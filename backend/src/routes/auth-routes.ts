@@ -30,7 +30,7 @@ router.get("/logout", (req, res) => {
   res.redirect(CLIENT_HOME_PAGE_URL);
 });
 
-// auth with twitter
+// auth with github
 router.get("/github", passport.authenticate("github"));
 
 // redirect to home page after successfully login via twitter

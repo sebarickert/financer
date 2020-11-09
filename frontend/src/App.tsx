@@ -1,26 +1,31 @@
-import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import React, { useEffect, useState } from "react";
 
-function App() {
+const LoginBlock = () => (
+  <ul>
+    <li>
+      <a href="/api/auth/github">Login with github</a>
+    </li>
+  </ul>
+);
+
+const Logout = () => <a href="/api/auth/logout">Logout</a>;
+
+const App = () => {
+  const [profileInfo, setProfileInfo] = useState<any>(undefined);
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      const userInfo = await fetch("/api/profile");
+      setProfileInfo(await userInfo.json());
+    };
+    fetchUserInfo();
+  }, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {profileInfo?.authenticated ? <Logout /> : <LoginBlock />}
+
+      <pre>{JSON.stringify(profileInfo)}</pre>
     </div>
   );
-}
+};
 
 export default App;

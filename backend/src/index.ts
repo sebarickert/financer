@@ -8,6 +8,8 @@ import mongoose from "mongoose";
 import "./config/passport-setup";
 import { MONGODB, SESSION } from "./config/keys";
 import authRoutes from "./routes/auth-routes";
+import profileRoutes from "./routes/profile";
+import { authCheck } from './routes/middleware';
 
 const app = express();
 const port = 4000; // default port to listen
@@ -44,17 +46,7 @@ app.use(passport.session());
 
 // set up routes
 app.use("/api/auth", authRoutes);
-
-const authCheck = (req: any, res: any, next: any) => {
-  if (!req.user) {
-    res.status(401).json({
-      authenticated: false,
-      message: "user has not been authenticated",
-    });
-  } else {
-    next();
-  }
-};
+app.use("/api/profile", profileRoutes);
 
 app.get("/", authCheck, (req: any, res) => {
   res.status(200).json({
