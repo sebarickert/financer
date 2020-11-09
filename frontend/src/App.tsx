@@ -21,7 +21,12 @@ const App = () => {
   }, []);
   return (
     <div>
-      {profileInfo?.authenticated ? <Logout /> : <LoginBlock />}
+      {typeof profileInfo === "undefined" ||
+      profileInfo.authenticated === false ? (
+        <LoginBlock />
+      ) : (
+        <Logout />
+      )}
 
       <pre>{JSON.stringify(profileInfo)}</pre>
     </div>

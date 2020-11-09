@@ -1,7 +1,6 @@
 import express from "express";
 import passport from "passport";
 import cookieSession from "cookie-session";
-import session from "express-session";
 import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 
