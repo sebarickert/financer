@@ -1,4 +1,4 @@
-import { Router} from "express";
+import { Router } from "express";
 import passport from "passport";
 
 const CLIENT_HOME_PAGE_URL = "http://localhost:3000";
@@ -11,7 +11,7 @@ router.get("/login/success", (req, res) => {
       success: true,
       message: "user has successfully authenticated",
       user: req.user,
-      cookies: req.cookies
+      cookies: req.cookies,
     });
   }
 });
@@ -20,7 +20,7 @@ router.get("/login/success", (req, res) => {
 router.get("/login/failed", (req, res) => {
   res.status(401).json({
     success: false,
-    message: "user failed to authenticate."
+    message: "user failed to authenticate.",
   });
 });
 
@@ -38,7 +38,7 @@ router.get(
   "/github/redirect",
   passport.authenticate("github", {
     successRedirect: CLIENT_HOME_PAGE_URL,
-    failureRedirect: "/auth/login/failed"
+    failureRedirect: "/auth/login/failed",
   })
 );
 

@@ -7,10 +7,9 @@ export const GITHUB_TOKENS = {
 const DB_USER = "admin";
 const DB_PASSWORD = "change-me";
 export const MONGODB = {
-  MONGODB_URI: `mongodb://${DB_USER}:${DB_PASSWORD}@localhost:27017/passport-express-react_dev`
+  MONGODB_URI: `mongodb://${DB_USER}:${DB_PASSWORD}@localhost:27017/passport-express-react_dev`,
 };
 
 export const SESSION = {
-  COOKIE_KEY: "thisappisawesome"
+  COOKIE_KEY: "thisappisawesome",
 };
-
