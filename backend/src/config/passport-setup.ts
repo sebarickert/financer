@@ -2,19 +2,18 @@ import passport from "passport";
 import { Strategy as GitHubStrategy, Profile } from "passport-github2";
 
 import { GITHUB_TOKENS } from "./keys";
-import User, { IUser } from "../models/user-model";
-// const TwitterStrategy = require("passport-twitter");
+import User, { IUserModel } from "../models/user-model";
 
 // serialize the user.id to save in the cookie session
 // so the browser will remember the user when login
-passport.serializeUser((user: IUser, done) => {
+passport.serializeUser((user: IUserModel, done) => {
   done(null, user.id);
 });
 
 // deserialize the cookieUserId to user in the database
 passport.deserializeUser((id, done) => {
   User.findById(id)
-    .then((user: IUser | null) => {
+    .then((user: IUserModel | null) => {
       done(null, user);
     })
     .catch(() => {
@@ -36,7 +35,7 @@ if (GITHUB_TOKENS.IS_ACTIVATED) {
         _accessToken: unknown,
         _refreshToken: unknown,
         profile: Profile,
-        done: (err?: Error | null, profile?: IUser | null) => void
+        done: (err?: Error | null, profile?: IUserModel | null) => void
       ) => {
         const currentUser = await User.findOne({
           githubId: profile.id,

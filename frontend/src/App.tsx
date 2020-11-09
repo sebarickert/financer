@@ -10,8 +10,10 @@ const LoginBlock = () => (
 
 const Logout = () => <a href="/api/auth/logout">Logout</a>;
 
-const App = () => {
-  const [profileInfo, setProfileInfo] = useState<any>(undefined);
+const App = (): JSX.Element => {
+  const [profileInfo, setProfileInfo] = useState<IUser | IAuthenticationFailed>(
+    { authenticated: false, message: "" }
+  );
   useEffect(() => {
     const fetchUserInfo = async () => {
       const userInfo = await fetch("/api/profile");
@@ -19,10 +21,11 @@ const App = () => {
     };
     fetchUserInfo();
   }, []);
+
   return (
     <div>
-      {typeof profileInfo === "undefined" ||
-      profileInfo.authenticated === false ? (
+      {"authenticated" in profileInfo &&
+      profileInfo?.authenticated === false ? (
         <LoginBlock />
       ) : (
         <Logout />
