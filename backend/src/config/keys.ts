@@ -1,15 +1,19 @@
-// ADD YOUR OWN KEYS AND RENAME THIS FILE TO keys.js
 export const GITHUB_TOKENS = {
-  GITHUB_CLIENT_ID: "client-id",
-  GITHUB_CLIENT_SECRET: "client-secret"
+  IS_ACTIVATED:
+    typeof process.env.GITHUB_CLIENT_ID !== "undefined" &&
+    typeof process.env.GITHUB_CLIENT_SECRET !== "undefined",
+  GITHUB_CLIENT_ID:
+    typeof process.env.GITHUB_CLIENT_ID !== "undefined"
+      ? process.env.GITHUB_CLIENT_ID
+      : "",
+  GITHUB_CLIENT_SECRET:
+    typeof process.env.GITHUB_CLIENT_SECRET !== "undefined"
+      ? process.env.GITHUB_CLIENT_SECRET
+      : "",
 };
 
-const DB_USER = "admin";
-const DB_PASSWORD = "change-me";
-export const MONGODB = {
-  MONGODB_URI: `mongodb://${DB_USER}:${DB_PASSWORD}@localhost:27017/passport-express-react_dev`,
-};
+export const MONGODB_URI = `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@localhost:27017/passport-express-react_dev`;
 
-export const SESSION = {
-  COOKIE_KEY: "thisappisawesome",
-};
+export const COOKIE_KEY = process.env.COOKIE_KEY
+  ? process.env.COOKIE_KEY
+  : "thisappisawesome";

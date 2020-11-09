@@ -1,13 +1,10 @@
 import { Router } from "express";
-import { authCheck } from './middleware';
+import authCheck from "./authenticationCheck";
 
 const router = Router();
 
-router.get("/", authCheck, (req: any, res) => {
-    res.status(200).json(
-      req.user,
-    );
-  });
-
+router.get("/", authCheck, (req, res) => {
+  res.status(200).json(req.user);
+});
 
 export default router;
