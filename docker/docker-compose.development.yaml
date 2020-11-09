@@ -1,0 +1,30 @@
+version: "3.6"
+# Deploys MongoDB with customization scripts and container with Mongo client
+# https://fabianlee.org/2018/05/20/docker-using-docker-compose-to-link-a-mongodb-server-and-client/
+#
+# usage:
+# sudo docker-compose build
+# sudo docker-compose up
+
+services:
+  mongodb:
+    image: mongo:4.2.10-bionic
+    container_name: passport-express-react_dev-mongodb
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_DATABASE=passport-express-react_dev
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=change-me
+    volumes:
+      - ./mongo-entrypoint:/docker-entrypoint-initdb.d
+      - ./data/mongo/db:/data/db
+      - ./data/mongo/configdb:/data/configdb
+  mongodbclient:
+    image: mongoclient/mongoclient:latest
+    container_name: passport-express-react_dev-mongoclient
+    hostname: mongoclient
+    depends_on:
+      - mongodb
+    ports:
+      - 3300:3000
