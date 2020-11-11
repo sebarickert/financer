@@ -1,5 +1,9 @@
-import { config } from "dotenv";
-import { resolve } from "path";
+import { config, parse } from "dotenv";
+import { readFileSync } from "fs";
 
 config();
-config({ path: resolve(process.cwd(), ".env.local") });
+const localConfig = parse(readFileSync(".env.local"));
+
+Object.entries(localConfig).forEach(([key, value]) => {
+  process.env[key] = value;
+});

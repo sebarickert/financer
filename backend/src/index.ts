@@ -4,6 +4,7 @@ import cookieSession from "cookie-session";
 import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 
+import "./config/load-env";
 import "./config/passport-setup";
 import { COOKIE_KEY, MONGODB_URI } from "./config/keys";
 import authRoutes from "./routes/auth/authentication-route";
