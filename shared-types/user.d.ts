@@ -1,5 +1,5 @@
 interface IUser {
-  name: string;
+  name: any;
   nickname: string;
   githubId: string;
   profileImageUrl: string;
