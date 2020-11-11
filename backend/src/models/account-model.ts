@@ -2,7 +2,12 @@ import mongoose, { Schema, Document } from "mongoose";
 import { USER_MODEL_NAME } from "./user-model";
 
 export const ACCOUNT_MODEL_NAME = "account";
-export interface IAccountModel extends Document, IAccount { }
+export interface IAccountModel extends Document, IAccount {
+  _id: any;
+  owner: any;
+}
+
+export const ACCOUNT_TYPES = ["cash", "savings", "investment", "credit"];
 
 const accountSchema = new Schema({
   name: String,

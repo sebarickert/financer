@@ -1,4 +1,5 @@
 import express from "express";
+import bodyParser from "body-parser";
 import passport from "passport";
 import cookieSession from "cookie-session";
 import cookieParser from "cookie-parser";
@@ -7,9 +8,10 @@ import mongoose from "mongoose";
 import "./config/load-env";
 import "./config/passport-setup";
 import { COOKIE_KEY, MONGODB_URI } from "./config/keys";
-import authRoutes from "./routes/auth/authentication-route";
-import profileRoutes from "./routes/profile";
-import authCheck from "./routes/authenticationCheck";
+import authRoutes from "./routes/authentication-route";
+import profileRoutes from "./routes/profile-route";
+import accountRoutes from "./routes/account-route";
+import authCheck from "./routes/middlewares/authenticationCheck";
 
 const app = express();
 const port = 4000; // default port to listen
@@ -39,17 +41,15 @@ app.use(
   })
 );
 
-// parse cookies
 app.use(cookieParser());
-
-// initalize passport
 app.use(passport.initialize());
-// deserialize cookie from the browser
 app.use(passport.session());
+app.use(bodyParser.json());
 
 // set up routes
 app.use("/api/auth", authRoutes);
 app.use("/api/profile", profileRoutes);
+app.use("/api/account", accountRoutes);
 
 app.get("/", authCheck, (req, res) => {
   res.status(200).json({
