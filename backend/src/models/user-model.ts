@@ -1,5 +1,6 @@
 import mongoose, { Schema, Document } from "mongoose";
 
+export const USER_MODEL_NAME = "user";
 export interface IUserModel extends Document, IUser {}
 
 const userSchema = new Schema({
@@ -9,4 +10,4 @@ const userSchema = new Schema({
   profileImageUrl: String,
 });
 
-export default mongoose.model<IUserModel>("user", userSchema);
+export default mongoose.model<IUserModel>(USER_MODEL_NAME, userSchema);
