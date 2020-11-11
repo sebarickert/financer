@@ -1,7 +1,9 @@
 export const GITHUB_TOKENS = {
   IS_ACTIVATED:
     typeof process.env.GITHUB_CLIENT_ID !== "undefined" &&
-    typeof process.env.GITHUB_CLIENT_SECRET !== "undefined",
+    typeof process.env.GITHUB_CLIENT_SECRET !== "undefined" &&
+    process.env.GITHUB_CLIENT_ID.length > 0 &&
+    process.env.GITHUB_CLIENT_SECRET.length > 0,
   GITHUB_CLIENT_ID:
     typeof process.env.GITHUB_CLIENT_ID !== "undefined"
       ? process.env.GITHUB_CLIENT_ID
