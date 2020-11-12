@@ -1,5 +1,5 @@
 interface IAccount {
-  id?: string;
+  id?: any;
   name: string;
   type: "cash" | "savings" | "investment" | "credit";
   balance: number;
