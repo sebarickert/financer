@@ -1,7 +1,7 @@
 interface IAccount {
   id?: string;
   name: string;
-  type: "cash" | "finance" | "credit";
+  type: "cash" | "savings" | "investment" | "credit";
   balance: number;
   owner: string;
 }
