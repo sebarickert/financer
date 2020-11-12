@@ -29,7 +29,7 @@ if (GITHUB_TOKENS.IS_ACTIVATED) {
       {
         clientID: GITHUB_TOKENS.GITHUB_CLIENT_ID,
         clientSecret: GITHUB_TOKENS.GITHUB_CLIENT_SECRET,
-        callbackURL: `http://${process.env.PUBLIC_URL}/api/auth/github/redirect`,
+        callbackURL: `${process.env.PUBLIC_URL}/api/auth/github/redirect`,
       },
       async (
         _accessToken: unknown,
