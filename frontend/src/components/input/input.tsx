@@ -4,7 +4,7 @@ import { addLeadingZero } from "../../utils/addLeadingZero";
 interface IProps {
   children: React.ReactNode;
   help?: string;
-  id: any;
+  id: string;
   isCurrency?: boolean;
   isDate?: boolean;
   isRequired?: boolean;
