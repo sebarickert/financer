@@ -64,21 +64,7 @@ $ docker-compose -f ./docker/docker-compose.development.yaml up -d
 
 ### Start up the backend and frontend
 
-Open both the directories in own tabs in the terminal.
-
-#### Backend
-
 ```
-$ cd backend/
-$ npm i
-$ npm start
-```
-
-#### Frontend
-
-```
-$ cd frontend/
-$ npm i
 $ npm start
 ```
 
