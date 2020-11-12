@@ -18,8 +18,8 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=change-me
     volumes:
       - ./mongo-entrypoint:/docker-entrypoint-initdb.d
-      - ./data/mongo/db:/data/db
-      - ./data/mongo/configdb:/data/configdb
+      - mongo_data:/data/db
+      - mongo_config:/data/configdb
   mongodbclient:
     image: mongoclient/mongoclient:latest
     container_name: passport-express-react_dev-mongoclient
@@ -28,3 +28,9 @@ services:
       - mongodb
     ports:
       - 3300:3000
+
+volumes:
+  mongo_data:
+    name: passport-express-react_dev-mongodata
+  mongo_config:
+    name: passport-express-react_dev-mongoconfig
