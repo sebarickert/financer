@@ -2,6 +2,6 @@ interface IAccount {
   id?: string;
   name: string;
   type: "cash" | "finance" | "credit";
-  saldo: number;
+  balance: number;
   owner: string;
 }

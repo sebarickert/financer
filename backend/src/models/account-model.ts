@@ -7,7 +7,7 @@ export interface IAccountModel extends Document, IAccount {}
 const accountSchema = new Schema({
   name: String,
   type: String,
-  saldo: Number,
+  balance: Number,
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: USER_MODEL_NAME,
@@ -15,8 +15,8 @@ const accountSchema = new Schema({
 });
 
 accountSchema
-  .path("saldo")
+  .path("balance")
   .get((num: number) => parseFloat((num / 100).toFixed(2)));
-accountSchema.path("saldo").set((num: number) => num * 100);
+accountSchema.path("balance").set((num: number) => num * 100);
 
 export default mongoose.model<IAccountModel>(ACCOUNT_MODEL_NAME, accountSchema);
