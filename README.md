@@ -56,6 +56,17 @@ $ nvm use
 $ npm ci
 ```
 
+#### Known issues
+
+If `npm ci` doesn't work, do this:
+
+```
+// Delete node_modules and package-lock.json
+$ rm -rf node_modules/ package-lock.json
+// Install all dependencies.
+$ npm i --legacy-peer-deps
+```
+
 ### Start up docker
 
 ```
@@ -80,6 +91,14 @@ $ npm --prefix frontend install DEPENDENCY-NAME
 
 ```
 $ npm --prefix backend install DEPENDENCY-NAME
+```
+
+#### Known issues
+
+If backend fails after first authentication attepmt, restart the backend.
+
+```
+$ npm start
 ```
 
 ## Authors
