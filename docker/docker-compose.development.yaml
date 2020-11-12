@@ -9,11 +9,11 @@ version: "3.6"
 services:
   mongodb:
     image: mongo:4.2.10-bionic
-    container_name: passport-express-react_dev-mongodb
+    container_name: financer_dev-mongodb
     ports:
       - 27017:27017
     environment:
-      - MONGO_INITDB_DATABASE=passport-express-react_dev
+      - MONGO_INITDB_DATABASE=financer_dev
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=change-me
     volumes:
@@ -22,7 +22,7 @@ services:
       - mongo_config:/data/configdb
   mongodbclient:
     image: mongoclient/mongoclient:latest
-    container_name: passport-express-react_dev-mongoclient
+    container_name: financer_dev-mongoclient
     hostname: mongoclient
     depends_on:
       - mongodb
@@ -31,6 +31,6 @@ services:
 
 volumes:
   mongo_data:
-    name: passport-express-react_dev-mongodata
+    name: financer_dev-mongodata
   mongo_config:
-    name: passport-express-react_dev-mongoconfig
+    name: financer_dev-mongoconfig
