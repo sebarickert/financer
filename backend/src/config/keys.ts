@@ -14,7 +14,7 @@ export const GITHUB_TOKENS = {
       : "",
 };
 
-export const MONGODB_URI = `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@localhost:27017/passport-express-react_dev`;
+export const MONGODB_URI = `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@localhost:27017/${process.env.DB_NAME}`;
 
 export const COOKIE_KEY = process.env.COOKIE_KEY
   ? process.env.COOKIE_KEY
