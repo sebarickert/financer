@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Layout from "./components/layout/layout";
-import Accounts from "./pages/Accounts";
+import AccountsRouter from "./pages/accounts/AccountsRouter";
 
 const Financer = (): JSX.Element => {
   return (
@@ -9,7 +9,7 @@ const Financer = (): JSX.Element => {
       <Router>
         <Switch>
           <Route path="/accounts">
-            <Accounts />
+            <AccountsRouter />
           </Route>
         </Switch>
       </Router>
