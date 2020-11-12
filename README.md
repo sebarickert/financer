@@ -68,6 +68,20 @@ $ docker-compose -f ./docker/docker-compose.development.yaml up -d
 $ npm start
 ```
 
+## Install new dependencies
+
+### Frontend
+
+```
+$ npm --prefix frontend install DEPENDENCY-NAME
+```
+
+### Backend
+
+```
+$ npm --prefix backend install DEPENDENCY-NAME
+```
+
 ## Authors
 
 - **Sebastian Hämäläinen** - [shamalainen](https://github.com/shamalainen)
