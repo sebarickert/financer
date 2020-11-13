@@ -57,11 +57,11 @@ export const addAccount = async (req: Request, res: Response) => {
   }
 
   if (errors.length > 0) {
-    res.status(400).json({ status: 400, errors });
+    res.status(400).json({ authorized: true, status: 400, errors });
     return;
   }
   newAccountData.owner = user.id;
   const newAccount = await createNewAccount(newAccountData);
 
-  res.status(201).json(newAccount);
+  res.status(201).json({ authorized: true, status: 201, payload: newAccount });
 };
