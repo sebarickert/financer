@@ -37,19 +37,23 @@ export const addAccount = async (req: Request, res: Response) => {
   const errors: string[] = [];
 
   if (!("name" in newAccountData) || newAccountData.name.length === 0) {
-    errors.push("New account name can't be empty");
+    errors.push("Name must not be empty.");
   }
+
   if (
     !("type" in newAccountData) ||
     !ACCOUNT_TYPES.includes(newAccountData.type)
   ) {
-    errors.push(`New account type must be one of ${ACCOUNT_TYPES.join(", ")}`);
+    errors.push(
+      `Type must be one of the following: ${ACCOUNT_TYPES.join(", ")}.`
+    );
   }
+
   if (
-    !("type" in newAccountData) ||
+    !("balance" in newAccountData) ||
     typeof newAccountData.balance !== "number"
   ) {
-    newAccountData.balance = 0;
+    errors.push("Balance must be a number.");
   }
 
   if (errors.length > 0) {
