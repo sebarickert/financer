@@ -1,28 +1,37 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Button from "../../components/button/button";
 import Hero from "../../components/hero/hero";
 import Table, { ITableHead } from "../../components/table/table";
 import { TAddiotinalLabel } from "../../components/table/table.header";
 
 const Accounts = (): JSX.Element => {
-  const [accounts, setAccounts] = useState([]);
+  const [accountsRaw, setAccountsRaw] = useState<IAccount[]>([]);
+  const [accounts, setAccounts] = useState<any[]>([]);
   const [totalBalance, setTotalBalance] = useState<number>(NaN);
 
   useEffect(() => {
     const fetchAccounts = async () => {
       const rawAccounts = await fetch("/api/account");
-      setAccounts(await rawAccounts.json());
+      setAccountsRaw(await rawAccounts.json());
     };
     fetchAccounts();
   }, []);
 
   useEffect(() => {
-    const total = accounts.reduce(
+    const total = accountsRaw.reduce(
       (currentTotal, { balance }) => currentTotal + balance,
       0
     );
     setTotalBalance(total);
-  }, [accounts]);
+    setAccounts(
+      accountsRaw.map(({ _id, ...account }) => ({
+        _id,
+        ...account,
+        actions: <Link to={`/accounts/${_id}`}>View</Link>,
+      }))
+    );
+  }, [accountsRaw]);
 
   const tableHeads: ITableHead[] = [
     { key: "name", label: "Account" },
