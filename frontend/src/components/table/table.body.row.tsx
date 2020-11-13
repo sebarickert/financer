@@ -10,15 +10,22 @@ interface IProps {
   keys: string[];
   row: IRow;
   actionKeys?: string[];
+  dataKeyColumn: string;
 }
 
-const TableBodyRow = ({ keys, row, actionKeys = [] }: IProps): JSX.Element => {
+const TableBodyRow = ({
+  keys,
+  row,
+  actionKeys = [],
+  dataKeyColumn,
+}: IProps): JSX.Element => {
   return (
     <tr>
       {keys.map((key, index) => (
         <TableBodyItem
           isFirst={index === 0}
           isAction={actionKeys.includes(key)}
+          key={`${row[dataKeyColumn]}-${key}` as string}
         >
           {key in row ? row[key] : ""}
         </TableBodyItem>
