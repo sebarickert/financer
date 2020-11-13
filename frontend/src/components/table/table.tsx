@@ -16,6 +16,7 @@ interface IProps {
   label: string;
   rows: IRow[];
   tableHeads: ITableHead[];
+  dataKeyColumn: string;
 }
 
 const Table = ({
@@ -23,6 +24,7 @@ const Table = ({
   label,
   rows,
   tableHeads,
+  dataKeyColumn,
 }: IProps): JSX.Element => {
   const actionKeys = tableHeads
     .filter(
@@ -45,7 +47,13 @@ const Table = ({
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <TableBodyRow keys={tableKeys} row={row} actionKeys={actionKeys} />
+            <TableBodyRow
+              key={row[dataKeyColumn] as string}
+              keys={tableKeys}
+              row={row}
+              actionKeys={actionKeys}
+              dataKeyColumn={dataKeyColumn}
+            />
           ))}
         </TableBody>
       </TableResponsiveContainer>

@@ -53,6 +53,7 @@ const Accounts = (): JSX.Element => {
           label="Your accounts"
           rows={accounts}
           tableHeads={tableHeads}
+          dataKeyColumn="_id"
         />
       </div>
     </>

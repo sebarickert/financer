@@ -21,6 +21,7 @@ const Select = ({
   isRequired = false,
   options,
 }: IProps): JSX.Element => {
+  const defaultValue = options.find((option) => option.selected)?.value;
   return (
     <div>
       <label
@@ -31,12 +32,13 @@ const Select = ({
         <select
           id={id}
           name={id}
+          defaultValue={defaultValue}
           className="mt-1 form-select block w-full pl-3 pr-10 py-2 text-base leading-6 border-gray-300 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
           required={isRequired}
           aria-describedby={help && `${id}-description`}
         >
-          {options.map(({ value, label, selected = false }) => (
-            <option value={value} selected={selected}>
+          {options.map(({ value, label }) => (
+            <option value={value} key={value}>
               {label}
             </option>
           ))}
