@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Button from "../../components/button/button";
 import Hero from "../../components/hero/hero";
 
 const Accounts = (): JSX.Element => {
+  const [accounts, setAccounts] = useState([]);
+
+  useEffect(() => {
+    fetch("/api/account")
+      .then((res) => res.json())
+      .then((result) => {
+        setAccounts(result);
+      });
+  }, []);
+
   return (
     <>
       <Hero accent="Your" accentColor="blue" label="Accounts">
