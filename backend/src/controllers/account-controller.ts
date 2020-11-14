@@ -3,7 +3,7 @@ import { Response, Request } from "express";
 import { ACCOUNT_TYPES, IAccountModel } from "../models/account-model";
 import { IUserModel } from "../models/user-model";
 import {
-  createNewAccount,
+  createAccount,
   findAccountsById,
   findAccountsByUser,
 } from "../services/account-service";
@@ -61,7 +61,71 @@ export const addAccount = async (req: Request, res: Response) => {
     return;
   }
   newAccountData.owner = user.id;
-  const newAccount = await createNewAccount(newAccountData);
+  const newAccount = await createAccount(newAccountData);
 
   res.status(201).json({ authorized: true, status: 201, payload: newAccount });
+};
+
+export const deleteAccount = async (req: Request, res: Response) => {
+  const user = req.user as IUserModel;
+  const accountId = req.params.id;
+  const account = await findAccountsById(accountId);
+
+  if (account?.owner + "" !== user._id + "") {
+    res.status(403).json({
+      authenticated: true,
+      status: 403,
+      errors: ["You can delete only your own accounts."],
+    });
+    return;
+  } else if (account === null) {
+    res.status(404).json({
+      authenticated: true,
+      status: 404,
+      errors: ["Account not found."],
+    });
+    return;
+  }
+
+  await account.remove();
+
+  res.status(200).json({ authenticated: true, status: 200 });
+};
+
+export const updateAccount = async (req: Request, res: Response) => {
+  const user = req.user as IUserModel;
+  const accountId = req.params.id;
+  const modifiedAccountData = req.body as IAccountModel;
+
+  const account = await findAccountsById(accountId);
+
+  if (account?.owner + "" !== user._id + "") {
+    res.status(403).json({
+      authenticated: true,
+      status: 403,
+      errors: ["You can delete only your own accounts."],
+    });
+    return;
+  } else if (account === null) {
+    res.status(404).json({
+      authenticated: true,
+      status: 404,
+      errors: ["Account not found."],
+    });
+    return;
+  }
+
+  if ("name" in modifiedAccountData) {
+    account.name = modifiedAccountData.name;
+  }
+  if ("balance" in modifiedAccountData) {
+    account.balance = modifiedAccountData.balance;
+  }
+  if ("type" in modifiedAccountData) {
+    account.type = modifiedAccountData.type;
+  }
+
+  await account?.save();
+
+  res.status(200).json({ authenticated: true, status: 200 });
 };
