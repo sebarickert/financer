@@ -1,5 +1,5 @@
 import React from "react";
-import "./loader.css";
+import { Loader as OrinalLoader } from "@silte/react-loader";
 
 interface IProps {
   loaderColor?: "pink" | "red" | "green" | "blue";
@@ -13,13 +13,13 @@ const Loader = ({ loaderColor = "pink" }: IProps): JSX.Element => {
     red: "#e53e3e",
   };
 
+  const loaderColorReal = loaderColor.length > 0 ? colorCode[loaderColor] : "";
+
   return (
-    <div className="loader flex justify-center items-center mx-auto my-12 sm:my-20 md:my-28 lg:my-36">
-      <div style={{ borderTopColor: colorCode[loaderColor] }} />
-      <div style={{ borderTopColor: colorCode[loaderColor] }} />
-      <div style={{ borderTopColor: colorCode[loaderColor] }} />
-      <div style={{ borderTopColor: colorCode[loaderColor] }} />
-    </div>
+    <OrinalLoader
+      className="flex justify-center items-center mx-auto my-12 sm:my-20 md:my-28 lg:my-36"
+      loaderColor={loaderColorReal}
+    />
   );
 };
 
