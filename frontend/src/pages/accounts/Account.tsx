@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Hero from "../../components/hero/hero";
+import Loader from "../../components/loader/loader";
 
 const Account = (): JSX.Element => {
   const [account, setAccount] = useState<IAccount | undefined>(undefined);
@@ -15,7 +16,7 @@ const Account = (): JSX.Element => {
   }, [id]);
 
   return typeof account === "undefined" ? (
-    <h1>Loading...</h1>
+    <Loader loaderColor="blue" />
   ) : (
     <Hero accent="Account" accentColor="blue" label={account.name}>
       Below you are able to edit your accounts information and check your
