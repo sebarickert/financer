@@ -5,5 +5,5 @@ export const findAccountsByUser = async (userId: string) =>
 
 export const findAccountsById = async (id: string) => accountModel.findById(id);
 
-export const createNewAccount = async (newAccount: IAccountModel) =>
+export const createAccount = async (newAccount: IAccountModel) =>
   accountModel.create(newAccount);
