@@ -6,12 +6,12 @@ interface IProps {
   id: string;
   isRequired?: boolean;
   options: IOption[];
+  defaultValue?: string;
 }
 
 export interface IOption {
   value: string;
   label: string;
-  selected?: boolean;
 }
 
 const Select = ({
@@ -20,8 +20,8 @@ const Select = ({
   id,
   isRequired = false,
   options,
+  defaultValue,
 }: IProps): JSX.Element => {
-  const defaultValue = options.find((option) => option.selected)?.value;
   return (
     <div>
       <label

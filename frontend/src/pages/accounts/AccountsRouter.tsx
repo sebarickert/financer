@@ -3,6 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import AddAccount from "./AddAccount";
 import Accounts from "./Accounts";
 import Account from "./Account";
+import EditAccount from "./EditAccount";
 
 const AccountsRouter = (): JSX.Element => {
   return (
@@ -15,6 +16,9 @@ const AccountsRouter = (): JSX.Element => {
       </Route>
       <Route exact path="/accounts/:id">
         <Account />
+      </Route>
+      <Route exact path="/accounts/:id/edit">
+        <EditAccount />
       </Route>
     </Switch>
   );
