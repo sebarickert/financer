@@ -4,6 +4,7 @@ import ModalConfirmActions from "./modal.confirm.actions";
 import ModalConfirmHeader from "./modal.confirm.header";
 
 interface IProps {
+  accentColor?: "pink" | "red" | "green" | "blue";
   children?: string;
   label: string;
   modalOpenButtonLabel: string;
@@ -17,6 +18,7 @@ const ModalConfirm = ({
   modalOpenButtonLabel,
   onConfirm,
   submitButtonLabel,
+  accentColor,
 }: IProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -30,6 +32,7 @@ const ModalConfirm = ({
       modalOpenButtonLabel={modalOpenButtonLabel}
       toggleOpen={handleToggleOpen}
       isOpen={isOpen}
+      accentColor={accentColor}
     >
       <ModalConfirmHeader label={label}>{children}</ModalConfirmHeader>
       <ModalConfirmActions

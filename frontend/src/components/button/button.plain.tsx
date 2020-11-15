@@ -4,12 +4,18 @@ interface IProps {
   children: string;
   onClick(): void;
   className: string;
+  type?: "button" | "submit" | "reset" | undefined;
 }
 
-const ButtonPlain = ({ children, onClick, className }: IProps): JSX.Element => {
+const ButtonPlain = ({
+  children,
+  onClick,
+  className,
+  type,
+}: IProps): JSX.Element => {
   return (
     <button
-      type="button"
+      type={type}
       onClick={onClick}
       aria-label={children}
       className={className}

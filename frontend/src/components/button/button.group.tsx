@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 interface IProps {
   readonly children: React.ReactNode[];
@@ -14,13 +13,11 @@ const ButtonGroup = ({ children, label }: IProps): JSX.Element => {
           {label}
         </h2>
       )}
-      <div className="flex">
+      <div className="sm:flex">
         {/* eslint-disable react/no-array-index-key */}
         {children.map((child, index) => (
           <span
-            className={`inline-flex rounded-md shadow-sm ${
-              index > 0 ? "ml-3" : ""
-            }`}
+            className={`${index > 0 ? "ml-3" : ""}`}
             key={`button-${index}`}
           >
             {child}

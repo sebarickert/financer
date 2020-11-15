@@ -3,12 +3,13 @@ import Container from "../container/container";
 
 interface IProps {
   children: React.ReactNode;
+  className?: string;
 }
 
-const Layout = ({ children }: IProps): JSX.Element => {
+const Layout = ({ className, children }: IProps): JSX.Element => {
   return (
     <>
-      <Container>{children}</Container>
+      <Container className={className}>{children}</Container>
     </>
   );
 };
