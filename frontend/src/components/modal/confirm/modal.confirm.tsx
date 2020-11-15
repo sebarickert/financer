@@ -1,23 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import Modal from "../modal";
 import ModalConfirmActions from "./modal.confirm.actions";
 import ModalConfirmHeader from "./modal.confirm.header";
 
 interface IProps {
-  label: string;
-  submitButtonLabel: string;
   children?: string;
+  label: string;
+  modalOpenButtonLabel: string;
+  onConfirm(): void;
+  submitButtonLabel: string;
 }
 
 const ModalConfirm = ({
-  label,
-  submitButtonLabel,
   children,
+  label,
+  modalOpenButtonLabel,
+  onConfirm,
+  submitButtonLabel,
 }: IProps): JSX.Element => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleToggleOpen = () => setIsOpen(!isOpen);
+  const handleConfirm = () => {
+    onConfirm();
+    handleToggleOpen();
+  };
   return (
-    <Modal>
+    <Modal
+      modalOpenButtonLabel={modalOpenButtonLabel}
+      toggleOpen={handleToggleOpen}
+      isOpen={isOpen}
+    >
       <ModalConfirmHeader label={label}>{children}</ModalConfirmHeader>
-      <ModalConfirmActions submitButtonLabel={submitButtonLabel} />
+      <ModalConfirmActions
+        submitButtonLabel={submitButtonLabel}
+        onCancel={handleToggleOpen}
+        onConfirm={handleConfirm}
+      />
     </Modal>
   );
 };
