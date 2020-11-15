@@ -29,7 +29,7 @@ const Button = ({
   };
 
   const elementClasses = [
-    `inline-flex items-center px-4 py-2 border font-medium rounded-md text-white focus:outline-none transition ease-in-out duration-150 ${fontSizeMapping[size]} ${className}`,
+    `inline-flex justify-center w-full sm:w-auto items-center px-4 py-2 border font-medium rounded-md text-white focus:outline-none transition ease-in-out duration-150 ${fontSizeMapping[size]} ${className}`,
   ];
 
   if (accentColor === "plain") {
