@@ -52,7 +52,7 @@ const Accounts = (): JSX.Element => {
         savings or investments to calculate total amount.
       </Hero>
       <div className="mt-6">
-        <Button href="/accounts/add" accentColor="blue">
+        <Button link="/accounts/add" accentColor="blue">
           Add account
         </Button>
       </div>
