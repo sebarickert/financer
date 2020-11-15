@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import Hero from "../../components/hero/hero";
 import Loader from "../../components/loader/loader";
 import ModalConfirm from "../../components/modal/confirm/modal.confirm";
@@ -37,6 +37,9 @@ const Account = (): JSX.Element => {
         Below you are able to edit your accounts information and check your
         transaction history as well as balance.
       </Hero>
+      <div className="mt-6">
+        <Link to={`/accounts/${id}/edit`}>Edit account</Link>
+      </div>
       <div className="mt-6">
         <ModalConfirm
           label="Delete account"
