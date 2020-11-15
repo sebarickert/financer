@@ -1,12 +1,12 @@
 import React from "react";
+import Button from "./components/button/button";
+import Layout from "./components/layout/layout";
 
 const Login = (): JSX.Element => {
   return (
-    <ul>
-      <li>
-        <a href="/api/auth/github">Login with github</a>
-      </li>
-    </ul>
+    <Layout className="mt-12 flex justify-center">
+      <Button link="/api/auth/github">Login with Github</Button>
+    </Layout>
   );
 };
 

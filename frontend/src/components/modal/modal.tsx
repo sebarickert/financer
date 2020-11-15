@@ -1,6 +1,8 @@
 import React from "react";
+import Button from "../button/button";
 
 interface IProps {
+  accentColor?: "pink" | "red" | "green" | "blue";
   children: React.ReactNode;
   isOpen: boolean;
   modalOpenButtonLabel: string;
@@ -12,12 +14,13 @@ const Modal = ({
   isOpen,
   modalOpenButtonLabel,
   toggleOpen,
+  accentColor,
 }: IProps): JSX.Element => {
   return (
     <>
-      <button type="button" onClick={toggleOpen}>
+      <Button accentColor={accentColor} onClick={toggleOpen}>
         {modalOpenButtonLabel}
-      </button>
+      </Button>
       {isOpen && (
         <div className="fixed z-10 inset-0 overflow-y-auto">
           <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">

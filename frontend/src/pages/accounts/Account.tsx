@@ -1,8 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
+import Button from "../../components/button/button";
+import ButtonGroup from "../../components/button/button.group";
 import Hero from "../../components/hero/hero";
 import Loader from "../../components/loader/loader";
 import ModalConfirm from "../../components/modal/confirm/modal.confirm";
+
+interface IProps {
+  handleDelete(): void;
+}
+
+const AccountDeleteModal = ({ handleDelete }: IProps) => (
+  <ModalConfirm
+    label="Delete account"
+    submitButtonLabel="Delete"
+    onConfirm={handleDelete}
+    modalOpenButtonLabel="Delete account"
+    accentColor="red"
+  >
+    Are you sure you want to delete your account? All of your data will be
+    permanently removed. This action cannot be undone.
+  </ModalConfirm>
+);
 
 const Account = (): JSX.Element => {
   const history = useHistory();
@@ -38,18 +57,12 @@ const Account = (): JSX.Element => {
         transaction history as well as balance.
       </Hero>
       <div className="mt-6">
-        <Link to={`/accounts/${id}/edit`}>Edit account</Link>
-      </div>
-      <div className="mt-6">
-        <ModalConfirm
-          label="Delete account"
-          submitButtonLabel="Delete"
-          onConfirm={handleDelete}
-          modalOpenButtonLabel="Delete account"
-        >
-          Are you sure you want to delete your account? All of your data will be
-          permanently removed. This action cannot be undone.
-        </ModalConfirm>
+        <ButtonGroup label="Account actions">
+          <Button accentColor="blue" link={`/accounts/${id}/edit`}>
+            Edit account
+          </Button>
+          <AccountDeleteModal handleDelete={handleDelete} />
+        </ButtonGroup>
       </div>
     </>
   );
