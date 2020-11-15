@@ -5,15 +5,15 @@ import AccountsRouter from "./pages/accounts/AccountsRouter";
 
 const Financer = (): JSX.Element => {
   return (
-    <Layout>
-      <Router>
+    <Router>
+      <Layout>
         <Switch>
           <Route path="/accounts">
             <AccountsRouter />
           </Route>
         </Switch>
-      </Router>
-    </Layout>
+      </Layout>
+    </Router>
   );
 };
 
