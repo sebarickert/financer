@@ -70,7 +70,7 @@ $ npm i --legacy-peer-deps
 ### Start up docker
 
 ```
-$ docker-compose -f ./docker/docker-compose.development.yaml up -d
+$ docker-compose -f ./docker/docker-compose.development.yml up -d
 ```
 
 ### Start up the backend and frontend
