@@ -1,4 +1,5 @@
 import { Response, Request } from "express";
+import accountModel from "../models/account-model";
 import { ITransactionModel } from "../models/transaction-model";
 
 import { IUserModel } from "../models/user-model";
@@ -47,6 +48,11 @@ export const addIncome = async (req: Request, res: Response) => {
 
   rawNewIncome.user = user.id;
   rawNewIncome.toAccountBalance = targetAccount?.balance;
+
+  if(targetAccount) {
+      targetAccount.balance = targetAccount.balance + rawNewIncome.amount;
+      await targetAccount.save();
+  }
 
   const newAccount = await createTransaction(rawNewIncome);
 
