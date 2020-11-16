@@ -27,9 +27,9 @@ const Accounts = (): JSX.Element => {
     setTotalBalance(total);
     setAccounts(
       accountsRaw.map(({ _id, balance, ...account }) => ({
+        ...account,
         _id,
         balance: formatCurrency(balance),
-        ...account,
         actions: <Link to={`/accounts/${_id}`}>View</Link>,
       }))
     );
