@@ -1,7 +1,7 @@
 import { Router } from "express";
 import passport from "passport";
 
-const CLIENT_HOME_PAGE_URL = "http://localhost:3000";
+const CLIENT_HOME_PAGE_URL = process.env.PUBLIC_URL || "http://localhost:3000";
 const router = Router();
 
 // when login is successful, retrieve user info
