@@ -15,7 +15,7 @@ import accountRoutes from "./routes/account-route";
 import fileExists from "./utils/fileExists";
 
 
-const REACT_APP_PATH = "/static/react-app";
+const REACT_APP_PATH = "/static/react-app/";
 const app = express();
 const port = 4000; // default port to listen
 
