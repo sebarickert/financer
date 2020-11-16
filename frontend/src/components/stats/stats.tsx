@@ -7,16 +7,12 @@ interface IProps {
   className?: string;
 }
 
-const Stats = ({
-  children,
-  label = "",
-  className = "",
-}: IProps): JSX.Element => {
+const Stats = ({ children, label, className = "" }: IProps): JSX.Element => {
   return (
     <div className={`p-8 -mx-8 bg-gray-100 rounded-lg ${className}`}>
-      <StatsHeader>{label}</StatsHeader>
+      {label && <StatsHeader>{label}</StatsHeader>}
       <div
-        className={`mt-4 grid grid-cols-1 rounded-lg bg-white overflow-hidden shadow md:grid-cols-${children.length}`}
+        className={`grid grid-cols-1 rounded-lg bg-white overflow-hidden shadow md:grid-cols-${children.length}`}
       >
         {/* eslint-disable react/no-array-index-key */}
         {children.map((child, index) => (
