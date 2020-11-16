@@ -4,12 +4,12 @@ import fileExists from "../utils/fileExists";
 
 config();
 
-const localConfigExists = fileExists(".env.local")
+const localConfigExists = fileExists(".env.local");
 
-if(localConfigExists) {
+if (localConfigExists) {
   const localConfig = parse(readFileSync(".env.local"));
 
   Object.entries(localConfig).forEach(([key, value]) => {
     process.env[key] = value;
-  });  
+  });
 }
