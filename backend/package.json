@@ -8,8 +8,8 @@
     "start": "tsc && node build/index.js",
     "start-dev": "nodemon",
     "tsc": "tsc",
-    "format": "prettier --write src/**/*.ts{,x}",
-    "lint": "tsc --noEmit && eslint src/**/*.ts{,x}"
+    "format": "prettier --write src/**/*.ts{,x} && eslint src/**/*.ts{,x} --fix",
+    "lint": "eslint src/**/*.ts{,x}"
   },
   "author": "",
   "license": "ISC",
