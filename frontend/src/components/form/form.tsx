@@ -6,6 +6,7 @@ interface IProps {
   children: React.ReactNode;
   formHeading: string;
   submitLabel: string;
+  accentColor?: "pink" | "red" | "green" | "blue";
   handleSubmit(event: any): void;
 }
 
@@ -14,12 +15,13 @@ const Form = ({
   submitLabel,
   formHeading,
   handleSubmit,
+  accentColor = "blue",
 }: IProps): JSX.Element => {
   return (
     <form onSubmit={handleSubmit} method="post">
       <FormHeader>{formHeading}</FormHeader>
       {children}
-      <FormFooter submitLabel={submitLabel} accentColor="blue" />
+      <FormFooter submitLabel={submitLabel} accentColor={accentColor} />
     </form>
   );
 };
