@@ -13,7 +13,7 @@ interface IProps {
 const TableHeader = ({ label, addiotinalLabel }: IProps): JSX.Element => {
   return (
     <div className="sm:flex sm:items-end sm:justify-between">
-      <h2 className="text-2xl leading-9 font-bold tracking-tight text-gray-900 sm:leading-10 mb-2 sm:mb-0 sm:leading-none">
+      <h2 className="text-2xl leading-9 font-bold tracking-tight text-gray-900 mb-2 sm:mb-0 sm:leading-none">
         {label}
       </h2>
       {addiotinalLabel && (
