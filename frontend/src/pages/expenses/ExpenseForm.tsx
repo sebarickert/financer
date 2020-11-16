@@ -6,19 +6,19 @@ import Alert from "../../components/alert/alert";
 
 interface IProps {
   errors: string[];
-  name?: string;
-  balance?: number;
+  purchase?: string;
+  price?: number;
   type?: string;
   onSubmit(account: IAccount): void;
   formHeading: string;
   submitLabel: string;
 }
 
-const AccountForm = ({
+const ExpenseForm = ({
   errors,
-  name = "",
-  balance = NaN,
-  type = "savings",
+  purchase = "",
+  price = NaN,
+  type = "credit",
   onSubmit,
   formHeading,
   submitLabel,
@@ -65,25 +65,28 @@ const AccountForm = ({
         submitLabel={submitLabel}
         formHeading={formHeading}
         handleSubmit={handleSubmit}
-        accentColor="blue"
+        accentColor="red"
       >
         <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-2">
           <Input
-            id="account"
-            help="Name of account, e.g. bank account."
+            id="purchase"
+            help="Name of purchase, e.g. rent."
             isRequired
-            value={name}
+            value={purchase}
           >
-            Account
+            Purchase
           </Input>
           <Input
-            id="amount"
-            help="Amount of savings in the account."
+            id="price"
+            help="Price of the purchase."
             isCurrency
             isRequired
-            value={Number.isNaN(balance) ? "" : balance}
+            value={Number.isNaN(price) ? "" : price}
           >
-            Amount
+            Price
+          </Input>
+          <Input id="date" type="date" isDate>
+            Date of the purchase
           </Input>
           <Select
             id="type"
@@ -91,7 +94,7 @@ const AccountForm = ({
             defaultValue={type}
             isRequired
           >
-            Account type
+            Account
           </Select>
         </div>
       </Form>
@@ -99,4 +102,4 @@ const AccountForm = ({
   );
 };
 
-export default AccountForm;
+export default ExpenseForm;

@@ -15,6 +15,12 @@ const Navigation = (): JSX.Element => {
               Dashboard
             </Link>
             <Link
+              to="/expenses"
+              className="whitespace-no-wrap ml-8 py-4 px-1 border-b-2 border-pink-500 font-medium text-sm leading-5 text-pink-600 focus:outline-none focus:text-pink-800 focus:border-pink-700"
+            >
+              Expenses
+            </Link>
+            <Link
               to="/accounts"
               className="whitespace-no-wrap ml-8 py-4 px-1 border-b-2 border-pink-500 font-medium text-sm leading-5 text-pink-600 focus:outline-none focus:text-pink-800 focus:border-pink-700"
             >
