@@ -5,6 +5,9 @@ import ButtonGroup from "../../components/button/button.group";
 import Hero from "../../components/hero/hero";
 import Loader from "../../components/loader/loader";
 import ModalConfirm from "../../components/modal/confirm/modal.confirm";
+import Stats from "../../components/stats/stats";
+import StatsItem from "../../components/stats/stats.item";
+import formatCurrency from "../../utils/formatCurrency";
 
 interface IProps {
   handleDelete(): void;
@@ -57,13 +60,19 @@ const Account = (): JSX.Element => {
         transaction history as well as balance.
       </Hero>
       <div className="mt-6">
-        <ButtonGroup label="Account actions">
+        <ButtonGroup>
           <Button accentColor="blue" link={`/accounts/${id}/edit`}>
             Edit account
           </Button>
           <AccountDeleteModal handleDelete={handleDelete} />
         </ButtonGroup>
       </div>
+      <Stats className="mt-12" label="Overview">
+        <StatsItem statLabel="Balance">
+          {formatCurrency(account.balance)}
+        </StatsItem>
+        <StatsItem statLabel="Type">{account.type}</StatsItem>
+      </Stats>
     </>
   );
 };
