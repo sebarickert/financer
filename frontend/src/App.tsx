@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Financer from "./Financer";
 import Login from "./Login";
 
-export const App = (): JSX.Element => {
+const App = (): JSX.Element => {
   const [profileInfo, setProfileInfo] = useState<IUser | IAuthenticationFailed>(
     { authenticated: false, message: "" }
   );

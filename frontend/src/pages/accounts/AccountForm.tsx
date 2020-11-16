@@ -44,11 +44,11 @@ const AccountForm = ({
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-    const { account, amount, type } = event.target;
+    const { account, amount, type: newType } = event.target;
     const newAccountData: IAccount = {
       balance: parseFloat(amount.value),
       name: account.value,
-      type: type.value,
+      type: newType.value,
     };
 
     onSubmit(newAccountData);
@@ -80,7 +80,7 @@ const AccountForm = ({
             help="Amount of savings in the account."
             isCurrency
             isRequired
-            value={isNaN(balance) ? "" : balance}
+            value={Number.isNaN(balance) ? "" : balance}
           >
             Amount
           </Input>

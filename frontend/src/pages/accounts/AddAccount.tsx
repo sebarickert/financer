@@ -25,6 +25,7 @@ const AddAccount = (): JSX.Element => {
         setErrors(newAccountJson.errors);
       }
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(error);
     }
   };
