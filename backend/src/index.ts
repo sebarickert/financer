@@ -4,6 +4,7 @@ import passport from "passport";
 import cookieSession from "cookie-session";
 import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
+import path from "path"
 
 import "./config/load-env";
 import "./config/passport-setup";
@@ -11,8 +12,10 @@ import { COOKIE_KEY, MONGODB_URI } from "./config/keys";
 import authRoutes from "./routes/authentication-route";
 import profileRoutes from "./routes/profile-route";
 import accountRoutes from "./routes/account-route";
-import authCheck from "./routes/middlewares/authenticationCheck";
+import fileExists from "./utils/fileExists";
 
+
+const REACT_APP_PATH = "/static/react-app";
 const app = express();
 const port = 4000; // default port to listen
 
@@ -51,13 +54,25 @@ app.use("/api/auth", authRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/account", accountRoutes);
 
-app.get("/", authCheck, (req, res) => {
-  res.status(200).json({
-    authenticated: true,
-    message: "user successfully authenticated",
-    user: req.user,
-    cookies: req.cookies,
-  });
+
+const reactFrontendExists = fileExists(`${__dirname}/../${REACT_APP_PATH}index.html`)
+
+if (reactFrontendExists) {
+  app.use(express.static(path.join(`${__dirname}/../${REACT_APP_PATH}`)));
+  app.get("*", (req, res) =>
+    res.sendFile(path.join(`${__dirname}/../${REACT_APP_PATH}index.html`))
+  );
+} else {
+  // eslint-disable-next-line no-console
+  console.log("React frontend not found, running developend frontpage.");
+  app.get("*", (req, res) =>
+    res.send("<h1>Financer developend backend</h1>")
+  );
+}
+
+app.use((request, response) => {
+  response.status(404);
+  response.send({ error: "Page not found" });
 });
 
 app.listen(port, () => {

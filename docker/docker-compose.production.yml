@@ -1,0 +1,31 @@
+version: "3.4"
+
+services:
+  webapp:
+    image: financer-production_webapp
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+    env_file: .env.production
+    working_dir: /app/
+    ports:
+      - 4000:4000
+    command: node build/index.js
+
+  mongodb:
+    image: mongo:4.2.10-bionic
+    container_name: financer-production_mongodb
+    env_file: .env.production
+    volumes:
+      - ./mongo-entrypoint:/docker-entrypoint-initdb.d
+      - mongo_data:/data/db
+      - mongo_config:/data/configdb
+
+volumes:
+  mongo_data:
+    name: financer_production-mongodata
+  mongo_config:
+    name: financer_production-mongoconfig
