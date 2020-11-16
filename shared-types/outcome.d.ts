@@ -1,8 +1,8 @@
 interface IOutcome implements ITransaction {
   _id?: any;
   fromAccount?: string;
-  fromBalance?: string;
+  fromAccountBalance?: string;
   amount: number;
-  description: string;
+  description?: string;
   user?: string;
 }

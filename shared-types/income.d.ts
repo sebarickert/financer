@@ -1,8 +1,8 @@
 interface IIncome implements ITransaction {
   _id?: any;
-  toAccount?: string;
-  toBalance?: number;
+  toAccount: string;
+  toAccountBalance?: number;
   amount: number;
-  description: string;
+  description?: string;
   user?: string;
 }
