@@ -25,8 +25,8 @@
     "build": "npm run watch:css && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "format": "prettier --write src/**/*.ts{,x}",
-    "lint": "tsc --noEmit && eslint src/**/*.ts{,x}",
+    "format": "prettier --write src/**/*.ts{,x} && eslint src/**/*.ts{,x} --fix",
+    "lint": "eslint src/**/*.ts{,x}",
     "watch:css": "postcss src/assets/tailwind.css -o src/assets/financer.css"
   },
   "eslintConfig": {
