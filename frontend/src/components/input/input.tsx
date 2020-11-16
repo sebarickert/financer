@@ -1,5 +1,5 @@
 import React from "react";
-import { addLeadingZero } from "../../utils/addLeadingZero";
+import addLeadingZero from "../../utils/addLeadingZero";
 
 interface IProps {
   children: React.ReactNode;

@@ -1,3 +1,4 @@
+/* eslint-disable react/button-has-type */
 import React from "react";
 
 interface IProps {
@@ -11,7 +12,7 @@ const ButtonPlain = ({
   children,
   onClick,
   className,
-  type,
+  type = "button",
 }: IProps): JSX.Element => {
   return (
     <button

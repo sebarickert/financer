@@ -1,1 +1,3 @@
-export const addLeadingZero = (number: number) => `0${number}`.substr(-2);
+const addLeadingZero = (number: number): string => `0${number}`.substr(-2);
+
+export default addLeadingZero;
