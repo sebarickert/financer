@@ -1,5 +1,4 @@
 import { Response, Request } from "express";
-import accountModel from "../models/account-model";
 import { ITransactionModel } from "../models/transaction-model";
 
 import { IUserModel } from "../models/user-model";
@@ -52,12 +51,14 @@ export const addIncome = async (req: Request, res: Response) => {
   rawNewIncome.user = user.id;
   rawNewIncome.toAccountBalance = targetAccount?.balance;
 
-  if(targetAccount) {
-      targetAccount.balance = targetAccount.balance + rawNewIncome.amount;
-      await targetAccount.save();
+  if (targetAccount) {
+    targetAccount.balance += rawNewIncome.amount;
+    await targetAccount.save();
   }
 
-  const newAccount = await createTransaction(rawNewIncome);
+  const newTransaction = await createTransaction(rawNewIncome);
 
-  res.status(201).json({ authorized: true, status: 201, payload: newAccount });
+  res
+    .status(201)
+    .json({ authorized: true, status: 201, payload: newTransaction });
 };

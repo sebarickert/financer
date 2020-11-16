@@ -7,6 +7,11 @@ export const findIncomeTransactionsByUser = async (
 ): Promise<ITransactionModel[] | null> =>
   transactionModel.find({ user: userId, toAccount: { $ne: undefined } });
 
+export const findExpenseTransactionsByUser = async (
+  userId: string
+): Promise<ITransactionModel[] | null> =>
+  transactionModel.find({ user: userId, fromAccount: { $ne: undefined } });
+
 export const findAccountsById = async (
   id: string
 ): Promise<ITransactionModel | null> => transactionModel.findById(id);
