@@ -35,6 +35,7 @@ const transactionSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: USER_MODEL_NAME,
   },
+  date: Date,
 });
 
 transactionSchema

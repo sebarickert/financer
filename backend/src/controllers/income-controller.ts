@@ -24,6 +24,9 @@ export const addIncome = async (req: Request, res: Response) => {
   if (!("amount" in rawNewIncome) || typeof rawNewIncome.amount !== "number") {
     errors.push("Amount must be a number.");
   }
+  if (new Date(rawNewIncome.date).toDateString() === "Invalid Date") {
+    errors.push("Date must not be empty.");
+  }
 
   let targetAccount;
   if (

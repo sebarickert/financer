@@ -5,4 +5,5 @@ interface IIncome implements ITransaction {
   amount: number;
   description?: string;
   user?: string;
+  date: Date;
 }
