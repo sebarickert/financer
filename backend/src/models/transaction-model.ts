@@ -11,15 +11,26 @@ const transactionSchema = new Schema({
   fromAccount: {
     type: mongoose.Schema.Types.ObjectId,
     ref: ACCOUNT_MODEL_NAME,
+    default: null,
   },
   toAccount: {
     type: mongoose.Schema.Types.ObjectId,
     ref: ACCOUNT_MODEL_NAME,
+    default: null,
   },
-  fromAccountBalance: Number,
-  toAccountBalance: Number,
+  fromAccountBalance: {
+    type: Number,
+    default: null,
+  },
+  toAccountBalance: {
+    type: Number,
+    default: null,
+  },
   amount: Number,
-  description: String,
+  description: {
+    type: String,
+    default: "",
+  },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: USER_MODEL_NAME,
