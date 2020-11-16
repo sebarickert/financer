@@ -13,6 +13,7 @@ import authRoutes from "./routes/authentication-route";
 import profileRoutes from "./routes/profile-route";
 import accountRoutes from "./routes/account-route";
 import incomeRoutes from "./routes/income-route";
+import expenseRoutes from "./routes/expense-route";
 import fileExists from "./utils/fileExists";
 
 const REACT_APP_PATH = "/static/react-app/";
@@ -54,6 +55,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/account", accountRoutes);
 app.use("/api/income", incomeRoutes);
+app.use("/api/expense", expenseRoutes);
 
 const reactFrontendExists = fileExists(
   `${__dirname}/../${REACT_APP_PATH}index.html`
