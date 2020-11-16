@@ -7,4 +7,5 @@ interface ITransaction {
   amount: number;
   description?: string;
   user?: string;
+  date: Date;
 }

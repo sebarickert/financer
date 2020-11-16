@@ -5,4 +5,5 @@ interface IOutcome implements ITransaction {
   amount: number;
   description?: string;
   user?: string;
+  date: Date;
 }
