@@ -4,6 +4,7 @@ import Button from "../../components/button/button";
 import Hero from "../../components/hero/hero";
 import Table, { ITableHead } from "../../components/table/table";
 import { TAddiotinalLabel } from "../../components/table/table.header";
+import formatCurrency from "../../utils/formatCurrency";
 
 const Accounts = (): JSX.Element => {
   const [accountsRaw, setAccountsRaw] = useState<IAccount[]>([]);
@@ -25,23 +26,26 @@ const Accounts = (): JSX.Element => {
     );
     setTotalBalance(total);
     setAccounts(
-      accountsRaw.map(({ _id, ...account }) => ({
+      accountsRaw.map(({ _id, balance, ...account }) => ({
         _id,
+        balance: formatCurrency(balance),
         ...account,
         actions: <Link to={`/accounts/${_id}`}>View</Link>,
       }))
     );
   }, [accountsRaw]);
 
+  console.log(accountsRaw);
+
   const tableHeads: ITableHead[] = [
     { key: "name", label: "Account" },
     { key: "type", label: "Type" },
-    { key: "balance", label: "Balance (€)" },
+    { key: "balance", label: "Balance" },
     { key: "actions", label: "" },
   ];
 
   const addiotinalLabel: TAddiotinalLabel = {
-    label: `${Number.isNaN(totalBalance) ? "-" : totalBalance} €`,
+    label: `${Number.isNaN(totalBalance) ? "-" : formatCurrency(totalBalance)}`,
     accentLabel: "Total",
   };
 
