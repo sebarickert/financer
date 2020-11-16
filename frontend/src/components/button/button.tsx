@@ -23,13 +23,13 @@ const Button = ({
   size = "medium",
 }: IProps): JSX.Element => {
   const fontSizeMapping = {
-    small: "text-sm leading-5",
-    medium: "text-base leading-6",
-    large: "text-lg leading-7",
+    small: "sm:text-sm leading-5",
+    medium: "leading-6",
+    large: "sm:text-lg leading-7",
   };
 
   const elementClasses = [
-    `inline-flex justify-center w-full sm:w-auto items-center px-4 py-2 border font-medium rounded-md text-white focus:outline-none transition ease-in-out duration-150 ${fontSizeMapping[size]} ${className}`,
+    `inline-flex justify-center w-full sm:w-auto items-center px-4 py-2 border font-medium rounded-md text-white focus:outline-none transition ease-in-out duration-150 text-base ${fontSizeMapping[size]} ${className}`,
   ];
 
   if (accentColor === "plain") {
