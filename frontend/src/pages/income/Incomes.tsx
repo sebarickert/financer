@@ -104,7 +104,7 @@ const Incomes = (): JSX.Element => {
     <Loader loaderColor="green" />
   ) : (
     <>
-      <Hero accent="Your" accentColor="green" label="Incomes">
+      <Hero accent="Overview" accentColor="green" label="Incomes">
         Below you are able to review all your added incomes and see a summary of
         the current month.
       </Hero>
