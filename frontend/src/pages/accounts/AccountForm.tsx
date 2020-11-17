@@ -46,7 +46,7 @@ const AccountForm = ({
     event.preventDefault();
     const { account, amount, type: newType } = event.target;
     const newAccountData: IAccount = {
-      balance: parseFloat(amount.value),
+      balance: parseFloat((amount.value as string).replace(",", ".")),
       name: account.value,
       type: newType.value,
     };
