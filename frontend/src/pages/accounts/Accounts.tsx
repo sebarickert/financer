@@ -54,7 +54,7 @@ const Accounts = (): JSX.Element => {
     <Loader loaderColor="blue" />
   ) : (
     <>
-      <Hero accent="Your" accentColor="blue" label="Accounts">
+      <Hero accent="Overview" accentColor="blue" label="Accounts">
         Below you are able to add your various accounts where you have your
         savings or investments to calculate total amount.
       </Hero>

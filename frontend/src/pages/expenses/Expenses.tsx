@@ -104,7 +104,7 @@ const Expenses = (): JSX.Element => {
     <Loader loaderColor="red" />
   ) : (
     <>
-      <Hero accent="Your" accentColor="red" label="Expenses">
+      <Hero accent="Overview" accentColor="red" label="Expenses">
         Below you are able to review all your added expenses and see a summary
         of the current month.
       </Hero>
