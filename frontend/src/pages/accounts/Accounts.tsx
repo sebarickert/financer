@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Button from "../../components/button/button";
 import Hero from "../../components/hero/hero";
+import Loader from "../../components/loader/loader";
 import Table, { ITableHead } from "../../components/table/table";
 import { TAddiotinalLabel } from "../../components/table/table.header";
 import formatCurrency from "../../utils/formatCurrency";
 
 const Accounts = (): JSX.Element => {
-  const [accountsRaw, setAccountsRaw] = useState<IAccount[]>([]);
+  const [accountsRaw, setAccountsRaw] = useState<IAccount[] | null>(null);
   const [accounts, setAccounts] = useState<any[]>([]);
   const [totalBalance, setTotalBalance] = useState<number>(NaN);
 
@@ -20,6 +21,8 @@ const Accounts = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
+    if (accountsRaw === null) return;
+
     const total = accountsRaw.reduce(
       (currentTotal, { balance }) => currentTotal + balance,
       0
@@ -47,13 +50,15 @@ const Accounts = (): JSX.Element => {
     accentLabel: "Total",
   };
 
-  return (
+  return accountsRaw === null ? (
+    <Loader loaderColor="blue" />
+  ) : (
     <>
       <Hero accent="Your" accentColor="blue" label="Accounts">
         Below you are able to add your various accounts where you have your
         savings or investments to calculate total amount.
       </Hero>
-      <div className="mt-6">
+      <div className="mt-12">
         <Button link="/accounts/add" accentColor="blue">
           Add account
         </Button>
