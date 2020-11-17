@@ -3,7 +3,7 @@ import React from "react";
 interface IProps {
   isAction?: boolean;
   isFirst?: boolean;
-  children: string | JSX.Element;
+  children: string | number | JSX.Element;
 }
 
 const TableBodyItem = ({
