@@ -8,7 +8,7 @@ import ModalConfirm from "../../components/modal/confirm/modal.confirm";
 import Stats from "../../components/stats/stats";
 import StatsItem from "../../components/stats/stats.item";
 import formatCurrency from "../../utils/formatCurrency";
-import formatDate from "../../utils/formatDate";
+import { formatDate } from "../../utils/formatDate";
 
 interface IProps {
   handleDelete(): void;
@@ -62,7 +62,7 @@ const Expense = (): JSX.Element => {
       </Hero>
       <div className="mt-6">
         <ButtonGroup>
-          <Button accentColor="blue" link={`/incomes/${id}/edit`}>
+          <Button accentColor="blue" link={`/expenses/${id}/edit`}>
             Edit expense
           </Button>
           <ExpenseDeleteModal handleDelete={handleDelete} />

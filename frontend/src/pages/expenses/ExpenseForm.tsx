@@ -4,6 +4,7 @@ import Input from "../../components/input/input";
 import Select, { IOption } from "../../components/select/select";
 import Alert from "../../components/alert/alert";
 import Loader from "../../components/loader/loader";
+import { inputDateFormat } from "../../utils/formatDate";
 
 interface IProps {
   amount?: number;
@@ -102,7 +103,7 @@ const ExpenseForm = ({
           <Input
             id="date"
             type="date"
-            value={typeof date !== "undefined" ? date.toDateString() : ""}
+            value={typeof date !== "undefined" ? inputDateFormat(date) : ""}
             isDate
           >
             Date of the expense

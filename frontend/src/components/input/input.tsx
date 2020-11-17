@@ -1,5 +1,6 @@
 import React from "react";
 import addLeadingZero from "../../utils/addLeadingZero";
+import { inputDateFormat } from "../../utils/formatDate";
 
 interface IProps {
   children: React.ReactNode;
@@ -22,13 +23,6 @@ const Input = ({
   type = "text",
   value = "",
 }: IProps): JSX.Element => {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = today.getMonth() + 1;
-  const day = today.getDate();
-
-  const currentDate = `${year}-${addLeadingZero(month)}-${addLeadingZero(day)}`;
-
   return (
     <div>
       <label
@@ -50,7 +44,7 @@ const Input = ({
             isCurrency && "pl-7"
           }`}
           aria-describedby={help && `${id}-description`}
-          defaultValue={isDate ? currentDate : value}
+          defaultValue={isDate && !value ? inputDateFormat(new Date()) : value}
           required={isRequired}
         />
       </div>
