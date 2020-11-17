@@ -2,15 +2,30 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Button from "../../components/button/button";
 import Hero from "../../components/hero/hero";
+import Loader from "../../components/loader/loader";
 import Table, { ITableHead } from "../../components/table/table";
 import { TAddiotinalLabel } from "../../components/table/table.header";
+import monthNames from "../../constants/months";
 import formatCurrency from "../../utils/formatCurrency";
 import formatDate from "../../utils/formatDate";
 
+interface IExpenseOutput extends Omit<IExpense, "date" | "amount" | "_id"> {
+  _id: string;
+  actions: JSX.Element;
+  date: string;
+  amount: string;
+}
+
+interface IExpensesPerMonth {
+  month: number;
+  total: number;
+  year: number;
+  rows: any[];
+}
+
 const Expenses = (): JSX.Element => {
-  const [expensesRaw, setExpensesRaw] = useState<IExpense[]>([]);
-  const [expenses, setExpenses] = useState<any[]>([]);
-  const [totalAmount, setTotalAmount] = useState<number>(NaN);
+  const [expensesRaw, setExpensesRaw] = useState<IExpense[] | null>(null);
+  const [expenses, setExpenses] = useState<IExpensesPerMonth[]>([]);
 
   useEffect(() => {
     const fetchExpenses = async () => {
@@ -21,24 +36,57 @@ const Expenses = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    const total = expensesRaw.reduce(
-      (currentTotal, { amount }) => currentTotal + amount,
-      0
-    );
-    setTotalAmount(total);
+    if (expensesRaw === null) return;
+
     setExpenses(
-      expensesRaw.map(({ _id, amount, date, ...expense }) => ({
-        ...expense,
-        _id,
-        amount: formatCurrency(amount),
-        date: formatDate(date),
-        actions: <Link to={`/expenses/${_id}`}>View</Link>,
-      }))
+      expensesRaw.reduce<IExpensesPerMonth[]>(
+        (dateStack, { _id, amount, date: dateRaw, ...expenseRest }) => {
+          const date = new Date(dateRaw);
+          const month = date.getMonth();
+          const year = date.getFullYear();
+
+          const expense: IExpenseOutput = {
+            ...expenseRest,
+            _id,
+            amount: formatCurrency(amount),
+            date: formatDate(date),
+            actions: <Link to={`/expenses/${_id}`}>View</Link>,
+          };
+
+          if (
+            dateStack.some(
+              ({ month: stackMonth, year: stackYear }) =>
+                month === stackMonth && year === stackYear
+            )
+          ) {
+            return dateStack.map(
+              ({
+                month: stackMonth,
+                year: stackYear,
+                total: stackTotal,
+                rows: stackRows,
+              }) => ({
+                month: stackMonth,
+                year: stackYear,
+                total: stackTotal + amount,
+                rows:
+                  stackYear === year && stackMonth === month
+                    ? [...stackRows, expense]
+                    : stackRows,
+              })
+            );
+          }
+          return dateStack.concat({
+            year,
+            month,
+            total: amount,
+            rows: [expense],
+          });
+        },
+        []
+      )
     );
   }, [expensesRaw]);
-
-  console.log(expensesRaw);
-  console.log(expenses);
 
   const tableHeads: ITableHead[] = [
     { key: "description", label: "Description" },
@@ -47,31 +95,35 @@ const Expenses = (): JSX.Element => {
     { key: "actions", label: "" },
   ];
 
-  const addiotinalLabel: TAddiotinalLabel = {
-    label: `${Number.isNaN(totalAmount) ? "-" : formatCurrency(totalAmount)}`,
+  const getAddiotinalLabel = (total: number): TAddiotinalLabel => ({
+    label: `${Number.isNaN(total) ? "-" : formatCurrency(total)}`,
     accentLabel: "Total",
-  };
+  });
 
-  return (
+  return expensesRaw === null ? (
+    <Loader loaderColor="red" />
+  ) : (
     <>
       <Hero accent="Your" accentColor="red" label="Expenses">
         Below you are able to review all your added expenses and see a summary
         of the current month.
       </Hero>
-      <div className="mt-6">
+      <div className="mt-12">
         <Button link="/expenses/add" accentColor="red">
           Add expense
         </Button>
       </div>
-      <div className="mt-12">
-        <Table
-          addiotinalLabel={addiotinalLabel}
-          label="MONTH, YEAR"
-          rows={expenses}
-          tableHeads={tableHeads}
-          dataKeyColumn="_id"
-        />
-      </div>
+      {expenses.map(({ year, month, rows, total }) => (
+        <div className="mt-12" key={`${year}-${month}`}>
+          <Table
+            addiotinalLabel={getAddiotinalLabel(total)}
+            label={`${monthNames[month]}, ${year}`}
+            rows={rows}
+            tableHeads={tableHeads}
+            dataKeyColumn="_id"
+          />
+        </div>
+      ))}
     </>
   );
 };
