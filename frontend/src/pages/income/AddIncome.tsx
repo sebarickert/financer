@@ -6,7 +6,7 @@ const AddIncome = (): JSX.Element => {
   const history = useHistory();
   const [errors, setErrors] = useState<string[]>([]);
 
-  const handleSubmit = async (newIncomeData: IIncome) => {
+  const handleSubmit = async (newIncomeData: IExpense) => {
     try {
       const newIncome = await fetch("/api/income", {
         method: "POST",
