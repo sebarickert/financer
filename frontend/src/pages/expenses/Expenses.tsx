@@ -105,6 +105,10 @@ const Expenses = (): JSX.Element => {
 
           return 0;
         })
+        .map((stack) => {
+          stack.rows.sort((a, b) => (a.date > b.date ? -1 : 1));
+          return stack;
+        })
     );
   }, [expensesRaw]);
 
