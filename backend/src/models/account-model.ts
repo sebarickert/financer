@@ -19,9 +19,4 @@ const accountSchema = new Schema({
   },
 });
 
-accountSchema
-  .path("balance")
-  .get((num: number) => parseFloat((num / 100).toFixed(2)));
-accountSchema.path("balance").set((num: number) => num * 100);
-
 export default mongoose.model<IAccountModel>(ACCOUNT_MODEL_NAME, accountSchema);

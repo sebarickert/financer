@@ -38,16 +38,6 @@ const transactionSchema = new Schema({
   date: Date,
 });
 
-transactionSchema
-  .path("fromAccountBalance")
-  .get((num: number) => parseFloat((num / 100).toFixed(2)));
-transactionSchema.path("fromAccountBalance").set((num: number) => num * 100);
-
-transactionSchema
-  .path("toAccountBalance")
-  .get((num: number) => parseFloat((num / 100).toFixed(2)));
-transactionSchema.path("toAccountBalance").set((num: number) => num * 100);
-
 export default mongoose.model<ITransactionModel>(
   TRANSACTION_MODEL_NAME,
   transactionSchema
