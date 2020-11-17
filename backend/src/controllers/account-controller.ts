@@ -19,6 +19,14 @@ export const getAccount = async (req: Request, res: Response) => {
   const accountId = req.params.id;
   const account = await findAccountsById(accountId);
 
+  if (account === null) {
+    res.status(404).json({
+      authenticated: true,
+      status: 404,
+      errors: ["Account not found."],
+    });
+    return;
+  }
   if (`${account?.owner}` !== `${user._id}`) {
     res.status(403).json({
       authenticated: true,
@@ -71,19 +79,19 @@ export const deleteAccount = async (req: Request, res: Response) => {
   const accountId = req.params.id;
   const account = await findAccountsById(accountId);
 
-  if (`${account?.owner}` !== `${user._id}`) {
-    res.status(403).json({
-      authenticated: true,
-      status: 403,
-      errors: ["You can delete only your own accounts."],
-    });
-    return;
-  }
   if (account === null) {
     res.status(404).json({
       authenticated: true,
       status: 404,
       errors: ["Account not found."],
+    });
+    return;
+  }
+  if (`${account?.owner}` !== `${user._id}`) {
+    res.status(403).json({
+      authenticated: true,
+      status: 403,
+      errors: ["You can delete only your own accounts."],
     });
     return;
   }
