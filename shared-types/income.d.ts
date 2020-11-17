@@ -3,7 +3,7 @@ interface IIncome {
   toAccount: string;
   toAccountBalance?: number;
   amount: number;
-  description?: string;
+  description: string;
   user?: string;
   date: Date;
 }

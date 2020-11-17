@@ -8,75 +8,76 @@ import ModalConfirm from "../../components/modal/confirm/modal.confirm";
 import Stats from "../../components/stats/stats";
 import StatsItem from "../../components/stats/stats.item";
 import formatCurrency from "../../utils/formatCurrency";
+import formatDate from "../../utils/formatDate";
 
 interface IProps {
   handleDelete(): void;
 }
 
-const AccountDeleteModal = ({ handleDelete }: IProps) => (
+const IncomeDeleteModal = ({ handleDelete }: IProps) => (
   <ModalConfirm
-    label="Delete account"
+    label="Delete income"
     submitButtonLabel="Delete"
     onConfirm={handleDelete}
-    modalOpenButtonLabel="Delete account"
+    modalOpenButtonLabel="Delete income"
     accentColor="red"
   >
-    Are you sure you want to delete your account? All of your data will be
+    Are you sure you want to delete your income? All of your data will be
     permanently removed. This action cannot be undone.
   </ModalConfirm>
 );
 
 const Income = (): JSX.Element => {
-  // const history = useHistory();
-  // const [account, setAccount] = useState<IAccount | undefined>(undefined);
-  // const { id } = useParams<{ id: string }>();
+  const history = useHistory();
+  const [income, setIncome] = useState<IIncome | undefined>(undefined);
+  const { id } = useParams<{ id: string }>();
 
-  // useEffect(() => {
-  //   const fetchAccount = async () => {
-  //     const rawAccount = await fetch(`/api/account/${id}`);
-  //     setAccount((await rawAccount.json()).payload);
-  //   };
-  //   fetchAccount();
-  // }, [id]);
+  useEffect(() => {
+    const fetchIncome = async () => {
+      const rawIncome = await fetch(`/api/income/${id}`);
+      setIncome((await rawIncome.json()).payload);
+    };
+    fetchIncome();
+  }, [id]);
 
-  // const handleDelete = async () => {
-  //   await fetch(`/api/account/${id}`, {
-  //     method: "DELETE",
-  //     headers: {
-  //       Accept: "application/json",
-  //       "Content-Type": "application/json",
-  //     },
-  //   });
+  const handleDelete = async () => {
+    await fetch(`/api/income/${id}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
 
-  //   history.push("/accounts");
-  // };
+    history.push("/incomes");
+  };
 
-  // return typeof account === "undefined" ? (
-  //   <Loader loaderColor="red" />
-  // ) : (
-  //   <>
-  //     <Hero accent="Account" accentColor="blue" label={account.name}>
-  //       Below you are able to edit your accounts information and check your
-  //       transaction history as well as balance.
-  //     </Hero>
-  //     <div className="mt-6">
-  //       <ButtonGroup>
-  //         <Button accentColor="blue" link={`/accounts/${id}/edit`}>
-  //           Edit account
-  //         </Button>
-  //         <AccountDeleteModal handleDelete={handleDelete} />
-  //       </ButtonGroup>
-  //     </div>
-  //     <Stats className="mt-12" label="Overview">
-  //       <StatsItem statLabel="Balance">
-  //         {formatCurrency(account.balance)}
-  //       </StatsItem>
-  //       <StatsItem statLabel="Type">{account.type}</StatsItem>
-  //     </Stats>
-  //   </>
-  // );
-
-  return <h1>Income</h1>;
+  return typeof income === "undefined" ? (
+    <Loader loaderColor="red" />
+  ) : (
+    <>
+      <Hero accent="Income" accentColor="green" label={income.description}>
+        Below you are able to edit your accounts information and check your
+        transaction history as well as balance.
+      </Hero>
+      <div className="mt-6">
+        <ButtonGroup>
+          <Button accentColor="blue" link={`/incomes/${id}/edit`}>
+            Edit income
+          </Button>
+          <IncomeDeleteModal handleDelete={handleDelete} />
+        </ButtonGroup>
+      </div>
+      <Stats className="mt-12" label="Overview">
+        <StatsItem statLabel="Amount">
+          {formatCurrency(income.amount)}
+        </StatsItem>
+        <StatsItem statLabel="Date">
+          {formatDate(new Date(income.date))}
+        </StatsItem>
+      </Stats>
+    </>
+  );
 };
 
 export default Income;
