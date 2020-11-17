@@ -5,5 +5,5 @@ interface IExpense {
   amount: number;
   description: string;
   user?: string;
-  date: Date;
+  date: Date | string;
 }

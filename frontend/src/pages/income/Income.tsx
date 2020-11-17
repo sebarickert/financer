@@ -8,7 +8,7 @@ import ModalConfirm from "../../components/modal/confirm/modal.confirm";
 import Stats from "../../components/stats/stats";
 import StatsItem from "../../components/stats/stats.item";
 import formatCurrency from "../../utils/formatCurrency";
-import formatDate from "../../utils/formatDate";
+import { formatDate } from "../../utils/formatDate";
 
 interface IProps {
   handleDelete(): void;

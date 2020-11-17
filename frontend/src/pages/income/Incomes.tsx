@@ -7,7 +7,7 @@ import Table, { ITableHead } from "../../components/table/table";
 import { TAddiotinalLabel } from "../../components/table/table.header";
 import monthNames from "../../constants/months";
 import formatCurrency from "../../utils/formatCurrency";
-import formatDate from "../../utils/formatDate";
+import { formatDate } from "../../utils/formatDate";
 
 interface IIncomeOutput extends Omit<IExpense, "date" | "amount" | "_id"> {
   _id: string;
