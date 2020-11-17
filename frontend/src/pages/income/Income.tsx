@@ -57,8 +57,8 @@ const Income = (): JSX.Element => {
   ) : (
     <>
       <Hero accent="Income" accentColor="green" label={income.description}>
-        Below you are able to edit your accounts information and check your
-        transaction history as well as balance.
+        Below you are able to edit your added income information or delete it
+        altogether.
       </Hero>
       <div className="mt-6">
         <ButtonGroup>
