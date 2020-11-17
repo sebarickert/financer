@@ -52,18 +52,18 @@ export const deleteTransaction = async (req: Request, res: Response) => {
     });
     return;
   }
-  if(transaction.fromAccount) {
-    const fromAccount = await findAccountsById(transaction.fromAccount)
-    if(fromAccount !== null) {
-      fromAccount.balance = fromAccount.balance + transaction.amount;
-      await fromAccount.save()
+  if (transaction.fromAccount) {
+    const fromAccount = await findAccountsById(transaction.fromAccount);
+    if (fromAccount !== null) {
+      fromAccount.balance += transaction.amount;
+      await fromAccount.save();
     }
   }
-  if(transaction.toAccount) {
-    const toAccount = await findAccountsById(transaction.toAccount)
-    if(toAccount !== null) {
-      toAccount.balance = toAccount.balance - transaction.amount;
-      await toAccount.save()
+  if (transaction.toAccount) {
+    const toAccount = await findAccountsById(transaction.toAccount);
+    if (toAccount !== null) {
+      toAccount.balance -= transaction.amount;
+      await toAccount.save();
     }
   }
 
