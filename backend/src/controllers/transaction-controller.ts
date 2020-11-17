@@ -1,6 +1,8 @@
 import { Response, Request } from "express";
+import accountModel from "../models/account-model";
 
 import { IUserModel } from "../models/user-model";
+import { findAccountsById } from "../services/account-service";
 import { findTransactionById } from "../services/transaction-service";
 
 export const getTransaction = async (req: Request, res: Response) => {
@@ -49,6 +51,20 @@ export const deleteTransaction = async (req: Request, res: Response) => {
       errors: ["Not authorized to view that transaction."],
     });
     return;
+  }
+  if(transaction.fromAccount) {
+    const fromAccount = await findAccountsById(transaction.fromAccount)
+    if(fromAccount !== null) {
+      fromAccount.balance = fromAccount.balance + transaction.amount;
+      await fromAccount.save()
+    }
+  }
+  if(transaction.toAccount) {
+    const toAccount = await findAccountsById(transaction.toAccount)
+    if(toAccount !== null) {
+      toAccount.balance = toAccount.balance - transaction.amount;
+      await toAccount.save()
+    }
   }
 
   await transaction.remove();
