@@ -4,36 +4,36 @@ import Loader from "../../components/loader/loader";
 import IncomeForm from "./IncomeForm";
 
 const EditIncome = (): JSX.Element => {
-  // const history = useHistory();
-  // const [errors, setErrors] = useState<string[]>([]);
+  const history = useHistory();
+  const [errors, setErrors] = useState<string[]>([]);
 
-  // const [account, setAccount] = useState<IAccount | undefined>(undefined);
-  // const { id } = useParams<{ id: string }>();
+  const [income, setIncome] = useState<IIncome | undefined>(undefined);
+  const { id } = useParams<{ id: string }>();
 
-  // useEffect(() => {
-  //   const fetchAccount = async () => {
-  //     const rawAccount = await fetch(`/api/account/${id}`);
-  //     setAccount((await rawAccount.json()).payload);
-  //   };
-  //   fetchAccount();
-  // }, [id]);
+  useEffect(() => {
+    const fetchIncome = async () => {
+      const rawIncome = await fetch(`/api/income/${id}`);
+      setIncome((await rawIncome.json()).payload);
+    };
+    fetchIncome();
+  }, [id]);
 
-  // const handleSubmit = async () => {};
+  const handleSubmit = async () => {};
 
-  // return typeof account === "undefined" ? (
-  //   <Loader loaderColor="red" />
-  // ) : (
-  //   <IncomeForm
-  //     onSubmit={handleSubmit}
-  //     errors={errors}
-  //     formHeading="Edit account"
-  //     submitLabel="Update"
-  //     // purchase={account.name}
-  //     // price={account.balance}
-  //     // type={account.type}
-  //   />
-  // );
-  return <h1>Edit</h1>;
+  return typeof income === "undefined" ? (
+    <Loader loaderColor="green" />
+  ) : (
+    <IncomeForm
+      onSubmit={handleSubmit}
+      errors={errors}
+      formHeading="Edit income"
+      submitLabel="Update"
+      amount={income.amount}
+      description={income.description}
+      date={new Date(income.date)}
+      toAccount={income.toAccount}
+    />
+  );
 };
 
 export default EditIncome;
