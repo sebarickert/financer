@@ -53,7 +53,7 @@ const Income = (): JSX.Element => {
   };
 
   return typeof income === "undefined" ? (
-    <Loader loaderColor="red" />
+    <Loader loaderColor="green" />
   ) : (
     <>
       <Hero accent="Income" accentColor="green" label={income.description}>

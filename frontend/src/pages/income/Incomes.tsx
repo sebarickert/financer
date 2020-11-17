@@ -24,7 +24,7 @@ interface IIncomesPerMonth {
 }
 
 const Incomes = (): JSX.Element => {
-  const [incomesRaw, setIncomesRaw] = useState<IIncome[] | null>(null);
+  const [incomesRaw, setIncomesRaw] = useState<IExpense[] | null>(null);
   const [incomes, setIncomes] = useState<IIncomesPerMonth[]>([]);
 
   useEffect(() => {

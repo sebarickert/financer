@@ -3,7 +3,7 @@ interface IExpense {
   fromAccount?: string;
   fromAccountBalance?: number;
   amount: number;
-  description?: string;
+  description: string;
   user?: string;
   date: Date;
 }
