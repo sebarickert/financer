@@ -59,7 +59,7 @@ const ExpenseForm = ({
     } = event.target;
     const newExpenseData: IExpense = {
       fromAccount: newFromAccount.value,
-      amount: parseFloat(newAmount.value),
+      amount: parseFloat((newAmount.value as string).replace(",", ".")),
       description: newDescription.value,
       date: newDate.value,
     };
