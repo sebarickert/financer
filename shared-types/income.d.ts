@@ -1,4 +1,4 @@
-interface IIncome implements ITransaction {
+interface IIncome {
   _id?: any;
   toAccount: string;
   toAccountBalance?: number;

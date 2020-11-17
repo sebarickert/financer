@@ -1,60 +1,74 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Form from "../../components/form/form";
 import Input from "../../components/input/input";
 import Select, { IOption } from "../../components/select/select";
 import Alert from "../../components/alert/alert";
+import Loader from "../../components/loader/loader";
 
 interface IProps {
+  amount?: number;
+  date?: Date;
+  description?: string;
   errors: string[];
-  purchase?: string;
-  price?: number;
-  type?: string;
-  onSubmit(account: IAccount): void;
   formHeading: string;
+  toAccount?: string;
+  onSubmit(account: IExpense): void;
   submitLabel: string;
 }
 
 const IncomeForm = ({
+  amount,
+  date,
+  description,
   errors,
-  purchase = "",
-  price = NaN,
-  type = "credit",
-  onSubmit,
   formHeading,
+  onSubmit,
   submitLabel,
+  toAccount,
 }: IProps): JSX.Element => {
-  const accountTypes: IOption[] = [
-    {
-      value: "cash",
-      label: "Cash",
-    },
-    {
-      value: "savings",
-      label: "Savings",
-    },
-    {
-      value: "investment",
-      label: "Investment",
-    },
-    {
-      value: "credit",
-      label: "Credit",
-    },
-  ];
+  const [accountsRaw, setAccountsRaw] = useState<IAccount[] | null>(null);
+  const [accounts, setAccounts] = useState<IOption[]>([]);
+
+  useEffect(() => {
+    const fetchAccounts = async () => {
+      const rawAccounts = await fetch("/api/account");
+      setAccountsRaw(await rawAccounts.json());
+    };
+    fetchAccounts();
+  }, []);
+
+  useEffect(() => {
+    if (accountsRaw === null) return;
+
+    setAccounts(
+      accountsRaw.map(({ _id, name }) => ({
+        value: _id,
+        label: name,
+      }))
+    );
+  }, [accountsRaw]);
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-    const { account, amount, type: newType } = event.target;
-    const newAccountData: IAccount = {
-      balance: parseFloat(amount.value),
-      name: account.value,
-      type: newType.value,
+    const {
+      description: newDescription,
+      amount: newAmount,
+      date: newDate,
+      toAccount: newToAccount,
+    } = event.target;
+    const newIncomeData: IIncome = {
+      toAccount: newToAccount.value,
+      amount: parseFloat(newAmount.value),
+      description: newDescription.value,
+      date: newDate.value,
     };
 
-    onSubmit(newAccountData);
+    onSubmit(newIncomeData);
   };
 
-  return (
+  return accountsRaw === null ? (
+    <Loader loaderColor="green" />
+  ) : (
     <>
       {errors.length > 0 && (
         <Alert additionalInformation={errors}>
@@ -69,32 +83,37 @@ const IncomeForm = ({
       >
         <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-2">
           <Input
-            id="purchase"
-            help="Name of purchase, e.g. rent."
+            id="description"
+            help="Description of the income, e.g. salary."
             isRequired
-            value={purchase}
+            value={description}
           >
-            Income
+            Description
           </Input>
           <Input
-            id="price"
-            help="Price of the purchase."
+            id="amount"
+            help="Amount of the income."
             isCurrency
             isRequired
-            value={Number.isNaN(price) ? "" : price}
+            value={Number.isNaN(amount) ? "" : amount}
           >
             Amount
           </Input>
-          <Input id="date" type="date" isDate>
+          <Input
+            id="date"
+            type="date"
+            value={typeof date !== "undefined" ? date.toDateString() : ""}
+            isDate
+          >
             Date of the income
           </Input>
           <Select
-            id="type"
-            options={accountTypes}
-            defaultValue={type}
+            id="toAccount"
+            options={accounts}
+            defaultValue={toAccount}
             isRequired
           >
-            Account
+            Account where the income was received on
           </Select>
         </div>
       </Form>
