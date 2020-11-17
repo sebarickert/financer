@@ -35,8 +35,6 @@ const Accounts = (): JSX.Element => {
     );
   }, [accountsRaw]);
 
-  console.log(accountsRaw);
-
   const tableHeads: ITableHead[] = [
     { key: "name", label: "Account" },
     { key: "type", label: "Type" },
