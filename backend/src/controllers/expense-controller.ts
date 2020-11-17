@@ -33,7 +33,7 @@ export const addExpense = async (req: Request, res: Response) => {
   let sourceAccount;
   if (
     !("fromAccount" in rawNewExpense) ||
-    typeof rawNewExpense.fromAccount === "undefined" ||
+    !rawNewExpense.fromAccount ||
     rawNewExpense.fromAccount?.length === 0
   ) {
     errors.push("fromAccount must not be empty.");
