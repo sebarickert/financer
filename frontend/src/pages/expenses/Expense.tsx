@@ -51,7 +51,7 @@ const Expense = (): JSX.Element => {
   //   history.push("/accounts");
   // };
 
-  // return typeof account === "undefined" ? (
+  // return account ? (
   //   <Loader loaderColor="red" />
   // ) : (
   //   <>

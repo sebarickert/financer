@@ -30,7 +30,7 @@ export const addIncome = async (req: Request, res: Response) => {
   let targetAccount;
   if (
     !("toAccount" in rawNewIncome) ||
-    typeof rawNewIncome.toAccount === "undefined" ||
+    !rawNewIncome.toAccount ||
     rawNewIncome.toAccount?.length === 0
   ) {
     errors.push("toAccount must not be empty.");
