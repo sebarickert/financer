@@ -1,7 +1,7 @@
-interface IOutcome implements ITransaction {
+interface IExpense {
   _id?: any;
   fromAccount?: string;
-  fromAccountBalance?: string;
+  fromAccountBalance?: number;
   amount: number;
   description?: string;
   user?: string;

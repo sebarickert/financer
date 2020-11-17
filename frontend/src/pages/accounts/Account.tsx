@@ -59,7 +59,7 @@ const Account = (): JSX.Element => {
         Below you are able to edit your accounts information and check your
         transaction history as well as balance.
       </Hero>
-      <div className="mt-6">
+      <div className="mt-12">
         <ButtonGroup>
           <Button accentColor="blue" link={`/accounts/${id}/edit`}>
             Edit account
