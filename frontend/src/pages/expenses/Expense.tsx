@@ -56,9 +56,9 @@ const Expense = (): JSX.Element => {
     <Loader loaderColor="red" />
   ) : (
     <>
-      <Hero accent="Income" accentColor="red" label={expense.description}>
-        Below you are able to edit your accounts information and check your
-        transaction history as well as balance.
+      <Hero accent="Expense" accentColor="red" label={expense.description}>
+        Below you are able to edit your added expense information or delete it
+        altogether.
       </Hero>
       <div className="mt-6">
         <ButtonGroup>

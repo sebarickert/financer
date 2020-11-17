@@ -39,52 +39,72 @@ const Expenses = (): JSX.Element => {
     if (expensesRaw === null) return;
 
     setExpenses(
-      expensesRaw.reduce<IExpensesPerMonth[]>(
-        (dateStack, { _id, amount, date: dateRaw, ...expenseRest }) => {
-          const date = new Date(dateRaw);
-          const month = date.getMonth();
-          const year = date.getFullYear();
+      expensesRaw
+        .reduce<IExpensesPerMonth[]>(
+          (dateStack, { _id, amount, date: dateRaw, ...expenseRest }) => {
+            const date = new Date(dateRaw);
+            const month = date.getMonth();
+            const year = date.getFullYear();
 
-          const expense: IExpenseOutput = {
-            ...expenseRest,
-            _id,
-            amount: formatCurrency(amount),
-            date: formatDate(date),
-            actions: <Link to={`/expenses/${_id}`}>View</Link>,
-          };
+            const expense: IExpenseOutput = {
+              ...expenseRest,
+              _id,
+              amount: formatCurrency(amount),
+              date: formatDate(date),
+              actions: <Link to={`/expenses/${_id}`}>View</Link>,
+            };
 
-          if (
-            dateStack.some(
-              ({ month: stackMonth, year: stackYear }) =>
-                month === stackMonth && year === stackYear
-            )
-          ) {
-            return dateStack.map(
-              ({
-                month: stackMonth,
-                year: stackYear,
-                total: stackTotal,
-                rows: stackRows,
-              }) => ({
-                month: stackMonth,
-                year: stackYear,
-                total: stackTotal + amount,
-                rows:
-                  stackYear === year && stackMonth === month
-                    ? [...stackRows, expense]
-                    : stackRows,
-              })
-            );
+            if (
+              dateStack.some(
+                ({ month: stackMonth, year: stackYear }) =>
+                  month === stackMonth && year === stackYear
+              )
+            ) {
+              return dateStack.map(
+                ({
+                  month: stackMonth,
+                  year: stackYear,
+                  total: stackTotal,
+                  rows: stackRows,
+                }) => ({
+                  month: stackMonth,
+                  year: stackYear,
+                  total: stackTotal + amount,
+                  rows:
+                    stackYear === year && stackMonth === month
+                      ? [...stackRows, expense]
+                      : stackRows,
+                })
+              );
+            }
+            return dateStack.concat({
+              year,
+              month,
+              total: amount,
+              rows: [expense],
+            });
+          },
+          []
+        )
+        .sort((a, b) => {
+          if (a.year > b.year) {
+            return -1;
           }
-          return dateStack.concat({
-            year,
-            month,
-            total: amount,
-            rows: [expense],
-          });
-        },
-        []
-      )
+
+          if (b.year > a.year) {
+            return 1;
+          }
+
+          if (a.month > b.month) {
+            return -1;
+          }
+
+          if (b.month > a.month) {
+            return 1;
+          }
+
+          return 0;
+        })
     );
   }, [expensesRaw]);
 
