@@ -1,47 +1,45 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import Container from "../container/container";
+import React, { useState } from "react";
+import NavigationContainer from "./navigation.container";
+import NavigationDesktop from "./desktop/navigation.desktop";
+import NavigationDesktopItem from "./desktop/navigation.desktop.item";
+import NavigationLogo from "./navigation.logo";
+import NavigationMobile from "./mobile/navigation.mobile";
+import NavigationMobileToggle from "./mobile/navigation.mobile.toggle";
+import NavigationUserMenu from "./user-menu/navigation.user.menu";
 
 const Navigation = (): JSX.Element => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   return (
-    <Container>
-      <div className="block">
-        <div className="border-b border-gray-200">
-          <nav className="-mb-px flex">
-            <Link
-              to="/"
-              className="whitespace-no-wrap py-4 px-1 border-b-2 border-pink-500 font-medium text-sm leading-5 text-pink-600 focus:outline-none focus:text-pink-800 focus:border-pink-700"
-            >
+    <NavigationContainer>
+      <div className="flex justify-between h-16">
+        {/* Desktop navigation */}
+        <div className="flex">
+          <NavigationLogo />
+          <NavigationDesktop>
+            <NavigationDesktopItem isExact accentColor="pink" location="/">
               Dashboard
-            </Link>
-            <Link
-              to="/incomes"
-              className="whitespace-no-wrap ml-8 py-4 px-1 border-b-2 border-pink-500 font-medium text-sm leading-5 text-pink-600 focus:outline-none focus:text-pink-800 focus:border-pink-700"
-            >
+            </NavigationDesktopItem>
+            <NavigationDesktopItem accentColor="green" location="/incomes">
               Incomes
-            </Link>
-            <Link
-              to="/expenses"
-              className="whitespace-no-wrap ml-8 py-4 px-1 border-b-2 border-pink-500 font-medium text-sm leading-5 text-pink-600 focus:outline-none focus:text-pink-800 focus:border-pink-700"
-            >
+            </NavigationDesktopItem>
+            <NavigationDesktopItem accentColor="red" location="/expenses">
               Expenses
-            </Link>
-            <Link
-              to="/accounts"
-              className="whitespace-no-wrap ml-8 py-4 px-1 border-b-2 border-pink-500 font-medium text-sm leading-5 text-pink-600 focus:outline-none focus:text-pink-800 focus:border-pink-700"
-            >
+            </NavigationDesktopItem>
+            <NavigationDesktopItem accentColor="blue" location="/accounts">
               Accounts
-            </Link>
-            <a
-              href="/api/auth/logout"
-              className="whitespace-no-wrap ml-8 py-4 px-1 border-b-2 border-pink-500 font-medium text-sm leading-5 text-pink-600 focus:outline-none focus:text-pink-800 focus:border-pink-700"
-            >
-              Logout
-            </a>
-          </nav>
+            </NavigationDesktopItem>
+          </NavigationDesktop>
         </div>
+        <NavigationUserMenu />
+        <NavigationMobileToggle
+          isOpen={isMobileMenuOpen}
+          handleToggleMenu={setIsMobileMenuOpen}
+        />
       </div>
-    </Container>
+      {/* Mobile navigation */}
+      <NavigationMobile isOpen={isMobileMenuOpen} />
+    </NavigationContainer>
   );
 };
 
