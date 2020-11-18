@@ -7,11 +7,11 @@ interface IProps {
   className?: string;
 }
 
-const Layout = ({ className, children }: IProps): JSX.Element => {
+const Layout = ({ className = "", children }: IProps): JSX.Element => {
   return (
     <>
       <Navigation />
-      <Container className={className}>{children}</Container>
+      <Container className={`mb-6 sm:mb-12 ${className}`}>{children}</Container>
     </>
   );
 };

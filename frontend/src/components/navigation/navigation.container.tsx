@@ -8,7 +8,7 @@ interface IProps {
 
 const NavigationContainer = ({ children }: IProps): JSX.Element => {
   return (
-    <nav className="bg-white shadow">
+    <nav className="bg-white shadow mb-6 sm:mb-12">
       <Container>{children}</Container>
     </nav>
   );
