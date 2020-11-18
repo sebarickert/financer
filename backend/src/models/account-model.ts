@@ -7,7 +7,13 @@ export interface IAccountModel extends Document, IAccount {
   owner: any;
 }
 
-export const ACCOUNT_TYPES = ["cash", "savings", "investment", "credit"];
+export const ACCOUNT_TYPES = [
+  "cash",
+  "savings",
+  "investment",
+  "credit",
+  "loan",
+];
 
 const accountSchema = new Schema({
   name: String,

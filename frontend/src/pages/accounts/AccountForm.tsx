@@ -40,6 +40,10 @@ const AccountForm = ({
       value: "credit",
       label: "Credit",
     },
+    {
+      value: "loan",
+      label: "Loan",
+    },
   ];
 
   const handleSubmit = async (event: any) => {
