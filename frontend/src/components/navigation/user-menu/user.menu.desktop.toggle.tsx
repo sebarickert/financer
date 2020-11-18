@@ -5,7 +5,7 @@ interface IProps {
   isOpen: boolean;
 }
 
-const NavigationUserMenuToggle = ({
+const UserMenuDesktopToggle = ({
   handleToggle,
   isOpen,
 }: IProps): JSX.Element => {
@@ -27,4 +27,4 @@ const NavigationUserMenuToggle = ({
   );
 };
 
-export default NavigationUserMenuToggle;
+export default UserMenuDesktopToggle;
