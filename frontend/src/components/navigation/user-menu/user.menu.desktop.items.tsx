@@ -6,10 +6,7 @@ interface IProps {
   isOpen: boolean;
 }
 
-const NavigationUserMenuContainer = ({
-  children,
-  isOpen,
-}: IProps): JSX.Element => {
+const UserMenuDesktopItems = ({ children, isOpen }: IProps): JSX.Element => {
   return (
     <Transition
       show={isOpen}
@@ -39,4 +36,4 @@ const NavigationUserMenuContainer = ({
   );
 };
 
-export default NavigationUserMenuContainer;
+export default UserMenuDesktopItems;
