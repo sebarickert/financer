@@ -28,7 +28,7 @@ const ExpenseForm = ({
   fromAccount,
 }: IProps): JSX.Element => {
   const [accountsRaw, setAccountsRaw] = useState<IAccount[] | null>(null);
-  const [accounts, setAccounts] = useState<IOption[]>([]);
+  const [accounts, setAccounts] = useState<IOption[] | null>(null);
 
   useEffect(() => {
     const fetchAccounts = async () => {
@@ -67,7 +67,13 @@ const ExpenseForm = ({
     onSubmit(newExpenseData);
   };
 
-  return accountsRaw === null ? (
+  console.log(
+    fromAccount,
+    accounts,
+    typeof fromAccount,
+    typeof accounts?.[0]?.value
+  );
+  return accounts === null ? (
     <Loader loaderColor="red" />
   ) : (
     <>
