@@ -5,7 +5,7 @@ import NavigationDesktopItem from "./desktop/navigation.desktop.item";
 import NavigationLogo from "./navigation.logo";
 import NavigationMobile from "./mobile/navigation.mobile";
 import NavigationMobileToggle from "./mobile/navigation.mobile.toggle";
-import NavigationUserMenu from "./user-menu/navigation.user.menu";
+import UserMenu from "./user-menu/user.menu";
 
 const Navigation = (): JSX.Element => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -31,7 +31,7 @@ const Navigation = (): JSX.Element => {
             </NavigationDesktopItem>
           </NavigationDesktop>
         </div>
-        <NavigationUserMenu />
+        <UserMenu type="desktop" />
         <NavigationMobileToggle
           isOpen={isMobileMenuOpen}
           handleToggleMenu={setIsMobileMenuOpen}

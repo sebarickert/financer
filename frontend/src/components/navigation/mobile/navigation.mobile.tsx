@@ -1,6 +1,7 @@
 import React from "react";
 import NavigationMobileMenu from "./navigation.mobile.menu";
 import NavigationMobileMenuItem from "./navigation.mobile.menu.item";
+import UserMenu from "../user-menu/user.menu";
 
 interface IProps {
   isOpen: boolean;
@@ -23,16 +24,7 @@ const NavigationMobile = ({ isOpen }: IProps): JSX.Element => {
           Accounts
         </NavigationMobileMenuItem>
       </NavigationMobileMenu>
-      <div className="pt-4 pb-3 border-t border-gray-200">
-        <div className="mt-3">
-          <a
-            href="/"
-            className="mt-1 block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100 focus:outline-none focus:text-gray-800 focus:bg-gray-100 transition duration-150 ease-in-out"
-          >
-            Sign out
-          </a>
-        </div>
-      </div>
+      <UserMenu type="mobile" />
     </div>
   );
 };
