@@ -28,7 +28,7 @@ const IncomeForm = ({
   toAccount,
 }: IProps): JSX.Element => {
   const [accountsRaw, setAccountsRaw] = useState<IAccount[] | null>(null);
-  const [accounts, setAccounts] = useState<IOption[]>([]);
+  const [accounts, setAccounts] = useState<IOption[] | null>(null);
 
   useEffect(() => {
     const fetchAccounts = async () => {
@@ -67,7 +67,7 @@ const IncomeForm = ({
     onSubmit(newIncomeData);
   };
 
-  return accountsRaw === null ? (
+  return accounts === null ? (
     <Loader loaderColor="green" />
   ) : (
     <>
