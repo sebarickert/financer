@@ -1,5 +1,4 @@
 import React from "react";
-import addLeadingZero from "../../utils/addLeadingZero";
 import { inputDateFormat } from "../../utils/formatDate";
 
 interface IProps {
@@ -40,7 +39,7 @@ const Input = ({
         <input
           id={id}
           type={type}
-          className={`form-input block w-full sm:text-sm sm:leading-5 ${
+          className={`appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
             isCurrency && "pl-7"
           }`}
           aria-describedby={help && `${id}-description`}
