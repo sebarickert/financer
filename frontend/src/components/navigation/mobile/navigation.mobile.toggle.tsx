@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 interface IProps {
   isOpen: boolean;
@@ -9,6 +10,11 @@ const NavigationMobileToggle = ({
   isOpen,
   handleToggleMenu,
 }: IProps): JSX.Element => {
+  const location = useLocation();
+  useEffect(() => {
+    handleToggleMenu(false);
+  }, [location, handleToggleMenu]);
+
   return (
     <div className="-mr-2 flex items-center sm:hidden">
       <button
