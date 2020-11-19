@@ -24,7 +24,8 @@ const Accounts = (): JSX.Element => {
     if (accountsRaw === null) return;
 
     const total = accountsRaw.reduce(
-      (currentTotal, { balance }) => currentTotal + balance,
+      (currentTotal, { balance, type }) =>
+        currentTotal + (type !== "loan" ? balance : 0),
       0
     );
     setTotalBalance(total);
