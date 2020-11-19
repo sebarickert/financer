@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Button from "../../components/button/button";
+import ButtonGroup from "../../components/button/button.group";
 import Hero from "../../components/hero/hero";
 import Loader from "../../components/loader/loader";
 import Table, { ITableHead } from "../../components/table/table";
@@ -60,9 +61,14 @@ const Accounts = (): JSX.Element => {
         savings or investments to calculate total amount.
       </Hero>
       <div className="mt-12">
-        <Button link="/accounts/add" accentColor="blue">
-          Add account
-        </Button>
+        <ButtonGroup>
+          <Button link="/accounts/add" accentColor="blue">
+            Add account
+          </Button>
+          <Button link="/accounts/transfer" accentColor="blue">
+            Transfer
+          </Button>
+        </ButtonGroup>
       </div>
       <div className="mt-12">
         <Table
