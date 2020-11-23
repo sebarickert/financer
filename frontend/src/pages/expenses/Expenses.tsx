@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Button from "../../components/button/button";
 import Hero from "../../components/hero/hero";
 import Loader from "../../components/loader/loader";
+import SEO from "../../components/seo/seo";
 import Table, { ITableHead } from "../../components/table/table";
 import { TAddiotinalLabel } from "../../components/table/table.header";
 import monthNames from "../../constants/months";
@@ -128,6 +129,7 @@ const Expenses = (): JSX.Element => {
     <Loader loaderColor="red" />
   ) : (
     <>
+      <SEO title="Expenses" />
       <Hero accent="Overview" accentColor="red" label="Expenses">
         Below you are able to review all your added expenses and see a summary
         of the current month.

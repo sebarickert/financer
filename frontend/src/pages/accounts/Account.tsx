@@ -5,6 +5,7 @@ import ButtonGroup from "../../components/button/button.group";
 import Hero from "../../components/hero/hero";
 import Loader from "../../components/loader/loader";
 import ModalConfirm from "../../components/modal/confirm/modal.confirm";
+import SEO from "../../components/seo/seo";
 import Stats from "../../components/stats/stats";
 import StatsItem from "../../components/stats/stats.item";
 import formatCurrency from "../../utils/formatCurrency";
@@ -55,6 +56,7 @@ const Account = (): JSX.Element => {
     <Loader loaderColor="blue" />
   ) : (
     <>
+      <SEO title={`${account.name}`} />
       <Hero accent="Account" accentColor="blue" label={account.name}>
         Below you are able to edit your accounts information and check your
         transaction history as well as balance.

@@ -5,6 +5,7 @@ import Input from "../../components/input/input";
 import Select, { IOption } from "../../components/select/select";
 import Alert from "../../components/alert/alert";
 import Loader from "../../components/loader/loader";
+import SEO from "../../components/seo/seo";
 
 const AccountTransfer = (): JSX.Element => {
   const history = useHistory();
@@ -69,6 +70,7 @@ const AccountTransfer = (): JSX.Element => {
     <Loader loaderColor="blue" />
   ) : (
     <>
+      <SEO title="Transfer between accounts" />
       {errors.length > 0 && (
         <Alert additionalInformation={errors}>
           There were {errors.length} errors with your submission
