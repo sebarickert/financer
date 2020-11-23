@@ -33,7 +33,7 @@ const AddIncome = (): JSX.Element => {
 
   return (
     <>
-      <SEO title="Add income" />
+      <SEO title="Add income | Incomes" />
       <IncomeForm
         onSubmit={handleSubmit}
         errors={errors}

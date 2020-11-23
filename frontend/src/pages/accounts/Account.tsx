@@ -56,7 +56,7 @@ const Account = (): JSX.Element => {
     <Loader loaderColor="blue" />
   ) : (
     <>
-      <SEO title={`${account.name}`} />
+      <SEO title={`${account.name} | Accounts`} />
       <Hero accent="Account" accentColor="blue" label={account.name}>
         Below you are able to edit your accounts information and check your
         transaction history as well as balance.

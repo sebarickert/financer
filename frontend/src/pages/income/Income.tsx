@@ -57,7 +57,7 @@ const Income = (): JSX.Element => {
     <Loader loaderColor="green" />
   ) : (
     <>
-      <SEO title={`${income.description}`} />
+      <SEO title={`${income.description} | Incomes`} />
       <Hero accent="Income" accentColor="green" label={income.description}>
         Below you are able to edit your added income information or delete it
         altogether.
