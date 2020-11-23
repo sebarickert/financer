@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import Loader from "../../components/loader/loader";
+import SEO from "../../components/seo/seo";
 import ExpenseForm from "./ExpenseForm";
 
 const EditExpense = (): JSX.Element => {
@@ -23,16 +24,19 @@ const EditExpense = (): JSX.Element => {
   return typeof expense === "undefined" ? (
     <Loader loaderColor="red" />
   ) : (
-    <ExpenseForm
-      onSubmit={handleSubmit}
-      errors={errors}
-      formHeading="Edit expense"
-      submitLabel="Update"
-      amount={expense.amount}
-      description={expense.description}
-      date={new Date(expense.date)}
-      fromAccount={expense.fromAccount}
-    />
+    <>
+      <SEO title={`Edit ${expense.description}`} />
+      <ExpenseForm
+        onSubmit={handleSubmit}
+        errors={errors}
+        formHeading="Edit expense"
+        submitLabel="Update"
+        amount={expense.amount}
+        description={expense.description}
+        date={new Date(expense.date)}
+        fromAccount={expense.fromAccount}
+      />
+    </>
   );
 };
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import Loader from "../../components/loader/loader";
+import SEO from "../../components/seo/seo";
 import AccountForm from "./AccountForm";
 
 const EditAccount = (): JSX.Element => {
@@ -49,15 +50,18 @@ const EditAccount = (): JSX.Element => {
   return typeof account === "undefined" ? (
     <Loader loaderColor="blue" />
   ) : (
-    <AccountForm
-      onSubmit={handleSubmit}
-      errors={errors}
-      formHeading="Edit account"
-      submitLabel="Update"
-      name={account.name}
-      balance={account.balance}
-      type={account.type}
-    />
+    <>
+      <SEO title={`Edit ${account.name}`} />
+      <AccountForm
+        onSubmit={handleSubmit}
+        errors={errors}
+        formHeading="Edit account"
+        submitLabel="Update"
+        name={account.name}
+        balance={account.balance}
+        type={account.type}
+      />
+    </>
   );
 };
 

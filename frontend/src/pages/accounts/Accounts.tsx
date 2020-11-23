@@ -4,6 +4,7 @@ import Button from "../../components/button/button";
 import ButtonGroup from "../../components/button/button.group";
 import Hero from "../../components/hero/hero";
 import Loader from "../../components/loader/loader";
+import SEO from "../../components/seo/seo";
 import Table, { ITableHead } from "../../components/table/table";
 import { TAddiotinalLabel } from "../../components/table/table.header";
 import formatCurrency from "../../utils/formatCurrency";
@@ -56,6 +57,7 @@ const Accounts = (): JSX.Element => {
     <Loader loaderColor="blue" />
   ) : (
     <>
+      <SEO title="Accounts" />
       <Hero accent="Overview" accentColor="blue" label="Accounts">
         Below you are able to add your various accounts where you have your
         savings or investments to calculate total amount.

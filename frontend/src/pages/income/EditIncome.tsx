@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import Loader from "../../components/loader/loader";
+import SEO from "../../components/seo/seo";
 import IncomeForm from "./IncomeForm";
 
 const EditIncome = (): JSX.Element => {
@@ -23,16 +24,19 @@ const EditIncome = (): JSX.Element => {
   return typeof income === "undefined" ? (
     <Loader loaderColor="green" />
   ) : (
-    <IncomeForm
-      onSubmit={handleSubmit}
-      errors={errors}
-      formHeading="Edit income"
-      submitLabel="Update"
-      amount={income.amount}
-      description={income.description}
-      date={new Date(income.date)}
-      toAccount={income.toAccount}
-    />
+    <>
+      <SEO title={`Edit ${income.description}`} />
+      <IncomeForm
+        onSubmit={handleSubmit}
+        errors={errors}
+        formHeading="Edit income"
+        submitLabel="Update"
+        amount={income.amount}
+        description={income.description}
+        date={new Date(income.date)}
+        toAccount={income.toAccount}
+      />
+    </>
   );
 };
 
