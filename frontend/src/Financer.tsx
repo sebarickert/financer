@@ -4,12 +4,16 @@ import Layout from "./components/layout/layout";
 import AccountsRouter from "./pages/accounts/AccountsRouter";
 import ExpensesRouter from "./pages/expenses/ExpensesRouter";
 import IncomesRouter from "./pages/income/IncomesRouter";
+import Dashboard from "./pages/dashboard/Dashboard";
 
 const Financer = (): JSX.Element => {
   return (
     <Router>
       <Layout>
         <Switch>
+          <Route exact path="/">
+            <Dashboard />
+          </Route>
           <Route path="/incomes">
             <IncomesRouter />
           </Route>
