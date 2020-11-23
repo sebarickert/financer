@@ -1,13 +1,10 @@
 import React from "react";
+import { ReactComponent as Logo } from "../../assets/logo.svg";
 
 const NavigationLogo = (): JSX.Element => {
   return (
     <div className="flex-shrink-0 flex items-center">
-      <img
-        className="block h-8 w-auto"
-        src="https://tailwindui.com/img/logos/v1/workflow-mark-on-white.svg"
-        alt="Workflow logo"
-      />
+      <Logo className="block h-10 w-auto" />
     </div>
   );
 };
