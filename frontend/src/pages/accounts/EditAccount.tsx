@@ -51,7 +51,7 @@ const EditAccount = (): JSX.Element => {
     <Loader loaderColor="blue" />
   ) : (
     <>
-      <SEO title={`Edit ${account.name}`} />
+      <SEO title={`Edit ${account.name} | Accounts`} />
       <AccountForm
         onSubmit={handleSubmit}
         errors={errors}

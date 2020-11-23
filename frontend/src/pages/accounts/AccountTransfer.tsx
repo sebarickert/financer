@@ -70,7 +70,7 @@ const AccountTransfer = (): JSX.Element => {
     <Loader loaderColor="blue" />
   ) : (
     <>
-      <SEO title="Transfer between accounts" />
+      <SEO title="Transfer between accounts | Accounts" />
       {errors.length > 0 && (
         <Alert additionalInformation={errors}>
           There were {errors.length} errors with your submission

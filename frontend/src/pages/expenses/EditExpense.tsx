@@ -25,7 +25,7 @@ const EditExpense = (): JSX.Element => {
     <Loader loaderColor="red" />
   ) : (
     <>
-      <SEO title={`Edit ${expense.description}`} />
+      <SEO title={`Edit ${expense.description} | Expenses`} />
       <ExpenseForm
         onSubmit={handleSubmit}
         errors={errors}

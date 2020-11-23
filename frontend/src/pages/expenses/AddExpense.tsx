@@ -33,7 +33,7 @@ const AddExpense = (): JSX.Element => {
 
   return (
     <>
-      <SEO title="Add expense" />
+      <SEO title="Add expense | Expenses" />
       <ExpenseForm
         onSubmit={handleSubmit}
         errors={errors}

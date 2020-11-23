@@ -57,7 +57,7 @@ const Expense = (): JSX.Element => {
     <Loader loaderColor="red" />
   ) : (
     <>
-      <SEO title={expense.description} />
+      <SEO title={`${expense.description} | Expenses`} />
       <Hero accent="Expense" accentColor="red" label={expense.description}>
         Below you are able to edit your added expense information or delete it
         altogether.

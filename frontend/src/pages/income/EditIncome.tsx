@@ -25,7 +25,7 @@ const EditIncome = (): JSX.Element => {
     <Loader loaderColor="green" />
   ) : (
     <>
-      <SEO title={`Edit ${income.description}`} />
+      <SEO title={`Edit ${income.description} | Incomes`} />
       <IncomeForm
         onSubmit={handleSubmit}
         errors={errors}
