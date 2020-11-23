@@ -5,6 +5,7 @@ import ButtonGroup from "../../components/button/button.group";
 import Hero from "../../components/hero/hero";
 import Loader from "../../components/loader/loader";
 import ModalConfirm from "../../components/modal/confirm/modal.confirm";
+import SEO from "../../components/seo/seo";
 import Stats from "../../components/stats/stats";
 import StatsItem from "../../components/stats/stats.item";
 import formatCurrency from "../../utils/formatCurrency";
@@ -56,11 +57,12 @@ const Expense = (): JSX.Element => {
     <Loader loaderColor="red" />
   ) : (
     <>
+      <SEO title={expense.description} />
       <Hero accent="Expense" accentColor="red" label={expense.description}>
         Below you are able to edit your added expense information or delete it
         altogether.
       </Hero>
-      <div className="mt-6">
+      <div className="mt-12">
         <ButtonGroup>
           <Button accentColor="blue" link={`/expenses/${id}/edit`}>
             Edit expense
