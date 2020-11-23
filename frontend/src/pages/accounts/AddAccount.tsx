@@ -33,7 +33,7 @@ const AddAccount = (): JSX.Element => {
 
   return (
     <>
-      <SEO title="Add account" />
+      <SEO title="Add account | Accounts" />
       <AccountForm
         onSubmit={handleSubmit}
         errors={errors}
