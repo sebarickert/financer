@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 npm --prefix backend run tsc
 npm --prefix frontend run build
