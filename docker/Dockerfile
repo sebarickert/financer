@@ -18,4 +18,6 @@ COPY --from=builder /app/node_modules /app/node_modules
 COPY --from=builder /app/backend/build /app/build
 COPY --from=builder /app/frontend/build /app/static/react-app
 
+CMD [ "node", "/app/build/index.js" ]
+
 EXPOSE 4000
