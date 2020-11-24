@@ -3,6 +3,7 @@ version: "3.4"
 services:
   webapp:
     image: financer-production_webapp
+    container_name: financer-production_webapp
     build:
       context: ../
       dockerfile: docker/Dockerfile
