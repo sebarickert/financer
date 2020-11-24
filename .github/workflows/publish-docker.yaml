@@ -1,0 +1,23 @@
+
+name: Build and publish docker
+
+on:
+  workflow_dispatch:
+  push:
+    branches: 
+      - production
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Publish to Github Packages Registry
+      uses: minddocdev/docker-publish-action@master
+      with:
+        name: shamalainen/financer/financer-webapp
+        registry: docker.pkg.github.com
+        username: ${{ secrets.GITHUB_USERNAME }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+        dockerfile: docker/Dockerfile
+        tags: latest
