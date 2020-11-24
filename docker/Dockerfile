@@ -6,8 +6,7 @@ COPY . /app
 WORKDIR /app
 
 RUN npm ci --quiet -f
-RUN npm --prefix backend run tsc
-RUN npm --prefix frontend run build
+RUN npm run build
 
 
 FROM node:15.1.0-alpine
