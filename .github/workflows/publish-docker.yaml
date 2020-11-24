@@ -17,7 +17,7 @@ jobs:
       with:
         name: shamalainen/financer/financer-webapp
         registry: docker.pkg.github.com
-        username: ${{ secrets.GITHUB_USERNAME }}
+        username: ${{ secrets.GITHUBUSERNAME }}
         password: ${{ secrets.GITHUB_TOKEN }}
         dockerfile: docker/Dockerfile
         extratags: latest
