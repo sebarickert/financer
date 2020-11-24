@@ -20,6 +20,9 @@ const Dashboard = (): JSX.Element => {
           <Button accentColor="red" link="/expenses/add">
             Add expense
           </Button>
+          <Button accentColor="blue" link="/accounts/transfer">
+            Transfer
+          </Button>
         </ButtonGroup>
       </div>
     </>
