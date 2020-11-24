@@ -36,7 +36,14 @@ const Accounts = (): JSX.Element => {
         ...account,
         _id,
         balance: formatCurrency(balance),
-        actions: <Link to={`/accounts/${_id}`}>View</Link>,
+        actions: (
+          <Link
+            to={`/accounts/${_id}`}
+            className="focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-sm"
+          >
+            View
+          </Link>
+        ),
       }))
     );
   }, [accountsRaw]);

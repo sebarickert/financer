@@ -52,7 +52,14 @@ const Expenses = (): JSX.Element => {
               _id,
               amount: formatCurrency(amount),
               date: formatDate(date),
-              actions: <Link to={`/expenses/${_id}`}>View</Link>,
+              actions: (
+                <Link
+                  to={`/expenses/${_id}`}
+                  className="focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-sm"
+                >
+                  View
+                </Link>
+              ),
             };
 
             if (
