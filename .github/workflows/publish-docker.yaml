@@ -20,4 +20,3 @@ jobs:
         username: ${{ secrets.GITHUBUSERNAME }}
         password: ${{ secrets.GITHUB_TOKEN }}
         dockerfile: docker/Dockerfile
-        extratags: latest
