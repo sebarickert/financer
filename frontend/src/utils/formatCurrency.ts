@@ -3,6 +3,6 @@ const formatter = new Intl.NumberFormat("fi-FI", {
   currency: "EUR",
 });
 
-const formatCurrency = (number: number) => formatter.format(number);
+const formatCurrency = (number: number): string => formatter.format(number);
 
 export default formatCurrency;

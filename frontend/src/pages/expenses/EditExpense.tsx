@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import Loader from "../../components/loader/loader";
