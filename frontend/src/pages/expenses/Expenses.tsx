@@ -17,7 +17,7 @@ interface IExpenseOutput extends Omit<IExpense, "date" | "amount" | "_id"> {
   amount: string;
 }
 
-interface IExpensesPerMonth {
+export interface IExpensesPerMonth {
   month: number;
   total: number;
   year: number;
