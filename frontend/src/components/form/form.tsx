@@ -7,6 +7,7 @@ interface IProps {
   formHeading: string;
   submitLabel: string;
   accentColor?: "pink" | "red" | "green" | "blue";
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   handleSubmit(event: any): void;
 }
 

@@ -21,6 +21,7 @@ export interface IIncomesPerMonth {
   month: number;
   total: number;
   year: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   rows: any[];
 }
 

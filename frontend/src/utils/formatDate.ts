@@ -2,9 +2,9 @@ import addLeadingZero from "./addLeadingZero";
 
 const formatter = new Intl.DateTimeFormat("fi-FI");
 
-export const formatDate = (date: Date) => formatter.format(date);
+export const formatDate = (date: Date): string => formatter.format(date);
 
-export const inputDateFormat = (date: Date) => {
+export const inputDateFormat = (date: Date): string => {
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
   const day = date.getDate();

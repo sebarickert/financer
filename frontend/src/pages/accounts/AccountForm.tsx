@@ -46,6 +46,7 @@ const AccountForm = ({
     },
   ];
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     const { account, amount, type: newType } = event.target;

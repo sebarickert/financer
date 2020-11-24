@@ -11,6 +11,7 @@ import formatCurrency from "../../utils/formatCurrency";
 
 const Accounts = (): JSX.Element => {
   const [accountsRaw, setAccountsRaw] = useState<IAccount[] | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [accounts, setAccounts] = useState<any[]>([]);
   const [totalBalance, setTotalBalance] = useState<number>(NaN);
 
