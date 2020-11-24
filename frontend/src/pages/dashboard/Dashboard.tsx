@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "../../components/button/button";
 import ButtonGroup from "../../components/button/button.group";
+import DashboardStats from "../../components/dashboard-stats/dashboard.stats";
 import Hero from "../../components/hero/hero";
 import SEO from "../../components/seo/seo";
 
@@ -12,19 +13,18 @@ const Dashboard = (): JSX.Element => {
         Below you are able to see summaries of your added accounts, income and
         expenses.
       </Hero>
-      <div className="mt-12">
-        <ButtonGroup>
-          <Button accentColor="green" link="/incomes/add">
-            Add income
-          </Button>
-          <Button accentColor="red" link="/expenses/add">
-            Add expense
-          </Button>
-          <Button accentColor="blue" link="/accounts/transfer">
-            Transfer
-          </Button>
-        </ButtonGroup>
-      </div>
+      <ButtonGroup className="mt-12">
+        <Button accentColor="green" link="/incomes/add">
+          Add income
+        </Button>
+        <Button accentColor="red" link="/expenses/add">
+          Add expense
+        </Button>
+        <Button accentColor="blue" link="/accounts/transfer">
+          Transfer
+        </Button>
+      </ButtonGroup>
+      <DashboardStats className="mt-12" label="Current month" />
     </>
   );
 };
