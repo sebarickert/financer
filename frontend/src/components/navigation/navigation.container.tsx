@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import Container from "../container/container";
 
 interface IProps {

@@ -32,6 +32,7 @@ const AccountTransfer = (): JSX.Element => {
     );
   }, [accountsRaw]);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     const { description, amount, date, fromAccount, toAccount } = event.target;
