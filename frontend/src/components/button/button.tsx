@@ -29,16 +29,16 @@ const Button = ({
   };
 
   const elementClasses = [
-    `inline-flex justify-center w-full sm:w-auto items-center px-4 py-2 border font-medium rounded-md text-white focus:outline-none transition ease-in-out duration-150 text-base ${fontSizeMapping[size]} ${className}`,
+    `inline-flex justify-center w-full sm:w-auto items-center px-4 py-2 border font-medium rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 transition ease-in-out duration-150 text-base ${fontSizeMapping[size]} ${className}`,
   ];
 
   if (accentColor === "plain") {
     elementClasses.push(
-      `border-gray-300 bg-white text-gray-700 shadow-sm hover:text-gray-500 focus:border-blue-300 focus:shadow-outline-blue`
+      `border-gray-300 bg-white text-gray-700 shadow-sm hover:text-gray-500 focus:ring-blue-500`
     );
   } else {
     elementClasses.push(
-      `bg-${accentColor}-600 hover:bg-${accentColor}-500 focus:border-${accentColor}-700 focus:shadow-outline-${accentColor} active:bg-${accentColor}-700 border-transparent`
+      `bg-${accentColor}-600 hover:bg-${accentColor}-500 active:bg-${accentColor}-700 border-transparent focus:ring-${accentColor}-500`
     );
   }
 
