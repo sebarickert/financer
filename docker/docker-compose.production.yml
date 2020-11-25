@@ -2,19 +2,14 @@ version: "3.4"
 
 services:
   webapp:
-    image: financer-production_webapp
+    image: ghcr.io/shamalainen/financer:latest
     container_name: financer-production_webapp
-    build:
-      context: ../
-      dockerfile: docker/Dockerfile
     restart: unless-stopped
     environment:
       NODE_ENV: production
     env_file: .env.production
-    working_dir: /app/
     ports:
       - 4000:4000
-    command: node build/index.js
 
   mongodb:
     image: mongo:4.2.10-bionic
