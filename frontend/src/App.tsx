@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Financer from "./Financer";
-import Login from "./components/login/login";
+import Login from "./pages/login/LoginRouter";
 
 const App = (): JSX.Element => {
   const [profileInfo, setProfileInfo] = useState<IUser | IAuthenticationFailed>(
