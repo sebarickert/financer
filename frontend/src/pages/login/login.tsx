@@ -1,8 +1,8 @@
 import React from "react";
 import LoginHeader from "./login.header";
 import LoginActions from "./login.actions";
-import SEO from "../seo/seo";
 import LoginFooter from "./login.footer";
+import SEO from "../../components/seo/seo";
 
 const Login = (): JSX.Element => {
   return (
