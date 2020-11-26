@@ -5,12 +5,26 @@ import AccountsRouter from "./pages/accounts/AccountsRouter";
 import ExpensesRouter from "./pages/expenses/ExpensesRouter";
 import IncomesRouter from "./pages/income/IncomesRouter";
 import Dashboard from "./pages/dashboard/Dashboard";
+import PrivacyPolicy from "./Privacy";
+import Login from "./pages/login/login";
 
-const Financer = (): JSX.Element => {
+interface IProps {
+  isLoggedIn: boolean;
+}
+
+const Financer = ({ isLoggedIn = false }: IProps): JSX.Element => {
   return (
     <Router>
-      <Layout>
-        <Switch>
+      <Switch>
+        <Route path="/privacy-policy">
+          <PrivacyPolicy />
+        </Route>
+        {!isLoggedIn && (
+          <Route path="/">
+            <Login />
+          </Route>
+        )}
+        <Layout>
           <Route exact path="/">
             <Dashboard />
           </Route>
@@ -23,8 +37,8 @@ const Financer = (): JSX.Element => {
           <Route path="/accounts">
             <AccountsRouter />
           </Route>
-        </Switch>
-      </Layout>
+        </Layout>
+      </Switch>
     </Router>
   );
 };

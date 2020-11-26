@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import SEO from "../seo/seo";
+import SEO from "./components/seo/seo";
 
 const PrivacyPolicy = (): JSX.Element => {
   return (
@@ -116,7 +116,7 @@ const PrivacyPolicy = (): JSX.Element => {
               to="/"
               className="inline-block text-base uppercase font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-4 rounded-sm mb-12 text-blue-600"
             >
-              Go back to login
+              Go back
             </Link>
             <h1>
               <span className="block text-base text-blue-600 font-semibold tracking-wide uppercase">
