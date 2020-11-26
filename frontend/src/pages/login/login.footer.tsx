@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Button from "../button/button";
 
 interface IProps {
   className: string;
