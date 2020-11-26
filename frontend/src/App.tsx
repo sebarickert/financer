@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Financer from "./Financer";
-import LoginPage from "./LoginPage";
+import Login from "./components/login/login";
 
 const App = (): JSX.Element => {
   const [profileInfo, setProfileInfo] = useState<IUser | IAuthenticationFailed>(
@@ -19,7 +19,7 @@ const App = (): JSX.Element => {
     <div>
       {"authenticated" in profileInfo &&
       profileInfo?.authenticated === false ? (
-        <LoginPage />
+        <Login />
       ) : (
         <Financer />
       )}
