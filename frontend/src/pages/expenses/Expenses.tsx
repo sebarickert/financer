@@ -9,6 +9,7 @@ import { TAddiotinalLabel } from "../../components/table/table.header";
 import monthNames from "../../constants/months";
 import formatCurrency from "../../utils/formatCurrency";
 import { formatDate } from "../../utils/formatDate";
+import { getAllExpenses } from "./ExpenseService";
 
 interface IExpenseOutput extends Omit<IExpense, "date" | "amount" | "_id"> {
   _id: string;
@@ -31,8 +32,7 @@ const Expenses = (): JSX.Element => {
 
   useEffect(() => {
     const fetchExpenses = async () => {
-      const rawExpenses = await fetch("/api/expense");
-      setExpensesRaw(await rawExpenses.json());
+      setExpensesRaw(await getAllExpenses());
     };
     fetchExpenses();
   }, []);

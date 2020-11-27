@@ -10,6 +10,7 @@ import Stats from "../../components/stats/stats";
 import StatsItem from "../../components/stats/stats.item";
 import formatCurrency from "../../utils/formatCurrency";
 import { formatDate } from "../../utils/formatDate";
+import { deleteExpense, getExpenseById } from "./ExpenseService";
 
 interface IProps {
   handleDelete(): void;
@@ -35,21 +36,13 @@ const Expense = (): JSX.Element => {
 
   useEffect(() => {
     const fetchExpense = async () => {
-      const rawExpense = await fetch(`/api/expense/${id}`);
-      setExpense((await rawExpense.json()).payload);
+      setExpense(await getExpenseById(id));
     };
     fetchExpense();
   }, [id]);
 
   const handleDelete = async () => {
-    await fetch(`/api/expense/${id}`, {
-      method: "DELETE",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    });
-
+    await deleteExpense(id);
     history.push("/expenses");
   };
 
