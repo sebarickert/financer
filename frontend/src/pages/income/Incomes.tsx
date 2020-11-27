@@ -14,7 +14,7 @@ import { getAllIncomes } from "./IncomeService";
 interface IIncomeOutput extends Omit<IExpense, "date" | "amount" | "_id"> {
   _id: string;
   actions: JSX.Element;
-  date: string;
+  date: Date;
   amount: string;
 }
 
@@ -52,7 +52,7 @@ const Incomes = (): JSX.Element => {
               ...incomeRest,
               _id,
               amount: formatCurrency(amount),
-              date: formatDate(date),
+              date,
               actions: (
                 <Link
                   to={`/incomes/${_id}`}
@@ -152,7 +152,10 @@ const Incomes = (): JSX.Element => {
           <Table
             addiotinalLabel={getAddiotinalLabel(total)}
             label={`${monthNames[month]}, ${year}`}
-            rows={rows}
+            rows={rows.map(({ date, ...rest }) => ({
+              ...rest,
+              date: formatDate(date),
+            }))}
             tableHeads={tableHeads}
             dataKeyColumn="_id"
           />
