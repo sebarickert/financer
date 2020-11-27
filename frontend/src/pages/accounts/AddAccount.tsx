@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import SEO from "../../components/seo/seo";
 import AccountForm from "./AccountForm";
+import { addAccount } from "./AccountService";
 
 const AddAccount = (): JSX.Element => {
   const history = useHistory();
@@ -9,21 +10,12 @@ const AddAccount = (): JSX.Element => {
 
   const handleSubmit = async (newAccountData: IAccount) => {
     try {
-      const newAccount = await fetch("/api/account", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newAccountData),
-      });
+      const newAccount = await addAccount(newAccountData);
 
-      const newAccountJson = await newAccount.json();
-
-      if (newAccountJson.status === 201) {
+      if (newAccount.status === 201) {
         history.push("/accounts");
-      } else if (newAccountJson.status === 400) {
-        setErrors(newAccountJson.errors);
+      } else if (newAccount.status === 400) {
+        setErrors(newAccount.errors);
       }
     } catch (error) {
       // eslint-disable-next-line no-console

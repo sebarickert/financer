@@ -8,6 +8,7 @@ import SEO from "../../components/seo/seo";
 import Table, { ITableHead } from "../../components/table/table";
 import { TAddiotinalLabel } from "../../components/table/table.header";
 import formatCurrency from "../../utils/formatCurrency";
+import { getAllAccounts } from "./AccountService";
 
 const Accounts = (): JSX.Element => {
   const [accountsRaw, setAccountsRaw] = useState<IAccount[] | null>(null);
@@ -17,8 +18,7 @@ const Accounts = (): JSX.Element => {
 
   useEffect(() => {
     const fetchAccounts = async () => {
-      const rawAccounts = await fetch("/api/account");
-      setAccountsRaw(await rawAccounts.json());
+      setAccountsRaw(await getAllAccounts());
     };
     fetchAccounts();
   }, []);
