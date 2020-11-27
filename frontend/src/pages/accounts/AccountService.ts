@@ -27,6 +27,7 @@ export const addAccount = async (
 export const editAccount = async (
   id: string,
   targetAccountData: IAccount
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): Promise<any> => {
   const targetAccount = await fetch(`/api/account/${id}`, {
     method: "PUT",
