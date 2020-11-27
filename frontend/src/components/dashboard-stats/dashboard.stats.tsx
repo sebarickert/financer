@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import formatCurrency from "../../utils/formatCurrency";
 import Stats from "../stats/stats";
 import StatsItem from "../stats/stats.item";
+import { getAllAccounts } from "../../pages/accounts/AccountService";
+import { getAllExpenses } from "../../pages/expenses/ExpenseService";
+import { getAllIncomes } from "../../pages/income/IncomeService";
 
 interface IProps {
   label?: string;
@@ -18,20 +21,17 @@ const DashboardStats = ({ label, className = "" }: IProps): JSX.Element => {
 
   useEffect(() => {
     const fetchAccounts = async () => {
-      const rawAccounts = await fetch("/api/account");
-      setAccountsRaw(await rawAccounts.json());
+      setAccountsRaw(await getAllAccounts());
     };
     fetchAccounts();
 
     const fetchExpenses = async () => {
-      const rawExpenses = await fetch("/api/expense");
-      setExpensesRaw(await rawExpenses.json());
+      setExpensesRaw(await getAllExpenses());
     };
     fetchExpenses();
 
     const fetchIncomes = async () => {
-      const rawIncomes = await fetch("/api/income");
-      setIncomesRaw(await rawIncomes.json());
+      setIncomesRaw(await getAllIncomes());
     };
     fetchIncomes();
   }, []);
