@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import SEO from "../../components/seo/seo";
 import ExpenseForm from "./ExpenseForm";
+import { addExpense } from "./ExpenseService";
 
 const AddExpense = (): JSX.Element => {
   const history = useHistory();
@@ -9,16 +10,7 @@ const AddExpense = (): JSX.Element => {
 
   const handleSubmit = async (newExpenseData: IExpense) => {
     try {
-      const newExpense = await fetch("/api/expense", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newExpenseData),
-      });
-
-      const newExpenseJson = await newExpense.json();
+      const newExpenseJson = await addExpense(newExpenseData);
 
       if (newExpenseJson.status === 201) {
         history.push("/expenses");
