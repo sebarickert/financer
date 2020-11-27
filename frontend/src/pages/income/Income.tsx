@@ -10,6 +10,7 @@ import Stats from "../../components/stats/stats";
 import StatsItem from "../../components/stats/stats.item";
 import formatCurrency from "../../utils/formatCurrency";
 import { formatDate } from "../../utils/formatDate";
+import { deleteIncome, getIncomeById } from "./IncomeService";
 
 interface IProps {
   handleDelete(): void;
@@ -35,21 +36,13 @@ const Income = (): JSX.Element => {
 
   useEffect(() => {
     const fetchIncome = async () => {
-      const rawIncome = await fetch(`/api/income/${id}`);
-      setIncome((await rawIncome.json()).payload);
+      setIncome(await getIncomeById(id));
     };
     fetchIncome();
   }, [id]);
 
   const handleDelete = async () => {
-    await fetch(`/api/income/${id}`, {
-      method: "DELETE",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    });
-
+    deleteIncome(id);
     history.push("/incomes");
   };
 

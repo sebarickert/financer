@@ -4,6 +4,7 @@ import { useHistory, useParams } from "react-router-dom";
 import Loader from "../../components/loader/loader";
 import SEO from "../../components/seo/seo";
 import IncomeForm from "./IncomeForm";
+import { getIncomeById } from "./IncomeService";
 
 const EditIncome = (): JSX.Element => {
   const history = useHistory();
@@ -14,8 +15,7 @@ const EditIncome = (): JSX.Element => {
 
   useEffect(() => {
     const fetchIncome = async () => {
-      const rawIncome = await fetch(`/api/income/${id}`);
-      setIncome((await rawIncome.json()).payload);
+      setIncome(await getIncomeById(id));
     };
     fetchIncome();
   }, [id]);

@@ -2,28 +2,20 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import SEO from "../../components/seo/seo";
 import IncomeForm from "./IncomeForm";
+import { addIncome } from "./IncomeService";
 
 const AddIncome = (): JSX.Element => {
   const history = useHistory();
   const [errors, setErrors] = useState<string[]>([]);
 
-  const handleSubmit = async (newIncomeData: IExpense) => {
+  const handleSubmit = async (newIncomeData: IIncome) => {
     try {
-      const newIncome = await fetch("/api/income", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newIncomeData),
-      });
+      const newIncome = await addIncome(newIncomeData);
 
-      const newIncomeJson = await newIncome.json();
-
-      if (newIncomeJson.status === 201) {
+      if (newIncome.status === 201) {
         history.push("/incomes");
-      } else if (newIncomeJson.status === 400) {
-        setErrors(newIncomeJson.errors);
+      } else if (newIncome.status === 400) {
+        setErrors(newIncome.errors);
       }
     } catch (error) {
       // eslint-disable-next-line no-console
