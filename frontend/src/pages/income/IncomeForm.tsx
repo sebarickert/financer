@@ -5,6 +5,7 @@ import Select, { IOption } from "../../components/select/select";
 import Alert from "../../components/alert/alert";
 import Loader from "../../components/loader/loader";
 import { inputDateFormat } from "../../utils/formatDate";
+import { getAllAccounts } from "../accounts/AccountService";
 
 interface IProps {
   amount?: number;
@@ -32,8 +33,7 @@ const IncomeForm = ({
 
   useEffect(() => {
     const fetchAccounts = async () => {
-      const rawAccounts = await fetch("/api/account");
-      setAccountsRaw(await rawAccounts.json());
+      setAccountsRaw(await getAllAccounts());
     };
     fetchAccounts();
   }, []);

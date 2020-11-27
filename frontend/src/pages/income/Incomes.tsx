@@ -9,6 +9,7 @@ import { TAddiotinalLabel } from "../../components/table/table.header";
 import monthNames from "../../constants/months";
 import formatCurrency from "../../utils/formatCurrency";
 import { formatDate } from "../../utils/formatDate";
+import { getAllIncomes } from "./IncomeService";
 
 interface IIncomeOutput extends Omit<IExpense, "date" | "amount" | "_id"> {
   _id: string;
@@ -26,13 +27,12 @@ export interface IIncomesPerMonth {
 }
 
 const Incomes = (): JSX.Element => {
-  const [incomesRaw, setIncomesRaw] = useState<IExpense[] | null>(null);
+  const [incomesRaw, setIncomesRaw] = useState<IIncome[] | null>(null);
   const [incomes, setIncomes] = useState<IIncomesPerMonth[]>([]);
 
   useEffect(() => {
     const fetchIncomes = async () => {
-      const rawIncomes = await fetch("/api/income");
-      setIncomesRaw(await rawIncomes.json());
+      setIncomesRaw(await getAllIncomes());
     };
     fetchIncomes();
   }, []);
