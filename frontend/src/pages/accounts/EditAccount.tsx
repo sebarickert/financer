@@ -3,6 +3,7 @@ import { useHistory, useParams } from "react-router-dom";
 import Loader from "../../components/loader/loader";
 import SEO from "../../components/seo/seo";
 import AccountForm from "./AccountForm";
+import { editAccount } from "./AccountService";
 
 const EditAccount = (): JSX.Element => {
   const history = useHistory();
@@ -20,26 +21,17 @@ const EditAccount = (): JSX.Element => {
   }, [id]);
 
   const handleSubmit = async (newAccountData: IAccount) => {
-    /* eslint-disable no-param-reassign, no-underscore-dangle */
+    /* eslint-disable no-param-reassign */
     newAccountData.owner = account?.owner;
     newAccountData._id = account?._id;
-    /* eslint-enable no-param-reassign, no-underscore-dangle */
+    /* eslint-enable no-param-reassign */
     try {
-      const newAccount = await fetch(`/api/account/${id}`, {
-        method: "PUT",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newAccountData),
-      });
+      const newAccount = await editAccount(newAccountData._id, newAccountData);
 
-      const newAccountJson = await newAccount.json();
-
-      if (newAccountJson.status === 200) {
+      if (newAccount.status === 200) {
         history.push(`/accounts/${id}`);
-      } else if (newAccountJson.status === 400) {
-        setErrors(newAccountJson.errors);
+      } else if (newAccount.status === 400) {
+        setErrors(newAccount.errors);
       }
     } catch (error) {
       // eslint-disable-next-line no-console

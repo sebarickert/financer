@@ -6,6 +6,8 @@ import Select, { IOption } from "../../components/select/select";
 import Alert from "../../components/alert/alert";
 import Loader from "../../components/loader/loader";
 import SEO from "../../components/seo/seo";
+import { getAllAccounts } from "./AccountService";
+import { addTransaction } from "../../services/TransactionService";
 
 const AccountTransfer = (): JSX.Element => {
   const history = useHistory();
@@ -15,8 +17,7 @@ const AccountTransfer = (): JSX.Element => {
 
   useEffect(() => {
     const fetchAccounts = async () => {
-      const rawAccounts = await fetch("/api/account");
-      setAccountsRaw(await rawAccounts.json());
+      setAccountsRaw(await getAllAccounts());
     };
     fetchAccounts();
   }, []);
@@ -45,21 +46,12 @@ const AccountTransfer = (): JSX.Element => {
     };
 
     try {
-      const newTransaction = await fetch("/api/transaction", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newTransferData),
-      });
+      const newTransaction = await addTransaction(newTransferData);
 
-      const newAccountJson = await newTransaction.json();
-
-      if (newAccountJson.status === 201) {
+      if (newTransaction.status === 201) {
         history.push("/accounts");
-      } else if (newAccountJson.status === 400) {
-        setErrors(newAccountJson.errors);
+      } else if (newTransaction.status === 400) {
+        setErrors(newTransaction.errors);
       }
     } catch (error) {
       // eslint-disable-next-line no-console
