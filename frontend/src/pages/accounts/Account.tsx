@@ -9,6 +9,7 @@ import SEO from "../../components/seo/seo";
 import Stats from "../../components/stats/stats";
 import StatsItem from "../../components/stats/stats.item";
 import formatCurrency from "../../utils/formatCurrency";
+import { deleteAccount, getAccountById } from "./AccountService";
 
 interface IProps {
   handleDelete(): void;
@@ -34,21 +35,13 @@ const Account = (): JSX.Element => {
 
   useEffect(() => {
     const fetchAccount = async () => {
-      const rawAccount = await fetch(`/api/account/${id}`);
-      setAccount((await rawAccount.json()).payload);
+      setAccount(await getAccountById(id));
     };
     fetchAccount();
   }, [id]);
 
   const handleDelete = async () => {
-    await fetch(`/api/account/${id}`, {
-      method: "DELETE",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    });
-
+    await deleteAccount(id);
     history.push("/accounts");
   };
 

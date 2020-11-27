@@ -28,6 +28,7 @@
         "endOfLine": "auto"
       }
     ],
-    "react/require-default-props": "off"
+    "react/require-default-props": "off",
+    "no-underscore-dangle":  ["error", { "allow": ["_id"] }]
   }
 }
