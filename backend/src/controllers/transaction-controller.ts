@@ -1,4 +1,4 @@
-import { Response, Request } from "express";
+import { Response, Request, NextFunction } from "express";
 import { ITransactionModel } from "../models/transaction-model";
 
 import { IUserModel } from "../models/user-model";
@@ -6,7 +6,9 @@ import { findAccountsById } from "../services/account-service";
 import {
   createTransaction,
   findTransactionById,
+  findTransactionsAfterByAccount,
   findTransferTransactionsByUser,
+  increaseAccountTransactionBalanceAfterTargetDate,
 } from "../services/transaction-service";
 
 export const getTransaction = async (
@@ -67,6 +69,11 @@ export const deleteTransaction = async (
     if (fromAccount !== null) {
       fromAccount.balance += transaction.amount;
       await fromAccount.save();
+      await increaseAccountTransactionBalanceAfterTargetDate(
+        transaction.fromAccount,
+        new Date(transaction.date),
+        transaction.amount
+      );
     }
   }
   if (transaction.toAccount) {
@@ -74,6 +81,11 @@ export const deleteTransaction = async (
     if (toAccount !== null) {
       toAccount.balance -= transaction.amount;
       await toAccount.save();
+      await increaseAccountTransactionBalanceAfterTargetDate(
+        transaction.toAccount,
+        new Date(transaction.date),
+        -transaction.amount
+      );
     }
   }
 
@@ -82,9 +94,10 @@ export const deleteTransaction = async (
   res.status(200).json({ authenticated: true, status: 200 });
 };
 
-export const addTransaction = async (
+export const addTransfer = async (
   req: Request,
-  res: Response
+  res: Response,
+  next: NextFunction
 ): Promise<void> => {
   const user = req.user as IUserModel;
   const rawNewTransaction = req.body as ITransactionModel;
@@ -139,9 +152,73 @@ export const addTransaction = async (
     return;
   }
 
+  next();
+};
+
+export const addTransaction = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const getAccountTotalAmountAfterDate = async (
+    accountId: string,
+    date: Date
+  ): Promise<number> =>
+    (await findTransactionsAfterByAccount(accountId, date))?.reduce(
+      (prev, { toAccount, amount }) => {
+        const currentAmount =
+          typeof toAccount !== "undefined" &&
+          toAccount?.toString() === accountId?.toString()
+            ? -amount
+            : amount;
+        return prev + currentAmount;
+      },
+      0
+    ) || 0;
+
+  const user = req.user as IUserModel;
+  const rawNewTransaction = req.body as ITransactionModel;
+
+  let sourceAccount;
+  let targetAccount;
+  if (rawNewTransaction.fromAccount) {
+    sourceAccount = await findAccountsById(rawNewTransaction.fromAccount);
+  }
+  if (rawNewTransaction.toAccount) {
+    targetAccount = await findAccountsById(rawNewTransaction.toAccount);
+  }
+
+  let fromAccountTotalIncomeAfter = 0;
+  if (rawNewTransaction.fromAccount) {
+    await increaseAccountTransactionBalanceAfterTargetDate(
+      rawNewTransaction.fromAccount,
+      new Date(rawNewTransaction.date),
+      -rawNewTransaction.amount
+    );
+    fromAccountTotalIncomeAfter = await getAccountTotalAmountAfterDate(
+      rawNewTransaction.fromAccount,
+      new Date(rawNewTransaction.date)
+    );
+  }
+
+  let toAccountTotalIncomeAfter = 0;
+  if (rawNewTransaction.toAccount) {
+    await increaseAccountTransactionBalanceAfterTargetDate(
+      rawNewTransaction.toAccount,
+      new Date(rawNewTransaction.date),
+      rawNewTransaction.amount
+    );
+    toAccountTotalIncomeAfter = await getAccountTotalAmountAfterDate(
+      rawNewTransaction.toAccount,
+      new Date(rawNewTransaction.date)
+    );
+  }
+
   rawNewTransaction.user = user.id;
-  rawNewTransaction.fromAccountBalance = sourceAccount?.balance;
-  rawNewTransaction.toAccountBalance = targetAccount?.balance;
+  rawNewTransaction.fromAccountBalance =
+    (sourceAccount?.balance || 0) + fromAccountTotalIncomeAfter;
+
+  rawNewTransaction.toAccountBalance =
+    (targetAccount?.balance || 0) + toAccountTotalIncomeAfter;
 
   if (sourceAccount) {
     sourceAccount.balance -= rawNewTransaction.amount;
