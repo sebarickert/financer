@@ -1,12 +1,9 @@
-import { Response, Request } from "express";
+import { Response, Request, NextFunction } from "express";
 import { ITransactionModel } from "../models/transaction-model";
 
 import { IUserModel } from "../models/user-model";
 import { findAccountsById } from "../services/account-service";
-import {
-  createTransaction,
-  findExpenseTransactionsByUser,
-} from "../services/transaction-service";
+import { findExpenseTransactionsByUser } from "../services/transaction-service";
 
 export const listUserExpenses = async (
   req: Request,
@@ -19,7 +16,8 @@ export const listUserExpenses = async (
 
 export const addExpense = async (
   req: Request,
-  res: Response
+  res: Response,
+  next: NextFunction
 ): Promise<void> => {
   const user = req.user as IUserModel;
   const rawNewExpense = req.body as ITransactionModel;
@@ -57,17 +55,5 @@ export const addExpense = async (
     return;
   }
 
-  rawNewExpense.user = user.id;
-  rawNewExpense.fromAccountBalance = sourceAccount?.balance;
-
-  if (sourceAccount) {
-    sourceAccount.balance -= rawNewExpense.amount;
-    await sourceAccount.save();
-  }
-
-  const newTransaction = await createTransaction(rawNewExpense);
-
-  res
-    .status(201)
-    .json({ authorized: true, status: 201, payload: newTransaction });
+  next();
 };

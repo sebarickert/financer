@@ -6,13 +6,14 @@ import {
 import {
   getTransaction,
   deleteTransaction,
+  addTransaction,
 } from "../controllers/transaction-controller";
 
 const router = Router();
 
 router.get("/", listUserExpenses);
 
-router.post("/", addExpense);
+router.post("/", addExpense, addTransaction);
 
 router.get("/:id", getTransaction);
 
