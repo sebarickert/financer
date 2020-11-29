@@ -51,6 +51,22 @@ export const findTransactionsByAccount = async (
     ],
   });
 
+export const findTransactionsAfterByAccount = async (
+  accountId: string,
+  date: Date
+): Promise<ITransactionModel[] | null> =>
+  transactionModel.find({
+    date: { $gt: date },
+    $or: [
+      {
+        fromAccount: accountId,
+      },
+      {
+        toAccount: accountId,
+      },
+    ],
+  });
+
 export const findTransactionsByUser = async (
   userId: string
 ): Promise<ITransactionModel[] | null> =>
@@ -62,3 +78,18 @@ export const findTransactionsByUser = async (
 export const DANGER_truncateTransactionsByUser = async (
   userId: string
 ): Promise<void> => transactionModel.deleteMany({ user: userId });
+
+export const increaseAccountTransactionBalanceAfterTargetDate = async (
+  accountId: string,
+  date: Date,
+  amount: number
+): Promise<void> => {
+  await transactionModel.updateMany(
+    { fromAccount: accountId, date: { $gt: date } },
+    { $inc: { fromAccountBalance: amount } }
+  );
+  await transactionModel.updateMany(
+    { toAccount: accountId, date: { $gt: date } },
+    { $inc: { toAccountBalance: amount } }
+  );
+};
