@@ -8,11 +8,26 @@ import ModalConfirm from "../../components/modal/confirm/modal.confirm";
 import SEO from "../../components/seo/seo";
 import Stats from "../../components/stats/stats";
 import StatsItem from "../../components/stats/stats.item";
+import Table, { ITableHead } from "../../components/table/table";
 import formatCurrency from "../../utils/formatCurrency";
-import { deleteAccount, getAccountById } from "./AccountService";
+import { formatDate } from "../../utils/formatDate";
+import {
+  deleteAccount,
+  getAccountById,
+  getAccountTransactions,
+} from "./AccountService";
 
 interface IProps {
   handleDelete(): void;
+}
+
+interface ITransactionsOutput {
+  type: string;
+  description: string;
+  amount: string;
+  balance: string;
+  date: Date;
+  dateStr: string;
 }
 
 const AccountDeleteModal = ({ handleDelete }: IProps) => (
@@ -31,13 +46,59 @@ const AccountDeleteModal = ({ handleDelete }: IProps) => (
 const Account = (): JSX.Element => {
   const history = useHistory();
   const [account, setAccount] = useState<IAccount | undefined>(undefined);
+  const [transactions, setTransactions] = useState<
+    ITransactionsOutput[] | null
+  >(null);
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
     const fetchAccount = async () => {
       setAccount(await getAccountById(id));
     };
+
+    const fetchTransactions = async () => {
+      const rawTransactions = (await getAccountTransactions(id)).payload;
+
+      setTransactions(
+        rawTransactions
+          .map(
+            ({
+              date: dateStr,
+              fromAccount,
+              toAccount,
+              description = "Unknown",
+              amount,
+              fromAccountBalance = 0,
+              toAccountBalance = 0,
+            }) => {
+              const date = new Date(dateStr);
+              if (toAccount === id) {
+                return {
+                  description,
+                  type: fromAccount === null ? "Income" : "Transfer",
+                  amount: formatCurrency(amount),
+                  date,
+                  dateStr: formatDate(date),
+                  balance: formatCurrency(toAccountBalance),
+                };
+              }
+
+              return {
+                description,
+                type: toAccount === null ? "Expense" : "Transfer",
+                amount: formatCurrency(-amount),
+                date,
+                dateStr: formatDate(date),
+                balance: formatCurrency(fromAccountBalance),
+              };
+            }
+          )
+          .sort((a, b) => (a.date > b.date ? -1 : 1))
+      );
+    };
+
     fetchAccount();
+    fetchTransactions();
   }, [id]);
 
   const handleDelete = async () => {
@@ -45,7 +106,15 @@ const Account = (): JSX.Element => {
     history.push("/accounts");
   };
 
-  return typeof account === "undefined" ? (
+  const tableHeads: ITableHead[] = [
+    { key: "type", label: "Type" },
+    { key: "amount", label: "Amount" },
+    { key: "description", label: "Description" },
+    { key: "balance", label: "Balance" },
+    { key: "dateStr", label: "Date" },
+  ];
+
+  return typeof account === "undefined" || transactions === null ? (
     <Loader loaderColor="blue" />
   ) : (
     <>
@@ -68,6 +137,15 @@ const Account = (): JSX.Element => {
         </StatsItem>
         <StatsItem statLabel="Type">{account.type}</StatsItem>
       </Stats>
+      <div className="mt-12">
+        <Table
+          label="Account transactions"
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          rows={transactions as any}
+          dataKeyColumn="_id"
+          tableHeads={tableHeads}
+        />
+      </div>
     </>
   );
 };
