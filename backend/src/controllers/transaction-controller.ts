@@ -6,6 +6,7 @@ import { findAccountsById } from "../services/account-service";
 import {
   createTransaction,
   findTransactionById,
+  findTransferTransactionsByUser,
 } from "../services/transaction-service";
 
 export const getTransaction = async (req: Request, res: Response) => {
@@ -147,4 +148,21 @@ export const addTransaction = async (req: Request, res: Response) => {
   res
     .status(201)
     .json({ authorized: true, status: 201, payload: newTransaction });
+};
+
+export const getTransfers = async (req: Request, res: Response) => {
+  const user = req.user as IUserModel;
+  const transfers = await findTransferTransactionsByUser(user.id);
+
+  if (transfers === null) {
+    res.status(404).json({
+      authenticated: true,
+      status: 404,
+      errors: ["Transaction not found."],
+    });
+    return;
+  }
+  res
+    .status(200)
+    .json({ authenticated: true, status: 200, payload: transfers });
 };
