@@ -1,5 +1,6 @@
 interface IApiResponse<T> {
+  authenticated: boolean;
+  errors?: string[];
+  payload: T;
   status: number;
-  error: string[];
-  payload: T
 }

@@ -15,7 +15,7 @@ const AddExpense = (): JSX.Element => {
       if (newExpenseJson.status === 201) {
         history.push("/expenses");
       } else if (newExpenseJson.status === 400) {
-        setErrors(newExpenseJson.errors);
+        setErrors(newExpenseJson?.errors || ["Unknown error."]);
       }
     } catch (error) {
       // eslint-disable-next-line no-console
