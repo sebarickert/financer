@@ -2,9 +2,7 @@ import React from "react";
 
 import TableBodyItem from "./table.body.item";
 
-export type IRow = {
-  [key in string]: string | number | JSX.Element;
-};
+export type IRow = Record<string, string | number | JSX.Element>;
 
 interface IProps {
   keys: string[];
