@@ -10,8 +10,7 @@ export const getExpenseById = async (id: string): Promise<IExpense> => {
 
 export const addExpense = async (
   newExpenseData: IExpense
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-): Promise<any> => {
+): Promise<IApiResponse<IExpense>> => {
   const newExpense = await fetch("/api/expense", {
     method: "POST",
     headers: {

@@ -31,7 +31,7 @@ const EditAccount = (): JSX.Element => {
       if (newAccount.status === 200) {
         history.push(`/accounts/${id}`);
       } else if (newAccount.status === 400) {
-        setErrors(newAccount.errors);
+        setErrors(newAccount?.errors || ["Unknown error."]);
       }
     } catch (error) {
       // eslint-disable-next-line no-console

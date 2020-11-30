@@ -15,7 +15,7 @@ const AddIncome = (): JSX.Element => {
       if (newIncome.status === 201) {
         history.push("/incomes");
       } else if (newIncome.status === 400) {
-        setErrors(newIncome.errors);
+        setErrors(newIncome?.errors || ["Unknown error."]);
       }
     } catch (error) {
       // eslint-disable-next-line no-console
