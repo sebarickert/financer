@@ -48,3 +48,10 @@ export const deleteAccount = async (id: string): Promise<void> => {
     },
   });
 };
+
+export const getAccountTransactions = async (
+  id: string
+): Promise<IApiResponse<ITransaction[]>> => {
+  const transactions = await fetch(`/api/account/${id}/transactions`);
+  return transactions.json();
+};
