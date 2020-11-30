@@ -14,3 +14,9 @@ export const addTransaction = async (
 
   return newTransaction.json();
 };
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const getAllTransferTranscations = async (): Promise<any> => {
+  const transfers = await fetch("/api/transaction/transfers");
+  return transfers.json();
+};
