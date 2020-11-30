@@ -36,3 +36,17 @@ export const findTransferTransactionsByUser = async (
     fromAccount: { $ne: undefined },
     toAccount: { $ne: undefined },
   });
+
+export const findTransactionsByAccount = async (
+  accountId: string
+): Promise<ITransactionModel[] | null> =>
+  transactionModel.find({
+    $or: [
+      {
+        fromAccount: accountId,
+      },
+      {
+        toAccount: accountId,
+      },
+    ],
+  });

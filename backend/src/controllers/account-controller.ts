@@ -7,6 +7,7 @@ import {
   findAccountsById,
   findAccountsByUser,
 } from "../services/account-service";
+import { findTransactionsByAccount } from "../services/transaction-service";
 
 export const listAccounts = async (req: Request, res: Response) => {
   const user = req.user as IUserModel;
@@ -138,4 +139,34 @@ export const updateAccount = async (req: Request, res: Response) => {
   await account?.save();
 
   res.status(200).json({ authenticated: true, status: 200 });
+};
+
+export const getAllAccountTransactions = async (
+  req: Request,
+  res: Response
+) => {
+  const user = req.user as IUserModel;
+  const accountId = req.params.id;
+  const account = await findAccountsById(accountId);
+
+  if (account === null) {
+    res.status(404).json({
+      authenticated: true,
+      status: 404,
+      errors: ["Account not found."],
+    });
+    return;
+  }
+  if (`${account?.owner}` !== `${user._id}`) {
+    res.status(403).json({
+      authenticated: true,
+      status: 403,
+      errors: ["Not authorized to view that account."],
+    });
+    return;
+  }
+  const transactions = await findTransactionsByAccount(accountId);
+  res
+    .status(200)
+    .json({ authenticated: true, status: 200, payload: transactions });
 };
