@@ -9,6 +9,7 @@ import Table, { ITableHead } from "../../components/table/table";
 import { TAddiotinalLabel } from "../../components/table/table.header";
 import formatCurrency from "../../utils/formatCurrency";
 import { getAllAccounts } from "./AccountService";
+import TransferList from "./TransferList";
 
 const Accounts = (): JSX.Element => {
   const [accountsRaw, setAccountsRaw] = useState<IAccount[] | null>(null);
@@ -89,6 +90,7 @@ const Accounts = (): JSX.Element => {
           dataKeyColumn="_id"
         />
       </div>
+      <TransferList className="mt-12" />
     </>
   );
 };
