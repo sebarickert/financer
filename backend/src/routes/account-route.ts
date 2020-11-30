@@ -4,6 +4,7 @@ import {
   addAccount,
   deleteAccount,
   getAccount,
+  getAllAccountTransactions,
   listAccounts,
   updateAccount,
 } from "../controllers/account-controller";
@@ -20,5 +21,7 @@ router.post("/", authCheck, addAccount);
 router.delete("/:id", authCheck, deleteAccount);
 
 router.put("/:id", authCheck, updateAccount);
+
+router.get("/:id/transactions", authCheck, getAllAccountTransactions);
 
 export default router;
