@@ -51,7 +51,7 @@ const AccountTransfer = (): JSX.Element => {
       if (newTransaction.status === 201) {
         history.push("/accounts");
       } else if (newTransaction.status === 400) {
-        setErrors(newTransaction.errors);
+        setErrors(newTransaction?.errors || ["Unknown error."]);
       }
     } catch (error) {
       // eslint-disable-next-line no-console

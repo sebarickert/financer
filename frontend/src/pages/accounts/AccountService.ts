@@ -10,8 +10,7 @@ export const getAccountById = async (id: string): Promise<IAccount> => {
 
 export const addAccount = async (
   newAccountData: IAccount
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-): Promise<any> => {
+): Promise<IApiResponse<IAccount>> => {
   const newAccount = await fetch("/api/account", {
     method: "POST",
     headers: {
@@ -27,8 +26,7 @@ export const addAccount = async (
 export const editAccount = async (
   id: string,
   targetAccountData: IAccount
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-): Promise<any> => {
+): Promise<IApiResponse<IAccount>> => {
   const targetAccount = await fetch(`/api/account/${id}`, {
     method: "PUT",
     headers: {

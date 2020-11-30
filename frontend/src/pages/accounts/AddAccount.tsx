@@ -15,7 +15,7 @@ const AddAccount = (): JSX.Element => {
       if (newAccount.status === 201) {
         history.push("/accounts");
       } else if (newAccount.status === 400) {
-        setErrors(newAccount.errors);
+        setErrors(newAccount?.errors || ["Unknown error."]);
       }
     } catch (error) {
       // eslint-disable-next-line no-console

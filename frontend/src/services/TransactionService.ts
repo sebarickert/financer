@@ -1,8 +1,7 @@
 // eslint-disable-next-line import/prefer-default-export
 export const addTransaction = async (
   newTransactionData: ITransaction
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-): Promise<any> => {
+): Promise<IApiResponse<ITransaction>> => {
   const newTransaction = await fetch("/api/transaction", {
     method: "POST",
     headers: {
@@ -15,8 +14,9 @@ export const addTransaction = async (
   return newTransaction.json();
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const getAllTransferTranscations = async (): Promise<any> => {
+export const getAllTransferTranscations = async (): Promise<
+  IApiResponse<ITransaction[]>
+> => {
   const transfers = await fetch("/api/transaction/transfers");
   return transfers.json();
 };

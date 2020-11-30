@@ -10,8 +10,7 @@ export const getIncomeById = async (id: string): Promise<IIncome> => {
 
 export const addIncome = async (
   newIncomeData: IIncome
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-): Promise<any> => {
+): Promise<IApiResponse<IIncome>> => {
   const newIncome = await fetch("/api/income", {
     method: "POST",
     headers: {
