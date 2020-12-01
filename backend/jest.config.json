@@ -1,0 +1,8 @@
+{
+  "preset": "ts-jest",
+  "testEnvironment": "node",
+  "testRegex": "(/__tests__/.*(test|spec))\\.(ts?)$",
+  "globalSetup": "<rootDir>/src/__tests__/setup.ts",
+  "globalTeardown": "<rootDir>/src/__tests__/teardown.ts",
+  "setupFilesAfterEnv": ["<rootDir>/src/__tests__/setupAfterEnv.ts"]
+}
