@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import formatCurrency from "../../utils/formatCurrency";
 
-export interface IExpenseOutput
+export interface IIncomeOutput
   extends Omit<IExpense, "date" | "amount" | "_id"> {
   _id: string;
   actions: JSX.Element;
@@ -11,7 +11,7 @@ export interface IExpenseOutput
   amount: string;
 }
 
-export interface IExpensesPerMonth {
+export interface IIncomesPerMonth {
   month: number;
   total: number;
   year: number;
@@ -19,22 +19,22 @@ export interface IExpensesPerMonth {
   rows: any[];
 }
 
-export const groupExpensesByMonth = (
-  dateStack: IExpensesPerMonth[],
+export const groupIncomesByMonth = (
+  dateStack: IIncomesPerMonth[],
   { _id, amount, date: dateRaw, ...expenseRest }: IExpense
-): IExpensesPerMonth[] => {
+): IIncomesPerMonth[] => {
   const date = new Date(dateRaw);
   const month = date.getMonth();
   const year = date.getFullYear();
 
-  const expense: IExpenseOutput = {
+  const expense: IIncomeOutput = {
     ...expenseRest,
     _id,
     amount: formatCurrency(amount),
     date,
     actions: (
       <Link
-        to={`/expenses/${_id}`}
+        to={`/incomes/${_id}`}
         className="focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-sm"
       >
         View
@@ -78,9 +78,9 @@ export const groupExpensesByMonth = (
   });
 };
 
-export const sortExpenseStacksByMonth = (
-  a: IExpensesPerMonth,
-  b: IExpensesPerMonth
+export const sortIncomeStacksByMonth = (
+  a: IIncomesPerMonth,
+  b: IIncomesPerMonth
 ): 0 | 1 | -1 => {
   if (a.year > b.year) {
     return -1;
@@ -101,9 +101,9 @@ export const sortExpenseStacksByMonth = (
   return 0;
 };
 
-export const sortExpensesByDate = (
-  stack: IExpensesPerMonth
-): IExpensesPerMonth => {
+export const sortIncomesByDate = (
+  stack: IIncomesPerMonth
+): IIncomesPerMonth => {
   stack.rows.sort((a, b) => (a.date > b.date ? -1 : 1));
   return stack;
 };
