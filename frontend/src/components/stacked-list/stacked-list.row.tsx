@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 
 type Tag = { label: string; color: "blue" | "red" | "green" };
 
+export interface ICustomStackedListRowProps extends IStackedListRowProps {
+  date: Date;
+}
 export interface IStackedListRowProps {
   additionalInformation?: string[];
   additionalLabel?: string;
