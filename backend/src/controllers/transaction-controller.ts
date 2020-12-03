@@ -9,7 +9,10 @@ import {
   findTransferTransactionsByUser,
 } from "../services/transaction-service";
 
-export const getTransaction = async (req: Request, res: Response) => {
+export const getTransaction = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   const user = req.user as IUserModel;
   const transactionId = req.params.id;
   const transaction = await findTransactionById(transactionId);
@@ -35,7 +38,10 @@ export const getTransaction = async (req: Request, res: Response) => {
     .json({ authenticated: true, status: 200, payload: transaction });
 };
 
-export const deleteTransaction = async (req: Request, res: Response) => {
+export const deleteTransaction = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   const user = req.user as IUserModel;
   const transactionId = req.params.id;
   const transaction = await findTransactionById(transactionId);
@@ -76,7 +82,10 @@ export const deleteTransaction = async (req: Request, res: Response) => {
   res.status(200).json({ authenticated: true, status: 200 });
 };
 
-export const addTransaction = async (req: Request, res: Response) => {
+export const addTransaction = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   const user = req.user as IUserModel;
   const rawNewTransaction = req.body as ITransactionModel;
 
@@ -150,7 +159,10 @@ export const addTransaction = async (req: Request, res: Response) => {
     .json({ authorized: true, status: 201, payload: newTransaction });
 };
 
-export const getTransfers = async (req: Request, res: Response) => {
+export const getTransfers = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   const user = req.user as IUserModel;
   const transfers = await findTransferTransactionsByUser(user.id);
 
