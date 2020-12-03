@@ -3,11 +3,11 @@ import Button from "../../components/button/button";
 import Hero from "../../components/hero/hero";
 import Loader from "../../components/loader/loader";
 import SEO from "../../components/seo/seo";
-import Table, { ITableHead } from "../../components/table/table";
+import StackedList from "../../components/stacked-list/stacked-list";
 import { TAddiotinalLabel } from "../../components/table/table.header";
 import monthNames from "../../constants/months";
 import formatCurrency from "../../utils/formatCurrency";
-import { formatDate } from "../../utils/formatDate";
+import { getAllAccounts } from "../accounts/AccountService";
 import {
   groupIncomesByMonth,
   IIncomesPerMonth,
@@ -19,31 +19,31 @@ import { getAllIncomes } from "./IncomeService";
 const Incomes = (): JSX.Element => {
   const [incomesRaw, setIncomesRaw] = useState<IIncome[] | null>(null);
   const [incomes, setIncomes] = useState<IIncomesPerMonth[]>([]);
+  const [accounts, setAccounts] = useState<IAccount[] | null>(null);
 
   useEffect(() => {
     const fetchIncomes = async () => {
       setIncomesRaw(await getAllIncomes());
     };
+
+    const fetchAccounts = async () => {
+      setAccounts(await getAllAccounts());
+    };
+
+    fetchAccounts();
     fetchIncomes();
   }, []);
 
   useEffect(() => {
-    if (incomesRaw === null) return;
+    if (incomesRaw === null || accounts === null) return;
 
     setIncomes(
       incomesRaw
-        .reduce<IIncomesPerMonth[]>(groupIncomesByMonth, [])
+        .reduce<IIncomesPerMonth[]>(groupIncomesByMonth(accounts), [])
         .sort(sortIncomeStacksByMonth)
         .map(sortIncomesByDate)
     );
-  }, [incomesRaw]);
-
-  const tableHeads: ITableHead[] = [
-    { key: "description", label: "Description" },
-    { key: "amount", label: "Amount" },
-    { key: "date", label: "Date" },
-    { key: "actions", label: "" },
-  ];
+  }, [incomesRaw, accounts]);
 
   const getAddiotinalLabel = (total: number): TAddiotinalLabel => ({
     label: `${Number.isNaN(total) ? "-" : formatCurrency(total)}`,
@@ -66,15 +66,10 @@ const Incomes = (): JSX.Element => {
       </div>
       {incomes.map(({ year, month, rows, total }) => (
         <div className="mt-12" key={`${year}-${month}`}>
-          <Table
+          <StackedList
             addiotinalLabel={getAddiotinalLabel(total)}
             label={`${monthNames[month]}, ${year}`}
-            rows={rows.map(({ date, ...rest }) => ({
-              ...rest,
-              date: formatDate(date),
-            }))}
-            tableHeads={tableHeads}
-            dataKeyColumn="_id"
+            rows={rows}
           />
         </div>
       ))}

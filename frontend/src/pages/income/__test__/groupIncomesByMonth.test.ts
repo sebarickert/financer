@@ -30,8 +30,18 @@ const testData: IIncome[] = [
   },
 ];
 
+const accountData: IAccount[] = [
+  {
+    _id: "5fbd39c804bcfa18c50dbf31",
+    balance: -123345.99999999895,
+    name: "Säästötili",
+    type: "savings",
+    owner: "5fbd378ede5ab913b62a75f3",
+  },
+];
+
 test("Should calculate correct total after month change", () => {
-  const incomesPerMonth = testData.reduce(groupIncomesByMonth, []);
+  const incomesPerMonth = testData.reduce(groupIncomesByMonth(accountData), []);
 
   const firstMonth = incomesPerMonth.find(
     ({ month, year }) => month === 10 && year === 2020

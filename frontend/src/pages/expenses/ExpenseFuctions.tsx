@@ -1,10 +1,6 @@
-import { IStackedListRowProps } from "../../components/stacked-list/stacked-list.row";
+import { ICustomStackedListRowProps } from "../../components/stacked-list/stacked-list.row";
 import formatCurrency from "../../utils/formatCurrency";
 import { formatDate } from "../../utils/formatDate";
-
-interface ICustomStackedListRowProps extends IStackedListRowProps {
-  date: Date;
-}
 
 export interface IExpensesPerMonth {
   month: number;

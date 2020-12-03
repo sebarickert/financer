@@ -1,45 +1,45 @@
-import React from "react";
-
-import { Link } from "react-router-dom";
+import { ICustomStackedListRowProps } from "../../components/stacked-list/stacked-list.row";
 import formatCurrency from "../../utils/formatCurrency";
-
-export interface IIncomeOutput
-  extends Omit<IExpense, "date" | "amount" | "_id"> {
-  _id: string;
-  actions: JSX.Element;
-  date: Date;
-  amount: string;
-}
+import { formatDate } from "../../utils/formatDate";
 
 export interface IIncomesPerMonth {
   month: number;
   total: number;
   year: number;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  rows: any[];
+  rows: ICustomStackedListRowProps[];
 }
 
-export const groupIncomesByMonth = (
+export const groupIncomesByMonth = (accounts: IAccount[]) => (
   dateStack: IIncomesPerMonth[],
-  { _id, amount, date: dateRaw, ...expenseRest }: IExpense
+  {
+    _id,
+    amount,
+    date: dateRaw,
+    description,
+    toAccount,
+    toAccountBalance,
+  }: IIncome
 ): IIncomesPerMonth[] => {
   const date = new Date(dateRaw);
   const month = date.getMonth();
   const year = date.getFullYear();
 
-  const expense: IIncomeOutput = {
-    ...expenseRest,
-    _id,
-    amount: formatCurrency(amount),
+  const getAccountNameById = (targetId: string): string =>
+    accounts.find(({ _id: accountId }) => accountId === targetId)?.name ||
+    "unknown";
+
+  const income: ICustomStackedListRowProps = {
+    label: description,
+    link: `/incomes/${_id}`,
+    additionalLabel: formatCurrency(amount),
+    additionalInformation: [
+      formatDate(date),
+      `${getAccountNameById(toAccount || "")} (${formatCurrency(
+        toAccountBalance || 0
+      )})`,
+    ],
     date,
-    actions: (
-      <Link
-        to={`/incomes/${_id}`}
-        className="focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-sm"
-      >
-        View
-      </Link>
-    ),
+    id: _id,
   };
 
   const isMonthInDateStack = dateStack.some(
@@ -64,7 +64,7 @@ export const groupIncomesByMonth = (
           ? stackTotal + amount
           : stackTotal,
         rows: isTargetMonthAndYear(stackYear, stackMonth)
-          ? [...stackRows, expense]
+          ? [...stackRows, income]
           : stackRows,
       })
     );
@@ -74,7 +74,7 @@ export const groupIncomesByMonth = (
     year,
     month,
     total: amount,
-    rows: [expense],
+    rows: [income],
   });
 };
 
