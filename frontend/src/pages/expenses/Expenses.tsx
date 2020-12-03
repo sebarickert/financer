@@ -3,11 +3,11 @@ import Button from "../../components/button/button";
 import Hero from "../../components/hero/hero";
 import Loader from "../../components/loader/loader";
 import SEO from "../../components/seo/seo";
-import Table, { ITableHead } from "../../components/table/table";
+import StackedList from "../../components/stacked-list/stacked-list";
 import { TAddiotinalLabel } from "../../components/table/table.header";
 import monthNames from "../../constants/months";
 import formatCurrency from "../../utils/formatCurrency";
-import { formatDate } from "../../utils/formatDate";
+import { getAllAccounts } from "../accounts/AccountService";
 import {
   groupExpensesByMonth,
   IExpensesPerMonth,
@@ -19,31 +19,31 @@ import { getAllExpenses } from "./ExpenseService";
 const Expenses = (): JSX.Element => {
   const [expensesRaw, setExpensesRaw] = useState<IExpense[] | null>(null);
   const [expenses, setExpenses] = useState<IExpensesPerMonth[]>([]);
+  const [accounts, setAccounts] = useState<IAccount[] | null>(null);
 
   useEffect(() => {
     const fetchExpenses = async () => {
       setExpensesRaw(await getAllExpenses());
     };
+
+    const fetchAccounts = async () => {
+      setAccounts(await getAllAccounts());
+    };
+
+    fetchAccounts();
     fetchExpenses();
   }, []);
 
   useEffect(() => {
-    if (expensesRaw === null) return;
+    if (expensesRaw === null || accounts === null) return;
 
     setExpenses(
       expensesRaw
-        .reduce<IExpensesPerMonth[]>(groupExpensesByMonth, [])
+        .reduce<IExpensesPerMonth[]>(groupExpensesByMonth(accounts), [])
         .sort(sortExpenseStacksByMonth)
         .map(sortExpensesByDate)
     );
-  }, [expensesRaw]);
-
-  const tableHeads: ITableHead[] = [
-    { key: "description", label: "Description" },
-    { key: "amount", label: "Amount" },
-    { key: "date", label: "Date" },
-    { key: "actions", label: "" },
-  ];
+  }, [expensesRaw, accounts]);
 
   const getAddiotinalLabel = (total: number): TAddiotinalLabel => ({
     label: `${Number.isNaN(total) ? "-" : formatCurrency(total)}`,
@@ -66,15 +66,10 @@ const Expenses = (): JSX.Element => {
       </div>
       {expenses.map(({ year, month, rows, total }) => (
         <div className="mt-12" key={`${year}-${month}`}>
-          <Table
+          <StackedList
             addiotinalLabel={getAddiotinalLabel(total)}
             label={`${monthNames[month]}, ${year}`}
-            rows={rows.map(({ date, ...rest }) => ({
-              ...rest,
-              date: formatDate(date),
-            }))}
-            tableHeads={tableHeads}
-            dataKeyColumn="_id"
+            rows={rows}
           />
         </div>
       ))}
