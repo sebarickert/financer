@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 
-import app from "./server";
 import "./config/load-env";
 import "./config/passport-setup";
 import { MONGODB_URI } from "./config/keys";
+import app from "./server";
 
 const port = 4000; // default port to listen
 
