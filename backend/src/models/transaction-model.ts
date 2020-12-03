@@ -4,6 +4,7 @@ import { USER_MODEL_NAME } from "./user-model";
 
 export const TRANSACTION_MODEL_NAME = "transaction";
 export interface ITransactionModel extends Document, ITransaction {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   _id: any;
 }
 
