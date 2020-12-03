@@ -8,13 +8,16 @@ import {
   findIncomeTransactionsByUser,
 } from "../services/transaction-service";
 
-export const listUserIncomes = async (req: Request, res: Response) => {
+export const listUserIncomes = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   const user = req.user as IUserModel;
   const allIncomes = await findIncomeTransactionsByUser(user.id);
   res.status(200).json(allIncomes);
 };
 
-export const addIncome = async (req: Request, res: Response) => {
+export const addIncome = async (req: Request, res: Response): Promise<void> => {
   const user = req.user as IUserModel;
   const rawNewIncome = req.body as ITransactionModel;
 

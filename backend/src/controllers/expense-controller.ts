@@ -8,13 +8,19 @@ import {
   findExpenseTransactionsByUser,
 } from "../services/transaction-service";
 
-export const listUserExpenses = async (req: Request, res: Response) => {
+export const listUserExpenses = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   const user = req.user as IUserModel;
   const allIncomes = await findExpenseTransactionsByUser(user.id);
   res.status(200).json(allIncomes);
 };
 
-export const addExpense = async (req: Request, res: Response) => {
+export const addExpense = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   const user = req.user as IUserModel;
   const rawNewExpense = req.body as ITransactionModel;
 

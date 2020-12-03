@@ -9,13 +9,19 @@ import {
 } from "../services/account-service";
 import { findTransactionsByAccount } from "../services/transaction-service";
 
-export const listAccounts = async (req: Request, res: Response) => {
+export const listAccounts = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   const user = req.user as IUserModel;
   const allAccounts = await findAccountsByUser(user.id);
   res.status(200).json(allAccounts);
 };
 
-export const getAccount = async (req: Request, res: Response) => {
+export const getAccount = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   const user = req.user as IUserModel;
   const accountId = req.params.id;
   const account = await findAccountsById(accountId);
@@ -39,7 +45,10 @@ export const getAccount = async (req: Request, res: Response) => {
   res.status(200).json({ authenticated: true, status: 200, payload: account });
 };
 
-export const addAccount = async (req: Request, res: Response) => {
+export const addAccount = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   const user = req.user as IUserModel;
   const newAccountData = req.body as IAccountModel;
 
@@ -75,7 +84,10 @@ export const addAccount = async (req: Request, res: Response) => {
   res.status(201).json({ authorized: true, status: 201, payload: newAccount });
 };
 
-export const deleteAccount = async (req: Request, res: Response) => {
+export const deleteAccount = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   const user = req.user as IUserModel;
   const accountId = req.params.id;
   const account = await findAccountsById(accountId);
@@ -102,7 +114,10 @@ export const deleteAccount = async (req: Request, res: Response) => {
   res.status(200).json({ authenticated: true, status: 200 });
 };
 
-export const updateAccount = async (req: Request, res: Response) => {
+export const updateAccount = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   const user = req.user as IUserModel;
   const accountId = req.params.id;
   const modifiedAccountData = req.body as IAccountModel;
@@ -144,7 +159,7 @@ export const updateAccount = async (req: Request, res: Response) => {
 export const getAllAccountTransactions = async (
   req: Request,
   res: Response
-) => {
+): Promise<void> => {
   const user = req.user as IUserModel;
   const accountId = req.params.id;
   const account = await findAccountsById(accountId);
