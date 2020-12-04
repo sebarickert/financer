@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import Button from "../../components/button/button";
 import ButtonGroup from "../../components/button/button.group";
 import Hero from "../../components/hero/hero";
 import Loader from "../../components/loader/loader";
 import SEO from "../../components/seo/seo";
-import Table, { ITableHead } from "../../components/table/table";
+import StackedList from "../../components/stacked-list/stacked-list";
+import { IStackedListRowProps } from "../../components/stacked-list/stacked-list.row";
 import { TAddiotinalLabel } from "../../components/table/table.header";
 import formatCurrency from "../../utils/formatCurrency";
 import { getAllAccounts } from "./AccountService";
@@ -13,8 +13,7 @@ import TransferList from "./TransferList";
 
 const Accounts = (): JSX.Element => {
   const [accountsRaw, setAccountsRaw] = useState<IAccount[] | null>(null);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [accounts, setAccounts] = useState<any[]>([]);
+  const [accounts, setAccounts] = useState<IStackedListRowProps[]>([]);
   const [totalBalance, setTotalBalance] = useState<number>(NaN);
 
   useEffect(() => {
@@ -34,33 +33,20 @@ const Accounts = (): JSX.Element => {
     );
     setTotalBalance(total);
     setAccounts(
-      accountsRaw.map(({ _id, balance, ...account }) => ({
-        ...account,
-        _id,
-        balance: formatCurrency(balance),
-        actions: (
-          <Link
-            to={`/accounts/${_id}`}
-            className="focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-sm"
-          >
-            View
-          </Link>
-        ),
+      accountsRaw.map(({ _id, balance, name, type }) => ({
+        label: name,
+        link: `/accounts/${_id}`,
+        additionalLabel: formatCurrency(balance),
+        additionalInformation: [type.charAt(0).toUpperCase() + type.slice(1)],
+        id: _id,
       }))
     );
   }, [accountsRaw]);
 
-  const tableHeads: ITableHead[] = [
-    { key: "name", label: "Account" },
-    { key: "type", label: "Type" },
-    { key: "balance", label: "Balance" },
-    { key: "actions", label: "" },
-  ];
-
-  const addiotinalLabel: TAddiotinalLabel = {
-    label: `${Number.isNaN(totalBalance) ? "-" : formatCurrency(totalBalance)}`,
+  const getAddiotinalLabel = (total: number): TAddiotinalLabel => ({
+    label: `${Number.isNaN(total) ? "-" : formatCurrency(total)}`,
     accentLabel: "Total",
-  };
+  });
 
   return accountsRaw === null ? (
     <Loader loaderColor="blue" />
@@ -82,12 +68,10 @@ const Accounts = (): JSX.Element => {
         </ButtonGroup>
       </div>
       <div className="mt-12">
-        <Table
-          addiotinalLabel={addiotinalLabel}
+        <StackedList
+          addiotinalLabel={getAddiotinalLabel(totalBalance)}
           label="Your accounts"
           rows={accounts}
-          tableHeads={tableHeads}
-          dataKeyColumn="_id"
         />
       </div>
       <TransferList className="mt-12" />
