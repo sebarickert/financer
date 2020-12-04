@@ -25,18 +25,6 @@ const StackedListRow = ({
   const stackedListRowContent = (
     <div className="px-4 py-4 flex items-center">
       <div className="min-w-0 flex-1">
-        {tags && (
-          <div className="mb-2">
-            {tags.map(({ label: tagLabel, color }) => (
-              <p
-                className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-${color}-100 text-${color}-800`}
-                key={tagLabel}
-              >
-                {tagLabel}
-              </p>
-            ))}
-          </div>
-        )}
         <h3 className="text-base font-medium truncate">{label}</h3>
         {additionalInformation && (
           <div className="mt-2 flex flex-col sm:flex-row sm:items-center text-xs text-gray-500">
@@ -58,6 +46,18 @@ const StackedListRow = ({
       </div>
       {additionalLabel && (
         <div className="flex-shrink-0 pl-4">
+          {tags && (
+            <div className="mb-2 text-right">
+              {tags.map(({ label: tagLabel, color }) => (
+                <p
+                  className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-${color}-100 text-${color}-800`}
+                  key={tagLabel}
+                >
+                  {tagLabel}
+                </p>
+              ))}
+            </div>
+          )}
           <p className="font-medium">{additionalLabel}</p>
         </div>
       )}
