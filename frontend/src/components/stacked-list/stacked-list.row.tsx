@@ -26,7 +26,7 @@ const StackedListRow = ({
     <div className="px-4 py-4 flex items-center">
       <div className="min-w-0 flex-1">
         {tags && (
-          <div className="-m-2 mb-2">
+          <div className="mb-2">
             {tags.map(({ label: tagLabel, color }) => (
               <p
                 className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-${color}-100 text-${color}-800`}
