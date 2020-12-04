@@ -4,7 +4,7 @@ import { formatDate } from "../../utils/formatDate";
 import formatCurrency from "../../utils/formatCurrency";
 import { getAllAccounts } from "./AccountService";
 import StackedList from "../../components/stacked-list/stacked-list";
-import { IStackedListRowProps } from "../../components/stacked-list/stacked-list.row";
+import { ICustomStackedListRowProps } from "../../components/stacked-list/stacked-list.row";
 
 interface IProps {
   className?: string;
@@ -12,7 +12,7 @@ interface IProps {
 
 const TransferList = ({ className = "" }: IProps): JSX.Element => {
   const [transfersRaw, setTransfersRaw] = useState<ITransaction[] | null>(null);
-  const [transfers, setTransfers] = useState<IStackedListRowProps[]>([]);
+  const [transfers, setTransfers] = useState<ICustomStackedListRowProps[]>([]);
   const [accounts, setAccounts] = useState<IAccount[] | null>(null);
 
   useEffect(() => {
@@ -42,7 +42,7 @@ const TransferList = ({ className = "" }: IProps): JSX.Element => {
             fromAccountBalance,
             toAccountBalance,
             _id,
-          }) => {
+          }): ICustomStackedListRowProps => {
             const date = new Date(dateStr);
             const fromAccountName =
               accounts.find(
@@ -60,11 +60,18 @@ const TransferList = ({ className = "" }: IProps): JSX.Element => {
                 formatDate(date),
                 `${fromAccountName} (${formatCurrency(
                   fromAccountBalance || 0
+                )}) --> ${toAccountName} (${formatCurrency(
+                  toAccountBalance || 0
                 )})`,
-                `${toAccountName} (${formatCurrency(toAccountBalance || 0)})`,
               ],
               id: _id,
               date,
+              tags: [
+                {
+                  label: "Transfer",
+                  color: "blue",
+                },
+              ],
             };
           }
         )
