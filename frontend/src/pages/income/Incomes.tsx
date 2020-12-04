@@ -64,8 +64,9 @@ const Incomes = (): JSX.Element => {
           Add income
         </Button>
       </div>
+      <div className="mt-12" />
       {incomes.map(({ year, month, rows, total }) => (
-        <div className="mt-12" key={`${year}-${month}`}>
+        <div className="mt-6" key={`${year}-${month}`}>
           <StackedList
             addiotinalLabel={getAddiotinalLabel(total)}
             label={`${monthNames[month]}, ${year}`}
