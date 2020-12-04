@@ -1,25 +1,18 @@
 import React, { useEffect, useState } from "react";
-import Table, { ITableHead } from "../../components/table/table";
 import { getAllTransferTranscations } from "../../services/TransactionService";
 import { formatDate } from "../../utils/formatDate";
 import formatCurrency from "../../utils/formatCurrency";
 import { getAllAccounts } from "./AccountService";
+import StackedList from "../../components/stacked-list/stacked-list";
+import { IStackedListRowProps } from "../../components/stacked-list/stacked-list.row";
 
 interface IProps {
   className?: string;
 }
 
-interface ITransactionRender extends Omit<ITransaction, "amount"> {
-  dateStr: string;
-  fromAccountName: string;
-  toAccountName: string;
-  amount: string;
-}
-
 const TransferList = ({ className = "" }: IProps): JSX.Element => {
   const [transfersRaw, setTransfersRaw] = useState<ITransaction[] | null>(null);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [transfers, setTransfers] = useState<ITransactionRender[]>([]);
+  const [transfers, setTransfers] = useState<IStackedListRowProps[]>([]);
   const [accounts, setAccounts] = useState<IAccount[] | null>(null);
 
   useEffect(() => {
@@ -40,41 +33,48 @@ const TransferList = ({ className = "" }: IProps): JSX.Element => {
 
     setTransfers(
       transfersRaw
-        .map(({ date: dateStr, amount, fromAccount, toAccount, ...rest }) => {
-          const date = new Date(dateStr);
+        .map(
+          ({
+            date: dateStr,
+            amount,
+            fromAccount,
+            toAccount,
+            fromAccountBalance,
+            toAccountBalance,
+            _id,
+          }) => {
+            const date = new Date(dateStr);
+            const fromAccountName =
+              accounts.find(
+                ({ _id: targetAccountId }) => targetAccountId === fromAccount
+              )?.name || "unknown";
+            const toAccountName =
+              accounts.find(
+                ({ _id: targetAccountId }) => targetAccountId === toAccount
+              )?.name || "unknown";
 
-          return {
-            ...rest,
-            amount: formatCurrency(amount),
-            date,
-            dateStr: formatDate(date),
-            fromAccountName:
-              accounts.find(({ _id }) => _id === fromAccount)?.name ||
-              "unknown",
-            toAccountName:
-              accounts.find(({ _id }) => _id === toAccount)?.name || "unknown",
-          };
-        })
+            return {
+              label: `${fromAccountName} --> ${toAccountName}`,
+              additionalLabel: formatCurrency(amount),
+              additionalInformation: [
+                formatDate(date),
+                `${fromAccountName} (${formatCurrency(
+                  fromAccountBalance || 0
+                )})`,
+                `${toAccountName} (${formatCurrency(toAccountBalance || 0)})`,
+              ],
+              id: _id,
+              date,
+            };
+          }
+        )
         .sort((a, b) => (a.date > b.date ? -1 : 1))
     );
   }, [transfersRaw, accounts]);
 
-  const tableHeads: ITableHead[] = [
-    { key: "fromAccountName", label: "From account" },
-    { key: "toAccountName", label: "To account" },
-    { key: "amount", label: "Amount" },
-    { key: "dateStr", label: "Date" },
-  ];
-
   return (
     <div className={className}>
-      <Table
-        tableHeads={tableHeads}
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        rows={transfers as any}
-        dataKeyColumn="_id"
-        label="Your transfers"
-      />
+      <StackedList label="Your transfers" rows={transfers} />
     </div>
   );
 };
