@@ -48,7 +48,8 @@ const Button = ({
       link.substr(0, 7) === "http://" ||
       link.substr(0, 2) === "//" ||
       link.substr(0, 5) === "blob:" ||
-      link.substr(0, 5) === "/api/"
+      link.substr(0, 5) === "/api/" ||
+      link.substr(0, 6) === "/auth/"
     ) {
       return (
         <ButtonExternal link={link} className={elementClasses.join(" ")}>
