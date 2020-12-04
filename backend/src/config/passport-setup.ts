@@ -41,6 +41,15 @@ if (GITHUB_TOKENS.IS_ACTIVATED) {
         profile: GithubProfile,
         done: (err?: Error | null, profile?: IUserModel | null) => void
       ) => {
+        if (!profile.id) {
+          // eslint-disable-next-line no-console
+          console.error(
+            "Error, Github oAuth returned with unexpected value",
+            profile
+          );
+          throw new Error("Error, oAuth returned with unexpected value");
+        }
+
         const currentUser = await User.findOne({
           githubId: profile.id,
         });
@@ -74,6 +83,14 @@ if (AUTH0_TOKENS.IS_ACTIVATED) {
         callbackURL: `${process.env.PUBLIC_URL}/api/auth/auth0/redirect`,
       },
       async (_accessToken, _refreshToken, _extraParams, profile, done) => {
+        if (!profile.id) {
+          // eslint-disable-next-line no-console
+          console.error(
+            "Error, Auth0 oAuth returned with unexpected value",
+            profile
+          );
+          throw new Error("Error, oAuth returned with unexpected value");
+        }
         const currentUser = await User.findOne({
           auth0Id: profile.id,
         });
