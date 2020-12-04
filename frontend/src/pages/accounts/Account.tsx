@@ -6,28 +6,21 @@ import Hero from "../../components/hero/hero";
 import Loader from "../../components/loader/loader";
 import ModalConfirm from "../../components/modal/confirm/modal.confirm";
 import SEO from "../../components/seo/seo";
+import StackedList from "../../components/stacked-list/stacked-list";
+import { ICustomStackedListRowProps } from "../../components/stacked-list/stacked-list.row";
 import Stats from "../../components/stats/stats";
 import StatsItem from "../../components/stats/stats.item";
-import Table, { ITableHead } from "../../components/table/table";
 import formatCurrency from "../../utils/formatCurrency";
 import { formatDate } from "../../utils/formatDate";
 import {
   deleteAccount,
   getAccountById,
   getAccountTransactions,
+  getAllAccounts,
 } from "./AccountService";
 
 interface IProps {
   handleDelete(): void;
-}
-
-interface ITransactionsOutput {
-  type: string;
-  description: string;
-  amount: string;
-  balance: string;
-  date: Date;
-  dateStr: string;
 }
 
 const AccountDeleteModal = ({ handleDelete }: IProps) => (
@@ -47,8 +40,8 @@ const Account = (): JSX.Element => {
   const history = useHistory();
   const [account, setAccount] = useState<IAccount | undefined>(undefined);
   const [transactions, setTransactions] = useState<
-    ITransactionsOutput[] | null
-  >(null);
+    ICustomStackedListRowProps[]
+  >([]);
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
@@ -58,6 +51,7 @@ const Account = (): JSX.Element => {
 
     const fetchTransactions = async () => {
       const rawTransactions = (await getAccountTransactions(id)).payload;
+      const accounts = await getAllAccounts();
 
       setTransactions(
         rawTransactions
@@ -70,26 +64,77 @@ const Account = (): JSX.Element => {
               amount,
               fromAccountBalance = 0,
               toAccountBalance = 0,
-            }) => {
+              _id,
+            }): ICustomStackedListRowProps => {
               const date = new Date(dateStr);
+              const fromAccountName =
+                accounts.find(
+                  ({ _id: targetAccountId }) => targetAccountId === fromAccount
+                )?.name || "unknown";
+              const toAccountName =
+                accounts.find(
+                  ({ _id: targetAccountId }) => targetAccountId === toAccount
+                )?.name || "unknown";
+
+              const accountTransactionDetailsLabel = (
+                type: "transfer" | "expense" | "income"
+              ): string => {
+                const fromAccountLabel = `${fromAccountName} (${formatCurrency(
+                  fromAccountBalance || 0
+                )})`;
+
+                const toAccountLabel = `${toAccountName} (${formatCurrency(
+                  toAccountBalance || 0
+                )})`;
+
+                switch (type) {
+                  case "income":
+                    return `${toAccountLabel}`;
+                  case "expense":
+                    return `${fromAccountLabel}`;
+                  default:
+                    return `${fromAccountLabel} --> ${toAccountLabel}`;
+                }
+              };
+
               if (toAccount === id) {
                 return {
-                  description,
-                  type: fromAccount === null ? "Income" : "Transfer",
-                  amount: formatCurrency(amount),
+                  label: description,
+                  additionalLabel: formatCurrency(amount),
+                  additionalInformation: [
+                    formatDate(date),
+                    accountTransactionDetailsLabel(
+                      !fromAccount ? "income" : "transfer"
+                    ),
+                  ],
+                  id: _id,
                   date,
-                  dateStr: formatDate(date),
-                  balance: formatCurrency(toAccountBalance),
+                  tags: [
+                    {
+                      label: !fromAccount ? "Income" : "Transfer",
+                      color: !fromAccount ? "green" : "blue",
+                    },
+                  ],
                 };
               }
 
               return {
-                description,
-                type: toAccount === null ? "Expense" : "Transfer",
-                amount: formatCurrency(-amount),
+                label: description,
+                additionalLabel: formatCurrency(amount),
+                additionalInformation: [
+                  formatDate(date),
+                  accountTransactionDetailsLabel(
+                    !toAccount ? "expense" : "transfer"
+                  ),
+                ],
+                id: _id,
                 date,
-                dateStr: formatDate(date),
-                balance: formatCurrency(fromAccountBalance),
+                tags: [
+                  {
+                    label: !toAccount ? "Expense" : "Transfer",
+                    color: !toAccount ? "red" : "blue",
+                  },
+                ],
               };
             }
           )
@@ -105,14 +150,6 @@ const Account = (): JSX.Element => {
     await deleteAccount(id);
     history.push("/accounts");
   };
-
-  const tableHeads: ITableHead[] = [
-    { key: "type", label: "Type" },
-    { key: "amount", label: "Amount" },
-    { key: "description", label: "Description" },
-    { key: "balance", label: "Balance" },
-    { key: "dateStr", label: "Date" },
-  ];
 
   return typeof account === "undefined" || transactions === null ? (
     <Loader loaderColor="blue" />
@@ -138,13 +175,7 @@ const Account = (): JSX.Element => {
         <StatsItem statLabel="Type">{account.type}</StatsItem>
       </Stats>
       <div className="mt-12">
-        <Table
-          label="Account transactions"
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          rows={transactions as any}
-          dataKeyColumn="_id"
-          tableHeads={tableHeads}
-        />
+        <StackedList label="Account transactions" rows={transactions} />
       </div>
     </>
   );
