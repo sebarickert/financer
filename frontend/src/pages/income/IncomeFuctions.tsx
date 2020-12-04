@@ -40,6 +40,12 @@ export const groupIncomesByMonth = (accounts: IAccount[]) => (
     ],
     date,
     id: _id,
+    tags: [
+      {
+        label: "Income",
+        color: "green",
+      },
+    ],
   };
 
   const isMonthInDateStack = dateStack.some(
