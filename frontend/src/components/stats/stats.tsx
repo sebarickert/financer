@@ -9,7 +9,9 @@ interface IProps {
 
 const Stats = ({ children, label, className = "" }: IProps): JSX.Element => {
   return (
-    <div className={`p-8 -mx-8 bg-gray-100 rounded-lg ${className}`}>
+    <div
+      className={`py-8 px-4 -mx-4 bg-gray-100 md:rounded-lg md:-mx-5 md:px-5 lg:-mx-8 lg:px-8 ${className}`}
+    >
       {label && <StatsHeader>{label}</StatsHeader>}
       <div
         className={`grid grid-cols-1 rounded-lg bg-white overflow-hidden shadow md:grid-cols-${children.length}`}
