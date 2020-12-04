@@ -1,5 +1,6 @@
 import { Router } from "express";
 import passport from "passport";
+import { AUTH0_TOKENS, GITHUB_TOKENS } from "../config/keys";
 
 const CLIENT_HOME_PAGE_URL = process.env.PUBLIC_URL || "http://localhost:3000";
 const router = Router();
@@ -30,16 +31,28 @@ router.get("/logout", (req, res) => {
   res.redirect(CLIENT_HOME_PAGE_URL);
 });
 
-// auth with github
-router.get("/github", passport.authenticate("github"));
+if (GITHUB_TOKENS.IS_ACTIVATED) {
+  // auth with github
+  router.get("/github", passport.authenticate("github"));
+  router.get(
+    "/github/redirect",
+    passport.authenticate("github", {
+      successRedirect: CLIENT_HOME_PAGE_URL,
+      failureRedirect: "/auth/login/failed",
+    })
+  );
+}
 
-// redirect to home page after successfully login via twitter
-router.get(
-  "/github/redirect",
-  passport.authenticate("github", {
-    successRedirect: CLIENT_HOME_PAGE_URL,
-    failureRedirect: "/auth/login/failed",
-  })
-);
+if (AUTH0_TOKENS.IS_ACTIVATED) {
+  // auth with github
+  router.get("/auth0", passport.authenticate("auth0"));
+  router.get(
+    "/auth0/redirect",
+    passport.authenticate("auth0", {
+      successRedirect: CLIENT_HOME_PAGE_URL,
+      failureRedirect: "/auth/login/failed",
+    })
+  );
+}
 
 export default router;

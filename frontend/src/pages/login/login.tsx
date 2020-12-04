@@ -4,6 +4,14 @@ import LoginActions from "./login.actions";
 import LoginFooter from "./login.footer";
 import SEO from "../../components/seo/seo";
 
+const {
+  REACT_APP_IS_GITHUB_OAUTH_ENABLED,
+  REACT_APP_IS_AUTH0_OAUTH_ENABLED,
+} = process.env;
+
+const checkIsEnabled = (stringBoolean: string | undefined) =>
+  stringBoolean && stringBoolean.toLocaleLowerCase() !== "false";
+
 const Login = (): JSX.Element => {
   return (
     <>
@@ -25,7 +33,18 @@ const Login = (): JSX.Element => {
               <LoginHeader label="Financer">
                 Please login to manage your accounts, expenses and incomes.
               </LoginHeader>
-              <LoginActions submitButtonLabel="Login with Github" />
+              {checkIsEnabled(REACT_APP_IS_GITHUB_OAUTH_ENABLED) && (
+                <LoginActions
+                  submitButtonLabel="Login with Github"
+                  loginUrl="/api/auth/github"
+                />
+              )}
+              {checkIsEnabled(REACT_APP_IS_AUTH0_OAUTH_ENABLED) && (
+                <LoginActions
+                  submitButtonLabel="Login with Auth0"
+                  loginUrl="/api/auth/auth0"
+                />
+              )}
             </div>
             <LoginFooter className="mt-2 overflow-hidden rounded-lg" />
           </div>

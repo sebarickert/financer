@@ -21,13 +21,19 @@ services:
       - mongo_data:/data/db
       - mongo_config:/data/configdb
   mongodbclient:
-    image: mongoclient/mongoclient:latest
+    image: mongo-express:latest
     container_name: financer_dev-mongoclient
     hostname: mongoclient
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+      - ME_CONFIG_MONGODB_AUTH_DATABASE=financer_dev
+      - ME_CONFIG_MONGODB_AUTH_USERNAME=admin
+      - ME_CONFIG_MONGODB_AUTH_PASSWORD=change-me
+      - ME_CONFIG_MONGODB_ENABLE_ADMIN=false
     depends_on:
       - mongodb
     ports:
-      - 3300:3000
+      - 3300:8081
 
 volumes:
   mongo_data:

@@ -1,7 +1,11 @@
 import passport from "passport";
-import { Strategy as GitHubStrategy, Profile } from "passport-github2";
+import {
+  Strategy as GitHubStrategy,
+  Profile as GithubProfile,
+} from "passport-github2";
+import { Strategy as Auth0Strategy } from "passport-auth0";
 
-import { GITHUB_TOKENS } from "./keys";
+import { AUTH0_TOKENS, GITHUB_TOKENS } from "./keys";
 import User, { IUserModel } from "../models/user-model";
 
 // serialize the user.id to save in the cookie session
@@ -34,7 +38,7 @@ if (GITHUB_TOKENS.IS_ACTIVATED) {
       async (
         _accessToken: unknown,
         _refreshToken: unknown,
-        profile: Profile,
+        profile: GithubProfile,
         done: (err?: Error | null, profile?: IUserModel | null) => void
       ) => {
         const currentUser = await User.findOne({
@@ -46,6 +50,39 @@ if (GITHUB_TOKENS.IS_ACTIVATED) {
             name: profile.displayName,
             screenName: profile.username,
             githubId: profile.id,
+            profileImageUrl: profile.photos?.slice().shift()?.value,
+          }).save();
+          if (newUser) {
+            done(null, newUser);
+          }
+        }
+        done(null, currentUser);
+      }
+    )
+  );
+}
+
+if (AUTH0_TOKENS.IS_ACTIVATED) {
+  // eslint-disable-next-line no-console
+  console.log("Auth0 Oauth plugin enabled.");
+  passport.use(
+    new Auth0Strategy(
+      {
+        domain: AUTH0_TOKENS.AUTH0_DOMAIN,
+        clientID: AUTH0_TOKENS.AUTH0_CLIENT_ID,
+        clientSecret: AUTH0_TOKENS.AUTH0_CLIENT_SECRET,
+        callbackURL: `${process.env.PUBLIC_URL}/api/auth/auth0/redirect`,
+      },
+      async (_accessToken, _refreshToken, _extraParams, profile, done) => {
+        const currentUser = await User.findOne({
+          auth0Id: profile.id,
+        });
+        // create new user if the database doesn't have this user
+        if (!currentUser) {
+          const newUser = await new User({
+            name: profile.displayName,
+            screenName: profile.username,
+            auth0Id: profile.id,
             profileImageUrl: profile.photos?.slice().shift()?.value,
           }).save();
           if (newUser) {
