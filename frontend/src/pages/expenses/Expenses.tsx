@@ -64,15 +64,17 @@ const Expenses = (): JSX.Element => {
           Add expense
         </Button>
       </div>
-      {expenses.map(({ year, month, rows, total }) => (
-        <div className="mt-12" key={`${year}-${month}`}>
-          <StackedList
-            addiotinalLabel={getAddiotinalLabel(total)}
-            label={`${monthNames[month]}, ${year}`}
-            rows={rows}
-          />
-        </div>
-      ))}
+      <div className="mt-12">
+        {expenses.map(({ year, month, rows, total }) => (
+          <div className="mt-6" key={`${year}-${month}`}>
+            <StackedList
+              addiotinalLabel={getAddiotinalLabel(total)}
+              label={`${monthNames[month]}, ${year}`}
+              rows={rows}
+            />
+          </div>
+        ))}
+      </div>
     </>
   );
 };
