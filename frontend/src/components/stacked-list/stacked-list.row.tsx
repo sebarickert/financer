@@ -23,7 +23,7 @@ const StackedListRow = ({
   tags,
 }: IStackedListRowProps): JSX.Element => {
   const stackedListRowContent = (
-    <div className="px-4 py-4 flex items-center sm:px-6">
+    <div className="px-4 py-4 flex items-center">
       <div className="min-w-0 flex-1">
         {tags && (
           <div className="-m-2 mb-2">
@@ -84,7 +84,10 @@ const StackedListRow = ({
   return (
     <li>
       {link ? (
-        <Link to={link} className="block hover:bg-gray-50">
+        <Link
+          to={link}
+          className="block hover:bg-gray-50 focus:bg-gray-50 outline-none"
+        >
           {stackedListRowContent}
         </Link>
       ) : (
