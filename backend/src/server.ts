@@ -13,6 +13,8 @@ import incomeRoutes from "./routes/income-route";
 import expenseRoutes from "./routes/expense-route";
 import transactionRoutes from "./routes/transaction-route";
 import fileExists from "./utils/fileExists";
+import errorHandler from "./routes/middlewares/errorHandler";
+import authenticationCheck from "./routes/middlewares/authenticationCheck";
 
 const REACT_APP_PATH = "/static/react-app/";
 const app = express();
@@ -29,9 +31,11 @@ app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(bodyParser.json());
+app.use(errorHandler);
+app.use("/api/*", authenticationCheck);
 
 // set up routes
-app.use("/api/auth", authRoutes);
+app.use("/auth", authRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/account", accountRoutes);
 app.use("/api/income", incomeRoutes);

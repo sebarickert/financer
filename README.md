@@ -21,7 +21,7 @@ Fill the form with these:
 
 - `Application name` as you want, doesn't matter.
 - `Homepage URL` as `http://localhost:3000/`.
-- `Authorization callback URL` as `http://localhost:3000/api/auth/github/redirect`.
+- `Authorization callback URL` as `http://localhost:3000/auth/github/redirect`.
 
 Register application!
 

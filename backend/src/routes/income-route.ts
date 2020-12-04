@@ -5,16 +5,14 @@ import {
   getTransaction,
 } from "../controllers/transaction-controller";
 
-import authCheck from "./middlewares/authenticationCheck";
-
 const router = Router();
 
-router.get("/", authCheck, listUserIncomes);
+router.get("/", listUserIncomes);
 
-router.post("/", authCheck, addIncome);
+router.post("/", addIncome);
 
-router.get("/:id", authCheck, getTransaction);
+router.get("/:id", getTransaction);
 
-router.delete("/:id", authCheck, deleteTransaction);
+router.delete("/:id", deleteTransaction);
 
 export default router;

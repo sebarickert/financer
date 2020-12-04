@@ -8,20 +8,19 @@ import {
   listAccounts,
   updateAccount,
 } from "../controllers/account-controller";
-import authCheck from "./middlewares/authenticationCheck";
 
 const router = Router();
 
-router.get("/", authCheck, listAccounts);
+router.get("/", listAccounts);
 
-router.get("/:id", authCheck, getAccount);
+router.get("/:id", getAccount);
 
-router.post("/", authCheck, addAccount);
+router.post("/", addAccount);
 
-router.delete("/:id", authCheck, deleteAccount);
+router.delete("/:id", deleteAccount);
 
-router.put("/:id", authCheck, updateAccount);
+router.put("/:id", updateAccount);
 
-router.get("/:id/transactions", authCheck, getAllAccountTransactions);
+router.get("/:id/transactions", getAllAccountTransactions);
 
 export default router;

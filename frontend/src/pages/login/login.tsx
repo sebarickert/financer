@@ -36,13 +36,13 @@ const Login = (): JSX.Element => {
               {checkIsEnabled(REACT_APP_IS_GITHUB_OAUTH_ENABLED) && (
                 <LoginActions
                   submitButtonLabel="Login with Github"
-                  loginUrl="/api/auth/github"
+                  loginUrl="/auth/github"
                 />
               )}
               {checkIsEnabled(REACT_APP_IS_AUTH0_OAUTH_ENABLED) && (
                 <LoginActions
                   submitButtonLabel="Login with Auth0"
-                  loginUrl="/api/auth/auth0"
+                  loginUrl="/auth/auth0"
                 />
               )}
             </div>
