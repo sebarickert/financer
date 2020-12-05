@@ -83,7 +83,6 @@ if (AUTH0_TOKENS.IS_ACTIVATED) {
         callbackURL: `${process.env.PUBLIC_URL}/auth/auth0/redirect`,
       },
       async (_accessToken, _refreshToken, _extraParams, profile, done) => {
-        console.log(profile);
         if (!profile.id) {
           // eslint-disable-next-line no-console
           console.error(
