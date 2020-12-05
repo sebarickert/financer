@@ -32,7 +32,6 @@ router.get("/logout", (req, res) => {
 });
 
 if (GITHUB_TOKENS.IS_ACTIVATED) {
-  // auth with github
   router.get("/github", passport.authenticate("github"));
   router.get(
     "/github/redirect",
@@ -44,7 +43,6 @@ if (GITHUB_TOKENS.IS_ACTIVATED) {
 }
 
 if (AUTH0_TOKENS.IS_ACTIVATED) {
-  // auth with github
   router.get("/auth0", passport.authenticate("auth0"));
   router.get(
     "/auth0/redirect",
@@ -53,6 +51,11 @@ if (AUTH0_TOKENS.IS_ACTIVATED) {
       failureRedirect: "/auth/login/failed",
     })
   );
+  router.get("/logout/auth0", (req, res) => {
+    res.redirect(
+      `https://${AUTH0_TOKENS.AUTH0_DOMAIN}/v2/logout?client_id=${AUTH0_TOKENS.AUTH0_CLIENT_ID}&returnTo=${CLIENT_HOME_PAGE_URL}/auth/logout`
+    );
+  });
 }
 
 export default router;
