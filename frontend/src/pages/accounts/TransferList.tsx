@@ -39,8 +39,6 @@ const TransferList = ({ className = "" }: IProps): JSX.Element => {
             amount,
             fromAccount,
             toAccount,
-            fromAccountBalance,
-            toAccountBalance,
             _id,
           }): ICustomStackedListRowProps => {
             const date = new Date(dateStr);
@@ -56,14 +54,7 @@ const TransferList = ({ className = "" }: IProps): JSX.Element => {
             return {
               label: `${fromAccountName} --> ${toAccountName}`,
               additionalLabel: formatCurrency(amount),
-              additionalInformation: [
-                formatDate(date),
-                `${fromAccountName} (${formatCurrency(
-                  fromAccountBalance || 0
-                )}) --> ${toAccountName} (${formatCurrency(
-                  toAccountBalance || 0
-                )})`,
-              ],
+              additionalInformation: [formatDate(date)],
               id: _id,
               date,
               tags: [

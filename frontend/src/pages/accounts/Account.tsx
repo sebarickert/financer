@@ -16,7 +16,6 @@ import {
   deleteAccount,
   getAccountById,
   getAccountTransactions,
-  getAllAccounts,
 } from "./AccountService";
 
 interface IProps {
@@ -51,7 +50,6 @@ const Account = (): JSX.Element => {
 
     const fetchTransactions = async () => {
       const rawTransactions = (await getAccountTransactions(id)).payload;
-      const accounts = await getAllAccounts();
 
       setTransactions(
         rawTransactions
@@ -62,51 +60,15 @@ const Account = (): JSX.Element => {
               toAccount,
               description = "Unknown",
               amount,
-              fromAccountBalance = 0,
-              toAccountBalance = 0,
               _id,
             }): ICustomStackedListRowProps => {
               const date = new Date(dateStr);
-              const fromAccountName =
-                accounts.find(
-                  ({ _id: targetAccountId }) => targetAccountId === fromAccount
-                )?.name || "unknown";
-              const toAccountName =
-                accounts.find(
-                  ({ _id: targetAccountId }) => targetAccountId === toAccount
-                )?.name || "unknown";
-
-              const accountTransactionDetailsLabel = (
-                type: "transfer" | "expense" | "income"
-              ): string => {
-                const fromAccountLabel = `${fromAccountName} (${formatCurrency(
-                  fromAccountBalance || 0
-                )})`;
-
-                const toAccountLabel = `${toAccountName} (${formatCurrency(
-                  toAccountBalance || 0
-                )})`;
-
-                switch (type) {
-                  case "income":
-                    return `${toAccountLabel}`;
-                  case "expense":
-                    return `${fromAccountLabel}`;
-                  default:
-                    return `${fromAccountLabel} --> ${toAccountLabel}`;
-                }
-              };
 
               if (toAccount === id) {
                 return {
                   label: description,
                   additionalLabel: formatCurrency(amount),
-                  additionalInformation: [
-                    formatDate(date),
-                    accountTransactionDetailsLabel(
-                      !fromAccount ? "income" : "transfer"
-                    ),
-                  ],
+                  additionalInformation: [formatDate(date)],
                   id: _id,
                   date,
                   tags: [
@@ -121,12 +83,7 @@ const Account = (): JSX.Element => {
               return {
                 label: description,
                 additionalLabel: formatCurrency(amount),
-                additionalInformation: [
-                  formatDate(date),
-                  accountTransactionDetailsLabel(
-                    !toAccount ? "expense" : "transfer"
-                  ),
-                ],
+                additionalInformation: [formatDate(date)],
                 id: _id,
                 date,
                 tags: [
