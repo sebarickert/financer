@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import Layout from "./components/layout/layout";
 import AccountsRouter from "./pages/accounts/AccountsRouter";
 import ExpensesRouter from "./pages/expenses/ExpensesRouter";
@@ -15,35 +15,38 @@ interface IProps {
 
 const Financer = ({ isLoggedIn = false }: IProps): JSX.Element => {
   return (
-    <Router>
-      <Switch>
-        <Route path="/privacy-policy">
-          <PrivacyPolicy />
+    <Switch>
+      <Route path="/privacy-policy">
+        <PrivacyPolicy />
+      </Route>
+      <Route path="/issues-with-login">
+        <IssuesWithLogin />
+      </Route>
+      {!isLoggedIn && (
+        <Route path="/">
+          <Login />
         </Route>
-        <Route path="/issues-with-login">
-          <IssuesWithLogin />
+      )}
+      {!isLoggedIn && (
+        <Route path="/">
+          <Login />
         </Route>
-        {!isLoggedIn && (
-          <Route path="/">
-            <Login />
-          </Route>
-        )}
-        <Layout>
-          <Route exact path="/">
-            <Dashboard />
-          </Route>
-          <Route path="/incomes">
-            <IncomesRouter />
-          </Route>
-          <Route path="/expenses">
-            <ExpensesRouter />
-          </Route>
-          <Route path="/accounts">
-            <AccountsRouter />
-          </Route>
-        </Layout>
-      </Switch>
-    </Router>
+      )}
+      <Layout>
+        <Route exact path="/">
+          <Dashboard />
+        </Route>
+        <Route path="/incomes">
+          <IncomesRouter />
+        </Route>
+        <Route path="/expenses">
+          <ExpensesRouter />
+        </Route>
+        <Route path="/accounts">
+          <AccountsRouter />
+        </Route>
+      </Layout>
+    </Switch>
   );
 };
 
