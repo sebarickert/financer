@@ -86,7 +86,7 @@ const AccountTransfer = (): JSX.Element => {
           <Input id="amount" help="Amount of transfer." isCurrency isRequired>
             Amount
           </Input>
-          <Input id="date" type="date" isDate>
+          <Input id="date" type="datetime-local" isDate>
             Date of the transfer
           </Input>
           <Select id="fromAccount" options={accounts} isRequired>
