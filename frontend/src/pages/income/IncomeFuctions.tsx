@@ -9,35 +9,19 @@ export interface IIncomesPerMonth {
   rows: ICustomStackedListRowProps[];
 }
 
-export const groupIncomesByMonth = (accounts: IAccount[]) => (
+export const groupIncomesByMonth = (
   dateStack: IIncomesPerMonth[],
-  {
-    _id,
-    amount,
-    date: dateRaw,
-    description,
-    toAccount,
-    toAccountBalance,
-  }: IIncome
+  { _id, amount, date: dateRaw, description }: IIncome
 ): IIncomesPerMonth[] => {
   const date = new Date(dateRaw);
   const month = date.getMonth();
   const year = date.getFullYear();
 
-  const getAccountNameById = (targetId: string): string =>
-    accounts.find(({ _id: accountId }) => accountId === targetId)?.name ||
-    "unknown";
-
   const income: ICustomStackedListRowProps = {
     label: description,
     link: `/incomes/${_id}`,
     additionalLabel: formatCurrency(amount),
-    additionalInformation: [
-      formatDate(date),
-      `${getAccountNameById(toAccount || "")} (${formatCurrency(
-        toAccountBalance || 0
-      )})`,
-    ],
+    additionalInformation: [formatDate(date)],
     date,
     id: _id,
     tags: [

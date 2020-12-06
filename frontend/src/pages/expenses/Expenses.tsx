@@ -7,7 +7,6 @@ import StackedList from "../../components/stacked-list/stacked-list";
 import { TAddiotinalLabel } from "../../components/table/table.header";
 import monthNames from "../../constants/months";
 import formatCurrency from "../../utils/formatCurrency";
-import { getAllAccounts } from "../accounts/AccountService";
 import {
   groupExpensesByMonth,
   IExpensesPerMonth,
@@ -19,31 +18,25 @@ import { getAllExpenses } from "./ExpenseService";
 const Expenses = (): JSX.Element => {
   const [expensesRaw, setExpensesRaw] = useState<IExpense[] | null>(null);
   const [expenses, setExpenses] = useState<IExpensesPerMonth[]>([]);
-  const [accounts, setAccounts] = useState<IAccount[] | null>(null);
 
   useEffect(() => {
     const fetchExpenses = async () => {
       setExpensesRaw(await getAllExpenses());
     };
 
-    const fetchAccounts = async () => {
-      setAccounts(await getAllAccounts());
-    };
-
-    fetchAccounts();
     fetchExpenses();
   }, []);
 
   useEffect(() => {
-    if (expensesRaw === null || accounts === null) return;
+    if (expensesRaw === null) return;
 
     setExpenses(
       expensesRaw
-        .reduce<IExpensesPerMonth[]>(groupExpensesByMonth(accounts), [])
+        .reduce<IExpensesPerMonth[]>(groupExpensesByMonth, [])
         .sort(sortExpenseStacksByMonth)
         .map(sortExpensesByDate)
     );
-  }, [expensesRaw, accounts]);
+  }, [expensesRaw]);
 
   const getAddiotinalLabel = (total: number): TAddiotinalLabel => ({
     label: `${Number.isNaN(total) ? "-" : formatCurrency(total)}`,
