@@ -7,6 +7,7 @@ import IncomesRouter from "./pages/income/IncomesRouter";
 import Dashboard from "./pages/dashboard/Dashboard";
 import PrivacyPolicy from "./Privacy";
 import Login from "./pages/login/login";
+import IssuesWithLogin from "./IssuesWithLogin";
 
 interface IProps {
   isLoggedIn: boolean;
@@ -18,6 +19,9 @@ const Financer = ({ isLoggedIn = false }: IProps): JSX.Element => {
       <Switch>
         <Route path="/privacy-policy">
           <PrivacyPolicy />
+        </Route>
+        <Route path="/issues-with-login">
+          <IssuesWithLogin />
         </Route>
         {!isLoggedIn && (
           <Route path="/">
