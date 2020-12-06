@@ -103,7 +103,7 @@ const IncomeForm = ({
           </Input>
           <Input
             id="date"
-            type="date"
+            type="datetime-local"
             value={typeof date !== "undefined" ? inputDateFormat(date) : ""}
             isDate
           >

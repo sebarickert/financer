@@ -8,7 +8,7 @@ interface IProps {
   isCurrency?: boolean;
   isDate?: boolean;
   isRequired?: boolean;
-  type?: "text" | "number" | "date";
+  type?: "text" | "number" | "datetime-local";
   value?: string | number;
 }
 
