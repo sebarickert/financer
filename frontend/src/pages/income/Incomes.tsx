@@ -7,7 +7,6 @@ import StackedList from "../../components/stacked-list/stacked-list";
 import { TAddiotinalLabel } from "../../components/table/table.header";
 import monthNames from "../../constants/months";
 import formatCurrency from "../../utils/formatCurrency";
-import { getAllAccounts } from "../accounts/AccountService";
 import {
   groupIncomesByMonth,
   IIncomesPerMonth,
@@ -19,31 +18,25 @@ import { getAllIncomes } from "./IncomeService";
 const Incomes = (): JSX.Element => {
   const [incomesRaw, setIncomesRaw] = useState<IIncome[] | null>(null);
   const [incomes, setIncomes] = useState<IIncomesPerMonth[]>([]);
-  const [accounts, setAccounts] = useState<IAccount[] | null>(null);
 
   useEffect(() => {
     const fetchIncomes = async () => {
       setIncomesRaw(await getAllIncomes());
     };
 
-    const fetchAccounts = async () => {
-      setAccounts(await getAllAccounts());
-    };
-
-    fetchAccounts();
     fetchIncomes();
   }, []);
 
   useEffect(() => {
-    if (incomesRaw === null || accounts === null) return;
+    if (incomesRaw === null) return;
 
     setIncomes(
       incomesRaw
-        .reduce<IIncomesPerMonth[]>(groupIncomesByMonth(accounts), [])
+        .reduce<IIncomesPerMonth[]>(groupIncomesByMonth, [])
         .sort(sortIncomeStacksByMonth)
         .map(sortIncomesByDate)
     );
-  }, [incomesRaw, accounts]);
+  }, [incomesRaw]);
 
   const getAddiotinalLabel = (total: number): TAddiotinalLabel => ({
     label: `${Number.isNaN(total) ? "-" : formatCurrency(total)}`,
