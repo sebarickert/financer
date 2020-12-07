@@ -14,10 +14,8 @@ FROM node:15.1.0-alpine
 ENV NODE_ENV production
 
 WORKDIR /app
-COPY --from=builder /app/node_modules /app/node_modules
-COPY --from=builder /app/backend/build /app/build
-COPY --from=builder /app/frontend/build /app/static/react-app
+COPY --from=builder /app/build /app
 
-CMD [ "node", "/app/build/index.js" ]
+CMD [ "node", "/app/app/server.js" ]
 
 EXPOSE 4000
