@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import Button from "../../components/button/button";
 import ButtonGroup from "../../components/button/button.group";
+import DescriptionList from "../../components/description-list/description-list";
+import DescriptionListItem from "../../components/description-list/description-list.item";
 import Hero from "../../components/hero/hero";
 import Loader from "../../components/loader/loader";
 import ModalConfirm from "../../components/modal/confirm/modal.confirm";
 import SEO from "../../components/seo/seo";
-import Stats from "../../components/stats/stats";
-import StatsItem from "../../components/stats/stats.item";
 import formatCurrency from "../../utils/formatCurrency";
 import { formatDate } from "../../utils/formatDate";
 import { deleteIncome, getIncomeById } from "./IncomeService";
@@ -63,14 +63,14 @@ const Income = (): JSX.Element => {
           <IncomeDeleteModal handleDelete={handleDelete} />
         </ButtonGroup>
       </div>
-      <Stats className="mt-12" label="Overview">
-        <StatsItem statLabel="Amount">
+      <DescriptionList label="Transaction details" className="mt-12">
+        <DescriptionListItem label="Amount">
           {formatCurrency(income.amount)}
-        </StatsItem>
-        <StatsItem statLabel="Date">
+        </DescriptionListItem>
+        <DescriptionListItem label="Date">
           {formatDate(new Date(income.date))}
-        </StatsItem>
-      </Stats>
+        </DescriptionListItem>
+      </DescriptionList>
     </>
   );
 };
