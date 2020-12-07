@@ -23,15 +23,7 @@ module.exports = {
       },
     ],
   },
-  plugins: [
-    new webpack.ContextReplacementPlugin(
-      /(express|mongodb)\/lib|/,
-
-      path.resolve("../node_modules"),
-      {
-        ejs: "ejs",
-      }
-    ),
-  ],
-  ignoreWarnings: [/require\.extensions/],
+  stats: {
+    warningsFilter: /require\.extensions/,
+  },
 };
