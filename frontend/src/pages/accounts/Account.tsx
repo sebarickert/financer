@@ -2,14 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import Button from "../../components/button/button";
 import ButtonGroup from "../../components/button/button.group";
+import DescriptionList from "../../components/description-list/description-list";
+import DescriptionListItem from "../../components/description-list/description-list.item";
 import Hero from "../../components/hero/hero";
 import Loader from "../../components/loader/loader";
 import ModalConfirm from "../../components/modal/confirm/modal.confirm";
 import SEO from "../../components/seo/seo";
 import StackedList from "../../components/stacked-list/stacked-list";
 import { ICustomStackedListRowProps } from "../../components/stacked-list/stacked-list.row";
-import Stats from "../../components/stats/stats";
-import StatsItem from "../../components/stats/stats.item";
+import capitalize from "../../utils/capitalize";
 import formatCurrency from "../../utils/formatCurrency";
 import { formatDate } from "../../utils/formatDate";
 import {
@@ -125,15 +126,19 @@ const Account = (): JSX.Element => {
           <AccountDeleteModal handleDelete={handleDelete} />
         </ButtonGroup>
       </div>
-      <Stats className="mt-12" label="Overview">
-        <StatsItem statLabel="Balance">
+      <DescriptionList label="Account details" className="mt-12">
+        <DescriptionListItem label="Balance">
           {formatCurrency(account.balance)}
-        </StatsItem>
-        <StatsItem statLabel="Type">{account.type}</StatsItem>
-      </Stats>
-      <div className="mt-12">
-        <StackedList label="Account transactions" rows={transactions} />
-      </div>
+        </DescriptionListItem>
+        <DescriptionListItem label="Type">
+          {capitalize(account.type)}
+        </DescriptionListItem>
+      </DescriptionList>
+      {transactions.length > 0 && (
+        <div className="mt-12">
+          <StackedList label="Account transactions" rows={transactions} />
+        </div>
+      )}
     </>
   );
 };
