@@ -1,8 +1,9 @@
 #!/bin/sh
 
-npm --prefix backend run tsc
+npm --prefix backend run build
 npm --prefix frontend run build
 
-mkdir backend/static
-rm -rf backend/static/react-app
-cp -r frontend/build backend/static/react-app
+rm -rf build
+mkdir -p build/static build/app
+cp backend/dist/server.js build/app/
+cp -r frontend/build build/static/react-app
