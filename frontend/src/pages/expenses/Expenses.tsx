@@ -59,7 +59,7 @@ const Expenses = (): JSX.Element => {
       </div>
       <div className="mt-12">
         {expenses.map(({ year, month, rows, total }) => (
-          <div className="mt-6" key={`${year}-${month}`}>
+          <div className="md:mt-6" key={`${year}-${month}`}>
             <StackedList
               addiotinalLabel={getAddiotinalLabel(total)}
               label={`${monthNames[month]}, ${year}`}

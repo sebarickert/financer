@@ -70,7 +70,7 @@ $ npm i --legacy-peer-deps
 ### Start up docker
 
 ```
-$ docker-compose -f ./docker/docker-compose.development.yml up -d
+$ ./bin/startDevDocker
 ```
 
 ### Start up the backend and frontend
@@ -95,7 +95,7 @@ $ npm --prefix backend install DEPENDENCY-NAME
 
 #### Known issues
 
-If backend fails after first authentication attepmt, restart the backend.
+If backend fails after first authentication attempt, restart the backend.
 
 ```
 $ npm start

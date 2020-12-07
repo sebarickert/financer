@@ -73,7 +73,7 @@ const Accounts = (): JSX.Element => {
           label="Your accounts"
           rows={accounts}
         />
-        <TransferList className="mt-12" />
+        <TransferList className="md:mt-6" />
       </div>
     </>
   );
