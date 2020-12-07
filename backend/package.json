@@ -7,6 +7,7 @@
     "start": "tsc && node build/index.js",
     "start-dev": "nodemon",
     "tsc": "tsc",
+    "compile": "rm -rf dist && webpack --mode development",
     "format": "prettier --write src/**/*.ts{,x} && eslint src/**/*.ts{,x} --fix",
     "lint": "eslint src/**/*.ts{,x}",
     "test": "jest --silent --runInBand --config ./jest.config.json --forceExit",
@@ -42,6 +43,7 @@
     "@types/supertest": "^2.0.10",
     "@typescript-eslint/eslint-plugin": "^4.6.1",
     "@typescript-eslint/parser": "^4.6.1",
+    "babel-loader": "^8.2.2",
     "eslint": "^7.13.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-airbnb-typescript": "^12.0.0",
@@ -53,7 +55,9 @@
     "nodemon": "^2.0.4",
     "prettier": "^2.1.2",
     "supertest": "^6.0.1",
-    "ts-jest": "^26.4.4"
+    "ts-jest": "^26.4.4",
+    "webpack": "^5.10.0",
+    "webpack-cli": "^4.2.0"
   },
   "nodemonConfig": {
     "ignore": [
