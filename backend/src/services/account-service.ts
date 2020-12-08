@@ -11,3 +11,8 @@ export const findAccountsById = async (
 export const createAccount = async (
   newAccount: IAccountModel
 ): Promise<IAccountModel | null> => accountModel.create(newAccount);
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export const DANGER_truncateAccountByUser = async (
+  userId: string
+): Promise<void> => accountModel.deleteMany({ owner: userId });
