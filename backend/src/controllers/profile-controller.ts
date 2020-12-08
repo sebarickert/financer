@@ -33,8 +33,9 @@ export const overrideMyData = async (req: Request, res: Response) => {
   if (!user.role.includes("test-user")) {
     res.status(403).json({
       status: 403,
-      error: ["Only users with the test-user role can override account data."],
+      errors: ["Only users with the test-user role can override account data."],
     });
+    return;
   }
 
   await DANGER_truncateAccountByUser(user.id);
