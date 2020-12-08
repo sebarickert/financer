@@ -8,6 +8,7 @@ import Dashboard from "./pages/dashboard/Dashboard";
 import PrivacyPolicy from "./Privacy";
 import Login from "./pages/login/login";
 import IssuesWithLogin from "./IssuesWithLogin";
+import ProfileRouter from "./pages/profile/ProfileRouter";
 
 interface IProps {
   isLoggedIn: boolean;
@@ -44,6 +45,9 @@ const Financer = ({ isLoggedIn = false }: IProps): JSX.Element => {
         </Route>
         <Route path="/accounts">
           <AccountsRouter />
+        </Route>
+        <Route path="/profile">
+          <ProfileRouter />
         </Route>
       </Layout>
     </Switch>
