@@ -5,4 +5,5 @@ interface IUser {
   githubId?: string;
   auth0Id?: string;
   profileImageUrl: string;
+  role: string[];
 }
