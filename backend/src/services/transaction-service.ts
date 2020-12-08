@@ -50,3 +50,15 @@ export const findTransactionsByAccount = async (
       },
     ],
   });
+
+export const findTransactionsByUser = async (
+  userId: string
+): Promise<ITransactionModel[] | null> =>
+  transactionModel.find({
+    user: userId,
+  });
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export const DANGER_truncateTransactionsByUser = async (
+  userId: string
+): Promise<void> => transactionModel.deleteMany({ user: userId });
