@@ -45,9 +45,9 @@ const StackedListRow = ({
         )}
       </div>
       {additionalLabel && (
-        <div className="flex-shrink-0 pl-4">
+        <div className="flex-shrink-0 pl-4 text-right">
           {tags && (
-            <div className="mb-1 text-right">
+            <div className="mb-1">
               {tags.map(({ label: tagLabel, color }) => (
                 <p
                   className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-${color}-100 text-${color}-800`}
