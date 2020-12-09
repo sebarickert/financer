@@ -1,11 +1,8 @@
-/* eslint-disable no-alert */
-/* eslint-disable consistent-return */
-import React, { useEffect, useState } from "react";
+/* eslint-disable no-alert, consistent-return */
+import React, { ChangeEvent, useEffect, useState } from "react";
 import Button from "../../components/button/button";
 import DescriptionList from "../../components/description-list/description-list";
 import DescriptionListItem from "../../components/description-list/description-list.item";
-import capitalize from "../../utils/capitalize";
-import formatCurrency from "../../utils/formatCurrency";
 
 interface IOveridata {
   accounts: IAccount[];
@@ -23,6 +20,7 @@ const Profile = (): JSX.Element => {
   const [overrideAccountCount, setOverrideAccountCount] = useState<
     number | null
   >(null);
+  const [overrideFilename, setOverrideFilename] = useState<string | null>(null);
 
   useEffect(() => {
     if (!uploadedUserData) {
@@ -53,10 +51,14 @@ const Profile = (): JSX.Element => {
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleFileChange = (changeEvent: any) => {
-    const { files } = changeEvent?.target;
-    if (files.length <= 0) {
-      return alert("File not found");
+  const handleFileChange = (changeEvent: ChangeEvent<HTMLInputElement>) => {
+    const { files } = changeEvent.target;
+    const targetFile = files?.item(0);
+    if (!targetFile) {
+      setOverrideFilename(null);
+      setUploadedUserData(null);
+      alert("File not found");
+      return;
     }
 
     const fr = new FileReader();
@@ -67,11 +69,12 @@ const Profile = (): JSX.Element => {
       ) {
         const result = JSON.parse(readerEvent.target.result);
         setUploadedUserData(result);
+        setOverrideFilename(targetFile.name);
       } else {
         alert("Failed to parse JSON file");
       }
     };
-    fr.readAsText(files.item(0));
+    fr.readAsText(targetFile);
   };
 
   return (
@@ -79,13 +82,22 @@ const Profile = (): JSX.Element => {
       <Button link="/api/profile/my-data" className="block">
         Download my data
       </Button>
-      <input
-        className="block mt-16"
-        type="file"
-        id="selectFiles"
-        onChange={handleFileChange}
-        accept="application/json"
-      />
+      <div className="block mt-16 ">
+        <label
+          htmlFor="selectFiles"
+          className="inline-flex justify-center w-full sm:w-auto items-center px-4 py-2 border font-medium rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 transition ease-in-out leading-6 duration-150 text-base bg-blue-600 hover:bg-blue-500 active:bg-blue-700 border-transparent focus:ring-blue-500"
+        >
+          Choose file
+          <input
+            className="hidden"
+            type="file"
+            id="selectFiles"
+            onChange={handleFileChange}
+            accept="application/json"
+          />
+        </label>
+        <span className="ml-2">{overrideFilename || "No file selected"}</span>
+      </div>
       <DescriptionList label="Override data details" className="mt-6">
         <DescriptionListItem label="Account count">
           {overrideAccountCount ? `${overrideAccountCount}` : "-"}
