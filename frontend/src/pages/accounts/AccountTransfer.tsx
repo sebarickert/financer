@@ -8,6 +8,7 @@ import Loader from "../../components/loader/loader";
 import SEO from "../../components/seo/seo";
 import { getAllAccounts } from "./AccountService";
 import { addTransaction } from "../../services/TransactionService";
+import Container from "../../components/container/container";
 
 const AccountTransfer = (): JSX.Element => {
   const history = useHistory();
@@ -62,7 +63,7 @@ const AccountTransfer = (): JSX.Element => {
   return accounts === null ? (
     <Loader loaderColor="blue" />
   ) : (
-    <>
+    <Container className="mt-6 sm:mt-12">
       <SEO title="Transfer between accounts | Accounts" />
       {errors.length > 0 && (
         <Alert additionalInformation={errors}>
@@ -97,7 +98,7 @@ const AccountTransfer = (): JSX.Element => {
           </Select>
         </div>
       </Form>
-    </>
+    </Container>
   );
 };
 

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import Container from "../../components/container/container";
 import SEO from "../../components/seo/seo";
 import AccountForm from "./AccountForm";
 import { addAccount } from "./AccountService";
@@ -24,7 +25,7 @@ const AddAccount = (): JSX.Element => {
   };
 
   return (
-    <>
+    <Container className="mt-6 sm:mt-12">
       <SEO title="Add account | Accounts" />
       <AccountForm
         onSubmit={handleSubmit}
@@ -32,7 +33,7 @@ const AddAccount = (): JSX.Element => {
         formHeading="Add account"
         submitLabel="Add"
       />
-    </>
+    </Container>
   );
 };
 

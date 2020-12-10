@@ -7,7 +7,7 @@ interface IProps {
 
 const Container = ({ className = "", children }: IProps): JSX.Element => {
   return (
-    <div className={`mx-auto px-4 max-w-screen-md ${className}`}>
+    <div className={`mx-auto px-4 max-w-screen-xl ${className}`}>
       {children}
     </div>
   );

@@ -1,5 +1,4 @@
 import React from "react";
-import Container from "../container/container";
 import Navigation from "../navigation/navigation";
 
 interface IProps {
@@ -11,7 +10,7 @@ const Layout = ({ className = "", children }: IProps): JSX.Element => {
   return (
     <>
       <Navigation />
-      <Container className={`mb-6 sm:mb-12 ${className}`}>{children}</Container>
+      {children}
     </>
   );
 };

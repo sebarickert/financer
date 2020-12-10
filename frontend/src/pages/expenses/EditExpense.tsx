@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import Container from "../../components/container/container";
 import Loader from "../../components/loader/loader";
 import SEO from "../../components/seo/seo";
 import ExpenseForm from "./ExpenseForm";
@@ -25,7 +26,7 @@ const EditExpense = (): JSX.Element => {
   return typeof expense === "undefined" ? (
     <Loader loaderColor="red" />
   ) : (
-    <>
+    <Container className="mt-6 sm:mt-12">
       <SEO title={`Edit ${expense.description} | Expenses`} />
       <ExpenseForm
         onSubmit={handleSubmit}
@@ -37,7 +38,7 @@ const EditExpense = (): JSX.Element => {
         date={new Date(expense.date)}
         fromAccount={expense.fromAccount}
       />
-    </>
+    </Container>
   );
 };
 

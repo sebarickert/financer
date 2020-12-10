@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import Container from "../../components/container/container";
 import SEO from "../../components/seo/seo";
 import IncomeForm from "./IncomeForm";
 import { addIncome } from "./IncomeService";
@@ -24,7 +25,7 @@ const AddIncome = (): JSX.Element => {
   };
 
   return (
-    <>
+    <Container className="mt-6 sm:mt-12">
       <SEO title="Add income | Incomes" />
       <IncomeForm
         onSubmit={handleSubmit}
@@ -32,7 +33,7 @@ const AddIncome = (): JSX.Element => {
         formHeading="Add income"
         submitLabel="Add"
       />
-    </>
+    </Container>
   );
 };
 

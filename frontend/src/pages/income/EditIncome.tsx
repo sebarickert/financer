@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import Container from "../../components/container/container";
 import Loader from "../../components/loader/loader";
 import SEO from "../../components/seo/seo";
 import IncomeForm from "./IncomeForm";
@@ -25,7 +26,7 @@ const EditIncome = (): JSX.Element => {
   return typeof income === "undefined" ? (
     <Loader loaderColor="green" />
   ) : (
-    <>
+    <Container className="mt-6 sm:mt-12">
       <SEO title={`Edit ${income.description} | Incomes`} />
       <IncomeForm
         onSubmit={handleSubmit}
@@ -37,7 +38,7 @@ const EditIncome = (): JSX.Element => {
         date={new Date(income.date)}
         toAccount={income.toAccount}
       />
-    </>
+    </Container>
   );
 };
 
