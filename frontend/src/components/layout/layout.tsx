@@ -3,10 +3,9 @@ import Navigation from "../navigation/navigation";
 
 interface IProps {
   children: React.ReactNode;
-  className?: string;
 }
 
-const Layout = ({ className = "", children }: IProps): JSX.Element => {
+const Layout = ({ children }: IProps): JSX.Element => {
   return (
     <>
       <Navigation />
