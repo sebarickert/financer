@@ -31,6 +31,7 @@ const ProfileNavigationItem = ({
     <li>
       <NavLink
         to={link}
+        exact
         className={linkClasses.default}
         activeClassName={linkClasses.active}
         role="menuitem"
@@ -46,10 +47,10 @@ const ProfileNavigation = (): JSX.Element => {
     <nav className="w-full">
       <ul className="space-y-1">
         <ProfileNavigationItem link="/profile">
-          Account information
+          Profile information
         </ProfileNavigationItem>
-        <ProfileNavigationItem link="/override-data">
-          Override account data
+        <ProfileNavigationItem link="/profile/override-data">
+          Override profile data
         </ProfileNavigationItem>
         <ProfileNavigationItem link="/api/profile/my-data">
           Download my data
