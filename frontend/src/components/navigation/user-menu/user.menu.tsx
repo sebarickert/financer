@@ -11,6 +11,9 @@ const UserMenu = ({ type }: IProps): JSX.Element => {
   if (type === "desktop") {
     return (
       <UserMenuDesktop>
+        <UserMenuItem link="/profile" type="desktop">
+          Profile
+        </UserMenuItem>
         <UserMenuItem link="/auth/logout" type="desktop">
           Sign out
         </UserMenuItem>
@@ -20,6 +23,9 @@ const UserMenu = ({ type }: IProps): JSX.Element => {
 
   return (
     <UserMenuMobile>
+      <UserMenuItem link="/profile" type="mobile">
+        Profile
+      </UserMenuItem>
       <UserMenuItem link="/auth/logout" type="mobile">
         Sign out
       </UserMenuItem>
