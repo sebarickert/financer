@@ -11,6 +11,7 @@ const NavigationMobileToggle = ({
   handleToggleMenu,
 }: IProps): JSX.Element => {
   const location = useLocation();
+
   useEffect(() => {
     handleToggleMenu(false);
   }, [location, handleToggleMenu]);
