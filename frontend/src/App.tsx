@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Financer from "./Financer";
+import { getProfileInformation } from "./pages/profile/ProfileService";
 
 const App = (): JSX.Element => {
   const [profileInfo, setProfileInfo] = useState<IUser | IAuthenticationFailed>(
@@ -8,8 +9,7 @@ const App = (): JSX.Element => {
 
   useEffect(() => {
     const fetchUserInfo = async () => {
-      const userInfo = await fetch("/api/profile");
-      setProfileInfo(await userInfo.json());
+      setProfileInfo(await getProfileInformation());
     };
     fetchUserInfo();
   }, []);
