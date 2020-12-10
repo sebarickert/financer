@@ -13,13 +13,27 @@ import {
   findTransactionsByUser,
 } from "../services/transaction-service";
 
-export const getMyData = async (req: Request, res: Response) => {
+export const getMyData = async (req: Request, res: Response): Promise<void> => {
+  const getMyDataFilename = (): string => {
+    const addLeadingZero = (number: number): string => `0${number}`.substr(-2);
+
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    return `my-financer-data-${year}${addLeadingZero(month)}${addLeadingZero(
+      day
+    )}.json`;
+  };
   const user = req.user as IUserModel;
   const accounts = await findAccountsByUser(user.id);
   const transactions = await findTransactionsByUser(user.id);
   const data = JSON.stringify({ user, accounts, transactions });
 
-  res.setHeader("Content-disposition", "attachment; filename= myData.json");
+  res.setHeader(
+    "Content-disposition",
+    `attachment; filename= ${getMyDataFilename()}`
+  );
   res.setHeader("Content-type", "application/json");
 
   res.write(data, () => {
@@ -27,7 +41,10 @@ export const getMyData = async (req: Request, res: Response) => {
   });
 };
 
-export const overrideMyData = async (req: Request, res: Response) => {
+export const overrideMyData = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   const user = req.user as IUserModel;
 
   if (!user.role.includes("test-user")) {
