@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Button from "../../components/button/button";
 import ButtonGroup from "../../components/button/button.group";
+import Container from "../../components/container/container";
 import Hero from "../../components/hero/hero";
 import Loader from "../../components/loader/loader";
 import SEO from "../../components/seo/seo";
@@ -57,7 +58,7 @@ const Accounts = (): JSX.Element => {
         Below you are able to add your various accounts where you have your
         savings or investments to calculate total amount.
       </Hero>
-      <div className="mt-12">
+      <Container className="mt-12">
         <ButtonGroup>
           <Button link="/accounts/add" accentColor="blue">
             Add account
@@ -66,15 +67,15 @@ const Accounts = (): JSX.Element => {
             Transfer
           </Button>
         </ButtonGroup>
-      </div>
-      <div className="mt-12">
+      </Container>
+      <Container className="mt-12">
         <StackedList
           addiotinalLabel={getAddiotinalLabel(totalBalance)}
           label="Your accounts"
           rows={accounts}
         />
         <TransferList className="md:mt-6" />
-      </div>
+      </Container>
     </>
   );
 };

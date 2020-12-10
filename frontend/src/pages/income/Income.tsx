@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import Button from "../../components/button/button";
 import ButtonGroup from "../../components/button/button.group";
+import Container from "../../components/container/container";
 import DescriptionList from "../../components/description-list/description-list";
 import DescriptionListItem from "../../components/description-list/description-list.item";
 import Hero from "../../components/hero/hero";
@@ -55,14 +56,14 @@ const Income = (): JSX.Element => {
         Below you are able to edit your added income information or delete it
         altogether.
       </Hero>
-      <div className="mt-12">
+      <Container className="mt-12">
         <ButtonGroup>
           <Button accentColor="blue" link={`/incomes/${id}/edit`}>
             Edit income
           </Button>
           <IncomeDeleteModal handleDelete={handleDelete} />
         </ButtonGroup>
-      </div>
+      </Container>
       <DescriptionList label="Transaction details" className="mt-12">
         <DescriptionListItem label="Amount">
           {formatCurrency(income.amount)}

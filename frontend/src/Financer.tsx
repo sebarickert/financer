@@ -28,11 +28,6 @@ const Financer = ({ isLoggedIn = false }: IProps): JSX.Element => {
           <Login />
         </Route>
       )}
-      {!isLoggedIn && (
-        <Route path="/">
-          <Login />
-        </Route>
-      )}
       <Layout>
         <Route exact path="/">
           <Dashboard />

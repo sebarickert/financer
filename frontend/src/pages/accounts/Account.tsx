@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import Button from "../../components/button/button";
 import ButtonGroup from "../../components/button/button.group";
+import Container from "../../components/container/container";
 import DescriptionList from "../../components/description-list/description-list";
 import DescriptionListItem from "../../components/description-list/description-list.item";
 import Hero from "../../components/hero/hero";
@@ -118,14 +119,14 @@ const Account = (): JSX.Element => {
         Below you are able to edit your accounts information and check your
         transaction history as well as balance.
       </Hero>
-      <div className="mt-12">
+      <Container className="mt-12">
         <ButtonGroup>
           <Button accentColor="blue" link={`/accounts/${id}/edit`}>
             Edit account
           </Button>
           <AccountDeleteModal handleDelete={handleDelete} />
         </ButtonGroup>
-      </div>
+      </Container>
       <DescriptionList label="Account details" className="mt-12">
         <DescriptionListItem label="Balance">
           {formatCurrency(account.balance)}
@@ -135,9 +136,9 @@ const Account = (): JSX.Element => {
         </DescriptionListItem>
       </DescriptionList>
       {transactions.length > 0 && (
-        <div className="mt-12">
+        <Container className="mt-12">
           <StackedList label="Account transactions" rows={transactions} />
-        </div>
+        </Container>
       )}
     </>
   );
