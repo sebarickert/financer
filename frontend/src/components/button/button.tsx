@@ -13,6 +13,14 @@ interface IProps {
   size?: "small" | "medium" | "large";
 }
 
+export const isExternalLink = (link: string): boolean =>
+  link.substr(0, 8) === "https://" ||
+  link.substr(0, 7) === "http://" ||
+  link.substr(0, 2) === "//" ||
+  link.substr(0, 5) === "blob:" ||
+  link.substr(0, 5) === "/api/" ||
+  link.substr(0, 6) === "/auth/";
+
 const Button = ({
   accentColor = "blue",
   children,
@@ -43,14 +51,7 @@ const Button = ({
   }
 
   if (typeof link === "string" && link.length > 0) {
-    if (
-      link.substr(0, 8) === "https://" ||
-      link.substr(0, 7) === "http://" ||
-      link.substr(0, 2) === "//" ||
-      link.substr(0, 5) === "blob:" ||
-      link.substr(0, 5) === "/api/" ||
-      link.substr(0, 6) === "/auth/"
-    ) {
+    if (isExternalLink(link)) {
       return (
         <ButtonExternal link={link} className={elementClasses.join(" ")}>
           {children}
