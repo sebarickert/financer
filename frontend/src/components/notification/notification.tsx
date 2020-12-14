@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Transition } from "@headlessui/react";
 import Container from "../container/container";
 import NotificationClose from "./notification.close";
@@ -9,14 +9,27 @@ export interface INotificationProps {
   type: "success" | "error";
   label: string;
   children: string;
+  resetNotification?(): void;
 }
 
 const Notification = ({
   type,
   label,
   children,
+  resetNotification = () => {},
 }: INotificationProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(true);
+
+  useEffect(() => {
+    if (!type || !label || !children) return;
+    setIsOpen(true);
+  }, [type, label, children]);
+
+  const handleClose = () => {
+    resetNotification();
+    setIsOpen(false);
+  };
+
   return (
     <Container className="fixed inset-0 flex items-end justify-center px-4 py-6 pointer-events-none sm:p-6 sm:items-start sm:justify-end">
       <Transition
@@ -40,7 +53,7 @@ const Notification = ({
                 <NotificationContent label={label}>
                   {children}
                 </NotificationContent>
-                <NotificationClose onClick={() => setIsOpen(false)} />
+                <NotificationClose onClick={handleClose} />
               </div>
             </div>
           </div>
