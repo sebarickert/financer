@@ -1,4 +1,4 @@
-/* eslint-disable no-alert, consistent-return */
+/* eslint-disable consistent-return */
 import React, { ChangeEvent, useEffect, useState } from "react";
 import Button from "../../components/button/button";
 import DescriptionList from "../../components/description-list/description-list";
@@ -40,9 +40,21 @@ const ProfileOverrideData = (): JSX.Element => {
     setOverrideAccountCount(uploadedUserData.accounts.length);
   }, [uploadedUserData]);
 
+  const handleResetNotification = () => {
+    setNotification({
+      type: "success",
+      label: "",
+      children: "",
+    });
+  };
+
   const handleOverrideData = async () => {
     if (!uploadedUserData) {
-      alert("Cannot update uploaded user data.");
+      setNotification({
+        type: "error",
+        label: "Upload failed",
+        children: "Cannot update uploaded user data.",
+      });
       return;
     }
 
@@ -55,7 +67,11 @@ const ProfileOverrideData = (): JSX.Element => {
         children: override?.payload,
       });
     } else {
-      alert(`Failed override: ${override.errors?.join(", ")}`);
+      setNotification({
+        type: "error",
+        label: "Overridde failed",
+        children: override?.payload,
+      });
     }
   };
 
@@ -66,7 +82,11 @@ const ProfileOverrideData = (): JSX.Element => {
     if (!targetFile) {
       setOverrideFilename(null);
       setUploadedUserData(null);
-      alert("File not found");
+      setNotification({
+        type: "error",
+        label: "Upload failed",
+        children: "File not found",
+      });
       return;
     }
 
@@ -80,7 +100,11 @@ const ProfileOverrideData = (): JSX.Element => {
         setUploadedUserData(result);
         setOverrideFilename(targetFile.name);
       } else {
-        alert("Failed to parse JSON file");
+        setNotification({
+          type: "error",
+          label: "Upload failed",
+          children: "Failed to parse JSON file",
+        });
       }
     };
     fr.readAsText(targetFile);
@@ -90,7 +114,11 @@ const ProfileOverrideData = (): JSX.Element => {
     <>
       <SEO title="Override data (DANGER ZONE) | Profile" />
       {notification && (
-        <Notification type={notification.type} label={notification.label}>
+        <Notification
+          type={notification.type}
+          label={notification.label}
+          resetNotification={handleResetNotification}
+        >
           {notification.children}
         </Notification>
       )}
