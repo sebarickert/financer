@@ -12,7 +12,7 @@ const userSchema = new Schema({
   githubId: String,
   auth0Id: String,
   profileImageUrl: String,
-  role: [{ type: String }],
+  roles: [{ type: String }],
 });
 
 export default mongoose.model<IUserModel>(USER_MODEL_NAME, userSchema);
