@@ -47,7 +47,7 @@ export const overrideMyData = async (
 ): Promise<void> => {
   const user = req.user as IUserModel;
 
-  if (!user.role.includes("test-user")) {
+  if (!user.roles.includes("test-user")) {
     res.status(403).json({
       status: 403,
       errors: ["Only users with the test-user role can override account data."],

@@ -27,7 +27,7 @@ const Profile = (): JSX.Element => {
           {profileInfo?.name || "-"}
         </DescriptionListItem>
         <DescriptionListItem label="Roles">
-          {profileInfo?.role?.join(", ") || "-"}
+          {profileInfo?.roles?.join(", ") || "-"}
         </DescriptionListItem>
       </DescriptionList>
     </>
