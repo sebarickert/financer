@@ -7,6 +7,10 @@ interface IProfileNavigationItemProps {
   children: string;
 }
 
+interface IProfileNavigationProps {
+  userRoles?: string[];
+}
+
 const ProfileNavigationItem = ({
   link,
   children,
@@ -42,16 +46,20 @@ const ProfileNavigationItem = ({
   );
 };
 
-const ProfileNavigation = (): JSX.Element => {
+const ProfileNavigation = ({
+  userRoles,
+}: IProfileNavigationProps): JSX.Element => {
   return (
     <nav className="w-full">
       <ul className="space-y-1">
         <ProfileNavigationItem link="/profile">
           Profile information
         </ProfileNavigationItem>
-        <ProfileNavigationItem link="/profile/override-data">
-          Override profile data
-        </ProfileNavigationItem>
+        {userRoles?.includes("test-user") && (
+          <ProfileNavigationItem link="/profile/override-data">
+            Override profile data
+          </ProfileNavigationItem>
+        )}
         <ProfileNavigationItem link="/api/profile/my-data">
           Download my data
         </ProfileNavigationItem>
