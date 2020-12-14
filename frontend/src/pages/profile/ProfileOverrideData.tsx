@@ -4,6 +4,9 @@ import Button from "../../components/button/button";
 import DescriptionList from "../../components/description-list/description-list";
 import DescriptionListItem from "../../components/description-list/description-list.item";
 import Hero from "../../components/hero/hero";
+import Notification, {
+  INotificationProps,
+} from "../../components/notification/notification";
 import SEO from "../../components/seo/seo";
 import {
   IOverrideProfileData,
@@ -22,6 +25,9 @@ const ProfileOverrideData = (): JSX.Element => {
     number | null
   >(null);
   const [overrideFilename, setOverrideFilename] = useState<string | null>(null);
+  const [notification, setNotification] = useState<INotificationProps | null>(
+    null
+  );
 
   useEffect(() => {
     if (!uploadedUserData) {
@@ -41,8 +47,13 @@ const ProfileOverrideData = (): JSX.Element => {
     }
 
     const override = await postOverrideProfileData(uploadedUserData);
+
     if (override.status < 300) {
-      alert(`Successfully overridden: ${override?.payload}`);
+      setNotification({
+        type: "success",
+        label: "Successfully overridden",
+        children: override?.payload,
+      });
     } else {
       alert(`Failed override: ${override.errors?.join(", ")}`);
     }
@@ -78,6 +89,11 @@ const ProfileOverrideData = (): JSX.Element => {
   return (
     <>
       <SEO title="Override data (DANGER ZONE) | Profile" />
+      {notification && (
+        <Notification type={notification.type} label={notification.label}>
+          {notification.children}
+        </Notification>
+      )}
       <Hero label="Override your data" standAlone className="mb-12">
         Below you are able to import a JSON-file that contains your profile data
         from some other environment.
