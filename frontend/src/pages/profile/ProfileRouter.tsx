@@ -1,23 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Switch, Route } from "react-router-dom";
 import Container from "../../components/container/container";
 import Profile from "./Profile";
 import ProfileNavigation from "./ProfileNavigation";
 import ProfileOverrideData from "./ProfileOverrideData";
+import { getProfileInformation } from "./ProfileService";
 
 const ProfileRouter = (): JSX.Element => {
+  const [profileInfo, setProfileInfo] = useState<IUser | null>(null);
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      setProfileInfo(await getProfileInformation());
+    };
+    fetchUserInfo();
+  }, []);
+
   return (
     <Container
       className="mt-6 sm:mt-12"
-      sidebarComponent={<ProfileNavigation />}
+      sidebarComponent={<ProfileNavigation userRoles={profileInfo?.roles} />}
     >
       <Switch>
         <Route exact path="/profile">
-          <Profile />
+          <Profile profileInfo={profileInfo} />
         </Route>
-        <Route exact path="/profile/override-data">
-          <ProfileOverrideData />
-        </Route>
+        {profileInfo?.roles.includes("test-user") && (
+          <Route exact path="/profile/override-data">
+            <ProfileOverrideData />
+          </Route>
+        )}
       </Switch>
     </Container>
   );
