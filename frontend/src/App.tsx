@@ -1,26 +1,35 @@
 import React, { useEffect, useState } from "react";
+import Notification from "./components/notification/notification";
 import Financer from "./Financer";
-import { getProfileInformation } from "./pages/profile/ProfileService";
+import { getAuthenticationStatus } from "./services/AuthenticationService";
 
 const App = (): JSX.Element => {
-  const [profileInfo, setProfileInfo] = useState<IUser | IAuthenticationFailed>(
-    { authenticated: false, message: "" }
-  );
+  const [
+    authenticationStatus,
+    setAuthenticationStatus,
+  ] = useState<IAuthenticationStatus>({
+    authenticated: false,
+  });
 
   useEffect(() => {
     const fetchUserInfo = async () => {
-      setProfileInfo(await getProfileInformation());
+      setAuthenticationStatus(await getAuthenticationStatus());
     };
     fetchUserInfo();
   }, []);
 
   return (
     <>
-      <Financer
-        isLoggedIn={
-          !("authenticated" in profileInfo && !profileInfo?.authenticated)
-        }
-      />
+      {authenticationStatus.errors && (
+        <Notification
+          type="error"
+          label="Something went wrong!"
+          className="z-20"
+        >
+          {authenticationStatus.errors?.join(" ") || ""}
+        </Notification>
+      )}
+      <Financer isLoggedIn={authenticationStatus?.authenticated} />
     </>
   );
 };

@@ -10,6 +10,7 @@ export interface INotificationProps {
   label: string;
   children: string;
   resetNotification?(): void;
+  className?: string;
 }
 
 const Notification = ({
@@ -17,6 +18,7 @@ const Notification = ({
   label,
   children,
   resetNotification = () => {},
+  className = "",
 }: INotificationProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(true);
 
@@ -31,7 +33,9 @@ const Notification = ({
   };
 
   return (
-    <Container className="fixed inset-0 flex items-end justify-center px-4 py-6 pointer-events-none sm:p-6 sm:items-start sm:justify-end">
+    <Container
+      className={`fixed inset-0 flex items-end justify-center px-4 py-6 pointer-events-none sm:p-6 sm:items-start sm:justify-end ${className}`}
+    >
       <Transition
         show={isOpen}
         enter="transform ease-out duration-300 transition"
