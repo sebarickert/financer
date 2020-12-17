@@ -1,4 +1,4 @@
-interface IAuthenticationFailed {
+interface IAuthenticationStatus {
   authenticated: boolean;
-  message: string;
+  errors?: string[];
 }

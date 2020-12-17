@@ -5,6 +5,24 @@ import { AUTH0_TOKENS, GITHUB_TOKENS } from "../config/keys";
 const CLIENT_HOME_PAGE_URL = process.env.PUBLIC_URL || "http://localhost:3000";
 const router = Router();
 
+router.get("/api/status", (req, res) => {
+  const status: IAuthenticationStatus = {
+    authenticated: Boolean(req.user),
+  };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { authenticationErrors } = req.session as any;
+  if (authenticationErrors) {
+    status.errors = [
+      authenticationErrors,
+      "Please see common login issues for solution.",
+    ];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (req.session as any).authenticationErrors = undefined;
+  }
+
+  res.json(status);
+});
+
 // when login is successful, retrieve user info
 router.get("/login/success", (req, res) => {
   if (req.user) {
@@ -19,10 +37,10 @@ router.get("/login/success", (req, res) => {
 
 // when login failed, send failed msg
 router.get("/login/failed", (req, res) => {
-  res.status(401).json({
-    success: false,
-    message: "user failed to authenticate.",
-  });
+  // @TODO: refactor to use proper way with Declaration merging like req.session document suggest
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (req.session as any).authenticationErrors = "Authentication failed.";
+  res.redirect(CLIENT_HOME_PAGE_URL);
 });
 
 // When logout, redirect to client
