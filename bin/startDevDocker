@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker-compose -f ./docker/docker-compose.development.yml up -d
+docker-compose -f ./docker/docker-compose.development.yml -p financer-dev up -d

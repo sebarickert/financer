@@ -1,5 +1,5 @@
 #!/bin/bash
 
-docker-compose -f ./docker/docker-compose.production.yml pull webapp
-docker-compose -f ./docker/docker-compose.production.yml down
-docker-compose -f ./docker/docker-compose.production.yml up -d
+docker-compose -f ./docker/docker-compose.production.yml -p financer pull webapp
+docker-compose -f ./docker/docker-compose.production.yml -p financer down
+docker-compose -f ./docker/docker-compose.production.yml -p financer up -d
