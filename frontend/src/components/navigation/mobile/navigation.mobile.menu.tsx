@@ -1,7 +1,7 @@
 import React from "react";
 
 interface IProps {
-  children?: React.ReactNode[];
+  children?: React.ReactNode[] | React.ReactNode;
 }
 
 const NavigationMobileMenu = ({ children }: IProps): JSX.Element => {

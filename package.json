@@ -7,12 +7,17 @@
     "backend"
   ],
   "scripts": {
-    "start": "npm --prefix backend run start-dev & npm --prefix frontend run start",
+    "start": "run-p start:backend start:frontend",
+    "start:backend": "npm --prefix backend run start-dev",
+    "start:frontend": "npm --prefix frontend run start",
     "lint": "npm --prefix backend run lint & npm --prefix frontend run lint",
     "format": "npm --prefix backend run format & npm --prefix frontend run format",
     "test": "CI=true npm --prefix backend run test && CI=true npm --prefix frontend run test",
     "build": "./bin/buildApp"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
+  }
 }

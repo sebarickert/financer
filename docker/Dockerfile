@@ -1,4 +1,4 @@
-FROM node:15.1.0-alpine as builder
+FROM node:15.12.0-alpine as builder
 
 ENV NODE_ENV production
 
@@ -9,7 +9,7 @@ RUN npm ci --quiet -f
 RUN npm run build
 
 
-FROM node:15.1.0-alpine
+FROM node:15.12.0-alpine
 
 ENV NODE_ENV production
 

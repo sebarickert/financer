@@ -77,7 +77,9 @@ export const findTransactionsByUser = async (
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const DANGER_truncateTransactionsByUser = async (
   userId: string
-): Promise<void> => transactionModel.deleteMany({ user: userId });
+): Promise<void> => {
+  await transactionModel.deleteMany({ user: userId });
+};
 
 export const increaseAccountTransactionBalanceAfterTargetDate = async (
   accountId: string,
