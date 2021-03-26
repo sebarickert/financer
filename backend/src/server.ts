@@ -1,5 +1,4 @@
 import express from "express";
-import bodyParser from "body-parser";
 import passport from "passport";
 import cookieSession from "cookie-session";
 import cookieParser from "cookie-parser";
@@ -30,7 +29,7 @@ app.use(
 app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(errorHandler);
 app.use("/api/*", authenticationCheck);
 

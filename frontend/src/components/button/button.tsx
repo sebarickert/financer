@@ -3,8 +3,9 @@ import ButtonPlain from "./button.plain";
 import ButtonExternal from "./button.external";
 import ButtonInternal from "./button.internal";
 
+type AccentColor = "pink" | "red" | "green" | "blue" | "plain";
 interface IProps {
-  accentColor?: "pink" | "red" | "green" | "blue" | "plain";
+  accentColor?: AccentColor;
   children: string;
   className?: string;
   link?: string;
@@ -20,6 +21,21 @@ export const isExternalLink = (link: string): boolean =>
   link.substr(0, 5) === "blob:" ||
   link.substr(0, 5) === "/api/" ||
   link.substr(0, 6) === "/auth/";
+
+const getButtonColorClasses = (color: AccentColor): string => {
+  switch (color) {
+    case "blue":
+      return "bg-blue-600 hover:bg-blue-500 active:bg-blue-700 focus:ring-blue-500";
+    case "green":
+      return "bg-green-600 hover:bg-green-500 active:bg-green-700 focus:ring-green-500";
+    case "red":
+      return "bg-red-600 hover:bg-red-500 active:bg-red-700 focus:ring-red-500";
+    case "pink":
+      return "bg-pink-600 hover:bg-pink-500 active:bg-pink-700 focus:ring-pink-500";
+    default:
+      return "";
+  }
+};
 
 const Button = ({
   accentColor = "blue",
@@ -46,7 +62,7 @@ const Button = ({
     );
   } else {
     elementClasses.push(
-      `bg-${accentColor}-600 hover:bg-${accentColor}-500 active:bg-${accentColor}-700 border-transparent focus:ring-${accentColor}-500`
+      `border-transparent ${getButtonColorClasses(accentColor)}`
     );
   }
 

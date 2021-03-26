@@ -15,4 +15,6 @@ export const createAccount = async (
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const DANGER_truncateAccountByUser = async (
   userId: string
-): Promise<void> => accountModel.deleteMany({ owner: userId });
+): Promise<void> => {
+  await accountModel.deleteMany({ owner: userId });
+};

@@ -1,14 +1,31 @@
 import React from "react";
 import Container from "../container/container";
 
+type AccentColor = "pink" | "red" | "green" | "blue";
+
 interface IProps {
   accent?: string;
-  accentColor?: "pink" | "red" | "green" | "blue";
+  accentColor?: AccentColor;
   label: string;
   children: React.ReactNode;
   standAlone?: boolean;
   className?: string;
 }
+
+const getHeroColorClasses = (color: AccentColor): string => {
+  switch (color) {
+    case "blue":
+      return "text-blue-500";
+    case "green":
+      return "text-green-500";
+    case "pink":
+      return "text-pink-500";
+    case "red":
+      return "text-red-500";
+    default:
+      return "";
+  }
+};
 
 const Hero = ({
   accent,
@@ -23,7 +40,11 @@ const Hero = ({
       <h1 className="text-4xl tracking-tight leading-10 font-extrabold text-gray-900 sm:leading-none sm:text-5xl">
         {accent && (
           <>
-            <span className={`text-2xl text-${accentColor}-500 leading-none`}>
+            <span
+              className={`text-2xl  leading-none ${getHeroColorClasses(
+                accentColor
+              )}`}
+            >
               {accent}
             </span>
             <br />
