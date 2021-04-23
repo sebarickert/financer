@@ -13,4 +13,6 @@ const monthNames = [
   "December",
 ];
 
+export const MONTH_IN_MS = 2592000000;
+
 export default monthNames;

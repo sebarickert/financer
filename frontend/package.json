@@ -15,11 +15,15 @@
     "@types/react-dom": "^16.9.10",
     "@types/react-helmet": "^6.1.0",
     "@types/react-router-dom": "^5.1.6",
+    "@types/recharts": "^1.8.18",
+    "install": "^0.13.0",
+    "postcss": "^8.1.7",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "recharts": "^1.8.5",
     "typescript": "^4.2.3",
     "web-vitals": "^0.2.4",
     "workbox-background-sync": "^5.1.4",
@@ -29,7 +33,8 @@
     "workbox-expiration": "^5.1.4",
     "workbox-precaching": "^5.1.4",
     "workbox-routing": "^5.1.4",
-    "workbox-strategies": "^5.1.4"
+    "workbox-strategies": "^5.1.4",
+    "workbox-streams": "^5.1.4"
   },
   "scripts": {
     "start": "run-p watch:css start:react",

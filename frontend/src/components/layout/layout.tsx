@@ -9,7 +9,7 @@ const Layout = ({ children }: IProps): JSX.Element => {
   return (
     <>
       <Navigation />
-      {children}
+      <main>{children}</main>
     </>
   );
 };
