@@ -17,7 +17,6 @@
     "@types/react-router-dom": "^5.1.6",
     "@types/recharts": "^1.8.18",
     "install": "^0.13.0",
-    "postcss": "^8.1.7",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0",
@@ -45,7 +44,7 @@
     "format": "prettier --write src/**/*.ts{,x} && eslint src/**/*.ts{,x} --fix",
     "lint": "eslint src/**/*.ts{,x}",
     "eject": "react-scripts eject",
-    "watch:css": "NODE_ENV=development postcss src/assets/tailwind.css -o src/assets/financer.css",
+    "watch:css": "NODE_ENV=development postcss src/assets/tailwind.css -o src/assets/financer.css -w",
     "build:css": "NODE_ENV=production  postcss src/assets/tailwind.css -o src/assets/financer.css"
   },
   "eslintConfig": {
@@ -68,7 +67,6 @@
   },
   "devDependencies": {
     "@types/react-helmet": "^6.1.0",
-    "@tailwindcss/jit": "^0.1.10",
     "@typescript-eslint/eslint-plugin": "^4.6.1",
     "@typescript-eslint/parser": "^4.6.1",
     "autoprefixer": "^10.2.5",
@@ -82,9 +80,9 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "http-proxy-middleware": "^0.19.1",
     "npm-run-all": "^4.1.5",
-    "postcss": "^8.1.7",
-    "postcss-cli": "^8.2.0",
+    "postcss": "^8.2.12",
+    "postcss-cli": "^8.3.1",
     "prettier": "^2.1.2",
-    "tailwindcss": "^2.0.4"
+    "tailwindcss": "^2.1.2"
   }
 }
