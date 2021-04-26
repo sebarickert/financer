@@ -3,6 +3,7 @@ import Button from "../../components/button/button";
 import ButtonGroup from "../../components/button/button.group";
 import Container from "../../components/container/container";
 import Hero from "../../components/hero/hero";
+import HeroLead from "../../components/hero/hero.lead";
 import Loader from "../../components/loader/loader";
 import SEO from "../../components/seo/seo";
 import StackedList from "../../components/stacked-list/stacked-list";
@@ -55,11 +56,11 @@ const Accounts = (): JSX.Element => {
     <>
       <SEO title="Accounts" />
       <Hero accent="Overview" accentColor="blue" label="Accounts">
-        Below you are able to add your various accounts where you have your
-        savings or investments to calculate total amount.
-      </Hero>
-      <Container className="mt-12">
-        <ButtonGroup>
+        <HeroLead>
+          Below you are able to add your various accounts where you have your
+          savings or investments to calculate total amount.
+        </HeroLead>
+        <ButtonGroup className="mt-12">
           <Button link="/accounts/add" accentColor="blue">
             Add account
           </Button>
@@ -67,14 +68,14 @@ const Accounts = (): JSX.Element => {
             Transfer
           </Button>
         </ButtonGroup>
-      </Container>
+      </Hero>
       <Container className="mt-12">
         <StackedList
           addiotinalLabel={getAddiotinalLabel(totalBalance)}
           label="Your accounts"
           rows={accounts}
         />
-        <TransferList className="md:mt-6" />
+        <TransferList className="mt-4 md:mt-6" />
       </Container>
     </>
   );

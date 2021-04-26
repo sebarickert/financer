@@ -18,7 +18,7 @@ const ProfileRouter = (): JSX.Element => {
 
   return (
     <Container
-      className="mt-6 sm:mt-12"
+      className="pt-6 sm:pt-12"
       sidebarComponent={<ProfileNavigation userRoles={profileInfo?.roles} />}
     >
       <Switch>

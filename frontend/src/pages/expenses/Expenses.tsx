@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Button from "../../components/button/button";
 import Container from "../../components/container/container";
 import Hero from "../../components/hero/hero";
+import HeroLead from "../../components/hero/hero.lead";
 import Loader from "../../components/loader/loader";
 import SEO from "../../components/seo/seo";
 import StackedList from "../../components/stacked-list/stacked-list";
@@ -50,17 +51,17 @@ const Expenses = (): JSX.Element => {
     <>
       <SEO title="Expenses" />
       <Hero accent="Overview" accentColor="red" label="Expenses">
-        Below you are able to review all your added expenses and see a summary
-        of the current month.
-      </Hero>
-      <Container className="mt-12">
-        <Button link="/expenses/add" accentColor="red">
+        <HeroLead>
+          Below you are able to review all your added expenses and see a summary
+          of the current month.
+        </HeroLead>
+        <Button className="mt-12" link="/expenses/add" accentColor="red">
           Add expense
         </Button>
-      </Container>
+      </Hero>
       <Container className="mt-12">
         {expenses.map(({ year, month, rows, total }) => (
-          <div className="md:mt-6" key={`${year}-${month}`}>
+          <div className="mt-4 md:mt-6" key={`${year}-${month}`}>
             <StackedList
               addiotinalLabel={getAddiotinalLabel(total)}
               label={`${monthNames[month]}, ${year}`}

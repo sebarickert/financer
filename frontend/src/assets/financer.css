@@ -1464,6 +1464,9 @@ select {
 .flex-shrink-0 {
 	flex-shrink: 0;
 }
+.flex-grow {
+	flex-grow: 1;
+}
 .transform {
 	--tw-translate-x: 0;
 	--tw-translate-y: 0;
@@ -1745,6 +1748,10 @@ select {
 	--tw-bg-opacity: 1;
 	background-color: rgba(55, 65, 81, var(--tw-bg-opacity));
 }
+.bg-gray-200 {
+	--tw-bg-opacity: 1;
+	background-color: rgba(229, 231, 235, var(--tw-bg-opacity));
+}
 .p-4 {
 	padding: 1rem;
 }
@@ -1857,6 +1864,21 @@ select {
 .pb-16 {
 	padding-bottom: 4rem;
 }
+.pb-8 {
+	padding-bottom: 2rem;
+}
+.pb-10 {
+	padding-bottom: 2.5rem;
+}
+.pt-8 {
+	padding-top: 2rem;
+}
+.pb-12 {
+	padding-bottom: 3rem;
+}
+.pb-14 {
+	padding-bottom: 3.5rem;
+}
 .text-center {
 	text-align: center;
 }
@@ -1919,6 +1941,9 @@ select {
 .font-normal {
 	font-weight: 400;
 }
+.font-light {
+	font-weight: 300;
+}
 .uppercase {
 	text-transform: uppercase;
 }
@@ -1948,6 +1973,9 @@ select {
 }
 .leading-4 {
 	line-height: 1rem;
+}
+.leading-relaxed {
+	line-height: 1.625;
 }
 .tracking-wide {
 	letter-spacing: 0.025em;
@@ -2037,6 +2065,22 @@ select {
 .text-pink-700 {
 	--tw-text-opacity: 1;
 	color: rgba(191, 18, 93, var(--tw-text-opacity));
+}
+.text-gray-300 {
+	--tw-text-opacity: 1;
+	color: rgba(210, 214, 220, var(--tw-text-opacity));
+}
+.text-black {
+	--tw-text-opacity: 1;
+	color: rgba(0, 0, 0, var(--tw-text-opacity));
+}
+.\!text-gray-500 {
+	--tw-text-opacity: 1 !important;
+	color: rgba(107, 114, 128, var(--tw-text-opacity)) !important;
+}
+.\!text-gray-600 {
+	--tw-text-opacity: 1 !important;
+	color: rgba(75, 85, 99, var(--tw-text-opacity)) !important;
 }
 .placeholder-gray-400::placeholder {
 	--tw-placeholder-opacity: 1;
@@ -2164,6 +2208,10 @@ select {
 .hover\:bg-gray-100:hover {
 	--tw-bg-opacity: 1;
 	background-color: rgba(244, 245, 247, var(--tw-bg-opacity));
+}
+.hover\:bg-gray-200:hover {
+	--tw-bg-opacity: 1;
+	background-color: rgba(229, 231, 235, var(--tw-bg-opacity));
 }
 .hover\:text-gray-500:hover {
 	--tw-text-opacity: 1;
@@ -2522,12 +2570,33 @@ select {
 		padding-right: 1rem;
 	}
 
+	.sm\:py-12 {
+		padding-top: 3rem;
+		padding-bottom: 3rem;
+	}
+
 	.sm\:pt-12 {
 		padding-top: 3rem;
 	}
 
 	.sm\:pb-4 {
 		padding-bottom: 1rem;
+	}
+
+	.sm\:pt-14 {
+		padding-top: 3.5rem;
+	}
+
+	.sm\:pb-14 {
+		padding-bottom: 3.5rem;
+	}
+
+	.sm\:pb-16 {
+		padding-bottom: 4rem;
+	}
+
+	.sm\:pb-20 {
+		padding-bottom: 5rem;
 	}
 
 	.sm\:text-left {
@@ -2573,6 +2642,10 @@ select {
 
 	.sm\:leading-5 {
 		line-height: 1.25rem;
+	}
+
+	.sm\:leading-relaxed {
+		line-height: 1.625;
 	}
 }
 @media (min-width: 768px) {
@@ -2714,6 +2787,15 @@ select {
 
 	.lg\:pb-24 {
 		padding-bottom: 6rem;
+	}
+
+	.lg\:text-5xl {
+		font-size: 3rem;
+		line-height: 1;
+	}
+
+	.lg\:leading-normal {
+		line-height: 1.5;
 	}
 
 	.lg\:text-gray-900 {

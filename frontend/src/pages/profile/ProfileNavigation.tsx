@@ -18,7 +18,7 @@ const ProfileNavigationItem = ({
   const linkClasses = {
     default:
       "text-gray-600 hover:bg-gray-50 hover:text-gray-900 flex items-center px-3 py-2 text-sm font-medium rounded-md",
-    active: "bg-gray-100 text-gray-900",
+    active: "bg-gray-200 text-gray-900 hover:bg-gray-200",
   };
 
   if (isExternalLink(link)) {
