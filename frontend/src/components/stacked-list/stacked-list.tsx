@@ -11,7 +11,7 @@ interface IProps {
 
 const StackedList = ({ addiotinalLabel, label, rows }: IProps): JSX.Element => {
   return (
-    <div className="py-8 px-4 -mx-4 bg-gray-100 md:rounded-lg md:-mx-5 md:px-5 lg:-mx-8 lg:px-8">
+    <div className="lg:flex items-start relative">
       <StackedListHeader label={label} addiotinalLabel={addiotinalLabel} />
       <StackedListBody>
         {rows.map(

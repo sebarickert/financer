@@ -67,10 +67,7 @@ const StackedListRow = ({
   return (
     <li>
       {link ? (
-        <Link
-          to={link}
-          className="block hover:bg-gray-50 focus:bg-gray-50 outline-none"
-        >
+        <Link to={link} className="block hover:bg-gray-50 focus:bg-gray-50">
           {stackedListRowContent}
         </Link>
       ) : (
