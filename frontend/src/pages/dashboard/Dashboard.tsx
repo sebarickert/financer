@@ -1,7 +1,6 @@
 import React from "react";
 import Button from "../../components/button/button";
 import ButtonGroup from "../../components/button/button.group";
-import Container from "../../components/container/container";
 import DashboardStats from "../../components/dashboard-stats/dashboard.stats";
 import Hero from "../../components/hero/hero";
 import HeroLead from "../../components/hero/hero.lead";
