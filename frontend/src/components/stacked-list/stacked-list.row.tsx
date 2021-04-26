@@ -48,14 +48,25 @@ const StackedListRow = ({
         <div className="flex-shrink-0 pl-4 text-right">
           {tags && (
             <div className="mb-1">
-              {tags.map(({ label: tagLabel, color }) => (
-                <p
-                  className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-${color}-100 text-${color}-800`}
-                  key={tagLabel}
-                >
-                  {tagLabel}
-                </p>
-              ))}
+              {tags.map(({ label: tagLabel, color }) => {
+                const colorMapping = {
+                  blue: "bg-blue-100 text-blue-800",
+                  green: "bg-green-100 text-green-800",
+                  red: "bg-red-100 text-red-800",
+                };
+
+                const baseClasses = [
+                  "px-2 inline-flex text-xs leading-5 font-semibold rounded-full",
+                ];
+
+                baseClasses.push(colorMapping[color]);
+
+                return (
+                  <p className={baseClasses.join(" ")} key={tagLabel}>
+                    {tagLabel}
+                  </p>
+                );
+              })}
             </div>
           )}
           <p className="font-medium">{additionalLabel}</p>
