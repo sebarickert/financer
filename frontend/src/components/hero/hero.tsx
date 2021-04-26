@@ -37,7 +37,11 @@ const Hero = ({
 }: IProps): JSX.Element => {
   const heroContent = (
     <div className="max-w-xl">
-      <h1 className="text-4xl tracking-tight leading-10 font-extrabold text-gray-900 sm:leading-none sm:text-5xl">
+      <h1
+        className={`text-4xl tracking-tight leading-10 font-extrabold ${
+          standAlone ? "text-gray-900" : "text-white"
+        } sm:leading-none sm:text-5xl`}
+      >
         {accent && (
           <>
             <span
@@ -52,7 +56,7 @@ const Hero = ({
         )}
         {label}
       </h1>
-      <p className="mt-5 text-xl leading-7 text-gray-500">{children}</p>
+      {children}
     </div>
   );
 
@@ -61,7 +65,7 @@ const Hero = ({
   }
 
   return (
-    <div className={`pt-6 sm:pt-12 ${className}`}>
+    <div className={`pt-8 pb-14 sm:pt-12 sm:pb-20 ${className} bg-gray-800`}>
       <Container>{heroContent}</Container>
     </div>
   );
