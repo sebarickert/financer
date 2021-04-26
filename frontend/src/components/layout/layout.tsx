@@ -9,7 +9,7 @@ const Layout = ({ children }: IProps): JSX.Element => {
   return (
     <>
       <Navigation />
-      <main>{children}</main>
+      <main className="bg-gray-100 pb-16 lg:pb-24">{children}</main>
     </>
   );
 };
