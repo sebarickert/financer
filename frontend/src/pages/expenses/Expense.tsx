@@ -6,6 +6,7 @@ import Container from "../../components/container/container";
 import DescriptionList from "../../components/description-list/description-list";
 import DescriptionListItem from "../../components/description-list/description-list.item";
 import Hero from "../../components/hero/hero";
+import HeroLead from "../../components/hero/hero.lead";
 import Loader from "../../components/loader/loader";
 import ModalConfirm from "../../components/modal/confirm/modal.confirm";
 import SEO from "../../components/seo/seo";
@@ -53,17 +54,17 @@ const Expense = (): JSX.Element => {
     <>
       <SEO title={`${expense.description} | Expenses`} />
       <Hero accent="Expense" accentColor="red" label={expense.description}>
-        Below you are able to edit your added expense information or delete it
-        altogether.
-      </Hero>
-      <Container className="mt-12">
-        <ButtonGroup>
+        <HeroLead>
+          Below you are able to edit your added expense information or delete it
+          altogether.
+        </HeroLead>
+        <ButtonGroup className="mt-12">
           <Button accentColor="blue" link={`/expenses/${id}/edit`}>
             Edit expense
           </Button>
           <ExpenseDeleteModal handleDelete={handleDelete} />
         </ButtonGroup>
-      </Container>
+      </Hero>
       <DescriptionList label="Transaction details" className="mt-12">
         <DescriptionListItem label="Amount">
           {formatCurrency(expense.amount)}
