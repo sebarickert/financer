@@ -6,8 +6,8 @@ interface IProps {
 
 const DescriptionListBody = ({ children }: IProps): JSX.Element => {
   return (
-    <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
-      <dl className="sm:divide-y sm:divide-gray-200">{children}</dl>
+    <div className="border-t border-gray-200 p-0">
+      <dl className="divide-y divide-gray-200">{children}</dl>
     </div>
   );
 };
