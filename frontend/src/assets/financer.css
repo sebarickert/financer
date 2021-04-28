@@ -1738,6 +1738,9 @@ select {
 .p-2 {
 	padding: 0.5rem;
 }
+.p-0 {
+	padding: 0;
+}
 .py-16 {
 	padding-top: 4rem;
 	padding-bottom: 4rem;
@@ -2451,6 +2454,10 @@ select {
 
 	.sm\:grid-cols-2 {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.sm\:grid-cols-4 {
+		grid-template-columns: repeat(4, minmax(0, 1fr));
 	}
 
 	.sm\:flex-row-reverse {
