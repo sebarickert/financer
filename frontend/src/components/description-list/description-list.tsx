@@ -17,12 +17,10 @@ const DescriptionList = ({
   return (
     <Container>
       <div
-        className={`py-8 px-4 -mx-4 bg-gray-100 md:rounded-lg md:-mx-5 md:px-5 lg:-mx-8 lg:px-8 ${className}`}
+        className={`bg-white border border-gray-200 overflow-hiddeN ${className}`}
       >
-        <div className="bg-white shadow overflow-hidden rounded-lg">
-          <DescriptionListHeader label={label} />
-          <DescriptionListBody>{children}</DescriptionListBody>
-        </div>
+        <DescriptionListHeader label={label} />
+        <DescriptionListBody>{children}</DescriptionListBody>
       </div>
     </Container>
   );
