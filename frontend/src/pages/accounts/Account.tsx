@@ -54,7 +54,7 @@ const CustomTooltip = ({
 }: TooltipProps): JSX.Element => {
   if (active && payload && payload.length) {
     return (
-      <div className="py-2 px-4 bg-blue-600 shadow-lg rounded-md">
+      <div className="py-2 px-4 bg-gray-800 shadow-lg">
         <p className="text-white">
           Balance {formatCurrency(payload[0].value as number)}
         </p>

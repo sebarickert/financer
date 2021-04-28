@@ -1410,6 +1410,9 @@ select {
 .h-12 {
 	height: 3rem;
 }
+.h-4 {
+	height: 1rem;
+}
 .min-h-screen {
 	min-height: 100vh;
 }
@@ -1436,6 +1439,9 @@ select {
 }
 .w-48 {
 	width: 12rem;
+}
+.w-4 {
+	width: 1rem;
 }
 .min-w-0 {
 	min-width: 0;
@@ -1539,6 +1545,18 @@ select {
 }
 .justify-end {
 	justify-content: flex-end;
+}
+.gap-3 {
+	gap: 0.75rem;
+}
+.gap-2 {
+	gap: 0.5rem;
+}
+.gap-1 {
+	gap: 0.25rem;
+}
+.gap-4 {
+	gap: 1rem;
 }
 .gap-y-6 {
 	row-gap: 1.5rem;
