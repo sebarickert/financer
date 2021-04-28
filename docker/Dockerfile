@@ -6,7 +6,7 @@ RUN apk add --update --no-cache python3 make g++ && ln -sf python3 /usr/bin/pyth
 COPY . /app
 WORKDIR /app
 
-RUN npm ci --quiet -f --also=dev
+RUN npm ci --quiet --also=dev
 RUN npm run build
 
 RUN ls -al /app/build
