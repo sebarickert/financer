@@ -6,7 +6,7 @@ interface IProps {
 
 const StackedListBody = ({ children }: IProps): JSX.Element => {
   return (
-    <div className="bg-white shadow rounded flex-1">
+    <div className="bg-white border border-gray-200 flex-1">
       <ul className="divide-y divide-gray-200">{children}</ul>
     </div>
   );
