@@ -69,13 +69,13 @@ const Accounts = (): JSX.Element => {
           </Button>
         </ButtonGroup>
       </Hero>
-      <Container className="mt-12">
+      <Container className="lg:mt-12">
         <StackedList
           addiotinalLabel={getAddiotinalLabel(totalBalance)}
           label="Your accounts"
           rows={accounts}
         />
-        <TransferList className="mt-4 md:mt-6" />
+        <TransferList className="lg:mt-6" />
       </Container>
     </>
   );
