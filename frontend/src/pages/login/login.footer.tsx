@@ -8,7 +8,7 @@ interface IProps {
 const LoginFooter = ({ className = "" }: IProps): JSX.Element => {
   return (
     <div
-      className={`bg-gray-900 py-3 pr-3 flex items-center gap-4 justify-center ${className}`}
+      className={`bg-gray-900 py-3 pr-3 grid grid-cols-2 items-center justify-center ${className}`}
     >
       <Link to="/privacy-policy" className="text-sm  text-gray-400">
         Privacy policy
