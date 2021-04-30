@@ -110,7 +110,13 @@ const SimpleLineChart = ({ data }: ISimpleLineChartProps): JSX.Element => {
             height={30}
             stroke="#1c64f2"
             startIndex={monthAgoIndex}
-          />
+          >
+            <AreaChart>
+              <CartesianGrid />
+              <YAxis hide domain={["dataMin", "dataMax"]} />
+              <Area dataKey="balance" stroke="#1c64f2" fill="#1c64f2" />
+            </AreaChart>
+          </Brush>
           <CartesianGrid vertical={false} opacity={0.5} />
         </AreaChart>
       </ResponsiveContainer>
