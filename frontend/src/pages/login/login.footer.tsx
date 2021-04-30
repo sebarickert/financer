@@ -8,19 +8,12 @@ interface IProps {
 const LoginFooter = ({ className = "" }: IProps): JSX.Element => {
   return (
     <div
-      className={`bg-white py-3 flex flex-col sm:flex-row sm:justify-center sm:items-center ${className}`}
+      className={`bg-gray-900 py-3 pr-3 flex items-center gap-4 justify-center ${className}`}
     >
-      <Link
-        to="/privacy-policy"
-        className="text-sm focus:outline-none focus:ring-2 focus:ring-offset-4 rounded-sm"
-      >
+      <Link to="/privacy-policy" className="text-sm  text-gray-400">
         Privacy policy
       </Link>
-      <span className="hidden px-1 mx-1 sm:inline-block">|</span>
-      <Link
-        to="/issues-with-login"
-        className="text-sm focus:outline-none focus:ring-2 focus:ring-offset-4 rounded-sm mt-2 sm:mt-0"
-      >
+      <Link to="/issues-with-login" className="text-sm  text-gray-400">
         Issues with login?
       </Link>
     </div>

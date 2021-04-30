@@ -29,7 +29,7 @@ const Login = (): JSX.Element => {
             aria-modal="true"
             aria-labelledby="modal-headline"
           >
-            <div className="bg-white rounded-lg text-left shadow-xl overflow-hidden">
+            <div className="overflow-hidden">
               <LoginHeader label="Financer">
                 Please login to manage your accounts, expenses and incomes.
               </LoginHeader>
@@ -46,7 +46,7 @@ const Login = (): JSX.Element => {
                 />
               )}
             </div>
-            <LoginFooter className="mt-2 overflow-hidden rounded-lg" />
+            <LoginFooter className="mt-2 overflow-hidden" />
           </div>
         </div>
       </div>
