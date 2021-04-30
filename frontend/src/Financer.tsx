@@ -9,6 +9,7 @@ import PrivacyPolicy from "./Privacy";
 import Login from "./pages/login/login";
 import IssuesWithLogin from "./IssuesWithLogin";
 import ProfileRouter from "./pages/profile/ProfileRouter";
+import TransfersRouter from "./pages/transfers/TransfersRouter";
 
 interface IProps {
   isLoggedIn: boolean;
@@ -37,6 +38,9 @@ const Financer = ({ isLoggedIn = false }: IProps): JSX.Element => {
         </Route>
         <Route path="/expenses">
           <ExpensesRouter />
+        </Route>
+        <Route path="/transfers">
+          <TransfersRouter />
         </Route>
         <Route path="/accounts">
           <AccountsRouter />
