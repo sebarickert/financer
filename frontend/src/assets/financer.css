@@ -1540,6 +1540,9 @@ select {
 .justify-end {
 	justify-content: flex-end;
 }
+.gap-4 {
+	gap: 1rem;
+}
 .gap-y-6 {
 	row-gap: 1.5rem;
 }
@@ -1839,6 +1842,9 @@ select {
 }
 .pb-3 {
 	padding-bottom: 0.75rem;
+}
+.pr-3 {
+	padding-right: 0.75rem;
 }
 .text-center {
 	text-align: center;
