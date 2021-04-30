@@ -61,7 +61,10 @@ if (GITHUB_TOKENS.IS_ACTIVATED) {
 }
 
 if (AUTH0_TOKENS.IS_ACTIVATED) {
-  router.get("/auth0", passport.authenticate("auth0"));
+  router.get(
+    "/auth0",
+    passport.authenticate("auth0", { scope: "openid email profile" })
+  );
   router.get(
     "/auth0/redirect",
     passport.authenticate("auth0", {
