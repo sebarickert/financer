@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { getAllTransferTranscations } from "../../services/TransactionService";
 import { formatDate } from "../../utils/formatDate";
 import formatCurrency from "../../utils/formatCurrency";
 import { getAllAccounts } from "./AccountService";
 import StackedList from "../../components/stacked-list/stacked-list";
 import { ICustomStackedListRowProps } from "../../components/stacked-list/stacked-list.row";
+import { getAllTransferTranscations } from "../transfers/TransferService";
 
 interface IProps {
   className?: string;
@@ -56,6 +56,7 @@ const TransferList = ({ className = "" }: IProps): JSX.Element => {
               additionalLabel: formatCurrency(amount),
               additionalInformation: [formatDate(date)],
               id: _id,
+              link: `/transfers/${_id}`,
               date,
               tags: [
                 {

@@ -13,10 +13,3 @@ export const addTransaction = async (
 
   return newTransaction.json();
 };
-
-export const getAllTransferTranscations = async (): Promise<
-  IApiResponse<ITransaction[]>
-> => {
-  const transfers = await fetch("/api/transaction/transfers");
-  return transfers.json();
-};
