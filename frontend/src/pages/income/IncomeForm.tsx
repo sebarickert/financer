@@ -95,6 +95,9 @@ const IncomeForm = ({
           <Input
             id="amount"
             help="Amount of the income."
+            type="number"
+            min={0.0}
+            step={0.01}
             isCurrency
             isRequired
             value={Number.isNaN(amount) ? "" : amount}
