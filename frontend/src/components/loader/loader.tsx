@@ -1,11 +1,11 @@
 import React from "react";
 import { Loader as OrinalLoader } from "@silte/react-loader";
 
-interface IProps {
+export interface ILoaderProps {
   loaderColor?: "pink" | "red" | "green" | "blue";
 }
 
-const Loader = ({ loaderColor = "pink" }: IProps): JSX.Element => {
+const Loader = ({ loaderColor = "pink" }: ILoaderProps): JSX.Element => {
   const colorCode = {
     blue: "#3182ce",
     green: "#38a169",
