@@ -69,14 +69,22 @@ const Button = ({
   if (typeof link === "string" && link.length > 0) {
     if (isExternalLink(link)) {
       return (
-        <ButtonExternal link={link} className={elementClasses.join(" ")}>
+        <ButtonExternal
+          link={link}
+          className={elementClasses.join(" ")}
+          onClick={onClick}
+        >
           {children}
         </ButtonExternal>
       );
     }
 
     return (
-      <ButtonInternal link={link} className={elementClasses.join(" ")}>
+      <ButtonInternal
+        link={link}
+        className={elementClasses.join(" ")}
+        onClick={onClick}
+      >
         {children}
       </ButtonInternal>
     );

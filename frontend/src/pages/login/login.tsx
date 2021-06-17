@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import LoginHeader from "./login.header";
 import LoginActions from "./login.actions";
 import LoginFooter from "./login.footer";
 import SEO from "../../components/seo/seo";
+import LoaderFullScreen from "../../components/loader/loader.fullscreen";
 
 const {
   REACT_APP_IS_GITHUB_OAUTH_ENABLED,
@@ -13,9 +14,14 @@ const checkIsEnabled = (stringBoolean: string | undefined) =>
   stringBoolean && stringBoolean.toLocaleLowerCase() !== "false";
 
 const Login = (): JSX.Element => {
+  const [isLoadingOAuthPage, setIsLoadingOAuthPage] = useState(false);
+
+  const startAuthLoading = () => setTimeout(setIsLoadingOAuthPage, 500, true);
+
   return (
     <>
       <SEO title="Login" />
+      {isLoadingOAuthPage && <LoaderFullScreen loaderColor="blue" />}
       <div className="fixed z-10 inset-0 overflow-y-auto">
         <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
           <div className="fixed inset-0 transition-opacity">
@@ -37,12 +43,14 @@ const Login = (): JSX.Element => {
                 <LoginActions
                   submitButtonLabel="Login with Github"
                   loginUrl="/auth/github"
+                  onClick={startAuthLoading}
                 />
               )}
               {checkIsEnabled(REACT_APP_IS_AUTH0_OAUTH_ENABLED) && (
                 <LoginActions
                   submitButtonLabel="Login with Auth0"
                   loginUrl="/auth/auth0"
+                  onClick={startAuthLoading}
                 />
               )}
             </div>
