@@ -14,10 +14,8 @@ import {
 } from "./ProfileService";
 
 const ProfileOverrideData = (): JSX.Element => {
-  const [
-    uploadedUserData,
-    setUploadedUserData,
-  ] = useState<IOverrideProfileData | null>(null);
+  const [uploadedUserData, setUploadedUserData] =
+    useState<IOverrideProfileData | null>(null);
   const [overrideTranactionCount, setOverrideTranactionCount] = useState<
     number | null
   >(null);
