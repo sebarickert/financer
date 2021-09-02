@@ -2,10 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import SEO from "./components/seo/seo";
 
-const {
-  REACT_APP_IS_GITHUB_OAUTH_ENABLED,
-  REACT_APP_IS_AUTH0_OAUTH_ENABLED,
-} = process.env;
+const { REACT_APP_IS_GITHUB_OAUTH_ENABLED, REACT_APP_IS_AUTH0_OAUTH_ENABLED } =
+  process.env;
 
 const checkIsEnabled = (stringBoolean: string | undefined) =>
   stringBoolean && stringBoolean.toLocaleLowerCase() !== "false";

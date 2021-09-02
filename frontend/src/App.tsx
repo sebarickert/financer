@@ -4,12 +4,10 @@ import Financer from "./Financer";
 import { getAuthenticationStatus } from "./services/AuthenticationService";
 
 const App = (): JSX.Element => {
-  const [
-    authenticationStatus,
-    setAuthenticationStatus,
-  ] = useState<IAuthenticationStatus>({
-    authenticated: false,
-  });
+  const [authenticationStatus, setAuthenticationStatus] =
+    useState<IAuthenticationStatus>({
+      authenticated: false,
+    });
 
   useEffect(() => {
     const fetchUserInfo = async () => {
