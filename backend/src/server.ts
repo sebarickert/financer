@@ -11,6 +11,7 @@ import accountRoutes from "./routes/account-route";
 import incomeRoutes from "./routes/income-route";
 import expenseRoutes from "./routes/expense-route";
 import transactionRoutes from "./routes/transaction-route";
+import transactionCategoryRoutes from "./routes/transaction-category-route";
 import fileExists from "./utils/fileExists";
 import errorHandler from "./routes/middlewares/errorHandler";
 import authenticationCheck from "./routes/middlewares/authenticationCheck";
@@ -40,6 +41,7 @@ app.use("/api/account", accountRoutes);
 app.use("/api/income", incomeRoutes);
 app.use("/api/expense", expenseRoutes);
 app.use("/api/transaction", transactionRoutes);
+app.use("/api/transaction-categories", transactionCategoryRoutes);
 
 const reactFrontendExists = fileExists(
   `${__dirname}/../${REACT_APP_PATH}index.html`
