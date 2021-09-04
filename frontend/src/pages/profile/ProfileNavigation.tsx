@@ -55,6 +55,9 @@ const ProfileNavigation = ({
         <ProfileNavigationItem link="/profile">
           Profile information
         </ProfileNavigationItem>
+        <ProfileNavigationItem link="/profile/transaction-categories">
+          Transaction categories
+        </ProfileNavigationItem>
         {userRoles?.includes("test-user") && (
           <ProfileNavigationItem link="/profile/override-data">
             Override profile data

@@ -5,6 +5,7 @@ import Profile from "./Profile";
 import ProfileNavigation from "./ProfileNavigation";
 import ProfileOverrideData from "./ProfileOverrideData";
 import { getProfileInformation } from "./ProfileService";
+import TransactionCategoriesRouter from "./TransactionCategories/TransactionCategoriesRouter";
 
 const ProfileRouter = (): JSX.Element => {
   const [profileInfo, setProfileInfo] = useState<IUser | null>(null);
@@ -24,6 +25,9 @@ const ProfileRouter = (): JSX.Element => {
       <Switch>
         <Route exact path="/profile">
           <Profile profileInfo={profileInfo} />
+        </Route>
+        <Route path="/profile/transaction-categories">
+          <TransactionCategoriesRouter />
         </Route>
         {profileInfo?.roles.includes("test-user") && (
           <Route exact path="/profile/override-data">
