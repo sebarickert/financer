@@ -45,3 +45,13 @@ export const editTransactionCategory = async (
 
   return targetTransactionCategory.json();
 };
+
+export const deleteTransactionCategory = async (id: string): Promise<void> => {
+  await fetch(`/api/transaction-categories/${id}`, {
+    method: "DELETE",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  });
+};
