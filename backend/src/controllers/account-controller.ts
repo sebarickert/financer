@@ -4,7 +4,7 @@ import { ACCOUNT_TYPES, IAccountModel } from "../models/account-model";
 import { IUserModel } from "../models/user-model";
 import {
   createAccount,
-  findAccountsById,
+  findAccountById,
   findAccountsByUser,
 } from "../services/account-service";
 import { findTransactionsByAccount } from "../services/transaction-service";
@@ -24,7 +24,7 @@ export const getAccount = async (
 ): Promise<void> => {
   const user = req.user as IUserModel;
   const accountId = req.params.id;
-  const account = await findAccountsById(accountId);
+  const account = await findAccountById(accountId);
 
   if (account === null) {
     res.status(404).json({
@@ -90,7 +90,7 @@ export const deleteAccount = async (
 ): Promise<void> => {
   const user = req.user as IUserModel;
   const accountId = req.params.id;
-  const account = await findAccountsById(accountId);
+  const account = await findAccountById(accountId);
 
   if (account === null) {
     res.status(404).json({
@@ -122,7 +122,7 @@ export const updateAccount = async (
   const accountId = req.params.id;
   const modifiedAccountData = req.body as IAccountModel;
 
-  const account = await findAccountsById(accountId);
+  const account = await findAccountById(accountId);
 
   if (`${account?.owner}` !== `${user._id}`) {
     res.status(403).json({
@@ -162,7 +162,7 @@ export const getAllAccountTransactions = async (
 ): Promise<void> => {
   const user = req.user as IUserModel;
   const accountId = req.params.id;
-  const account = await findAccountsById(accountId);
+  const account = await findAccountById(accountId);
 
   if (account === null) {
     res.status(404).json({

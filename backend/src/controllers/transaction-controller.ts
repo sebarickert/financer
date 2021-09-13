@@ -2,7 +2,7 @@ import { Response, Request, NextFunction } from "express";
 import { ITransactionModel } from "../models/transaction-model";
 
 import { IUserModel } from "../models/user-model";
-import { findAccountsById } from "../services/account-service";
+import { findAccountById } from "../services/account-service";
 import {
   createTransaction,
   findTransactionById,
@@ -65,7 +65,7 @@ export const deleteTransaction = async (
     return;
   }
   if (transaction.fromAccount) {
-    const fromAccount = await findAccountsById(transaction.fromAccount);
+    const fromAccount = await findAccountById(transaction.fromAccount);
     if (fromAccount !== null) {
       fromAccount.balance += transaction.amount;
       await fromAccount.save();
@@ -77,7 +77,7 @@ export const deleteTransaction = async (
     }
   }
   if (transaction.toAccount) {
-    const toAccount = await findAccountsById(transaction.toAccount);
+    const toAccount = await findAccountById(transaction.toAccount);
     if (toAccount !== null) {
       toAccount.balance -= transaction.amount;
       await toAccount.save();
@@ -122,7 +122,7 @@ export const addTransfer = async (
   ) {
     errors.push("fromAccount must not be empty.");
   } else {
-    sourceAccount = await findAccountsById(rawNewTransaction.fromAccount);
+    sourceAccount = await findAccountById(rawNewTransaction.fromAccount);
     if (sourceAccount === null) {
       errors.push("Source account not found.");
     } else if (`${sourceAccount?.owner}` !== `${user.id}`) {
@@ -135,7 +135,7 @@ export const addTransfer = async (
   ) {
     errors.push("toAccount must not be empty.");
   } else {
-    targetAccount = await findAccountsById(rawNewTransaction.toAccount);
+    targetAccount = await findAccountById(rawNewTransaction.toAccount);
     if (targetAccount === null) {
       errors.push("Target account not found.");
     } else if (`${targetAccount?.owner}` !== `${user.id}`) {
@@ -181,10 +181,10 @@ export const addTransaction = async (
   let sourceAccount;
   let targetAccount;
   if (rawNewTransaction.fromAccount) {
-    sourceAccount = await findAccountsById(rawNewTransaction.fromAccount);
+    sourceAccount = await findAccountById(rawNewTransaction.fromAccount);
   }
   if (rawNewTransaction.toAccount) {
-    targetAccount = await findAccountsById(rawNewTransaction.toAccount);
+    targetAccount = await findAccountById(rawNewTransaction.toAccount);
   }
 
   let fromAccountTotalIncomeAfter = 0;

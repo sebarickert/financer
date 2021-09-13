@@ -3,7 +3,7 @@ import supertest from "supertest";
 import server from "../../server";
 import {
   createAccount,
-  findAccountsById,
+  findAccountById,
 } from "../../services/account-service";
 import { IAccountModel } from "../../models/account-model";
 import {
@@ -143,7 +143,7 @@ describe("Income endpoint", () => {
       .expect("Content-Type", /application\/json/);
 
     const incomes = await findIncomeTransactionsByUser(USER_ID);
-    const testAccountAfter = await findAccountsById(testAccount?._id);
+    const testAccountAfter = await findAccountById(testAccount?._id);
     expect(newIncome.toAccountBalance).toEqual(testAccount?.balance);
     expect(incomes?.length).toEqual(1);
     expect(testAccountAfter?.balance).toEqual(1100);
@@ -185,7 +185,7 @@ describe("Income endpoint", () => {
       .expect("Content-Type", /application\/json/);
 
     const incomesAfter = await findIncomeTransactionsByUser(USER_ID);
-    const testAccountAfter = await findAccountsById(testAccount?._id);
+    const testAccountAfter = await findAccountById(testAccount?._id);
     expect(incomesAfter?.length).toEqual(0);
     expect(testAccountAfter?.balance).toEqual(800);
   });

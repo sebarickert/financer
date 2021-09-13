@@ -80,6 +80,7 @@ const TransactionCategoryForm = ({
           : newParentTransactionCategory.value,
       visibility: newVisibility,
     };
+
     onSubmit(newTransactionCategoryData);
   };
 
