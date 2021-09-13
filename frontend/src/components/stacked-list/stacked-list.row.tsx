@@ -1,7 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Button from "../button/button";
 
 type Tag = { label: string; color: "blue" | "red" | "green" };
+type Action = { label: string; color: "blue" | "red" | "green"; link: string };
 
 export interface ICustomStackedListRowProps extends IStackedListRowProps {
   date: Date;
@@ -13,6 +15,7 @@ export interface IStackedListRowProps {
   link?: string;
   tags?: Tag[];
   id: string;
+  actions?: Action[];
 }
 
 const StackedListRow = ({
@@ -21,6 +24,7 @@ const StackedListRow = ({
   label,
   link,
   tags,
+  actions,
 }: IStackedListRowProps): JSX.Element => {
   const stackedListRowContent = (
     <div className="px-4 py-4 flex items-center">
@@ -37,16 +41,16 @@ const StackedListRow = ({
                   {index !== 0 && (
                     <span className="hidden sm:inline-block sm:mx-1">|</span>
                   )}
-                  {information}
+                  {information.charAt(0).toUpperCase() + information.slice(1)}
                 </>
               </p>
             ))}
           </div>
         )}
       </div>
-      {additionalLabel && (
+      {(additionalLabel || actions) && (
         <div className="flex-shrink-0 pl-4 text-right">
-          {tags && (
+          {tags && !actions && (
             <div className="mb-1">
               {tags.map(({ label: tagLabel, color }) => {
                 const colorMapping = {
@@ -69,7 +73,21 @@ const StackedListRow = ({
               })}
             </div>
           )}
-          <p className="font-medium">{additionalLabel}</p>
+          {actions &&
+            actions.map(
+              ({ label: actionLabel, color, link: actionLink }, index) => (
+                <Button
+                  accentColor={color}
+                  className={`${index > 0 ? "ml-3" : ""}`}
+                  // eslint-disable-next-line react/no-array-index-key
+                  key={`action-button-${index}`}
+                  link={actionLink}
+                >
+                  {actionLabel}
+                </Button>
+              )
+            )}
+          {!actions && <p className="font-medium">{additionalLabel}</p>}
         </div>
       )}
     </div>
