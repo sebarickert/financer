@@ -6,6 +6,7 @@ import {
   createTransactionCategory,
   findTransactionCategoriesByUser,
   findTransactionCategoryById,
+  markTransactionCategoryAsDeleted,
 } from "../services/transaction-category-service";
 
 export const getAllUserTransactionCategories = async (
@@ -126,6 +127,39 @@ export const updateTransactionCategory = async (
   }
 
   await transactionCategory?.save();
+
+  res.status(200).json({ authenticated: true, status: 200 });
+};
+
+export const deleteTransactionCategory = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const user = req.user as IUserModel;
+  const transactionCategoryId = req.params.id;
+  const transactionCategory = await findTransactionCategoryById(
+    transactionCategoryId
+  );
+
+  if (transactionCategory === null) {
+    res.status(404).json({
+      authenticated: true,
+      status: 404,
+      errors: ["Transaction category not found."],
+    });
+    return;
+  }
+
+  if (`${transactionCategory?.owner}` !== `${user._id}`) {
+    res.status(403).json({
+      authenticated: true,
+      status: 403,
+      errors: ["You can only delete your own transaction categories."],
+    });
+    return;
+  }
+
+  await markTransactionCategoryAsDeleted(transactionCategoryId);
 
   res.status(200).json({ authenticated: true, status: 200 });
 };

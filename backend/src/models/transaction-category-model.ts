@@ -7,6 +7,7 @@ export interface ITransactionCategoryModel
     ITransactionCategory {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   _id: any;
+  deleted: boolean;
 }
 
 const transactionCategorySchema = new Schema({
@@ -23,6 +24,10 @@ const transactionCategorySchema = new Schema({
   parent_category_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: TRANSACTION_CATEGORY_MODEL_NAME,
+  },
+  deleted: {
+    type: Boolean,
+    default: false,
   },
 });
 

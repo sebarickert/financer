@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   addTransactionCategory,
+  deleteTransactionCategory,
   getAllUserTransactionCategories,
   getTransactionCategory,
   updateTransactionCategory,
@@ -13,6 +14,8 @@ router.get("/", getAllUserTransactionCategories);
 router.post("/", addTransactionCategory);
 
 router.get("/:id", getTransactionCategory);
+
+router.delete("/:id", deleteTransactionCategory);
 
 router.put("/:id", updateTransactionCategory);
 
