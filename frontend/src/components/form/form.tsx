@@ -7,8 +7,10 @@ interface IProps {
   formHeading: string;
   submitLabel: string;
   accentColor?: "pink" | "red" | "green" | "blue";
+  formFooterBackLink?: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   handleSubmit(event: any): void;
+  optionalFooterComponent?: React.ReactNode;
 }
 
 const Form = ({
@@ -17,12 +19,19 @@ const Form = ({
   formHeading,
   handleSubmit,
   accentColor = "blue",
+  formFooterBackLink,
+  optionalFooterComponent,
 }: IProps): JSX.Element => {
   return (
     <form onSubmit={handleSubmit} method="post">
       <FormHeader>{formHeading}</FormHeader>
       {children}
-      <FormFooter submitLabel={submitLabel} accentColor={accentColor} />
+      <FormFooter
+        submitLabel={submitLabel}
+        accentColor={accentColor}
+        formFooterBackLink={formFooterBackLink}
+        optionalComponent={optionalFooterComponent}
+      />
     </form>
   );
 };
