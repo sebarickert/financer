@@ -1,21 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
 import Form from "../../../components/form/form";
 import Input from "../../../components/input/input";
 import Select, { IOption } from "../../../components/select/select";
 import Alert from "../../../components/alert/alert";
 import Loader from "../../../components/loader/loader";
-import {
-  deleteTransactionCategory,
-  getAllTransactionCategories,
-} from "./TransactionCategoriesService";
+import { getAllTransactionCategories } from "./TransactionCategoriesService";
 import CheckboxGroup from "../../../components/checkbox/checkbox.group";
 import Checkbox from "../../../components/checkbox/checkbox";
-import ModalConfirm from "../../../components/modal/confirm/modal.confirm";
 
-interface ITransactionCategoryDeleteModalProps {
-  handleDelete(): void;
-}
 interface ITransactionCategoryFormProps {
   errors: string[];
   onSubmit(transactionCategory: ITransactionCategory): void;
@@ -24,22 +16,8 @@ interface ITransactionCategoryFormProps {
   name?: string;
   visibility?: VisibilityType[];
   parentTransactioCategoryId?: string;
+  optionalFooterComponent?: React.ReactNode;
 }
-
-const TransactionCategoryDeleteModal = ({
-  handleDelete,
-}: ITransactionCategoryDeleteModalProps) => (
-  <ModalConfirm
-    label="Delete transaction category"
-    submitButtonLabel="Delete"
-    onConfirm={handleDelete}
-    modalOpenButtonLabel="Delete transaction category"
-    accentColor="red"
-  >
-    Are you sure you want to delete this transaction category? All of your data
-    will be permanently removed. This action cannot be undone.
-  </ModalConfirm>
-);
 
 const TransactionCategoryForm = ({
   errors,
@@ -49,15 +27,14 @@ const TransactionCategoryForm = ({
   submitLabel,
   name,
   visibility,
+  optionalFooterComponent,
 }: ITransactionCategoryFormProps): JSX.Element => {
-  const history = useHistory();
   const [transactionCategoriesRaw, setTransactionCategoriesRaw] = useState<
     ITransactionCategory[] | null
   >(null);
   const [transactionCategories, setTransactionCategories] = useState<
     IOption[] | null
   >(null);
-  const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
     const fetchTransactionCategories = async () => {
@@ -109,11 +86,6 @@ const TransactionCategoryForm = ({
     onSubmit(newTransactionCategoryData);
   };
 
-  const handleDelete = async () => {
-    deleteTransactionCategory(id);
-    history.push("/profile/transaction-categories");
-  };
-
   return transactionCategories === null ? (
     <Loader loaderColor="green" />
   ) : (
@@ -129,9 +101,7 @@ const TransactionCategoryForm = ({
         handleSubmit={handleSubmit}
         accentColor="green"
         formFooterBackLink="/profile/transaction-categories"
-        optionalFooterComponent={
-          <TransactionCategoryDeleteModal handleDelete={handleDelete} />
-        }
+        optionalFooterComponent={optionalFooterComponent}
       >
         <div className="grid gap-y-6 gap-x-4">
           <Input

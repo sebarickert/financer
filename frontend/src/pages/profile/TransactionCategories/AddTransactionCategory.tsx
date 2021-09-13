@@ -30,7 +30,7 @@ const AddTransactionCategory = (): JSX.Element => {
 
   return (
     <Container>
-      <SEO title="Add expense | Expenses" />
+      <SEO title="Add transaction category | Transaction categories | Profile" />
       <TransactionCategoryForm
         onSubmit={handleSubmit}
         errors={errors}

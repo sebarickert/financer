@@ -3,12 +3,33 @@ import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import Container from "../../../components/container/container";
 import Loader from "../../../components/loader/loader";
+import ModalConfirm from "../../../components/modal/confirm/modal.confirm";
 import SEO from "../../../components/seo/seo";
 import {
+  deleteTransactionCategory,
   editTransactionCategory,
   getTransactionCategoryById,
 } from "./TransactionCategoriesService";
 import TransactionCategoryForm from "./TransactionCategoryForm";
+
+interface ITransactionCategoryDeleteModalProps {
+  handleDelete(): void;
+}
+
+const TransactionCategoryDeleteModal = ({
+  handleDelete,
+}: ITransactionCategoryDeleteModalProps) => (
+  <ModalConfirm
+    label="Delete transaction category"
+    submitButtonLabel="Delete"
+    onConfirm={handleDelete}
+    modalOpenButtonLabel="Delete transaction category"
+    accentColor="red"
+  >
+    Are you sure you want to delete this transaction category? All of your data
+    will be permanently removed. This action cannot be undone.
+  </ModalConfirm>
+);
 
 const EditTransactionCategory = (): JSX.Element => {
   const history = useHistory();
@@ -50,6 +71,11 @@ const EditTransactionCategory = (): JSX.Element => {
     }
   };
 
+  const handleDelete = async () => {
+    deleteTransactionCategory(id);
+    history.push("/profile/transaction-categories");
+  };
+
   return typeof transactionCategory === "undefined" ? (
     <Loader loaderColor="green" />
   ) : (
@@ -63,6 +89,9 @@ const EditTransactionCategory = (): JSX.Element => {
         name={transactionCategory.name}
         visibility={transactionCategory.visibility}
         parentTransactioCategoryId={transactionCategory.parent_category_id}
+        optionalFooterComponent={
+          <TransactionCategoryDeleteModal handleDelete={handleDelete} />
+        }
       />
     </Container>
   );
