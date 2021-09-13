@@ -2,7 +2,7 @@ import { Response, Request, NextFunction } from "express";
 import { ITransactionModel } from "../models/transaction-model";
 
 import { IUserModel } from "../models/user-model";
-import { findAccountsById } from "../services/account-service";
+import { findAccountById } from "../services/account-service";
 import { findExpenseTransactionsByUser } from "../services/transaction-service";
 
 export const listUserExpenses = async (
@@ -42,7 +42,7 @@ export const addExpense = async (
   ) {
     errors.push("fromAccount must not be empty.");
   } else {
-    sourceAccount = await findAccountsById(rawNewExpense.fromAccount);
+    sourceAccount = await findAccountById(rawNewExpense.fromAccount);
     if (sourceAccount === null) {
       errors.push("Source account not found.");
     } else if (`${sourceAccount?.owner}` !== `${user.id}`) {

@@ -1,6 +1,7 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 import AddTransactionCategory from "./AddTransactionCategory";
+import EditTransactionCategory from "./EditTransactionCategory";
 import TransactionCategories from "./TransactionCategories";
 
 const TransactionCategoriesRouter = (): JSX.Element => {
@@ -11,6 +12,9 @@ const TransactionCategoriesRouter = (): JSX.Element => {
       </Route>
       <Route exact path="/profile/transaction-categories/add">
         <AddTransactionCategory />
+      </Route>
+      <Route exact path="/profile/transaction-categories/:id/edit">
+        <EditTransactionCategory />
       </Route>
     </Switch>
   );

@@ -5,37 +5,68 @@ import StackedListRow, { IStackedListRowProps } from "./stacked-list.row";
 
 interface IProps {
   addiotinalLabel?: TAddiotinalLabel;
-  label: string;
+  label?: string;
   rows: IStackedListRowProps[];
 }
 
 const StackedList = ({ addiotinalLabel, label, rows }: IProps): JSX.Element => {
+  if (label) {
+    return (
+      <div className="lg:flex items-start relative">
+        <StackedListHeader label={label} addiotinalLabel={addiotinalLabel} />
+        <StackedListBody>
+          {rows.map(
+            ({
+              additionalInformation,
+              additionalLabel,
+              label: rowLabel,
+              link,
+              tags,
+              id,
+              actions,
+            }) => (
+              <StackedListRow
+                label={rowLabel}
+                additionalLabel={additionalLabel}
+                additionalInformation={additionalInformation}
+                link={link}
+                tags={tags}
+                actions={actions}
+                id={id}
+                key={id}
+              />
+            )
+          )}
+        </StackedListBody>
+      </div>
+    );
+  }
+
   return (
-    <div className="lg:flex items-start relative">
-      <StackedListHeader label={label} addiotinalLabel={addiotinalLabel} />
-      <StackedListBody>
-        {rows.map(
-          ({
-            additionalInformation,
-            additionalLabel,
-            label: rowLabel,
-            link,
-            tags,
-            id,
-          }) => (
-            <StackedListRow
-              label={rowLabel}
-              additionalLabel={additionalLabel}
-              additionalInformation={additionalInformation}
-              link={link}
-              tags={tags}
-              id={id}
-              key={id}
-            />
-          )
-        )}
-      </StackedListBody>
-    </div>
+    <StackedListBody>
+      {rows.map(
+        ({
+          additionalInformation,
+          additionalLabel,
+          label: rowLabel,
+          link,
+          tags,
+          id,
+          actions,
+        }) => (
+          <StackedListRow
+            label={rowLabel}
+            additionalLabel={additionalLabel}
+            additionalInformation={additionalInformation}
+            link={link}
+            tags={tags}
+            actions={actions}
+            id={id}
+            key={id}
+          />
+        )
+      )}
+    </StackedListBody>
   );
 };
 

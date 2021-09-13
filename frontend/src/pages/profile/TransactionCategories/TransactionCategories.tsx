@@ -1,25 +1,51 @@
 import React, { useEffect, useState } from "react";
-import Loader from "@silte/react-loader";
 import Button from "../../../components/button/button";
 import Hero from "../../../components/hero/hero";
 import HeroLead from "../../../components/hero/hero.lead";
 import SEO from "../../../components/seo/seo";
 import { getAllTransactionCategories } from "./TransactionCategoriesService";
+import StackedList from "../../../components/stacked-list/stacked-list";
+import { IStackedListRowProps } from "../../../components/stacked-list/stacked-list.row";
+import Loader from "../../../components/loader/loader";
 
 const TransactionCategories = (): JSX.Element => {
+  const [transactionCategoriesRaw, setTransactionCategoriesRaw] = useState<
+    ITransactionCategory[] | null
+  >(null);
   const [transactionCategories, setTransactionCategories] = useState<
-    ITransactionCategory[]
+    IStackedListRowProps[]
   >([]);
 
   useEffect(() => {
     const fetchTransactionCategories = async () => {
-      setTransactionCategories(await getAllTransactionCategories());
+      setTransactionCategoriesRaw(await getAllTransactionCategories());
     };
 
     fetchTransactionCategories();
   }, []);
 
-  return transactionCategories === null ? (
+  useEffect(() => {
+    if (transactionCategoriesRaw === null) return;
+
+    setTransactionCategories(
+      transactionCategoriesRaw.map(({ _id, name, visibility }) => ({
+        label: name,
+        // link: `/accounts/${_id}`,
+        additionalLabel: "plaa",
+        actions: [
+          {
+            label: "Edit",
+            color: "blue",
+            link: `/profile/transaction-categories/${_id}/edit`,
+          },
+        ],
+        additionalInformation: visibility,
+        id: _id,
+      }))
+    );
+  }, [transactionCategoriesRaw]);
+
+  return transactionCategoriesRaw === null ? (
     <Loader loaderColor="green" />
   ) : (
     <>
@@ -29,12 +55,14 @@ const TransactionCategories = (): JSX.Element => {
           Below you are able to add, delete or edit your transaction categories.
         </HeroLead>
       </Hero>
-      <Button link="/profile/transaction-categories/add" accentColor="green">
+      <Button
+        link="/profile/transaction-categories/add"
+        accentColor="green"
+        className="mb-5"
+      >
         Add transaction category
       </Button>
-      {transactionCategories.map((category) => (
-        <li>{category.name}</li>
-      ))}
+      <StackedList rows={transactionCategories} />
     </>
   );
 };

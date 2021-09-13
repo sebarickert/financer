@@ -4,7 +4,7 @@ export const findAccountsByUser = async (
   userId: string
 ): Promise<IAccountModel[] | null> => accountModel.find({ owner: userId });
 
-export const findAccountsById = async (
+export const findAccountById = async (
   id: string
 ): Promise<IAccountModel | null> => accountModel.findById(id);
 
