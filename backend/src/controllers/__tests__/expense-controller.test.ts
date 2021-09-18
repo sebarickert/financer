@@ -1,10 +1,7 @@
 import { NextFunction, Request } from "express";
 import supertest from "supertest";
 import server from "../../server";
-import {
-  createAccount,
-  findAccountById,
-} from "../../services/account-service";
+import { createAccount, findAccountById } from "../../services/account-service";
 import { IAccountModel } from "../../models/account-model";
 import {
   createTransaction,
@@ -268,12 +265,10 @@ describe("Expense endpoint", () => {
       .expect(201)
       .expect("Content-Type", /application\/json/);
 
-    const existingIncomeAfterNewExpenseAfterInsertNewExpense = await findTransactionById(
-      existingExpenseAfterNewExpense?._id
-    );
-    const existingIncomeBeforeNewExpenseAfterInsertNewExpense = await findTransactionById(
-      existingExpenseBeforeNewExpense?._id
-    );
+    const existingIncomeAfterNewExpenseAfterInsertNewExpense =
+      await findTransactionById(existingExpenseAfterNewExpense?._id);
+    const existingIncomeBeforeNewExpenseAfterInsertNewExpense =
+      await findTransactionById(existingExpenseBeforeNewExpense?._id);
     expect(
       existingIncomeAfterNewExpenseAfterInsertNewExpense?.fromAccountBalance
     ).toEqual(900);
