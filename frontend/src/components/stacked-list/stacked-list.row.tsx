@@ -16,6 +16,7 @@ export interface IStackedListRowProps {
   tags?: Tag[];
   id: string;
   actions?: Action[];
+  testId?: string;
 }
 
 const StackedListRow = ({
@@ -25,6 +26,7 @@ const StackedListRow = ({
   link,
   tags,
   actions,
+  testId,
 }: IStackedListRowProps): JSX.Element => {
   const stackedListRowContent = (
     <div className="px-4 py-4 flex items-center">
@@ -94,7 +96,7 @@ const StackedListRow = ({
   );
 
   return (
-    <li>
+    <li data-test-id={testId}>
       {link ? (
         <Link to={link} className="block hover:bg-gray-50 focus:bg-gray-50">
           {stackedListRowContent}

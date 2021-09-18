@@ -6,6 +6,7 @@ interface IProps {
   className: string;
   link: string;
   onClick?(): void;
+  testId?: string;
 }
 
 const ButtonInternal = ({
@@ -13,6 +14,7 @@ const ButtonInternal = ({
   className,
   link,
   onClick,
+  testId,
 }: IProps): JSX.Element => {
   return (
     <Link
@@ -20,6 +22,7 @@ const ButtonInternal = ({
       aria-label={children}
       className={className}
       onClick={onClick}
+      data-test-id={testId}
     >
       {children}
     </Link>

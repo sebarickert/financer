@@ -7,9 +7,15 @@ interface IProps {
   addiotinalLabel?: TAddiotinalLabel;
   label?: string;
   rows: IStackedListRowProps[];
+  rowTestId?: string;
 }
 
-const StackedList = ({ addiotinalLabel, label, rows }: IProps): JSX.Element => {
+const StackedList = ({
+  addiotinalLabel,
+  label,
+  rows,
+  rowTestId,
+}: IProps): JSX.Element => {
   if (label) {
     return (
       <div className="lg:flex items-start relative">
@@ -34,6 +40,7 @@ const StackedList = ({ addiotinalLabel, label, rows }: IProps): JSX.Element => {
                 actions={actions}
                 id={id}
                 key={id}
+                testId={rowTestId}
               />
             )
           )}
@@ -63,6 +70,7 @@ const StackedList = ({ addiotinalLabel, label, rows }: IProps): JSX.Element => {
             actions={actions}
             id={id}
             key={id}
+            testId={rowTestId}
           />
         )
       )}

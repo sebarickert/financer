@@ -12,6 +12,7 @@ interface IProps {
   onClick?(): void;
   type?: "button" | "submit" | "reset" | undefined;
   size?: "small" | "medium" | "large";
+  testId?: string;
 }
 
 export const isExternalLink = (link: string): boolean =>
@@ -45,6 +46,7 @@ const Button = ({
   onClick = () => {},
   type = "button",
   size = "medium",
+  testId,
 }: IProps): JSX.Element => {
   const fontSizeMapping = {
     small: "sm:text-sm leading-5",
@@ -73,6 +75,7 @@ const Button = ({
           link={link}
           className={elementClasses.join(" ")}
           onClick={onClick}
+          testId={testId}
         >
           {children}
         </ButtonExternal>
@@ -84,6 +87,7 @@ const Button = ({
         link={link}
         className={elementClasses.join(" ")}
         onClick={onClick}
+        testId={testId}
       >
         {children}
       </ButtonInternal>
@@ -95,6 +99,7 @@ const Button = ({
       type={type}
       onClick={onClick}
       className={elementClasses.join(" ")}
+      testId={testId}
     >
       {children}
     </ButtonPlain>

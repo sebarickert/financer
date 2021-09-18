@@ -61,7 +61,7 @@ const Accounts = (): JSX.Element => {
           savings or investments to calculate total amount.
         </HeroLead>
         <ButtonGroup className="mt-12">
-          <Button link="/accounts/add" accentColor="blue">
+          <Button link="/accounts/add" accentColor="blue" testId="add-account">
             Add account
           </Button>
           <Button link="/accounts/transfer" accentColor="blue">
@@ -74,6 +74,7 @@ const Accounts = (): JSX.Element => {
           addiotinalLabel={getAddiotinalLabel(totalBalance)}
           label="Your accounts"
           rows={accounts}
+          rowTestId="account-row"
         />
         <TransferList className="lg:mt-6" />
       </Container>

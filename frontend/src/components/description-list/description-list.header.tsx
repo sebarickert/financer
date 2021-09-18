@@ -3,14 +3,16 @@ import React from "react";
 interface IProps {
   label: string;
   children?: string;
+  testId?: string;
 }
 
 const DescriptionListHeader = ({
   label,
   children = "",
+  testId,
 }: IProps): JSX.Element => {
   return (
-    <div className="px-4 py-5">
+    <div className="px-4 py-5" data-test-id={testId}>
       <h3 className="text-lg leading-6 font-medium text-gray-900">{label}</h3>
       {children && (
         <p className="mt-1 max-w-2xl text-sm text-gray-500">{children}</p>
