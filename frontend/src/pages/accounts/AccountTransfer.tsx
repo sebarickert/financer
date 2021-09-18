@@ -107,6 +107,7 @@ const AccountTransfer = (): JSX.Element => {
 
     try {
       const newTransactionJson = await addTransaction(newTransferData);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const newTransactionCategoryMappingJson =
         await addTransactionCategoryMapping(
           transactionCategoryMappings.map(

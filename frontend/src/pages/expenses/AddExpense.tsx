@@ -33,6 +33,7 @@ const AddExpense = (): JSX.Element => {
   ) => {
     try {
       const newExpenseJson = await addExpense(newExpenseData);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const newTransactionCategoryMappingJson =
         await addTransactionCategoryMapping(
           newTransactionCategoryMappingsData.map(
