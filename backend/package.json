@@ -24,7 +24,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "mongodb": "^3.6.2",
-    "mongodb-client-encryption": "^1.2.3",
+    "mongodb-client-encryption": "1.2.3",
     "mongodb-memory-server": "^6.9.2",
     "mongoose": "^5.10.13",
     "passport": "^0.4.1",
