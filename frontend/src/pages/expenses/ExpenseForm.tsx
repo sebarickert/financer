@@ -195,71 +195,79 @@ const ExpenseForm = ({
             Account the expense was made from
           </Select>
         </div>
-        <div className="border-t border-gray-200 pt-5 mt-8">
-          <h2 className="text-lg font-bold leading-7 text-gray-900 sm:text-2xl sm:leading-9 sm:truncate">
-            Categories
-          </h2>
-          <div className="grid gap-x-4 sm:grid-cols-2">
-            {categoryAmount.map((index) => (
-              <div
-                className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4"
-                key={index}
-              >
-                <Select
-                  id={`transactionCategory[${index}]category`}
-                  options={transactionCategories}
-                  defaultValue={
-                    transactionCategoryMapping
-                      ? transactionCategoryMapping[index].category_id || ""
-                      : ""
-                  }
-                  isRequired
-                >
-                  Categories
-                </Select>
-                <Input
-                  id={`transactionCategory[${index}]amount`}
-                  help="Amount of the purchase."
-                  type="number"
-                  min={0.0}
-                  step={0.01}
-                  isCurrency
-                  isRequired
-                  value={
-                    transactionCategoryMapping &&
-                    !Number.isNaN(transactionCategoryMapping[index].amount)
-                      ? transactionCategoryMapping[index].amount
-                      : ""
-                  }
-                >
-                  Amount
-                </Input>
-                <Input
-                  id={`transactionCategory[${index}]description`}
-                  help="Description of purchase, e.g. rent."
-                  value={
-                    transactionCategoryMapping
-                      ? transactionCategoryMapping[index].description || ""
-                      : ""
-                  }
-                >
-                  Description
-                </Input>
-                <Button
-                  className="mt-4"
-                  onClick={() => deleteTransactionCategoryItem(index)}
-                  accentColor="red"
-                >
-                  Delete
-                </Button>
+        {transactionCategories.length > 0 && (
+          <>
+            <div className="border-t border-gray-200 pt-5 mt-8">
+              <h2 className="text-lg font-bold leading-7 text-gray-900 sm:text-2xl sm:leading-9 sm:truncate">
+                Categories
+              </h2>
+              <div className="grid gap-x-4 sm:grid-cols-2">
+                {categoryAmount.map((index) => (
+                  <div
+                    className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4"
+                    key={index}
+                  >
+                    <Select
+                      id={`transactionCategory[${index}]category`}
+                      options={transactionCategories}
+                      defaultValue={
+                        transactionCategoryMapping
+                          ? transactionCategoryMapping[index].category_id || ""
+                          : ""
+                      }
+                      isRequired
+                    >
+                      Categories
+                    </Select>
+                    <Input
+                      id={`transactionCategory[${index}]amount`}
+                      help="Amount of the purchase."
+                      type="number"
+                      min={0.0}
+                      step={0.01}
+                      isCurrency
+                      isRequired
+                      value={
+                        transactionCategoryMapping &&
+                        !Number.isNaN(transactionCategoryMapping[index].amount)
+                          ? transactionCategoryMapping[index].amount
+                          : ""
+                      }
+                    >
+                      Amount
+                    </Input>
+                    <Input
+                      id={`transactionCategory[${index}]description`}
+                      help="Description of purchase, e.g. rent."
+                      value={
+                        transactionCategoryMapping
+                          ? transactionCategoryMapping[index].description || ""
+                          : ""
+                      }
+                    >
+                      Description
+                    </Input>
+                    <Button
+                      className="mt-4"
+                      onClick={() => deleteTransactionCategoryItem(index)}
+                      accentColor="red"
+                    >
+                      Delete
+                    </Button>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
+            </div>
 
-        <Button className="mt-4" onClick={addNewCategory} accentColor="green">
-          Add category
-        </Button>
+            <Button
+              className="mt-4"
+              onClick={addNewCategory}
+              accentColor="green"
+            >
+              Add category
+            </Button>
+          </>
+        )}
       </Form>
     </>
   );

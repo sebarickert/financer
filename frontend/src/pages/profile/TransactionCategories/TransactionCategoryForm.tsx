@@ -4,7 +4,10 @@ import Input from "../../../components/input/input";
 import Select, { IOption } from "../../../components/select/select";
 import Alert from "../../../components/alert/alert";
 import Loader from "../../../components/loader/loader";
-import { getAllTransactionCategories } from "./TransactionCategoriesService";
+import {
+  getAllTransactionCategoriesWithCategoryTree,
+  ITransactionCategoryWithCategoryTree,
+} from "./TransactionCategoriesService";
 import CheckboxGroup from "../../../components/checkbox/checkbox.group";
 import Checkbox from "../../../components/checkbox/checkbox";
 
@@ -30,7 +33,7 @@ const TransactionCategoryForm = ({
   optionalFooterComponent,
 }: ITransactionCategoryFormProps): JSX.Element => {
   const [transactionCategoriesRaw, setTransactionCategoriesRaw] = useState<
-    ITransactionCategory[] | null
+    ITransactionCategoryWithCategoryTree[] | null
   >(null);
   const [transactionCategories, setTransactionCategories] = useState<
     IOption[] | null
@@ -38,7 +41,9 @@ const TransactionCategoryForm = ({
 
   useEffect(() => {
     const fetchTransactionCategories = async () => {
-      setTransactionCategoriesRaw(await getAllTransactionCategories());
+      setTransactionCategoriesRaw(
+        await getAllTransactionCategoriesWithCategoryTree()
+      );
     };
     fetchTransactionCategories();
   }, []);
@@ -49,7 +54,7 @@ const TransactionCategoryForm = ({
     setTransactionCategories([
       { label: "None", value: undefined },
       ...transactionCategoriesRaw.map(
-        ({ _id, name: transactionCategoryName }) => ({
+        ({ _id, categoryTree: transactionCategoryName }) => ({
           value: _id,
           label: transactionCategoryName,
         })
