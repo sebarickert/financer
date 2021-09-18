@@ -1,0 +1,5 @@
+videos/*
+screenshots/*
+
+!videos/.keepme
+!screenshots/.keepme
