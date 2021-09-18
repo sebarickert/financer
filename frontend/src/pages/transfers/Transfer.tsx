@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import Button from "../../components/button/button";
-import ButtonGroup from "../../components/button/button.group";
 import DescriptionList from "../../components/description-list/description-list";
 import DescriptionListItem from "../../components/description-list/description-list.item";
 import Hero from "../../components/hero/hero";
@@ -11,6 +9,11 @@ import ModalConfirm from "../../components/modal/confirm/modal.confirm";
 import SEO from "../../components/seo/seo";
 import formatCurrency from "../../utils/formatCurrency";
 import { formatDate } from "../../utils/formatDate";
+import { getTransactionCategoryMappingByTransactionId } from "../expenses/Expense";
+import {
+  getAllTransactionCategoriesWithCategoryTree,
+  ITransactionCategoryWithCategoryTree,
+} from "../profile/TransactionCategories/TransactionCategoriesService";
 import { getTransferById, deleteTransfer } from "./TransferService";
 
 interface IProps {
@@ -33,21 +36,48 @@ const TransferDeleteModal = ({ handleDelete }: IProps) => (
 const Transfer = (): JSX.Element => {
   const history = useHistory();
   const [transfer, setTransfer] = useState<ITransaction | undefined>(undefined);
+  const [transactionCategoryMapping, setTransactionCategoryMapping] = useState<
+    ITransactionCategoryMapping[] | undefined
+  >(undefined);
+  const [transactionCategories, setTransactionCategories] = useState<
+    ITransactionCategoryWithCategoryTree[] | null
+  >(null);
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
     const fetchTransfer = async () => {
       setTransfer(await getTransferById(id));
     };
+
+    const fetchTransactionCategoryMapping = async () => {
+      setTransactionCategoryMapping(
+        await getTransactionCategoryMappingByTransactionId(id)
+      );
+    };
+
+    const fetchTransactionCategories = async () => {
+      setTransactionCategories(
+        await getAllTransactionCategoriesWithCategoryTree()
+      );
+    };
+
     fetchTransfer();
+    fetchTransactionCategoryMapping();
+    fetchTransactionCategories();
   }, [id]);
+
+  const getCategoryNameById = (categoryId: string) =>
+    transactionCategories?.find((category) => category._id === categoryId)
+      ?.categoryTree || categoryId;
 
   const handleDelete = async () => {
     await deleteTransfer(id);
-    history.push("/transfers");
+    history.push("/accounts");
   };
 
-  return typeof transfer === "undefined" ? (
+  return typeof transfer === "undefined" ||
+    typeof transactionCategoryMapping === "undefined" ||
+    transactionCategories === null ? (
     <Loader loaderColor="blue" />
   ) : (
     <>
@@ -61,12 +91,9 @@ const Transfer = (): JSX.Element => {
           Below you are able to edit your transfer information or delete it
           altogether.
         </HeroLead>
-        <ButtonGroup className="mt-12">
-          <Button accentColor="blue" link={`/expenses/${id}/edit`}>
-            Edit transfer
-          </Button>
+        <div className="mt-12">
           <TransferDeleteModal handleDelete={handleDelete} />
-        </ButtonGroup>
+        </div>
       </Hero>
       <DescriptionList label="Transaction details" className="mt-12">
         <DescriptionListItem label="Amount">
@@ -76,6 +103,18 @@ const Transfer = (): JSX.Element => {
           {formatDate(new Date(transfer.date))}
         </DescriptionListItem>
       </DescriptionList>
+      {transactionCategoryMapping?.length && (
+        <DescriptionList label="Categories" className="mt-6">
+          {transactionCategoryMapping?.map(({ amount, category_id, _id }) => (
+            <DescriptionListItem
+              label={getCategoryNameById(category_id)}
+              key={_id}
+            >
+              {formatCurrency(amount)}
+            </DescriptionListItem>
+          ))}
+        </DescriptionList>
+      )}
     </>
   );
 };
