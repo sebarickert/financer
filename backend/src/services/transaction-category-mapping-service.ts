@@ -13,18 +13,24 @@ export const findTransactionCategoryMappingsByUser = async (
     owner: userId,
   });
 
-// export const findTransactionCategoryById = async (
-//   id: string
-// ): Promise<ITransactionCategoryModel | null> =>
-//   transactionCategoryModel.findOne({
-//     _id: id,
-//     deleted: { $ne: true },
-//   });
-// //
+export const findTransactionCategoryMappingById = async (
+  id: string
+): Promise<ITransactionCategoryMappingModel | null> =>
+  transactionCategoryMappingModel.findOne({
+    _id: id,
+  });
+
 export const createTransactionCategoryMapping = async (
   newTransactionCategoryMapping: ITransactionCategoryMappingModel
 ): Promise<ITransactionCategoryMappingModel | null> =>
   transactionCategoryMappingModel.create(newTransactionCategoryMapping);
+
+export const findTransactionCategoryMappingByTransaction = async (
+  id: string
+): Promise<ITransactionCategoryMappingModel[] | null> =>
+  transactionCategoryMappingModel.find({
+    transaction_id: id,
+  });
 
 // export const markTransactionCategoryAsDeleted = async (
 //   id: string

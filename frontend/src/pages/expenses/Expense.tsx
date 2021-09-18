@@ -11,6 +11,11 @@ import ModalConfirm from "../../components/modal/confirm/modal.confirm";
 import SEO from "../../components/seo/seo";
 import formatCurrency from "../../utils/formatCurrency";
 import { formatDate } from "../../utils/formatDate";
+import {
+  getAllTransactionCategoriesWithCategoryTree,
+  getTransactionCategoryById,
+  ITransactionCategoryWithCategoryTree,
+} from "../profile/TransactionCategories/TransactionCategoriesService";
 import { deleteExpense, getExpenseById } from "./ExpenseService";
 
 interface IProps {
@@ -30,24 +35,60 @@ const ExpenseDeleteModal = ({ handleDelete }: IProps) => (
   </ModalConfirm>
 );
 
+export const getTransactionCategoryMappingByTransactionId = async (
+  id: string
+): Promise<ITransactionCategoryMapping[]> => {
+  const transactionCategoryMapping = await fetch(
+    `/api/transaction-categories-mapping/by-transaction/${id}`
+  );
+  return (await transactionCategoryMapping.json()).payload;
+};
+
 const Expense = (): JSX.Element => {
   const history = useHistory();
   const [expense, setExpense] = useState<IExpense | undefined>(undefined);
+  const [transactionCategoryMapping, setTransactionCategoryMapping] = useState<
+    ITransactionCategoryMapping[] | undefined
+  >(undefined);
+  const [transactionCategories, setTransactionCategories] = useState<
+    ITransactionCategoryWithCategoryTree[] | null
+  >(null);
+
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
     const fetchExpense = async () => {
       setExpense(await getExpenseById(id));
     };
+
+    const fetchTransactionCategoryMapping = async () => {
+      setTransactionCategoryMapping(
+        await getTransactionCategoryMappingByTransactionId(id)
+      );
+    };
+
+    const fetchTransactionCategories = async () => {
+      setTransactionCategories(
+        await getAllTransactionCategoriesWithCategoryTree()
+      );
+    };
+
     fetchExpense();
+    fetchTransactionCategoryMapping();
+    fetchTransactionCategories();
   }, [id]);
+
+  const getCategoryNameById = (categoryId: string) =>
+    transactionCategories?.find((category) => category._id === categoryId)
+      ?.categoryTree || categoryId;
 
   const handleDelete = async () => {
     await deleteExpense(id);
     history.push("/expenses");
   };
 
-  return typeof expense === "undefined" ? (
+  return typeof expense === "undefined" ||
+    typeof transactionCategoryMapping === "undefined" ? (
     <Loader loaderColor="red" />
   ) : (
     <>
@@ -64,7 +105,7 @@ const Expense = (): JSX.Element => {
           <ExpenseDeleteModal handleDelete={handleDelete} />
         </ButtonGroup>
       </Hero>
-      <DescriptionList label="Transaction details" className="mt-12">
+      <DescriptionList label="Details" className="mt-12">
         <DescriptionListItem label="Amount">
           {formatCurrency(expense.amount)}
         </DescriptionListItem>
@@ -72,6 +113,15 @@ const Expense = (): JSX.Element => {
           {formatDate(new Date(expense.date))}
         </DescriptionListItem>
       </DescriptionList>
+      {transactionCategoryMapping?.length && (
+        <DescriptionList label="Categories" className="mt-6">
+          {transactionCategoryMapping?.map(({ amount, category_id }) => (
+            <DescriptionListItem label={getCategoryNameById(category_id)}>
+              {formatCurrency(amount)}
+            </DescriptionListItem>
+          ))}
+        </DescriptionList>
+      )}
     </>
   );
 };

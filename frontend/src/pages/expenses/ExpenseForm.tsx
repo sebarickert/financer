@@ -6,7 +6,10 @@ import Alert from "../../components/alert/alert";
 import Loader from "../../components/loader/loader";
 import { inputDateFormat } from "../../utils/formatDate";
 import { getAllAccounts } from "../accounts/AccountService";
-import { getAllTransactionCategories } from "../profile/TransactionCategories/TransactionCategoriesService";
+import {
+  getAllTransactionCategoriesWithCategoryTree,
+  ITransactionCategoryWithCategoryTree,
+} from "../profile/TransactionCategories/TransactionCategoriesService";
 import Button from "../../components/button/button";
 
 interface IProps {
@@ -36,7 +39,7 @@ const ExpenseForm = ({
   const [accountsRaw, setAccountsRaw] = useState<IAccount[] | null>(null);
   const [accounts, setAccounts] = useState<IOption[] | null>(null);
   const [transactionCategoriesRaw, setTransactionCategoriesRaw] = useState<
-    ITransactionCategory[] | null
+    ITransactionCategoryWithCategoryTree[] | null
   >(null);
   const [transactionCategories, setTransactionCategories] = useState<
     IOption[] | null
@@ -58,7 +61,9 @@ const ExpenseForm = ({
     };
 
     const fetchTransactionCategories = async () => {
-      setTransactionCategoriesRaw(await getAllTransactionCategories());
+      setTransactionCategoriesRaw(
+        await getAllTransactionCategoriesWithCategoryTree()
+      );
     };
 
     fetchAccounts();
@@ -80,9 +85,9 @@ const ExpenseForm = ({
     if (transactionCategoriesRaw === null) return;
 
     setTransactionCategories(
-      transactionCategoriesRaw.map(({ _id, name }) => ({
+      transactionCategoriesRaw.map(({ _id, categoryTree }) => ({
         value: _id,
-        label: name,
+        label: categoryTree,
       }))
     );
   }, [transactionCategoriesRaw]);
@@ -195,7 +200,7 @@ const ExpenseForm = ({
                   defaultValue={fromAccount}
                   isRequired
                 >
-                  Transaction categories
+                  Categories
                 </Select>
                 <Input
                   id={`transactionCategory[${index}]amount`}
