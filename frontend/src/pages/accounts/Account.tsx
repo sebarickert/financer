@@ -241,10 +241,10 @@ const Account = (): JSX.Element => {
         </ButtonGroup>
       </Hero>
       <DescriptionList label="Account details" className="mt-12">
-        <DescriptionListItem label="Balance">
+        <DescriptionListItem label="Balance" testId="balance">
           {formatCurrency(account.balance)}
         </DescriptionListItem>
-        <DescriptionListItem label="Type">
+        <DescriptionListItem label="Type" testId="type">
           {capitalize(account.type)}
         </DescriptionListItem>
       </DescriptionList>

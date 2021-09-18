@@ -5,6 +5,7 @@ interface IProps {
   className: string;
   link: string;
   onClick?(): void;
+  testId?: string;
 }
 
 const ButtonExternal = ({
@@ -12,6 +13,7 @@ const ButtonExternal = ({
   className,
   link,
   onClick,
+  testId,
 }: IProps): JSX.Element => {
   return (
     <a
@@ -19,6 +21,7 @@ const ButtonExternal = ({
       aria-label={children}
       className={className}
       onClick={onClick}
+      data-test-id={testId}
     >
       {children}
     </a>
