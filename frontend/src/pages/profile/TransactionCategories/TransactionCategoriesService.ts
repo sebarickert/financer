@@ -23,7 +23,9 @@ export const getAllTransactionCategories = async (): Promise<
   ITransactionCategory[]
 > => {
   const transactionCategories = await fetch("/api/transaction-categories");
-  return transactionCategories.json();
+  return (
+    (await transactionCategories.json()) as IApiResponse<ITransactionCategory[]>
+  ).payload;
 };
 
 export const getAllTransactionCategoriesWithCategoryTree = async (): Promise<

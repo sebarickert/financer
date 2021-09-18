@@ -32,6 +32,14 @@ export const findTransactionCategoryMappingByTransaction = async (
     transaction_id: id,
   });
 
+export const deleteTransactionCategoryMappingByTransaction = async (
+  id: string
+): Promise<void> => {
+  await transactionCategoryMappingModel.deleteMany({
+    transaction_id: id,
+  });
+};
+
 // export const markTransactionCategoryAsDeleted = async (
 //   id: string
 // ): Promise<ITransactionCategoryModel | null> => {
@@ -43,3 +51,10 @@ export const findTransactionCategoryMappingByTransaction = async (
 
 //   return transactionCategory.save();
 // };
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export const DANGER_truncateTransactionCategoryMappingsByUser = async (
+  userId: string
+): Promise<void> => {
+  await transactionCategoryMappingModel.deleteMany({ owner: userId });
+};
