@@ -20,6 +20,7 @@ Use a more readable tab size (opinionated).
 */
 
 html {
+	-moz-tab-size: 4;
 	tab-size: 4;
 }
 
@@ -88,7 +89,8 @@ Add the correct text decoration in Chrome, Edge, and Safari.
 */
 
 abbr[title] {
-	text-decoration: underline dotted;
+	-webkit-text-decoration: underline dotted;
+	        text-decoration: underline dotted;
 }
 
 /**
@@ -425,6 +427,16 @@ textarea {
   resize: vertical;
 }
 
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+  opacity: 1;
+  color: #9ca3af;
+}
+
+input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+  opacity: 1;
+  color: #9ca3af;
+}
+
 input::placeholder,
 textarea::placeholder {
   opacity: 1;
@@ -631,6 +643,16 @@ video {
 	border-color: #2563eb;
 }
 
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+	color: #6b7280;
+	opacity: 1;
+}
+
+input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+	color: #6b7280;
+	opacity: 1;
+}
+
 input::placeholder, textarea::placeholder {
 	color: #6b7280;
 	opacity: 1;
@@ -677,6 +699,7 @@ select {
 	vertical-align: middle;
 	background-origin: border-box;
 	-webkit-user-select: none;
+	    -ms-user-select: none;
 	        user-select: none;
 	flex-shrink: 0;
 	height: 1rem;
@@ -1057,40 +1080,49 @@ select {
 	flex-grow: 1;
 }
 .origin-top-right {
-	transform-origin: top right;
+	-webkit-transform-origin: top right;
+	        transform-origin: top right;
 }
 .translate-x-32 {
 	--tw-translate-x: 8rem;
-	transform: var(--tw-transform);
+	-webkit-transform: var(--tw-transform);
+	        transform: var(--tw-transform);
 }
 .-translate-y-1\/2 {
 	--tw-translate-y: -50%;
-	transform: var(--tw-transform);
+	-webkit-transform: var(--tw-transform);
+	        transform: var(--tw-transform);
 }
 .-translate-x-32 {
 	--tw-translate-x: -8rem;
-	transform: var(--tw-transform);
+	-webkit-transform: var(--tw-transform);
+	        transform: var(--tw-transform);
 }
 .translate-y-2 {
 	--tw-translate-y: 0.5rem;
-	transform: var(--tw-transform);
+	-webkit-transform: var(--tw-transform);
+	        transform: var(--tw-transform);
 }
 .translate-y-0 {
 	--tw-translate-y: 0px;
-	transform: var(--tw-transform);
+	-webkit-transform: var(--tw-transform);
+	        transform: var(--tw-transform);
 }
 .scale-95 {
 	--tw-scale-x: .95;
 	--tw-scale-y: .95;
-	transform: var(--tw-transform);
+	-webkit-transform: var(--tw-transform);
+	        transform: var(--tw-transform);
 }
 .scale-100 {
 	--tw-scale-x: 1;
 	--tw-scale-y: 1;
-	transform: var(--tw-transform);
+	-webkit-transform: var(--tw-transform);
+	        transform: var(--tw-transform);
 }
 .transform {
-	transform: var(--tw-transform);
+	-webkit-transform: var(--tw-transform);
+	        transform: var(--tw-transform);
 }
 .list-disc {
 	list-style-type: disc;
@@ -1133,7 +1165,8 @@ select {
 	row-gap: 1.5rem;
 }
 .gap-x-4 {
-	column-gap: 1rem;
+	-webkit-column-gap: 1rem;
+	        column-gap: 1rem;
 }
 .space-y-3 > :not([hidden]) ~ :not([hidden]) {
 	--tw-space-y-reverse: 0;
@@ -1627,6 +1660,14 @@ select {
 	--tw-text-opacity: 1;
 	color: rgba(190, 24, 93, var(--tw-text-opacity));
 }
+.placeholder-gray-400::-webkit-input-placeholder {
+	--tw-placeholder-opacity: 1;
+	color: rgba(156, 163, 175, var(--tw-placeholder-opacity));
+}
+.placeholder-gray-400:-ms-input-placeholder {
+	--tw-placeholder-opacity: 1;
+	color: rgba(156, 163, 175, var(--tw-placeholder-opacity));
+}
 .placeholder-gray-400::placeholder {
 	--tw-placeholder-opacity: 1;
 	color: rgba(156, 163, 175, var(--tw-placeholder-opacity));
@@ -1676,12 +1717,13 @@ select {
 	--tw-ring-opacity: 0.05;
 }
 .filter {
-	filter: var(--tw-filter);
+	-webkit-filter: var(--tw-filter);
+	        filter: var(--tw-filter);
 }
 .transition {
-	transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
+	transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, -webkit-transform, -webkit-filter, -webkit-backdrop-filter;
 	transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-	transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
+	transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-transform, -webkit-filter, -webkit-backdrop-filter;
 	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 	transition-duration: 150ms;
 }
@@ -2012,17 +2054,20 @@ select {
 
 	.sm\:translate-y-0 {
 		--tw-translate-y: 0px;
-		transform: var(--tw-transform);
+		-webkit-transform: var(--tw-transform);
+		        transform: var(--tw-transform);
 	}
 
 	.sm\:translate-x-2 {
 		--tw-translate-x: 0.5rem;
-		transform: var(--tw-transform);
+		-webkit-transform: var(--tw-transform);
+		        transform: var(--tw-transform);
 	}
 
 	.sm\:translate-x-0 {
 		--tw-translate-x: 0px;
-		transform: var(--tw-transform);
+		-webkit-transform: var(--tw-transform);
+		        transform: var(--tw-transform);
 	}
 
 	.sm\:grid-cols-3 {
@@ -2131,6 +2176,11 @@ select {
 	.sm\:text-5xl {
 		font-size: 3rem;
 		line-height: 1;
+	}
+
+	.sm\:text-2xl {
+		font-size: 1.5rem;
+		line-height: 2rem;
 	}
 
 	.sm\:leading-9 {
