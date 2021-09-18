@@ -1,5 +1,7 @@
 import { Response, Request } from "express";
 import { IAccountModel } from "../models/account-model";
+import { ITransactionCategoryMappingModel } from "../models/transaction-category-mapping-model";
+import { ITransactionCategoryModel } from "../models/transaction-category-model";
 import { ITransactionModel } from "../models/transaction-model";
 import { IUserModel } from "../models/user-model";
 import {
@@ -7,6 +9,16 @@ import {
   DANGER_truncateAccountByUser,
   findAccountsByUser,
 } from "../services/account-service";
+import {
+  createTransactionCategoryMapping,
+  DANGER_truncateTransactionCategoryMappingsByUser,
+  findTransactionCategoryMappingsByUser,
+} from "../services/transaction-category-mapping-service";
+import {
+  createTransactionCategory,
+  DANGER_truncateTransactionCategoriesByUser,
+  findTransactionCategoriesByUser,
+} from "../services/transaction-category-service";
 import {
   createTransaction,
   DANGER_truncateTransactionsByUser,
@@ -28,7 +40,17 @@ export const getMyData = async (req: Request, res: Response): Promise<void> => {
   const user = req.user as IUserModel;
   const accounts = await findAccountsByUser(user.id);
   const transactions = await findTransactionsByUser(user.id);
-  const data = JSON.stringify({ user, accounts, transactions });
+  const transactionCategories = await findTransactionCategoriesByUser(user.id);
+  const transactionCategoryMappings =
+    await findTransactionCategoryMappingsByUser(user.id);
+
+  const data = JSON.stringify({
+    user,
+    accounts,
+    transactions,
+    transactionCategories,
+    transactionCategoryMappings,
+  });
 
   res.setHeader(
     "Content-disposition",
@@ -57,13 +79,19 @@ export const overrideMyData = async (
 
   await DANGER_truncateAccountByUser(user.id);
   await DANGER_truncateTransactionsByUser(user.id);
+  await DANGER_truncateTransactionCategoriesByUser(user.id);
+  await DANGER_truncateTransactionCategoryMappingsByUser(user.id);
 
   const {
     accounts,
     transactions,
+    transactionCategories,
+    transactionCategoryMappings,
   }: {
     accounts: IAccountModel[];
     transactions: ITransactionModel[];
+    transactionCategories: ITransactionCategoryModel[];
+    transactionCategoryMappings: ITransactionCategoryMappingModel[];
   } = req.body;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -78,9 +106,38 @@ export const overrideMyData = async (
     user: user.id,
   }));
 
-  migrateAccounts.forEach(async (account) => createAccount(account));
-  migrateTransactions.forEach(async (transaction) =>
-    createTransaction(transaction)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const migrateTransactionCategories: any[] = transactionCategories.map(
+    (transactionCategory) => ({
+      ...transactionCategory,
+      owner: user.id,
+    })
+  );
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const migrateTransactionCategoryMappings: any[] =
+    transactionCategoryMappings.map((transactionCategoryMapping) => ({
+      ...transactionCategoryMapping,
+      owner: user.id,
+    }));
+
+  await Promise.all(
+    migrateAccounts.map(async (account) => createAccount(account))
+  );
+  await Promise.all(
+    migrateTransactions.map(async (transaction) =>
+      createTransaction(transaction)
+    )
+  );
+  await Promise.all(
+    migrateTransactionCategories.map((transactionCategory) =>
+      createTransactionCategory(transactionCategory)
+    )
+  );
+  await Promise.all(
+    migrateTransactionCategoryMappings.map((migrateTranactionCategoryMapping) =>
+      createTransactionCategoryMapping(migrateTranactionCategoryMapping)
+    )
   );
 
   res

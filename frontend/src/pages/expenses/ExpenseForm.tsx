@@ -24,6 +24,7 @@ interface IProps {
     transactionCategoryMappings: ITransactionCategoryMapping[]
   ): void;
   submitLabel: string;
+  transactionCategoryMapping?: ITransactionCategoryMapping[];
 }
 
 const ExpenseForm = ({
@@ -35,6 +36,7 @@ const ExpenseForm = ({
   onSubmit,
   submitLabel,
   fromAccount,
+  transactionCategoryMapping,
 }: IProps): JSX.Element => {
   const [accountsRaw, setAccountsRaw] = useState<IAccount[] | null>(null);
   const [accounts, setAccounts] = useState<IOption[] | null>(null);
@@ -49,7 +51,7 @@ const ExpenseForm = ({
   const addNewCategory = () =>
     setCategoryAmount([
       ...categoryAmount,
-      Math.max(...(categoryAmount.length === 0 ? [0] : categoryAmount)) + 1,
+      Math.max(...(categoryAmount.length === 0 ? [-1] : categoryAmount)) + 1,
     ]);
 
   const deleteTransactionCategoryItem = (itemToDelete: number) =>
@@ -91,6 +93,15 @@ const ExpenseForm = ({
       }))
     );
   }, [transactionCategoriesRaw]);
+
+  useEffect(() => {
+    if (typeof transactionCategoryMapping === "undefined") return;
+    const newCategoryAmount: number[] = [];
+    transactionCategoryMapping.forEach((_, index) =>
+      newCategoryAmount.push(index)
+    );
+    setCategoryAmount(newCategoryAmount);
+  }, [transactionCategoryMapping]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = async (event: any) => {
@@ -197,7 +208,11 @@ const ExpenseForm = ({
                 <Select
                   id={`transactionCategory[${index}]category`}
                   options={transactionCategories}
-                  defaultValue={fromAccount}
+                  defaultValue={
+                    transactionCategoryMapping
+                      ? transactionCategoryMapping[index].category_id || ""
+                      : ""
+                  }
                   isRequired
                 >
                   Categories
@@ -210,14 +225,23 @@ const ExpenseForm = ({
                   step={0.01}
                   isCurrency
                   isRequired
-                  value={Number.isNaN(amount) ? "" : amount}
+                  value={
+                    transactionCategoryMapping &&
+                    !Number.isNaN(transactionCategoryMapping[index].amount)
+                      ? transactionCategoryMapping[index].amount
+                      : ""
+                  }
                 >
                   Amount
                 </Input>
                 <Input
                   id={`transactionCategory[${index}]description`}
                   help="Description of purchase, e.g. rent."
-                  value={description}
+                  value={
+                    transactionCategoryMapping
+                      ? transactionCategoryMapping[index].description || ""
+                      : ""
+                  }
                 >
                   Description
                 </Input>
