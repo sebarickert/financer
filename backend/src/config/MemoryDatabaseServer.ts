@@ -3,6 +3,8 @@
 import { MongoMemoryServer } from "mongodb-memory-server";
 import mongoose from "mongoose";
 import accountModel from "../models/account-model";
+import transactionCategoryMappingModel from "../models/transaction-category-mapping-model";
+import transactionCategoryModel from "../models/transaction-category-model";
 import transactionModel from "../models/transaction-model";
 import userModel from "../models/user-model";
 
@@ -15,7 +17,7 @@ class MemoryDatabaseServer {
   constructor() {
     this.server = new MongoMemoryServer({
       binary: {
-        version: "4.2.10",
+        version: "4.2.16",
       },
       autoStart: false,
     });
@@ -39,6 +41,8 @@ export const truncate = async () => {
     await userModel.deleteMany({});
     await accountModel.deleteMany({});
     await transactionModel.deleteMany({});
+    await transactionCategoryModel.deleteMany({});
+    await transactionCategoryMappingModel.deleteMany({});
   }
 };
 
