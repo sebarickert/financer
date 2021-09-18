@@ -4,7 +4,6 @@ import Container from "../../components/container/container";
 import SEO from "../../components/seo/seo";
 import ExpenseForm from "./ExpenseForm";
 import { addExpense } from "./ExpenseService";
-import { addTransactionCategory } from "../profile/TransactionCategories/TransactionCategoriesService";
 
 export const addTransactionCategoryMapping = async (
   newTransactionCategoryMappingData: ITransactionCategoryMapping[]

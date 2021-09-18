@@ -11,6 +11,11 @@ import ModalConfirm from "../../components/modal/confirm/modal.confirm";
 import SEO from "../../components/seo/seo";
 import formatCurrency from "../../utils/formatCurrency";
 import { formatDate } from "../../utils/formatDate";
+import { getTransactionCategoryMappingByTransactionId } from "../expenses/Expense";
+import {
+  getAllTransactionCategoriesWithCategoryTree,
+  ITransactionCategoryWithCategoryTree,
+} from "../profile/TransactionCategories/TransactionCategoriesService";
 import { deleteIncome, getIncomeById } from "./IncomeService";
 
 interface IProps {
@@ -33,21 +38,48 @@ const IncomeDeleteModal = ({ handleDelete }: IProps) => (
 const Income = (): JSX.Element => {
   const history = useHistory();
   const [income, setIncome] = useState<IIncome | undefined>(undefined);
+  const [transactionCategoryMapping, setTransactionCategoryMapping] = useState<
+    ITransactionCategoryMapping[] | undefined
+  >(undefined);
+  const [transactionCategories, setTransactionCategories] = useState<
+    ITransactionCategoryWithCategoryTree[] | null
+  >(null);
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
     const fetchIncome = async () => {
       setIncome(await getIncomeById(id));
     };
+
+    const fetchTransactionCategoryMapping = async () => {
+      setTransactionCategoryMapping(
+        await getTransactionCategoryMappingByTransactionId(id)
+      );
+    };
+
+    const fetchTransactionCategories = async () => {
+      setTransactionCategories(
+        await getAllTransactionCategoriesWithCategoryTree()
+      );
+    };
+
     fetchIncome();
+    fetchTransactionCategoryMapping();
+    fetchTransactionCategories();
   }, [id]);
+
+  const getCategoryNameById = (categoryId: string) =>
+    transactionCategories?.find((category) => category._id === categoryId)
+      ?.categoryTree || categoryId;
 
   const handleDelete = async () => {
     deleteIncome(id);
     history.push("/incomes");
   };
 
-  return typeof income === "undefined" ? (
+  return typeof income === "undefined" ||
+    typeof transactionCategoryMapping === "undefined" ||
+    transactionCategories === null ? (
     <Loader loaderColor="green" />
   ) : (
     <>
@@ -72,6 +104,15 @@ const Income = (): JSX.Element => {
           {formatDate(new Date(income.date))}
         </DescriptionListItem>
       </DescriptionList>
+      {transactionCategoryMapping?.length && (
+        <DescriptionList label="Categories" className="mt-6">
+          {transactionCategoryMapping?.map(({ amount, category_id }) => (
+            <DescriptionListItem label={getCategoryNameById(category_id)}>
+              {formatCurrency(amount)}
+            </DescriptionListItem>
+          ))}
+        </DescriptionList>
+      )}
     </>
   );
 };

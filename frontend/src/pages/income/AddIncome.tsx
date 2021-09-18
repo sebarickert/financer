@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Container from "../../components/container/container";
 import SEO from "../../components/seo/seo";
+import { addTransactionCategoryMapping } from "../expenses/AddExpense";
 import IncomeForm from "./IncomeForm";
 import { addIncome } from "./IncomeService";
 
@@ -9,14 +10,26 @@ const AddIncome = (): JSX.Element => {
   const history = useHistory();
   const [errors, setErrors] = useState<string[]>([]);
 
-  const handleSubmit = async (newIncomeData: IIncome) => {
+  const handleSubmit = async (
+    newIncomeData: IIncome,
+    newTransactionCategoryMappingsData: ITransactionCategoryMapping[]
+  ) => {
     try {
-      const newIncome = await addIncome(newIncomeData);
+      const newIncomeJson = await addIncome(newIncomeData);
+      const newTransactionCategoryMappingJson =
+        await addTransactionCategoryMapping(
+          newTransactionCategoryMappingsData.map(
+            (newTransactionCategoryMappingData) => ({
+              ...newTransactionCategoryMappingData,
+              transaction_id: newIncomeJson.payload._id,
+            })
+          )
+        );
 
-      if (newIncome.status === 201) {
+      if (newIncomeJson.status === 201) {
         history.push("/incomes");
-      } else if (newIncome.status === 400) {
-        setErrors(newIncome?.errors || ["Unknown error."]);
+      } else if (newIncomeJson.status === 400) {
+        setErrors(newIncomeJson?.errors || ["Unknown error."]);
       }
     } catch (error) {
       // eslint-disable-next-line no-console
