@@ -3,30 +3,17 @@ import Button from "../../../components/button/button";
 import Hero from "../../../components/hero/hero";
 import HeroLead from "../../../components/hero/hero.lead";
 import SEO from "../../../components/seo/seo";
-import { getAllTransactionCategories } from "./TransactionCategoriesService";
 import StackedList from "../../../components/stacked-list/stacked-list";
 import { IStackedListRowProps } from "../../../components/stacked-list/stacked-list.row";
 import Loader from "../../../components/loader/loader";
-
-const parseParentCategoryPath = (
-  allCategories: ITransactionCategory[],
-  categoryId: string
-): string => {
-  const targetCategory = allCategories.find(({ _id }) => _id === categoryId);
-
-  if (!targetCategory?.parent_category_id) {
-    return `${targetCategory?.name}`;
-  }
-  const parentPath = parseParentCategoryPath(
-    allCategories,
-    targetCategory.parent_category_id
-  );
-  return `${parentPath} > ${targetCategory?.name}`;
-};
+import {
+  getAllTransactionCategoriesWithCategoryTree,
+  ITransactionCategoryWithCategoryTree,
+} from "./TransactionCategoriesService";
 
 const TransactionCategories = (): JSX.Element => {
   const [transactionCategoriesRaw, setTransactionCategoriesRaw] = useState<
-    ITransactionCategory[] | null
+    ITransactionCategoryWithCategoryTree[] | null
   >(null);
   const [transactionCategories, setTransactionCategories] = useState<
     IStackedListRowProps[]
@@ -34,7 +21,9 @@ const TransactionCategories = (): JSX.Element => {
 
   useEffect(() => {
     const fetchTransactionCategories = async () => {
-      setTransactionCategoriesRaw(await getAllTransactionCategories());
+      setTransactionCategoriesRaw(
+        await getAllTransactionCategoriesWithCategoryTree()
+      );
     };
 
     fetchTransactionCategories();
@@ -44,21 +33,20 @@ const TransactionCategories = (): JSX.Element => {
     if (transactionCategoriesRaw === null) return;
 
     setTransactionCategories(
-      transactionCategoriesRaw.map(({ _id, name, visibility }) => ({
-        label: name,
-        actions: [
-          {
-            label: "Edit",
-            color: "blue",
-            link: `/profile/transaction-categories/${_id}/edit`,
-          },
-        ],
-        additionalInformation: [
-          parseParentCategoryPath(transactionCategoriesRaw, _id),
-          visibility.join(", "),
-        ],
-        id: _id,
-      }))
+      transactionCategoriesRaw.map(
+        ({ _id, name, visibility, categoryTree }) => ({
+          label: name,
+          actions: [
+            {
+              label: "Edit",
+              color: "blue",
+              link: `/profile/transaction-categories/${_id}/edit`,
+            },
+          ],
+          additionalInformation: [categoryTree, visibility.join(", ")],
+          id: _id,
+        })
+      )
     );
   }, [transactionCategoriesRaw]);
 

@@ -1,8 +1,48 @@
+export interface ITransactionCategoryWithCategoryTree
+  extends ITransactionCategory {
+  categoryTree: string;
+}
+
+export const parseParentCategoryPath = (
+  allCategories: ITransactionCategory[],
+  categoryId: string
+): string => {
+  const targetCategory = allCategories.find(({ _id }) => _id === categoryId);
+
+  if (!targetCategory?.parent_category_id) {
+    return `${targetCategory?.name}`;
+  }
+  const parentPath = parseParentCategoryPath(
+    allCategories,
+    targetCategory.parent_category_id
+  );
+  return `${parentPath} > ${targetCategory?.name}`;
+};
+
 export const getAllTransactionCategories = async (): Promise<
   ITransactionCategory[]
 > => {
   const transactionCategories = await fetch("/api/transaction-categories");
   return transactionCategories.json();
+};
+
+export const getAllTransactionCategoriesWithCategoryTree = async (): Promise<
+  ITransactionCategoryWithCategoryTree[]
+> => {
+  const transactionCategoriesRaw = await fetch("/api/transaction-categories");
+  const transactionCategories = (
+    (await transactionCategoriesRaw.json()) as IApiResponse<
+      ITransactionCategory[]
+    >
+  ).payload;
+
+  return transactionCategories.map((transactionCategory) => ({
+    ...transactionCategory,
+    categoryTree: parseParentCategoryPath(
+      transactionCategories,
+      transactionCategory._id
+    ),
+  }));
 };
 
 export const getTransactionCategoryById = async (
