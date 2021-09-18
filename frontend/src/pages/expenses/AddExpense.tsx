@@ -4,14 +4,45 @@ import Container from "../../components/container/container";
 import SEO from "../../components/seo/seo";
 import ExpenseForm from "./ExpenseForm";
 import { addExpense } from "./ExpenseService";
+import { addTransactionCategory } from "../profile/TransactionCategories/TransactionCategoriesService";
+
+export const addTransactionCategoryMapping = async (
+  newTransactionCategoryMappingData: ITransactionCategoryMapping[]
+): Promise<IApiResponse<ITransactionCategoryMapping[]>> => {
+  const newTransactionCategoryMapping = await fetch(
+    "/api/transaction-categories-mapping",
+    {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newTransactionCategoryMappingData),
+    }
+  );
+
+  return newTransactionCategoryMapping.json();
+};
 
 const AddExpense = (): JSX.Element => {
   const history = useHistory();
   const [errors, setErrors] = useState<string[]>([]);
 
-  const handleSubmit = async (newExpenseData: IExpense) => {
+  const handleSubmit = async (
+    newExpenseData: IExpense,
+    newTransactionCategoryMappingsData: ITransactionCategoryMapping[]
+  ) => {
     try {
       const newExpenseJson = await addExpense(newExpenseData);
+      const newTransactionCategoryMappingJson =
+        await addTransactionCategoryMapping(
+          newTransactionCategoryMappingsData.map(
+            (newTransactionCategoryMappingData) => ({
+              ...newTransactionCategoryMappingData,
+              transaction_id: newExpenseJson.payload._id,
+            })
+          )
+        );
 
       if (newExpenseJson.status === 201) {
         history.push("/expenses");
