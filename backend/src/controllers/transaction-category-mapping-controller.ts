@@ -3,8 +3,11 @@ import { ITransactionCategoryMappingModel } from "../models/transaction-category
 import { IUserModel } from "../models/user-model";
 import {
   createTransactionCategoryMapping,
+  findTransactionCategoryMappingById,
+  findTransactionCategoryMappingByTransaction,
   findTransactionCategoryMappingsByUser,
 } from "../services/transaction-category-mapping-service";
+import { findTransactionById } from "../services/transaction-service";
 
 export const getAllUserTransactionCategoryMappings = async (
   req: Request,
@@ -63,115 +66,73 @@ export const addTransactionCategoryMapping = async (
   });
 };
 
-// export const getTransactionCategory = async (
-//   req: Request,
-//   res: Response
-// ): Promise<void> => {
-//   const user = req.user as IUserModel;
-//   const transactionCategoryId = req.params.id;
-//   const transactionCategory = await findTransactionCategoryById(
-//     transactionCategoryId
-//   );
+export const getTransactionCategoryMapping = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const user = req.user as IUserModel;
+  const transactionCategoryMappingId = req.params.id;
+  const transactionCategoryMapping = await findTransactionCategoryMappingById(
+    transactionCategoryMappingId
+  );
 
-//   if (transactionCategory === null) {
-//     res.status(404).json({
-//       authenticated: true,
-//       status: 404,
-//       errors: ["Transaction category not found."],
-//     });
-//     return;
-//   }
+  if (transactionCategoryMapping === null) {
+    res.status(404).json({
+      authenticated: true,
+      status: 404,
+      errors: ["Transaction category mapping not found."],
+    });
+    return;
+  }
 
-//   if (`${transactionCategory?.owner}` !== `${user._id}`) {
-//     res.status(403).json({
-//       authenticated: true,
-//       status: 403,
-//       errors: ["Not authorized to view that transaction category."],
-//     });
-//     return;
-//   }
-//   res
-//     .status(200)
-//     .json({ authenticated: true, status: 200, payload: transactionCategory });
-// };
+  if (`${transactionCategoryMapping?.owner}` !== `${user._id}`) {
+    res.status(403).json({
+      authenticated: true,
+      status: 403,
+      errors: ["Not authorized to view that transaction category mapping."],
+    });
+    return;
+  }
 
-// export const updateTransactionCategory = async (
-//   req: Request,
-//   res: Response
-// ): Promise<void> => {
-//   const user = req.user as IUserModel;
-//   const transactionCategoryId = req.params.id;
-//   const modifiedAccountData = req.body as ITransactionCategory;
+  res.status(200).json({
+    authenticated: true,
+    status: 200,
+    payload: transactionCategoryMapping,
+  });
+};
 
-//   const transactionCategory = await findTransactionCategoryById(
-//     transactionCategoryId
-//   );
+export const getTransactionCategoryMappingsByTransactionId = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const user = req.user as IUserModel;
+  const { transactionId } = req.params;
 
-//   if (`${transactionCategory?.owner}` !== `${user._id}`) {
-//     res.status(403).json({
-//       authenticated: true,
-//       status: 403,
-//       errors: ["You can only edit your transaction categories."],
-//     });
-//     return;
-//   }
+  const targetTransaction = await findTransactionById(transactionId);
 
-//   if (transactionCategory === null) {
-//     res.status(404).json({
-//       authenticated: true,
-//       status: 404,
-//       errors: ["Transaction category not found."],
-//     });
-//     return;
-//   }
+  if (targetTransaction === null) {
+    res.status(404).json({
+      authenticated: true,
+      status: 404,
+      errors: ["Transaction not found."],
+    });
+  }
 
-//   if ("name" in modifiedAccountData) {
-//     transactionCategory.name = modifiedAccountData.name;
-//   }
+  if (`${targetTransaction?.user}` !== `${user._id}`) {
+    res.status(403).json({
+      authenticated: true,
+      status: 403,
+      errors: ["Not authorized to view that transaction category mapping."],
+    });
+    return;
+  }
 
-//   if ("visibility" in modifiedAccountData) {
-//     transactionCategory.visibility = modifiedAccountData.visibility;
-//   }
+  const transactionCategoryMappings =
+    await findTransactionCategoryMappingByTransaction(transactionId);
 
-//   if ("parent_category_id" in modifiedAccountData) {
-//     transactionCategory.parent_category_id =
-//       modifiedAccountData.parent_category_id;
-//   }
-
-//   await transactionCategory?.save();
-
-//   res.status(200).json({ authenticated: true, status: 200 });
-// };
-
-// export const deleteTransactionCategory = async (
-//   req: Request,
-//   res: Response
-// ): Promise<void> => {
-//   const user = req.user as IUserModel;
-//   const transactionCategoryId = req.params.id;
-//   const transactionCategory = await findTransactionCategoryById(
-//     transactionCategoryId
-//   );
-
-//   if (transactionCategory === null) {
-//     res.status(404).json({
-//       authenticated: true,
-//       status: 404,
-//       errors: ["Transaction category not found."],
-//     });
-//     return;
-//   }
-
-//   if (`${transactionCategory?.owner}` !== `${user._id}`) {
-//     res.status(403).json({
-//       authenticated: true,
-//       status: 403,
-//       errors: ["You can only delete your own transaction categories."],
-//     });
-//     return;
-//   }
-
-//   await markTransactionCategoryAsDeleted(transactionCategoryId);
-
-//   res.status(200).json({ authenticated: true, status: 200 });
-// };
+  res.status(200).json({
+    authenticated: true,
+    status: 200,
+    payload: transactionCategoryMappings,
+  });
+};

@@ -17,7 +17,12 @@ export const getAllUserTransactionCategories = async (
   const allTransactionCategories = await findTransactionCategoriesByUser(
     user.id
   );
-  res.status(200).json(allTransactionCategories);
+
+  res.status(200).json({
+    authenticated: true,
+    status: 200,
+    payload: allTransactionCategories,
+  });
 };
 
 export const addTransactionCategory = async (
