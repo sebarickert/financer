@@ -16,6 +16,7 @@ const AddIncome = (): JSX.Element => {
   ) => {
     try {
       const newIncomeJson = await addIncome(newIncomeData);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const newTransactionCategoryMappingJson =
         await addTransactionCategoryMapping(
           newTransactionCategoryMappingsData.map(
