@@ -8,6 +8,22 @@ import StackedList from "../../../components/stacked-list/stacked-list";
 import { IStackedListRowProps } from "../../../components/stacked-list/stacked-list.row";
 import Loader from "../../../components/loader/loader";
 
+const parseParentCategoryPath = (
+  allCategories: ITransactionCategory[],
+  categoryId: string
+): string => {
+  const targetCategory = allCategories.find(({ _id }) => _id === categoryId);
+
+  if (!targetCategory?.parent_category_id) {
+    return `${targetCategory?.name}`;
+  }
+  const parentPath = parseParentCategoryPath(
+    allCategories,
+    targetCategory.parent_category_id
+  );
+  return `${parentPath} > ${targetCategory?.name}`;
+};
+
 const TransactionCategories = (): JSX.Element => {
   const [transactionCategoriesRaw, setTransactionCategoriesRaw] = useState<
     ITransactionCategory[] | null
@@ -30,8 +46,6 @@ const TransactionCategories = (): JSX.Element => {
     setTransactionCategories(
       transactionCategoriesRaw.map(({ _id, name, visibility }) => ({
         label: name,
-        // link: `/accounts/${_id}`,
-        additionalLabel: "plaa",
         actions: [
           {
             label: "Edit",
@@ -39,7 +53,10 @@ const TransactionCategories = (): JSX.Element => {
             link: `/profile/transaction-categories/${_id}/edit`,
           },
         ],
-        additionalInformation: visibility,
+        additionalInformation: [
+          parseParentCategoryPath(transactionCategoriesRaw, _id),
+          visibility.join(", "),
+        ],
         id: _id,
       }))
     );
