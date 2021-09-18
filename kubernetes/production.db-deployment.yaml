@@ -1,0 +1,122 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb-deployment
+  namespace: financer
+  labels:
+    name: mongodb
+    env: productions
+    app: financer
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      containers:
+        - image: mongo:4.4.8
+          name: mongodb-server
+          ports:
+          - containerPort: 27017
+            name: mongodb
+          resources:
+            limits:
+              cpu: "0.5"
+              memory: "1Gi"
+            requests:
+              cpu: "0.1"
+              memory: "200Mi"
+          envFrom:
+            - secretRef:
+                name: mongodb-crentials-secret
+          volumeMounts:
+            - name: mongo-data
+              mountPath: /data/db
+            - name: mongodb-config
+              mountPath: /data/configdb
+            - name: mongo-init
+              mountPath: /docker-entrypoint-initdb.d/
+      volumes:
+        - name: mongo-data
+          persistentVolumeClaim:
+            claimName: mongodb-data-volume
+        - name: mongodb-config
+          persistentVolumeClaim:
+            claimName: mongodb-config-volume
+        - name: mongo-init
+          configMap:
+            name: mongodb-initial-config
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongodb-initial-config
+  namespace: financer
+data:
+  init-users.sh: |
+    if [ "$MONGO_INITDB_ROOT_USERNAME" ] && [ "$MONGO_INITDB_ROOT_PASSWORD" ]; then
+    "${mongo[@]}" "$MONGO_INITDB_DATABASE" <<-EOJS
+    db.createUser({
+       user: $(_js_escape "$MONGO_INITDB_ROOT_USERNAME"),
+       pwd: $(_js_escape "$MONGO_INITDB_ROOT_PASSWORD"),
+       roles: [ "readWrite", "dbAdmin" ]
+       })
+    EOJS
+    fi
+
+    echo ======================================================
+    echo created $MONGO_INITDB_ROOT_USERNAME in database $MONGO_INITDB_DATABASE
+    echo ======================================================
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: financer
+  name: mongodb
+spec:
+  ports:
+  - port: 27017
+  selector:
+    app: mongodb
+  clusterIP: None
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongodb-data-volume
+  namespace: financer
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 2Gi
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongodb-config-volume
+  namespace: financer
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 10Mi
