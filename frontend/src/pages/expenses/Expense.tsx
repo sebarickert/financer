@@ -13,7 +13,6 @@ import formatCurrency from "../../utils/formatCurrency";
 import { formatDate } from "../../utils/formatDate";
 import {
   getAllTransactionCategoriesWithCategoryTree,
-  getTransactionCategoryById,
   ITransactionCategoryWithCategoryTree,
 } from "../profile/TransactionCategories/TransactionCategoriesService";
 import { deleteExpense, getExpenseById } from "./ExpenseService";

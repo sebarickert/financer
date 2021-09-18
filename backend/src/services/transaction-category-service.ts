@@ -1,4 +1,3 @@
-import { truncate } from "fs";
 import transactionCategoryModel, {
   ITransactionCategoryModel,
 } from "../models/transaction-category-model";
@@ -34,4 +33,11 @@ export const markTransactionCategoryAsDeleted = async (
   transactionCategory.deleted = true;
 
   return transactionCategory.save();
+};
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export const DANGER_truncateTransactionCategoriesByUser = async (
+  userId: string
+): Promise<void> => {
+  await transactionCategoryModel.deleteMany({ owner: userId });
 };

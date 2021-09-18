@@ -3,6 +3,7 @@ import { ITransactionModel } from "../models/transaction-model";
 
 import { IUserModel } from "../models/user-model";
 import { findAccountById } from "../services/account-service";
+import { deleteTransactionCategoryMappingByTransaction } from "../services/transaction-category-mapping-service";
 import {
   createTransaction,
   findTransactionById,
@@ -64,6 +65,7 @@ export const deleteTransaction = async (
     });
     return;
   }
+
   if (transaction.fromAccount) {
     const fromAccount = await findAccountById(transaction.fromAccount);
     if (fromAccount !== null) {
@@ -90,6 +92,7 @@ export const deleteTransaction = async (
   }
 
   await transaction.remove();
+  await deleteTransactionCategoryMappingByTransaction(transactionId);
 
   res.status(200).json({ authenticated: true, status: 200 });
 };
