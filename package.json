@@ -4,16 +4,23 @@
   "description": "",
   "workspaces": [
     "frontend",
-    "backend"
+    "backend",
+    "cypress"
   ],
   "scripts": {
     "start": "run-p start:backend start:frontend",
+    "start:ci": "run-p start:backend:ci start:frontend",
+    "start:test": "run-p start:backend:test start:frontend",
     "start:backend": "npm --prefix backend run start-dev",
+    "start:backend:ci": "NODE_ENV=test npm --prefix backend run start",
+    "start:backend:test": "NODE_ENV=test npm --prefix backend run start-dev",
     "start:frontend": "npm --prefix frontend run start",
     "lint": "npm --prefix backend run lint & npm --prefix frontend run lint",
     "format": "npm --prefix backend run format & npm --prefix frontend run format",
     "test": "CI=true npm --prefix backend run test && CI=true npm --prefix frontend run test",
-    "build": "./bin/buildApp"
+    "build": "./bin/buildApp",
+    "cypress:run": "npm --prefix cypress run cypress:run",
+    "cypress:open": "npm --prefix cypress run cypress:open"
   },
   "author": "",
   "license": "ISC",
