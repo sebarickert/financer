@@ -2,8 +2,15 @@ import React from "react";
 import IconSwitchHorizontal from "./icon.switchHorizontal";
 import IconPlusCircle from "./icon.plusCircle";
 import IconMinusCircle from "./icon.minusCircle";
+import IconHome from "./icon.home";
+import IconUser from "./icon.user";
 
-export type IconName = "switch-horizontal" | "plus-circle" | "minus-circle";
+export type IconName =
+  | "switch-horizontal"
+  | "plus-circle"
+  | "minus-circle"
+  | "home"
+  | "user";
 interface IconProps {
   type: IconName;
 }
@@ -20,6 +27,12 @@ const Icon = ({ type }: IconProps): JSX.Element => {
 
     case "minus-circle":
       return <IconMinusCircle className={defaultIconClasses} />;
+
+    case "home":
+      return <IconHome className={defaultIconClasses} />;
+
+    case "user":
+      return <IconUser className={defaultIconClasses} />;
 
     default:
       break;
