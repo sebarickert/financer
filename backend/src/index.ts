@@ -5,27 +5,41 @@ import "./config/load-env";
 import "./config/passport-setup";
 import { MONGODB_URI } from "./config/keys";
 import app from "./server";
+import memoryDatabaseServer, {
+  connect as connectToTestDbInMemory,
+  disconnect as disconnectFromTestDbInMemory,
+} from "./config/MemoryDatabaseServer";
 
 const port = 4000; // default port to listen
 
 let connections: Socket[] = [];
 
-// connect to mongodb
-mongoose.connect(
-  MONGODB_URI,
-  { useNewUrlParser: true, useUnifiedTopology: true },
-  (err) => {
-    if (err) {
-      // eslint-disable-next-line no-console
-      console.error("failed to connect to mongo db");
-      // eslint-disable-next-line no-console
-      console.error(`${err.name}: ${err.message}`);
-    } else {
-      // eslint-disable-next-line no-console
-      console.log("connected to mongo db");
+if (process.env.NODE_ENV !== "test") {
+  // connect to mongodb
+  mongoose.connect(
+    MONGODB_URI,
+    { useNewUrlParser: true, useUnifiedTopology: true },
+    (err) => {
+      if (err) {
+        // eslint-disable-next-line no-console
+        console.error("failed to connect to mongo db");
+        // eslint-disable-next-line no-console
+        console.error(`${err.name}: ${err.message}`);
+      } else {
+        // eslint-disable-next-line no-console
+        console.log("connected to mongo db");
+      }
     }
-  }
-);
+  );
+} else {
+  const openDbAndConnection = async () => {
+    await memoryDatabaseServer.start();
+    await connectToTestDbInMemory();
+    // eslint-disable-next-line no-console
+    console.log("Connected to in memory test db");
+  };
+  openDbAndConnection();
+}
 
 const server = app.listen(port, () => {
   // eslint-disable-next-line no-console
@@ -47,6 +61,16 @@ const shutDown = () => {
     console.log("Closed out remaining connections");
     process.exit(0);
   });
+
+  if (process.env.NODE_ENV === "test") {
+    const closeConnectionAndStopInMemoryTestDb = async () => {
+      await disconnectFromTestDbInMemory();
+      await memoryDatabaseServer.stop();
+      // eslint-disable-next-line no-console
+      console.log("In memory test db stopped");
+    };
+    closeConnectionAndStopInMemoryTestDb();
+  }
 
   setTimeout(() => {
     // eslint-disable-next-line no-console

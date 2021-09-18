@@ -16,6 +16,7 @@ import transactionCategoryMappingRoutes from "./routes/transaction-category-mapp
 import fileExists from "./utils/fileExists";
 import errorHandler from "./routes/middlewares/errorHandler";
 import authenticationCheck from "./routes/middlewares/authenticationCheck";
+import { mockAuthenticationMiddleware } from "./config/mockAuthenticationMiddleware";
 
 const REACT_APP_PATH = "/static/react-app/";
 const app = express();
@@ -27,10 +28,13 @@ app.use(
     maxAge: 24 * 60 * 60 * 100,
   })
 );
-
-app.use(cookieParser());
-app.use(passport.initialize());
-app.use(passport.session());
+if (process.env.NODE_ENV !== "test") {
+  app.use(cookieParser());
+  app.use(passport.initialize());
+  app.use(passport.session());
+} else {
+  app.use(mockAuthenticationMiddleware);
+}
 app.use(express.json());
 app.use(errorHandler);
 app.use("/api/*", authenticationCheck);
