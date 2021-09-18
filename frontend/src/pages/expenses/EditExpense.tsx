@@ -20,7 +20,6 @@ const EditExpense = (): JSX.Element => {
   const [transactionCategoryMapping, setTransactionCategoryMapping] = useState<
     ITransactionCategoryMapping[] | undefined
   >(undefined);
-
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {

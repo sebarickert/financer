@@ -87,7 +87,8 @@ const Expense = (): JSX.Element => {
   };
 
   return typeof expense === "undefined" ||
-    typeof transactionCategoryMapping === "undefined" ? (
+    typeof transactionCategoryMapping === "undefined" ||
+    transactionCategories === null ? (
     <Loader loaderColor="red" />
   ) : (
     <>
