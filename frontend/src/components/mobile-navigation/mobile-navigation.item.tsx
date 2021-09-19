@@ -7,6 +7,7 @@ interface IProps {
   iconName: IconName;
   label: string;
   onClick?(): void;
+  ariaLabel?: string;
 }
 
 const MobileNavigationItem = ({
@@ -14,15 +15,17 @@ const MobileNavigationItem = ({
   iconName,
   label,
   onClick = () => {},
+  ariaLabel,
 }: IProps): JSX.Element => {
   return (
     <li>
       <NavLink
         to={link}
         exact
-        className="flex flex-col items-center justify-center pb-2 pt-4 focus:text-blue-600 hover:text-blue-600 focus:outline-none focus:ring-blue-600 focus:ring-2 focus:ring-inset"
-        activeClassName="text-blue-600"
+        className="flex flex-col items-center justify-center pb-2 pt-4 focus:text-blue-financer hover:text-blue-financer"
+        activeClassName="text-blue-financer"
         onClick={onClick}
+        aria-label={ariaLabel}
       >
         <Icon type={iconName} />
         <span className="text-xs mt-1 text-gray-600">{label}</span>

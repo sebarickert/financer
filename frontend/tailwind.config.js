@@ -13,6 +13,12 @@ module.exports = {
       fontFamily: {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],
       },
+      colors: {
+        'blue-financer': '#2D4EF5',
+        'white-off': '#FAFAFA',
+        'black-off': '#1E253A',
+        'gray-financer': '#838690',
+      }
     },
   },
   variants: {
