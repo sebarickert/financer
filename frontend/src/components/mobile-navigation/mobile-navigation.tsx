@@ -9,7 +9,7 @@ const MobileNavigation = (): JSX.Element => {
         <ul className="grid grid-cols-5 relative">
           <MobileNavigationItem label="Home" iconName="home" link="/" />
           <MobileNavigationItem
-            label="Stats"
+            label="Statistics"
             iconName="chart-bar"
             link="/expenses"
           />

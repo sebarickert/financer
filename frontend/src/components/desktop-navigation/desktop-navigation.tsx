@@ -8,7 +8,7 @@ const DesktopNavigation = (): JSX.Element => {
         <ul className="-mr-4">
           <DesktopNavigationItem label="Home" iconName="home" link="/" />
           <DesktopNavigationItem
-            label="Stats"
+            label="Statistics"
             iconName="chart-bar"
             link="/expenses"
           />
