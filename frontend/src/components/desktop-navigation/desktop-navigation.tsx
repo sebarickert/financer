@@ -10,7 +10,7 @@ const DesktopNavigation = (): JSX.Element => {
           <DesktopNavigationItem
             label="Statistics"
             iconName="chart-bar"
-            link="/expenses"
+            link="/statistics"
           />
           <DesktopNavigationItem
             label="Accounts"
