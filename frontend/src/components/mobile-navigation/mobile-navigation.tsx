@@ -11,7 +11,7 @@ const MobileNavigation = (): JSX.Element => {
           <MobileNavigationItem
             label="Statistics"
             iconName="chart-bar"
-            link="/expenses"
+            link="/statistics"
           />
           <MobileNavigationActions />
           <MobileNavigationItem
