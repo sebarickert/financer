@@ -41,7 +41,7 @@ const Layout = ({ children }: IProps): JSX.Element => {
   return (
     <div className="flex flex-col min-h-screen">
       <main className="bg-gray-100 lg:pb-24 flex-grow">
-        <div className="py-12 px-8">{children}</div>
+        <div className="pt-12 pb-24 px-8">{children}</div>
       </main>
       <MobileNavigation />
     </div>
