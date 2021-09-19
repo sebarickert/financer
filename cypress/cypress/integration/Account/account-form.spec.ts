@@ -79,7 +79,7 @@ describe("Account creation", () => {
     cy.location("pathname").should("eq", "/accounts");
   });
 
-  it.skip("Verify Account Balance should accept negative values", () => {
+  it("Verify Account Balance should accept negative values", () => {
     cy.get("#account").type("irrelevant");
     cy.get("#amount").type("-1000.99");
     cy.get("[data-test-id='submit']").click();

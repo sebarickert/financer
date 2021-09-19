@@ -3,13 +3,14 @@ import Container from "../container/container";
 
 type AccentColor = "pink" | "red" | "green" | "blue";
 
-interface IProps {
+interface IHeroProps {
   accent?: string;
   accentColor?: AccentColor;
   label: string;
   children: React.ReactNode;
   standAlone?: boolean;
   className?: string;
+  testId?: string;
 }
 
 const getHeroColorClasses = (color: AccentColor): string => {
@@ -34,13 +35,15 @@ const Hero = ({
   children,
   standAlone,
   className = "",
-}: IProps): JSX.Element => {
+  testId,
+}: IHeroProps): JSX.Element => {
   const heroContent = (
-    <div className="max-w-xl">
+    <div className="max-w-xl" data-test-id={testId}>
       <h1
         className={`text-4xl tracking-tight leading-10 font-extrabold ${
           standAlone ? "text-gray-900" : "text-white"
         } sm:leading-none sm:text-5xl`}
+        data-test-id="hero-title"
       >
         {accent && (
           <>
