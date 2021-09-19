@@ -228,13 +228,22 @@ const Account = (): JSX.Element => {
   ) : (
     <>
       <SEO title={`${account.name} | Accounts`} />
-      <Hero accent="Account" accentColor="blue" label={account.name}>
+      <Hero
+        accent="Account"
+        accentColor="blue"
+        label={account.name}
+        testId="account-hero"
+      >
         <HeroLead>
           Below you are able to edit your accounts information and check your
           transaction history as well as balance.
         </HeroLead>
         <ButtonGroup className="mt-12">
-          <Button accentColor="blue" link={`/accounts/${id}/edit`}>
+          <Button
+            accentColor="blue"
+            link={`/accounts/${id}/edit`}
+            testId="edit-account"
+          >
             Edit account
           </Button>
           <AccountDeleteModal handleDelete={handleDelete} />

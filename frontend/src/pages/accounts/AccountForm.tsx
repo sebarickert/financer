@@ -85,7 +85,6 @@ const AccountForm = ({
             id="amount"
             help="Amount of savings in the account."
             type="number"
-            min={0.0}
             step={0.01}
             isCurrency
             isRequired
