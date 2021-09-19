@@ -38,18 +38,21 @@ const MobileNavigationActionsBody = ({
                 label="Income"
                 iconName="download"
                 link="/incomes/add"
+                ariaLabel="Add new income transaction"
                 onClick={() => onClick(true)}
               />
               <MobileNavigationItem
                 label="Expense"
                 iconName="upload"
                 link="/expenses/add"
+                ariaLabel="Add new expense transaction"
                 onClick={() => onClick(true)}
               />
               <MobileNavigationItem
                 label="Transfer"
                 iconName="switch-horizontal"
                 link="/accounts/transfer"
+                ariaLabel="Add new transfer transaction"
                 onClick={() => onClick(true)}
               />
             </ul>

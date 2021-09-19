@@ -10,6 +10,7 @@ import IconUserCircle from "./icon.userCircle";
 import IconPlus from "./icon.plus";
 import IconDownload from "./icon.download";
 import IconUpload from "./icon.upload";
+import IconLogout from "./icon.logout";
 
 export type IconName =
   | "switch-horizontal"
@@ -22,7 +23,8 @@ export type IconName =
   | "user-circle"
   | "plus"
   | "download"
-  | "upload";
+  | "upload"
+  | "logout";
 interface IconProps {
   type: IconName;
 }
@@ -63,6 +65,9 @@ const Icon = ({ type }: IconProps): JSX.Element => {
 
     case "upload":
       return <IconUpload className={defaultIconClasses} />;
+
+    case "logout":
+      return <IconLogout className={defaultIconClasses} />;
 
     default:
       break;
