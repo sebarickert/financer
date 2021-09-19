@@ -1171,6 +1171,12 @@ select {
 .justify-between {
 	justify-content: space-between;
 }
+.gap-8 {
+	gap: 2rem;
+}
+.gap-4 {
+	gap: 1rem;
+}
 .gap-y-6 {
 	row-gap: 1.5rem;
 }
@@ -1884,6 +1890,10 @@ select {
 	content: "";
 	padding-right: 100vw;
 }
+.focus-within\:bg-blue-financer:focus-within {
+	--tw-bg-opacity: 1;
+	background-color: rgba(45, 78, 245, var(--tw-bg-opacity));
+}
 .focus-within\:ring-2:focus-within {
 	--tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
 	--tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
@@ -1895,6 +1905,10 @@ select {
 .focus-within\:ring-blue-500:focus-within {
 	--tw-ring-opacity: 1;
 	--tw-ring-color: rgba(59, 130, 246, var(--tw-ring-opacity));
+}
+.focus-within\:ring-blue-financer:focus-within {
+	--tw-ring-opacity: 1;
+	--tw-ring-color: rgba(45, 78, 245, var(--tw-ring-opacity));
 }
 .hover\:border-gray-300:hover {
 	--tw-border-opacity: 1;
@@ -2259,6 +2273,10 @@ select {
 
 	.sm\:gap-px {
 		gap: 1px;
+	}
+
+	.sm\:gap-8 {
+		gap: 2rem;
 	}
 
 	.sm\:divide-y-0 > :not([hidden]) ~ :not([hidden]) {
