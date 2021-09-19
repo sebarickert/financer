@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useRef, useState } from "react";
 import Icon from "../icon/icon";
 import MobileNavigationActionsBody from "./mobile-navigation.actions.body";
