@@ -7,7 +7,7 @@ const Statistics = (): JSX.Element => {
   return (
     <>
       <SEO title="Statistics" />
-      <div className="p-8 rounded-lg shadow-lg bg-black-off text-white space-y-4">
+      <div className="p-6 rounded-lg shadow-lg bg-black-off text-white space-y-4">
         <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
           Statistics
         </h1>
