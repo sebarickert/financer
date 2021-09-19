@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import Icon, { IconName } from "../icon/icon";
+import isIOSDevice from "../../utils/isIOSDevice";
 
 interface IProps {
   link: string;
@@ -8,6 +9,7 @@ interface IProps {
   label: string;
   onClick?(): void;
   ariaLabel?: string;
+  addExtraPaddingIOS?: boolean;
 }
 
 const MobileNavigationItem = ({
@@ -16,13 +18,16 @@ const MobileNavigationItem = ({
   label,
   onClick = () => {},
   ariaLabel,
+  addExtraPaddingIOS,
 }: IProps): JSX.Element => {
   return (
     <li>
       <NavLink
         to={link}
         exact
-        className="flex flex-col items-center justify-center pb-2 pt-4 focus:text-blue-financer hover:text-blue-financer"
+        className={`flex flex-col items-center justify-center focus:text-blue-financer hover:text-blue-financer ${
+          addExtraPaddingIOS && isIOSDevice() ? "pb-8 pt-4" : "pb-2 pt-4"
+        }`}
         activeClassName="text-blue-financer"
         onClick={onClick}
         aria-label={ariaLabel}
