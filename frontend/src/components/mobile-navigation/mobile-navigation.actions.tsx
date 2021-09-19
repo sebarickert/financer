@@ -44,13 +44,13 @@ const MobileNavigationActions = (): JSX.Element => {
     <li>
       <button
         type="button"
-        className="flex w-full h-full items-center justify-center focus:outline-none focus:ring-blue-600 focus:ring-2 focus:ring-inset"
+        className="flex w-full h-full items-center justify-center"
         aria-expanded={!isActionsModalHidden}
         aria-label="Add new transaction"
         onClick={() => setIsActionsModalHidden(!isActionsModalHidden)}
         ref={mobileNavigationToggleButtonRef}
       >
-        <span className="p-2 bg-blue-600 text-white rounded-xl">
+        <span className="p-2 bg-blue-financer text-white rounded-xl">
           <span
             className={`${
               !isActionsModalHidden ? "rotate-45" : ""
