@@ -1,0 +1,36 @@
+{
+  "extends": [
+    "plugin:cypress/recommended",
+    "airbnb-typescript/base",
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+    "prettier/@typescript-eslint",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": ["chai-friendly", "@typescript-eslint"],
+  "env": {
+    "browser": false,
+    "es6": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    "linebreak-style": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
+    "no-unused-expressions": 0,
+    "@typescript-eslint/no-unused-expressions": 0,
+    "chai-friendly/no-unused-expressions": 2
+  }
+}
