@@ -6,10 +6,12 @@ const addAccountAndVefiryDetails = (
 ) => {
   cy.get('[data-test-id="account-row"').should(
     "not.have.text",
-    "New Test Account"
+    `New Test ${expectedType} Account`
   );
 
   cy.get('[data-test-id="add-account"]').click();
+
+  // Add account form
   cy.get("#account").clear();
   cy.get("#account").type(`New Test ${expectedType} Account`);
   cy.get("#amount").clear();
@@ -22,9 +24,11 @@ const addAccountAndVefiryDetails = (
     .contains(`New Test ${expectedType} Account`)
     .click();
 
-  expect(cy.get('[data-test-id="balance"] > dd').contains(expextedBalance)).to
-    .exist;
   cy.get('[data-test-id="type"] > dd').should("have.text", expectedType);
+  cy.get('[data-test-id="balance"] > dd')
+    .invoke("text")
+    .invoke("replace", /\u00a0/g, " ")
+    .should("equal", expextedBalance);
 };
 
 describe("Account creation", () => {
