@@ -17,7 +17,7 @@ const Statistics = (): JSX.Element => {
           list by transaction types, i.e. incomes and expenses.
         </p>
       </div>
-      <QuickLinks className="mt-8">
+      <QuickLinks className="mt-4">
         <QuickLinksItem
           title="Incomes"
           link="/incomes"
