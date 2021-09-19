@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useRef, useState } from "react";
+import isIOSDevice from "../../utils/isIOSDevice";
 import Icon from "../icon/icon";
 import MobileNavigationActionsBody from "./mobile-navigation.actions.body";
 
@@ -45,7 +46,9 @@ const MobileNavigationActions = (): JSX.Element => {
     <li>
       <button
         type="button"
-        className="flex w-full h-full items-center justify-center"
+        className={`flex w-full h-full justify-center ${
+          isIOSDevice() ? "items-start pt-4" : "items-center"
+        }`}
         aria-expanded={!isActionsModalHidden}
         aria-label="Add new transaction"
         onClick={() => setIsActionsModalHidden(!isActionsModalHidden)}
