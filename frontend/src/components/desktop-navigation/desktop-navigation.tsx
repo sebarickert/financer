@@ -4,7 +4,7 @@ import DesktopNavigationItem from "./desktop-navigation.item";
 const DesktopNavigation = (): JSX.Element => {
   return (
     <div className="grid grid-cols-1">
-      <nav>
+      <nav aria-label="Main navigation in desktop viewmode.">
         <ul className="-mr-4">
           <DesktopNavigationItem label="Home" iconName="home" link="/" />
           <DesktopNavigationItem
@@ -24,7 +24,10 @@ const DesktopNavigation = (): JSX.Element => {
           />
         </ul>
       </nav>
-      <nav className="border-t pt-8 mt-8">
+      <nav
+        className="border-t pt-8 mt-8"
+        aria-label="Quick transaction actions navigation in desktop viewmode."
+      >
         <ul className="-mr-4">
           <DesktopNavigationItem
             label="Income"
@@ -46,7 +49,10 @@ const DesktopNavigation = (): JSX.Element => {
           />
         </ul>
       </nav>
-      <nav className="border-t pt-8 mt-8">
+      <nav
+        className="border-t pt-8 mt-8"
+        aria-label="User action links navigation in desktop viewmode."
+      >
         <ul className="-mr-4">
           <DesktopNavigationItem
             label="Sign out"

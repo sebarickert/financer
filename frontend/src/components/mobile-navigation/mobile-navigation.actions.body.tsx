@@ -29,9 +29,10 @@ const MobileNavigationActionsBody = ({
           aria-hidden={isModalHidden}
           ref={ref}
         >
-          <div
+          <nav
             className="bg-white p-2 rounded-lg shadow-md whitespace-nowrap border mx-4 max-w-sm w-full"
             ref={outsideClickRef}
+            aria-label="Quick transaction actions navigation in mobile viewmode."
           >
             <ul className="grid grid-cols-3 justify-center items-center">
               <MobileNavigationItem
@@ -56,7 +57,7 @@ const MobileNavigationActionsBody = ({
                 onClick={() => onClick(true)}
               />
             </ul>
-          </div>
+          </nav>
         </div>
       )}
     </Transition>
