@@ -4,6 +4,7 @@ import MobileNavigationItem from "./mobile-navigation.item";
 
 interface IMobileNavigationActionsBodyProps {
   isModalHidden: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   outsideClickRef: any;
   onClick?(param: boolean): void;
 }
