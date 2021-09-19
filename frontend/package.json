@@ -38,8 +38,8 @@
     "format": "prettier --write src/**/*.ts{,x} && eslint src/**/*.ts{,x} --fix",
     "lint": "eslint src/**/*.ts{,x}",
     "eject": "react-scripts eject",
-    "watch:css": "NODE_ENV=development postcss src/assets/tailwind.css -o src/assets/financer.css -w",
-    "build:css": "NODE_ENV=production  postcss src/assets/tailwind.css -o src/assets/financer.css"
+    "watch:css": "NODE_ENV=development TAILWIND_MODE=watch postcss src/assets/tailwind.css -o src/assets/financer.css -w",
+    "build:css": "NODE_ENV=production postcss src/assets/tailwind.css -o src/assets/financer.css"
   },
   "eslintConfig": {
     "extends": [
