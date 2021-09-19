@@ -19,10 +19,20 @@ const FormFooter = ({
     <>
       <div className="mt-8 border-t border-gray-200 pt-5">
         <ButtonGroup isReverse>
-          <Button accentColor={accentColor} type="submit" size="small">
+          <Button
+            accentColor={accentColor}
+            type="submit"
+            size="small"
+            testId="submit"
+          >
             {submitLabel}
           </Button>
-          <Button accentColor="plain" link={formFooterBackLink} size="small">
+          <Button
+            accentColor="plain"
+            link={formFooterBackLink}
+            size="small"
+            testId="cancel"
+          >
             Cancel
           </Button>
         </ButtonGroup>

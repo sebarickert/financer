@@ -1,13 +1,18 @@
 import React from "react";
 
-interface IProps {
+interface IAlertProps {
   children: React.ReactNode;
   additionalInformation?: string[];
+  testId?: string;
 }
 
-const Alert = ({ children, additionalInformation }: IProps): JSX.Element => {
+const Alert = ({
+  children,
+  additionalInformation,
+  testId,
+}: IAlertProps): JSX.Element => {
   return (
-    <div className="rounded-md bg-red-50 p-4 my-6">
+    <div className="rounded-md bg-red-50 p-4 my-6" data-test-id={testId}>
       <div className="flex">
         <div className="flex-shrink-0">
           <svg
