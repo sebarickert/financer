@@ -12,9 +12,9 @@ const Statistics = (): JSX.Element => {
           Statistics
         </h1>
         <p className="text-lg text-gray-300">
-          Etiam egestas hendrerit orci sit amet porta. Nunc vulputate bibendum
-          nulla, id pretium enim vehicula a. Integer vel rhoncus magna. Morbi
-          metus nisi, fermentum eget vulputate sit amet, fermentum eget nulla.
+          Below you are able to review, edit or delete all your transactions.
+          They are ordered by date (latest first). You can as well filter the
+          list by transaction types, i.e. incomes and expenses.
         </p>
       </div>
       <QuickLinks className="mt-8">
@@ -23,14 +23,14 @@ const Statistics = (): JSX.Element => {
           link="/incomes"
           iconName="download"
           iconBackgroundColor="green"
-          description="plaa"
+          description="On the incomes page you are able to review, edit or delete all your income transaction."
         />
         <QuickLinksItem
           title="Expenses"
           link="/expenses"
           iconName="upload"
           iconBackgroundColor="red"
-          description="plaa"
+          description="On the expenses page you are able to review, edit or delete all your income transaction."
         />
       </QuickLinks>
     </>
