@@ -15,7 +15,12 @@ const QuickLinks = ({
     <section aria-labelledby="quick-links-title" className={className}>
       <div
         className={`rounded-lg overflow-hidden grid gap-4 ${
-          children.length === 3 ? "md:grid-cols-3" : "sm:grid-cols-2"
+          children.filter((child) => typeof child !== "undefined" && child)
+            .length %
+            3 ===
+          0
+            ? "md:grid-cols-3"
+            : "sm:grid-cols-2"
         }`}
       >
         <h2 className="sr-only" id="quick-links-title">
