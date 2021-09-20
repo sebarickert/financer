@@ -4,6 +4,7 @@ import Container from "../container/container";
 import MobileNavigation from "../mobile-navigation/mobile-navigation";
 import { ReactComponent as Logo } from "../../assets/logo.svg";
 import DesktopNavigation from "../desktop-navigation/desktop-navigation";
+import isIOSDevice from "../../utils/isIOSDevice";
 
 interface IProps {
   children: React.ReactNode;
@@ -43,7 +44,9 @@ const Layout = ({ children }: IProps): JSX.Element => {
   return (
     <div className="flex flex-col min-h-screen">
       <main className="bg-gray-100 lg:pb-24 flex-grow">
-        <div className="pt-6 pb-24 px-4">{children}</div>
+        <div className={`pt-6 ${isIOSDevice() ? "pb-32" : "pb-24"} px-4`}>
+          {children}
+        </div>
       </main>
       <header>
         <MobileNavigation />
