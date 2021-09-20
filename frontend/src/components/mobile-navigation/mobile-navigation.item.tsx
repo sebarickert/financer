@@ -10,6 +10,7 @@ interface IProps {
   onClick?(): void;
   ariaLabel?: string;
   addExtraPaddingIOS?: boolean;
+  isExact?: boolean;
 }
 
 const MobileNavigationItem = ({
@@ -19,12 +20,13 @@ const MobileNavigationItem = ({
   onClick = () => {},
   ariaLabel,
   addExtraPaddingIOS,
+  isExact,
 }: IProps): JSX.Element => {
   return (
     <li>
       <NavLink
         to={link}
-        exact
+        exact={isExact}
         className={`flex flex-col items-center justify-center focus:text-blue-financer hover:text-blue-financer ${
           addExtraPaddingIOS && isIOSDevice() ? "pb-8 pt-4" : "pb-2 pt-4"
         }`}

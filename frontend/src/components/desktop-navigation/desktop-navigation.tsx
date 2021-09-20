@@ -6,7 +6,12 @@ const DesktopNavigation = (): JSX.Element => {
     <div className="grid grid-cols-1">
       <nav aria-label="Main navigation in desktop viewmode.">
         <ul className="-mr-4">
-          <DesktopNavigationItem label="Home" iconName="home" link="/" />
+          <DesktopNavigationItem
+            label="Home"
+            iconName="home"
+            link="/"
+            isExact
+          />
           <DesktopNavigationItem
             label="Statistics"
             iconName="chart-bar"
