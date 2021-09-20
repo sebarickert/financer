@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Switch, Route } from "react-router-dom";
-import Container from "../../components/container/container";
 import Profile from "./Profile";
-import ProfileNavigation from "./ProfileNavigation";
 import ProfileOverrideData from "./ProfileOverrideData";
 import { getProfileInformation } from "./ProfileService";
 import TransactionCategoriesRouter from "./TransactionCategories/TransactionCategoriesRouter";
