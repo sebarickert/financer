@@ -24,10 +24,12 @@ const Layout = ({ children }: IProps): JSX.Element => {
         <Container className="grid grid-cols-[16rem,1fr] min-h-screen px-0">
           <aside className="after:bg-white after:ml-[-100vw] after:pr-[100vw] after:absolute after:top-0 after:bottom-0 after:right-0 relative border-r">
             <div className="z-10 sticky top-0 pt-12 pb-12 px-4 bottom-12 min-h-screen">
-              <NavLink to="/" className="mb-8 block">
-                <Logo className="block h-10 w-auto" />
-              </NavLink>
-              <DesktopNavigation />
+              <header>
+                <NavLink to="/" className="mb-8 block">
+                  <Logo className="block h-10 w-auto" />
+                </NavLink>
+                <DesktopNavigation />
+              </header>
             </div>
           </aside>
           <main>
@@ -43,7 +45,9 @@ const Layout = ({ children }: IProps): JSX.Element => {
       <main className="bg-gray-100 lg:pb-24 flex-grow">
         <div className="pt-6 pb-24 px-4">{children}</div>
       </main>
-      <MobileNavigation />
+      <header>
+        <MobileNavigation />
+      </header>
     </div>
   );
 };

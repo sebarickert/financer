@@ -11,6 +11,9 @@ import IconPlus from "./icon.plus";
 import IconDownload from "./icon.download";
 import IconUpload from "./icon.upload";
 import IconLogout from "./icon.logout";
+import IconTag from "./icon.tag";
+import IconExclamation from "./icon.exclamation";
+import IconCloudDownload from "./icon.cloudDownload";
 
 export type IconName =
   | "switch-horizontal"
@@ -24,7 +27,10 @@ export type IconName =
   | "plus"
   | "download"
   | "upload"
-  | "logout";
+  | "logout"
+  | "tag"
+  | "exclamation"
+  | "cloud-download";
 interface IconProps {
   type: IconName;
 }
@@ -68,6 +74,15 @@ const Icon = ({ type }: IconProps): JSX.Element => {
 
     case "logout":
       return <IconLogout className={defaultIconClasses} />;
+
+    case "tag":
+      return <IconTag className={defaultIconClasses} />;
+
+    case "exclamation":
+      return <IconExclamation className={defaultIconClasses} />;
+
+    case "cloud-download":
+      return <IconCloudDownload className={defaultIconClasses} />;
 
     default:
       break;

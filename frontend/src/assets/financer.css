@@ -1045,6 +1045,9 @@ select {
 .w-48 {
 	width: 12rem;
 }
+.\!w-full {
+	width: 100% !important;
+}
 .min-w-0 {
 	min-width: 0px;
 }
@@ -2414,6 +2417,10 @@ select {
 
 	.lg\:flex {
 		display: flex;
+	}
+
+	.lg\:hidden {
+		display: none;
 	}
 
 	.lg\:h-full {

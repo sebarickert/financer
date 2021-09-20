@@ -1,4 +1,5 @@
 import React from "react";
+import Banner from "../../components/banner/banner";
 import QuickLinks from "../../components/quick-links/quick-links";
 import QuickLinksItem from "../../components/quick-links/quick-links.item";
 import SEO from "../../components/seo/seo";
@@ -7,30 +8,23 @@ const Statistics = (): JSX.Element => {
   return (
     <>
       <SEO title="Statistics" />
-      <div className="p-6 rounded-lg shadow-lg bg-black-off text-white space-y-4">
-        <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
-          Statistics
-        </h1>
-        <p className="text-lg text-gray-300">
-          Below you are able to review, edit or delete all your transactions.
-          They are ordered by date (latest first). You can as well filter the
-          list by transaction types, i.e. incomes and expenses.
-        </p>
-      </div>
+      <Banner title="Statistics" headindType="h1">
+        Manage all your transactions in one place - review, edit or delete.
+      </Banner>
       <QuickLinks className="mt-4">
         <QuickLinksItem
           title="Incomes"
           link="/incomes"
           iconName="download"
           iconBackgroundColor="green"
-          description="On the incomes page you are able to review, edit or delete all your income transaction."
+          description="Go to incomes page where you are able to manage your income transactions."
         />
         <QuickLinksItem
           title="Expenses"
           link="/expenses"
           iconName="upload"
           iconBackgroundColor="red"
-          description="On the expenses page you are able to review, edit or delete all your income transaction."
+          description="Go to expenses page where you are able to manage your expense transactions."
         />
       </QuickLinks>
     </>
