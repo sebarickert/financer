@@ -12,6 +12,7 @@ const MobileNavigation = (): JSX.Element => {
             iconName="home"
             link="/"
             addExtraPaddingIOS
+            isExact
           />
           <MobileNavigationItem
             label="Statistics"

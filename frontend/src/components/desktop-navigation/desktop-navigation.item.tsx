@@ -9,6 +9,7 @@ interface IProps {
   label: string;
   onClick?(): void;
   ariaLabel?: string;
+  isExact?: boolean;
 }
 
 const DesktopNavigationItem = ({
@@ -17,6 +18,7 @@ const DesktopNavigationItem = ({
   label,
   onClick = () => {},
   ariaLabel,
+  isExact,
 }: IProps): JSX.Element => {
   if (isExternalLink(link)) {
     return (
@@ -37,7 +39,7 @@ const DesktopNavigationItem = ({
     <li>
       <NavLink
         to={link}
-        exact
+        exact={isExact}
         className="flex items-center py-4 focus:text-blue-financer hover:text-blue-financer"
         activeClassName="text-blue-financer border-r-4 border-blue-financer"
         onClick={onClick}
