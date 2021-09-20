@@ -18,24 +18,19 @@ const ProfileRouter = (): JSX.Element => {
   }, []);
 
   return (
-    <Container
-      className="pt-6 sm:pt-12"
-      sidebarComponent={<ProfileNavigation userRoles={profileInfo?.roles} />}
-    >
-      <Switch>
-        <Route exact path="/profile">
-          <Profile profileInfo={profileInfo} />
+    <Switch>
+      <Route exact path="/profile">
+        <Profile profileInfo={profileInfo} />
+      </Route>
+      <Route path="/profile/transaction-categories">
+        <TransactionCategoriesRouter />
+      </Route>
+      {profileInfo?.roles.includes("test-user") && (
+        <Route exact path="/profile/override-data">
+          <ProfileOverrideData />
         </Route>
-        <Route path="/profile/transaction-categories">
-          <TransactionCategoriesRouter />
-        </Route>
-        {profileInfo?.roles.includes("test-user") && (
-          <Route exact path="/profile/override-data">
-            <ProfileOverrideData />
-          </Route>
-        )}
-      </Switch>
-    </Container>
+      )}
+    </Switch>
   );
 };
 
