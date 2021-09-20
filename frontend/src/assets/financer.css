@@ -1278,7 +1278,7 @@ select {
 }
 .border-blue-financer {
 	--tw-border-opacity: 1;
-	border-color: rgba(45, 78, 245, var(--tw-border-opacity));
+	border-color: rgba(31, 120, 240, var(--tw-border-opacity));
 }
 .border-blue-500 {
 	--tw-border-opacity: 1;
@@ -1338,7 +1338,7 @@ select {
 }
 .bg-blue-financer {
 	--tw-bg-opacity: 1;
-	background-color: rgba(45, 78, 245, var(--tw-bg-opacity));
+	background-color: rgba(31, 120, 240, var(--tw-bg-opacity));
 }
 .bg-gray-900 {
 	--tw-bg-opacity: 1;
@@ -1483,14 +1483,20 @@ select {
 .pb-12 {
 	padding-bottom: 3rem;
 }
+.pt-6 {
+	padding-top: 1.5rem;
+}
 .pb-24 {
 	padding-bottom: 6rem;
 }
-.pb-2 {
-	padding-bottom: 0.5rem;
-}
 .pt-4 {
 	padding-top: 1rem;
+}
+.pb-8 {
+	padding-bottom: 2rem;
+}
+.pb-2 {
+	padding-bottom: 0.5rem;
 }
 .pb-20 {
 	padding-bottom: 5rem;
@@ -1513,9 +1519,6 @@ select {
 .pb-4 {
 	padding-bottom: 1rem;
 }
-.pt-6 {
-	padding-top: 1.5rem;
-}
 .pt-1 {
 	padding-top: 0.25rem;
 }
@@ -1527,9 +1530,6 @@ select {
 }
 .pb-3 {
 	padding-bottom: 0.75rem;
-}
-.pb-8 {
-	padding-bottom: 2rem;
 }
 .text-left {
 	text-align: left;
@@ -1678,7 +1678,7 @@ select {
 }
 .text-blue-financer {
 	--tw-text-opacity: 1;
-	color: rgba(45, 78, 245, var(--tw-text-opacity));
+	color: rgba(31, 120, 240, var(--tw-text-opacity));
 }
 .text-gray-300 {
 	--tw-text-opacity: 1;
@@ -1913,7 +1913,7 @@ select {
 }
 .hover\:text-blue-financer:hover {
 	--tw-text-opacity: 1;
-	color: rgba(45, 78, 245, var(--tw-text-opacity));
+	color: rgba(31, 120, 240, var(--tw-text-opacity));
 }
 .hover\:text-blue-900:hover {
 	--tw-text-opacity: 1;
@@ -1989,7 +1989,7 @@ select {
 }
 .focus\:text-blue-financer:focus {
 	--tw-text-opacity: 1;
-	color: rgba(45, 78, 245, var(--tw-text-opacity));
+	color: rgba(31, 120, 240, var(--tw-text-opacity));
 }
 .focus\:text-gray-700:focus {
 	--tw-text-opacity: 1;
