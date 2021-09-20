@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import Icon, { IconName } from "../icon/icon";
+import { isExternalLink } from "../button/button";
 
 interface IQuickLinksItemProps {
   title: string;
@@ -32,10 +33,17 @@ const QuickLinksItem = ({
       </div>
       <div className="mt-8">
         <h3 className="text-lg font-medium">
-          <NavLink to={link} className="focus:outline-none">
-            <span className="absolute inset-0" aria-hidden="true" />
-            {title}
-          </NavLink>
+          {isExternalLink(link) ? (
+            <a href={link} className="focus:outline-none">
+              <span className="absolute inset-0" aria-hidden="true" />
+              {title}
+            </a>
+          ) : (
+            <NavLink to={link} className="focus:outline-none">
+              <span className="absolute inset-0" aria-hidden="true" />
+              {title}
+            </NavLink>
+          )}
         </h3>
         <p className="mt-2 text-sm text-gray-500">{description}</p>
       </div>
