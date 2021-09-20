@@ -14,7 +14,7 @@ module.exports = {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],
       },
       colors: {
-        'blue-financer': '#2D4EF5',
+        'blue-financer': '#1f78f0',
         'white-off': '#FAFAFA',
         'black-off': '#1E253A',
         'gray-financer': '#838690',
