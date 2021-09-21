@@ -1,4 +1,4 @@
-describe("Account creation", () => {
+describe("Account form", () => {
   beforeEach(() => cy.visit("http://localhost:3000/accounts/add"));
 
   it("Verify Account name cannot be empty", () => {
@@ -45,8 +45,7 @@ describe("Account creation", () => {
   it("Verify Account Balance must be number", () => {
     cy.get("#account").type("irrelevant");
 
-    cy.get("#amount").type("not a number");
-    cy.get("#amount").should("have.value", "");
+    cy.get("#amount").invoke("prop", "type").should("equal", "number");
 
     // Remove change type to able to send text value for backend
     cy.get("#amount").invoke("prop", "type", "text");
