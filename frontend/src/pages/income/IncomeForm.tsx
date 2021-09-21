@@ -143,7 +143,7 @@ const IncomeForm = ({
   ) : (
     <>
       {errors.length > 0 && (
-        <Alert additionalInformation={errors}>
+        <Alert additionalInformation={errors} testId="form-errors">
           There were {errors.length} errors with your submission
         </Alert>
       )}
