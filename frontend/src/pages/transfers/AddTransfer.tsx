@@ -135,7 +135,7 @@ const AddTransfer = (): JSX.Element => {
     <Container className="mt-6 sm:mt-12">
       <SEO title="Transfer between accounts | Accounts" />
       {errors.length > 0 && (
-        <Alert additionalInformation={errors}>
+        <Alert additionalInformation={errors} testId="form-errors">
           There were {errors.length} errors with your submission
         </Alert>
       )}

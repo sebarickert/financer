@@ -155,7 +155,7 @@ const editAccountAllDetailsAndVerify = (
   verifyAccountPage(newAccountName, newAccountBalance, newAccountType);
 };
 
-describe("Account creation", () => {
+describe("Account editing", () => {
   beforeEach(() => cy.visit("http://localhost:3000/accounts"));
   it("Change Cash account name", () => {
     editAccountNameAndVerify(
