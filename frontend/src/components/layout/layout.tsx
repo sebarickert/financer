@@ -43,7 +43,7 @@ const Layout = ({ children }: IProps): JSX.Element => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <main className="bg-gray-100 lg:pb-24 flex-grow">
+      <main className="bg-white-off lg:pb-24 flex-grow">
         <div className={`pt-6 ${isIOSDevice() ? "pb-32" : "pb-24"} px-4`}>
           {children}
         </div>

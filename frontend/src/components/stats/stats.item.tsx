@@ -7,16 +7,10 @@ interface IProps {
 
 const StatsItem = ({ children, statLabel }: IProps): JSX.Element => {
   return (
-    <div className="px-4 py-5 sm:p-6">
+    <div className="relative group bg-white p-6 rounded-lg border">
       <dl>
-        <dt className="text-base leading-6 font-normal text-gray-900">
-          {statLabel}
-        </dt>
-        <dd className="mt-1 flex justify-between items-baseline md:block lg:flex">
-          <div className="flex items-baseline text-2xl leading-8 font-semibold text-gray-900 capitalize">
-            {children}
-          </div>
-        </dd>
+        <dt className="text-sm font-medium truncate mb-2">{statLabel}</dt>
+        <dd className="text-2xl font-bold tracking-tight">{children}</dd>
       </dl>
     </div>
   );
