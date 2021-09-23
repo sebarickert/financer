@@ -8,6 +8,7 @@ import {
   createTransaction,
   findTransactionById,
   findTransactionsAfterByAccount,
+  findTransactionsByUser,
   findTransferTransactionsByUser,
   increaseAccountTransactionBalanceAfterTargetDate,
 } from "../services/transaction-service";
@@ -257,4 +258,24 @@ export const getTransfers = async (
   res
     .status(200)
     .json({ authenticated: true, status: 200, payload: transfers });
+};
+
+export const getAllUserTransactions = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const user = req.user as IUserModel;
+  const transactions = await findTransactionsByUser(user.id);
+
+  if (transactions === null) {
+    res.status(404).json({
+      authenticated: true,
+      status: 404,
+      errors: ["Transactions not found."],
+    });
+    return;
+  }
+  res
+    .status(200)
+    .json({ authenticated: true, status: 200, payload: transactions });
 };

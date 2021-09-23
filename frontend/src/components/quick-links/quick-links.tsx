@@ -14,7 +14,7 @@ const QuickLinks = ({
   return (
     <section aria-labelledby="quick-links-title" className={className}>
       <div
-        className={`rounded-lg overflow-hidden grid gap-4 ${
+        className={`overflow-hidden grid gap-4 ${
           children.filter((child) => typeof child !== "undefined" && child)
             .length %
             3 ===

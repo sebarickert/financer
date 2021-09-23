@@ -17,7 +17,7 @@ const Profile = ({ profileInfo }: IProfileProps): JSX.Element => {
         Manage transaction categories associated with your account and download
         your financer data.
       </Banner>
-      <QuickLinks className="mt-4">
+      <QuickLinks className="mt-8">
         <QuickLinksItem
           title="Categories"
           link="/profile/transaction-categories"
