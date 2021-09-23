@@ -8,16 +8,16 @@ import Incomes from "./Incomes";
 const IncomesRouter = (): JSX.Element => {
   return (
     <Switch>
-      <Route exact path="/incomes">
+      <Route exact path="/statistics/incomes">
         <Incomes />
       </Route>
-      <Route exact path="/incomes/add">
+      <Route exact path="/statistics/incomes/add">
         <AddIncome />
       </Route>
-      <Route exact path="/incomes/:id">
+      <Route exact path="/statistics/incomes/:id">
         <Income />
       </Route>
-      <Route exact path="/incomes/:id/edit">
+      <Route exact path="/statistics/incomes/:id/edit">
         <EditIncome />
       </Route>
     </Switch>

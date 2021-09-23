@@ -34,17 +34,17 @@ const Financer = ({ isLoggedIn = false }: IProps): JSX.Element => {
         <Route exact path="/">
           <Dashboard />
         </Route>
-        <Route path="/statistics">
-          <StatisticsRouter />
-        </Route>
-        <Route path="/incomes">
+        <Route path="/statistics/incomes">
           <IncomesRouter />
         </Route>
-        <Route path="/expenses">
+        <Route path="/statistics/expenses">
           <ExpensesRouter />
         </Route>
-        <Route path="/transfers">
+        <Route path="/statistics/transfers">
           <TransfersRouter />
+        </Route>
+        <Route path="/statistics">
+          <StatisticsRouter />
         </Route>
         <Route path="/accounts">
           <AccountsRouter />

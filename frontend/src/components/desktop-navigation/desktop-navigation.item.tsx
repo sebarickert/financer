@@ -10,6 +10,7 @@ interface IProps {
   onClick?(): void;
   ariaLabel?: string;
   isExact?: boolean;
+  isActive?(match: never, location: { pathname: string }): boolean;
 }
 
 const DesktopNavigationItem = ({
@@ -19,6 +20,7 @@ const DesktopNavigationItem = ({
   onClick = () => {},
   ariaLabel,
   isExact,
+  isActive,
 }: IProps): JSX.Element => {
   if (isExternalLink(link)) {
     return (
@@ -44,6 +46,7 @@ const DesktopNavigationItem = ({
         activeClassName="text-blue-financer border-r-4 border-blue-financer"
         onClick={onClick}
         aria-label={ariaLabel}
+        isActive={isActive}
       >
         <Icon type={iconName} />
         <span className="text-sm ml-4 text-gray-600">{label}</span>

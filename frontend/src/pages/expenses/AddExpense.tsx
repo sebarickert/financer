@@ -45,7 +45,7 @@ const AddExpense = (): JSX.Element => {
         );
 
       if (newExpenseJson.status === 201) {
-        history.push("/expenses");
+        history.push("/statistics/expenses");
       } else if (newExpenseJson.status === 400) {
         setErrors(newExpenseJson?.errors || ["Unknown error."]);
       }

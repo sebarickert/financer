@@ -134,7 +134,7 @@ const Statistics = (): JSX.Element => {
               transactionAmount: formatCurrency(amount),
               date: formatDate(date),
               label: description,
-              link: `/${mapTransactionTypeToUrlPrefix[transactionType]}/${_id}`,
+              link: `/statistics/${mapTransactionTypeToUrlPrefix[transactionType]}/${_id}`,
               transactionType,
               id: _id,
             } as ITransactionStackedListRowProps;
@@ -232,14 +232,14 @@ const Statistics = (): JSX.Element => {
       <QuickLinks className="mt-4">
         <QuickLinksItem
           title="Incomes"
-          link="/incomes"
+          link="/statistics/incomes"
           iconName="download"
           iconBackgroundColor="green"
           description="Go to incomes page where you are able to manage your income transactions."
         />
         <QuickLinksItem
           title="Expenses"
-          link="/expenses"
+          link="/statistics/expenses"
           iconName="upload"
           iconBackgroundColor="red"
           description="Go to expenses page where you are able to manage your expense transactions."

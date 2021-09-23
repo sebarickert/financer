@@ -99,7 +99,7 @@ const Expense = (): JSX.Element => {
           altogether.
         </HeroLead>
         <ButtonGroup className="mt-12">
-          <Button accentColor="blue" link={`/expenses/${id}/edit`}>
+          <Button accentColor="blue" link={`/statistics/expenses/${id}/edit`}>
             Edit expense
           </Button>
           <ExpenseDeleteModal handleDelete={handleDelete} />

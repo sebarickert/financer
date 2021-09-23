@@ -19,7 +19,7 @@ export const groupIncomesByMonth = (
 
   const income: ICustomStackedListRowProps = {
     label: description,
-    link: `/incomes/${_id}`,
+    link: `/statistics/incomes/${_id}`,
     additionalLabel: formatCurrency(amount),
     additionalInformation: [formatDate(date)],
     date,
