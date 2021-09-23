@@ -7,7 +7,7 @@ export interface ILoaderProps {
 
 const Loader = ({ loaderColor = "pink" }: ILoaderProps): JSX.Element => {
   const colorCode = {
-    blue: "#3182ce",
+    blue: "#1f78f0",
     green: "#38a169",
     pink: "#d53f8c",
     red: "#e53e3e",

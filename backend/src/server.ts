@@ -35,7 +35,7 @@ if (process.env.NODE_ENV !== "test") {
 } else {
   app.use(mockAuthenticationMiddleware);
 }
-app.use(express.json());
+app.use(express.json({ limit: "10mb" }));
 app.use(errorHandler);
 app.use("/api/*", authenticationCheck);
 
