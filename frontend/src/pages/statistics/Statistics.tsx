@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Banner from "../../components/banner/banner";
+import Divider from "../../components/divider/divider";
 import Loader from "../../components/loader/loader";
 import QuickLinks from "../../components/quick-links/quick-links";
 import QuickLinksItem from "../../components/quick-links/quick-links.item";
@@ -241,16 +242,7 @@ const Statistics = (): JSX.Element => {
         </StatsItem>
       </Stats>
       <TransactionStackedList className="mt-4" rows={visibleTransactions} />
-      <div className="relative my-8">
-        <div className="absolute inset-0 flex items-center" aria-hidden="true">
-          <div className="w-full border-t border-gray-300" />
-        </div>
-        <div className="relative flex justify-center">
-          <span className="px-2 bg-white-off text-sm text-gray-500">
-            Continue to dedicated pages
-          </span>
-        </div>
-      </div>
+      <Divider className="my-8">Continue to dedicated pages</Divider>
       <QuickLinks className="mt-4">
         <QuickLinksItem
           title="Incomes"
