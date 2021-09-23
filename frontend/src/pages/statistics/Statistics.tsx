@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Banner from "../../components/banner/banner";
 import Divider from "../../components/divider/divider";
 import Filter from "../../components/filter/filter";
-import FilterItem from "../../components/filter/filter.item";
 import Loader from "../../components/loader/loader";
 import QuickLinks from "../../components/quick-links/quick-links";
 import QuickLinksItem from "../../components/quick-links/quick-links.item";
