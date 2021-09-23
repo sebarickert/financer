@@ -6,7 +6,7 @@ import Select, { IOption } from "../../components/select/select";
 import Alert from "../../components/alert/alert";
 import Loader from "../../components/loader/loader";
 import SEO from "../../components/seo/seo";
-import { getAllAccounts } from "./AccountService";
+import { getAllAccounts } from "../accounts/AccountService";
 import { addTransaction } from "../../services/TransactionService";
 import Container from "../../components/container/container";
 import {
@@ -16,7 +16,7 @@ import {
 import Button from "../../components/button/button";
 import { addTransactionCategoryMapping } from "../expenses/AddExpense";
 
-const AccountTransfer = (): JSX.Element => {
+const AddTransfer = (): JSX.Element => {
   const history = useHistory();
   const [errors, setErrors] = useState<string[]>([]);
   const [accountsRaw, setAccountsRaw] = useState<IAccount[] | null>(null);
@@ -144,6 +144,7 @@ const AccountTransfer = (): JSX.Element => {
         formHeading="Transfer money between accounts"
         handleSubmit={handleSubmit}
         accentColor="blue"
+        formFooterBackLink="/accounts"
       >
         <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-2">
           <Input
@@ -228,4 +229,4 @@ const AccountTransfer = (): JSX.Element => {
   );
 };
 
-export default AccountTransfer;
+export default AddTransfer;

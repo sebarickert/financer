@@ -8,16 +8,16 @@ import Expenses from "./Expenses";
 const ExpensesRouter = (): JSX.Element => {
   return (
     <Switch>
-      <Route exact path="/expenses">
+      <Route exact path="/statistics/expenses">
         <Expenses />
       </Route>
-      <Route exact path="/expenses/add">
+      <Route exact path="/statistics/expenses/add">
         <AddExpense />
       </Route>
-      <Route exact path="/expenses/:id">
+      <Route exact path="/statistics/expenses/:id">
         <Expense />
       </Route>
-      <Route exact path="/expenses/:id/edit">
+      <Route exact path="/statistics/expenses/:id/edit">
         <EditExpense />
       </Route>
     </Switch>
