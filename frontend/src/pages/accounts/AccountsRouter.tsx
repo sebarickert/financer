@@ -4,7 +4,6 @@ import AddAccount from "./AddAccount";
 import Accounts from "./Accounts";
 import Account from "./Account";
 import EditAccount from "./EditAccount";
-import AccountTransfer from "./AccountTransfer";
 
 const AccountsRouter = (): JSX.Element => {
   return (
@@ -14,9 +13,6 @@ const AccountsRouter = (): JSX.Element => {
       </Route>
       <Route exact path="/accounts/add">
         <AddAccount />
-      </Route>
-      <Route exact path="/accounts/transfer">
-        <AccountTransfer />
       </Route>
       <Route exact path="/accounts/:id">
         <Account />

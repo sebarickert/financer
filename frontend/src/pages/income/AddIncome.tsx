@@ -28,7 +28,7 @@ const AddIncome = (): JSX.Element => {
         );
 
       if (newIncomeJson.status === 201) {
-        history.push("/incomes");
+        history.push("/statistics/incomes");
       } else if (newIncomeJson.status === 400) {
         setErrors(newIncomeJson?.errors || ["Unknown error."]);
       }

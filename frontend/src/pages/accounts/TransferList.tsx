@@ -56,7 +56,7 @@ const TransferList = ({ className = "" }: IProps): JSX.Element => {
               additionalLabel: formatCurrency(amount),
               additionalInformation: [formatDate(date)],
               id: _id,
-              link: `/transfers/${_id}`,
+              link: `/statistics/transfers/${_id}`,
               date,
               tags: [
                 {

@@ -16,6 +16,10 @@ const DesktopNavigation = (): JSX.Element => {
             label="Statistics"
             iconName="chart-bar"
             link="/statistics"
+            isActive={(match: never, location: { pathname: string }) =>
+              location.pathname.substr(0, 11) === "/statistics" &&
+              location.pathname.substr(-4) !== "/add"
+            }
           />
           <DesktopNavigationItem
             label="Accounts"
@@ -37,19 +41,19 @@ const DesktopNavigation = (): JSX.Element => {
           <DesktopNavigationItem
             label="Income"
             iconName="download"
-            link="/incomes/add"
+            link="/statistics/incomes/add"
             ariaLabel="Add new income transaction"
           />
           <DesktopNavigationItem
             label="Expense"
             iconName="upload"
-            link="/expenses/add"
+            link="/statistics/expenses/add"
             ariaLabel="Add new expense transaction"
           />
           <DesktopNavigationItem
             label="Transfer"
             iconName="switch-horizontal"
-            link="/accounts/transfer"
+            link="/statistics/transfers/add"
             ariaLabel="Add new transfer transaction"
           />
         </ul>
