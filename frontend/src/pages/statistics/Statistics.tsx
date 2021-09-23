@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Banner from "../../components/banner/banner";
 import Divider from "../../components/divider/divider";
+import Filter from "../../components/filter/filter";
+import FilterItem from "../../components/filter/filter.item";
 import Loader from "../../components/loader/loader";
 import QuickLinks from "../../components/quick-links/quick-links";
 import QuickLinksItem from "../../components/quick-links/quick-links.item";
@@ -183,6 +185,25 @@ const Statistics = (): JSX.Element => {
   const pageVisibleYear = now.getFullYear();
   const pageVisibleMonth = monthNames[now.getMonth()];
 
+  const filterItems = [
+    {
+      label: "All",
+      onClick: () => setTransactionVisibilityFilter("all"),
+    },
+    {
+      label: "Income",
+      onClick: () => setTransactionVisibilityFilter("income"),
+    },
+    {
+      label: "Expense",
+      onClick: () => setTransactionVisibilityFilter("expense"),
+    },
+    {
+      label: "Transfer",
+      onClick: () => setTransactionVisibilityFilter("transfer"),
+    },
+  ];
+
   return visibleTransactions === null ? (
     <Loader loaderColor="blue" />
   ) : (
@@ -191,42 +212,7 @@ const Statistics = (): JSX.Element => {
       <Banner title="Statistics" headindType="h1">
         Manage all your transactions in one place - review, edit or delete.
       </Banner>
-      <div
-        className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4 mt-8"
-        aria-labelledby="statistics-filter-title"
-      >
-        <h2 className="sr-only" id="statistics-filter-title">
-          Filter transaction listing to all, incomes or expenses.
-        </h2>
-        <button
-          type="button"
-          onClick={() => setTransactionVisibilityFilter("all")}
-          className="rounded-lg bg-black-off text-white py-4 focus-within:ring-2 focus:ring-inset focus:ring-blue-500 focus:outline-none border text-sm font-medium md:text-base"
-        >
-          All
-        </button>
-        <button
-          type="button"
-          onClick={() => setTransactionVisibilityFilter("income")}
-          className="rounded-lg bg-white py-4 focus-within:ring-2 focus:ring-inset focus:ring-blue-500 focus:outline-none border text-sm font-medium md:text-base"
-        >
-          Incomes
-        </button>
-        <button
-          type="button"
-          onClick={() => setTransactionVisibilityFilter("expense")}
-          className="rounded-lg bg-white py-4 focus-within:ring-2 focus:ring-inset focus:ring-blue-500 focus:outline-none border text-sm font-medium md:text-base"
-        >
-          Expenses
-        </button>
-        <button
-          type="button"
-          onClick={() => setTransactionVisibilityFilter("transfer")}
-          className="rounded-lg bg-white py-4 focus-within:ring-2 focus:ring-inset focus:ring-blue-500 focus:outline-none border text-sm font-medium md:text-base"
-        >
-          Transfers
-        </button>
-      </div>
+      <Filter filters={filterItems} />
       <h2 className="text-2xl sm:text-3xl font-bold tracking-tighter mt-8 mb-4">
         {`${pageVisibleMonth}, ${pageVisibleYear}`}
       </h2>
