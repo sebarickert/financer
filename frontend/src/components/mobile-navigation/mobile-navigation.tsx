@@ -19,6 +19,10 @@ const MobileNavigation = (): JSX.Element => {
             iconName="chart-bar"
             link="/statistics"
             addExtraPaddingIOS
+            isActive={(match: never, location: { pathname: string }) =>
+              location.pathname.substr(0, 11) === "/statistics" &&
+              location.pathname.substr(-4) !== "/add"
+            }
           />
           <MobileNavigationActions />
           <MobileNavigationItem
