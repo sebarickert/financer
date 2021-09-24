@@ -1,10 +1,11 @@
 import mongoose from "mongoose";
 import { Socket } from "net";
+import http, { Server } from "http";
 
 import "./config/load-env";
 import "./config/passport-setup";
 import { MONGODB_URI } from "./config/keys";
-import app from "./server";
+import createExpressServer from "./server";
 import memoryDatabaseServer, {
   connect as connectToTestDbInMemory,
   disconnect as disconnectFromTestDbInMemory,
@@ -14,44 +15,55 @@ const port = 4000; // default port to listen
 
 let connections: Socket[] = [];
 
-if (process.env.NODE_ENV !== "test") {
-  // connect to mongodb
-  mongoose.connect(
-    MONGODB_URI,
-    { useNewUrlParser: true, useUnifiedTopology: true },
-    (err) => {
-      if (err) {
-        // eslint-disable-next-line no-console
-        console.error("failed to connect to mongo db");
-        // eslint-disable-next-line no-console
-        console.error(`${err.name}: ${err.message}`);
-      } else {
-        // eslint-disable-next-line no-console
-        console.log("connected to mongo db");
-      }
+let server: Server;
+
+const startServer = async () => {
+  let connectedToDb;
+  if (process.env.NODE_ENV !== "test") {
+    // connect to mongodb
+    try {
+      await mongoose.connect(MONGODB_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      });
+      // eslint-disable-next-line no-console
+      console.log("connected to mongo db");
+      connectedToDb = true;
+    } catch (untypeErr) {
+      const err = untypeErr as mongoose.CallbackError;
+      // eslint-disable-next-line no-console
+      console.error("failed to connect to mongo db");
+      // eslint-disable-next-line no-console
+      console.error(`${err?.name}: ${err?.message}`);
     }
-  );
-} else {
-  const openDbAndConnection = async () => {
+  } else {
     await memoryDatabaseServer.start();
     await connectToTestDbInMemory();
     // eslint-disable-next-line no-console
     console.log("Connected to in memory test db");
-  };
-  openDbAndConnection();
-}
+    connectedToDb = true;
+  }
 
-const server = app.listen(port, () => {
-  // eslint-disable-next-line no-console
-  console.log(`server started at http://localhost:${port}`);
-});
+  server = connectedToDb
+    ? createExpressServer().listen(port, () => {
+        // eslint-disable-next-line no-console
+        console.log(`Server started at http://localhost:${port}`);
+      })
+    : http
+        .createServer((request, response) => {
+          response.writeHead(500, { "Content-Type": "text/html" });
+          response.write("<h1>Internal server error</h1>");
+          response.end();
+        })
+        .listen(port);
 
-server.on("connection", (connection) => {
-  connections.push(connection);
-  connection.on("close", () => {
-    connections = connections.filter((curr) => curr !== connection);
+  server.on("connection", (connection) => {
+    connections.push(connection);
+    connection.on("close", () => {
+      connections = connections.filter((curr) => curr !== connection);
+    });
   });
-});
+};
 
 const shutDown = () => {
   // eslint-disable-next-line no-console
@@ -84,5 +96,6 @@ const shutDown = () => {
   setTimeout(() => connections.forEach((curr) => curr.destroy()), 5000);
 };
 
+startServer();
 process.on("SIGTERM", shutDown);
 process.on("SIGINT", shutDown);

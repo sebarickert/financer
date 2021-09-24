@@ -1,13 +1,13 @@
 import { connect, truncate, disconnect } from "../config/MemoryDatabaseServer";
 
-beforeAll(() => {
+beforeAll(async () => {
   return connect();
 });
 
-beforeEach(() => {
+beforeEach(async () => {
   return truncate();
 });
 
-afterAll(() => {
+afterAll(async () => {
   return disconnect();
 });
