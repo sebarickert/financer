@@ -1,10 +1,8 @@
 import { NextFunction, Request } from "express";
 import supertest from "supertest";
-import server from "../../server";
+import createExpressServer from "../../server";
 import { createAccount } from "../../services/account-service";
 import { IAccountModel } from "../../models/account-model";
-
-const api = supertest(server);
 
 const SIMPLE_ACCOUNT: IAccount = {
   _id: "5faef3d6498b721318cbdc3e",
@@ -26,6 +24,11 @@ jest.mock(
 );
 
 describe("Account endpoint", () => {
+  let api: supertest.SuperTest<supertest.Test>;
+  beforeAll(() => {
+    api = supertest(createExpressServer());
+  });
+
   test("GET /api/account should return all user own accounts", async () => {
     const accountData = { ...SIMPLE_ACCOUNT } as IAccountModel;
     delete accountData._id;
@@ -44,23 +47,23 @@ describe("Account endpoint", () => {
 
     expect(accounts.body.length).toEqual(3);
   });
-});
 
-test("DELETE /api/account/ACCOUNT-ID should delete account if user own that account", async () => {
-  const accountData = { ...SIMPLE_ACCOUNT } as IAccountModel;
-  delete accountData._id;
-  accountData.owner = USER_ID;
-  const ownAccount = await createAccount(accountData);
-  accountData.owner = OTHER_USER_ID;
-  const notOwnAccount = await createAccount(accountData);
+  test("DELETE /api/account/ACCOUNT-ID should delete account if user own that account", async () => {
+    const accountData = { ...SIMPLE_ACCOUNT } as IAccountModel;
+    delete accountData._id;
+    accountData.owner = USER_ID;
+    const ownAccount = await createAccount(accountData);
+    accountData.owner = OTHER_USER_ID;
+    const notOwnAccount = await createAccount(accountData);
 
-  await api
-    .delete(`/api/account/${ownAccount?._id}`)
-    .expect(200)
-    .expect("Content-Type", /application\/json/);
+    await api
+      .delete(`/api/account/${ownAccount?._id}`)
+      .expect(200)
+      .expect("Content-Type", /application\/json/);
 
-  await api
-    .delete(`/api/account/${notOwnAccount?._id}`)
-    .expect(403)
-    .expect("Content-Type", /application\/json/);
+    await api
+      .delete(`/api/account/${notOwnAccount?._id}`)
+      .expect(403)
+      .expect("Content-Type", /application\/json/);
+  });
 });

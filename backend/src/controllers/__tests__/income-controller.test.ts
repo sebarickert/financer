@@ -1,6 +1,6 @@
 import { NextFunction, Request } from "express";
 import supertest from "supertest";
-import server from "../../server";
+import createExpressServer from "../../server";
 import { createAccount, findAccountById } from "../../services/account-service";
 import { IAccountModel } from "../../models/account-model";
 import {
@@ -9,8 +9,6 @@ import {
   findTransactionById,
 } from "../../services/transaction-service";
 import { ITransactionModel } from "../../models/transaction-model";
-
-const api = supertest(server);
 
 const SIMPLE_ACCOUNT: IAccount = {
   name: "simple account",
@@ -47,6 +45,11 @@ jest.mock(
 );
 
 describe("Income endpoint", () => {
+  let api: supertest.SuperTest<supertest.Test>;
+  beforeAll(() => {
+    api = supertest(createExpressServer());
+  });
+
   test("GET /api/income should return user own incomes", async () => {
     const testAccount = await createAccount({
       ...SIMPLE_ACCOUNT,
