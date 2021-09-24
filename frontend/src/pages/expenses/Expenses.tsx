@@ -55,7 +55,11 @@ const Expenses = (): JSX.Element => {
           Below you are able to review all your added expenses and see a summary
           of the current month.
         </HeroLead>
-        <Button className="mt-12" link="/expenses/add" accentColor="red">
+        <Button
+          className="mt-12"
+          link="/statistics/expenses/add"
+          accentColor="red"
+        >
           Add expense
         </Button>
       </Hero>

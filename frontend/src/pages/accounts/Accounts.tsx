@@ -64,7 +64,7 @@ const Accounts = (): JSX.Element => {
           <Button link="/accounts/add" accentColor="blue" testId="add-account">
             Add account
           </Button>
-          <Button link="/accounts/transfer" accentColor="blue">
+          <Button link="/statistics/transfers/add" accentColor="blue">
             Transfer
           </Button>
         </ButtonGroup>

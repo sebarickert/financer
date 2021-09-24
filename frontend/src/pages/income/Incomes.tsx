@@ -55,7 +55,11 @@ const Incomes = (): JSX.Element => {
           Below you are able to review all your added incomes and see a summary
           of the current month.
         </HeroLead>
-        <Button className="mt-12" link="/incomes/add" accentColor="green">
+        <Button
+          className="mt-12"
+          link="/statistics/incomes/add"
+          accentColor="green"
+        >
           Add income
         </Button>
       </Hero>
