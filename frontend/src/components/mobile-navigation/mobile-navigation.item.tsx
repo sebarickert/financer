@@ -11,6 +11,7 @@ interface IProps {
   ariaLabel?: string;
   addExtraPaddingIOS?: boolean;
   isExact?: boolean;
+  isActive?(match: never, location: { pathname: string }): boolean;
 }
 
 const MobileNavigationItem = ({
@@ -21,6 +22,7 @@ const MobileNavigationItem = ({
   ariaLabel,
   addExtraPaddingIOS,
   isExact,
+  isActive,
 }: IProps): JSX.Element => {
   return (
     <li>
@@ -33,6 +35,7 @@ const MobileNavigationItem = ({
         activeClassName="text-blue-financer"
         onClick={onClick}
         aria-label={ariaLabel}
+        isActive={isActive}
       >
         <Icon type={iconName} />
         <span className="text-xs mt-1 text-gray-600">{label}</span>
