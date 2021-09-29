@@ -4,7 +4,7 @@ import ModalConfirmActions from "./modal.confirm.actions";
 import ModalConfirmHeader from "./modal.confirm.header";
 
 interface IProps {
-  accentColor?: "pink" | "red" | "green" | "blue";
+  accentColor?: "red" | "green" | "blue";
   children?: string;
   label: string;
   modalOpenButtonLabel: string;

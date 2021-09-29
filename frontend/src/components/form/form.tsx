@@ -6,7 +6,7 @@ interface IProps {
   children: React.ReactNode;
   formHeading: string;
   submitLabel: string;
-  accentColor?: "pink" | "red" | "green" | "blue";
+  accentColor?: "red" | "green" | "blue";
   formFooterBackLink?: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   handleSubmit(event: any): void;
