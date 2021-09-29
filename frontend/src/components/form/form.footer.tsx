@@ -4,14 +4,14 @@ import ButtonGroup from "../button/button.group";
 
 interface IProps {
   submitLabel: string;
-  accentColor?: "pink" | "red" | "green" | "blue";
+  accentColor?: "red" | "green" | "blue";
   formFooterBackLink?: string;
   optionalComponent?: React.ReactNode;
 }
 
 const FormFooter = ({
   submitLabel,
-  accentColor = "pink",
+  accentColor = "blue",
   formFooterBackLink = "./",
   optionalComponent,
 }: IProps): JSX.Element => {
@@ -19,20 +19,10 @@ const FormFooter = ({
     <>
       <div className="mt-8 border-t border-gray-200 pt-5">
         <ButtonGroup isReverse>
-          <Button
-            accentColor={accentColor}
-            type="submit"
-            size="small"
-            testId="submit"
-          >
+          <Button accentColor={accentColor} type="submit" testId="submit">
             {submitLabel}
           </Button>
-          <Button
-            accentColor="plain"
-            link={formFooterBackLink}
-            size="small"
-            testId="cancel"
-          >
+          <Button accentColor="plain" link={formFooterBackLink} testId="cancel">
             Cancel
           </Button>
         </ButtonGroup>

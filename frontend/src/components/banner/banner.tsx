@@ -5,7 +5,7 @@ interface IBannerProps {
   accentColor?: "black" | "blue";
   headindType?: "h1" | "h2";
   title: string;
-  children: string;
+  children: React.ReactNode;
 }
 
 const Banner = ({
@@ -28,13 +28,13 @@ const Banner = ({
       <HeadingType className="text-3xl font-extrabold sm:text-4xl">
         {title}
       </HeadingType>
-      <p
-        className={`text-lg ${accentColor === "black" && "text-gray-300"} ${
+      <div
+        className={`${accentColor === "black" && "text-gray-300"} ${
           accentColor === "blue" && "text-white"
         }`}
       >
         {children}
-      </p>
+      </div>
     </div>
   );
 };

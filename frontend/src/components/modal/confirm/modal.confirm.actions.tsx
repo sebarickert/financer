@@ -15,10 +15,10 @@ const ModalConfirmActions = ({
 }: IProps): JSX.Element => {
   return (
     <ButtonGroup className="bg-gray-50 px-4 py-3 sm:px-6" isReverse>
-      <Button onClick={onConfirm} accentColor="red" size="small">
+      <Button onClick={onConfirm} accentColor="red">
         {submitButtonLabel}
       </Button>
-      <Button onClick={onCancel} accentColor="plain" size="small">
+      <Button onClick={onCancel} accentColor="plain">
         Cancel
       </Button>
     </ButtonGroup>

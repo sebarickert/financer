@@ -2,7 +2,7 @@ import React from "react";
 import Button from "../button/button";
 
 interface IProps {
-  accentColor?: "pink" | "red" | "green" | "blue";
+  accentColor?: "red" | "green" | "blue";
   children: React.ReactNode;
   isOpen: boolean;
   modalOpenButtonLabel: string;
