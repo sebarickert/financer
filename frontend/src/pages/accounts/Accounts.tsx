@@ -11,7 +11,6 @@ import { IStackedListRowProps } from "../../components/stacked-list/stacked-list
 import { TAddiotinalLabel } from "../../components/table/table.header";
 import formatCurrency from "../../utils/formatCurrency";
 import { getAllAccounts } from "./AccountService";
-import TransferList from "./TransferList";
 
 const Accounts = (): JSX.Element => {
   const [accountsRaw, setAccountsRaw] = useState<IAccount[] | null>(null);
@@ -76,7 +75,6 @@ const Accounts = (): JSX.Element => {
           rows={accounts}
           rowTestId="account-row"
         />
-        <TransferList className="lg:mt-6" />
       </Container>
     </>
   );

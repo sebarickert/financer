@@ -3,7 +3,7 @@ import ButtonPlain from "./button.plain";
 import ButtonExternal from "./button.external";
 import ButtonInternal from "./button.internal";
 
-type AccentColor = "pink" | "red" | "green" | "blue" | "plain";
+type AccentColor = "red" | "green" | "blue" | "plain";
 interface IProps {
   accentColor?: AccentColor;
   children: string;
@@ -11,7 +11,6 @@ interface IProps {
   link?: string;
   onClick?(): void;
   type?: "button" | "submit" | "reset" | undefined;
-  size?: "small" | "medium" | "large";
   testId?: string;
 }
 
@@ -26,13 +25,11 @@ export const isExternalLink = (link: string): boolean =>
 const getButtonColorClasses = (color: AccentColor): string => {
   switch (color) {
     case "blue":
-      return "bg-blue-600 hover:bg-blue-500 active:bg-blue-700 focus:ring-blue-500";
+      return "bg-blue-financer hover:bg-blue-500 active:bg-blue-700 focus:ring-blue-500";
     case "green":
       return "bg-green-600 hover:bg-green-500 active:bg-green-700 focus:ring-green-500";
     case "red":
       return "bg-red-600 hover:bg-red-500 active:bg-red-700 focus:ring-red-500";
-    case "pink":
-      return "bg-pink-600 hover:bg-pink-500 active:bg-pink-700 focus:ring-pink-500";
     default:
       return "";
   }
@@ -45,17 +42,10 @@ const Button = ({
   link,
   onClick = () => {},
   type = "button",
-  size = "medium",
   testId,
 }: IProps): JSX.Element => {
-  const fontSizeMapping = {
-    small: "sm:text-sm leading-5",
-    medium: "leading-6",
-    large: "sm:text-lg leading-7",
-  };
-
   const elementClasses = [
-    `inline-flex justify-center w-full sm:w-auto items-center px-4 py-2 border font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 transition ease-in-out duration-150 text-base ${fontSizeMapping[size]} ${className}`,
+    `inline-flex justify-center w-full sm:w-auto rounded-md items-center py-3 px-6 border font-medium text-base text-white focus-within:ring-2 focus:ring-inset focus:ring-blue-500 focus:outline-none transition ease-in-out duration-150 ${className}`,
   ];
 
   if (accentColor === "plain") {

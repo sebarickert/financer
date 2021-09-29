@@ -7,53 +7,50 @@ import SEO from "../../components/seo/seo";
 import TransactionStackedList from "../../components/transaction-stacked-list/transaction-stacked-list";
 import monthNames from "../../constants/months";
 import formatCurrency from "../../utils/formatCurrency";
+import { IIncomesPerMonth } from "../income/IncomeFuctions";
 import {
-  groupExpensesByMonth,
-  IExpensesPerMonth,
-  sortExpensesByDate,
-  sortExpenseStacksByMonth,
-} from "./ExpenseFuctions";
-import { getAllExpenses } from "./ExpenseService";
+  ITransfersPerMonth,
+  sortIncomeStacksByMonth,
+  sortIncomesByDate,
+  groupTransfersByMonth,
+} from "./TransferFuctions";
+import { getAllTransferTranscations } from "./TransferService";
 
-const Expenses = (): JSX.Element => {
-  const [expensesRaw, setExpensesRaw] = useState<IExpense[] | null>(null);
-  const [expenses, setExpenses] = useState<IExpensesPerMonth[]>([]);
+const Transfers = (): JSX.Element => {
+  const [transfersRaw, setTransfersRaw] = useState<ITransaction[] | null>(null);
+  const [transfers, setTransfers] = useState<ITransfersPerMonth[]>([]);
 
   useEffect(() => {
-    const fetchExpenses = async () => {
-      setExpensesRaw(await getAllExpenses());
+    const fetchTransfers = async () => {
+      setTransfersRaw((await getAllTransferTranscations()).payload);
     };
 
-    fetchExpenses();
+    fetchTransfers();
   }, []);
 
   useEffect(() => {
-    if (expensesRaw === null) return;
+    if (transfersRaw === null) return;
 
-    setExpenses(
-      expensesRaw
-        .reduce<IExpensesPerMonth[]>(groupExpensesByMonth, [])
-        .sort(sortExpenseStacksByMonth)
-        .map(sortExpensesByDate)
+    setTransfers(
+      transfersRaw
+        .reduce<IIncomesPerMonth[]>(groupTransfersByMonth, [])
+        .sort(sortIncomeStacksByMonth)
+        .map(sortIncomesByDate)
     );
-  }, [expensesRaw]);
+  }, [transfersRaw]);
 
-  return expensesRaw === null ? (
-    <Loader loaderColor="red" />
+  return transfersRaw === null ? (
+    <Loader loaderColor="blue" />
   ) : (
     <>
-      <SEO title="Expenses" />
-      <Banner title="Expenses" headindType="h1" className="mb-8">
-        <BannerText>Overview page for your expense transactions.</BannerText>
-        <Button
-          link="/statistics/expenses/add"
-          className="mt-6"
-          accentColor="red"
-        >
-          Add expense
+      <SEO title="Transfers" />
+      <Banner title="Transfers" headindType="h1" className="mb-8">
+        <BannerText>Overview page for your transfer transactions.</BannerText>
+        <Button link="/statistics/transfers/add" className="mt-6">
+          Add transfer
         </Button>
       </Banner>
-      {expenses.map(({ year, month, rows, total }) => (
+      {transfers.map(({ year, month, rows, total }) => (
         <section
           className="mb-12"
           aria-label={`IOverview of income transactions for ${monthNames[month]}, ${year}`}
@@ -74,4 +71,4 @@ const Expenses = (): JSX.Element => {
   );
 };
 
-export default Expenses;
+export default Transfers;

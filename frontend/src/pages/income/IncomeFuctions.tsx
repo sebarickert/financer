@@ -1,4 +1,4 @@
-import { ICustomStackedListRowProps } from "../../components/stacked-list/stacked-list.row";
+import { ITransactionStackedListRowProps } from "../../components/transaction-stacked-list/transaction-stacked-list.row";
 import formatCurrency from "../../utils/formatCurrency";
 import { formatDate } from "../../utils/formatDate";
 
@@ -6,7 +6,7 @@ export interface IIncomesPerMonth {
   month: number;
   total: number;
   year: number;
-  rows: ICustomStackedListRowProps[];
+  rows: ITransactionStackedListRowProps[];
 }
 
 export const groupIncomesByMonth = (
@@ -17,19 +17,24 @@ export const groupIncomesByMonth = (
   const month = date.getMonth();
   const year = date.getFullYear();
 
-  const income: ICustomStackedListRowProps = {
+  // const categoryMappings = transactionCategoryMappings
+  //   ?.filter(({ transaction_id }) => transaction_id === _id)
+  //   .map(
+  //     ({ category_id }) =>
+  //       transactionCategories.find(
+  //         ({ _id: categoryId }) => category_id === categoryId
+  //       )?.name
+  //   )
+  //   .filter((categoryName) => typeof categoryName !== "undefined");
+
+  const income: ITransactionStackedListRowProps = {
+    transactionCategories: 'categoryMappings.join(", ")',
+    transactionAmount: formatCurrency(amount),
+    date: formatDate(date),
     label: description,
     link: `/statistics/incomes/${_id}`,
-    additionalLabel: formatCurrency(amount),
-    additionalInformation: [formatDate(date)],
-    date,
+    transactionType: "income",
     id: _id,
-    tags: [
-      {
-        label: "Income",
-        color: "green",
-      },
-    ],
   };
 
   const isMonthInDateStack = dateStack.some(

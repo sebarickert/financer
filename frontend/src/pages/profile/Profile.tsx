@@ -1,5 +1,6 @@
 import React from "react";
 import Banner from "../../components/banner/banner";
+import BannerText from "../../components/banner/banner.text";
 import Button from "../../components/button/button";
 import QuickLinks from "../../components/quick-links/quick-links";
 import QuickLinksItem from "../../components/quick-links/quick-links.item";
@@ -14,8 +15,10 @@ const Profile = ({ profileInfo }: IProfileProps): JSX.Element => {
     <>
       <SEO title="Profile" />
       <Banner title="Profile" headindType="h1">
-        Manage transaction categories associated with your account and download
-        your financer data.
+        <BannerText>
+          Manage transaction categories associated with your account and
+          download your financer data.
+        </BannerText>
       </Banner>
       <QuickLinks className="mt-8">
         <QuickLinksItem

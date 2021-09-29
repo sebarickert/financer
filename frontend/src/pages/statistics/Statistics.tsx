@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Banner from "../../components/banner/banner";
+import BannerText from "../../components/banner/banner.text";
 import Divider from "../../components/divider/divider";
 import Filter from "../../components/filter/filter";
 import Loader from "../../components/loader/loader";
@@ -209,9 +210,11 @@ const Statistics = (): JSX.Element => {
     <>
       <SEO title="Statistics" />
       <Banner title="Statistics" headindType="h1">
-        Manage all your transactions in one place - review, edit or delete.
+        <BannerText>
+          Manage all your transactions in one place - review, edit or delete.
+        </BannerText>
       </Banner>
-      <Filter filters={filterItems} />
+      <Filter className="mt-8" filters={filterItems} />
       <h2 className="text-2xl sm:text-3xl font-bold tracking-tighter mt-8 mb-4">
         {`${pageVisibleMonth}, ${pageVisibleYear}`}
       </h2>
@@ -242,6 +245,12 @@ const Statistics = (): JSX.Element => {
           iconName="upload"
           iconBackgroundColor="red"
           description="Go to expenses page where you are able to manage your expense transactions."
+        />
+        <QuickLinksItem
+          title="Transfers"
+          link="/statistics/transfers"
+          iconName="switch-horizontal"
+          description="Go to transfers page where you are able to manage your transfer transactions."
         />
       </QuickLinks>
     </>

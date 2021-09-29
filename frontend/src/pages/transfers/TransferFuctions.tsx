@@ -2,28 +2,28 @@ import { ITransactionStackedListRowProps } from "../../components/transaction-st
 import formatCurrency from "../../utils/formatCurrency";
 import { formatDate } from "../../utils/formatDate";
 
-export interface IExpensesPerMonth {
+export interface ITransfersPerMonth {
   month: number;
   total: number;
   year: number;
   rows: ITransactionStackedListRowProps[];
 }
 
-export const groupExpensesByMonth = (
-  dateStack: IExpensesPerMonth[],
-  { _id, amount, date: dateRaw, description }: IExpense
-): IExpensesPerMonth[] => {
+export const groupTransfersByMonth = (
+  dateStack: ITransfersPerMonth[],
+  { _id, amount, date: dateRaw, description }: ITransaction
+): ITransfersPerMonth[] => {
   const date = new Date(dateRaw);
   const month = date.getMonth();
   const year = date.getFullYear();
 
-  const expense: ITransactionStackedListRowProps = {
+  const transfer: ITransactionStackedListRowProps = {
     transactionCategories: 'categoryMappings.join(", ")',
     transactionAmount: formatCurrency(amount),
     date: formatDate(date),
-    label: description,
-    link: `/statistics/expenses/${_id}`,
-    transactionType: "expense",
+    label: description || "plaa",
+    link: `/statistics/transfers/${_id}`,
+    transactionType: "transfer",
     id: _id,
   };
 
@@ -49,7 +49,7 @@ export const groupExpensesByMonth = (
           ? stackTotal + amount
           : stackTotal,
         rows: isTargetMonthAndYear(stackYear, stackMonth)
-          ? [...stackRows, expense]
+          ? [...stackRows, transfer]
           : stackRows,
       })
     );
@@ -59,13 +59,13 @@ export const groupExpensesByMonth = (
     year,
     month,
     total: amount,
-    rows: [expense],
+    rows: [transfer],
   });
 };
 
-export const sortExpenseStacksByMonth = (
-  a: IExpensesPerMonth,
-  b: IExpensesPerMonth
+export const sortIncomeStacksByMonth = (
+  a: ITransfersPerMonth,
+  b: ITransfersPerMonth
 ): 0 | 1 | -1 => {
   if (a.year > b.year) {
     return -1;
@@ -86,9 +86,9 @@ export const sortExpenseStacksByMonth = (
   return 0;
 };
 
-export const sortExpensesByDate = (
-  stack: IExpensesPerMonth
-): IExpensesPerMonth => {
+export const sortIncomesByDate = (
+  stack: ITransfersPerMonth
+): ITransfersPerMonth => {
   stack.rows.sort((a, b) => (a.date > b.date ? -1 : 1));
   return stack;
 };

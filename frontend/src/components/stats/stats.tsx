@@ -11,7 +11,18 @@ const Stats = ({ children, label, className = "" }: IProps): JSX.Element => {
   return (
     <section className={`${className}`}>
       {label && <StatsHeader>{label}</StatsHeader>}
-      <div className="grid gap-4 sm:grid-cols-3">{children}</div>
+      <div
+        className={`grid gap-4 ${
+          children.filter((child) => typeof child !== "undefined" && child)
+            .length %
+            3 ===
+          0
+            ? "md:grid-cols-3"
+            : "sm:grid-cols-2"
+        }`}
+      >
+        {children}
+      </div>
     </section>
   );
 };
