@@ -1,21 +1,16 @@
 import React from "react";
+import Banner from "../../components/banner/banner";
 import Button from "../../components/button/button";
 import ButtonGroup from "../../components/button/button.group";
 import DashboardStats from "../../components/dashboard-stats/dashboard.stats";
-import Hero from "../../components/hero/hero";
-import HeroLead from "../../components/hero/hero.lead";
 import SEO from "../../components/seo/seo";
 
 const Dashboard = (): JSX.Element => {
   return (
     <>
       <SEO title="Dashboard" />
-      <Hero accent="Your" accentColor="pink" label="Dashboard">
-        <HeroLead>
-          Below you are able to see summaries of your added accounts, income and
-          expenses.
-        </HeroLead>
-        <ButtonGroup className="mt-12">
+      <Banner title="Dashboard" headindType="h1" className="mb-8">
+        <ButtonGroup>
           <Button accentColor="green" link="/statistics/incomes/add">
             Add income
           </Button>
@@ -26,8 +21,8 @@ const Dashboard = (): JSX.Element => {
             Transfer
           </Button>
         </ButtonGroup>
-      </Hero>
-      <DashboardStats className="mt-12" label="Current month" />
+      </Banner>
+      <DashboardStats label="Current month" />
     </>
   );
 };
