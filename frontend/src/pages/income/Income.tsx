@@ -71,7 +71,7 @@ const Income = (): JSX.Element => {
 
   const handleDelete = async () => {
     deleteIncome(id);
-    history.push("/incomes");
+    history.push("/statistics/incomes");
   };
 
   return typeof income === "undefined" ||

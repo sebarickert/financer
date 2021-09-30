@@ -16,13 +16,13 @@ const Dashboard = (): JSX.Element => {
           expenses.
         </HeroLead>
         <ButtonGroup className="mt-12">
-          <Button accentColor="green" link="/incomes/add">
+          <Button accentColor="green" link="/statistics/incomes/add">
             Add income
           </Button>
-          <Button accentColor="red" link="/expenses/add">
+          <Button accentColor="red" link="/statistics/expenses/add">
             Add expense
           </Button>
-          <Button accentColor="blue" link="/accounts/transfer">
+          <Button accentColor="blue" link="/statistics/transfers/add">
             Transfer
           </Button>
         </ButtonGroup>
