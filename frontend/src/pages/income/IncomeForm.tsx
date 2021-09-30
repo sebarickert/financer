@@ -139,7 +139,7 @@ const IncomeForm = ({
   };
 
   return accounts === null || transactionCategories === null ? (
-    <Loader loaderColor="green" />
+    <Loader loaderColor="blue" />
   ) : (
     <>
       {errors.length > 0 && (

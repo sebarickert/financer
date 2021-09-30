@@ -7,6 +7,8 @@ import SEO from "../../components/seo/seo";
 import TransactionStackedList from "../../components/transaction-stacked-list/transaction-stacked-list";
 import monthNames from "../../constants/months";
 import formatCurrency from "../../utils/formatCurrency";
+import { getAllUserTransactionCategoryMappings } from "../expenses/Expenses";
+import { getAllTransactionCategories } from "../profile/TransactionCategories/TransactionCategoriesService";
 import {
   groupIncomesByMonth,
   IIncomesPerMonth,
@@ -18,13 +20,29 @@ import { getAllIncomes } from "./IncomeService";
 const Incomes = (): JSX.Element => {
   const [incomesRaw, setIncomesRaw] = useState<IIncome[] | null>(null);
   const [incomes, setIncomes] = useState<IIncomesPerMonth[]>([]);
+  const [transactionCategoryMappings, setTransactionCategoryMappings] =
+    useState<ITransactionCategoryMapping[]>([]);
+  const [transactionCategories, setTransactionCategories] = useState<
+    ITransactionCategory[]
+  >([]);
 
   useEffect(() => {
     const fetchIncomes = async () => {
       setIncomesRaw(await getAllIncomes());
     };
 
+    const fetchAllTransactionCategories = async () => {
+      setTransactionCategories(await getAllTransactionCategories());
+    };
+    const fetchAllUserTransactionCategoryMappings = async () => {
+      setTransactionCategoryMappings(
+        await getAllUserTransactionCategoryMappings()
+      );
+    };
+
     fetchIncomes();
+    fetchAllTransactionCategories();
+    fetchAllUserTransactionCategoryMappings();
   }, []);
 
   useEffect(() => {
@@ -32,14 +50,30 @@ const Incomes = (): JSX.Element => {
 
     setIncomes(
       incomesRaw
+        .map(({ _id, ...rest }) => {
+          const categoryMappings = transactionCategoryMappings
+            ?.filter(({ transaction_id }) => transaction_id === _id)
+            .map(
+              ({ category_id }) =>
+                transactionCategories.find(
+                  ({ _id: categoryId }) => category_id === categoryId
+                )?.name
+            )
+            .filter(
+              (categoryName) => typeof categoryName !== "undefined"
+              // @todo: Fix this type.
+            ) as string[];
+
+          return { _id, ...rest, categoryMappings };
+        })
         .reduce<IIncomesPerMonth[]>(groupIncomesByMonth, [])
         .sort(sortIncomeStacksByMonth)
         .map(sortIncomesByDate)
     );
-  }, [incomesRaw]);
+  }, [incomesRaw, transactionCategories, transactionCategoryMappings]);
 
   return incomesRaw === null ? (
-    <Loader loaderColor="green" />
+    <Loader loaderColor="blue" />
   ) : (
     <>
       <SEO title="Incomes" />

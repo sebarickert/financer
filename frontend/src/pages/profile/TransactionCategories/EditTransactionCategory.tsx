@@ -77,7 +77,7 @@ const EditTransactionCategory = (): JSX.Element => {
   };
 
   return typeof transactionCategory === "undefined" ? (
-    <Loader loaderColor="green" />
+    <Loader loaderColor="blue" />
   ) : (
     <Container>
       <SEO title="Add expense | Expenses" />

@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import DescriptionList from "../../components/description-list/description-list";
 import DescriptionListItem from "../../components/description-list/description-list.item";
-import Hero from "../../components/hero/hero";
-import HeroLead from "../../components/hero/hero.lead";
+import Icon from "../../components/icon/icon";
 import Loader from "../../components/loader/loader";
 import ModalConfirm from "../../components/modal/confirm/modal.confirm";
 import SEO from "../../components/seo/seo";
@@ -82,39 +81,38 @@ const Transfer = (): JSX.Element => {
   ) : (
     <>
       <SEO title={`${transfer.description} | Transfers`} />
-      <Hero
-        accent="Transfer"
-        accentColor="blue"
-        label={transfer.description ?? "plaa"}
-      >
-        <HeroLead>
-          Below you are able to edit your transfer information or delete it
-          altogether.
-        </HeroLead>
-        <div className="mt-12">
-          <TransferDeleteModal handleDelete={handleDelete} />
-        </div>
-      </Hero>
-      <DescriptionList label="Transaction details" className="mt-12">
-        <DescriptionListItem label="Amount">
-          {formatCurrency(transfer.amount)}
-        </DescriptionListItem>
-        <DescriptionListItem label="Date">
-          {formatDate(new Date(transfer.date))}
-        </DescriptionListItem>
-      </DescriptionList>
-      {transactionCategoryMapping?.length && (
-        <DescriptionList label="Categories" className="mt-6">
-          {transactionCategoryMapping?.map(({ amount, category_id, _id }) => (
-            <DescriptionListItem
-              label={getCategoryNameById(category_id)}
-              key={_id}
-            >
-              {formatCurrency(amount)}
+      <section className="rounded-lg border bg-white sm:grid divide-y sm:divide-y-0 sm:divide-x">
+        <div className="p-6">
+          <header className="flex items-center mb-6">
+            <span className="rounded-lg inline-flex p-3 text-white bg-blue-financer">
+              <Icon type="switch-horizontal" />
+            </span>
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tighter ml-4">
+              {transfer.description}
+            </h1>
+          </header>
+          <DescriptionList label="Transaction details">
+            <DescriptionListItem label="Amount">
+              {formatCurrency(transfer.amount)}
             </DescriptionListItem>
-          ))}
-        </DescriptionList>
-      )}
+            <DescriptionListItem label="Date">
+              {formatDate(new Date(transfer.date))}
+            </DescriptionListItem>
+          </DescriptionList>
+          {transactionCategoryMapping.length > 0 && (
+            <DescriptionList label="Categories" className="mt-6" visibleLabel>
+              {transactionCategoryMapping?.map(({ amount, category_id }) => (
+                <DescriptionListItem label={getCategoryNameById(category_id)}>
+                  {formatCurrency(amount)}
+                </DescriptionListItem>
+              ))}
+            </DescriptionList>
+          )}
+        </div>
+      </section>
+      <div className="mt-6">
+        <TransferDeleteModal handleDelete={handleDelete} />
+      </div>
     </>
   );
 };

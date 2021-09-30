@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import Button from "../../components/button/button";
-import ButtonGroup from "../../components/button/button.group";
 import DescriptionList from "../../components/description-list/description-list";
 import DescriptionListItem from "../../components/description-list/description-list.item";
-import Hero from "../../components/hero/hero";
-import HeroLead from "../../components/hero/hero.lead";
+import Icon from "../../components/icon/icon";
 import Loader from "../../components/loader/loader";
 import ModalConfirm from "../../components/modal/confirm/modal.confirm";
 import SEO from "../../components/seo/seo";
@@ -80,39 +77,42 @@ const Income = (): JSX.Element => {
   return typeof income === "undefined" ||
     typeof transactionCategoryMapping === "undefined" ||
     transactionCategories === null ? (
-    <Loader loaderColor="green" />
+    <Loader loaderColor="blue" />
   ) : (
     <>
       <SEO title={`${income.description} | Incomes`} />
-      <Hero accent="Income" accentColor="green" label={income.description}>
-        <HeroLead>
-          Below you are able to edit your added income information or delete it
-          altogether.
-        </HeroLead>
-        <ButtonGroup className="mt-12">
-          <Button accentColor="blue" link={`/statistics/incomes/${id}/edit`}>
-            Edit income
-          </Button>
-          <IncomeDeleteModal handleDelete={handleDelete} />
-        </ButtonGroup>
-      </Hero>
-      <DescriptionList label="Transaction details" className="mt-12">
-        <DescriptionListItem label="Amount">
-          {formatCurrency(income.amount)}
-        </DescriptionListItem>
-        <DescriptionListItem label="Date">
-          {formatDate(new Date(income.date))}
-        </DescriptionListItem>
-      </DescriptionList>
-      {transactionCategoryMapping?.length && (
-        <DescriptionList label="Categories" className="mt-6">
-          {transactionCategoryMapping?.map(({ amount, category_id }) => (
-            <DescriptionListItem label={getCategoryNameById(category_id)}>
-              {formatCurrency(amount)}
+      <section className="rounded-lg border bg-white sm:grid divide-y sm:divide-y-0 sm:divide-x">
+        <div className="p-6">
+          <header className="flex items-center mb-6">
+            <span className="rounded-lg inline-flex p-3 text-white bg-green-600">
+              <Icon type="upload" />
+            </span>
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tighter ml-4">
+              {income.description}
+            </h1>
+          </header>
+          <DescriptionList label="Transaction details">
+            <DescriptionListItem label="Amount">
+              {formatCurrency(income.amount)}
             </DescriptionListItem>
-          ))}
-        </DescriptionList>
-      )}
+            <DescriptionListItem label="Date">
+              {formatDate(new Date(income.date))}
+            </DescriptionListItem>
+          </DescriptionList>
+          {transactionCategoryMapping.length > 0 && (
+            <DescriptionList label="Categories" className="mt-6" visibleLabel>
+              {transactionCategoryMapping?.map(({ amount, category_id }) => (
+                <DescriptionListItem label={getCategoryNameById(category_id)}>
+                  {formatCurrency(amount)}
+                </DescriptionListItem>
+              ))}
+            </DescriptionList>
+          )}
+        </div>
+      </section>
+      <div className="mt-6">
+        <IncomeDeleteModal handleDelete={handleDelete} />
+      </div>
     </>
   );
 };

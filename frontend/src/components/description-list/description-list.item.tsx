@@ -12,14 +12,9 @@ const DescriptionListItem = ({
   testId,
 }: IProps): JSX.Element => {
   return (
-    <div
-      className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 px-4"
-      data-test-id={testId}
-    >
+    <div className="py-4 grid grid-cols-2 gap-4" data-test-id={testId}>
       <dt className="text-sm font-medium text-gray-500">{label}</dt>
-      <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-        {children}
-      </dd>
+      <dd className="text-sm text-gray-900">{children}</dd>
     </div>
   );
 };
