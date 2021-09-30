@@ -24,7 +24,7 @@ export const groupExpensesByMonth = (
   const { categoryMappings } = rest;
 
   const expense: ITransactionStackedListRowProps = {
-    transactionCategories: categoryMappings.join(", "),
+    transactionCategories: categoryMappings?.join(", "),
     transactionAmount: formatCurrency(amount),
     date: formatDate(date),
     label: description,
