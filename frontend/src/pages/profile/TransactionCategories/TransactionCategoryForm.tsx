@@ -92,7 +92,7 @@ const TransactionCategoryForm = ({
   };
 
   return transactionCategories === null ? (
-    <Loader loaderColor="green" />
+    <Loader loaderColor="blue" />
   ) : (
     <>
       {errors.length > 0 && (

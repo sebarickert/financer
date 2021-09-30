@@ -41,7 +41,7 @@ const EditExpense = (): JSX.Element => {
 
   return typeof expense === "undefined" ||
     typeof transactionCategoryMapping === "undefined" ? (
-    <Loader loaderColor="red" />
+    <Loader loaderColor="blue" />
   ) : (
     <Container className="mt-6 sm:mt-12">
       <SEO title={`Edit ${expense.description} | Expenses`} />

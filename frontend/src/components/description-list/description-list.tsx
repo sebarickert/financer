@@ -1,5 +1,4 @@
 import React from "react";
-import Container from "../container/container";
 import DescriptionListBody from "./description-list.body";
 import DescriptionListHeader from "./description-list.header";
 
@@ -8,6 +7,7 @@ interface IProps {
   className?: string;
   children: React.ReactNode;
   testId?: string;
+  visibleLabel?: boolean;
 }
 
 const DescriptionList = ({
@@ -15,17 +15,13 @@ const DescriptionList = ({
   className = "",
   children,
   testId,
+  visibleLabel = false,
 }: IProps): JSX.Element => {
   return (
-    <Container>
-      <div
-        className={`bg-white border border-gray-200 overflow-hiddeN ${className}`}
-        data-test-id={testId}
-      >
-        <DescriptionListHeader label={label} />
-        <DescriptionListBody>{children}</DescriptionListBody>
-      </div>
-    </Container>
+    <div className={`${className}`} data-test-id={testId}>
+      <DescriptionListHeader label={label} visibleLabel={visibleLabel} />
+      <DescriptionListBody>{children}</DescriptionListBody>
+    </div>
   );
 };
 

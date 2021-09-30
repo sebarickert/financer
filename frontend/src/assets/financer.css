@@ -941,11 +941,20 @@ select {
 .mb-5 {
 	margin-bottom: 1.25rem;
 }
+.ml-8 {
+	margin-left: 2rem;
+}
+.mt-0 {
+	margin-top: 0px;
+}
 .block {
 	display: block;
 }
 .inline-block {
 	display: inline-block;
+}
+.inline {
+	display: inline;
 }
 .flex {
 	display: flex;
@@ -958,6 +967,9 @@ select {
 }
 .grid {
 	display: grid;
+}
+.inline-grid {
+	display: inline-grid;
 }
 .hidden {
 	display: none;
@@ -1115,6 +1127,12 @@ select {
 .grid-cols-\[1fr\2c auto\] {
 	grid-template-columns: 1fr auto;
 }
+.grid-cols-\[1fr\2c 300px\] {
+	grid-template-columns: 1fr 300px;
+}
+.grid-cols-\[1fr\2c 250px\] {
+	grid-template-columns: 1fr 250px;
+}
 .flex-col {
 	flex-direction: column;
 }
@@ -1126,6 +1144,9 @@ select {
 }
 .items-center {
 	align-items: center;
+}
+.items-baseline {
+	align-items: baseline;
 }
 .justify-end {
 	justify-content: flex-end;
@@ -1173,9 +1194,18 @@ select {
 	border-top-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));
 	border-bottom-width: calc(1px * var(--tw-divide-y-reverse));
 }
+.divide-x > :not([hidden]) ~ :not([hidden]) {
+	--tw-divide-x-reverse: 0;
+	border-right-width: calc(1px * var(--tw-divide-x-reverse));
+	border-left-width: calc(1px * calc(1 - var(--tw-divide-x-reverse)));
+}
 .divide-gray-200 > :not([hidden]) ~ :not([hidden]) {
 	--tw-divide-opacity: 1;
 	border-color: rgba(229, 231, 235, var(--tw-divide-opacity));
+}
+.divide-green-500 > :not([hidden]) ~ :not([hidden]) {
+	--tw-divide-opacity: 1;
+	border-color: rgba(16, 185, 129, var(--tw-divide-opacity));
 }
 .overflow-hidden {
 	overflow: hidden;
@@ -1988,6 +2018,10 @@ select {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
 
+	.sm\:grid-cols-\[1fr\2c 250px\] {
+		grid-template-columns: 1fr 250px;
+	}
+
 	.sm\:flex-row {
 		flex-direction: row;
 	}
@@ -2018,6 +2052,18 @@ select {
 
 	.sm\:gap-4 {
 		gap: 1rem;
+	}
+
+	.sm\:divide-x > :not([hidden]) ~ :not([hidden]) {
+		--tw-divide-x-reverse: 0;
+		border-right-width: calc(1px * var(--tw-divide-x-reverse));
+		border-left-width: calc(1px * calc(1 - var(--tw-divide-x-reverse)));
+	}
+
+	.sm\:divide-y-0 > :not([hidden]) ~ :not([hidden]) {
+		--tw-divide-y-reverse: 0;
+		border-top-width: calc(0px * calc(1 - var(--tw-divide-y-reverse)));
+		border-bottom-width: calc(0px * var(--tw-divide-y-reverse));
 	}
 
 	.sm\:truncate {

@@ -2,6 +2,10 @@ import { ITransactionStackedListRowProps } from "../../components/transaction-st
 import formatCurrency from "../../utils/formatCurrency";
 import { formatDate } from "../../utils/formatDate";
 
+interface IExpenseWithCategories extends IExpense {
+  categoryMappings: string[];
+}
+
 export interface IExpensesPerMonth {
   month: number;
   total: number;
@@ -11,14 +15,16 @@ export interface IExpensesPerMonth {
 
 export const groupExpensesByMonth = (
   dateStack: IExpensesPerMonth[],
-  { _id, amount, date: dateRaw, description }: IExpense
+  { _id, amount, date: dateRaw, description, ...rest }: IExpenseWithCategories
 ): IExpensesPerMonth[] => {
   const date = new Date(dateRaw);
   const month = date.getMonth();
   const year = date.getFullYear();
 
+  const { categoryMappings } = rest;
+
   const expense: ITransactionStackedListRowProps = {
-    transactionCategories: 'categoryMappings.join(", ")',
+    transactionCategories: categoryMappings.join(", "),
     transactionAmount: formatCurrency(amount),
     date: formatDate(date),
     label: description,

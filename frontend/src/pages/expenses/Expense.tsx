@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import Button from "../../components/button/button";
-import ButtonGroup from "../../components/button/button.group";
 import DescriptionList from "../../components/description-list/description-list";
 import DescriptionListItem from "../../components/description-list/description-list.item";
-import Hero from "../../components/hero/hero";
-import HeroLead from "../../components/hero/hero.lead";
+import Icon from "../../components/icon/icon";
 import Loader from "../../components/loader/loader";
 import ModalConfirm from "../../components/modal/confirm/modal.confirm";
 import SEO from "../../components/seo/seo";
@@ -26,7 +23,7 @@ const ExpenseDeleteModal = ({ handleDelete }: IProps) => (
     label="Delete expense"
     submitButtonLabel="Delete"
     onConfirm={handleDelete}
-    modalOpenButtonLabel="Delete expense"
+    modalOpenButtonLabel="Delete"
     accentColor="red"
   >
     Are you sure you want to delete your expense? All of your data will be
@@ -83,45 +80,48 @@ const Expense = (): JSX.Element => {
 
   const handleDelete = async () => {
     await deleteExpense(id);
-    history.push("/expenses");
+    history.push("/statistics/expenses");
   };
 
   return typeof expense === "undefined" ||
     typeof transactionCategoryMapping === "undefined" ||
     transactionCategories === null ? (
-    <Loader loaderColor="red" />
+    <Loader loaderColor="blue" />
   ) : (
     <>
       <SEO title={`${expense.description} | Expenses`} />
-      <Hero accent="Expense" accentColor="red" label={expense.description}>
-        <HeroLead>
-          Below you are able to edit your added expense information or delete it
-          altogether.
-        </HeroLead>
-        <ButtonGroup className="mt-12">
-          <Button accentColor="blue" link={`/statistics/expenses/${id}/edit`}>
-            Edit expense
-          </Button>
-          <ExpenseDeleteModal handleDelete={handleDelete} />
-        </ButtonGroup>
-      </Hero>
-      <DescriptionList label="Details" className="mt-12">
-        <DescriptionListItem label="Amount">
-          {formatCurrency(expense.amount)}
-        </DescriptionListItem>
-        <DescriptionListItem label="Date">
-          {formatDate(new Date(expense.date))}
-        </DescriptionListItem>
-      </DescriptionList>
-      {transactionCategoryMapping?.length && (
-        <DescriptionList label="Categories" className="mt-6">
-          {transactionCategoryMapping?.map(({ amount, category_id }) => (
-            <DescriptionListItem label={getCategoryNameById(category_id)}>
-              {formatCurrency(amount)}
+      <section className="rounded-lg border bg-white sm:grid divide-y sm:divide-y-0 sm:divide-x">
+        <div className="p-6">
+          <header className="flex items-center mb-6">
+            <span className="rounded-lg inline-flex p-3 text-white bg-red-600">
+              <Icon type="download" />
+            </span>
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tighter ml-4">
+              {expense.description}
+            </h1>
+          </header>
+          <DescriptionList label="Transaction details">
+            <DescriptionListItem label="Amount">
+              {formatCurrency(expense.amount)}
             </DescriptionListItem>
-          ))}
-        </DescriptionList>
-      )}
+            <DescriptionListItem label="Date">
+              {formatDate(new Date(expense.date))}
+            </DescriptionListItem>
+          </DescriptionList>
+          {transactionCategoryMapping.length > 0 && (
+            <DescriptionList label="Categories" className="mt-6" visibleLabel>
+              {transactionCategoryMapping?.map(({ amount, category_id }) => (
+                <DescriptionListItem label={getCategoryNameById(category_id)}>
+                  {formatCurrency(amount)}
+                </DescriptionListItem>
+              ))}
+            </DescriptionList>
+          )}
+        </div>
+      </section>
+      <div className="mt-6">
+        <ExpenseDeleteModal handleDelete={handleDelete} />
+      </div>
     </>
   );
 };

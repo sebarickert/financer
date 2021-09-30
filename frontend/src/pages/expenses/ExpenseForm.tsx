@@ -143,7 +143,7 @@ const ExpenseForm = ({
   };
 
   return accounts === null || transactionCategories === null ? (
-    <Loader loaderColor="red" />
+    <Loader loaderColor="blue" />
   ) : (
     <>
       {errors.length > 0 && (
