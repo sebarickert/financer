@@ -51,7 +51,7 @@ const TransactionCategories = (): JSX.Element => {
   }, [transactionCategoriesRaw]);
 
   return transactionCategoriesRaw === null ? (
-    <Loader loaderColor="green" />
+    <Loader loaderColor="blue" />
   ) : (
     <>
       <SEO title="Transaction categories | Profile" />

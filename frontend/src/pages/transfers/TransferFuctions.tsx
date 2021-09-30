@@ -2,6 +2,10 @@ import { ITransactionStackedListRowProps } from "../../components/transaction-st
 import formatCurrency from "../../utils/formatCurrency";
 import { formatDate } from "../../utils/formatDate";
 
+interface ITransactionWithCategories extends ITransaction {
+  categoryMappings: string[];
+}
+
 export interface ITransfersPerMonth {
   month: number;
   total: number;
@@ -11,14 +15,22 @@ export interface ITransfersPerMonth {
 
 export const groupTransfersByMonth = (
   dateStack: ITransfersPerMonth[],
-  { _id, amount, date: dateRaw, description }: ITransaction
+  {
+    _id,
+    amount,
+    date: dateRaw,
+    description,
+    ...rest
+  }: ITransactionWithCategories
 ): ITransfersPerMonth[] => {
   const date = new Date(dateRaw);
   const month = date.getMonth();
   const year = date.getFullYear();
 
+  const { categoryMappings } = rest;
+
   const transfer: ITransactionStackedListRowProps = {
-    transactionCategories: 'categoryMappings.join(", ")',
+    transactionCategories: categoryMappings.join(", "),
     transactionAmount: formatCurrency(amount),
     date: formatDate(date),
     label: description || "plaa",
