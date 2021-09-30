@@ -30,7 +30,7 @@ export const groupTransfersByMonth = (
   const { categoryMappings } = rest;
 
   const transfer: ITransactionStackedListRowProps = {
-    transactionCategories: categoryMappings.join(", "),
+    transactionCategories: categoryMappings?.join(", "),
     transactionAmount: formatCurrency(amount),
     date: formatDate(date),
     label: description || "plaa",

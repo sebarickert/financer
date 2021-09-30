@@ -23,7 +23,7 @@ export const groupIncomesByMonth = (
   const { categoryMappings } = rest;
 
   const income: ITransactionStackedListRowProps = {
-    transactionCategories: categoryMappings.join(", "),
+    transactionCategories: categoryMappings?.join(", "),
     transactionAmount: formatCurrency(amount),
     date: formatDate(date),
     label: description,
