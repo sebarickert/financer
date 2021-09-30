@@ -1,7 +1,11 @@
-import { groupExpensesByMonth } from "../ExpenseFuctions";
+import {
+  groupExpensesByMonth,
+  IExpenseWithCategories,
+} from "../ExpenseFuctions";
 
-const testData: IExpense[] = [
+const testData: IExpenseWithCategories[] = [
   {
+    categoryMappings: ["Category 1", "Category 2"],
     fromAccount: "5fbd39c804bcfa18c50dbf31",
     fromAccountBalance: 1000.0000000010477,
     description: "123",
@@ -11,6 +15,7 @@ const testData: IExpense[] = [
     user: "5fbd378ede5ab913b62a75f3",
   },
   {
+    categoryMappings: ["Category 1", "Category 2"],
     fromAccount: "5fbd39c804bcfa18c50dbf31",
     fromAccountBalance: 990.0000000010477,
     description: "123",
@@ -20,6 +25,7 @@ const testData: IExpense[] = [
     user: "5fbd378ede5ab913b62a75f3",
   },
   {
+    categoryMappings: ["Category 1", "Category 2"],
     fromAccount: "5fbd39c804bcfa18c50dbf31",
     fromAccountBalance: 970.0000000010477,
     description: "123",

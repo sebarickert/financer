@@ -1,7 +1,8 @@
-import { groupIncomesByMonth } from "../IncomeFuctions";
+import { groupIncomesByMonth, IIncomeWithCategories } from "../IncomeFuctions";
 
-const testData: IIncome[] = [
+const testData: IIncomeWithCategories[] = [
   {
+    categoryMappings: ["Category 1", "Category 2"],
     toAccount: "5fbd39c804bcfa18c50dbf31",
     toAccountBalance: -122182.99999999895,
     description: "asd",
@@ -11,6 +12,7 @@ const testData: IIncome[] = [
     user: "5fbd378ede5ab913b62a75f3",
   },
   {
+    categoryMappings: ["Category 1", "Category 2"],
     toAccount: "5fbd39c804bcfa18c50dbf31",
     toAccountBalance: -122172.99999999895,
     description: "asd",
@@ -20,6 +22,7 @@ const testData: IIncome[] = [
     user: "5fbd378ede5ab913b62a75f3",
   },
   {
+    categoryMappings: ["Category 1", "Category 2"],
     toAccount: "5fbd39c804bcfa18c50dbf31",
     toAccountBalance: -122152.99999999895,
     description: "ad",
