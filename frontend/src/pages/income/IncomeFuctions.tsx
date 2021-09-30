@@ -2,7 +2,7 @@ import { ITransactionStackedListRowProps } from "../../components/transaction-st
 import formatCurrency from "../../utils/formatCurrency";
 import { formatDate } from "../../utils/formatDate";
 
-interface IIncomeWithCategories extends IIncome {
+export interface IIncomeWithCategories extends IIncome {
   categoryMappings: string[];
 }
 export interface IIncomesPerMonth {

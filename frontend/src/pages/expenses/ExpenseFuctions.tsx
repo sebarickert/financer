@@ -2,7 +2,7 @@ import { ITransactionStackedListRowProps } from "../../components/transaction-st
 import formatCurrency from "../../utils/formatCurrency";
 import { formatDate } from "../../utils/formatDate";
 
-interface IExpenseWithCategories extends IExpense {
+export interface IExpenseWithCategories extends IExpense {
   categoryMappings: string[];
 }
 
