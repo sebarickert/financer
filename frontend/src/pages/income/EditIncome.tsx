@@ -39,7 +39,7 @@ const EditIncome = (): JSX.Element => {
     typeof transactionCategoryMapping === "undefined" ? (
     <Loader loaderColor="blue" />
   ) : (
-    <Container className="mt-6 sm:mt-12">
+    <>
       <SEO title={`Edit ${income.description} | Incomes`} />
       <IncomeForm
         onSubmit={handleSubmit}
@@ -52,7 +52,7 @@ const EditIncome = (): JSX.Element => {
         toAccount={income.toAccount}
         transactionCategoryMapping={transactionCategoryMapping}
       />
-    </Container>
+    </>
   );
 };
 

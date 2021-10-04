@@ -7,6 +7,7 @@ interface IProps {
   isRequired?: boolean;
   options: IOption[];
   defaultValue?: string;
+  className?: string;
 }
 
 export interface IOption {
@@ -21,19 +22,20 @@ const Select = ({
   isRequired = false,
   options,
   defaultValue,
+  className = "",
 }: IProps): JSX.Element => {
   return (
-    <div>
+    <div className={className}>
       <label
         htmlFor={id}
-        className="block text-sm leading-5 font-medium text-gray-700"
+        className="block text-xs font-semibold uppercase leading-5 tracking-wider text-gray-500"
       >
         {children}
         <select
           id={id}
           name={id}
           defaultValue={defaultValue}
-          className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+          className="mt-1 block w-full pl-3 pr-10 py-3 text-base border-gray-300 focus:outline-none focus:ring-blue-financer focus:border-blue-financer rounded-md text-gray-900"
           required={isRequired}
           aria-describedby={help && `${id}-description`}
         >
