@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import Container from "../../components/container/container";
 import SEO from "../../components/seo/seo";
 import { addTransactionCategoryMapping } from "../expenses/AddExpense";
 import IncomeForm from "./IncomeForm";
@@ -39,15 +38,15 @@ const AddIncome = (): JSX.Element => {
   };
 
   return (
-    <Container className="mt-6 sm:mt-12">
+    <>
       <SEO title="Add income | Incomes" />
       <IncomeForm
         onSubmit={handleSubmit}
         errors={errors}
         formHeading="Add income"
-        submitLabel="Add"
+        submitLabel="Submit"
       />
-    </Container>
+    </>
   );
 };
 
