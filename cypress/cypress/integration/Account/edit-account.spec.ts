@@ -3,13 +3,13 @@ const verifyAccountPage = (
   accountBalance: string,
   accountType: string
 ) => {
-  cy.get('[data-testId="account-banner"] [data-testId="banner-title"]').should(
+  cy.get('[data-testid="account-hero"] [data-testid="hero-title"]').should(
     "contain.text",
     accountName
   );
 
-  cy.get('[data-testId="type"] > dd').should("have.text", accountType);
-  cy.get('[data-testId="balance"] > dd')
+  cy.get('[data-testid="type"] > dd').should("have.text", accountType);
+  cy.get('[data-testid="balance"] > dd')
     .invoke("text")
     .invoke("replace", /\u00a0/g, " ")
     .should(
@@ -24,28 +24,28 @@ const editAccountNameAndVerify = (
   accountBalance: string,
   accountType: string
 ) => {
-  cy.get('[data-test-id="account-row"').should(
+  cy.get('[data-testid="account-row"').should(
     "not.contain.text",
     newAccountName
   );
 
-  cy.get("[data-test-id='account-row'").contains(oldAccountName).click();
+  cy.get("[data-testid='account-row'").contains(oldAccountName).click();
   verifyAccountPage(oldAccountName, accountBalance, accountType);
   // Account page
 
-  cy.get("[data-test-id='edit-account']").click();
+  cy.get("[data-testid='edit-account']").click();
 
   // Edit account form
   cy.get("#account").clear();
   cy.get("#account").type(newAccountName);
-  cy.get("[data-test-id='submit']").click();
+  cy.get("[data-testid='submit']").click();
 
   cy.location("pathname").should("not.contain", "/edit");
   cy.visit("http://localhost:3000/accounts");
 
   // All accounts list
-  cy.get('[data-test-id="account-row"').should("contain.text", newAccountName);
-  cy.get("[data-test-id='account-row']").contains(newAccountName).click();
+  cy.get('[data-testid="account-row"').should("contain.text", newAccountName);
+  cy.get("[data-testid='account-row']").contains(newAccountName).click();
 
   // Account page
   verifyAccountPage(newAccountName, accountBalance, accountType);
@@ -57,21 +57,21 @@ const editAccountTypeAndVerify = (
   oldAccountType: string,
   newAccountType: string
 ) => {
-  cy.get("[data-test-id='account-row'").contains(accountName).click();
+  cy.get("[data-testid='account-row'").contains(accountName).click();
   verifyAccountPage(accountName, accountBalance, oldAccountType);
   // Account page
 
-  cy.get("[data-test-id='edit-account']").click();
+  cy.get("[data-testid='edit-account']").click();
 
   // Edit account form
   cy.get("#type").select(newAccountType);
-  cy.get("[data-test-id='submit']").click();
+  cy.get("[data-testid='submit']").click();
 
   cy.location("pathname").should("not.contain", "/edit");
   cy.visit("http://localhost:3000/accounts");
 
   // All accounts list
-  cy.get("[data-test-id='account-row']").contains(accountName).click();
+  cy.get("[data-testid='account-row']").contains(accountName).click();
 
   // Account page
   verifyAccountPage(accountName, accountBalance, newAccountType);
@@ -83,11 +83,11 @@ const editAccountBalanceAndVerify = (
   newAccountBalance: string,
   accountType: string
 ) => {
-  cy.get("[data-test-id='account-row'").contains(accountName).click();
+  cy.get("[data-testid='account-row'").contains(accountName).click();
   verifyAccountPage(accountName, oldAccountBalance, accountType);
   // Account page
 
-  cy.get("[data-test-id='edit-account']").click();
+  cy.get("[data-testid='edit-account']").click();
 
   // Edit account form
   cy.get("#amount").clear();
@@ -103,13 +103,13 @@ const editAccountBalanceAndVerify = (
   //     "val",
   //     newAccountBalance.replace(",", ".").replace(/ /g, "").replace("€", "")
   //   );
-  cy.get("[data-test-id='submit']").click();
+  cy.get("[data-testid='submit']").click();
 
   cy.location("pathname").should("not.contain", "/edit");
   cy.visit("http://localhost:3000/accounts");
 
   // All accounts list
-  cy.get("[data-test-id='account-row']").contains(accountName).click();
+  cy.get("[data-testid='account-row']").contains(accountName).click();
 
   // Account page
   verifyAccountPage(accountName, newAccountBalance, accountType);
@@ -123,11 +123,11 @@ const editAccountAllDetailsAndVerify = (
   oldAccountType: string,
   newAccountType: string
 ) => {
-  cy.get("[data-test-id='account-row'").contains(oldAccountName).click();
+  cy.get("[data-testid='account-row'").contains(oldAccountName).click();
   verifyAccountPage(oldAccountName, oldAccountBalance, oldAccountType);
   // Account page
 
-  cy.get("[data-test-id='edit-account']").click();
+  cy.get("[data-testid='edit-account']").click();
 
   // Edit account form
   cy.get("#account").clear();
@@ -142,14 +142,14 @@ const editAccountAllDetailsAndVerify = (
       .replace(String.fromCharCode(8722), String.fromCharCode(45)) // charcodes for different kind of `-`
   );
 
-  cy.get("[data-test-id='submit']").click();
+  cy.get("[data-testid='submit']").click();
 
   cy.location("pathname").should("not.contain", "/edit");
   cy.visit("http://localhost:3000/accounts");
 
   // All accounts list
-  cy.get('[data-test-id="account-row"').should("contain.text", newAccountName);
-  cy.get("[data-test-id='account-row']").contains(newAccountName).click();
+  cy.get('[data-testid="account-row"').should("contain.text", newAccountName);
+  cy.get("[data-testid='account-row']").contains(newAccountName).click();
 
   // Account page
   verifyAccountPage(newAccountName, newAccountBalance, newAccountType);

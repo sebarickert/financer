@@ -19,7 +19,7 @@ export const DescriptionList = ({
   visibleLabel = false,
 }: IDescriptionListProps): JSX.Element => {
   return (
-    <div className={`${className}`} data-test-id={testId}>
+    <div className={`${className}`} data-testid={testId}>
       <DescriptionListHeader label={label} visibleLabel={visibleLabel} />
       <DescriptionListBody>{children}</DescriptionListBody>
     </div>
