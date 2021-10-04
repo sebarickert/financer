@@ -21,7 +21,7 @@ export const ButtonExternal = ({
       aria-label={children}
       className={className}
       onClick={onClick}
-      data-test-id={testId}
+      data-testid={testId}
     >
       {children}
     </a>

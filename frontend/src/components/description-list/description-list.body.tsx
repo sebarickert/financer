@@ -10,7 +10,7 @@ export const DescriptionListBody = ({
   testId,
 }: IDescriptionListBodyProps): JSX.Element => {
   return (
-    <div data-test-id={testId}>
+    <div data-testid={testId}>
       <dl className="divide-y">{children}</dl>
     </div>
   );
