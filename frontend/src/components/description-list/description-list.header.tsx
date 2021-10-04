@@ -12,7 +12,7 @@ export const DescriptionListHeader = ({
   visibleLabel,
 }: IDescriptionListHeaderProps): JSX.Element => {
   return (
-    <div className="pb-2" data-test-id={testId}>
+    <div className="pb-2" data-testid={testId}>
       <h3
         className={`text-lg leading-6 font-medium text-gray-900 ${
           !visibleLabel && 'sr-only'

@@ -22,7 +22,7 @@ export const ButtonInternal = ({
       aria-label={children}
       className={className}
       onClick={onClick}
-      data-test-id={testId}
+      data-testid={testId}
     >
       {children}
     </Link>

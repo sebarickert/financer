@@ -12,7 +12,7 @@ export const Alert = ({
   testId,
 }: IAlertProps): JSX.Element => {
   return (
-    <div className="rounded-md bg-red-50 p-4 my-6" data-test-id={testId}>
+    <div className="rounded-md bg-red-50 p-4 my-6" data-testid={testId}>
       <div className="flex">
         <div className="flex-shrink-0">
           <svg

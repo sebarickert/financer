@@ -97,7 +97,7 @@ export const StackedListRow = ({
   );
 
   return (
-    <li data-test-id={testId}>
+    <li data-testid={testId}>
       {link ? (
         <Link to={link} className="block hover:bg-gray-50 focus:bg-gray-50">
           {stackedListRowContent}

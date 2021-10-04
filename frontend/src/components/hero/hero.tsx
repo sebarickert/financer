@@ -39,12 +39,12 @@ export const Hero = ({
   testId,
 }: IHeroProps): JSX.Element => {
   const heroContent = (
-    <div className="max-w-xl" data-test-id={testId}>
+    <div className="max-w-xl" data-testid={testId}>
       <h1
         className={`text-4xl tracking-tight leading-10 font-extrabold ${
           standAlone ? 'text-gray-900' : 'text-white'
         } sm:leading-none sm:text-5xl`}
-        data-test-id="hero-title"
+        data-testid="hero-title"
       >
         {accent && (
           <>

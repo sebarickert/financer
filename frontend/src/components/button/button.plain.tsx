@@ -24,7 +24,7 @@ export const ButtonPlain = ({
       onClick={onClick}
       aria-label={children}
       className={`${className} disabled:opacity-50 disabled:cursor-not-allowed`}
-      data-test-id={testId}
+      data-testid={testId}
       disabled={isDisabled}
     >
       {children}

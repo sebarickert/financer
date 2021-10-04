@@ -4,12 +4,12 @@ const addAccountAndVefiryDetails = (
   expectedType,
   expextedBalance
 ) => {
-  cy.get('[data-test-id="account-row"').should(
+  cy.get('[data-testid="account-row"').should(
     "not.have.text",
     `New Test ${expectedType} Account`
   );
 
-  cy.get('[data-test-id="add-account"]').click();
+  cy.get('[data-testid="add-account"]').click();
 
   // Add account form
   cy.get("#account").clear();
@@ -19,13 +19,13 @@ const addAccountAndVefiryDetails = (
   cy.get("#type").select(accountType);
   cy.get(":nth-child(1) > .inline-flex").click();
 
-  cy.get('[data-test-id="account-row"]').should("have.length", 7);
-  cy.get('[data-test-id="account-row"]')
+  cy.get('[data-testid="account-row"]').should("have.length", 7);
+  cy.get('[data-testid="account-row"]')
     .contains(`New Test ${expectedType} Account`)
     .click();
 
-  cy.get('[data-testId="type"] > dd').should("have.text", expectedType);
-  cy.get('[data-testId="balance"] > dd')
+  cy.get('[data-testid="type"] > dd').should("have.text", expectedType);
+  cy.get('[data-testid="balance"] > dd')
     .invoke("text")
     .invoke("replace", /\u00a0/g, " ")
     .should("equal", expextedBalance);
@@ -35,7 +35,7 @@ describe("Account creation", () => {
   beforeEach(() => cy.visit("http://localhost:3000/accounts"));
 
   it("Verify accounts in fixture", () => {
-    cy.get('[data-test-id="account-row"').should("have.length", 6);
+    cy.get('[data-testid="account-row"').should("have.length", 6);
   });
 
   it("Add Cash account", () => {
