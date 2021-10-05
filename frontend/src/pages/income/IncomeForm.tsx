@@ -13,6 +13,7 @@ import {
 } from "../profile/TransactionCategories/TransactionCategoriesService";
 import Icon from "../../components/icon/icon";
 import Divider from "../../components/divider/divider";
+import TransactionCategoriesForm from "../../components/transaction-categories-form/transaction-categories-form";
 
 interface IProps {
   amount?: number;
@@ -192,92 +193,16 @@ const IncomeForm = ({
         {transactionCategories.length > 0 && (
           <section className="mt-8">
             <h2 className="sr-only">Categories</h2>
-            <button
-              className="inline-flex justify-between w-full text-xs font-semibold uppercase leading-5 tracking-wider bg-white border border-gray-300 rounded-md items-center py-3 pl-6 pr-3 focus-within:ring-2 focus:ring-inset focus:ring-blue-500 focus:outline-none transition ease-in-out duration-150 hover:bg-gray-50"
-              type="button"
-              onClick={addNewCategory}
-            >
+            <TransactionCategoriesForm
+              className="my-8 space-y-8"
+              categoryAmount={categoryAmount}
+              transactionCategories={transactionCategories}
+              transactionCategoryMapping={transactionCategoryMapping}
+              deleteTransactionCategoryItem={deleteTransactionCategoryItem}
+            />
+            <Button onClick={addNewCategory} accentColor="plain">
               Add category item
-              <span className="text-gray-500">
-                <Icon type="plus" />
-              </span>
-            </button>
-            <div className="mt-8 space-y-8">
-              {categoryAmount.map((index, arrayIndex) => (
-                <div>
-                  <Divider>{`Category Item #${arrayIndex + 1}`}</Divider>
-                  <div
-                    className="grid sm:grid-cols-[1fr,auto] gap-6 sm:gap-4 items-start mt-4"
-                    key={index}
-                  >
-                    <div className="space-y-4">
-                      <div className="grid gap-4">
-                        <Select
-                          id={`transactionCategory[${index}]category`}
-                          options={transactionCategories}
-                          defaultValue={
-                            transactionCategoryMapping
-                              ? transactionCategoryMapping[index].category_id ||
-                                ""
-                              : ""
-                          }
-                          isRequired
-                        >
-                          Category
-                        </Select>
-                        <div className="grid grid-cols-[1fr,auto] gap-2 items-end">
-                          <Input
-                            id={`transactionCategory[${index}]amount`}
-                            type="number"
-                            min={0.0}
-                            step={0.01}
-                            isCurrency
-                            isRequired
-                            value={
-                              transactionCategoryMapping &&
-                              !Number.isNaN(
-                                transactionCategoryMapping[index].amount
-                              )
-                                ? transactionCategoryMapping[index].amount
-                                : ""
-                            }
-                          >
-                            Amount
-                          </Input>
-                          <button
-                            type="button"
-                            className="border-gray-300 bg-white text-gray-700 shadow-sm hover:text-gray-500 inline-flex justify-center w-16 rounded-md items-center py-3 border font-medium text-base  focus-within:ring-2 focus:ring-inset focus:ring-blue-500 focus:outline-none transition ease-in-out duration-150 h-[50px]"
-                          >
-                            <span className="sr-only">
-                              Add unallocated amount
-                            </span>
-                            <Icon type="plus-circle" />
-                          </button>
-                        </div>
-                      </div>
-                      <Input
-                        id={`transactionCategory[${index}]description`}
-                        value={
-                          transactionCategoryMapping
-                            ? transactionCategoryMapping[index].description ||
-                              ""
-                            : ""
-                        }
-                      >
-                        Description
-                      </Input>
-                    </div>
-                    <Button
-                      className="sm:mt-6"
-                      onClick={() => deleteTransactionCategoryItem(index)}
-                      accentColor="plain"
-                    >
-                      Delete
-                    </Button>
-                  </div>
-                </div>
-              ))}
-            </div>
+            </Button>
           </section>
         )}
       </Form>
