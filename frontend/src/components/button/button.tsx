@@ -12,6 +12,7 @@ interface IProps {
   onClick?(): void;
   type?: "button" | "submit" | "reset" | undefined;
   testId?: string;
+  isDisabled?: boolean;
 }
 
 export const isExternalLink = (link: string): boolean =>
@@ -43,6 +44,7 @@ const Button = ({
   onClick = () => {},
   type = "button",
   testId,
+  isDisabled,
 }: IProps): JSX.Element => {
   const elementClasses = [
     `inline-flex justify-center w-full sm:w-auto rounded-md items-center py-3 px-6 border font-medium text-base text-white focus-within:ring-2 focus:ring-inset focus:ring-blue-500 focus:outline-none transition ease-in-out duration-150 ${className}`,
@@ -58,7 +60,7 @@ const Button = ({
     );
   }
 
-  if (typeof link === "string" && link.length > 0) {
+  if (typeof link === "string" && link.length > 0 && !isDisabled) {
     if (isExternalLink(link)) {
       return (
         <ButtonExternal
@@ -90,6 +92,7 @@ const Button = ({
       onClick={onClick}
       className={elementClasses.join(" ")}
       testId={testId}
+      isDisabled={isDisabled}
     >
       {children}
     </ButtonPlain>

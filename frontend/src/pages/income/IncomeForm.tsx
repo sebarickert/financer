@@ -200,7 +200,7 @@ const IncomeForm = ({
               transactionCategoryMapping={transactionCategoryMapping}
               deleteTransactionCategoryItem={deleteTransactionCategoryItem}
             />
-            <Button onClick={addNewCategory} accentColor="plain">
+            <Button onClick={addNewCategory} accentColor="plain" isDisabled>
               Add category item
             </Button>
           </section>
