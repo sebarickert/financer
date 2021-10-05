@@ -7,6 +7,7 @@ interface IProps {
   className: string;
   type?: "button" | "submit" | "reset" | undefined;
   testId?: string;
+  isDisabled?: boolean;
 }
 
 const ButtonPlain = ({
@@ -15,14 +16,16 @@ const ButtonPlain = ({
   className,
   type = "button",
   testId,
+  isDisabled,
 }: IProps): JSX.Element => {
   return (
     <button
       type={type}
       onClick={onClick}
       aria-label={children}
-      className={className}
+      className={`${className} disabled:opacity-50 disabled:cursor-not-allowed`}
       data-test-id={testId}
+      disabled={isDisabled}
     >
       {children}
     </button>
