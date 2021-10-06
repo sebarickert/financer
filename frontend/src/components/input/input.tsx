@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 import { inputDateFormat } from "../../utils/formatDate";
 
 interface IProps {
@@ -10,8 +10,12 @@ interface IProps {
   isRequired?: boolean;
   type?: "text" | "number" | "datetime-local";
   value?: string | number;
+  forcedValue?: string | number;
   min?: number;
+  max?: number;
   step?: number;
+  ref?: React.MutableRefObject<null>;
+  onChange?(event: ChangeEvent<HTMLInputElement>): void;
 }
 
 const Input = ({
@@ -23,8 +27,12 @@ const Input = ({
   isRequired = false,
   type = "text",
   min,
+  max,
   step,
   value = "",
+  forcedValue,
+  ref,
+  onChange,
 }: IProps): JSX.Element => {
   return (
     <div>
@@ -44,13 +52,17 @@ const Input = ({
           id={id}
           type={type}
           min={min}
+          max={max}
           step={step}
           className={`appearance-none block w-full px-3 py-3 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-financer focus:border-blue-financer text-gray-900 ${
             isCurrency && "pl-7"
           }`}
           aria-describedby={help && `${id}-description`}
           defaultValue={isDate && !value ? inputDateFormat(new Date()) : value}
+          value={forcedValue}
           required={isRequired}
+          ref={ref}
+          onChange={onChange}
         />
       </div>
       {help && (
