@@ -4,7 +4,7 @@ import MobileNavigationItem from "./mobile-navigation.item";
 
 const MobileNavigation = (): JSX.Element => {
   return (
-    <div className="bg-white fixed bottom-0 left-0 right-0 w-full border-t">
+    <div className="bg-white fixed bottom-0 left-0 right-0 w-full border-t z-10">
       <nav aria-label="Main navigation in mobile viewmode.">
         <ul className="grid grid-cols-5 relative">
           <MobileNavigationItem
