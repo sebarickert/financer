@@ -8,19 +8,27 @@ import Select, { IOption } from "../select/select";
 interface ITransactionCategoriesFormItemProps {
   className?: string;
   categoryAmountIndex: number;
+  amountMaxValue: number;
   arrayIndex: number;
   categories: IOption[];
   categoryMapping: ITransactionCategoryMapping[] | undefined;
   deleteTransactionCategoryItem(): void;
+  setUnallocatedAmount(): void;
+  setTransactionCategoryItemAmount(newValue: number): void;
+  amountValue: number;
 }
 
 const TransactionCategoriesFormItem = ({
   className = "",
   categoryAmountIndex,
+  amountMaxValue,
   arrayIndex,
   categories,
   categoryMapping,
   deleteTransactionCategoryItem,
+  setTransactionCategoryItemAmount,
+  amountValue,
+  setUnallocatedAmount,
 }: ITransactionCategoriesFormItemProps): JSX.Element => {
   return (
     <div className={className}>
@@ -49,13 +57,14 @@ const TransactionCategoriesFormItem = ({
                 type="number"
                 min={0.0}
                 step={0.01}
+                max={amountMaxValue}
                 isCurrency
                 isRequired
-                value={
-                  categoryMapping &&
-                  !Number.isNaN(categoryMapping[categoryAmountIndex].amount)
-                    ? categoryMapping[categoryAmountIndex].amount
-                    : ""
+                forcedValue={amountValue || ""}
+                onChange={(event) =>
+                  setTransactionCategoryItemAmount(
+                    parseFloat(event.target.value)
+                  )
                 }
               >
                 Amount
@@ -63,6 +72,7 @@ const TransactionCategoriesFormItem = ({
               <button
                 type="button"
                 className="border-gray-300 bg-white text-gray-700 shadow-sm hover:text-gray-500 inline-flex justify-center w-16 rounded-md items-center py-3 border font-medium text-base  focus-within:ring-2 focus:ring-inset focus:ring-blue-500 focus:outline-none transition ease-in-out duration-150 h-[50px]"
+                onClick={setUnallocatedAmount}
               >
                 <span className="sr-only">Add unallocated amount</span>
                 <Icon type="plus-circle" />

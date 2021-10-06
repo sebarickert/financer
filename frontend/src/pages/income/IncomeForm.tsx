@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import Form from "../../components/form/form";
 import Input from "../../components/input/input";
 import Select, { IOption } from "../../components/select/select";
@@ -11,8 +11,6 @@ import {
   getAllTransactionCategoriesWithCategoryTree,
   ITransactionCategoryWithCategoryTree,
 } from "../profile/TransactionCategories/TransactionCategoriesService";
-import Icon from "../../components/icon/icon";
-import Divider from "../../components/divider/divider";
 import TransactionCategoriesForm from "../../components/transaction-categories-form/transaction-categories-form";
 
 interface IProps {
@@ -49,16 +47,44 @@ const IncomeForm = ({
   const [transactionCategories, setTransactionCategories] = useState<
     IOption[] | null
   >(null);
+  const [inputAmountValue, setInputAmountValue] = useState<number | null>(null);
 
-  const [categoryAmount, setCategoryAmount] = useState<number[]>([]);
+  const handleAmountInputValueChange = (
+    event: ChangeEvent<HTMLInputElement>
+  ) => {
+    setInputAmountValue(parseInt(event.target.value, 10));
+  };
+
+  const [categoryAmount, setCategoryAmount] = useState<{
+    [key in number]: number;
+  }>([]);
+
   const addNewCategory = () =>
-    setCategoryAmount([
+    setCategoryAmount({
       ...categoryAmount,
-      Math.max(...(categoryAmount.length === 0 ? [-1] : categoryAmount)) + 1,
-    ]);
+      [Math.max(
+        ...(Object.keys(categoryAmount).length === 0
+          ? [-1]
+          : Object.keys(categoryAmount).map((categoryIndex) =>
+              parseInt(categoryIndex[0], 10)
+            ))
+      ) + 1]: NaN,
+    });
 
-  const deleteTransactionCategoryItem = (itemToDelete: number) =>
-    setCategoryAmount(categoryAmount.filter((item) => item !== itemToDelete));
+  const deleteTransactionCategoryItem = (itemToDelete: number) => {
+    const newCategoryAmount = { ...categoryAmount };
+    delete newCategoryAmount[itemToDelete];
+    setCategoryAmount(newCategoryAmount);
+  };
+
+  const setTransactionCategoryItemAmount = (
+    itemIndex: number,
+    itemAmount: number
+  ) => {
+    const newCategoryAmount = { ...categoryAmount };
+    newCategoryAmount[itemIndex] = itemAmount;
+    setCategoryAmount(newCategoryAmount);
+  };
 
   useEffect(() => {
     const fetchAccounts = async () => {
@@ -121,7 +147,7 @@ const IncomeForm = ({
     };
 
     const transactionCategoryMappings: ITransactionCategoryMapping[] =
-      categoryAmount.map((item) => {
+      Object.keys(categoryAmount).map((item) => {
         const newTransactionCategories =
           event.target[`transactionCategory[${item}]category`];
         const newTransactionCategoriesAmount =
@@ -154,7 +180,6 @@ const IncomeForm = ({
         submitLabel={submitLabel}
         formHeading={formHeading}
         handleSubmit={handleSubmit}
-        accentColor="green"
       >
         <section>
           <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
@@ -169,6 +194,7 @@ const IncomeForm = ({
               isCurrency
               isRequired
               value={Number.isNaN(amount) ? "" : amount}
+              onChange={handleAmountInputValueChange}
             >
               Amount
             </Input>
@@ -198,9 +224,17 @@ const IncomeForm = ({
               categoryAmount={categoryAmount}
               transactionCategories={transactionCategories}
               transactionCategoryMapping={transactionCategoryMapping}
+              amountMaxValue={inputAmountValue || 0}
               deleteTransactionCategoryItem={deleteTransactionCategoryItem}
+              setTransactionCategoryItemAmount={
+                setTransactionCategoryItemAmount
+              }
             />
-            <Button onClick={addNewCategory} accentColor="plain" isDisabled>
+            <Button
+              onClick={addNewCategory}
+              accentColor="plain"
+              isDisabled={!inputAmountValue || inputAmountValue < 0}
+            >
               Add category item
             </Button>
           </section>
