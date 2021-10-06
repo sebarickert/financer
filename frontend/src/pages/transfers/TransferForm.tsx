@@ -20,15 +20,16 @@ interface IProps {
   errors: string[];
   formHeading: string;
   fromAccount?: string;
+  toAccount?: string;
   onSubmit(
-    account: IExpense,
+    newTransfer: ITransaction,
     transactionCategoryMappings: ITransactionCategoryMapping[]
   ): void;
   submitLabel: string;
   transactionCategoryMapping?: ITransactionCategoryMapping[];
 }
 
-const ExpenseForm = ({
+const TransferForm = ({
   amount,
   date,
   description,
@@ -37,6 +38,7 @@ const ExpenseForm = ({
   onSubmit,
   submitLabel,
   fromAccount,
+  toAccount,
   transactionCategoryMapping,
 }: IProps): JSX.Element => {
   const [accountsRaw, setAccountsRaw] = useState<IAccount[] | null>(null);
@@ -138,10 +140,12 @@ const ExpenseForm = ({
       amount: newAmount,
       date: newDate,
       fromAccount: newFromAccount,
+      toAccount: newToAccount,
     } = event.target;
 
-    const newExpenseData: IExpense = {
+    const newTransferData: ITransaction = {
       fromAccount: newFromAccount.value,
+      toAccount: newToAccount.value,
       amount: parseFloat((newAmount.value as string).replace(",", ".")),
       description: newDescription.value,
       date: newDate.value,
@@ -165,7 +169,7 @@ const ExpenseForm = ({
         };
       });
 
-    onSubmit(newExpenseData, transactionCategoryMappings);
+    onSubmit(newTransferData, transactionCategoryMappings);
   };
 
   return accounts === null || transactionCategories === null ? (
@@ -199,6 +203,22 @@ const ExpenseForm = ({
             >
               Amount
             </Input>
+            <Select
+              id="fromAccount"
+              options={accounts}
+              defaultValue={fromAccount}
+              isRequired
+            >
+              From Account
+            </Select>
+            <Select
+              id="toAccount"
+              options={accounts}
+              defaultValue={toAccount}
+              isRequired
+            >
+              To Account
+            </Select>
             <Input
               id="date"
               type="datetime-local"
@@ -207,14 +227,6 @@ const ExpenseForm = ({
             >
               Date
             </Input>
-            <Select
-              id="fromAccount"
-              options={accounts}
-              defaultValue={fromAccount}
-              isRequired
-            >
-              Account
-            </Select>
           </div>
         </section>
         {transactionCategories.length > 0 && (
@@ -245,4 +257,4 @@ const ExpenseForm = ({
   );
 };
 
-export default ExpenseForm;
+export default TransferForm;

@@ -71,7 +71,7 @@ const Transfer = (): JSX.Element => {
 
   const handleDelete = async () => {
     await deleteTransfer(id);
-    history.push("/accounts");
+    history.push("/statistics/transfers");
   };
 
   return typeof transfer === "undefined" ||

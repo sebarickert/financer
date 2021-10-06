@@ -15,6 +15,7 @@ import {
 } from "../profile/TransactionCategories/TransactionCategoriesService";
 import Button from "../../components/button/button";
 import { addTransactionCategoryMapping } from "../expenses/AddExpense";
+import TransferForm from "./TransferForm";
 
 const AddTransfer = (): JSX.Element => {
   const history = useHistory();
@@ -76,37 +77,12 @@ const AddTransfer = (): JSX.Element => {
   }, [transactionCategoriesRaw]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleSubmit = async (event: any) => {
-    event.preventDefault();
-    const { description, amount, date, fromAccount, toAccount } = event.target;
-    const newTransferData: ITransaction = {
-      fromAccount: fromAccount.value,
-      toAccount: toAccount.value,
-      amount: parseFloat((amount.value as string).replace(",", ".")),
-      description: description.value,
-      date: date.value,
-    };
-
-    const transactionCategoryMappings: ITransactionCategoryMapping[] =
-      categoryAmount.map((item) => {
-        const newTransactionCategories =
-          event.target[`transactionCategory[${item}]category`];
-        const newTransactionCategoriesAmount =
-          event.target[`transactionCategory[${item}]amount`];
-        const newTransactionCategoriesDescription =
-          event.target[`transactionCategory[${item}]description`];
-
-        return {
-          category_id: newTransactionCategories.value,
-          amount: parseFloat(
-            (newTransactionCategoriesAmount.value as string).replace(",", ".")
-          ),
-          description: newTransactionCategoriesDescription.value,
-        };
-      });
-
+  const handleSubmit = async (
+    newTransfer: ITransaction,
+    transactionCategoryMappings: ITransactionCategoryMapping[]
+  ) => {
     try {
-      const newTransactionJson = await addTransaction(newTransferData);
+      const newTransactionJson = await addTransaction(newTransfer);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const newTransactionCategoryMappingJson =
         await addTransactionCategoryMapping(
@@ -119,7 +95,7 @@ const AddTransfer = (): JSX.Element => {
         );
 
       if (newTransactionJson.status === 201) {
-        history.push("/accounts");
+        history.push("/statistics/transfers");
       } else if (newTransactionJson.status === 400) {
         setErrors(newTransactionJson?.errors || ["Unknown error."]);
       }
@@ -129,103 +105,16 @@ const AddTransfer = (): JSX.Element => {
     }
   };
 
-  return accounts === null || transactionCategories === null ? (
-    <Loader loaderColor="blue" />
-  ) : (
-    <Container className="mt-6 sm:mt-12">
-      <SEO title="Transfer between accounts | Accounts" />
-      {errors.length > 0 && (
-        <Alert additionalInformation={errors} testId="form-errors">
-          There were {errors.length} errors with your submission
-        </Alert>
-      )}
-      <Form
-        submitLabel="Transfer"
-        formHeading="Transfer money between accounts"
-        handleSubmit={handleSubmit}
-        accentColor="blue"
-        formFooterBackLink="/accounts"
-      >
-        <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-2">
-          <Input
-            id="description"
-            help="Description of purchase, e.g. rent."
-            isRequired
-          >
-            Description
-          </Input>
-          <Input id="amount" help="Amount of transfer." isCurrency isRequired>
-            Amount
-          </Input>
-          <Input id="date" type="datetime-local" isDate>
-            Date of the transfer
-          </Input>
-          <Select id="fromAccount" options={accounts} isRequired>
-            The account from which the money is taken
-          </Select>
-          <Select id="toAccount" options={accounts} isRequired>
-            The account to which the money will be added
-          </Select>
-        </div>
-        {transactionCategories.length > 0 && (
-          <>
-            <div className="border-t border-gray-200 pt-5 mt-8">
-              <h2 className="text-lg font-bold leading-7 text-gray-900 sm:text-2xl sm:leading-9 sm:truncate">
-                Categories
-              </h2>
-              <div className="grid gap-x-4 sm:grid-cols-2">
-                {categoryAmount.map((index) => (
-                  <div
-                    className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4"
-                    key={index}
-                  >
-                    <Select
-                      id={`transactionCategory[${index}]category`}
-                      options={transactionCategories}
-                      isRequired
-                    >
-                      Categories
-                    </Select>
-                    <Input
-                      id={`transactionCategory[${index}]amount`}
-                      help="Amount of the purchase."
-                      type="number"
-                      min={0.0}
-                      step={0.01}
-                      isCurrency
-                      isRequired
-                    >
-                      Amount
-                    </Input>
-                    <Input
-                      id={`transactionCategory[${index}]description`}
-                      help="Description of purchase, e.g. rent."
-                    >
-                      Description
-                    </Input>
-                    <Button
-                      className="mt-4"
-                      onClick={() => deleteTransactionCategoryItem(index)}
-                      accentColor="red"
-                    >
-                      Delete
-                    </Button>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <Button
-              className="mt-4"
-              onClick={addNewCategory}
-              accentColor="green"
-            >
-              Add category
-            </Button>
-          </>
-        )}
-      </Form>
-    </Container>
+  return (
+    <>
+      <SEO title="Add transfer" />
+      <TransferForm
+        onSubmit={handleSubmit}
+        errors={errors}
+        formHeading="Add transfer"
+        submitLabel="Submit"
+      />
+    </>
   );
 };
 
