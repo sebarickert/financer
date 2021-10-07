@@ -61,7 +61,6 @@ const Accounts = (): JSX.Element => {
         </ButtonGroup>
       </Banner>
       <Stats>
-        <StatsItem statLabel="Total Accounts">{`${accounts.length}`}</StatsItem>
         <StatsItem statLabel="Total Balance">
           {`${formatCurrency(totalBalance)}`}
         </StatsItem>
