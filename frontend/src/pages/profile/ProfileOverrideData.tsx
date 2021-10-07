@@ -110,7 +110,7 @@ const ProfileOverrideData = (): JSX.Element => {
 
   return (
     <>
-      <SEO title="Override data (DANGER ZONE) | Profile" />
+      <SEO title="Override data (DANGER ZONE)" />
       {notification && (
         <Notification
           type={notification.type}
