@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from "react";
+import Banner from "../../components/banner/banner";
+import BannerText from "../../components/banner/banner.text";
 import Button from "../../components/button/button";
 import ButtonGroup from "../../components/button/button.group";
-import Container from "../../components/container/container";
-import Hero from "../../components/hero/hero";
-import HeroLead from "../../components/hero/hero.lead";
 import Loader from "../../components/loader/loader";
 import SEO from "../../components/seo/seo";
-import StackedList from "../../components/stacked-list/stacked-list";
-import { IStackedListRowProps } from "../../components/stacked-list/stacked-list.row";
-import { TAddiotinalLabel } from "../../components/table/table.header";
 import formatCurrency from "../../utils/formatCurrency";
 import { getAllAccounts } from "./AccountService";
+import AccountsList from "../../components/accounts-list/accounts-list";
+import { IAccountsListRowProps } from "../../components/accounts-list/accounts-list.row";
+import Stats from "../../components/stats/stats";
+import StatsItem from "../../components/stats/stats.item";
 
 const Accounts = (): JSX.Element => {
   const [accountsRaw, setAccountsRaw] = useState<IAccount[] | null>(null);
-  const [accounts, setAccounts] = useState<IStackedListRowProps[]>([]);
+  const [accounts, setAccounts] = useState<IAccountsListRowProps[]>([]);
   const [totalBalance, setTotalBalance] = useState<number>(NaN);
 
   useEffect(() => {
@@ -37,29 +37,21 @@ const Accounts = (): JSX.Element => {
       accountsRaw.map(({ _id, balance, name, type }) => ({
         label: name,
         link: `/accounts/${_id}`,
-        additionalLabel: formatCurrency(balance),
-        additionalInformation: [type.charAt(0).toUpperCase() + type.slice(1)],
+        balanceAmount: formatCurrency(balance),
+        accountType: type.charAt(0).toUpperCase() + type.slice(1),
         id: _id,
       }))
     );
   }, [accountsRaw]);
-
-  const getAddiotinalLabel = (total: number): TAddiotinalLabel => ({
-    label: `${Number.isNaN(total) ? "-" : formatCurrency(total)}`,
-    accentLabel: "Total",
-  });
 
   return accountsRaw === null ? (
     <Loader loaderColor="blue" />
   ) : (
     <>
       <SEO title="Accounts" />
-      <Hero accent="Overview" accentColor="blue" label="Accounts">
-        <HeroLead>
-          Below you are able to add your various accounts where you have your
-          savings or investments to calculate total amount.
-        </HeroLead>
-        <ButtonGroup className="mt-12">
+      <Banner title="Accounts" headindType="h1" className="mb-8">
+        <BannerText>Overview page for your accounts and loans.</BannerText>
+        <ButtonGroup className="mt-6">
           <Button link="/accounts/add" accentColor="blue" testId="add-account">
             Add account
           </Button>
@@ -67,15 +59,53 @@ const Accounts = (): JSX.Element => {
             Transfer
           </Button>
         </ButtonGroup>
-      </Hero>
-      <Container className="lg:mt-12">
-        <StackedList
-          addiotinalLabel={getAddiotinalLabel(totalBalance)}
-          label="Your accounts"
-          rows={accounts}
-          rowTestId="account-row"
-        />
-      </Container>
+      </Banner>
+      <Stats>
+        <StatsItem statLabel="Total Accounts">{`${accounts.length}`}</StatsItem>
+        <StatsItem statLabel="Total Balance">
+          {`${formatCurrency(totalBalance)}`}
+        </StatsItem>
+        {accounts.filter(
+          ({ accountType }) => accountType.toLowerCase() === "loan"
+        ).length > 0 && (
+          <StatsItem statLabel="Total Loans">{`${formatCurrency(
+            parseFloat(
+              `${accounts
+                .filter(
+                  ({ accountType }) => accountType.toLowerCase() === "loan"
+                )
+                .reduce((currentTotal, { balanceAmount }) => {
+                  return (
+                    currentTotal +
+                    parseFloat(
+                      balanceAmount
+                        .replace("€", "")
+                        .replace(
+                          String.fromCharCode(8722),
+                          String.fromCharCode(45)
+                        )
+                        .replace(/\s/g, "")
+                        .replace(",", ".")
+                    )
+                  );
+                }, 0)}`
+            )
+          )}`}</StatsItem>
+        )}
+      </Stats>
+      <AccountsList
+        label="Savings accounts"
+        rows={accounts.filter(
+          ({ accountType }) => accountType.toLowerCase() !== "loan"
+        )}
+      />
+      <AccountsList
+        label="Loans"
+        rows={accounts.filter(
+          ({ accountType }) => accountType.toLowerCase() === "loan"
+        )}
+        className="mt-12"
+      />
     </>
   );
 };
