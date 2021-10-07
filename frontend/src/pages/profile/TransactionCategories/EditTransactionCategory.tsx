@@ -80,7 +80,7 @@ const EditTransactionCategory = (): JSX.Element => {
     <Loader loaderColor="blue" />
   ) : (
     <Container>
-      <SEO title="Add expense | Expenses" />
+      <SEO title="Add expense" />
       <TransactionCategoryForm
         onSubmit={handleSubmit}
         errors={errors}
