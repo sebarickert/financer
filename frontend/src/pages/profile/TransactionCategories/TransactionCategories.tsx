@@ -54,7 +54,7 @@ const TransactionCategories = (): JSX.Element => {
     <Loader loaderColor="blue" />
   ) : (
     <>
-      <SEO title="Transaction categories | Profile" />
+      <SEO title="Transaction categories" />
       <Hero label="Transaction categories" standAlone className="mb-12">
         <HeroLead className="!text-gray-600">
           Below you are able to add, delete or edit your transaction categories.
