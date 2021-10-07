@@ -16,7 +16,10 @@ const AccountsListRow = ({
   link,
 }: IAccountsListRowProps): JSX.Element => {
   return (
-    <article className="relative group bg-white focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-500 rounded-lg border overflow-hidden hover:bg-gray-50 h-full p-6">
+    <article
+      className="relative group bg-white focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-500 rounded-lg border overflow-hidden hover:bg-gray-50 h-full p-6"
+      data-test-id="account-row"
+    >
       <dl className="flex flex-col justify-between h-full space-y-4">
         <div>
           <dt className="sr-only">Account type</dt>
