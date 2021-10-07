@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import Container from "../../components/container/container";
 import Loader from "../../components/loader/loader";
 import SEO from "../../components/seo/seo";
 import AccountForm from "./AccountForm";
@@ -43,8 +42,8 @@ const EditAccount = (): JSX.Element => {
   return typeof account === "undefined" ? (
     <Loader loaderColor="blue" />
   ) : (
-    <Container className="mt-6 sm:mt-12">
-      <SEO title={`Edit ${account.name} | Accounts`} />
+    <>
+      <SEO title={`Edit ${account.name}`} />
       <AccountForm
         onSubmit={handleSubmit}
         errors={errors}
@@ -54,7 +53,7 @@ const EditAccount = (): JSX.Element => {
         balance={account.balance}
         type={account.type}
       />
-    </Container>
+    </>
   );
 };
 

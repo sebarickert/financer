@@ -72,35 +72,31 @@ const AccountForm = ({
         handleSubmit={handleSubmit}
         accentColor="blue"
       >
-        <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-2">
-          <Input
-            id="account"
-            help="Name of account, e.g. bank account."
-            isRequired
-            value={name}
-          >
-            Account
-          </Input>
-          <Input
-            id="amount"
-            help="Amount of savings in the account."
-            type="number"
-            step={0.01}
-            isCurrency
-            isRequired
-            value={Number.isNaN(balance) ? "" : balance}
-          >
-            Amount
-          </Input>
-          <Select
-            id="type"
-            options={accountTypes}
-            defaultValue={type}
-            isRequired
-          >
-            Account type
-          </Select>
-        </div>
+        <section>
+          <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
+            <Input id="account" isRequired value={name}>
+              Account
+            </Input>
+            <Input
+              id="amount"
+              type="number"
+              step={0.01}
+              isCurrency
+              isRequired
+              value={Number.isNaN(balance) ? "" : balance}
+            >
+              Balance
+            </Input>
+            <Select
+              id="type"
+              options={accountTypes}
+              defaultValue={type}
+              isRequired
+            >
+              Type
+            </Select>
+          </div>
+        </section>
       </Form>
     </>
   );
