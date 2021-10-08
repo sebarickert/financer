@@ -7,13 +7,13 @@ import {
   getAllAccountTransactionsById,
 } from "../apiHelpers";
 
-describe("Add income", () => {
-  beforeEach(() => cy.visit("http://localhost:3000/statistics/incomes"));
+describe("Add expense", () => {
+  beforeEach(() => cy.visit("http://localhost:3000/statistics/expenses"));
   const newTransactionAmountStr = "15.50";
   const newTransactionAmount = parseFloat(newTransactionAmountStr);
   const newTransactionName = "new dummy transaction created by test code";
 
-  it("Add latest income", () => {
+  it("Add latest expense", () => {
     cy.wrap(null).then(async () => {
       const transactionsBefore = await getAllUserTransaction();
       const targetTransactionBefore =
@@ -24,14 +24,14 @@ describe("Add income", () => {
         targetTransactionBefore.dateObj.getTime() + MINUTE_IN_MS
       );
 
-      cy.get("[data-testid=add-income]").click();
+      cy.get("[data-testid=add-expense]").click();
       cy.get("#description").clear();
       cy.get("#description").type(newTransactionName);
       cy.get("#date").clear();
       cy.get("#date").type(formatDate(newTransactionDate));
       cy.get("#amount").clear();
       cy.get("#amount").type(newTransactionAmountStr);
-      cy.get("#toAccount").select(targetAccountId);
+      cy.get("#fromAccount").select(targetAccountId);
       cy.get("[data-testid=submit]")
         .click()
         .then(async () => {
@@ -40,7 +40,7 @@ describe("Add income", () => {
             targetTransactionBefore._id
           );
 
-          expect(accountBefore.balance + newTransactionAmount).to.be.eq(
+          expect(accountBefore.balance - newTransactionAmount).to.be.eq(
             accountAfter.balance
           );
           expect(targetTransactionBefore.toAccountBalance).to.be.eq(
@@ -50,7 +50,7 @@ describe("Add income", () => {
     });
   });
 
-  it("Add second latest income", () => {
+  it("Add second latest expense", () => {
     cy.wrap(null).then(async () => {
       const transactionsBefore = await getAllUserTransaction();
       const targetTransactionBefore =
@@ -61,14 +61,14 @@ describe("Add income", () => {
         targetTransactionBefore.dateObj.getTime() - MINUTE_IN_MS
       );
 
-      cy.get("[data-testid=add-income]").click();
+      cy.get("[data-testid=add-expense]").click();
       cy.get("#description").clear();
       cy.get("#description").type(newTransactionName);
       cy.get("#date").clear();
       cy.get("#date").type(formatDate(newTransactionDate));
       cy.get("#amount").clear();
       cy.get("#amount").type(newTransactionAmountStr);
-      cy.get("#toAccount").select(targetAccountId);
+      cy.get("#fromAccount").select(targetAccountId);
       cy.get("[data-testid=submit]")
         .click()
         .then(async () => {
@@ -77,17 +77,17 @@ describe("Add income", () => {
             targetTransactionBefore._id
           );
 
-          expect(accountBefore.balance + newTransactionAmount).to.be.eq(
+          expect(accountBefore.balance - newTransactionAmount).to.be.eq(
             accountAfter.balance
           );
           expect(
-            targetTransactionBefore.toAccountBalance + newTransactionAmount
+            targetTransactionBefore.toAccountBalance - newTransactionAmount
           ).to.be.eq(targetTransactionAfter.toAccountBalance);
         });
     });
   });
 
-  it("Add first income", () => {
+  it("Add first expense", () => {
     cy.wrap(null).then(async () => {
       const transactionsBefore = await getAllUserTransaction();
       const targetTransactionBefore = transactionsBefore[0];
@@ -97,14 +97,14 @@ describe("Add income", () => {
         targetTransactionBefore.dateObj.getTime() - MINUTE_IN_MS
       );
 
-      cy.get("[data-testid=add-income]").click();
+      cy.get("[data-testid=add-expense]").click();
       cy.get("#description").clear();
       cy.get("#description").type(newTransactionName);
       cy.get("#date").clear();
       cy.get("#date").type(formatDate(newTransactionDate));
       cy.get("#amount").clear();
       cy.get("#amount").type(newTransactionAmountStr);
-      cy.get("#toAccount").select(targetAccountId);
+      cy.get("#fromAccount").select(targetAccountId);
       cy.get("[data-testid=submit]")
         .click()
         .then(async () => {
@@ -113,7 +113,7 @@ describe("Add income", () => {
             targetAccountId
           );
 
-          expect(accountBefore.balance + newTransactionAmount).to.be.eq(
+          expect(accountBefore.balance - newTransactionAmount).to.be.eq(
             accountAfter.balance
           );
 
@@ -134,7 +134,7 @@ describe("Add income", () => {
                   : transactionAfter.fromAccountBalance;
 
               expect(
-                beforeTargetAccountBalanse + newTransactionAmount
+                beforeTargetAccountBalanse - newTransactionAmount
               ).to.be.eq(afterTargetAccountBalanse);
             });
         });
