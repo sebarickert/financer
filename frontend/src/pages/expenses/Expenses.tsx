@@ -88,6 +88,7 @@ export const Expenses = (): JSX.Element => {
           link="/statistics/expenses/add"
           className="mt-6"
           accentColor="red"
+          testId="add-expense"
         >
           Add expense
         </Button>
