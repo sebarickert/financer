@@ -1,11 +1,14 @@
-import React from "react";
+import React from 'react';
 
-interface IProps {
+interface IModalConfirmHeaderProps {
   label: string;
   children?: string;
 }
 
-const ModalConfirmHeader = ({ label, children }: IProps): JSX.Element => {
+export const ModalConfirmHeader = ({
+  label,
+  children,
+}: IModalConfirmHeaderProps): JSX.Element => {
   return (
     <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
       <div className="sm:flex sm:items-start">
@@ -42,5 +45,3 @@ const ModalConfirmHeader = ({ label, children }: IProps): JSX.Element => {
     </div>
   );
 };
-
-export default ModalConfirmHeader;

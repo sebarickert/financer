@@ -25,10 +25,21 @@
     "prettier/prettier": [
       "error",
       {
-        "endOfLine": "auto"
+        "endOfLine": "auto",
+        "singleQuote": true,
+        "semi": true
       }
     ],
+    "no-underscore-dangle":  ["error", { "allow": ["_id"] }],
     "react/require-default-props": "off",
-    "no-underscore-dangle":  ["error", { "allow": ["_id"] }]
+    "import/prefer-default-export": "off",
+    "import/no-default-export": "error",
+    "import/order": [
+      "error",
+      {
+        "newlines-between": "always",
+        "alphabetize": { "order": "asc", "caseInsensitive": true }
+      }
+    ]
   }
 }

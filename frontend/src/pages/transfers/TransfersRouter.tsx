@@ -1,10 +1,11 @@
-import React from "react";
-import { Switch, Route } from "react-router-dom";
-import AddTransfer from "./AddTransfer";
-import Transfer from "./Transfer";
-import Transfers from "./Transfers";
+import React from 'react';
+import { Switch, Route } from 'react-router-dom';
 
-const TransfersRouter = (): JSX.Element => {
+import { AddTransfer } from './AddTransfer';
+import { Transfer } from './Transfer';
+import { Transfers } from './Transfers';
+
+export const TransfersRouter = (): JSX.Element => {
   return (
     <Switch>
       <Route exact path="/statistics/transfers">
@@ -19,5 +20,3 @@ const TransfersRouter = (): JSX.Element => {
     </Switch>
   );
 };
-
-export default TransfersRouter;

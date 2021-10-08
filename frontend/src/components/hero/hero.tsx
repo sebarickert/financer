@@ -1,7 +1,8 @@
-import React from "react";
-import Container from "../container/container";
+import React from 'react';
 
-type AccentColor = "pink" | "red" | "green" | "blue";
+import { Container } from '../container/container';
+
+type AccentColor = 'pink' | 'red' | 'green' | 'blue';
 
 interface IHeroProps {
   accent?: string;
@@ -15,33 +16,33 @@ interface IHeroProps {
 
 const getHeroColorClasses = (color: AccentColor): string => {
   switch (color) {
-    case "blue":
-      return "text-blue-500";
-    case "green":
-      return "text-green-500";
-    case "pink":
-      return "text-pink-500";
-    case "red":
-      return "text-red-500";
+    case 'blue':
+      return 'text-blue-500';
+    case 'green':
+      return 'text-green-500';
+    case 'pink':
+      return 'text-pink-500';
+    case 'red':
+      return 'text-red-500';
     default:
-      return "";
+      return '';
   }
 };
 
-const Hero = ({
+export const Hero = ({
   accent,
-  accentColor = "pink",
+  accentColor = 'pink',
   label,
   children,
   standAlone,
-  className = "",
+  className = '',
   testId,
 }: IHeroProps): JSX.Element => {
   const heroContent = (
     <div className="max-w-xl" data-test-id={testId}>
       <h1
         className={`text-4xl tracking-tight leading-10 font-extrabold ${
-          standAlone ? "text-gray-900" : "text-white"
+          standAlone ? 'text-gray-900' : 'text-white'
         } sm:leading-none sm:text-5xl`}
         data-test-id="hero-title"
       >
@@ -73,5 +74,3 @@ const Hero = ({
     </div>
   );
 };
-
-export default Hero;

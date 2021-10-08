@@ -1,14 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState, useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
-import Container from "../../components/container/container";
-import Loader from "../../components/loader/loader";
-import SEO from "../../components/seo/seo";
-import { getTransactionCategoryMappingByTransactionId } from "../expenses/Expense";
-import IncomeForm from "./IncomeForm";
-import { getIncomeById } from "./IncomeService";
+import React, { useState, useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 
-const EditIncome = (): JSX.Element => {
+import { Container } from '../../components/container/container';
+import { Loader } from '../../components/loader/loader';
+import { SEO } from '../../components/seo/seo';
+import { getTransactionCategoryMappingByTransactionId } from '../expenses/Expense';
+
+import { IncomeForm } from './IncomeForm';
+import { getIncomeById } from './IncomeService';
+
+export const EditIncome = (): JSX.Element => {
   const history = useHistory();
   const [errors, setErrors] = useState<string[]>([]);
 
@@ -35,8 +37,8 @@ const EditIncome = (): JSX.Element => {
 
   const handleSubmit = async () => {};
 
-  return typeof income === "undefined" ||
-    typeof transactionCategoryMapping === "undefined" ? (
+  return typeof income === 'undefined' ||
+    typeof transactionCategoryMapping === 'undefined' ? (
     <Loader loaderColor="blue" />
   ) : (
     <>
@@ -55,5 +57,3 @@ const EditIncome = (): JSX.Element => {
     </>
   );
 };
-
-export default EditIncome;

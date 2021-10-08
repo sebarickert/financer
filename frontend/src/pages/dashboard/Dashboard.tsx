@@ -1,11 +1,12 @@
-import React from "react";
-import Banner from "../../components/banner/banner";
-import Button from "../../components/button/button";
-import ButtonGroup from "../../components/button/button.group";
-import DashboardStats from "../../components/dashboard-stats/dashboard.stats";
-import SEO from "../../components/seo/seo";
+import React from 'react';
 
-const Dashboard = (): JSX.Element => {
+import { Banner } from '../../components/banner/banner';
+import { Button } from '../../components/button/button';
+import { ButtonGroup } from '../../components/button/button.group';
+import { DashboardStats } from '../../components/dashboard-stats/dashboard.stats';
+import { SEO } from '../../components/seo/seo';
+
+export const Dashboard = (): JSX.Element => {
   return (
     <>
       <SEO title="Dashboard" />
@@ -26,5 +27,3 @@ const Dashboard = (): JSX.Element => {
     </>
   );
 };
-
-export default Dashboard;

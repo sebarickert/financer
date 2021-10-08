@@ -1,5 +1,6 @@
-import React from "react";
-import Button from "../../components/button/button";
+import React from 'react';
+
+import { Button } from '../../components/button/button';
 
 interface ILoginActionsProps {
   submitButtonLabel: string;
@@ -7,7 +8,7 @@ interface ILoginActionsProps {
   onClick?(): void;
 }
 
-const LoginActions = ({
+export const LoginActions = ({
   submitButtonLabel,
   loginUrl,
   onClick = () => {},
@@ -20,5 +21,3 @@ const LoginActions = ({
     </div>
   );
 };
-
-export default LoginActions;

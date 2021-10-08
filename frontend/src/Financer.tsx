@@ -1,22 +1,25 @@
-import React from "react";
-import { Switch, Route } from "react-router-dom";
-import Layout from "./components/layout/layout";
-import AccountsRouter from "./pages/accounts/AccountsRouter";
-import ExpensesRouter from "./pages/expenses/ExpensesRouter";
-import IncomesRouter from "./pages/income/IncomesRouter";
-import Dashboard from "./pages/dashboard/Dashboard";
-import PrivacyPolicy from "./Privacy";
-import Login from "./pages/login/login";
-import IssuesWithLogin from "./IssuesWithLogin";
-import ProfileRouter from "./pages/profile/ProfileRouter";
-import TransfersRouter from "./pages/transfers/TransfersRouter";
-import StatisticsRouter from "./pages/statistics/StatisticsRouter";
+import React from 'react';
+import { Switch, Route } from 'react-router-dom';
 
-interface IProps {
+import { Layout } from './components/layout/layout';
+import { IssuesWithLogin } from './IssuesWithLogin';
+import { AccountsRouter } from './pages/accounts/AccountsRouter';
+import { Dashboard } from './pages/dashboard/Dashboard';
+import { ExpensesRouter } from './pages/expenses/ExpensesRouter';
+import { IncomesRouter } from './pages/income/IncomesRouter';
+import { Login } from './pages/login/login';
+import { ProfileRouter } from './pages/profile/ProfileRouter';
+import { StatisticsRouter } from './pages/statistics/StatisticsRouter';
+import { TransfersRouter } from './pages/transfers/TransfersRouter';
+import { PrivacyPolicy } from './Privacy';
+
+interface IFinancerProps {
   isLoggedIn: boolean;
 }
 
-const Financer = ({ isLoggedIn = false }: IProps): JSX.Element => {
+export const Financer = ({
+  isLoggedIn = false,
+}: IFinancerProps): JSX.Element => {
   return (
     <Switch>
       <Route path="/privacy-policy">
@@ -56,5 +59,3 @@ const Financer = ({ isLoggedIn = false }: IProps): JSX.Element => {
     </Switch>
   );
 };
-
-export default Financer;

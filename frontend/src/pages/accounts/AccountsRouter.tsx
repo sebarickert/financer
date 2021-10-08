@@ -1,11 +1,12 @@
-import React from "react";
-import { Switch, Route } from "react-router-dom";
-import AddAccount from "./AddAccount";
-import Accounts from "./Accounts";
-import Account from "./Account";
-import EditAccount from "./EditAccount";
+import React from 'react';
+import { Switch, Route } from 'react-router-dom';
 
-const AccountsRouter = (): JSX.Element => {
+import { Account } from './Account';
+import { Accounts } from './Accounts';
+import { AddAccount } from './AddAccount';
+import { EditAccount } from './EditAccount';
+
+export const AccountsRouter = (): JSX.Element => {
   return (
     <Switch>
       <Route exact path="/accounts">
@@ -23,5 +24,3 @@ const AccountsRouter = (): JSX.Element => {
     </Switch>
   );
 };
-
-export default AccountsRouter;

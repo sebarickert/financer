@@ -1,8 +1,9 @@
-import React from "react";
-import DescriptionListBody from "./description-list.body";
-import DescriptionListHeader from "./description-list.header";
+import React from 'react';
 
-interface IProps {
+import { DescriptionListBody } from './description-list.body';
+import { DescriptionListHeader } from './description-list.header';
+
+interface IDescriptionListProps {
   label: string;
   className?: string;
   children: React.ReactNode;
@@ -10,13 +11,13 @@ interface IProps {
   visibleLabel?: boolean;
 }
 
-const DescriptionList = ({
+export const DescriptionList = ({
   label,
-  className = "",
+  className = '',
   children,
   testId,
   visibleLabel = false,
-}: IProps): JSX.Element => {
+}: IDescriptionListProps): JSX.Element => {
   return (
     <div className={`${className}`} data-test-id={testId}>
       <DescriptionListHeader label={label} visibleLabel={visibleLabel} />
@@ -24,5 +25,3 @@ const DescriptionList = ({
     </div>
   );
 };
-
-export default DescriptionList;

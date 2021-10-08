@@ -1,11 +1,14 @@
-import React from "react";
+import React from 'react';
 
-interface IProps {
+interface IStatsItemProps {
   children: string;
   statLabel: string;
 }
 
-const StatsItem = ({ children, statLabel }: IProps): JSX.Element => {
+export const StatsItem = ({
+  children,
+  statLabel,
+}: IStatsItemProps): JSX.Element => {
   return (
     <div className="relative group bg-white p-6 rounded-lg border">
       <dl>
@@ -15,5 +18,3 @@ const StatsItem = ({ children, statLabel }: IProps): JSX.Element => {
     </div>
   );
 };
-
-export default StatsItem;

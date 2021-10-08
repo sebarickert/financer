@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 
 interface IconElementProps {
   className?: string;
 }
 
-const IconUser = ({ className = "" }: IconElementProps): JSX.Element => {
+export const IconUser = ({ className = '' }: IconElementProps): JSX.Element => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -22,5 +22,3 @@ const IconUser = ({ className = "" }: IconElementProps): JSX.Element => {
     </svg>
   );
 };
-
-export default IconUser;

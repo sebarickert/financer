@@ -1,9 +1,10 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import { isExternalLink } from "../button/button";
-import Icon, { IconName } from "../icon/icon";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 
-interface IProps {
+import { isExternalLink } from '../button/button';
+import { Icon, IconName } from '../icon/icon';
+
+interface IDesktopNavigationItemProps {
   link: string;
   iconName: IconName;
   label: string;
@@ -13,7 +14,7 @@ interface IProps {
   isActive?(match: never, location: { pathname: string }): boolean;
 }
 
-const DesktopNavigationItem = ({
+export const DesktopNavigationItem = ({
   link,
   iconName,
   label,
@@ -21,7 +22,7 @@ const DesktopNavigationItem = ({
   ariaLabel,
   isExact,
   isActive,
-}: IProps): JSX.Element => {
+}: IDesktopNavigationItemProps): JSX.Element => {
   if (isExternalLink(link)) {
     return (
       <li>
@@ -54,5 +55,3 @@ const DesktopNavigationItem = ({
     </li>
   );
 };
-
-export default DesktopNavigationItem;

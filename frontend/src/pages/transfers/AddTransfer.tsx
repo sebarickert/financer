@@ -1,11 +1,13 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-import SEO from "../../components/seo/seo";
-import { addTransaction } from "../../services/TransactionService";
-import { addTransactionCategoryMapping } from "../expenses/AddExpense";
-import TransferForm from "./TransferForm";
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
-const AddTransfer = (): JSX.Element => {
+import { SEO } from '../../components/seo/seo';
+import { addTransaction } from '../../services/TransactionService';
+import { addTransactionCategoryMapping } from '../expenses/AddExpense';
+
+import { TransferForm } from './TransferForm';
+
+export const AddTransfer = (): JSX.Element => {
   const history = useHistory();
   const [errors, setErrors] = useState<string[]>([]);
 
@@ -28,9 +30,9 @@ const AddTransfer = (): JSX.Element => {
         );
 
       if (newTransactionJson.status === 201) {
-        history.push("/statistics/transfers");
+        history.push('/statistics/transfers');
       } else if (newTransactionJson.status === 400) {
-        setErrors(newTransactionJson?.errors || ["Unknown error."]);
+        setErrors(newTransactionJson?.errors || ['Unknown error.']);
       }
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -50,5 +52,3 @@ const AddTransfer = (): JSX.Element => {
     </>
   );
 };
-
-export default AddTransfer;

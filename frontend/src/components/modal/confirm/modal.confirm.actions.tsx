@@ -1,18 +1,19 @@
-import React from "react";
-import Button from "../../button/button";
-import ButtonGroup from "../../button/button.group";
+import React from 'react';
 
-interface IProps {
+import { Button } from '../../button/button';
+import { ButtonGroup } from '../../button/button.group';
+
+interface IModalConfirmActionsProps {
   onCancel(): void;
   onConfirm(): void;
   submitButtonLabel: string;
 }
 
-const ModalConfirmActions = ({
+export const ModalConfirmActions = ({
   onCancel,
   onConfirm,
   submitButtonLabel,
-}: IProps): JSX.Element => {
+}: IModalConfirmActionsProps): JSX.Element => {
   return (
     <ButtonGroup className="bg-gray-50 px-4 py-3 sm:px-6" isReverse>
       <Button onClick={onConfirm} accentColor="red">
@@ -24,5 +25,3 @@ const ModalConfirmActions = ({
     </ButtonGroup>
   );
 };
-
-export default ModalConfirmActions;

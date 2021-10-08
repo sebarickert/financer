@@ -1,21 +1,22 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
-import Container from "../container/container";
-import MobileNavigation from "../mobile-navigation/mobile-navigation";
-import { ReactComponent as Logo } from "../../assets/logo.svg";
-import DesktopNavigation from "../desktop-navigation/desktop-navigation";
-import isIOSDevice from "../../utils/isIOSDevice";
+import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
-interface IProps {
+import { ReactComponent as Logo } from '../../assets/logo.svg';
+import { isIOSDevice } from '../../utils/isIOSDevice';
+import { Container } from '../container/container';
+import { DesktopNavigation } from '../desktop-navigation/desktop-navigation';
+import { MobileNavigation } from '../mobile-navigation/mobile-navigation';
+
+interface ILayoutProps {
   children: React.ReactNode;
 }
 
-const Layout = ({ children }: IProps): JSX.Element => {
+export const Layout = ({ children }: ILayoutProps): JSX.Element => {
   const [currentWindowWidth, setCurrentWindowWidth] = useState(
     window.outerWidth
   );
 
-  window.addEventListener("resize", () =>
+  window.addEventListener('resize', () =>
     setCurrentWindowWidth(window.outerWidth)
   );
 
@@ -44,7 +45,7 @@ const Layout = ({ children }: IProps): JSX.Element => {
   return (
     <div className="flex flex-col min-h-screen">
       <main className="bg-white-off lg:pb-24 flex-grow">
-        <div className={`pt-6 ${isIOSDevice() ? "pb-32" : "pb-24"} px-4`}>
+        <div className={`pt-6 ${isIOSDevice() ? 'pb-32' : 'pb-24'} px-4`}>
           {children}
         </div>
       </main>
@@ -54,5 +55,3 @@ const Layout = ({ children }: IProps): JSX.Element => {
     </div>
   );
 };
-
-export default Layout;

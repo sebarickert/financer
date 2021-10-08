@@ -1,16 +1,16 @@
-import React from "react";
+import React from 'react';
 
-export interface IProps {
+export interface IDescriptionListItemProps {
   label: string;
   children: string;
   testId?: string;
 }
 
-const DescriptionListItem = ({
+export const DescriptionListItem = ({
   label,
   children,
   testId,
-}: IProps): JSX.Element => {
+}: IDescriptionListItemProps): JSX.Element => {
   return (
     <div className="py-4 grid grid-cols-2 gap-4" data-test-id={testId}>
       <dt className="text-sm font-medium text-gray-500">{label}</dt>
@@ -18,5 +18,3 @@ const DescriptionListItem = ({
     </div>
   );
 };
-
-export default DescriptionListItem;

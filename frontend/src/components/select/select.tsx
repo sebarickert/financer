@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-interface IProps {
+interface ISelectProps {
   children: React.ReactNode;
   help?: string;
   id: string;
@@ -15,15 +15,15 @@ export interface IOption {
   label: string;
 }
 
-const Select = ({
+export const Select = ({
   children,
-  help = "",
+  help = '',
   id,
   isRequired = false,
   options,
   defaultValue,
-  className = "",
-}: IProps): JSX.Element => {
+  className = '',
+}: ISelectProps): JSX.Element => {
   return (
     <div className={className}>
       <label
@@ -54,5 +54,3 @@ const Select = ({
     </div>
   );
 };
-
-export default Select;

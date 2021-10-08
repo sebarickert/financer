@@ -1,14 +1,14 @@
-import React from "react";
+import React from 'react';
 
-interface IProps {
+interface ITableHeadItemProps {
   children?: string;
   isAction?: boolean;
 }
 
-const TableHeadItem = ({
-  children = "",
+export const TableHeadItem = ({
+  children = '',
   isAction = false,
-}: IProps): JSX.Element => {
+}: ITableHeadItemProps): JSX.Element => {
   if (isAction) {
     return <th className="px-6 py-3 bg-gray-50" aria-label="Actions" />;
   }
@@ -22,5 +22,3 @@ const TableHeadItem = ({
     </th>
   );
 };
-
-export default TableHeadItem;

@@ -1,25 +1,27 @@
-import React, { useState, useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
-import DescriptionList from "../../components/description-list/description-list";
-import DescriptionListItem from "../../components/description-list/description-list.item";
-import Icon from "../../components/icon/icon";
-import Loader from "../../components/loader/loader";
-import ModalConfirm from "../../components/modal/confirm/modal.confirm";
-import SEO from "../../components/seo/seo";
-import formatCurrency from "../../utils/formatCurrency";
-import { formatDate } from "../../utils/formatDate";
-import { getTransactionCategoryMappingByTransactionId } from "../expenses/Expense";
+import React, { useState, useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
+
+import { DescriptionList } from '../../components/description-list/description-list';
+import { DescriptionListItem } from '../../components/description-list/description-list.item';
+import { Icon } from '../../components/icon/icon';
+import { Loader } from '../../components/loader/loader';
+import { ModalConfirm } from '../../components/modal/confirm/modal.confirm';
+import { SEO } from '../../components/seo/seo';
+import { formatCurrency } from '../../utils/formatCurrency';
+import { formatDate } from '../../utils/formatDate';
+import { getTransactionCategoryMappingByTransactionId } from '../expenses/Expense';
 import {
   getAllTransactionCategoriesWithCategoryTree,
   ITransactionCategoryWithCategoryTree,
-} from "../profile/TransactionCategories/TransactionCategoriesService";
-import { deleteIncome, getIncomeById } from "./IncomeService";
+} from '../profile/TransactionCategories/TransactionCategoriesService';
 
-interface IProps {
+import { deleteIncome, getIncomeById } from './IncomeService';
+
+interface IIncomeDeleteModalProps {
   handleDelete(): void;
 }
 
-const IncomeDeleteModal = ({ handleDelete }: IProps) => (
+const IncomeDeleteModal = ({ handleDelete }: IIncomeDeleteModalProps) => (
   <ModalConfirm
     label="Delete income"
     submitButtonLabel="Delete"
@@ -32,7 +34,7 @@ const IncomeDeleteModal = ({ handleDelete }: IProps) => (
   </ModalConfirm>
 );
 
-const Income = (): JSX.Element => {
+export const Income = (): JSX.Element => {
   const history = useHistory();
   const [income, setIncome] = useState<IIncome | undefined>(undefined);
   const [transactionCategoryMapping, setTransactionCategoryMapping] = useState<
@@ -71,11 +73,11 @@ const Income = (): JSX.Element => {
 
   const handleDelete = async () => {
     deleteIncome(id);
-    history.push("/statistics/incomes");
+    history.push('/statistics/incomes');
   };
 
-  return typeof income === "undefined" ||
-    typeof transactionCategoryMapping === "undefined" ||
+  return typeof income === 'undefined' ||
+    typeof transactionCategoryMapping === 'undefined' ||
     transactionCategories === null ? (
     <Loader loaderColor="blue" />
   ) : (
@@ -116,5 +118,3 @@ const Income = (): JSX.Element => {
     </>
   );
 };
-
-export default Income;

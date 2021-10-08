@@ -1,21 +1,22 @@
-import React from "react";
-import Button from "../button/button";
+import React from 'react';
 
-interface IProps {
-  accentColor?: "red" | "green" | "blue";
+import { Button } from '../button/button';
+
+interface IModalProps {
+  accentColor?: 'red' | 'green' | 'blue';
   children: React.ReactNode;
   isOpen: boolean;
   modalOpenButtonLabel: string;
   toggleOpen(): void;
 }
 
-const Modal = ({
+export const Modal = ({
   children,
   isOpen,
   modalOpenButtonLabel,
   toggleOpen,
   accentColor,
-}: IProps): JSX.Element => {
+}: IModalProps): JSX.Element => {
   return (
     <>
       <Button accentColor={accentColor} onClick={toggleOpen}>
@@ -43,5 +44,3 @@ const Modal = ({
     </>
   );
 };
-
-export default Modal;

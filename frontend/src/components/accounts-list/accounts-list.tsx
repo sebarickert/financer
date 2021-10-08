@@ -1,5 +1,6 @@
-import React from "react";
-import AccountsListRow, { IAccountsListRowProps } from "./accounts-list.row";
+import React from 'react';
+
+import { AccountsListRow, IAccountsListRowProps } from './accounts-list.row';
 
 interface IAccountsListProps {
   label?: string;
@@ -7,7 +8,7 @@ interface IAccountsListProps {
   className?: string;
 }
 
-const AccountsList = ({
+export const AccountsList = ({
   label,
   rows,
   className,
@@ -38,5 +39,3 @@ const AccountsList = ({
     </section>
   );
 };
-
-export default AccountsList;

@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
-import Loader from "../../components/loader/loader";
-import SEO from "../../components/seo/seo";
-import AccountForm from "./AccountForm";
-import { editAccount } from "./AccountService";
+import React, { useState, useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 
-const EditAccount = (): JSX.Element => {
+import { Loader } from '../../components/loader/loader';
+import { SEO } from '../../components/seo/seo';
+
+import { AccountForm } from './AccountForm';
+import { editAccount } from './AccountService';
+
+export const EditAccount = (): JSX.Element => {
   const history = useHistory();
   const [errors, setErrors] = useState<string[]>([]);
 
@@ -31,7 +33,7 @@ const EditAccount = (): JSX.Element => {
       if (newAccount.status === 200) {
         history.push(`/accounts/${id}`);
       } else if (newAccount.status === 400) {
-        setErrors(newAccount?.errors || ["Unknown error."]);
+        setErrors(newAccount?.errors || ['Unknown error.']);
       }
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -39,7 +41,7 @@ const EditAccount = (): JSX.Element => {
     }
   };
 
-  return typeof account === "undefined" ? (
+  return typeof account === 'undefined' ? (
     <Loader loaderColor="blue" />
   ) : (
     <>
@@ -56,5 +58,3 @@ const EditAccount = (): JSX.Element => {
     </>
   );
 };
-
-export default EditAccount;

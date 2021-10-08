@@ -1,11 +1,11 @@
 export const addTransaction = async (
   newTransactionData: ITransaction
 ): Promise<IApiResponse<ITransaction>> => {
-  const newTransaction = await fetch("/api/transaction", {
-    method: "POST",
+  const newTransaction = await fetch('/api/transaction', {
+    method: 'POST',
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(newTransactionData),
   });
@@ -16,10 +16,10 @@ export const addTransaction = async (
 export const getAllUserTransactions = async (): Promise<
   IApiResponse<ITransaction[]>
 > => {
-  const transactions = await fetch("/api/transaction", {
+  const transactions = await fetch('/api/transaction', {
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
   });
 

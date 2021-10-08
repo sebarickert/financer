@@ -1,23 +1,25 @@
-import React, { useState, useEffect } from "react";
-import Banner from "../../components/banner/banner";
-import BannerText from "../../components/banner/banner.text";
-import Button from "../../components/button/button";
-import Loader from "../../components/loader/loader";
-import SEO from "../../components/seo/seo";
-import TransactionStackedList from "../../components/transaction-stacked-list/transaction-stacked-list";
-import monthNames from "../../constants/months";
-import formatCurrency from "../../utils/formatCurrency";
-import { getAllUserTransactionCategoryMappings } from "../expenses/Expenses";
-import { getAllTransactionCategories } from "../profile/TransactionCategories/TransactionCategoriesService";
+import React, { useState, useEffect } from 'react';
+
+import { Banner } from '../../components/banner/banner';
+import { BannerText } from '../../components/banner/banner.text';
+import { Button } from '../../components/button/button';
+import { Loader } from '../../components/loader/loader';
+import { SEO } from '../../components/seo/seo';
+import { TransactionStackedList } from '../../components/transaction-stacked-list/transaction-stacked-list';
+import { monthNames } from '../../constants/months';
+import { formatCurrency } from '../../utils/formatCurrency';
+import { getAllUserTransactionCategoryMappings } from '../expenses/Expenses';
+import { getAllTransactionCategories } from '../profile/TransactionCategories/TransactionCategoriesService';
+
 import {
   ITransfersPerMonth,
   sortIncomeStacksByMonth,
   sortIncomesByDate,
   groupTransfersByMonth,
-} from "./TransferFuctions";
-import { getAllTransferTranscations } from "./TransferService";
+} from './TransferFuctions';
+import { getAllTransferTranscations } from './TransferService';
 
-const Transfers = (): JSX.Element => {
+export const Transfers = (): JSX.Element => {
   const [transfersRaw, setTransfersRaw] = useState<ITransaction[] | null>(null);
   const [transfers, setTransfers] = useState<ITransfersPerMonth[]>([]);
   const [transactionCategoryMappings, setTransactionCategoryMappings] =
@@ -60,7 +62,7 @@ const Transfers = (): JSX.Element => {
                 )?.name
             )
             .filter(
-              (categoryName) => typeof categoryName !== "undefined"
+              (categoryName) => typeof categoryName !== 'undefined'
               // @todo: Fix this type.
             ) as string[];
 
@@ -94,7 +96,7 @@ const Transfers = (): JSX.Element => {
             </h2>
             <p className="font-semibold text-gray-600">
               <span className="sr-only">Total: </span>
-              {Number.isNaN(total) ? "-" : formatCurrency(total)}
+              {Number.isNaN(total) ? '-' : formatCurrency(total)}
             </p>
           </div>
           <TransactionStackedList rows={rows} />
@@ -103,5 +105,3 @@ const Transfers = (): JSX.Element => {
     </>
   );
 };
-
-export default Transfers;

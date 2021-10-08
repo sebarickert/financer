@@ -1,9 +1,10 @@
-import React from "react";
-import Button from "../button/button";
-import Divider from "../divider/divider";
-import Icon from "../icon/icon";
-import Input from "../input/input";
-import Select, { IOption } from "../select/select";
+import React from 'react';
+
+import { Button } from '../button/button';
+import { Divider } from '../divider/divider';
+import { Icon } from '../icon/icon';
+import { Input } from '../input/input';
+import { Select, IOption } from '../select/select';
 
 interface ITransactionCategoriesFormItemProps {
   className?: string;
@@ -18,8 +19,8 @@ interface ITransactionCategoriesFormItemProps {
   amountValue: number;
 }
 
-const TransactionCategoriesFormItem = ({
-  className = "",
+export const TransactionCategoriesFormItem = ({
+  className = '',
   categoryAmountIndex,
   amountMaxValue,
   arrayIndex,
@@ -44,8 +45,8 @@ const TransactionCategoriesFormItem = ({
               options={categories}
               defaultValue={
                 categoryMapping
-                  ? categoryMapping[categoryAmountIndex].category_id || ""
-                  : ""
+                  ? categoryMapping[categoryAmountIndex].category_id || ''
+                  : ''
               }
               isRequired
             >
@@ -60,7 +61,7 @@ const TransactionCategoriesFormItem = ({
                 max={amountMaxValue}
                 isCurrency
                 isRequired
-                forcedValue={amountValue || ""}
+                forcedValue={amountValue || ''}
                 onChange={(event) =>
                   setTransactionCategoryItemAmount(
                     parseFloat(event.target.value)
@@ -83,8 +84,8 @@ const TransactionCategoriesFormItem = ({
             id={`transactionCategory[${categoryAmountIndex}]description`}
             value={
               categoryMapping
-                ? categoryMapping[categoryAmountIndex].description || ""
-                : ""
+                ? categoryMapping[categoryAmountIndex].description || ''
+                : ''
             }
           >
             Description
@@ -101,5 +102,3 @@ const TransactionCategoriesFormItem = ({
     </div>
   );
 };
-
-export default TransactionCategoriesFormItem;

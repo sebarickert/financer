@@ -1,11 +1,13 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-import SEO from "../../components/seo/seo";
-import { addTransactionCategoryMapping } from "../expenses/AddExpense";
-import IncomeForm from "./IncomeForm";
-import { addIncome } from "./IncomeService";
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
-const AddIncome = (): JSX.Element => {
+import { SEO } from '../../components/seo/seo';
+import { addTransactionCategoryMapping } from '../expenses/AddExpense';
+
+import { IncomeForm } from './IncomeForm';
+import { addIncome } from './IncomeService';
+
+export const AddIncome = (): JSX.Element => {
   const history = useHistory();
   const [errors, setErrors] = useState<string[]>([]);
 
@@ -27,9 +29,9 @@ const AddIncome = (): JSX.Element => {
         );
 
       if (newIncomeJson.status === 201) {
-        history.push("/statistics/incomes");
+        history.push('/statistics/incomes');
       } else if (newIncomeJson.status === 400) {
-        setErrors(newIncomeJson?.errors || ["Unknown error."]);
+        setErrors(newIncomeJson?.errors || ['Unknown error.']);
       }
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -49,5 +51,3 @@ const AddIncome = (): JSX.Element => {
     </>
   );
 };
-
-export default AddIncome;

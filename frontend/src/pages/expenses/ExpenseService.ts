@@ -1,5 +1,5 @@
 export const getAllExpenses = async (): Promise<IExpense[]> => {
-  const expenses = await fetch("/api/expense");
+  const expenses = await fetch('/api/expense');
   return expenses.json();
 };
 
@@ -11,11 +11,11 @@ export const getExpenseById = async (id: string): Promise<IExpense> => {
 export const addExpense = async (
   newExpenseData: IExpense
 ): Promise<IApiResponse<IExpense>> => {
-  const newExpense = await fetch("/api/expense", {
-    method: "POST",
+  const newExpense = await fetch('/api/expense', {
+    method: 'POST',
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(newExpenseData),
   });
@@ -25,10 +25,10 @@ export const addExpense = async (
 
 export const deleteExpense = async (id: string): Promise<void> => {
   await fetch(`/api/expense/${id}`, {
-    method: "DELETE",
+    method: 'DELETE',
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
   });
 };

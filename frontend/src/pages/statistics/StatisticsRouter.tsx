@@ -1,8 +1,9 @@
-import React from "react";
-import { Switch, Route } from "react-router-dom";
-import Statistics from "./Statistics";
+import React from 'react';
+import { Switch, Route } from 'react-router-dom';
 
-const StatisticsRouter = (): JSX.Element => {
+import { Statistics } from './Statistics';
+
+export const StatisticsRouter = (): JSX.Element => {
   return (
     <Switch>
       <Route exact path="/statistics">
@@ -11,5 +12,3 @@ const StatisticsRouter = (): JSX.Element => {
     </Switch>
   );
 };
-
-export default StatisticsRouter;

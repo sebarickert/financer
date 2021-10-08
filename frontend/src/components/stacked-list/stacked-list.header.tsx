@@ -1,16 +1,19 @@
-import React from "react";
+import React from 'react';
 
 export type TAddiotinalLabel = {
   label: string;
   accentLabel?: string;
 };
 
-interface IProps {
+interface IStackedListHeaderProps {
   label: string;
   addiotinalLabel?: TAddiotinalLabel;
 }
 
-const StackedListHeader = ({ label, addiotinalLabel }: IProps): JSX.Element => {
+export const StackedListHeader = ({
+  label,
+  addiotinalLabel,
+}: IStackedListHeaderProps): JSX.Element => {
   return (
     <div className="flex flex-col shadow-md lg:shadow-none p-6 bg-gray-900 sticky top-0 lg:top-4 lg:flex-shrink-0 lg:w-80 lg:mr-4 space-y-6 -mx-4 lg:mx-0">
       <h2 className="text-xl font-bold tracking-tight leading-none truncate text-white">
@@ -29,5 +32,3 @@ const StackedListHeader = ({ label, addiotinalLabel }: IProps): JSX.Element => {
     </div>
   );
 };
-
-export default StackedListHeader;

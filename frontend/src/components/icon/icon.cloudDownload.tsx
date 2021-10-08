@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 
 interface IconElementProps {
   className?: string;
 }
 
-const IconCloudDownload = ({
-  className = "",
+export const IconCloudDownload = ({
+  className = '',
 }: IconElementProps): JSX.Element => {
   return (
     <svg
@@ -24,5 +24,3 @@ const IconCloudDownload = ({
     </svg>
   );
 };
-
-export default IconCloudDownload;

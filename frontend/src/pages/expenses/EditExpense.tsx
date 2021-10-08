@@ -1,18 +1,20 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState, useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
-import Container from "../../components/container/container";
-import Loader from "../../components/loader/loader";
-import SEO from "../../components/seo/seo";
+import React, { useState, useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
+
+import { Container } from '../../components/container/container';
+import { Loader } from '../../components/loader/loader';
+import { SEO } from '../../components/seo/seo';
 import {
   getAllTransactionCategoriesWithCategoryTree,
   ITransactionCategoryWithCategoryTree,
-} from "../profile/TransactionCategories/TransactionCategoriesService";
-import { getTransactionCategoryMappingByTransactionId } from "./Expense";
-import ExpenseForm from "./ExpenseForm";
-import { getExpenseById } from "./ExpenseService";
+} from '../profile/TransactionCategories/TransactionCategoriesService';
 
-const EditExpense = (): JSX.Element => {
+import { getTransactionCategoryMappingByTransactionId } from './Expense';
+import { ExpenseForm } from './ExpenseForm';
+import { getExpenseById } from './ExpenseService';
+
+export const EditExpense = (): JSX.Element => {
   const history = useHistory();
   const [errors, setErrors] = useState<string[]>([]);
 
@@ -39,8 +41,8 @@ const EditExpense = (): JSX.Element => {
 
   const handleSubmit = async () => {};
 
-  return typeof expense === "undefined" ||
-    typeof transactionCategoryMapping === "undefined" ? (
+  return typeof expense === 'undefined' ||
+    typeof transactionCategoryMapping === 'undefined' ? (
     <Loader loaderColor="blue" />
   ) : (
     <Container className="mt-6 sm:mt-12">
@@ -59,5 +61,3 @@ const EditExpense = (): JSX.Element => {
     </Container>
   );
 };
-
-export default EditExpense;

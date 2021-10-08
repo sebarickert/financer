@@ -1,17 +1,21 @@
-import React, { useEffect, useState } from "react";
-import formatCurrency from "../../utils/formatCurrency";
-import Stats from "../stats/stats";
-import StatsItem from "../stats/stats.item";
-import { getAllAccounts } from "../../pages/accounts/AccountService";
-import { getAllExpenses } from "../../pages/expenses/ExpenseService";
-import { getAllIncomes } from "../../pages/income/IncomeService";
+import React, { useEffect, useState } from 'react';
 
-interface IProps {
+import { getAllAccounts } from '../../pages/accounts/AccountService';
+import { getAllExpenses } from '../../pages/expenses/ExpenseService';
+import { getAllIncomes } from '../../pages/income/IncomeService';
+import { formatCurrency } from '../../utils/formatCurrency';
+import { Stats } from '../stats/stats';
+import { StatsItem } from '../stats/stats.item';
+
+interface IDashboardStatsProps {
   label?: string;
   className?: string;
 }
 
-const DashboardStats = ({ label, className = "" }: IProps): JSX.Element => {
+export const DashboardStats = ({
+  label,
+  className = '',
+}: IDashboardStatsProps): JSX.Element => {
   const [accountsRaw, setAccountsRaw] = useState<IAccount[] | null>(null);
   const [totalBalance, setTotalBalance] = useState<number>(NaN);
   const [expensesRaw, setExpensesRaw] = useState<IExpense[] | null>(null);
@@ -41,7 +45,7 @@ const DashboardStats = ({ label, className = "" }: IProps): JSX.Element => {
 
     const total = accountsRaw.reduce(
       (currentTotal, { balance, type }) =>
-        currentTotal + (type !== "loan" ? balance : 0),
+        currentTotal + (type !== 'loan' ? balance : 0),
       0
     );
 
@@ -85,16 +89,14 @@ const DashboardStats = ({ label, className = "" }: IProps): JSX.Element => {
   return (
     <Stats className={`${className}`} label={label}>
       <StatsItem statLabel="Balance">
-        {Number.isNaN(totalBalance) ? "-" : formatCurrency(totalBalance)}
+        {Number.isNaN(totalBalance) ? '-' : formatCurrency(totalBalance)}
       </StatsItem>
       <StatsItem statLabel="Income">
-        {Number.isNaN(totalIncomes) ? "-" : formatCurrency(totalIncomes)}
+        {Number.isNaN(totalIncomes) ? '-' : formatCurrency(totalIncomes)}
       </StatsItem>
       <StatsItem statLabel="Expenses">
-        {Number.isNaN(totalExpenses) ? "-" : formatCurrency(totalExpenses)}
+        {Number.isNaN(totalExpenses) ? '-' : formatCurrency(totalExpenses)}
       </StatsItem>
     </Stats>
   );
 };
-
-export default DashboardStats;

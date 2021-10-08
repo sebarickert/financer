@@ -1,24 +1,26 @@
-import React, { useEffect, useState } from "react";
-import { Transition } from "@headlessui/react";
-import Container from "../container/container";
-import NotificationClose from "./notification.close";
-import NotificationContent from "./notification.content";
-import NotificationIcon from "./notification.icon";
+import { Transition } from '@headlessui/react';
+import React, { useEffect, useState } from 'react';
+
+import { Container } from '../container/container';
+
+import { NotificationClose } from './notification.close';
+import { NotificationContent } from './notification.content';
+import { NotificationIcon } from './notification.icon';
 
 export interface INotificationProps {
-  type: "success" | "error";
+  type: 'success' | 'error';
   label: string;
   children: string;
   resetNotification?(): void;
   className?: string;
 }
 
-const Notification = ({
+export const Notification = ({
   type,
   label,
   children,
   resetNotification = () => {},
-  className = "",
+  className = '',
 }: INotificationProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(true);
 
@@ -66,5 +68,3 @@ const Notification = ({
     </Container>
   );
 };
-
-export default Notification;

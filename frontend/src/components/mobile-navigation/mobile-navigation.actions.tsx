@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useRef, useState } from "react";
-import isIOSDevice from "../../utils/isIOSDevice";
-import Icon from "../icon/icon";
-import MobileNavigationActionsBody from "./mobile-navigation.actions.body";
+import React, { useEffect, useRef, useState } from 'react';
+
+import { isIOSDevice } from '../../utils/isIOSDevice';
+import { Icon } from '../icon/icon';
+
+import { MobileNavigationActionsBody } from './mobile-navigation.actions.body';
 
 function useOnClickOutside(
   ref: any,
@@ -15,7 +17,7 @@ function useOnClickOutside(
         return;
       }
       if (
-        typeof secondaryRef !== "undefined" &&
+        typeof secondaryRef !== 'undefined' &&
         (!secondaryRef.current || secondaryRef.current.contains(event.target))
       ) {
         return;
@@ -23,16 +25,16 @@ function useOnClickOutside(
 
       handler(event);
     };
-    document.addEventListener("mousedown", listener);
-    document.addEventListener("touchstart", listener);
+    document.addEventListener('mousedown', listener);
+    document.addEventListener('touchstart', listener);
     return () => {
-      document.removeEventListener("mousedown", listener);
-      document.removeEventListener("touchstart", listener);
+      document.removeEventListener('mousedown', listener);
+      document.removeEventListener('touchstart', listener);
     };
   }, [ref, secondaryRef, handler]);
 }
 
-const MobileNavigationActions = (): JSX.Element => {
+export const MobileNavigationActions = (): JSX.Element => {
   const mobileNavigationActionsBodyRef = useRef();
   const mobileNavigationToggleButtonRef = useRef(null);
   const [isActionsModalHidden, setIsActionsModalHidden] = useState(true);
@@ -47,7 +49,7 @@ const MobileNavigationActions = (): JSX.Element => {
       <button
         type="button"
         className={`flex w-full h-full justify-center ${
-          isIOSDevice() ? "items-start pt-4" : "items-center"
+          isIOSDevice() ? 'items-start pt-4' : 'items-center'
         }`}
         aria-expanded={!isActionsModalHidden}
         aria-label="Add new transaction"
@@ -57,7 +59,7 @@ const MobileNavigationActions = (): JSX.Element => {
         <span className="p-2 bg-blue-financer text-white rounded-xl">
           <span
             className={`${
-              !isActionsModalHidden ? "rotate-45" : ""
+              !isActionsModalHidden ? 'rotate-45' : ''
             } transition duration-250 ease-in-out block`}
           >
             <Icon type="plus" />
@@ -72,5 +74,3 @@ const MobileNavigationActions = (): JSX.Element => {
     </li>
   );
 };
-
-export default MobileNavigationActions;

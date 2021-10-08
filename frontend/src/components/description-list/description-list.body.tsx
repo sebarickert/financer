@@ -1,16 +1,17 @@
-import React from "react";
+import React from 'react';
 
-interface IProps {
+interface IDescriptionListBodyProps {
   children: React.ReactNode;
   testId?: string;
 }
 
-const DescriptionListBody = ({ children, testId }: IProps): JSX.Element => {
+export const DescriptionListBody = ({
+  children,
+  testId,
+}: IDescriptionListBodyProps): JSX.Element => {
   return (
     <div data-test-id={testId}>
       <dl className="divide-y">{children}</dl>
     </div>
   );
 };
-
-export default DescriptionListBody;

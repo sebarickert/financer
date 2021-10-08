@@ -1,5 +1,5 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 export interface IAccountsListRowProps {
   accountType: string;
@@ -9,7 +9,7 @@ export interface IAccountsListRowProps {
   id: string;
 }
 
-const AccountsListRow = ({
+export const AccountsListRow = ({
   accountType,
   balanceAmount,
   label,
@@ -63,5 +63,3 @@ const AccountsListRow = ({
     </article>
   );
 };
-
-export default AccountsListRow;

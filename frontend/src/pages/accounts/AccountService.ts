@@ -1,5 +1,5 @@
 export const getAllAccounts = async (): Promise<IAccount[]> => {
-  const accounts = await fetch("/api/account");
+  const accounts = await fetch('/api/account');
   return accounts.json();
 };
 
@@ -11,11 +11,11 @@ export const getAccountById = async (id: string): Promise<IAccount> => {
 export const addAccount = async (
   newAccountData: IAccount
 ): Promise<IApiResponse<IAccount>> => {
-  const newAccount = await fetch("/api/account", {
-    method: "POST",
+  const newAccount = await fetch('/api/account', {
+    method: 'POST',
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(newAccountData),
   });
@@ -28,10 +28,10 @@ export const editAccount = async (
   targetAccountData: IAccount
 ): Promise<IApiResponse<IAccount>> => {
   const targetAccount = await fetch(`/api/account/${id}`, {
-    method: "PUT",
+    method: 'PUT',
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(targetAccountData),
   });
@@ -41,10 +41,10 @@ export const editAccount = async (
 
 export const deleteAccount = async (id: string): Promise<void> => {
   await fetch(`/api/account/${id}`, {
-    method: "DELETE",
+    method: 'DELETE',
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
   });
 };

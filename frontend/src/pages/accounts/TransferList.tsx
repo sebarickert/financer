@@ -1,16 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { formatDate } from "../../utils/formatDate";
-import formatCurrency from "../../utils/formatCurrency";
-import { getAllAccounts } from "./AccountService";
-import StackedList from "../../components/stacked-list/stacked-list";
-import { ICustomStackedListRowProps } from "../../components/stacked-list/stacked-list.row";
-import { getAllTransferTranscations } from "../transfers/TransferService";
+import React, { useEffect, useState } from 'react';
 
-interface IProps {
+import { StackedList } from '../../components/stacked-list/stacked-list';
+import { ICustomStackedListRowProps } from '../../components/stacked-list/stacked-list.row';
+import { formatCurrency } from '../../utils/formatCurrency';
+import { formatDate } from '../../utils/formatDate';
+import { getAllTransferTranscations } from '../transfers/TransferService';
+
+import { getAllAccounts } from './AccountService';
+
+interface ITransferListProps {
   className?: string;
 }
 
-const TransferList = ({ className = "" }: IProps): JSX.Element => {
+export const TransferList = ({
+  className = '',
+}: ITransferListProps): JSX.Element => {
   const [transfersRaw, setTransfersRaw] = useState<ITransaction[] | null>(null);
   const [transfers, setTransfers] = useState<ICustomStackedListRowProps[]>([]);
   const [accounts, setAccounts] = useState<IAccount[] | null>(null);
@@ -45,11 +49,11 @@ const TransferList = ({ className = "" }: IProps): JSX.Element => {
             const fromAccountName =
               accounts.find(
                 ({ _id: targetAccountId }) => targetAccountId === fromAccount
-              )?.name || "unknown";
+              )?.name || 'unknown';
             const toAccountName =
               accounts.find(
                 ({ _id: targetAccountId }) => targetAccountId === toAccount
-              )?.name || "unknown";
+              )?.name || 'unknown';
 
             return {
               label: `${fromAccountName} --> ${toAccountName}`,
@@ -60,8 +64,8 @@ const TransferList = ({ className = "" }: IProps): JSX.Element => {
               date,
               tags: [
                 {
-                  label: "Transfer",
-                  color: "blue",
+                  label: 'Transfer',
+                  color: 'blue',
                 },
               ],
             };
@@ -77,5 +81,3 @@ const TransferList = ({ className = "" }: IProps): JSX.Element => {
     </div>
   );
 };
-
-export default TransferList;

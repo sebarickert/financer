@@ -1,6 +1,6 @@
-import { ITransactionStackedListRowProps } from "../../components/transaction-stacked-list/transaction-stacked-list.row";
-import formatCurrency from "../../utils/formatCurrency";
-import { formatDate } from "../../utils/formatDate";
+import { ITransactionStackedListRowProps } from '../../components/transaction-stacked-list/transaction-stacked-list.row';
+import { formatCurrency } from '../../utils/formatCurrency';
+import { formatDate } from '../../utils/formatDate';
 
 interface ITransactionWithCategories extends ITransaction {
   categoryMappings: string[];
@@ -30,12 +30,12 @@ export const groupTransfersByMonth = (
   const { categoryMappings } = rest;
 
   const transfer: ITransactionStackedListRowProps = {
-    transactionCategories: categoryMappings?.join(", "),
+    transactionCategories: categoryMappings?.join(', '),
     transactionAmount: formatCurrency(amount),
     date: formatDate(date),
-    label: description || "plaa",
+    label: description || 'plaa',
     link: `/statistics/transfers/${_id}`,
-    transactionType: "transfer",
+    transactionType: 'transfer',
     id: _id,
   };
 

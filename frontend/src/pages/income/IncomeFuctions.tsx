@@ -1,6 +1,6 @@
-import { ITransactionStackedListRowProps } from "../../components/transaction-stacked-list/transaction-stacked-list.row";
-import formatCurrency from "../../utils/formatCurrency";
-import { formatDate } from "../../utils/formatDate";
+import { ITransactionStackedListRowProps } from '../../components/transaction-stacked-list/transaction-stacked-list.row';
+import { formatCurrency } from '../../utils/formatCurrency';
+import { formatDate } from '../../utils/formatDate';
 
 export interface IIncomeWithCategories extends IIncome {
   categoryMappings: string[];
@@ -23,12 +23,12 @@ export const groupIncomesByMonth = (
   const { categoryMappings } = rest;
 
   const income: ITransactionStackedListRowProps = {
-    transactionCategories: categoryMappings?.join(", "),
+    transactionCategories: categoryMappings?.join(', '),
     transactionAmount: formatCurrency(amount),
     date: formatDate(date),
     label: description,
     link: `/statistics/incomes/${_id}`,
-    transactionType: "income",
+    transactionType: 'income',
     id: _id,
   };
 

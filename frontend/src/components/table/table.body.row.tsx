@@ -1,22 +1,22 @@
-import React from "react";
+import React from 'react';
 
-import TableBodyItem from "./table.body.item";
+import { TableBodyItem } from './table.body.item';
 
 export type IRow = Record<string, string | number | JSX.Element>;
 
-interface IProps {
+interface ITableBodyRowProps {
   keys: string[];
   row: IRow;
   actionKeys?: string[];
   dataKeyColumn: string;
 }
 
-const TableBodyRow = ({
+export const TableBodyRow = ({
   keys,
   row,
   actionKeys = [],
   dataKeyColumn,
-}: IProps): JSX.Element => {
+}: ITableBodyRowProps): JSX.Element => {
   return (
     <tr>
       {keys.map((key, index) => (
@@ -25,11 +25,9 @@ const TableBodyRow = ({
           isAction={actionKeys.includes(key)}
           key={`${row[dataKeyColumn]}-${key}` as string}
         >
-          {key in row ? row[key] : ""}
+          {key in row ? row[key] : ''}
         </TableBodyItem>
       ))}
     </tr>
   );
 };
-
-export default TableBodyRow;

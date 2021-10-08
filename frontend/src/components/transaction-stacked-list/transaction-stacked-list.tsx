@@ -1,8 +1,10 @@
-import React from "react";
-import TransactionStackedListRow, {
+import React from 'react';
+
+import {
+  TransactionStackedListRow,
   ITransactionStackedListRowProps,
-} from "./transaction-stacked-list.row";
-import TransactionStackedListRows from "./transaction-stacked-list.rows";
+} from './transaction-stacked-list.row';
+import { TransactionStackedListRows } from './transaction-stacked-list.rows';
 
 interface ITransactionStackedListProps {
   title?: string;
@@ -10,10 +12,10 @@ interface ITransactionStackedListProps {
   className?: string;
 }
 
-const TransactionStackedList = ({
+export const TransactionStackedList = ({
   title,
   rows,
-  className = "",
+  className = '',
 }: ITransactionStackedListProps): JSX.Element => {
   return (
     <section className={`${className}`}>
@@ -45,5 +47,3 @@ const TransactionStackedList = ({
     </section>
   );
 };
-
-export default TransactionStackedList;

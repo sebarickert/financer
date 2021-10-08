@@ -1,11 +1,13 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-import Container from "../../../components/container/container";
-import SEO from "../../../components/seo/seo";
-import { addTransactionCategory } from "./TransactionCategoriesService";
-import TransactionCategoryForm from "./TransactionCategoryForm";
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
-const AddTransactionCategory = (): JSX.Element => {
+import { Container } from '../../../components/container/container';
+import { SEO } from '../../../components/seo/seo';
+
+import { addTransactionCategory } from './TransactionCategoriesService';
+import { TransactionCategoryForm } from './TransactionCategoryForm';
+
+export const AddTransactionCategory = (): JSX.Element => {
   const history = useHistory();
   const [errors, setErrors] = useState<string[]>([]);
 
@@ -18,9 +20,9 @@ const AddTransactionCategory = (): JSX.Element => {
       );
 
       if (newExpenseJson.status === 201) {
-        history.push("/profile/transaction-categories");
+        history.push('/profile/transaction-categories');
       } else if (newExpenseJson.status === 400) {
-        setErrors(newExpenseJson?.errors || ["Unknown error."]);
+        setErrors(newExpenseJson?.errors || ['Unknown error.']);
       }
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -40,5 +42,3 @@ const AddTransactionCategory = (): JSX.Element => {
     </Container>
   );
 };
-
-export default AddTransactionCategory;

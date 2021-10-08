@@ -1,87 +1,88 @@
-import React from "react";
-import IconSwitchHorizontal from "./icon.switchHorizontal";
-import IconPlusCircle from "./icon.plusCircle";
-import IconMinusCircle from "./icon.minusCircle";
-import IconHome from "./icon.home";
-import IconUser from "./icon.user";
-import IconChartBar from "./icon.chartBar";
-import IconViewGrid from "./icon.viewGrid";
-import IconUserCircle from "./icon.userCircle";
-import IconPlus from "./icon.plus";
-import IconDownload from "./icon.download";
-import IconUpload from "./icon.upload";
-import IconLogout from "./icon.logout";
-import IconTag from "./icon.tag";
-import IconExclamation from "./icon.exclamation";
-import IconCloudDownload from "./icon.cloudDownload";
+import React from 'react';
+
+import { IconChartBar } from './icon.chartBar';
+import { IconCloudDownload } from './icon.cloudDownload';
+import { IconDownload } from './icon.download';
+import { IconExclamation } from './icon.exclamation';
+import { IconHome } from './icon.home';
+import { IconLogout } from './icon.logout';
+import { IconMinusCircle } from './icon.minusCircle';
+import { IconPlus } from './icon.plus';
+import { IconPlusCircle } from './icon.plusCircle';
+import { IconSwitchHorizontal } from './icon.switchHorizontal';
+import { IconTag } from './icon.tag';
+import { IconUpload } from './icon.upload';
+import { IconUser } from './icon.user';
+import { IconUserCircle } from './icon.userCircle';
+import { IconViewGrid } from './icon.viewGrid';
 
 export type IconName =
-  | "switch-horizontal"
-  | "plus-circle"
-  | "minus-circle"
-  | "home"
-  | "user"
-  | "chart-bar"
-  | "view-grid"
-  | "user-circle"
-  | "plus"
-  | "download"
-  | "upload"
-  | "logout"
-  | "tag"
-  | "exclamation"
-  | "cloud-download";
+  | 'switch-horizontal'
+  | 'plus-circle'
+  | 'minus-circle'
+  | 'home'
+  | 'user'
+  | 'chart-bar'
+  | 'view-grid'
+  | 'user-circle'
+  | 'plus'
+  | 'download'
+  | 'upload'
+  | 'logout'
+  | 'tag'
+  | 'exclamation'
+  | 'cloud-download';
 interface IconProps {
   type: IconName;
 }
 
-const Icon = ({ type }: IconProps): JSX.Element => {
-  const defaultIconClasses = "h-6 w-6";
+export const Icon = ({ type }: IconProps): JSX.Element => {
+  const defaultIconClasses = 'h-6 w-6';
 
   switch (type) {
-    case "switch-horizontal":
+    case 'switch-horizontal':
       return <IconSwitchHorizontal className={defaultIconClasses} />;
 
-    case "plus-circle":
+    case 'plus-circle':
       return <IconPlusCircle className={defaultIconClasses} />;
 
-    case "minus-circle":
+    case 'minus-circle':
       return <IconMinusCircle className={defaultIconClasses} />;
 
-    case "home":
+    case 'home':
       return <IconHome className={defaultIconClasses} />;
 
-    case "user":
+    case 'user':
       return <IconUser className={defaultIconClasses} />;
 
-    case "chart-bar":
+    case 'chart-bar':
       return <IconChartBar className={defaultIconClasses} />;
 
-    case "view-grid":
+    case 'view-grid':
       return <IconViewGrid className={defaultIconClasses} />;
 
-    case "user-circle":
+    case 'user-circle':
       return <IconUserCircle className={defaultIconClasses} />;
 
-    case "plus":
+    case 'plus':
       return <IconPlus className={defaultIconClasses} />;
 
-    case "download":
+    case 'download':
       return <IconDownload className={defaultIconClasses} />;
 
-    case "upload":
+    case 'upload':
       return <IconUpload className={defaultIconClasses} />;
 
-    case "logout":
+    case 'logout':
       return <IconLogout className={defaultIconClasses} />;
 
-    case "tag":
+    case 'tag':
       return <IconTag className={defaultIconClasses} />;
 
-    case "exclamation":
+    case 'exclamation':
       return <IconExclamation className={defaultIconClasses} />;
 
-    case "cloud-download":
+    case 'cloud-download':
       return <IconCloudDownload className={defaultIconClasses} />;
 
     default:
@@ -90,5 +91,3 @@ const Icon = ({ type }: IconProps): JSX.Element => {
 
   return <div />;
 };
-
-export default Icon;

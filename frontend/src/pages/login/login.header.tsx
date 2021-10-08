@@ -1,12 +1,16 @@
-import React from "react";
-import { ReactComponent as Logo } from "../../assets/logo.svg";
+import React from 'react';
 
-interface IProps {
+import { ReactComponent as Logo } from '../../assets/logo.svg';
+
+interface ILoginHeaderProps {
   label: string;
   children: string;
 }
 
-const LoginHeader = ({ label, children }: IProps): JSX.Element => {
+export const LoginHeader = ({
+  label,
+  children,
+}: ILoginHeaderProps): JSX.Element => {
   return (
     <div className="bg-gray-800 p-6 pb-4">
       <div className="flex items-start">
@@ -28,5 +32,3 @@ const LoginHeader = ({ label, children }: IProps): JSX.Element => {
     </div>
   );
 };
-
-export default LoginHeader;

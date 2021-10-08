@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from "react";
-import Banner from "../../components/banner/banner";
-import BannerText from "../../components/banner/banner.text";
-import Button from "../../components/button/button";
-import ButtonGroup from "../../components/button/button.group";
-import Loader from "../../components/loader/loader";
-import SEO from "../../components/seo/seo";
-import formatCurrency from "../../utils/formatCurrency";
-import { getAllAccounts } from "./AccountService";
-import AccountsList from "../../components/accounts-list/accounts-list";
-import { IAccountsListRowProps } from "../../components/accounts-list/accounts-list.row";
-import Stats from "../../components/stats/stats";
-import StatsItem from "../../components/stats/stats.item";
+import React, { useState, useEffect } from 'react';
 
-const Accounts = (): JSX.Element => {
+import { AccountsList } from '../../components/accounts-list/accounts-list';
+import { IAccountsListRowProps } from '../../components/accounts-list/accounts-list.row';
+import { Banner } from '../../components/banner/banner';
+import { BannerText } from '../../components/banner/banner.text';
+import { Button } from '../../components/button/button';
+import { ButtonGroup } from '../../components/button/button.group';
+import { Loader } from '../../components/loader/loader';
+import { SEO } from '../../components/seo/seo';
+import { Stats } from '../../components/stats/stats';
+import { StatsItem } from '../../components/stats/stats.item';
+import { formatCurrency } from '../../utils/formatCurrency';
+
+import { getAllAccounts } from './AccountService';
+
+export const Accounts = (): JSX.Element => {
   const [accountsRaw, setAccountsRaw] = useState<IAccount[] | null>(null);
   const [accounts, setAccounts] = useState<IAccountsListRowProps[]>([]);
   const [totalBalance, setTotalBalance] = useState<number>(NaN);
@@ -29,7 +31,7 @@ const Accounts = (): JSX.Element => {
 
     const total = accountsRaw.reduce(
       (currentTotal, { balance, type }) =>
-        currentTotal + (type !== "loan" ? balance : 0),
+        currentTotal + (type !== 'loan' ? balance : 0),
       0
     );
     setTotalBalance(total);
@@ -65,26 +67,26 @@ const Accounts = (): JSX.Element => {
           {`${formatCurrency(totalBalance)}`}
         </StatsItem>
         {accounts.filter(
-          ({ accountType }) => accountType.toLowerCase() === "loan"
+          ({ accountType }) => accountType.toLowerCase() === 'loan'
         ).length > 0 && (
           <StatsItem statLabel="Total Loans">{`${formatCurrency(
             parseFloat(
               `${accounts
                 .filter(
-                  ({ accountType }) => accountType.toLowerCase() === "loan"
+                  ({ accountType }) => accountType.toLowerCase() === 'loan'
                 )
                 .reduce((currentTotal, { balanceAmount }) => {
                   return (
                     currentTotal +
                     parseFloat(
                       balanceAmount
-                        .replace("€", "")
+                        .replace('€', '')
                         .replace(
                           String.fromCharCode(8722),
                           String.fromCharCode(45)
                         )
-                        .replace(/\s/g, "")
-                        .replace(",", ".")
+                        .replace(/\s/g, '')
+                        .replace(',', '.')
                     )
                   );
                 }, 0)}`
@@ -95,18 +97,16 @@ const Accounts = (): JSX.Element => {
       <AccountsList
         label="Savings accounts"
         rows={accounts.filter(
-          ({ accountType }) => accountType.toLowerCase() !== "loan"
+          ({ accountType }) => accountType.toLowerCase() !== 'loan'
         )}
       />
       <AccountsList
         label="Loans"
         rows={accounts.filter(
-          ({ accountType }) => accountType.toLowerCase() === "loan"
+          ({ accountType }) => accountType.toLowerCase() === 'loan'
         )}
         className="mt-12"
       />
     </>
   );
 };
-
-export default Accounts;

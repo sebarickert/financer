@@ -1,16 +1,19 @@
-import React from "react";
+import React from 'react';
 
 export type TAddiotinalLabel = {
   label: string;
   accentLabel?: string;
 };
 
-interface IProps {
+interface ITableHeaderProps {
   label: string;
   addiotinalLabel?: TAddiotinalLabel;
 }
 
-const TableHeader = ({ label, addiotinalLabel }: IProps): JSX.Element => {
+export const TableHeader = ({
+  label,
+  addiotinalLabel,
+}: ITableHeaderProps): JSX.Element => {
   return (
     <div className="sm:flex sm:items-end sm:justify-between">
       <h2 className="text-2xl leading-9 font-bold tracking-tight text-gray-900 mb-2 sm:mb-0 sm:leading-none">
@@ -32,5 +35,3 @@ const TableHeader = ({ label, addiotinalLabel }: IProps): JSX.Element => {
     </div>
   );
 };
-
-export default TableHeader;
