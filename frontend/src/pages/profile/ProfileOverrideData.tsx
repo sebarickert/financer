@@ -1,19 +1,22 @@
 /* eslint-disable consistent-return */
-import React, { ChangeEvent, useEffect, useState } from "react";
-import Button from "../../components/button/button";
-import DescriptionList from "../../components/description-list/description-list";
-import DescriptionListItem from "../../components/description-list/description-list.item";
-import Hero from "../../components/hero/hero";
-import Notification, {
+import React, { ChangeEvent, useEffect, useState } from 'react';
+
+import { Button } from '../../components/button/button';
+import { DescriptionList } from '../../components/description-list/description-list';
+import { DescriptionListItem } from '../../components/description-list/description-list.item';
+import { Hero } from '../../components/hero/hero';
+import {
+  Notification,
   INotificationProps,
-} from "../../components/notification/notification";
-import SEO from "../../components/seo/seo";
+} from '../../components/notification/notification';
+import { SEO } from '../../components/seo/seo';
+
 import {
   IOverrideProfileData,
   postOverrideProfileData,
-} from "./ProfileService";
+} from './ProfileService';
 
-const ProfileOverrideData = (): JSX.Element => {
+export const ProfileOverrideData = (): JSX.Element => {
   const [uploadedUserData, setUploadedUserData] =
     useState<IOverrideProfileData | null>(null);
   const [overrideTranactionCount, setOverrideTranactionCount] = useState<
@@ -40,18 +43,18 @@ const ProfileOverrideData = (): JSX.Element => {
 
   const handleResetNotification = () => {
     setNotification({
-      type: "success",
-      label: "",
-      children: "",
+      type: 'success',
+      label: '',
+      children: '',
     });
   };
 
   const handleOverrideData = async () => {
     if (!uploadedUserData) {
       setNotification({
-        type: "error",
-        label: "Upload failed",
-        children: "Cannot update uploaded user data.",
+        type: 'error',
+        label: 'Upload failed',
+        children: 'Cannot update uploaded user data.',
       });
       return;
     }
@@ -60,14 +63,14 @@ const ProfileOverrideData = (): JSX.Element => {
 
     if (override.status < 300) {
       setNotification({
-        type: "success",
-        label: "Successfully overridden",
+        type: 'success',
+        label: 'Successfully overridden',
         children: override?.payload,
       });
     } else {
       setNotification({
-        type: "error",
-        label: "Overridde failed",
+        type: 'error',
+        label: 'Overridde failed',
         children: override?.payload,
       });
     }
@@ -81,9 +84,9 @@ const ProfileOverrideData = (): JSX.Element => {
       setOverrideFilename(null);
       setUploadedUserData(null);
       setNotification({
-        type: "error",
-        label: "Upload failed",
-        children: "File not found",
+        type: 'error',
+        label: 'Upload failed',
+        children: 'File not found',
       });
       return;
     }
@@ -92,16 +95,16 @@ const ProfileOverrideData = (): JSX.Element => {
     fr.onload = (readerEvent) => {
       if (
         readerEvent?.target?.result &&
-        typeof readerEvent?.target?.result === "string"
+        typeof readerEvent?.target?.result === 'string'
       ) {
         const result = JSON.parse(readerEvent.target.result);
         setUploadedUserData(result);
         setOverrideFilename(targetFile.name);
       } else {
         setNotification({
-          type: "error",
-          label: "Upload failed",
-          children: "Failed to parse JSON file",
+          type: 'error',
+          label: 'Upload failed',
+          children: 'Failed to parse JSON file',
         });
       }
     };
@@ -138,14 +141,14 @@ const ProfileOverrideData = (): JSX.Element => {
             accept="application/json"
           />
         </label>
-        <span className="ml-2">{overrideFilename || "No file selected"}</span>
+        <span className="ml-2">{overrideFilename || 'No file selected'}</span>
       </div>
       <DescriptionList label="Override data details" className="mt-6">
         <DescriptionListItem label="Account count">
-          {overrideAccountCount ? `${overrideAccountCount}` : "-"}
+          {overrideAccountCount ? `${overrideAccountCount}` : '-'}
         </DescriptionListItem>
         <DescriptionListItem label="Transaction count">
-          {overrideTranactionCount ? `${overrideTranactionCount}` : "-"}
+          {overrideTranactionCount ? `${overrideTranactionCount}` : '-'}
         </DescriptionListItem>
       </DescriptionList>
 
@@ -155,5 +158,3 @@ const ProfileOverrideData = (): JSX.Element => {
     </>
   );
 };
-
-export default ProfileOverrideData;

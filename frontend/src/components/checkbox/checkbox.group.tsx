@@ -1,16 +1,16 @@
-import React from "react";
+import React from 'react';
 
-interface IProps {
+interface ICheckboxGroupProps {
   readonly children: React.ReactNode[];
   label?: string;
   className?: string;
 }
 
-const CheckboxGroup = ({
+export const CheckboxGroup = ({
   children,
   label,
-  className = "",
-}: IProps): JSX.Element => {
+  className = '',
+}: ICheckboxGroupProps): JSX.Element => {
   return (
     <fieldset className={`space-y-3 ${className}`}>
       {label && <legend className="sr-only">{label}</legend>}
@@ -26,5 +26,3 @@ const CheckboxGroup = ({
     </fieldset>
   );
 };
-
-export default CheckboxGroup;

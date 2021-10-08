@@ -1,12 +1,16 @@
-import React from "react";
+import React from 'react';
 
-interface IProps {
+interface ICheckboxProps {
   id: string;
   label: string;
   checked?: boolean;
 }
 
-const Checkbox = ({ id, label, checked = false }: IProps): JSX.Element => {
+export const Checkbox = ({
+  id,
+  label,
+  checked = false,
+}: ICheckboxProps): JSX.Element => {
   return (
     <div className="relative flex items-start">
       <div className="flex items-center h-5">
@@ -26,5 +30,3 @@ const Checkbox = ({ id, label, checked = false }: IProps): JSX.Element => {
     </div>
   );
 };
-
-export default Checkbox;

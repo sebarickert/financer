@@ -1,7 +1,7 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-interface IProps {
+interface IButtonInternalProps {
   children: string;
   className: string;
   link: string;
@@ -9,13 +9,13 @@ interface IProps {
   testId?: string;
 }
 
-const ButtonInternal = ({
+export const ButtonInternal = ({
   children,
   className,
   link,
   onClick,
   testId,
-}: IProps): JSX.Element => {
+}: IButtonInternalProps): JSX.Element => {
   return (
     <Link
       to={link}
@@ -28,5 +28,3 @@ const ButtonInternal = ({
     </Link>
   );
 };
-
-export default ButtonInternal;

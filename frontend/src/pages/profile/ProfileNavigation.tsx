@@ -1,6 +1,7 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import { isExternalLink } from "../../components/button/button";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+
+import { isExternalLink } from '../../components/button/button';
 
 interface IProfileNavigationItemProps {
   link: string;
@@ -11,14 +12,14 @@ interface IProfileNavigationProps {
   userRoles?: string[];
 }
 
-const ProfileNavigationItem = ({
+export const ProfileNavigationItem = ({
   link,
   children,
 }: IProfileNavigationItemProps): JSX.Element => {
   const linkClasses = {
     default:
-      "text-gray-600 hover:bg-gray-50 hover:text-gray-900 flex items-center px-3 py-2 text-sm font-medium rounded-md",
-    active: "bg-gray-200 text-gray-900 hover:bg-gray-200",
+      'text-gray-600 hover:bg-gray-50 hover:text-gray-900 flex items-center px-3 py-2 text-sm font-medium rounded-md',
+    active: 'bg-gray-200 text-gray-900 hover:bg-gray-200',
   };
 
   if (isExternalLink(link)) {
@@ -46,7 +47,7 @@ const ProfileNavigationItem = ({
   );
 };
 
-const ProfileNavigation = ({
+export const ProfileNavigation = ({
   userRoles,
 }: IProfileNavigationProps): JSX.Element => {
   return (
@@ -58,7 +59,7 @@ const ProfileNavigation = ({
         <ProfileNavigationItem link="/profile/transaction-categories">
           Transaction categories
         </ProfileNavigationItem>
-        {userRoles?.includes("test-user") && (
+        {userRoles?.includes('test-user') && (
           <ProfileNavigationItem link="/profile/override-data">
             Override profile data
           </ProfileNavigationItem>
@@ -70,5 +71,3 @@ const ProfileNavigation = ({
     </nav>
   );
 };
-
-export default ProfileNavigation;

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface IAlertProps {
   children: React.ReactNode;
@@ -6,7 +6,7 @@ interface IAlertProps {
   testId?: string;
 }
 
-const Alert = ({
+export const Alert = ({
   children,
   additionalInformation,
   testId,
@@ -36,7 +36,7 @@ const Alert = ({
             <div className="mt-2 text-sm leading-5 text-red-700">
               <ul className="list-disc pl-5">
                 {additionalInformation.map((information, index) => (
-                  <li key={information} className={index > 0 ? "mt-1" : ""}>
+                  <li key={information} className={index > 0 ? 'mt-1' : ''}>
                     {information}
                   </li>
                 ))}
@@ -48,5 +48,3 @@ const Alert = ({
     </div>
   );
 };
-
-export default Alert;

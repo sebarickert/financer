@@ -1,7 +1,7 @@
 export const getAllTransferTranscations = async (): Promise<
   IApiResponse<ITransaction[]>
 > => {
-  const transfers = await fetch("/api/transaction/transfers");
+  const transfers = await fetch('/api/transaction/transfers');
   return transfers.json();
 };
 
@@ -27,10 +27,10 @@ export const getTransferById = async (id: string): Promise<ITransaction> => {
 
 export const deleteTransfer = async (id: string): Promise<void> => {
   await fetch(`/api/transaction/${id}`, {
-    method: "DELETE",
+    method: 'DELETE',
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
   });
 };

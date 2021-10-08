@@ -1,9 +1,10 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import Button from "../button/button";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-type Tag = { label: string; color: "blue" | "red" | "green" };
-type Action = { label: string; color: "blue" | "red" | "green"; link: string };
+import { Button } from '../button/button';
+
+type Tag = { label: string; color: 'blue' | 'red' | 'green' };
+type Action = { label: string; color: 'blue' | 'red' | 'green'; link: string };
 
 export interface ICustomStackedListRowProps extends IStackedListRowProps {
   date: Date;
@@ -19,7 +20,7 @@ export interface IStackedListRowProps {
   testId?: string;
 }
 
-const StackedListRow = ({
+export const StackedListRow = ({
   additionalInformation,
   additionalLabel,
   label,
@@ -36,7 +37,7 @@ const StackedListRow = ({
           <div className="mt-1 flex flex-col sm:flex-row sm:items-center text-xs text-gray-500">
             {additionalInformation.map((information, index) => (
               <p
-                className={index !== 0 ? "mt-1 sm:mt-0" : ""}
+                className={index !== 0 ? 'mt-1 sm:mt-0' : ''}
                 key={information}
               >
                 <>
@@ -56,19 +57,19 @@ const StackedListRow = ({
             <div className="mb-1">
               {tags.map(({ label: tagLabel, color }) => {
                 const colorMapping = {
-                  blue: "bg-blue-100 text-blue-800",
-                  green: "bg-green-100 text-green-800",
-                  red: "bg-red-100 text-red-800",
+                  blue: 'bg-blue-100 text-blue-800',
+                  green: 'bg-green-100 text-green-800',
+                  red: 'bg-red-100 text-red-800',
                 };
 
                 const baseClasses = [
-                  "px-2 inline-flex text-xs leading-5 font-semibold rounded-full",
+                  'px-2 inline-flex text-xs leading-5 font-semibold rounded-full',
                 ];
 
                 baseClasses.push(colorMapping[color]);
 
                 return (
-                  <p className={baseClasses.join(" ")} key={tagLabel}>
+                  <p className={baseClasses.join(' ')} key={tagLabel}>
                     {tagLabel}
                   </p>
                 );
@@ -80,7 +81,7 @@ const StackedListRow = ({
               ({ label: actionLabel, color, link: actionLink }, index) => (
                 <Button
                   accentColor={color}
-                  className={`${index > 0 ? "ml-3" : ""}`}
+                  className={`${index > 0 ? 'ml-3' : ''}`}
                   // eslint-disable-next-line react/no-array-index-key
                   key={`action-button-${index}`}
                   link={actionLink}
@@ -107,5 +108,3 @@ const StackedListRow = ({
     </li>
   );
 };
-
-export default StackedListRow;

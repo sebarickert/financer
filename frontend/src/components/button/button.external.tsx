@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-interface IProps {
+interface IButtonExternalProps {
   children: string;
   className: string;
   link: string;
@@ -8,13 +8,13 @@ interface IProps {
   testId?: string;
 }
 
-const ButtonExternal = ({
+export const ButtonExternal = ({
   children,
   className,
   link,
   onClick,
   testId,
-}: IProps): JSX.Element => {
+}: IButtonExternalProps): JSX.Element => {
   return (
     <a
       href={link}
@@ -27,5 +27,3 @@ const ButtonExternal = ({
     </a>
   );
 };
-
-export default ButtonExternal;

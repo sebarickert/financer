@@ -1,27 +1,28 @@
-import React from "react";
-import FormFooter from "./form.footer";
-import FormHeader from "./form.header";
+import React from 'react';
 
-interface IProps {
+import { FormFooter } from './form.footer';
+import { FormHeader } from './form.header';
+
+interface IFormProps {
   children: React.ReactNode;
   formHeading: string;
   submitLabel: string;
-  accentColor?: "red" | "green" | "blue";
+  accentColor?: 'red' | 'green' | 'blue';
   formFooterBackLink?: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   handleSubmit(event: any): void;
   optionalFooterComponent?: React.ReactNode;
 }
 
-const Form = ({
+export const Form = ({
   children,
   submitLabel,
   formHeading,
   handleSubmit,
-  accentColor = "blue",
+  accentColor = 'blue',
   formFooterBackLink,
   optionalFooterComponent,
-}: IProps): JSX.Element => {
+}: IFormProps): JSX.Element => {
   return (
     <form onSubmit={handleSubmit} method="post">
       <FormHeader>{formHeading}</FormHeader>
@@ -35,5 +36,3 @@ const Form = ({
     </form>
   );
 };
-
-export default Form;

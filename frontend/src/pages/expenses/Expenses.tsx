@@ -1,26 +1,28 @@
-import React, { useState, useEffect } from "react";
-import Banner from "../../components/banner/banner";
-import BannerText from "../../components/banner/banner.text";
-import Button from "../../components/button/button";
-import Loader from "../../components/loader/loader";
-import SEO from "../../components/seo/seo";
-import TransactionStackedList from "../../components/transaction-stacked-list/transaction-stacked-list";
-import monthNames from "../../constants/months";
-import formatCurrency from "../../utils/formatCurrency";
-import { getAllTransactionCategories } from "../profile/TransactionCategories/TransactionCategoriesService";
+import React, { useState, useEffect } from 'react';
+
+import { Banner } from '../../components/banner/banner';
+import { BannerText } from '../../components/banner/banner.text';
+import { Button } from '../../components/button/button';
+import { Loader } from '../../components/loader/loader';
+import { SEO } from '../../components/seo/seo';
+import { TransactionStackedList } from '../../components/transaction-stacked-list/transaction-stacked-list';
+import { monthNames } from '../../constants/months';
+import { formatCurrency } from '../../utils/formatCurrency';
+import { getAllTransactionCategories } from '../profile/TransactionCategories/TransactionCategoriesService';
+
 import {
   groupExpensesByMonth,
   IExpensesPerMonth,
   sortExpensesByDate,
   sortExpenseStacksByMonth,
-} from "./ExpenseFuctions";
-import { getAllExpenses } from "./ExpenseService";
+} from './ExpenseFuctions';
+import { getAllExpenses } from './ExpenseService';
 
 export const getAllUserTransactionCategoryMappings = async (): Promise<
   ITransactionCategoryMapping[]
-> => (await fetch("/api/transaction-categories-mapping")).json();
+> => (await fetch('/api/transaction-categories-mapping')).json();
 
-const Expenses = (): JSX.Element => {
+export const Expenses = (): JSX.Element => {
   const [expensesRaw, setExpensesRaw] = useState<IExpense[] | null>(null);
   const [expenses, setExpenses] = useState<IExpensesPerMonth[]>([]);
   const [transactionCategoryMappings, setTransactionCategoryMappings] =
@@ -63,7 +65,7 @@ const Expenses = (): JSX.Element => {
                 )?.name
             )
             .filter(
-              (categoryName) => typeof categoryName !== "undefined"
+              (categoryName) => typeof categoryName !== 'undefined'
               // @todo: Fix this type.
             ) as string[];
 
@@ -101,7 +103,7 @@ const Expenses = (): JSX.Element => {
             </h2>
             <p className="font-semibold text-gray-600">
               <span className="sr-only">Total: </span>
-              {Number.isNaN(total) ? "-" : formatCurrency(total)}
+              {Number.isNaN(total) ? '-' : formatCurrency(total)}
             </p>
           </div>
           <TransactionStackedList rows={rows} />
@@ -110,5 +112,3 @@ const Expenses = (): JSX.Element => {
     </>
   );
 };
-
-export default Expenses;

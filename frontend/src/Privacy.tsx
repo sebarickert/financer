@@ -1,8 +1,9 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import SEO from "./components/seo/seo";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-const PrivacyPolicy = (): JSX.Element => {
+import { SEO } from './components/seo/seo';
+
+export const PrivacyPolicy = (): JSX.Element => {
   return (
     <>
       <SEO title="Privacy policy" />
@@ -138,14 +139,14 @@ const PrivacyPolicy = (): JSX.Element => {
               Information that we collect are used for providing and improving
               the Service. We will not use or share your information with anyone
               except as described in this Privacy Policy. Our Privacy Policy was
-              created with the help of the{" "}
+              created with the help of the{' '}
               <a
                 href="https://www.privacypolicytemplate.net"
                 className="focus:outline-none focus:ring-2 focus:ring-offset-4 rounded-sm text-blue-600"
               >
                 Privacy Policy Template
-              </a>{" "}
-              and the{" "}
+              </a>{' '}
+              and the{' '}
               <a
                 href="https://www.generateprivacypolicy.com"
                 className="focus:outline-none focus:ring-2 focus:ring-offset-4 rounded-sm text-blue-600"
@@ -201,7 +202,7 @@ const PrivacyPolicy = (): JSX.Element => {
             </p>
 
             <p>
-              For more general information on cookies, please read{" "}
+              For more general information on cookies, please read{' '}
               <a
                 href="https://www.cookieconsent.com/what-are-cookies/"
                 className="focus:outline-none focus:ring-2 focus:ring-offset-4 rounded-sm text-blue-600"
@@ -288,5 +289,3 @@ const PrivacyPolicy = (): JSX.Element => {
     </>
   );
 };
-
-export default PrivacyPolicy;

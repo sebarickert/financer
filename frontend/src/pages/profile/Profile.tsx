@@ -1,16 +1,17 @@
-import React from "react";
-import Banner from "../../components/banner/banner";
-import BannerText from "../../components/banner/banner.text";
-import Button from "../../components/button/button";
-import QuickLinks from "../../components/quick-links/quick-links";
-import QuickLinksItem from "../../components/quick-links/quick-links.item";
-import SEO from "../../components/seo/seo";
+import React from 'react';
+
+import { Banner } from '../../components/banner/banner';
+import { BannerText } from '../../components/banner/banner.text';
+import { Button } from '../../components/button/button';
+import { QuickLinks } from '../../components/quick-links/quick-links';
+import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
+import { SEO } from '../../components/seo/seo';
 
 interface IProfileProps {
   profileInfo: IUser | null;
 }
 
-const Profile = ({ profileInfo }: IProfileProps): JSX.Element => {
+export const Profile = ({ profileInfo }: IProfileProps): JSX.Element => {
   return (
     <>
       <SEO title="Profile" />
@@ -33,7 +34,7 @@ const Profile = ({ profileInfo }: IProfileProps): JSX.Element => {
           iconName="cloud-download"
           description="Download your complete financer data as a JSON-file."
         />
-        {profileInfo?.roles.includes("test-user") && (
+        {profileInfo?.roles.includes('test-user') && (
           <QuickLinksItem
             title="Override data"
             link="/profile/override-data"
@@ -53,5 +54,3 @@ const Profile = ({ profileInfo }: IProfileProps): JSX.Element => {
     </>
   );
 };
-
-export default Profile;

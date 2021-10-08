@@ -1,6 +1,7 @@
-import React from "react";
-import { Transition } from "@headlessui/react";
-import MobileNavigationItem from "./mobile-navigation.item";
+import { Transition } from '@headlessui/react';
+import React from 'react';
+
+import { MobileNavigationItem } from './mobile-navigation.item';
 
 interface IMobileNavigationActionsBodyProps {
   isModalHidden: boolean;
@@ -9,7 +10,7 @@ interface IMobileNavigationActionsBodyProps {
   onClick?(param: boolean): void;
 }
 
-const MobileNavigationActionsBody = ({
+export const MobileNavigationActionsBody = ({
   isModalHidden,
   outsideClickRef,
   onClick = () => {},
@@ -64,5 +65,3 @@ const MobileNavigationActionsBody = ({
     </Transition>
   );
 };
-
-export default MobileNavigationActionsBody;

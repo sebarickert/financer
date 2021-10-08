@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface IFilterProps {
   children: string;
@@ -7,7 +7,7 @@ interface IFilterProps {
   isActive: boolean;
 }
 
-const FilterItem = ({
+export const FilterItem = ({
   children,
   onClick,
   setActive,
@@ -23,12 +23,10 @@ const FilterItem = ({
       type="button"
       onClick={handleClick}
       className={`rounded-lg py-4 focus-within:ring-2 focus:ring-inset focus:ring-blue-500 focus:outline-none border text-sm font-medium md:text-base ${
-        isActive ? "bg-black-off text-white" : "bg-white text-gray-900"
-      } ${!isActive && "hover:bg-gray-50"}`}
+        isActive ? 'bg-black-off text-white' : 'bg-white text-gray-900'
+      } ${!isActive && 'hover:bg-gray-50'}`}
     >
       {children}
     </button>
   );
 };
-
-export default FilterItem;

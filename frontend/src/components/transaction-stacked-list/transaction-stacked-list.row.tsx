@@ -1,8 +1,9 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import Icon, { IconName } from "../icon/icon";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 
-export type TransactionType = "expense" | "income" | "transfer";
+import { Icon, IconName } from '../icon/icon';
+
+export type TransactionType = 'expense' | 'income' | 'transfer';
 
 export interface ITransactionStackedListRowProps {
   transactionCategories?: string;
@@ -14,7 +15,7 @@ export interface ITransactionStackedListRowProps {
   id: string;
 }
 
-const TransactionStackedListRow = ({
+export const TransactionStackedListRow = ({
   transactionCategories,
   transactionAmount,
   date,
@@ -23,11 +24,11 @@ const TransactionStackedListRow = ({
   transactionType,
 }: ITransactionStackedListRowProps): JSX.Element => {
   const iconTypeMapping: {
-    [key in "expense" | "income" | "transfer"]: IconName;
+    [key in 'expense' | 'income' | 'transfer']: IconName;
   } = {
-    expense: "download",
-    income: "upload",
-    transfer: "switch-horizontal",
+    expense: 'download',
+    income: 'upload',
+    transfer: 'switch-horizontal',
   };
 
   return (
@@ -36,9 +37,9 @@ const TransactionStackedListRow = ({
         <div>
           <span
             className={`rounded-lg inline-flex p-3 text-white ring-4 ring-white ${
-              transactionType === "transfer" && "bg-blue-financer"
-            } ${transactionType === "income" && "bg-green-600"} ${
-              transactionType === "expense" && "bg-red-600"
+              transactionType === 'transfer' && 'bg-blue-financer'
+            } ${transactionType === 'income' && 'bg-green-600'} ${
+              transactionType === 'expense' && 'bg-red-600'
             }`}
           >
             <Icon type={iconTypeMapping[transactionType]} />
@@ -58,11 +59,11 @@ const TransactionStackedListRow = ({
         <div className="flex flex-col justify-between text-right">
           <p
             className={`text-base font-semibold truncate ${
-              transactionType === "income" && "text-green-600"
-            } ${transactionType === "expense" && "text-red-600"}`}
+              transactionType === 'income' && 'text-green-600'
+            } ${transactionType === 'expense' && 'text-red-600'}`}
           >
-            {transactionType === "income" && "+ "}
-            {transactionType === "expense" && "- "}
+            {transactionType === 'income' && '+ '}
+            {transactionType === 'expense' && '- '}
             {transactionAmount}
           </p>
           <p className="text-sm text-gray-500">{date}</p>
@@ -71,5 +72,3 @@ const TransactionStackedListRow = ({
     </li>
   );
 };
-
-export default TransactionStackedListRow;

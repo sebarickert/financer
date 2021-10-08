@@ -1,10 +1,12 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-import SEO from "../../components/seo/seo";
-import AccountForm from "./AccountForm";
-import { addAccount } from "./AccountService";
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
-const AddAccount = (): JSX.Element => {
+import { SEO } from '../../components/seo/seo';
+
+import { AccountForm } from './AccountForm';
+import { addAccount } from './AccountService';
+
+export const AddAccount = (): JSX.Element => {
   const history = useHistory();
   const [errors, setErrors] = useState<string[]>([]);
 
@@ -13,9 +15,9 @@ const AddAccount = (): JSX.Element => {
       const newAccount = await addAccount(newAccountData);
 
       if (newAccount.status === 201) {
-        history.push("/accounts");
+        history.push('/accounts');
       } else if (newAccount.status === 400) {
-        setErrors(newAccount?.errors || ["Unknown error."]);
+        setErrors(newAccount?.errors || ['Unknown error.']);
       }
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -35,5 +37,3 @@ const AddAccount = (): JSX.Element => {
     </>
   );
 };
-
-export default AddAccount;

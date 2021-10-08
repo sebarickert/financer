@@ -1,15 +1,15 @@
-import React from "react";
+import React from 'react';
 
-interface IProps {
+interface IStackedListBodyProps {
   children: React.ReactNode;
 }
 
-const StackedListBody = ({ children }: IProps): JSX.Element => {
+export const StackedListBody = ({
+  children,
+}: IStackedListBodyProps): JSX.Element => {
   return (
     <div className="bg-white border border-gray-200 flex-1 -mx-4 lg:mx-0">
       <ul className="divide-y divide-gray-200">{children}</ul>
     </div>
   );
 };
-
-export default StackedListBody;

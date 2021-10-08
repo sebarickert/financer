@@ -1,39 +1,39 @@
-import { groupIncomesByMonth, IIncomeWithCategories } from "../IncomeFuctions";
+import { groupIncomesByMonth, IIncomeWithCategories } from '../IncomeFuctions';
 
 const testData: IIncomeWithCategories[] = [
   {
-    categoryMappings: ["Category 1", "Category 2"],
-    toAccount: "5fbd39c804bcfa18c50dbf31",
+    categoryMappings: ['Category 1', 'Category 2'],
+    toAccount: '5fbd39c804bcfa18c50dbf31',
     toAccountBalance: -122182.99999999895,
-    description: "asd",
-    _id: "5fc7e34bdf7e9e067f57c829",
+    description: 'asd',
+    _id: '5fc7e34bdf7e9e067f57c829',
     amount: 10,
-    date: "2020-11-18T00:00:00.000Z",
-    user: "5fbd378ede5ab913b62a75f3",
+    date: '2020-11-18T00:00:00.000Z',
+    user: '5fbd378ede5ab913b62a75f3',
   },
   {
-    categoryMappings: ["Category 1", "Category 2"],
-    toAccount: "5fbd39c804bcfa18c50dbf31",
+    categoryMappings: ['Category 1', 'Category 2'],
+    toAccount: '5fbd39c804bcfa18c50dbf31',
     toAccountBalance: -122172.99999999895,
-    description: "asd",
-    _id: "5fc7e351df7e9e067f57c82a",
+    description: 'asd',
+    _id: '5fc7e351df7e9e067f57c82a',
     amount: 20,
-    date: "2020-12-02T00:00:00.000Z",
-    user: "5fbd378ede5ab913b62a75f3",
+    date: '2020-12-02T00:00:00.000Z',
+    user: '5fbd378ede5ab913b62a75f3',
   },
   {
-    categoryMappings: ["Category 1", "Category 2"],
-    toAccount: "5fbd39c804bcfa18c50dbf31",
+    categoryMappings: ['Category 1', 'Category 2'],
+    toAccount: '5fbd39c804bcfa18c50dbf31',
     toAccountBalance: -122152.99999999895,
-    description: "ad",
-    _id: "5fc7e355df7e9e067f57c82b",
+    description: 'ad',
+    _id: '5fc7e355df7e9e067f57c82b',
     amount: 30,
-    date: "2020-12-02T00:00:00.000Z",
-    user: "5fbd378ede5ab913b62a75f3",
+    date: '2020-12-02T00:00:00.000Z',
+    user: '5fbd378ede5ab913b62a75f3',
   },
 ];
 
-test("Should calculate correct total after month change", () => {
+test('Should calculate correct total after month change', () => {
   const incomesPerMonth = testData.reduce(groupIncomesByMonth, []);
 
   const firstMonth = incomesPerMonth.find(

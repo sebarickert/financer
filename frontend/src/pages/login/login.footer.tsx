@@ -1,11 +1,13 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-interface IProps {
+interface ILoginFooterProps {
   className: string;
 }
 
-const LoginFooter = ({ className = "" }: IProps): JSX.Element => {
+export const LoginFooter = ({
+  className = '',
+}: ILoginFooterProps): JSX.Element => {
   return (
     <div
       className={`bg-gray-900 py-3 pr-3 grid grid-cols-2 items-center justify-center ${className}`}
@@ -19,5 +21,3 @@ const LoginFooter = ({ className = "" }: IProps): JSX.Element => {
     </div>
   );
 };
-
-export default LoginFooter;

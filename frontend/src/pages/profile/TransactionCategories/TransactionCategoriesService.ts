@@ -22,7 +22,7 @@ export const parseParentCategoryPath = (
 export const getAllTransactionCategories = async (): Promise<
   ITransactionCategory[]
 > => {
-  const transactionCategories = await fetch("/api/transaction-categories");
+  const transactionCategories = await fetch('/api/transaction-categories');
   return (
     (await transactionCategories.json()) as IApiResponse<ITransactionCategory[]>
   ).payload;
@@ -31,7 +31,7 @@ export const getAllTransactionCategories = async (): Promise<
 export const getAllTransactionCategoriesWithCategoryTree = async (): Promise<
   ITransactionCategoryWithCategoryTree[]
 > => {
-  const transactionCategoriesRaw = await fetch("/api/transaction-categories");
+  const transactionCategoriesRaw = await fetch('/api/transaction-categories');
   const transactionCategories = (
     (await transactionCategoriesRaw.json()) as IApiResponse<
       ITransactionCategory[]
@@ -66,11 +66,11 @@ export const getTransactionCategoryById = async (
 export const addTransactionCategory = async (
   newTransactionCategoryData: ITransactionCategory
 ): Promise<IApiResponse<ITransactionCategory>> => {
-  const newTransactionCategory = await fetch("/api/transaction-categories", {
-    method: "POST",
+  const newTransactionCategory = await fetch('/api/transaction-categories', {
+    method: 'POST',
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(newTransactionCategoryData),
   });
@@ -85,10 +85,10 @@ export const editTransactionCategory = async (
   const targetTransactionCategory = await fetch(
     `/api/transaction-categories/${id}`,
     {
-      method: "PUT",
+      method: 'PUT',
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(targetTransactionCategoryData),
     }
@@ -99,10 +99,10 @@ export const editTransactionCategory = async (
 
 export const deleteTransactionCategory = async (id: string): Promise<void> => {
   await fetch(`/api/transaction-categories/${id}`, {
-    method: "DELETE",
+    method: 'DELETE',
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
   });
 };

@@ -1,7 +1,8 @@
-import React from "react";
-import DesktopNavigationItem from "./desktop-navigation.item";
+import React from 'react';
 
-const DesktopNavigation = (): JSX.Element => {
+import { DesktopNavigationItem } from './desktop-navigation.item';
+
+export const DesktopNavigation = (): JSX.Element => {
   return (
     <div className="grid grid-cols-1">
       <nav aria-label="Main navigation in desktop viewmode.">
@@ -17,8 +18,8 @@ const DesktopNavigation = (): JSX.Element => {
             iconName="chart-bar"
             link="/statistics"
             isActive={(match: never, location: { pathname: string }) =>
-              location.pathname.substr(0, 11) === "/statistics" &&
-              location.pathname.substr(-4) !== "/add"
+              location.pathname.substr(0, 11) === '/statistics' &&
+              location.pathname.substr(-4) !== '/add'
             }
           />
           <DesktopNavigationItem
@@ -73,5 +74,3 @@ const DesktopNavigation = (): JSX.Element => {
     </div>
   );
 };
-
-export default DesktopNavigation;

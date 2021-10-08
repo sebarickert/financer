@@ -1,20 +1,21 @@
-import React from "react";
-import Button from "../button/button";
-import ButtonGroup from "../button/button.group";
+import React from 'react';
 
-interface IProps {
+import { Button } from '../button/button';
+import { ButtonGroup } from '../button/button.group';
+
+interface IFormFooterProps {
   submitLabel: string;
-  accentColor?: "red" | "green" | "blue";
+  accentColor?: 'red' | 'green' | 'blue';
   formFooterBackLink?: string;
   optionalComponent?: React.ReactNode;
 }
 
-const FormFooter = ({
+export const FormFooter = ({
   submitLabel,
-  accentColor = "blue",
-  formFooterBackLink = "./",
+  accentColor = 'blue',
+  formFooterBackLink = './',
   optionalComponent,
-}: IProps): JSX.Element => {
+}: IFormFooterProps): JSX.Element => {
   return (
     <>
       <div className="mt-8 border-t border-gray-200 pt-5">
@@ -35,5 +36,3 @@ const FormFooter = ({
     </>
   );
 };
-
-export default FormFooter;

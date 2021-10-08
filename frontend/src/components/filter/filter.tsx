@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import FilterItem from "./filter.item";
+import React, { useState } from 'react';
+
+import { FilterItem } from './filter.item';
 
 type FilterItemType = { label: string; onClick(): void };
 
@@ -9,17 +10,17 @@ interface IFilterProps {
   className?: string;
 }
 
-const Filter = ({
+export const Filter = ({
   srTitle,
   filters,
-  className = "",
+  className = '',
 }: IFilterProps): JSX.Element => {
   const [isActiveIndex, setIsActiveIndex] = useState(0);
 
   return (
     <div
       className={`grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4 ${
-        className ?? ""
+        className ?? ''
       }`}
       aria-label={srTitle}
     >
@@ -36,5 +37,3 @@ const Filter = ({
     </div>
   );
 };
-
-export default Filter;

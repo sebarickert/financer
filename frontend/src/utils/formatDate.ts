@@ -1,6 +1,6 @@
-import addLeadingZero from "./addLeadingZero";
+import { addLeadingZero } from './addLeadingZero';
 
-const formatter = new Intl.DateTimeFormat("fi-FI");
+const formatter = new Intl.DateTimeFormat('fi-FI');
 
 export const formatDate = (date: Date): string => formatter.format(date);
 

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import {
   Area,
   AreaChart,
@@ -10,30 +10,32 @@ import {
   TooltipProps,
   XAxis,
   YAxis,
-} from "recharts";
-import Button from "../../components/button/button";
-import ButtonGroup from "../../components/button/button.group";
-import Container from "../../components/container/container";
-import DescriptionList from "../../components/description-list/description-list";
-import DescriptionListItem from "../../components/description-list/description-list.item";
-import Hero from "../../components/hero/hero";
-import HeroLead from "../../components/hero/hero.lead";
-import Loader from "../../components/loader/loader";
-import ModalConfirm from "../../components/modal/confirm/modal.confirm";
-import SEO from "../../components/seo/seo";
-import StackedList from "../../components/stacked-list/stacked-list";
-import { ICustomStackedListRowProps } from "../../components/stacked-list/stacked-list.row";
-import { MONTH_IN_MS } from "../../constants/months";
-import capitalize from "../../utils/capitalize";
-import formatCurrency from "../../utils/formatCurrency";
-import { formatDate } from "../../utils/formatDate";
+} from 'recharts';
+
+import { Button } from '../../components/button/button';
+import { ButtonGroup } from '../../components/button/button.group';
+import { Container } from '../../components/container/container';
+import { DescriptionList } from '../../components/description-list/description-list';
+import { DescriptionListItem } from '../../components/description-list/description-list.item';
+import { Hero } from '../../components/hero/hero';
+import { HeroLead } from '../../components/hero/hero.lead';
+import { Loader } from '../../components/loader/loader';
+import { ModalConfirm } from '../../components/modal/confirm/modal.confirm';
+import { SEO } from '../../components/seo/seo';
+import { StackedList } from '../../components/stacked-list/stacked-list';
+import { ICustomStackedListRowProps } from '../../components/stacked-list/stacked-list.row';
+import { MONTH_IN_MS } from '../../constants/months';
+import { capitalize } from '../../utils/capitalize';
+import { formatCurrency } from '../../utils/formatCurrency';
+import { formatDate } from '../../utils/formatDate';
+
 import {
   deleteAccount,
   getAccountById,
   getAccountTransactions,
-} from "./AccountService";
+} from './AccountService';
 
-interface IProps {
+interface IAccountDeleteModalProps {
   handleDelete(): void;
 }
 
@@ -73,7 +75,7 @@ const SimpleLineChart = ({ data }: ISimpleLineChartProps): JSX.Element => {
   );
 
   return (
-    <div style={{ width: "100%", height: "33vh", minHeight: "450px" }}>
+    <div style={{ width: '100%', height: '33vh', minHeight: '450px' }}>
       <ResponsiveContainer>
         <AreaChart data={data}>
           <defs>
@@ -88,7 +90,7 @@ const SimpleLineChart = ({ data }: ISimpleLineChartProps): JSX.Element => {
             axisLine={false}
             tickLine={false}
             tickCount={6}
-            domain={["dataMin", "dataMax"]}
+            domain={['dataMin', 'dataMax']}
             tickFormatter={(number) => formatCurrency(number)}
             width={105}
           />
@@ -113,7 +115,7 @@ const SimpleLineChart = ({ data }: ISimpleLineChartProps): JSX.Element => {
           >
             <AreaChart>
               <CartesianGrid />
-              <YAxis hide domain={["dataMin", "dataMax"]} />
+              <YAxis hide domain={['dataMin', 'dataMax']} />
               <Area dataKey="balance" stroke="#1c64f2" fill="#1c64f2" />
             </AreaChart>
           </Brush>
@@ -124,7 +126,7 @@ const SimpleLineChart = ({ data }: ISimpleLineChartProps): JSX.Element => {
   );
 };
 
-const AccountDeleteModal = ({ handleDelete }: IProps) => (
+const AccountDeleteModal = ({ handleDelete }: IAccountDeleteModalProps) => (
   <ModalConfirm
     label="Delete account"
     submitButtonLabel="Delete"
@@ -137,7 +139,7 @@ const AccountDeleteModal = ({ handleDelete }: IProps) => (
   </ModalConfirm>
 );
 
-const Account = (): JSX.Element => {
+export const Account = (): JSX.Element => {
   const history = useHistory();
   const [account, setAccount] = useState<IAccount | undefined>(undefined);
   const [transactions, setTransactions] = useState<
@@ -161,7 +163,7 @@ const Account = (): JSX.Element => {
               date: dateStr,
               fromAccount,
               toAccount,
-              description = "Unknown",
+              description = 'Unknown',
               amount,
               _id,
             }): ICustomStackedListRowProps => {
@@ -176,8 +178,8 @@ const Account = (): JSX.Element => {
                   date,
                   tags: [
                     {
-                      label: !fromAccount ? "Income" : "Transfer",
-                      color: !fromAccount ? "green" : "blue",
+                      label: !fromAccount ? 'Income' : 'Transfer',
+                      color: !fromAccount ? 'green' : 'blue',
                     },
                   ],
                 };
@@ -191,8 +193,8 @@ const Account = (): JSX.Element => {
                 date,
                 tags: [
                   {
-                    label: !toAccount ? "Expense" : "Transfer",
-                    color: !toAccount ? "red" : "blue",
+                    label: !toAccount ? 'Expense' : 'Transfer',
+                    color: !toAccount ? 'red' : 'blue',
                   },
                 ],
               };
@@ -220,10 +222,10 @@ const Account = (): JSX.Element => {
 
   const handleDelete = async () => {
     await deleteAccount(id);
-    history.push("/accounts");
+    history.push('/accounts');
   };
 
-  return typeof account === "undefined" || transactions === null ? (
+  return typeof account === 'undefined' || transactions === null ? (
     <Loader loaderColor="blue" />
   ) : (
     <>
@@ -268,5 +270,3 @@ const Account = (): JSX.Element => {
     </>
   );
 };
-
-export default Account;

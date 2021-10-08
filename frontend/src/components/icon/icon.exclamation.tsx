@@ -1,10 +1,12 @@
-import React from "react";
+import React from 'react';
 
 interface IconElementProps {
   className?: string;
 }
 
-const IconExclamation = ({ className = "" }: IconElementProps): JSX.Element => {
+export const IconExclamation = ({
+  className = '',
+}: IconElementProps): JSX.Element => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -22,5 +24,3 @@ const IconExclamation = ({ className = "" }: IconElementProps): JSX.Element => {
     </svg>
   );
 };
-
-export default IconExclamation;

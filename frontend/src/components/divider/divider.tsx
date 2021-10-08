@@ -1,13 +1,16 @@
-import React from "react";
+import React from 'react';
 
 interface IDividerProps {
   children: string;
   className?: string;
 }
 
-const Divider = ({ children, className = "" }: IDividerProps): JSX.Element => {
+export const Divider = ({
+  children,
+  className = '',
+}: IDividerProps): JSX.Element => {
   return (
-    <div className={`relative ${className || ""}`}>
+    <div className={`relative ${className || ''}`}>
       <div className="absolute inset-0 flex items-center" aria-hidden="true">
         <div className="w-full border-t border-gray-300" />
       </div>
@@ -19,5 +22,3 @@ const Divider = ({ children, className = "" }: IDividerProps): JSX.Element => {
     </div>
   );
 };
-
-export default Divider;

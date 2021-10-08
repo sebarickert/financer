@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from "react";
-import Form from "../../../components/form/form";
-import Input from "../../../components/input/input";
-import Select, { IOption } from "../../../components/select/select";
-import Alert from "../../../components/alert/alert";
-import Loader from "../../../components/loader/loader";
+import React, { useEffect, useState } from 'react';
+
+import { Alert } from '../../../components/alert/alert';
+import { Checkbox } from '../../../components/checkbox/checkbox';
+import { CheckboxGroup } from '../../../components/checkbox/checkbox.group';
+import { Form } from '../../../components/form/form';
+import { Input } from '../../../components/input/input';
+import { Loader } from '../../../components/loader/loader';
+import { Select, IOption } from '../../../components/select/select';
+
 import {
   getAllTransactionCategoriesWithCategoryTree,
   ITransactionCategoryWithCategoryTree,
-} from "./TransactionCategoriesService";
-import CheckboxGroup from "../../../components/checkbox/checkbox.group";
-import Checkbox from "../../../components/checkbox/checkbox";
+} from './TransactionCategoriesService';
 
 interface ITransactionCategoryFormProps {
   errors: string[];
@@ -22,7 +24,7 @@ interface ITransactionCategoryFormProps {
   optionalFooterComponent?: React.ReactNode;
 }
 
-const TransactionCategoryForm = ({
+export const TransactionCategoryForm = ({
   errors,
   formHeading,
   onSubmit,
@@ -52,7 +54,7 @@ const TransactionCategoryForm = ({
     if (transactionCategoriesRaw === null) return;
 
     setTransactionCategories([
-      { label: "None", value: undefined },
+      { label: 'None', value: undefined },
       ...transactionCategoriesRaw.map(
         ({ _id, categoryTree: transactionCategoryName }) => ({
           value: _id,
@@ -74,15 +76,15 @@ const TransactionCategoryForm = ({
     } = event.target;
 
     const newVisibility = [
-      newIncomeVisible.checked ? "income" : "",
-      newExpenseVisible.checked ? "expense" : "",
-      newTransferVisible.checked ? "transfer" : "",
-    ].filter((i) => i !== "") as VisibilityType[];
+      newIncomeVisible.checked ? 'income' : '',
+      newExpenseVisible.checked ? 'expense' : '',
+      newTransferVisible.checked ? 'transfer' : '',
+    ].filter((i) => i !== '') as VisibilityType[];
 
     const newTransactionCategoryData: ITransactionCategory = {
       name: newCategoryName.value,
       parent_category_id:
-        newParentTransactionCategory.value === "None"
+        newParentTransactionCategory.value === 'None'
           ? null
           : newParentTransactionCategory.value,
       visibility: newVisibility,
@@ -121,17 +123,17 @@ const TransactionCategoryForm = ({
             <Checkbox
               id="incomeVisible"
               label="Income"
-              checked={visibility?.some((item) => item === "income")}
+              checked={visibility?.some((item) => item === 'income')}
             />
             <Checkbox
               id="expenseVisible"
               label="Expense"
-              checked={visibility?.some((item) => item === "expense")}
+              checked={visibility?.some((item) => item === 'expense')}
             />
             <Checkbox
               id="transferVisible"
               label="Transfer"
-              checked={visibility?.some((item) => item === "transfer")}
+              checked={visibility?.some((item) => item === 'transfer')}
             />
           </CheckboxGroup>
           <Select
@@ -147,5 +149,3 @@ const TransactionCategoryForm = ({
     </>
   );
 };
-
-export default TransactionCategoryForm;

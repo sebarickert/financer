@@ -1,31 +1,32 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import Icon, { IconName } from "../icon/icon";
-import { isExternalLink } from "../button/button";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+
+import { isExternalLink } from '../button/button';
+import { Icon, IconName } from '../icon/icon';
 
 interface IQuickLinksItemProps {
   title: string;
   link: string;
   description: string;
   iconName: IconName;
-  iconBackgroundColor?: "green" | "red" | "blue";
+  iconBackgroundColor?: 'green' | 'red' | 'blue';
 }
 
-const QuickLinksItem = ({
+export const QuickLinksItem = ({
   title,
   link,
   description,
   iconName,
-  iconBackgroundColor = "blue",
+  iconBackgroundColor = 'blue',
 }: IQuickLinksItemProps): JSX.Element => {
   return (
     <div className="relative group bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-500 rounded-lg border">
       <div>
         <span
           className={`rounded-lg inline-flex p-3 text-white ring-4 ring-white ${
-            iconBackgroundColor === "blue" && "bg-blue-financer"
-          } ${iconBackgroundColor === "green" && "bg-green-600"} ${
-            iconBackgroundColor === "red" && "bg-red-600"
+            iconBackgroundColor === 'blue' && 'bg-blue-financer'
+          } ${iconBackgroundColor === 'green' && 'bg-green-600'} ${
+            iconBackgroundColor === 'red' && 'bg-red-600'
           }`}
         >
           <Icon type={iconName} />
@@ -63,5 +64,3 @@ const QuickLinksItem = ({
     </div>
   );
 };
-
-export default QuickLinksItem;

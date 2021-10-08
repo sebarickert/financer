@@ -5,18 +5,18 @@ export interface IOverrideProfileData {
 }
 
 export const getProfileInformation = async (): Promise<IUser> => {
-  const profile = await fetch("/api/profile");
+  const profile = await fetch('/api/profile');
   return profile.json();
 };
 
 export const postOverrideProfileData = async (
   uploadedUserData: IOverrideProfileData
 ): Promise<IApiResponse<string>> => {
-  const rawOverride = await fetch("/api/profile/my-data", {
-    method: "POST",
+  const rawOverride = await fetch('/api/profile/my-data', {
+    method: 'POST',
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(uploadedUserData),
   });

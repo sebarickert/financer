@@ -1,13 +1,11 @@
-import React from "react";
+import React from 'react';
 
-interface IProps {
+interface ITableBodyProps {
   children: React.ReactNode;
 }
 
-const TableBody = ({ children }: IProps): JSX.Element => {
+export const TableBody = ({ children }: ITableBodyProps): JSX.Element => {
   return (
     <tbody className="bg-white divide-y divide-gray-200">{children}</tbody>
   );
 };
-
-export default TableBody;

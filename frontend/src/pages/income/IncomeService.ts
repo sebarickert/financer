@@ -1,5 +1,5 @@
 export const getAllIncomes = async (): Promise<IIncome[]> => {
-  const incomes = await fetch("/api/income");
+  const incomes = await fetch('/api/income');
   return incomes.json();
 };
 
@@ -11,11 +11,11 @@ export const getIncomeById = async (id: string): Promise<IIncome> => {
 export const addIncome = async (
   newIncomeData: IIncome
 ): Promise<IApiResponse<IIncome>> => {
-  const newIncome = await fetch("/api/income", {
-    method: "POST",
+  const newIncome = await fetch('/api/income', {
+    method: 'POST',
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(newIncomeData),
   });
@@ -25,10 +25,10 @@ export const addIncome = async (
 
 export const deleteIncome = async (id: string): Promise<void> => {
   await fetch(`/api/income/${id}`, {
-    method: "DELETE",
+    method: 'DELETE',
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
   });
 };

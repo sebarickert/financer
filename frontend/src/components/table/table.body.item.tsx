@@ -1,16 +1,16 @@
-import React from "react";
+import React from 'react';
 
-interface IProps {
+interface ITableBodyItemProps {
   isAction?: boolean;
   isFirst?: boolean;
   children: string | number | JSX.Element;
 }
 
-const TableBodyItem = ({
+export const TableBodyItem = ({
   children,
   isFirst = false,
   isAction = false,
-}: IProps): JSX.Element => {
+}: ITableBodyItemProps): JSX.Element => {
   if (isFirst) {
     return (
       <td className="px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium text-gray-900 max-w-xs">
@@ -34,5 +34,3 @@ const TableBodyItem = ({
     </td>
   );
 };
-
-export default TableBodyItem;

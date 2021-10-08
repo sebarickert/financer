@@ -1,6 +1,8 @@
-import React from "react";
-import { IOption } from "../select/select";
-import TransactionCategoriesFormItem from "./transaction-categories-form.item";
+import React from 'react';
+
+import { IOption } from '../select/select';
+
+import { TransactionCategoriesFormItem } from './transaction-categories-form.item';
 
 interface ITransactionCategoriesFormProps {
   className?: string;
@@ -12,8 +14,8 @@ interface ITransactionCategoriesFormProps {
   setTransactionCategoryItemAmount(itemKey: number, itemValue: number): void;
 }
 
-const TransactionCategoriesForm = ({
-  className = "",
+export const TransactionCategoriesForm = ({
+  className = '',
   categoryAmount,
   transactionCategories,
   amountMaxValue,
@@ -52,5 +54,3 @@ const TransactionCategoriesForm = ({
     </div>
   );
 };
-
-export default TransactionCategoriesForm;

@@ -1,15 +1,13 @@
-import React from "react";
+import React from 'react';
 
 interface IBannerTextProps {
   children: string;
   className?: string;
 }
 
-const BannerText = ({
+export const BannerText = ({
   children,
-  className = "",
+  className = '',
 }: IBannerTextProps): JSX.Element => (
   <p className={`text-lg max-w-xl ${className}`}>{children}</p>
 );
-
-export default BannerText;

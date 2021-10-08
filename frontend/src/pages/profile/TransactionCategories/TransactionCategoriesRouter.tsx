@@ -1,10 +1,11 @@
-import React from "react";
-import { Switch, Route } from "react-router-dom";
-import AddTransactionCategory from "./AddTransactionCategory";
-import EditTransactionCategory from "./EditTransactionCategory";
-import TransactionCategories from "./TransactionCategories";
+import React from 'react';
+import { Switch, Route } from 'react-router-dom';
 
-const TransactionCategoriesRouter = (): JSX.Element => {
+import { AddTransactionCategory } from './AddTransactionCategory';
+import { EditTransactionCategory } from './EditTransactionCategory';
+import { TransactionCategories } from './TransactionCategories';
+
+export const TransactionCategoriesRouter = (): JSX.Element => {
   return (
     <Switch>
       <Route exact path="/profile/transaction-categories">
@@ -19,5 +20,3 @@ const TransactionCategoriesRouter = (): JSX.Element => {
     </Switch>
   );
 };
-
-export default TransactionCategoriesRouter;

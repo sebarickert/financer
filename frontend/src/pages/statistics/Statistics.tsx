@@ -1,70 +1,71 @@
-import React, { useEffect, useState } from "react";
-import Banner from "../../components/banner/banner";
-import BannerText from "../../components/banner/banner.text";
-import Divider from "../../components/divider/divider";
-import Filter from "../../components/filter/filter";
-import Loader from "../../components/loader/loader";
-import QuickLinks from "../../components/quick-links/quick-links";
-import QuickLinksItem from "../../components/quick-links/quick-links.item";
-import SEO from "../../components/seo/seo";
-import Stats from "../../components/stats/stats";
-import StatsItem from "../../components/stats/stats.item";
-import TransactionStackedList from "../../components/transaction-stacked-list/transaction-stacked-list";
+import React, { useEffect, useState } from 'react';
+
+import { Banner } from '../../components/banner/banner';
+import { BannerText } from '../../components/banner/banner.text';
+import { Divider } from '../../components/divider/divider';
+import { Filter } from '../../components/filter/filter';
+import { Loader } from '../../components/loader/loader';
+import { QuickLinks } from '../../components/quick-links/quick-links';
+import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
+import { SEO } from '../../components/seo/seo';
+import { Stats } from '../../components/stats/stats';
+import { StatsItem } from '../../components/stats/stats.item';
+import { TransactionStackedList } from '../../components/transaction-stacked-list/transaction-stacked-list';
 import {
   ITransactionStackedListRowProps,
   TransactionType,
-} from "../../components/transaction-stacked-list/transaction-stacked-list.row";
-import monthNames from "../../constants/months";
-import { getAllUserTransactions } from "../../services/TransactionService";
-import formatCurrency from "../../utils/formatCurrency";
-import { formatDate } from "../../utils/formatDate";
-import { getAllTransactionCategories } from "../profile/TransactionCategories/TransactionCategoriesService";
+} from '../../components/transaction-stacked-list/transaction-stacked-list.row';
+import { monthNames } from '../../constants/months';
+import { getAllUserTransactions } from '../../services/TransactionService';
+import { formatCurrency } from '../../utils/formatCurrency';
+import { formatDate } from '../../utils/formatDate';
+import { getAllTransactionCategories } from '../profile/TransactionCategories/TransactionCategoriesService';
 
 type TransactionVisibilityFilterType =
-  | "all"
-  | "income"
-  | "expense"
-  | "transfer";
+  | 'all'
+  | 'income'
+  | 'expense'
+  | 'transfer';
 
 const getAllUserTransactionCategoryMappings = async (): Promise<
   ITransactionCategoryMapping[]
-> => (await fetch("/api/transaction-categories-mapping")).json();
+> => (await fetch('/api/transaction-categories-mapping')).json();
 
 const getTransactionType = (
   toAccount: string | null | undefined,
   fromAccount: string | null | undefined
 ): TransactionType => {
   if (toAccount && !fromAccount) {
-    return "income";
+    return 'income';
   }
 
   if (!toAccount && fromAccount) {
-    return "expense";
+    return 'expense';
   }
 
-  return "transfer";
+  return 'transfer';
 };
 
 const mapTransactionTypeToUrlPrefix: {
-  [key in TransactionType]: "incomes" | "expenses" | "transfers";
+  [key in TransactionType]: 'incomes' | 'expenses' | 'transfers';
 } = {
-  income: "incomes",
-  expense: "expenses",
-  transfer: "transfers",
+  income: 'incomes',
+  expense: 'expenses',
+  transfer: 'transfers',
 };
 
 const filterTransactionsByType = (
   visibilityFilter: TransactionVisibilityFilterType,
   { toAccount, fromAccount }: ITransaction
 ) => {
-  if (visibilityFilter === "all") return true;
+  if (visibilityFilter === 'all') return true;
 
   return getTransactionType(toAccount, fromAccount) === visibilityFilter;
 };
 
-const Statistics = (): JSX.Element => {
+export const Statistics = (): JSX.Element => {
   const [transactionVisibilityFilter, setTransactionVisibilityFilter] =
-    useState<TransactionVisibilityFilterType>("all");
+    useState<TransactionVisibilityFilterType>('all');
   const [transactionsRaw, setTransactionsRaw] = useState<ITransaction[] | null>(
     null
   );
@@ -127,10 +128,10 @@ const Statistics = (): JSX.Element => {
                     ({ _id: categoryId }) => category_id === categoryId
                   )?.name
               )
-              .filter((categoryName) => typeof categoryName !== "undefined");
+              .filter((categoryName) => typeof categoryName !== 'undefined');
 
             return {
-              transactionCategories: categoryMappings.join(", "),
+              transactionCategories: categoryMappings.join(', '),
               transactionAmount: formatCurrency(amount),
               date: formatDate(date),
               label: description,
@@ -145,7 +146,7 @@ const Statistics = (): JSX.Element => {
     setTotalIncomes(
       transactions
         .filter((transaction) =>
-          filterTransactionsByType("income", transaction)
+          filterTransactionsByType('income', transaction)
         )
         .reduce((currentTotal, { amount }) => currentTotal + amount, 0)
     );
@@ -153,7 +154,7 @@ const Statistics = (): JSX.Element => {
     setTotalExpenses(
       transactions
         .filter((transaction) =>
-          filterTransactionsByType("expense", transaction)
+          filterTransactionsByType('expense', transaction)
         )
         .reduce((currentTotal, { amount }) => currentTotal + amount, 0)
     );
@@ -187,20 +188,20 @@ const Statistics = (): JSX.Element => {
 
   const filterItems = [
     {
-      label: "All",
-      onClick: () => setTransactionVisibilityFilter("all"),
+      label: 'All',
+      onClick: () => setTransactionVisibilityFilter('all'),
     },
     {
-      label: "Income",
-      onClick: () => setTransactionVisibilityFilter("income"),
+      label: 'Income',
+      onClick: () => setTransactionVisibilityFilter('income'),
     },
     {
-      label: "Expense",
-      onClick: () => setTransactionVisibilityFilter("expense"),
+      label: 'Expense',
+      onClick: () => setTransactionVisibilityFilter('expense'),
     },
     {
-      label: "Transfer",
-      onClick: () => setTransactionVisibilityFilter("transfer"),
+      label: 'Transfer',
+      onClick: () => setTransactionVisibilityFilter('transfer'),
     },
   ];
 
@@ -223,10 +224,10 @@ const Statistics = (): JSX.Element => {
           {`${totalTransactions}`}
         </StatsItem>
         <StatsItem statLabel="Total Incomes">
-          {Number.isNaN(totalIncomes) ? "-" : formatCurrency(totalIncomes)}
+          {Number.isNaN(totalIncomes) ? '-' : formatCurrency(totalIncomes)}
         </StatsItem>
         <StatsItem statLabel="Total Expenses">
-          {Number.isNaN(totalExpenses) ? "-" : formatCurrency(totalExpenses)}
+          {Number.isNaN(totalExpenses) ? '-' : formatCurrency(totalExpenses)}
         </StatsItem>
       </Stats>
       <TransactionStackedList className="mt-4" rows={visibleTransactions} />
@@ -256,5 +257,3 @@ const Statistics = (): JSX.Element => {
     </>
   );
 };
-
-export default Statistics;

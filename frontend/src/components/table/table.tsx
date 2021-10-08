@@ -1,10 +1,11 @@
-import React from "react";
-import TableHead from "./table.head";
-import TableHeader, { TAddiotinalLabel } from "./table.header";
-import TableResponsiveContainer from "./table.responsive";
-import TableBody from "./table.body";
-import TableHeadItem from "./table.head.item";
-import TableBodyRow, { IRow } from "./table.body.row";
+import React from 'react';
+
+import { TableBody } from './table.body';
+import { TableBodyRow, IRow } from './table.body.row';
+import { TableHead } from './table.head';
+import { TableHeadItem } from './table.head.item';
+import { TableHeader, TAddiotinalLabel } from './table.header';
+import { TableResponsiveContainer } from './table.responsive';
 
 export interface ITableHead {
   key: string;
@@ -19,7 +20,7 @@ interface IProps {
   dataKeyColumn: string;
 }
 
-const Table = ({
+export const Table = ({
   addiotinalLabel,
   label,
   rows,
@@ -29,7 +30,7 @@ const Table = ({
   const actionKeys = tableHeads
     .filter(
       ({ label: headLabel }) =>
-        typeof headLabel === "undefined" || headLabel.length === 0
+        typeof headLabel === 'undefined' || headLabel.length === 0
     )
     .map(({ key }) => key);
   const tableKeys = tableHeads.map(({ key }) => key);
@@ -60,5 +61,3 @@ const Table = ({
     </>
   );
 };
-
-export default Table;

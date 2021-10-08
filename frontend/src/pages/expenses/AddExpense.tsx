@@ -1,19 +1,21 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-import SEO from "../../components/seo/seo";
-import ExpenseForm from "./ExpenseForm";
-import { addExpense } from "./ExpenseService";
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+
+import { SEO } from '../../components/seo/seo';
+
+import { ExpenseForm } from './ExpenseForm';
+import { addExpense } from './ExpenseService';
 
 export const addTransactionCategoryMapping = async (
   newTransactionCategoryMappingData: ITransactionCategoryMapping[]
 ): Promise<IApiResponse<ITransactionCategoryMapping[]>> => {
   const newTransactionCategoryMapping = await fetch(
-    "/api/transaction-categories-mapping",
+    '/api/transaction-categories-mapping',
     {
-      method: "POST",
+      method: 'POST',
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(newTransactionCategoryMappingData),
     }
@@ -22,7 +24,7 @@ export const addTransactionCategoryMapping = async (
   return newTransactionCategoryMapping.json();
 };
 
-const AddExpense = (): JSX.Element => {
+export const AddExpense = (): JSX.Element => {
   const history = useHistory();
   const [errors, setErrors] = useState<string[]>([]);
 
@@ -44,9 +46,9 @@ const AddExpense = (): JSX.Element => {
         );
 
       if (newExpenseJson.status === 201) {
-        history.push("/statistics/expenses");
+        history.push('/statistics/expenses');
       } else if (newExpenseJson.status === 400) {
-        setErrors(newExpenseJson?.errors || ["Unknown error."]);
+        setErrors(newExpenseJson?.errors || ['Unknown error.']);
       }
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -66,5 +68,3 @@ const AddExpense = (): JSX.Element => {
     </>
   );
 };
-
-export default AddExpense;

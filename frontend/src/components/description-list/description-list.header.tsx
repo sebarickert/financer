@@ -1,21 +1,21 @@
-import React from "react";
+import React from 'react';
 
-interface IProps {
+interface IDescriptionListHeaderProps {
   label: string;
   testId?: string;
   visibleLabel: boolean;
 }
 
-const DescriptionListHeader = ({
+export const DescriptionListHeader = ({
   label,
   testId,
   visibleLabel,
-}: IProps): JSX.Element => {
+}: IDescriptionListHeaderProps): JSX.Element => {
   return (
     <div className="pb-2" data-test-id={testId}>
       <h3
         className={`text-lg leading-6 font-medium text-gray-900 ${
-          !visibleLabel && "sr-only"
+          !visibleLabel && 'sr-only'
         }`}
       >
         {label}
@@ -23,5 +23,3 @@ const DescriptionListHeader = ({
     </div>
   );
 };
-
-export default DescriptionListHeader;

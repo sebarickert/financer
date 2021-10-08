@@ -1,19 +1,20 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
-import Form from "../../components/form/form";
-import Input from "../../components/input/input";
-import Select, { IOption } from "../../components/select/select";
-import Alert from "../../components/alert/alert";
-import Loader from "../../components/loader/loader";
-import { inputDateFormat } from "../../utils/formatDate";
-import { getAllAccounts } from "../accounts/AccountService";
-import Button from "../../components/button/button";
+import React, { ChangeEvent, useEffect, useState } from 'react';
+
+import { Alert } from '../../components/alert/alert';
+import { Button } from '../../components/button/button';
+import { Form } from '../../components/form/form';
+import { Input } from '../../components/input/input';
+import { Loader } from '../../components/loader/loader';
+import { Select, IOption } from '../../components/select/select';
+import { TransactionCategoriesForm } from '../../components/transaction-categories-form/transaction-categories-form';
+import { inputDateFormat } from '../../utils/formatDate';
+import { getAllAccounts } from '../accounts/AccountService';
 import {
   getAllTransactionCategoriesWithCategoryTree,
   ITransactionCategoryWithCategoryTree,
-} from "../profile/TransactionCategories/TransactionCategoriesService";
-import TransactionCategoriesForm from "../../components/transaction-categories-form/transaction-categories-form";
+} from '../profile/TransactionCategories/TransactionCategoriesService';
 
-interface IProps {
+interface ITransferFormProps {
   amount?: number;
   date?: Date;
   description?: string;
@@ -29,7 +30,7 @@ interface IProps {
   transactionCategoryMapping?: ITransactionCategoryMapping[];
 }
 
-const TransferForm = ({
+export const TransferForm = ({
   amount,
   date,
   description,
@@ -40,7 +41,7 @@ const TransferForm = ({
   fromAccount,
   toAccount,
   transactionCategoryMapping,
-}: IProps): JSX.Element => {
+}: ITransferFormProps): JSX.Element => {
   const [accountsRaw, setAccountsRaw] = useState<IAccount[] | null>(null);
   const [accounts, setAccounts] = useState<IOption[] | null>(null);
   const [transactionCategoriesRaw, setTransactionCategoriesRaw] = useState<
@@ -124,7 +125,7 @@ const TransferForm = ({
   }, [transactionCategoriesRaw]);
 
   useEffect(() => {
-    if (typeof transactionCategoryMapping === "undefined") return;
+    if (typeof transactionCategoryMapping === 'undefined') return;
     const newCategoryAmount: number[] = [];
     transactionCategoryMapping.forEach((_, index) =>
       newCategoryAmount.push(index)
@@ -146,7 +147,7 @@ const TransferForm = ({
     const newTransferData: ITransaction = {
       fromAccount: newFromAccount.value,
       toAccount: newToAccount.value,
-      amount: parseFloat((newAmount.value as string).replace(",", ".")),
+      amount: parseFloat((newAmount.value as string).replace(',', '.')),
       description: newDescription.value,
       date: newDate.value,
     };
@@ -163,7 +164,7 @@ const TransferForm = ({
         return {
           category_id: newTransactionCategories.value,
           amount: parseFloat(
-            (newTransactionCategoriesAmount.value as string).replace(",", ".")
+            (newTransactionCategoriesAmount.value as string).replace(',', '.')
           ),
           description: newTransactionCategoriesDescription.value,
         };
@@ -198,7 +199,7 @@ const TransferForm = ({
               step={0.01}
               isCurrency
               isRequired
-              value={Number.isNaN(amount) ? "" : amount}
+              value={Number.isNaN(amount) ? '' : amount}
               onChange={handleAmountInputValueChange}
             >
               Amount
@@ -222,7 +223,7 @@ const TransferForm = ({
             <Input
               id="date"
               type="datetime-local"
-              value={typeof date !== "undefined" ? inputDateFormat(date) : ""}
+              value={typeof date !== 'undefined' ? inputDateFormat(date) : ''}
               isDate
             >
               Date
@@ -256,5 +257,3 @@ const TransferForm = ({
     </>
   );
 };
-
-export default TransferForm;

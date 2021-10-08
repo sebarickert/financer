@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 
 interface INotificationCloseProps {
   onClick(): void;
 }
 
-const NotificationClose = ({
+export const NotificationClose = ({
   onClick,
 }: INotificationCloseProps): JSX.Element => {
   return (
@@ -32,5 +32,3 @@ const NotificationClose = ({
     </div>
   );
 };
-
-export default NotificationClose;

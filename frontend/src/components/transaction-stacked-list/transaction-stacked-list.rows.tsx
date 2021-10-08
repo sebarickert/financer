@@ -1,13 +1,11 @@
-import React from "react";
+import React from 'react';
 
 interface ITransactionStackedListRowsProps {
   children: React.ReactNode;
 }
 
-const TransactionStackedListRows = ({
+export const TransactionStackedListRows = ({
   children,
 }: ITransactionStackedListRowsProps): JSX.Element => {
   return <ul className="space-y-4">{children}</ul>;
 };
-
-export default TransactionStackedListRows;

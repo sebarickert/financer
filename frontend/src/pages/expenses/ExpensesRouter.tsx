@@ -1,11 +1,12 @@
-import React from "react";
-import { Switch, Route } from "react-router-dom";
-import AddExpense from "./AddExpense";
-import EditExpense from "./EditExpense";
-import Expense from "./Expense";
-import Expenses from "./Expenses";
+import React from 'react';
+import { Switch, Route } from 'react-router-dom';
 
-const ExpensesRouter = (): JSX.Element => {
+import { AddExpense } from './AddExpense';
+import { EditExpense } from './EditExpense';
+import { Expense } from './Expense';
+import { Expenses } from './Expenses';
+
+export const ExpensesRouter = (): JSX.Element => {
   return (
     <Switch>
       <Route exact path="/statistics/expenses">
@@ -23,5 +24,3 @@ const ExpensesRouter = (): JSX.Element => {
     </Switch>
   );
 };
-
-export default ExpensesRouter;

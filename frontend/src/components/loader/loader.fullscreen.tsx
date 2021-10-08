@@ -1,8 +1,9 @@
-import React from "react";
-import Loader, { ILoaderProps } from "./loader";
+import React from 'react';
 
-const LoaderFullScreen = ({
-  loaderColor = "pink",
+import { Loader, ILoaderProps } from './loader';
+
+export const LoaderFullScreen = ({
+  loaderColor = 'pink',
 }: ILoaderProps): JSX.Element => (
   <div className="z-50 fixed inset-0 w-full h-full flex items-center">
     <div className="fixed inset-0 transition-opacity">
@@ -13,5 +14,3 @@ const LoaderFullScreen = ({
     </div>
   </div>
 );
-
-export default LoaderFullScreen;

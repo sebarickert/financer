@@ -1,23 +1,23 @@
 /* eslint-disable react/button-has-type */
-import React from "react";
+import React from 'react';
 
-interface IProps {
+interface IButtonPlainProps {
   children: string;
   onClick(): void;
   className: string;
-  type?: "button" | "submit" | "reset" | undefined;
+  type?: 'button' | 'submit' | 'reset' | undefined;
   testId?: string;
   isDisabled?: boolean;
 }
 
-const ButtonPlain = ({
+export const ButtonPlain = ({
   children,
   onClick,
   className,
-  type = "button",
+  type = 'button',
   testId,
   isDisabled,
-}: IProps): JSX.Element => {
+}: IButtonPlainProps): JSX.Element => {
   return (
     <button
       type={type}
@@ -31,5 +31,3 @@ const ButtonPlain = ({
     </button>
   );
 };
-
-export default ButtonPlain;

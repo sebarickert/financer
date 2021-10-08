@@ -1,9 +1,10 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import Icon, { IconName } from "../icon/icon";
-import isIOSDevice from "../../utils/isIOSDevice";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 
-interface IProps {
+import { isIOSDevice } from '../../utils/isIOSDevice';
+import { Icon, IconName } from '../icon/icon';
+
+interface IMobileNavigationItemProps {
   link: string;
   iconName: IconName;
   label: string;
@@ -14,7 +15,7 @@ interface IProps {
   isActive?(match: never, location: { pathname: string }): boolean;
 }
 
-const MobileNavigationItem = ({
+export const MobileNavigationItem = ({
   link,
   iconName,
   label,
@@ -23,14 +24,14 @@ const MobileNavigationItem = ({
   addExtraPaddingIOS,
   isExact,
   isActive,
-}: IProps): JSX.Element => {
+}: IMobileNavigationItemProps): JSX.Element => {
   return (
     <li>
       <NavLink
         to={link}
         exact={isExact}
         className={`flex flex-col items-center justify-center focus:text-blue-financer hover:text-blue-financer ${
-          addExtraPaddingIOS && isIOSDevice() ? "pb-8 pt-4" : "pb-2 pt-4"
+          addExtraPaddingIOS && isIOSDevice() ? 'pb-8 pt-4' : 'pb-2 pt-4'
         }`}
         activeClassName="text-blue-financer"
         onClick={onClick}
@@ -43,5 +44,3 @@ const MobileNavigationItem = ({
     </li>
   );
 };
-
-export default MobileNavigationItem;

@@ -1,25 +1,27 @@
-import React, { useState, useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
-import DescriptionList from "../../components/description-list/description-list";
-import DescriptionListItem from "../../components/description-list/description-list.item";
-import Icon from "../../components/icon/icon";
-import Loader from "../../components/loader/loader";
-import ModalConfirm from "../../components/modal/confirm/modal.confirm";
-import SEO from "../../components/seo/seo";
-import formatCurrency from "../../utils/formatCurrency";
-import { formatDate } from "../../utils/formatDate";
-import { getTransactionCategoryMappingByTransactionId } from "../expenses/Expense";
+import React, { useState, useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
+
+import { DescriptionList } from '../../components/description-list/description-list';
+import { DescriptionListItem } from '../../components/description-list/description-list.item';
+import { Icon } from '../../components/icon/icon';
+import { Loader } from '../../components/loader/loader';
+import { ModalConfirm } from '../../components/modal/confirm/modal.confirm';
+import { SEO } from '../../components/seo/seo';
+import { formatCurrency } from '../../utils/formatCurrency';
+import { formatDate } from '../../utils/formatDate';
+import { getTransactionCategoryMappingByTransactionId } from '../expenses/Expense';
 import {
   getAllTransactionCategoriesWithCategoryTree,
   ITransactionCategoryWithCategoryTree,
-} from "../profile/TransactionCategories/TransactionCategoriesService";
-import { getTransferById, deleteTransfer } from "./TransferService";
+} from '../profile/TransactionCategories/TransactionCategoriesService';
 
-interface IProps {
+import { getTransferById, deleteTransfer } from './TransferService';
+
+interface ITransferDeleteModalProps {
   handleDelete(): void;
 }
 
-const TransferDeleteModal = ({ handleDelete }: IProps) => (
+const TransferDeleteModal = ({ handleDelete }: ITransferDeleteModalProps) => (
   <ModalConfirm
     label="Delete transfer"
     submitButtonLabel="Delete"
@@ -32,7 +34,7 @@ const TransferDeleteModal = ({ handleDelete }: IProps) => (
   </ModalConfirm>
 );
 
-const Transfer = (): JSX.Element => {
+export const Transfer = (): JSX.Element => {
   const history = useHistory();
   const [transfer, setTransfer] = useState<ITransaction | undefined>(undefined);
   const [transactionCategoryMapping, setTransactionCategoryMapping] = useState<
@@ -71,11 +73,11 @@ const Transfer = (): JSX.Element => {
 
   const handleDelete = async () => {
     await deleteTransfer(id);
-    history.push("/statistics/transfers");
+    history.push('/statistics/transfers');
   };
 
-  return typeof transfer === "undefined" ||
-    typeof transactionCategoryMapping === "undefined" ||
+  return typeof transfer === 'undefined' ||
+    typeof transactionCategoryMapping === 'undefined' ||
     transactionCategories === null ? (
     <Loader loaderColor="blue" />
   ) : (
@@ -116,5 +118,3 @@ const Transfer = (): JSX.Element => {
     </>
   );
 };
-
-export default Transfer;

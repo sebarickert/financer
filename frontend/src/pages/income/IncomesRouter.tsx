@@ -1,11 +1,12 @@
-import React from "react";
-import { Switch, Route } from "react-router-dom";
-import AddIncome from "./AddIncome";
-import EditIncome from "./EditIncome";
-import Income from "./Income";
-import Incomes from "./Incomes";
+import React from 'react';
+import { Switch, Route } from 'react-router-dom';
 
-const IncomesRouter = (): JSX.Element => {
+import { AddIncome } from './AddIncome';
+import { EditIncome } from './EditIncome';
+import { Income } from './Income';
+import { Incomes } from './Incomes';
+
+export const IncomesRouter = (): JSX.Element => {
   return (
     <Switch>
       <Route exact path="/statistics/incomes">
@@ -23,5 +24,3 @@ const IncomesRouter = (): JSX.Element => {
     </Switch>
   );
 };
-
-export default IncomesRouter;

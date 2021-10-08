@@ -1,10 +1,12 @@
-import React from "react";
+import React from 'react';
 
-interface IProps {
+interface ITableResponsiveContainerProps {
   children: React.ReactNode;
 }
 
-const TableResponsiveContainer = ({ children }: IProps): JSX.Element => {
+export const TableResponsiveContainer = ({
+  children,
+}: ITableResponsiveContainerProps): JSX.Element => {
   return (
     <div className="flex flex-col mt-4">
       <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -19,5 +21,3 @@ const TableResponsiveContainer = ({ children }: IProps): JSX.Element => {
     </div>
   );
 };
-
-export default TableResponsiveContainer;

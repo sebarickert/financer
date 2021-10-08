@@ -1,8 +1,9 @@
-import React from "react";
-import MobileNavigationActions from "./mobile-navigation.actions";
-import MobileNavigationItem from "./mobile-navigation.item";
+import React from 'react';
 
-const MobileNavigation = (): JSX.Element => {
+import { MobileNavigationActions } from './mobile-navigation.actions';
+import { MobileNavigationItem } from './mobile-navigation.item';
+
+export const MobileNavigation = (): JSX.Element => {
   return (
     <div className="bg-white fixed bottom-0 left-0 right-0 w-full border-t z-10">
       <nav aria-label="Main navigation in mobile viewmode.">
@@ -20,8 +21,8 @@ const MobileNavigation = (): JSX.Element => {
             link="/statistics"
             addExtraPaddingIOS
             isActive={(match: never, location: { pathname: string }) =>
-              location.pathname.substr(0, 11) === "/statistics" &&
-              location.pathname.substr(-4) !== "/add"
+              location.pathname.substr(0, 11) === '/statistics' &&
+              location.pathname.substr(-4) !== '/add'
             }
           />
           <MobileNavigationActions />
@@ -42,5 +43,3 @@ const MobileNavigation = (): JSX.Element => {
     </div>
   );
 };
-
-export default MobileNavigation;

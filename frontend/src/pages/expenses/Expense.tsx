@@ -1,24 +1,26 @@
-import React, { useState, useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
-import DescriptionList from "../../components/description-list/description-list";
-import DescriptionListItem from "../../components/description-list/description-list.item";
-import Icon from "../../components/icon/icon";
-import Loader from "../../components/loader/loader";
-import ModalConfirm from "../../components/modal/confirm/modal.confirm";
-import SEO from "../../components/seo/seo";
-import formatCurrency from "../../utils/formatCurrency";
-import { formatDate } from "../../utils/formatDate";
+import React, { useState, useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
+
+import { DescriptionList } from '../../components/description-list/description-list';
+import { DescriptionListItem } from '../../components/description-list/description-list.item';
+import { Icon } from '../../components/icon/icon';
+import { Loader } from '../../components/loader/loader';
+import { ModalConfirm } from '../../components/modal/confirm/modal.confirm';
+import { SEO } from '../../components/seo/seo';
+import { formatCurrency } from '../../utils/formatCurrency';
+import { formatDate } from '../../utils/formatDate';
 import {
   getAllTransactionCategoriesWithCategoryTree,
   ITransactionCategoryWithCategoryTree,
-} from "../profile/TransactionCategories/TransactionCategoriesService";
-import { deleteExpense, getExpenseById } from "./ExpenseService";
+} from '../profile/TransactionCategories/TransactionCategoriesService';
 
-interface IProps {
+import { deleteExpense, getExpenseById } from './ExpenseService';
+
+interface IExpenseDeleteModalProps {
   handleDelete(): void;
 }
 
-const ExpenseDeleteModal = ({ handleDelete }: IProps) => (
+const ExpenseDeleteModal = ({ handleDelete }: IExpenseDeleteModalProps) => (
   <ModalConfirm
     label="Delete expense"
     submitButtonLabel="Delete"
@@ -40,7 +42,7 @@ export const getTransactionCategoryMappingByTransactionId = async (
   return (await transactionCategoryMapping.json()).payload;
 };
 
-const Expense = (): JSX.Element => {
+export const Expense = (): JSX.Element => {
   const history = useHistory();
   const [expense, setExpense] = useState<IExpense | undefined>(undefined);
   const [transactionCategoryMapping, setTransactionCategoryMapping] = useState<
@@ -80,11 +82,11 @@ const Expense = (): JSX.Element => {
 
   const handleDelete = async () => {
     await deleteExpense(id);
-    history.push("/statistics/expenses");
+    history.push('/statistics/expenses');
   };
 
-  return typeof expense === "undefined" ||
-    typeof transactionCategoryMapping === "undefined" ||
+  return typeof expense === 'undefined' ||
+    typeof transactionCategoryMapping === 'undefined' ||
     transactionCategories === null ? (
     <Loader loaderColor="blue" />
   ) : (
@@ -125,5 +127,3 @@ const Expense = (): JSX.Element => {
     </>
   );
 };
-
-export default Expense;

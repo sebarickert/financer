@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
-import Notification from "./components/notification/notification";
-import Financer from "./Financer";
-import { getAuthenticationStatus } from "./services/AuthenticationService";
+import React, { useEffect, useState } from 'react';
 
-const App = (): JSX.Element => {
+import { Notification } from './components/notification/notification';
+import { Financer } from './Financer';
+import { getAuthenticationStatus } from './services/AuthenticationService';
+
+export const App = (): JSX.Element => {
   const [authenticationStatus, setAuthenticationStatus] =
     useState<IAuthenticationStatus>({
       authenticated: false,
@@ -24,12 +25,10 @@ const App = (): JSX.Element => {
           label="Something went wrong!"
           className="z-20"
         >
-          {authenticationStatus.errors?.join(" ") || ""}
+          {authenticationStatus.errors?.join(' ') || ''}
         </Notification>
       )}
       <Financer isLoggedIn={authenticationStatus?.authenticated} />
     </>
   );
 };
-
-export default App;

@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 
 interface IconElementProps {
   className?: string;
 }
 
-const IconSwitchHorizontal = ({
-  className = "",
+export const IconSwitchHorizontal = ({
+  className = '',
 }: IconElementProps): JSX.Element => {
   return (
     <svg
@@ -24,5 +24,3 @@ const IconSwitchHorizontal = ({
     </svg>
   );
 };
-
-export default IconSwitchHorizontal;

@@ -1,10 +1,11 @@
-import React from "react";
-import Form from "../../components/form/form";
-import Input from "../../components/input/input";
-import Select, { IOption } from "../../components/select/select";
-import Alert from "../../components/alert/alert";
+import React from 'react';
 
-interface IProps {
+import { Alert } from '../../components/alert/alert';
+import { Form } from '../../components/form/form';
+import { Input } from '../../components/input/input';
+import { Select, IOption } from '../../components/select/select';
+
+interface IAccountFormProps {
   errors: string[];
   name?: string;
   balance?: number;
@@ -14,35 +15,35 @@ interface IProps {
   submitLabel: string;
 }
 
-const AccountForm = ({
+export const AccountForm = ({
   errors,
-  name = "",
+  name = '',
   balance = NaN,
-  type = "savings",
+  type = 'savings',
   onSubmit,
   formHeading,
   submitLabel,
-}: IProps): JSX.Element => {
+}: IAccountFormProps): JSX.Element => {
   const accountTypes: IOption[] = [
     {
-      value: "cash",
-      label: "Cash",
+      value: 'cash',
+      label: 'Cash',
     },
     {
-      value: "savings",
-      label: "Savings",
+      value: 'savings',
+      label: 'Savings',
     },
     {
-      value: "investment",
-      label: "Investment",
+      value: 'investment',
+      label: 'Investment',
     },
     {
-      value: "credit",
-      label: "Credit",
+      value: 'credit',
+      label: 'Credit',
     },
     {
-      value: "loan",
-      label: "Loan",
+      value: 'loan',
+      label: 'Loan',
     },
   ];
 
@@ -51,7 +52,7 @@ const AccountForm = ({
     event.preventDefault();
     const { account, amount, type: newType } = event.target;
     const newAccountData: IAccount = {
-      balance: parseFloat((amount.value as string).replace(",", ".")),
+      balance: parseFloat((amount.value as string).replace(',', '.')),
       name: account.value,
       type: newType.value,
     };
@@ -83,7 +84,7 @@ const AccountForm = ({
               step={0.01}
               isCurrency
               isRequired
-              value={Number.isNaN(balance) ? "" : balance}
+              value={Number.isNaN(balance) ? '' : balance}
             >
               Balance
             </Input>
@@ -101,5 +102,3 @@ const AccountForm = ({
     </>
   );
 };
-
-export default AccountForm;

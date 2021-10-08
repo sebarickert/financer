@@ -1,21 +1,22 @@
-import React from "react";
-import StackedListBody from "./stacked-list.body";
-import StackedListHeader, { TAddiotinalLabel } from "./stacked-list.header";
-import StackedListRow, { IStackedListRowProps } from "./stacked-list.row";
+import React from 'react';
 
-interface IProps {
+import { StackedListBody } from './stacked-list.body';
+import { StackedListHeader, TAddiotinalLabel } from './stacked-list.header';
+import { StackedListRow, IStackedListRowProps } from './stacked-list.row';
+
+interface IStackedListProps {
   addiotinalLabel?: TAddiotinalLabel;
   label?: string;
   rows: IStackedListRowProps[];
   rowTestId?: string;
 }
 
-const StackedList = ({
+export const StackedList = ({
   addiotinalLabel,
   label,
   rows,
   rowTestId,
-}: IProps): JSX.Element => {
+}: IStackedListProps): JSX.Element => {
   if (label) {
     return (
       <div className="lg:flex items-start relative">
@@ -77,5 +78,3 @@ const StackedList = ({
     </StackedListBody>
   );
 };
-
-export default StackedList;

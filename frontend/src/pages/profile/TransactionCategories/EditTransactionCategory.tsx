@@ -1,16 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState, useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
-import Container from "../../../components/container/container";
-import Loader from "../../../components/loader/loader";
-import ModalConfirm from "../../../components/modal/confirm/modal.confirm";
-import SEO from "../../../components/seo/seo";
+import React, { useState, useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
+
+import { Container } from '../../../components/container/container';
+import { Loader } from '../../../components/loader/loader';
+import { ModalConfirm } from '../../../components/modal/confirm/modal.confirm';
+import { SEO } from '../../../components/seo/seo';
+
 import {
   deleteTransactionCategory,
   editTransactionCategory,
   getTransactionCategoryById,
-} from "./TransactionCategoriesService";
-import TransactionCategoryForm from "./TransactionCategoryForm";
+} from './TransactionCategoriesService';
+import { TransactionCategoryForm } from './TransactionCategoryForm';
 
 interface ITransactionCategoryDeleteModalProps {
   handleDelete(): void;
@@ -31,7 +33,7 @@ const TransactionCategoryDeleteModal = ({
   </ModalConfirm>
 );
 
-const EditTransactionCategory = (): JSX.Element => {
+export const EditTransactionCategory = (): JSX.Element => {
   const history = useHistory();
   const [errors, setErrors] = useState<string[]>([]);
 
@@ -63,7 +65,7 @@ const EditTransactionCategory = (): JSX.Element => {
       if (newTransactionCategory.status === 200) {
         history.push(`/profile/transaction-categories`);
       } else if (newTransactionCategory.status === 400) {
-        setErrors(newTransactionCategory?.errors || ["Unknown error."]);
+        setErrors(newTransactionCategory?.errors || ['Unknown error.']);
       }
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -73,10 +75,10 @@ const EditTransactionCategory = (): JSX.Element => {
 
   const handleDelete = async () => {
     deleteTransactionCategory(id);
-    history.push("/profile/transaction-categories");
+    history.push('/profile/transaction-categories');
   };
 
-  return typeof transactionCategory === "undefined" ? (
+  return typeof transactionCategory === 'undefined' ? (
     <Loader loaderColor="blue" />
   ) : (
     <Container>
@@ -96,5 +98,3 @@ const EditTransactionCategory = (): JSX.Element => {
     </Container>
   );
 };
-
-export default EditTransactionCategory;

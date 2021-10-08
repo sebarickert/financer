@@ -1,6 +1,6 @@
-import { ITransactionStackedListRowProps } from "../../components/transaction-stacked-list/transaction-stacked-list.row";
-import formatCurrency from "../../utils/formatCurrency";
-import { formatDate } from "../../utils/formatDate";
+import { ITransactionStackedListRowProps } from '../../components/transaction-stacked-list/transaction-stacked-list.row';
+import { formatCurrency } from '../../utils/formatCurrency';
+import { formatDate } from '../../utils/formatDate';
 
 export interface IExpenseWithCategories extends IExpense {
   categoryMappings: string[];
@@ -24,12 +24,12 @@ export const groupExpensesByMonth = (
   const { categoryMappings } = rest;
 
   const expense: ITransactionStackedListRowProps = {
-    transactionCategories: categoryMappings?.join(", "),
+    transactionCategories: categoryMappings?.join(', '),
     transactionAmount: formatCurrency(amount),
     date: formatDate(date),
     label: description,
     link: `/statistics/expenses/${_id}`,
-    transactionType: "expense",
+    transactionType: 'expense',
     id: _id,
   };
 

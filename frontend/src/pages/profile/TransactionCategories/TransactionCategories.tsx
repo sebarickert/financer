@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from "react";
-import Button from "../../../components/button/button";
-import Hero from "../../../components/hero/hero";
-import HeroLead from "../../../components/hero/hero.lead";
-import SEO from "../../../components/seo/seo";
-import StackedList from "../../../components/stacked-list/stacked-list";
-import { IStackedListRowProps } from "../../../components/stacked-list/stacked-list.row";
-import Loader from "../../../components/loader/loader";
+import React, { useEffect, useState } from 'react';
+
+import { Button } from '../../../components/button/button';
+import { Hero } from '../../../components/hero/hero';
+import { HeroLead } from '../../../components/hero/hero.lead';
+import { Loader } from '../../../components/loader/loader';
+import { SEO } from '../../../components/seo/seo';
+import { StackedList } from '../../../components/stacked-list/stacked-list';
+import { IStackedListRowProps } from '../../../components/stacked-list/stacked-list.row';
+
 import {
   getAllTransactionCategoriesWithCategoryTree,
   ITransactionCategoryWithCategoryTree,
-} from "./TransactionCategoriesService";
+} from './TransactionCategoriesService';
 
-const TransactionCategories = (): JSX.Element => {
+export const TransactionCategories = (): JSX.Element => {
   const [transactionCategoriesRaw, setTransactionCategoriesRaw] = useState<
     ITransactionCategoryWithCategoryTree[] | null
   >(null);
@@ -38,12 +40,12 @@ const TransactionCategories = (): JSX.Element => {
           label: name,
           actions: [
             {
-              label: "Edit",
-              color: "blue",
+              label: 'Edit',
+              color: 'blue',
               link: `/profile/transaction-categories/${_id}/edit`,
             },
           ],
-          additionalInformation: [categoryTree, visibility.join(", ")],
+          additionalInformation: [categoryTree, visibility.join(', ')],
           id: _id,
         })
       )
@@ -71,5 +73,3 @@ const TransactionCategories = (): JSX.Element => {
     </>
   );
 };
-
-export default TransactionCategories;
