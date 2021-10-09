@@ -13,6 +13,35 @@ import {
   increaseAccountTransactionBalanceAfterTargetDate,
 } from "../services/transaction-service";
 
+export const verifyTransactionOwnership = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  const user = req.user as IUserModel;
+  const transactionId = req.params.id;
+  const transaction = await findTransactionById(transactionId);
+
+  if (transaction === null) {
+    res.status(404).json({
+      authenticated: true,
+      status: 404,
+      errors: ["Transaction not found."],
+    });
+    return;
+  }
+  if (`${transaction?.user}` !== `${user._id}`) {
+    res.status(403).json({
+      authenticated: true,
+      status: 403,
+      errors: ["Not authorized to access that transaction."],
+    });
+    return;
+  }
+
+  next();
+};
+
 export const getTransaction = async (
   req: Request,
   res: Response
@@ -33,7 +62,7 @@ export const getTransaction = async (
     res.status(403).json({
       authenticated: true,
       status: 403,
-      errors: ["Not authorized to view that transaction."],
+      errors: ["Not authorized to access that transaction."],
     });
     return;
   }
@@ -62,7 +91,7 @@ export const deleteTransaction = async (
     res.status(403).json({
       authenticated: true,
       status: 403,
-      errors: ["Not authorized to view that transaction."],
+      errors: ["Not authorized to access that transaction."],
     });
     return;
   }
@@ -98,7 +127,7 @@ export const deleteTransaction = async (
   res.status(200).json({ authenticated: true, status: 200 });
 };
 
-export const addTransfer = async (
+export const verifyNewTransferInfo = async (
   req: Request,
   res: Response,
   next: NextFunction

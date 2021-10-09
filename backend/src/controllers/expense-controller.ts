@@ -14,7 +14,7 @@ export const listUserExpenses = async (
   res.status(200).json(allIncomes);
 };
 
-export const addExpense = async (
+export const verifyNewExpenseInfo = async (
   req: Request,
   res: Response,
   next: NextFunction

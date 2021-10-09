@@ -1,16 +1,25 @@
 import { Router } from "express";
 import {
   addTransaction,
-  addTransfer,
+  verifyNewTransferInfo,
   deleteTransaction,
   getAllUserTransactions,
   getTransaction,
   getTransfers,
+  verifyTransactionOwnership,
 } from "../controllers/transaction-controller";
 
 const router = Router();
 
-router.post("/", addTransfer, addTransaction);
+router.post("/", verifyNewTransferInfo, addTransaction);
+
+router.put(
+  "/",
+  verifyTransactionOwnership,
+  verifyNewTransferInfo,
+  deleteTransaction,
+  addTransaction
+);
 
 router.get("/", getAllUserTransactions);
 
