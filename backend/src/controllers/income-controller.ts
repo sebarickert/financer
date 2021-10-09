@@ -14,7 +14,7 @@ export const listUserIncomes = async (
   res.status(200).json(allIncomes);
 };
 
-export const addIncome = async (
+export const verifyNewIncomeInfo = async (
   req: Request,
   res: Response,
   next: NextFunction
