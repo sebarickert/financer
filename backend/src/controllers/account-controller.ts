@@ -1,4 +1,4 @@
-import { Response, Request } from "express";
+import { Response, Request, NextFunction } from "express";
 
 import { ACCOUNT_TYPES, IAccountModel } from "../models/account-model";
 import { IUserModel } from "../models/user-model";
@@ -8,6 +8,44 @@ import {
   findAccountsByUser,
 } from "../services/account-service";
 import { findTransactionsByAccount } from "../services/transaction-service";
+
+export const verifyAccountOwnership = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  const accountNotFound = () =>
+    res.status(404).json({
+      authenticated: true,
+      status: 404,
+      errors: ["Account not found."],
+    });
+
+  const user = req.user as IUserModel;
+  const accountId = req.params.id;
+
+  const account = await findAccountById(accountId);
+  try {
+    if (account === null) {
+      accountNotFound();
+      return;
+    }
+    if (`${account?.owner}` !== `${user._id}`) {
+      res.status(403).json({
+        authenticated: true,
+        status: 403,
+        errors: ["Not authorized to access that account."],
+      });
+      return;
+    }
+
+    next();
+  } catch (error) {
+    accountNotFound();
+    // eslint-disable-next-line no-console
+    console.log(error);
+  }
+};
 
 export const listAccounts = async (
   req: Request,
@@ -22,26 +60,9 @@ export const getAccount = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const user = req.user as IUserModel;
   const accountId = req.params.id;
   const account = await findAccountById(accountId);
 
-  if (account === null) {
-    res.status(404).json({
-      authenticated: true,
-      status: 404,
-      errors: ["Account not found."],
-    });
-    return;
-  }
-  if (`${account?.owner}` !== `${user._id}`) {
-    res.status(403).json({
-      authenticated: true,
-      status: 403,
-      errors: ["Not authorized to view that account."],
-    });
-    return;
-  }
   res.status(200).json({ authenticated: true, status: 200, payload: account });
 };
 
@@ -88,24 +109,11 @@ export const deleteAccount = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const user = req.user as IUserModel;
   const accountId = req.params.id;
   const account = await findAccountById(accountId);
 
   if (account === null) {
-    res.status(404).json({
-      authenticated: true,
-      status: 404,
-      errors: ["Account not found."],
-    });
-    return;
-  }
-  if (`${account?.owner}` !== `${user._id}`) {
-    res.status(403).json({
-      authenticated: true,
-      status: 403,
-      errors: ["You can delete only your own accounts."],
-    });
+    res.status(404).json({});
     return;
   }
 
@@ -118,26 +126,13 @@ export const updateAccount = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const user = req.user as IUserModel;
   const accountId = req.params.id;
   const modifiedAccountData = req.body as IAccountModel;
 
   const account = await findAccountById(accountId);
 
-  if (`${account?.owner}` !== `${user._id}`) {
-    res.status(403).json({
-      authenticated: true,
-      status: 403,
-      errors: ["You can delete only your own accounts."],
-    });
-    return;
-  }
   if (account === null) {
-    res.status(404).json({
-      authenticated: true,
-      status: 404,
-      errors: ["Account not found."],
-    });
+    res.status(404).json({});
     return;
   }
 
@@ -160,26 +155,14 @@ export const getAllAccountTransactions = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const user = req.user as IUserModel;
   const accountId = req.params.id;
   const account = await findAccountById(accountId);
 
   if (account === null) {
-    res.status(404).json({
-      authenticated: true,
-      status: 404,
-      errors: ["Account not found."],
-    });
+    res.status(404).json({});
     return;
   }
-  if (`${account?.owner}` !== `${user._id}`) {
-    res.status(403).json({
-      authenticated: true,
-      status: 403,
-      errors: ["Not authorized to view that account."],
-    });
-    return;
-  }
+
   const transactions = await findTransactionsByAccount(accountId);
   res
     .status(200)
