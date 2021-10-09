@@ -7,20 +7,25 @@ import {
   getAllAccountTransactions,
   listAccounts,
   updateAccount,
+  verifyAccountOwnership,
 } from "../controllers/account-controller";
 
 const router = Router();
 
 router.get("/", listAccounts);
 
-router.get("/:id", getAccount);
+router.get("/:id", verifyAccountOwnership, getAccount);
 
 router.post("/", addAccount);
 
-router.delete("/:id", deleteAccount);
+router.delete("/:id", verifyAccountOwnership, deleteAccount);
 
-router.put("/:id", updateAccount);
+router.put("/:id", verifyAccountOwnership, updateAccount);
 
-router.get("/:id/transactions", getAllAccountTransactions);
+router.get(
+  "/:id/transactions",
+  verifyAccountOwnership,
+  getAllAccountTransactions
+);
 
 export default router;
