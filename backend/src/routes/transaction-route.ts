@@ -25,8 +25,8 @@ router.get("/", getAllUserTransactions);
 
 router.get("/transfers", getTransfers);
 
-router.get("/:id", getTransaction);
+router.get("/:id", verifyTransactionOwnership, getTransaction);
 
-router.delete("/:id", deleteTransaction);
+router.delete("/:id", verifyTransactionOwnership, deleteTransaction);
 
 export default router;

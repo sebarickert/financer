@@ -18,54 +18,46 @@ export const verifyTransactionOwnership = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  const user = req.user as IUserModel;
-  const transactionId = req.params.id;
-  const transaction = await findTransactionById(transactionId);
-
-  if (transaction === null) {
+  const transactionNotFound = () =>
     res.status(404).json({
       authenticated: true,
       status: 404,
       errors: ["Transaction not found."],
     });
-    return;
-  }
-  if (`${transaction?.user}` !== `${user._id}`) {
-    res.status(403).json({
-      authenticated: true,
-      status: 403,
-      errors: ["Not authorized to access that transaction."],
-    });
-    return;
-  }
 
-  next();
+  const user = req.user as IUserModel;
+  const transactionId = req.params.id;
+
+  try {
+    const transaction = await findTransactionById(transactionId);
+    if (transaction === null) {
+      transactionNotFound();
+      return;
+    }
+    if (`${transaction?.user}` !== `${user._id}`) {
+      res.status(403).json({
+        authenticated: true,
+        status: 403,
+        errors: ["Not authorized to access that transaction."],
+      });
+      return;
+    }
+
+    next();
+  } catch (error) {
+    transactionNotFound();
+    // eslint-disable-next-line no-console
+    console.log(error);
+  }
 };
 
 export const getTransaction = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const user = req.user as IUserModel;
   const transactionId = req.params.id;
   const transaction = await findTransactionById(transactionId);
 
-  if (transaction === null) {
-    res.status(404).json({
-      authenticated: true,
-      status: 404,
-      errors: ["Transaction not found."],
-    });
-    return;
-  }
-  if (`${transaction?.user}` !== `${user._id}`) {
-    res.status(403).json({
-      authenticated: true,
-      status: 403,
-      errors: ["Not authorized to access that transaction."],
-    });
-    return;
-  }
   res
     .status(200)
     .json({ authenticated: true, status: 200, payload: transaction });
@@ -75,24 +67,11 @@ export const deleteTransaction = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const user = req.user as IUserModel;
   const transactionId = req.params.id;
   const transaction = await findTransactionById(transactionId);
 
   if (transaction === null) {
-    res.status(404).json({
-      authenticated: true,
-      status: 404,
-      errors: ["Transaction not found."],
-    });
-    return;
-  }
-  if (`${transaction?.user}` !== `${user._id}`) {
-    res.status(403).json({
-      authenticated: true,
-      status: 403,
-      errors: ["Not authorized to access that transaction."],
-    });
+    res.status(404).json({});
     return;
   }
 
