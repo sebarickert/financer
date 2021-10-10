@@ -35,7 +35,7 @@ export const TransactionCategoriesForm = ({
           amountMaxValue={amountMaxValue}
           arrayIndex={arrayIndex}
           categories={transactionCategories}
-          categoryMapping={transactionCategoryMapping}
+          categoryMapping={transactionCategoryMapping?.[arrayIndex]}
           deleteTransactionCategoryItem={() =>
             deleteTransactionCategoryItem(parseInt(index, 10))
           }

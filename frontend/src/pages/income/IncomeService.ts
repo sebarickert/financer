@@ -23,6 +23,22 @@ export const addIncome = async (
   return newIncome.json();
 };
 
+export const updateIncome = async (
+  targetIncome: IIncome,
+  id: string
+): Promise<IApiResponse<IIncome>> => {
+  const updatedIncome = await fetch(`/api/income/${id}`, {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(targetIncome),
+  });
+
+  return updatedIncome.json();
+};
+
 export const deleteIncome = async (id: string): Promise<void> => {
   await fetch(`/api/income/${id}`, {
     method: 'DELETE',

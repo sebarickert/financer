@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
+import { Button } from '../../components/button/button';
+import { ButtonGroup } from '../../components/button/button.group';
 import { DescriptionList } from '../../components/description-list/description-list';
 import { DescriptionListItem } from '../../components/description-list/description-list.item';
 import { Icon } from '../../components/icon/icon';
@@ -121,9 +123,10 @@ export const Expense = (): JSX.Element => {
           )}
         </div>
       </section>
-      <div className="mt-6">
+      <ButtonGroup className="mt-6">
+        <Button link={`/statistics/expenses/${id}/edit`}>Edit</Button>
         <ExpenseDeleteModal handleDelete={handleDelete} />
-      </div>
+      </ButtonGroup>
     </>
   );
 };
