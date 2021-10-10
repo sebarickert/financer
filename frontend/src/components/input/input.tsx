@@ -79,6 +79,7 @@ export const Input = ({
           required={isRequired}
           ref={ref}
           onChange={handleChange}
+          lang="fi"
         />
       </div>
       {help && (
