@@ -65,7 +65,8 @@ export const getTransaction = async (
 
 export const deleteTransaction = async (
   req: Request,
-  res: Response
+  res: Response,
+  next: NextFunction
 ): Promise<void> => {
   const transactionId = req.params.id;
   const transaction = await findTransactionById(transactionId);
@@ -87,6 +88,7 @@ export const deleteTransaction = async (
       );
     }
   }
+
   if (transaction.toAccount) {
     const toAccount = await findAccountById(transaction.toAccount);
     if (toAccount !== null) {
@@ -103,6 +105,10 @@ export const deleteTransaction = async (
   await transaction.remove();
   await deleteTransactionCategoryMappingByTransaction(transactionId);
 
+  next();
+};
+
+export const sendVerifyDelete = (req: Request, res: Response) => {
   res.status(200).json({ authenticated: true, status: 200 });
 };
 

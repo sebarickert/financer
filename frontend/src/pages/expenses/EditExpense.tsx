@@ -10,9 +10,10 @@ import {
   ITransactionCategoryWithCategoryTree,
 } from '../profile/TransactionCategories/TransactionCategoriesService';
 
+import { addTransactionCategoryMapping } from './AddExpense';
 import { getTransactionCategoryMappingByTransactionId } from './Expense';
 import { ExpenseForm } from './ExpenseForm';
-import { getExpenseById } from './ExpenseService';
+import { getExpenseById, updateExpense } from './ExpenseService';
 
 export const EditExpense = (): JSX.Element => {
   const history = useHistory();
@@ -39,7 +40,33 @@ export const EditExpense = (): JSX.Element => {
     fetchTransactionCategoryMapping();
   }, [id]);
 
-  const handleSubmit = async () => {};
+  const handleSubmit = async (
+    targetExpenseData: IIncome,
+    newTransactionCategoryMappingsData: ITransactionCategoryMapping[]
+  ) => {
+    try {
+      const targetExpenseJson = await updateExpense(targetExpenseData, id);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const newTransactionCategoryMappingJson =
+        await addTransactionCategoryMapping(
+          newTransactionCategoryMappingsData.map(
+            (newTransactionCategoryMappingData) => ({
+              ...newTransactionCategoryMappingData,
+              transaction_id: targetExpenseJson.payload._id,
+            })
+          )
+        );
+
+      if (targetExpenseJson.status === 201) {
+        history.push('/statistics/expenses');
+      } else if (targetExpenseJson.status === 400) {
+        setErrors(targetExpenseJson?.errors || ['Unknown error.']);
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(error);
+    }
+  };
 
   return typeof expense === 'undefined' ||
     typeof transactionCategoryMapping === 'undefined' ? (

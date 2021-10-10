@@ -7,6 +7,7 @@ import {
   getTransaction,
   getTransfers,
   verifyTransactionOwnership,
+  sendVerifyDelete,
 } from "../controllers/transaction-controller";
 
 const router = Router();
@@ -14,7 +15,7 @@ const router = Router();
 router.post("/", verifyNewTransferInfo, addTransaction);
 
 router.put(
-  "/",
+  "/:id",
   verifyTransactionOwnership,
   verifyNewTransferInfo,
   deleteTransaction,
@@ -27,6 +28,11 @@ router.get("/transfers", getTransfers);
 
 router.get("/:id", verifyTransactionOwnership, getTransaction);
 
-router.delete("/:id", verifyTransactionOwnership, deleteTransaction);
+router.delete(
+  "/:id",
+  verifyTransactionOwnership,
+  deleteTransaction,
+  sendVerifyDelete
+);
 
 export default router;

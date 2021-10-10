@@ -23,6 +23,22 @@ export const addExpense = async (
   return newExpense.json();
 };
 
+export const updateExpense = async (
+  targetExpense: IExpense,
+  id: string
+): Promise<IApiResponse<IExpense>> => {
+  const updatedExpense = await fetch(`/api/expense/${id}`, {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(targetExpense),
+  });
+
+  return updatedExpense.json();
+};
+
 export const deleteExpense = async (id: string): Promise<void> => {
   await fetch(`/api/expense/${id}`, {
     method: 'DELETE',

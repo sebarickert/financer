@@ -8,6 +8,7 @@ import {
   deleteTransaction,
   addTransaction,
   verifyTransactionOwnership,
+  sendVerifyDelete,
 } from "../controllers/transaction-controller";
 
 const router = Router();
@@ -26,6 +27,11 @@ router.put(
 
 router.get("/:id", verifyTransactionOwnership, getTransaction);
 
-router.delete("/:id", verifyTransactionOwnership, deleteTransaction);
+router.delete(
+  "/:id",
+  verifyTransactionOwnership,
+  deleteTransaction,
+  sendVerifyDelete
+);
 
 export default router;
