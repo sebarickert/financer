@@ -12,7 +12,7 @@ interface ITransactionCategoriesFormItemProps {
   amountMaxValue: number;
   arrayIndex: number;
   categories: IOption[];
-  categoryMapping: ITransactionCategoryMapping[] | undefined;
+  categoryMapping: ITransactionCategoryMapping | undefined;
   deleteTransactionCategoryItem(): void;
   setUnallocatedAmount(): void;
   setTransactionCategoryItemAmount(newValue: number): void;
@@ -43,11 +43,7 @@ export const TransactionCategoriesFormItem = ({
             <Select
               id={`transactionCategory[${categoryAmountIndex}]category`}
               options={categories}
-              defaultValue={
-                categoryMapping
-                  ? categoryMapping[categoryAmountIndex].category_id || ''
-                  : ''
-              }
+              defaultValue={categoryMapping?.category_id || ''}
               isRequired
             >
               Category
@@ -61,7 +57,7 @@ export const TransactionCategoriesFormItem = ({
                 max={amountMaxValue}
                 isCurrency
                 isRequired
-                forcedValue={amountValue || ''}
+                value={amountValue || categoryMapping?.amount || ''}
                 onChange={(event) =>
                   setTransactionCategoryItemAmount(
                     parseFloat(event.target.value)
@@ -82,11 +78,7 @@ export const TransactionCategoriesFormItem = ({
           </div>
           <Input
             id={`transactionCategory[${categoryAmountIndex}]description`}
-            value={
-              categoryMapping
-                ? categoryMapping[categoryAmountIndex].description || ''
-                : ''
-            }
+            value={categoryMapping?.description || ''}
           >
             Description
           </Input>

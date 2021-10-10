@@ -56,6 +56,12 @@ export const ExpenseForm = ({
     setInputAmountValue(parseFloat(event.target.value));
   };
 
+  useEffect(() => {
+    if (amount) {
+      setInputAmountValue(amount);
+    }
+  }, [amount]);
+
   const [categoryAmount, setCategoryAmount] = useState<{
     [key in number]: number;
   }>([]);

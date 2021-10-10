@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 
 import { inputDateFormat } from '../../utils/formatDate';
 
@@ -11,7 +11,6 @@ interface IInputProps {
   isRequired?: boolean;
   type?: 'text' | 'number' | 'datetime-local';
   value?: string | number;
-  forcedValue?: string | number;
   min?: number;
   max?: number;
   step?: number;
@@ -31,10 +30,27 @@ export const Input = ({
   max,
   step,
   value = '',
-  forcedValue,
   ref,
   onChange,
 }: IInputProps): JSX.Element => {
+  const formatValue = useCallback(
+    (newValue: string | number) =>
+      isDate && !newValue ? inputDateFormat(new Date()) : newValue,
+    [isDate]
+  );
+
+  const [inputValue, setInputValue] = useState(formatValue(value));
+
+  useEffect(() => {
+    setInputValue(formatValue(value));
+  }, [value, formatValue]);
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (onChange) {
+      onChange(event);
+    }
+    setInputValue(event.target.value);
+  };
   return (
     <div>
       <label
@@ -59,11 +75,10 @@ export const Input = ({
             isCurrency && 'pl-7'
           }`}
           aria-describedby={help && `${id}-description`}
-          defaultValue={isDate && !value ? inputDateFormat(new Date()) : value}
-          value={forcedValue}
+          value={inputValue}
           required={isRequired}
           ref={ref}
-          onChange={onChange}
+          onChange={handleChange}
         />
       </div>
       {help && (

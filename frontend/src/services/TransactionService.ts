@@ -13,6 +13,22 @@ export const addTransaction = async (
   return newTransaction.json();
 };
 
+export const updateTransaction = async (
+  targetTransactionData: ITransaction,
+  id: string
+): Promise<IApiResponse<ITransaction>> => {
+  const updatedTransaction = await fetch(`/api/transaction/${id}`, {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(targetTransactionData),
+  });
+
+  return updatedTransaction.json();
+};
+
 export const getAllUserTransactions = async (): Promise<
   IApiResponse<ITransaction[]>
 > => {
