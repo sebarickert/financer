@@ -53,7 +53,7 @@ export const ExpenseForm = ({
   const handleAmountInputValueChange = (
     event: ChangeEvent<HTMLInputElement>
   ) => {
-    setInputAmountValue(parseInt(event.target.value, 10));
+    setInputAmountValue(parseFloat(event.target.value));
   };
 
   const [categoryAmount, setCategoryAmount] = useState<{
@@ -67,7 +67,7 @@ export const ExpenseForm = ({
         ...(Object.keys(categoryAmount).length === 0
           ? [-1]
           : Object.keys(categoryAmount).map((categoryIndex) =>
-              parseInt(categoryIndex[0], 10)
+              parseInt(categoryIndex, 10)
             ))
       ) + 1]: NaN,
     });
