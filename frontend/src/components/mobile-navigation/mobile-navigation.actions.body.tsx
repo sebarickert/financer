@@ -43,6 +43,7 @@ export const MobileNavigationActionsBody = ({
                 link="/statistics/incomes/add"
                 ariaLabel="Add new income transaction"
                 onClick={() => onClick(true)}
+                hasDarkBackground
               />
               <MobileNavigationItem
                 label="Expense"
@@ -50,6 +51,7 @@ export const MobileNavigationActionsBody = ({
                 link="/statistics/expenses/add"
                 ariaLabel="Add new expense transaction"
                 onClick={() => onClick(true)}
+                hasDarkBackground
               />
               <MobileNavigationItem
                 label="Transfer"
@@ -57,6 +59,7 @@ export const MobileNavigationActionsBody = ({
                 link="/statistics/transfers/add"
                 ariaLabel="Add new transfer transaction"
                 onClick={() => onClick(true)}
+                hasDarkBackground
               />
             </ul>
           </nav>
