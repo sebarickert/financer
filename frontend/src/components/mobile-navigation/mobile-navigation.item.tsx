@@ -13,6 +13,7 @@ interface IMobileNavigationItemProps {
   addExtraPaddingIOS?: boolean;
   isExact?: boolean;
   isActive?(match: never, location: { pathname: string }): boolean;
+  hasDarkBackground?: boolean;
 }
 
 export const MobileNavigationItem = ({
@@ -24,6 +25,7 @@ export const MobileNavigationItem = ({
   addExtraPaddingIOS,
   isExact,
   isActive,
+  hasDarkBackground,
 }: IMobileNavigationItemProps): JSX.Element => {
   return (
     <li>
@@ -39,7 +41,13 @@ export const MobileNavigationItem = ({
         isActive={isActive}
       >
         <Icon type={iconName} />
-        <span className="text-xs mt-1 text-gray-300">{label}</span>
+        <span
+          className={`text-xs mt-1 ${
+            hasDarkBackground ? 'text-gray-300' : 'text-gray-600'
+          }`}
+        >
+          {label}
+        </span>
       </NavLink>
     </li>
   );
