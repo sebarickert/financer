@@ -31,7 +31,7 @@ const getAllUserTransactionCategoryMappings = async (): Promise<
   ITransactionCategoryMapping[]
 > => (await fetch('/api/transaction-categories-mapping')).json();
 
-const getTransactionType = (
+export const getTransactionType = (
   toAccount: string | null | undefined,
   fromAccount: string | null | undefined
 ): TransactionType => {
@@ -46,7 +46,7 @@ const getTransactionType = (
   return 'transfer';
 };
 
-const mapTransactionTypeToUrlPrefix: {
+export const mapTransactionTypeToUrlPrefix: {
   [key in TransactionType]: 'incomes' | 'expenses' | 'transfers';
 } = {
   income: 'incomes',
