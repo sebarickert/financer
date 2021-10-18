@@ -12,22 +12,27 @@ import {
   YAxis,
 } from 'recharts';
 
+import { Banner } from '../../components/banner/banner';
+import { BannerText } from '../../components/banner/banner.text';
 import { Button } from '../../components/button/button';
 import { ButtonGroup } from '../../components/button/button.group';
-import { Container } from '../../components/container/container';
-import { DescriptionList } from '../../components/description-list/description-list';
-import { DescriptionListItem } from '../../components/description-list/description-list.item';
-import { Hero } from '../../components/hero/hero';
-import { HeroLead } from '../../components/hero/hero.lead';
 import { Loader } from '../../components/loader/loader';
 import { ModalConfirm } from '../../components/modal/confirm/modal.confirm';
 import { SEO } from '../../components/seo/seo';
-import { StackedList } from '../../components/stacked-list/stacked-list';
-import { ICustomStackedListRowProps } from '../../components/stacked-list/stacked-list.row';
+import { Stats } from '../../components/stats/stats';
+import { StatsItem } from '../../components/stats/stats.item';
+import { TransactionStackedList } from '../../components/transaction-stacked-list/transaction-stacked-list';
+import { ITransactionStackedListRowProps } from '../../components/transaction-stacked-list/transaction-stacked-list.row';
 import { MONTH_IN_MS } from '../../constants/months';
 import { capitalize } from '../../utils/capitalize';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDate } from '../../utils/formatDate';
+import { getAllUserTransactionCategoryMappings } from '../expenses/Expenses';
+import { getAllTransactionCategories } from '../profile/TransactionCategories/TransactionCategoriesService';
+import {
+  getTransactionType,
+  mapTransactionTypeToUrlPrefix,
+} from '../statistics/Statistics';
 
 import {
   deleteAccount,
@@ -75,53 +80,55 @@ const SimpleLineChart = ({ data }: ISimpleLineChartProps): JSX.Element => {
   );
 
   return (
-    <div style={{ width: '100%', height: '33vh', minHeight: '450px' }}>
-      <ResponsiveContainer>
-        <AreaChart data={data}>
-          <defs>
-            <linearGradient id="color" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#1c64f2" stopOpacity={0.4} />
-              <stop offset="75%" stopColor="#1c64f2" stopOpacity={0.05} />
-            </linearGradient>
-          </defs>
-          <Tooltip content={CustomTooltip} />
-          <YAxis
-            dataKey="balance"
-            axisLine={false}
-            tickLine={false}
-            tickCount={6}
-            domain={['dataMin', 'dataMax']}
-            tickFormatter={(number) => formatCurrency(number)}
-            width={105}
-          />
-          <XAxis
-            dataKey="dateStr"
-            axisLine={false}
-            tickLine={false}
-            tickMargin={15}
-            height={50}
-          />
-          <Area
-            dataKey="balance"
-            stroke="#1c64f2"
-            fill="url(#color)"
-            strokeWidth={2}
-          />
-          <Brush
-            dataKey="dateStr"
-            height={30}
-            stroke="#1c64f2"
-            startIndex={monthAgoIndex}
-          >
-            <AreaChart>
-              <CartesianGrid />
-              <YAxis hide domain={['dataMin', 'dataMax']} />
-              <Area dataKey="balance" stroke="#1c64f2" fill="#1c64f2" />
-            </AreaChart>
-          </Brush>
-          <CartesianGrid vertical={false} opacity={0.5} />
-        </AreaChart>
-      </ResponsiveContainer>
+    <div className="bg-white rounded-lg border pl-2 py-6 pr-6">
+      <div style={{ width: '100%', height: '33vh', minHeight: '450px' }}>
+        <ResponsiveContainer>
+          <AreaChart data={data}>
+            <defs>
+              <linearGradient id="color" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#1c64f2" stopOpacity={0.4} />
+                <stop offset="75%" stopColor="#1c64f2" stopOpacity={0.05} />
+              </linearGradient>
+            </defs>
+            <Tooltip content={CustomTooltip} />
+            <YAxis
+              dataKey="balance"
+              axisLine={false}
+              tickLine={false}
+              tickCount={6}
+              domain={['dataMin', 'dataMax']}
+              tickFormatter={(number) => formatCurrency(number)}
+              width={105}
+            />
+            <XAxis
+              dataKey="dateStr"
+              axisLine={false}
+              tickLine={false}
+              tickMargin={15}
+              height={50}
+            />
+            <Area
+              dataKey="balance"
+              stroke="#1c64f2"
+              fill="url(#color)"
+              strokeWidth={2}
+            />
+            <Brush
+              dataKey="dateStr"
+              height={30}
+              stroke="#1c64f2"
+              startIndex={monthAgoIndex}
+            >
+              <AreaChart>
+                <CartesianGrid />
+                <YAxis hide domain={['dataMin', 'dataMax']} />
+                <Area dataKey="balance" stroke="#1c64f2" fill="#1c64f2" />
+              </AreaChart>
+            </Brush>
+            <CartesianGrid vertical={false} opacity={0.5} />
+          </AreaChart>
+        </ResponsiveContainer>
+      </div>
     </div>
   );
 };
@@ -143,7 +150,12 @@ export const Account = (): JSX.Element => {
   const history = useHistory();
   const [account, setAccount] = useState<IAccount | undefined>(undefined);
   const [transactions, setTransactions] = useState<
-    ICustomStackedListRowProps[]
+    ITransactionStackedListRowProps[]
+  >([]);
+  const [transactionCategoryMappings, setTransactionCategoryMappings] =
+    useState<ITransactionCategoryMapping[]>([]);
+  const [transactionCategories, setTransactionCategories] = useState<
+    ITransactionCategory[]
   >([]);
   const [chartData, setChartData] = useState<IChartData[]>([]);
   const { id } = useParams<{ id: string }>();
@@ -153,6 +165,15 @@ export const Account = (): JSX.Element => {
       setAccount(await getAccountById(id));
     };
 
+    const fetchAllTransactionCategories = async () => {
+      setTransactionCategories(await getAllTransactionCategories());
+    };
+    const fetchAllUserTransactionCategoryMappings = async () => {
+      setTransactionCategoryMappings(
+        await getAllUserTransactionCategoryMappings()
+      );
+    };
+
     const fetchTransactions = async () => {
       const rawTransactions = (await getAccountTransactions(id)).payload;
 
@@ -160,44 +181,38 @@ export const Account = (): JSX.Element => {
         rawTransactions
           .map(
             ({
-              date: dateStr,
+              date: dateRaw,
               fromAccount,
               toAccount,
               description = 'Unknown',
               amount,
               _id,
-            }): ICustomStackedListRowProps => {
-              const date = new Date(dateStr);
+            }): ITransactionStackedListRowProps => {
+              const date = new Date(dateRaw);
+              const transactionType = getTransactionType(
+                toAccount,
+                fromAccount
+              );
 
-              if (toAccount === id) {
-                return {
-                  label: description,
-                  additionalLabel: formatCurrency(amount),
-                  additionalInformation: [formatDate(date)],
-                  id: _id,
-                  date,
-                  tags: [
-                    {
-                      label: !fromAccount ? 'Income' : 'Transfer',
-                      color: !fromAccount ? 'green' : 'blue',
-                    },
-                  ],
-                };
-              }
+              const categoryMappings = transactionCategoryMappings
+                ?.filter(({ transaction_id }) => transaction_id === _id)
+                .map(
+                  ({ category_id }) =>
+                    transactionCategories.find(
+                      ({ _id: categoryId }) => category_id === categoryId
+                    )?.name
+                )
+                .filter((categoryName) => typeof categoryName !== 'undefined');
 
               return {
+                transactionCategories: categoryMappings.join(', '),
+                transactionAmount: formatCurrency(amount),
+                date: formatDate(date),
                 label: description,
-                additionalLabel: formatCurrency(amount),
-                additionalInformation: [formatDate(date)],
+                link: `/statistics/${mapTransactionTypeToUrlPrefix[transactionType]}/${_id}`,
+                transactionType,
                 id: _id,
-                date,
-                tags: [
-                  {
-                    label: !toAccount ? 'Expense' : 'Transfer',
-                    color: !toAccount ? 'red' : 'blue',
-                  },
-                ],
-              };
+              } as ITransactionStackedListRowProps;
             }
           )
           .sort((a, b) => (a.date > b.date ? -1 : 1))
@@ -217,8 +232,10 @@ export const Account = (): JSX.Element => {
     };
 
     fetchAccount();
+    fetchAllTransactionCategories();
+    fetchAllUserTransactionCategoryMappings();
     fetchTransactions();
-  }, [id]);
+  }, [id, transactionCategoryMappings, transactionCategories]);
 
   const handleDelete = async () => {
     await deleteAccount(id);
@@ -229,18 +246,13 @@ export const Account = (): JSX.Element => {
     <Loader loaderColor="blue" />
   ) : (
     <>
-      <SEO title={`${account.name} | Accounts`} />
-      <Hero
-        accent="Account"
-        accentColor="blue"
-        label={account.name}
-        testId="account-hero"
-      >
-        <HeroLead>
-          Below you are able to edit your accounts information and check your
-          transaction history as well as balance.
-        </HeroLead>
-        <ButtonGroup className="mt-12">
+      <SEO title={`${account.name}`} />
+      <Banner title={account.name} headindType="h1">
+        <BannerText>
+          Manage your account information and review your account transaction
+          history.
+        </BannerText>
+        <ButtonGroup className="mt-6">
           <Button
             accentColor="blue"
             link={`/accounts/${id}/edit`}
@@ -250,23 +262,18 @@ export const Account = (): JSX.Element => {
           </Button>
           <AccountDeleteModal handleDelete={handleDelete} />
         </ButtonGroup>
-      </Hero>
-      <DescriptionList label="Account details" className="mt-12">
-        <DescriptionListItem label="Balance" testId="balance">
+      </Banner>
+      <Stats className="my-8">
+        <StatsItem statLabel="Type">{capitalize(account.type)}</StatsItem>
+        <StatsItem statLabel="Balance">
           {formatCurrency(account.balance)}
-        </DescriptionListItem>
-        <DescriptionListItem label="Type" testId="type">
-          {capitalize(account.type)}
-        </DescriptionListItem>
-      </DescriptionList>
-      <Container className="mt-12">
-        <SimpleLineChart data={chartData} />
-      </Container>
-      {transactions.length > 0 && (
-        <Container className="mt-12">
-          <StackedList label="Account transactions" rows={transactions} />
-        </Container>
-      )}
+        </StatsItem>
+      </Stats>
+      <SimpleLineChart data={chartData} />
+      <h2 className="text-2xl sm:text-3xl font-bold tracking-tighter mt-8 mb-4">
+        History
+      </h2>
+      <TransactionStackedList className="mt-4" rows={transactions} />
     </>
   );
 };
