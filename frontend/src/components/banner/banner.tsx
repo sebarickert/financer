@@ -6,6 +6,7 @@ interface IBannerProps {
   headindType?: 'h1' | 'h2';
   title: string;
   children: React.ReactNode;
+  testId?: string;
 }
 
 export const Banner = ({
@@ -14,6 +15,7 @@ export const Banner = ({
   headindType = 'h2',
   title,
   children,
+  testId,
 }: IBannerProps): JSX.Element => {
   const HeadingType = headindType;
 
@@ -24,8 +26,12 @@ export const Banner = ({
       } ${
         accentColor === 'blue' && 'bg-blue-financer'
       } text-white space-y-4 ${className}`}
+      data-testId={testId}
     >
-      <HeadingType className="text-3xl font-extrabold sm:text-4xl">
+      <HeadingType
+        className="text-3xl font-extrabold sm:text-4xl"
+        data-testId="banner-title"
+      >
         {title}
       </HeadingType>
       <div
