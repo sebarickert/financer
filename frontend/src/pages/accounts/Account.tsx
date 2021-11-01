@@ -152,6 +152,7 @@ export const Account = (): JSX.Element => {
   const [transactions, setTransactions] = useState<
     ITransactionStackedListRowProps[]
   >([]);
+  const [rawTransactions, setRawTransactions] = useState<ITransaction[]>([]);
   const [transactionCategoryMappings, setTransactionCategoryMappings] =
     useState<ITransactionCategoryMapping[]>([]);
   const [transactionCategories, setTransactionCategories] = useState<
@@ -175,67 +176,73 @@ export const Account = (): JSX.Element => {
     };
 
     const fetchTransactions = async () => {
-      const rawTransactions = (await getAccountTransactions(id)).payload;
-
-      setTransactions(
-        rawTransactions
-          .map(
-            ({
-              date: dateRaw,
-              fromAccount,
-              toAccount,
-              description = 'Unknown',
-              amount,
-              _id,
-            }): ITransactionStackedListRowProps => {
-              const date = new Date(dateRaw);
-              const transactionType = getTransactionType(
-                toAccount,
-                fromAccount
-              );
-
-              const categoryMappings = transactionCategoryMappings
-                ?.filter(({ transaction_id }) => transaction_id === _id)
-                .map(
-                  ({ category_id }) =>
-                    transactionCategories.find(
-                      ({ _id: categoryId }) => category_id === categoryId
-                    )?.name
-                )
-                .filter((categoryName) => typeof categoryName !== 'undefined');
-
-              return {
-                transactionCategories: categoryMappings.join(', '),
-                transactionAmount: formatCurrency(amount),
-                date: formatDate(date),
-                label: description,
-                link: `/statistics/${mapTransactionTypeToUrlPrefix[transactionType]}/${_id}`,
-                transactionType,
-                id: _id,
-              } as ITransactionStackedListRowProps;
-            }
-          )
-          .sort((a, b) => (a.date > b.date ? -1 : 1))
-      );
-      setChartData(
-        rawTransactions.map(
-          ({ toAccount, toAccountBalance, fromAccountBalance, date }) => ({
-            dateStr: formatDate(new Date(date)),
-            date: new Date(date),
-            balance:
-              toAccount === id
-                ? toAccountBalance || 0
-                : fromAccountBalance || 0,
-          })
-        )
-      );
+      setRawTransactions((await getAccountTransactions(id)).payload);
     };
 
     fetchAccount();
     fetchAllTransactionCategories();
     fetchAllUserTransactionCategoryMappings();
     fetchTransactions();
-  }, [id, transactionCategoryMappings, transactionCategories]);
+  }, [id]);
+
+  useEffect(() => {
+    setTransactions(
+      rawTransactions
+        .map(
+          ({
+            date: dateRaw,
+            fromAccount,
+            toAccount,
+            description = 'Unknown',
+            amount,
+            _id,
+          }): ITransactionStackedListRowProps => {
+            const date = new Date(dateRaw);
+            const transactionType = getTransactionType(toAccount, fromAccount);
+
+            const categoryMappings = transactionCategoryMappings
+              ?.filter(({ transaction_id }) => transaction_id === _id)
+              .map(
+                ({ category_id }) =>
+                  transactionCategories.find(
+                    ({ _id: categoryId }) => category_id === categoryId
+                  )?.name
+              )
+              .filter((categoryName) => typeof categoryName !== 'undefined');
+
+            return {
+              transactionCategories: categoryMappings.join(', '),
+              transactionAmount: formatCurrency(amount),
+              date: formatDate(date),
+              label: description,
+              link: `/statistics/${mapTransactionTypeToUrlPrefix[transactionType]}/${_id}`,
+              transactionType,
+              id: _id,
+            } as ITransactionStackedListRowProps;
+          }
+        )
+        .sort((a, b) => (a.date > b.date ? -1 : 1))
+    );
+
+    setChartData(
+      rawTransactions.map(
+        ({
+          toAccount,
+          toAccountBalance = 0,
+          fromAccountBalance = 0,
+          date,
+          amount,
+        }) => ({
+          dateStr: formatDate(new Date(date)),
+          date: new Date(date),
+          balance:
+            toAccount === id
+              ? toAccountBalance + amount
+              : fromAccountBalance - amount,
+        })
+      )
+    );
+  }, [id, rawTransactions, transactionCategories, transactionCategoryMappings]);
 
   const handleDelete = async () => {
     await deleteAccount(id);
