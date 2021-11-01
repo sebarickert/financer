@@ -174,7 +174,12 @@ export const Statistics = (): JSX.Element => {
       transactionsRaw
         .filter(({ date: dateStr }) => {
           const date = new Date(dateStr);
-          return date.getMonth() === now.getMonth();
+          const currentYear = new Date().getFullYear();
+
+          return (
+            date.getMonth() === now.getMonth() &&
+            currentYear === date.getFullYear()
+          );
         })
         .sort(({ date: dateA }, { date: dateB }) => {
           return new Date(dateB).getTime() - new Date(dateA).getTime();
