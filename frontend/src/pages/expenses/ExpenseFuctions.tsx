@@ -95,6 +95,9 @@ export const sortExpenseStacksByMonth = (
 export const sortExpensesByDate = (
   stack: IExpensesPerMonth
 ): IExpensesPerMonth => {
-  stack.rows.sort((a, b) => (a.date > b.date ? -1 : 1));
+  stack.rows.sort((a, b) =>
+    new Date(b.date).getTime() > new Date(a.date).getTime() ? 1 : -1
+  );
+
   return stack;
 };
