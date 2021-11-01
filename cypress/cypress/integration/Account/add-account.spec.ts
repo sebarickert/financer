@@ -24,8 +24,8 @@ const addAccountAndVefiryDetails = (
     .contains(`New Test ${expectedType} Account`)
     .click();
 
-  cy.get('[data-test-id="type"] > dd').should("have.text", expectedType);
-  cy.get('[data-test-id="balance"] > dd')
+  cy.get('[data-testId="type"] > dd').should("have.text", expectedType);
+  cy.get('[data-testId="balance"] > dd')
     .invoke("text")
     .invoke("replace", /\u00a0/g, " ")
     .should("equal", expextedBalance);
