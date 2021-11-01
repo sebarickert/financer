@@ -3,13 +3,13 @@ const verifyAccountPage = (
   accountBalance: string,
   accountType: string
 ) => {
-  cy.get('[data-test-id="account-hero"] [data-test-id="hero-title"]').should(
+  cy.get('[data-testId="account-banner"] [data-testId="banner-title"]').should(
     "contain.text",
     accountName
   );
 
-  cy.get('[data-test-id="type"] > dd').should("have.text", accountType);
-  cy.get('[data-test-id="balance"] > dd')
+  cy.get('[data-testId="type"] > dd').should("have.text", accountType);
+  cy.get('[data-testId="balance"] > dd')
     .invoke("text")
     .invoke("replace", /\u00a0/g, " ")
     .should(

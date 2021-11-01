@@ -254,7 +254,7 @@ export const Account = (): JSX.Element => {
   ) : (
     <>
       <SEO title={`${account.name}`} />
-      <Banner title={account.name} headindType="h1">
+      <Banner title={account.name} headindType="h1" testId="account-banner">
         <BannerText>
           Manage your account information and review your account transaction
           history.
@@ -271,8 +271,10 @@ export const Account = (): JSX.Element => {
         </ButtonGroup>
       </Banner>
       <Stats className="my-8">
-        <StatsItem statLabel="Type">{capitalize(account.type)}</StatsItem>
-        <StatsItem statLabel="Balance">
+        <StatsItem statLabel="Type" testId="type">
+          {capitalize(account.type)}
+        </StatsItem>
+        <StatsItem statLabel="Balance" testId="balance">
           {formatCurrency(account.balance)}
         </StatsItem>
       </Stats>
