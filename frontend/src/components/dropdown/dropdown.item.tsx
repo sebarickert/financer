@@ -1,18 +1,18 @@
 import React from 'react';
 
-interface IFilterProps {
+interface IDropdownItemProps {
   children: string;
   onClick(): void;
   setActive(): void;
   isActive: boolean;
 }
 
-export const FilterItem = ({
+export const DropdownItem = ({
   children,
   onClick,
   setActive,
   isActive,
-}: IFilterProps): JSX.Element => {
+}: IDropdownItemProps): JSX.Element => {
   const handleClick = () => {
     setActive();
     onClick();
@@ -22,8 +22,8 @@ export const FilterItem = ({
     <button
       type="button"
       onClick={handleClick}
-      className={`rounded-lg py-4 focus-within:ring-2 focus:ring-inset focus:ring-blue-500 focus:outline-none border text-sm font-medium md:text-base ${
-        isActive ? 'bg-black-off text-white' : 'bg-white text-gray-900'
+      className={`group flex px-4 py-2 text-sm w-full ${
+        isActive ? 'bg-gray-100 text-gray-900' : 'bg-white text-gray-900'
       } ${!isActive && 'hover:bg-gray-50'}`}
     >
       {children}
