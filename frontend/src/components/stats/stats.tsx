@@ -17,13 +17,13 @@ export const Stats = ({
     <section className={`${className}`}>
       {label && <StatsHeader>{label}</StatsHeader>}
       <div
-        className={`grid gap-4 ${
+        className={`grid gap-2 md:gap-4 ${
           children.filter((child) => typeof child !== 'undefined' && child)
             .length %
             3 ===
           0
-            ? 'md:grid-cols-3'
-            : 'sm:grid-cols-2'
+            ? 'grid-cols-3'
+            : 'grid-cols-2'
         }`}
       >
         {children}
