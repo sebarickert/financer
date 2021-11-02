@@ -18,7 +18,7 @@ module.exports = {
         'white-off': '#FAFAFA',
         'black-off': '#1E253A',
         'gray-financer': '#838690',
-      }
+      },
     },
   },
   variants: {

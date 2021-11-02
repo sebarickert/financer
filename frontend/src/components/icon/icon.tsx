@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { IconChartBar } from './icon.chartBar';
+import { IconChevronDown } from './icon.chevronDown';
 import { IconCloudDownload } from './icon.cloudDownload';
 import { IconDownload } from './icon.download';
 import { IconExclamation } from './icon.exclamation';
@@ -31,13 +32,19 @@ export type IconName =
   | 'logout'
   | 'tag'
   | 'exclamation'
-  | 'cloud-download';
+  | 'cloud-download'
+  | 'chevron-down';
 interface IconProps {
   type: IconName;
+  className?: string;
 }
 
-export const Icon = ({ type }: IconProps): JSX.Element => {
-  const defaultIconClasses = 'h-6 w-6';
+export const Icon = ({ type, className = '' }: IconProps): JSX.Element => {
+  let defaultIconClasses = 'h-6 w-6';
+
+  if (className) {
+    defaultIconClasses = `${defaultIconClasses} ${className}`;
+  }
 
   switch (type) {
     case 'switch-horizontal':
@@ -84,6 +91,9 @@ export const Icon = ({ type }: IconProps): JSX.Element => {
 
     case 'cloud-download':
       return <IconCloudDownload className={defaultIconClasses} />;
+
+    case 'chevron-down':
+      return <IconChevronDown className={defaultIconClasses} />;
 
     default:
       break;
