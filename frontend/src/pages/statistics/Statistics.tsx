@@ -225,16 +225,20 @@ export const Statistics = (): JSX.Element => {
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tighter truncate">
             {`${pageVisibleMonth}, ${pageVisibleYear}`}
           </h2>
-          <Dropdown items={filterItems} label="Filter" />
+          <Dropdown
+            items={filterItems}
+            label="Filter"
+            className="mb-[-3px] sm:mb-[-1px]"
+          />
         </div>
         <Stats>
-          <StatsItem statLabel="Total Transactions">
+          <StatsItem statLabel="Transactions">
             {`${totalTransactions}`}
           </StatsItem>
-          <StatsItem statLabel="Total Incomes">
+          <StatsItem statLabel="Incomes">
             {Number.isNaN(totalIncomes) ? '-' : formatCurrency(totalIncomes)}
           </StatsItem>
-          <StatsItem statLabel="Total Expenses">
+          <StatsItem statLabel="Expenses">
             {Number.isNaN(totalExpenses) ? '-' : formatCurrency(totalExpenses)}
           </StatsItem>
         </Stats>
