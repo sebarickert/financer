@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Banner } from '../../components/banner/banner';
 import { BannerText } from '../../components/banner/banner.text';
 import { Divider } from '../../components/divider/divider';
-import { Filter } from '../../components/filter/filter';
+import { Dropdown } from '../../components/dropdown/dropdown';
 import { Loader } from '../../components/loader/loader';
 import { QuickLinks } from '../../components/quick-links/quick-links';
 import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
@@ -220,22 +220,26 @@ export const Statistics = (): JSX.Element => {
           Manage all your transactions in one place - review, edit or delete.
         </BannerText>
       </Banner>
-      <Filter className="mt-8" filters={filterItems} />
-      <h2 className="text-2xl sm:text-3xl font-bold tracking-tighter mt-8 mb-4">
-        {`${pageVisibleMonth}, ${pageVisibleYear}`}
-      </h2>
-      <Stats>
-        <StatsItem statLabel="Total Transactions">
-          {`${totalTransactions}`}
-        </StatsItem>
-        <StatsItem statLabel="Total Incomes">
-          {Number.isNaN(totalIncomes) ? '-' : formatCurrency(totalIncomes)}
-        </StatsItem>
-        <StatsItem statLabel="Total Expenses">
-          {Number.isNaN(totalExpenses) ? '-' : formatCurrency(totalExpenses)}
-        </StatsItem>
-      </Stats>
-      <TransactionStackedList className="mt-4" rows={visibleTransactions} />
+      <section className="mt-4">
+        <div className="grid grid-cols-[1fr,auto] gap-4 items-end justify-between sticky top-0 z-10 bg-white-off py-4">
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tighter truncate">
+            {`${pageVisibleMonth}, ${pageVisibleYear}`}
+          </h2>
+          <Dropdown items={filterItems} label="Filter" />
+        </div>
+        <Stats>
+          <StatsItem statLabel="Total Transactions">
+            {`${totalTransactions}`}
+          </StatsItem>
+          <StatsItem statLabel="Total Incomes">
+            {Number.isNaN(totalIncomes) ? '-' : formatCurrency(totalIncomes)}
+          </StatsItem>
+          <StatsItem statLabel="Total Expenses">
+            {Number.isNaN(totalExpenses) ? '-' : formatCurrency(totalExpenses)}
+          </StatsItem>
+        </Stats>
+        <TransactionStackedList className="mt-4" rows={visibleTransactions} />
+      </section>
       <Divider className="my-8">Continue to dedicated pages</Divider>
       <QuickLinks className="mt-4">
         <QuickLinksItem
