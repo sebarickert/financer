@@ -58,8 +58,12 @@ export const DashboardStats = ({
     const total = incomesRaw.reduce((currentTotal, { amount, date }) => {
       const currentMonth = new Date().getMonth() + 1;
       const month = new Date(date).getMonth() + 1;
+      const currentYear = new Date().getFullYear();
 
-      if (currentMonth === month) {
+      if (
+        currentMonth === month &&
+        currentYear === new Date(date).getFullYear()
+      ) {
         return currentTotal + amount;
       }
 
@@ -75,8 +79,12 @@ export const DashboardStats = ({
     const total = expensesRaw.reduce((currentTotal, { amount, date }) => {
       const currentMonth = new Date().getMonth() + 1;
       const month = new Date(date).getMonth() + 1;
+      const currentYear = new Date().getFullYear();
 
-      if (currentMonth === month) {
+      if (
+        currentMonth === month &&
+        currentYear === new Date(date).getFullYear()
+      ) {
         return currentTotal + amount;
       }
 
