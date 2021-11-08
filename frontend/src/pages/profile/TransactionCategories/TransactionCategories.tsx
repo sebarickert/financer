@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
+import { Banner } from '../../../components/banner/banner';
+import { BannerText } from '../../../components/banner/banner.text';
 import { Button } from '../../../components/button/button';
-import { Hero } from '../../../components/hero/hero';
-import { HeroLead } from '../../../components/hero/hero.lead';
 import { Loader } from '../../../components/loader/loader';
 import { SEO } from '../../../components/seo/seo';
 import { StackedList } from '../../../components/stacked-list/stacked-list';
@@ -57,18 +57,18 @@ export const TransactionCategories = (): JSX.Element => {
   ) : (
     <>
       <SEO title="Transaction categories" />
-      <Hero label="Transaction categories" standAlone className="mb-12">
-        <HeroLead className="!text-gray-600">
+      <Banner title="Transaction categories" headindType="h1" className="mb-4">
+        <BannerText>
           Below you are able to add, delete or edit your transaction categories.
-        </HeroLead>
-      </Hero>
-      <Button
-        link="/profile/transaction-categories/add"
-        accentColor="green"
-        className="mb-5"
-      >
-        Add transaction category
-      </Button>
+        </BannerText>
+        <Button
+          link="/profile/transaction-categories/add"
+          accentColor="green"
+          className="mt-6"
+        >
+          Add transaction category
+        </Button>
+      </Banner>
       <StackedList rows={transactionCategories} />
     </>
   );
