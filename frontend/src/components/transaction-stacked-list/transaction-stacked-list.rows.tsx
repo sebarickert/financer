@@ -7,5 +7,7 @@ interface ITransactionStackedListRowsProps {
 export const TransactionStackedListRows = ({
   children,
 }: ITransactionStackedListRowsProps): JSX.Element => {
-  return <ul className="space-y-4">{children}</ul>;
+  return (
+    <ul className="border rounded-lg overflow-hidden divide-y">{children}</ul>
+  );
 };
