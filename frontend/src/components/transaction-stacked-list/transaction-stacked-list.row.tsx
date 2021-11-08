@@ -33,7 +33,7 @@ export const TransactionStackedListRow = ({
 
   return (
     <li>
-      <article className="relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-500 rounded-lg border grid grid-cols-[auto,1fr,auto] gap-4 hover:bg-gray-50">
+      <article className="relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-500  grid grid-cols-[auto,1fr,auto] gap-4 hover:bg-gray-50">
         <div>
           <span
             className={`rounded-lg inline-flex p-3 text-white ring-4 ring-white ${
