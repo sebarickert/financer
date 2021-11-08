@@ -21,7 +21,7 @@ export const Banner = ({
 
   return (
     <div
-      className={`p-6 rounded-lg shadow-lg ${
+      className={`-mt-6 -mx-4 pt-16 pb-12 px-6 lg:rounded-lg lg:mt-0 lg:mx-0 lg:p-6 ${
         accentColor === 'black' && 'bg-black-off'
       } ${
         accentColor === 'blue' && 'bg-blue-financer'
