@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import { ReactComponent as Logo } from '../../assets/logo.svg';
-import { isIOSDevice } from '../../utils/isIOSDevice';
 import { Container } from '../container/container';
 import { DesktopNavigation } from '../desktop-navigation/desktop-navigation';
 import { MobileNavigation } from '../mobile-navigation/mobile-navigation';
@@ -45,9 +44,7 @@ export const Layout = ({ children }: ILayoutProps): JSX.Element => {
   return (
     <div className="flex flex-col min-h-screen">
       <main className="bg-white-off lg:pb-24 flex-grow">
-        <div className={`pt-6 ${isIOSDevice() ? 'pb-32' : 'pb-24'} px-4`}>
-          {children}
-        </div>
+        <div className="pt-6 pb-24 mb-safe px-4">{children}</div>
       </main>
       <header>
         <MobileNavigation />
