@@ -78,7 +78,6 @@ export const Statistics = (): JSX.Element => {
   const [transactionCategories, setTransactionCategories] = useState<
     ITransactionCategory[]
   >([]);
-  const [totalTransactions, setTotalTransactions] = useState<number>(NaN);
   const [totalExpenses, setTotalExpenses] = useState<number>(NaN);
   const [totalIncomes, setTotalIncomes] = useState<number>(NaN);
 
@@ -102,7 +101,6 @@ export const Statistics = (): JSX.Element => {
   useEffect(() => {
     if (transactions === null) return;
 
-    setTotalTransactions(transactions.length);
     setVisibleTransactions(
       transactions
         .filter((transaction) =>
@@ -232,9 +230,6 @@ export const Statistics = (): JSX.Element => {
           />
         </div>
         <Stats>
-          <StatsItem statLabel="Transactions">
-            {`${totalTransactions}`}
-          </StatsItem>
           <StatsItem statLabel="Incomes">
             {Number.isNaN(totalIncomes) ? '-' : formatCurrency(totalIncomes)}
           </StatsItem>
