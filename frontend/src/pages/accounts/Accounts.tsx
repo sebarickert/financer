@@ -8,7 +8,6 @@ import { Button } from '../../components/button/button';
 import { ButtonGroup } from '../../components/button/button.group';
 import { Loader } from '../../components/loader/loader';
 import { SEO } from '../../components/seo/seo';
-import { Stats } from '../../components/stats/stats';
 import { StatsItem } from '../../components/stats/stats.item';
 import { formatCurrency } from '../../utils/formatCurrency';
 
@@ -62,38 +61,9 @@ export const Accounts = (): JSX.Element => {
           </Button>
         </ButtonGroup>
       </Banner>
-      <Stats>
-        <StatsItem statLabel="Total Balance">
-          {`${formatCurrency(totalBalance)}`}
-        </StatsItem>
-        {accounts.filter(
-          ({ accountType }) => accountType.toLowerCase() === 'loan'
-        ).length > 0 && (
-          <StatsItem statLabel="Total Loans">{`${formatCurrency(
-            parseFloat(
-              `${accounts
-                .filter(
-                  ({ accountType }) => accountType.toLowerCase() === 'loan'
-                )
-                .reduce((currentTotal, { balanceAmount }) => {
-                  return (
-                    currentTotal +
-                    parseFloat(
-                      balanceAmount
-                        .replace('€', '')
-                        .replace(
-                          String.fromCharCode(8722),
-                          String.fromCharCode(45)
-                        )
-                        .replace(/\s/g, '')
-                        .replace(',', '.')
-                    )
-                  );
-                }, 0)}`
-            )
-          )}`}</StatsItem>
-        )}
-      </Stats>
+      <StatsItem statLabel="Total Balance">
+        {`${formatCurrency(totalBalance)}`}
+      </StatsItem>
       <AccountsList
         label="Savings accounts"
         rows={accounts.filter(
