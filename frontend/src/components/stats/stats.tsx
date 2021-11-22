@@ -22,7 +22,7 @@ export const Stats = ({
             .length %
             3 ===
           0
-            ? 'grid-cols-3'
+            ? 'md:grid-cols-3'
             : 'grid-cols-2'
         }`}
       >
