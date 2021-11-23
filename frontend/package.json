@@ -17,7 +17,6 @@
     "react-scripts": "4.0.3",
     "recharts": "^1.8.5",
     "tailwindcss": "^2.2.9",
-    "tailwindcss-safe-area": "^0.2.1",
     "typescript": "^4.2.3",
     "web-vitals": "^0.2.4",
     "workbox-background-sync": "^5.1.4",

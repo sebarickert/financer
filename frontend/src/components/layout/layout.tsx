@@ -42,13 +42,15 @@ export const Layout = ({ children }: ILayoutProps): JSX.Element => {
   }
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <main className="bg-white-off lg:pb-24 flex-grow">
-        <div className="pt-6 pb-24 mb-safe px-4">{children}</div>
-      </main>
-      <header>
-        <MobileNavigation />
-      </header>
+    <div className="safe-top safe-left safe-right safe-bottom">
+      <div className="flex flex-col max-h-screen h-full overflow-y-scroll disable-scrollbars">
+        <main className="bg-white-off lg:pb-24 flex-grow">
+          <div className="pt-6 pb-24 px-4">{children}</div>
+        </main>
+        <header>
+          <MobileNavigation />
+        </header>
+      </div>
     </div>
   );
 };

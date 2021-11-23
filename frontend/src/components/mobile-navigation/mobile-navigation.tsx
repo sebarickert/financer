@@ -1,5 +1,8 @@
 import React from 'react';
 
+import { isIOSDevice } from '../../utils/isIOSDevice';
+import { isStandaloneMode } from '../../utils/isStandaloneMode';
+
 import { MobileNavigationActions } from './mobile-navigation.actions';
 import { MobileNavigationItem } from './mobile-navigation.item';
 
@@ -7,7 +10,11 @@ export const MobileNavigation = (): JSX.Element => {
   return (
     <div className="bg-white fixed bottom-0 left-0 right-0 w-full border-t z-10">
       <nav aria-label="Main navigation in mobile viewmode.">
-        <ul className="grid grid-cols-5 relative">
+        <ul
+          className={`grid grid-cols-5 relative ${
+            isIOSDevice() && isStandaloneMode() ? 'pb-4' : ''
+          }`}
+        >
           <MobileNavigationItem label="Home" iconName="home" link="/" isExact />
           <MobileNavigationItem
             label="Statistics"
