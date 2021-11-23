@@ -4,12 +4,9 @@ import { getAllAccounts } from '../../pages/accounts/AccountService';
 import { getAllExpenses } from '../../pages/expenses/ExpenseService';
 import { getAllIncomes } from '../../pages/income/IncomeService';
 import { formatCurrency } from '../../utils/formatCurrency';
-import { MobileNavigationItem } from '../mobile-navigation/mobile-navigation.item';
 import { Stats } from '../stats/stats';
 import { StatsGroup } from '../stats/stats.group';
 import { StatsItem } from '../stats/stats.item';
-
-import { DashboardStatsItem } from './dashboard.stats.item';
 
 interface IDashboardStatsProps {
   label?: string;
