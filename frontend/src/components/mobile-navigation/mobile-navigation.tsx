@@ -15,7 +15,13 @@ export const MobileNavigation = (): JSX.Element => {
             isIOSDevice() && isStandaloneMode() ? 'pb-4' : ''
           }`}
         >
-          <MobileNavigationItem label="Home" iconName="home" link="/" isExact />
+          <MobileNavigationItem
+            label="Home"
+            iconName="home"
+            link="/"
+            isExact
+            type="standalone"
+          />
           <MobileNavigationItem
             label="Statistics"
             iconName="chart-bar"
@@ -24,17 +30,20 @@ export const MobileNavigation = (): JSX.Element => {
               location.pathname.substr(0, 11) === '/statistics' &&
               location.pathname.substr(-4) !== '/add'
             }
+            type="standalone"
           />
           <MobileNavigationActions />
           <MobileNavigationItem
             label="Accounts"
             iconName="view-grid"
             link="/accounts"
+            type="standalone"
           />
           <MobileNavigationItem
             label="Profile"
             iconName="user-circle"
             link="/profile"
+            type="standalone"
           />
         </ul>
       </nav>
