@@ -8,7 +8,6 @@ import { Button } from '../../components/button/button';
 import { ButtonGroup } from '../../components/button/button.group';
 import { Loader } from '../../components/loader/loader';
 import { SEO } from '../../components/seo/seo';
-import { StatsItem } from '../../components/stats/stats.item';
 import { formatCurrency } from '../../utils/formatCurrency';
 
 import { getAllAccounts } from './AccountService';
@@ -16,7 +15,6 @@ import { getAllAccounts } from './AccountService';
 export const Accounts = (): JSX.Element => {
   const [accountsRaw, setAccountsRaw] = useState<IAccount[] | null>(null);
   const [accounts, setAccounts] = useState<IAccountsListRowProps[]>([]);
-  const [totalBalance, setTotalBalance] = useState<number>(NaN);
 
   useEffect(() => {
     const fetchAccounts = async () => {
@@ -27,13 +25,6 @@ export const Accounts = (): JSX.Element => {
 
   useEffect(() => {
     if (accountsRaw === null) return;
-
-    const total = accountsRaw.reduce(
-      (currentTotal, { balance, type }) =>
-        currentTotal + (type !== 'loan' ? balance : 0),
-      0
-    );
-    setTotalBalance(total);
     setAccounts(
       accountsRaw.map(({ _id, balance, name, type }) => ({
         label: name,
@@ -61,9 +52,6 @@ export const Accounts = (): JSX.Element => {
           </Button>
         </ButtonGroup>
       </Banner>
-      <StatsItem statLabel="Total Balance">
-        {`${formatCurrency(totalBalance)}`}
-      </StatsItem>
       <AccountsList
         label="Savings accounts"
         rows={accounts.filter(

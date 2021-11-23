@@ -9,6 +9,7 @@ import { QuickLinks } from '../../components/quick-links/quick-links';
 import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
 import { SEO } from '../../components/seo/seo';
 import { Stats } from '../../components/stats/stats';
+import { StatsGroup } from '../../components/stats/stats.group';
 import { StatsItem } from '../../components/stats/stats.item';
 import { TransactionStackedList } from '../../components/transaction-stacked-list/transaction-stacked-list';
 import {
@@ -229,14 +230,14 @@ export const Statistics = (): JSX.Element => {
             className="mb-[-3px] sm:mb-[-1px]"
           />
         </div>
-        <Stats>
+        <StatsGroup>
           <StatsItem statLabel="Incomes">
             {Number.isNaN(totalIncomes) ? '-' : formatCurrency(totalIncomes)}
           </StatsItem>
           <StatsItem statLabel="Expenses">
             {Number.isNaN(totalExpenses) ? '-' : formatCurrency(totalExpenses)}
           </StatsItem>
-        </Stats>
+        </StatsGroup>
         <TransactionStackedList className="mt-4" rows={visibleTransactions} />
       </section>
       <Divider className="my-8">Continue to dedicated pages</Divider>

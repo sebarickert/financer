@@ -4,8 +4,12 @@ import { getAllAccounts } from '../../pages/accounts/AccountService';
 import { getAllExpenses } from '../../pages/expenses/ExpenseService';
 import { getAllIncomes } from '../../pages/income/IncomeService';
 import { formatCurrency } from '../../utils/formatCurrency';
+import { MobileNavigationItem } from '../mobile-navigation/mobile-navigation.item';
 import { Stats } from '../stats/stats';
+import { StatsGroup } from '../stats/stats.group';
 import { StatsItem } from '../stats/stats.item';
+
+import { DashboardStatsItem } from './dashboard.stats.item';
 
 interface IDashboardStatsProps {
   label?: string;
@@ -95,16 +99,20 @@ export const DashboardStats = ({
   }, [expensesRaw]);
 
   return (
-    <Stats className={`${className}`} label={label}>
-      <StatsItem statLabel="Balance">
-        {Number.isNaN(totalBalance) ? '-' : formatCurrency(totalBalance)}
-      </StatsItem>
-      <StatsItem statLabel="Income">
-        {Number.isNaN(totalIncomes) ? '-' : formatCurrency(totalIncomes)}
-      </StatsItem>
-      <StatsItem statLabel="Expenses">
-        {Number.isNaN(totalExpenses) ? '-' : formatCurrency(totalExpenses)}
-      </StatsItem>
-    </Stats>
+    <section className={` ${className}`}>
+      <Stats className={`${className}`} label={label}>
+        <StatsItem statLabel="Balance" type="standalone">
+          {Number.isNaN(totalBalance) ? '-' : formatCurrency(totalBalance)}
+        </StatsItem>
+        <StatsGroup>
+          <StatsItem statLabel="Income">
+            {Number.isNaN(totalIncomes) ? '-' : formatCurrency(totalIncomes)}
+          </StatsItem>
+          <StatsItem statLabel="Expenses">
+            {Number.isNaN(totalExpenses) ? '-' : formatCurrency(totalExpenses)}
+          </StatsItem>
+        </StatsGroup>
+      </Stats>
+    </section>
   );
 };
