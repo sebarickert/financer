@@ -19,7 +19,7 @@ import { ButtonGroup } from '../../components/button/button.group';
 import { Loader } from '../../components/loader/loader';
 import { ModalConfirm } from '../../components/modal/confirm/modal.confirm';
 import { SEO } from '../../components/seo/seo';
-import { Stats } from '../../components/stats/stats';
+import { StatsGroup } from '../../components/stats/stats.group';
 import { StatsItem } from '../../components/stats/stats.item';
 import { TransactionStackedList } from '../../components/transaction-stacked-list/transaction-stacked-list';
 import { ITransactionStackedListRowProps } from '../../components/transaction-stacked-list/transaction-stacked-list.row';
@@ -272,14 +272,14 @@ export const Account = (): JSX.Element => {
           <AccountDeleteModal handleDelete={handleDelete} />
         </ButtonGroup>
       </Banner>
-      <Stats className="my-8">
+      <StatsGroup className="mt-8 mb-4">
         <StatsItem statLabel="Type" testId="type">
           {capitalize(account.type)}
         </StatsItem>
         <StatsItem statLabel="Balance" testId="balance">
           {formatCurrency(account.balance)}
         </StatsItem>
-      </Stats>
+      </StatsGroup>
       <SimpleLineChart data={chartData} />
       <h2 className="text-2xl sm:text-3xl font-bold tracking-tighter mt-8 mb-4">
         History
