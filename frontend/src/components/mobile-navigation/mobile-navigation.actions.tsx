@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 import { isIOSDevice } from '../../utils/isIOSDevice';
+import { isStandaloneMode } from '../../utils/isStandaloneMode';
 import { Icon } from '../icon/icon';
 
 import { MobileNavigationActionsBody } from './mobile-navigation.actions.body';
@@ -49,7 +50,9 @@ export const MobileNavigationActions = (): JSX.Element => {
       <button
         type="button"
         className={`flex w-full h-full justify-center ${
-          isIOSDevice() ? 'items-start pt-4' : 'items-center'
+          isIOSDevice() && isStandaloneMode()
+            ? 'items-start pt-3'
+            : 'items-center'
         }`}
         aria-expanded={!isActionsModalHidden}
         aria-label="Add new transaction"
