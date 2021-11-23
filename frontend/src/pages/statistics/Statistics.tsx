@@ -8,7 +8,6 @@ import { Loader } from '../../components/loader/loader';
 import { QuickLinks } from '../../components/quick-links/quick-links';
 import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
 import { SEO } from '../../components/seo/seo';
-import { Stats } from '../../components/stats/stats';
 import { StatsGroup } from '../../components/stats/stats.group';
 import { StatsItem } from '../../components/stats/stats.item';
 import { TransactionStackedList } from '../../components/transaction-stacked-list/transaction-stacked-list';
