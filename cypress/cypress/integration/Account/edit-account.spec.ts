@@ -3,7 +3,7 @@ const verifyAccountPage = (
   accountBalance: string,
   accountType: string
 ) => {
-  cy.get('[data-testid="account-hero"] [data-testid="hero-title"]').should(
+  cy.get('[data-testid="account-banner"] [data-testid="banner-title"]').should(
     "contain.text",
     accountName
   );
