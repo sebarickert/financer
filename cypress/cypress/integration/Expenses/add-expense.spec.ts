@@ -5,6 +5,9 @@ import {
   formatDate,
   getTransactionById,
   getAllAccountTransactionsById,
+  ITransactionWithDateObject,
+  getAccountFromTransactions,
+  getAccountBalanceFromTransactions,
 } from "../apiHelpers";
 
 describe("Add expense", () => {
@@ -13,132 +16,213 @@ describe("Add expense", () => {
   const newTransactionAmount = parseFloat(newTransactionAmountStr);
   const newTransactionName = "new dummy transaction created by test code";
 
-  it("Add latest expense", () => {
-    cy.wrap(null).then(async () => {
-      const transactionsBefore = await getAllUserTransaction();
-      const targetTransactionBefore =
-        transactionsBefore[transactionsBefore.length - 1];
-      const targetAccountId = targetTransactionBefore.toAccount;
-      const accountBefore = await getAccount(targetAccountId);
-      const newTransactionDate = new Date(
-        targetTransactionBefore.dateObj.getTime() + MINUTE_IN_MS
-      );
+  it("Add newest expense", () => {
+    cy.saveAsyncData("transactionsBefore", getAllUserTransaction);
 
-      cy.get("[data-testid=add-expense]").click();
-      cy.get("#description").clear();
-      cy.get("#description").type(newTransactionName);
-      cy.get("#date").clear();
-      cy.get("#date").type(formatDate(newTransactionDate));
-      cy.get("#amount").clear();
-      cy.get("#amount").type(newTransactionAmountStr);
-      cy.get("#fromAccount").select(targetAccountId);
-      cy.get("[data-testid=submit]")
-        .click()
-        .then(async () => {
-          const accountAfter = await getAccount(targetAccountId);
-          const targetTransactionAfter = await getTransactionById(
-            targetTransactionBefore._id
-          );
+    cy.get<ITransactionWithDateObject[]>("@transactionsBefore").then(
+      (transactionsBefore) => {
+        const targetTransactionBefore =
+          transactionsBefore[transactionsBefore.length - 1];
 
-          expect(accountBefore.balance - newTransactionAmount).to.be.eq(
-            accountAfter.balance
-          );
-          expect(targetTransactionBefore.toAccountBalance).to.be.eq(
-            targetTransactionAfter.toAccountBalance
-          );
-        });
+        const targetAccountId = getAccountFromTransactions(
+          targetTransactionBefore
+        );
+
+        cy.saveData("targetTransactionBefore", targetTransactionBefore);
+        cy.saveAsyncData("accountBefore", () => getAccount(targetAccountId));
+
+        const newTransactionDate = new Date(
+          targetTransactionBefore.dateObj.getTime() + MINUTE_IN_MS
+        );
+
+        cy.getById("add-expense").click();
+        cy.get("#description").clear();
+        cy.get("#description").type(newTransactionName);
+        cy.get("#date").clear();
+        cy.get("#date").type(formatDate(newTransactionDate));
+        cy.get("#amount").clear();
+        cy.get("#amount").type(newTransactionAmountStr);
+        cy.get("#fromAccount").select(targetAccountId);
+        cy.getById("submit")
+          .click()
+          .then(() => {
+            cy.saveAsyncData("accountAfter", () => getAccount(targetAccountId));
+            cy.saveAsyncData("targetTransactionAfter", () =>
+              getTransactionById(targetTransactionBefore._id)
+            );
+          });
+
+        cy.get<ITransaction>("@targetTransactionAfter").then(
+          (targetTransactionAfter) => {
+            expect(targetTransactionBefore.toAccountBalance).to.be.eq(
+              targetTransactionAfter.toAccountBalance
+            );
+          }
+        );
+      }
+    );
+
+    cy.get<IAccount>("@accountBefore").then((accountBefore) => {
+      cy.get<IAccount>("@accountAfter").then((accountAfter) => {
+        expect(accountBefore.balance - newTransactionAmount).to.be.eq(
+          accountAfter.balance
+        );
+      });
     });
+
+    cy.get<ITransaction>("@targetTransactionBefore").then(
+      (targetTransactionBefore) => {
+        cy.get<ITransaction>("@targetTransactionAfter").then(
+          (targetTransactionAfter) => {
+            expect(
+              getAccountBalanceFromTransactions(targetTransactionBefore)
+            ).to.be.eq(
+              getAccountBalanceFromTransactions(targetTransactionAfter)
+            );
+          }
+        );
+      }
+    );
   });
 
-  it("Add second latest expense", () => {
-    cy.wrap(null).then(async () => {
-      const transactionsBefore = await getAllUserTransaction();
-      const targetTransactionBefore =
-        transactionsBefore[transactionsBefore.length - 1];
-      const targetAccountId = targetTransactionBefore.toAccount;
-      const accountBefore = await getAccount(targetAccountId);
-      const newTransactionDate = new Date(
-        targetTransactionBefore.dateObj.getTime() - MINUTE_IN_MS
-      );
+  it("Add second newest expense", () => {
+    cy.saveAsyncData("transactionsBefore", getAllUserTransaction);
 
-      cy.get("[data-testid=add-expense]").click();
-      cy.get("#description").clear();
-      cy.get("#description").type(newTransactionName);
-      cy.get("#date").clear();
-      cy.get("#date").type(formatDate(newTransactionDate));
-      cy.get("#amount").clear();
-      cy.get("#amount").type(newTransactionAmountStr);
-      cy.get("#fromAccount").select(targetAccountId);
-      cy.get("[data-testid=submit]")
-        .click()
-        .then(async () => {
-          const accountAfter = await getAccount(targetAccountId);
-          const targetTransactionAfter = await getTransactionById(
-            targetTransactionBefore._id
-          );
+    cy.get<ITransactionWithDateObject[]>("@transactionsBefore").then(
+      (transactionsBefore) => {
+        const targetTransactionBefore =
+          transactionsBefore[transactionsBefore.length - 1];
 
-          expect(accountBefore.balance - newTransactionAmount).to.be.eq(
-            accountAfter.balance
-          );
-          expect(
-            targetTransactionBefore.toAccountBalance - newTransactionAmount
-          ).to.be.eq(targetTransactionAfter.toAccountBalance);
-        });
+        const targetAccountId = getAccountFromTransactions(
+          targetTransactionBefore
+        );
+
+        const newTransactionDate = new Date(
+          targetTransactionBefore.dateObj.getTime() - MINUTE_IN_MS
+        );
+
+        cy.saveData("targetTransactionBefore", targetTransactionBefore);
+        cy.saveAsyncData("accountBefore", () => getAccount(targetAccountId));
+
+        cy.getById("add-expense").click();
+        cy.get("#description").clear();
+        cy.get("#description").type(newTransactionName);
+        cy.get("#date").clear();
+        cy.get("#date").type(formatDate(newTransactionDate));
+        cy.get("#amount").clear();
+        cy.get("#amount").type(newTransactionAmountStr);
+        cy.get("#fromAccount").select(targetAccountId);
+        cy.getById("submit")
+          .click()
+          .then(() => {
+            cy.saveAsyncData("accountAfter", () => getAccount(targetAccountId));
+            cy.saveAsyncData("targetTransactionAfter", () =>
+              getTransactionById(targetTransactionBefore._id)
+            );
+          });
+      }
+    );
+
+    cy.get<IAccount>("@accountBefore").then((accountBefore) => {
+      cy.get<IAccount>("@accountAfter").then((accountAfter) => {
+        expect(accountBefore.balance - newTransactionAmount).to.be.eq(
+          accountAfter.balance
+        );
+      });
     });
+
+    cy.get<ITransaction>("@targetTransactionBefore").then(
+      (targetTransactionBefore) => {
+        cy.get<ITransaction>("@targetTransactionAfter").then(
+          (targetTransactionAfter) => {
+            expect(
+              getAccountBalanceFromTransactions(targetTransactionBefore) -
+                newTransactionAmount
+            ).to.be.eq(
+              getAccountBalanceFromTransactions(targetTransactionAfter)
+            );
+          }
+        );
+      }
+    );
   });
 
-  it("Add first expense", () => {
-    cy.wrap(null).then(async () => {
-      const transactionsBefore = await getAllUserTransaction();
-      const targetTransactionBefore = transactionsBefore[0];
-      const targetAccountId = targetTransactionBefore.toAccount;
-      const accountBefore = await getAccount(targetAccountId);
-      const newTransactionDate = new Date(
-        targetTransactionBefore.dateObj.getTime() - MINUTE_IN_MS
-      );
+  it("Add oldest expense", () => {
+    cy.saveAsyncData("transactionsBefore", getAllUserTransaction);
 
-      cy.get("[data-testid=add-expense]").click();
-      cy.get("#description").clear();
-      cy.get("#description").type(newTransactionName);
-      cy.get("#date").clear();
-      cy.get("#date").type(formatDate(newTransactionDate));
-      cy.get("#amount").clear();
-      cy.get("#amount").type(newTransactionAmountStr);
-      cy.get("#fromAccount").select(targetAccountId);
-      cy.get("[data-testid=submit]")
-        .click()
-        .then(async () => {
-          const accountAfter = await getAccount(targetAccountId);
-          const transactionsAfter = await getAllAccountTransactionsById(
-            targetAccountId
-          );
+    cy.get<ITransactionWithDateObject[]>("@transactionsBefore").then(
+      (transactionsBefore) => {
+        const targetTransactionBefore = transactionsBefore[0];
 
-          expect(accountBefore.balance - newTransactionAmount).to.be.eq(
-            accountAfter.balance
-          );
+        const targetAccountId = getAccountFromTransactions(
+          targetTransactionBefore
+        );
 
-          transactionsAfter
-            .filter(({ description }) => description !== newTransactionName)
-            .forEach((transactionAfter) => {
-              const transactionBefore = transactionsBefore.find(
-                ({ _id }) => _id === transactionAfter._id
-              );
+        const newTransactionDate = new Date(
+          targetTransactionBefore.dateObj.getTime() - MINUTE_IN_MS
+        );
 
-              const beforeTargetAccountBalanse =
-                transactionBefore.toAccount === targetAccountId
-                  ? transactionBefore.toAccountBalance
-                  : transactionBefore.fromAccountBalance;
-              const afterTargetAccountBalanse =
-                transactionAfter.toAccount === targetAccountId
-                  ? transactionAfter.toAccountBalance
-                  : transactionAfter.fromAccountBalance;
+        cy.saveData("targetTransactionBefore", targetTransactionBefore);
+        cy.saveData("targetAccountId", targetAccountId);
+        cy.saveAsyncData("accountBefore", () => getAccount(targetAccountId));
 
-              expect(
-                beforeTargetAccountBalanse - newTransactionAmount
-              ).to.be.eq(afterTargetAccountBalanse);
+        cy.getById("add-expense").click();
+        cy.get("#description").clear();
+        cy.get("#description").type(newTransactionName);
+        cy.get("#date").clear();
+        cy.get("#date").type(formatDate(newTransactionDate));
+        cy.get("#amount").clear();
+        cy.get("#amount").type(newTransactionAmountStr);
+        cy.get("#fromAccount").select(targetAccountId);
+        cy.getById("submit")
+          .click()
+          .then(() => {
+            cy.saveAsyncData("accountAfter", () => getAccount(targetAccountId));
+            cy.saveAsyncData("transactionsAfter", () =>
+              getAllAccountTransactionsById(targetAccountId)
+            );
+          });
+      }
+    );
+
+    cy.get<IAccount>("@accountBefore").then((accountBefore) => {
+      cy.get<IAccount>("@accountAfter").then((accountAfter) => {
+        expect(accountBefore.balance - newTransactionAmount).to.be.eq(
+          accountAfter.balance
+        );
+      });
+    });
+
+    cy.get<ITransactionWithDateObject[]>("@transactionsBefore").then(
+      (transactionsBefore) => {
+        cy.get<ITransactionWithDateObject[]>("@transactionsAfter").then(
+          (transactionsAfter) => {
+            cy.get<string>("@targetAccountId").then((targetAccountId) => {
+              transactionsAfter
+                .filter(({ description }) => description !== newTransactionName)
+                .forEach((transactionAfter) => {
+                  const transactionBefore = transactionsBefore.find(
+                    ({ _id }) => _id === transactionAfter._id
+                  );
+
+                  const beforeTargetAccountBalanse =
+                    transactionBefore.toAccount === targetAccountId
+                      ? transactionBefore.toAccountBalance
+                      : transactionBefore.fromAccountBalance;
+                  const afterTargetAccountBalanse =
+                    transactionAfter.toAccount === targetAccountId
+                      ? transactionAfter.toAccountBalance
+                      : transactionAfter.fromAccountBalance;
+
+                  expect(
+                    beforeTargetAccountBalanse - newTransactionAmount
+                  ).to.be.eq(afterTargetAccountBalanse);
+                });
             });
-        });
-    });
+          }
+        );
+      }
+    );
   });
 
   it("Check that date is correct", () => {
