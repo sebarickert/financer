@@ -5,20 +5,17 @@ describe("Expense form", () => {
     cy.get("#description").clear();
     cy.get("#amount").type("0");
 
-    cy.get("[data-testid='submit']").click();
+    cy.getById("submit").click();
     cy.get("#description:invalid").should("have.length", 1);
 
     // Remove form validation to test backend validation
     cy.get("#description").invoke("prop", "required", false);
-    cy.get("[data-testid='submit']").click();
-    cy.get("[data-testid='form-errors']").should(
+    cy.getById("submit").click();
+    cy.getById("form-errors").should(
       "contain.text",
       "There were 1 errors with your submission"
     );
-    cy.get("[data-testid='form-errors']").should(
-      "contain.text",
-      "Name must not be empty"
-    );
+    cy.getById("form-errors").should("contain.text", "Name must not be empty");
   });
 
   it("Verify Expense Amount cannot be empty", () => {
@@ -26,20 +23,17 @@ describe("Expense form", () => {
 
     cy.get("#amount").clear();
 
-    cy.get("[data-testid='submit']").click();
+    cy.getById("submit").click();
     cy.get("#amount:invalid").should("have.length", 1);
 
     // Remove form validation to test backend validation
     cy.get("#amount").invoke("prop", "required", false);
-    cy.get("[data-testid='submit']").click();
-    cy.get("[data-testid='form-errors']").should(
+    cy.getById("submit").click();
+    cy.getById("form-errors").should(
       "contain.text",
       "There were 1 errors with your submission"
     );
-    cy.get("[data-testid='form-errors']").should(
-      "contain.text",
-      "Amount must be a number"
-    );
+    cy.getById("form-errors").should("contain.text", "Amount must be a number");
   });
 
   it("Verify Expense Amount must be number", () => {
@@ -51,12 +45,12 @@ describe("Expense form", () => {
     cy.get("#amount").invoke("prop", "type", "text");
     cy.get("#amount").type("not a number");
 
-    cy.get("[data-testid='submit']").click();
-    cy.get("[data-testid='form-errors']").should(
+    cy.getById("submit").click();
+    cy.getById("form-errors").should(
       "contain.text",
       "There were 1 errors with your submission"
     );
-    cy.get("[data-testid='form-errors']").should(
+    cy.getById("form-errors").should(
       "contain.text",
       "Amount must be a number."
     );
@@ -65,7 +59,7 @@ describe("Expense form", () => {
   it("Verify Expense Amount should accept positive values", () => {
     cy.get("#description").type("irrelevant");
     cy.get("#amount").type("100.19");
-    cy.get("[data-testid='submit']").click();
+    cy.getById("submit").click();
 
     cy.location("pathname").should("eq", "/statistics/expenses");
   });
@@ -73,7 +67,7 @@ describe("Expense form", () => {
   it("Verify Expense Amount should accept zero value", () => {
     cy.get("#description").type("irrelevant");
     cy.get("#amount").type("0.00");
-    cy.get("[data-testid='submit']").click();
+    cy.getById("submit").click();
 
     cy.location("pathname").should("eq", "/statistics/expenses");
   });
@@ -81,12 +75,12 @@ describe("Expense form", () => {
   it.skip("Verify Expense Amount should not accept negative values", () => {
     cy.get("#description").type("irrelevant");
     cy.get("#amount").type("-1000.99");
-    cy.get("[data-testid='submit']").click();
+    cy.getById("submit").click();
     cy.get("#amount:invalid").should("have.length", 1);
 
     cy.get("#amount").invoke("removeAttr", "min");
-    cy.get("[data-testid='submit']").click();
-    cy.get("[data-testid='form-errors']").should(
+    cy.getById("submit").click();
+    cy.getById("form-errors").should(
       "contain.text",
       "There were 1 errors with your submission"
     );
@@ -98,20 +92,17 @@ describe("Expense form", () => {
 
     cy.get("#date").clear();
 
-    cy.get("[data-testid='submit']").click();
+    cy.getById("submit").click();
     cy.get("#date:invalid").should("have.length", 1);
 
     // Remove form validation to test backend validation
     cy.get("#date").invoke("prop", "required", false);
-    cy.get("[data-testid='submit']").click();
-    cy.get("[data-testid='form-errors']").should(
+    cy.getById("submit").click();
+    cy.getById("form-errors").should(
       "contain.text",
       "There were 1 errors with your submission"
     );
-    cy.get("[data-testid='form-errors']").should(
-      "contain.text",
-      "Date must not be empty."
-    );
+    cy.getById("form-errors").should("contain.text", "Date must not be empty.");
   });
 
   it("Verify Expense date must be date value", () => {
@@ -124,15 +115,12 @@ describe("Expense form", () => {
     cy.get("#date").invoke("prop", "type", "text");
     cy.get("#date").type("not a date");
 
-    cy.get("[data-testid='submit']").click();
-    cy.get("[data-testid='form-errors']").should(
+    cy.getById("submit").click();
+    cy.getById("form-errors").should(
       "contain.text",
       "There were 1 errors with your submission"
     );
-    cy.get("[data-testid='form-errors']").should(
-      "contain.text",
-      "Date must not be empty."
-    );
+    cy.getById("form-errors").should("contain.text", "Date must not be empty.");
   });
 
   it("Verify Expenses source accounts", () => {
@@ -152,18 +140,18 @@ describe("Expense form", () => {
 
     cy.get("#fromAccount").invoke("val", undefined);
 
-    cy.get("[data-testid='submit']").click();
+    cy.getById("submit").click();
     cy.get("#fromAccount:invalid").should("have.length", 1);
 
     // Remove form validation to test backend validation
     cy.get("#fromAccount").invoke("prop", "required", false);
-    cy.get("[data-testid='submit']").click();
+    cy.getById("submit").click();
 
-    cy.get("[data-testid='form-errors']").should(
+    cy.getById("form-errors").should(
       "contain.text",
       "There were 1 errors with your submission"
     );
-    cy.get("[data-testid='form-errors']").should(
+    cy.getById("form-errors").should(
       "contain.text",
       "fromAccount must not be empty."
     );
@@ -178,13 +166,13 @@ describe("Expense form", () => {
     );
     cy.get("#fromAccount").invoke("val", "not-existing-account");
 
-    cy.get("[data-testid='submit']").click();
+    cy.getById("submit").click();
 
-    cy.get("[data-testid='form-errors']").should(
+    cy.getById("form-errors").should(
       "contain.text",
       "There were 1 errors with your submission"
     );
-    cy.get("[data-testid='form-errors']").should(
+    cy.getById("form-errors").should(
       "contain.text",
       "Type must be one of the following: cash, savings, investment, credit, loan."
     );
@@ -196,7 +184,7 @@ describe("Expense form", () => {
     cy.get("#date").clear();
     cy.get("#fromAccount").invoke("val", undefined);
 
-    cy.get("[data-testid='submit']").click();
+    cy.getById("submit").click();
     cy.get(":invalid:not(form)").should("have.length", 3);
 
     // Remove form validation to test backend validation
@@ -204,24 +192,18 @@ describe("Expense form", () => {
     cy.get("#amount").invoke("prop", "required", false);
     cy.get("#fromAccount").invoke("prop", "required", false);
 
-    cy.get("[data-testid='submit']").click();
-    cy.get("[data-testid='form-errors']").should(
+    cy.getById("submit").click();
+    cy.getById("form-errors").should(
       "contain.text",
       "There were 4 errors with your submission"
     );
-    cy.get("[data-testid='form-errors']").should(
-      "contain.text",
-      "Name must not be empty."
-    );
-    cy.get("[data-testid='form-errors']").should(
+    cy.getById("form-errors").should("contain.text", "Name must not be empty.");
+    cy.getById("form-errors").should(
       "contain.text",
       "Amount must be a number."
     );
-    cy.get("[data-testid='form-errors']").should(
-      "contain.text",
-      "Date must not be empty."
-    );
-    cy.get("[data-testid='form-errors']").should(
+    cy.getById("form-errors").should("contain.text", "Date must not be empty.");
+    cy.getById("form-errors").should(
       "contain.text",
       "fromAccount must not be empty."
     );

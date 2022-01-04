@@ -10,26 +10,44 @@ interface IStatsItemProps {
 export const StatsItem = ({
   children,
   statLabel,
-  testId,
+  testId = '',
   type = 'default',
 }: IStatsItemProps): JSX.Element => {
+  const testIdPostfix = testId ? `_${testId}` : '';
+
   if (type === 'standalone') {
     return (
-      <dl data-testId={testId} className="pl-1">
-        <dt className="text-sm text-gray-500 font-medium truncate lg:text-base">
+      <dl data-testid={`stats-item${testIdPostfix}`} className="pl-1">
+        <dt
+          className="text-sm font-medium text-gray-500 truncate lg:text-base"
+          data-testid={`stats-item-label${testIdPostfix}`}
+        >
           {statLabel}
         </dt>
-        <dd className="text-2xl font-bold tracking-tight">{children}</dd>
+        <dd
+          className="text-2xl font-bold tracking-tight"
+          data-testid={`stats-item-content${testIdPostfix}`}
+        >
+          {children}
+        </dd>
       </dl>
     );
   }
 
   return (
-    <dl data-testId={testId} className="p-4">
-      <dt className="text-xs text-gray-500 lg:text-sm lg:mb-0.5">
+    <dl data-testid={`stats-item${testIdPostfix}`} className="p-4">
+      <dt
+        className="text-xs text-gray-500 lg:text-sm lg:mb-0.5"
+        data-testid={`stats-item-label${testIdPostfix}`}
+      >
         {statLabel}
       </dt>
-      <dd className="text-lg font-semibold truncate lg:text-xl">{children}</dd>
+      <dd
+        className="text-lg font-semibold truncate lg:text-xl"
+        data-testid={`stats-item-content${testIdPostfix}`}
+      >
+        {children}
+      </dd>
     </dl>
   );
 };

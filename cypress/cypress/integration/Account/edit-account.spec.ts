@@ -1,93 +1,130 @@
+const parseFloatFromText = (text: string) => {
+  return parseFloat(
+    text
+      .replace(",", ".")
+      .replace(/\u00a0/g, " ")
+      .replace(/ /g, "")
+      .replace(String.fromCharCode(8722), String.fromCharCode(45))
+  );
+};
+
+const verifyDifferentBalanaces = (balanceA: string, balanceB: string) => {
+  const a = parseFloatFromText(balanceA);
+  const b = parseFloatFromText(balanceB);
+  expect(a).not.to.be.NaN;
+  expect(b).not.to.be.NaN;
+
+  expect(a).to.not.equal(b);
+};
 const verifyAccountPage = (
   accountName: string,
   accountBalance: string,
   accountType: string
 ) => {
-  cy.get('[data-testid="account-banner"] [data-testid="banner-title"]').should(
-    "contain.text",
-    accountName
-  );
+  cy.getById("account-banner")
+    .getById("banner-title")
+    .should("contain.text", accountName);
 
-  cy.get('[data-testid="type"] > dd').should("have.text", accountType);
-  cy.get('[data-testid="balance"] > dd')
+  cy.getById("stats-item-content_type").should("have.text", accountType);
+
+  cy.getById("stats-item-content_balance")
     .invoke("text")
-    .invoke("replace", /\u00a0/g, " ")
-    .should(
-      "equal",
-      accountBalance.replace(String.fromCharCode(45), String.fromCharCode(8722))
-    ); // charcodes for different kind of `-`
+    .then((currentBalance) => {
+      expect(parseFloatFromText(currentBalance)).to.equal(
+        parseFloatFromText(accountBalance)
+      );
+    });
 };
 
 const editAccountNameAndVerify = (
   oldAccountName: string,
   newAccountName: string,
-  accountBalance: string,
   accountType: string
 ) => {
-  cy.get('[data-testid="account-row"').should(
-    "not.contain.text",
-    newAccountName
-  );
+  cy.getById("account-row").should("not.contain.text", newAccountName);
 
-  cy.get("[data-testid='account-row'").contains(oldAccountName).click();
-  verifyAccountPage(oldAccountName, accountBalance, accountType);
+  cy.getById("account-row").contains(oldAccountName).click();
+  cy.getById("stats-item-content_balance").then(($balanceElement) => {
+    cy.wrap($balanceElement.text()).as("accountBalance");
+  });
+
+  cy.get<string>("@accountBalance").then((accountBalance) => {
+    verifyAccountPage(oldAccountName, accountBalance, accountType);
+  });
   // Account page
 
-  cy.get("[data-testid='edit-account']").click();
+  cy.getById("edit-account").click();
 
   // Edit account form
   cy.get("#account").clear();
   cy.get("#account").type(newAccountName);
-  cy.get("[data-testid='submit']").click();
+  cy.getById("submit").click();
 
   cy.location("pathname").should("not.contain", "/edit");
   cy.visit("http://localhost:3000/accounts");
 
   // All accounts list
-  cy.get('[data-testid="account-row"').should("contain.text", newAccountName);
-  cy.get("[data-testid='account-row']").contains(newAccountName).click();
+  cy.getById("account-row").should("contain.text", newAccountName);
+  cy.getById("account-row").contains(newAccountName).click();
 
   // Account page
-  verifyAccountPage(newAccountName, accountBalance, accountType);
+  cy.get<string>("@accountBalance").then((accountBalance) => {
+    verifyAccountPage(newAccountName, accountBalance, accountType);
+  });
 };
 
 const editAccountTypeAndVerify = (
   accountName: string,
-  accountBalance: string,
   oldAccountType: string,
   newAccountType: string
 ) => {
-  cy.get("[data-testid='account-row'").contains(accountName).click();
-  verifyAccountPage(accountName, accountBalance, oldAccountType);
+  cy.getById("account-row").contains(accountName).click();
   // Account page
 
-  cy.get("[data-testid='edit-account']").click();
+  cy.getById("stats-item-content_balance").then(($balanceElement) => {
+    cy.wrap($balanceElement.text()).as("accountBalance");
+  });
+
+  cy.get<string>("@accountBalance").then((accountBalance) => {
+    verifyAccountPage(accountName, accountBalance, oldAccountType);
+  });
+
+  cy.getById("edit-account").click();
 
   // Edit account form
   cy.get("#type").select(newAccountType);
-  cy.get("[data-testid='submit']").click();
+  cy.getById("submit").click();
 
   cy.location("pathname").should("not.contain", "/edit");
   cy.visit("http://localhost:3000/accounts");
 
   // All accounts list
-  cy.get("[data-testid='account-row']").contains(accountName).click();
+  cy.getById("account-row").contains(accountName).click();
 
   // Account page
-  verifyAccountPage(accountName, accountBalance, newAccountType);
+  cy.get<string>("@accountBalance").then((accountBalance) => {
+    verifyAccountPage(accountName, accountBalance, newAccountType);
+  });
 };
 
 const editAccountBalanceAndVerify = (
   accountName: string,
-  oldAccountBalance: string,
   newAccountBalance: string,
   accountType: string
 ) => {
-  cy.get("[data-testid='account-row'").contains(accountName).click();
-  verifyAccountPage(accountName, oldAccountBalance, accountType);
+  cy.getById("account-row").contains(accountName).click();
+  cy.getById("stats-item-content_balance").then(($balanceElement) => {
+    cy.wrap($balanceElement.text()).as("oldAccountBalance");
+  });
+
+  cy.get<string>("@oldAccountBalance").then((oldAccountBalance) => {
+    verifyAccountPage(accountName, oldAccountBalance, accountType);
+    verifyDifferentBalanaces(oldAccountBalance, newAccountBalance);
+  });
+
   // Account page
 
-  cy.get("[data-testid='edit-account']").click();
+  cy.getById("edit-account").click();
 
   // Edit account form
   cy.get("#amount").clear();
@@ -99,17 +136,13 @@ const editAccountBalanceAndVerify = (
       .replace(String.fromCharCode(8722), String.fromCharCode(45)) // charcodes for different kind of `-`
   );
 
-  //   cy.get("#amount").invoke(
-  //     "val",
-  //     newAccountBalance.replace(",", ".").replace(/ /g, "").replace("€", "")
-  //   );
-  cy.get("[data-testid='submit']").click();
+  cy.getById("submit").click();
 
   cy.location("pathname").should("not.contain", "/edit");
   cy.visit("http://localhost:3000/accounts");
 
   // All accounts list
-  cy.get("[data-testid='account-row']").contains(accountName).click();
+  cy.getById("account-row").contains(accountName).click();
 
   // Account page
   verifyAccountPage(accountName, newAccountBalance, accountType);
@@ -118,16 +151,23 @@ const editAccountBalanceAndVerify = (
 const editAccountAllDetailsAndVerify = (
   oldAccountName: string,
   newAccountName: string,
-  oldAccountBalance: string,
   newAccountBalance: string,
   oldAccountType: string,
   newAccountType: string
 ) => {
-  cy.get("[data-testid='account-row'").contains(oldAccountName).click();
-  verifyAccountPage(oldAccountName, oldAccountBalance, oldAccountType);
+  cy.getById("account-row").contains(oldAccountName).click();
   // Account page
 
-  cy.get("[data-testid='edit-account']").click();
+  cy.getById("stats-item-content_balance").then(($balanceElement) => {
+    cy.wrap($balanceElement.text()).as("oldAccountBalance");
+  });
+
+  cy.get<string>("@oldAccountBalance").then((oldAccountBalance) => {
+    verifyAccountPage(oldAccountName, oldAccountBalance, oldAccountType);
+    verifyDifferentBalanaces(oldAccountBalance, newAccountBalance);
+  });
+
+  cy.getById("edit-account").click();
 
   // Edit account form
   cy.get("#account").clear();
@@ -142,14 +182,14 @@ const editAccountAllDetailsAndVerify = (
       .replace(String.fromCharCode(8722), String.fromCharCode(45)) // charcodes for different kind of `-`
   );
 
-  cy.get("[data-testid='submit']").click();
+  cy.getById("submit").click();
 
   cy.location("pathname").should("not.contain", "/edit");
   cy.visit("http://localhost:3000/accounts");
 
   // All accounts list
-  cy.get('[data-testid="account-row"').should("contain.text", newAccountName);
-  cy.get("[data-testid='account-row']").contains(newAccountName).click();
+  cy.getById("account-row").should("contain.text", newAccountName);
+  cy.getById("account-row").contains(newAccountName).click();
 
   // Account page
   verifyAccountPage(newAccountName, newAccountBalance, newAccountType);
@@ -157,19 +197,14 @@ const editAccountAllDetailsAndVerify = (
 
 describe("Account editing", () => {
   beforeEach(() => cy.visit("http://localhost:3000/accounts"));
+
   it("Change Cash account name", () => {
-    editAccountNameAndVerify(
-      "Cash account",
-      "Cash Renamed account",
-      "4 350,00 €",
-      "Cash"
-    );
+    editAccountNameAndVerify("Cash account", "Cash Renamed account", "Cash");
   });
   it("Change Saving account name", () => {
     editAccountNameAndVerify(
       "Saving account 2",
       "Saving Renamed account 2",
-      "51 000,00 €",
       "Savings"
     );
   });
@@ -177,7 +212,6 @@ describe("Account editing", () => {
     editAccountNameAndVerify(
       "Investment account",
       "Investment Renamed account",
-      "0,00 €",
       "Investment"
     );
   });
@@ -185,96 +219,53 @@ describe("Account editing", () => {
     editAccountNameAndVerify(
       "Credit account",
       "Credit Renamed account",
-      "−950,00 €",
       "Credit"
     );
   });
   it("Change Loan account name", () => {
-    editAccountNameAndVerify(
-      "Loan account",
-      "Loan Renamed account",
-      "−5 000,00 €",
-      "Loan"
-    );
+    editAccountNameAndVerify("Loan account", "Loan Renamed account", "Loan");
   });
 
   it("Change Cash account type", () => {
-    editAccountTypeAndVerify("Cash account", "4 350,00 €", "Cash", "Loan");
+    editAccountTypeAndVerify("Cash account", "Cash", "Loan");
   });
   it("Change Saving account type", () => {
-    editAccountTypeAndVerify(
-      "Saving account 2",
-      "51 000,00 €",
-      "Savings",
-      "Cash"
-    );
+    editAccountTypeAndVerify("Saving account 2", "Savings", "Cash");
   });
   it("Change Ivestment account type", () => {
-    editAccountTypeAndVerify(
-      "Investment account",
-      "0,00 €",
-      "Investment",
-      "Savings"
-    );
+    editAccountTypeAndVerify("Investment account", "Investment", "Savings");
   });
   it("Change Credit account type", () => {
-    editAccountTypeAndVerify(
-      "Credit account",
-      "−950,00 €",
-      "Credit",
-      "Investment"
-    );
+    editAccountTypeAndVerify("Credit account", "Credit", "Investment");
   });
   it("Change Loan account type", () => {
-    editAccountTypeAndVerify("Loan account", "−5 000,00 €", "Loan", "Credit");
+    editAccountTypeAndVerify("Loan account", "Loan", "Credit");
   });
 
   it("Change Cash account balance", () => {
-    editAccountBalanceAndVerify(
-      "Cash account",
-      "4 350,00 €",
-      "−14 350,00 €",
-      "Cash"
-    );
+    editAccountBalanceAndVerify("Cash account", "−1 040 350,00 €", "Cash");
   });
   it("Change Saving account balance", () => {
-    editAccountBalanceAndVerify(
-      "Saving account 2",
-      "51 000,00 €",
-      "0,10 €",
-      "Savings"
-    );
+    editAccountBalanceAndVerify("Saving account 2", "0,10 €", "Savings");
   });
   it("Change Ivestment account balance", () => {
     editAccountBalanceAndVerify(
       "Investment account",
-      "0,00 €",
       "1 000 000,00 €",
       "Investment"
     );
   });
   it("Change Credit account balance", () => {
-    editAccountBalanceAndVerify(
-      "Credit account",
-      "−950,00 €",
-      "−251 950,00 €",
-      "Credit"
-    );
+    editAccountBalanceAndVerify("Credit account", "−251 950,00 €", "Credit");
   });
   it("Change Loan account balance", () => {
-    editAccountBalanceAndVerify(
-      "Loan account",
-      "−5 000,00 €",
-      "0,00 €",
-      "Loan"
-    );
+    editAccountBalanceAndVerify("Loan account", "0,00 €", "Loan");
   });
 
   it("Change Cash account all fields", () => {
     editAccountAllDetailsAndVerify(
       "Cash account",
       "Changed to Savings",
-      "4 350,00 €",
       "100 000 000 000 000,00 €",
       "Cash",
       "Savings"
@@ -284,7 +275,6 @@ describe("Account editing", () => {
     editAccountAllDetailsAndVerify(
       "Saving account 2",
       "Changed to Investment",
-      "51 000,00 €",
       "-99 000,10 €",
       "Savings",
       "Investment"
@@ -294,7 +284,6 @@ describe("Account editing", () => {
     editAccountAllDetailsAndVerify(
       "Investment account",
       "Changed to Credit",
-      "0,00 €",
       "-10,01 €",
       "Investment",
       "Credit"
@@ -304,7 +293,6 @@ describe("Account editing", () => {
     editAccountAllDetailsAndVerify(
       "Credit account",
       "Changed to Loan",
-      "−950,00 €",
       "999 999,99 €",
       "Credit",
       "Loan"
@@ -314,7 +302,6 @@ describe("Account editing", () => {
     editAccountAllDetailsAndVerify(
       "Loan account",
       "Changed to Credit",
-      "−5 000,00 €",
       "-55,55 €",
       "Loan",
       "Credit"
