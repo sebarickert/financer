@@ -1,0 +1,43 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: mongodb-backup
+  namespace: financer
+spec:
+  schedule: "0 3 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: mongodb-backup
+              image: mongo:4.4.8
+              args:
+                - "/bin/sh"
+                - "-c"
+                - '/usr/bin/mongodump -u $DB_USER -p $DB_PASSWORD --db $DB_NAME -h $DB_HOST --gzip --archive=/backup/financer_$(date +"%Y-%m-%d_%H-%M").gz'
+              envFrom:
+                - secretRef:
+                    name: webapp-environment-secret
+              volumeMounts:
+                - name: backup-volume
+                  mountPath: /backup
+          restartPolicy: OnFailure
+          volumes:
+            - name: backup-volume
+              persistentVolumeClaim:
+                claimName: mongodb-backup-volume
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongodb-backup-volume
+  namespace: financer
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 1Gi
