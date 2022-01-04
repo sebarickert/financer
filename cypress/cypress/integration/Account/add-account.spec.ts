@@ -4,12 +4,12 @@ const addAccountAndVefiryDetails = (
   expectedType,
   expextedBalance
 ) => {
-  cy.get('[data-testid="account-row"').should(
+  cy.getById("account-row").should(
     "not.have.text",
     `New Test ${expectedType} Account`
   );
 
-  cy.get('[data-testid="add-account"]').click();
+  cy.getById("add-account").click();
 
   // Add account form
   cy.get("#account").clear();
@@ -19,13 +19,13 @@ const addAccountAndVefiryDetails = (
   cy.get("#type").select(accountType);
   cy.getById("submit").click();
 
-  cy.get('[data-testid="account-row"]').should("have.length", 7);
-  cy.get('[data-testid="account-row"]')
+  cy.getById("account-row").should("have.length", 7);
+  cy.getById("account-row")
     .contains(`New Test ${expectedType} Account`)
     .click();
 
-  cy.get('[data-testid="type"] > dd').should("have.text", expectedType);
-  cy.get('[data-testid="balance"] > dd')
+  cy.getById("stats-item-content_type").should("have.text", expectedType);
+  cy.getById("stats-item-content_balance")
     .invoke("text")
     .invoke("replace", /\u00a0/g, " ")
     .should("equal", expextedBalance);
@@ -35,7 +35,7 @@ describe("Account creation", () => {
   beforeEach(() => cy.visit("http://localhost:3000/accounts"));
 
   it("Verify accounts in fixture", () => {
-    cy.get('[data-testid="account-row"').should("have.length", 6);
+    cy.getById("account-row").should("have.length", 6);
   });
 
   it("Add Cash account", () => {

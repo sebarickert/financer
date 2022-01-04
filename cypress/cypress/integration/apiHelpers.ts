@@ -1,4 +1,4 @@
-interface ITransactionWithDateObject extends ITransaction {
+export interface ITransactionWithDateObject extends ITransaction {
   dateObj: Date;
 }
 
@@ -71,3 +71,16 @@ export const getAllAccountTransactionsById = async (
     }))
     .sort((a, b) => (a.date < b.date ? -1 : 1));
 };
+
+export const getAccountFromTransactions = (transaction: ITransaction) =>
+  transaction.toAccount || transaction.fromAccount;
+
+export const roundToTwoDecimal = (number: number): number =>
+  Math.round(number * 100) / 100;
+
+export const getAccountBalanceFromTransactions = (transaction: ITransaction) =>
+  roundToTwoDecimal(
+    transaction.toAccount
+      ? transaction.toAccountBalance
+      : transaction.fromAccountBalance
+  );

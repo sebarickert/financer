@@ -108,7 +108,7 @@ export const deleteTransaction = async (
   next();
 };
 
-export const sendVerifyDelete = (req: Request, res: Response) => {
+export const sendVerifyDelete = (req: Request, res: Response): void => {
   res.status(200).json({ authenticated: true, status: 200 });
 };
 
@@ -198,6 +198,10 @@ export const addTransaction = async (
 
   const user = req.user as IUserModel;
   const rawNewTransaction = req.body as ITransactionModel;
+
+  if (req.params.id) {
+    rawNewTransaction._id = req.params.id;
+  }
 
   let sourceAccount;
   let targetAccount;
