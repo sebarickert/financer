@@ -101,6 +101,20 @@ If backend fails after first authentication attempt, restart the backend.
 $ npm start
 ```
 
+## Production deployment
+
+### Import the database in kubernetes
+
+Get your database dump and copy it to your pod in kubernetes. Using to code sample below. Replace `mongodb-deployment-XXXXXXXXX-XXXXX` with your pod name. And finally remove dump from pod.
+
+```
+kubens financer
+kubectl cp financer_2022-01-01_03-00.gz mongodb-deployment-XXXXXXXXX-XXXXX:/tmp/mongo.gz
+kube exec mongodb-deployment-XXXXXXXXX-XXXXX -- bash -c 'mongorestore  -u $DB_USER -p $DB_PASSWORD --gzip --archive=/tmp/mongo.gz'
+kube exec mongodb-deployment-XXXXXXXXX-XXXXX -- bash -c 'rm /tmp/mongo.gz'
+
+```
+
 ## Authors
 
 - **Sebastian Hämäläinen** - [shamalainen](https://github.com/shamalainen)
