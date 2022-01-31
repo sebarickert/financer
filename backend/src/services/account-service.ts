@@ -12,6 +12,10 @@ export const createAccount = async (
   newAccount: IAccountModel
 ): Promise<IAccountModel | null> => accountModel.create(newAccount);
 
+export const createMultipleAccounts = async (
+  newAccounts: IAccountModel[]
+): Promise<IAccountModel[] | null> => accountModel.insertMany(newAccounts);
+
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const DANGER_truncateAccountByUser = async (
   userId: string

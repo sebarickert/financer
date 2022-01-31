@@ -29,8 +29,13 @@ export const findTransactionById = async (
 ): Promise<ITransactionModel | null> => transactionModel.findById(id);
 
 export const createTransaction = async (
-  newAccount: ITransactionModel
-): Promise<ITransactionModel | null> => transactionModel.create(newAccount);
+  newTransaction: ITransactionModel
+): Promise<ITransactionModel | null> => transactionModel.create(newTransaction);
+
+export const createMultipleTransactions = async (
+  newTransactions: ITransactionModel[]
+): Promise<ITransactionModel[] | null> =>
+  transactionModel.insertMany(newTransactions);
 
 export const findTransferTransactionsByUser = async (
   userId: string

@@ -25,6 +25,11 @@ export const createTransactionCategoryMapping = async (
 ): Promise<ITransactionCategoryMappingModel | null> =>
   transactionCategoryMappingModel.create(newTransactionCategoryMapping);
 
+export const createMultipleTransactionCategoryMappings = async (
+  newTransactionCategoryMappings: ITransactionCategoryMappingModel[]
+): Promise<ITransactionCategoryMappingModel[] | null> =>
+  transactionCategoryMappingModel.insertMany(newTransactionCategoryMappings);
+
 export const findTransactionCategoryMappingByTransaction = async (
   id: string
 ): Promise<ITransactionCategoryMappingModel[] | null> =>

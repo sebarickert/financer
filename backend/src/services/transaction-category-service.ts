@@ -23,6 +23,11 @@ export const createTransactionCategory = async (
 ): Promise<ITransactionCategoryModel | null> =>
   transactionCategoryModel.create(newTransactionCategory);
 
+export const createMultipleTransactionCategories = async (
+  newTransactionCategories: ITransactionCategoryModel[]
+): Promise<ITransactionCategoryModel[] | null> =>
+  transactionCategoryModel.insertMany(newTransactionCategories);
+
 export const markTransactionCategoryAsDeleted = async (
   id: string
 ): Promise<ITransactionCategoryModel | null> => {
