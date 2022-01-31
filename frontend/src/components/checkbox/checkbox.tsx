@@ -18,7 +18,7 @@ export const Checkbox = ({
           id={id}
           name={id}
           type="checkbox"
-          className="focus:ring-green-500 h-4 w-4 text-green-600 border-gray-300 rounded"
+          className="focus:ring-emerald-500 h-4 w-4 text-emerald-600 border-gray-300 rounded"
           defaultChecked={checked}
         />
       </div>

@@ -25,7 +25,7 @@ export const QuickLinksItem = ({
         <span
           className={`rounded-lg inline-flex p-3 text-white ring-4 ring-white ${
             iconBackgroundColor === 'blue' && 'bg-blue-financer'
-          } ${iconBackgroundColor === 'green' && 'bg-green-600'} ${
+          } ${iconBackgroundColor === 'green' && 'bg-emerald-600'} ${
             iconBackgroundColor === 'red' && 'bg-red-600'
           }`}
         >
