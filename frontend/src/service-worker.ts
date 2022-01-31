@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /// <reference lib="webworker" />
 /* eslint-disable no-restricted-globals */
 

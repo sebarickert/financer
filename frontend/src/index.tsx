@@ -18,6 +18,7 @@ const Root = (): JSX.Element => {
         const waitingServiceWorker = registration.waiting;
 
         if (waitingServiceWorker) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           waitingServiceWorker.addEventListener('statechange', (event: any) => {
             if (event?.target?.state === 'activated') {
               setIsAppUpdateAvailable(true);
