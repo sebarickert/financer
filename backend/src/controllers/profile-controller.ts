@@ -5,22 +5,22 @@ import { ITransactionCategoryModel } from "../models/transaction-category-model"
 import { ITransactionModel } from "../models/transaction-model";
 import { IUserModel } from "../models/user-model";
 import {
-  createAccount,
+  createMultipleAccounts,
   DANGER_truncateAccountByUser,
   findAccountsByUser,
 } from "../services/account-service";
 import {
-  createTransactionCategoryMapping,
+  createMultipleTransactionCategoryMappings,
   DANGER_truncateTransactionCategoryMappingsByUser,
   findTransactionCategoryMappingsByUser,
 } from "../services/transaction-category-mapping-service";
 import {
-  createTransactionCategory,
+  createMultipleTransactionCategories,
   DANGER_truncateTransactionCategoriesByUser,
   findTransactionCategoriesByUser,
 } from "../services/transaction-category-service";
 import {
-  createTransaction,
+  createMultipleTransactions,
   DANGER_truncateTransactionsByUser,
   findTransactionsByUser,
 } from "../services/transaction-service";
@@ -76,11 +76,12 @@ export const overrideMyData = async (
     });
     return;
   }
-
-  await DANGER_truncateAccountByUser(user.id);
-  await DANGER_truncateTransactionsByUser(user.id);
-  await DANGER_truncateTransactionCategoriesByUser(user.id);
-  await DANGER_truncateTransactionCategoryMappingsByUser(user.id);
+  await Promise.all([
+    DANGER_truncateAccountByUser(user.id),
+    DANGER_truncateTransactionsByUser(user.id),
+    DANGER_truncateTransactionCategoriesByUser(user.id),
+    DANGER_truncateTransactionCategoryMappingsByUser(user.id),
+  ]);
 
   const {
     accounts,
@@ -121,24 +122,14 @@ export const overrideMyData = async (
       owner: user.id,
     }));
 
-  await Promise.all(
-    migrateAccounts.map(async (account) => createAccount(account))
-  );
-  await Promise.all(
-    migrateTransactions.map(async (transaction) =>
-      createTransaction(transaction)
-    )
-  );
-  await Promise.all(
-    migrateTransactionCategories.map((transactionCategory) =>
-      createTransactionCategory(transactionCategory)
-    )
-  );
-  await Promise.all(
-    migrateTransactionCategoryMappings.map((migrateTranactionCategoryMapping) =>
-      createTransactionCategoryMapping(migrateTranactionCategoryMapping)
-    )
-  );
+  await Promise.all([
+    createMultipleAccounts(migrateAccounts),
+    createMultipleTransactions(migrateTransactions),
+    createMultipleTransactionCategories(migrateTransactionCategories),
+    createMultipleTransactionCategoryMappings(
+      migrateTransactionCategoryMappings
+    ),
+  ]);
 
   res
     .status(201)
