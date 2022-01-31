@@ -88,7 +88,7 @@ export const Income = (): JSX.Element => {
       <section className="rounded-lg border bg-white sm:grid divide-y sm:divide-y-0 sm:divide-x">
         <div className="p-6">
           <header className="flex items-center mb-6">
-            <span className="rounded-lg inline-flex p-3 text-white bg-green-600">
+            <span className="rounded-lg inline-flex p-3 text-white bg-emerald-600">
               <Icon type="upload" />
             </span>
             <h1 className="text-2xl sm:text-3xl font-bold tracking-tighter ml-4">

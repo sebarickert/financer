@@ -29,7 +29,7 @@ const getButtonColorClasses = (color: AccentColor): string => {
     case 'blue':
       return 'bg-blue-financer hover:bg-blue-500 active:bg-blue-700 focus:ring-blue-500';
     case 'green':
-      return 'bg-green-600 hover:bg-green-500 active:bg-green-700 focus:ring-green-500';
+      return 'bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 focus:ring-emerald-500';
     case 'red':
       return 'bg-red-600 hover:bg-red-500 active:bg-red-700 focus:ring-red-500';
     default:

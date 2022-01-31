@@ -22,7 +22,6 @@ clientsClaim();
 // Their URLs are injected into the manifest variable below.
 // This variable must be present somewhere in your service worker file,
 // even if you decide not to use precaching. See https://cra.link/PWA
-// eslint-disable-next-line no-underscore-dangle
 precacheAndRoute(self.__WB_MANIFEST);
 
 // Set up App Shell-style routing, so that all navigation requests
@@ -49,7 +48,6 @@ registerRoute(
       return false;
     }
 
-    // If this looks like a backend endpoint, skip.
     if (url.pathname.match(backendEndpointsRegexp)) {
       return false;
     }

@@ -19,7 +19,7 @@ const getHeroColorClasses = (color: AccentColor): string => {
     case 'blue':
       return 'text-blue-500';
     case 'green':
-      return 'text-green-500';
+      return 'text-emerald-500';
     case 'pink':
       return 'text-pink-500';
     case 'red':
