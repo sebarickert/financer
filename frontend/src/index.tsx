@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, useLocation } from 'react-router-dom';
 
 import { App } from './App';
-import './assets/financer.css';
+import './assets/tailwind.css';
 import { reportWebVitals } from './reportWebVitals';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { isUpdateAllowed } from './utils/allowedUpdateLocations';
@@ -18,7 +18,6 @@ const Root = (): JSX.Element => {
         const waitingServiceWorker = registration.waiting;
 
         if (waitingServiceWorker) {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           waitingServiceWorker.addEventListener('statechange', (event: any) => {
             if (event?.target?.state === 'activated') {
               setIsAppUpdateAvailable(true);

@@ -38,7 +38,7 @@ export const TransactionStackedListRow = ({
           <span
             className={`rounded-lg inline-flex p-3 text-white ring-4 ring-white ${
               transactionType === 'transfer' && 'bg-blue-financer'
-            } ${transactionType === 'income' && 'bg-green-600'} ${
+            } ${transactionType === 'income' && 'bg-emerald-600'} ${
               transactionType === 'expense' && 'bg-red-600'
             }`}
           >
@@ -59,7 +59,7 @@ export const TransactionStackedListRow = ({
         <div className="flex flex-col justify-between text-right">
           <p
             className={`text-base font-semibold truncate ${
-              transactionType === 'income' && 'text-green-600'
+              transactionType === 'income' && 'text-emerald-600'
             } ${transactionType === 'expense' && 'text-red-600'}`}
           >
             {transactionType === 'income' && '+ '}

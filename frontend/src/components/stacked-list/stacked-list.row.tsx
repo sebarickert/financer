@@ -58,7 +58,7 @@ export const StackedListRow = ({
               {tags.map(({ label: tagLabel, color }) => {
                 const colorMapping = {
                   blue: 'bg-blue-100 text-blue-800',
-                  green: 'bg-green-100 text-green-800',
+                  green: 'bg-emerald-100 text-emerald-800',
                   red: 'bg-red-100 text-red-800',
                 };
 
