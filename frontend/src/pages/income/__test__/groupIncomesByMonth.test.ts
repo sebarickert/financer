@@ -33,17 +33,19 @@ const testData: IIncomeWithCategories[] = [
   },
 ];
 
-test('Should calculate correct total after month change', () => {
-  const incomesPerMonth = testData.reduce(groupIncomesByMonth, []);
+describe('Income transaction tests', () => {
+  test('Should calculate correct total after month change', () => {
+    const incomesPerMonth = testData.reduce(groupIncomesByMonth, []);
 
-  const firstMonth = incomesPerMonth.find(
-    ({ month, year }) => month === 10 && year === 2020
-  );
+    const firstMonth = incomesPerMonth.find(
+      ({ month, year }) => month === 10 && year === 2020
+    );
 
-  const secondMonth = incomesPerMonth.find(
-    ({ month, year }) => month === 11 && year === 2020
-  );
+    const secondMonth = incomesPerMonth.find(
+      ({ month, year }) => month === 11 && year === 2020
+    );
 
-  expect(firstMonth?.total).toEqual(10);
-  expect(secondMonth?.total).toEqual(50);
+    expect(firstMonth?.total).toEqual(10);
+    expect(secondMonth?.total).toEqual(50);
+  });
 });

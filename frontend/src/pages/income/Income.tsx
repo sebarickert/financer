@@ -115,7 +115,12 @@ export const Income = (): JSX.Element => {
         </div>
       </section>
       <ButtonGroup className="mt-6">
-        <Button link={`/statistics/incomes/${id}/edit`}>Edit</Button>
+        <Button
+          link={`/statistics/incomes/${id}/edit`}
+          testId="edit-income-button"
+        >
+          Edit
+        </Button>
         <IncomeDeleteModal handleDelete={handleDelete} />
       </ButtonGroup>
     </>
