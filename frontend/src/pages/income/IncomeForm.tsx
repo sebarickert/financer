@@ -146,11 +146,12 @@ export const IncomeForm = ({
       date: newDate,
       toAccount: newToAccount,
     } = event.target;
+
     const newIncomeData: IIncome = {
       toAccount: newToAccount.value,
       amount: parseFloat((newAmount.value as string).replace(',', '.')),
       description: newDescription.value,
-      date: newDate.value,
+      date: new Date(newDate.value),
     };
 
     const transactionCategoryMappings: ITransactionCategoryMapping[] =
