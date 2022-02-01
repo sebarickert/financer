@@ -124,7 +124,12 @@ export const Expense = (): JSX.Element => {
         </div>
       </section>
       <ButtonGroup className="mt-6">
-        <Button link={`/statistics/expenses/${id}/edit`}>Edit</Button>
+        <Button
+          link={`/statistics/expenses/${id}/edit`}
+          testId="edit-expense-button"
+        >
+          Edit
+        </Button>
         <ExpenseDeleteModal handleDelete={handleDelete} />
       </ButtonGroup>
     </>
