@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "cypress:run": "cypress run",
-    "cypress:open": "cypress open",
+    "cypress:run": "TZ=America/New_York cypress run",
+    "cypress:open": "TZ=America/New_York cypress open",
     "format": "prettier --write cypress/**/*.ts && eslint cypress/**/*.ts --fix",
     "lint": "eslint cypress/**/*.ts"
   },
