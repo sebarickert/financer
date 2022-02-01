@@ -151,7 +151,7 @@ export const ExpenseForm = ({
       fromAccount: newFromAccount.value,
       amount: parseFloat((newAmount.value as string).replace(',', '.')),
       description: newDescription.value,
-      date: newDate.value,
+      date: new Date(newDate.value),
     };
 
     const transactionCategoryMappings: ITransactionCategoryMapping[] =
