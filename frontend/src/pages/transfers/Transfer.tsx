@@ -115,7 +115,12 @@ export const Transfer = (): JSX.Element => {
         </div>
       </section>
       <ButtonGroup className="mt-6">
-        <Button link={`/statistics/transfers/${id}/edit`}>Edit</Button>
+        <Button
+          link={`/statistics/transfers/${id}/edit`}
+          testId="edit-transfer-button"
+        >
+          Edit
+        </Button>
         <TransferDeleteModal handleDelete={handleDelete} />
       </ButtonGroup>
     </>

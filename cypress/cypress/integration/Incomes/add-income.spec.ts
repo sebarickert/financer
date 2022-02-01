@@ -141,7 +141,7 @@ describe("Add income", () => {
     });
   });
 
-  it("Add first income", () => {
+  it("Check that date is correct", () => {
     const date = new Date();
     date.setSeconds(0);
     date.setMilliseconds(0);
@@ -161,6 +161,5 @@ describe("Add income", () => {
       const inputValue = $input.val() as string;
       expect(date.toISOString()).equals(new Date(inputValue).toISOString());
     })
-
   });
 });
