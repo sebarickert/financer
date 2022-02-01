@@ -81,7 +81,11 @@ export const Transfers = (): JSX.Element => {
       <SEO title="Transfers" />
       <Banner title="Transfers" headindType="h1" className="mb-8">
         <BannerText>Overview page for your transfer transactions.</BannerText>
-        <Button link="/statistics/transfers/add" className="mt-6">
+        <Button
+          link="/statistics/transfers/add"
+          className="mt-6"
+          testId="add-transfer"
+        >
           Add transfer
         </Button>
       </Banner>
