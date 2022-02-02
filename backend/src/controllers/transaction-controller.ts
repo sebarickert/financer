@@ -128,7 +128,10 @@ export const verifyNewTransferInfo = async (
   ) {
     errors.push("Amount must be a number.");
   }
-  if (new Date(rawNewTransaction.date).toDateString() === "Invalid Date") {
+  if (
+    new Date(rawNewTransaction.date).toDateString() === "Invalid Date" ||
+    rawNewTransaction.date === null
+  ) {
     errors.push("Date must not be empty.");
   }
 
