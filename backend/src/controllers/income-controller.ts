@@ -27,7 +27,10 @@ export const verifyNewIncomeInfo = async (
   if (!("amount" in rawNewIncome) || typeof rawNewIncome.amount !== "number") {
     errors.push("Amount must be a number.");
   }
-  if (new Date(rawNewIncome.date).toDateString() === "Invalid Date") {
+  if (
+    new Date(rawNewIncome.date).toDateString() === "Invalid Date" ||
+    rawNewIncome.date === null
+  ) {
     errors.push("Date must not be empty.");
   }
 
