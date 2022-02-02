@@ -17,7 +17,7 @@ const addAccountAndVefiryDetails = (
   cy.get("#amount").clear();
   cy.get("#amount").type(accountBalance);
   cy.get("#type").select(accountType);
-  cy.get(":nth-child(1) > .inline-flex").click();
+  cy.getById("submit").click();
 
   cy.get('[data-testid="account-row"]').should("have.length", 7);
   cy.get('[data-testid="account-row"]')
