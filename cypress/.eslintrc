@@ -4,10 +4,9 @@
     "airbnb-typescript/base",
     "plugin:@typescript-eslint/recommended",
     "prettier",
-    "prettier/@typescript-eslint",
     "plugin:prettier/recommended"
   ],
-  "plugins": ["chai-friendly", "@typescript-eslint"],
+  "plugins": ["cypress", "chai-friendly", "@typescript-eslint", "prettier", "import"],
   "env": {
     "browser": false,
     "es6": true
