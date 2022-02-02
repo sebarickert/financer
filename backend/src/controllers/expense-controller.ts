@@ -30,7 +30,10 @@ export const verifyNewExpenseInfo = async (
   ) {
     errors.push("Amount must be a number.");
   }
-  if (new Date(rawNewExpense.date).toDateString() === "Invalid Date") {
+  if (
+    new Date(rawNewExpense.date).toDateString() === "Invalid Date" ||
+    rawNewExpense.date === null
+  ) {
     errors.push("Date must not be empty.");
   }
 
