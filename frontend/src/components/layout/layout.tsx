@@ -26,8 +26,11 @@ export const Layout = ({ children }: ILayoutProps): JSX.Element => {
           <aside className="after:bg-white after:ml-[-100vw] after:pr-[100vw] after:absolute after:top-0 after:bottom-0 after:right-0 relative border-r">
             <div className="z-10 sticky top-0 pt-12 pb-12 px-4 bottom-12 min-h-screen">
               <header>
-                <NavLink to="/" className="mb-8 block">
+                <NavLink to="/" className="mb-8 inline-flex items-center gap-3">
                   <Logo className="block h-10 w-auto" />
+                  <h2 className="tracking-tight font-bold text-black text-2xl">
+                    Financer
+                  </h2>
                 </NavLink>
                 <DesktopNavigation />
               </header>
