@@ -8,14 +8,16 @@
 // https://on.cypress.io/custom-commands
 // ***********************************************
 
+// eslint-disable-next-line @typescript-eslint/no-namespace
 declare namespace Cypress {
-    interface Chainable {
-        getById(selector: string, options?: Partial<Loggable & Timeoutable & Withinable & Shadow>): Chainable<JQuery<Element>>
-    }
+  interface Chainable {
+    getById(
+      selector: string,
+      options?: Partial<Loggable & Timeoutable & Withinable & Shadow>
+    ): Chainable<JQuery<Element>>;
+  }
 }
 
-Cypress.Commands.add('getById', (selector, ...args) => {
-    return cy.get(`[data-testid=${selector}]`, ...args)
-  })
-  
-  
+Cypress.Commands.add("getById", (selector, ...args) => {
+  return cy.get(`[data-testid=${selector}]`, ...args);
+});
