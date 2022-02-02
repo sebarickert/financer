@@ -48,7 +48,7 @@ export const Button = ({
   isDisabled,
 }: IButtonProps): JSX.Element => {
   const elementClasses = [
-    `inline-flex justify-center w-full sm:w-auto rounded-md items-center py-3 px-6 border font-medium text-base text-white focus-within:ring-2 focus:ring-inset focus:ring-blue-500 focus:outline-none transition ease-in-out duration-150 ${className}`,
+    `inline-flex justify-center w-full sm:w-auto rounded-md items-center py-3 px-6 border font-medium text-base text-white focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:outline-none transition ease-in-out duration-150 ${className}`,
   ];
 
   if (accentColor === 'plain') {
