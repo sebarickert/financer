@@ -4,17 +4,12 @@ import { getAllAccounts } from '../../pages/accounts/AccountService';
 import { getAllExpenses } from '../../pages/expenses/ExpenseService';
 import { getAllIncomes } from '../../pages/income/IncomeService';
 import { formatCurrency } from '../../utils/formatCurrency';
-import { Stats } from '../stats/stats';
-import { StatsGroup } from '../stats/stats.group';
-import { StatsItem } from '../stats/stats.item';
 
 interface IDashboardStatsProps {
-  label?: string;
   className?: string;
 }
 
 export const DashboardStats = ({
-  label,
   className = '',
 }: IDashboardStatsProps): JSX.Element => {
   const [accountsRaw, setAccountsRaw] = useState<IAccount[] | null>(null);
@@ -96,20 +91,33 @@ export const DashboardStats = ({
   }, [expensesRaw]);
 
   return (
-    <section className={` ${className}`}>
-      <Stats className={`${className}`} label={label}>
-        <StatsItem statLabel="Balance" type="standalone">
+    <section className={`bg-white border rounded-lg ${className}`}>
+      <dl className="relative px-6 pt-10 pb-6 border-b">
+        <dt className="text-sm text-gray-700 font-medium truncate lg:text-base absolute top-4 left-6">
+          Balance
+        </dt>
+        <dd className="text-3xl font-bold tracking-tight">
           {Number.isNaN(totalBalance) ? '-' : formatCurrency(totalBalance)}
-        </StatsItem>
-        <StatsGroup>
-          <StatsItem statLabel="Income">
+        </dd>
+      </dl>
+      <section className="grid grid-cols-2 divide-x">
+        <dl className="py-4 pl-6 pr-4">
+          <dt className="text-xs text-gray-700 font-medium truncate lg:text-sm">
+            Income
+          </dt>
+          <dd className="text-xl font-bold tracking-tight">
             {Number.isNaN(totalIncomes) ? '-' : formatCurrency(totalIncomes)}
-          </StatsItem>
-          <StatsItem statLabel="Expenses">
+          </dd>
+        </dl>
+        <dl className="py-4 pl-6 pr-4">
+          <dt className="text-xs text-gray-700 font-medium truncate lg:text-sm">
+            Expenses
+          </dt>
+          <dd className="text-xl font-bold tracking-tight">
             {Number.isNaN(totalExpenses) ? '-' : formatCurrency(totalExpenses)}
-          </StatsItem>
-        </StatsGroup>
-      </Stats>
+          </dd>
+        </dl>
+      </section>
     </section>
   );
 };
