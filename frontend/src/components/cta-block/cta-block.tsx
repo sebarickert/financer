@@ -13,7 +13,7 @@ export const CtaBlock = ({
 }: ICtaBlockProps): JSX.Element => {
   return (
     <section
-      className={`bg-white text-white p-2 rounded-lg shadow-md whitespace-nowrap max-w-sm w-full ${className}`}
+      className={`bg-white border p-2 rounded-lg whitespace-nowrap w-full ${className}`}
     >
       <nav aria-label={label}>
         <ul className="grid grid-cols-3 justify-center items-center">
