@@ -214,7 +214,9 @@ export const Statistics = (): JSX.Element => {
   ) : (
     <>
       <SEO title="Statistics" />
-      <Heading className="mb-4">Statistics</Heading>
+      <Heading variant="h1" className="mb-4 lg:mb-6">
+        Statistics
+      </Heading>
       {/*       <Banner title="Statistics" headindType="h1">
         <BannerText>
           Manage all your transactions in one place - review, edit or delete.
