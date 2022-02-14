@@ -1,10 +1,6 @@
-import React, { useEffect } from 'react';
-
-import { Banner } from '../../components/banner/banner';
-import { BannerText } from '../../components/banner/banner.text';
+import { BalanceGraph } from '../../components/balance-graph/balance-graph';
 import { CtaBlock } from '../../components/cta-block/cta-block';
 import { CtaBlockItem } from '../../components/cta-block/cta-block.item';
-import { DashboardAccounts } from '../../components/dashboard-accounts/dashboard.accounts';
 import { DashboardLatestTransactions } from '../../components/dashboard-latest-transactions/dashboard-latest-transactions';
 import { DashboardStats } from '../../components/dashboard-stats/dashboard.stats';
 import { Heading } from '../../components/heading/heading';
@@ -16,21 +12,10 @@ export const Dashboard = (): JSX.Element => {
   return (
     <>
       <SEO title="Dashboard" />
-      {/*       <Banner
-        title="Hello there."
-        headindType="h1"
-        className="pb-20 lg:pb-20 lg:pt-16 text-center"
-      >
-        <BannerText className="mx-auto max-w-sm">
-          Keep yourself financially up-to-date with Financer by tracking your
-          transactions.
-        </BannerText>
-      </Banner> */}
-
       <Heading variant="h1" className="mb-4 lg:mb-6">
         Dashboard
       </Heading>
-      <section className="grid gap-8">
+      <section className="grid">
         <section className="grid md:grid-cols-[40%,1fr] gap-4 md:auto-rows-[fit-content(0)]">
           <section className="grid gap-4 md:self-baseline">
             <DashboardStats />
@@ -55,16 +40,15 @@ export const Dashboard = (): JSX.Element => {
               />
             </CtaBlock>
           </section>
-          <DashboardAccounts className="overflow-y-auto" />
+          <BalanceGraph />
         </section>
-        {/* <DashboardAccounts /> */}
-        <section>
+        <section className="mt-8 mb-4">
           <Heading className="mb-4">Recent transactions</Heading>
           <div className="overflow-y-auto">
             <DashboardLatestTransactions />
           </div>
         </section>
-        {/* <QuickLinks className="col-span-full">
+        <QuickLinks>
           <QuickLinksItem
             title="Incomes"
             link="/statistics/incomes"
@@ -85,7 +69,7 @@ export const Dashboard = (): JSX.Element => {
             iconName="switch-horizontal"
             description="Go to transfers page where you are able to manage your transfer transactions."
           />
-        </QuickLinks> */}
+        </QuickLinks>
       </section>
     </>
   );
