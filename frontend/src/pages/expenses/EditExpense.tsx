@@ -72,7 +72,7 @@ export const EditExpense = (): JSX.Element => {
     typeof transactionCategoryMapping === 'undefined' ? (
     <Loader loaderColor="blue" />
   ) : (
-    <Container className="mt-6 sm:mt-12">
+    <>
       <SEO title={`Edit ${expense.description} | Expenses`} />
       <ExpenseForm
         onSubmit={handleSubmit}
@@ -85,6 +85,6 @@ export const EditExpense = (): JSX.Element => {
         fromAccount={expense.fromAccount}
         transactionCategoryMapping={transactionCategoryMapping}
       />
-    </Container>
+    </>
   );
 };

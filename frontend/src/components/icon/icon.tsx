@@ -3,6 +3,7 @@ import React from 'react';
 import { IconChartBar } from './icon.chartBar';
 import { IconChevronDown } from './icon.chevronDown';
 import { IconCloudDownload } from './icon.cloudDownload';
+import { IconCollection } from './icon.collection';
 import { IconDownload } from './icon.download';
 import { IconExclamation } from './icon.exclamation';
 import { IconHome } from './icon.home';
@@ -16,6 +17,7 @@ import { IconUpload } from './icon.upload';
 import { IconUser } from './icon.user';
 import { IconUserCircle } from './icon.userCircle';
 import { IconViewGrid } from './icon.viewGrid';
+import { IconViewGridAdd } from './icon.viewGridAdd';
 
 export type IconName =
   | 'switch-horizontal'
@@ -33,7 +35,9 @@ export type IconName =
   | 'tag'
   | 'exclamation'
   | 'cloud-download'
-  | 'chevron-down';
+  | 'chevron-down'
+  | 'view-grid-add'
+  | 'collection';
 interface IconProps {
   type: IconName;
   className?: string;
@@ -94,6 +98,12 @@ export const Icon = ({ type, className = '' }: IconProps): JSX.Element => {
 
     case 'chevron-down':
       return <IconChevronDown className={defaultIconClasses} />;
+
+    case 'collection':
+      return <IconCollection className={defaultIconClasses} />;
+
+    case 'view-grid-add':
+      return <IconViewGridAdd className={defaultIconClasses} />;
 
     default:
       break;

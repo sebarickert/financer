@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Heading } from '../heading/heading';
+
 import { AccountsListRow, IAccountsListRowProps } from './accounts-list.row';
 
 interface IAccountsListProps {
@@ -15,11 +17,7 @@ export const AccountsList = ({
 }: IAccountsListProps): JSX.Element => {
   return (
     <section className={`${className}`}>
-      {label && (
-        <h2 className="text-2xl sm:text-3xl font-bold tracking-tighter mt-8 mb-4">
-          {label}
-        </h2>
-      )}
+      {label && <Heading className="mb-4">{label}</Heading>}
       <ul className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
         {rows.map(
           ({ balanceAmount, accountType, label: rowLabel, link, id }) => (
