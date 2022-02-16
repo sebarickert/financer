@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-import { Banner } from '../../components/banner/banner';
-import { BannerText } from '../../components/banner/banner.text';
-import { Divider } from '../../components/divider/divider';
 import { Dropdown } from '../../components/dropdown/dropdown';
 import { Heading } from '../../components/heading/heading';
 import { Loader } from '../../components/loader/loader';
@@ -217,11 +214,6 @@ export const Statistics = (): JSX.Element => {
       <Heading variant="h1" className="mb-4 lg:mb-6">
         Statistics
       </Heading>
-      {/*       <Banner title="Statistics" headindType="h1">
-        <BannerText>
-          Manage all your transactions in one place - review, edit or delete.
-        </BannerText>
-      </Banner> */}
       <section className="mt-4">
         <div className="grid grid-cols-[1fr,auto] gap-4 items-end justify-between sticky top-0 z-10 bg-white-off py-4">
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tighter truncate">
@@ -243,7 +235,6 @@ export const Statistics = (): JSX.Element => {
         </StatsGroup>
         <TransactionStackedList className="mt-4" rows={visibleTransactions} />
       </section>
-      <Divider className="my-8">Continue to dedicated pages</Divider>
       <QuickLinks className="mt-4">
         <QuickLinksItem
           title="Incomes"
