@@ -3,6 +3,7 @@ import React from 'react';
 import { Banner } from '../../components/banner/banner';
 import { BannerText } from '../../components/banner/banner.text';
 import { Button } from '../../components/button/button';
+import { Heading } from '../../components/heading/heading';
 import { QuickLinks } from '../../components/quick-links/quick-links';
 import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
 import { SEO } from '../../components/seo/seo';
@@ -15,12 +16,9 @@ export const Profile = ({ profileInfo }: IProfileProps): JSX.Element => {
   return (
     <>
       <SEO title="Profile" />
-      <Banner title="Profile" headindType="h1">
-        <BannerText>
-          Manage transaction categories associated with your account and
-          download your financer data.
-        </BannerText>
-      </Banner>
+      <Heading variant="h1" className="mb-6">
+        Profile
+      </Heading>
       <QuickLinks className="mt-8">
         <QuickLinksItem
           title="Categories"
