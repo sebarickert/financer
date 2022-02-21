@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { IconArrowLeft } from './icon.arrowLeft';
+import { IconArrowRight } from './icon.arrowRight';
 import { IconChartBar } from './icon.chartBar';
 import { IconChevronDown } from './icon.chevronDown';
 import { IconCloudDownload } from './icon.cloudDownload';
@@ -36,6 +38,8 @@ export type IconName =
   | 'exclamation'
   | 'cloud-download'
   | 'chevron-down'
+  | 'arrow-left'
+  | 'arrow-right'
   | 'view-grid-add'
   | 'collection';
 interface IconProps {
@@ -104,6 +108,12 @@ export const Icon = ({ type, className = '' }: IconProps): JSX.Element => {
 
     case 'view-grid-add':
       return <IconViewGridAdd className={defaultIconClasses} />;
+
+    case 'arrow-left':
+      return <IconArrowLeft className={defaultIconClasses} />;
+
+    case 'arrow-right':
+      return <IconArrowRight className={defaultIconClasses} />;
 
     default:
       break;
