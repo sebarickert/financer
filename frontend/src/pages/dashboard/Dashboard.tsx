@@ -1,3 +1,4 @@
+import { BalanceGraph } from '../../components/balance-graph/balance-graph';
 import { CtaBlock } from '../../components/cta-block/cta-block';
 import { CtaBlockItem } from '../../components/cta-block/cta-block.item';
 import { DashboardAccounts } from '../../components/dashboard-accounts/dashboard.accounts';
@@ -40,9 +41,9 @@ export const Dashboard = (): JSX.Element => {
               />
             </CtaBlock>
           </section>
-          <DashboardAccounts className="overflow-y-auto" />
+          <BalanceGraph />
         </section>
-        <section className="mt-8 mb-4">
+        <section className="mt-8 mb-8">
           <Heading className="mb-4">Recent transactions</Heading>
           <div className="overflow-y-auto">
             <DashboardLatestTransactions />

@@ -235,7 +235,7 @@ export const Statistics = (): JSX.Element => {
         </StatsGroup>
         <TransactionStackedList className="mt-4" rows={visibleTransactions} />
       </section>
-      <QuickLinks className="mt-4">
+      <QuickLinks className="mt-8">
         <QuickLinksItem
           title="Incomes"
           link="/statistics/incomes"
