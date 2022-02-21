@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+
+import { Loader } from '../loader/loader';
+import { Pager } from '../pager/pager';
 
 import {
   TransactionStackedListRow,
@@ -17,11 +20,39 @@ export const TransactionStackedList = ({
   rows,
   className = '',
 }: ITransactionStackedListProps): JSX.Element => {
-  return (
+  const [pages, setPages] = useState<
+    null | ITransactionStackedListRowProps[][]
+  >(null);
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const chunkAmount = 8;
+
+  useEffect(() => {
+    setPages(
+      rows.reduce(
+        (resultArray: ITransactionStackedListRowProps[][], item, index) => {
+          const chunkIndex = Math.floor(index / chunkAmount);
+
+          if (!resultArray[chunkIndex]) {
+            resultArray[chunkIndex] = [];
+          }
+
+          resultArray[chunkIndex].push(item);
+
+          return resultArray;
+        },
+        []
+      )
+    );
+  }, [rows]);
+
+  return pages === null ? (
+    <Loader loaderColor="blue" />
+  ) : (
     <section className={`${className}`}>
       {title && <h2 className="sr-only">{title}</h2>}
       <TransactionStackedListRows>
-        {rows.map(
+        {pages[currentPage].map(
           ({
             transactionCategories,
             transactionAmount,
@@ -44,6 +75,15 @@ export const TransactionStackedList = ({
           )
         )}
       </TransactionStackedListRows>
+      {chunkAmount <= rows.length && (
+        <Pager
+          currentPage={currentPage}
+          pageCount={pages.length}
+          handlePageUpdate={setCurrentPage}
+          isCentered
+          className="mt-4"
+        />
+      )}
     </section>
   );
 };
