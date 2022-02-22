@@ -1,5 +1,3 @@
-import React, { useState, useEffect } from 'react';
-
 import { Banner } from '../../components/banner/banner';
 import { BannerText } from '../../components/banner/banner.text';
 import { Button } from '../../components/button/button';
@@ -7,77 +5,17 @@ import { Loader } from '../../components/loader/loader';
 import { SEO } from '../../components/seo/seo';
 import { TransactionStackedList } from '../../components/transaction-stacked-list/transaction-stacked-list';
 import { monthNames } from '../../constants/months';
+import { useAllExpensesGroupByMonth } from '../../hooks/useAllExpenses';
 import { formatCurrency } from '../../utils/formatCurrency';
-import { getAllTransactionCategories } from '../profile/TransactionCategories/TransactionCategoriesService';
-
-import {
-  groupExpensesByMonth,
-  IExpensesPerMonth,
-  sortExpensesByDate,
-  sortExpenseStacksByMonth,
-} from './ExpenseFuctions';
-import { getAllExpenses } from './ExpenseService';
 
 export const getAllUserTransactionCategoryMappings = async (): Promise<
   ITransactionCategoryMapping[]
 > => (await fetch('/api/transaction-categories-mapping')).json();
 
 export const Expenses = (): JSX.Element => {
-  const [expensesRaw, setExpensesRaw] = useState<IExpense[] | null>(null);
-  const [expenses, setExpenses] = useState<IExpensesPerMonth[]>([]);
-  const [transactionCategoryMappings, setTransactionCategoryMappings] =
-    useState<ITransactionCategoryMapping[]>([]);
-  const [transactionCategories, setTransactionCategories] = useState<
-    ITransactionCategory[]
-  >([]);
+  const expenses = useAllExpensesGroupByMonth();
 
-  useEffect(() => {
-    const fetchExpenses = async () => {
-      setExpensesRaw(await getAllExpenses());
-    };
-
-    const fetchAllTransactionCategories = async () => {
-      setTransactionCategories(await getAllTransactionCategories());
-    };
-    const fetchAllUserTransactionCategoryMappings = async () => {
-      setTransactionCategoryMappings(
-        await getAllUserTransactionCategoryMappings()
-      );
-    };
-
-    fetchExpenses();
-    fetchAllTransactionCategories();
-    fetchAllUserTransactionCategoryMappings();
-  }, []);
-
-  useEffect(() => {
-    if (expensesRaw === null) return;
-
-    setExpenses(
-      expensesRaw
-        .map(({ _id, ...rest }) => {
-          const categoryMappings = transactionCategoryMappings
-            ?.filter(({ transaction_id }) => transaction_id === _id)
-            .map(
-              ({ category_id }) =>
-                transactionCategories.find(
-                  ({ _id: categoryId }) => category_id === categoryId
-                )?.name
-            )
-            .filter(
-              (categoryName) => typeof categoryName !== 'undefined'
-              // @todo: Fix this type.
-            ) as string[];
-
-          return { _id, ...rest, categoryMappings };
-        })
-        .reduce<IExpensesPerMonth[]>(groupExpensesByMonth, [])
-        .sort(sortExpenseStacksByMonth)
-        .map(sortExpensesByDate)
-    );
-  }, [expensesRaw, transactionCategories, transactionCategoryMappings]);
-
-  return expensesRaw === null ? (
+  return expenses === null ? (
     <Loader loaderColor="blue" />
   ) : (
     <>
