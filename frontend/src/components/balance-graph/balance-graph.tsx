@@ -10,15 +10,17 @@ import {
   CartesianGrid,
   TooltipProps,
 } from 'recharts';
+import {
+  NameType,
+  ValueType,
+} from 'recharts/types/component/DefaultTooltipContent';
 
-import { MONTH_IN_MS } from '../../constants/months';
 import { useAllAccountsByType } from '../../hooks/useAllAccounts';
 import { useAllExpenses } from '../../hooks/useAllExpenses';
 import { useAllIncomes } from '../../hooks/useAllIncomes';
 import { useTotalBalance } from '../../hooks/useTotalBalance';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDate } from '../../utils/formatDate';
-import { Heading } from '../heading/heading';
 import { Loader } from '../loader/loader';
 
 interface BalanceGraphProps {
@@ -38,7 +40,7 @@ const CustomTooltip = ({
   active,
   payload,
   label,
-}: TooltipProps): JSX.Element => {
+}: TooltipProps<ValueType, NameType>): JSX.Element => {
   if (active && payload && payload.length) {
     return (
       <div className="py-2 px-4 bg-gray-800 shadow-lg">
