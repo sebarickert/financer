@@ -1,60 +1,36 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { getAllUserTransactionCategoryMappings } from '../pages/expenses/Expenses';
 import {
-  groupIncomesByMonth,
-  IIncomesPerMonth,
-  sortIncomesByDate,
   sortIncomeStacksByMonth,
+  sortIncomesByDate,
 } from '../pages/income/IncomeFuctions';
-import { getAllIncomes } from '../pages/income/IncomeService';
 import { getAllTransactionCategories } from '../pages/profile/TransactionCategories/TransactionCategoriesService';
+import {
+  ITransfersPerMonth,
+  groupTransfersByMonth,
+} from '../pages/transfers/TransferFuctions';
+import { getAllTransferTranscations } from '../pages/transfers/TransferService';
 
-export const useAllIncomes = (): IIncome[] | null => {
-  const [incomes, setIncomes] = useState<IIncome[] | null>(null);
+export const useAllTransfers = (): ITransaction[] | null => {
+  const [transfers, setTransfers] = useState<ITransaction[] | null>(null);
 
   useEffect(() => {
-    const fetchIncomes = async () => {
-      setIncomes(await getAllIncomes());
+    const fetchTransfers = async () => {
+      setTransfers((await getAllTransferTranscations()).payload);
     };
 
-    fetchIncomes();
+    fetchTransfers();
   }, []);
 
-  return incomes;
+  return transfers;
 };
 
-export const useCurrentMonthIncomesTotalAmount = (): number => {
-  const incomes = useAllIncomes();
-  const [totalAmount, setTotalAmount] = useState(NaN);
-
-  useEffect(() => {
-    if (incomes === null) return;
-
-    const total = incomes.reduce((currentTotal, { amount, date }) => {
-      const currentMonth = new Date().getMonth() + 1;
-      const month = new Date(date).getMonth() + 1;
-      const currentYear = new Date().getFullYear();
-
-      if (
-        currentMonth === month &&
-        currentYear === new Date(date).getFullYear()
-      ) {
-        return currentTotal + amount;
-      }
-
-      return currentTotal;
-    }, 0);
-
-    setTotalAmount(total);
-  }, [incomes]);
-
-  return totalAmount;
-};
-
-export const useAllIncomesGroupByMonth = () => {
-  const incomes = useAllIncomes();
-  const [groupedIncomes, setGroupedIncomes] = useState<IIncomesPerMonth[]>([]);
+export const useAllTransfersGroupByMonth = () => {
+  const transfers = useAllTransfers();
+  const [groupedTransfers, setGroupedTransfers] = useState<
+    ITransfersPerMonth[]
+  >([]);
   const [transactionCategoryMappings, setTransactionCategoryMappings] =
     useState<ITransactionCategoryMapping[]>([]);
   const [transactionCategories, setTransactionCategories] = useState<
@@ -76,10 +52,10 @@ export const useAllIncomesGroupByMonth = () => {
   }, []);
 
   useEffect(() => {
-    if (incomes === null) return;
+    if (transfers === null) return;
 
-    setGroupedIncomes(
-      incomes
+    setGroupedTransfers(
+      transfers
         .map(({ _id, ...rest }) => {
           const categoryMappings = transactionCategoryMappings
             ?.filter(({ transaction_id }) => transaction_id === _id)
@@ -96,11 +72,11 @@ export const useAllIncomesGroupByMonth = () => {
 
           return { _id, ...rest, categoryMappings };
         })
-        .reduce<IIncomesPerMonth[]>(groupIncomesByMonth, [])
+        .reduce<ITransfersPerMonth[]>(groupTransfersByMonth, [])
         .sort(sortIncomeStacksByMonth)
         .map(sortIncomesByDate)
     );
-  }, [incomes, transactionCategories, transactionCategoryMappings]);
+  }, [transactionCategoryMappings, transactionCategories, transfers]);
 
-  return groupedIncomes;
+  return groupedTransfers;
 };
