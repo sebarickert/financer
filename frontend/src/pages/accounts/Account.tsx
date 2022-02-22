@@ -11,6 +11,10 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
+import {
+  NameType,
+  ValueType,
+} from 'recharts/types/component/DefaultTooltipContent';
 
 import { Banner } from '../../components/banner/banner';
 import { BannerText } from '../../components/banner/banner.text';
@@ -58,7 +62,7 @@ const CustomTooltip = ({
   active,
   payload,
   label,
-}: TooltipProps): JSX.Element => {
+}: TooltipProps<ValueType, NameType>): JSX.Element => {
   if (active && payload && payload.length) {
     return (
       <div className="py-2 px-4 bg-gray-800 shadow-lg">
