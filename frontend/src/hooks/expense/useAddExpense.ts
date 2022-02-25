@@ -11,6 +11,7 @@ export const useAddExpense = () => {
       const newExpense = await addExpense(newExpenseData);
       queryClient.invalidateQueries('expenses');
       queryClient.invalidateQueries('transactions');
+      queryClient.invalidateQueries('transactionCategoryMappings');
 
       return newExpense;
     },

@@ -11,6 +11,7 @@ export const useEditExpense = () => {
       const editedExpense = await updateExpense(targetExpenseData, id);
       queryClient.invalidateQueries('expenses');
       queryClient.invalidateQueries('transactions');
+      queryClient.invalidateQueries('transactionCategoryMappings');
 
       return editedExpense;
     },
