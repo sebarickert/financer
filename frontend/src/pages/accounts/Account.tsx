@@ -31,6 +31,10 @@ import { MONTH_IN_MS } from '../../constants/months';
 import { useAllTransactionCategories } from '../../hooks/useAllTransactionCategories';
 import { useAllTransactionCategoryMappings } from '../../hooks/useAllTransactionCategoryMappings';
 import { useDeleteAccount } from '../../hooks/useDeleteAccount';
+import {
+  getAccountById,
+  getAccountTransactions,
+} from '../../services/AccountService';
 import { capitalize } from '../../utils/capitalize';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDate } from '../../utils/formatDate';
@@ -38,8 +42,6 @@ import {
   getTransactionType,
   mapTransactionTypeToUrlPrefix,
 } from '../statistics/Statistics';
-
-import { getAccountById, getAccountTransactions } from './AccountService';
 
 interface IAccountDeleteModalProps {
   handleDelete(): void;

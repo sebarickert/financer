@@ -5,12 +5,14 @@ import { useHistory, useParams } from 'react-router-dom';
 import { Container } from '../../components/container/container';
 import { Loader } from '../../components/loader/loader';
 import { SEO } from '../../components/seo/seo';
-import { ITransactionCategoryWithCategoryTree } from '../profile/TransactionCategories/TransactionCategoriesService';
+import { getExpenseById, updateExpense } from '../../services/ExpenseService';
+import { ITransactionCategoryWithCategoryTree } from '../../services/TransactionCategoriesService';
+import {
+  addTransactionCategoryMapping,
+  getTransactionCategoryMappingByTransactionId,
+} from '../../services/TransactionCategoryMappingService';
 
-import { addTransactionCategoryMapping } from './AddExpense';
-import { getTransactionCategoryMappingByTransactionId } from './Expense';
 import { ExpenseForm } from './ExpenseForm';
-import { getExpenseById, updateExpense } from './ExpenseService';
 
 export const EditExpense = (): JSX.Element => {
   const history = useHistory();

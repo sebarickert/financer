@@ -7,7 +7,7 @@ import {
   sortIncomesByDate,
   sortIncomeStacksByMonth,
 } from '../pages/income/IncomeFuctions';
-import { getAllIncomes } from '../pages/income/IncomeService';
+import { getAllIncomes } from '../services/IncomeService';
 
 import { useAllTransactionCategories } from './useAllTransactionCategories';
 import { useAllTransactionCategoryMappings } from './useAllTransactionCategoryMappings';

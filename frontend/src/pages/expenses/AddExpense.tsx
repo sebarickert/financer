@@ -2,27 +2,10 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { SEO } from '../../components/seo/seo';
+import { addExpense } from '../../services/ExpenseService';
+import { addTransactionCategoryMapping } from '../../services/TransactionCategoryMappingService';
 
 import { ExpenseForm } from './ExpenseForm';
-import { addExpense } from './ExpenseService';
-
-export const addTransactionCategoryMapping = async (
-  newTransactionCategoryMappingData: ITransactionCategoryMapping[]
-): Promise<IApiResponse<ITransactionCategoryMapping[]>> => {
-  const newTransactionCategoryMapping = await fetch(
-    '/api/transaction-categories-mapping',
-    {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newTransactionCategoryMappingData),
-    }
-  );
-
-  return newTransactionCategoryMapping.json();
-};
 
 export const AddExpense = (): JSX.Element => {
   const history = useHistory();

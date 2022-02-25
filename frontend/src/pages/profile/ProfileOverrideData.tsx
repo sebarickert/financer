@@ -10,11 +10,10 @@ import {
   INotificationProps,
 } from '../../components/notification/notification';
 import { SEO } from '../../components/seo/seo';
-
 import {
   IOverrideProfileData,
   postOverrideProfileData,
-} from './ProfileService';
+} from '../../services/ProfileService';
 
 export const ProfileOverrideData = (): JSX.Element => {
   const [uploadedUserData, setUploadedUserData] =
@@ -130,7 +129,7 @@ export const ProfileOverrideData = (): JSX.Element => {
       <div>
         <label
           htmlFor="selectFiles"
-          className="inline-flex justify-center w-full sm:w-auto items-center px-4 py-2 border font-medium rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 transition ease-in-out leading-6 duration-150 text-base bg-blue-600 hover:bg-blue-500 active:bg-blue-700 border-transparent focus:ring-blue-500"
+          className="inline-flex items-center justify-center w-full px-4 py-2 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-blue-600 border border-transparent rounded-md sm:w-auto focus:outline-none focus:ring-2 focus:ring-offset-2 hover:bg-blue-500 active:bg-blue-700 focus:ring-blue-500"
         >
           Choose file
           <input
