@@ -1,26 +1,18 @@
-import React, { useEffect, useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import { getProfileInformation } from '../../services/ProfileService';
+import { useProfileInformation } from '../../hooks/profile/useProfileInformation';
 
 import { Profile } from './Profile';
 import { ProfileOverrideData } from './ProfileOverrideData';
 import { TransactionCategoriesRouter } from './TransactionCategories/TransactionCategoriesRouter';
 
 export const ProfileRouter = (): JSX.Element => {
-  const [profileInfo, setProfileInfo] = useState<IUser | null>(null);
-
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      setProfileInfo(await getProfileInformation());
-    };
-    fetchUserInfo();
-  }, []);
+  const profileInfo = useProfileInformation();
 
   return (
     <Switch>
       <Route exact path="/profile">
-        <Profile profileInfo={profileInfo} />
+        <Profile />
       </Route>
       <Route path="/profile/transaction-categories">
         <TransactionCategoriesRouter />
