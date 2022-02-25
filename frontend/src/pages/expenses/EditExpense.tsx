@@ -52,7 +52,7 @@ export const EditExpense = (): JSX.Element => {
     }
   };
 
-  return !expense || typeof transactionCategoryMapping === 'undefined' ? (
+  return !expense || !transactionCategoryMapping ? (
     <Loader loaderColor="blue" />
   ) : (
     <>

@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
 import { Loader } from '../../components/loader/loader';
 import { SEO } from '../../components/seo/seo';
+import { useEditTransaction } from '../../hooks/transaction/useEditTransaction';
 import { useAddTransactionCategoryMapping } from '../../hooks/transactionCategoryMapping/useAddTransactionCategoryMapping';
 import { useTransactionCategoryMappingsByTransactionId } from '../../hooks/transactionCategoryMapping/useTransactionCategoryMappingsByTransactionId';
-import { updateTransaction } from '../../services/TransactionService';
-import { getTransferById } from '../../services/TransferService';
+import { useTransferById } from '../../hooks/transfer/useTransferById';
 
 import { TransferForm } from './TransferForm';
 
@@ -15,28 +15,18 @@ export const EditTransfer = (): JSX.Element => {
   const { id } = useParams<{ id: string }>();
   const [errors, setErrors] = useState<string[]>([]);
 
-  const [transfer, setTransfer] = useState<ITransaction | undefined>(undefined);
+  const [transfer] = useTransferById(id);
   const [transactionCategoryMapping] =
     useTransactionCategoryMappingsByTransactionId(id);
   const addTransactionCategoryMapping = useAddTransactionCategoryMapping();
-
-  useEffect(() => {
-    const fetchTransfer = async () => {
-      setTransfer(await getTransferById(id));
-    };
-
-    fetchTransfer();
-  }, [id]);
+  const editTransaction = useEditTransaction();
 
   const handleSubmit = async (
     targetTransferData: ITransaction,
     transactionCategoryMappings: ITransactionCategoryMapping[]
   ) => {
     try {
-      const newTransactionJson = await updateTransaction(
-        targetTransferData,
-        id
-      );
+      const newTransactionJson = await editTransaction(targetTransferData, id);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const newTransactionCategoryMappingJson =
         await addTransactionCategoryMapping(
@@ -59,8 +49,7 @@ export const EditTransfer = (): JSX.Element => {
     }
   };
 
-  return typeof transfer === 'undefined' ||
-    typeof transactionCategoryMapping === 'undefined' ? (
+  return !transfer || !transactionCategoryMapping ? (
     <Loader loaderColor="blue" />
   ) : (
     <>

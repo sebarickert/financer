@@ -49,9 +49,7 @@ export const Expense = (): JSX.Element => {
     history.push('/statistics/expenses');
   };
 
-  return !expense ||
-    typeof transactionCategoryMapping === 'undefined' ||
-    !transactionCategories ? (
+  return !expense || !transactionCategoryMapping || !transactionCategories ? (
     <Loader loaderColor="blue" />
   ) : (
     <>
