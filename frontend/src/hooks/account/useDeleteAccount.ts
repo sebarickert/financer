@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useQueryClient } from 'react-query';
 
-import { deleteAccount } from '../services/AccountService';
+import { deleteAccount } from '../../services/AccountService';
 
 export const useDeleteAccount = () => {
   const queryClient = useQueryClient();

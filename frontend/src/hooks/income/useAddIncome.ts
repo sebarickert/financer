@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useQueryClient } from 'react-query';
 
-import { addIncome } from '../services/IncomeService';
+import { addIncome } from '../../services/IncomeService';
 
 export const useAddIncome = () => {
   const queryClient = useQueryClient();

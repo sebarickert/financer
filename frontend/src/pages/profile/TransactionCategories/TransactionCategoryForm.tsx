@@ -7,7 +7,7 @@ import { Form } from '../../../components/form/form';
 import { Input } from '../../../components/input/input';
 import { Loader } from '../../../components/loader/loader';
 import { Select, IOption } from '../../../components/select/select';
-import { useAllTransactionCategoriesWithCategoryTree } from '../../../hooks/useAllTransactionCategories';
+import { useAllTransactionCategoriesWithCategoryTree } from '../../../hooks/transactionCategories/useAllTransactionCategories';
 
 interface ITransactionCategoryFormProps {
   errors: string[];

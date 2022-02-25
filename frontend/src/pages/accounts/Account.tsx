@@ -28,9 +28,9 @@ import { StatsItem } from '../../components/stats/stats.item';
 import { TransactionStackedList } from '../../components/transaction-stacked-list/transaction-stacked-list';
 import { ITransactionStackedListRowProps } from '../../components/transaction-stacked-list/transaction-stacked-list.row';
 import { MONTH_IN_MS } from '../../constants/months';
-import { useAllTransactionCategories } from '../../hooks/useAllTransactionCategories';
-import { useAllTransactionCategoryMappings } from '../../hooks/useAllTransactionCategoryMappings';
-import { useDeleteAccount } from '../../hooks/useDeleteAccount';
+import { useDeleteAccount } from '../../hooks/account/useDeleteAccount';
+import { useAllTransactionCategories } from '../../hooks/transactionCategories/useAllTransactionCategories';
+import { useAllTransactionCategoryMappings } from '../../hooks/transactionCategoryMapping/useAllTransactionCategoryMappings';
 import {
   getAccountById,
   getAccountTransactions,

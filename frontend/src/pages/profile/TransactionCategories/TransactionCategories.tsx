@@ -7,7 +7,7 @@ import { Loader } from '../../../components/loader/loader';
 import { SEO } from '../../../components/seo/seo';
 import { StackedList } from '../../../components/stacked-list/stacked-list';
 import { IStackedListRowProps } from '../../../components/stacked-list/stacked-list.row';
-import { useAllTransactionCategoriesWithCategoryTree } from '../../../hooks/useAllTransactionCategories';
+import { useAllTransactionCategoriesWithCategoryTree } from '../../../hooks/transactionCategories/useAllTransactionCategories';
 
 export const TransactionCategories = (): JSX.Element => {
   const transactionCategoriesRaw =

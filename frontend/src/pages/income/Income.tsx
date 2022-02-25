@@ -9,7 +9,7 @@ import { Icon } from '../../components/icon/icon';
 import { Loader } from '../../components/loader/loader';
 import { ModalConfirm } from '../../components/modal/confirm/modal.confirm';
 import { SEO } from '../../components/seo/seo';
-import { useAllTransactionCategoriesWithCategoryTree } from '../../hooks/useAllTransactionCategories';
+import { useAllTransactionCategoriesWithCategoryTree } from '../../hooks/transactionCategories/useAllTransactionCategories';
 import { deleteIncome, getIncomeById } from '../../services/IncomeService';
 import { getTransactionCategoryMappingByTransactionId } from '../../services/TransactionCategoryMappingService';
 import { formatCurrency } from '../../utils/formatCurrency';

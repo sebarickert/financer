@@ -7,7 +7,7 @@ import { Loader } from '../../components/loader/loader';
 import { QuickLinks } from '../../components/quick-links/quick-links';
 import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
 import { SEO } from '../../components/seo/seo';
-import { useAllAccounts } from '../../hooks/useAllAccounts';
+import { useAllAccounts } from '../../hooks/account/useAllAccounts';
 import { formatCurrency } from '../../utils/formatCurrency';
 
 export const Accounts = (): JSX.Element => {

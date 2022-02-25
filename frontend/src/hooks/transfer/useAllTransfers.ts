@@ -4,15 +4,14 @@ import { useQuery } from 'react-query';
 import {
   sortIncomeStacksByMonth,
   sortIncomesByDate,
-} from '../pages/income/IncomeFuctions';
+} from '../../pages/income/IncomeFuctions';
 import {
   ITransfersPerMonth,
   groupTransfersByMonth,
-} from '../pages/transfers/TransferFuctions';
-import { getAllTransferTranscations } from '../services/TransferService';
-
-import { useAllTransactionCategories } from './useAllTransactionCategories';
-import { useAllTransactionCategoryMappings } from './useAllTransactionCategoryMappings';
+} from '../../pages/transfers/TransferFuctions';
+import { getAllTransferTranscations } from '../../services/TransferService';
+import { useAllTransactionCategories } from '../transactionCategories/useAllTransactionCategories';
+import { useAllTransactionCategoryMappings } from '../transactionCategoryMapping/useAllTransactionCategoryMappings';
 
 export const useAllTransfers = (): ITransaction[] | null => {
   const transfersQuery = useQuery('transfers', getAllTransferTranscations, {
