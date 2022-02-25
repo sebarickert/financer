@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { SEO } from '../../components/seo/seo';
-import { addIncome } from '../../services/IncomeService';
+import { useAddIncome } from '../../hooks/income/useAddIncome';
 import { addTransactionCategoryMapping } from '../../services/TransactionCategoryMappingService';
 
 import { IncomeForm } from './IncomeForm';
@@ -10,6 +10,7 @@ import { IncomeForm } from './IncomeForm';
 export const AddIncome = (): JSX.Element => {
   const history = useHistory();
   const [errors, setErrors] = useState<string[]>([]);
+  const addIncome = useAddIncome();
 
   const handleSubmit = async (
     newIncomeData: IIncome,

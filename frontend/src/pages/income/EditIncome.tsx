@@ -5,7 +5,8 @@ import { useHistory, useParams } from 'react-router-dom';
 import { Container } from '../../components/container/container';
 import { Loader } from '../../components/loader/loader';
 import { SEO } from '../../components/seo/seo';
-import { getIncomeById, updateIncome } from '../../services/IncomeService';
+import { useEditIncome } from '../../hooks/income/useEditIncome';
+import { useIncomeById } from '../../hooks/income/useIncomeById';
 import {
   addTransactionCategoryMapping,
   getTransactionCategoryMappingByTransactionId,
@@ -16,25 +17,21 @@ import { IncomeForm } from './IncomeForm';
 export const EditIncome = (): JSX.Element => {
   const history = useHistory();
   const [errors, setErrors] = useState<string[]>([]);
+  const { id } = useParams<{ id: string }>();
 
-  const [income, setIncome] = useState<IIncome | undefined>(undefined);
+  const [income] = useIncomeById(id);
   const [transactionCategoryMapping, setTransactionCategoryMapping] = useState<
     ITransactionCategoryMapping[] | undefined
   >(undefined);
-  const { id } = useParams<{ id: string }>();
+  const editIncome = useEditIncome();
 
   useEffect(() => {
-    const fetchIncome = async () => {
-      setIncome(await getIncomeById(id));
-    };
-
     const fetchTransactionCategoryMapping = async () => {
       setTransactionCategoryMapping(
         await getTransactionCategoryMappingByTransactionId(id)
       );
     };
 
-    fetchIncome();
     fetchTransactionCategoryMapping();
   }, [id]);
 
@@ -43,7 +40,7 @@ export const EditIncome = (): JSX.Element => {
     newTransactionCategoryMappingsData: ITransactionCategoryMapping[]
   ) => {
     try {
-      const targetIncomeJson = await updateIncome(targetIncomeData, id);
+      const targetIncomeJson = await editIncome(targetIncomeData, id);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const newTransactionCategoryMappingJson =
         await addTransactionCategoryMapping(
@@ -66,8 +63,7 @@ export const EditIncome = (): JSX.Element => {
     }
   };
 
-  return typeof income === 'undefined' ||
-    typeof transactionCategoryMapping === 'undefined' ? (
+  return !income || typeof transactionCategoryMapping === 'undefined' ? (
     <Loader loaderColor="blue" />
   ) : (
     <>

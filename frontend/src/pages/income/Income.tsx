@@ -9,8 +9,9 @@ import { Icon } from '../../components/icon/icon';
 import { Loader } from '../../components/loader/loader';
 import { ModalConfirm } from '../../components/modal/confirm/modal.confirm';
 import { SEO } from '../../components/seo/seo';
+import { useDeleteIncome } from '../../hooks/income/useDeleteIncome';
+import { useIncomeById } from '../../hooks/income/useIncomeById';
 import { useAllTransactionCategoriesWithCategoryTree } from '../../hooks/transactionCategories/useAllTransactionCategories';
-import { deleteIncome, getIncomeById } from '../../services/IncomeService';
 import { getTransactionCategoryMappingByTransactionId } from '../../services/TransactionCategoryMappingService';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDate } from '../../utils/formatDate';
@@ -34,25 +35,21 @@ const IncomeDeleteModal = ({ handleDelete }: IIncomeDeleteModalProps) => (
 
 export const Income = (): JSX.Element => {
   const history = useHistory();
-  const [income, setIncome] = useState<IIncome | undefined>(undefined);
+  const { id } = useParams<{ id: string }>();
+  const [income] = useIncomeById(id);
   const [transactionCategoryMapping, setTransactionCategoryMapping] = useState<
     ITransactionCategoryMapping[] | undefined
   >(undefined);
   const transactionCategories = useAllTransactionCategoriesWithCategoryTree();
-  const { id } = useParams<{ id: string }>();
+  const deleteIncome = useDeleteIncome();
 
   useEffect(() => {
-    const fetchIncome = async () => {
-      setIncome(await getIncomeById(id));
-    };
-
     const fetchTransactionCategoryMapping = async () => {
       setTransactionCategoryMapping(
         await getTransactionCategoryMappingByTransactionId(id)
       );
     };
 
-    fetchIncome();
     fetchTransactionCategoryMapping();
   }, [id]);
 
@@ -65,9 +62,9 @@ export const Income = (): JSX.Element => {
     history.push('/statistics/incomes');
   };
 
-  return typeof income === 'undefined' ||
+  return !income ||
     typeof transactionCategoryMapping === 'undefined' ||
-    transactionCategories === null ? (
+    !transactionCategories ? (
     <Loader loaderColor="blue" />
   ) : (
     <>
