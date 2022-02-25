@@ -10,6 +10,7 @@ interface IQuickLinksItemProps {
   description?: string;
   iconName: IconName;
   iconBackgroundColor?: 'green' | 'red' | 'blue';
+  testId?: string;
 }
 
 export const QuickLinksItem = ({
@@ -18,10 +19,11 @@ export const QuickLinksItem = ({
   description,
   iconName,
   iconBackgroundColor = 'blue',
+  testId,
 }: IQuickLinksItemProps): JSX.Element => {
   if (!description) {
     return (
-      <div className="relative group bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-500 rounded-lg border inline-flex items-center gap-4 hover:bg-gray-50">
+      <div className="relative inline-flex items-center gap-4 p-6 bg-white border rounded-lg group focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-500 hover:bg-gray-50">
         <div>
           <span
             className={`rounded-lg inline-flex p-3 text-white ring-4 ring-white ${
@@ -36,7 +38,8 @@ export const QuickLinksItem = ({
         {isExternalLink(link) ? (
           <a
             href={link}
-            className="focus:outline-none text-lg font-semibold tracking-tight"
+            className="text-lg font-semibold tracking-tight focus:outline-none"
+            data-testid={testId}
           >
             <span className="absolute inset-0" aria-hidden="true" />
             {title}
@@ -44,18 +47,19 @@ export const QuickLinksItem = ({
         ) : (
           <NavLink
             to={link}
-            className="focus:outline-none text-lg font-semibold tracking-tight"
+            className="text-lg font-semibold tracking-tight focus:outline-none"
+            data-testid={testId}
           >
             <span className="absolute inset-0" aria-hidden="true" />
             {title}
           </NavLink>
         )}
         <span
-          className="pointer-events-none absolute top-1/2 right-6 -translate-y-1/2 text-gray-300 group-hover:text-gray-400"
+          className="absolute text-gray-300 -translate-y-1/2 pointer-events-none top-1/2 right-6 group-hover:text-gray-400"
           aria-hidden="true"
         >
           <svg
-            className="h-6 w-6"
+            className="w-6 h-6"
             xmlns="http://www.w3.org/2000/svg"
             fill="currentColor"
             viewBox="0 0 24 24"
@@ -68,7 +72,7 @@ export const QuickLinksItem = ({
   }
 
   return (
-    <div className="relative group bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-500 rounded-lg border">
+    <div className="relative p-6 bg-white border rounded-lg group focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-500">
       <div>
         <span
           className={`rounded-lg inline-flex p-3 text-white ring-4 ring-white ${
@@ -83,12 +87,16 @@ export const QuickLinksItem = ({
       <div className="mt-8">
         <h3 className="text-lg font-medium">
           {isExternalLink(link) ? (
-            <a href={link} className="focus:outline-none">
+            <a href={link} className="focus:outline-none" data-testid={testId}>
               <span className="absolute inset-0" aria-hidden="true" />
               {title}
             </a>
           ) : (
-            <NavLink to={link} className="focus:outline-none">
+            <NavLink
+              to={link}
+              className="focus:outline-none"
+              data-testid={testId}
+            >
               <span className="absolute inset-0" aria-hidden="true" />
               {title}
             </NavLink>
@@ -97,11 +105,11 @@ export const QuickLinksItem = ({
         <p className="mt-2 text-sm text-gray-500">{description}</p>
       </div>
       <span
-        className="pointer-events-none absolute top-6 right-6 text-gray-300 group-hover:text-gray-400"
+        className="absolute text-gray-300 pointer-events-none top-6 right-6 group-hover:text-gray-400"
         aria-hidden="true"
       >
         <svg
-          className="h-6 w-6"
+          className="w-6 h-6"
           xmlns="http://www.w3.org/2000/svg"
           fill="currentColor"
           viewBox="0 0 24 24"

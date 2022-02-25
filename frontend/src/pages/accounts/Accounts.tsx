@@ -43,6 +43,7 @@ export const Accounts = (): JSX.Element => {
               link="/accounts/add"
               iconName="view-grid-add"
               iconBackgroundColor="blue"
+              testId="add-account"
             />
             <QuickLinksItem
               title="Transfer"
