@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
 
-import { getAllUserTransactionCategoryMappings } from '../services/TransactionCategoryMappingService';
+import { getAllUserTransactionCategoryMappings } from '../../services/TransactionCategoryMappingService';
 
 export const useAllTransactionCategoryMappings = () => {
   const transactionCategoryMappingsQuery = useQuery(

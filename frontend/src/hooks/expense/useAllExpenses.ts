@@ -2,32 +2,31 @@ import { useState, useEffect } from 'react';
 import { useQuery } from 'react-query';
 
 import {
-  groupIncomesByMonth,
-  IIncomesPerMonth,
-  sortIncomesByDate,
-  sortIncomeStacksByMonth,
-} from '../pages/income/IncomeFuctions';
-import { getAllIncomes } from '../services/IncomeService';
+  groupExpensesByMonth,
+  IExpensesPerMonth,
+  sortExpensesByDate,
+  sortExpenseStacksByMonth,
+} from '../../pages/expenses/ExpenseFuctions';
+import { getAllExpenses } from '../../services/ExpenseService';
+import { useAllTransactionCategories } from '../transactionCategories/useAllTransactionCategories';
+import { useAllTransactionCategoryMappings } from '../transactionCategoryMapping/useAllTransactionCategoryMappings';
 
-import { useAllTransactionCategories } from './useAllTransactionCategories';
-import { useAllTransactionCategoryMappings } from './useAllTransactionCategoryMappings';
-
-export const useAllIncomes = (): IIncome[] | null => {
-  const incomesQuery = useQuery('incomes', getAllIncomes, {
+export const useAllExpenses = (): IExpense[] | null => {
+  const expenseQuery = useQuery('expenses', getAllExpenses, {
     staleTime: 300000,
   });
 
-  return incomesQuery.data || null;
+  return expenseQuery.data || null;
 };
 
-export const useCurrentMonthIncomesTotalAmount = (): number => {
-  const incomes = useAllIncomes();
+export const useCurrentMonthExpensesTotalAmount = (): number => {
+  const expenses = useAllExpenses();
   const [totalAmount, setTotalAmount] = useState(NaN);
 
   useEffect(() => {
-    if (incomes === null) return;
+    if (expenses === null) return;
 
-    const total = incomes.reduce((currentTotal, { amount, date }) => {
+    const total = expenses.reduce((currentTotal, { amount, date }) => {
       const currentMonth = new Date().getMonth() + 1;
       const month = new Date(date).getMonth() + 1;
       const currentYear = new Date().getFullYear();
@@ -43,22 +42,24 @@ export const useCurrentMonthIncomesTotalAmount = (): number => {
     }, 0);
 
     setTotalAmount(total);
-  }, [incomes]);
+  }, [expenses]);
 
   return totalAmount;
 };
 
-export const useAllIncomesGroupByMonth = () => {
-  const incomes = useAllIncomes();
-  const [groupedIncomes, setGroupedIncomes] = useState<IIncomesPerMonth[]>([]);
+export const useAllExpensesGroupByMonth = () => {
+  const expenses = useAllExpenses();
+  const [groupedExpenses, setGroupedExpenses] = useState<IExpensesPerMonth[]>(
+    []
+  );
   const transactionCategoryMappings = useAllTransactionCategoryMappings();
   const transactionCategories = useAllTransactionCategories();
 
   useEffect(() => {
-    if (incomes === null) return;
+    if (expenses === null) return;
 
-    setGroupedIncomes(
-      incomes
+    setGroupedExpenses(
+      expenses
         .map(({ _id, ...rest }) => {
           const categoryMappings = transactionCategoryMappings
             ?.filter(({ transaction_id }) => transaction_id === _id)
@@ -75,11 +76,11 @@ export const useAllIncomesGroupByMonth = () => {
 
           return { _id, ...rest, categoryMappings };
         })
-        .reduce<IIncomesPerMonth[]>(groupIncomesByMonth, [])
-        .sort(sortIncomeStacksByMonth)
-        .map(sortIncomesByDate)
+        .reduce<IExpensesPerMonth[]>(groupExpensesByMonth, [])
+        .sort(sortExpenseStacksByMonth)
+        .map(sortExpensesByDate)
     );
-  }, [incomes, transactionCategories, transactionCategoryMappings]);
+  }, [expenses, transactionCategories, transactionCategoryMappings]);
 
-  return groupedIncomes;
+  return groupedExpenses;
 };

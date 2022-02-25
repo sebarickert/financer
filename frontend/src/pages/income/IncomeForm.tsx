@@ -7,8 +7,8 @@ import { Input } from '../../components/input/input';
 import { Loader } from '../../components/loader/loader';
 import { Select, IOption } from '../../components/select/select';
 import { TransactionCategoriesForm } from '../../components/transaction-categories-form/transaction-categories-form';
-import { useAllAccounts } from '../../hooks/useAllAccounts';
-import { useAllTransactionCategoriesWithCategoryTree } from '../../hooks/useAllTransactionCategories';
+import { useAllAccounts } from '../../hooks/account/useAllAccounts';
+import { useAllTransactionCategoriesWithCategoryTree } from '../../hooks/transactionCategories/useAllTransactionCategories';
 import { inputDateFormat } from '../../utils/formatDate';
 
 interface IIncomeFormProps {

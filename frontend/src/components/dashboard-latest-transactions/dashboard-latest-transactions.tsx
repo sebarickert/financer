@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
-import { useAllTransactionCategories } from '../../hooks/useAllTransactionCategories';
-import { useAllTransactionCategoryMappings } from '../../hooks/useAllTransactionCategoryMappings';
+import { useAllTransactionCategories } from '../../hooks/transactionCategories/useAllTransactionCategories';
+import { useAllTransactionCategoryMappings } from '../../hooks/transactionCategoryMapping/useAllTransactionCategoryMappings';
 import { useAllTransactions } from '../../hooks/useAllTransactions';
 import {
   getTransactionType,

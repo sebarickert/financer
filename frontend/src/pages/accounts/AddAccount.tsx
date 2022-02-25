@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { SEO } from '../../components/seo/seo';
-import { useAddAccount } from '../../hooks/useAddAccount';
+import { useAddAccount } from '../../hooks/account/useAddAccount';
 
 import { AccountForm } from './AccountForm';
 

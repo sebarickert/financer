@@ -4,7 +4,7 @@ import {
   getAllTransactionCategories,
   ITransactionCategoryWithCategoryTree,
   parseParentCategoryPath,
-} from '../services/TransactionCategoriesService';
+} from '../../services/TransactionCategoriesService';
 
 export const useAllTransactionCategories = (): ITransactionCategory[] => {
   const transactionCategoriesQuery = useQuery(
