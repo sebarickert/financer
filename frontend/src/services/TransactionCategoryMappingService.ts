@@ -25,6 +25,6 @@ export const getTransactionCategoryMappingByTransactionId = async (
   return (await transactionCategoryMapping.json()).payload;
 };
 
-export const getAllUserTransactionCategoryMappings = async (): Promise<
+export const getAllTransactionCategoryMappings = async (): Promise<
   ITransactionCategoryMapping[]
 > => (await fetch('/api/transaction-categories-mapping')).json();

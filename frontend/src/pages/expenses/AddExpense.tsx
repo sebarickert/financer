@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import { SEO } from '../../components/seo/seo';
 import { useAddExpense } from '../../hooks/expense/useAddExpense';
-import { addTransactionCategoryMapping } from '../../services/TransactionCategoryMappingService';
+import { useAddTransactionCategoryMapping } from '../../hooks/transactionCategoryMapping/useAddTransactionCategoryMapping';
 
 import { ExpenseForm } from './ExpenseForm';
 
@@ -11,6 +11,7 @@ export const AddExpense = (): JSX.Element => {
   const history = useHistory();
   const [errors, setErrors] = useState<string[]>([]);
   const addExpense = useAddExpense();
+  const addTransactionCategoryMapping = useAddTransactionCategoryMapping();
 
   const handleSubmit = async (
     newExpenseData: IExpense,

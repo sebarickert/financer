@@ -23,7 +23,7 @@ interface IExpenseFormProps {
     transactionCategoryMappings: ITransactionCategoryMapping[]
   ): void;
   submitLabel: string;
-  transactionCategoryMapping?: ITransactionCategoryMapping[];
+  transactionCategoryMapping?: ITransactionCategoryMapping[] | null;
 }
 
 export const ExpenseForm = ({
@@ -35,7 +35,7 @@ export const ExpenseForm = ({
   onSubmit,
   submitLabel,
   fromAccount,
-  transactionCategoryMapping,
+  transactionCategoryMapping = null,
 }: IExpenseFormProps): JSX.Element => {
   const accountsRaw = useAllAccounts();
   const [accounts, setAccounts] = useState<IOption[] | null>(null);
@@ -112,7 +112,7 @@ export const ExpenseForm = ({
   }, [transactionCategoriesRaw]);
 
   useEffect(() => {
-    if (typeof transactionCategoryMapping === 'undefined') return;
+    if (!transactionCategoryMapping) return;
     const newCategoryAmount: number[] = [];
     transactionCategoryMapping.forEach((_, index) =>
       newCategoryAmount.push(index)

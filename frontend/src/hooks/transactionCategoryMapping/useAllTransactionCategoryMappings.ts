@@ -1,11 +1,11 @@
 import { useQuery } from 'react-query';
 
-import { getAllUserTransactionCategoryMappings } from '../../services/TransactionCategoryMappingService';
+import { getAllTransactionCategoryMappings } from '../../services/TransactionCategoryMappingService';
 
 export const useAllTransactionCategoryMappings = () => {
   const transactionCategoryMappingsQuery = useQuery(
     'transactionCategoryMappings',
-    getAllUserTransactionCategoryMappings,
+    getAllTransactionCategoryMappings,
     {
       staleTime: 300000,
     }

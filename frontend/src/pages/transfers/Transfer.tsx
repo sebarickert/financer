@@ -10,7 +10,7 @@ import { Loader } from '../../components/loader/loader';
 import { ModalConfirm } from '../../components/modal/confirm/modal.confirm';
 import { SEO } from '../../components/seo/seo';
 import { useAllTransactionCategoriesWithCategoryTree } from '../../hooks/transactionCategories/useAllTransactionCategories';
-import { getTransactionCategoryMappingByTransactionId } from '../../services/TransactionCategoryMappingService';
+import { useTransactionCategoryMappingsByTransactionId } from '../../hooks/transactionCategoryMapping/useTransactionCategoryMappingsByTransactionId';
 import {
   getTransferById,
   deleteTransfer,
@@ -37,26 +37,18 @@ const TransferDeleteModal = ({ handleDelete }: ITransferDeleteModalProps) => (
 
 export const Transfer = (): JSX.Element => {
   const history = useHistory();
-  const [transfer, setTransfer] = useState<ITransaction | undefined>(undefined);
-  const [transactionCategoryMapping, setTransactionCategoryMapping] = useState<
-    ITransactionCategoryMapping[] | undefined
-  >(undefined);
-  const transactionCategories = useAllTransactionCategoriesWithCategoryTree();
   const { id } = useParams<{ id: string }>();
+  const [transfer, setTransfer] = useState<ITransaction | undefined>(undefined);
+  const [transactionCategoryMapping] =
+    useTransactionCategoryMappingsByTransactionId(id);
+  const transactionCategories = useAllTransactionCategoriesWithCategoryTree();
 
   useEffect(() => {
     const fetchTransfer = async () => {
       setTransfer(await getTransferById(id));
     };
 
-    const fetchTransactionCategoryMapping = async () => {
-      setTransactionCategoryMapping(
-        await getTransactionCategoryMappingByTransactionId(id)
-      );
-    };
-
     fetchTransfer();
-    fetchTransactionCategoryMapping();
   }, [id]);
 
   const getCategoryNameById = (categoryId: string) =>
@@ -69,8 +61,8 @@ export const Transfer = (): JSX.Element => {
   };
 
   return typeof transfer === 'undefined' ||
-    typeof transactionCategoryMapping === 'undefined' ||
-    transactionCategories === null ? (
+    !transactionCategoryMapping ||
+    !transactionCategories ? (
     <Loader loaderColor="blue" />
   ) : (
     <>
