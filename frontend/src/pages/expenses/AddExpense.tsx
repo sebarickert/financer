@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { SEO } from '../../components/seo/seo';
-import { addExpense } from '../../services/ExpenseService';
+import { useAddExpense } from '../../hooks/expense/useAddExpense';
 import { addTransactionCategoryMapping } from '../../services/TransactionCategoryMappingService';
 
 import { ExpenseForm } from './ExpenseForm';
@@ -10,6 +10,7 @@ import { ExpenseForm } from './ExpenseForm';
 export const AddExpense = (): JSX.Element => {
   const history = useHistory();
   const [errors, setErrors] = useState<string[]>([]);
+  const addExpense = useAddExpense();
 
   const handleSubmit = async (
     newExpenseData: IExpense,

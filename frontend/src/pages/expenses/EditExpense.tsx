@@ -5,7 +5,8 @@ import { useHistory, useParams } from 'react-router-dom';
 import { Container } from '../../components/container/container';
 import { Loader } from '../../components/loader/loader';
 import { SEO } from '../../components/seo/seo';
-import { getExpenseById, updateExpense } from '../../services/ExpenseService';
+import { useEditExpense } from '../../hooks/expense/useEditExpense';
+import { useExpenseById } from '../../hooks/expense/useExpenseById';
 import { ITransactionCategoryWithCategoryTree } from '../../services/TransactionCategoriesService';
 import {
   addTransactionCategoryMapping,
@@ -16,26 +17,22 @@ import { ExpenseForm } from './ExpenseForm';
 
 export const EditExpense = (): JSX.Element => {
   const history = useHistory();
+  const { id } = useParams<{ id: string }>();
   const [errors, setErrors] = useState<string[]>([]);
+  const editExpense = useEditExpense();
 
-  const [expense, setExpense] = useState<IExpense | undefined>(undefined);
+  const [expense] = useExpenseById(id);
   const [transactionCategoryMapping, setTransactionCategoryMapping] = useState<
     ITransactionCategoryMapping[] | undefined
   >(undefined);
-  const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
-    const fetchExpense = async () => {
-      setExpense(await getExpenseById(id));
-    };
-
     const fetchTransactionCategoryMapping = async () => {
       setTransactionCategoryMapping(
         await getTransactionCategoryMappingByTransactionId(id)
       );
     };
 
-    fetchExpense();
     fetchTransactionCategoryMapping();
   }, [id]);
 
@@ -44,7 +41,7 @@ export const EditExpense = (): JSX.Element => {
     newTransactionCategoryMappingsData: ITransactionCategoryMapping[]
   ) => {
     try {
-      const targetExpenseJson = await updateExpense(targetExpenseData, id);
+      const targetExpenseJson = await editExpense(targetExpenseData, id);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const newTransactionCategoryMappingJson =
         await addTransactionCategoryMapping(
@@ -67,8 +64,7 @@ export const EditExpense = (): JSX.Element => {
     }
   };
 
-  return typeof expense === 'undefined' ||
-    typeof transactionCategoryMapping === 'undefined' ? (
+  return !expense || typeof transactionCategoryMapping === 'undefined' ? (
     <Loader loaderColor="blue" />
   ) : (
     <>
