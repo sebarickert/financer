@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useQueryClient } from 'react-query';
 
-import { editAccount } from '../services/AccountService';
+import { editAccount } from '../../services/AccountService';
 
 export const useEditAccount = () => {
   const queryClient = useQueryClient();

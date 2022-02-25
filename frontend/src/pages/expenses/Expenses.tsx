@@ -5,7 +5,7 @@ import { Loader } from '../../components/loader/loader';
 import { SEO } from '../../components/seo/seo';
 import { TransactionStackedList } from '../../components/transaction-stacked-list/transaction-stacked-list';
 import { monthNames } from '../../constants/months';
-import { useAllExpensesGroupByMonth } from '../../hooks/useAllExpenses';
+import { useAllExpensesGroupByMonth } from '../../hooks/expense/useAllExpenses';
 import { formatCurrency } from '../../utils/formatCurrency';
 
 export const Expenses = (): JSX.Element => {

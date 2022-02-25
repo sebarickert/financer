@@ -17,9 +17,9 @@ import {
   ValueType,
 } from 'recharts/types/component/DefaultTooltipContent';
 
-import { useAllAccountsByType } from '../../hooks/useAllAccounts';
-import { useAllExpenses } from '../../hooks/useAllExpenses';
-import { useAllIncomes } from '../../hooks/useAllIncomes';
+import { useAllAccountsByType } from '../../hooks/account/useAllAccounts';
+import { useAllExpenses } from '../../hooks/expense/useAllExpenses';
+import { useAllIncomes } from '../../hooks/income/useAllIncomes';
 import { useTotalBalance } from '../../hooks/useTotalBalance';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDate } from '../../utils/formatDate';
@@ -45,7 +45,7 @@ const CustomTooltip = ({
 }: TooltipProps<ValueType, NameType>): JSX.Element => {
   if (active && payload && payload.length) {
     return (
-      <div className="py-2 px-4 bg-gray-800 shadow-lg">
+      <div className="px-4 py-2 bg-gray-800 shadow-lg">
         <p className="text-white">
           Balance {formatCurrency(payload[0].value as number)}
         </p>

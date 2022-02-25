@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { StackedList } from '../../components/stacked-list/stacked-list';
 import { ICustomStackedListRowProps } from '../../components/stacked-list/stacked-list.row';
-import { useAllAccounts } from '../../hooks/useAllAccounts';
+import { useAllAccounts } from '../../hooks/account/useAllAccounts';
 import { getAllTransferTranscations } from '../../services/TransferService';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDate } from '../../utils/formatDate';

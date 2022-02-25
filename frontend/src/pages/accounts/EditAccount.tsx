@@ -3,7 +3,7 @@ import { useHistory, useParams } from 'react-router-dom';
 
 import { Loader } from '../../components/loader/loader';
 import { SEO } from '../../components/seo/seo';
-import { useEditAccount } from '../../hooks/useEditAccount';
+import { useEditAccount } from '../../hooks/account/useEditAccount';
 import { getAccountById } from '../../services/AccountService';
 
 import { AccountForm } from './AccountForm';

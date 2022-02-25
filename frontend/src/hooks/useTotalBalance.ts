@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import { useAllAccounts } from './useAllAccounts';
+import { useAllAccounts } from './account/useAllAccounts';
 
 export const useTotalBalance = (): number => {
   const accounts = useAllAccounts();
