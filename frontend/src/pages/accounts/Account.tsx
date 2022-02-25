@@ -28,13 +28,11 @@ import { StatsItem } from '../../components/stats/stats.item';
 import { TransactionStackedList } from '../../components/transaction-stacked-list/transaction-stacked-list';
 import { ITransactionStackedListRowProps } from '../../components/transaction-stacked-list/transaction-stacked-list.row';
 import { MONTH_IN_MS } from '../../constants/months';
+import { useAccountById } from '../../hooks/account/useAccountById';
 import { useDeleteAccount } from '../../hooks/account/useDeleteAccount';
+import { useTransactionsByAccountId } from '../../hooks/transaction/useTransactionsByAccountId';
 import { useAllTransactionCategories } from '../../hooks/transactionCategories/useAllTransactionCategories';
 import { useAllTransactionCategoryMappings } from '../../hooks/transactionCategoryMapping/useAllTransactionCategoryMappings';
-import {
-  getAccountById,
-  getAccountTransactions,
-} from '../../services/AccountService';
 import { capitalize } from '../../utils/capitalize';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDate } from '../../utils/formatDate';
@@ -147,32 +145,20 @@ const AccountDeleteModal = ({ handleDelete }: IAccountDeleteModalProps) => (
 );
 
 export const Account = (): JSX.Element => {
+  const { id } = useParams<{ id: string }>();
   const history = useHistory();
   const deleteAccount = useDeleteAccount();
-  const [account, setAccount] = useState<IAccount | undefined>(undefined);
+  const [account] = useAccountById(id);
   const [transactions, setTransactions] = useState<
     ITransactionStackedListRowProps[]
   >([]);
-  const [rawTransactions, setRawTransactions] = useState<ITransaction[]>([]);
+  const [rawTransactions] = useTransactionsByAccountId(id);
   const transactionCategoryMappings = useAllTransactionCategoryMappings();
   const transactionCategories = useAllTransactionCategories();
   const [chartData, setChartData] = useState<IChartData[]>([]);
-  const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
-    const fetchAccount = async () => {
-      setAccount(await getAccountById(id));
-    };
-
-    const fetchTransactions = async () => {
-      setRawTransactions((await getAccountTransactions(id)).payload);
-    };
-
-    fetchAccount();
-    fetchTransactions();
-  }, [id]);
-
-  useEffect(() => {
+    if (!rawTransactions) return;
     setTransactions(
       rawTransactions
         .map(
@@ -238,7 +224,7 @@ export const Account = (): JSX.Element => {
     history.push('/accounts');
   };
 
-  return typeof account === 'undefined' || transactions === null ? (
+  return !account || !transactions ? (
     <Loader loaderColor="blue" />
   ) : (
     <>
