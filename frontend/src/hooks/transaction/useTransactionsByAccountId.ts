@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useAllTransactions } from './useAllTransactions';
 
@@ -9,14 +9,19 @@ export const useTransactionsByAccountId = (
   React.Dispatch<React.SetStateAction<string | null>>
 ] => {
   const [targetAccountId, setTargetId] = useState(accountId);
-  const accounts = useAllTransactions();
+  const [targetAccountTransactions, setTargetAccountTransactions] = useState<
+    ITransaction[] | null
+  >(null);
+  const transactions = useAllTransactions();
 
-  const targetAccount = !targetAccountId
-    ? null
-    : accounts?.filter(
-        ({ fromAccount, toAccount }) =>
+  useEffect(() => {
+    setTargetAccountTransactions(
+      transactions?.filter(
+        ({ toAccount, fromAccount }) =>
           fromAccount === targetAccountId || toAccount === targetAccountId
-      ) || null;
+      ) || null
+    );
+  }, [targetAccountId, transactions]);
 
-  return [targetAccount, setTargetId];
+  return [targetAccountTransactions, setTargetId];
 };
