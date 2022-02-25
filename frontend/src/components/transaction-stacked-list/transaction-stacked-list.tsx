@@ -15,6 +15,23 @@ interface ITransactionStackedListProps {
   className?: string;
 }
 
+const test = (rows: ITransactionStackedListRowProps[], chunkAmount = 0) => {
+  return rows.reduce(
+    (resultArray: ITransactionStackedListRowProps[][], item, index: number) => {
+      const chunkIndex = Math.floor(index / chunkAmount);
+
+      if (!resultArray[chunkIndex]) {
+        resultArray[chunkIndex] = [];
+      }
+
+      resultArray[chunkIndex].push(item);
+
+      return resultArray;
+    },
+    []
+  );
+};
+
 export const TransactionStackedList = ({
   title,
   rows,
@@ -28,22 +45,7 @@ export const TransactionStackedList = ({
   const chunkAmount = 8;
 
   useEffect(() => {
-    setPages(
-      rows.reduce(
-        (resultArray: ITransactionStackedListRowProps[][], item, index) => {
-          const chunkIndex = Math.floor(index / chunkAmount);
-
-          if (!resultArray[chunkIndex]) {
-            resultArray[chunkIndex] = [];
-          }
-
-          resultArray[chunkIndex].push(item);
-
-          return resultArray;
-        },
-        []
-      )
-    );
+    setPages(test(rows, chunkAmount));
   }, [rows]);
 
   return pages === null ? (

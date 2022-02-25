@@ -7,20 +7,12 @@ import { Loader } from '../../components/loader/loader';
 import { QuickLinks } from '../../components/quick-links/quick-links';
 import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
 import { SEO } from '../../components/seo/seo';
+import { useAllAccounts } from '../../hooks/useAllAccounts';
 import { formatCurrency } from '../../utils/formatCurrency';
 
-import { getAllAccounts } from './AccountService';
-
 export const Accounts = (): JSX.Element => {
-  const [accountsRaw, setAccountsRaw] = useState<IAccount[] | null>(null);
+  const accountsRaw = useAllAccounts();
   const [accounts, setAccounts] = useState<IAccountsListRowProps[]>([]);
-
-  useEffect(() => {
-    const fetchAccounts = async () => {
-      setAccountsRaw(await getAllAccounts());
-    };
-    fetchAccounts();
-  }, []);
 
   useEffect(() => {
     if (accountsRaw === null) return;

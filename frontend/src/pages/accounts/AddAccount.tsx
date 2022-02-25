@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { SEO } from '../../components/seo/seo';
+import { useAddAccount } from '../../hooks/useAddAccount';
 
 import { AccountForm } from './AccountForm';
-import { addAccount } from './AccountService';
 
 export const AddAccount = (): JSX.Element => {
   const history = useHistory();
+  const addAccount = useAddAccount();
   const [errors, setErrors] = useState<string[]>([]);
 
   const handleSubmit = async (newAccountData: IAccount) => {

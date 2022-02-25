@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 
 import { StackedList } from '../../components/stacked-list/stacked-list';
 import { ICustomStackedListRowProps } from '../../components/stacked-list/stacked-list.row';
+import { useAllAccounts } from '../../hooks/useAllAccounts';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDate } from '../../utils/formatDate';
 import { getAllTransferTranscations } from '../transfers/TransferService';
-
-import { getAllAccounts } from './AccountService';
 
 interface ITransferListProps {
   className?: string;
@@ -17,19 +16,14 @@ export const TransferList = ({
 }: ITransferListProps): JSX.Element => {
   const [transfersRaw, setTransfersRaw] = useState<ITransaction[] | null>(null);
   const [transfers, setTransfers] = useState<ICustomStackedListRowProps[]>([]);
-  const [accounts, setAccounts] = useState<IAccount[] | null>(null);
+  const accounts = useAllAccounts();
 
   useEffect(() => {
     const fetchTransfers = async () => {
       setTransfersRaw((await getAllTransferTranscations()).payload);
     };
 
-    const fetchAccounts = async () => {
-      setAccounts(await getAllAccounts());
-    };
-
     fetchTransfers();
-    fetchAccounts();
   }, []);
 
   useEffect(() => {

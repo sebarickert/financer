@@ -8,10 +8,6 @@ import { monthNames } from '../../constants/months';
 import { useAllExpensesGroupByMonth } from '../../hooks/useAllExpenses';
 import { formatCurrency } from '../../utils/formatCurrency';
 
-export const getAllUserTransactionCategoryMappings = async (): Promise<
-  ITransactionCategoryMapping[]
-> => (await fetch('/api/transaction-categories-mapping')).json();
-
 export const Expenses = (): JSX.Element => {
   const expenses = useAllExpensesGroupByMonth();
 
@@ -37,7 +33,7 @@ export const Expenses = (): JSX.Element => {
           aria-label={`IOverview of income transactions for ${monthNames[month]}, ${year}`}
         >
           <div className="grid grid-cols-[1fr,auto] gap-4 items-end justify-between sticky top-0 z-10 bg-white-off py-4 -mt-4">
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tighter truncate">
+            <h2 className="text-2xl font-bold tracking-tighter truncate sm:text-3xl">
               {`${monthNames[month]}, ${year}`}
             </h2>
             <p className="font-semibold text-gray-600">
