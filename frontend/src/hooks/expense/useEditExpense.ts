@@ -7,8 +7,8 @@ export const useEditExpense = () => {
   const queryClient = useQueryClient();
 
   return useCallback(
-    async (targetAccountData: IExpense, id: string) => {
-      const editedExpense = await updateExpense(targetAccountData, id);
+    async (targetExpenseData: IExpense, id: string) => {
+      const editedExpense = await updateExpense(targetExpenseData, id);
       queryClient.invalidateQueries('expenses');
       queryClient.invalidateQueries('transactions');
 

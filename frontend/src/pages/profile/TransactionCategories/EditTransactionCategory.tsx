@@ -6,11 +6,9 @@ import { Container } from '../../../components/container/container';
 import { Loader } from '../../../components/loader/loader';
 import { ModalConfirm } from '../../../components/modal/confirm/modal.confirm';
 import { SEO } from '../../../components/seo/seo';
-import {
-  deleteTransactionCategory,
-  editTransactionCategory,
-  getTransactionCategoryById,
-} from '../../../services/TransactionCategoriesService';
+import { useDeleteTransactionCategory } from '../../../hooks/transactionCategories/useDeleteTransactionCategory';
+import { useEditTransactionCategory } from '../../../hooks/transactionCategories/useEditTransactionCategory';
+import { useTransactionCategoryById } from '../../../hooks/transactionCategories/useTransactionCategoryById';
 
 import { TransactionCategoryForm } from './TransactionCategoryForm';
 
@@ -35,19 +33,12 @@ const TransactionCategoryDeleteModal = ({
 
 export const EditTransactionCategory = (): JSX.Element => {
   const history = useHistory();
+  const { id } = useParams<{ id: string }>();
   const [errors, setErrors] = useState<string[]>([]);
 
-  const [transactionCategory, setTransactionCategory] = useState<
-    ITransactionCategory | undefined
-  >(undefined);
-  const { id } = useParams<{ id: string }>();
-
-  useEffect(() => {
-    const fetchTransactionCategory = async () => {
-      setTransactionCategory(await getTransactionCategoryById(id));
-    };
-    fetchTransactionCategory();
-  }, [id]);
+  const [transactionCategory] = useTransactionCategoryById(id);
+  const deleteTransactionCategory = useDeleteTransactionCategory();
+  const editTransactionCategory = useEditTransactionCategory();
 
   const handleSubmit = async (
     newTransactionCategoryData: ITransactionCategory
@@ -78,7 +69,7 @@ export const EditTransactionCategory = (): JSX.Element => {
     history.push('/profile/transaction-categories');
   };
 
-  return typeof transactionCategory === 'undefined' ? (
+  return !transactionCategory ? (
     <Loader loaderColor="blue" />
   ) : (
     <Container>

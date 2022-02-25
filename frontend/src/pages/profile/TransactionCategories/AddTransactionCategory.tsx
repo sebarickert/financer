@@ -3,13 +3,14 @@ import { useHistory } from 'react-router-dom';
 
 import { Container } from '../../../components/container/container';
 import { SEO } from '../../../components/seo/seo';
-import { addTransactionCategory } from '../../../services/TransactionCategoriesService';
+import { useAddTransactionCategory } from '../../../hooks/transactionCategories/useAddTransactionCategory';
 
 import { TransactionCategoryForm } from './TransactionCategoryForm';
 
 export const AddTransactionCategory = (): JSX.Element => {
   const history = useHistory();
   const [errors, setErrors] = useState<string[]>([]);
+  const addTransactionCategory = useAddTransactionCategory();
 
   const handleSubmit = async (
     newTransactionCategoryData: ITransactionCategory
