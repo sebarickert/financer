@@ -7,8 +7,8 @@ export const useEditIncome = () => {
   const queryClient = useQueryClient();
 
   return useCallback(
-    async (targetAccountData: IIncome, id: string) => {
-      const editedExpense = await updateIncome(targetAccountData, id);
+    async (targetIncomeData: IIncome, id: string) => {
+      const editedExpense = await updateIncome(targetIncomeData, id);
       queryClient.invalidateQueries('incomes');
       queryClient.invalidateQueries('transactions');
 
