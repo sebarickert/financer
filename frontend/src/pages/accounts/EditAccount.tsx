@@ -4,6 +4,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { Loader } from '../../components/loader/loader';
 import { SEO } from '../../components/seo/seo';
 import { useEditAccount } from '../../hooks/useEditAccount';
+import { getAccountById } from '../../services/AccountService';
 
 import { AccountForm } from './AccountForm';
 
@@ -18,8 +19,7 @@ export const EditAccount = (): JSX.Element => {
 
   useEffect(() => {
     const fetchAccount = async () => {
-      const rawAccount = await fetch(`/api/account/${id}`);
-      setAccount((await rawAccount.json()).payload);
+      setAccount(await getAccountById(id));
     };
     fetchAccount();
   }, [id]);

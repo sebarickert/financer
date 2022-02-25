@@ -10,11 +10,13 @@ import { Loader } from '../../components/loader/loader';
 import { ModalConfirm } from '../../components/modal/confirm/modal.confirm';
 import { SEO } from '../../components/seo/seo';
 import { useAllTransactionCategoriesWithCategoryTree } from '../../hooks/useAllTransactionCategories';
+import { getTransactionCategoryMappingByTransactionId } from '../../services/TransactionCategoryMappingService';
+import {
+  getTransferById,
+  deleteTransfer,
+} from '../../services/TransferService';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDate } from '../../utils/formatDate';
-import { getTransactionCategoryMappingByTransactionId } from '../expenses/Expense';
-
-import { getTransferById, deleteTransfer } from './TransferService';
 
 interface ITransferDeleteModalProps {
   handleDelete(): void;

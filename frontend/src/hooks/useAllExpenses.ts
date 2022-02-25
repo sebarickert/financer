@@ -7,7 +7,7 @@ import {
   sortExpensesByDate,
   sortExpenseStacksByMonth,
 } from '../pages/expenses/ExpenseFuctions';
-import { getAllExpenses } from '../pages/expenses/ExpenseService';
+import { getAllExpenses } from '../services/ExpenseService';
 
 import { useAllTransactionCategories } from './useAllTransactionCategories';
 import { useAllTransactionCategoryMappings } from './useAllTransactionCategoryMappings';

@@ -3,12 +3,14 @@ import { useHistory, useParams } from 'react-router-dom';
 
 import { Loader } from '../../components/loader/loader';
 import { SEO } from '../../components/seo/seo';
+import {
+  addTransactionCategoryMapping,
+  getTransactionCategoryMappingByTransactionId,
+} from '../../services/TransactionCategoryMappingService';
 import { updateTransaction } from '../../services/TransactionService';
-import { addTransactionCategoryMapping } from '../expenses/AddExpense';
-import { getTransactionCategoryMappingByTransactionId } from '../expenses/Expense';
+import { getTransferById } from '../../services/TransferService';
 
 import { TransferForm } from './TransferForm';
-import { getTransferById } from './TransferService';
 
 export const EditTransfer = (): JSX.Element => {
   const history = useHistory();

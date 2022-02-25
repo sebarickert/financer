@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 
-import { getAllAccounts } from '../pages/accounts/AccountService';
+import { getAllAccounts } from '../services/AccountService';
 
 export const useAllAccounts = (): IAccount[] | null => {
   const accountsQuery = useQuery<IAccount[]>('accounts', getAllAccounts, {

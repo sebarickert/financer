@@ -106,7 +106,3 @@ export const deleteTransactionCategory = async (id: string): Promise<void> => {
     },
   });
 };
-
-export const getAllUserTransactionCategoryMappings = async (): Promise<
-  ITransactionCategoryMapping[]
-> => (await fetch('/api/transaction-categories-mapping')).json();

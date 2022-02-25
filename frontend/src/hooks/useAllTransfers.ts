@@ -9,7 +9,7 @@ import {
   ITransfersPerMonth,
   groupTransfersByMonth,
 } from '../pages/transfers/TransferFuctions';
-import { getAllTransferTranscations } from '../pages/transfers/TransferService';
+import { getAllTransferTranscations } from '../services/TransferService';
 
 import { useAllTransactionCategories } from './useAllTransactionCategories';
 import { useAllTransactionCategoryMappings } from './useAllTransactionCategoryMappings';

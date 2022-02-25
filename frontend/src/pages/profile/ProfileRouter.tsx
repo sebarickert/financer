@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
+import { getProfileInformation } from '../../services/ProfileService';
+
 import { Profile } from './Profile';
 import { ProfileOverrideData } from './ProfileOverrideData';
-import { getProfileInformation } from './ProfileService';
 import { TransactionCategoriesRouter } from './TransactionCategories/TransactionCategoriesRouter';
 
 export const ProfileRouter = (): JSX.Element => {
