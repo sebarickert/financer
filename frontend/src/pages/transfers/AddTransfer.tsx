@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { SEO } from '../../components/seo/seo';
+import { addTransactionCategoryMapping } from '../../services/TransactionCategoryMappingService';
 import { addTransaction } from '../../services/TransactionService';
-import { addTransactionCategoryMapping } from '../expenses/AddExpense';
 
 import { TransferForm } from './TransferForm';
 

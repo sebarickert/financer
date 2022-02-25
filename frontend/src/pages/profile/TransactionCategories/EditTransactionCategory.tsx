@@ -6,12 +6,12 @@ import { Container } from '../../../components/container/container';
 import { Loader } from '../../../components/loader/loader';
 import { ModalConfirm } from '../../../components/modal/confirm/modal.confirm';
 import { SEO } from '../../../components/seo/seo';
-
 import {
   deleteTransactionCategory,
   editTransactionCategory,
   getTransactionCategoryById,
-} from './TransactionCategoriesService';
+} from '../../../services/TransactionCategoriesService';
+
 import { TransactionCategoryForm } from './TransactionCategoryForm';
 
 interface ITransactionCategoryDeleteModalProps {

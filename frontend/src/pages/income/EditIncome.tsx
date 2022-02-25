@@ -5,11 +5,13 @@ import { useHistory, useParams } from 'react-router-dom';
 import { Container } from '../../components/container/container';
 import { Loader } from '../../components/loader/loader';
 import { SEO } from '../../components/seo/seo';
-import { addTransactionCategoryMapping } from '../expenses/AddExpense';
-import { getTransactionCategoryMappingByTransactionId } from '../expenses/Expense';
+import { getIncomeById, updateIncome } from '../../services/IncomeService';
+import {
+  addTransactionCategoryMapping,
+  getTransactionCategoryMappingByTransactionId,
+} from '../../services/TransactionCategoryMappingService';
 
 import { IncomeForm } from './IncomeForm';
-import { getIncomeById, updateIncome } from './IncomeService';
 
 export const EditIncome = (): JSX.Element => {
   const history = useHistory();

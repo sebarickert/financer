@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { SEO } from '../../components/seo/seo';
-import { addTransactionCategoryMapping } from '../expenses/AddExpense';
+import { addIncome } from '../../services/IncomeService';
+import { addTransactionCategoryMapping } from '../../services/TransactionCategoryMappingService';
 
 import { IncomeForm } from './IncomeForm';
-import { addIncome } from './IncomeService';
 
 export const AddIncome = (): JSX.Element => {
   const history = useHistory();

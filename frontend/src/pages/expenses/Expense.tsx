@@ -11,10 +11,9 @@ import { ModalConfirm } from '../../components/modal/confirm/modal.confirm';
 import { SEO } from '../../components/seo/seo';
 import { useAllTransactionCategoriesWithCategoryTree } from '../../hooks/useAllTransactionCategories';
 import { useAllTransactionCategoryMappings } from '../../hooks/useAllTransactionCategoryMappings';
+import { deleteExpense, getExpenseById } from '../../services/ExpenseService';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDate } from '../../utils/formatDate';
-
-import { deleteExpense, getExpenseById } from './ExpenseService';
 
 interface IExpenseDeleteModalProps {
   handleDelete(): void;
@@ -32,15 +31,6 @@ const ExpenseDeleteModal = ({ handleDelete }: IExpenseDeleteModalProps) => (
     permanently removed. This action cannot be undone.
   </ModalConfirm>
 );
-
-export const getTransactionCategoryMappingByTransactionId = async (
-  id: string
-): Promise<ITransactionCategoryMapping[]> => {
-  const transactionCategoryMapping = await fetch(
-    `/api/transaction-categories-mapping/by-transaction/${id}`
-  );
-  return (await transactionCategoryMapping.json()).payload;
-};
 
 export const Expense = (): JSX.Element => {
   const history = useHistory();

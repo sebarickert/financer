@@ -3,8 +3,8 @@ import { useHistory } from 'react-router-dom';
 
 import { Container } from '../../../components/container/container';
 import { SEO } from '../../../components/seo/seo';
+import { addTransactionCategory } from '../../../services/TransactionCategoriesService';
 
-import { addTransactionCategory } from './TransactionCategoriesService';
 import { TransactionCategoryForm } from './TransactionCategoryForm';
 
 export const AddTransactionCategory = (): JSX.Element => {

@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useQueryClient } from 'react-query';
 
-import { addExpense } from '../pages/expenses/ExpenseService';
+import { addExpense } from '../services/ExpenseService';
 
 export const useAddExpense = () => {
   const queryClient = useQueryClient();
