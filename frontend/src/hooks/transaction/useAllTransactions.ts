@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
 
-import { getAllUserTransactions } from '../services/TransactionService';
+import { getAllUserTransactions } from '../../services/TransactionService';
 
 export const useAllTransactions = () => {
   const transactionsQuery = useQuery('transactions', getAllUserTransactions, {

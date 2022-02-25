@@ -1,28 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
 import { Loader } from '../../components/loader/loader';
 import { SEO } from '../../components/seo/seo';
+import { useAccountById } from '../../hooks/account/useAccountById';
 import { useEditAccount } from '../../hooks/account/useEditAccount';
-import { getAccountById } from '../../services/AccountService';
 
 import { AccountForm } from './AccountForm';
 
 export const EditAccount = (): JSX.Element => {
+  const { id } = useParams<{ id: string }>();
   const history = useHistory();
   const editAccount = useEditAccount();
 
   const [errors, setErrors] = useState<string[]>([]);
 
-  const [account, setAccount] = useState<IAccount | undefined>(undefined);
-  const { id } = useParams<{ id: string }>();
-
-  useEffect(() => {
-    const fetchAccount = async () => {
-      setAccount(await getAccountById(id));
-    };
-    fetchAccount();
-  }, [id]);
+  const [account] = useAccountById(id);
 
   const handleSubmit = async (newAccountData: IAccount) => {
     /* eslint-disable no-param-reassign */
@@ -43,7 +36,7 @@ export const EditAccount = (): JSX.Element => {
     }
   };
 
-  return typeof account === 'undefined' ? (
+  return !account ? (
     <Loader loaderColor="blue" />
   ) : (
     <>

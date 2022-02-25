@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
+import { useAllTransactions } from '../../hooks/transaction/useAllTransactions';
 import { useAllTransactionCategories } from '../../hooks/transactionCategories/useAllTransactionCategories';
 import { useAllTransactionCategoryMappings } from '../../hooks/transactionCategoryMapping/useAllTransactionCategoryMappings';
-import { useAllTransactions } from '../../hooks/useAllTransactions';
 import {
   getTransactionType,
   mapTransactionTypeToUrlPrefix,
