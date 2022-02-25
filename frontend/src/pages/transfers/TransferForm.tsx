@@ -7,12 +7,9 @@ import { Input } from '../../components/input/input';
 import { Loader } from '../../components/loader/loader';
 import { Select, IOption } from '../../components/select/select';
 import { TransactionCategoriesForm } from '../../components/transaction-categories-form/transaction-categories-form';
+import { useAllAccounts } from '../../hooks/useAllAccounts';
+import { useAllTransactionCategoriesWithCategoryTree } from '../../hooks/useAllTransactionCategories';
 import { inputDateFormat } from '../../utils/formatDate';
-import { getAllAccounts } from '../accounts/AccountService';
-import {
-  getAllTransactionCategoriesWithCategoryTree,
-  ITransactionCategoryWithCategoryTree,
-} from '../profile/TransactionCategories/TransactionCategoriesService';
 
 interface ITransferFormProps {
   amount?: number;
@@ -42,11 +39,10 @@ export const TransferForm = ({
   toAccount,
   transactionCategoryMapping,
 }: ITransferFormProps): JSX.Element => {
-  const [accountsRaw, setAccountsRaw] = useState<IAccount[] | null>(null);
+  const accountsRaw = useAllAccounts();
   const [accounts, setAccounts] = useState<IOption[] | null>(null);
-  const [transactionCategoriesRaw, setTransactionCategoriesRaw] = useState<
-    ITransactionCategoryWithCategoryTree[] | null
-  >(null);
+  const transactionCategoriesRaw =
+    useAllTransactionCategoriesWithCategoryTree();
   const [transactionCategories, setTransactionCategories] = useState<
     IOption[] | null
   >(null);
@@ -94,19 +90,6 @@ export const TransferForm = ({
     newCategoryAmount[itemIndex] = itemAmount;
     setCategoryAmount(newCategoryAmount);
   };
-
-  useEffect(() => {
-    const fetchAccounts = async () => {
-      setAccountsRaw(await getAllAccounts());
-    };
-    const fetchTransactionCategories = async () => {
-      setTransactionCategoriesRaw(
-        await getAllTransactionCategoriesWithCategoryTree()
-      );
-    };
-    fetchAccounts();
-    fetchTransactionCategories();
-  }, []);
 
   useEffect(() => {
     if (accountsRaw === null) return;

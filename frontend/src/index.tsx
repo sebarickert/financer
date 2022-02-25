@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter as Router, useLocation } from 'react-router-dom';
 
 import { App } from './App';
@@ -7,6 +8,8 @@ import './assets/tailwind.css';
 import { reportWebVitals } from './reportWebVitals';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { isUpdateAllowed } from './utils/allowedUpdateLocations';
+
+const queryClient = new QueryClient();
 
 const Root = (): JSX.Element => {
   const { pathname } = useLocation();
@@ -38,7 +41,9 @@ const Root = (): JSX.Element => {
 
   return (
     <React.StrictMode>
-      <App />
+      <QueryClientProvider client={queryClient}>
+        <App />
+      </QueryClientProvider>
     </React.StrictMode>
   );
 };

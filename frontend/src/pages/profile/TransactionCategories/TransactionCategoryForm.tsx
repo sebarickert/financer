@@ -7,11 +7,7 @@ import { Form } from '../../../components/form/form';
 import { Input } from '../../../components/input/input';
 import { Loader } from '../../../components/loader/loader';
 import { Select, IOption } from '../../../components/select/select';
-
-import {
-  getAllTransactionCategoriesWithCategoryTree,
-  ITransactionCategoryWithCategoryTree,
-} from './TransactionCategoriesService';
+import { useAllTransactionCategoriesWithCategoryTree } from '../../../hooks/useAllTransactionCategories';
 
 interface ITransactionCategoryFormProps {
   errors: string[];
@@ -34,21 +30,11 @@ export const TransactionCategoryForm = ({
   visibility,
   optionalFooterComponent,
 }: ITransactionCategoryFormProps): JSX.Element => {
-  const [transactionCategoriesRaw, setTransactionCategoriesRaw] = useState<
-    ITransactionCategoryWithCategoryTree[] | null
-  >(null);
+  const transactionCategoriesRaw =
+    useAllTransactionCategoriesWithCategoryTree();
   const [transactionCategories, setTransactionCategories] = useState<
     IOption[] | null
   >(null);
-
-  useEffect(() => {
-    const fetchTransactionCategories = async () => {
-      setTransactionCategoriesRaw(
-        await getAllTransactionCategoriesWithCategoryTree()
-      );
-    };
-    fetchTransactionCategories();
-  }, []);
 
   useEffect(() => {
     if (transactionCategoriesRaw === null) return;

@@ -1,29 +1,25 @@
 import { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
 
-import { getAllUserTransactionCategoryMappings } from '../pages/expenses/Expenses';
 import {
   sortIncomeStacksByMonth,
   sortIncomesByDate,
 } from '../pages/income/IncomeFuctions';
-import { getAllTransactionCategories } from '../pages/profile/TransactionCategories/TransactionCategoriesService';
 import {
   ITransfersPerMonth,
   groupTransfersByMonth,
 } from '../pages/transfers/TransferFuctions';
 import { getAllTransferTranscations } from '../pages/transfers/TransferService';
 
+import { useAllTransactionCategories } from './useAllTransactionCategories';
+import { useAllTransactionCategoryMappings } from './useAllTransactionCategoryMappings';
+
 export const useAllTransfers = (): ITransaction[] | null => {
-  const [transfers, setTransfers] = useState<ITransaction[] | null>(null);
+  const transfersQuery = useQuery('transfers', getAllTransferTranscations, {
+    staleTime: 300000,
+  });
 
-  useEffect(() => {
-    const fetchTransfers = async () => {
-      setTransfers((await getAllTransferTranscations()).payload);
-    };
-
-    fetchTransfers();
-  }, []);
-
-  return transfers;
+  return transfersQuery.data?.payload || null;
 };
 
 export const useAllTransfersGroupByMonth = () => {
@@ -31,25 +27,8 @@ export const useAllTransfersGroupByMonth = () => {
   const [groupedTransfers, setGroupedTransfers] = useState<
     ITransfersPerMonth[]
   >([]);
-  const [transactionCategoryMappings, setTransactionCategoryMappings] =
-    useState<ITransactionCategoryMapping[]>([]);
-  const [transactionCategories, setTransactionCategories] = useState<
-    ITransactionCategory[]
-  >([]);
-
-  useEffect(() => {
-    const fetchAllTransactionCategories = async () => {
-      setTransactionCategories(await getAllTransactionCategories());
-    };
-    const fetchAllUserTransactionCategoryMappings = async () => {
-      setTransactionCategoryMappings(
-        await getAllUserTransactionCategoryMappings()
-      );
-    };
-
-    fetchAllTransactionCategories();
-    fetchAllUserTransactionCategoryMappings();
-  }, []);
+  const transactionCategoryMappings = useAllTransactionCategoryMappings();
+  const transactionCategories = useAllTransactionCategories();
 
   useEffect(() => {
     if (transfers === null) return;

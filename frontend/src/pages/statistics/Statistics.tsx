@@ -14,20 +14,17 @@ import {
   TransactionType,
 } from '../../components/transaction-stacked-list/transaction-stacked-list.row';
 import { monthNames } from '../../constants/months';
-import { getAllUserTransactions } from '../../services/TransactionService';
+import { useAllTransactionCategories } from '../../hooks/useAllTransactionCategories';
+import { useAllTransactionCategoryMappings } from '../../hooks/useAllTransactionCategoryMappings';
+import { useAllTransactions } from '../../hooks/useAllTransactions';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDate } from '../../utils/formatDate';
-import { getAllTransactionCategories } from '../profile/TransactionCategories/TransactionCategoriesService';
 
 type TransactionVisibilityFilterType =
   | 'all'
   | 'income'
   | 'expense'
   | 'transfer';
-
-const getAllUserTransactionCategoryMappings = async (): Promise<
-  ITransactionCategoryMapping[]
-> => (await fetch('/api/transaction-categories-mapping')).json();
 
 export const getTransactionType = (
   toAccount: string | null | undefined,
@@ -64,37 +61,15 @@ export const filterTransactionsByType = (
 export const Statistics = (): JSX.Element => {
   const [transactionVisibilityFilter, setTransactionVisibilityFilter] =
     useState<TransactionVisibilityFilterType>('all');
-  const [transactionsRaw, setTransactionsRaw] = useState<ITransaction[] | null>(
-    null
-  );
+  const transactionsRaw = useAllTransactions();
   const [transactions, setTransactions] = useState<ITransaction[] | null>(null);
   const [visibleTransactions, setVisibleTransactions] = useState<
     ITransactionStackedListRowProps[] | null
   >(null);
-  const [transactionCategoryMappings, setTransactionCategoryMappings] =
-    useState<ITransactionCategoryMapping[]>([]);
-  const [transactionCategories, setTransactionCategories] = useState<
-    ITransactionCategory[]
-  >([]);
+  const transactionCategoryMappings = useAllTransactionCategoryMappings();
+  const transactionCategories = useAllTransactionCategories();
   const [totalExpenses, setTotalExpenses] = useState<number>(NaN);
   const [totalIncomes, setTotalIncomes] = useState<number>(NaN);
-
-  useEffect(() => {
-    const fetchAllUserTransactions = async () => {
-      setTransactionsRaw((await getAllUserTransactions()).payload);
-    };
-    const fetchAllTransactionCategories = async () => {
-      setTransactionCategories(await getAllTransactionCategories());
-    };
-    const fetchAllUserTransactionCategoryMappings = async () => {
-      setTransactionCategoryMappings(
-        await getAllUserTransactionCategoryMappings()
-      );
-    };
-    fetchAllUserTransactions();
-    fetchAllTransactionCategories();
-    fetchAllUserTransactionCategoryMappings();
-  }, []);
 
   useEffect(() => {
     if (transactions === null) return;
@@ -216,7 +191,7 @@ export const Statistics = (): JSX.Element => {
       </Heading>
       <section className="mt-4">
         <div className="grid grid-cols-[1fr,auto] gap-4 items-end justify-between sticky top-0 z-10 bg-white-off py-4">
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tighter truncate">
+          <h2 className="text-2xl font-bold tracking-tighter truncate sm:text-3xl">
             {`${pageVisibleMonth}, ${pageVisibleYear}`}
           </h2>
           <Dropdown

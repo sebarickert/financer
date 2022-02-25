@@ -5,10 +5,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { Container } from '../../components/container/container';
 import { Loader } from '../../components/loader/loader';
 import { SEO } from '../../components/seo/seo';
-import {
-  getAllTransactionCategoriesWithCategoryTree,
-  ITransactionCategoryWithCategoryTree,
-} from '../profile/TransactionCategories/TransactionCategoriesService';
+import { ITransactionCategoryWithCategoryTree } from '../profile/TransactionCategories/TransactionCategoriesService';
 
 import { addTransactionCategoryMapping } from './AddExpense';
 import { getTransactionCategoryMappingByTransactionId } from './Expense';

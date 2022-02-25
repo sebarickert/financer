@@ -7,29 +7,15 @@ import { Loader } from '../../../components/loader/loader';
 import { SEO } from '../../../components/seo/seo';
 import { StackedList } from '../../../components/stacked-list/stacked-list';
 import { IStackedListRowProps } from '../../../components/stacked-list/stacked-list.row';
-
-import {
-  getAllTransactionCategoriesWithCategoryTree,
-  ITransactionCategoryWithCategoryTree,
-} from './TransactionCategoriesService';
+import { useAllTransactionCategoriesWithCategoryTree } from '../../../hooks/useAllTransactionCategories';
 
 export const TransactionCategories = (): JSX.Element => {
-  const [transactionCategoriesRaw, setTransactionCategoriesRaw] = useState<
-    ITransactionCategoryWithCategoryTree[] | null
-  >(null);
+  const transactionCategoriesRaw =
+    useAllTransactionCategoriesWithCategoryTree();
+
   const [transactionCategories, setTransactionCategories] = useState<
     IStackedListRowProps[]
   >([]);
-
-  useEffect(() => {
-    const fetchTransactionCategories = async () => {
-      setTransactionCategoriesRaw(
-        await getAllTransactionCategoriesWithCategoryTree()
-      );
-    };
-
-    fetchTransactionCategories();
-  }, []);
 
   useEffect(() => {
     if (transactionCategoriesRaw === null) return;
