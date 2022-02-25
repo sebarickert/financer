@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
 import { Button } from '../../components/button/button';
@@ -9,9 +8,10 @@ import { Icon } from '../../components/icon/icon';
 import { Loader } from '../../components/loader/loader';
 import { ModalConfirm } from '../../components/modal/confirm/modal.confirm';
 import { SEO } from '../../components/seo/seo';
+import { useDeleteExpense } from '../../hooks/expense/useDeleteExpense';
+import { useExpenseById } from '../../hooks/expense/useExpenseById';
 import { useAllTransactionCategoriesWithCategoryTree } from '../../hooks/transactionCategories/useAllTransactionCategories';
 import { useAllTransactionCategoryMappings } from '../../hooks/transactionCategoryMapping/useAllTransactionCategoryMappings';
-import { deleteExpense, getExpenseById } from '../../services/ExpenseService';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDate } from '../../utils/formatDate';
 
@@ -34,19 +34,11 @@ const ExpenseDeleteModal = ({ handleDelete }: IExpenseDeleteModalProps) => (
 
 export const Expense = (): JSX.Element => {
   const history = useHistory();
-  const [expense, setExpense] = useState<IExpense | undefined>(undefined);
+  const { id } = useParams<{ id: string }>();
+  const [expense] = useExpenseById(id);
   const transactionCategoryMapping = useAllTransactionCategoryMappings();
   const transactionCategories = useAllTransactionCategoriesWithCategoryTree();
-
-  const { id } = useParams<{ id: string }>();
-
-  useEffect(() => {
-    const fetchExpense = async () => {
-      setExpense(await getExpenseById(id));
-    };
-
-    fetchExpense();
-  }, [id]);
+  const deleteExpense = useDeleteExpense();
 
   const getCategoryNameById = (categoryId: string) =>
     transactionCategories?.find((category) => category._id === categoryId)
@@ -57,9 +49,9 @@ export const Expense = (): JSX.Element => {
     history.push('/statistics/expenses');
   };
 
-  return typeof expense === 'undefined' ||
+  return !expense ||
     typeof transactionCategoryMapping === 'undefined' ||
-    transactionCategories === null ? (
+    !transactionCategories ? (
     <Loader loaderColor="blue" />
   ) : (
     <>
