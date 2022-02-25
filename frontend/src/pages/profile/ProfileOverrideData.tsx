@@ -10,10 +10,8 @@ import {
   INotificationProps,
 } from '../../components/notification/notification';
 import { SEO } from '../../components/seo/seo';
-import {
-  IOverrideProfileData,
-  postOverrideProfileData,
-} from '../../services/ProfileService';
+import { useOverrideProfileData } from '../../hooks/profile/useOverrideProfileData';
+import { IOverrideProfileData } from '../../services/ProfileService';
 
 export const ProfileOverrideData = (): JSX.Element => {
   const [uploadedUserData, setUploadedUserData] =
@@ -28,6 +26,7 @@ export const ProfileOverrideData = (): JSX.Element => {
   const [notification, setNotification] = useState<INotificationProps | null>(
     null
   );
+  const overrideProfileData = useOverrideProfileData();
 
   useEffect(() => {
     if (!uploadedUserData) {
@@ -58,7 +57,7 @@ export const ProfileOverrideData = (): JSX.Element => {
       return;
     }
 
-    const override = await postOverrideProfileData(uploadedUserData);
+    const override = await overrideProfileData(uploadedUserData);
 
     if (override.status < 300) {
       setNotification({
