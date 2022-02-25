@@ -1,18 +1,13 @@
-import React from 'react';
-
-import { Banner } from '../../components/banner/banner';
-import { BannerText } from '../../components/banner/banner.text';
 import { Button } from '../../components/button/button';
 import { Heading } from '../../components/heading/heading';
 import { QuickLinks } from '../../components/quick-links/quick-links';
 import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
 import { SEO } from '../../components/seo/seo';
+import { useProfileInformation } from '../../hooks/profile/useProfileInformation';
 
-interface IProfileProps {
-  profileInfo: IUser | null;
-}
+export const Profile = (): JSX.Element => {
+  const profileInfo = useProfileInformation();
 
-export const Profile = ({ profileInfo }: IProfileProps): JSX.Element => {
   return (
     <>
       <SEO title="Profile" />
