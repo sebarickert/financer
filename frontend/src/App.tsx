@@ -1,23 +1,14 @@
-import React, { useEffect, useState } from 'react';
-
+import { Loader } from './components/loader/loader';
 import { Notification } from './components/notification/notification';
 import { Financer } from './Financer';
-import { getAuthenticationStatus } from './services/AuthenticationService';
+import { useAuthenticationStatus } from './hooks/useAuthenticationStatus';
 
 export const App = (): JSX.Element => {
-  const [authenticationStatus, setAuthenticationStatus] =
-    useState<IAuthenticationStatus>({
-      authenticated: false,
-    });
+  const authenticationStatus = useAuthenticationStatus();
 
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      setAuthenticationStatus(await getAuthenticationStatus());
-    };
-    fetchUserInfo();
-  }, []);
-
-  return (
+  return !authenticationStatus ? (
+    <Loader />
+  ) : (
     <>
       {authenticationStatus.errors && (
         <Notification
