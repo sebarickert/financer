@@ -7,11 +7,9 @@ import { Loader } from '../../components/loader/loader';
 import { SEO } from '../../components/seo/seo';
 import { useEditExpense } from '../../hooks/expense/useEditExpense';
 import { useExpenseById } from '../../hooks/expense/useExpenseById';
+import { useAddTransactionCategoryMapping } from '../../hooks/transactionCategoryMapping/useAddTransactionCategoryMapping';
+import { useTransactionCategoryMappingsByTransactionId } from '../../hooks/transactionCategoryMapping/useTransactionCategoryMappingsByTransactionId';
 import { ITransactionCategoryWithCategoryTree } from '../../services/TransactionCategoriesService';
-import {
-  addTransactionCategoryMapping,
-  getTransactionCategoryMappingByTransactionId,
-} from '../../services/TransactionCategoryMappingService';
 
 import { ExpenseForm } from './ExpenseForm';
 
@@ -22,19 +20,9 @@ export const EditExpense = (): JSX.Element => {
   const editExpense = useEditExpense();
 
   const [expense] = useExpenseById(id);
-  const [transactionCategoryMapping, setTransactionCategoryMapping] = useState<
-    ITransactionCategoryMapping[] | undefined
-  >(undefined);
-
-  useEffect(() => {
-    const fetchTransactionCategoryMapping = async () => {
-      setTransactionCategoryMapping(
-        await getTransactionCategoryMappingByTransactionId(id)
-      );
-    };
-
-    fetchTransactionCategoryMapping();
-  }, [id]);
+  const [transactionCategoryMapping] =
+    useTransactionCategoryMappingsByTransactionId(id);
+  const addTransactionCategoryMapping = useAddTransactionCategoryMapping();
 
   const handleSubmit = async (
     targetExpenseData: IIncome,
