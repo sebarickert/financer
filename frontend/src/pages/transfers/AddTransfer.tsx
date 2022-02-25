@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { SEO } from '../../components/seo/seo';
-import { addTransactionCategoryMapping } from '../../services/TransactionCategoryMappingService';
+import { useAddTransactionCategoryMapping } from '../../hooks/transactionCategoryMapping/useAddTransactionCategoryMapping';
 import { addTransaction } from '../../services/TransactionService';
 
 import { TransferForm } from './TransferForm';
@@ -10,6 +10,7 @@ import { TransferForm } from './TransferForm';
 export const AddTransfer = (): JSX.Element => {
   const history = useHistory();
   const [errors, setErrors] = useState<string[]>([]);
+  const addTransactionCategoryMapping = useAddTransactionCategoryMapping();
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = async (

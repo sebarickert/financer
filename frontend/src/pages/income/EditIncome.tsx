@@ -7,10 +7,8 @@ import { Loader } from '../../components/loader/loader';
 import { SEO } from '../../components/seo/seo';
 import { useEditIncome } from '../../hooks/income/useEditIncome';
 import { useIncomeById } from '../../hooks/income/useIncomeById';
-import {
-  addTransactionCategoryMapping,
-  getTransactionCategoryMappingByTransactionId,
-} from '../../services/TransactionCategoryMappingService';
+import { useAddTransactionCategoryMapping } from '../../hooks/transactionCategoryMapping/useAddTransactionCategoryMapping';
+import { useTransactionCategoryMappingsByTransactionId } from '../../hooks/transactionCategoryMapping/useTransactionCategoryMappingsByTransactionId';
 
 import { IncomeForm } from './IncomeForm';
 
@@ -20,20 +18,10 @@ export const EditIncome = (): JSX.Element => {
   const { id } = useParams<{ id: string }>();
 
   const [income] = useIncomeById(id);
-  const [transactionCategoryMapping, setTransactionCategoryMapping] = useState<
-    ITransactionCategoryMapping[] | undefined
-  >(undefined);
+  const [transactionCategoryMapping] =
+    useTransactionCategoryMappingsByTransactionId(id);
   const editIncome = useEditIncome();
-
-  useEffect(() => {
-    const fetchTransactionCategoryMapping = async () => {
-      setTransactionCategoryMapping(
-        await getTransactionCategoryMappingByTransactionId(id)
-      );
-    };
-
-    fetchTransactionCategoryMapping();
-  }, [id]);
+  const addTransactionCategoryMapping = useAddTransactionCategoryMapping();
 
   const handleSubmit = async (
     targetIncomeData: IIncome,

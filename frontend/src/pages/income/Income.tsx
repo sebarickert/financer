@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
 import { Button } from '../../components/button/button';
@@ -12,7 +11,7 @@ import { SEO } from '../../components/seo/seo';
 import { useDeleteIncome } from '../../hooks/income/useDeleteIncome';
 import { useIncomeById } from '../../hooks/income/useIncomeById';
 import { useAllTransactionCategoriesWithCategoryTree } from '../../hooks/transactionCategories/useAllTransactionCategories';
-import { getTransactionCategoryMappingByTransactionId } from '../../services/TransactionCategoryMappingService';
+import { useTransactionCategoryMappingsByTransactionId } from '../../hooks/transactionCategoryMapping/useTransactionCategoryMappingsByTransactionId';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDate } from '../../utils/formatDate';
 
@@ -37,21 +36,10 @@ export const Income = (): JSX.Element => {
   const history = useHistory();
   const { id } = useParams<{ id: string }>();
   const [income] = useIncomeById(id);
-  const [transactionCategoryMapping, setTransactionCategoryMapping] = useState<
-    ITransactionCategoryMapping[] | undefined
-  >(undefined);
+  const [transactionCategoryMapping] =
+    useTransactionCategoryMappingsByTransactionId(id);
   const transactionCategories = useAllTransactionCategoriesWithCategoryTree();
   const deleteIncome = useDeleteIncome();
-
-  useEffect(() => {
-    const fetchTransactionCategoryMapping = async () => {
-      setTransactionCategoryMapping(
-        await getTransactionCategoryMappingByTransactionId(id)
-      );
-    };
-
-    fetchTransactionCategoryMapping();
-  }, [id]);
 
   const getCategoryNameById = (categoryId: string) =>
     transactionCategories?.find((category) => category._id === categoryId)
@@ -62,9 +50,7 @@ export const Income = (): JSX.Element => {
     history.push('/statistics/incomes');
   };
 
-  return !income ||
-    typeof transactionCategoryMapping === 'undefined' ||
-    !transactionCategories ? (
+  return !income || !transactionCategoryMapping || !transactionCategories ? (
     <Loader loaderColor="blue" />
   ) : (
     <>

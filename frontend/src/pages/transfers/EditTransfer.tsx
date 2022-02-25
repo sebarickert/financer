@@ -3,10 +3,8 @@ import { useHistory, useParams } from 'react-router-dom';
 
 import { Loader } from '../../components/loader/loader';
 import { SEO } from '../../components/seo/seo';
-import {
-  addTransactionCategoryMapping,
-  getTransactionCategoryMappingByTransactionId,
-} from '../../services/TransactionCategoryMappingService';
+import { useAddTransactionCategoryMapping } from '../../hooks/transactionCategoryMapping/useAddTransactionCategoryMapping';
+import { useTransactionCategoryMappingsByTransactionId } from '../../hooks/transactionCategoryMapping/useTransactionCategoryMappingsByTransactionId';
 import { updateTransaction } from '../../services/TransactionService';
 import { getTransferById } from '../../services/TransferService';
 
@@ -14,27 +12,20 @@ import { TransferForm } from './TransferForm';
 
 export const EditTransfer = (): JSX.Element => {
   const history = useHistory();
+  const { id } = useParams<{ id: string }>();
   const [errors, setErrors] = useState<string[]>([]);
 
   const [transfer, setTransfer] = useState<ITransaction | undefined>(undefined);
-  const [transactionCategoryMapping, setTransactionCategoryMapping] = useState<
-    ITransactionCategoryMapping[] | undefined
-  >(undefined);
-  const { id } = useParams<{ id: string }>();
+  const [transactionCategoryMapping] =
+    useTransactionCategoryMappingsByTransactionId(id);
+  const addTransactionCategoryMapping = useAddTransactionCategoryMapping();
 
   useEffect(() => {
     const fetchTransfer = async () => {
       setTransfer(await getTransferById(id));
     };
 
-    const fetchTransactionCategoryMapping = async () => {
-      setTransactionCategoryMapping(
-        await getTransactionCategoryMappingByTransactionId(id)
-      );
-    };
-
     fetchTransfer();
-    fetchTransactionCategoryMapping();
   }, [id]);
 
   const handleSubmit = async (
