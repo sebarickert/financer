@@ -11,6 +11,7 @@ export const useEditIncome = () => {
       const editedExpense = await updateIncome(targetIncomeData, id);
       queryClient.invalidateQueries('incomes');
       queryClient.invalidateQueries('transactions');
+      queryClient.invalidateQueries('transactionCategoryMappings');
 
       return editedExpense;
     },

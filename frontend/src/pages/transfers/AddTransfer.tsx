@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { SEO } from '../../components/seo/seo';
+import { useAddTransaction } from '../../hooks/transaction/useAddTransaction';
 import { useAddTransactionCategoryMapping } from '../../hooks/transactionCategoryMapping/useAddTransactionCategoryMapping';
-import { addTransaction } from '../../services/TransactionService';
 
 import { TransferForm } from './TransferForm';
 
@@ -11,6 +11,7 @@ export const AddTransfer = (): JSX.Element => {
   const history = useHistory();
   const [errors, setErrors] = useState<string[]>([]);
   const addTransactionCategoryMapping = useAddTransactionCategoryMapping();
+  const addTransaction = useAddTransaction();
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = async (

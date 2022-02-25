@@ -11,6 +11,7 @@ export const useAddIncome = () => {
       const newIncome = await addIncome(newIncomeData);
       queryClient.invalidateQueries('incomes');
       queryClient.invalidateQueries('transactions');
+      queryClient.invalidateQueries('transactionCategoryMappings');
 
       return newIncome;
     },

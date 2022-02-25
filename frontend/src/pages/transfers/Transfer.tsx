@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
 import { Button } from '../../components/button/button';
@@ -11,10 +10,8 @@ import { ModalConfirm } from '../../components/modal/confirm/modal.confirm';
 import { SEO } from '../../components/seo/seo';
 import { useAllTransactionCategoriesWithCategoryTree } from '../../hooks/transactionCategories/useAllTransactionCategories';
 import { useTransactionCategoryMappingsByTransactionId } from '../../hooks/transactionCategoryMapping/useTransactionCategoryMappingsByTransactionId';
-import {
-  getTransferById,
-  deleteTransfer,
-} from '../../services/TransferService';
+import { useDeleteTransfer } from '../../hooks/transfer/useDeleteTransfer';
+import { useTransferById } from '../../hooks/transfer/useTransferById';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDate } from '../../utils/formatDate';
 
@@ -38,18 +35,11 @@ const TransferDeleteModal = ({ handleDelete }: ITransferDeleteModalProps) => (
 export const Transfer = (): JSX.Element => {
   const history = useHistory();
   const { id } = useParams<{ id: string }>();
-  const [transfer, setTransfer] = useState<ITransaction | undefined>(undefined);
   const [transactionCategoryMapping] =
     useTransactionCategoryMappingsByTransactionId(id);
   const transactionCategories = useAllTransactionCategoriesWithCategoryTree();
-
-  useEffect(() => {
-    const fetchTransfer = async () => {
-      setTransfer(await getTransferById(id));
-    };
-
-    fetchTransfer();
-  }, [id]);
+  const [transfer] = useTransferById(id);
+  const deleteTransfer = useDeleteTransfer();
 
   const getCategoryNameById = (categoryId: string) =>
     transactionCategories?.find((category) => category._id === categoryId)
@@ -60,9 +50,7 @@ export const Transfer = (): JSX.Element => {
     history.push('/statistics/transfers');
   };
 
-  return typeof transfer === 'undefined' ||
-    !transactionCategoryMapping ||
-    !transactionCategories ? (
+  return !transfer || !transactionCategoryMapping || !transactionCategories ? (
     <Loader loaderColor="blue" />
   ) : (
     <>
