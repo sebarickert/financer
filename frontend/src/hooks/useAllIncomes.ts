@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
+import { useQuery } from 'react-query';
 
-import { getAllUserTransactionCategoryMappings } from '../pages/expenses/Expenses';
 import {
   groupIncomesByMonth,
   IIncomesPerMonth,
@@ -8,20 +8,16 @@ import {
   sortIncomeStacksByMonth,
 } from '../pages/income/IncomeFuctions';
 import { getAllIncomes } from '../pages/income/IncomeService';
-import { getAllTransactionCategories } from '../pages/profile/TransactionCategories/TransactionCategoriesService';
+
+import { useAllTransactionCategories } from './useAllTransactionCategories';
+import { useAllTransactionCategoryMappings } from './useAllTransactionCategoryMappings';
 
 export const useAllIncomes = (): IIncome[] | null => {
-  const [incomes, setIncomes] = useState<IIncome[] | null>(null);
+  const incomesQuery = useQuery('incomes', getAllIncomes, {
+    staleTime: 300000,
+  });
 
-  useEffect(() => {
-    const fetchIncomes = async () => {
-      setIncomes(await getAllIncomes());
-    };
-
-    fetchIncomes();
-  }, []);
-
-  return incomes;
+  return incomesQuery.data || null;
 };
 
 export const useCurrentMonthIncomesTotalAmount = (): number => {
@@ -55,25 +51,8 @@ export const useCurrentMonthIncomesTotalAmount = (): number => {
 export const useAllIncomesGroupByMonth = () => {
   const incomes = useAllIncomes();
   const [groupedIncomes, setGroupedIncomes] = useState<IIncomesPerMonth[]>([]);
-  const [transactionCategoryMappings, setTransactionCategoryMappings] =
-    useState<ITransactionCategoryMapping[]>([]);
-  const [transactionCategories, setTransactionCategories] = useState<
-    ITransactionCategory[]
-  >([]);
-
-  useEffect(() => {
-    const fetchAllTransactionCategories = async () => {
-      setTransactionCategories(await getAllTransactionCategories());
-    };
-    const fetchAllUserTransactionCategoryMappings = async () => {
-      setTransactionCategoryMappings(
-        await getAllUserTransactionCategoryMappings()
-      );
-    };
-
-    fetchAllTransactionCategories();
-    fetchAllUserTransactionCategoryMappings();
-  }, []);
+  const transactionCategoryMappings = useAllTransactionCategoryMappings();
+  const transactionCategories = useAllTransactionCategories();
 
   useEffect(() => {
     if (incomes === null) return;

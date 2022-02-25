@@ -3,12 +3,14 @@ import { useHistory, useParams } from 'react-router-dom';
 
 import { Loader } from '../../components/loader/loader';
 import { SEO } from '../../components/seo/seo';
+import { useEditAccount } from '../../hooks/useEditAccount';
 
 import { AccountForm } from './AccountForm';
-import { editAccount } from './AccountService';
 
 export const EditAccount = (): JSX.Element => {
   const history = useHistory();
+  const editAccount = useEditAccount();
+
   const [errors, setErrors] = useState<string[]>([]);
 
   const [account, setAccount] = useState<IAccount | undefined>(undefined);

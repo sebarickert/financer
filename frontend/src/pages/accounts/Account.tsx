@@ -28,21 +28,18 @@ import { StatsItem } from '../../components/stats/stats.item';
 import { TransactionStackedList } from '../../components/transaction-stacked-list/transaction-stacked-list';
 import { ITransactionStackedListRowProps } from '../../components/transaction-stacked-list/transaction-stacked-list.row';
 import { MONTH_IN_MS } from '../../constants/months';
+import { useAllTransactionCategories } from '../../hooks/useAllTransactionCategories';
+import { useAllTransactionCategoryMappings } from '../../hooks/useAllTransactionCategoryMappings';
+import { useDeleteAccount } from '../../hooks/useDeleteAccount';
 import { capitalize } from '../../utils/capitalize';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDate } from '../../utils/formatDate';
-import { getAllUserTransactionCategoryMappings } from '../expenses/Expenses';
-import { getAllTransactionCategories } from '../profile/TransactionCategories/TransactionCategoriesService';
 import {
   getTransactionType,
   mapTransactionTypeToUrlPrefix,
 } from '../statistics/Statistics';
 
-import {
-  deleteAccount,
-  getAccountById,
-  getAccountTransactions,
-} from './AccountService';
+import { getAccountById, getAccountTransactions } from './AccountService';
 
 interface IAccountDeleteModalProps {
   handleDelete(): void;
@@ -65,7 +62,7 @@ const CustomTooltip = ({
 }: TooltipProps<ValueType, NameType>): JSX.Element => {
   if (active && payload && payload.length) {
     return (
-      <div className="py-2 px-4 bg-gray-800 shadow-lg">
+      <div className="px-4 py-2 bg-gray-800 shadow-lg">
         <p className="text-white">
           Balance {formatCurrency(payload[0].value as number)}
         </p>
@@ -84,55 +81,52 @@ const SimpleLineChart = ({ data }: ISimpleLineChartProps): JSX.Element => {
   );
 
   return (
-    <div className="bg-white rounded-lg border pl-2 py-6 pr-6">
-      <div style={{ width: '100%', height: '33vh', minHeight: '450px' }}>
-        <ResponsiveContainer>
-          <AreaChart data={data}>
-            <defs>
-              <linearGradient id="color" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#1c64f2" stopOpacity={0.4} />
-                <stop offset="75%" stopColor="#1c64f2" stopOpacity={0.05} />
-              </linearGradient>
-            </defs>
-            <Tooltip content={CustomTooltip} />
-            <YAxis
-              dataKey="balance"
-              axisLine={false}
-              tickLine={false}
-              tickCount={6}
-              domain={['dataMin', 'dataMax']}
-              tickFormatter={(number) => formatCurrency(number)}
-              width={105}
-            />
-            <XAxis
-              dataKey="dateStr"
-              axisLine={false}
-              tickLine={false}
-              tickMargin={15}
-              height={50}
-            />
-            <Area
-              dataKey="balance"
-              stroke="#1c64f2"
-              fill="url(#color)"
-              strokeWidth={2}
-            />
-            <Brush
-              dataKey="dateStr"
-              height={30}
-              stroke="#1c64f2"
-              startIndex={monthAgoIndex}
-            >
-              <AreaChart>
-                <CartesianGrid />
-                <YAxis hide domain={['dataMin', 'dataMax']} />
-                <Area dataKey="balance" stroke="#1c64f2" fill="#1c64f2" />
-              </AreaChart>
-            </Brush>
-            <CartesianGrid vertical={false} opacity={0.5} />
-          </AreaChart>
-        </ResponsiveContainer>
-      </div>
+    <div className="bg-white border rounded-lg aspect-video">
+      <ResponsiveContainer>
+        <AreaChart
+          data={data}
+          margin={{ top: 0, left: 0, right: 0, bottom: 0 }}
+        >
+          <defs>
+            <linearGradient id="color" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#1c64f2" stopOpacity={0.4} />
+              <stop offset="75%" stopColor="#1c64f2" stopOpacity={0.05} />
+            </linearGradient>
+          </defs>
+          <Tooltip content={CustomTooltip} />
+          <YAxis
+            dataKey="balance"
+            axisLine={false}
+            tickLine={false}
+            tickCount={6}
+            domain={['dataMin', 'dataMax']}
+            tickFormatter={(number) => formatCurrency(number)}
+            type="number"
+          />
+          <XAxis
+            dataKey="dateStr"
+            axisLine={false}
+            tickLine={false}
+            tickMargin={15}
+            height={50}
+          />
+          <Area
+            dataKey="balance"
+            stroke="#1c64f2"
+            fill="url(#color)"
+            strokeWidth={2}
+            isAnimationActive={false}
+          />
+          <Brush dataKey="dateStr" stroke="#1c64f2" startIndex={monthAgoIndex}>
+            <AreaChart>
+              <CartesianGrid />
+              <YAxis hide domain={['dataMin', 'dataMax']} />
+              <Area dataKey="balance" stroke="#1c64f2" fill="#1c64f2" />
+            </AreaChart>
+          </Brush>
+          <CartesianGrid vertical={false} opacity={0.25} />
+        </AreaChart>
+      </ResponsiveContainer>
     </div>
   );
 };
@@ -152,16 +146,14 @@ const AccountDeleteModal = ({ handleDelete }: IAccountDeleteModalProps) => (
 
 export const Account = (): JSX.Element => {
   const history = useHistory();
+  const deleteAccount = useDeleteAccount();
   const [account, setAccount] = useState<IAccount | undefined>(undefined);
   const [transactions, setTransactions] = useState<
     ITransactionStackedListRowProps[]
   >([]);
   const [rawTransactions, setRawTransactions] = useState<ITransaction[]>([]);
-  const [transactionCategoryMappings, setTransactionCategoryMappings] =
-    useState<ITransactionCategoryMapping[]>([]);
-  const [transactionCategories, setTransactionCategories] = useState<
-    ITransactionCategory[]
-  >([]);
+  const transactionCategoryMappings = useAllTransactionCategoryMappings();
+  const transactionCategories = useAllTransactionCategories();
   const [chartData, setChartData] = useState<IChartData[]>([]);
   const { id } = useParams<{ id: string }>();
 
@@ -170,22 +162,11 @@ export const Account = (): JSX.Element => {
       setAccount(await getAccountById(id));
     };
 
-    const fetchAllTransactionCategories = async () => {
-      setTransactionCategories(await getAllTransactionCategories());
-    };
-    const fetchAllUserTransactionCategoryMappings = async () => {
-      setTransactionCategoryMappings(
-        await getAllUserTransactionCategoryMappings()
-      );
-    };
-
     const fetchTransactions = async () => {
       setRawTransactions((await getAccountTransactions(id)).payload);
     };
 
     fetchAccount();
-    fetchAllTransactionCategories();
-    fetchAllUserTransactionCategoryMappings();
     fetchTransactions();
   }, [id]);
 
@@ -285,10 +266,10 @@ export const Account = (): JSX.Element => {
         </StatsItem>
       </StatsGroup>
       <SimpleLineChart data={chartData} />
-      <h2 className="text-2xl sm:text-3xl font-bold tracking-tighter mt-8 mb-4">
+      <h2 className="mt-8 mb-4 text-2xl font-bold tracking-tighter sm:text-3xl">
         History
       </h2>
-      <TransactionStackedList className="mt-4" rows={transactions} />
+      {/* <TransactionStackedList className="mt-4" rows={transactions} /> */}
     </>
   );
 };

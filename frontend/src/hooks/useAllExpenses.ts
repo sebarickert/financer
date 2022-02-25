@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useQuery } from 'react-query';
 
 import {
   groupExpensesByMonth,
@@ -6,22 +7,17 @@ import {
   sortExpensesByDate,
   sortExpenseStacksByMonth,
 } from '../pages/expenses/ExpenseFuctions';
-import { getAllUserTransactionCategoryMappings } from '../pages/expenses/Expenses';
 import { getAllExpenses } from '../pages/expenses/ExpenseService';
-import { getAllTransactionCategories } from '../pages/profile/TransactionCategories/TransactionCategoriesService';
+
+import { useAllTransactionCategories } from './useAllTransactionCategories';
+import { useAllTransactionCategoryMappings } from './useAllTransactionCategoryMappings';
 
 export const useAllExpenses = (): IExpense[] | null => {
-  const [expenses, setExpenses] = useState<IExpense[] | null>(null);
+  const expenseQuery = useQuery('expenses', getAllExpenses, {
+    staleTime: 300000,
+  });
 
-  useEffect(() => {
-    const fetchExpenses = async () => {
-      setExpenses(await getAllExpenses());
-    };
-
-    fetchExpenses();
-  }, []);
-
-  return expenses;
+  return expenseQuery.data || null;
 };
 
 export const useCurrentMonthExpensesTotalAmount = (): number => {
@@ -57,25 +53,8 @@ export const useAllExpensesGroupByMonth = () => {
   const [groupedExpenses, setGroupedExpenses] = useState<IExpensesPerMonth[]>(
     []
   );
-  const [transactionCategoryMappings, setTransactionCategoryMappings] =
-    useState<ITransactionCategoryMapping[]>([]);
-  const [transactionCategories, setTransactionCategories] = useState<
-    ITransactionCategory[]
-  >([]);
-
-  useEffect(() => {
-    const fetchAllTransactionCategories = async () => {
-      setTransactionCategories(await getAllTransactionCategories());
-    };
-    const fetchAllUserTransactionCategoryMappings = async () => {
-      setTransactionCategoryMappings(
-        await getAllUserTransactionCategoryMappings()
-      );
-    };
-
-    fetchAllTransactionCategories();
-    fetchAllUserTransactionCategoryMappings();
-  }, []);
+  const transactionCategoryMappings = useAllTransactionCategoryMappings();
+  const transactionCategories = useAllTransactionCategories();
 
   useEffect(() => {
     if (expenses === null) return;

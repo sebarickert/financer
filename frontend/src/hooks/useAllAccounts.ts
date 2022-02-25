@@ -1,20 +1,14 @@
 import { useEffect, useState } from 'react';
-import { isConstructorDeclaration } from 'typescript';
+import { useQuery } from 'react-query';
 
 import { getAllAccounts } from '../pages/accounts/AccountService';
 
 export const useAllAccounts = (): IAccount[] | null => {
-  const [accounts, setAccounts] = useState<IAccount[] | null>(null);
+  const accountsQuery = useQuery<IAccount[]>('accounts', getAllAccounts, {
+    staleTime: 300000,
+  });
 
-  useEffect(() => {
-    const fetchAccounts = async () => {
-      setAccounts(await getAllAccounts());
-    };
-
-    fetchAccounts();
-  }, []);
-
-  return accounts;
+  return accountsQuery.data || null;
 };
 
 export const useAllAccountsByType = (

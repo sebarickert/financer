@@ -9,6 +9,8 @@ import {
   Brush,
   CartesianGrid,
   TooltipProps,
+  Line,
+  LineChart,
 } from 'recharts';
 import {
   NameType,
@@ -57,50 +59,32 @@ const CustomTooltip = ({
 
 const SimpleLineChart = ({ data }: ISimpleLineChartProps): JSX.Element => {
   return (
-    <div className="bg-white rounded-lg border pl-2 py-6 pr-6 w-full">
-      <div style={{ width: '100%', height: '33vh', minHeight: '450px' }}>
-        <ResponsiveContainer>
-          <AreaChart
-            data={data.map(({ date, balance }) => ({
-              dateStr: formatDate(date),
-              date,
-              balance,
-            }))}
-          >
-            <defs>
-              <linearGradient id="color" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#1c64f2" stopOpacity={0.4} />
-                <stop offset="75%" stopColor="#1c64f2" stopOpacity={0.05} />
-              </linearGradient>
-            </defs>
-            <Tooltip content={CustomTooltip} />
-            {/* <YAxis
-              dataKey="balance"
-              axisLine={false}
-              tickLine={false}
-              tickCount={6}
-              domain={['dataMin', 'dataMax']}
-              tickFormatter={(number) => formatCurrency(number)}
-              width={105}
-            /> */}
-            <XAxis
-              dataKey="dateStr"
-              axisLine={false}
-              tickLine={false}
-              tickMargin={15}
-              height={50}
-            />
-            <Area
-              dataKey="balance"
-              stroke="#1c64f2"
-              fill="url(#color)"
-              strokeWidth={2}
-            />
-            <CartesianGrid vertical={false} opacity={0.5} />
-          </AreaChart>
-        </ResponsiveContainer>
-      </div>
-    </div>
+    <ResponsiveContainer>
+      <AreaChart
+        data={data.map(({ date, balance }) => ({
+          dateStr: formatDate(date),
+          date,
+          balance,
+        }))}
+        margin={{ top: 0, left: 0, right: 0, bottom: 0 }}
+      >
+        <defs>
+          <linearGradient id="color" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#1c64f2" stopOpacity={0.4} />
+            <stop offset="75%" stopColor="#1c64f2" stopOpacity={0.05} />
+          </linearGradient>
+        </defs>
+        <Tooltip content={CustomTooltip} />
+        <Area
+          dataKey="balance"
+          stroke="#1c64f2"
+          fill="url(#color)"
+          strokeWidth={2}
+          isAnimationActive={false}
+        />
+        <CartesianGrid vertical={false} opacity={0.25} />
+      </AreaChart>
+    </ResponsiveContainer>
   );
 };
 
@@ -157,13 +141,15 @@ export const BalanceGraph = ({
     setBalanceHistory(newBalanceHistory);
   }, [allExpenses, allIncomes, allLoanAccounts, totalBalance]);
 
-  return balanceHistory === null ? (
-    <Loader loaderColor="blue" />
-  ) : (
-    <div
-      className={`bg-white border rounded-lg flex items-center justify-center aspect-video md:aspect-auto w-full ${className}`}
+  return (
+    <section
+      className={`bg-white rounded-lg border ${className} aspect-video md:aspect-auto`}
     >
-      <SimpleLineChart data={balanceHistory} />
-    </div>
+      {balanceHistory === null ? (
+        <Loader loaderColor="blue" />
+      ) : (
+        <SimpleLineChart data={balanceHistory} />
+      )}
+    </section>
   );
 };

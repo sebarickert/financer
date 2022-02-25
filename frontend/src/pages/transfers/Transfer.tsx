@@ -9,13 +9,10 @@ import { Icon } from '../../components/icon/icon';
 import { Loader } from '../../components/loader/loader';
 import { ModalConfirm } from '../../components/modal/confirm/modal.confirm';
 import { SEO } from '../../components/seo/seo';
+import { useAllTransactionCategoriesWithCategoryTree } from '../../hooks/useAllTransactionCategories';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDate } from '../../utils/formatDate';
 import { getTransactionCategoryMappingByTransactionId } from '../expenses/Expense';
-import {
-  getAllTransactionCategoriesWithCategoryTree,
-  ITransactionCategoryWithCategoryTree,
-} from '../profile/TransactionCategories/TransactionCategoriesService';
 
 import { getTransferById, deleteTransfer } from './TransferService';
 
@@ -42,9 +39,7 @@ export const Transfer = (): JSX.Element => {
   const [transactionCategoryMapping, setTransactionCategoryMapping] = useState<
     ITransactionCategoryMapping[] | undefined
   >(undefined);
-  const [transactionCategories, setTransactionCategories] = useState<
-    ITransactionCategoryWithCategoryTree[] | null
-  >(null);
+  const transactionCategories = useAllTransactionCategoriesWithCategoryTree();
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
@@ -58,15 +53,8 @@ export const Transfer = (): JSX.Element => {
       );
     };
 
-    const fetchTransactionCategories = async () => {
-      setTransactionCategories(
-        await getAllTransactionCategoriesWithCategoryTree()
-      );
-    };
-
     fetchTransfer();
     fetchTransactionCategoryMapping();
-    fetchTransactionCategories();
   }, [id]);
 
   const getCategoryNameById = (categoryId: string) =>
@@ -85,13 +73,13 @@ export const Transfer = (): JSX.Element => {
   ) : (
     <>
       <SEO title={`${transfer.description} | Transfers`} />
-      <section className="rounded-lg border bg-white sm:grid divide-y sm:divide-y-0 sm:divide-x">
+      <section className="bg-white border divide-y rounded-lg sm:grid sm:divide-y-0 sm:divide-x">
         <div className="p-6">
           <header className="flex items-center mb-6">
-            <span className="rounded-lg inline-flex p-3 text-white bg-blue-financer">
+            <span className="inline-flex p-3 text-white rounded-lg bg-blue-financer">
               <Icon type="switch-horizontal" />
             </span>
-            <h1 className="text-2xl sm:text-3xl font-bold tracking-tighter ml-4">
+            <h1 className="ml-4 text-2xl font-bold tracking-tighter sm:text-3xl">
               {transfer.description}
             </h1>
           </header>

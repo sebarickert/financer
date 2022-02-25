@@ -41,7 +41,7 @@ export const Dashboard = (): JSX.Element => {
               />
             </CtaBlock>
           </section>
-          <BalanceGraph />
+          <BalanceGraph className="overflow-y-auto" />
         </section>
         <section className="mt-8 mb-8">
           <Heading className="mb-4">Recent transactions</Heading>

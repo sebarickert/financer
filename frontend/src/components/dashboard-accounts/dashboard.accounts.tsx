@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { getAllAccounts } from '../../pages/accounts/AccountService';
+import { useAllAccounts } from '../../hooks/useAllAccounts';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { IAccountsListRowProps } from '../accounts-list/accounts-list.row';
 import { Button } from '../button/button';
@@ -16,15 +16,8 @@ interface IDashboardAccountsProps {
 export const DashboardAccounts = ({
   className = '',
 }: IDashboardAccountsProps): JSX.Element => {
-  const [accountsRaw, setAccountsRaw] = useState<IAccount[] | null>(null);
+  const accountsRaw = useAllAccounts();
   const [accounts, setAccounts] = useState<IAccountsListRowProps[]>([]);
-
-  useEffect(() => {
-    const fetchAccounts = async () => {
-      setAccountsRaw(await getAllAccounts());
-    };
-    fetchAccounts();
-  }, []);
 
   useEffect(() => {
     if (accountsRaw === null) return;

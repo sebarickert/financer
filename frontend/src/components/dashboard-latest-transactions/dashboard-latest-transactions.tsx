@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
-import { getAllUserTransactionCategoryMappings } from '../../pages/expenses/Expenses';
-import { getAllTransactionCategories } from '../../pages/profile/TransactionCategories/TransactionCategoriesService';
+import { useAllTransactionCategories } from '../../hooks/useAllTransactionCategories';
+import { useAllTransactionCategoryMappings } from '../../hooks/useAllTransactionCategoryMappings';
+import { useAllTransactions } from '../../hooks/useAllTransactions';
 import {
   getTransactionType,
   mapTransactionTypeToUrlPrefix,
 } from '../../pages/statistics/Statistics';
-import { getAllUserTransactions } from '../../services/TransactionService';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDate } from '../../utils/formatDate';
 import { Loader } from '../loader/loader';
@@ -23,32 +23,10 @@ export const DashboardLatestTransactions = ({
   const [visibleTransactions, setVisibleTransactions] = useState<
     ITransactionStackedListRowProps[] | null
   >(null);
-  const [transactionsRaw, setTransactionsRaw] = useState<ITransaction[] | null>(
-    null
-  );
+  const transactionsRaw = useAllTransactions();
   const [transactions, setTransactions] = useState<ITransaction[] | null>(null);
-  const [transactionCategoryMappings, setTransactionCategoryMappings] =
-    useState<ITransactionCategoryMapping[]>([]);
-  const [transactionCategories, setTransactionCategories] = useState<
-    ITransactionCategory[]
-  >([]);
-
-  useEffect(() => {
-    const fetchAllUserTransactions = async () => {
-      setTransactionsRaw((await getAllUserTransactions()).payload);
-    };
-    const fetchAllTransactionCategories = async () => {
-      setTransactionCategories(await getAllTransactionCategories());
-    };
-    const fetchAllUserTransactionCategoryMappings = async () => {
-      setTransactionCategoryMappings(
-        await getAllUserTransactionCategoryMappings()
-      );
-    };
-    fetchAllUserTransactions();
-    fetchAllTransactionCategories();
-    fetchAllUserTransactionCategoryMappings();
-  }, []);
+  const transactionCategoryMappings = useAllTransactionCategoryMappings();
+  const transactionCategories = useAllTransactionCategories();
 
   useEffect(() => {
     if (transactionsRaw === null) return;
