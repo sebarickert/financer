@@ -9,7 +9,7 @@ import { useAllExpensesGroupByMonth } from '../../hooks/expense/useAllExpenses';
 import { formatCurrency } from '../../utils/formatCurrency';
 
 export const Expenses = (): JSX.Element => {
-  const expenses = useAllExpensesGroupByMonth();
+  const [expenses] = useAllExpensesGroupByMonth();
 
   return expenses === null ? (
     <Loader loaderColor="blue" />
