@@ -3,9 +3,13 @@ import React from 'react';
 
 export interface ILoaderProps {
   loaderColor?: 'pink' | 'red' | 'green' | 'blue';
+  className?: string;
 }
 
-export const Loader = ({ loaderColor = 'pink' }: ILoaderProps): JSX.Element => {
+export const Loader = ({
+  loaderColor = 'pink',
+  className = '',
+}: ILoaderProps): JSX.Element => {
   const colorCode = {
     blue: '#1f78f0',
     green: '#38a169',
@@ -17,7 +21,7 @@ export const Loader = ({ loaderColor = 'pink' }: ILoaderProps): JSX.Element => {
 
   return (
     <OrinalLoader
-      className="flex justify-center items-center mx-auto my-12 sm:my-20 md:my-28 lg:my-36"
+      className={`flex justify-center items-center mx-auto ${className}`}
       loaderColor={loaderColorReal}
     />
   );
