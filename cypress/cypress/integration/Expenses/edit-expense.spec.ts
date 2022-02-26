@@ -41,7 +41,11 @@ describe("Add expense", () => {
         const newAmount =
           targetTransactionBefore.amount + amountToChangeTransaction;
 
-        cy.getById(targetTransactionBefore._id).click();
+        // cy.getById(targetTransactionBefore._id).click();
+        // Due to pager on expenses page, we need this workaround and navigate to url manually
+        cy.visit(
+          `http://localhost:3000/statistics/expenses/${targetTransactionBefore._id}`
+        );
         cy.getById(`edit-expense-button`).click();
         cy.get("#description").clear();
         cy.get("#description").type(editedTransactionName);
@@ -149,7 +153,11 @@ describe("Add expense", () => {
         const newAmount =
           targetTransactionBefore.amount + amountToChangeTransaction;
 
-        cy.getById(targetTransactionBefore._id).click();
+        // cy.getById(targetTransactionBefore._id).click();
+        // Due to pager on expenses page, we need this workaround and navigate to url manually
+        cy.visit(
+          `http://localhost:3000/statistics/expenses/${targetTransactionBefore._id}`
+        );
         cy.getById(`edit-expense-button`).click();
         cy.get("#description").clear();
         cy.get("#description").type(editedTransactionName);

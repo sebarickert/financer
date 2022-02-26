@@ -39,7 +39,11 @@ describe("Edit income", () => {
         const newAmount =
           targetTransactionBefore.amount + amountToChangeTransaction;
 
-        cy.getById(targetTransactionBefore._id).click();
+        // cy.getById(targetTransactionBefore._id).click();
+        // Due to pager on incomes page, we need this workaround and navigate to url manually
+        cy.visit(
+          `http://localhost:3000/statistics/incomes/${targetTransactionBefore._id}`
+        );
         cy.getById(`edit-income-button`).click();
         cy.get("#description").clear();
         cy.get("#description").type(editedTransactionName);
@@ -147,7 +151,11 @@ describe("Edit income", () => {
         const newAmount =
           targetTransactionBefore.amount + amountToChangeTransaction;
 
-        cy.getById(targetTransactionBefore._id).click();
+        // cy.getById(targetTransactionBefore._id).click();
+        // Due to pager on incomes page, we need this workaround and navigate to url manually
+        cy.visit(
+          `http://localhost:3000/statistics/incomes/${targetTransactionBefore._id}`
+        );
         cy.getById(`edit-income-button`).click();
         cy.get("#description").clear();
         cy.get("#description").type(editedTransactionName);
