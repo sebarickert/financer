@@ -13,4 +13,19 @@ export const monthNames = [
   'December',
 ];
 
+export const monthNamesAbbreviation = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+];
+
 export const MONTH_IN_MS = 2592000000;

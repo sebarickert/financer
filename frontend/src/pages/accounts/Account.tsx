@@ -1,20 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import {
-  Area,
-  AreaChart,
-  Brush,
-  CartesianGrid,
-  ResponsiveContainer,
-  Tooltip,
-  TooltipProps,
-  XAxis,
-  YAxis,
-} from 'recharts';
-import {
-  NameType,
-  ValueType,
-} from 'recharts/types/component/DefaultTooltipContent';
 
 import { Banner } from '../../components/banner/banner';
 import { BannerText } from '../../components/banner/banner.text';
@@ -27,7 +12,6 @@ import { StatsGroup } from '../../components/stats/stats.group';
 import { StatsItem } from '../../components/stats/stats.item';
 import { TransactionStackedList } from '../../components/transaction-stacked-list/transaction-stacked-list';
 import { ITransactionStackedListRowProps } from '../../components/transaction-stacked-list/transaction-stacked-list.row';
-import { MONTH_IN_MS } from '../../constants/months';
 import { useAccountById } from '../../hooks/account/useAccountById';
 import { useDeleteAccount } from '../../hooks/account/useDeleteAccount';
 import { useTransactionsByAccountId } from '../../hooks/transaction/useTransactionsByAccountId';
@@ -41,95 +25,11 @@ import {
   mapTransactionTypeToUrlPrefix,
 } from '../statistics/Statistics';
 
+import { AccountBalanceHistoryChart } from './AccountBalanceHistoryChart';
+
 interface IAccountDeleteModalProps {
   handleDelete(): void;
 }
-
-interface IChartData {
-  dateStr: string;
-  date: Date;
-  balance: number;
-}
-
-interface ISimpleLineChartProps {
-  data: IChartData[];
-}
-
-const CustomTooltip = ({
-  active,
-  payload,
-  label,
-}: TooltipProps<ValueType, NameType>): JSX.Element => {
-  if (active && payload && payload.length) {
-    return (
-      <div className="px-4 py-2 bg-gray-800 shadow-lg">
-        <p className="text-white">
-          Balance {formatCurrency(payload[0].value as number)}
-        </p>
-        <p className="text-white">{label}</p>
-      </div>
-    );
-  }
-
-  return <div />;
-};
-
-const SimpleLineChart = ({ data }: ISimpleLineChartProps): JSX.Element => {
-  const monthAgoDate = new Date().getTime() - MONTH_IN_MS;
-  const monthAgoIndex = data.indexOf(
-    data.find((tick) => tick.date.getTime() > monthAgoDate) || data[0]
-  );
-
-  return (
-    <div className="bg-white border rounded-lg aspect-video">
-      <ResponsiveContainer>
-        <AreaChart
-          data={data}
-          margin={{ top: 0, left: 0, right: 0, bottom: 0 }}
-        >
-          <defs>
-            <linearGradient id="color" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#1c64f2" stopOpacity={0.4} />
-              <stop offset="75%" stopColor="#1c64f2" stopOpacity={0.05} />
-            </linearGradient>
-          </defs>
-          <Tooltip content={CustomTooltip} />
-          <YAxis
-            dataKey="balance"
-            axisLine={false}
-            tickLine={false}
-            tickCount={6}
-            domain={['dataMin', 'dataMax']}
-            tickFormatter={(number) => formatCurrency(number)}
-            type="number"
-          />
-          <XAxis
-            dataKey="dateStr"
-            axisLine={false}
-            tickLine={false}
-            tickMargin={15}
-            height={50}
-          />
-          <Area
-            dataKey="balance"
-            stroke="#1c64f2"
-            fill="url(#color)"
-            strokeWidth={2}
-            isAnimationActive={false}
-          />
-          <Brush dataKey="dateStr" stroke="#1c64f2" startIndex={monthAgoIndex}>
-            <AreaChart>
-              <CartesianGrid />
-              <YAxis hide domain={['dataMin', 'dataMax']} />
-              <Area dataKey="balance" stroke="#1c64f2" fill="#1c64f2" />
-            </AreaChart>
-          </Brush>
-          <CartesianGrid vertical={false} opacity={0.25} />
-        </AreaChart>
-      </ResponsiveContainer>
-    </div>
-  );
-};
 
 const AccountDeleteModal = ({ handleDelete }: IAccountDeleteModalProps) => (
   <ModalConfirm
@@ -155,7 +55,6 @@ export const Account = (): JSX.Element => {
   const [rawTransactions] = useTransactionsByAccountId(id);
   const transactionCategoryMappings = useAllTransactionCategoryMappings();
   const transactionCategories = useAllTransactionCategories();
-  const [chartData, setChartData] = useState<IChartData[]>([]);
 
   useEffect(() => {
     if (!rawTransactions) return;
@@ -198,25 +97,6 @@ export const Account = (): JSX.Element => {
           new Date(b.date).getTime() > new Date(a.date).getTime() ? 1 : -1
         )
     );
-
-    setChartData(
-      rawTransactions.map(
-        ({
-          toAccount,
-          toAccountBalance = 0,
-          fromAccountBalance = 0,
-          date,
-          amount,
-        }) => ({
-          dateStr: formatDate(new Date(date)),
-          date: new Date(date),
-          balance:
-            toAccount === id
-              ? toAccountBalance + amount
-              : fromAccountBalance - amount,
-        })
-      )
-    );
   }, [id, rawTransactions, transactionCategories, transactionCategoryMappings]);
 
   const handleDelete = async () => {
@@ -253,11 +133,11 @@ export const Account = (): JSX.Element => {
           {formatCurrency(account.balance)}
         </StatsItem>
       </StatsGroup>
-      <SimpleLineChart data={chartData} />
+      <AccountBalanceHistoryChart accountId={id} />
       <h2 className="mt-8 mb-4 text-2xl font-bold tracking-tighter sm:text-3xl">
         History
       </h2>
-      {/* <TransactionStackedList className="mt-4" rows={transactions} /> */}
+      <TransactionStackedList className="mt-4" rows={transactions} />
     </>
   );
 };

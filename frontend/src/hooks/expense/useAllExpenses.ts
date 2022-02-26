@@ -8,6 +8,7 @@ import {
   sortExpenseStacksByMonth,
 } from '../../pages/expenses/ExpenseFuctions';
 import { getAllExpenses } from '../../services/ExpenseService';
+import { useAllAccountsByType } from '../account/useAllAccounts';
 import { useAllTransactionCategories } from '../transactionCategories/useAllTransactionCategories';
 import { useAllTransactionCategoryMappings } from '../transactionCategoryMapping/useAllTransactionCategoryMappings';
 
@@ -47,19 +48,31 @@ export const useCurrentMonthExpensesTotalAmount = (): number => {
   return totalAmount;
 };
 
-export const useAllExpensesGroupByMonth = () => {
+export const useAllExpensesGroupByMonth = (
+  initialForbiddenAccountTypes: IAccount['type'][] = []
+): [
+  IExpensesPerMonth[],
+  React.Dispatch<React.SetStateAction<IAccount['type'][]>>
+] => {
   const expenses = useAllExpenses();
+  const [allForbiddenAccounts, setTargetTypes] = useAllAccountsByType([]);
   const [groupedExpenses, setGroupedExpenses] = useState<IExpensesPerMonth[]>(
     []
   );
   const transactionCategoryMappings = useAllTransactionCategoryMappings();
   const transactionCategories = useAllTransactionCategories();
+  const [forbiddenAccountTypes, setForbiddenAccountTypes] = useState<
+    IAccount['type'][]
+  >(initialForbiddenAccountTypes);
 
   useEffect(() => {
     if (expenses === null) return;
 
+    const forbiddenAccountIds = allForbiddenAccounts?.map(({ _id }) => _id);
+
     setGroupedExpenses(
       expenses
+        .filter(({ _id }) => !forbiddenAccountIds?.includes(_id))
         .map(({ _id, ...rest }) => {
           const categoryMappings = transactionCategoryMappings
             ?.filter(({ transaction_id }) => transaction_id === _id)
@@ -80,7 +93,16 @@ export const useAllExpensesGroupByMonth = () => {
         .sort(sortExpenseStacksByMonth)
         .map(sortExpensesByDate)
     );
-  }, [expenses, transactionCategories, transactionCategoryMappings]);
+  }, [
+    allForbiddenAccounts,
+    expenses,
+    transactionCategories,
+    transactionCategoryMappings,
+  ]);
 
-  return groupedExpenses;
+  useEffect(() => {
+    setTargetTypes(forbiddenAccountTypes);
+  }, [forbiddenAccountTypes, setTargetTypes]);
+
+  return [groupedExpenses, setForbiddenAccountTypes];
 };
