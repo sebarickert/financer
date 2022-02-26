@@ -3,9 +3,9 @@ import { useHistory, useParams } from 'react-router-dom';
 
 import { Loader } from '../../components/loader/loader';
 import { SEO } from '../../components/seo/seo';
-import { useEditTransaction } from '../../hooks/transaction/useEditTransaction';
 import { useAddTransactionCategoryMapping } from '../../hooks/transactionCategoryMapping/useAddTransactionCategoryMapping';
 import { useTransactionCategoryMappingsByTransactionId } from '../../hooks/transactionCategoryMapping/useTransactionCategoryMappingsByTransactionId';
+import { useEditTransfer } from '../../hooks/transfer/useEditTransfer';
 import { useTransferById } from '../../hooks/transfer/useTransferById';
 
 import { TransferForm } from './TransferForm';
@@ -19,7 +19,7 @@ export const EditTransfer = (): JSX.Element => {
   const [transactionCategoryMapping] =
     useTransactionCategoryMappingsByTransactionId(id);
   const addTransactionCategoryMapping = useAddTransactionCategoryMapping();
-  const editTransaction = useEditTransaction();
+  const editTransaction = useEditTransfer();
 
   const handleSubmit = async (
     targetTransferData: ITransaction,
