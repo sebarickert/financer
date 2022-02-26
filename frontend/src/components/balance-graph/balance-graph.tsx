@@ -181,10 +181,10 @@ export const BalanceGraph = ({
       className={`bg-white rounded-lg border ${className} aspect-video md:aspect-auto relative`}
     >
       {balanceHistory === null ? (
-        <Loader loaderColor="blue" />
+        <Loader loaderColor="blue" className="scale-50 h-full" />
       ) : (
         <>
-          <Heading style="h4" className="absolute top-4 left-4">
+          <Heading style="h4" className="absolute top-4 left-4 opacity-50">
             Balance history
           </Heading>
           <SimpleLineChart data={balanceHistory} />
