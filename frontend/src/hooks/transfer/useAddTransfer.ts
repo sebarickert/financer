@@ -1,14 +1,14 @@
 import { useCallback } from 'react';
 import { useQueryClient } from 'react-query';
 
-import { addTransaction } from '../../services/TransactionService';
+import { addTransfer } from '../../services/TransferService';
 
-export const useAddTransaction = () => {
+export const useAddTransfer = () => {
   const queryClient = useQueryClient();
 
   return useCallback(
     async (newTransactionData: ITransaction) => {
-      const newTransaction = await addTransaction(newTransactionData);
+      const newTransaction = await addTransfer(newTransactionData);
       queryClient.invalidateQueries('transfers');
       queryClient.invalidateQueries('transactions');
       queryClient.invalidateQueries('transactionCategoryMappings');

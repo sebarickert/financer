@@ -1,9 +1,9 @@
 import { useQuery } from 'react-query';
 
-import { getAllUserTransactions } from '../../services/TransactionService';
+import { getAllTransactions } from '../../services/TransactionService';
 
 export const useAllTransactions = () => {
-  const transactionsQuery = useQuery('transactions', getAllUserTransactions, {
+  const transactionsQuery = useQuery('transactions', getAllTransactions, {
     staleTime: 300000,
   });
 
