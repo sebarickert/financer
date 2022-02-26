@@ -9,7 +9,7 @@ import { useAllIncomesGroupByMonth } from '../../hooks/income/useAllIncomes';
 import { formatCurrency } from '../../utils/formatCurrency';
 
 export const Incomes = (): JSX.Element => {
-  const incomes = useAllIncomesGroupByMonth();
+  const [incomes] = useAllIncomesGroupByMonth();
 
   return incomes === null ? (
     <Loader loaderColor="blue" />
