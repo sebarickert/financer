@@ -1,7 +1,6 @@
 import { BalanceGraph } from '../../components/balance-graph/balance-graph';
 import { CtaBlock } from '../../components/cta-block/cta-block';
 import { CtaBlockItem } from '../../components/cta-block/cta-block.item';
-import { DashboardAccounts } from '../../components/dashboard-accounts/dashboard.accounts';
 import { DashboardLatestTransactions } from '../../components/dashboard-latest-transactions/dashboard-latest-transactions';
 import { DashboardStats } from '../../components/dashboard-stats/dashboard.stats';
 import { Heading } from '../../components/heading/heading';
