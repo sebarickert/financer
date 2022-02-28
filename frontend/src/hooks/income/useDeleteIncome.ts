@@ -11,6 +11,7 @@ export const useDeleteIncome = () => {
       await deleteIncome(id);
       queryClient.invalidateQueries('incomes');
       queryClient.invalidateQueries('transactions');
+      queryClient.invalidateQueries('accounts');
     },
     [queryClient]
   );

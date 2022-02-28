@@ -12,6 +12,7 @@ export const useEditTransfer = () => {
       queryClient.invalidateQueries('transfers');
       queryClient.invalidateQueries('transactions');
       queryClient.invalidateQueries('transactionCategoryMappings');
+      queryClient.invalidateQueries('accounts');
 
       return editedTransaction;
     },

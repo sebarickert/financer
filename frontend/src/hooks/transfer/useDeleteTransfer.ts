@@ -11,6 +11,7 @@ export const useDeleteTransfer = () => {
       await deleteTransfer(id);
       queryClient.invalidateQueries('transfers');
       queryClient.invalidateQueries('transactions');
+      queryClient.invalidateQueries('accounts');
     },
     [queryClient]
   );
