@@ -11,6 +11,7 @@ export const useDeleteExpense = () => {
       await deleteExpense(id);
       queryClient.invalidateQueries('expenses');
       queryClient.invalidateQueries('transactions');
+      queryClient.invalidateQueries('accounts');
     },
     [queryClient]
   );

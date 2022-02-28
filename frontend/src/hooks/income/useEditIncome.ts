@@ -12,6 +12,7 @@ export const useEditIncome = () => {
       queryClient.invalidateQueries('incomes');
       queryClient.invalidateQueries('transactions');
       queryClient.invalidateQueries('transactionCategoryMappings');
+      queryClient.invalidateQueries('accounts');
 
       return editedExpense;
     },
