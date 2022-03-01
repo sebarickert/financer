@@ -1,5 +1,8 @@
 describe("Account form", () => {
-  beforeEach(() => cy.visit("http://localhost:3000/accounts/add"));
+  beforeEach(() => {
+    cy.applyFixture("empty");
+    cy.visit("http://localhost:3000/accounts/add");
+  });
 
   it("Verify Account name cannot be empty", () => {
     cy.get("#account").clear();

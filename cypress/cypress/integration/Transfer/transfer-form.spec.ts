@@ -1,5 +1,8 @@
 describe("Income form", () => {
-  beforeEach(() => cy.visit("http://localhost:3000/statistics/transfers/add"));
+  beforeEach(() => {
+    cy.applyFixture("accounts-only");
+    cy.visit("http://localhost:3000/statistics/transfers/add");
+  });
 
   it.skip("Verify Transfer name cannot be empty", () => {
     cy.get("#description").clear();

@@ -1,5 +1,8 @@
 describe("Expense form", () => {
-  beforeEach(() => cy.visit("http://localhost:3000/statistics/expenses/add"));
+  beforeEach(() => {
+    cy.applyFixture("accounts-only");
+    cy.visit("http://localhost:3000/statistics/expenses/add");
+  });
 
   it.skip("Verify Expense name cannot be empty", () => {
     cy.get("#description").clear();

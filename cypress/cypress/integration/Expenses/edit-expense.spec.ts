@@ -7,7 +7,11 @@ import {
 } from "../apiHelpers";
 
 describe("Add expense", () => {
-  beforeEach(() => cy.visit("http://localhost:3000/statistics/expenses"));
+  beforeEach(() => {
+    cy.applyFixture("large");
+    cy.visit("http://localhost:3000/statistics/expenses");
+  });
+
   const amountToChangeTransactionStr = "15.50";
   const amountToChangeTransaction = parseFloat(amountToChangeTransactionStr);
   const editedTransactionName = "edited dummy transaction created by test code";
