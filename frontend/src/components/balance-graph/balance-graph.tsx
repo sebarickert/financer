@@ -22,6 +22,7 @@ import {
   useAllIncomes,
   useAllIncomesGroupByMonth,
 } from '../../hooks/income/useAllIncomes';
+import { useAllTransactions } from '../../hooks/transaction/useAllTransactions';
 import { useTotalBalance } from '../../hooks/useTotalBalance';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDateShort } from '../../utils/formatDate';
@@ -41,18 +42,28 @@ interface ISimpleLineChartProps {
   data: BalanceHistory[];
 }
 
+type TooltopPropsWithLastDataItem = TooltipProps<ValueType, NameType> & {
+  lastDataItem: BalanceHistory;
+};
+
 const CustomTooltip = ({
   active,
   payload,
   label,
-}: TooltipProps<ValueType, NameType>): JSX.Element => {
-  if (active && payload && payload.length) {
+  lastDataItem,
+}: TooltopPropsWithLastDataItem): JSX.Element => {
+  if (active && payload && payload.length && lastDataItem) {
+    const isLastItem =
+      lastDataItem.date.getTime() === new Date(label).getTime();
+
     return (
       <div className="px-4 py-2 bg-gray-800 shadow-lg">
         <p className="text-white">
           Balance {formatCurrency(payload[0].value as number)}
         </p>
-        <p className="text-white">{formatDateShort(new Date(label))}</p>
+        <p className="text-white">
+          {isLastItem ? 'Current' : formatDateShort(new Date(label))}
+        </p>
       </div>
     );
   }
@@ -77,7 +88,12 @@ const SimpleLineChart = ({ data }: ISimpleLineChartProps): JSX.Element => {
             <stop offset="75%" stopColor="#1c64f2" stopOpacity={0.05} />
           </linearGradient>
         </defs>
-        <Tooltip content={CustomTooltip} isAnimationActive={false} />
+        <Tooltip
+          content={(props) => (
+            <CustomTooltip {...props} lastDataItem={data[data.length - 1]} />
+          )}
+          isAnimationActive={false}
+        />
         <YAxis dataKey="balance" domain={['dataMin - 1000', 'auto']} hide />
         <XAxis
           dataKey="dateStr"
@@ -114,13 +130,14 @@ export const BalanceGraph = ({
   const allExpenses = useAllExpenses();
   const [groupedIncomes] = useAllIncomesGroupByMonth(['loan']);
   const [groupedExpenses] = useAllExpensesGroupByMonth(['loan']);
-
+  const allTransactions = useAllTransactions();
   const [balanceHistory, setBalanceHistory] = useState<null | BalanceHistory[]>(
     null
   );
 
   useEffect(() => {
-    if (!totalBalance || !allIncomes || !allExpenses) return;
+    if (!totalBalance || !allIncomes || !allExpenses || !allTransactions)
+      return;
 
     const now = new Date();
 
@@ -155,6 +172,12 @@ export const BalanceGraph = ({
       ),
     ];
 
+    const latestTransactionTimestamp = new Date(
+      allTransactions.sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+      )[0].date ?? now
+    );
+
     const oldestVisibleDate = new Date();
     oldestVisibleDate.setFullYear(oldestVisibleDate.getFullYear() - 1);
 
@@ -169,11 +192,18 @@ export const BalanceGraph = ({
 
           return [currentBalance, ...previousBalance];
         },
-        [{ date: now, balance: totalBalance }]
+        [{ date: latestTransactionTimestamp, balance: totalBalance }]
       );
 
     setBalanceHistory(newBalanceHistory);
-  }, [allExpenses, allIncomes, groupedExpenses, groupedIncomes, totalBalance]);
+  }, [
+    allExpenses,
+    allIncomes,
+    allTransactions,
+    groupedExpenses,
+    groupedIncomes,
+    totalBalance,
+  ]);
 
   return (
     <section
