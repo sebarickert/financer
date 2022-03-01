@@ -32,7 +32,10 @@ const addAccountAndVefiryDetails = (
 };
 
 describe("Account creation", () => {
-  beforeEach(() => cy.visit("http://localhost:3000/accounts"));
+  beforeEach(() => {
+    cy.applyFixture("accounts-only");
+    cy.visit("http://localhost:3000/accounts");
+  });
 
   it("Verify accounts in fixture", () => {
     cy.getById("account-row").should("have.length", 6);

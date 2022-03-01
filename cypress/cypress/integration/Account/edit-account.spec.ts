@@ -196,7 +196,10 @@ const editAccountAllDetailsAndVerify = (
 };
 
 describe("Account editing", () => {
-  beforeEach(() => cy.visit("http://localhost:3000/accounts"));
+  beforeEach(() => {
+    cy.applyFixture("accounts-only");
+    cy.visit("http://localhost:3000/accounts");
+  });
 
   it("Change Cash account name", () => {
     editAccountNameAndVerify("Cash account", "Cash Renamed account", "Cash");

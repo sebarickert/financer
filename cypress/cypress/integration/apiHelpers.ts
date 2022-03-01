@@ -51,7 +51,7 @@ export const getTransactionById = async (
     ).json()
   ).payload as ITransaction;
 
-  return { ...transaction, dateObj: new Date(transaction.date) };
+  return { ...transaction, dateObj: new Date(transaction?.date) };
 };
 
 export const getAllAccountTransactionsById = async (
