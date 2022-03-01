@@ -1,0 +1,55 @@
+{
+  "accounts": [
+    {
+      "_id": "61460d8554ea082ad0256759",
+      "balance": -200,
+      "name": "Saving account 1",
+      "type": "savings",
+      "owner": "61460d7354ea082ad0256749",
+      "__v": 0
+    },
+    {
+      "_id": "61460d9454ea082ad0256762",
+      "balance": 51000,
+      "name": "Saving account 2",
+      "type": "savings",
+      "owner": "61460d7354ea082ad0256749",
+      "__v": 0
+    },
+    {
+      "_id": "61460da354ea082ad025676b",
+      "balance": 4350,
+      "name": "Cash account",
+      "type": "cash",
+      "owner": "61460d7354ea082ad0256749",
+      "__v": 0
+    },
+    {
+      "_id": "61460db554ea082ad0256774",
+      "balance": 0,
+      "name": "Investment account",
+      "type": "investment",
+      "owner": "61460d7354ea082ad0256749",
+      "__v": 0
+    },
+    {
+      "_id": "61460dd554ea082ad025677d",
+      "balance": -950,
+      "name": "Credit account",
+      "type": "credit",
+      "owner": "61460d7354ea082ad0256749",
+      "__v": 0
+    },
+    {
+      "_id": "61460de154ea082ad0256786",
+      "balance": -5000,
+      "name": "Loan account",
+      "type": "loan",
+      "owner": "61460d7354ea082ad0256749",
+      "__v": 0
+    }
+  ],
+  "transactions": [],
+  "transactionCategories": [],
+  "transactionCategoryMappings": []
+}

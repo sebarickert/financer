@@ -11,7 +11,11 @@ import {
 } from "../apiHelpers";
 
 describe("Add income", () => {
-  beforeEach(() => cy.visit("http://localhost:3000/statistics/incomes"));
+  beforeEach(() => {
+    cy.applyFixture("large");
+    cy.visit("http://localhost:3000/statistics/incomes");
+  });
+
   const newTransactionAmountStr = "15.50";
   const newTransactionAmount = parseFloat(newTransactionAmountStr);
   const newTransactionName = "new dummy transaction created by test code";
