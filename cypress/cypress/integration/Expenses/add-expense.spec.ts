@@ -47,8 +47,10 @@ describe("Add expense", () => {
         cy.get("#amount").clear();
         cy.get("#amount").type(newTransactionAmountStr);
         cy.get("#fromAccount").select(targetAccountId);
-        cy.getById("submit")
-          .click()
+        cy.getById("submit").click();
+
+        cy.location("pathname")
+          .should("not.contain", "/add")
           .then(() => {
             cy.saveAsyncData("accountAfter", () => getAccount(targetAccountId));
             cy.saveAsyncData("targetTransactionAfter", () =>
@@ -116,8 +118,10 @@ describe("Add expense", () => {
         cy.get("#amount").clear();
         cy.get("#amount").type(newTransactionAmountStr);
         cy.get("#fromAccount").select(targetAccountId);
-        cy.getById("submit")
-          .click()
+        cy.getById("submit").click();
+
+        cy.location("pathname")
+          .should("not.contain", "/add")
           .then(() => {
             cy.saveAsyncData("accountAfter", () => getAccount(targetAccountId));
             cy.saveAsyncData("targetTransactionAfter", () =>
@@ -178,8 +182,10 @@ describe("Add expense", () => {
         cy.get("#amount").clear();
         cy.get("#amount").type(newTransactionAmountStr);
         cy.get("#fromAccount").select(targetAccountId);
-        cy.getById("submit")
-          .click()
+        cy.getById("submit").click();
+
+        cy.location("pathname")
+          .should("not.contain", "/add")
           .then(() => {
             cy.saveAsyncData("accountAfter", () => getAccount(targetAccountId));
             cy.saveAsyncData("transactionsAfter", () =>
