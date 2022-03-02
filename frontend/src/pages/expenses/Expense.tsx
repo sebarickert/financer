@@ -11,7 +11,7 @@ import { SEO } from '../../components/seo/seo';
 import { useDeleteExpense } from '../../hooks/expense/useDeleteExpense';
 import { useExpenseById } from '../../hooks/expense/useExpenseById';
 import { useAllTransactionCategoriesWithCategoryTree } from '../../hooks/transactionCategories/useAllTransactionCategories';
-import { useAllTransactionCategoryMappings } from '../../hooks/transactionCategoryMapping/useAllTransactionCategoryMappings';
+import { useTransactionCategoryMappingsByTransactionId } from '../../hooks/transactionCategoryMapping/useTransactionCategoryMappingsByTransactionId';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDate } from '../../utils/formatDate';
 
@@ -36,7 +36,8 @@ export const Expense = (): JSX.Element => {
   const history = useHistory();
   const { id } = useParams<{ id: string }>();
   const [expense] = useExpenseById(id);
-  const transactionCategoryMapping = useAllTransactionCategoryMappings();
+  const [transactionCategoryMapping] =
+    useTransactionCategoryMappingsByTransactionId(id);
   const transactionCategories = useAllTransactionCategoriesWithCategoryTree();
   const deleteExpense = useDeleteExpense();
 
