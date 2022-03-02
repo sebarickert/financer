@@ -124,16 +124,19 @@ export const BalanceGraph = ({
 
     const now = new Date();
 
+    const getDateFromYearAndMonth = (year: number, month: number): Date =>
+      new Date(`${year}-${(month + 1).toString().padStart(2, '0')}-01`);
+
     const groupedIncomesFormatted = groupedIncomes.map(
       ({ month, year, total }) => ({
-        date: new Date(`${year}-${month + 1}-01`),
+        date: getDateFromYearAndMonth(year, month),
         amount: total,
       })
     );
 
     const groupedExpensesFormatted = groupedExpenses.map(
       ({ month, year, total }) => ({
-        date: new Date(`${year}-${month + 1}-01`),
+        date: getDateFromYearAndMonth(year, month),
         amount: total * -1,
       })
     );
