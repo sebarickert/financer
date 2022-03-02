@@ -64,8 +64,10 @@ describe("Add transfer", () => {
         cy.get("#amount").type(newTransactionAmountStr);
         cy.get("#toAccount").select(targetToAccountId);
         cy.get("#fromAccount").select(targetFromAccountId);
-        cy.getById("submit")
-          .click()
+        cy.getById("submit").click();
+
+        cy.location("pathname")
+          .should("not.contain", "/add")
           .then(() => {
             cy.saveAsyncData("accountToAcccountAfter", () =>
               getAccount(targetToAccountId)
@@ -171,8 +173,10 @@ describe("Add transfer", () => {
         cy.get("#amount").type(newTransactionAmountStr);
         cy.get("#toAccount").select(targetToAccountId);
         cy.get("#fromAccount").select(targetFromAccountId);
-        cy.getById("submit")
-          .click()
+        cy.getById("submit").click();
+
+        cy.location("pathname")
+          .should("not.contain", "/add")
           .then(() => {
             cy.saveAsyncData("accountToAcccountAfter", () =>
               getAccount(targetToAccountId)
@@ -279,8 +283,10 @@ describe("Add transfer", () => {
         cy.get("#amount").type(newTransactionAmountStr);
         cy.get("#toAccount").select(targetToAccountId);
         cy.get("#fromAccount").select(targetFromAccountId);
-        cy.getById("submit")
-          .click()
+        cy.getById("submit").click();
+
+        cy.location("pathname")
+          .should("not.contain", "/add")
           .then(() => {
             cy.saveAsyncData("accountToAcccountAfter", () =>
               getAccount(targetToAccountId)
@@ -294,20 +300,20 @@ describe("Add transfer", () => {
           });
       }
     );
-    // cy.get<IAccount>("@accountToAccountBefore").then((accountToAccountBefore) =>
-    //   cy
-    //     .get<IAccount>("@accountToAcccountAfter")
-    //     .then((accountToAcccountAfter) => {
-    //       const balanceBefore = roundToTwoDecimal(
-    //         accountToAccountBefore.balance
-    //       );
-    //       const balanceAfter = roundToTwoDecimal(
-    //         accountToAcccountAfter.balance
-    //       );
+    cy.get<IAccount>("@accountToAccountBefore").then((accountToAccountBefore) =>
+      cy
+        .get<IAccount>("@accountToAcccountAfter")
+        .then((accountToAcccountAfter) => {
+          const balanceBefore = roundToTwoDecimal(
+            accountToAccountBefore.balance
+          );
+          const balanceAfter = roundToTwoDecimal(
+            accountToAcccountAfter.balance
+          );
 
-    //       expect(balanceBefore + newTransactionAmount).to.be.eq(balanceAfter);
-    //     })
-    // );
+          expect(balanceBefore + newTransactionAmount).to.be.eq(balanceAfter);
+        })
+    );
 
     cy.get<IAccount>("@accountFromAccountBefore").then(
       (accountFromAccountBefore) =>
@@ -344,45 +350,29 @@ describe("Add transfer", () => {
     );
   });
 
-  //           expect(
-  //             accountToAccountBefore.balance + newTransactionAmount
-  //           ).to.be.eq(accountToAcccountAfter.balance);
-  //           expect(
-  //             accountFromAccountBefore.balance - newTransactionAmount
-  //           ).to.be.eq(accountFromAcccountAfter.balance);
+  it("Check that date is correct", () => {
+    const date = new Date();
+    date.setSeconds(0);
+    date.setMilliseconds(0);
 
-  //           expect(
-  //             targetToAccountTransactionBefore.toAccountBalance +
-  //               newTransactionAmount
-  //           ).to.be.eq(targetToAccountTransactionAfter.toAccountBalance);
-  //         });
-  //     }
-  //   );
-  // });
+    cy.getById("add-transfer").click();
+    cy.get("#description").clear();
+    cy.get("#description").type(newTransactionName);
+    cy.get("#date").clear();
+    cy.get("#date").type(formatDate(date));
+    cy.get("#amount").clear();
+    cy.get("#amount").type(newTransactionAmountStr);
+    cy.get("#toAccount").select("Saving account 1");
+    cy.get("#fromAccount").select("Saving account 2");
+    cy.getById("submit").click();
 
-  // it("Check that date is correct", () => {
-  //   const date = new Date();
-  //   date.setSeconds(0);
-  //   date.setMilliseconds(0);
-
-  //   cy.getById("add-transfer").click();
-  //   cy.get("#description").clear();
-  //   cy.get("#description").type(newTransactionName);
-  //   cy.get("#date").clear();
-  //   cy.get("#date").type(formatDate(date));
-  //   cy.get("#amount").clear();
-  //   cy.get("#amount").type(newTransactionAmountStr);
-  //   cy.get("#toAccount").select("Saving account 1");
-  //   cy.get("#fromAccount").select("Saving account 2");
-  //   cy.getById("submit").click();
-
-  //   cy.getById("transaction-stacked-list-container")
-  //     .contains(newTransactionName)
-  //     .click();
-  //   cy.getById("edit-transfer-button").click();
-  //   cy.get("#date").then(($input) => {
-  //     const inputValue = $input.val() as string;
-  //     expect(date.toISOString()).equals(new Date(inputValue).toISOString());
-  //   });
-  // });
+    cy.getById("transaction-stacked-list-container")
+      .contains(newTransactionName)
+      .click();
+    cy.getById("edit-transfer-button").click();
+    cy.get("#date").then(($input) => {
+      const inputValue = $input.val() as string;
+      expect(date.toISOString()).equals(new Date(inputValue).toISOString());
+    });
+  });
 });
