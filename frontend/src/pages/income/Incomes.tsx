@@ -1,7 +1,6 @@
-import { Banner } from '../../components/banner/banner';
-import { BannerText } from '../../components/banner/banner.text';
-import { Button } from '../../components/button/button';
+import { Heading } from '../../components/heading/heading';
 import { Loader } from '../../components/loader/loader';
+import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
 import { SEO } from '../../components/seo/seo';
 import { TransactionStackedList } from '../../components/transaction-stacked-list/transaction-stacked-list';
 import { monthNames } from '../../constants/months';
@@ -16,17 +15,18 @@ export const Incomes = (): JSX.Element => {
   ) : (
     <>
       <SEO title="Incomes" />
-      <Banner title="Incomes" headindType="h1" className="mb-8">
-        <BannerText>Overview page for your income transactions.</BannerText>
-        <Button
+      <section className="mb-8">
+        <Heading variant="h1" className="mb-6">
+          Incomes
+        </Heading>
+        <QuickLinksItem
+          title="Add income"
           link="/statistics/incomes/add"
-          className="mt-6"
-          accentColor="green"
+          iconName="upload"
+          iconBackgroundColor="green"
           testId="add-income"
-        >
-          Add income
-        </Button>
-      </Banner>
+        />
+      </section>
       {incomes.map(({ year, month, rows, total }) => (
         <section
           className="mb-12"

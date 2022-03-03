@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import { AccountsList } from '../../components/accounts-list/accounts-list';
 import { IAccountsListRowProps } from '../../components/accounts-list/accounts-list.row';
 import { Heading } from '../../components/heading/heading';
 import { Loader } from '../../components/loader/loader';
-import { QuickLinks } from '../../components/quick-links/quick-links';
 import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
 import { SEO } from '../../components/seo/seo';
 import { useAllAccounts } from '../../hooks/account/useAllAccounts';
@@ -37,21 +36,13 @@ export const Accounts = (): JSX.Element => {
           <Heading variant="h1" className="mb-6">
             Accounts
           </Heading>
-          <QuickLinks>
-            <QuickLinksItem
-              title="Add account"
-              link="/accounts/add"
-              iconName="view-grid-add"
-              iconBackgroundColor="blue"
-              testId="add-account"
-            />
-            <QuickLinksItem
-              title="Transfer"
-              link="/statistics/transfers/add"
-              iconName="switch-horizontal"
-              iconBackgroundColor="blue"
-            />
-          </QuickLinks>
+          <QuickLinksItem
+            title="Add account"
+            link="/accounts/add"
+            iconName="view-grid-add"
+            iconBackgroundColor="blue"
+            testId="add-account"
+          />
         </section>
         <AccountsList
           label="Savings accounts"

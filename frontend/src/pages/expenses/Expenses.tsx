@@ -1,7 +1,6 @@
-import { Banner } from '../../components/banner/banner';
-import { BannerText } from '../../components/banner/banner.text';
-import { Button } from '../../components/button/button';
+import { Heading } from '../../components/heading/heading';
 import { Loader } from '../../components/loader/loader';
+import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
 import { SEO } from '../../components/seo/seo';
 import { TransactionStackedList } from '../../components/transaction-stacked-list/transaction-stacked-list';
 import { monthNames } from '../../constants/months';
@@ -16,17 +15,18 @@ export const Expenses = (): JSX.Element => {
   ) : (
     <>
       <SEO title="Expenses" />
-      <Banner title="Expenses" headindType="h1" className="mb-8">
-        <BannerText>Overview page for your expense transactions.</BannerText>
-        <Button
+      <section className="mb-8">
+        <Heading variant="h1" className="mb-6">
+          Expenses
+        </Heading>
+        <QuickLinksItem
+          title="Add expense"
           link="/statistics/expenses/add"
-          className="mt-6"
-          accentColor="red"
+          iconName="download"
+          iconBackgroundColor="red"
           testId="add-expense"
-        >
-          Add expense
-        </Button>
-      </Banner>
+        />
+      </section>
       {expenses.map(({ year, month, rows, total }) => (
         <section
           className="mb-12"
