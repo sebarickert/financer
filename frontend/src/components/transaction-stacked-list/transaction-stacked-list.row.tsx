@@ -46,20 +46,32 @@ export const TransactionStackedListRow = ({
             <Icon type={iconTypeMapping[transactionType]} />
           </span>
         </div>
-        <div className="flex flex-col justify-between overflow-hidden">
-          <h2 className="text-base font-semibold truncate">
+        <div className="flex flex-col justify-center overflow-hidden">
+          <h2 className="text-sm sm:text-base font-semibold truncate">
             <NavLink to={link} className="focus:outline-none">
               <span className="absolute inset-0" aria-hidden="true" />
               {label}
             </NavLink>
           </h2>
-          <p className="text-sm text-gray-500 truncate">
-            {transactionCategories}
+          <p className="text-xs sm:text-sm text-gray-500 truncate mt-0.5">
+            <span>
+              <span className="sr-only">Date: </span>
+              {date}
+            </span>
+            {transactionCategories && (
+              <>
+                {' - '}
+                <span>
+                  <span className="sr-only">Categories: </span>
+                  {transactionCategories}
+                </span>
+              </>
+            )}
           </p>
         </div>
-        <div className="flex flex-col justify-between text-right">
+        <div className="flex items-center">
           <p
-            className={`text-base font-semibold truncate ${
+            className={`text-sm sm:text-base font-semibold ${
               transactionType === 'income' && 'text-emerald-600'
             } ${transactionType === 'expense' && 'text-red-600'}`}
           >
@@ -67,7 +79,6 @@ export const TransactionStackedListRow = ({
             {transactionType === 'expense' && '- '}
             {transactionAmount}
           </p>
-          <p className="text-sm text-gray-500">{date}</p>
         </div>
       </article>
     </li>

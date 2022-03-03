@@ -85,6 +85,9 @@ export const DashboardLatestTransactions = ({
       <Loader loaderColor="blue" />
     </section>
   ) : (
-    <TransactionStackedList rows={visibleTransactions} />
+    <TransactionStackedList
+      className={`${className}`}
+      rows={visibleTransactions}
+    />
   );
 };
