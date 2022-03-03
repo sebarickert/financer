@@ -26,7 +26,6 @@ import { useAllTransactions } from '../../hooks/transaction/useAllTransactions';
 import { useTotalBalance } from '../../hooks/useTotalBalance';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDateShort } from '../../utils/formatDate';
-import { Heading } from '../heading/heading';
 import { Loader } from '../loader/loader';
 
 interface BalanceGraphProps {
@@ -71,6 +70,28 @@ const CustomTooltip = ({
   return <div />;
 };
 
+const CustomXAxisTick = ({
+  x,
+  y,
+  payload,
+  index,
+}: {
+  x: number;
+  y: number;
+  payload: { value: string };
+  index: number;
+}) => {
+  if (index === 0 || index === 6) return null;
+
+  return (
+    <g className={`text-xs md:text-sm`}>
+      <text x={x} y={y + 18} textAnchor="middle" fill="#666">
+        {formatDateShort(new Date(payload.value))}
+      </text>
+    </g>
+  );
+};
+
 const SimpleLineChart = ({ data }: ISimpleLineChartProps): JSX.Element => {
   return (
     <ResponsiveContainer>
@@ -99,15 +120,9 @@ const SimpleLineChart = ({ data }: ISimpleLineChartProps): JSX.Element => {
           dataKey="dateStr"
           axisLine={false}
           tickLine={false}
-          tick={{ fontSize: '14px' }}
-          tickMargin={10}
           height={40}
           interval={1}
-          tickFormatter={(tick, index) => {
-            if (index === 0 || index === 6) return '';
-
-            return formatDateShort(new Date(tick));
-          }}
+          tick={(props) => <CustomXAxisTick {...props} />}
         />
         <Area
           dataKey="balance"
@@ -213,9 +228,6 @@ export const BalanceGraph = ({
         <Loader loaderColor="blue" className="scale-50 h-full" />
       ) : (
         <>
-          <Heading style="h4" className="absolute top-4 left-4 opacity-50">
-            Balance history
-          </Heading>
           <SimpleLineChart data={balanceHistory} />
         </>
       )}
