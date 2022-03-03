@@ -34,7 +34,7 @@ const createExpressServer = (): ExpressServerType => {
       saveUninitialized: false,
       resave: false,
       store: MongoStore.create({
-        client: mongoose.connection.getClient(),
+        client: mongoose.connection.getClient() as any,
         touchAfter: 60 * 60 * 24,
       }),
     })
