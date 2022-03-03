@@ -36,7 +36,7 @@ const CustomTooltip = ({
 }: TooltipProps<ValueType, NameType>): JSX.Element => {
   if (active && payload && payload.length) {
     return (
-      <div className="px-4 py-2 bg-gray-800 shadow-lg">
+      <div className="px-4 py-2 bg-gray-800 shadow-lg rounded-md">
         <p className="text-white">
           Balance {formatCurrency(payload[0].value as number)}
         </p>
@@ -46,6 +46,28 @@ const CustomTooltip = ({
   }
 
   return <div />;
+};
+
+const CustomYAxisTick = ({
+  x,
+  y,
+  payload,
+  index,
+}: {
+  x: number;
+  y: number;
+  payload: { value: number };
+  index: number;
+}) => {
+  if (index === 0) return null;
+
+  return (
+    <g className={`text-xs md:text-sm`}>
+      <text x={x} y={y + 5} textAnchor="start" fill="#666">
+        {formatCurrencyAbbreviation(payload.value)}
+      </text>
+    </g>
+  );
 };
 
 interface IAccountBalanceHistoryChartProps {
@@ -92,7 +114,7 @@ export const AccountBalanceHistoryChart = ({
   );
 
   return (
-    <div className="bg-white border rounded-lg min-h-[450px] h-[33vh] md:h-auto md:min-h-0 md:aspect-video pl-2 py-6 pr-6">
+    <div className="bg-white border rounded-lg min-h-[300px] h-[20vh] md:h-auto md:min-h-0 md:aspect-video pl-2 py-6 pr-2">
       <ResponsiveContainer>
         <AreaChart
           data={chartData}
@@ -109,12 +131,9 @@ export const AccountBalanceHistoryChart = ({
             dataKey="balance"
             axisLine={false}
             tickLine={false}
-            tick={{ fontSize: '14px' }}
-            tickFormatter={(tick) => {
-              return formatCurrencyAbbreviation(tick);
-            }}
             type="number"
-            width={75}
+            orientation="right"
+            tick={(props) => <CustomYAxisTick {...props} />}
           />
           <XAxis
             dataKey="dateStr"
