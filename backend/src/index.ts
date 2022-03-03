@@ -14,7 +14,7 @@ import memoryDatabaseServer, {
 const port = 4000; // default port to listen
 
 let connections: Socket[] = [];
-
+ 
 let server: Server;
 
 const startServer = async () => {
@@ -22,10 +22,7 @@ const startServer = async () => {
   if (process.env.NODE_ENV !== "test") {
     // connect to mongodb
     try {
-      await mongoose.connect(MONGODB_URI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      });
+      await mongoose.connect(MONGODB_URI);
       // eslint-disable-next-line no-console
       console.log("connected to mongo db");
       connectedToDb = true;
