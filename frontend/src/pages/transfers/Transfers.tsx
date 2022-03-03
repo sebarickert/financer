@@ -1,7 +1,6 @@
-import { Banner } from '../../components/banner/banner';
-import { BannerText } from '../../components/banner/banner.text';
-import { Button } from '../../components/button/button';
+import { Heading } from '../../components/heading/heading';
 import { Loader } from '../../components/loader/loader';
+import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
 import { SEO } from '../../components/seo/seo';
 import { TransactionStackedList } from '../../components/transaction-stacked-list/transaction-stacked-list';
 import { monthNames } from '../../constants/months';
@@ -16,16 +15,18 @@ export const Transfers = (): JSX.Element => {
   ) : (
     <>
       <SEO title="Transfers" />
-      <Banner title="Transfers" headindType="h1" className="mb-8">
-        <BannerText>Overview page for your transfer transactions.</BannerText>
-        <Button
+      <section className="mb-8">
+        <Heading variant="h1" className="mb-6">
+          Transfers
+        </Heading>
+        <QuickLinksItem
+          title="Add transfer"
           link="/statistics/transfers/add"
-          className="mt-6"
+          iconName="switch-horizontal"
+          iconBackgroundColor="blue"
           testId="add-transfer"
-        >
-          Add transfer
-        </Button>
-      </Banner>
+        />
+      </section>
       {transfers.map(({ year, month, rows, total }) => (
         <section
           className="mb-12"
