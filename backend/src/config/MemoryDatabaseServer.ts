@@ -19,7 +19,7 @@ class MemoryDatabaseServer {
       binary: {
         version: "4.2.16",
       },
-      autoStart: false,
+      // autoStart: false,
     });
   }
 
@@ -48,10 +48,7 @@ export const truncate = async () => {
 
 export const connect = async () => {
   const url = await memoryDatabaseServer.server?.getUri();
-  await mongoose.connect(url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  await mongoose.connect(url);
 };
 
 export const disconnect = async () => {
