@@ -8,7 +8,7 @@ import { Loader } from '../../components/loader/loader';
 import { Select, IOption } from '../../components/select/select';
 import { TransactionCategoriesForm } from '../../components/transaction-categories-form/transaction-categories-form';
 import { useAllAccounts } from '../../hooks/account/useAllAccounts';
-import { useAllTransactionCategoriesWithCategoryTree } from '../../hooks/transactionCategories/useAllTransactionCategories';
+import { useAllTransactionCategoriesForIncomeWithCategoryTree } from '../../hooks/transactionCategories/useAllTransactionCategoriesForIncome';
 import { inputDateFormat } from '../../utils/formatDate';
 
 interface IIncomeFormProps {
@@ -40,7 +40,7 @@ export const IncomeForm = ({
   const accountsRaw = useAllAccounts();
   const [accounts, setAccounts] = useState<IOption[] | null>(null);
   const transactionCategoriesRaw =
-    useAllTransactionCategoriesWithCategoryTree();
+    useAllTransactionCategoriesForIncomeWithCategoryTree();
   const [transactionCategories, setTransactionCategories] = useState<
     IOption[] | null
   >(null);
