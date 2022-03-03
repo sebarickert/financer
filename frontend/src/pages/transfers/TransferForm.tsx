@@ -8,7 +8,7 @@ import { Loader } from '../../components/loader/loader';
 import { Select, IOption } from '../../components/select/select';
 import { TransactionCategoriesForm } from '../../components/transaction-categories-form/transaction-categories-form';
 import { useAllAccounts } from '../../hooks/account/useAllAccounts';
-import { useAllTransactionCategoriesWithCategoryTree } from '../../hooks/transactionCategories/useAllTransactionCategories';
+import { useAllTransactionCategoriesForTransferWithCategoryTree } from '../../hooks/transactionCategories/useAllTransactionCategoriesForTransfer';
 import { inputDateFormat } from '../../utils/formatDate';
 
 interface ITransferFormProps {
@@ -42,7 +42,7 @@ export const TransferForm = ({
   const accountsRaw = useAllAccounts();
   const [accounts, setAccounts] = useState<IOption[] | null>(null);
   const transactionCategoriesRaw =
-    useAllTransactionCategoriesWithCategoryTree();
+    useAllTransactionCategoriesForTransferWithCategoryTree();
   const [transactionCategories, setTransactionCategories] = useState<
     IOption[] | null
   >(null);
