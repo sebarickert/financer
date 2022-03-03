@@ -44,9 +44,7 @@ export const Dashboard = (): JSX.Element => {
         </section>
         <section className="mt-8 mb-8">
           <Heading className="mb-4">Recent transactions</Heading>
-          <div className="overflow-y-auto">
-            <DashboardLatestTransactions />
-          </div>
+          <DashboardLatestTransactions />
         </section>
         <QuickLinks>
           <QuickLinksItem
