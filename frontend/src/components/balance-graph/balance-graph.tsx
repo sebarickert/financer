@@ -56,7 +56,7 @@ const CustomTooltip = ({
       lastDataItem.date.getTime() === new Date(label).getTime();
 
     return (
-      <div className="px-4 py-2 bg-gray-800 shadow-lg">
+      <div className="px-4 py-2 bg-gray-800 shadow-lg rounded-md">
         <p className="text-white">
           Balance {formatCurrency(payload[0].value as number)}
         </p>
