@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 import { Alert } from '../../components/alert/alert';
 import { Button } from '../../components/button/button';
@@ -8,7 +8,7 @@ import { Loader } from '../../components/loader/loader';
 import { Select, IOption } from '../../components/select/select';
 import { TransactionCategoriesForm } from '../../components/transaction-categories-form/transaction-categories-form';
 import { useAllAccounts } from '../../hooks/account/useAllAccounts';
-import { useAllTransactionCategoriesWithCategoryTree } from '../../hooks/transactionCategories/useAllTransactionCategories';
+import { useAllTransactionCategoriesForExpenseWithCategoryTree } from '../../hooks/transactionCategories/useAllTransactionCategoriesForExpense';
 import { inputDateFormat } from '../../utils/formatDate';
 
 interface IExpenseFormProps {
@@ -40,7 +40,7 @@ export const ExpenseForm = ({
   const accountsRaw = useAllAccounts();
   const [accounts, setAccounts] = useState<IOption[] | null>(null);
   const transactionCategoriesRaw =
-    useAllTransactionCategoriesWithCategoryTree();
+    useAllTransactionCategoriesForExpenseWithCategoryTree();
   const [transactionCategories, setTransactionCategories] = useState<
     IOption[] | null
   >(null);
