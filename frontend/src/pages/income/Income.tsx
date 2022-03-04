@@ -1,4 +1,4 @@
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { Button } from '../../components/button/button';
 import { ButtonGroup } from '../../components/button/button.group';
@@ -33,7 +33,7 @@ const IncomeDeleteModal = ({ handleDelete }: IIncomeDeleteModalProps) => (
 );
 
 export const Income = (): JSX.Element => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const [income] = useIncomeById(id);
   const [transactionCategoryMapping] =
@@ -46,8 +46,12 @@ export const Income = (): JSX.Element => {
       ?.categoryTree || categoryId;
 
   const handleDelete = async () => {
+    if (!id) {
+      console.error('Failed to delete income: no id');
+      return;
+    }
     deleteIncome(id);
-    history.push('/statistics/incomes');
+    navigate('/statistics/incomes');
   };
 
   return !income || !transactionCategoryMapping || !transactionCategories ? (

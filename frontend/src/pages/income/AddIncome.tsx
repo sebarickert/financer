@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { SEO } from '../../components/seo/seo';
 import { useAddIncome } from '../../hooks/income/useAddIncome';
@@ -8,7 +8,7 @@ import { useAddTransactionCategoryMapping } from '../../hooks/transactionCategor
 import { IncomeForm } from './IncomeForm';
 
 export const AddIncome = (): JSX.Element => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [errors, setErrors] = useState<string[]>([]);
   const addIncome = useAddIncome();
   const addTransactionCategoryMapping = useAddTransactionCategoryMapping();
@@ -31,7 +31,7 @@ export const AddIncome = (): JSX.Element => {
         );
 
       if (newIncomeJson.status === 201) {
-        history.push('/statistics/incomes');
+        navigate('/statistics/incomes');
       } else if (newIncomeJson.status === 400) {
         setErrors(newIncomeJson?.errors || ['Unknown error.']);
       }

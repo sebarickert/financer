@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useMatch, useResolvedPath } from 'react-router-dom';
 
 import { isExternalLink } from '../../components/button/button';
 
@@ -16,6 +16,11 @@ export const ProfileNavigationItem = ({
   link,
   children,
 }: IProfileNavigationItemProps): JSX.Element => {
+  const resolved = useResolvedPath(link);
+  const match = useMatch({ path: resolved.pathname, end: true });
+
+  const isActive = Boolean(match);
+
   const linkClasses = {
     default:
       'text-gray-600 hover:bg-gray-50 hover:text-gray-900 flex items-center px-3 py-2 text-sm font-medium rounded-md',
@@ -36,9 +41,9 @@ export const ProfileNavigationItem = ({
     <li>
       <NavLink
         to={link}
-        exact
-        className={linkClasses.default}
-        activeClassName={linkClasses.active}
+        className={`${linkClasses.default} ${
+          isActive ? linkClasses.active : ''
+        }`}
         role="menuitem"
       >
         <span className="truncate">{children}</span>

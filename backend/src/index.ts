@@ -14,7 +14,7 @@ import memoryDatabaseServer, {
 const port = 4000; // default port to listen
 
 let connections: Socket[] = [];
- 
+
 let server: Server;
 
 const startServer = async () => {

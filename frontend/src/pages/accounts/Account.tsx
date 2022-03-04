@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { Banner } from '../../components/banner/banner';
 import { BannerText } from '../../components/banner/banner.text';
@@ -46,7 +46,7 @@ const AccountDeleteModal = ({ handleDelete }: IAccountDeleteModalProps) => (
 
 export const Account = (): JSX.Element => {
   const { id } = useParams<{ id: string }>();
-  const history = useHistory();
+  const navigate = useNavigate();
   const deleteAccount = useDeleteAccount();
   const [account] = useAccountById(id);
   const [transactions, setTransactions] = useState<
@@ -100,8 +100,12 @@ export const Account = (): JSX.Element => {
   }, [id, rawTransactions, transactionCategories, transactionCategoryMappings]);
 
   const handleDelete = async () => {
+    if (!id) {
+      console.error('Failure to delete account: no id');
+      return;
+    }
     await deleteAccount(id);
-    history.push('/accounts');
+    navigate('/accounts');
   };
 
   return !account || !transactions ? (

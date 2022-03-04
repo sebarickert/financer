@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { Loader } from '../../components/loader/loader';
 import { SEO } from '../../components/seo/seo';
@@ -10,7 +10,7 @@ import { AccountForm } from './AccountForm';
 
 export const EditAccount = (): JSX.Element => {
   const { id } = useParams<{ id: string }>();
-  const history = useHistory();
+  const navigate = useNavigate();
   const editAccount = useEditAccount();
 
   const [errors, setErrors] = useState<string[]>([]);
@@ -26,7 +26,7 @@ export const EditAccount = (): JSX.Element => {
       const newAccount = await editAccount(newAccountData._id, newAccountData);
 
       if (newAccount.status === 200) {
-        history.push(`/accounts/${id}`);
+        navigate(`/accounts/${id}`);
       } else if (newAccount.status === 400) {
         setErrors(newAccount?.errors || ['Unknown error.']);
       }

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { DesktopNavigationItem } from './desktop-navigation.item';
 
 export const DesktopNavigation = (): JSX.Element => {
@@ -17,10 +15,7 @@ export const DesktopNavigation = (): JSX.Element => {
             label="Statistics"
             iconName="chart-bar"
             link="/statistics"
-            isActive={(match: never, location: { pathname: string }) =>
-              location.pathname.substr(0, 11) === '/statistics' &&
-              location.pathname.substr(-4) !== '/add'
-            }
+            disallowedPathEndings={['add']}
           />
           <DesktopNavigationItem
             label="Accounts"
@@ -35,7 +30,7 @@ export const DesktopNavigation = (): JSX.Element => {
         </ul>
       </nav>
       <nav
-        className="border-t pt-8 mt-8"
+        className="pt-8 mt-8 border-t"
         aria-label="Quick transaction actions navigation in desktop viewmode."
       >
         <ul className="-mr-4">
@@ -60,7 +55,7 @@ export const DesktopNavigation = (): JSX.Element => {
         </ul>
       </nav>
       <nav
-        className="border-t pt-8 mt-8"
+        className="pt-8 mt-8 border-t"
         aria-label="User action links navigation in desktop viewmode."
       >
         <ul className="-mr-4">
