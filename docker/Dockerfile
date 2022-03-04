@@ -1,4 +1,4 @@
-FROM node:16.3.0-alpine as builder
+FROM node:16.14.0-alpine as builder
 
 ENV NODE_ENV production
 RUN apk add --update --no-cache python3 make g++ && ln -sf python3 /usr/bin/python
@@ -11,7 +11,7 @@ RUN npm run build
 
 RUN ls -al /app/build
 
-FROM node:16.3.0-alpine
+FROM node:16.14.0-alpine
 
 ENV NODE_ENV production
 
