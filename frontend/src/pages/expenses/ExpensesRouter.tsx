@@ -1,5 +1,4 @@
-import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import { AddExpense } from './AddExpense';
 import { EditExpense } from './EditExpense';
@@ -8,19 +7,11 @@ import { Expenses } from './Expenses';
 
 export const ExpensesRouter = (): JSX.Element => {
   return (
-    <Switch>
-      <Route exact path="/statistics/expenses">
-        <Expenses />
-      </Route>
-      <Route exact path="/statistics/expenses/add">
-        <AddExpense />
-      </Route>
-      <Route exact path="/statistics/expenses/:id">
-        <Expense />
-      </Route>
-      <Route exact path="/statistics/expenses/:id/edit">
-        <EditExpense />
-      </Route>
-    </Switch>
+    <Routes>
+      <Route index element={<Expenses />} />
+      <Route path="add" element={<AddExpense />} />
+      <Route path=":id" element={<Expense />} />
+      <Route path=":id/edit" element={<EditExpense />} />
+    </Routes>
   );
 };

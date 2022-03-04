@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState, useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { Container } from '../../../components/container/container';
 import { Loader } from '../../../components/loader/loader';
@@ -32,7 +32,7 @@ const TransactionCategoryDeleteModal = ({
 );
 
 export const EditTransactionCategory = (): JSX.Element => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const [errors, setErrors] = useState<string[]>([]);
 
@@ -54,7 +54,7 @@ export const EditTransactionCategory = (): JSX.Element => {
       );
 
       if (newTransactionCategory.status === 200) {
-        history.push(`/profile/transaction-categories`);
+        navigate(`/profile/transaction-categories`);
       } else if (newTransactionCategory.status === 400) {
         setErrors(newTransactionCategory?.errors || ['Unknown error.']);
       }
@@ -65,8 +65,12 @@ export const EditTransactionCategory = (): JSX.Element => {
   };
 
   const handleDelete = async () => {
+    if (!id) {
+      console.error('Failed to delete transaction category: no id');
+      return;
+    }
     deleteTransactionCategory(id);
-    history.push('/profile/transaction-categories');
+    navigate('/profile/transaction-categories');
   };
 
   return !transactionCategory ? (

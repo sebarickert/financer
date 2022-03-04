@@ -1,6 +1,6 @@
-import React from 'react';
 import { NavLink } from 'react-router-dom';
 
+import { useIsActiveLink } from '../../hooks/useIsActiveLink';
 import { isExternalLink } from '../button/button';
 import { Icon, IconName } from '../icon/icon';
 
@@ -11,7 +11,7 @@ interface IDesktopNavigationItemProps {
   onClick?(): void;
   ariaLabel?: string;
   isExact?: boolean;
-  isActive?(match: never, location: { pathname: string }): boolean;
+  disallowedPathEndings?: string[];
 }
 
 export const DesktopNavigationItem = ({
@@ -20,9 +20,11 @@ export const DesktopNavigationItem = ({
   label,
   onClick = () => {},
   ariaLabel,
-  isExact,
-  isActive,
+  isExact = false,
+  disallowedPathEndings = [],
 }: IDesktopNavigationItemProps): JSX.Element => {
+  const isActive = useIsActiveLink({ link, isExact, disallowedPathEndings });
+
   if (isExternalLink(link)) {
     return (
       <li>
@@ -32,7 +34,7 @@ export const DesktopNavigationItem = ({
           aria-label={ariaLabel}
         >
           <Icon type={iconName} />
-          <span className="text-sm ml-4 text-gray-600">{label}</span>
+          <span className="ml-4 text-sm text-gray-600">{label}</span>
         </a>
       </li>
     );
@@ -42,15 +44,14 @@ export const DesktopNavigationItem = ({
     <li>
       <NavLink
         to={link}
-        exact={isExact}
-        className="flex items-center py-4 focus:text-blue-financer hover:text-blue-financer"
-        activeClassName="text-blue-financer border-r-4 border-blue-financer"
+        className={`flex items-center py-4 focus:text-blue-financer hover:text-blue-financer ${
+          isActive ? 'text-blue-financer border-r-4 border-blue-financer' : ''
+        }`}
         onClick={onClick}
         aria-label={ariaLabel}
-        isActive={isActive}
       >
         <Icon type={iconName} />
-        <span className="text-sm ml-4 text-gray-600">{label}</span>
+        <span className="ml-4 text-sm text-gray-600">{label}</span>
       </NavLink>
     </li>
   );

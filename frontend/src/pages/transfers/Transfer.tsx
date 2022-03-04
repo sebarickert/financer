@@ -1,4 +1,4 @@
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { Button } from '../../components/button/button';
 import { ButtonGroup } from '../../components/button/button.group';
@@ -33,7 +33,7 @@ const TransferDeleteModal = ({ handleDelete }: ITransferDeleteModalProps) => (
 );
 
 export const Transfer = (): JSX.Element => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const [transactionCategoryMapping] =
     useTransactionCategoryMappingsByTransactionId(id);
@@ -46,8 +46,12 @@ export const Transfer = (): JSX.Element => {
       ?.categoryTree || categoryId;
 
   const handleDelete = async () => {
+    if (!id) {
+      console.error('Failed to delete transfer: no id');
+      return;
+    }
     await deleteTransfer(id);
-    history.push('/statistics/transfers');
+    navigate('/statistics/transfers');
   };
 
   return !transfer || !transactionCategoryMapping || !transactionCategories ? (

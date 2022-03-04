@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState, useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { Container } from '../../components/container/container';
 import { Loader } from '../../components/loader/loader';
@@ -13,7 +13,7 @@ import { useTransactionCategoryMappingsByTransactionId } from '../../hooks/trans
 import { IncomeForm } from './IncomeForm';
 
 export const EditIncome = (): JSX.Element => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [errors, setErrors] = useState<string[]>([]);
   const { id } = useParams<{ id: string }>();
 
@@ -27,6 +27,10 @@ export const EditIncome = (): JSX.Element => {
     targetIncomeData: IIncome,
     newTransactionCategoryMappingsData: ITransactionCategoryMapping[]
   ) => {
+    if (!id) {
+      console.error('Failed to edit income: no id');
+      return;
+    }
     try {
       const targetIncomeJson = await editIncome(targetIncomeData, id);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -41,7 +45,7 @@ export const EditIncome = (): JSX.Element => {
         );
 
       if (targetIncomeJson.status === 201) {
-        history.push('/statistics/incomes');
+        navigate('/statistics/incomes');
       } else if (targetIncomeJson.status === 400) {
         setErrors(targetIncomeJson?.errors || ['Unknown error.']);
       }
