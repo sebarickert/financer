@@ -25,7 +25,7 @@ export const TransactionStackedList = ({
   >(null);
   const [currentPage, setCurrentPage] = useState(0);
 
-  const chunkAmount = 8;
+  const chunkAmount = 5;
 
   useEffect(() => {
     setPages(
@@ -79,7 +79,7 @@ export const TransactionStackedList = ({
           )
         )}
       </TransactionStackedListRows>
-      {chunkAmount <= rows.length && (
+      {chunkAmount < rows.length && (
         <Pager
           currentPage={currentPage}
           pageCount={pages.length}
