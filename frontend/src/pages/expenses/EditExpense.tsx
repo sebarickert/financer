@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { Container } from '../../components/container/container';
 import { Loader } from '../../components/loader/loader';
@@ -14,7 +14,7 @@ import { ITransactionCategoryWithCategoryTree } from '../../services/Transaction
 import { ExpenseForm } from './ExpenseForm';
 
 export const EditExpense = (): JSX.Element => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const [errors, setErrors] = useState<string[]>([]);
   const editExpense = useEditExpense();
@@ -28,6 +28,10 @@ export const EditExpense = (): JSX.Element => {
     targetExpenseData: IIncome,
     newTransactionCategoryMappingsData: ITransactionCategoryMapping[]
   ) => {
+    if (!id) {
+      console.error('Failed to edit expense: no id');
+      return;
+    }
     try {
       const targetExpenseJson = await editExpense(targetExpenseData, id);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -42,7 +46,7 @@ export const EditExpense = (): JSX.Element => {
         );
 
       if (targetExpenseJson.status === 201) {
-        history.push('/statistics/expenses');
+        navigate('/statistics/expenses');
       } else if (targetExpenseJson.status === 400) {
         setErrors(targetExpenseJson?.errors || ['Unknown error.']);
       }

@@ -1,4 +1,4 @@
-import { Switch, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import { useProfileInformation } from '../../hooks/profile/useProfileInformation';
 
@@ -10,18 +10,15 @@ export const ProfileRouter = (): JSX.Element => {
   const profileInfo = useProfileInformation();
 
   return (
-    <Switch>
-      <Route exact path="/profile">
-        <Profile />
-      </Route>
-      <Route path="/profile/transaction-categories">
-        <TransactionCategoriesRouter />
-      </Route>
+    <Routes>
+      <Route index element={<Profile />} />
+      <Route
+        path="transaction-categories/*"
+        element={<TransactionCategoriesRouter />}
+      />
       {profileInfo?.roles.includes('test-user') && (
-        <Route exact path="/profile/override-data">
-          <ProfileOverrideData />
-        </Route>
+        <Route path="override-data" element={<ProfileOverrideData />} />
       )}
-    </Switch>
+    </Routes>
   );
 };

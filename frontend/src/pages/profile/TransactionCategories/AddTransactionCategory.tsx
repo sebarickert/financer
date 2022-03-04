@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { Container } from '../../../components/container/container';
 import { SEO } from '../../../components/seo/seo';
@@ -8,7 +8,7 @@ import { useAddTransactionCategory } from '../../../hooks/transactionCategories/
 import { TransactionCategoryForm } from './TransactionCategoryForm';
 
 export const AddTransactionCategory = (): JSX.Element => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [errors, setErrors] = useState<string[]>([]);
   const addTransactionCategory = useAddTransactionCategory();
 
@@ -21,7 +21,7 @@ export const AddTransactionCategory = (): JSX.Element => {
       );
 
       if (newExpenseJson.status === 201) {
-        history.push('/profile/transaction-categories');
+        navigate('/profile/transaction-categories');
       } else if (newExpenseJson.status === 400) {
         setErrors(newExpenseJson?.errors || ['Unknown error.']);
       }

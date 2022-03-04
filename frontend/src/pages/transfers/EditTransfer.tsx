@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { Loader } from '../../components/loader/loader';
 import { SEO } from '../../components/seo/seo';
@@ -11,7 +11,7 @@ import { useTransferById } from '../../hooks/transfer/useTransferById';
 import { TransferForm } from './TransferForm';
 
 export const EditTransfer = (): JSX.Element => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const [errors, setErrors] = useState<string[]>([]);
 
@@ -25,6 +25,10 @@ export const EditTransfer = (): JSX.Element => {
     targetTransferData: ITransaction,
     transactionCategoryMappings: ITransactionCategoryMapping[]
   ) => {
+    if (!id) {
+      console.error('Failed to edit transfer: no id');
+      return;
+    }
     try {
       const newTransactionJson = await editTransaction(targetTransferData, id);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -39,7 +43,7 @@ export const EditTransfer = (): JSX.Element => {
         );
 
       if (newTransactionJson.status === 201) {
-        history.push('/statistics/transfers');
+        navigate('/statistics/transfers');
       } else if (newTransactionJson.status === 400) {
         setErrors(newTransactionJson?.errors || ['Unknown error.']);
       }

@@ -1,6 +1,6 @@
-import React from 'react';
 import { NavLink } from 'react-router-dom';
 
+import { useIsActiveLink } from '../../hooks/useIsActiveLink';
 import { Icon, IconName } from '../icon/icon';
 
 interface IMobileNavigationItemProps {
@@ -10,7 +10,7 @@ interface IMobileNavigationItemProps {
   onClick?(): void;
   ariaLabel?: string;
   isExact?: boolean;
-  isActive?(match: never, location: { pathname: string }): boolean;
+  disallowedPathEndings?: string[];
   hasDarkBackground?: boolean;
   type?: 'standalone' | 'default';
 }
@@ -22,21 +22,23 @@ export const MobileNavigationItem = ({
   onClick = () => {},
   ariaLabel,
   isExact,
-  isActive,
   hasDarkBackground,
   type = 'default',
+  disallowedPathEndings,
 }: IMobileNavigationItemProps): JSX.Element => {
+  const isActive = useIsActiveLink({ link, isExact, disallowedPathEndings });
+  console.log('isActive', isActive);
+
   if (type === 'standalone') {
     return (
       <li>
         <NavLink
           to={link}
-          exact={isExact}
-          className="flex flex-col items-center justify-center focus:text-blue-financer hover:text-blue-financer pt-4 pb-3 after:h-1.5 after:w-1.5 after:bg-transparent after:rounded-full after:mt-1"
-          activeClassName="text-blue-financer after:!bg-blue-financer"
+          className={`flex flex-col items-center justify-center focus:text-blue-financer hover:text-blue-financer pt-4 pb-3 after:h-1.5 after:w-1.5 after:bg-transparent after:rounded-full after:mt-1 ${
+            isActive ? 'text-blue-financer after:!bg-blue-financer' : ''
+          }`}
           onClick={onClick}
           aria-label={ariaLabel}
-          isActive={isActive}
         >
           <Icon type={iconName} />
           <span
@@ -55,12 +57,11 @@ export const MobileNavigationItem = ({
     <li>
       <NavLink
         to={link}
-        exact={isExact}
-        className="flex flex-col items-center justify-center focus:text-blue-financer hover:text-blue-financer pt-4 pb-2"
-        activeClassName="text-blue-financer after:!bg-blue-financer"
+        className={`flex flex-col items-center justify-center pt-4 pb-2 focus:text-blue-financer hover:text-blue-financer ${
+          isActive ? 'text-blue-financer after:!bg-blue-financer' : ''
+        }`}
         onClick={onClick}
         aria-label={ariaLabel}
-        isActive={isActive}
       >
         <Icon type={iconName} />
         <span

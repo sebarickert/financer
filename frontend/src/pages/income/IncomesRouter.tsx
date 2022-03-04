@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import { AddIncome } from './AddIncome';
 import { EditIncome } from './EditIncome';
@@ -8,19 +8,11 @@ import { Incomes } from './Incomes';
 
 export const IncomesRouter = (): JSX.Element => {
   return (
-    <Switch>
-      <Route exact path="/statistics/incomes">
-        <Incomes />
-      </Route>
-      <Route exact path="/statistics/incomes/add">
-        <AddIncome />
-      </Route>
-      <Route exact path="/statistics/incomes/:id">
-        <Income />
-      </Route>
-      <Route exact path="/statistics/incomes/:id/edit">
-        <EditIncome />
-      </Route>
-    </Switch>
+    <Routes>
+      <Route index element={<Incomes />} />
+      <Route path="add" element={<AddIncome />} />
+      <Route path=":id" element={<Income />} />
+      <Route path=":id/edit" element={<EditIncome />} />
+    </Routes>
   );
 };

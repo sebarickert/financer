@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { SEO } from '../../components/seo/seo';
 import { useAddTransactionCategoryMapping } from '../../hooks/transactionCategoryMapping/useAddTransactionCategoryMapping';
@@ -8,7 +8,7 @@ import { useAddTransfer } from '../../hooks/transfer/useAddTransfer';
 import { TransferForm } from './TransferForm';
 
 export const AddTransfer = (): JSX.Element => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [errors, setErrors] = useState<string[]>([]);
   const addTransactionCategoryMapping = useAddTransactionCategoryMapping();
   const addTransaction = useAddTransfer();
@@ -32,7 +32,7 @@ export const AddTransfer = (): JSX.Element => {
         );
 
       if (newTransactionJson.status === 201) {
-        history.push('/statistics/transfers');
+        navigate('/statistics/transfers');
       } else if (newTransactionJson.status === 400) {
         setErrors(newTransactionJson?.errors || ['Unknown error.']);
       }

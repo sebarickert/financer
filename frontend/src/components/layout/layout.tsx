@@ -1,16 +1,12 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
 
 import { ReactComponent as Logo } from '../../assets/logo.svg';
 import { Container } from '../container/container';
 import { DesktopNavigation } from '../desktop-navigation/desktop-navigation';
 import { MobileNavigation } from '../mobile-navigation/mobile-navigation';
 
-interface ILayoutProps {
-  children: React.ReactNode;
-}
-
-export const Layout = ({ children }: ILayoutProps): JSX.Element => {
+export const Layout = (): JSX.Element => {
   const [currentWindowWidth, setCurrentWindowWidth] = useState(
     window.outerWidth
   );
@@ -24,11 +20,11 @@ export const Layout = ({ children }: ILayoutProps): JSX.Element => {
       <div className="bg-white-off">
         <Container className="grid grid-cols-[16rem,1fr] min-h-screen px-0">
           <aside className="after:bg-white after:ml-[-100vw] after:pr-[100vw] after:absolute after:top-0 after:bottom-0 after:right-0 relative border-r">
-            <div className="z-10 sticky top-0 pt-12 pb-12 px-4 bottom-12 min-h-screen">
+            <div className="sticky top-0 z-10 min-h-screen px-4 pt-12 pb-12 bottom-12">
               <header>
-                <NavLink to="/" className="mb-8 inline-flex items-center gap-3">
-                  <Logo className="block h-10 w-auto" />
-                  <h2 className="tracking-tight font-bold text-black text-2xl">
+                <NavLink to="/" className="inline-flex items-center gap-3 mb-8">
+                  <Logo className="block w-auto h-10" />
+                  <h2 className="text-2xl font-bold tracking-tight text-black">
                     Financer
                   </h2>
                 </NavLink>
@@ -37,7 +33,9 @@ export const Layout = ({ children }: ILayoutProps): JSX.Element => {
             </div>
           </aside>
           <main>
-            <div className="py-12 px-8">{children}</div>
+            <div className="px-8 py-12">
+              <Outlet />
+            </div>
           </main>
         </Container>
       </div>
@@ -46,9 +44,11 @@ export const Layout = ({ children }: ILayoutProps): JSX.Element => {
 
   return (
     <div className="safe-top safe-left safe-right safe-bottom">
-      <div className="flex flex-col min-h-screen h-full overflow-y-scroll disable-scrollbars">
-        <main className="bg-white-off lg:pb-24 flex-grow">
-          <div className="pt-8 pb-24 px-6">{children}</div>
+      <div className="flex flex-col h-full min-h-screen overflow-y-scroll disable-scrollbars">
+        <main className="flex-grow bg-white-off lg:pb-24">
+          <div className="px-6 pt-8 pb-24">
+            <Outlet />
+          </div>
         </main>
         <header>
           <MobileNavigation />

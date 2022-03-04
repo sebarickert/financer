@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { IconArrowLeft } from './icon.arrowLeft';
 import { IconArrowRight } from './icon.arrowRight';
 import { IconChartBar } from './icon.chartBar';

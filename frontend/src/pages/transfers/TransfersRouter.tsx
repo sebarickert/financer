@@ -1,5 +1,4 @@
-import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import { AddTransfer } from './AddTransfer';
 import { EditTransfer } from './EditTransfer';
@@ -8,19 +7,11 @@ import { Transfers } from './Transfers';
 
 export const TransfersRouter = (): JSX.Element => {
   return (
-    <Switch>
-      <Route exact path="/statistics/transfers">
-        <Transfers />
-      </Route>
-      <Route exact path="/statistics/transfers/add">
-        <AddTransfer />
-      </Route>
-      <Route exact path="/statistics/transfers/:id">
-        <Transfer />
-      </Route>
-      <Route exact path="/statistics/transfers/:id/edit">
-        <EditTransfer />
-      </Route>
-    </Switch>
+    <Routes>
+      <Route index element={<Transfers />} />
+      <Route path="add" element={<AddTransfer />} />
+      <Route path=":id" element={<Transfer />} />
+      <Route path=":id/edit" element={<EditTransfer />} />
+    </Routes>
   );
 };
