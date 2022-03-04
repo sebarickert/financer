@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import { Banner } from '../../../components/banner/banner';
-import { BannerText } from '../../../components/banner/banner.text';
-import { Button } from '../../../components/button/button';
+import { Heading } from '../../../components/heading/heading';
 import { Loader } from '../../../components/loader/loader';
+import { QuickLinksItem } from '../../../components/quick-links/quick-links.item';
 import { SEO } from '../../../components/seo/seo';
 import { StackedList } from '../../../components/stacked-list/stacked-list';
 import { IStackedListRowProps } from '../../../components/stacked-list/stacked-list.row';
@@ -19,6 +18,8 @@ export const TransactionCategories = (): JSX.Element => {
 
   useEffect(() => {
     if (transactionCategoriesRaw === null) return;
+
+    console.log(transactionCategoriesRaw);
 
     setTransactionCategories(
       transactionCategoriesRaw.map(
@@ -42,19 +43,19 @@ export const TransactionCategories = (): JSX.Element => {
     <Loader loaderColor="blue" />
   ) : (
     <>
-      <SEO title="Transaction categories" />
-      <Banner title="Transaction categories" headindType="h1" className="mb-4">
-        <BannerText>
-          Below you are able to add, delete or edit your transaction categories.
-        </BannerText>
-        <Button
+      <SEO title="Categories" />
+      <section className="mb-8">
+        <Heading variant="h1" className="mb-6">
+          Categories
+        </Heading>
+        <QuickLinksItem
+          title="Add category"
           link="/profile/transaction-categories/add"
-          accentColor="green"
-          className="mt-6"
-        >
-          Add transaction category
-        </Button>
-      </Banner>
+          iconName="tag"
+          iconBackgroundColor="blue"
+          testId="add-category"
+        />
+      </section>
       <StackedList rows={transactionCategories} />
     </>
   );
