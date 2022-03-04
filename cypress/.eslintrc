@@ -21,16 +21,28 @@
     "project": "./tsconfig.json"
   },
   "rules": {
+    "chai-friendly/no-unused-expressions": 2,
+    "no-unused-expressions": 0,
+    "@typescript-eslint/no-unused-expressions": 0,
     "linebreak-style": "off",
+    "no-underscore-dangle":  ["error", { "allow": ["_id"] }],
+    "import/prefer-default-export": "off",
+    "import/no-default-export": "error",
+    "import/order": [
+      "error",
+      {
+        "newlines-between": "always",
+        "alphabetize": { "order": "asc", "caseInsensitive": true }
+      }
+    ],
     "prettier/prettier": [
       "error",
       {
-        "endOfLine": "auto"
+        "endOfLine": "auto",
+        "singleQuote": true,
+        "semi": true
       }
-    ],
-    "no-unused-expressions": 0,
-    "@typescript-eslint/no-unused-expressions": 0,
-    "chai-friendly/no-unused-expressions": 2,
-    "no-underscore-dangle": ["error", { "allow": ["_id"] }]
+    ]
+
   }
 }

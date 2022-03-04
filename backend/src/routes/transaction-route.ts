@@ -1,4 +1,5 @@
-import { Router } from "express";
+import { Router } from 'express';
+
 import {
   addTransaction,
   verifyNewTransferInfo,
@@ -8,31 +9,29 @@ import {
   getTransfers,
   verifyTransactionOwnership,
   sendVerifyDelete,
-} from "../controllers/transaction-controller";
+} from '../controllers/transaction-controller';
 
-const router = Router();
+export const transactionRouter = Router();
 
-router.post("/", verifyNewTransferInfo, addTransaction);
+transactionRouter.post('/', verifyNewTransferInfo, addTransaction);
 
-router.put(
-  "/:id",
+transactionRouter.put(
+  '/:id',
   verifyTransactionOwnership,
   verifyNewTransferInfo,
   deleteTransaction,
   addTransaction
 );
 
-router.get("/", getAllUserTransactions);
+transactionRouter.get('/', getAllUserTransactions);
 
-router.get("/transfers", getTransfers);
+transactionRouter.get('/transfers', getTransfers);
 
-router.get("/:id", verifyTransactionOwnership, getTransaction);
+transactionRouter.get('/:id', verifyTransactionOwnership, getTransaction);
 
-router.delete(
-  "/:id",
+transactionRouter.delete(
+  '/:id',
   verifyTransactionOwnership,
   deleteTransaction,
   sendVerifyDelete
 );
-
-export default router;

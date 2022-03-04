@@ -30,7 +30,7 @@ export const getAllUserTransaction = async (): Promise<
   ITransactionWithDateObject[]
 > => {
   const transactions = (
-    await (await fetch("http://localhost:3000/api/transaction")).json()
+    await (await fetch('http://localhost:3000/api/transaction')).json()
   ).payload as ITransaction[];
 
   return transactions

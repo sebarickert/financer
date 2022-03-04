@@ -1,37 +1,36 @@
-import { Router } from "express";
+import { Router } from 'express';
+
 import {
   verifyNewExpenseInfo,
   listUserExpenses,
-} from "../controllers/expense-controller";
+} from '../controllers/expense-controller';
 import {
   getTransaction,
   deleteTransaction,
   addTransaction,
   verifyTransactionOwnership,
   sendVerifyDelete,
-} from "../controllers/transaction-controller";
+} from '../controllers/transaction-controller';
 
-const router = Router();
+export const expenseRouter = Router();
 
-router.get("/", listUserExpenses);
+expenseRouter.get('/', listUserExpenses);
 
-router.post("/", verifyNewExpenseInfo, addTransaction);
+expenseRouter.post('/', verifyNewExpenseInfo, addTransaction);
 
-router.put(
-  "/:id",
+expenseRouter.put(
+  '/:id',
   verifyTransactionOwnership,
   verifyNewExpenseInfo,
   deleteTransaction,
   addTransaction
 );
 
-router.get("/:id", verifyTransactionOwnership, getTransaction);
+expenseRouter.get('/:id', verifyTransactionOwnership, getTransaction);
 
-router.delete(
-  "/:id",
+expenseRouter.delete(
+  '/:id',
   verifyTransactionOwnership,
   deleteTransaction,
   sendVerifyDelete
 );
-
-export default router;

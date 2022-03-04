@@ -1,22 +1,21 @@
-import { Router } from "express";
+import { Router } from 'express';
+
 import {
   addTransactionCategory,
   deleteTransactionCategory,
   getAllUserTransactionCategories,
   getTransactionCategory,
   updateTransactionCategory,
-} from "../controllers/transaction-category-controller";
+} from '../controllers/transaction-category-controller';
 
-const router = Router();
+export const transactionCategoryRouter = Router();
 
-router.get("/", getAllUserTransactionCategories);
+transactionCategoryRouter.get('/', getAllUserTransactionCategories);
 
-router.post("/", addTransactionCategory);
+transactionCategoryRouter.post('/', addTransactionCategory);
 
-router.get("/:id", getTransactionCategory);
+transactionCategoryRouter.get('/:id', getTransactionCategory);
 
-router.delete("/:id", deleteTransactionCategory);
+transactionCategoryRouter.delete('/:id', deleteTransactionCategory);
 
-router.put("/:id", updateTransactionCategory);
-
-export default router;
+transactionCategoryRouter.put('/:id', updateTransactionCategory);

@@ -1,10 +1,10 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response } from 'express';
 
 export const DUMMY_TEST_USER = {
-  roles: ["test-user"],
-  _id: "61460d7354ea082ad0256749",
-  id: "61460d7354ea082ad0256749",
-  name: "Dummy Test User",
+  roles: ['test-user'],
+  _id: '61460d7354ea082ad0256749',
+  id: '61460d7354ea082ad0256749',
+  name: 'Dummy Test User',
 };
 
 export const mockAuthenticationMiddleware = (

@@ -1,14 +1,13 @@
-import { Router } from "express";
-import { getMyData, overrideMyData } from "../controllers/profile-controller";
+import { Router } from 'express';
 
-const router = Router();
+import { getMyData, overrideMyData } from '../controllers/profile-controller';
 
-router.get("/", (req, res) => {
+export const profileRouter = Router();
+
+profileRouter.get('/', (req, res) => {
   res.status(200).json(req.user);
 });
 
-router.get("/my-data", getMyData);
+profileRouter.get('/my-data', getMyData);
 
-router.post("/my-data", overrideMyData);
-
-export default router;
+profileRouter.post('/my-data', overrideMyData);

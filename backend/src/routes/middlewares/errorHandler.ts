@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from 'express';
 
-export default (
+export const errorHandler = (
   err: Error,
   req: Request,
   res: Response,

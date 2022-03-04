@@ -2,9 +2,10 @@
 //   ITransactionCategoryModel,
 // } from "../models/transaction-category-model";
 
-import transactionCategoryMappingModel, {
+import {
+  transactionCategoryMappingModel,
   ITransactionCategoryMappingModel,
-} from "../models/transaction-category-mapping-model";
+} from '../models/transaction-category-mapping-model';
 
 export const findTransactionCategoryMappingsByUser = async (
   userId: string

@@ -1,3 +1,4 @@
-import MemoryDatabaseServer from "../config/MemoryDatabaseServer";
+import { memoryDatabaseServer } from '../config/MemoryDatabaseServer';
 
-export default async (): Promise<void> => MemoryDatabaseServer.stop();
+// eslint-disable-next-line import/no-default-export
+export default async (): Promise<void> => memoryDatabaseServer.stop();

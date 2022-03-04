@@ -1,37 +1,36 @@
-import { Router } from "express";
+import { Router } from 'express';
+
 import {
   verifyNewIncomeInfo,
   listUserIncomes,
-} from "../controllers/income-controller";
+} from '../controllers/income-controller';
 import {
   addTransaction,
   deleteTransaction,
   getTransaction,
   sendVerifyDelete,
   verifyTransactionOwnership,
-} from "../controllers/transaction-controller";
+} from '../controllers/transaction-controller';
 
-const router = Router();
+export const incomeRouter = Router();
 
-router.get("/", listUserIncomes);
+incomeRouter.get('/', listUserIncomes);
 
-router.post("/", verifyNewIncomeInfo, addTransaction);
+incomeRouter.post('/', verifyNewIncomeInfo, addTransaction);
 
-router.put(
-  "/:id",
+incomeRouter.put(
+  '/:id',
   verifyTransactionOwnership,
   verifyNewIncomeInfo,
   deleteTransaction,
   addTransaction
 );
 
-router.get("/:id", verifyTransactionOwnership, getTransaction);
+incomeRouter.get('/:id', verifyTransactionOwnership, getTransaction);
 
-router.delete(
-  "/:id",
+incomeRouter.delete(
+  '/:id',
   verifyTransactionOwnership,
   deleteTransaction,
   sendVerifyDelete
 );
-
-export default router;

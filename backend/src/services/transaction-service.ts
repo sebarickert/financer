@@ -1,6 +1,7 @@
-import transactionModel, {
+import {
   ITransactionModel,
-} from "../models/transaction-model";
+  transactionModel,
+} from '../models/transaction-model';
 
 export const findIncomeTransactionsByUser = async (
   userId: string
@@ -11,7 +12,7 @@ export const findIncomeTransactionsByUser = async (
       toAccount: { $ne: undefined },
       fromAccount: { $eq: undefined },
     })
-    .sort({ date: "asc" });
+    .sort({ date: 'asc' });
 
 export const findExpenseTransactionsByUser = async (
   userId: string
@@ -22,7 +23,7 @@ export const findExpenseTransactionsByUser = async (
       fromAccount: { $ne: undefined },
       toAccount: { $eq: undefined },
     })
-    .sort({ date: "asc" });
+    .sort({ date: 'asc' });
 
 export const findTransactionById = async (
   id: string
@@ -46,7 +47,7 @@ export const findTransferTransactionsByUser = async (
       fromAccount: { $ne: undefined },
       toAccount: { $ne: undefined },
     })
-    .sort({ date: "asc" });
+    .sort({ date: 'asc' });
 
 export const findTransactionsByAccount = async (
   accountId: string
@@ -62,7 +63,7 @@ export const findTransactionsByAccount = async (
         },
       ],
     })
-    .sort({ date: "asc" });
+    .sort({ date: 'asc' });
 
 export const findTransactionsAfterByAccount = async (
   accountId: string,
@@ -80,7 +81,7 @@ export const findTransactionsAfterByAccount = async (
         },
       ],
     })
-    .sort({ date: "asc" });
+    .sort({ date: 'asc' });
 
 export const findTransactionsByUser = async (
   userId: string
@@ -89,7 +90,7 @@ export const findTransactionsByUser = async (
     .find({
       user: userId,
     })
-    .sort({ date: "asc" });
+    .sort({ date: 'asc' });
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const DANGER_truncateTransactionsByUser = async (

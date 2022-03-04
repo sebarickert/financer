@@ -1,42 +1,43 @@
-import { NextFunction, Request } from "express";
-import supertest from "supertest";
-import createExpressServer from "../../server";
-import { createAccount, findAccountById } from "../../services/account-service";
-import { IAccountModel } from "../../models/account-model";
+import { NextFunction, Request } from 'express';
+import supertest from 'supertest';
+
+import { IAccountModel } from '../../models/account-model';
+import { ITransactionModel } from '../../models/transaction-model';
+import { createExpressServer } from '../../server';
+import { createAccount, findAccountById } from '../../services/account-service';
 import {
   createTransaction,
   findExpenseTransactionsByUser,
   findTransactionById,
-} from "../../services/transaction-service";
-import { ITransactionModel } from "../../models/transaction-model";
+} from '../../services/transaction-service';
 
 const SIMPLE_ACCOUNT: IAccount = {
-  name: "simple account",
-  type: "cash",
+  name: 'simple account',
+  type: 'cash',
   balance: 1000.0,
 };
 
 const SIMPLE_TRANSACTION = {
-  description: "123",
+  description: '123',
   amount: 100,
-  date: "2020-11-10T00:00:00.000Z",
+  date: '2020-11-10T00:00:00.000Z',
 };
 
 const SIMPLE_TRANSACTION_AFTER = {
   ...SIMPLE_TRANSACTION,
-  date: "2020-11-11T00:00:00.000Z",
+  date: '2020-11-11T00:00:00.000Z',
 };
 
 const SIMPLE_TRANSACTION_BEFORE = {
   ...SIMPLE_TRANSACTION,
-  date: "2020-11-09T00:00:00.000Z",
+  date: '2020-11-09T00:00:00.000Z',
 };
 
-const USER_ID = "5faef3d6498b721318cbdc51";
-const OTHER_USER_ID = "5faef3d6498b721318cbdc55";
+const USER_ID = '5faef3d6498b721318cbdc51';
+const OTHER_USER_ID = '5faef3d6498b721318cbdc55';
 
 jest.mock(
-  "../../routes/middlewares/authenticationCheck",
+  '../../routes/middlewares/authenticationCheck',
   () => (req: Request, res: never, next: NextFunction) => {
     const user = { _id: USER_ID, id: USER_ID };
     req.user = user;
@@ -44,13 +45,13 @@ jest.mock(
   }
 );
 
-describe("Expense endpoint", () => {
+describe('Expense endpoint', () => {
   let api: supertest.SuperTest<supertest.Test>;
   beforeAll(() => {
     api = supertest(createExpressServer());
   });
 
-  test("GET /api/expense should return user own expenses", async () => {
+  test('GET /api/expense should return user own expenses', async () => {
     const testAccount = await createAccount({
       ...SIMPLE_ACCOUNT,
       owner: USER_ID,
@@ -84,12 +85,12 @@ describe("Expense endpoint", () => {
     const { body: expenses }: { body: IExpense[] } = await api
       .get(`/api/expense`)
       .expect(200)
-      .expect("Content-Type", /application\/json/);
+      .expect('Content-Type', /application\/json/);
 
     expect(expenses.length).toEqual(2);
   });
 
-  test("GET /api/expense/EXPENSE-ID should should show only own expenses", async () => {
+  test('GET /api/expense/EXPENSE-ID should should show only own expenses', async () => {
     const testAccount = await createAccount({
       ...SIMPLE_ACCOUNT,
       owner: USER_ID,
@@ -115,14 +116,14 @@ describe("Expense endpoint", () => {
     await api
       .get(`/api/expense/${ownExpense?._id}`)
       .expect(200)
-      .expect("Content-Type", /application\/json/);
+      .expect('Content-Type', /application\/json/);
     await api
       .get(`/api/expense/${notOwnExpense?._id}`)
       .expect(403)
-      .expect("Content-Type", /application\/json/);
+      .expect('Content-Type', /application\/json/);
   });
 
-  test("POST /api/expense should add expense and decrease account balance", async () => {
+  test('POST /api/expense should add expense and decrease account balance', async () => {
     const testAccount = await createAccount({
       ...SIMPLE_ACCOUNT,
       owner: USER_ID,
@@ -140,7 +141,7 @@ describe("Expense endpoint", () => {
         fromAccount: testAccount?._id,
       } as ITransactionModel)
       .expect(201)
-      .expect("Content-Type", /application\/json/);
+      .expect('Content-Type', /application\/json/);
 
     const expenses = await findExpenseTransactionsByUser(USER_ID);
     const testAccountAfter = await findAccountById(testAccount?._id);
@@ -149,7 +150,7 @@ describe("Expense endpoint", () => {
     expect(testAccountAfter?.balance).toEqual(900);
   });
 
-  test("DELETE /api/expense/EXPENSE-ID should remove expense and increase account balance", async () => {
+  test('DELETE /api/expense/EXPENSE-ID should remove expense and increase account balance', async () => {
     const testAccount = await createAccount({
       ...SIMPLE_ACCOUNT,
       owner: USER_ID,
@@ -178,11 +179,11 @@ describe("Expense endpoint", () => {
     await api
       .delete(`/api/expense/${ownExpense?._id}`)
       .expect(200)
-      .expect("Content-Type", /application\/json/);
+      .expect('Content-Type', /application\/json/);
     await api
       .delete(`/api/expense/${notOwnExpense?._id}`)
       .expect(403)
-      .expect("Content-Type", /application\/json/);
+      .expect('Content-Type', /application\/json/);
 
     const expensesAfter = await findExpenseTransactionsByUser(USER_ID);
     const testAccountAfter = await findAccountById(testAccount?._id);
@@ -190,7 +191,7 @@ describe("Expense endpoint", () => {
     expect(testAccountAfter?.balance).toEqual(1000);
   });
 
-  test("DELETE /api/expense/EXPENSE-ID should increase newer expense fromAccountBalance", async () => {
+  test('DELETE /api/expense/EXPENSE-ID should increase newer expense fromAccountBalance', async () => {
     const testAccount = await createAccount({
       ...SIMPLE_ACCOUNT,
       owner: USER_ID,
@@ -215,7 +216,7 @@ describe("Expense endpoint", () => {
     await api
       .delete(`/api/expense/${firstTransaction?._id}`)
       .expect(200)
-      .expect("Content-Type", /application\/json/);
+      .expect('Content-Type', /application\/json/);
 
     const secondTransactionAfter = await findTransactionById(
       secondTransaction?._id
@@ -224,7 +225,7 @@ describe("Expense endpoint", () => {
     expect(secondTransactionAfter?.fromAccountBalance).toEqual(1000);
   });
 
-  test("POST /api/expense when add past expense should decrease newer expense fromAcountBalance", async () => {
+  test('POST /api/expense when add past expense should decrease newer expense fromAcountBalance', async () => {
     const testAccount = await createAccount({
       ...SIMPLE_ACCOUNT,
       owner: USER_ID,
@@ -266,7 +267,7 @@ describe("Expense endpoint", () => {
         fromAccount: testAccount?._id,
       } as ITransactionModel)
       .expect(201)
-      .expect("Content-Type", /application\/json/);
+      .expect('Content-Type', /application\/json/);
 
     const existingIncomeAfterNewExpenseAfterInsertNewExpense =
       await findTransactionById(existingExpenseAfterNewExpense?._id);

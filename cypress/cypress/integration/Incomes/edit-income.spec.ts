@@ -4,22 +4,22 @@ import {
   getTransactionById,
   ITransactionWithDateObject,
   roundToTwoDecimal,
-} from "../apiHelpers";
+} from '../apiHelpers';
 
-describe("Edit income", () => {
+describe('Edit income', () => {
   beforeEach(() => {
-    cy.applyFixture("large");
-    cy.visit("http://localhost:3000/statistics/incomes");
+    cy.applyFixture('large');
+    cy.visit('http://localhost:3000/statistics/incomes');
   });
 
-  const amountToChangeTransactionStr = "15.50";
+  const amountToChangeTransactionStr = '15.50';
   const amountToChangeTransaction = parseFloat(amountToChangeTransactionStr);
-  const editedTransactionName = "edited dummy transaction created by test code";
+  const editedTransactionName = 'edited dummy transaction created by test code';
 
-  it("Edit newest income", () => {
-    cy.saveAsyncData("transactionsBefore", getAllUserTransaction);
+  it('Edit newest income', () => {
+    cy.saveAsyncData('transactionsBefore', getAllUserTransaction);
 
-    cy.get<ITransactionWithDateObject[]>("@transactionsBefore").then(
+    cy.get<ITransactionWithDateObject[]>('@transactionsBefore').then(
       (transactionsBefore) => {
         const incomesBefore = transactionsBefore.filter(
           ({ fromAccount, toAccount }) => !fromAccount && toAccount
@@ -34,11 +34,11 @@ describe("Edit income", () => {
         );
 
         cy.saveData(
-          "laterTransactionWithSameAccountBefore",
+          'laterTransactionWithSameAccountBefore',
           laterTransactionWithSameAccountBefore
         );
-        cy.saveData("targetTransactionBefore", targetTransactionBefore);
-        cy.saveAsyncData("accountBefore", () => getAccount(targetAccountId));
+        cy.saveData('targetTransactionBefore', targetTransactionBefore);
+        cy.saveAsyncData('accountBefore', () => getAccount(targetAccountId));
 
         const newAmount =
           targetTransactionBefore.amount + amountToChangeTransaction;
@@ -49,28 +49,28 @@ describe("Edit income", () => {
           `http://localhost:3000/statistics/incomes/${targetTransactionBefore._id}`
         );
         cy.getById(`edit-income-button`).click();
-        cy.get("#description").clear();
-        cy.get("#description").type(editedTransactionName);
-        cy.get("#amount").clear();
-        cy.get("#amount").type(newAmount.toString());
-        cy.get("#toAccount").select(targetAccountId);
-        cy.getById("submit").click();
+        cy.get('#description').clear();
+        cy.get('#description').type(editedTransactionName);
+        cy.get('#amount').clear();
+        cy.get('#amount').type(newAmount.toString());
+        cy.get('#toAccount').select(targetAccountId);
+        cy.getById('submit').click();
 
-        cy.location("pathname")
-          .should("not.contain", "/edit")
+        cy.location('pathname')
+          .should('not.contain', '/edit')
           .then(() => {
-            cy.saveAsyncData("accountAfter", () => getAccount(targetAccountId));
-            cy.saveAsyncData("targetTransactionAfter", () =>
+            cy.saveAsyncData('accountAfter', () => getAccount(targetAccountId));
+            cy.saveAsyncData('targetTransactionAfter', () =>
               getTransactionById(targetTransactionBefore._id)
             );
-            cy.saveAsyncData("laterTransactionWithSameAccountAfter", () =>
+            cy.saveAsyncData('laterTransactionWithSameAccountAfter', () =>
               getTransactionById(laterTransactionWithSameAccountBefore._id)
             );
           });
       }
     );
-    cy.get<IAccount>("@accountBefore").then((accountBefore) =>
-      cy.get<IAccount>("@accountAfter").then((accountAfter) => {
+    cy.get<IAccount>('@accountBefore').then((accountBefore) =>
+      cy.get<IAccount>('@accountAfter').then((accountAfter) => {
         const balanceBefore = roundToTwoDecimal(accountBefore.balance);
         const balanceAfter = roundToTwoDecimal(accountAfter.balance);
 
@@ -80,10 +80,10 @@ describe("Edit income", () => {
       })
     );
 
-    cy.get<ITransactionWithDateObject>("@targetTransactionBefore").then(
+    cy.get<ITransactionWithDateObject>('@targetTransactionBefore').then(
       (targetTransactionBefore) =>
         cy
-          .get<ITransactionWithDateObject>("@targetTransactionAfter")
+          .get<ITransactionWithDateObject>('@targetTransactionAfter')
           .then((targetTransactionAfter) => {
             const targetTransactionAfterName =
               targetTransactionAfter.description;
@@ -107,11 +107,11 @@ describe("Edit income", () => {
     );
 
     cy.get<ITransactionWithDateObject>(
-      "@laterTransactionWithSameAccountBefore"
+      '@laterTransactionWithSameAccountBefore'
     ).then((laterTransactionWithSameAccountBefore) =>
       cy
         .get<ITransactionWithDateObject>(
-          "@laterTransactionWithSameAccountAfter"
+          '@laterTransactionWithSameAccountAfter'
         )
         .then((laterTransactionWithSameAccountAfter) => {
           const laterTransactionWithSameAccountAfterToAccountBalance =
@@ -130,10 +130,10 @@ describe("Edit income", () => {
     );
   });
 
-  it("Edit oldest income", () => {
-    cy.saveAsyncData("transactionsBefore", getAllUserTransaction);
+  it('Edit oldest income', () => {
+    cy.saveAsyncData('transactionsBefore', getAllUserTransaction);
 
-    cy.get<ITransactionWithDateObject[]>("@transactionsBefore").then(
+    cy.get<ITransactionWithDateObject[]>('@transactionsBefore').then(
       (transactionsBefore) => {
         const incomesBefore = transactionsBefore.filter(
           ({ fromAccount, toAccount }) => !fromAccount && toAccount
@@ -148,11 +148,11 @@ describe("Edit income", () => {
         );
 
         cy.saveData(
-          "laterTransactionWithSameAccountBefore",
+          'laterTransactionWithSameAccountBefore',
           laterTransactionWithSameAccountBefore
         );
-        cy.saveData("targetTransactionBefore", targetTransactionBefore);
-        cy.saveAsyncData("accountBefore", () => getAccount(targetAccountId));
+        cy.saveData('targetTransactionBefore', targetTransactionBefore);
+        cy.saveAsyncData('accountBefore', () => getAccount(targetAccountId));
 
         const newAmount =
           targetTransactionBefore.amount + amountToChangeTransaction;
@@ -163,28 +163,28 @@ describe("Edit income", () => {
           `http://localhost:3000/statistics/incomes/${targetTransactionBefore._id}`
         );
         cy.getById(`edit-income-button`).click();
-        cy.get("#description").clear();
-        cy.get("#description").type(editedTransactionName);
-        cy.get("#amount").clear();
-        cy.get("#amount").type(newAmount.toString());
-        cy.get("#toAccount").select(targetAccountId);
-        cy.getById("submit").click();
+        cy.get('#description').clear();
+        cy.get('#description').type(editedTransactionName);
+        cy.get('#amount').clear();
+        cy.get('#amount').type(newAmount.toString());
+        cy.get('#toAccount').select(targetAccountId);
+        cy.getById('submit').click();
 
-        cy.location("pathname")
-          .should("not.contain", "/edit")
+        cy.location('pathname')
+          .should('not.contain', '/edit')
           .then(() => {
-            cy.saveAsyncData("accountAfter", () => getAccount(targetAccountId));
-            cy.saveAsyncData("targetTransactionAfter", () =>
+            cy.saveAsyncData('accountAfter', () => getAccount(targetAccountId));
+            cy.saveAsyncData('targetTransactionAfter', () =>
               getTransactionById(targetTransactionBefore._id)
             );
-            cy.saveAsyncData("laterTransactionWithSameAccountAfter", () =>
+            cy.saveAsyncData('laterTransactionWithSameAccountAfter', () =>
               getTransactionById(laterTransactionWithSameAccountBefore._id)
             );
           });
       }
     );
-    cy.get<IAccount>("@accountBefore").then((accountBefore) =>
-      cy.get<IAccount>("@accountAfter").then((accountAfter) => {
+    cy.get<IAccount>('@accountBefore').then((accountBefore) =>
+      cy.get<IAccount>('@accountAfter').then((accountAfter) => {
         const balanceBefore = roundToTwoDecimal(accountBefore.balance);
         const balanceAfter = roundToTwoDecimal(accountAfter.balance);
 
@@ -194,10 +194,10 @@ describe("Edit income", () => {
       })
     );
 
-    cy.get<ITransactionWithDateObject>("@targetTransactionBefore").then(
+    cy.get<ITransactionWithDateObject>('@targetTransactionBefore').then(
       (targetTransactionBefore) =>
         cy
-          .get<ITransactionWithDateObject>("@targetTransactionAfter")
+          .get<ITransactionWithDateObject>('@targetTransactionAfter')
           .then((targetTransactionAfter) => {
             const targetTransactionAfterToAccountBalance = roundToTwoDecimal(
               targetTransactionAfter.toAccountBalance
@@ -212,11 +212,11 @@ describe("Edit income", () => {
           })
     );
     cy.get<ITransactionWithDateObject>(
-      "@laterTransactionWithSameAccountBefore"
+      '@laterTransactionWithSameAccountBefore'
     ).then((laterTransactionWithSameAccountBefore) =>
       cy
         .get<ITransactionWithDateObject>(
-          "@laterTransactionWithSameAccountAfter"
+          '@laterTransactionWithSameAccountAfter'
         )
         .then((laterTransactionWithSameAccountAfter) => {
           const laterTransactionWithSameAccountAfterToAccountBalance =
