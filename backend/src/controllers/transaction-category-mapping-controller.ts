@@ -1,13 +1,14 @@
-import { Response, Request } from "express";
-import { ITransactionCategoryMappingModel } from "../models/transaction-category-mapping-model";
-import { IUserModel } from "../models/user-model";
+import { Response, Request } from 'express';
+
+import { ITransactionCategoryMappingModel } from '../models/transaction-category-mapping-model';
+import { IUserModel } from '../models/user-model';
 import {
   createTransactionCategoryMapping,
   findTransactionCategoryMappingById,
   findTransactionCategoryMappingByTransaction,
   findTransactionCategoryMappingsByUser,
-} from "../services/transaction-category-mapping-service";
-import { findTransactionById } from "../services/transaction-service";
+} from '../services/transaction-category-mapping-service';
+import { findTransactionById } from '../services/transaction-service';
 
 export const getAllUserTransactionCategoryMappings = async (
   req: Request,
@@ -32,10 +33,10 @@ export const addTransactionCategoryMapping = async (
   newTransactionCategoryMappingsData.forEach(
     (newTransactionCategoryMappingData) => {
       if (
-        !("amount" in newTransactionCategoryMappingData) ||
+        !('amount' in newTransactionCategoryMappingData) ||
         newTransactionCategoryMappingData.amount <= 0
       ) {
-        errors.push("Amount must be greater than zero.");
+        errors.push('Amount must be greater than zero.');
       }
     }
   );
@@ -80,7 +81,7 @@ export const getTransactionCategoryMapping = async (
     res.status(404).json({
       authenticated: true,
       status: 404,
-      errors: ["Transaction category mapping not found."],
+      errors: ['Transaction category mapping not found.'],
     });
     return;
   }
@@ -89,7 +90,7 @@ export const getTransactionCategoryMapping = async (
     res.status(403).json({
       authenticated: true,
       status: 403,
-      errors: ["Not authorized to view that transaction category mapping."],
+      errors: ['Not authorized to view that transaction category mapping.'],
     });
     return;
   }
@@ -114,7 +115,7 @@ export const getTransactionCategoryMappingsByTransactionId = async (
     res.status(404).json({
       authenticated: true,
       status: 404,
-      errors: ["Transaction not found."],
+      errors: ['Transaction not found.'],
     });
   }
 
@@ -122,7 +123,7 @@ export const getTransactionCategoryMappingsByTransactionId = async (
     res.status(403).json({
       authenticated: true,
       status: 403,
-      errors: ["Not authorized to view that transaction category mapping."],
+      errors: ['Not authorized to view that transaction category mapping.'],
     });
     return;
   }

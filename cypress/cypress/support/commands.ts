@@ -25,19 +25,19 @@ declare namespace Cypress {
   }
 }
 
-Cypress.Commands.add("getById", (selector, ...args) => {
+Cypress.Commands.add('getById', (selector, ...args) => {
   return cy.get(`[data-testid=${selector}]`, ...args);
 });
 
 Cypress.Commands.add(
-  "saveAsyncData",
+  'saveAsyncData',
   (variableName: string, fetchFunction: () => Promise<unknown>) =>
     cy.wrap(null).then(async () => {
       cy.wrap(await fetchFunction()).as(variableName);
     })
 );
 
-Cypress.Commands.add("saveData", (variableName: string, data: unknown) =>
+Cypress.Commands.add('saveData', (variableName: string, data: unknown) =>
   cy.wrap(null).then(async () => {
     cy.wrap(data).as(variableName);
   })

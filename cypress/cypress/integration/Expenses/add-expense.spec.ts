@@ -8,22 +8,22 @@ import {
   ITransactionWithDateObject,
   getAccountFromTransactions,
   getAccountBalanceFromTransactions,
-} from "../apiHelpers";
+} from '../apiHelpers';
 
-describe("Add expense", () => {
+describe('Add expense', () => {
   beforeEach(() => {
-    cy.applyFixture("large");
-    cy.visit("http://localhost:3000/statistics/expenses");
+    cy.applyFixture('large');
+    cy.visit('http://localhost:3000/statistics/expenses');
   });
 
-  const newTransactionAmountStr = "15.50";
+  const newTransactionAmountStr = '15.50';
   const newTransactionAmount = parseFloat(newTransactionAmountStr);
-  const newTransactionName = "new dummy transaction created by test code";
+  const newTransactionName = 'new dummy transaction created by test code';
 
-  it("Add newest expense", () => {
-    cy.saveAsyncData("transactionsBefore", getAllUserTransaction);
+  it('Add newest expense', () => {
+    cy.saveAsyncData('transactionsBefore', getAllUserTransaction);
 
-    cy.get<ITransactionWithDateObject[]>("@transactionsBefore").then(
+    cy.get<ITransactionWithDateObject[]>('@transactionsBefore').then(
       (transactionsBefore) => {
         const targetTransactionBefore =
           transactionsBefore[transactionsBefore.length - 1];
@@ -32,33 +32,33 @@ describe("Add expense", () => {
           targetTransactionBefore
         );
 
-        cy.saveData("targetTransactionBefore", targetTransactionBefore);
-        cy.saveAsyncData("accountBefore", () => getAccount(targetAccountId));
+        cy.saveData('targetTransactionBefore', targetTransactionBefore);
+        cy.saveAsyncData('accountBefore', () => getAccount(targetAccountId));
 
         const newTransactionDate = new Date(
           targetTransactionBefore.dateObj.getTime() + MINUTE_IN_MS
         );
 
-        cy.getById("add-expense").click();
-        cy.get("#description").clear();
-        cy.get("#description").type(newTransactionName);
-        cy.get("#date").clear();
-        cy.get("#date").type(formatDate(newTransactionDate));
-        cy.get("#amount").clear();
-        cy.get("#amount").type(newTransactionAmountStr);
-        cy.get("#fromAccount").select(targetAccountId);
-        cy.getById("submit").click();
+        cy.getById('add-expense').click();
+        cy.get('#description').clear();
+        cy.get('#description').type(newTransactionName);
+        cy.get('#date').clear();
+        cy.get('#date').type(formatDate(newTransactionDate));
+        cy.get('#amount').clear();
+        cy.get('#amount').type(newTransactionAmountStr);
+        cy.get('#fromAccount').select(targetAccountId);
+        cy.getById('submit').click();
 
-        cy.location("pathname")
-          .should("not.contain", "/add")
+        cy.location('pathname')
+          .should('not.contain', '/add')
           .then(() => {
-            cy.saveAsyncData("accountAfter", () => getAccount(targetAccountId));
-            cy.saveAsyncData("targetTransactionAfter", () =>
+            cy.saveAsyncData('accountAfter', () => getAccount(targetAccountId));
+            cy.saveAsyncData('targetTransactionAfter', () =>
               getTransactionById(targetTransactionBefore._id)
             );
           });
 
-        cy.get<ITransaction>("@targetTransactionAfter").then(
+        cy.get<ITransaction>('@targetTransactionAfter').then(
           (targetTransactionAfter) => {
             expect(targetTransactionBefore.toAccountBalance).to.be.eq(
               targetTransactionAfter.toAccountBalance
@@ -68,17 +68,17 @@ describe("Add expense", () => {
       }
     );
 
-    cy.get<IAccount>("@accountBefore").then((accountBefore) => {
-      cy.get<IAccount>("@accountAfter").then((accountAfter) => {
+    cy.get<IAccount>('@accountBefore').then((accountBefore) => {
+      cy.get<IAccount>('@accountAfter').then((accountAfter) => {
         expect(accountBefore.balance - newTransactionAmount).to.be.eq(
           accountAfter.balance
         );
       });
     });
 
-    cy.get<ITransaction>("@targetTransactionBefore").then(
+    cy.get<ITransaction>('@targetTransactionBefore').then(
       (targetTransactionBefore) => {
-        cy.get<ITransaction>("@targetTransactionAfter").then(
+        cy.get<ITransaction>('@targetTransactionAfter').then(
           (targetTransactionAfter) => {
             expect(
               getAccountBalanceFromTransactions(targetTransactionBefore)
@@ -91,10 +91,10 @@ describe("Add expense", () => {
     );
   });
 
-  it("Add second newest expense", () => {
-    cy.saveAsyncData("transactionsBefore", getAllUserTransaction);
+  it('Add second newest expense', () => {
+    cy.saveAsyncData('transactionsBefore', getAllUserTransaction);
 
-    cy.get<ITransactionWithDateObject[]>("@transactionsBefore").then(
+    cy.get<ITransactionWithDateObject[]>('@transactionsBefore').then(
       (transactionsBefore) => {
         const targetTransactionBefore =
           transactionsBefore[transactionsBefore.length - 1];
@@ -107,41 +107,41 @@ describe("Add expense", () => {
           targetTransactionBefore.dateObj.getTime() - MINUTE_IN_MS
         );
 
-        cy.saveData("targetTransactionBefore", targetTransactionBefore);
-        cy.saveAsyncData("accountBefore", () => getAccount(targetAccountId));
+        cy.saveData('targetTransactionBefore', targetTransactionBefore);
+        cy.saveAsyncData('accountBefore', () => getAccount(targetAccountId));
 
-        cy.getById("add-expense").click();
-        cy.get("#description").clear();
-        cy.get("#description").type(newTransactionName);
-        cy.get("#date").clear();
-        cy.get("#date").type(formatDate(newTransactionDate));
-        cy.get("#amount").clear();
-        cy.get("#amount").type(newTransactionAmountStr);
-        cy.get("#fromAccount").select(targetAccountId);
-        cy.getById("submit").click();
+        cy.getById('add-expense').click();
+        cy.get('#description').clear();
+        cy.get('#description').type(newTransactionName);
+        cy.get('#date').clear();
+        cy.get('#date').type(formatDate(newTransactionDate));
+        cy.get('#amount').clear();
+        cy.get('#amount').type(newTransactionAmountStr);
+        cy.get('#fromAccount').select(targetAccountId);
+        cy.getById('submit').click();
 
-        cy.location("pathname")
-          .should("not.contain", "/add")
+        cy.location('pathname')
+          .should('not.contain', '/add')
           .then(() => {
-            cy.saveAsyncData("accountAfter", () => getAccount(targetAccountId));
-            cy.saveAsyncData("targetTransactionAfter", () =>
+            cy.saveAsyncData('accountAfter', () => getAccount(targetAccountId));
+            cy.saveAsyncData('targetTransactionAfter', () =>
               getTransactionById(targetTransactionBefore._id)
             );
           });
       }
     );
 
-    cy.get<IAccount>("@accountBefore").then((accountBefore) => {
-      cy.get<IAccount>("@accountAfter").then((accountAfter) => {
+    cy.get<IAccount>('@accountBefore').then((accountBefore) => {
+      cy.get<IAccount>('@accountAfter').then((accountAfter) => {
         expect(accountBefore.balance - newTransactionAmount).to.be.eq(
           accountAfter.balance
         );
       });
     });
 
-    cy.get<ITransaction>("@targetTransactionBefore").then(
+    cy.get<ITransaction>('@targetTransactionBefore').then(
       (targetTransactionBefore) => {
-        cy.get<ITransaction>("@targetTransactionAfter").then(
+        cy.get<ITransaction>('@targetTransactionAfter').then(
           (targetTransactionAfter) => {
             expect(
               getAccountBalanceFromTransactions(targetTransactionBefore) -
@@ -155,10 +155,10 @@ describe("Add expense", () => {
     );
   });
 
-  it("Add oldest expense", () => {
-    cy.saveAsyncData("transactionsBefore", getAllUserTransaction);
+  it('Add oldest expense', () => {
+    cy.saveAsyncData('transactionsBefore', getAllUserTransaction);
 
-    cy.get<ITransactionWithDateObject[]>("@transactionsBefore").then(
+    cy.get<ITransactionWithDateObject[]>('@transactionsBefore').then(
       (transactionsBefore) => {
         const targetTransactionBefore = transactionsBefore[0];
 
@@ -170,44 +170,44 @@ describe("Add expense", () => {
           targetTransactionBefore.dateObj.getTime() - MINUTE_IN_MS
         );
 
-        cy.saveData("targetTransactionBefore", targetTransactionBefore);
-        cy.saveData("targetAccountId", targetAccountId);
-        cy.saveAsyncData("accountBefore", () => getAccount(targetAccountId));
+        cy.saveData('targetTransactionBefore', targetTransactionBefore);
+        cy.saveData('targetAccountId', targetAccountId);
+        cy.saveAsyncData('accountBefore', () => getAccount(targetAccountId));
 
-        cy.getById("add-expense").click();
-        cy.get("#description").clear();
-        cy.get("#description").type(newTransactionName);
-        cy.get("#date").clear();
-        cy.get("#date").type(formatDate(newTransactionDate));
-        cy.get("#amount").clear();
-        cy.get("#amount").type(newTransactionAmountStr);
-        cy.get("#fromAccount").select(targetAccountId);
-        cy.getById("submit").click();
+        cy.getById('add-expense').click();
+        cy.get('#description').clear();
+        cy.get('#description').type(newTransactionName);
+        cy.get('#date').clear();
+        cy.get('#date').type(formatDate(newTransactionDate));
+        cy.get('#amount').clear();
+        cy.get('#amount').type(newTransactionAmountStr);
+        cy.get('#fromAccount').select(targetAccountId);
+        cy.getById('submit').click();
 
-        cy.location("pathname")
-          .should("not.contain", "/add")
+        cy.location('pathname')
+          .should('not.contain', '/add')
           .then(() => {
-            cy.saveAsyncData("accountAfter", () => getAccount(targetAccountId));
-            cy.saveAsyncData("transactionsAfter", () =>
+            cy.saveAsyncData('accountAfter', () => getAccount(targetAccountId));
+            cy.saveAsyncData('transactionsAfter', () =>
               getAllAccountTransactionsById(targetAccountId)
             );
           });
       }
     );
 
-    cy.get<IAccount>("@accountBefore").then((accountBefore) => {
-      cy.get<IAccount>("@accountAfter").then((accountAfter) => {
+    cy.get<IAccount>('@accountBefore').then((accountBefore) => {
+      cy.get<IAccount>('@accountAfter').then((accountAfter) => {
         expect(accountBefore.balance - newTransactionAmount).to.be.eq(
           accountAfter.balance
         );
       });
     });
 
-    cy.get<ITransactionWithDateObject[]>("@transactionsBefore").then(
+    cy.get<ITransactionWithDateObject[]>('@transactionsBefore').then(
       (transactionsBefore) => {
-        cy.get<ITransactionWithDateObject[]>("@transactionsAfter").then(
+        cy.get<ITransactionWithDateObject[]>('@transactionsAfter').then(
           (transactionsAfter) => {
-            cy.get<string>("@targetAccountId").then((targetAccountId) => {
+            cy.get<string>('@targetAccountId').then((targetAccountId) => {
               transactionsAfter
                 .filter(({ description }) => description !== newTransactionName)
                 .forEach((transactionAfter) => {
@@ -235,25 +235,25 @@ describe("Add expense", () => {
     );
   });
 
-  it("Check that date is correct", () => {
+  it('Check that date is correct', () => {
     const date = new Date();
     date.setSeconds(0);
     date.setMilliseconds(0);
 
-    cy.getById("add-expense").click();
-    cy.get("#description").clear();
-    cy.get("#description").type(newTransactionName);
-    cy.get("#date").clear();
-    cy.get("#date").type(formatDate(date));
-    cy.get("#amount").clear();
-    cy.get("#amount").type(newTransactionAmountStr);
-    cy.getById("submit").click();
+    cy.getById('add-expense').click();
+    cy.get('#description').clear();
+    cy.get('#description').type(newTransactionName);
+    cy.get('#date').clear();
+    cy.get('#date').type(formatDate(date));
+    cy.get('#amount').clear();
+    cy.get('#amount').type(newTransactionAmountStr);
+    cy.getById('submit').click();
 
-    cy.getById("transaction-stacked-list-container")
+    cy.getById('transaction-stacked-list-container')
       .contains(newTransactionName)
       .click();
-    cy.getById("edit-expense-button").click();
-    cy.get("#date").then(($input) => {
+    cy.getById('edit-expense-button').click();
+    cy.get('#date').then(($input) => {
       const inputValue = $input.val() as string;
       expect(date.toISOString()).equals(new Date(inputValue).toISOString());
     });

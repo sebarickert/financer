@@ -1,4 +1,4 @@
-import accountModel, { IAccountModel } from "../models/account-model";
+import { accountModel, IAccountModel } from '../models/account-model';
 
 export const findAccountsByUser = async (
   userId: string

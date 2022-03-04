@@ -1,6 +1,7 @@
-import transactionCategoryModel, {
+import {
+  transactionCategoryModel,
   ITransactionCategoryModel,
-} from "../models/transaction-category-model";
+} from '../models/transaction-category-model';
 
 export const findTransactionCategoriesByUser = async (
   userId: string

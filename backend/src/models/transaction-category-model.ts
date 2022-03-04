@@ -1,7 +1,8 @@
-import mongoose, { Schema, Document } from "mongoose";
-import { USER_MODEL_NAME } from "./user-model";
+import mongoose, { Schema, Document } from 'mongoose';
 
-export const TRANSACTION_CATEGORY_MODEL_NAME = "transaction-category";
+import { USER_MODEL_NAME } from './user-model';
+
+export const TRANSACTION_CATEGORY_MODEL_NAME = 'transaction-category';
 export interface ITransactionCategoryModel
   extends Document,
     ITransactionCategory {
@@ -31,7 +32,8 @@ const transactionCategorySchema = new Schema({
   },
 });
 
-export default mongoose.model<ITransactionCategoryModel>(
-  TRANSACTION_CATEGORY_MODEL_NAME,
-  transactionCategorySchema
-);
+export const transactionCategoryModel =
+  mongoose.model<ITransactionCategoryModel>(
+    TRANSACTION_CATEGORY_MODEL_NAME,
+    transactionCategorySchema
+  );

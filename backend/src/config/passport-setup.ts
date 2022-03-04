@@ -1,33 +1,36 @@
-import passport from "passport";
+import passport from 'passport';
+import { Strategy as Auth0Strategy } from 'passport-auth0';
 import {
   Strategy as GitHubStrategy,
   Profile as GithubProfile,
-} from "passport-github2";
-import { Strategy as Auth0Strategy } from "passport-auth0";
+} from 'passport-github2';
 
-import { AUTH0_TOKENS, GITHUB_TOKENS } from "./keys";
-import User, { IUserModel } from "../models/user-model";
+import { userModel, IUserModel } from '../models/user-model';
+
+import { AUTH0_TOKENS, GITHUB_TOKENS } from './keys';
 
 // serialize the user.id to save in the cookie session
 // so the browser will remember the user when login
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 passport.serializeUser((user: any, done) => {
   done(null, user.id);
 });
 
 // deserialize the cookieUserId to user in the database
 passport.deserializeUser((id, done) => {
-  User.findById(id)
+  userModel
+    .findById(id)
     .then((user: IUserModel | null) => {
       done(null, user);
     })
     .catch(() => {
-      done(new Error("Failed to deserialize an user"));
+      done(new Error('Failed to deserialize an user'));
     });
 });
 
 if (GITHUB_TOKENS.IS_ACTIVATED) {
   // eslint-disable-next-line no-console
-  console.log("Github Oauth plugin enabled.");
+  console.log('Github Oauth plugin enabled.');
   passport.use(
     new GitHubStrategy(
       {
@@ -44,18 +47,18 @@ if (GITHUB_TOKENS.IS_ACTIVATED) {
         if (!profile.id) {
           // eslint-disable-next-line no-console
           console.error(
-            "Error, Github oAuth returned with unexpected value",
+            'Error, Github oAuth returned with unexpected value',
             profile
           );
           return done(null, undefined);
         }
 
-        const currentUser = await User.findOne({
+        const currentUser = await userModel.findOne({
           githubId: profile.id,
         });
         // create new user if the database doesn't have this user
         if (!currentUser) {
-          const newUser = await new User({
+          const newUser = await new userModel({
             name: profile.displayName,
             screenName: profile.username,
             githubId: profile.id,
@@ -73,7 +76,7 @@ if (GITHUB_TOKENS.IS_ACTIVATED) {
 
 if (AUTH0_TOKENS.IS_ACTIVATED) {
   // eslint-disable-next-line no-console
-  console.log("Auth0 Oauth plugin enabled.");
+  console.log('Auth0 Oauth plugin enabled.');
   passport.use(
     new Auth0Strategy(
       {
@@ -86,17 +89,17 @@ if (AUTH0_TOKENS.IS_ACTIVATED) {
         if (!profile.id) {
           // eslint-disable-next-line no-console
           console.error(
-            "Error, Auth0 oAuth returned with unexpected value",
+            'Error, Auth0 oAuth returned with unexpected value',
             profile
           );
           return done(null, undefined);
         }
-        const currentUser = await User.findOne({
+        const currentUser = await userModel.findOne({
           auth0Id: profile.id,
         });
         // create new user if the database doesn't have this user
         if (!currentUser) {
-          const newUser = await new User({
+          const newUser = await new userModel({
             name: profile.displayName,
             screenName: profile.username,
             auth0Id: profile.id,

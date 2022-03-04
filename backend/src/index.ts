@@ -1,15 +1,17 @@
-import mongoose from "mongoose";
-import { Socket } from "net";
-import http, { Server } from "http";
+import http, { Server } from 'http';
+import { Socket } from 'net';
 
-import "./config/load-env";
-import "./config/passport-setup";
-import { MONGODB_URI } from "./config/keys";
-import createExpressServer from "./server";
-import memoryDatabaseServer, {
+import mongoose from 'mongoose';
+
+import './config/load-env';
+import './config/passport-setup';
+import { MONGODB_URI } from './config/keys';
+import {
   connect as connectToTestDbInMemory,
   disconnect as disconnectFromTestDbInMemory,
-} from "./config/MemoryDatabaseServer";
+  memoryDatabaseServer,
+} from './config/MemoryDatabaseServer';
+import { createExpressServer } from './server';
 
 const port = 4000; // default port to listen
 
@@ -19,17 +21,17 @@ let server: Server;
 
 const startServer = async () => {
   let connectedToDb;
-  if (process.env.NODE_ENV !== "test") {
+  if (process.env.NODE_ENV !== 'test') {
     // connect to mongodb
     try {
       await mongoose.connect(MONGODB_URI);
       // eslint-disable-next-line no-console
-      console.log("connected to mongo db");
+      console.log('connected to mongo db');
       connectedToDb = true;
     } catch (untypeErr) {
       const err = untypeErr as mongoose.CallbackError;
       // eslint-disable-next-line no-console
-      console.error("failed to connect to mongo db");
+      console.error('failed to connect to mongo db');
       // eslint-disable-next-line no-console
       console.error(`${err?.name}: ${err?.message}`);
     }
@@ -37,7 +39,7 @@ const startServer = async () => {
     await memoryDatabaseServer.start();
     await connectToTestDbInMemory();
     // eslint-disable-next-line no-console
-    console.log("Connected to in memory test db");
+    console.log('Connected to in memory test db');
     connectedToDb = true;
   }
 
@@ -48,15 +50,15 @@ const startServer = async () => {
       })
     : http
         .createServer((request, response) => {
-          response.writeHead(500, { "Content-Type": "text/html" });
-          response.write("<h1>Internal server error</h1>");
+          response.writeHead(500, { 'Content-Type': 'text/html' });
+          response.write('<h1>Internal server error</h1>');
           response.end();
         })
         .listen(port);
 
-  server.on("connection", (connection) => {
+  server.on('connection', (connection) => {
     connections.push(connection);
-    connection.on("close", () => {
+    connection.on('close', () => {
       connections = connections.filter((curr) => curr !== connection);
     });
   });
@@ -64,19 +66,19 @@ const startServer = async () => {
 
 const shutDown = () => {
   // eslint-disable-next-line no-console
-  console.log("Received kill signal, shutting down gracefully");
+  console.log('Received kill signal, shutting down gracefully');
   server.close(() => {
     // eslint-disable-next-line no-console
-    console.log("Closed out remaining connections");
+    console.log('Closed out remaining connections');
     process.exit(0);
   });
 
-  if (process.env.NODE_ENV === "test") {
+  if (process.env.NODE_ENV === 'test') {
     const closeConnectionAndStopInMemoryTestDb = async () => {
       await disconnectFromTestDbInMemory();
       await memoryDatabaseServer.stop();
       // eslint-disable-next-line no-console
-      console.log("In memory test db stopped");
+      console.log('In memory test db stopped');
     };
     closeConnectionAndStopInMemoryTestDb();
   }
@@ -84,7 +86,7 @@ const shutDown = () => {
   setTimeout(() => {
     // eslint-disable-next-line no-console
     console.error(
-      "Could not close connections in time, forcefully shutting down"
+      'Could not close connections in time, forcefully shutting down'
     );
     process.exit(1);
   }, 10000);
@@ -94,5 +96,5 @@ const shutDown = () => {
 };
 
 startServer();
-process.on("SIGTERM", shutDown);
-process.on("SIGINT", shutDown);
+process.on('SIGTERM', shutDown);
+process.on('SIGINT', shutDown);

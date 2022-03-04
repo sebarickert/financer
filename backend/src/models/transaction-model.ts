@@ -1,8 +1,9 @@
-import mongoose, { Schema, Document } from "mongoose";
-import { ACCOUNT_MODEL_NAME } from "./account-model";
-import { USER_MODEL_NAME } from "./user-model";
+import mongoose, { Schema, Document } from 'mongoose';
 
-export const TRANSACTION_MODEL_NAME = "transaction";
+import { ACCOUNT_MODEL_NAME } from './account-model';
+import { USER_MODEL_NAME } from './user-model';
+
+export const TRANSACTION_MODEL_NAME = 'transaction';
 export interface ITransactionModel extends Document, ITransaction {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   _id: any;
@@ -30,7 +31,7 @@ const transactionSchema = new Schema({
   amount: Number,
   description: {
     type: String,
-    default: "",
+    default: '',
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
@@ -39,7 +40,7 @@ const transactionSchema = new Schema({
   date: Date,
 });
 
-export default mongoose.model<ITransactionModel>(
+export const transactionModel = mongoose.model<ITransactionModel>(
   TRANSACTION_MODEL_NAME,
   transactionSchema
 );

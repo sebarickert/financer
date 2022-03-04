@@ -1,4 +1,4 @@
-import { connect, truncate, disconnect } from "../config/MemoryDatabaseServer";
+import { connect, truncate, disconnect } from '../config/MemoryDatabaseServer';
 
 beforeAll(async () => {
   return connect();

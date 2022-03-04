@@ -1,13 +1,13 @@
-import { Response, Request, NextFunction } from "express";
+import { Response, Request, NextFunction } from 'express';
 
-import { ACCOUNT_TYPES, IAccountModel } from "../models/account-model";
-import { IUserModel } from "../models/user-model";
+import { ACCOUNT_TYPES, IAccountModel } from '../models/account-model';
+import { IUserModel } from '../models/user-model';
 import {
   createAccount,
   findAccountById,
   findAccountsByUser,
-} from "../services/account-service";
-import { findTransactionsByAccount } from "../services/transaction-service";
+} from '../services/account-service';
+import { findTransactionsByAccount } from '../services/transaction-service';
 
 export const verifyAccountOwnership = async (
   req: Request,
@@ -18,7 +18,7 @@ export const verifyAccountOwnership = async (
     res.status(404).json({
       authenticated: true,
       status: 404,
-      errors: ["Account not found."],
+      errors: ['Account not found.'],
     });
 
   const user = req.user as IUserModel;
@@ -34,7 +34,7 @@ export const verifyAccountOwnership = async (
       res.status(403).json({
         authenticated: true,
         status: 403,
-        errors: ["Not authorized to access that account."],
+        errors: ['Not authorized to access that account.'],
       });
       return;
     }
@@ -75,24 +75,24 @@ export const addAccount = async (
 
   const errors: string[] = [];
 
-  if (!("name" in newAccountData) || newAccountData.name.length === 0) {
-    errors.push("Name must not be empty.");
+  if (!('name' in newAccountData) || newAccountData.name.length === 0) {
+    errors.push('Name must not be empty.');
   }
 
   if (
-    !("type" in newAccountData) ||
+    !('type' in newAccountData) ||
     !ACCOUNT_TYPES.includes(newAccountData.type)
   ) {
     errors.push(
-      `Type must be one of the following: ${ACCOUNT_TYPES.join(", ")}.`
+      `Type must be one of the following: ${ACCOUNT_TYPES.join(', ')}.`
     );
   }
 
   if (
-    !("balance" in newAccountData) ||
-    typeof newAccountData.balance !== "number"
+    !('balance' in newAccountData) ||
+    typeof newAccountData.balance !== 'number'
   ) {
-    errors.push("Balance must be a number.");
+    errors.push('Balance must be a number.');
   }
 
   if (errors.length > 0) {
@@ -136,13 +136,13 @@ export const updateAccount = async (
     return;
   }
 
-  if ("name" in modifiedAccountData) {
+  if ('name' in modifiedAccountData) {
     account.name = modifiedAccountData.name;
   }
-  if ("balance" in modifiedAccountData) {
+  if ('balance' in modifiedAccountData) {
     account.balance = modifiedAccountData.balance;
   }
-  if ("type" in modifiedAccountData) {
+  if ('type' in modifiedAccountData) {
     account.type = modifiedAccountData.type;
   }
 

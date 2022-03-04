@@ -1,2 +1,2 @@
-import "./commands";
-import "./resetFixtures";
+import './commands';
+import './resetFixtures';

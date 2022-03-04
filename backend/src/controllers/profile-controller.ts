@@ -1,29 +1,30 @@
-import { Response, Request } from "express";
-import { IAccountModel } from "../models/account-model";
-import { ITransactionCategoryMappingModel } from "../models/transaction-category-mapping-model";
-import { ITransactionCategoryModel } from "../models/transaction-category-model";
-import { ITransactionModel } from "../models/transaction-model";
-import { IUserModel } from "../models/user-model";
+import { Response, Request } from 'express';
+
+import { IAccountModel } from '../models/account-model';
+import { ITransactionCategoryMappingModel } from '../models/transaction-category-mapping-model';
+import { ITransactionCategoryModel } from '../models/transaction-category-model';
+import { ITransactionModel } from '../models/transaction-model';
+import { IUserModel } from '../models/user-model';
 import {
   createMultipleAccounts,
   DANGER_truncateAccountByUser,
   findAccountsByUser,
-} from "../services/account-service";
+} from '../services/account-service';
 import {
   createMultipleTransactionCategoryMappings,
   DANGER_truncateTransactionCategoryMappingsByUser,
   findTransactionCategoryMappingsByUser,
-} from "../services/transaction-category-mapping-service";
+} from '../services/transaction-category-mapping-service';
 import {
   createMultipleTransactionCategories,
   DANGER_truncateTransactionCategoriesByUser,
   findTransactionCategoriesByUser,
-} from "../services/transaction-category-service";
+} from '../services/transaction-category-service';
 import {
   createMultipleTransactions,
   DANGER_truncateTransactionsByUser,
   findTransactionsByUser,
-} from "../services/transaction-service";
+} from '../services/transaction-service';
 
 export const getMyData = async (req: Request, res: Response): Promise<void> => {
   const getMyDataFilename = (): string => {
@@ -53,10 +54,10 @@ export const getMyData = async (req: Request, res: Response): Promise<void> => {
   });
 
   res.setHeader(
-    "Content-disposition",
+    'Content-disposition',
     `attachment; filename= ${getMyDataFilename()}`
   );
-  res.setHeader("Content-type", "application/json");
+  res.setHeader('Content-type', 'application/json');
 
   res.write(data, () => {
     res.end();
@@ -69,10 +70,10 @@ export const overrideMyData = async (
 ): Promise<void> => {
   const user = req.user as IUserModel;
 
-  if (!user.roles.includes("test-user")) {
+  if (!user.roles.includes('test-user')) {
     res.status(403).json({
       status: 403,
-      errors: ["Only users with the test-user role can override account data."],
+      errors: ['Only users with the test-user role can override account data.'],
     });
     return;
   }
@@ -133,5 +134,5 @@ export const overrideMyData = async (
 
   res
     .status(201)
-    .json({ status: 201, payload: "Successfully overrided data." });
+    .json({ status: 201, payload: 'Successfully overrided data.' });
 };

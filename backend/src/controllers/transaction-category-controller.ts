@@ -1,13 +1,13 @@
-import { Response, Request } from "express";
+import { Response, Request } from 'express';
 
-import { ITransactionCategoryModel } from "../models/transaction-category-model";
-import { IUserModel } from "../models/user-model";
+import { ITransactionCategoryModel } from '../models/transaction-category-model';
+import { IUserModel } from '../models/user-model';
 import {
   createTransactionCategory,
   findTransactionCategoriesByUser,
   findTransactionCategoryById,
   markTransactionCategoryAsDeleted,
-} from "../services/transaction-category-service";
+} from '../services/transaction-category-service';
 
 export const getAllUserTransactionCategories = async (
   req: Request,
@@ -35,10 +35,10 @@ export const addTransactionCategory = async (
   const errors: string[] = [];
 
   if (
-    !("name" in newTransactionCategoryData) ||
+    !('name' in newTransactionCategoryData) ||
     newTransactionCategoryData.name.length === 0
   ) {
-    errors.push("Name must not be empty.");
+    errors.push('Name must not be empty.');
   }
 
   if (errors.length > 0) {
@@ -70,7 +70,7 @@ export const getTransactionCategory = async (
     res.status(404).json({
       authenticated: true,
       status: 404,
-      errors: ["Transaction category not found."],
+      errors: ['Transaction category not found.'],
     });
     return;
   }
@@ -79,7 +79,7 @@ export const getTransactionCategory = async (
     res.status(403).json({
       authenticated: true,
       status: 403,
-      errors: ["Not authorized to view that transaction category."],
+      errors: ['Not authorized to view that transaction category.'],
     });
     return;
   }
@@ -104,7 +104,7 @@ export const updateTransactionCategory = async (
     res.status(403).json({
       authenticated: true,
       status: 403,
-      errors: ["You can only edit your transaction categories."],
+      errors: ['You can only edit your transaction categories.'],
     });
     return;
   }
@@ -113,20 +113,20 @@ export const updateTransactionCategory = async (
     res.status(404).json({
       authenticated: true,
       status: 404,
-      errors: ["Transaction category not found."],
+      errors: ['Transaction category not found.'],
     });
     return;
   }
 
-  if ("name" in modifiedAccountData) {
+  if ('name' in modifiedAccountData) {
     transactionCategory.name = modifiedAccountData.name;
   }
 
-  if ("visibility" in modifiedAccountData) {
+  if ('visibility' in modifiedAccountData) {
     transactionCategory.visibility = modifiedAccountData.visibility;
   }
 
-  if ("parent_category_id" in modifiedAccountData) {
+  if ('parent_category_id' in modifiedAccountData) {
     transactionCategory.parent_category_id =
       modifiedAccountData.parent_category_id;
   }
@@ -150,7 +150,7 @@ export const deleteTransactionCategory = async (
     res.status(404).json({
       authenticated: true,
       status: 404,
-      errors: ["Transaction category not found."],
+      errors: ['Transaction category not found.'],
     });
     return;
   }
@@ -159,7 +159,7 @@ export const deleteTransactionCategory = async (
     res.status(403).json({
       authenticated: true,
       status: 403,
-      errors: ["You can only delete your own transaction categories."],
+      errors: ['You can only delete your own transaction categories.'],
     });
     return;
   }

@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Router } from 'express';
 
 import {
   addAccount,
@@ -8,24 +8,22 @@ import {
   listAccounts,
   updateAccount,
   verifyAccountOwnership,
-} from "../controllers/account-controller";
+} from '../controllers/account-controller';
 
-const router = Router();
+export const accountRouter = Router();
 
-router.get("/", listAccounts);
+accountRouter.get('/', listAccounts);
 
-router.get("/:id", verifyAccountOwnership, getAccount);
+accountRouter.get('/:id', verifyAccountOwnership, getAccount);
 
-router.post("/", addAccount);
+accountRouter.post('/', addAccount);
 
-router.delete("/:id", verifyAccountOwnership, deleteAccount);
+accountRouter.delete('/:id', verifyAccountOwnership, deleteAccount);
 
-router.put("/:id", verifyAccountOwnership, updateAccount);
+accountRouter.put('/:id', verifyAccountOwnership, updateAccount);
 
-router.get(
-  "/:id/transactions",
+accountRouter.get(
+  '/:id/transactions',
   verifyAccountOwnership,
   getAllAccountTransactions
 );
-
-export default router;

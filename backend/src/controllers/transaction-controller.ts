@@ -1,9 +1,9 @@
-import { Response, Request, NextFunction } from "express";
-import { ITransactionModel } from "../models/transaction-model";
+import { Response, Request, NextFunction } from 'express';
 
-import { IUserModel } from "../models/user-model";
-import { findAccountById } from "../services/account-service";
-import { deleteTransactionCategoryMappingByTransaction } from "../services/transaction-category-mapping-service";
+import { ITransactionModel } from '../models/transaction-model';
+import { IUserModel } from '../models/user-model';
+import { findAccountById } from '../services/account-service';
+import { deleteTransactionCategoryMappingByTransaction } from '../services/transaction-category-mapping-service';
 import {
   createTransaction,
   findTransactionById,
@@ -11,7 +11,7 @@ import {
   findTransactionsByUser,
   findTransferTransactionsByUser,
   increaseAccountTransactionBalanceAfterTargetDate,
-} from "../services/transaction-service";
+} from '../services/transaction-service';
 
 export const verifyTransactionOwnership = async (
   req: Request,
@@ -22,7 +22,7 @@ export const verifyTransactionOwnership = async (
     res.status(404).json({
       authenticated: true,
       status: 404,
-      errors: ["Transaction not found."],
+      errors: ['Transaction not found.'],
     });
 
   const user = req.user as IUserModel;
@@ -38,7 +38,7 @@ export const verifyTransactionOwnership = async (
       res.status(403).json({
         authenticated: true,
         status: 403,
-        errors: ["Not authorized to access that transaction."],
+        errors: ['Not authorized to access that transaction.'],
       });
       return;
     }
@@ -123,16 +123,16 @@ export const verifyNewTransferInfo = async (
   const errors: string[] = [];
 
   if (
-    !("amount" in rawNewTransaction) ||
-    typeof rawNewTransaction.amount !== "number"
+    !('amount' in rawNewTransaction) ||
+    typeof rawNewTransaction.amount !== 'number'
   ) {
-    errors.push("Amount must be a number.");
+    errors.push('Amount must be a number.');
   }
   if (
-    new Date(rawNewTransaction.date).toDateString() === "Invalid Date" ||
+    new Date(rawNewTransaction.date).toDateString() === 'Invalid Date' ||
     rawNewTransaction.date === null
   ) {
-    errors.push("Date must not be empty.");
+    errors.push('Date must not be empty.');
   }
 
   let sourceAccount;
@@ -141,26 +141,26 @@ export const verifyNewTransferInfo = async (
     !rawNewTransaction.fromAccount ||
     rawNewTransaction.fromAccount.length === 0
   ) {
-    errors.push("fromAccount must not be empty.");
+    errors.push('fromAccount must not be empty.');
   } else {
     sourceAccount = await findAccountById(rawNewTransaction.fromAccount);
     if (sourceAccount === null) {
-      errors.push("Source account not found.");
+      errors.push('Source account not found.');
     } else if (`${sourceAccount?.owner}` !== `${user.id}`) {
-      errors.push("You can transfer only from your own account.");
+      errors.push('You can transfer only from your own account.');
     }
   }
   if (
     !rawNewTransaction.toAccount ||
     rawNewTransaction.toAccount.length === 0
   ) {
-    errors.push("toAccount must not be empty.");
+    errors.push('toAccount must not be empty.');
   } else {
     targetAccount = await findAccountById(rawNewTransaction.toAccount);
     if (targetAccount === null) {
-      errors.push("Target account not found.");
+      errors.push('Target account not found.');
     } else if (`${targetAccount?.owner}` !== `${user.id}`) {
-      errors.push("You can transfer only to your own account.");
+      errors.push('You can transfer only to your own account.');
     }
   }
 
@@ -187,7 +187,7 @@ export const addTransaction = async (
     (await findTransactionsAfterByAccount(accountId, date))?.reduce(
       (prev, { toAccount, amount }) => {
         const currentAmount =
-          typeof toAccount !== "undefined" &&
+          typeof toAccount !== 'undefined' &&
           toAccount?.toString() === accountId?.toString()
             ? -amount
             : amount;
@@ -272,7 +272,7 @@ export const getTransfers = async (
     res.status(404).json({
       authenticated: true,
       status: 404,
-      errors: ["Transaction not found."],
+      errors: ['Transaction not found.'],
     });
     return;
   }
@@ -292,7 +292,7 @@ export const getAllUserTransactions = async (
     res.status(404).json({
       authenticated: true,
       status: 404,
-      errors: ["Transactions not found."],
+      errors: ['Transactions not found.'],
     });
     return;
   }

@@ -19,17 +19,9 @@
     "project": "./tsconfig.json"
   },
   "rules": {
-    "linebreak-style": "off",
-    "prettier/prettier": [
-      "error",
-      {
-        "endOfLine": "auto",
-        "singleQuote": true,
-        "semi": true
-      }
-    ],
-    "no-underscore-dangle":  ["error", { "allow": ["_id"] }],
     "react/require-default-props": "off",
+    "linebreak-style": "off",
+    "no-underscore-dangle":  ["error", { "allow": ["_id"] }],
     "import/prefer-default-export": "off",
     "import/no-default-export": "error",
     "import/order": [
@@ -37,6 +29,14 @@
       {
         "newlines-between": "always",
         "alphabetize": { "order": "asc", "caseInsensitive": true }
+      }
+    ],
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto",
+        "singleQuote": true,
+        "semi": true
       }
     ]
   }

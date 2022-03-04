@@ -1,22 +1,24 @@
-import { Router } from "express";
+import { Router } from 'express';
+
 import {
   addTransactionCategoryMapping,
   getAllUserTransactionCategoryMappings,
   getTransactionCategoryMapping,
   getTransactionCategoryMappingsByTransactionId,
-} from "../controllers/transaction-category-mapping-controller";
+} from '../controllers/transaction-category-mapping-controller';
 
-const router = Router();
+export const transactionCategoryMappingRouter = Router();
 
-router.get("/", getAllUserTransactionCategoryMappings);
+transactionCategoryMappingRouter.get(
+  '/',
+  getAllUserTransactionCategoryMappings
+);
 
-router.post("/", addTransactionCategoryMapping);
+transactionCategoryMappingRouter.post('/', addTransactionCategoryMapping);
 
-router.get(
-  "/by-transaction/:transactionId",
+transactionCategoryMappingRouter.get(
+  '/by-transaction/:transactionId',
   getTransactionCategoryMappingsByTransactionId
 );
 
-router.get("/:id", getTransactionCategoryMapping);
-
-export default router;
+transactionCategoryMappingRouter.get('/:id', getTransactionCategoryMapping);
