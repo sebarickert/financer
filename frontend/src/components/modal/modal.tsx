@@ -12,6 +12,7 @@ interface IModalProps {
   buttonStyle?: 'default' | 'quick-link';
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const QuickLinkStyleButton = ({ children, onClick = () => {} }: any) => {
   return (
     <button
