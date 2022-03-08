@@ -6,6 +6,7 @@ import { UserDefaultExpenseAccount } from './preferences/UserDefaultExpenseAccou
 import { UserDefaultIncomeAccount } from './preferences/UserDefaultIncomeAccount';
 import { UserDefaultTransferSourceAccount } from './preferences/UserDefaultTransferSourceAccount';
 import { UserDefaultTransferTargetAccount } from './preferences/UserDefaultTransferTargetAccount';
+import { UserTransactionListChunkSize } from './preferences/UserTransactionListChunkSize';
 
 export const UserPreferences = (): JSX.Element => {
   return (
@@ -19,6 +20,7 @@ export const UserPreferences = (): JSX.Element => {
         <UserDefaultExpenseAccount />
         <UserDefaultTransferSourceAccount />
         <UserDefaultTransferTargetAccount />
+        <UserTransactionListChunkSize />
       </QuickLinks>
     </>
   );
