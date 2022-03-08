@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import { useUserTransactionListChunkSize } from '../../hooks/profile/user-preference/useUserTransactionListChunkSize';
 import { Loader } from '../loader/loader';
 import { Pager } from '../pager/pager';
 
@@ -25,7 +26,7 @@ export const TransactionStackedList = ({
   >(null);
   const [currentPage, setCurrentPage] = useState(0);
 
-  const chunkAmount = 5;
+  const [chunkAmount] = useUserTransactionListChunkSize();
 
   useEffect(() => {
     setPages(
@@ -35,7 +36,7 @@ export const TransactionStackedList = ({
           item,
           index: number
         ) => {
-          const chunkIndex = Math.floor(index / chunkAmount);
+          const chunkIndex = Math.floor(index / (chunkAmount ?? 5));
 
           if (!resultArray[chunkIndex]) {
             resultArray[chunkIndex] = [];
@@ -48,7 +49,7 @@ export const TransactionStackedList = ({
         []
       )
     );
-  }, [rows]);
+  }, [chunkAmount, rows]);
 
   return !pages || !pages[currentPage] ? (
     <Loader loaderColor="blue" />
@@ -79,7 +80,7 @@ export const TransactionStackedList = ({
           )
         )}
       </TransactionStackedListRows>
-      {chunkAmount < rows.length && (
+      {(chunkAmount ?? 5) < rows.length && (
         <Pager
           currentPage={currentPage}
           pageCount={pages.length}
