@@ -16,6 +16,12 @@ export const Profile = (): JSX.Element => {
       </Heading>
       <QuickLinks className="mt-8">
         <QuickLinksItem
+          title="User preferences"
+          link="/profile/user-preferences"
+          iconName="cog"
+          description="Go to user preferences page where you are able to set available settings to your preference."
+        />
+        <QuickLinksItem
           title="Categories"
           link="/profile/transaction-categories"
           iconName="tag"

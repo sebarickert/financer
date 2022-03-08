@@ -27,7 +27,6 @@ export const MobileNavigationItem = ({
   disallowedPathEndings,
 }: IMobileNavigationItemProps): JSX.Element => {
   const isActive = useIsActiveLink({ link, isExact, disallowedPathEndings });
-  console.log('isActive', isActive);
 
   if (type === 'standalone') {
     return (

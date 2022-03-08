@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { SEO } from '../../components/seo/seo';
 import { useAddIncome } from '../../hooks/income/useAddIncome';
+import { useUserDefaultIncomeAccount } from '../../hooks/profile/user-preference/useUserDefaultIncomeAccount';
 import { useAddTransactionCategoryMapping } from '../../hooks/transactionCategoryMapping/useAddTransactionCategoryMapping';
 
 import { IncomeForm } from './IncomeForm';
@@ -12,6 +13,7 @@ export const AddIncome = (): JSX.Element => {
   const [errors, setErrors] = useState<string[]>([]);
   const addIncome = useAddIncome();
   const addTransactionCategoryMapping = useAddTransactionCategoryMapping();
+  const [defaultIncomeAccount] = useUserDefaultIncomeAccount();
 
   const handleSubmit = async (
     newIncomeData: IIncome,
@@ -49,6 +51,7 @@ export const AddIncome = (): JSX.Element => {
         errors={errors}
         formHeading="Add income"
         submitLabel="Submit"
+        toAccount={defaultIncomeAccount}
       />
     </>
   );

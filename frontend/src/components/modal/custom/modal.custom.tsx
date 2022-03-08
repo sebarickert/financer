@@ -1,27 +1,28 @@
 import React, { useState } from 'react';
 
+import { AccentColor } from '../../button/button';
 import { Modal } from '../modal';
 
-import { ModalConfirmActions } from './modal.confirm.actions';
-import { ModalConfirmHeader } from './modal.confirm.header';
+import { ModalCustomActions } from './modal.custom.actions';
+import { ModalCustomContent } from './modal.custom.content';
 
-interface IModalConfirmProps {
+interface IModalCustomProps {
   accentColor?: 'red' | 'green' | 'blue';
-  children?: string;
-  label: string;
+  children: React.ReactNode;
   modalOpenButtonLabel: string;
   onConfirm(): void;
   submitButtonLabel: string;
+  submitButtonAccentColor?: AccentColor;
 }
 
-export const ModalConfirm = ({
+export const ModalCustom = ({
   children,
-  label,
   modalOpenButtonLabel,
   onConfirm,
   submitButtonLabel,
+  submitButtonAccentColor = 'blue',
   accentColor,
-}: IModalConfirmProps): JSX.Element => {
+}: IModalCustomProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleToggleOpen = () => setIsOpen(!isOpen);
@@ -35,13 +36,14 @@ export const ModalConfirm = ({
       toggleOpen={handleToggleOpen}
       isOpen={isOpen}
       accentColor={accentColor}
+      buttonStyle="quick-link"
     >
-      cccccccccccccccccc
-      <ModalConfirmHeader label={label}>{children}</ModalConfirmHeader>
-      <ModalConfirmActions
+      <ModalCustomContent>{children}</ModalCustomContent>
+      <ModalCustomActions
         submitButtonLabel={submitButtonLabel}
         onCancel={handleToggleOpen}
         onConfirm={handleConfirm}
+        submitButtonAccentColor={submitButtonAccentColor}
       />
     </Modal>
   );
