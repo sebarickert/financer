@@ -8,6 +8,7 @@ interface ISelectProps {
   options: IOption[];
   defaultValue?: string;
   className?: string;
+  handleOnChange?(event: React.ChangeEvent<HTMLSelectElement>): void;
 }
 
 export interface IOption {
@@ -23,7 +24,14 @@ export const Select = ({
   options,
   defaultValue,
   className = '',
+  handleOnChange = () => {},
 }: ISelectProps): JSX.Element => {
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    if (!handleOnChange) return null;
+
+    handleOnChange(event);
+  };
+
   return (
     <div className={className}>
       <label
@@ -38,6 +46,7 @@ export const Select = ({
           className="mt-1 block w-full pl-3 pr-10 py-3 text-base border-gray-300 focus:outline-none focus:ring-blue-financer focus:border-blue-financer rounded-md text-gray-900"
           required={isRequired}
           aria-describedby={help && `${id}-description`}
+          onChange={handleChange}
         >
           {options.map(({ value, label }) => (
             <option value={value} key={value}>

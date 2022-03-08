@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { SEO } from '../../components/seo/seo';
 import { useAddExpense } from '../../hooks/expense/useAddExpense';
+import { useUserDefaultExpenseAccount } from '../../hooks/profile/user-preference/useUserDefaultExpenseAccount';
 import { useAddTransactionCategoryMapping } from '../../hooks/transactionCategoryMapping/useAddTransactionCategoryMapping';
 
 import { ExpenseForm } from './ExpenseForm';
@@ -12,6 +13,7 @@ export const AddExpense = (): JSX.Element => {
   const [errors, setErrors] = useState<string[]>([]);
   const addExpense = useAddExpense();
   const addTransactionCategoryMapping = useAddTransactionCategoryMapping();
+  const [defaultExpenseAccount] = useUserDefaultExpenseAccount();
 
   const handleSubmit = async (
     newExpenseData: IExpense,
@@ -49,6 +51,7 @@ export const AddExpense = (): JSX.Element => {
         errors={errors}
         formHeading="Add expense"
         submitLabel="Submit"
+        fromAccount={defaultExpenseAccount}
       />
     </>
   );

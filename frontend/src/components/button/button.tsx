@@ -4,7 +4,7 @@ import { ButtonExternal } from './button.external';
 import { ButtonInternal } from './button.internal';
 import { ButtonPlain } from './button.plain';
 
-type AccentColor = 'red' | 'green' | 'blue' | 'plain';
+export type AccentColor = 'red' | 'green' | 'blue' | 'plain';
 interface IButtonProps {
   accentColor?: AccentColor;
   children: string;

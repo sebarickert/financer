@@ -19,8 +19,6 @@ export const TransactionCategories = (): JSX.Element => {
   useEffect(() => {
     if (transactionCategoriesRaw === null) return;
 
-    console.log(transactionCategoriesRaw);
-
     setTransactionCategories(
       transactionCategoriesRaw.map(
         ({ _id, name, visibility, categoryTree }) => ({
