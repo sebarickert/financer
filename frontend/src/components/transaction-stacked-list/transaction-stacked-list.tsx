@@ -36,7 +36,7 @@ export const TransactionStackedList = ({
           item,
           index: number
         ) => {
-          const chunkIndex = Math.floor(index / (chunkAmount ?? 5));
+          const chunkIndex = Math.floor(index / chunkAmount);
 
           if (!resultArray[chunkIndex]) {
             resultArray[chunkIndex] = [];
@@ -80,7 +80,7 @@ export const TransactionStackedList = ({
           )
         )}
       </TransactionStackedListRows>
-      {(chunkAmount ?? 5) < rows.length && (
+      {chunkAmount < rows.length && (
         <Pager
           currentPage={currentPage}
           pageCount={pages.length}
