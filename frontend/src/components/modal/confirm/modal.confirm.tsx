@@ -36,7 +36,6 @@ export const ModalConfirm = ({
       isOpen={isOpen}
       accentColor={accentColor}
     >
-      cccccccccccccccccc
       <ModalConfirmHeader label={label}>{children}</ModalConfirmHeader>
       <ModalConfirmActions
         submitButtonLabel={submitButtonLabel}
