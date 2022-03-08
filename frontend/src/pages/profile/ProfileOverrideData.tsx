@@ -1,10 +1,10 @@
 /* eslint-disable consistent-return */
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 import { Button } from '../../components/button/button';
 import { DescriptionList } from '../../components/description-list/description-list';
 import { DescriptionListItem } from '../../components/description-list/description-list.item';
-import { Hero } from '../../components/hero/hero';
+import { Heading } from '../../components/heading/heading';
 import {
   Notification,
   INotificationProps,
@@ -121,10 +121,9 @@ export const ProfileOverrideData = (): JSX.Element => {
           {notification.children}
         </Notification>
       )}
-      <Hero label="Override your data" standAlone className="mb-12">
-        Below you are able to import a JSON-file that contains your profile data
-        from some other environment.
-      </Hero>
+      <Heading variant="h1" className="mb-4 lg:mb-6">
+        Override your data
+      </Heading>
       <div>
         <label
           htmlFor="selectFiles"

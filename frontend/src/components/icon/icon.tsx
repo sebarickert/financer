@@ -3,6 +3,7 @@ import { IconArrowRight } from './icon.arrowRight';
 import { IconChartBar } from './icon.chartBar';
 import { IconChevronDown } from './icon.chevronDown';
 import { IconCloudDownload } from './icon.cloudDownload';
+import { IconCog } from './icon.cog';
 import { IconCollection } from './icon.collection';
 import { IconDownload } from './icon.download';
 import { IconExclamation } from './icon.exclamation';
@@ -39,6 +40,7 @@ export type IconName =
   | 'arrow-left'
   | 'arrow-right'
   | 'view-grid-add'
+  | 'cog'
   | 'collection';
 interface IconProps {
   type: IconName;
@@ -112,6 +114,9 @@ export const Icon = ({ type, className = '' }: IconProps): JSX.Element => {
 
     case 'arrow-right':
       return <IconArrowRight className={defaultIconClasses} />;
+
+    case 'cog':
+      return <IconCog className={defaultIconClasses} />;
 
     default:
       break;

@@ -8,7 +8,7 @@ interface IQuickLinksItemProps {
   title: string;
   link: string;
   description?: string;
-  iconName: IconName;
+  iconName?: IconName;
   iconBackgroundColor?: 'green' | 'red' | 'blue';
   testId?: string;
 }
@@ -24,17 +24,19 @@ export const QuickLinksItem = ({
   if (!description) {
     return (
       <div className="relative inline-flex items-center gap-4 w-full md:w-auto p-6 pr-20 bg-white border rounded-lg group focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-500 hover:bg-gray-50">
-        <div>
-          <span
-            className={`rounded-lg inline-flex p-3 text-white ring-4 ring-white ${
-              iconBackgroundColor === 'blue' && 'bg-blue-financer'
-            } ${iconBackgroundColor === 'green' && 'bg-emerald-600'} ${
-              iconBackgroundColor === 'red' && 'bg-red-600'
-            }`}
-          >
-            <Icon type={iconName} />
-          </span>
-        </div>
+        {iconName && (
+          <div>
+            <span
+              className={`rounded-lg inline-flex p-3 text-white ring-4 ring-white ${
+                iconBackgroundColor === 'blue' && 'bg-blue-financer'
+              } ${iconBackgroundColor === 'green' && 'bg-emerald-600'} ${
+                iconBackgroundColor === 'red' && 'bg-red-600'
+              }`}
+            >
+              <Icon type={iconName} />
+            </span>
+          </div>
+        )}
         {isExternalLink(link) ? (
           <a
             href={link}
@@ -73,17 +75,19 @@ export const QuickLinksItem = ({
 
   return (
     <div className="relative p-6 bg-white border rounded-lg group focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-500">
-      <div>
-        <span
-          className={`rounded-lg inline-flex p-3 text-white ring-4 ring-white ${
-            iconBackgroundColor === 'blue' && 'bg-blue-financer'
-          } ${iconBackgroundColor === 'green' && 'bg-emerald-600'} ${
-            iconBackgroundColor === 'red' && 'bg-red-600'
-          }`}
-        >
-          <Icon type={iconName} />
-        </span>
-      </div>
+      {iconName && (
+        <div>
+          <span
+            className={`rounded-lg inline-flex p-3 text-white ring-4 ring-white ${
+              iconBackgroundColor === 'blue' && 'bg-blue-financer'
+            } ${iconBackgroundColor === 'green' && 'bg-emerald-600'} ${
+              iconBackgroundColor === 'red' && 'bg-red-600'
+            }`}
+          >
+            <Icon type={iconName} />
+          </span>
+        </div>
+      )}
       <div className="mt-8">
         <h3 className="text-lg font-medium">
           {isExternalLink(link) ? (
