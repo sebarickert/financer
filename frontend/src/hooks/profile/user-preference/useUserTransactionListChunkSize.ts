@@ -5,11 +5,11 @@ const targetUserPreference =
   UserPreferenceProperties.TRANSACTION_LIST_CHUNK_SIZE;
 
 export const useUserTransactionListChunkSize = (): [
-  chunkSize: number | undefined,
+  chunkSize: number,
   setChunkSize: (value: number) => void
 ] => {
   const [chunkSize, setChunkSize] =
     useSingleUserPreferenceProperty<number>(targetUserPreference);
 
-  return [chunkSize, setChunkSize];
+  return [chunkSize ?? 5, setChunkSize];
 };
