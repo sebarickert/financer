@@ -10,28 +10,11 @@ import { userModel } from '../models/user-model';
 // Extend the default timeout so MongoDB binaries can download
 // jest.setTimeout(60000);
 
-class MemoryDatabaseServer {
-  server: MongoMemoryServer;
-
-  constructor() {
-    this.server = new MongoMemoryServer({
-      binary: {
-        version: '4.2.16',
-      },
-      // autoStart: false,
-    });
-  }
-
-  async start() {
-    await this.server.start();
-  }
-
-  async stop() {
-    await this.server?.stop();
-  }
-}
-
-export const memoryDatabaseServer = new MemoryDatabaseServer();
+export const memoryDatabaseServer = new MongoMemoryServer({
+  binary: {
+    version: '4.2.16',
+  },
+});
 
 export const truncate = async () => {
   if (mongoose.connection.readyState !== 0) {
@@ -44,7 +27,8 @@ export const truncate = async () => {
 };
 
 export const connect = async () => {
-  const url = await memoryDatabaseServer.server?.getUri();
+  await memoryDatabaseServer.ensureInstance();
+  const url = memoryDatabaseServer.getUri();
   await mongoose.connect(url);
 };
 

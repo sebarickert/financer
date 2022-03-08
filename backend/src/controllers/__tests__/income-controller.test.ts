@@ -36,14 +36,13 @@ const SIMPLE_TRANSACTION_BEFORE = {
 const USER_ID = '5faef3d6498b721318cbdc51';
 const OTHER_USER_ID = '5faef3d6498b721318cbdc55';
 
-jest.mock(
-  '../../routes/middlewares/authenticationCheck',
-  () => (req: Request, res: never, next: NextFunction) => {
+jest.mock('../../routes/middlewares/authenticationCheck', () => ({
+  authenticationCheck: (req: Request, res: never, next: NextFunction) => {
     const user = { _id: USER_ID, id: USER_ID };
     req.user = user;
     next();
-  }
-);
+  },
+}));
 
 describe('Income endpoint', () => {
   let api: supertest.SuperTest<supertest.Test>;
