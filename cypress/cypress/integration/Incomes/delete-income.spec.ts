@@ -57,11 +57,12 @@ describe('Delete income', () => {
         );
         const targetTransactionBefore = incomesBefore[incomesBefore.length - 1];
 
+        const targetTransactionId = targetTransactionBefore._id;
         const targetAccountId = targetTransactionBefore.toAccount;
 
         const olderTransactionWithSameAccountBefore = incomesBefore.find(
           ({ toAccount, _id }) =>
-            toAccount === targetAccountId && _id !== targetTransactionBefore._id
+            toAccount === targetAccountId && _id !== targetTransactionId
         );
 
         cy.saveData(
@@ -71,10 +72,10 @@ describe('Delete income', () => {
         cy.saveData('targetTransactionBefore', targetTransactionBefore);
         cy.saveAsyncData('accountBefore', () => getAccount(targetAccountId));
 
-        // cy.getById(targetTransactionBefore._id).click();
+        // cy.getById(targetTransactionId).click();
         // Due to pager on incomes page, we need this workaround and navigate to url manually
         cy.visit(
-          `http://localhost:3000/statistics/incomes/${targetTransactionBefore._id}`
+          `http://localhost:3000/statistics/incomes/${targetTransactionId}`
         );
 
         cy.getById('income-delete-modal_open-button').click();
@@ -118,7 +119,7 @@ describe('Delete income', () => {
     );
   });
 
-  it('Edit oldest income', () => {
+  it('Delete oldest income', () => {
     cy.saveAsyncData('transactionsBefore', getAllUserTransaction);
 
     cy.get<ITransactionWithDateObject[]>('@transactionsBefore').then(
@@ -128,11 +129,12 @@ describe('Delete income', () => {
         );
         const targetTransactionBefore = incomesBefore[0];
 
+        const targetTransactionId = targetTransactionBefore._id;
         const targetAccountId = targetTransactionBefore.toAccount;
 
         const olderTransactionWithSameAccountBefore = incomesBefore.find(
           ({ toAccount, _id }) =>
-            toAccount === targetAccountId && _id !== targetTransactionBefore._id
+            toAccount === targetAccountId && _id !== targetTransactionId
         );
 
         cy.saveData(
@@ -142,10 +144,10 @@ describe('Delete income', () => {
         cy.saveData('targetTransactionBefore', targetTransactionBefore);
         cy.saveAsyncData('accountBefore', () => getAccount(targetAccountId));
 
-        // cy.getById(targetTransactionBefore._id).click();
+        // cy.getById(targetTransactionId).click();
         // Due to pager on incomes page, we need this workaround and navigate to url manually
         cy.visit(
-          `http://localhost:3000/statistics/incomes/${targetTransactionBefore._id}`
+          `http://localhost:3000/statistics/incomes/${targetTransactionId}`
         );
 
         cy.getById('income-delete-modal_open-button').click();
