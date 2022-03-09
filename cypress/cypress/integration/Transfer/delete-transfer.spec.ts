@@ -7,9 +7,9 @@ import {
   getTransactionByIdRaw,
 } from '../apiHelpers';
 
-const verifyAccountBalanceChangeByTransactionBeforeAmount = () =>
-  cy.get<IAccount>('@accountBefore').then((accountBefore) =>
-    cy.get<IAccount>('@accountAfter').then((accountAfter) =>
+const verifyToAccountBalanceChangeByTransactionBeforeAmount = () =>
+  cy.get<IAccount>('@fromAccountBefore').then((accountBefore) =>
+    cy.get<IAccount>('@fromAccountAfter').then((accountAfter) =>
       cy
         .get<ITransaction>('@targetTransactionBefore')
         .then((targetTransactionBefore) => {
@@ -20,6 +20,26 @@ const verifyAccountBalanceChangeByTransactionBeforeAmount = () =>
           const balanceAfter = roundToTwoDecimal(accountAfter.balance);
           const balanceBeforeWithChangedAmount = roundToTwoDecimal(
             balanceBefore + changedAmount
+          );
+
+          expect(balanceBeforeWithChangedAmount).to.be.eq(balanceAfter);
+        })
+    )
+  );
+
+const verifyFromAccountBalanceChangeByTransactionBeforeAmount = () =>
+  cy.get<IAccount>('@toAccountBefore').then((accountBefore) =>
+    cy.get<IAccount>('@toAccountAfter').then((accountAfter) =>
+      cy
+        .get<ITransaction>('@targetTransactionBefore')
+        .then((targetTransactionBefore) => {
+          const changedAmount = roundToTwoDecimal(
+            targetTransactionBefore.amount
+          );
+          const balanceBefore = roundToTwoDecimal(accountBefore.balance);
+          const balanceAfter = roundToTwoDecimal(accountAfter.balance);
+          const balanceBeforeWithChangedAmount = roundToTwoDecimal(
+            balanceBefore - changedAmount
           );
 
           expect(balanceBeforeWithChangedAmount).to.be.eq(balanceAfter);
@@ -41,29 +61,32 @@ const verifyTargetTransactionDoesNotExistsAfter = () => {
   );
 };
 
-describe('Delete expense', () => {
+describe('Delete transfer', () => {
   beforeEach(() => {
     cy.applyFixture('large');
-    cy.visit('http://localhost:3000/statistics/expenses');
+    cy.visit('http://localhost:3000/statistics/transfers');
   });
 
-  it('Delete newest expense', () => {
+  it('Delete newest transfer', () => {
     cy.saveAsyncData('transactionsBefore', getAllUserTransaction);
 
     cy.get<ITransactionWithDateObject[]>('@transactionsBefore').then(
       (transactionsBefore) => {
-        const expensesBefore = transactionsBefore.filter(
-          ({ fromAccount, toAccount }) => fromAccount && !toAccount
+        const transfersBefore = transactionsBefore.filter(
+          ({ fromAccount, toAccount }) => fromAccount && toAccount
         );
         const targetTransactionBefore =
-          expensesBefore[expensesBefore.length - 1];
+          transfersBefore[transfersBefore.length - 1];
 
         const targetTransactionId = targetTransactionBefore._id;
-        const targetAccountId = targetTransactionBefore.fromAccount;
+        const targetToAccountId = targetTransactionBefore.toAccount;
+        const targetFromAccountId = targetTransactionBefore.fromAccount;
 
-        const olderTransactionWithSameAccountBefore = expensesBefore.find(
-          ({ fromAccount, _id }) =>
-            fromAccount === targetAccountId && _id !== targetTransactionId
+        const olderTransactionWithSameAccountBefore = transfersBefore.find(
+          ({ toAccount, fromAccount, _id }) =>
+            toAccount === targetToAccountId &&
+            fromAccount === targetFromAccountId &&
+            _id !== targetTransactionId
         );
 
         cy.saveData(
@@ -71,21 +94,31 @@ describe('Delete expense', () => {
           olderTransactionWithSameAccountBefore
         );
         cy.saveData('targetTransactionBefore', targetTransactionBefore);
-        cy.saveAsyncData('accountBefore', () => getAccount(targetAccountId));
-
-        // cy.getById(targetTransactionId).click();
-        // Due to pager on expenses page, we need this workaround and navigate to url manually
-        cy.visit(
-          `http://localhost:3000/statistics/expenses/${targetTransactionId}`
+        cy.saveAsyncData('toAccountBefore', () =>
+          getAccount(targetToAccountId)
+        );
+        cy.saveAsyncData('fromAccountBefore', () =>
+          getAccount(targetFromAccountId)
         );
 
-        cy.getById('expense-delete-modal_open-button').click();
-        cy.getById('expense-delete-modal_confirm-button').click();
+        // cy.getById(targetTransactionId).click();
+        // Due to pager on transfers page, we need this workaround and navigate to url manually
+        cy.visit(
+          `http://localhost:3000/statistics/transfers/${targetTransactionId}`
+        );
+
+        cy.getById('transfer-delete-modal_open-button').click();
+        cy.getById('transfer-delete-modal_confirm-button').click();
 
         cy.location('pathname')
-          .should('not.contain', `/${targetAccountId}`)
+          .should('not.contain', `/${targetTransactionId}`)
           .then(() => {
-            cy.saveAsyncData('accountAfter', () => getAccount(targetAccountId));
+            cy.saveAsyncData('toAccountAfter', () =>
+              getAccount(targetToAccountId)
+            );
+            cy.saveAsyncData('fromAccountAfter', () =>
+              getAccount(targetFromAccountId)
+            );
             cy.saveAsyncData('olderTransactionWithSameAccountAfter', () =>
               getTransactionById(olderTransactionWithSameAccountBefore._id)
             );
@@ -93,7 +126,8 @@ describe('Delete expense', () => {
       }
     );
 
-    verifyAccountBalanceChangeByTransactionBeforeAmount();
+    verifyToAccountBalanceChangeByTransactionBeforeAmount();
+    verifyFromAccountBalanceChangeByTransactionBeforeAmount();
     verifyTargetTransactionDoesNotExistsAfter();
 
     cy.get<ITransactionWithDateObject>(
@@ -106,11 +140,11 @@ describe('Delete expense', () => {
         .then((olderTransactionWithSameAccountAfter) => {
           const olderTransactionWithSameAccountAfterToAccountBalance =
             roundToTwoDecimal(
-              olderTransactionWithSameAccountAfter.fromAccountBalance
+              olderTransactionWithSameAccountAfter.toAccountBalance
             );
           const olderTransactionWithSameAccountBeforeToAccountBalance =
             roundToTwoDecimal(
-              olderTransactionWithSameAccountBefore.fromAccountBalance
+              olderTransactionWithSameAccountBefore.toAccountBalance
             );
 
           expect(
@@ -120,22 +154,25 @@ describe('Delete expense', () => {
     );
   });
 
-  it('Delete oldest expense', () => {
+  it('Delete oldest transfer', () => {
     cy.saveAsyncData('transactionsBefore', getAllUserTransaction);
 
     cy.get<ITransactionWithDateObject[]>('@transactionsBefore').then(
       (transactionsBefore) => {
-        const expensesBefore = transactionsBefore.filter(
-          ({ fromAccount, toAccount }) => fromAccount && !toAccount
+        const transfersBefore = transactionsBefore.filter(
+          ({ fromAccount, toAccount }) => fromAccount && toAccount
         );
-        const targetTransactionBefore = expensesBefore[0];
+        const targetTransactionBefore = transfersBefore[0];
 
         const targetTransactionId = targetTransactionBefore._id;
-        const targetAccountId = targetTransactionBefore.fromAccount;
+        const targetToAccountId = targetTransactionBefore.toAccount;
+        const targetFromAccountId = targetTransactionBefore.fromAccount;
 
-        const olderTransactionWithSameAccountBefore = expensesBefore.find(
-          ({ fromAccount, _id }) =>
-            fromAccount === targetAccountId && _id !== targetTransactionId
+        const olderTransactionWithSameAccountBefore = transfersBefore.find(
+          ({ toAccount, fromAccount, _id }) =>
+            toAccount === targetToAccountId &&
+            fromAccount === targetFromAccountId &&
+            _id !== targetTransactionId
         );
 
         cy.saveData(
@@ -143,21 +180,31 @@ describe('Delete expense', () => {
           olderTransactionWithSameAccountBefore
         );
         cy.saveData('targetTransactionBefore', targetTransactionBefore);
-        cy.saveAsyncData('accountBefore', () => getAccount(targetAccountId));
-
-        // cy.getById(targetTransactionId).click();
-        // Due to pager on expenses page, we need this workaround and navigate to url manually
-        cy.visit(
-          `http://localhost:3000/statistics/expenses/${targetTransactionId}`
+        cy.saveAsyncData('toAccountBefore', () =>
+          getAccount(targetToAccountId)
+        );
+        cy.saveAsyncData('fromAccountBefore', () =>
+          getAccount(targetFromAccountId)
         );
 
-        cy.getById('expense-delete-modal_open-button').click();
-        cy.getById('expense-delete-modal_confirm-button').click();
+        // cy.getById(targetTransactionBefore._id).click();
+        // Due to pager on transfers page, we need this workaround and navigate to url manually
+        cy.visit(
+          `http://localhost:3000/statistics/transfers/${targetTransactionBefore._id}`
+        );
+
+        cy.getById('transfer-delete-modal_open-button').click();
+        cy.getById('transfer-delete-modal_confirm-button').click();
 
         cy.location('pathname')
-          .should('not.contain', `/${targetAccountId}`)
+          .should('not.contain', `/${targetTransactionId}`)
           .then(() => {
-            cy.saveAsyncData('accountAfter', () => getAccount(targetAccountId));
+            cy.saveAsyncData('toAccountAfter', () =>
+              getAccount(targetToAccountId)
+            );
+            cy.saveAsyncData('fromAccountAfter', () =>
+              getAccount(targetFromAccountId)
+            );
             cy.saveAsyncData('olderTransactionWithSameAccountAfter', () =>
               getTransactionById(olderTransactionWithSameAccountBefore._id)
             );
@@ -165,7 +212,8 @@ describe('Delete expense', () => {
       }
     );
 
-    verifyAccountBalanceChangeByTransactionBeforeAmount();
+    verifyToAccountBalanceChangeByTransactionBeforeAmount();
+    verifyFromAccountBalanceChangeByTransactionBeforeAmount();
     verifyTargetTransactionDoesNotExistsAfter();
 
     cy.get<ITransactionWithDateObject>(
@@ -185,15 +233,15 @@ describe('Delete expense', () => {
 
               const olderTransactionWithSameAccountAfterToAccountBalance =
                 roundToTwoDecimal(
-                  olderTransactionWithSameAccountAfter.fromAccountBalance
+                  olderTransactionWithSameAccountAfter.toAccountBalance
                 );
               const olderTransactionWithSameAccountBeforeToAccountBalance =
                 roundToTwoDecimal(
-                  olderTransactionWithSameAccountBefore.fromAccountBalance
+                  olderTransactionWithSameAccountBefore.toAccountBalance
                 );
 
               expect(
-                olderTransactionWithSameAccountBeforeToAccountBalance +
+                olderTransactionWithSameAccountBeforeToAccountBalance -
                   changedAmount
               ).to.be.eq(olderTransactionWithSameAccountAfterToAccountBalance);
             })
