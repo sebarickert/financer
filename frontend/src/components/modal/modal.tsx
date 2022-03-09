@@ -10,14 +10,25 @@ interface IModalProps {
   modalOpenButtonLabel: string;
   toggleOpen(): void;
   buttonStyle?: 'default' | 'quick-link';
+  testId?: string;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const QuickLinkStyleButton = ({ children, onClick = () => {} }: any) => {
+interface QuickLinkStyleButtonProps {
+  children: React.ReactNode;
+  onClick(): void;
+  testId?: string;
+}
+
+const QuickLinkStyleButton = ({
+  children,
+  onClick = () => {},
+  testId,
+}: QuickLinkStyleButtonProps) => {
   return (
     <button
-      className="relative inline-flex items-center gap-4 w-full md:w-auto p-6 pr-20 bg-white border rounded-lg group focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-500 hover:bg-gray-50 text-lg font-semibold tracking-tight focus:outline-none"
+      className="relative inline-flex items-center w-full gap-4 p-6 pr-20 text-lg font-semibold tracking-tight bg-white border rounded-lg md:w-auto group focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-500 hover:bg-gray-50 focus:outline-none"
       onClick={onClick}
+      data-testid={`${testId}_open-button`}
     >
       {children}
       <span
@@ -44,20 +55,25 @@ export const Modal = ({
   toggleOpen,
   accentColor,
   buttonStyle = 'default',
+  testId,
 }: IModalProps): JSX.Element => {
   return (
     <>
       {buttonStyle === 'quick-link' ? (
-        <QuickLinkStyleButton onClick={toggleOpen}>
+        <QuickLinkStyleButton onClick={toggleOpen} testId={testId}>
           {modalOpenButtonLabel}
         </QuickLinkStyleButton>
       ) : (
-        <Button accentColor={accentColor} onClick={toggleOpen}>
+        <Button
+          accentColor={accentColor}
+          onClick={toggleOpen}
+          testId={`${testId}_open-button`}
+        >
           {modalOpenButtonLabel}
         </Button>
       )}
       {isOpen && (
-        <div className="fixed z-10 inset-0 overflow-y-auto">
+        <div className="fixed inset-0 z-10 overflow-y-auto">
           <div
             className={`flex items-end justify-center min-h-screen pt-4 px-4 text-center sm:block sm:p-0 ${
               isIOSDevice() ? 'pb-28' : 'pb-20'
@@ -69,7 +85,7 @@ export const Modal = ({
             <span className="hidden sm:inline-block sm:align-middle sm:h-screen" />
             &#8203;
             <div
-              className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle w-full max-w-lg sm:w-full"
+              className="inline-block w-full max-w-lg overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:w-full"
               role="dialog"
               aria-modal="true"
               aria-labelledby="modal-headline"

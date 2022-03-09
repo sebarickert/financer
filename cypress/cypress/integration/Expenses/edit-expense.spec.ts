@@ -6,7 +6,7 @@ import {
   roundToTwoDecimal,
 } from '../apiHelpers';
 
-describe('Add expense', () => {
+describe('Edit expense', () => {
   beforeEach(() => {
     cy.applyFixture('large');
     cy.visit('http://localhost:3000/statistics/expenses');
