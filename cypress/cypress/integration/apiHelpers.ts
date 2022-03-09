@@ -42,14 +42,20 @@ export const getAllUserTransaction = async (): Promise<
     .sort((a, b) => (a.date < b.date ? -1 : 1));
 };
 
-export const getTransactionById = async (
+export const getTransactionByIdRaw = async (
   transactionId: string
-): Promise<ITransactionWithDateObject> => {
-  const transaction = (
+): Promise<ITransaction> => {
+  return (
     await (
       await fetch(`http://localhost:3000/api/transaction/${transactionId}`)
     ).json()
   ).payload as ITransaction;
+};
+
+export const getTransactionById = async (
+  transactionId: string
+): Promise<ITransactionWithDateObject> => {
+  const transaction = await getTransactionByIdRaw(transactionId);
 
   return { ...transaction, dateObj: new Date(transaction?.date) };
 };

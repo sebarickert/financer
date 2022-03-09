@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Button } from '../../button/button';
 import { ButtonGroup } from '../../button/button.group';
 
@@ -7,19 +5,29 @@ interface IModalConfirmActionsProps {
   onCancel(): void;
   onConfirm(): void;
   submitButtonLabel: string;
+  testId?: string;
 }
 
 export const ModalConfirmActions = ({
   onCancel,
   onConfirm,
   submitButtonLabel,
+  testId,
 }: IModalConfirmActionsProps): JSX.Element => {
   return (
-    <ButtonGroup className="bg-gray-50 px-4 py-3 sm:px-6" isReverse>
-      <Button onClick={onConfirm} accentColor="red">
+    <ButtonGroup className="px-4 py-3 bg-gray-50 sm:px-6" isReverse>
+      <Button
+        onClick={onConfirm}
+        accentColor="red"
+        testId={`${testId}_confirm-button`}
+      >
         {submitButtonLabel}
       </Button>
-      <Button onClick={onCancel} accentColor="plain">
+      <Button
+        onClick={onCancel}
+        accentColor="plain"
+        testId={`${testId}_cancel-button`}
+      >
         Cancel
       </Button>
     </ButtonGroup>

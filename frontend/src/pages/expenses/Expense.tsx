@@ -26,6 +26,7 @@ const ExpenseDeleteModal = ({ handleDelete }: IExpenseDeleteModalProps) => (
     onConfirm={handleDelete}
     modalOpenButtonLabel="Delete"
     accentColor="red"
+    testId="expense-delete-modal"
   >
     Are you sure you want to delete your expense? All of your data will be
     permanently removed. This action cannot be undone.

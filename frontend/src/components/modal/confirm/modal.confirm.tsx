@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { Modal } from '../modal';
 
@@ -12,6 +12,7 @@ interface IModalConfirmProps {
   modalOpenButtonLabel: string;
   onConfirm(): void;
   submitButtonLabel: string;
+  testId?: string;
 }
 
 export const ModalConfirm = ({
@@ -21,6 +22,7 @@ export const ModalConfirm = ({
   onConfirm,
   submitButtonLabel,
   accentColor,
+  testId = '',
 }: IModalConfirmProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -35,12 +37,14 @@ export const ModalConfirm = ({
       toggleOpen={handleToggleOpen}
       isOpen={isOpen}
       accentColor={accentColor}
+      testId={testId}
     >
       <ModalConfirmHeader label={label}>{children}</ModalConfirmHeader>
       <ModalConfirmActions
         submitButtonLabel={submitButtonLabel}
         onCancel={handleToggleOpen}
         onConfirm={handleConfirm}
+        testId={testId}
       />
     </Modal>
   );
