@@ -26,6 +26,7 @@ const IncomeDeleteModal = ({ handleDelete }: IIncomeDeleteModalProps) => (
     onConfirm={handleDelete}
     modalOpenButtonLabel="Delete income"
     accentColor="red"
+    testId="income-delete-modal"
   >
     Are you sure you want to delete your income? All of your data will be
     permanently removed. This action cannot be undone.
