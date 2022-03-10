@@ -1,3 +1,4 @@
+import { ITransactionCategory } from '@local/types';
 import { Response, Request } from 'express';
 
 import { ITransactionCategoryModel } from '../models/transaction-category-model';

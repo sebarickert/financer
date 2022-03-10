@@ -1,3 +1,4 @@
+import { ITransactionCategory } from '@local/types';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 

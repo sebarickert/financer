@@ -1,3 +1,4 @@
+import { IAccount } from '@local/types';
 import { useState, useEffect } from 'react';
 import {
   Area,
@@ -22,7 +23,6 @@ import {
   formatCurrencyAbbreviation,
 } from '../../utils/formatCurrency';
 import { formatDate } from '../../utils/formatDate';
-
 interface IChartData {
   dateStr: string;
   date: Date;
@@ -36,7 +36,7 @@ const CustomTooltip = ({
 }: TooltipProps<ValueType, NameType>): JSX.Element => {
   if (active && payload && payload.length) {
     return (
-      <div className="px-4 py-2 bg-gray-800 shadow-lg rounded-md">
+      <div className="px-4 py-2 bg-gray-800 rounded-md shadow-lg">
         <p className="text-white">
           Balance {formatCurrency(payload[0].value as number)}
         </p>

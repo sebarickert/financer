@@ -1,3 +1,5 @@
+import { IApiResponse, IExpense } from '@local/types';
+
 export const getAllExpenses = async (): Promise<IExpense[]> => {
   const expenses = await fetch('/api/expense');
   return expenses.json();

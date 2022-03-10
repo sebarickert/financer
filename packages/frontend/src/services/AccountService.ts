@@ -1,3 +1,5 @@
+import { IAccount, IApiResponse } from '@local/types';
+
 export const getAllAccounts = async (): Promise<IAccount[]> => {
   const accounts = await fetch('/api/account');
   return accounts.json();

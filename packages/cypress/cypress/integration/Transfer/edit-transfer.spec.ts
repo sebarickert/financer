@@ -1,3 +1,5 @@
+import { IAccount } from '@local/types';
+
 import {
   getAllUserTransaction,
   getAccount,

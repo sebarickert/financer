@@ -1,3 +1,5 @@
+import { IApiResponse, ITransaction } from '@local/types';
+
 export const getAllTransactions = async (): Promise<
   IApiResponse<ITransaction[]>
 > => {

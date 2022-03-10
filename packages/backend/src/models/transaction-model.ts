@@ -1,3 +1,4 @@
+import { ITransaction } from '@local/types';
 import mongoose, { Schema, Document } from 'mongoose';
 
 import { ACCOUNT_MODEL_NAME } from './account-model';

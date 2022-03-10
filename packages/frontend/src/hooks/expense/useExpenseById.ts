@@ -1,3 +1,4 @@
+import { IExpense } from '@local/types';
 import { useState, useEffect } from 'react';
 
 import { useAllExpenses } from './useAllExpenses';
