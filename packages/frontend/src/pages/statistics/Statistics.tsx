@@ -1,3 +1,4 @@
+import { ITransaction } from '@local/types';
 import { useEffect, useState } from 'react';
 
 import { Dropdown } from '../../components/dropdown/dropdown';

@@ -1,3 +1,4 @@
+import { ITransaction } from '@local/types';
 import { useState, useEffect } from 'react';
 
 import { useAllTransfers } from './useAllTransfers';

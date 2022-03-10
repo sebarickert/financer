@@ -1,3 +1,5 @@
+import { IApiResponse, IIncome } from '@local/types';
+
 export const getAllIncomes = async (): Promise<IIncome[]> => {
   const incomes = await fetch('/api/income');
   return incomes.json();

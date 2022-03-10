@@ -1,3 +1,4 @@
+import { IUser } from '@local/types';
 import mongoose, { Schema, Document } from 'mongoose';
 
 export const USER_MODEL_NAME = 'user';

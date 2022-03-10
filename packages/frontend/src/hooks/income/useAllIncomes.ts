@@ -1,3 +1,4 @@
+import { IAccount, IIncome } from '@local/types';
 import React, { useState, useEffect } from 'react';
 import { useQuery } from 'react-query';
 

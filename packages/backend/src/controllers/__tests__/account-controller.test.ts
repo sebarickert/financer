@@ -1,3 +1,4 @@
+import { IAccount } from '@local/types';
 import { NextFunction, Request } from 'express';
 import supertest from 'supertest';
 
@@ -30,7 +31,7 @@ describe('Account endpoint', () => {
   });
 
   test('GET /api/account should return all user own accounts', async () => {
-    const accountData = { ...SIMPLE_ACCOUNT } as IAccountModel;
+    const accountData = { ...SIMPLE_ACCOUNT } as unknown as IAccountModel;
     delete accountData._id;
     accountData.owner = USER_ID;
 
@@ -49,7 +50,7 @@ describe('Account endpoint', () => {
   });
 
   test('DELETE /api/account/ACCOUNT-ID should delete account if user own that account', async () => {
-    const accountData = { ...SIMPLE_ACCOUNT } as IAccountModel;
+    const accountData = { ...SIMPLE_ACCOUNT } as unknown as IAccountModel;
     delete accountData._id;
     accountData.owner = USER_ID;
     const ownAccount = await createAccount(accountData);

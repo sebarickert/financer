@@ -1,3 +1,4 @@
+import { ITransactionCategory } from '@local/types';
 import mongoose, { Schema, Document } from 'mongoose';
 
 import { USER_MODEL_NAME } from './user-model';

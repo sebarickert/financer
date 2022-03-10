@@ -1,3 +1,4 @@
+import { IAccount, IApiResponse, IExpense } from '@local/types';
 import { NextFunction, Request } from 'express';
 import supertest from 'supertest';
 
@@ -55,7 +56,7 @@ describe('Expense endpoint', () => {
       ...SIMPLE_ACCOUNT,
       owner: USER_ID,
       balance: 1000,
-    } as IAccountModel);
+    } as unknown as IAccountModel);
 
     await createTransaction({
       ...SIMPLE_TRANSACTION,
@@ -63,7 +64,7 @@ describe('Expense endpoint', () => {
       amount: 100,
       fromAccountBalance: 1000,
       fromAccount: testAccount?._id,
-    } as ITransactionModel);
+    } as unknown as ITransactionModel);
 
     await createTransaction({
       ...SIMPLE_TRANSACTION,
@@ -71,7 +72,7 @@ describe('Expense endpoint', () => {
       amount: 100,
       fromAccountBalance: 900,
       fromAccount: testAccount?._id,
-    } as ITransactionModel);
+    } as unknown as ITransactionModel);
 
     await createTransaction({
       ...SIMPLE_TRANSACTION,
@@ -79,7 +80,7 @@ describe('Expense endpoint', () => {
       amount: 100,
       fromAccountBalance: 800,
       fromAccount: testAccount?._id,
-    } as ITransactionModel);
+    } as unknown as ITransactionModel);
 
     const { body: expenses }: { body: IExpense[] } = await api
       .get(`/api/expense`)
@@ -94,7 +95,7 @@ describe('Expense endpoint', () => {
       ...SIMPLE_ACCOUNT,
       owner: USER_ID,
       balance: 1000,
-    } as IAccountModel);
+    } as unknown as IAccountModel);
 
     const ownExpense = await createTransaction({
       ...SIMPLE_TRANSACTION,
@@ -102,7 +103,7 @@ describe('Expense endpoint', () => {
       amount: 100,
       fromAccountBalance: 1000,
       fromAccount: testAccount?._id,
-    } as ITransactionModel);
+    } as unknown as ITransactionModel);
 
     const notOwnExpense = await createTransaction({
       ...SIMPLE_TRANSACTION,
@@ -110,7 +111,7 @@ describe('Expense endpoint', () => {
       amount: 100,
       fromAccountBalance: 800,
       fromAccount: testAccount?._id,
-    } as ITransactionModel);
+    } as unknown as ITransactionModel);
 
     await api
       .get(`/api/expense/${ownExpense?._id}`)
@@ -127,7 +128,7 @@ describe('Expense endpoint', () => {
       ...SIMPLE_ACCOUNT,
       owner: USER_ID,
       balance: 1000,
-    } as IAccountModel);
+    } as unknown as IAccountModel);
 
     const {
       body: { payload: newExpense },
@@ -138,7 +139,7 @@ describe('Expense endpoint', () => {
         user: USER_ID,
         amount: 100,
         fromAccount: testAccount?._id,
-      } as ITransactionModel)
+      } as unknown as ITransactionModel)
       .expect(201)
       .expect('Content-Type', /application\/json/);
 
@@ -154,7 +155,7 @@ describe('Expense endpoint', () => {
       ...SIMPLE_ACCOUNT,
       owner: USER_ID,
       balance: 900,
-    } as IAccountModel);
+    } as unknown as IAccountModel);
 
     const ownExpense = await createTransaction({
       ...SIMPLE_TRANSACTION,
@@ -162,7 +163,7 @@ describe('Expense endpoint', () => {
       amount: 100,
       fromAccountBalance: 1000,
       fromAccount: testAccount?._id,
-    } as ITransactionModel);
+    } as unknown as ITransactionModel);
 
     const notOwnExpense = await createTransaction({
       ...SIMPLE_TRANSACTION,
@@ -170,7 +171,7 @@ describe('Expense endpoint', () => {
       amount: 100,
       fromAccountBalance: 800,
       fromAccount: testAccount?._id,
-    } as ITransactionModel);
+    } as unknown as ITransactionModel);
 
     const expensesBefore = await findExpenseTransactionsByUser(USER_ID);
     expect(expensesBefore?.length).toEqual(1);
@@ -195,7 +196,7 @@ describe('Expense endpoint', () => {
       ...SIMPLE_ACCOUNT,
       owner: USER_ID,
       balance: 800,
-    } as IAccountModel);
+    } as unknown as IAccountModel);
 
     const firstTransaction = await createTransaction({
       ...SIMPLE_TRANSACTION,
@@ -203,14 +204,14 @@ describe('Expense endpoint', () => {
       amount: 100,
       fromAccountBalance: 1000,
       fromAccount: testAccount?._id,
-    } as ITransactionModel);
+    } as unknown as ITransactionModel);
     const secondTransaction = await createTransaction({
       ...SIMPLE_TRANSACTION_AFTER,
       user: USER_ID,
       amount: 100,
       fromAccountBalance: 900,
       fromAccount: testAccount?._id,
-    } as ITransactionModel);
+    } as unknown as ITransactionModel);
 
     await api
       .delete(`/api/expense/${firstTransaction?._id}`)
@@ -229,7 +230,7 @@ describe('Expense endpoint', () => {
       ...SIMPLE_ACCOUNT,
       owner: USER_ID,
       balance: 950,
-    } as IAccountModel);
+    } as unknown as IAccountModel);
 
     const existingExpenseAfterNewExpense = await createTransaction({
       ...SIMPLE_TRANSACTION_AFTER,
@@ -237,7 +238,7 @@ describe('Expense endpoint', () => {
       amount: 100,
       fromAccountBalance: 1000,
       fromAccount: testAccount?._id,
-    } as ITransactionModel);
+    } as unknown as ITransactionModel);
 
     const existingExpenseBeforeNewExpense = await createTransaction({
       ...SIMPLE_TRANSACTION_BEFORE,
@@ -245,7 +246,7 @@ describe('Expense endpoint', () => {
       amount: 500,
       fromAccountBalance: 1500,
       fromAccount: testAccount?._id,
-    } as ITransactionModel);
+    } as unknown as ITransactionModel);
 
     await createTransaction({
       ...SIMPLE_TRANSACTION_AFTER,
@@ -253,7 +254,7 @@ describe('Expense endpoint', () => {
       amount: 50,
       toAccountBalance: 900,
       toAccount: testAccount?._id,
-    } as ITransactionModel);
+    } as unknown as ITransactionModel);
 
     const {
       body: { payload: newExpense },
@@ -264,7 +265,7 @@ describe('Expense endpoint', () => {
         user: USER_ID,
         amount: 100,
         fromAccount: testAccount?._id,
-      } as ITransactionModel)
+      } as unknown as ITransactionModel)
       .expect(201)
       .expect('Content-Type', /application\/json/);
 

@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { IIncome, ITransactionCategoryMapping } from '@local/types';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { Container } from '../../components/container/container';
 import { Loader } from '../../components/loader/loader';
 import { SEO } from '../../components/seo/seo';
 import { useEditIncome } from '../../hooks/income/useEditIncome';

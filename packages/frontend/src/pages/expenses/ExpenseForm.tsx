@@ -1,3 +1,4 @@
+import { IExpense, ITransactionCategoryMapping } from '@local/types';
 import { ChangeEvent, useEffect, useState } from 'react';
 
 import { Alert } from '../../components/alert/alert';

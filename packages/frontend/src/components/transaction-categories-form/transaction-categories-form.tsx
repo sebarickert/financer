@@ -1,3 +1,4 @@
+import { ITransactionCategoryMapping } from '@local/types';
 import React from 'react';
 
 import { IOption } from '../select/select';

@@ -1,6 +1,6 @@
 type VisibilityType = 'income' | 'expense' | 'transfer';
 
-interface ITransactionCategory {
+export interface ITransactionCategory {
   _id?: any;
   owner?: string;
   name: string;

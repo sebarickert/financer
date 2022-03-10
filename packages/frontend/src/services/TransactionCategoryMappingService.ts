@@ -1,3 +1,5 @@
+import { IApiResponse, ITransactionCategoryMapping } from '@local/types';
+
 export const addTransactionCategoryMapping = async (
   newTransactionCategoryMappingData: ITransactionCategoryMapping[]
 ): Promise<IApiResponse<ITransactionCategoryMapping[]>> => {

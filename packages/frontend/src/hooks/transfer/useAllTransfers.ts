@@ -1,3 +1,4 @@
+import { ITransaction } from '@local/types';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 

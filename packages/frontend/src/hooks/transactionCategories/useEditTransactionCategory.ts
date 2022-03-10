@@ -1,3 +1,4 @@
+import { ITransactionCategory } from '@local/types';
 import { useCallback } from 'react';
 import { useQueryClient } from 'react-query';
 

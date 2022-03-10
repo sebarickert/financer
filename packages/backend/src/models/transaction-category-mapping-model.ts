@@ -1,3 +1,4 @@
+import { ITransactionCategoryMapping } from '@local/types';
 import mongoose, { Schema, Document } from 'mongoose';
 
 import { TRANSACTION_CATEGORY_MODEL_NAME } from './transaction-category-model';

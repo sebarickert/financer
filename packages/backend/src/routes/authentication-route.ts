@@ -1,3 +1,4 @@
+import { IAuthenticationStatus } from '@local/types';
 import { Router } from 'express';
 import passport from 'passport';
 

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { IExpense, ITransactionCategoryMapping } from '@local/types';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { SEO } from '../../components/seo/seo';

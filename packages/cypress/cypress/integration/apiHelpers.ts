@@ -1,3 +1,5 @@
+import { IAccount, ITransaction } from '@local/types';
+
 export interface ITransactionWithDateObject extends ITransaction {
   dateObj: Date;
 }

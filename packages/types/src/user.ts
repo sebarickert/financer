@@ -1,4 +1,4 @@
-interface IUser {
+export interface IUser {
   _id: any;
   name: any;
   nickname: string;
