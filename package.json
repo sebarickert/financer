@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "workspaces": [
-    "frontend",
-    "backend",
-    "cypress"
+    "packages/*"
   ],
   "scripts": {
     "start": "run-p start:backend start:frontend",
