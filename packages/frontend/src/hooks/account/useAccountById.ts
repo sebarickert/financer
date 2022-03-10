@@ -1,3 +1,4 @@
+import { IAccount } from '@local/types';
 import { useState, useEffect } from 'react';
 
 import { useAllAccounts } from './useAllAccounts';

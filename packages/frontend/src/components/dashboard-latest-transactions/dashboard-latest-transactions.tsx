@@ -1,3 +1,4 @@
+import { ITransaction } from '@local/types';
 import React, { useEffect, useState } from 'react';
 
 import { useAllTransactions } from '../../hooks/transaction/useAllTransactions';

@@ -1,4 +1,4 @@
-interface ITransactionCategoryMapping {
+export interface ITransactionCategoryMapping {
   _id?: any;
   owner?: string;
   amount: number;

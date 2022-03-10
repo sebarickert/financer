@@ -1,3 +1,5 @@
+import { IAccount, IApiResponse, ITransaction, IUser } from '@local/types';
+
 export interface IOverrideProfileData {
   accounts: IAccount[];
   transactions: ITransaction[];

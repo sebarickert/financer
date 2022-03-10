@@ -1,3 +1,4 @@
+import { IAccount } from '@local/types';
 import React from 'react';
 
 import { Alert } from '../../components/alert/alert';

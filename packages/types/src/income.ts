@@ -1,7 +1,7 @@
-interface IExpense {
+export interface IIncome {
   _id?: any;
-  fromAccount?: string;
-  fromAccountBalance?: number;
+  toAccount: string;
+  toAccountBalance?: number;
   amount: number;
   description: string;
   user?: string;

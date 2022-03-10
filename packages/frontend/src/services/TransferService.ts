@@ -1,3 +1,5 @@
+import { IApiResponse, ITransaction } from '@local/types';
+
 export const addTransfer = async (
   newTransactionData: ITransaction
 ): Promise<IApiResponse<ITransaction>> => {

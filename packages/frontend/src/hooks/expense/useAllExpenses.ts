@@ -1,3 +1,4 @@
+import { IAccount, IExpense } from '@local/types';
 import { useState, useEffect } from 'react';
 import { useQuery } from 'react-query';
 

@@ -1,3 +1,4 @@
+import { ITransactionCategoryMapping } from '@local/types';
 import { useState, useEffect } from 'react';
 
 import { useAllTransactionCategoryMappings } from './useAllTransactionCategoryMappings';

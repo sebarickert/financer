@@ -1,3 +1,5 @@
+import { IApiResponse, ITransactionCategory } from '@local/types';
+
 export interface ITransactionCategoryWithCategoryTree
   extends ITransactionCategory {
   categoryTree: string;

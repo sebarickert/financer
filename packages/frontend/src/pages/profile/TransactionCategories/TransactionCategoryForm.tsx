@@ -1,3 +1,4 @@
+import { ITransactionCategory } from '@local/types';
 import React, { useEffect, useState } from 'react';
 
 import { Alert } from '../../../components/alert/alert';
@@ -15,7 +16,7 @@ interface ITransactionCategoryFormProps {
   formHeading: string;
   submitLabel: string;
   name?: string;
-  visibility?: VisibilityType[];
+  visibility?: ITransactionCategory['visibility'];
   parentTransactioCategoryId?: string;
   optionalFooterComponent?: React.ReactNode;
 }
@@ -65,7 +66,7 @@ export const TransactionCategoryForm = ({
       newIncomeVisible.checked ? 'income' : '',
       newExpenseVisible.checked ? 'expense' : '',
       newTransferVisible.checked ? 'transfer' : '',
-    ].filter((i) => i !== '') as VisibilityType[];
+    ].filter((i) => i !== '') as ITransactionCategory['visibility'];
 
     const newTransactionCategoryData: ITransactionCategory = {
       name: newCategoryName.value,

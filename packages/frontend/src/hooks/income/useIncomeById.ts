@@ -1,3 +1,4 @@
+import { IIncome } from '@local/types';
 import { useState, useEffect } from 'react';
 
 import { useAllIncomes } from './useAllIncomes';

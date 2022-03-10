@@ -1,3 +1,4 @@
+import { ITransactionCategory } from '@local/types';
 import { useState, useEffect } from 'react';
 
 import { ITransactionCategoryWithCategoryTree } from '../../services/TransactionCategoriesService';
