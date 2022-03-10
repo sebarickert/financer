@@ -2,3 +2,5 @@ node_modules
 docker/.env.production
 .vscode
 build
+
+!.vscode/settings.json
