@@ -9,6 +9,10 @@
       "changeProcessCWD": true
     },
     {
+      "directory": "./packages/backend-nest",
+      "changeProcessCWD": true
+    },
+    {
       "directory": "./packages/cypress",
       "changeProcessCWD": true
     }

@@ -2,5 +2,9 @@
   "name": "@local/types",
   "version": "1.0.0",
   "type": "module",
-  "main": "src/index.ts"
+  "main": "src/index.ts",
+  "scripts": {
+    "format": "echo 'No format task defined'",
+    "lint": "echo 'No lint task defined'"
+  }
 }
