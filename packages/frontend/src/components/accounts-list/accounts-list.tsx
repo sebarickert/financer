@@ -21,7 +21,7 @@ export const AccountsList = ({
       <ul className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
         {rows.map(
           ({ balanceAmount, accountType, label: rowLabel, link, id }) => (
-            <li>
+            <li key={id}>
               <AccountsListRow
                 label={rowLabel}
                 balanceAmount={balanceAmount}
