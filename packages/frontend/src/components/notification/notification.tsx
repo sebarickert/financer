@@ -1,5 +1,5 @@
 import { Transition } from '@headlessui/react';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Container } from '../container/container';
 
@@ -46,24 +46,16 @@ export const Notification = ({
         leave="transition ease-in duration-100"
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
+        className="max-w-sm w-full bg-white shadow-lg rounded-lg pointer-events-auto ring-1 ring-black ring-opacity-5 overflow-hidden"
+        role="status"
       >
-        {(ref) => (
-          <div
-            className="max-w-sm w-full bg-white shadow-lg rounded-lg pointer-events-auto ring-1 ring-black ring-opacity-5 overflow-hidden"
-            ref={ref}
-            role="status"
-          >
-            <div className="p-4">
-              <div className="flex items-start">
-                <NotificationIcon type={type} />
-                <NotificationContent label={label}>
-                  {children}
-                </NotificationContent>
-                <NotificationClose onClick={handleClose} />
-              </div>
-            </div>
+        <div className="p-4">
+          <div className="flex items-start">
+            <NotificationIcon type={type} />
+            <NotificationContent label={label}>{children}</NotificationContent>
+            <NotificationClose onClick={handleClose} />
           </div>
-        )}
+        </div>
       </Transition>
     </Container>
   );
