@@ -9,7 +9,7 @@
     "start": "run-p start:backend start:frontend",
     "start:ci": "run-p start:backend:ci start:frontend",
     "start:test": "run-p start:backend:test start:frontend",
-    "start:backend": "npm -w backend run start-dev",
+    "start:backend": "npm -w backend run start:dev",
     "start:backend:ci": "NODE_ENV=test npm -w backend run start",
     "start:backend:test": "NODE_ENV=test npm -w backend run start-dev",
     "start:frontend": "npm -w frontend run start",
