@@ -5,7 +5,7 @@
   "main": "build/index.js",
   "scripts": {
     "start": "tsc && node build/index.js",
-    "start-dev": "nodemon",
+    "start:dev": "nodemon",
     "tsc": "tsc",
     "compile": "rm -rf dist && webpack --mode production",
     "build": "tsc && npm run compile",
