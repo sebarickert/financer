@@ -35,7 +35,7 @@ export class AuthController {
     const publicUrl = this.configService.get('publicUrl');
 
     passport.authenticate('github', {
-      successRedirect: `${publicUrl}/users/my-user`,
+      successRedirect: `${publicUrl}`,
       failureRedirect: '/auth/login/failed',
     })(req, res, next);
   }
@@ -49,9 +49,17 @@ export class AuthController {
     const publicUrl = this.configService.get('publicUrl');
 
     passport.authenticate('auth0', {
-      successRedirect: `${publicUrl}/users/my-user`,
+      successRedirect: `${publicUrl}`,
       failureRedirect: '/auth/login/failed',
     })(req, res, next);
+  }
+
+  @Get('logout')
+  logout(@Req() req: Request, @Res() res: Response) {
+    const publicUrl = this.configService.get('publicUrl');
+
+    req.logout();
+    res.redirect(publicUrl);
   }
 
   @Get('logout/auth0')
