@@ -21,7 +21,7 @@ export class AuthController {
   @Get('status')
   getAuthenticationStatus(@Req() req: Request) {
     return {
-      authenticated: req.isAuthenticated(),
+      authenticated: Boolean(req.user),
     };
   }
 
