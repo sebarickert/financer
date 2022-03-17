@@ -6,13 +6,18 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { UserId } from './users.decorators';
 import { UsersService } from './users.service';
 
-@Controller('users')
+@Controller('api/users')
 @LoggedIn()
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get('my-user')
   findOwnUser(@UserId() userId: string) {
+    return this.usersService.findOne(userId);
+  }
+
+  @Get('my-user/my-data')
+  getAllOwnUserData(@UserId() userId: string) {
     return this.usersService.findOne(userId);
   }
 
@@ -33,6 +38,12 @@ export class UsersController {
   @Get(':id')
   @Auth('admin')
   findOne(@Param('id') id: string) {
+    return this.usersService.findOne(id);
+  }
+
+  @Get(':id/my-data')
+  @Auth('admin')
+  getAllOneUserData(@Param('id') id: string) {
     return this.usersService.findOne(id);
   }
 

@@ -2,6 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
+import { isNodeEnvInTest } from '../config/configuration';
+import { DUMMY_TEST_USER } from '../config/mockAuthenticationMiddleware';
+
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User, UserDocument } from './schemas/user.schema';
 
@@ -14,7 +17,9 @@ export class UsersService {
   }
 
   async findOne(id: string): Promise<User> {
-    return this.userModel.findById(id).exec();
+    return !isNodeEnvInTest()
+      ? this.userModel.findById(id).exec()
+      : (DUMMY_TEST_USER as User);
   }
 
   async findOneByGithubId(githubId: string): Promise<User> {
