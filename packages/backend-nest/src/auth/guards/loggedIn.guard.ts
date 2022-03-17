@@ -1,10 +1,11 @@
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
-import { Request } from 'express';
+import { ExecutionContext, Injectable } from '@nestjs/common';
+
+import { BaseGuard } from './base.guard';
 
 @Injectable()
-export class LoggedInGuard implements CanActivate {
+export class LoggedInGuard extends BaseGuard {
   canActivate(context: ExecutionContext): boolean | Promise<boolean> {
-    const { user } = context.switchToHttp().getRequest() as Request;
+    const user = this.getRequestUser(context);
 
     return Boolean(user);
   }
