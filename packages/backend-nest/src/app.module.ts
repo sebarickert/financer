@@ -2,8 +2,10 @@ import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { InjectConnection, MongooseModule } from '@nestjs/mongoose';
 import MongoStore from 'connect-mongo';
+import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import mongoose from 'mongoose';
+import passport from 'passport';
 
 import { AccountsModule } from './accounts/accounts.module';
 import { AuthModule } from './auth/auth.module';
@@ -27,12 +29,12 @@ import { UsersModule } from './users/users.module';
         uri: configService.get<string>('mongodbConnectionString'),
       }),
     }),
+    AuthModule.register(),
     UsersModule,
     AccountsModule,
     TransactionsModule,
     TransactionCategoriesModule,
     TransactionCategoryMappingsModule,
-    AuthModule,
   ],
 })
 export class AppModule implements NestModule {
@@ -57,6 +59,9 @@ export class AppModule implements NestModule {
             touchAfter: 60 * 60 * 24,
           }),
         }),
+        cookieParser(),
+        passport.initialize(),
+        passport.session(),
       )
       .forRoutes('*');
   }
