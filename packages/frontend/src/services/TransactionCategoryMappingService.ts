@@ -4,7 +4,7 @@ export const addTransactionCategoryMapping = async (
   newTransactionCategoryMappingData: ITransactionCategoryMapping[]
 ): Promise<IApiResponse<ITransactionCategoryMapping[]>> => {
   const newTransactionCategoryMapping = await fetch(
-    '/api/transaction-categories-mapping',
+    '/api/transaction-category-mappings',
     {
       method: 'POST',
       headers: {
@@ -22,11 +22,11 @@ export const getTransactionCategoryMappingByTransactionId = async (
   id: string
 ): Promise<ITransactionCategoryMapping[]> => {
   const transactionCategoryMapping = await fetch(
-    `/api/transaction-categories-mapping/by-transaction/${id}`
+    `/api/transaction-category-mappings/by-transaction/${id}`
   );
   return (await transactionCategoryMapping.json()).payload;
 };
 
 export const getAllTransactionCategoryMappings = async (): Promise<
   ITransactionCategoryMapping[]
-> => (await fetch('/api/transaction-categories-mapping')).json();
+> => (await fetch('/api/transaction-category-mappings')).json();

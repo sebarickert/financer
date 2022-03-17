@@ -12,7 +12,7 @@ import { CreateTransactionCategoryDto } from './dto/create-transaction-category.
 import { UpdateTransactionCategoryDto } from './dto/update-transaction-category.dto';
 import { TransactionCategoriesService } from './transaction-categories.service';
 
-@Controller('transaction-categories')
+@Controller('api/transaction-categories')
 export class TransactionCategoriesController {
   constructor(
     private readonly transactionCategoriesService: TransactionCategoriesService,

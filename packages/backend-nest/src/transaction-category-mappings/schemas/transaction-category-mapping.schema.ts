@@ -3,11 +3,11 @@ import { Document, Schema as MogooseSchema } from 'mongoose';
 import { Transaction } from 'src/transactions/schemas/transaction.schema';
 import { User } from 'src/users/schemas/user.schema';
 
-export type TransactionCategoryMappingDocument = TransactionMappingCategory &
+export type TransactionCategoryMappingDocument = TransactionCategoryMapping &
   Document;
 
 @Schema()
-export class TransactionMappingCategory {
+export class TransactionCategoryMapping {
   @Prop({ required: true, type: MogooseSchema.Types.ObjectId, ref: 'User' })
   owner: User;
 
@@ -19,7 +19,7 @@ export class TransactionMappingCategory {
     ref: 'TransactionCategory',
     required: true,
   })
-  category_id: TransactionMappingCategory;
+  category_id: TransactionCategoryMapping;
 
   @Prop({
     type: MogooseSchema.Types.ObjectId,
@@ -32,6 +32,6 @@ export class TransactionMappingCategory {
   amount: number;
 }
 
-export const TransactionCategorySchema = SchemaFactory.createForClass(
-  TransactionMappingCategory,
+export const TransactionCategoryMappingSchema = SchemaFactory.createForClass(
+  TransactionCategoryMapping,
 );

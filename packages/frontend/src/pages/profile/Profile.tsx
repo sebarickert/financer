@@ -29,7 +29,7 @@ export const Profile = (): JSX.Element => {
         />
         <QuickLinksItem
           title="Download your data"
-          link="/api/profile/my-data"
+          link="/api/users/my-user/my-data"
           iconName="cloud-download"
           description="Download your complete financer data as a JSON-file."
         />

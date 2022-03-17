@@ -10,9 +10,13 @@ import passport from 'passport';
 import { AccountsModule } from './accounts/accounts.module';
 import { AuthModule } from './auth/auth.module';
 import { configuration } from './config/configuration';
+import { ExpensesModule } from './expenses/expenses.module';
+import { IncomesModule } from './incomes/incomes.module';
 import { TransactionCategoriesModule } from './transaction-categories/transaction-categories.module';
 import { TransactionCategoryMappingsModule } from './transaction-category-mappings/transaction-category-mappings.module';
 import { TransactionsModule } from './transactions/transactions.module';
+import { TransfersModule } from './transfers/transfers.module';
+import { UserDataModule } from './user-data/user-data.module';
 import { UsersModule } from './users/users.module';
 
 @Module({
@@ -35,6 +39,10 @@ import { UsersModule } from './users/users.module';
     TransactionsModule,
     TransactionCategoriesModule,
     TransactionCategoryMappingsModule,
+    UserDataModule,
+    ExpensesModule,
+    IncomesModule,
+    TransfersModule,
   ],
 })
 export class AppModule implements NestModule {
