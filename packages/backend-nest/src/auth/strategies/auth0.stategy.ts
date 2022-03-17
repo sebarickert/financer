@@ -5,45 +5,55 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
-import { Strategy, Profile } from 'passport-github2';
+import { Profile, Strategy } from 'passport-auth0';
 import { UsersService } from 'src/users/users.service';
 
 import { AuthService } from '../auth.service';
 
 @Injectable()
-export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
+export class Auth0Strategy extends PassportStrategy(Strategy, 'auth0') {
   constructor(
     private authService: AuthService,
     private userService: UsersService,
     private configService: ConfigService,
   ) {
-    const githubKeys = configService.get('githubKeys');
+    const auth0Keys = configService.get('auth0Keys');
     const publicUrl = configService.get('publicUrl');
     super({
-      ...githubKeys,
-      callbackURL: `${publicUrl}/auth/github/redirect`,
+      ...auth0Keys,
+      scope: 'openid email profile',
+      callbackURL: `${publicUrl}/auth/auth0/redirect`,
     });
 
-    console.log('github oauth enabled');
+    console.log('auth0 oauth enabled');
   }
 
-  async validate(_accessToken: never, _refreshToken: never, profile: Profile) {
+  async validate(
+    _accessToken: never,
+    _refreshToken: never,
+    _extraParams: never,
+    profile: Profile,
+  ) {
     if (!profile.id) {
       throw new ServiceUnavailableException();
     }
 
     try {
-      const user = await this.authService.validateUserByGithub(profile.id);
+      console.log('auth0 oauth profile', profile.id);
+      const user = await this.authService.validateUserByAuth0(profile.id);
+      console.log('auth0 oauth user', user);
       if (user) {
         return user;
       }
 
+      console.log('auth0 oauth profile not found, creating new user');
+
       return this.userService.create({
         name: profile.displayName,
         nickname: profile.username,
-        githubId: profile.id,
         profileImageUrl: profile.photos?.slice().shift()?.value,
-        auth0Id: null,
+        githubId: null,
+        auth0Id: profile.id,
         roles: [],
       });
     } catch (error) {

@@ -13,7 +13,6 @@ export class UsersController {
 
   @Get('my-user')
   findOwnUser(@UserId() userId: string) {
-    console.log(userId);
     return this.usersService.findOne(userId);
   }
 
