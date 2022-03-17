@@ -13,7 +13,7 @@ import {
 } from './config/MemoryDatabaseServer';
 import { createExpressServer } from './server';
 
-const port = 4000; // default port to listen
+const port = 4001; // default port to listen
 
 let connections: Socket[] = [];
 
