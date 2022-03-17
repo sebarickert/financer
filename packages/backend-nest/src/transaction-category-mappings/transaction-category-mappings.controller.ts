@@ -12,7 +12,7 @@ import { CreateTransactionCategoryMappingDto } from './dto/create-transaction-ca
 import { UpdateTransactionCategoryMappingDto } from './dto/update-transaction-category-mapping.dto';
 import { TransactionCategoryMappingsService } from './transaction-category-mappings.service';
 
-@Controller('transaction-category-mappings')
+@Controller('api/transaction-category-mappings')
 export class TransactionCategoryMappingsController {
   constructor(
     private readonly transactionCategoryMappingsService: TransactionCategoryMappingsService,

@@ -18,6 +18,13 @@ import { GithubGuard } from './guards/github.guard';
 export class AuthController {
   constructor(private configService: ConfigService) {}
 
+  @Get('status')
+  getAuthenticationStatus(@Req() req: Request) {
+    return {
+      authenticated: req.isAuthenticated(),
+    };
+  }
+
   @Get('github')
   @UseGuards(GithubGuard)
   loginGithub() {}

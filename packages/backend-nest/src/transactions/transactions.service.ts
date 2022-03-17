@@ -1,10 +1,21 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import {
+  Transaction,
+  TransactionDocument,
+} from 'src/transactions/schemas/transaction.schema';
 
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 
 @Injectable()
 export class TransactionsService {
+  constructor(
+    @InjectModel(Transaction.name)
+    private transactionModel: Model<TransactionDocument>,
+  ) {}
+
   create(createTransactionDto: CreateTransactionDto) {
     return 'This action adds a new transaction';
   }
@@ -15,6 +26,10 @@ export class TransactionsService {
 
   findOne(id: number) {
     return `This action returns a #${id} transaction`;
+  }
+
+  async findByUser(userId: string): Promise<TransactionDocument[]> {
+    return this.transactionModel.find({ owner: userId }).exec();
   }
 
   update(id: number, updateTransactionDto: UpdateTransactionDto) {

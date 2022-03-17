@@ -1,19 +1,19 @@
 import { IApiResponse, IIncome } from '@local/types';
 
 export const getAllIncomes = async (): Promise<IIncome[]> => {
-  const incomes = await fetch('/api/income');
+  const incomes = await fetch('/api/incomes');
   return incomes.json();
 };
 
 export const getIncomeById = async (id: string): Promise<IIncome> => {
-  const income = await fetch(`/api/income/${id}`);
+  const income = await fetch(`/api/incomes/${id}`);
   return (await income.json()).payload;
 };
 
 export const addIncome = async (
   newIncomeData: IIncome
 ): Promise<IApiResponse<IIncome>> => {
-  const newIncome = await fetch('/api/income', {
+  const newIncome = await fetch('/api/incomes', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -29,7 +29,7 @@ export const updateIncome = async (
   targetIncome: IIncome,
   id: string
 ): Promise<IApiResponse<IIncome>> => {
-  const updatedIncome = await fetch(`/api/income/${id}`, {
+  const updatedIncome = await fetch(`/api/incomes/${id}`, {
     method: 'PUT',
     headers: {
       Accept: 'application/json',
@@ -42,7 +42,7 @@ export const updateIncome = async (
 };
 
 export const deleteIncome = async (id: string): Promise<void> => {
-  await fetch(`/api/income/${id}`, {
+  await fetch(`/api/incomes/${id}`, {
     method: 'DELETE',
     headers: {
       Accept: 'application/json',
