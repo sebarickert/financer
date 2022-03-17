@@ -11,6 +11,6 @@ export class AuthService {
   }
 
   async validateUserByAuth0(auht0Id: string): Promise<User> {
-    return this.usersService.findOneByAuht0Id(auht0Id);
+    return this.usersService.findOneByAuth0Id(auht0Id);
   }
 }

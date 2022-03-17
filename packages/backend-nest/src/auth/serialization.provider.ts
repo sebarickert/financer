@@ -19,7 +19,7 @@ export class AuthSerializer extends PassportSerializer {
   ) {
     const user = await this.userService.findOne(userId);
     if (!user) {
-      return done(new UnauthorizedException(), null);
+      throw new UnauthorizedException();
     }
     done(null, user);
   }

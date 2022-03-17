@@ -21,8 +21,8 @@ export class UsersService {
     return this.userModel.findOne({ githubId }).exec();
   }
 
-  async findOneByAuht0Id(auht0Id: string): Promise<User> {
-    return this.userModel.findOne({ auht0Id }).exec();
+  async findOneByAuth0Id(auth0Id: string): Promise<User> {
+    return this.userModel.findOne({ auth0Id }).exec();
   }
 
   async create(createUserDto: User) {
