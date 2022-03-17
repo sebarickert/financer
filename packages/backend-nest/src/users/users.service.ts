@@ -12,21 +12,21 @@ import { User, UserDocument } from './schemas/user.schema';
 export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
-  async findAll(): Promise<User[]> {
+  async findAll(): Promise<UserDocument[]> {
     return this.userModel.find().exec();
   }
 
-  async findOne(id: string): Promise<User> {
+  async findOne(id: string): Promise<UserDocument> {
     return !isNodeEnvInTest()
       ? this.userModel.findById(id).exec()
-      : (DUMMY_TEST_USER as User);
+      : (DUMMY_TEST_USER as UserDocument);
   }
 
-  async findOneByGithubId(githubId: string): Promise<User> {
+  async findOneByGithubId(githubId: string): Promise<UserDocument> {
     return this.userModel.findOne({ githubId }).exec();
   }
 
-  async findOneByAuth0Id(auth0Id: string): Promise<User> {
+  async findOneByAuth0Id(auth0Id: string): Promise<UserDocument> {
     return this.userModel.findOne({ auth0Id }).exec();
   }
 

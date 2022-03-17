@@ -5,9 +5,9 @@ import { User } from 'src/users/schemas/user.schema';
 export type TransactionCategoryDocument = TransactionCategory & Document;
 
 enum VisibilityType {
-  income = 'income',
-  expense = 'expense',
-  transfer = 'transfer',
+  Income = 'Income',
+  Expense = 'Expense',
+  Transfer = 'Transfer',
 }
 
 @Schema()
@@ -18,7 +18,7 @@ export class TransactionCategory {
   @Prop({ required: true })
   name: string;
 
-  @Prop([VisibilityType])
+  @Prop([String])
   visibility: VisibilityType[];
 
   @Prop({
