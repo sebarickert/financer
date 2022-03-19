@@ -1,7 +1,10 @@
 import { ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
+import { Role } from 'src/modules/users/schemas/user.schema';
 
 import { BaseGuard } from './base.guard';
+
+export const ROLES_KEY = 'roles';
 
 @Injectable()
 export class RolesGuard extends BaseGuard {
@@ -10,7 +13,7 @@ export class RolesGuard extends BaseGuard {
   }
 
   canActivate(context: ExecutionContext): boolean {
-    const requiredRoles = this.reflector.getAllAndOverride<string[]>('roles', [
+    const requiredRoles = this.reflector.getAllAndOverride<Role[]>(ROLES_KEY, [
       context.getHandler(),
       context.getClass(),
     ]);

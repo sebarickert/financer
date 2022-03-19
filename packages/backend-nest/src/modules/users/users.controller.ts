@@ -5,6 +5,7 @@ import { LoggedIn } from 'src/modules/auth/decorators/loggedIn.decorators';
 import { UserDataService } from 'src/modules/user-data/user-data.service';
 
 import { UpdateUserDto } from './dto/update-user.dto';
+import { Role } from './schemas/user.schema';
 import { UserId } from './users.decorators';
 import { UsersService } from './users.service';
 
@@ -29,7 +30,7 @@ export class UsersController {
   @Post('my-user/my-data')
   @Auth('test-user')
   overrideAllOwnUserData(@UserId() userId: string) {
-    return this.userDataService.overrideUserData();
+    return this.userDataService.overrideUserData(userId);
   }
 
   @Patch('my-user')
@@ -41,19 +42,19 @@ export class UsersController {
   }
 
   @Get()
-  @Auth('admin')
+  @Auth(Role.admin)
   findAll() {
     return this.usersService.findAll();
   }
 
   @Get(':id')
-  @Auth('admin')
+  @Auth(Role.admin)
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(id);
   }
 
   @Get(':id/my-data')
-  @Auth('admin')
+  @Auth(Role.admin)
   async getAllOneUserData(@Param('id') id: string, @Res() res: Response) {
     const user = await this.usersService.findOne(id);
     const { filename, data } = await this.userDataService.findAllOneUserData(
