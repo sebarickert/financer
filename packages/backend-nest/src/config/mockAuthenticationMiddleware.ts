@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { UserDocument } from 'src/users/schemas/user.schema';
+import { UserDocument } from 'src/modules/users/schemas/user.schema';
 
 export const DUMMY_TEST_USER: Partial<UserDocument> = {
   roles: ['test-user'],

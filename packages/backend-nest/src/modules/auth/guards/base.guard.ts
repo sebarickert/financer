@@ -2,7 +2,7 @@ import { CanActivate, ExecutionContext } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { isNodeEnvInTest } from 'src/config/configuration';
 import { DUMMY_TEST_USER } from 'src/config/mockAuthenticationMiddleware';
-import { UserDocument } from 'src/users/schemas/user.schema';
+import { UserDocument } from 'src/modules/users/schemas/user.schema';
 
 export abstract class BaseGuard implements CanActivate {
   canActivate(

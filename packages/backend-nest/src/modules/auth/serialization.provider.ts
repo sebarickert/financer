@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportSerializer } from '@nestjs/passport';
-import { User, UserDocument } from 'src/users/schemas/user.schema';
-import { UsersService } from 'src/users/users.service';
+import { User, UserDocument } from 'src/modules/users/schemas/user.schema';
+import { UsersService } from 'src/modules/users/users.service';
 
 @Injectable()
 export class AuthSerializer extends PassportSerializer {
