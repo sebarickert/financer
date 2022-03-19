@@ -25,7 +25,7 @@ export class AccountsService {
     return `This action returns a #${id} account`;
   }
 
-  async findByUser(userId: string): Promise<AccountDocument[]> {
+  async findAllByUser(userId: string): Promise<AccountDocument[]> {
     return this.accountModel.find({ owner: userId });
   }
 
