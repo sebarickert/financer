@@ -57,19 +57,21 @@ export const ProfileOverrideData = (): JSX.Element => {
       return;
     }
 
-    const override = await overrideProfileData(uploadedUserData);
+    const { message: overrideMessage, status } = await overrideProfileData(
+      uploadedUserData
+    );
 
-    if (override.status < 300) {
+    if (status === 201) {
       setNotification({
         type: 'success',
         label: 'Successfully overridden',
-        children: override?.payload,
+        children: overrideMessage,
       });
     } else {
       setNotification({
         type: 'error',
         label: 'Overridde failed',
-        children: override?.payload,
+        children: overrideMessage,
       });
     }
   };

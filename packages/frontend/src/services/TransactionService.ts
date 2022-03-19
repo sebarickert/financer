@@ -1,8 +1,6 @@
-import { IApiResponse, ITransaction } from '@local/types';
+import { ITransaction } from '@local/types';
 
-export const getAllTransactions = async (): Promise<
-  IApiResponse<ITransaction[]>
-> => {
+export const getAllTransactions = async (): Promise<ITransaction[]> => {
   const transactions = await fetch('/api/transactions', {
     headers: {
       Accept: 'application/json',
@@ -15,7 +13,7 @@ export const getAllTransactions = async (): Promise<
 
 export const getTransactionsByAccountId = async (
   id: string
-): Promise<IApiResponse<ITransaction[]>> => {
+): Promise<ITransaction[]> => {
   const transactions = await fetch(`/api/accounts/${id}/transactions`);
   return transactions.json();
 };

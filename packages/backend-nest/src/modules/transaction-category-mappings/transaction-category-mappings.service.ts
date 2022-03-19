@@ -22,6 +22,14 @@ export class TransactionCategoryMappingsService {
     return 'This action adds a new transactionCategoryMapping';
   }
 
+  async createMany(
+    createTransactionCategoryMappingDto: CreateTransactionCategoryMappingDto[],
+  ) {
+    return this.transactionCategoryMappingModel.insertMany(
+      createTransactionCategoryMappingDto,
+    );
+  }
+
   findAll() {
     return `This action returns all transactionCategoryMappings`;
   }
@@ -45,5 +53,13 @@ export class TransactionCategoryMappingsService {
 
   remove(id: number) {
     return `This action removes a #${id} transactionCategoryMapping`;
+  }
+
+  async removeAllByUser(userId: string) {
+    return this.transactionCategoryMappingModel
+      .deleteMany({
+        owner: userId,
+      })
+      .exec();
   }
 }
