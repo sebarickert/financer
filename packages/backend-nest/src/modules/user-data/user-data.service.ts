@@ -1,8 +1,4 @@
-import {
-  Inject,
-  Injectable,
-  ServiceUnavailableException,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { AccountsService } from 'src/modules/accounts/accounts.service';
 import { TransactionCategoriesService } from 'src/modules/transaction-categories/transaction-categories.service';
 import { TransactionCategoryMappingsService } from 'src/modules/transaction-category-mappings/transaction-category-mappings.service';
@@ -53,7 +49,5 @@ export class UserDataService {
     return { filename, data };
   }
 
-  overrideUserData() {
-    throw new ServiceUnavailableException('Not implemented yet');
-  }
+  async overrideUserData(userId: string) {}
 }
