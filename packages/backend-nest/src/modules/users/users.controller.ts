@@ -2,7 +2,10 @@ import { Controller, Get, Body, Patch, Param, Post, Res } from '@nestjs/common';
 import { Response } from 'express';
 import { Auth } from 'src/modules/auth/decorators/auht.decorator';
 import { LoggedIn } from 'src/modules/auth/decorators/loggedIn.decorators';
-import { UserDataService } from 'src/modules/user-data/user-data.service';
+import {
+  ImportUserDataDto,
+  UserDataService,
+} from 'src/modules/user-data/user-data.service';
 
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Role } from './schemas/user.schema';
@@ -29,8 +32,11 @@ export class UsersController {
 
   @Post('my-user/my-data')
   @Auth('test-user')
-  overrideAllOwnUserData(@UserId() userId: string) {
-    return this.userDataService.overrideUserData(userId);
+  overrideAllOwnUserData(
+    @UserId() userId: string,
+    @Body() userData: ImportUserDataDto,
+  ) {
+    return this.userDataService.overrideUserData(userId, userData);
   }
 
   @Patch('my-user')

@@ -1,4 +1,4 @@
-import { IApiResponse, IIncome } from '@local/types';
+import { ApiResponseWithStatus, IIncome } from '@local/types';
 
 export const getAllIncomes = async (): Promise<IIncome[]> => {
   const incomes = await fetch('/api/incomes');
@@ -7,12 +7,12 @@ export const getAllIncomes = async (): Promise<IIncome[]> => {
 
 export const getIncomeById = async (id: string): Promise<IIncome> => {
   const income = await fetch(`/api/incomes/${id}`);
-  return (await income.json()).payload;
+  return income.json();
 };
 
 export const addIncome = async (
   newIncomeData: IIncome
-): Promise<IApiResponse<IIncome>> => {
+): Promise<ApiResponseWithStatus<IIncome>> => {
   const newIncome = await fetch('/api/incomes', {
     method: 'POST',
     headers: {
@@ -22,13 +22,13 @@ export const addIncome = async (
     body: JSON.stringify(newIncomeData),
   });
 
-  return newIncome.json();
+  return { payload: await newIncome.json(), status: newIncome.status };
 };
 
 export const updateIncome = async (
   targetIncome: IIncome,
   id: string
-): Promise<IApiResponse<IIncome>> => {
+): Promise<ApiResponseWithStatus<IIncome>> => {
   const updatedIncome = await fetch(`/api/incomes/${id}`, {
     method: 'PUT',
     headers: {
@@ -38,7 +38,7 @@ export const updateIncome = async (
     body: JSON.stringify(targetIncome),
   });
 
-  return updatedIncome.json();
+  return { payload: await updatedIncome.json(), status: updatedIncome.status };
 };
 
 export const deleteIncome = async (id: string): Promise<void> => {

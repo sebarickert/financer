@@ -1,4 +1,4 @@
-import { IAccount, IApiResponse } from '@local/types';
+import { ApiResponseWithStatus, IAccount } from '@local/types';
 
 export const getAllAccounts = async (): Promise<IAccount[]> => {
   const accounts = await fetch('/api/accounts');
@@ -7,12 +7,12 @@ export const getAllAccounts = async (): Promise<IAccount[]> => {
 
 export const getAccountById = async (id: string): Promise<IAccount> => {
   const account = await fetch(`/api/accounts/${id}`);
-  return (await account.json()).payload;
+  return account.json();
 };
 
 export const addAccount = async (
   newAccountData: IAccount
-): Promise<IApiResponse<IAccount>> => {
+): Promise<ApiResponseWithStatus<IAccount>> => {
   const newAccount = await fetch('/api/accounts', {
     method: 'POST',
     headers: {
@@ -22,13 +22,13 @@ export const addAccount = async (
     body: JSON.stringify(newAccountData),
   });
 
-  return newAccount.json();
+  return { payload: await newAccount.json(), status: newAccount.status };
 };
 
 export const editAccount = async (
   id: string,
   targetAccountData: IAccount
-): Promise<IApiResponse<IAccount>> => {
+): Promise<ApiResponseWithStatus<IAccount>> => {
   const targetAccount = await fetch(`/api/accounts/${id}`, {
     method: 'PUT',
     headers: {
@@ -38,7 +38,7 @@ export const editAccount = async (
     body: JSON.stringify(targetAccountData),
   });
 
-  return targetAccount.json();
+  return { payload: await targetAccount.json(), status: targetAccount.status };
 };
 
 export const deleteAccount = async (id: string): Promise<void> => {

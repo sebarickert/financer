@@ -1,4 +1,4 @@
-import { IApiResponse, IExpense } from '@local/types';
+import { ApiResponseWithStatus, IExpense } from '@local/types';
 
 export const getAllExpenses = async (): Promise<IExpense[]> => {
   const expenses = await fetch('/api/expenses');
@@ -7,12 +7,12 @@ export const getAllExpenses = async (): Promise<IExpense[]> => {
 
 export const getExpenseById = async (id: string): Promise<IExpense> => {
   const expense = await fetch(`/api/expenses/${id}`);
-  return (await expense.json()).payload;
+  return expense.json();
 };
 
 export const addExpense = async (
   newExpenseData: IExpense
-): Promise<IApiResponse<IExpense>> => {
+): Promise<ApiResponseWithStatus<IExpense>> => {
   const newExpense = await fetch('/api/expenses', {
     method: 'POST',
     headers: {
@@ -22,13 +22,13 @@ export const addExpense = async (
     body: JSON.stringify(newExpenseData),
   });
 
-  return newExpense.json();
+  return { payload: await newExpense.json(), status: newExpense.status };
 };
 
 export const updateExpense = async (
   targetExpense: IExpense,
   id: string
-): Promise<IApiResponse<IExpense>> => {
+): Promise<ApiResponseWithStatus<IExpense>> => {
   const updatedExpense = await fetch(`/api/expenses/${id}`, {
     method: 'PUT',
     headers: {
@@ -38,7 +38,10 @@ export const updateExpense = async (
     body: JSON.stringify(targetExpense),
   });
 
-  return updatedExpense.json();
+  return {
+    payload: await updatedExpense.json(),
+    status: updatedExpense.status,
+  };
 };
 
 export const deleteExpense = async (id: string): Promise<void> => {

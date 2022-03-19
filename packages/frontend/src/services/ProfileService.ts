@@ -1,4 +1,4 @@
-import { IAccount, IApiResponse, ITransaction, IUser } from '@local/types';
+import { IAccount, ITransaction, IUser } from '@local/types';
 
 export interface IOverrideProfileData {
   accounts: IAccount[];
@@ -13,7 +13,7 @@ export const getProfileInformation = async (): Promise<IUser> => {
 
 export const postOverrideProfileData = async (
   uploadedUserData: IOverrideProfileData
-): Promise<IApiResponse<string>> => {
+): Promise<{ message: string; status: number }> => {
   const rawOverride = await fetch('/api/users/my-user/my-data', {
     method: 'POST',
     headers: {
@@ -23,5 +23,7 @@ export const postOverrideProfileData = async (
     body: JSON.stringify(uploadedUserData),
   });
 
-  return rawOverride.json();
+  const { payload: message } = await rawOverride.json();
+
+  return { message, status: rawOverride.status };
 };

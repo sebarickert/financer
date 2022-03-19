@@ -20,6 +20,14 @@ export class TransactionCategoriesService {
     return 'This action adds a new transactionCategory';
   }
 
+  async createMany(
+    createTransactionCategoryDto: CreateTransactionCategoryDto[],
+  ) {
+    return this.transactionCategoryModel.insertMany(
+      createTransactionCategoryDto,
+    );
+  }
+
   findAll() {
     return `This action returns all transactionCategories`;
   }
@@ -41,5 +49,9 @@ export class TransactionCategoriesService {
 
   remove(id: number) {
     return `This action removes a #${id} transactionCategory`;
+  }
+
+  async removeAllByUser(userId: string) {
+    return this.transactionCategoryModel.deleteMany({ owner: userId }).exec();
   }
 }

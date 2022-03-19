@@ -19,7 +19,7 @@ export const useAllTransfers = (): ITransaction[] | null => {
     staleTime: 300000,
   });
 
-  return transfersQuery.data?.payload || null;
+  return transfersQuery.data || null;
 };
 
 export const useAllTransfersGroupByMonth = () => {

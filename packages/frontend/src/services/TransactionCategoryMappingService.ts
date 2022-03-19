@@ -1,8 +1,11 @@
-import { IApiResponse, ITransactionCategoryMapping } from '@local/types';
+import {
+  ApiResponseWithStatus,
+  ITransactionCategoryMapping,
+} from '@local/types';
 
 export const addTransactionCategoryMapping = async (
   newTransactionCategoryMappingData: ITransactionCategoryMapping[]
-): Promise<IApiResponse<ITransactionCategoryMapping[]>> => {
+): Promise<ApiResponseWithStatus<ITransactionCategoryMapping[]>> => {
   const newTransactionCategoryMapping = await fetch(
     '/api/transaction-category-mappings',
     {
@@ -15,7 +18,10 @@ export const addTransactionCategoryMapping = async (
     }
   );
 
-  return newTransactionCategoryMapping.json();
+  return {
+    payload: await newTransactionCategoryMapping.json(),
+    status: newTransactionCategoryMapping.status,
+  };
 };
 
 export const getTransactionCategoryMappingByTransactionId = async (
@@ -24,7 +30,7 @@ export const getTransactionCategoryMappingByTransactionId = async (
   const transactionCategoryMapping = await fetch(
     `/api/transaction-category-mappings/by-transaction/${id}`
   );
-  return (await transactionCategoryMapping.json()).payload;
+  return transactionCategoryMapping.json();
 };
 
 export const getAllTransactionCategoryMappings = async (): Promise<
