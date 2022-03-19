@@ -16,7 +16,6 @@ interface IFinancerProps {
 export const Financer = ({
   isLoggedIn = false,
 }: IFinancerProps): JSX.Element => {
-  console.log(isLoggedIn);
   return (
     <Routes>
       <Route path="privacy-policy" element={<PrivacyPolicy />} />
