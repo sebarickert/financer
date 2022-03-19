@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
-import { UserDocument } from 'src/modules/users/schemas/user.schema';
+import { Role, UserDocument } from 'src/modules/users/schemas/user.schema';
 
 export const DUMMY_TEST_USER: Partial<UserDocument> = {
-  roles: ['test-user'],
+  roles: [Role.testUser],
   _id: '61460d7354ea082ad0256749',
   name: 'Dummy Test User',
 };
