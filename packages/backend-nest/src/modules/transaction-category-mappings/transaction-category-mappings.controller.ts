@@ -8,11 +8,15 @@ import {
   Delete,
 } from '@nestjs/common';
 
+import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
+import { UserId } from '../users/users.decorators';
+
 import { CreateTransactionCategoryMappingDto } from './dto/create-transaction-category-mapping.dto';
 import { UpdateTransactionCategoryMappingDto } from './dto/update-transaction-category-mapping.dto';
 import { TransactionCategoryMappingsService } from './transaction-category-mappings.service';
 
 @Controller('api/transaction-category-mappings')
+@LoggedIn()
 export class TransactionCategoryMappingsController {
   constructor(
     private readonly transactionCategoryMappingsService: TransactionCategoryMappingsService,
@@ -29,8 +33,8 @@ export class TransactionCategoryMappingsController {
   }
 
   @Get()
-  findAll() {
-    return this.transactionCategoryMappingsService.findAll();
+  findAllByUser(@UserId() userId: string) {
+    return this.transactionCategoryMappingsService.findAllByUser(userId);
   }
 
   @Get(':id')

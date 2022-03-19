@@ -34,12 +34,12 @@ export class UserDataService {
       )}.json`;
     };
     const userId = user._id;
-    const accounts = await this.accountService.findByUser(userId);
-    const transactions = await this.transactionService.findByUser(userId);
+    const accounts = await this.accountService.findAllByUser(userId);
+    const transactions = await this.transactionService.findAllByUser(userId);
     const transactionCategories =
-      await this.transactionCategoriesService.findByUser(userId);
+      await this.transactionCategoriesService.findAllByUser(userId);
     const transactionCategoryMappings =
-      await this.transactionCategoryMappingService.findByUser(userId);
+      await this.transactionCategoryMappingService.findAllByUser(userId);
 
     const filename = getMyDataFilename();
     const data = JSON.stringify({

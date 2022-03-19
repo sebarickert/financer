@@ -30,7 +30,7 @@ export class TransactionCategoryMappingsService {
     return `This action returns a #${id} transactionCategoryMapping`;
   }
 
-  async findByUser(
+  async findAllByUser(
     userId: string,
   ): Promise<TransactionCategoryMappingDocument[]> {
     return this.transactionCategoryMappingModel.find({ owner: userId }).exec();

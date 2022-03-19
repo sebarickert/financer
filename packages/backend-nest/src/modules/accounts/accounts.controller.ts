@@ -8,11 +8,15 @@ import {
   Delete,
 } from '@nestjs/common';
 
+import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
+import { UserId } from '../users/users.decorators';
+
 import { AccountsService } from './accounts.service';
 import { CreateAccountDto } from './dto/create-account.dto';
 import { UpdateAccountDto } from './dto/update-account.dto';
 
 @Controller('api/accounts')
+@LoggedIn()
 export class AccountsController {
   constructor(private readonly accountsService: AccountsService) {}
 
@@ -22,8 +26,8 @@ export class AccountsController {
   }
 
   @Get()
-  findAll() {
-    return this.accountsService.findAll();
+  findAllByUser(@UserId() userId: string) {
+    return this.accountsService.findAllByUser(userId);
   }
 
   @Get(':id')
