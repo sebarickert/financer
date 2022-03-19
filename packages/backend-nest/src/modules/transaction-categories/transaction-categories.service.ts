@@ -28,7 +28,7 @@ export class TransactionCategoriesService {
     return `This action returns a #${id} transactionCategory`;
   }
 
-  async findByUser(userId: string): Promise<TransactionCategoryDocument[]> {
+  async findAllByUser(userId: string): Promise<TransactionCategoryDocument[]> {
     return this.transactionCategoryModel.find({ owner: userId }).exec();
   }
 

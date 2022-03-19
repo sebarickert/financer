@@ -28,7 +28,7 @@ export class TransactionsService {
     return `This action returns a #${id} transaction`;
   }
 
-  async findByUser(userId: string): Promise<TransactionDocument[]> {
+  async findAllByUser(userId: string): Promise<TransactionDocument[]> {
     return this.transactionModel.find({ owner: userId }).exec();
   }
 
@@ -38,5 +38,35 @@ export class TransactionsService {
 
   remove(id: number) {
     return `This action removes a #${id} transaction`;
+  }
+
+  async findAllIncomesByUser(userId: string): Promise<TransactionDocument[]> {
+    return this.transactionModel
+      .find({
+        owner: userId,
+        toAccount: { $ne: undefined },
+        fromAccount: { $eq: undefined },
+      })
+      .exec();
+  }
+
+  async findAllExpensesByUser(userId: string): Promise<TransactionDocument[]> {
+    return this.transactionModel
+      .find({
+        owner: userId,
+        fromAccount: { $ne: undefined },
+        toAccount: { $eq: undefined },
+      })
+      .exec();
+  }
+
+  async findAllTransfersByUser(userId: string): Promise<TransactionDocument[]> {
+    return this.transactionModel
+      .find({
+        owner: userId,
+        fromAccount: { $ne: undefined },
+        toAccount: { $ne: undefined },
+      })
+      .exec();
   }
 }
