@@ -20,13 +20,16 @@ export const Financer = ({
     <Routes>
       <Route path="privacy-policy" element={<PrivacyPolicy />} />
       <Route path="issues-with-login" element={<IssuesWithLogin />} />
-      {!isLoggedIn && <Route path="*" element={<Login />} />}
-      <Route element={<Layout />}>
-        <Route index element={<Dashboard />} />
-        <Route path="statistics/*" element={<StatisticsRouter />} />
-        <Route path="accounts/*" element={<AccountsRouter />} />
-        <Route path="profile/*" element={<ProfileRouter />} />
-      </Route>
+      {!isLoggedIn ? (
+        <Route path="*" element={<Login />} />
+      ) : (
+        <Route element={<Layout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="statistics/*" element={<StatisticsRouter />} />
+          <Route path="accounts/*" element={<AccountsRouter />} />
+          <Route path="profile/*" element={<ProfileRouter />} />
+        </Route>
+      )}
     </Routes>
   );
 };
