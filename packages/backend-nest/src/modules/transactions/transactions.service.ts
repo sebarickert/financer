@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 import {
   Transaction,
   TransactionDocument,
-} from 'src/transactions/schemas/transaction.schema';
+} from 'src/modules/transactions/schemas/transaction.schema';
 
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';

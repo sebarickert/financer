@@ -3,11 +3,11 @@ import {
   Injectable,
   ServiceUnavailableException,
 } from '@nestjs/common';
-import { AccountsService } from 'src/accounts/accounts.service';
-import { TransactionCategoriesService } from 'src/transaction-categories/transaction-categories.service';
-import { TransactionCategoryMappingsService } from 'src/transaction-category-mappings/transaction-category-mappings.service';
-import { TransactionsService } from 'src/transactions/transactions.service';
-import { UserDocument } from 'src/users/schemas/user.schema';
+import { AccountsService } from 'src/modules/accounts/accounts.service';
+import { TransactionCategoriesService } from 'src/modules/transaction-categories/transaction-categories.service';
+import { TransactionCategoryMappingsService } from 'src/modules/transaction-category-mappings/transaction-category-mappings.service';
+import { TransactionsService } from 'src/modules/transactions/transactions.service';
+import { UserDocument } from 'src/modules/users/schemas/user.schema';
 
 @Injectable()
 export class UserDataService {

@@ -7,17 +7,17 @@ import session from 'express-session';
 import mongoose from 'mongoose';
 import passport from 'passport';
 
-import { AccountsModule } from './accounts/accounts.module';
-import { AuthModule } from './auth/auth.module';
 import { configuration } from './config/configuration';
-import { ExpensesModule } from './expenses/expenses.module';
-import { IncomesModule } from './incomes/incomes.module';
-import { TransactionCategoriesModule } from './transaction-categories/transaction-categories.module';
-import { TransactionCategoryMappingsModule } from './transaction-category-mappings/transaction-category-mappings.module';
-import { TransactionsModule } from './transactions/transactions.module';
-import { TransfersModule } from './transfers/transfers.module';
-import { UserDataModule } from './user-data/user-data.module';
-import { UsersModule } from './users/users.module';
+import { AccountsModule } from './modules/accounts/accounts.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { ExpensesModule } from './modules/expenses/expenses.module';
+import { IncomesModule } from './modules/incomes/incomes.module';
+import { TransactionCategoriesModule } from './modules/transaction-categories/transaction-categories.module';
+import { TransactionCategoryMappingsModule } from './modules/transaction-category-mappings/transaction-category-mappings.module';
+import { TransactionsModule } from './modules/transactions/transactions.module';
+import { TransfersModule } from './modules/transfers/transfers.module';
+import { UserDataModule } from './modules/user-data/user-data.module';
+import { UsersModule } from './modules/users/users.module';
 
 @Module({
   imports: [

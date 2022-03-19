@@ -1,8 +1,8 @@
 import { Controller, Get, Body, Patch, Param, Post, Res } from '@nestjs/common';
 import { Response } from 'express';
-import { Auth } from 'src/auth/decorators/auht.decorator';
-import { LoggedIn } from 'src/auth/decorators/loggedIn.decorators';
-import { UserDataService } from 'src/user-data/user-data.service';
+import { Auth } from 'src/modules/auth/decorators/auht.decorator';
+import { LoggedIn } from 'src/modules/auth/decorators/loggedIn.decorators';
+import { UserDataService } from 'src/modules/user-data/user-data.service';
 
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserId } from './users.decorators';
