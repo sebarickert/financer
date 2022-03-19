@@ -7,5 +7,5 @@ export const useAllTransactions = () => {
     staleTime: 300000,
   });
 
-  return transactionsQuery.data?.payload || null;
+  return transactionsQuery.data || null;
 };

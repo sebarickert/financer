@@ -29,7 +29,7 @@ export class Transaction {
   date: Date;
 
   @Prop({ required: true, type: MogooseSchema.Types.ObjectId, ref: 'User' })
-  owner: User;
+  user: User;
 }
 
 export const TransactionSchema = SchemaFactory.createForClass(Transaction);

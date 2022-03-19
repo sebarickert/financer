@@ -17,6 +17,10 @@ export class AccountsService {
     return 'This action adds a new account';
   }
 
+  async createMany(createAccountDto: CreateAccountDto[]) {
+    return this.accountModel.insertMany(createAccountDto);
+  }
+
   findAll() {
     return `This action returns all accounts`;
   }
@@ -35,5 +39,9 @@ export class AccountsService {
 
   remove(id: number) {
     return `This action removes a #${id} account`;
+  }
+
+  async removeAllByUser(userId: string) {
+    return this.accountModel.deleteMany({ owner: userId }).exec();
   }
 }

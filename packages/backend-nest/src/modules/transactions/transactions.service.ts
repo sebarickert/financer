@@ -20,6 +20,10 @@ export class TransactionsService {
     return 'This action adds a new transaction';
   }
 
+  async createMany(createTransactionDto: CreateTransactionDto[]) {
+    return this.transactionModel.insertMany(createTransactionDto);
+  }
+
   findAll() {
     return `This action returns all transactions`;
   }
@@ -38,6 +42,10 @@ export class TransactionsService {
 
   remove(id: number) {
     return `This action removes a #${id} transaction`;
+  }
+
+  async removeAllByUser(userId: string) {
+    return this.transactionModel.deleteMany({ owner: userId }).exec();
   }
 
   async findAllIncomesByUser(userId: string): Promise<TransactionDocument[]> {

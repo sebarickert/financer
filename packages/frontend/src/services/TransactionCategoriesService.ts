@@ -1,4 +1,4 @@
-import { IApiResponse, ITransactionCategory } from '@local/types';
+import { ApiResponseWithStatus, ITransactionCategory } from '@local/types';
 
 export interface ITransactionCategoryWithCategoryTree
   extends ITransactionCategory {
@@ -25,20 +25,15 @@ export const getAllTransactionCategories = async (): Promise<
   ITransactionCategory[]
 > => {
   const transactionCategories = await fetch('/api/transaction-categories');
-  return (
-    (await transactionCategories.json()) as IApiResponse<ITransactionCategory[]>
-  ).payload;
+  return (await transactionCategories.json()) as ITransactionCategory[];
 };
 
 export const getAllTransactionCategoriesWithCategoryTree = async (): Promise<
   ITransactionCategoryWithCategoryTree[]
 > => {
   const transactionCategoriesRaw = await fetch('/api/transaction-categories');
-  const transactionCategories = (
-    (await transactionCategoriesRaw.json()) as IApiResponse<
-      ITransactionCategory[]
-    >
-  ).payload;
+  const transactionCategories =
+    (await transactionCategoriesRaw.json()) as ITransactionCategory[];
 
   return transactionCategories
     .map((transactionCategory) => ({
@@ -62,12 +57,12 @@ export const getTransactionCategoryById = async (
   id: string
 ): Promise<ITransactionCategory> => {
   const transactionCategory = await fetch(`/api/transaction-categories/${id}`);
-  return (await transactionCategory.json()).payload;
+  return transactionCategory.json();
 };
 
 export const addTransactionCategory = async (
   newTransactionCategoryData: ITransactionCategory
-): Promise<IApiResponse<ITransactionCategory>> => {
+): Promise<ApiResponseWithStatus<ITransactionCategory>> => {
   const newTransactionCategory = await fetch('/api/transaction-categories', {
     method: 'POST',
     headers: {
@@ -77,13 +72,16 @@ export const addTransactionCategory = async (
     body: JSON.stringify(newTransactionCategoryData),
   });
 
-  return newTransactionCategory.json();
+  return {
+    payload: await newTransactionCategory.json(),
+    status: newTransactionCategory.status,
+  };
 };
 
 export const editTransactionCategory = async (
   id: string,
   targetTransactionCategoryData: ITransactionCategory
-): Promise<IApiResponse<ITransactionCategory>> => {
+): Promise<ApiResponseWithStatus<ITransactionCategory>> => {
   const targetTransactionCategory = await fetch(
     `/api/transaction-categories/${id}`,
     {
@@ -96,7 +94,10 @@ export const editTransactionCategory = async (
     }
   );
 
-  return targetTransactionCategory.json();
+  return {
+    payload: await targetTransactionCategory.json(),
+    status: targetTransactionCategory.status,
+  };
 };
 
 export const deleteTransactionCategory = async (id: string): Promise<void> => {

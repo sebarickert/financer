@@ -1,9 +1,9 @@
-import { IApiResponse, ITransaction } from '@local/types';
+import { ApiResponseWithStatus, ITransaction } from '@local/types';
 
 export const addTransfer = async (
   newTransactionData: ITransaction
-): Promise<IApiResponse<ITransaction>> => {
-  const newTransaction = await fetch('/api/transactions', {
+): Promise<ApiResponseWithStatus<ITransaction>> => {
+  const newTransaction = await fetch('/api/transfers', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -12,14 +12,17 @@ export const addTransfer = async (
     body: JSON.stringify(newTransactionData),
   });
 
-  return newTransaction.json();
+  return {
+    payload: await newTransaction.json(),
+    status: newTransaction.status,
+  };
 };
 
 export const updateTransfer = async (
   targetTransactionData: ITransaction,
   id: string
-): Promise<IApiResponse<ITransaction>> => {
-  const updatedTransaction = await fetch(`/api/transactions/${id}`, {
+): Promise<ApiResponseWithStatus<ITransaction>> => {
+  const updatedTransaction = await fetch(`/api/transfers/${id}`, {
     method: 'PUT',
     headers: {
       Accept: 'application/json',
@@ -28,23 +31,24 @@ export const updateTransfer = async (
     body: JSON.stringify(targetTransactionData),
   });
 
-  return updatedTransaction.json();
+  return {
+    payload: await updatedTransaction.json(),
+    status: updatedTransaction.status,
+  };
 };
 
-export const getAllTransferTranscations = async (): Promise<
-  IApiResponse<ITransaction[]>
-> => {
-  const transfers = await fetch('/api/transactions/transfers');
+export const getAllTransferTranscations = async (): Promise<ITransaction[]> => {
+  const transfers = await fetch('/api/transfers');
   return transfers.json();
 };
 
 export const getTransferById = async (id: string): Promise<ITransaction> => {
-  const transfer = await fetch(`/api/transactions/${id}`);
-  return (await transfer.json()).payload;
+  const transfer = await fetch(`/api/transfers/${id}`);
+  return transfer.json();
 };
 
 export const deleteTransfer = async (id: string): Promise<void> => {
-  await fetch(`/api/transactions/${id}`, {
+  await fetch(`/api/transfers/${id}`, {
     method: 'DELETE',
     headers: {
       Accept: 'application/json',
