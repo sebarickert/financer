@@ -1,4 +1,6 @@
-import { ApiResponseWithStatus, IAccount } from '@local/types';
+import { ApiResponse, IAccount } from '@local/types';
+
+import { parseApiResponse } from '../utils/apiHelper';
 
 export const getAllAccounts = async (): Promise<IAccount[]> => {
   const accounts = await fetch('/api/accounts');
@@ -12,7 +14,7 @@ export const getAccountById = async (id: string): Promise<IAccount> => {
 
 export const addAccount = async (
   newAccountData: IAccount
-): Promise<ApiResponseWithStatus<IAccount>> => {
+): Promise<ApiResponse<IAccount>> => {
   const newAccount = await fetch('/api/accounts', {
     method: 'POST',
     headers: {
@@ -22,15 +24,15 @@ export const addAccount = async (
     body: JSON.stringify(newAccountData),
   });
 
-  return { payload: await newAccount.json(), status: newAccount.status };
+  return parseApiResponse(newAccount);
 };
 
 export const editAccount = async (
   id: string,
   targetAccountData: IAccount
-): Promise<ApiResponseWithStatus<IAccount>> => {
+): Promise<ApiResponse<IAccount>> => {
   const targetAccount = await fetch(`/api/accounts/${id}`, {
-    method: 'PUT',
+    method: 'PATCH',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -38,7 +40,7 @@ export const editAccount = async (
     body: JSON.stringify(targetAccountData),
   });
 
-  return { payload: await targetAccount.json(), status: targetAccount.status };
+  return parseApiResponse(targetAccount);
 };
 
 export const deleteAccount = async (id: string): Promise<void> => {

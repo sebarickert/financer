@@ -1,4 +1,4 @@
-export interface ITransaction {
+export type ITransaction = {
   _id?: any;
   fromAccount?: string;
   toAccount?: string;
@@ -8,4 +8,4 @@ export interface ITransaction {
   description?: string;
   user?: string;
   date: Date | string;
-}
+};

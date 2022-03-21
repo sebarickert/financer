@@ -4,7 +4,7 @@ import { User } from 'src/modules/users/schemas/user.schema';
 
 export type AccountDocument = Account & Document;
 
-export enum AccounTypes {
+export enum AccounType {
   cash = 'cash',
   savings = 'savings',
   investment = 'investment',
@@ -18,10 +18,10 @@ export class Account {
   name: string;
 
   @Prop({ required: true })
-  type: AccounTypes;
+  type: AccounType;
 
   @Prop({ required: true })
-  balance: string;
+  balance: number;
 
   @Prop({ required: true, type: MogooseSchema.Types.ObjectId, ref: 'User' })
   owner: User;

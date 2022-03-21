@@ -18,7 +18,7 @@ describe('Account form', () => {
       'contain.text',
       'There were 1 errors with your submission'
     );
-    cy.getById('form-errors').should('contain.text', 'Name must not be empty');
+    cy.getById('form-errors').should('contain.text', 'Name must not be empty.');
   });
 
   it('Verify Account Balance cannot be empty', () => {
@@ -38,7 +38,7 @@ describe('Account form', () => {
     );
     cy.getById('form-errors').should(
       'contain.text',
-      'Balance must be a number'
+      'Balance must be a number.'
     );
   });
 

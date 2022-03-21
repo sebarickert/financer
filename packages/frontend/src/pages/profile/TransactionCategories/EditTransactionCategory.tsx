@@ -10,6 +10,7 @@ import { SEO } from '../../../components/seo/seo';
 import { useDeleteTransactionCategory } from '../../../hooks/transactionCategories/useDeleteTransactionCategory';
 import { useEditTransactionCategory } from '../../../hooks/transactionCategories/useEditTransactionCategory';
 import { useTransactionCategoryById } from '../../../hooks/transactionCategories/useTransactionCategoryById';
+import { parseErrorMessagesToArray } from '../../../utils/apiHelper';
 
 import { TransactionCategoryForm } from './TransactionCategoryForm';
 
@@ -54,11 +55,12 @@ export const EditTransactionCategory = (): JSX.Element => {
         newTransactionCategoryData
       );
 
-      if (newTransactionCategory.status === 200) {
-        navigate(`/profile/transaction-categories`);
-      } else if (newTransactionCategory.status === 400) {
-        setErrors(newTransactionCategory?.errors || ['Unknown error.']);
+      if ('message' in newTransactionCategory) {
+        setErrors(parseErrorMessagesToArray(newTransactionCategory.message));
+        return;
       }
+
+      navigate(`/profile/transaction-categories`);
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log(error);

@@ -1,4 +1,4 @@
-export interface IExpense {
+export type IExpense = {
   _id?: any;
   fromAccount?: string;
   fromAccountBalance?: number;
@@ -6,4 +6,4 @@ export interface IExpense {
   description: string;
   user?: string;
   date: Date | string;
-}
+};
