@@ -8,6 +8,7 @@ import {
   Delete,
 } from '@nestjs/common';
 
+import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
 import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
 import { UserId } from '../users/users.decorators';
 
@@ -21,8 +22,8 @@ export class AccountsController {
   constructor(private readonly accountsService: AccountsService) {}
 
   @Post()
-  create(@Body() createAccountDto: CreateAccountDto) {
-    return this.accountsService.create(createAccountDto);
+  create(@UserId() userId: string, @Body() createAccountDto: CreateAccountDto) {
+    return this.accountsService.create(userId, createAccountDto);
   }
 
   @Get()
@@ -31,13 +32,17 @@ export class AccountsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.accountsService.findOne(+id);
+  findOne(@UserId() userId: string, @Param('id', ValidateEntityId) id: string) {
+    return this.accountsService.findOne(userId, id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAccountDto: UpdateAccountDto) {
-    return this.accountsService.update(+id, updateAccountDto);
+  update(
+    @UserId() userId: string,
+    @Param('id', ValidateEntityId) id: string,
+    @Body() updateAccountDto: UpdateAccountDto,
+  ) {
+    return this.accountsService.update(userId, id, updateAccountDto);
   }
 
   @Delete(':id')

@@ -1,4 +1,4 @@
-export interface IIncome {
+export type IIncome = {
   _id?: any;
   toAccount: string;
   toAccountBalance?: number;
@@ -6,4 +6,4 @@ export interface IIncome {
   description: string;
   user?: string;
   date: Date | string;
-}
+};

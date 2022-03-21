@@ -4,9 +4,9 @@ describe('Income form', () => {
     cy.visit('http://localhost:3000/statistics/incomes/add');
   });
 
-  it.skip('Verify Income name cannot be empty', () => {
+  it('Verify Income description cannot be empty', () => {
     cy.get('#description').clear();
-    cy.get('#amount').type('0');
+    cy.get('#amount').type('1');
 
     cy.getById('submit').click();
     cy.get('#description:invalid').should('have.length', 1);
@@ -18,7 +18,10 @@ describe('Income form', () => {
       'contain.text',
       'There were 1 errors with your submission'
     );
-    cy.getById('form-errors').should('contain.text', 'Name must not be empty');
+    cy.getById('form-errors').should(
+      'contain.text',
+      'Description must not be empty.'
+    );
   });
 
   it('Verify Income Amount cannot be empty', () => {
@@ -36,7 +39,10 @@ describe('Income form', () => {
       'contain.text',
       'There were 1 errors with your submission'
     );
-    cy.getById('form-errors').should('contain.text', 'Amount must be a number');
+    cy.getById('form-errors').should(
+      'contain.text',
+      'Amount must be a positive number.'
+    );
   });
 
   it('Verify Income Amount must be number', () => {
@@ -55,7 +61,7 @@ describe('Income form', () => {
     );
     cy.getById('form-errors').should(
       'contain.text',
-      'Amount must be a number.'
+      'Amount must be a positive number.'
     );
   });
 
@@ -67,15 +73,25 @@ describe('Income form', () => {
     cy.location('pathname').should('eq', '/statistics/incomes');
   });
 
-  it('Verify Income Amount should accept zero value', () => {
+  it('Verify Income Amount should not accept zero value', () => {
     cy.get('#description').type('irrelevant');
     cy.get('#amount').type('0.00');
     cy.getById('submit').click();
+    cy.get('#amount:invalid').should('have.length', 1);
 
-    cy.location('pathname').should('eq', '/statistics/incomes');
+    cy.get('#amount').invoke('removeAttr', 'min');
+    cy.getById('submit').click();
+    cy.getById('form-errors').should(
+      'contain.text',
+      'There were 1 errors with your submission'
+    );
+    cy.getById('form-errors').should(
+      'contain.text',
+      'Amount must be a positive number.'
+    );
   });
 
-  it.skip('Verify Income Amount should not accept negative values', () => {
+  it('Verify Income Amount should not accept negative values', () => {
     cy.get('#description').type('irrelevant');
     cy.get('#amount').type('-1000.99');
     cy.getById('submit').click();
@@ -87,16 +103,17 @@ describe('Income form', () => {
       'contain.text',
       'There were 1 errors with your submission'
     );
+    cy.getById('form-errors').should(
+      'contain.text',
+      'Amount must be a positive number.'
+    );
   });
 
-  it.skip('Verify Income Date cannot be empty', () => {
+  it('Verify Income Date cannot be empty', () => {
     cy.get('#description').type('irrelevant');
-    cy.get('#amount').type('0');
+    cy.get('#amount').type('1');
 
     cy.get('#date').clear();
-
-    cy.getById('submit').click();
-    cy.get('#date:invalid').should('have.length', 1);
 
     // Remove form validation to test backend validation
     cy.get('#date').invoke('prop', 'required', false);
@@ -110,7 +127,7 @@ describe('Income form', () => {
 
   it('Verify Income date must be date value', () => {
     cy.get('#description').type('irrelevant');
-    cy.get('#amount').type('0');
+    cy.get('#amount').type('1');
 
     cy.get('#date').invoke('prop', 'type').should('equal', 'datetime-local');
 
@@ -140,7 +157,7 @@ describe('Income form', () => {
 
   it('Verify Incomes target account cannot be empty', () => {
     cy.get('#description').type('irrelevant');
-    cy.get('#amount').type('0');
+    cy.get('#amount').type('1');
 
     cy.get('#toAccount').invoke('val', undefined);
 
@@ -161,14 +178,15 @@ describe('Income form', () => {
     );
   });
 
-  it.skip('Verify Incomes target account must exists', () => {
+  it('Verify Incomes target account must exists', () => {
     cy.get('#description').type('irrelevant');
-    cy.get('#amount').type('0');
-    cy.get('#toAccount').invoke(
-      'prepend',
-      "<option value='not-allowed-type'>not existing account</option>"
-    );
-    cy.get('#toAccount').invoke('val', 'not-existing-account');
+    cy.get('#amount').type('1');
+    cy.get('#toAccount').then(($select) => {
+      $select.append(
+        '<option value="123456789012345678901234">non-existing-account</option>'
+      );
+    });
+    cy.get('#toAccount').select('non-existing-account');
 
     cy.getById('submit').click();
 
@@ -176,13 +194,10 @@ describe('Income form', () => {
       'contain.text',
       'There were 1 errors with your submission'
     );
-    cy.getById('form-errors').should(
-      'contain.text',
-      'Type must be one of the following: cash, savings, investment, credit, loan.'
-    );
+    cy.getById('form-errors').should('contain.text', 'Account not found.');
   });
 
-  it.skip('Test with empty form', () => {
+  it('Test with empty form', () => {
     cy.get('#description').clear();
     cy.get('#amount').clear();
     cy.get('#date').clear();
@@ -201,10 +216,13 @@ describe('Income form', () => {
       'contain.text',
       'There were 4 errors with your submission'
     );
-    cy.getById('form-errors').should('contain.text', 'Name must not be empty.');
     cy.getById('form-errors').should(
       'contain.text',
-      'Amount must be a number.'
+      'Description must not be empty.'
+    );
+    cy.getById('form-errors').should(
+      'contain.text',
+      'Amount must be a positive number.'
     );
     cy.getById('form-errors').should('contain.text', 'Date must not be empty.');
     cy.getById('form-errors').should(

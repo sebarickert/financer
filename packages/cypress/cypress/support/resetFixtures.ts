@@ -11,7 +11,7 @@ Cypress.Commands.add('applyFixture', (fixtureType) => {
   cy.fixture(`${fixtureType}_fixture-data.json`).then(
     { timeout: 10000 },
     (fixture) =>
-      fetch('http://localhost:3000/api/profile/my-data', {
+      fetch('http://localhost:3000/api/users/my-user/my-data', {
         method: 'POST',
         headers: {
           Accept: 'application/json',

@@ -1,4 +1,4 @@
-export interface IUser {
+export type IUser = {
   _id: any;
   name: any;
   nickname: string;
@@ -6,4 +6,4 @@ export interface IUser {
   auth0Id?: string;
   profileImageUrl: string;
   roles: string[];
-}
+};

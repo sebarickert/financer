@@ -23,17 +23,17 @@ export const formatDate = (date: Date): string => {
 
 export const getAccount = async (accountId: string): Promise<IAccount> => {
   const rawAccount = await fetch(
-    `http://localhost:3000/api/account/${accountId}`
+    `http://localhost:3000/api/accounts/${accountId}`
   );
-  return (await rawAccount.json()).payload;
+  return rawAccount.json();
 };
 
 export const getAllUserTransaction = async (): Promise<
   ITransactionWithDateObject[]
 > => {
-  const transactions = (
-    await (await fetch('http://localhost:3000/api/transaction')).json()
-  ).payload as ITransaction[];
+  const transactions = (await (
+    await fetch('http://localhost:3000/api/transactions')
+  ).json()) as ITransaction[];
 
   return transactions
     .map(({ date, ...rest }) => ({
@@ -47,11 +47,9 @@ export const getAllUserTransaction = async (): Promise<
 export const getTransactionByIdRaw = async (
   transactionId: string
 ): Promise<ITransaction> => {
-  return (
-    await (
-      await fetch(`http://localhost:3000/api/transaction/${transactionId}`)
-    ).json()
-  ).payload as ITransaction;
+  return (await (
+    await fetch(`http://localhost:3000/api/transactions/${transactionId}`)
+  ).json()) as ITransaction;
 };
 
 export const getTransactionById = async (
@@ -65,11 +63,9 @@ export const getTransactionById = async (
 export const getAllAccountTransactionsById = async (
   accountId: string
 ): Promise<ITransactionWithDateObject[]> => {
-  const transactions = (
-    await (
-      await fetch(`http://localhost:3000/api/account/${accountId}/transactions`)
-    ).json()
-  ).payload as ITransaction[];
+  const transactions = (await (
+    await fetch(`http://localhost:3000/api/transactions/account/${accountId}`)
+  ).json()) as ITransaction[];
 
   return transactions
     .map(({ date, ...rest }) => ({

@@ -8,6 +8,7 @@ import { useAddTransactionCategoryMapping } from '../../hooks/transactionCategor
 import { useTransactionCategoryMappingsByTransactionId } from '../../hooks/transactionCategoryMapping/useTransactionCategoryMappingsByTransactionId';
 import { useEditTransfer } from '../../hooks/transfer/useEditTransfer';
 import { useTransferById } from '../../hooks/transfer/useTransferById';
+import { parseErrorMessagesToArray } from '../../utils/apiHelper';
 
 import { TransferForm } from './TransferForm';
 
@@ -32,22 +33,26 @@ export const EditTransfer = (): JSX.Element => {
     }
     try {
       const newTransactionJson = await editTransaction(targetTransferData, id);
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const newTransactionCategoryMappingJson =
-        await addTransactionCategoryMapping(
-          transactionCategoryMappings.map(
-            (newTransactionCategoryMappingData) => ({
-              ...newTransactionCategoryMappingData,
-              transaction_id: newTransactionJson.payload._id,
-            })
-          )
-        );
 
-      if (newTransactionJson.status === 201) {
-        navigate('/statistics/transfers');
-      } else if (newTransactionJson.status === 400) {
-        setErrors(newTransactionJson?.errors || ['Unknown error.']);
+      if ('message' in newTransactionJson) {
+        setErrors(parseErrorMessagesToArray(newTransactionJson.message));
+        return;
       }
+
+      if (transactionCategoryMappings.length > 0) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const newTransactionCategoryMappingJson =
+          await addTransactionCategoryMapping(
+            transactionCategoryMappings.map(
+              (newTransactionCategoryMappingData) => ({
+                ...newTransactionCategoryMappingData,
+                transaction_id: newTransactionJson.payload._id,
+              })
+            )
+          );
+      }
+
+      navigate('/statistics/transfers');
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log(error);

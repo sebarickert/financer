@@ -106,7 +106,7 @@ export class UserDataService {
 
     await Promise.all([
       this.accountService.createMany(accountsWithCurrentUserId),
-      this.transactionService.createMany(transactionsWithCurrentUserId),
+      this.transactionService.createMany(transactionsWithCurrentUserId as any),
       this.transactionCategoriesService.createMany(
         transactionCategoriesWithCurrentUserId,
       ),

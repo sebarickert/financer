@@ -1,18 +1,9 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
+import { ValidateEntityId } from 'src/utils/validate-entity-id.pipe';
 
 import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
 import { UserId } from '../users/users.decorators';
 
-import { CreateTransactionDto } from './dto/create-transaction.dto';
-import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { TransactionsService } from './transactions.service';
 
 @Controller('api/transactions')
@@ -20,31 +11,24 @@ import { TransactionsService } from './transactions.service';
 export class TransactionsController {
   constructor(private readonly transactionsService: TransactionsService) {}
 
-  @Post()
-  create(@Body() createTransactionDto: CreateTransactionDto) {
-    return this.transactionsService.create(createTransactionDto);
-  }
-
   @Get()
   findAllByUser(@UserId() userId: string) {
     return this.transactionsService.findAllByUser(userId);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.transactionsService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateTransactionDto: UpdateTransactionDto,
+  @Get('/account/:id')
+  async findAllByAccount(
+    @UserId() userId: string,
+    @Param('id', ValidateEntityId) id: string,
   ) {
-    return this.transactionsService.update(+id, updateTransactionDto);
+    return this.transactionsService.findAllByAccount(userId, id);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.transactionsService.remove(+id);
+  @Get(':id')
+  async findOne(
+    @UserId() userId: string,
+    @Param('id', ValidateEntityId) id: string,
+  ) {
+    return this.transactionsService.findOne(userId, id);
   }
 }

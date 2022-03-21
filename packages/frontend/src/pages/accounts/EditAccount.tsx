@@ -6,6 +6,7 @@ import { Loader } from '../../components/loader/loader';
 import { SEO } from '../../components/seo/seo';
 import { useAccountById } from '../../hooks/account/useAccountById';
 import { useEditAccount } from '../../hooks/account/useEditAccount';
+import { parseErrorMessagesToArray } from '../../utils/apiHelper';
 
 import { AccountForm } from './AccountForm';
 
@@ -26,11 +27,12 @@ export const EditAccount = (): JSX.Element => {
     try {
       const newAccount = await editAccount(newAccountData._id, newAccountData);
 
-      if (newAccount.status === 200) {
-        navigate(`/accounts/${id}`);
-      } else if (newAccount.status === 400) {
-        setErrors(newAccount?.errors || ['Unknown error.']);
+      if ('message' in newAccount) {
+        setErrors(parseErrorMessagesToArray(newAccount.message));
+        return;
       }
+
+      navigate(`/accounts/${id}`);
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log(error);

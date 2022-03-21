@@ -38,7 +38,7 @@ const verifyTargetTransactionDoesNotExistsAfter = () => {
   );
   cy.get<ITransactionWithDateObject>('@targetTransactionAfter').then(
     (targetTransactionAfter) => {
-      expect(targetTransactionAfter).to.be.undefined;
+      expect((targetTransactionAfter as any).statusCode).to.be.equal(404);
     }
   );
 };

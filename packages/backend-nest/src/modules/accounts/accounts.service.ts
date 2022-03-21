@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { AccountDocument } from 'src/modules/accounts/schemas/account.schema';
@@ -13,28 +17,61 @@ export class AccountsService {
     @InjectModel(Account.name) private accountModel: Model<AccountDocument>,
   ) {}
 
-  create(createAccountDto: CreateAccountDto) {
-    return 'This action adds a new account';
+  async create(
+    userId: string,
+    createAccountDto: CreateAccountDto,
+  ): Promise<AccountDocument> {
+    return this.accountModel.create({ ...createAccountDto, owner: userId });
   }
 
-  async createMany(createAccountDto: CreateAccountDto[]) {
+  async createMany(
+    createAccountDto: CreateAccountDto[],
+  ): Promise<AccountDocument[]> {
     return this.accountModel.insertMany(createAccountDto);
   }
 
-  findAll() {
-    return `This action returns all accounts`;
-  }
+  async findOne(userId: string, id: string): Promise<AccountDocument> {
+    const account = await this.accountModel.findOne({ _id: id });
 
-  findOne(id: number) {
-    return `This action returns a #${id} account`;
+    if (!account) {
+      throw new NotFoundException('Account not found.');
+    } else if (account.owner + '' !== (userId as any)) {
+      throw new UnauthorizedException('Unauthorized to access this account.');
+    }
+
+    return account;
   }
 
   async findAllByUser(userId: string): Promise<AccountDocument[]> {
     return this.accountModel.find({ owner: userId });
   }
 
-  update(id: number, updateAccountDto: UpdateAccountDto) {
-    return `This action updates a #${id} account`;
+  async update(
+    userId: string,
+    id: string,
+    updateAccountDto: UpdateAccountDto,
+  ): Promise<AccountDocument> {
+    await this.findOne(userId, id);
+
+    return this.accountModel.findByIdAndUpdate(id, updateAccountDto).exec();
+  }
+
+  async updateAccountBalance(
+    userId: string,
+    id: string,
+    amount: number,
+  ): Promise<AccountDocument> {
+    await this.findOne(userId, id);
+
+    return this.accountModel
+      .findByIdAndUpdate(
+        id,
+        {
+          $inc: { balance: amount },
+        },
+        { new: true },
+      )
+      .exec();
   }
 
   remove(id: number) {

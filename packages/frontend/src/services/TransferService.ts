@@ -1,8 +1,10 @@
-import { ApiResponseWithStatus, ITransaction } from '@local/types';
+import { ApiResponse, ITransaction } from '@local/types';
+
+import { parseApiResponse } from '../utils/apiHelper';
 
 export const addTransfer = async (
   newTransactionData: ITransaction
-): Promise<ApiResponseWithStatus<ITransaction>> => {
+): Promise<ApiResponse<ITransaction>> => {
   const newTransaction = await fetch('/api/transfers', {
     method: 'POST',
     headers: {
@@ -12,18 +14,15 @@ export const addTransfer = async (
     body: JSON.stringify(newTransactionData),
   });
 
-  return {
-    payload: await newTransaction.json(),
-    status: newTransaction.status,
-  };
+  return parseApiResponse(newTransaction);
 };
 
 export const updateTransfer = async (
   targetTransactionData: ITransaction,
   id: string
-): Promise<ApiResponseWithStatus<ITransaction>> => {
+): Promise<ApiResponse<ITransaction>> => {
   const updatedTransaction = await fetch(`/api/transfers/${id}`, {
-    method: 'PUT',
+    method: 'PATCH',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -31,10 +30,7 @@ export const updateTransfer = async (
     body: JSON.stringify(targetTransactionData),
   });
 
-  return {
-    payload: await updatedTransaction.json(),
-    status: updatedTransaction.status,
-  };
+  return parseApiResponse(updatedTransaction);
 };
 
 export const getAllTransferTranscations = async (): Promise<ITransaction[]> => {

@@ -1,9 +1,10 @@
 import { IAccount } from '@local/types';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { SEO } from '../../components/seo/seo';
 import { useAddAccount } from '../../hooks/account/useAddAccount';
+import { parseErrorMessagesToArray } from '../../utils/apiHelper';
 
 import { AccountForm } from './AccountForm';
 
@@ -16,11 +17,12 @@ export const AddAccount = (): JSX.Element => {
     try {
       const newAccount = await addAccount(newAccountData);
 
-      if (newAccount.status === 201) {
-        navigate('/accounts');
-      } else if (newAccount.status === 400) {
-        setErrors(newAccount?.errors || ['Unknown error.']);
+      if ('message' in newAccount) {
+        setErrors(parseErrorMessagesToArray(newAccount.message));
+        return;
       }
+
+      navigate('/accounts');
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log(error);
