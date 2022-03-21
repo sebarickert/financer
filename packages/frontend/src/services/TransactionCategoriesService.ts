@@ -1,4 +1,6 @@
-import { ApiResponseWithStatus, ITransactionCategory } from '@local/types';
+import { ApiResponse, ITransactionCategory } from '@local/types';
+
+import { parseApiResponse } from '../utils/apiHelper';
 
 export interface ITransactionCategoryWithCategoryTree
   extends ITransactionCategory {
@@ -62,7 +64,7 @@ export const getTransactionCategoryById = async (
 
 export const addTransactionCategory = async (
   newTransactionCategoryData: ITransactionCategory
-): Promise<ApiResponseWithStatus<ITransactionCategory>> => {
+): Promise<ApiResponse<ITransactionCategory>> => {
   const newTransactionCategory = await fetch('/api/transaction-categories', {
     method: 'POST',
     headers: {
@@ -72,16 +74,13 @@ export const addTransactionCategory = async (
     body: JSON.stringify(newTransactionCategoryData),
   });
 
-  return {
-    payload: await newTransactionCategory.json(),
-    status: newTransactionCategory.status,
-  };
+  return parseApiResponse(newTransactionCategory);
 };
 
 export const editTransactionCategory = async (
   id: string,
   targetTransactionCategoryData: ITransactionCategory
-): Promise<ApiResponseWithStatus<ITransactionCategory>> => {
+): Promise<ApiResponse<ITransactionCategory>> => {
   const targetTransactionCategory = await fetch(
     `/api/transaction-categories/${id}`,
     {
@@ -94,10 +93,7 @@ export const editTransactionCategory = async (
     }
   );
 
-  return {
-    payload: await targetTransactionCategory.json(),
-    status: targetTransactionCategory.status,
-  };
+  return parseApiResponse(targetTransactionCategory);
 };
 
 export const deleteTransactionCategory = async (id: string): Promise<void> => {

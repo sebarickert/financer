@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { Container } from '../../../components/container/container';
 import { SEO } from '../../../components/seo/seo';
 import { useAddTransactionCategory } from '../../../hooks/transactionCategories/useAddTransactionCategory';
+import { parseErrorMessagesToArray } from '../../../utils/apiHelper';
 
 import { TransactionCategoryForm } from './TransactionCategoryForm';
 
@@ -21,11 +22,12 @@ export const AddTransactionCategory = (): JSX.Element => {
         newTransactionCategoryData
       );
 
-      if (newExpenseJson.status === 201) {
-        navigate('/profile/transaction-categories');
-      } else if (newExpenseJson.status === 400) {
-        setErrors(newExpenseJson?.errors || ['Unknown error.']);
+      if ('message' in newExpenseJson) {
+        setErrors(parseErrorMessagesToArray(newExpenseJson.message));
+        return;
       }
+
+      navigate('/profile/transaction-categories');
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log(error);

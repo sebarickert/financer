@@ -1,11 +1,10 @@
-import {
-  ApiResponseWithStatus,
-  ITransactionCategoryMapping,
-} from '@local/types';
+import { ApiResponse, ITransactionCategoryMapping } from '@local/types';
+
+import { parseApiResponse } from '../utils/apiHelper';
 
 export const addTransactionCategoryMapping = async (
   newTransactionCategoryMappingData: ITransactionCategoryMapping[]
-): Promise<ApiResponseWithStatus<ITransactionCategoryMapping[]>> => {
+): Promise<ApiResponse<ITransactionCategoryMapping[]>> => {
   const newTransactionCategoryMapping = await fetch(
     '/api/transaction-category-mappings',
     {
@@ -18,10 +17,7 @@ export const addTransactionCategoryMapping = async (
     }
   );
 
-  return {
-    payload: await newTransactionCategoryMapping.json(),
-    status: newTransactionCategoryMapping.status,
-  };
+  return parseApiResponse(newTransactionCategoryMapping);
 };
 
 export const getTransactionCategoryMappingByTransactionId = async (

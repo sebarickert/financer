@@ -4,9 +4,9 @@ describe('Income form', () => {
     cy.visit('http://localhost:3000/statistics/transfers/add');
   });
 
-  it.skip('Verify Transfer name cannot be empty', () => {
+  it('Verify Transfer description cannot be empty', () => {
     cy.get('#description').clear();
-    cy.get('#amount').type('0');
+    cy.get('#amount').type('1');
     cy.get('#toAccount').select('Saving account 1');
     cy.get('#fromAccount').select('Saving account 2');
 
@@ -20,7 +20,10 @@ describe('Income form', () => {
       'contain.text',
       'There were 1 errors with your submission'
     );
-    cy.getById('form-errors').should('contain.text', 'Name must not be empty');
+    cy.getById('form-errors').should(
+      'contain.text',
+      'Description must not be empty.'
+    );
   });
 
   it('Verify Transfer Amount cannot be empty', () => {
@@ -40,10 +43,13 @@ describe('Income form', () => {
       'contain.text',
       'There were 1 errors with your submission'
     );
-    cy.getById('form-errors').should('contain.text', 'Amount must be a number');
+    cy.getById('form-errors').should(
+      'contain.text',
+      'Amount must be a positive number'
+    );
   });
 
-  it.skip('Verify Transfer Amount must be number', () => {
+  it('Verify Transfer Amount must be number', () => {
     cy.get('#description').type('irrelevant');
     cy.get('#toAccount').select('Saving account 1');
     cy.get('#fromAccount').select('Saving account 2');
@@ -61,7 +67,7 @@ describe('Income form', () => {
     );
     cy.getById('form-errors').should(
       'contain.text',
-      'Amount must be a number.'
+      'Amount must be a positive number.'
     );
   });
 
@@ -76,18 +82,28 @@ describe('Income form', () => {
     cy.location('pathname').should('eq', '/statistics/transfers');
   });
 
-  it('Verify Transfer Amount should accept zero value', () => {
+  it('Verify Transfer Amount should not accept zero value', () => {
     cy.get('#description').type('irrelevant');
     cy.get('#toAccount').select('Saving account 1');
     cy.get('#fromAccount').select('Saving account 2');
 
     cy.get('#amount').type('0.00');
     cy.getById('submit').click();
+    cy.get('#amount:invalid').should('have.length', 1);
 
-    cy.location('pathname').should('eq', '/statistics/transfers');
+    cy.get('#amount').invoke('removeAttr', 'min');
+    cy.getById('submit').click();
+    cy.getById('form-errors').should(
+      'contain.text',
+      'There were 1 errors with your submission'
+    );
+    cy.getById('form-errors').should(
+      'contain.text',
+      'Amount must be a positive number.'
+    );
   });
 
-  it.skip('Verify Transfer Amount should not accept negative values', () => {
+  it('Verify Transfer Amount should not accept negative values', () => {
     cy.get('#description').type('irrelevant');
     cy.get('#toAccount').select('Saving account 1');
     cy.get('#fromAccount').select('Saving account 2');
@@ -102,18 +118,19 @@ describe('Income form', () => {
       'contain.text',
       'There were 1 errors with your submission'
     );
+    cy.getById('form-errors').should(
+      'contain.text',
+      'Amount must be a positive number.'
+    );
   });
 
-  it.skip('Verify Transfer Date cannot be empty', () => {
+  it('Verify Transfer Date cannot be empty', () => {
     cy.get('#description').type('irrelevant');
-    cy.get('#amount').type('0');
+    cy.get('#amount').type('1');
     cy.get('#toAccount').select('Saving account 1');
     cy.get('#fromAccount').select('Saving account 2');
 
     cy.get('#date').clear();
-
-    cy.getById('submit').click();
-    cy.get('#date:invalid').should('have.length', 1);
 
     // Remove form validation to test backend validation
     cy.get('#date').invoke('prop', 'required', false);
@@ -127,7 +144,7 @@ describe('Income form', () => {
 
   it('Verify Transfer date must be date value', () => {
     cy.get('#description').type('irrelevant');
-    cy.get('#amount').type('0');
+    cy.get('#amount').type('1');
     cy.get('#toAccount').select('Saving account 1');
     cy.get('#fromAccount').select('Saving account 2');
 
@@ -146,8 +163,9 @@ describe('Income form', () => {
     cy.getById('form-errors').should('contain.text', 'Date must not be empty.');
   });
 
-  it('Verify Transfer target accounts', () => {
+  it('Verify Transfer accounts', () => {
     cy.get('#toAccount option').should('have.length', 6);
+    cy.get('#fromAccount option').should('have.length', 6);
 
     cy.get('#toAccount option').contains('Saving account 1');
     cy.get('#toAccount option').contains('Saving account 2');
@@ -155,54 +173,6 @@ describe('Income form', () => {
     cy.get('#toAccount option').contains('Investment account');
     cy.get('#toAccount option').contains('Credit account');
     cy.get('#toAccount option').contains('Loan account');
-  });
-
-  it('Verify Transfer target account cannot be empty', () => {
-    cy.get('#description').type('irrelevant');
-    cy.get('#amount').type('0');
-
-    cy.get('#toAccount').invoke('val', undefined);
-
-    cy.getById('submit').click();
-    cy.get('#toAccount:invalid').should('have.length', 1);
-
-    // Remove form validation to test backend validation
-    cy.get('#toAccount').invoke('prop', 'required', false);
-    cy.getById('submit').click();
-
-    cy.getById('form-errors').should(
-      'contain.text',
-      'There were 1 errors with your submission'
-    );
-    cy.getById('form-errors').should(
-      'contain.text',
-      'toAccount must not be empty.'
-    );
-  });
-
-  it.skip('Verify Transfer target account must exists', () => {
-    cy.get('#description').type('irrelevant');
-    cy.get('#amount').type('0');
-    cy.get('#toAccount').invoke(
-      'prepend',
-      "<option value='not-allowed-type'>not existing account</option>"
-    );
-    cy.get('#toAccount').invoke('val', 'not-existing-account');
-
-    cy.getById('submit').click();
-
-    cy.getById('form-errors').should(
-      'contain.text',
-      'There were 1 errors with your submission'
-    );
-    cy.getById('form-errors').should(
-      'contain.text',
-      'Type must be one of the following: cash, savings, investment, credit, loan.'
-    );
-  });
-
-  it('Verify Transfer target accounts', () => {
-    cy.get('#fromAccount option').should('have.length', 6);
 
     cy.get('#fromAccount option').contains('Saving account 1');
     cy.get('#fromAccount option').contains('Saving account 2');
@@ -212,37 +182,50 @@ describe('Income form', () => {
     cy.get('#fromAccount option').contains('Loan account');
   });
 
-  it('Verify Transfer target account cannot be empty', () => {
+  it('Verify Transfer account cannot be empty', () => {
     cy.get('#description').type('irrelevant');
-    cy.get('#amount').type('0');
+    cy.get('#amount').type('1');
 
+    cy.get('#toAccount').invoke('val', undefined);
     cy.get('#fromAccount').invoke('val', undefined);
 
     cy.getById('submit').click();
+    cy.get('#toAccount:invalid').should('have.length', 1);
     cy.get('#fromAccount:invalid').should('have.length', 1);
 
     // Remove form validation to test backend validation
+    cy.get('#toAccount').invoke('prop', 'required', false);
     cy.get('#fromAccount').invoke('prop', 'required', false);
     cy.getById('submit').click();
 
     cy.getById('form-errors').should(
       'contain.text',
-      'There were 1 errors with your submission'
+      'There were 3 errors with your submission'
+    );
+    cy.getById('form-errors').should(
+      'contain.text',
+      'toAccount must not be empty.'
     );
     cy.getById('form-errors').should(
       'contain.text',
       'fromAccount must not be empty.'
     );
+    cy.getById('form-errors').should(
+      'contain.text',
+      "Target and source accounts can't be the same account."
+    );
   });
 
-  it.skip('Verify Transfer target account must exists', () => {
+  it('Verify Transfer toAccount must exists', () => {
     cy.get('#description').type('irrelevant');
-    cy.get('#amount').type('0');
-    cy.get('#fromAccount').invoke(
-      'prepend',
-      "<option value='not-allowed-type'>not existing account</option>"
-    );
-    cy.get('#fromAccount').invoke('val', 'not-existing-account');
+    cy.get('#amount').type('1');
+
+    cy.get('#toAccount').then(($select) => {
+      $select.append(
+        '<option value="123456789012345678901234">non-existing-account</option>'
+      );
+    });
+    cy.get('#toAccount').select('non-existing-account');
 
     cy.getById('submit').click();
 
@@ -250,15 +233,32 @@ describe('Income form', () => {
       'contain.text',
       'There were 1 errors with your submission'
     );
+    cy.getById('form-errors').should('contain.text', 'Account not found.');
+  });
+
+  it('Verify Transfer fromAccounts must exists', () => {
+    cy.get('#description').type('irrelevant');
+    cy.get('#amount').type('1');
+
+    cy.get('#fromAccount').then(($select) => {
+      $select.append(
+        '<option value="123456789012345678901235">non-existing-account</option>'
+      );
+    });
+    cy.get('#fromAccount').select('non-existing-account');
+
+    cy.getById('submit').click();
+
     cy.getById('form-errors').should(
       'contain.text',
-      'Type must be one of the following: cash, savings, investment, credit, loan.'
+      'There were 1 errors with your submission'
     );
+    cy.getById('form-errors').should('contain.text', 'Account not found.');
   });
 
   it('Verify Transfer target and source account cannot be the same account', () => {
     cy.get('#description').type('irrelevant');
-    cy.get('#amount').type('0');
+    cy.get('#amount').type('1');
     cy.get('#toAccount').select('Saving account 1');
     cy.get('#fromAccount').select('Saving account 1');
 
@@ -274,7 +274,7 @@ describe('Income form', () => {
     );
   });
 
-  it.skip('Test with empty form', () => {
+  it('Test with empty form', () => {
     cy.get('#description').clear();
     cy.get('#amount').clear();
     cy.get('#date').clear();
@@ -282,7 +282,7 @@ describe('Income form', () => {
     cy.get('#fromAccount').invoke('val', undefined);
 
     cy.getById('submit').click();
-    cy.get(':invalid:not(form)').should('have.length', 5);
+    cy.get(':invalid:not(form)').should('have.length', 4);
 
     // Remove form validation to test backend validation
     cy.get('#description').invoke('prop', 'required', false);
@@ -295,10 +295,13 @@ describe('Income form', () => {
       'contain.text',
       'There were 6 errors with your submission'
     );
-    cy.getById('form-errors').should('contain.text', 'Name must not be empty.');
     cy.getById('form-errors').should(
       'contain.text',
-      'Amount must be a number.'
+      'Description must not be empty.'
+    );
+    cy.getById('form-errors').should(
+      'contain.text',
+      'Amount must be a positive number.'
     );
     cy.getById('form-errors').should('contain.text', 'Date must not be empty.');
     cy.getById('form-errors').should(

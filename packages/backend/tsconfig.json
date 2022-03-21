@@ -68,6 +68,5 @@
   },
   "include": [
     "src",
-    "../../shared-types"
   ]
 }

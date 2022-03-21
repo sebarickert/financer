@@ -39,16 +39,13 @@ export class Auth0Strategy extends PassportStrategy(Strategy, 'auth0') {
     }
 
     try {
-      console.log('auth0 oauth profile', profile.id);
       const user = await this.authService.validateUserByAuth0(profile.id);
-      console.log('auth0 oauth user', user);
+
       if (user) {
         return user;
       }
 
-      console.log('auth0 oauth profile not found, creating new user');
-
-      return this.userService.create({
+      return await this.userService.create({
         name: profile.displayName,
         nickname: profile.username,
         profileImageUrl: profile.photos?.slice().shift()?.value,

@@ -11,6 +11,7 @@ import { useExpenseById } from '../../hooks/expense/useExpenseById';
 import { useAddTransactionCategoryMapping } from '../../hooks/transactionCategoryMapping/useAddTransactionCategoryMapping';
 import { useTransactionCategoryMappingsByTransactionId } from '../../hooks/transactionCategoryMapping/useTransactionCategoryMappingsByTransactionId';
 import { ITransactionCategoryWithCategoryTree } from '../../services/TransactionCategoriesService';
+import { parseErrorMessagesToArray } from '../../utils/apiHelper';
 
 import { ExpenseForm } from './ExpenseForm';
 
@@ -35,22 +36,26 @@ export const EditExpense = (): JSX.Element => {
     }
     try {
       const targetExpenseJson = await editExpense(targetExpenseData, id);
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const newTransactionCategoryMappingJson =
-        await addTransactionCategoryMapping(
-          newTransactionCategoryMappingsData.map(
-            (newTransactionCategoryMappingData) => ({
-              ...newTransactionCategoryMappingData,
-              transaction_id: targetExpenseJson.payload._id,
-            })
-          )
-        );
 
-      if (targetExpenseJson.status === 201) {
-        navigate('/statistics/expenses');
-      } else if (targetExpenseJson.status === 400) {
-        setErrors(targetExpenseJson?.errors || ['Unknown error.']);
+      if ('message' in targetExpenseJson) {
+        setErrors(parseErrorMessagesToArray(targetExpenseJson.message));
+        return;
       }
+
+      if (newTransactionCategoryMappingsData.length > 0) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const newTransactionCategoryMappingJson =
+          await addTransactionCategoryMapping(
+            newTransactionCategoryMappingsData.map(
+              (newTransactionCategoryMappingData) => ({
+                ...newTransactionCategoryMappingData,
+                transaction_id: targetExpenseJson.payload._id,
+              })
+            )
+          );
+      }
+
+      navigate('/statistics/expenses');
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log(error);

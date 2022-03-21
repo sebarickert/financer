@@ -6,6 +6,7 @@ import { SEO } from '../../components/seo/seo';
 import { useAddIncome } from '../../hooks/income/useAddIncome';
 import { useUserDefaultIncomeAccount } from '../../hooks/profile/user-preference/useUserDefaultIncomeAccount';
 import { useAddTransactionCategoryMapping } from '../../hooks/transactionCategoryMapping/useAddTransactionCategoryMapping';
+import { parseErrorMessagesToArray } from '../../utils/apiHelper';
 
 import { IncomeForm } from './IncomeForm';
 
@@ -22,22 +23,26 @@ export const AddIncome = (): JSX.Element => {
   ) => {
     try {
       const newIncomeJson = await addIncome(newIncomeData);
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const newTransactionCategoryMappingJson =
-        await addTransactionCategoryMapping(
-          newTransactionCategoryMappingsData.map(
-            (newTransactionCategoryMappingData) => ({
-              ...newTransactionCategoryMappingData,
-              transaction_id: newIncomeJson.payload._id,
-            })
-          )
-        );
 
-      if (newIncomeJson.status === 201) {
-        navigate('/statistics/incomes');
-      } else if (newIncomeJson.status === 400) {
-        setErrors(newIncomeJson?.errors || ['Unknown error.']);
+      if ('message' in newIncomeJson) {
+        setErrors(parseErrorMessagesToArray(newIncomeJson.message));
+        return;
       }
+
+      if (newTransactionCategoryMappingsData.length > 0) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const newTransactionCategoryMappingJson =
+          await addTransactionCategoryMapping(
+            newTransactionCategoryMappingsData.map(
+              (newTransactionCategoryMappingData) => ({
+                ...newTransactionCategoryMappingData,
+                transaction_id: newIncomeJson.payload._id,
+              })
+            )
+          );
+      }
+
+      navigate('/statistics/incomes');
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log(error);
