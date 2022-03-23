@@ -4,13 +4,13 @@
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#0e6ac7",
-  "background_color": "#FAFAFA",
+  "background_color": "#0E6AC7",
     "icons": [
     {
       "src": "/logo.svg",
       "type": "image/svg+xml",
       "sizes": "any",
-      "purpose": "maskable"
+      "purpose": "any"
     },
     {
       "src": "/android-icon-192x192.png",
