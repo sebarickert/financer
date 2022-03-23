@@ -1,7 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MogooseSchema } from 'mongoose';
-import { Transaction } from 'src/modules/transactions/schemas/transaction.schema';
-import { User } from 'src/modules/users/schemas/user.schema';
+
+import { Transaction } from '../../transactions/schemas/transaction.schema';
+import { User } from '../../users/schemas/user.schema';
 
 export type TransactionCategoryMappingDocument = TransactionCategoryMapping &
   Document;

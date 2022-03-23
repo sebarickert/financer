@@ -6,8 +6,9 @@ import {
   IsString,
   Min,
 } from 'class-validator';
-import { Account } from 'src/modules/accounts/schemas/account.schema';
-import { User } from 'src/modules/users/schemas/user.schema';
+
+import { Account } from '../../accounts/schemas/account.schema';
+import { User } from '../../users/schemas/user.schema';
 
 export class TransactionDto {
   @IsMongoId()

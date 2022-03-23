@@ -5,8 +5,8 @@ import {
   IsNumber,
   IsString,
 } from 'class-validator';
-import { UserDocument } from 'src/modules/users/schemas/user.schema';
 
+import { UserDocument } from '../../users/schemas/user.schema';
 import { AccounType } from '../schemas/account.schema';
 
 export class AccountDto {

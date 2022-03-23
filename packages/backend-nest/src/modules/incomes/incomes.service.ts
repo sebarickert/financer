@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { TransactionDocument } from 'src/modules/transactions/schemas/transaction.schema';
 
 import { AccountsService } from '../accounts/accounts.service';
+import { TransactionDocument } from '../transactions/schemas/transaction.schema';
 import { TransactionsService } from '../transactions/transactions.service';
 
 import { CreateIncomeDto } from './dto/create-income.dto';

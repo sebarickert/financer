@@ -1,7 +1,7 @@
 import { IsMongoId } from 'class-validator';
-import { Account } from 'src/modules/accounts/schemas/account.schema';
-import { IsNotEqual } from 'src/utils/is-not-equal.decorator';
 
+import { IsNotEqual } from '../../../utils/is-not-equal.decorator';
+import { Account } from '../../accounts/schemas/account.schema';
 import { TransactionDto } from '../../transactions/dto/transaction.dto';
 export class TransferDto extends TransactionDto {
   @IsMongoId({ message: 'fromAccount must not be empty.' })

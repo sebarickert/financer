@@ -5,15 +5,12 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import {
-  Transaction,
-  TransactionDocument,
-} from 'src/modules/transactions/schemas/transaction.schema';
 
 import { AccountsService } from '../accounts/accounts.service';
 
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
+import { Transaction, TransactionDocument } from './schemas/transaction.schema';
 
 @Injectable()
 export class TransactionsService {

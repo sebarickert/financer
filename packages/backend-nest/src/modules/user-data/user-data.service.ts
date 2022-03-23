@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { AccountsService } from 'src/modules/accounts/accounts.service';
-import { TransactionCategoriesService } from 'src/modules/transaction-categories/transaction-categories.service';
-import { TransactionCategoryMappingsService } from 'src/modules/transaction-category-mappings/transaction-category-mappings.service';
-import { TransactionsService } from 'src/modules/transactions/transactions.service';
-import { UserDocument } from 'src/modules/users/schemas/user.schema';
 
+import { AccountsService } from '../accounts/accounts.service';
 import { AccountDocument } from '../accounts/schemas/account.schema';
 import { TransactionCategoryDocument } from '../transaction-categories/schemas/transaction-category.schema';
+import { TransactionCategoriesService } from '../transaction-categories/transaction-categories.service';
 import { TransactionCategoryMappingDocument } from '../transaction-category-mappings/schemas/transaction-category-mapping.schema';
+import { TransactionCategoryMappingsService } from '../transaction-category-mappings/transaction-category-mappings.service';
 import { TransactionDocument } from '../transactions/schemas/transaction.schema';
+import { TransactionsService } from '../transactions/transactions.service';
+import { UserDocument } from '../users/schemas/user.schema';
 
 export type ImportUserDataDto = {
   transactions: TransactionDocument[];
