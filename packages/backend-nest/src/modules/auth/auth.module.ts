@@ -1,10 +1,11 @@
 import { DynamicModule, Module, Provider } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
+
 import {
   isAuth0AuthEnabled,
   isGithubAuthEnabled,
-} from 'src/config/configuration';
-import { UsersModule } from 'src/modules/users/users.module';
+} from '../../config/configuration';
+import { UsersModule } from '../users/users.module';
 
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';

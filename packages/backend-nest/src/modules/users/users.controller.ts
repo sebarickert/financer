@@ -1,11 +1,12 @@
 import { Controller, Get, Body, Patch, Param, Post, Res } from '@nestjs/common';
 import { Response } from 'express';
-import { Auth } from 'src/modules/auth/decorators/auht.decorator';
-import { LoggedIn } from 'src/modules/auth/decorators/loggedIn.decorators';
+
+import { Auth } from '../auth/decorators/auht.decorator';
+import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
 import {
-  ImportUserDataDto,
   UserDataService,
-} from 'src/modules/user-data/user-data.service';
+  ImportUserDataDto,
+} from '../user-data/user-data.service';
 
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Role } from './schemas/user.schema';

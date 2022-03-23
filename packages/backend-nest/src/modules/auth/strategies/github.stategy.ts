@@ -6,8 +6,8 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, Profile } from 'passport-github2';
-import { UsersService } from 'src/modules/users/users.service';
 
+import { UsersService } from '../../users/users.service';
 import { AuthService } from '../auth.service';
 
 @Injectable()
@@ -38,7 +38,7 @@ export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
         return user;
       }
 
-      return this.userService.create({
+      return await this.userService.create({
         name: profile.displayName,
         nickname: profile.username,
         githubId: profile.id,

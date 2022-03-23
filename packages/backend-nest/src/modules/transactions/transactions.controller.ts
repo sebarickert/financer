@@ -1,6 +1,6 @@
 import { Controller, Get, Param } from '@nestjs/common';
-import { ValidateEntityId } from 'src/utils/validate-entity-id.pipe';
 
+import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
 import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
 import { UserId } from '../users/users.decorators';
 
