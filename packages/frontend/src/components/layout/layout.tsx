@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 
 import { ReactComponent as Logo } from '../../assets/logo.svg';
+import { isIOSDevice } from '../../utils/isIOSDevice';
+import { isStandaloneMode } from '../../utils/isStandaloneMode';
 import { Container } from '../container/container';
 import { DesktopNavigation } from '../desktop-navigation/desktop-navigation';
 import { MobileNavigation } from '../mobile-navigation/mobile-navigation';
@@ -46,7 +48,11 @@ export const Layout = (): JSX.Element => {
     <div className="safe-top safe-left safe-right safe-bottom">
       <div className="flex flex-col h-full min-h-screen overflow-y-scroll disable-scrollbars">
         <main className="flex-grow bg-white-off lg:pb-24">
-          <div className="px-6 pt-8 pb-24">
+          <div
+            className={`px-6 ${
+              isIOSDevice() && isStandaloneMode() ? 'pt-16' : 'pt-8'
+            } pb-24`}
+          >
             <Outlet />
           </div>
         </main>
