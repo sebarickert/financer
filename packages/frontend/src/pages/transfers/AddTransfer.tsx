@@ -25,24 +25,14 @@ export const AddTransfer = (): JSX.Element => {
     transactionCategoryMappings: ITransactionCategoryMapping[]
   ) => {
     try {
-      const newTransactionJson = await addTransaction(newTransfer);
+      const newTransactionJson = await addTransaction({
+        ...newTransfer,
+        categories: transactionCategoryMappings,
+      } as any);
 
       if ('message' in newTransactionJson) {
         setErrors(parseErrorMessagesToArray(newTransactionJson.message));
         return;
-      }
-
-      if (transactionCategoryMappings.length > 0) {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const newTransactionCategoryMappingJson =
-          await addTransactionCategoryMapping(
-            transactionCategoryMappings.map(
-              (newTransactionCategoryMappingData) => ({
-                ...newTransactionCategoryMappingData,
-                transaction_id: newTransactionJson.payload._id,
-              })
-            )
-          );
       }
 
       navigate('/statistics/transfers');

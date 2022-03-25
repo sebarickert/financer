@@ -7,6 +7,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import { AccountsService } from '../accounts/accounts.service';
+import { TransactionCategoriesService } from '../transaction-categories/transaction-categories.service';
+import { TransactionCategoryMappingsService } from '../transaction-category-mappings/transaction-category-mappings.service';
 
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
@@ -18,12 +20,34 @@ export class TransactionsService {
     @InjectModel(Transaction.name)
     private transactionModel: Model<TransactionDocument>,
     private accountService: AccountsService,
+    private transactionCategoriesService: TransactionCategoriesService,
+    private transactionCategoryMappingsService: TransactionCategoryMappingsService,
   ) {}
 
   async create(
     createTransactionDto: CreateTransactionDto,
   ): Promise<TransactionDocument> {
-    return this.transactionModel.create(createTransactionDto);
+    const { categories: rawCategories, ...transactioData } =
+      createTransactionDto;
+
+    if (rawCategories) {
+      await this.transactionCategoriesService.ensureCategoriesExist(
+        rawCategories.map((category) => category.category_id as any),
+      );
+    }
+
+    const transaction = await this.transactionModel.create(transactioData);
+
+    if (rawCategories) {
+      const categories = rawCategories.map((category) => ({
+        ...category,
+        transaction_id: transaction._id,
+        owner: transaction.user,
+      }));
+      await this.transactionCategoryMappingsService.createMany(categories);
+    }
+
+    return transaction;
   }
 
   async createMany(

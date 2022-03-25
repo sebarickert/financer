@@ -137,4 +137,14 @@ export class TransactionCategoriesService {
   async removeAllByUser(userId: string) {
     return this.transactionCategoryModel.deleteMany({ owner: userId }).exec();
   }
+
+  async ensureCategoriesExist(ids: string[]) {
+    const categories = await this.transactionCategoryModel.find({
+      _id: { $in: ids },
+    });
+
+    if (categories.length !== ids.length) {
+      throw new BadRequestException('One or more categories does not exist.');
+    }
+  }
 }

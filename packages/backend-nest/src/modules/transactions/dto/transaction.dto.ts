@@ -1,13 +1,17 @@
+import { Type } from 'class-transformer';
 import {
   IsDateString,
   IsMongoId,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsString,
   Min,
+  ValidateNested,
 } from 'class-validator';
 
 import { Account } from '../../accounts/schemas/account.schema';
+import { TransactionCategoryMappingDto } from '../../transaction-category-mappings/dto/transaction-category-mapping.dto';
 import { User } from '../../users/schemas/user.schema';
 
 export class TransactionDto {
@@ -38,4 +42,11 @@ export class TransactionDto {
 
   @IsMongoId()
   readonly user: User;
+}
+
+export class TransactionBaseWithCategoryDto {
+  @IsOptional()
+  @ValidateNested({ each: true })
+  @Type(() => TransactionCategoryMappingDto)
+  categories: TransactionCategoryMappingDto[];
 }

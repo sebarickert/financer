@@ -20,8 +20,14 @@ export const DescriptionList = ({
 }: IDescriptionListProps): JSX.Element => {
   return (
     <div className={`${className}`} data-testid={testId}>
-      <DescriptionListHeader label={label} visibleLabel={visibleLabel} />
-      <DescriptionListBody>{children}</DescriptionListBody>
+      <DescriptionListHeader
+        label={label}
+        visibleLabel={visibleLabel}
+        testId={`${testId}_list-header`}
+      />
+      <DescriptionListBody testId={`${testId}_list-body`}>
+        {children}
+      </DescriptionListBody>
     </div>
   );
 };
