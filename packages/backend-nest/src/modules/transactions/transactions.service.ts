@@ -98,23 +98,50 @@ export class TransactionsService {
     id: string,
     updateTransactionDto: UpdateTransactionDto,
   ): Promise<TransactionDocument> {
-    if (updateTransactionDto.toAccount) {
+    const { categories: rawCategories, ...transactionData } =
+      updateTransactionDto;
+
+    if (transactionData.toAccount) {
       await this.accountService.findOne(
         userId,
-        updateTransactionDto.toAccount as any,
+        transactionData.toAccount as any,
       );
     }
-    if (updateTransactionDto.fromAccount) {
+    if (transactionData.fromAccount) {
       await this.accountService.findOne(
         userId,
-        updateTransactionDto.fromAccount as any,
+        transactionData.fromAccount as any,
       );
     }
 
     await this.findOne(userId, id);
-    return this.transactionModel
-      .findByIdAndUpdate(id, updateTransactionDto, { new: true })
+
+    if (rawCategories) {
+      await this.transactionCategoriesService.ensureCategoriesExist(
+        rawCategories.map((category) => category.category_id as any),
+      );
+    }
+
+    const transaction = this.transactionModel
+      .findByIdAndUpdate(id, transactionData, { new: true })
       .exec();
+
+    await this.transactionCategoryMappingsService.removeAllByUserAndTransaction(
+      userId,
+      id,
+    );
+    if (rawCategories) {
+      const categories = rawCategories.map((category) => ({
+        ...category,
+        transaction_id: id,
+        owner: userId,
+      }));
+      await this.transactionCategoryMappingsService.createMany(
+        categories as any,
+      );
+    }
+
+    return transaction;
   }
 
   async updateAccountBalanceBeforeByAfterDate(

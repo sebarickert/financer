@@ -55,6 +55,15 @@ export class TransactionCategoryMappingsService {
     return `This action removes a #${id} transactionCategoryMapping`;
   }
 
+  async removeAllByUserAndTransaction(userId: string, transactionId: string) {
+    return this.transactionCategoryMappingModel
+      .deleteMany({
+        owner: userId,
+        transaction_id: transactionId,
+      })
+      .exec();
+  }
+
   async removeAllByUser(userId: string) {
     return this.transactionCategoryMappingModel
       .deleteMany({

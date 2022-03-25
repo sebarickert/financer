@@ -32,24 +32,17 @@ export const EditTransfer = (): JSX.Element => {
       return;
     }
     try {
-      const newTransactionJson = await editTransaction(targetTransferData, id);
+      const newTransactionJson = await editTransaction(
+        {
+          ...targetTransferData,
+          categories: transactionCategoryMappings,
+        } as any,
+        id
+      );
 
       if ('message' in newTransactionJson) {
         setErrors(parseErrorMessagesToArray(newTransactionJson.message));
         return;
-      }
-
-      if (transactionCategoryMappings.length > 0) {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const newTransactionCategoryMappingJson =
-          await addTransactionCategoryMapping(
-            transactionCategoryMappings.map(
-              (newTransactionCategoryMappingData) => ({
-                ...newTransactionCategoryMappingData,
-                transaction_id: newTransactionJson.payload._id,
-              })
-            )
-          );
       }
 
       navigate('/statistics/transfers');
