@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { isIOSDevice } from '../../utils/isIOSDevice';
 import { isStandaloneMode } from '../../utils/isStandaloneMode';
@@ -58,6 +58,18 @@ export const Modal = ({
   buttonStyle = 'default',
   testId,
 }: IModalProps): JSX.Element => {
+  useEffect(() => {
+    const bodyElement = document.getElementsByTagName('body')[0];
+
+    if (isOpen) {
+      bodyElement.style.overflowY = 'hidden';
+    }
+
+    return () => {
+      bodyElement.style.overflowY = 'visible';
+    };
+  }, [isOpen]);
+
   return (
     <>
       {buttonStyle === 'quick-link' ? (
