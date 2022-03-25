@@ -180,11 +180,6 @@ describe('Expense form', () => {
   it('Verify Expense target account must exists', () => {
     cy.get('#description').type('irrelevant');
     cy.get('#amount').type('1');
-    cy.get('#fromAccount').invoke(
-      'prepend',
-      "<option value='not-allowed-type'>not existing account</option>"
-    );
-
     cy.get('#fromAccount').then(($select) => {
       $select.append(
         '<option value="123456789012345678901234">non-existing-account</option>'

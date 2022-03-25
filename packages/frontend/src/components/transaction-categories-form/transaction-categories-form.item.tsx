@@ -59,7 +59,7 @@ export const TransactionCategoriesFormItem = ({
               <Input
                 id={`transactionCategory[${categoryAmountIndex}]amount`}
                 type="number"
-                min={0.0}
+                min={0.01}
                 step={0.01}
                 max={amountMaxValue}
                 isCurrency

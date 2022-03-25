@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
 import { AccountsModule } from '../accounts/accounts.module';
+import { TransactionCategoriesModule } from '../transaction-categories/transaction-categories.module';
+import { TransactionCategoryMappingsModule } from '../transaction-category-mappings/transaction-category-mappings.module';
 
 import { Transaction, TransactionSchema } from './schemas/transaction.schema';
 import { TransactionsController } from './transactions.controller';
@@ -13,6 +15,8 @@ import { TransactionsService } from './transactions.service';
       { name: Transaction.name, schema: TransactionSchema },
     ]),
     AccountsModule,
+    TransactionCategoriesModule,
+    TransactionCategoryMappingsModule,
   ],
   controllers: [TransactionsController],
   providers: [TransactionsService],
