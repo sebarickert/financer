@@ -19,6 +19,7 @@ interface ITransactionCategoryFormProps {
   visibility?: ITransactionCategory['visibility'];
   parentTransactioCategoryId?: string;
   optionalFooterComponent?: React.ReactNode;
+  currentCategoryId?: string;
 }
 
 export const TransactionCategoryForm = ({
@@ -30,9 +31,10 @@ export const TransactionCategoryForm = ({
   name,
   visibility,
   optionalFooterComponent,
+  currentCategoryId,
 }: ITransactionCategoryFormProps): JSX.Element => {
   const transactionCategoriesRaw =
-    useAllTransactionCategoriesWithCategoryTree();
+    useAllTransactionCategoriesWithCategoryTree(currentCategoryId);
   const [transactionCategories, setTransactionCategories] = useState<
     IOption[] | null
   >(null);
@@ -49,13 +51,13 @@ export const TransactionCategoryForm = ({
         })
       ),
     ]);
-  }, [transactionCategoriesRaw]);
+  }, [currentCategoryId, transactionCategoriesRaw]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     const {
-      transactionCategoryName: newCategoryName,
+      name: newCategoryName,
       parentTransactionCategory: newParentTransactionCategory,
       incomeVisible: newIncomeVisible,
       expenseVisible: newExpenseVisible,
@@ -85,7 +87,7 @@ export const TransactionCategoryForm = ({
   ) : (
     <>
       {errors.length > 0 && (
-        <Alert additionalInformation={errors}>
+        <Alert additionalInformation={errors} testId="form-errors">
           There were {errors.length} errors with your submission
         </Alert>
       )}
@@ -99,14 +101,14 @@ export const TransactionCategoryForm = ({
       >
         <div className="grid gap-y-6 gap-x-4">
           <Input
-            id="transactionCategoryName"
+            id="name"
             help="Name of the transaction category, e.g. food, hobby, car, etc."
             isRequired
             value={name}
           >
             Name
           </Input>
-          <CheckboxGroup>
+          <CheckboxGroup testId="visibility-checkboxes">
             <Checkbox
               id="incomeVisible"
               label="Income"

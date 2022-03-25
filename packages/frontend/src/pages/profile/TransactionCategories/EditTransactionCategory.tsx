@@ -27,6 +27,7 @@ const TransactionCategoryDeleteModal = ({
     onConfirm={handleDelete}
     modalOpenButtonLabel="Delete transaction category"
     accentColor="red"
+    testId="delete-transaction-category-modal"
   >
     Are you sure you want to delete this transaction category? All of your data
     will be permanently removed. This action cannot be undone.
@@ -89,6 +90,7 @@ export const EditTransactionCategory = (): JSX.Element => {
         name={transactionCategory.name}
         visibility={transactionCategory.visibility}
         parentTransactioCategoryId={transactionCategory.parent_category_id}
+        currentCategoryId={id}
         optionalFooterComponent={
           <TransactionCategoryDeleteModal handleDelete={handleDelete} />
         }
