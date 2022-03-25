@@ -74,15 +74,15 @@ export const Modal = ({
         </Button>
       )}
       {isOpen && (
-        <div className="fixed inset-0 z-10 overflow-y-auto">
+        <div className="fixed inset-0 z-20">
+          <div className="fixed inset-0 transition-opacity">
+            <div className="absolute inset-0 bg-gray-500 opacity-75" />
+          </div>
           <div
             className={`flex items-end justify-center min-h-screen pt-4 px-4 text-center sm:block sm:p-0 ${
               isIOSDevice() && isStandaloneMode() ? 'pb-28' : 'pb-20'
             }`}
           >
-            <div className="fixed inset-0 transition-opacity">
-              <div className="absolute inset-0 bg-gray-500 opacity-75" />
-            </div>
             <span className="hidden sm:inline-block sm:align-middle sm:h-screen" />
             &#8203;
             <div
