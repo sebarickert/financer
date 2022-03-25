@@ -5,11 +5,10 @@ import { Banner } from '../../components/banner/banner';
 import { BannerText } from '../../components/banner/banner.text';
 import { Button } from '../../components/button/button';
 import { ButtonGroup } from '../../components/button/button.group';
+import { Heading } from '../../components/heading/heading';
 import { Loader } from '../../components/loader/loader';
 import { ModalConfirm } from '../../components/modal/confirm/modal.confirm';
 import { SEO } from '../../components/seo/seo';
-import { StatsGroup } from '../../components/stats/stats.group';
-import { StatsItem } from '../../components/stats/stats.item';
 import { TransactionStackedList } from '../../components/transaction-stacked-list/transaction-stacked-list';
 import { ITransactionStackedListRowProps } from '../../components/transaction-stacked-list/transaction-stacked-list.row';
 import { useAccountById } from '../../hooks/account/useAccountById';
@@ -113,7 +112,12 @@ export const Account = (): JSX.Element => {
   ) : (
     <>
       <SEO title={`${account.name}`} />
-      <Banner title={account.name} headindType="h1" testId="account-banner">
+      <Banner
+        title={account.name}
+        headindType="h1"
+        testId="account-banner"
+        className="mb-4 lg:mb-6"
+      >
         <BannerText>
           Manage your account information and review your account transaction
           history.
@@ -129,19 +133,39 @@ export const Account = (): JSX.Element => {
           <AccountDeleteModal handleDelete={handleDelete} />
         </ButtonGroup>
       </Banner>
-      <StatsGroup className="mt-8 mb-4">
-        <StatsItem statLabel="Type" testId="type">
-          {capitalize(account.type)}
-        </StatsItem>
-        <StatsItem statLabel="Balance" testId="balance">
-          {formatCurrency(account.balance)}
-        </StatsItem>
-      </StatsGroup>
+      <section className={`bg-white border rounded-lg mb-4 lg:mb-6`}>
+        <dl className="relative px-6 pt-10 pb-6 border-b">
+          <dt className="absolute text-sm font-medium text-gray-700 truncate lg:text-base top-4 left-6">
+            Balance
+          </dt>
+          <dd className="text-3xl font-bold tracking-tight">
+            {formatCurrency(account.balance)}
+          </dd>
+        </dl>
+        <section className="grid grid-cols-2 divide-x">
+          <dl className="py-4 pl-6 pr-4">
+            <dt className="text-xs font-medium text-gray-700 truncate lg:text-sm">
+              Type
+            </dt>
+            <dd className="text-xl font-bold tracking-tight">
+              {capitalize(account.type)}
+            </dd>
+          </dl>
+          <dl className="py-4 pl-6 pr-4">
+            <dt className="text-xs font-medium text-gray-700 truncate lg:text-sm">
+              Transactions
+            </dt>
+            <dd className="text-xl font-bold tracking-tight">
+              {transactions.length}
+            </dd>
+          </dl>
+        </section>
+      </section>
       <AccountBalanceHistoryChart accountId={id} />
-      <h2 className="mt-8 mb-4 text-2xl font-bold tracking-tighter sm:text-3xl">
-        History
-      </h2>
-      <TransactionStackedList className="mt-4" rows={transactions} />
+      <section className="mt-4 lg:mt-6">
+        <Heading>History</Heading>
+        <TransactionStackedList className="mt-4" rows={transactions} />
+      </section>
     </>
   );
 };
