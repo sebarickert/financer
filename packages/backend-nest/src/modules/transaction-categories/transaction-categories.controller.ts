@@ -8,6 +8,7 @@ import {
   Delete,
 } from '@nestjs/common';
 
+import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
 import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
 import { UserId } from '../users/users.decorators';
 
@@ -23,8 +24,12 @@ export class TransactionCategoriesController {
   ) {}
 
   @Post()
-  create(@Body() createTransactionCategoryDto: CreateTransactionCategoryDto) {
+  async create(
+    @UserId() userId: string,
+    @Body() createTransactionCategoryDto: CreateTransactionCategoryDto,
+  ) {
     return this.transactionCategoriesService.create(
+      userId,
       createTransactionCategoryDto,
     );
   }
@@ -35,23 +40,25 @@ export class TransactionCategoriesController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.transactionCategoriesService.findOne(+id);
+  findOne(@UserId() userId: string, @Param('id', ValidateEntityId) id: string) {
+    return this.transactionCategoriesService.findOne(userId, id);
   }
 
   @Patch(':id')
   update(
-    @Param('id') id: string,
+    @UserId() userId: string,
+    @Param('id', ValidateEntityId) id: string,
     @Body() updateTransactionCategoryDto: UpdateTransactionCategoryDto,
   ) {
     return this.transactionCategoriesService.update(
-      +id,
+      userId,
+      id,
       updateTransactionCategoryDto,
     );
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.transactionCategoriesService.remove(+id);
+  remove(@UserId() userId: string, @Param('id', ValidateEntityId) id: string) {
+    return this.transactionCategoriesService.remove(userId, id);
   }
 }

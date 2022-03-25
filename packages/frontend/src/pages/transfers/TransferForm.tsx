@@ -239,6 +239,7 @@ export const TransferForm = ({
               onClick={addNewCategory}
               accentColor="plain"
               isDisabled={!inputAmountValue || inputAmountValue < 0}
+              testId="add-category-button"
             >
               Add category item
             </Button>

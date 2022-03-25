@@ -54,7 +54,7 @@ export const TransactionCategories = (): JSX.Element => {
           testId="add-category"
         />
       </section>
-      <StackedList rows={transactionCategories} />
+      <StackedList rows={transactionCategories} rowTestId="category-row" />
     </>
   );
 };

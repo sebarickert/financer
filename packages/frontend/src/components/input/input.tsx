@@ -16,6 +16,7 @@ interface IInputProps {
   step?: number;
   ref?: React.MutableRefObject<null>;
   onChange?(event: ChangeEvent<HTMLInputElement>): void;
+  testId?: string;
 }
 
 export const Input = ({
@@ -32,6 +33,7 @@ export const Input = ({
   value = '',
   ref,
   onChange,
+  testId,
 }: IInputProps): JSX.Element => {
   const formatValue = useCallback(
     (newValue: string | number) =>
@@ -55,13 +57,13 @@ export const Input = ({
     <div>
       <label
         htmlFor={id}
-        className="block text-xs font-semibold uppercase leading-5 tracking-wider text-gray-500"
+        className="block text-xs font-semibold leading-5 tracking-wider text-gray-500 uppercase"
       >
         {children}
       </label>
-      <div className="mt-1 relative rounded-md">
+      <div className="relative mt-1 rounded-md">
         {isCurrency && (
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
             <span className="text-gray-500">€</span>
           </div>
         )}
@@ -80,6 +82,7 @@ export const Input = ({
           ref={ref}
           onChange={handleChange}
           lang="fi"
+          data-testid={testId}
         />
       </div>
       {help && (
