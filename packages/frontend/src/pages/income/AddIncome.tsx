@@ -22,24 +22,14 @@ export const AddIncome = (): JSX.Element => {
     newTransactionCategoryMappingsData: ITransactionCategoryMapping[]
   ) => {
     try {
-      const newIncomeJson = await addIncome(newIncomeData);
+      const newIncomeJson = await addIncome({
+        ...newIncomeData,
+        categories: newTransactionCategoryMappingsData,
+      } as any);
 
       if ('message' in newIncomeJson) {
         setErrors(parseErrorMessagesToArray(newIncomeJson.message));
         return;
-      }
-
-      if (newTransactionCategoryMappingsData.length > 0) {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const newTransactionCategoryMappingJson =
-          await addTransactionCategoryMapping(
-            newTransactionCategoryMappingsData.map(
-              (newTransactionCategoryMappingData) => ({
-                ...newTransactionCategoryMappingData,
-                transaction_id: newIncomeJson.payload._id,
-              })
-            )
-          );
       }
 
       navigate('/statistics/incomes');

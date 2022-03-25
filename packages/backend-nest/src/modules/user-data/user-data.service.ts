@@ -111,7 +111,7 @@ export class UserDataService {
         transactionCategoriesWithCurrentUserId,
       ),
       this.transactionCategoryMappingService.createMany(
-        transactionCategoryMappingsWithCurrentUserId,
+        transactionCategoryMappingsWithCurrentUserId as any,
       ),
     ]);
 

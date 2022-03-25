@@ -79,9 +79,17 @@ export const Transfer = (): JSX.Element => {
             </DescriptionListItem>
           </DescriptionList>
           {transactionCategoryMapping.length > 0 && (
-            <DescriptionList label="Categories" className="mt-6" visibleLabel>
+            <DescriptionList
+              label="Categories"
+              className="mt-6"
+              visibleLabel
+              testId="categories-wrapper"
+            >
               {transactionCategoryMapping?.map(({ amount, category_id }) => (
-                <DescriptionListItem label={getCategoryNameById(category_id)}>
+                <DescriptionListItem
+                  label={getCategoryNameById(category_id)}
+                  testId="category-row"
+                >
                   {formatCurrency(amount)}
                 </DescriptionListItem>
               ))}

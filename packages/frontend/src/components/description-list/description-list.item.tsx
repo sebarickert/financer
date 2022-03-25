@@ -12,9 +12,16 @@ export const DescriptionListItem = ({
   testId,
 }: IDescriptionListItemProps): JSX.Element => {
   return (
-    <div className="py-4 grid grid-cols-2 gap-4" data-testid={testId}>
-      <dt className="text-sm font-medium text-gray-500">{label}</dt>
-      <dd className="text-sm text-gray-900">{children}</dd>
+    <div className="grid grid-cols-2 gap-4 py-4" data-testid={testId}>
+      <dt
+        className="text-sm font-medium text-gray-500"
+        data-testid={`${testId}_label`}
+      >
+        {label}
+      </dt>
+      <dd className="text-sm text-gray-900" data-testid={`${testId}_content`}>
+        {children}
+      </dd>
     </div>
   );
 };

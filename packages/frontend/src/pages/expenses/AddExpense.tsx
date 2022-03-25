@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { SEO } from '../../components/seo/seo';
 import { useAddExpense } from '../../hooks/expense/useAddExpense';
 import { useUserDefaultExpenseAccount } from '../../hooks/profile/user-preference/useUserDefaultExpenseAccount';
-import { useAddTransactionCategoryMapping } from '../../hooks/transactionCategoryMapping/useAddTransactionCategoryMapping';
 import { parseErrorMessagesToArray } from '../../utils/apiHelper';
 
 import { ExpenseForm } from './ExpenseForm';
@@ -14,7 +13,6 @@ export const AddExpense = (): JSX.Element => {
   const navigate = useNavigate();
   const [errors, setErrors] = useState<string[]>([]);
   const addExpense = useAddExpense();
-  const addTransactionCategoryMapping = useAddTransactionCategoryMapping();
   const [defaultExpenseAccount] = useUserDefaultExpenseAccount();
 
   const handleSubmit = async (
@@ -22,24 +20,14 @@ export const AddExpense = (): JSX.Element => {
     newTransactionCategoryMappingsData: ITransactionCategoryMapping[]
   ) => {
     try {
-      const newExpenseJson = await addExpense(newExpenseData);
+      const newExpenseJson = await addExpense({
+        ...newExpenseData,
+        categories: newTransactionCategoryMappingsData,
+      } as any);
 
       if ('message' in newExpenseJson) {
         setErrors(parseErrorMessagesToArray(newExpenseJson.message));
         return;
-      }
-
-      if (newTransactionCategoryMappingsData.length > 0) {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const newTransactionCategoryMappingJson =
-          await addTransactionCategoryMapping(
-            newTransactionCategoryMappingsData.map(
-              (newTransactionCategoryMappingData) => ({
-                ...newTransactionCategoryMappingData,
-                transaction_id: newExpenseJson.payload._id,
-              })
-            )
-          );
       }
 
       navigate('/statistics/expenses');
