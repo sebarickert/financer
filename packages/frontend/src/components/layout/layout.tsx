@@ -1,4 +1,3 @@
-import { useLayoutEffect, useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 
 import { ReactComponent as Logo } from '../../assets/logo.svg';
@@ -7,21 +6,21 @@ import { DesktopNavigation } from '../desktop-navigation/desktop-navigation';
 import { MobileNavigation } from '../mobile-navigation/mobile-navigation';
 
 export const Layout = (): JSX.Element => {
-  const [currentWindowWidth, setCurrentWindowWidth] = useState(
-    window.outerWidth
-  );
-
-  useLayoutEffect(() => {
-    setCurrentWindowWidth(window.outerWidth);
-  }, []);
-
-  window.addEventListener('resize', () =>
-    setCurrentWindowWidth(window.outerWidth)
-  );
-
-  if (currentWindowWidth > 1024) {
-    return (
-      <div className="bg-white-off">
+  return (
+    <>
+      {/* MOBILE */}
+      <div className="flex lg:hidden flex-col h-full min-h-screen overflow-y-scroll disable-scrollbars">
+        <main className="flex-grow bg-white-off lg:pb-24">
+          <div className={`px-6 pt-8 pb-24`}>
+            <Outlet />
+          </div>
+        </main>
+        <header>
+          <MobileNavigation />
+        </header>
+      </div>
+      {/* DESKTOP */}
+      <div className="bg-white-off hidden lg:block">
         <Container className="grid grid-cols-[16rem,1fr] min-h-screen px-0">
           <aside className="after:bg-white after:ml-[-100vw] after:pr-[100vw] after:absolute after:top-0 after:bottom-0 after:right-0 relative border-r">
             <div className="sticky top-0 z-10 min-h-screen px-4 pt-12 pb-12 bottom-12">
@@ -43,19 +42,6 @@ export const Layout = (): JSX.Element => {
           </main>
         </Container>
       </div>
-    );
-  }
-
-  return (
-    <div className="flex flex-col h-full min-h-screen overflow-y-scroll disable-scrollbars">
-      <main className="flex-grow bg-white-off lg:pb-24">
-        <div className={`px-6 pt-8 pb-24`}>
-          <Outlet />
-        </div>
-      </main>
-      <header>
-        <MobileNavigation />
-      </header>
-    </div>
+    </>
   );
 };
