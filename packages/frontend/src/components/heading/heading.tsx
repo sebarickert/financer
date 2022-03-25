@@ -21,10 +21,10 @@ export const Heading = ({
   return (
     <HeadingType
       className={`!font-bold !leading-tight tracking-tighter text-gray-900 ${className}
-        ${styleToApply === 'h1' ? 'text-4xl' : ''}
-        ${styleToApply === 'h2' ? 'text-3xl' : ''}
-        ${styleToApply === 'h3' ? 'text-2xl' : ''}
-        ${styleToApply === 'h4' ? 'text-xl' : ''}
+        ${styleToApply === 'h1' ? 'text-3xl' : ''}
+        ${styleToApply === 'h2' ? 'text-2xl' : ''}
+        ${styleToApply === 'h3' ? 'text-xl' : ''}
+        ${styleToApply === 'h4' ? 'text-lg' : ''}
       `}
     >
       {children}
