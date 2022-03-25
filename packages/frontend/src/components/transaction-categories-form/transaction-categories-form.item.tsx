@@ -96,6 +96,7 @@ export const TransactionCategoriesFormItem = ({
           className="sm:mt-6"
           onClick={deleteTransactionCategoryItem}
           accentColor="red"
+          testId={`${testId}_delete-button`}
         >
           Delete
         </Button>

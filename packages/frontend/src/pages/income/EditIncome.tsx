@@ -33,24 +33,17 @@ export const EditIncome = (): JSX.Element => {
       return;
     }
     try {
-      const targetIncomeJson = await editIncome(targetIncomeData, id);
+      const targetIncomeJson = await editIncome(
+        {
+          ...targetIncomeData,
+          categories: newTransactionCategoryMappingsData,
+        } as any,
+        id
+      );
 
       if ('message' in targetIncomeJson) {
         setErrors(parseErrorMessagesToArray(targetIncomeJson.message));
         return;
-      }
-
-      if (newTransactionCategoryMappingsData.length > 0) {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const newTransactionCategoryMappingJson =
-          await addTransactionCategoryMapping(
-            newTransactionCategoryMappingsData.map(
-              (newTransactionCategoryMappingData) => ({
-                ...newTransactionCategoryMappingData,
-                transaction_id: targetIncomeJson.payload._id,
-              })
-            )
-          );
       }
 
       navigate('/statistics/incomes');
