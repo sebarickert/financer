@@ -1,4 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+  UnauthorizedException,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
@@ -16,8 +23,30 @@ export class TransactionCategoriesService {
     private transactionCategoryModel: Model<TransactionCategoryDocument>,
   ) {}
 
-  create(createTransactionCategoryDto: CreateTransactionCategoryDto) {
-    return 'This action adds a new transactionCategory';
+  private async isParentIdInChildHierarchy(
+    id: string,
+    newParentId: string,
+  ): Promise<boolean> {
+    const categories = await this.findAllChildrensById([id]);
+    const ids = categories.map((category) => category._id + '');
+
+    return ids.includes(newParentId);
+  }
+
+  async create(
+    userId: string,
+    createTransactionCategoryDto: CreateTransactionCategoryDto,
+  ): Promise<TransactionCategoryDocument> {
+    const newCategory = {
+      ...createTransactionCategoryDto,
+      owner: userId,
+    };
+
+    if (newCategory.parent_category_id) {
+      await this.findOne(userId, newCategory.parent_category_id as any);
+    }
+
+    return this.transactionCategoryModel.create(newCategory);
   }
 
   async createMany(
@@ -32,23 +61,77 @@ export class TransactionCategoriesService {
     return `This action returns all transactionCategories`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} transactionCategory`;
+  async findOne(
+    userId: string,
+    id: string,
+  ): Promise<TransactionCategoryDocument> {
+    const category = await this.transactionCategoryModel.findOne({ _id: id });
+
+    if (!category) {
+      throw new NotFoundException('Category not found.');
+    } else if (category.owner + '' !== (userId as any)) {
+      throw new UnauthorizedException('Unauthorized to access this categry.');
+    }
+
+    return category;
+  }
+
+  async findAllChildrensById(parentIds: string[], depth = 0) {
+    if (depth > 10) {
+      throw new InternalServerErrorException(
+        'Too many levels of nesting, probably infite loop on hierarchy?',
+      );
+    }
+    const categories = await this.transactionCategoryModel.find({
+      parent_category_id: { $in: parentIds },
+    });
+
+    const ids = categories.map((category) => category._id);
+    if (ids.length === 0) {
+      return categories;
+    }
+    const childCategories = await this.findAllChildrensById(ids, depth + 1);
+
+    return [...categories, ...childCategories];
   }
 
   async findAllByUser(userId: string): Promise<TransactionCategoryDocument[]> {
-    return this.transactionCategoryModel.find({ owner: userId }).exec();
+    // deleted is not true
+    return this.transactionCategoryModel
+      .find({ owner: userId, deleted: { $ne: true } })
+      .exec();
   }
 
-  update(
-    id: number,
+  async update(
+    userId: string,
+    id: string,
     updateTransactionCategoryDto: UpdateTransactionCategoryDto,
   ) {
-    return `This action updates a #${id} transactionCategory`;
+    await this.findOne(userId, id);
+
+    if (updateTransactionCategoryDto.parent_category_id) {
+      const parentId = updateTransactionCategoryDto.parent_category_id;
+      if (await this.isParentIdInChildHierarchy(id, parentId as any)) {
+        throw new BadRequestException(
+          'Parent category cannot be child category of current item.',
+        );
+      }
+    }
+
+    return this.transactionCategoryModel.findByIdAndUpdate(
+      id,
+      updateTransactionCategoryDto,
+      { new: true },
+    );
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} transactionCategory`;
+  async remove(userId: string, id: string) {
+    await this.findOne(userId, id);
+    await this.transactionCategoryModel.findByIdAndUpdate(id, {
+      $set: {
+        deleted: true,
+      },
+    });
   }
 
   async removeAllByUser(userId: string) {

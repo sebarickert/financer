@@ -50,6 +50,97 @@
     }
   ],
   "transactions": [],
-  "transactionCategories": [],
+  "transactionCategories": [
+    {
+      "_id": "623b58ada3deba9879422fbf",
+      "owner": "61460d7354ea082ad0256749",
+      "name": "Category for all types",
+      "visibility": ["income", "expense", "transfer"],
+      "parent_category_id": null,
+      "deleted": false,
+      "__v": 0
+    },
+    {
+      "_id": "623b58b8a3deba9879422fc2",
+      "owner": "61460d7354ea082ad0256749",
+      "name": "Invisible category",
+      "visibility": [],
+      "parent_category_id": null,
+      "deleted": false,
+      "__v": 0
+    },
+    {
+      "_id": "623b58bfa3deba9879422fc5",
+      "owner": "61460d7354ea082ad0256749",
+      "name": "Expense category",
+      "visibility": ["expense"],
+      "parent_category_id": null,
+      "deleted": false,
+      "__v": 0
+    },
+    {
+      "_id": "623b58c5a3deba9879422fc8",
+      "owner": "61460d7354ea082ad0256749",
+      "name": "Income category",
+      "visibility": ["income"],
+      "parent_category_id": null,
+      "deleted": false,
+      "__v": 0
+    },
+    {
+      "_id": "623b6b17a3deba9879422fcd",
+      "owner": "61460d7354ea082ad0256749",
+      "name": "Transfer category",
+      "visibility": ["transfer"],
+      "parent_category_id": null,
+      "deleted": false,
+      "__v": 0
+    },
+    {
+      "_id": "623b6b36a3deba9879422fd1",
+      "owner": "61460d7354ea082ad0256749",
+      "name": "Transfer sub category",
+      "visibility": ["transfer"],
+      "parent_category_id": "623b58b8a3deba9879422fc2",
+      "deleted": false,
+      "__v": 0
+    },
+    {
+      "_id": "623b6b51a3deba9879422fd5",
+      "owner": "61460d7354ea082ad0256749",
+      "name": "Income sub category",
+      "visibility": ["income"],
+      "parent_category_id": "623b58b8a3deba9879422fc2",
+      "deleted": false,
+      "__v": 0
+    },
+    {
+      "_id": "623b6b64a3deba9879422fd9",
+      "owner": "61460d7354ea082ad0256749",
+      "name": "Expense sub category",
+      "visibility": ["expense"],
+      "parent_category_id": "623b58b8a3deba9879422fc2",
+      "deleted": false,
+      "__v": 0
+    },
+    {
+      "_id": "623b6b84a3deba9879422fdd",
+      "owner": "61460d7354ea082ad0256749",
+      "name": "Invisble sub category",
+      "visibility": [],
+      "parent_category_id": "623b58ada3deba9879422fbf",
+      "deleted": false,
+      "__v": 0
+    },
+    {
+      "_id": "623b6b91a3deba9879422fe1",
+      "owner": "61460d7354ea082ad0256749",
+      "name": "Sub category for all types",
+      "visibility": ["income", "expense", "transfer"],
+      "parent_category_id": "623b58b8a3deba9879422fc2",
+      "deleted": false,
+      "__v": 0
+    }
+  ],
   "transactionCategoryMappings": []
 }

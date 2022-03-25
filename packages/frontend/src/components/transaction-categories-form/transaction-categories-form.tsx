@@ -13,6 +13,7 @@ interface ITransactionCategoriesFormProps {
   transactionCategoryMapping: ITransactionCategoryMapping[] | null;
   deleteTransactionCategoryItem(itemKey: number): void;
   setTransactionCategoryItemAmount(itemKey: number, itemValue: number): void;
+  testId?: string;
 }
 
 export const TransactionCategoriesForm = ({
@@ -23,13 +24,14 @@ export const TransactionCategoriesForm = ({
   transactionCategoryMapping,
   deleteTransactionCategoryItem,
   setTransactionCategoryItemAmount,
+  testId = 'transaction-categories-form',
 }: ITransactionCategoriesFormProps): JSX.Element => {
   const totalAllocatedAmount = Object.values(categoryAmount)
     .filter((item) => !Number.isNaN(item))
     .reduce((current, previous) => current + previous, 0);
 
   return (
-    <div className={className}>
+    <div className={className} data-testid={testId}>
       {Object.entries(categoryAmount).map(([index, value], arrayIndex) => (
         <TransactionCategoriesFormItem
           categoryAmountIndex={parseInt(index, 10)}
@@ -50,6 +52,7 @@ export const TransactionCategoriesForm = ({
               amountMaxValue - totalAllocatedAmount + (value || 0)
             );
           }}
+          testId={testId}
         />
       ))}
     </div>

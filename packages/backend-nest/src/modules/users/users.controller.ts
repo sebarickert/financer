@@ -71,7 +71,7 @@ export class UsersController {
     res.setHeader('Content-disposition', `attachment; filename= ${filename}`);
     res.setHeader('Content-type', 'application/json');
 
-    res.write(data, () => {
+    res.write(JSON.stringify(data), () => {
       res.end();
     });
   }

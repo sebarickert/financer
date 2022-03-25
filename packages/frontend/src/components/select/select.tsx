@@ -9,6 +9,7 @@ interface ISelectProps {
   defaultValue?: string;
   className?: string;
   handleOnChange?(event: React.ChangeEvent<HTMLSelectElement>): void;
+  testId?: string;
 }
 
 export interface IOption {
@@ -24,6 +25,7 @@ export const Select = ({
   options,
   defaultValue,
   className = '',
+  testId,
   handleOnChange = () => {},
 }: ISelectProps): JSX.Element => {
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -36,20 +38,20 @@ export const Select = ({
     <div className={className}>
       <label
         htmlFor={id}
-        className="block text-xs font-semibold uppercase leading-5 tracking-wider text-gray-500"
+        className="block text-xs font-semibold leading-5 tracking-wider text-gray-500 uppercase"
       >
         {children}
         <select
+          data-testid={testId}
           id={id}
           name={id}
-          defaultValue={defaultValue}
-          className="mt-1 block w-full pl-3 pr-10 py-3 text-base border-gray-300 focus:outline-none focus:ring-blue-financer focus:border-blue-financer rounded-md text-gray-900"
+          className="block w-full py-3 pl-3 pr-10 mt-1 text-base text-gray-900 border-gray-300 rounded-md focus:outline-none focus:ring-blue-financer focus:border-blue-financer"
           required={isRequired}
           aria-describedby={help && `${id}-description`}
           onChange={handleChange}
         >
           {options.map(({ value, label }) => (
-            <option value={value} key={value}>
+            <option value={value} key={value} selected={value === defaultValue}>
               {label}
             </option>
           ))}

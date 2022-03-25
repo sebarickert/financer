@@ -5,10 +5,10 @@ import { User } from '../../users/schemas/user.schema';
 
 export type TransactionCategoryDocument = TransactionCategory & Document;
 
-enum VisibilityType {
-  Income = 'Income',
-  Expense = 'Expense',
-  Transfer = 'Transfer',
+export enum VisibilityType {
+  income = 'income',
+  expense = 'expense',
+  transfer = 'transfer',
 }
 
 @Schema()

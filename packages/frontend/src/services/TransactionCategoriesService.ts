@@ -84,7 +84,7 @@ export const editTransactionCategory = async (
   const targetTransactionCategory = await fetch(
     `/api/transaction-categories/${id}`,
     {
-      method: 'PUT',
+      method: 'PATCH',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',

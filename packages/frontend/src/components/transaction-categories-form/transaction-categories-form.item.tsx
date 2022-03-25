@@ -18,6 +18,7 @@ interface ITransactionCategoriesFormItemProps {
   setUnallocatedAmount(): void;
   setTransactionCategoryItemAmount(newValue: number): void;
   amountValue: number;
+  testId?: string;
 }
 
 export const TransactionCategoriesFormItem = ({
@@ -31,9 +32,13 @@ export const TransactionCategoriesFormItem = ({
   setTransactionCategoryItemAmount,
   amountValue,
   setUnallocatedAmount,
+  testId = '',
 }: ITransactionCategoriesFormItemProps): JSX.Element => {
   return (
-    <div className={className}>
+    <div
+      className={className}
+      data-testid={`${testId}_transaction-category_row`}
+    >
       <Divider>{`Category Item #${arrayIndex + 1}`}</Divider>
       <div
         className="grid sm:grid-cols-[1fr,auto] gap-6 sm:gap-4 items-start mt-4"
@@ -46,6 +51,7 @@ export const TransactionCategoriesFormItem = ({
               options={categories}
               defaultValue={categoryMapping?.category_id || ''}
               isRequired
+              testId={`${testId}_transaction-category_category`}
             >
               Category
             </Select>
@@ -64,6 +70,7 @@ export const TransactionCategoriesFormItem = ({
                     parseFloat(event.target.value)
                   )
                 }
+                testId={`${testId}_transaction-category_amount`}
               >
                 Amount
               </Input>
@@ -80,6 +87,7 @@ export const TransactionCategoriesFormItem = ({
           <Input
             id={`transactionCategory[${categoryAmountIndex}]description`}
             value={categoryMapping?.description || ''}
+            testId={`${testId}_transaction-category_description`}
           >
             Description
           </Input>
