@@ -192,9 +192,7 @@ export const Statistics = (): JSX.Element => {
       </Heading>
       <section className="mt-4">
         <div className="grid grid-cols-[1fr,auto] gap-4 items-end justify-between sticky top-0 z-10 bg-white-off py-4">
-          <h2 className="text-2xl font-bold tracking-tighter truncate sm:text-3xl">
-            {`${pageVisibleMonth}, ${pageVisibleYear}`}
-          </h2>
+          <Heading>{`${pageVisibleMonth}, ${pageVisibleYear}`}</Heading>
           <Dropdown
             items={filterItems}
             label="Filter"

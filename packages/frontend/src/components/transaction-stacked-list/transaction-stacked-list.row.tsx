@@ -34,16 +34,19 @@ export const TransactionStackedListRow = ({
 
   return (
     <li data-testid={id}>
-      <article className="relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-500  grid grid-cols-[auto,1fr,auto] gap-4 hover:bg-gray-50">
-        <div>
+      <article className="relative bg-white p-4 md:p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-500 grid grid-cols-[auto,1fr,auto] gap-3 sm:gap-4 hover:bg-gray-50 items-center">
+        <div className="">
           <span
-            className={`rounded-lg inline-flex p-3 text-white ring-4 ring-white ${
+            className={`rounded-md sm:rounded-lg inline-flex p-2 sm:p-3 text-white ring-4 ring-white ${
               transactionType === 'transfer' && 'bg-blue-financer'
             } ${transactionType === 'income' && 'bg-emerald-600'} ${
               transactionType === 'expense' && 'bg-red-600'
             }`}
           >
-            <Icon type={iconTypeMapping[transactionType]} />
+            <Icon
+              type={iconTypeMapping[transactionType]}
+              className="h-5 w-5 sm:h-6 sm:w-6"
+            />
           </span>
         </div>
         <div className="flex flex-col justify-center overflow-hidden">

@@ -172,6 +172,7 @@ export const IncomeForm = ({
         submitLabel={submitLabel}
         formHeading={formHeading}
         handleSubmit={handleSubmit}
+        formFooterBackLink="/"
       >
         <section>
           <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
