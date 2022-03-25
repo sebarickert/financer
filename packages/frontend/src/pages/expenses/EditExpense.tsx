@@ -35,24 +35,17 @@ export const EditExpense = (): JSX.Element => {
       return;
     }
     try {
-      const targetExpenseJson = await editExpense(targetExpenseData, id);
+      const targetExpenseJson = await editExpense(
+        {
+          ...targetExpenseData,
+          categories: newTransactionCategoryMappingsData,
+        } as any,
+        id
+      );
 
       if ('message' in targetExpenseJson) {
         setErrors(parseErrorMessagesToArray(targetExpenseJson.message));
         return;
-      }
-
-      if (newTransactionCategoryMappingsData.length > 0) {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const newTransactionCategoryMappingJson =
-          await addTransactionCategoryMapping(
-            newTransactionCategoryMappingsData.map(
-              (newTransactionCategoryMappingData) => ({
-                ...newTransactionCategoryMappingData,
-                transaction_id: targetExpenseJson.payload._id,
-              })
-            )
-          );
       }
 
       navigate('/statistics/expenses');
