@@ -56,7 +56,7 @@ export class TransactionCategoryMappingsService {
   }
 
   async removeAllByUserAndTransaction(userId: string, transactionId: string) {
-    return this.transactionCategoryMappingModel
+    await this.transactionCategoryMappingModel
       .deleteMany({
         owner: userId,
         transaction_id: transactionId,
@@ -65,7 +65,7 @@ export class TransactionCategoryMappingsService {
   }
 
   async removeAllByUser(userId: string) {
-    return this.transactionCategoryMappingModel
+    await this.transactionCategoryMappingModel
       .deleteMany({
         owner: userId,
       })
