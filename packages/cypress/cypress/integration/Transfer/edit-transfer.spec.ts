@@ -57,10 +57,29 @@ const verifyTargetTransactionChangeAfter = (
             targetTransactionBefore.amount
           );
 
+          const targetTransactionAfterFromAccountBalance = roundToTwoDecimal(
+            targetTransactionAfter.fromAccountBalance
+          );
+          const targetTransactionBeforeFromAccountBalance = roundToTwoDecimal(
+            targetTransactionBefore.fromAccountBalance
+          );
+          const targetTransactionAfterToAccountBalance = roundToTwoDecimal(
+            targetTransactionAfter.toAccountBalance
+          );
+          const targetTransactionBeforeToAccountBalance = roundToTwoDecimal(
+            targetTransactionBefore.toAccountBalance
+          );
+
           expect(targetTransactionBeforeName).not.to.be.eq(newName);
           expect(targetTransactionAfterName).to.be.eq(newName);
           expect(targetTransactionBeforeAmount + changedAmount).to.be.eq(
             targetTransactionAfterAmount
+          );
+          expect(targetTransactionAfterFromAccountBalance).to.be.eq(
+            targetTransactionBeforeFromAccountBalance
+          );
+          expect(targetTransactionAfterToAccountBalance).to.be.eq(
+            targetTransactionBeforeToAccountBalance
           );
         })
   );

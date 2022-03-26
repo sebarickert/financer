@@ -203,15 +203,15 @@ describe('Edit expense', () => {
         cy
           .get<ITransactionWithDateObject>('@targetTransactionAfter')
           .then((targetTransactionAfter) => {
-            const targetTransactionAfterToAccountBalance = roundToTwoDecimal(
-              targetTransactionAfter.toAccountBalance
+            const targetTransactionAfterFromAccountBalance = roundToTwoDecimal(
+              targetTransactionAfter.fromAccountBalance
             );
-            const targetTransactionBeforeToAccountBalance = roundToTwoDecimal(
-              targetTransactionBefore.toAccountBalance
+            const targetTransactionBeforeFromAccountBalance = roundToTwoDecimal(
+              targetTransactionBefore.fromAccountBalance
             );
 
-            expect(targetTransactionAfterToAccountBalance).to.be.eq(
-              targetTransactionBeforeToAccountBalance
+            expect(targetTransactionAfterFromAccountBalance).to.be.eq(
+              targetTransactionBeforeFromAccountBalance
             );
           })
     );

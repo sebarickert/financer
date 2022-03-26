@@ -23,21 +23,15 @@ export class TransfersService {
   }
 
   async create(userId: string, createTransfer: CreateTransferDto) {
-    const targetToAccount = await this.accountService.findOne(
-      userId,
-      createTransfer.toAccount as any,
-    );
-    const targetFromAccount = await this.accountService.findOne(
-      userId,
-      createTransfer.fromAccount as any,
-    );
-
     const newTransferData = {
       ...createTransfer,
       user: userId,
-      toAccountBalance: targetToAccount.balance,
-      fromAccountBalance: targetFromAccount.balance,
     };
+
+    const newTransfer = await this.transactionService.create(
+      userId,
+      newTransferData as any,
+    );
 
     await this.updateTransactionHistoryAndAccount(
       userId,
@@ -47,7 +41,7 @@ export class TransfersService {
       createTransfer.amount,
     );
 
-    return this.transactionService.create(newTransferData as any);
+    return newTransfer;
   }
 
   async update(
@@ -55,19 +49,39 @@ export class TransfersService {
     id: string,
     updateTransactionDto: UpdateTransferDto,
   ) {
-    const incomeBefore = await this.findOne(userId, id);
-    await this.updateTransactionHistoryAndAccount(
-      userId,
-      incomeBefore.toAccount,
-      incomeBefore.fromAccount,
-      incomeBefore.date,
-      -incomeBefore.amount,
-    );
+    const transferBefore = await this.findOne(userId, id);
+
+    const toAccountBalanceBeforeCorrection =
+      updateTransactionDto.toAccount + '' === transferBefore.toAccount + '' &&
+      new Date(updateTransactionDto.date).getTime() >=
+        transferBefore.date.getTime()
+        ? transferBefore.amount
+        : 0;
+
+    const fromAccountBalanceBeforeCorrection =
+      updateTransactionDto.fromAccount + '' ===
+        transferBefore.fromAccount + '' &&
+      new Date(updateTransactionDto.date).getTime() >=
+        transferBefore.date.getTime()
+        ? transferBefore.amount
+        : 0;
 
     const updatedIncome = await this.transactionService.update(
       userId,
       id,
       updateTransactionDto,
+      {
+        toAccount: toAccountBalanceBeforeCorrection,
+        fromAccount: fromAccountBalanceBeforeCorrection,
+      },
+    );
+
+    await this.updateTransactionHistoryAndAccount(
+      userId,
+      transferBefore.toAccount,
+      transferBefore.fromAccount,
+      transferBefore.date,
+      -transferBefore.amount,
     );
 
     await this.updateTransactionHistoryAndAccount(
@@ -103,18 +117,18 @@ export class TransfersService {
     amount,
   ): Promise<void> {
     await Promise.all([
-      this.transactionService.updateAccountBalanceBeforeByAfterDate(
+      this.transactionService.updateTransactionHistoryAndAccount(
+        userId,
         toAccountId,
         date,
         amount,
       ),
-      this.transactionService.updateAccountBalanceBeforeByAfterDate(
+      this.transactionService.updateTransactionHistoryAndAccount(
+        userId,
         fromAccountId,
         date,
         -amount,
       ),
-      this.accountService.updateAccountBalance(userId, toAccountId, amount),
-      this.accountService.updateAccountBalance(userId, fromAccountId, -amount),
     ]);
   }
 }
