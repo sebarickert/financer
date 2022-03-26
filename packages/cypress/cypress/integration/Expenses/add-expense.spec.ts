@@ -10,6 +10,8 @@ import {
   ITransactionWithDateObject,
   getAccountFromTransactions,
   getAccountBalanceFromTransactions,
+  roundToTwoDecimal,
+  getAccountBalanceFromTransactionByAccountId,
 } from '../apiHelpers';
 
 describe('Add expense', () => {
@@ -17,6 +19,53 @@ describe('Add expense', () => {
     cy.applyFixture('large');
     cy.visit('http://localhost:3000/statistics/expenses');
   });
+
+  const verifyAccountBalanceChange = (amount: number) =>
+    cy.get<IAccount>('@accountBefore').then((accountBefore) => {
+      cy.get<IAccount>('@accountAfter').then((accountAfter) => {
+        expect(roundToTwoDecimal(accountBefore.balance - amount)).to.be.eq(
+          roundToTwoDecimal(accountAfter.balance)
+        );
+      });
+    });
+
+  const verifyTargetTransactionBalance = (amount: number) =>
+    cy
+      .get<ITransaction>('@targetTransactionBefore')
+      .then((targetTransactionBefore) => {
+        cy.get<ITransaction>('@targetTransactionAfter').then(
+          (targetTransactionAfter) => {
+            const targetTransactionBeforeBalance =
+              getAccountBalanceFromTransactions(targetTransactionBefore);
+            const targetTransactionAfterBalance =
+              getAccountBalanceFromTransactions(targetTransactionAfter);
+
+            expect(targetTransactionBeforeBalance - amount).to.be.eq(
+              targetTransactionAfterBalance
+            );
+          }
+        );
+      });
+
+  const verifyNewTransactionBalance = (positionInTransactions: number) => {
+    cy.get<ITransaction[]>('@transactionsAfter').then((transactionsAfter) => {
+      cy.get<number>('@expectedAccountBalance').then(
+        (expectedAccountBalance) => {
+          const newTransaction = transactionsAfter.at(positionInTransactions);
+          const newTransactionAccountBalance = roundToTwoDecimal(
+            newTransaction.fromAccountBalance
+          );
+          const roundedExpectedAccountBalance = roundToTwoDecimal(
+            expectedAccountBalance
+          );
+
+          expect(newTransactionAccountBalance).to.be.eq(
+            roundedExpectedAccountBalance
+          );
+        }
+      );
+    });
+  };
 
   const newTransactionAmountStr = '15.50';
   const newTransactionAmount = parseFloat(newTransactionAmountStr);
@@ -27,8 +76,7 @@ describe('Add expense', () => {
 
     cy.get<ITransactionWithDateObject[]>('@transactionsBefore').then(
       (transactionsBefore) => {
-        const targetTransactionBefore =
-          transactionsBefore[transactionsBefore.length - 1];
+        const targetTransactionBefore = transactionsBefore.at(-1);
 
         const targetAccountId = getAccountFromTransactions(
           targetTransactionBefore
@@ -36,6 +84,10 @@ describe('Add expense', () => {
 
         cy.saveData('targetTransactionBefore', targetTransactionBefore);
         cy.saveAsyncData('accountBefore', () => getAccount(targetAccountId));
+
+        cy.get<IAccount>('@accountBefore').then((accountBefore) =>
+          cy.saveData('expectedAccountBalance', accountBefore.balance)
+        );
 
         const newTransactionDate = new Date(
           targetTransactionBefore.dateObj.getTime() + MINUTE_IN_MS
@@ -55,42 +107,17 @@ describe('Add expense', () => {
           .should('not.contain', '/add')
           .then(() => {
             cy.saveAsyncData('accountAfter', () => getAccount(targetAccountId));
+            cy.saveAsyncData('transactionsAfter', getAllUserTransaction);
             cy.saveAsyncData('targetTransactionAfter', () =>
               getTransactionById(targetTransactionBefore._id)
             );
           });
-
-        cy.get<ITransaction>('@targetTransactionAfter').then(
-          (targetTransactionAfter) => {
-            expect(targetTransactionBefore.toAccountBalance).to.be.eq(
-              targetTransactionAfter.toAccountBalance
-            );
-          }
-        );
       }
     );
 
-    cy.get<IAccount>('@accountBefore').then((accountBefore) => {
-      cy.get<IAccount>('@accountAfter').then((accountAfter) => {
-        expect(accountBefore.balance - newTransactionAmount).to.be.eq(
-          accountAfter.balance
-        );
-      });
-    });
-
-    cy.get<ITransaction>('@targetTransactionBefore').then(
-      (targetTransactionBefore) => {
-        cy.get<ITransaction>('@targetTransactionAfter').then(
-          (targetTransactionAfter) => {
-            expect(
-              getAccountBalanceFromTransactions(targetTransactionBefore)
-            ).to.be.eq(
-              getAccountBalanceFromTransactions(targetTransactionAfter)
-            );
-          }
-        );
-      }
-    );
+    verifyAccountBalanceChange(newTransactionAmount);
+    verifyTargetTransactionBalance(0);
+    verifyNewTransactionBalance(-1);
   });
 
   it('Add second newest expense', () => {
@@ -98,11 +125,18 @@ describe('Add expense', () => {
 
     cy.get<ITransactionWithDateObject[]>('@transactionsBefore').then(
       (transactionsBefore) => {
-        const targetTransactionBefore =
-          transactionsBefore[transactionsBefore.length - 1];
+        const targetTransactionBefore = transactionsBefore.at(-1);
 
         const targetAccountId = getAccountFromTransactions(
           targetTransactionBefore
+        );
+
+        cy.saveData(
+          'expectedAccountBalance',
+          getAccountBalanceFromTransactionByAccountId(
+            targetTransactionBefore,
+            targetAccountId
+          )
         );
 
         const newTransactionDate = new Date(
@@ -126,35 +160,16 @@ describe('Add expense', () => {
           .should('not.contain', '/add')
           .then(() => {
             cy.saveAsyncData('accountAfter', () => getAccount(targetAccountId));
+            cy.saveAsyncData('transactionsAfter', getAllUserTransaction);
             cy.saveAsyncData('targetTransactionAfter', () =>
               getTransactionById(targetTransactionBefore._id)
             );
           });
       }
     );
-
-    cy.get<IAccount>('@accountBefore').then((accountBefore) => {
-      cy.get<IAccount>('@accountAfter').then((accountAfter) => {
-        expect(accountBefore.balance - newTransactionAmount).to.be.eq(
-          accountAfter.balance
-        );
-      });
-    });
-
-    cy.get<ITransaction>('@targetTransactionBefore').then(
-      (targetTransactionBefore) => {
-        cy.get<ITransaction>('@targetTransactionAfter').then(
-          (targetTransactionAfter) => {
-            expect(
-              getAccountBalanceFromTransactions(targetTransactionBefore) -
-                newTransactionAmount
-            ).to.be.eq(
-              getAccountBalanceFromTransactions(targetTransactionAfter)
-            );
-          }
-        );
-      }
-    );
+    verifyAccountBalanceChange(newTransactionAmount);
+    verifyTargetTransactionBalance(newTransactionAmount);
+    verifyNewTransactionBalance(-2);
   });
 
   it('Add oldest expense', () => {
@@ -162,10 +177,17 @@ describe('Add expense', () => {
 
     cy.get<ITransactionWithDateObject[]>('@transactionsBefore').then(
       (transactionsBefore) => {
-        const targetTransactionBefore = transactionsBefore[0];
+        const targetTransactionBefore = transactionsBefore.at(0);
 
         const targetAccountId = getAccountFromTransactions(
           targetTransactionBefore
+        );
+        cy.saveData(
+          'expectedAccountBalance',
+          getAccountBalanceFromTransactionByAccountId(
+            targetTransactionBefore,
+            targetAccountId
+          )
         );
 
         const newTransactionDate = new Date(
@@ -197,13 +219,8 @@ describe('Add expense', () => {
       }
     );
 
-    cy.get<IAccount>('@accountBefore').then((accountBefore) => {
-      cy.get<IAccount>('@accountAfter').then((accountAfter) => {
-        expect(accountBefore.balance - newTransactionAmount).to.be.eq(
-          accountAfter.balance
-        );
-      });
-    });
+    verifyAccountBalanceChange(newTransactionAmount);
+    verifyNewTransactionBalance(0);
 
     cy.get<ITransactionWithDateObject[]>('@transactionsBefore').then(
       (transactionsBefore) => {
@@ -218,16 +235,20 @@ describe('Add expense', () => {
                   );
 
                   const beforeTargetAccountBalanse =
-                    transactionBefore.toAccount === targetAccountId
-                      ? transactionBefore.toAccountBalance
-                      : transactionBefore.fromAccountBalance;
+                    getAccountBalanceFromTransactionByAccountId(
+                      transactionBefore,
+                      targetAccountId
+                    );
                   const afterTargetAccountBalanse =
-                    transactionAfter.toAccount === targetAccountId
-                      ? transactionAfter.toAccountBalance
-                      : transactionAfter.fromAccountBalance;
+                    getAccountBalanceFromTransactionByAccountId(
+                      transactionAfter,
+                      targetAccountId
+                    );
 
                   expect(
-                    beforeTargetAccountBalanse - newTransactionAmount
+                    roundToTwoDecimal(
+                      beforeTargetAccountBalanse - newTransactionAmount
+                    )
                   ).to.be.eq(afterTargetAccountBalanse);
                 });
             });

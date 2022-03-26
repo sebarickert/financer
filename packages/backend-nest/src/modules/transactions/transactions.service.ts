@@ -25,10 +25,34 @@ export class TransactionsService {
   ) {}
 
   async create(
+    userId: string,
     createTransactionDto: CreateTransactionDto,
   ): Promise<TransactionDocument> {
-    const { categories: rawCategories, ...transactioData } =
+    const { categories: rawCategories, ...transactionData } =
       createTransactionDto;
+
+    await this.verifyTransactionAccountOwnership(
+      userId,
+      transactionData as any,
+    );
+
+    if (transactionData.fromAccount) {
+      (transactionData as Transaction).fromAccountBalance =
+        await this.parseTransactionAccountBalanceBefore(
+          userId,
+          transactionData.fromAccount as any,
+          transactionData.date,
+        );
+    }
+
+    if (transactionData.toAccount) {
+      (transactionData as Transaction).toAccountBalance =
+        await this.parseTransactionAccountBalanceBefore(
+          userId,
+          transactionData.toAccount as any,
+          transactionData.date,
+        );
+    }
 
     if (rawCategories) {
       await this.transactionCategoriesService.ensureCategoriesExist(
@@ -36,13 +60,13 @@ export class TransactionsService {
       );
     }
 
-    const transaction = await this.transactionModel.create(transactioData);
+    const transaction = await this.transactionModel.create(transactionData);
 
     if (rawCategories) {
       const categories = rawCategories.map((category) => ({
         ...category,
         transaction_id: transaction._id,
-        owner: transaction.user,
+        owner: userId,
       }));
       await this.transactionCategoryMappingsService.createMany(categories);
     }
@@ -68,6 +92,13 @@ export class TransactionsService {
     }
 
     return transaction;
+  }
+
+  async findOneNewer(accountId, date) {
+    return this.transactionModel.findOne({
+      $or: [{ toAccount: accountId }, { fromAccount: accountId }],
+      date: { $gt: date },
+    });
   }
 
   async findAllByUser(userId: string): Promise<TransactionDocument[]> {
@@ -97,24 +128,34 @@ export class TransactionsService {
     userId: string,
     id: string,
     updateTransactionDto: UpdateTransactionDto,
+    correctionBalance: { fromAccount?: number; toAccount?: number },
   ): Promise<TransactionDocument> {
     const { categories: rawCategories, ...transactionData } =
       updateTransactionDto;
 
-    if (transactionData.toAccount) {
-      await this.accountService.findOne(
-        userId,
-        transactionData.toAccount as any,
-      );
-    }
+    await this.findOne(userId, id);
+    await this.verifyTransactionAccountOwnership(
+      userId,
+      transactionData as any,
+    );
+
     if (transactionData.fromAccount) {
-      await this.accountService.findOne(
-        userId,
-        transactionData.fromAccount as any,
-      );
+      (transactionData as Transaction).fromAccountBalance =
+        (await this.parseTransactionAccountBalanceBefore(
+          userId,
+          transactionData.fromAccount as any,
+          transactionData.date,
+        )) + (correctionBalance.fromAccount || 0);
     }
 
-    await this.findOne(userId, id);
+    if (transactionData.toAccount) {
+      (transactionData as Transaction).toAccountBalance =
+        (await this.parseTransactionAccountBalanceBefore(
+          userId,
+          transactionData.toAccount as any,
+          transactionData.date,
+        )) - (correctionBalance.toAccount || 0);
+    }
 
     if (rawCategories) {
       await this.transactionCategoriesService.ensureCategoriesExist(
@@ -144,7 +185,19 @@ export class TransactionsService {
     return transaction;
   }
 
-  async updateAccountBalanceBeforeByAfterDate(
+  async updateTransactionHistoryAndAccount(
+    userId,
+    accountId,
+    date,
+    amount,
+  ): Promise<void> {
+    await Promise.all([
+      this.updateAccountBalanceBeforeByAfterDate(accountId, date, amount),
+      this.accountService.updateAccountBalance(userId, accountId, amount),
+    ]);
+  }
+
+  private async updateAccountBalanceBeforeByAfterDate(
     accountId: string,
     date: Date,
     balanceChange: number,
@@ -229,5 +282,37 @@ export class TransactionsService {
         toAccount: { $ne: undefined },
       })
       .exec();
+  }
+
+  private async verifyTransactionAccountOwnership(
+    userId: string,
+    transaction: Transaction,
+  ) {
+    if (transaction.toAccount) {
+      await this.accountService.findOne(userId, transaction.toAccount as any);
+    }
+    if (transaction.fromAccount) {
+      await this.accountService.findOne(userId, transaction.fromAccount as any);
+    }
+  }
+
+  private async parseTransactionAccountBalanceBefore(
+    userId: string,
+    accountId: string,
+    date: Date,
+  ): Promise<number> {
+    const newerTransaction = await this.findOneNewer(accountId, date);
+
+    if (newerTransaction) {
+      const isNextTransactionExpense =
+        newerTransaction?.fromAccount + '' === accountId;
+
+      return isNextTransactionExpense
+        ? newerTransaction.fromAccountBalance
+        : newerTransaction.toAccountBalance;
+    }
+
+    const account = await this.accountService.findOne(userId, accountId);
+    return account.balance;
   }
 }
