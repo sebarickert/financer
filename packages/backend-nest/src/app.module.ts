@@ -1,6 +1,9 @@
+import { join } from 'path';
+
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { InjectConnection, MongooseModule } from '@nestjs/mongoose';
+import { ServeStaticModule } from '@nestjs/serve-static';
 import MongoStore from 'connect-mongo';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
@@ -33,6 +36,10 @@ import { UsersModule } from './modules/users/users.module';
         uri: configService.get<string>('mongodbConnectionString'),
       }),
     }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'client'),
+    }),
+
     AuthModule.register(),
     UsersModule,
     AccountsModule,
