@@ -135,7 +135,7 @@ export class TransactionCategoriesService {
   }
 
   async removeAllByUser(userId: string) {
-    return this.transactionCategoryModel.deleteMany({ owner: userId }).exec();
+    await this.transactionCategoryModel.deleteMany({ owner: userId }).exec();
   }
 
   async ensureCategoriesExist(ids: string[]) {

@@ -78,6 +78,6 @@ export class AccountsService {
   }
 
   async removeAllByUser(userId: string) {
-    return this.accountModel.deleteMany({ owner: userId }).exec();
+    await this.accountModel.deleteMany({ owner: userId }).exec();
   }
 }
