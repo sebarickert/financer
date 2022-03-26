@@ -4,6 +4,6 @@ npm -w backend run build
 npm -w frontend run build
 
 rm -rf build
-mkdir -p build/static build/app
-cp packages/backend/dist/server.js build/app/
-cp -r packages/frontend/build build/static/react-app
+mkdir -p build/
+cp -r packages/backend/dist/ build/server
+cp -r packages/frontend/build build/client
