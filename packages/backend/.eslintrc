@@ -1,42 +1,41 @@
 {
-    "extends": [
-      "airbnb-typescript/base",
-      "plugin:@typescript-eslint/recommended",
-      "prettier",
-      "plugin:prettier/recommended"
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "tsconfig.json",
+    "sourceType": "module"
+  },
+  "plugins": ["@typescript-eslint", "prettier", "import"],
+  "extends": [
+    "airbnb-typescript/base",
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+    "plugin:prettier/recommended"
+],
+  "root": true,
+  "env": {
+    "node": true,
+    "jest": true
+  },
+  "rules": {
+    "@typescript-eslint/interface-name-prefix": "off",
+    "linebreak-style": "off",
+    "no-underscore-dangle":  ["error", { "allow": ["_id"] }],
+    "import/prefer-default-export": "off",
+    "import/no-default-export": "error",
+    "import/order": [
+      "error",
+      {
+        "newlines-between": "always",
+        "alphabetize": { "order": "asc", "caseInsensitive": true }
+      }
     ],
-    "plugins": ["node", "@typescript-eslint", "prettier", "import"],
-    "env": {
-      "browser": false,
-      "node": true,
-      "es6": true,
-      "jest": false
-    },
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-      "ecmaVersion": 2018,
-      "sourceType": "module",
-      "project": "./tsconfig.json"
-    },
-    "rules": {
-      "linebreak-style": "off",
-      "no-underscore-dangle":  ["error", { "allow": ["_id"] }],
-      "import/prefer-default-export": "off",
-      "import/no-default-export": "error",
-      "import/order": [
-        "error",
-        {
-          "newlines-between": "always",
-          "alphabetize": { "order": "asc", "caseInsensitive": true }
-        }
-      ],
-      "prettier/prettier": [
-        "error",
-        {
-          "endOfLine": "auto",
-          "singleQuote": true,
-          "semi": true
-        }
-      ]  
-    }
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto",
+        "singleQuote": true,
+        "semi": true
+      }
+    ]
   }
+}
