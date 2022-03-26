@@ -251,7 +251,7 @@ export class TransactionsService {
   }
 
   async removeAllByUser(userId: string): Promise<any> {
-    return this.transactionModel.deleteMany({ owner: userId }).exec();
+    await this.transactionModel.deleteMany({ owner: userId }).exec();
   }
 
   async findAllIncomesByUser(userId: string): Promise<TransactionDocument[]> {
