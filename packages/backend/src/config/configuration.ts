@@ -1,4 +1,4 @@
-import { getMemoryDbUri, startMemoryDb } from './memoryDatabaseServer';
+import { getMemoryDbUri } from './memoryDatabaseServer';
 
 const isNotEmptyString = (value: string) => value && value.length > 0;
 
