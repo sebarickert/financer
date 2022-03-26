@@ -23,25 +23,24 @@ export class ExpensesService {
   }
 
   async create(userId: string, createExpense: CreateExpenseDto) {
-    const targetAccount = await this.accountService.findOne(
-      userId,
-      createExpense.fromAccount as any,
-    );
-
     const newExpenseData = {
       ...createExpense,
       user: userId,
-      fromAccountBalance: targetAccount.balance,
     };
 
-    await this.updateTransactionHistoryAndAccount(
+    const newExpense = await this.transactionService.create(
+      userId,
+      newExpenseData as any,
+    );
+
+    await this.transactionService.updateTransactionHistoryAndAccount(
       userId,
       createExpense.fromAccount,
       createExpense.date,
       -createExpense.amount,
     );
 
-    return this.transactionService.create(newExpenseData as any);
+    return newExpense;
   }
 
   async update(
@@ -50,20 +49,30 @@ export class ExpensesService {
     updateTransactionDto: UpdateExpenseDto,
   ) {
     const expenseBefore = await this.findOne(userId, id);
-    await this.updateTransactionHistoryAndAccount(
+
+    const balanceBeforeCorrection =
+      updateTransactionDto.fromAccount + '' ===
+        expenseBefore.fromAccount + '' &&
+      new Date(updateTransactionDto.date).getTime() >=
+        expenseBefore.date.getTime()
+        ? expenseBefore.amount
+        : 0;
+
+    const updatedExpense = await this.transactionService.update(
+      userId,
+      id,
+      updateTransactionDto,
+      { fromAccount: balanceBeforeCorrection },
+    );
+
+    await this.transactionService.updateTransactionHistoryAndAccount(
       userId,
       expenseBefore.fromAccount,
       expenseBefore.date,
       expenseBefore.amount,
     );
 
-    const updatedExpense = await this.transactionService.update(
-      userId,
-      id,
-      updateTransactionDto,
-    );
-
-    await this.updateTransactionHistoryAndAccount(
+    await this.transactionService.updateTransactionHistoryAndAccount(
       userId,
       updatedExpense.fromAccount,
       updatedExpense.date,
@@ -76,7 +85,7 @@ export class ExpensesService {
   async remove(userId: string, id: string) {
     const transaction = await this.findOne(userId, id);
 
-    await this.updateTransactionHistoryAndAccount(
+    await this.transactionService.updateTransactionHistoryAndAccount(
       userId,
       transaction.fromAccount,
       transaction.date,
@@ -84,21 +93,5 @@ export class ExpensesService {
     );
 
     await transaction.delete();
-  }
-
-  private async updateTransactionHistoryAndAccount(
-    userId,
-    accountId,
-    date,
-    amount,
-  ): Promise<void> {
-    await Promise.all([
-      this.transactionService.updateAccountBalanceBeforeByAfterDate(
-        accountId,
-        date,
-        amount,
-      ),
-      this.accountService.updateAccountBalance(userId, accountId, amount),
-    ]);
   }
 }

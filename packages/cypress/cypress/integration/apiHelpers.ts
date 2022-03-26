@@ -88,3 +88,13 @@ export const getAccountBalanceFromTransactions = (transaction: ITransaction) =>
       ? transaction.toAccountBalance
       : transaction.fromAccountBalance
   );
+
+export const getAccountBalanceFromTransactionByAccountId = (
+  transaction: ITransaction,
+  acountId: string
+) =>
+  roundToTwoDecimal(
+    transaction.toAccount === acountId
+      ? transaction.toAccountBalance
+      : transaction.fromAccountBalance
+  );
