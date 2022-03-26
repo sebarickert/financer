@@ -7,6 +7,8 @@ import { isNodeEnvInTest } from './config/configuration';
 import { startMemoryDb } from './config/memoryDatabaseServer';
 import { mockAuthenticationMiddleware } from './config/mockAuthenticationMiddleware';
 
+const PORT = process.env.PORT || 4000;
+
 async function bootstrap() {
   if (isNodeEnvInTest()) await startMemoryDb();
 
@@ -21,6 +23,6 @@ async function bootstrap() {
 
   if (isNodeEnvInTest()) app.use(mockAuthenticationMiddleware);
 
-  await app.listen(4000);
+  await app.listen(PORT);
 }
 bootstrap();

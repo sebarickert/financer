@@ -29,6 +29,9 @@ import { UsersModule } from './modules/users/users.module';
       load: [configuration],
       isGlobal: true,
     }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'client'),
+    }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -36,10 +39,6 @@ import { UsersModule } from './modules/users/users.module';
         uri: configService.get<string>('mongodbConnectionString'),
       }),
     }),
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'client'),
-    }),
-
     AuthModule.register(),
     UsersModule,
     AccountsModule,
