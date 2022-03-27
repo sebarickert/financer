@@ -22,6 +22,7 @@ export class AuthController {
   getAuthenticationStatus(@Req() req: Request) {
     return {
       authenticated: Boolean(req.user),
+      payload: req.user,
     };
   }
 
