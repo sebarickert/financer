@@ -11,7 +11,7 @@ export enum VisibilityType {
   transfer = 'transfer',
 }
 
-@Schema()
+@Schema({ collection: 'transaction-categories' })
 export class TransactionCategory {
   @Prop({ required: true, type: MogooseSchema.Types.ObjectId, ref: 'User' })
   owner: User;

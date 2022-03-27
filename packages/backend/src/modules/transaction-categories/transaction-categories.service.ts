@@ -96,7 +96,6 @@ export class TransactionCategoriesService {
   }
 
   async findAllByUser(userId: string): Promise<TransactionCategoryDocument[]> {
-    // deleted is not true
     return this.transactionCategoryModel
       .find({ owner: userId, deleted: { $ne: true } })
       .exec();
