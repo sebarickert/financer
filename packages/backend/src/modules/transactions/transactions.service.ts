@@ -66,7 +66,7 @@ export class TransactionsService {
       const categories = rawCategories.map((category) => ({
         ...category,
         transaction_id: transaction._id,
-        owner: userId,
+        user: userId,
       }));
       await this.transactionCategoryMappingsService.createMany(categories);
     }
@@ -102,7 +102,7 @@ export class TransactionsService {
   }
 
   async findAllByUser(userId: string): Promise<TransactionDocument[]> {
-    return this.transactionModel.find({ owner: userId }).exec();
+    return this.transactionModel.find({ user: userId }).exec();
   }
 
   async findAllByAccount(
@@ -175,7 +175,7 @@ export class TransactionsService {
       const categories = rawCategories.map((category) => ({
         ...category,
         transaction_id: id,
-        owner: userId,
+        user: userId,
       }));
       await this.transactionCategoryMappingsService.createMany(
         categories as any,
@@ -251,13 +251,13 @@ export class TransactionsService {
   }
 
   async removeAllByUser(userId: string): Promise<any> {
-    await this.transactionModel.deleteMany({ owner: userId }).exec();
+    await this.transactionModel.deleteMany({ user: userId }).exec();
   }
 
   async findAllIncomesByUser(userId: string): Promise<TransactionDocument[]> {
     return this.transactionModel
       .find({
-        owner: userId,
+        user: userId,
         toAccount: { $ne: undefined },
         fromAccount: { $eq: undefined },
       })
@@ -267,7 +267,7 @@ export class TransactionsService {
   async findAllExpensesByUser(userId: string): Promise<TransactionDocument[]> {
     return this.transactionModel
       .find({
-        owner: userId,
+        user: userId,
         fromAccount: { $ne: undefined },
         toAccount: { $eq: undefined },
       })
@@ -277,7 +277,7 @@ export class TransactionsService {
   async findAllTransfersByUser(userId: string): Promise<TransactionDocument[]> {
     return this.transactionModel
       .find({
-        owner: userId,
+        user: userId,
         fromAccount: { $ne: undefined },
         toAccount: { $ne: undefined },
       })
