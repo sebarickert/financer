@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { SEO } from '../../components/seo/seo';
 import { useUserDefaultTransferSourceAccount } from '../../hooks/profile/user-preference/useUserDefaultTransferSourceAccount';
 import { useUserDefaultTransferTargetAccount } from '../../hooks/profile/user-preference/useUserDefaultTransferTargetAccount';
-import { useAddTransactionCategoryMapping } from '../../hooks/transactionCategoryMapping/useAddTransactionCategoryMapping';
 import { useAddTransfer } from '../../hooks/transfer/useAddTransfer';
 import { parseErrorMessagesToArray } from '../../utils/apiHelper';
 
@@ -14,7 +13,6 @@ import { TransferForm } from './TransferForm';
 export const AddTransfer = (): JSX.Element => {
   const navigate = useNavigate();
   const [errors, setErrors] = useState<string[]>([]);
-  const addTransactionCategoryMapping = useAddTransactionCategoryMapping();
   const addTransaction = useAddTransfer();
   const [defaultTransferSourceAccount] = useUserDefaultTransferSourceAccount();
   const [defaultTransferTargetAccount] = useUserDefaultTransferTargetAccount();
@@ -28,6 +26,7 @@ export const AddTransfer = (): JSX.Element => {
       const newTransactionJson = await addTransaction({
         ...newTransfer,
         categories: transactionCategoryMappings,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } as any);
 
       if ('message' in newTransactionJson) {

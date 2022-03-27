@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useRef, useState } from 'react';
 
 import { Icon } from '../icon/icon';
@@ -15,11 +14,14 @@ interface IDropdownProps {
 }
 
 function useOnClickOutside(
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   ref: any,
   handler: any,
   secondaryRef: any = undefined
+  /* eslint-enable @typescript-eslint/no-explicit-any */
 ) {
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const listener = (event: any) => {
       if (!ref.current || ref.current.contains(event.target)) {
         return;
@@ -64,7 +66,7 @@ export const Dropdown = ({
       <div>
         <button
           type="button"
-          className="inline-flex justify-center w-full sm:w-auto rounded-md items-center py-2 px-4 border font-medium text-sm focus-within:ring-2 focus:ring-inset focus:ring-blue-500 focus:outline-none transition ease-in-out duration-150 border-gray-300 bg-white text-gray-700 shadow-sm hover:text-gray-500"
+          className="inline-flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md shadow-sm sm:w-auto focus-within:ring-2 focus:ring-inset focus:ring-blue-500 focus:outline-none hover:text-gray-500"
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
           ref={dropdownToggleButtonRef}
         >

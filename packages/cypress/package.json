@@ -6,7 +6,7 @@
   "scripts": {
     "cypress:run": "TZ=America/New_York cypress run",
     "cypress:open": "TZ=America/New_York cypress open",
-    "format": "prettier --write 'cypress/**/*.ts' && eslint 'cypress/**/*.ts' --fix",
+    "format": "eslint 'cypress/**/*.ts' --fix",
     "lint": "eslint 'cypress/**/*.ts'"
   },
   "author": "",

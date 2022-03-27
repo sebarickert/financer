@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { IIncome, ITransactionCategoryMapping } from '@local/types';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -7,7 +6,6 @@ import { Loader } from '../../components/loader/loader';
 import { SEO } from '../../components/seo/seo';
 import { useEditIncome } from '../../hooks/income/useEditIncome';
 import { useIncomeById } from '../../hooks/income/useIncomeById';
-import { useAddTransactionCategoryMapping } from '../../hooks/transactionCategoryMapping/useAddTransactionCategoryMapping';
 import { useTransactionCategoryMappingsByTransactionId } from '../../hooks/transactionCategoryMapping/useTransactionCategoryMappingsByTransactionId';
 import { parseErrorMessagesToArray } from '../../utils/apiHelper';
 
@@ -22,7 +20,6 @@ export const EditIncome = (): JSX.Element => {
   const [transactionCategoryMapping] =
     useTransactionCategoryMappingsByTransactionId(id);
   const editIncome = useEditIncome();
-  const addTransactionCategoryMapping = useAddTransactionCategoryMapping();
 
   const handleSubmit = async (
     targetIncomeData: IIncome,
@@ -37,6 +34,7 @@ export const EditIncome = (): JSX.Element => {
         {
           ...targetIncomeData,
           categories: newTransactionCategoryMappingsData,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } as any,
         id
       );

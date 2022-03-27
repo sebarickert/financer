@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useRef, useState } from 'react';
 
 import { isIOSDevice } from '../../utils/isIOSDevice';
@@ -8,11 +7,14 @@ import { Icon } from '../icon/icon';
 import { MobileNavigationActionsBody } from './mobile-navigation.actions.body';
 
 function useOnClickOutside(
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   ref: any,
   handler: any,
   secondaryRef: any = undefined
+  /* eslint-enable @typescript-eslint/no-explicit-any */
 ) {
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const listener = (event: any) => {
       if (!ref.current || ref.current.contains(event.target)) {
         return;
@@ -59,7 +61,7 @@ export const MobileNavigationActions = (): JSX.Element => {
         onClick={() => setIsActionsModalHidden(!isActionsModalHidden)}
         ref={mobileNavigationToggleButtonRef}
       >
-        <span className="p-2 bg-blue-financer text-white rounded-xl">
+        <span className="p-2 text-white bg-blue-financer rounded-xl">
           <span
             className={`${
               !isActionsModalHidden ? 'rotate-45' : ''
