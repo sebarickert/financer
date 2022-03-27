@@ -1,16 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { IIncome, ITransactionCategoryMapping } from '@local/types';
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { Container } from '../../components/container/container';
 import { Loader } from '../../components/loader/loader';
 import { SEO } from '../../components/seo/seo';
 import { useEditExpense } from '../../hooks/expense/useEditExpense';
 import { useExpenseById } from '../../hooks/expense/useExpenseById';
-import { useAddTransactionCategoryMapping } from '../../hooks/transactionCategoryMapping/useAddTransactionCategoryMapping';
 import { useTransactionCategoryMappingsByTransactionId } from '../../hooks/transactionCategoryMapping/useTransactionCategoryMappingsByTransactionId';
-import { ITransactionCategoryWithCategoryTree } from '../../services/TransactionCategoriesService';
 import { parseErrorMessagesToArray } from '../../utils/apiHelper';
 
 import { ExpenseForm } from './ExpenseForm';
@@ -24,7 +20,6 @@ export const EditExpense = (): JSX.Element => {
   const [expense] = useExpenseById(id);
   const [transactionCategoryMapping] =
     useTransactionCategoryMappingsByTransactionId(id);
-  const addTransactionCategoryMapping = useAddTransactionCategoryMapping();
 
   const handleSubmit = async (
     targetExpenseData: IIncome,
@@ -39,6 +34,7 @@ export const EditExpense = (): JSX.Element => {
         {
           ...targetExpenseData,
           categories: newTransactionCategoryMappingsData,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } as any,
         id
       );

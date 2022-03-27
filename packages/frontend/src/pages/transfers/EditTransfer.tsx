@@ -4,7 +4,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { Loader } from '../../components/loader/loader';
 import { SEO } from '../../components/seo/seo';
-import { useAddTransactionCategoryMapping } from '../../hooks/transactionCategoryMapping/useAddTransactionCategoryMapping';
 import { useTransactionCategoryMappingsByTransactionId } from '../../hooks/transactionCategoryMapping/useTransactionCategoryMappingsByTransactionId';
 import { useEditTransfer } from '../../hooks/transfer/useEditTransfer';
 import { useTransferById } from '../../hooks/transfer/useTransferById';
@@ -20,7 +19,6 @@ export const EditTransfer = (): JSX.Element => {
   const [transfer] = useTransferById(id);
   const [transactionCategoryMapping] =
     useTransactionCategoryMappingsByTransactionId(id);
-  const addTransactionCategoryMapping = useAddTransactionCategoryMapping();
   const editTransaction = useEditTransfer();
 
   const handleSubmit = async (
@@ -36,6 +34,7 @@ export const EditTransfer = (): JSX.Element => {
         {
           ...targetTransferData,
           categories: transactionCategoryMappings,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } as any,
         id
       );
