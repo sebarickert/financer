@@ -138,7 +138,10 @@ export const Account = (): JSX.Element => {
           <dt className="absolute text-sm font-medium text-gray-700 truncate lg:text-base top-4 left-6">
             Balance
           </dt>
-          <dd className="text-3xl font-bold tracking-tight">
+          <dd
+            className="text-3xl font-bold tracking-tight"
+            data-testid="account-balance"
+          >
             {formatCurrency(account.balance)}
           </dd>
         </dl>
@@ -147,7 +150,10 @@ export const Account = (): JSX.Element => {
             <dt className="text-xs font-medium text-gray-700 truncate lg:text-sm">
               Type
             </dt>
-            <dd className="text-xl font-bold tracking-tight">
+            <dd
+              className="text-xl font-bold tracking-tight"
+              data-testid="account-type"
+            >
               {capitalize(account.type)}
             </dd>
           </dl>

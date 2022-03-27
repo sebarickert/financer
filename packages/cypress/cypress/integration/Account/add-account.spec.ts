@@ -25,8 +25,8 @@ describe('Account creation', () => {
       .contains(`New Test ${expectedType} Account`)
       .click();
 
-    cy.getById('stats-item-content_type').should('have.text', expectedType);
-    cy.getById('stats-item-content_balance')
+    cy.getById('account-type').should('have.text', expectedType);
+    cy.getById('account-balance')
       .invoke('text')
       .invoke('replace', /\u00a0/g, ' ')
       .should('equal', expextedBalance);

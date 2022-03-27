@@ -21,13 +21,11 @@ const verifyAccountPage = (
   accountBalance: string,
   accountType: string
 ) => {
-  cy.getById('account-banner')
-    .getById('banner-title')
-    .should('contain.text', accountName);
+  cy.getById('account-banner').find('h1').should('contain.text', accountName);
 
-  cy.getById('stats-item-content_type').should('have.text', accountType);
+  cy.getById('account-type').should('have.text', accountType);
 
-  cy.getById('stats-item-content_balance')
+  cy.getById('account-balance')
     .invoke('text')
     .then((currentBalance) => {
       expect(parseFloatFromText(currentBalance)).to.equal(
@@ -44,7 +42,7 @@ const editAccountNameAndVerify = (
   cy.getById('account-row').should('not.contain.text', newAccountName);
 
   cy.getById('account-row').contains(oldAccountName).click();
-  cy.getById('stats-item-content_balance').then(($balanceElement) => {
+  cy.getById('account-balance').then(($balanceElement) => {
     cy.wrap($balanceElement.text()).as('accountBalance');
   });
 
@@ -81,7 +79,7 @@ const editAccountTypeAndVerify = (
   cy.getById('account-row').contains(accountName).click();
   // Account page
 
-  cy.getById('stats-item-content_balance').then(($balanceElement) => {
+  cy.getById('account-balance').then(($balanceElement) => {
     cy.wrap($balanceElement.text()).as('accountBalance');
   });
 
@@ -113,7 +111,7 @@ const editAccountBalanceAndVerify = (
   accountType: string
 ) => {
   cy.getById('account-row').contains(accountName).click();
-  cy.getById('stats-item-content_balance').then(($balanceElement) => {
+  cy.getById('account-balance').then(($balanceElement) => {
     cy.wrap($balanceElement.text()).as('oldAccountBalance');
   });
 
@@ -158,7 +156,7 @@ const editAccountAllDetailsAndVerify = (
   cy.getById('account-row').contains(oldAccountName).click();
   // Account page
 
-  cy.getById('stats-item-content_balance').then(($balanceElement) => {
+  cy.getById('account-balance').then(($balanceElement) => {
     cy.wrap($balanceElement.text()).as('oldAccountBalance');
   });
 
