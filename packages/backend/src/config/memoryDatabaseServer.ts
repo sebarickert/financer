@@ -10,10 +10,16 @@ export const memoryDatabaseServer = new MongoMemoryServer({
 });
 
 export const startMemoryDb = async (): Promise<void> => {
-  console.log('starting memory db');
+  console.log('Starting memory db');
   return memoryDatabaseServer.start();
 };
 
-export const getMemoryDbUri = (): string => {
+export const stopMemoryDb = async (): Promise<void> => {
+  console.log('Stopping memory db');
+  await memoryDatabaseServer.stop();
+};
+
+export const getMemoryDbUri = async (): Promise<string> => {
+  await memoryDatabaseServer.ensureInstance();
   return memoryDatabaseServer.getUri();
 };
