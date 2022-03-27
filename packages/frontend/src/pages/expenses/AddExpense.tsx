@@ -23,6 +23,7 @@ export const AddExpense = (): JSX.Element => {
       const newExpenseJson = await addExpense({
         ...newExpenseData,
         categories: newTransactionCategoryMappingsData,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } as any);
 
       if ('message' in newExpenseJson) {

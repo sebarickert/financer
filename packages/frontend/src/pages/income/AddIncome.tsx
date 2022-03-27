@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { SEO } from '../../components/seo/seo';
 import { useAddIncome } from '../../hooks/income/useAddIncome';
 import { useUserDefaultIncomeAccount } from '../../hooks/profile/user-preference/useUserDefaultIncomeAccount';
-import { useAddTransactionCategoryMapping } from '../../hooks/transactionCategoryMapping/useAddTransactionCategoryMapping';
 import { parseErrorMessagesToArray } from '../../utils/apiHelper';
 
 import { IncomeForm } from './IncomeForm';
@@ -14,7 +13,6 @@ export const AddIncome = (): JSX.Element => {
   const navigate = useNavigate();
   const [errors, setErrors] = useState<string[]>([]);
   const addIncome = useAddIncome();
-  const addTransactionCategoryMapping = useAddTransactionCategoryMapping();
   const [defaultIncomeAccount] = useUserDefaultIncomeAccount();
 
   const handleSubmit = async (
@@ -25,6 +23,7 @@ export const AddIncome = (): JSX.Element => {
       const newIncomeJson = await addIncome({
         ...newIncomeData,
         categories: newTransactionCategoryMappingsData,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } as any);
 
       if ('message' in newIncomeJson) {
