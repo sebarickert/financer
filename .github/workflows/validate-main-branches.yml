@@ -49,7 +49,7 @@ jobs:
       - name: Run frontend build
         run: npm -w frontend run build
       - name: Run backend build
-        run: npm -w backend run tsc
+        run: npm -w backend run build
       - name: Run frontend tests
         run: npm -w frontend run test
       - name: Run backend tests
