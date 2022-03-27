@@ -1,5 +1,12 @@
+import { MongooseModule } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 
+import { rootMongooseTestModule } from '../../../test/rootMongooseTest.module';
+
+import {
+  TransactionCategory,
+  TransactionCategorySchema,
+} from './schemas/transaction-category.schema';
 import { TransactionCategoriesController } from './transaction-categories.controller';
 import { TransactionCategoriesService } from './transaction-categories.service';
 
@@ -8,6 +15,12 @@ describe('TransactionCategoriesController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [
+        rootMongooseTestModule(),
+        MongooseModule.forFeature([
+          { name: TransactionCategory.name, schema: TransactionCategorySchema },
+        ]),
+      ],
       controllers: [TransactionCategoriesController],
       providers: [TransactionCategoriesService],
     }).compile();

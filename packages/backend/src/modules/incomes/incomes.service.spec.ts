@@ -1,5 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
+import { rootMongooseTestModule } from '../../../test/rootMongooseTest.module';
+import { AccountsModule } from '../accounts/accounts.module';
+import { TransactionsModule } from '../transactions/transactions.module';
+
 import { IncomesService } from './incomes.service';
 
 describe('IncomesService', () => {
@@ -7,6 +11,7 @@ describe('IncomesService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [rootMongooseTestModule(), TransactionsModule, AccountsModule],
       providers: [IncomesService],
     }).compile();
 
