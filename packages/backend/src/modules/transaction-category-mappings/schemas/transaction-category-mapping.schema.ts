@@ -7,7 +7,7 @@ import { User } from '../../users/schemas/user.schema';
 export type TransactionCategoryMappingDocument = TransactionCategoryMapping &
   Document;
 
-@Schema()
+@Schema({ collection: 'transaction-category-mappings' })
 export class TransactionCategoryMapping {
   @Prop({ required: true, type: MogooseSchema.Types.ObjectId, ref: 'User' })
   owner: User;

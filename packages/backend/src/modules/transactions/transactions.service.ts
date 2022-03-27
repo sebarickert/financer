@@ -66,7 +66,7 @@ export class TransactionsService {
       const categories = rawCategories.map((category) => ({
         ...category,
         transaction_id: transaction._id,
-        user: userId,
+        owner: userId,
       }));
       await this.transactionCategoryMappingsService.createMany(categories);
     }
@@ -175,7 +175,7 @@ export class TransactionsService {
       const categories = rawCategories.map((category) => ({
         ...category,
         transaction_id: id,
-        user: userId,
+        owner: userId,
       }));
       await this.transactionCategoryMappingsService.createMany(
         categories as any,
