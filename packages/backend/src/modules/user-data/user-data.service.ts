@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+import { ObjectId } from '../../types/objectId';
 import { AccountsService } from '../accounts/accounts.service';
 import { AccountDocument } from '../accounts/schemas/account.schema';
 import { TransactionCategoryDocument } from '../transaction-categories/schemas/transaction-category.schema';
@@ -66,7 +67,7 @@ export class UserDataService {
   }
 
   async overrideUserData(
-    userId: string,
+    userId: ObjectId,
     {
       accounts,
       transactions,
@@ -106,12 +107,12 @@ export class UserDataService {
 
     await Promise.all([
       this.accountService.createMany(accountsWithCurrentUserId),
-      this.transactionService.createMany(transactionsWithCurrentUserId as any),
+      this.transactionService.createMany(transactionsWithCurrentUserId),
       this.transactionCategoriesService.createMany(
         transactionCategoriesWithCurrentUserId,
       ),
       this.transactionCategoryMappingService.createMany(
-        transactionCategoryMappingsWithCurrentUserId as any,
+        transactionCategoryMappingsWithCurrentUserId,
       ),
     ]);
 

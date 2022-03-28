@@ -8,6 +8,7 @@ import {
   Delete,
 } from '@nestjs/common';
 
+import { ObjectId } from '../../types/objectId';
 import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
 import { UserId } from '../users/users.decorators';
 
@@ -33,7 +34,7 @@ export class TransactionCategoryMappingsController {
   }
 
   @Get()
-  findAllByUser(@UserId() userId: string) {
+  findAllByUser(@UserId() userId: ObjectId) {
     return this.transactionCategoryMappingsService.findAllByUser(userId);
   }
 

@@ -6,18 +6,15 @@ import {
   IsOptional,
 } from 'class-validator';
 
-import { User } from '../../users/schemas/user.schema';
-import {
-  TransactionCategory,
-  VisibilityType,
-} from '../schemas/transaction-category.schema';
+import { ObjectId } from '../../../types/objectId';
+import { VisibilityType } from '../schemas/transaction-category.schema';
 
 export class TransactionCategoryDto {
   @IsMongoId()
-  _id: string;
+  _id: ObjectId;
 
   @IsMongoId()
-  owner: User;
+  owner: ObjectId;
 
   @IsNotEmpty({ message: 'Name must not be empty.' })
   name: string;
@@ -32,7 +29,7 @@ export class TransactionCategoryDto {
 
   @IsOptional()
   @IsMongoId()
-  parent_category_id: TransactionCategory;
+  parent_category_id: ObjectId;
 
   @IsOptional()
   @IsBoolean()

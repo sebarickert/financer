@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 
 import { isNodeEnvInTest } from '../../config/configuration';
 import { DUMMY_TEST_USER } from '../../config/mockAuthenticationMiddleware';
+import { ObjectId } from '../../types/objectId';
 
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User, UserDocument } from './schemas/user.schema';
@@ -16,7 +17,7 @@ export class UsersService {
     return this.userModel.find().exec();
   }
 
-  async findOne(id: string): Promise<UserDocument> {
+  async findOne(id: ObjectId): Promise<UserDocument> {
     return !isNodeEnvInTest()
       ? this.userModel.findById(id).exec()
       : (DUMMY_TEST_USER as UserDocument);
@@ -34,11 +35,11 @@ export class UsersService {
     return this.userModel.create(createUserDto);
   }
 
-  update(id: string, updateUserDto: UpdateUserDto) {
+  update(id: ObjectId, updateUserDto: UpdateUserDto) {
     return `This action updates a #${id} user`;
   }
 
-  remove(id: string) {
+  remove(id: ObjectId) {
     return `This action removes a #${id} user`;
   }
 }

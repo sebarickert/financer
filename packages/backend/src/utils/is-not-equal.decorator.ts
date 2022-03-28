@@ -8,8 +8,10 @@ import {
 
 @ValidatorConstraint({ name: 'IsNotEqual' })
 export class IsNotEqualConstraint implements ValidatorConstraintInterface {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   validate(value: any, args: ValidationArguments) {
     const [relatedPropertyName] = args.constraints;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const relatedValue = (args.object as any)[relatedPropertyName];
     return value !== relatedValue;
   }
@@ -21,6 +23,7 @@ export const IsNotEqual = (
     message: 'The two properties must not be equal',
   },
 ) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (object: any, propertyName: string) => {
     registerDecorator({
       target: object.constructor,

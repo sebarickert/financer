@@ -8,6 +8,7 @@ import {
   Delete,
 } from '@nestjs/common';
 
+import { ObjectId } from '../../types/objectId';
 import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
 import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
 import { UserId } from '../users/users.decorators';
@@ -25,7 +26,7 @@ export class TransactionCategoriesController {
 
   @Post()
   async create(
-    @UserId() userId: string,
+    @UserId() userId: ObjectId,
     @Body() createTransactionCategoryDto: CreateTransactionCategoryDto,
   ) {
     return this.transactionCategoriesService.create(
@@ -35,19 +36,22 @@ export class TransactionCategoriesController {
   }
 
   @Get()
-  findAllByUser(@UserId() userId: string) {
+  findAllByUser(@UserId() userId: ObjectId) {
     return this.transactionCategoriesService.findAllByUser(userId);
   }
 
   @Get(':id')
-  findOne(@UserId() userId: string, @Param('id', ValidateEntityId) id: string) {
+  findOne(
+    @UserId() userId: ObjectId,
+    @Param('id', ValidateEntityId) id: ObjectId,
+  ) {
     return this.transactionCategoriesService.findOne(userId, id);
   }
 
   @Patch(':id')
   update(
-    @UserId() userId: string,
-    @Param('id', ValidateEntityId) id: string,
+    @UserId() userId: ObjectId,
+    @Param('id', ValidateEntityId) id: ObjectId,
     @Body() updateTransactionCategoryDto: UpdateTransactionCategoryDto,
   ) {
     return this.transactionCategoriesService.update(
@@ -58,7 +62,10 @@ export class TransactionCategoriesController {
   }
 
   @Delete(':id')
-  remove(@UserId() userId: string, @Param('id', ValidateEntityId) id: string) {
+  remove(
+    @UserId() userId: ObjectId,
+    @Param('id', ValidateEntityId) id: ObjectId,
+  ) {
     return this.transactionCategoriesService.remove(userId, id);
   }
 }

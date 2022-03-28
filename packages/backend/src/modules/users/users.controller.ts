@@ -1,6 +1,8 @@
 import { Controller, Get, Body, Patch, Param, Post, Res } from '@nestjs/common';
 import { Response } from 'express';
 
+import { ObjectId } from '../../types/objectId';
+import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
 import { Auth } from '../auth/decorators/auht.decorator';
 import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
 import {
@@ -22,19 +24,19 @@ export class UsersController {
   ) {}
 
   @Get('my-user')
-  findOwnUser(@UserId() userId: string) {
+  findOwnUser(@UserId() userId: ObjectId) {
     return this.usersService.findOne(userId);
   }
 
   @Get('my-user/my-data')
-  getAllOwnUserData(@UserId() userId: string, @Res() res: Response) {
+  getAllOwnUserData(@UserId() userId: ObjectId, @Res() res: Response) {
     this.getAllOneUserData(userId, res);
   }
 
   @Post('my-user/my-data')
   @Auth('test-user')
   overrideAllOwnUserData(
-    @UserId() userId: string,
+    @UserId() userId: ObjectId,
     @Body() userData: ImportUserDataDto,
   ) {
     return this.userDataService.overrideUserData(userId, userData);
@@ -42,7 +44,7 @@ export class UsersController {
 
   @Patch('my-user')
   updateOwnUser(
-    @UserId() userId: string,
+    @UserId() userId: ObjectId,
     @Body() updateUserDto: UpdateUserDto,
   ) {
     return this.usersService.update(userId, updateUserDto);
@@ -56,13 +58,16 @@ export class UsersController {
 
   @Get(':id')
   @Auth(Role.admin)
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id', ValidateEntityId) id: ObjectId) {
     return this.usersService.findOne(id);
   }
 
   @Get(':id/my-data')
   @Auth(Role.admin)
-  async getAllOneUserData(@Param('id') id: string, @Res() res: Response) {
+  async getAllOneUserData(
+    @Param('id', ValidateEntityId) id: ObjectId,
+    @Res() res: Response,
+  ) {
     const user = await this.usersService.findOne(id);
     const { filename, data } = await this.userDataService.findAllOneUserData(
       user,
@@ -78,7 +83,10 @@ export class UsersController {
 
   @Patch(':id')
   @Auth('admin')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  update(
+    @Param('id', ValidateEntityId) id: ObjectId,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
     return this.usersService.update(id, updateUserDto);
   }
 }

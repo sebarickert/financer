@@ -6,6 +6,10 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
+import { ObjectId } from '../../types/objectId';
+import { TransactionCategory } from '../transaction-categories/schemas/transaction-category.schema';
+import { User } from '../users/schemas/user.schema';
+
 import { CreateAccountDto } from './dto/create-account.dto';
 import { UpdateAccountDto } from './dto/update-account.dto';
 import { Account, AccountDocument } from './schemas/account.schema';
@@ -17,7 +21,7 @@ export class AccountsService {
   ) {}
 
   async create(
-    userId: string,
+    userId: ObjectId,
     createAccountDto: CreateAccountDto,
   ): Promise<AccountDocument> {
     return this.accountModel.create({ ...createAccountDto, owner: userId });
@@ -29,25 +33,25 @@ export class AccountsService {
     return this.accountModel.insertMany(createAccountDto);
   }
 
-  async findOne(userId: string, id: string): Promise<AccountDocument> {
+  async findOne(userId: ObjectId, id: ObjectId): Promise<AccountDocument> {
     const account = await this.accountModel.findOne({ _id: id });
 
     if (!account) {
       throw new NotFoundException('Account not found.');
-    } else if (account.owner + '' !== (userId as any)) {
+    } else if (!account.owner.equals(userId)) {
       throw new UnauthorizedException('Unauthorized to access this account.');
     }
 
     return account;
   }
 
-  async findAllByUser(userId: string): Promise<AccountDocument[]> {
+  async findAllByUser(userId: ObjectId): Promise<AccountDocument[]> {
     return this.accountModel.find({ owner: userId });
   }
 
   async update(
-    userId: string,
-    id: string,
+    userId: ObjectId,
+    id: ObjectId,
     updateAccountDto: UpdateAccountDto,
   ): Promise<AccountDocument> {
     await this.findOne(userId, id);
@@ -56,8 +60,8 @@ export class AccountsService {
   }
 
   async updateAccountBalance(
-    userId: string,
-    id: string,
+    userId: ObjectId,
+    id: ObjectId,
     amount: number,
   ): Promise<AccountDocument> {
     await this.findOne(userId, id);
@@ -77,7 +81,7 @@ export class AccountsService {
     return `This action removes a #${id} account`;
   }
 
-  async removeAllByUser(userId: string) {
+  async removeAllByUser(userId: ObjectId) {
     await this.accountModel.deleteMany({ owner: userId }).exec();
   }
 }

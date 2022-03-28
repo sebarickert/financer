@@ -10,19 +10,18 @@ import {
   ValidateNested,
 } from 'class-validator';
 
-import { Account } from '../../accounts/schemas/account.schema';
+import { ObjectId } from '../../../types/objectId';
 import { TransactionCategoryMappingDto } from '../../transaction-category-mappings/dto/transaction-category-mapping.dto';
-import { User } from '../../users/schemas/user.schema';
 
 export class TransactionDto {
   @IsMongoId()
-  readonly _id: string;
+  readonly _id: ObjectId;
 
   @IsMongoId({ message: 'fromAccount must not be empty.' })
-  readonly fromAccount: Account;
+  readonly fromAccount: ObjectId;
 
   @IsMongoId({ message: 'toAccount must not be empty.' })
-  readonly toAccount: Account;
+  readonly toAccount: ObjectId;
 
   @IsNumber()
   readonly fromAccountBalance: number;
@@ -41,12 +40,5 @@ export class TransactionDto {
   readonly date: Date;
 
   @IsMongoId()
-  readonly user: User;
-}
-
-export class TransactionBaseWithCategoryDto {
-  @IsOptional()
-  @ValidateNested({ each: true })
-  @Type(() => TransactionCategoryMappingDto)
-  categories: TransactionCategoryMappingDto[];
+  readonly user: ObjectId;
 }

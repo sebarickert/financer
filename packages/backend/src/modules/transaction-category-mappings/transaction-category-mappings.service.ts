@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
+import { ObjectId } from '../../types/objectId';
+
 import { CreateTransactionCategoryMappingDto } from './dto/create-transaction-category-mapping.dto';
 import { UpdateTransactionCategoryMappingDto } from './dto/update-transaction-category-mapping.dto';
 import {
@@ -39,7 +41,7 @@ export class TransactionCategoryMappingsService {
   }
 
   async findAllByUser(
-    userId: string,
+    userId: ObjectId,
   ): Promise<TransactionCategoryMappingDocument[]> {
     return this.transactionCategoryMappingModel.find({ owner: userId }).exec();
   }
@@ -55,7 +57,10 @@ export class TransactionCategoryMappingsService {
     return `This action removes a #${id} transactionCategoryMapping`;
   }
 
-  async removeAllByUserAndTransaction(userId: string, transactionId: string) {
+  async removeAllByUserAndTransaction(
+    userId: ObjectId,
+    transactionId: ObjectId,
+  ) {
     await this.transactionCategoryMappingModel
       .deleteMany({
         owner: userId,
@@ -64,7 +69,7 @@ export class TransactionCategoryMappingsService {
       .exec();
   }
 
-  async removeAllByUser(userId: string) {
+  async removeAllByUser(userId: ObjectId) {
     await this.transactionCategoryMappingModel
       .deleteMany({
         owner: userId,

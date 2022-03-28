@@ -1,18 +1,23 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Schema as MogooseSchema } from 'mongoose';
+import { Document, Types as MogooseTypes } from 'mongoose';
 
+import { ObjectId } from '../../../types/objectId';
 import { Account } from '../../accounts/schemas/account.schema';
 import { User } from '../../users/schemas/user.schema';
 
-export type TransactionDocument = Transaction & Document;
+export type TransactionDocument = Transaction & Document<MogooseTypes.ObjectId>;
 
 @Schema()
 export class Transaction {
-  @Prop({ type: MogooseSchema.Types.ObjectId, ref: 'Account', default: null })
-  fromAccount: Account;
+  @Prop({
+    type: MogooseTypes.ObjectId,
+    ref: Account.name,
+    default: null,
+  })
+  fromAccount: ObjectId;
 
-  @Prop({ type: MogooseSchema.Types.ObjectId, ref: 'Account', default: null })
-  toAccount: Account;
+  @Prop({ type: MogooseTypes.ObjectId, ref: Account.name, default: null })
+  toAccount: ObjectId;
 
   @Prop({ default: null })
   fromAccountBalance: number;
@@ -29,8 +34,8 @@ export class Transaction {
   @Prop({ default: '' })
   date: Date;
 
-  @Prop({ required: true, type: MogooseSchema.Types.ObjectId, ref: 'User' })
-  user: User;
+  @Prop({ required: true, type: MogooseTypes.ObjectId, ref: User.name })
+  user: ObjectId;
 }
 
 export const TransactionSchema = SchemaFactory.createForClass(Transaction);
