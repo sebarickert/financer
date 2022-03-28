@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+import { ObjectId } from '../../types/objectId';
 import { AccountsService } from '../accounts/accounts.service';
 import { TransactionDocument } from '../transactions/schemas/transaction.schema';
 import { TransactionsService } from '../transactions/transactions.service';
@@ -14,15 +15,15 @@ export class TransfersService {
     private accountService: AccountsService,
   ) {}
 
-  async findAllByUser(userId: string): Promise<TransactionDocument[]> {
+  async findAllByUser(userId: ObjectId): Promise<TransactionDocument[]> {
     return this.transactionService.findAllTransfersByUser(userId);
   }
 
-  async findOne(userId: string, id: string): Promise<TransactionDocument> {
+  async findOne(userId: ObjectId, id: ObjectId): Promise<TransactionDocument> {
     return this.transactionService.findOne(userId, id);
   }
 
-  async create(userId: string, createTransfer: CreateTransferDto) {
+  async create(userId: ObjectId, createTransfer: CreateTransferDto) {
     const newTransferData = {
       ...createTransfer,
       user: userId,
@@ -30,7 +31,7 @@ export class TransfersService {
 
     const newTransfer = await this.transactionService.create(
       userId,
-      newTransferData as any,
+      newTransferData,
     );
 
     await this.updateTransactionHistoryAndAccount(
@@ -45,8 +46,8 @@ export class TransfersService {
   }
 
   async update(
-    userId: string,
-    id: string,
+    userId: ObjectId,
+    id: ObjectId,
     updateTransactionDto: UpdateTransferDto,
   ) {
     const transferBefore = await this.findOne(userId, id);
@@ -95,7 +96,7 @@ export class TransfersService {
     return updatedIncome;
   }
 
-  async remove(userId: string, id: string) {
+  async remove(userId: ObjectId, id: ObjectId) {
     const transaction = await this.findOne(userId, id);
 
     await this.updateTransactionHistoryAndAccount(

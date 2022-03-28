@@ -1,9 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Schema as MogooseSchema } from 'mongoose';
+import { Document, Types as MogooseTypes } from 'mongoose';
 
+import { ObjectId } from '../../../types/objectId';
 import { User } from '../../users/schemas/user.schema';
 
-export type TransactionCategoryDocument = TransactionCategory & Document;
+export type TransactionCategoryDocument = TransactionCategory &
+  Document<MogooseTypes.ObjectId>;
 
 export enum VisibilityType {
   income = 'income',
@@ -13,8 +15,8 @@ export enum VisibilityType {
 
 @Schema({ collection: 'transaction-categories' })
 export class TransactionCategory {
-  @Prop({ required: true, type: MogooseSchema.Types.ObjectId, ref: 'User' })
-  owner: User;
+  @Prop({ required: true, type: MogooseTypes.ObjectId, ref: User.name })
+  owner: ObjectId;
 
   @Prop({ required: true })
   name: string;
@@ -23,11 +25,11 @@ export class TransactionCategory {
   visibility: VisibilityType[];
 
   @Prop({
-    type: MogooseSchema.Types.ObjectId,
-    ref: 'TransactionCategory',
+    type: MogooseTypes.ObjectId,
+    ref: TransactionCategory.name,
     default: null,
   })
-  parent_category_id: TransactionCategory;
+  parent_category_id: ObjectId;
 
   @Prop({ default: false })
   deleted: boolean;

@@ -1,24 +1,22 @@
 import { IsMongoId, IsString, Min, IsOptional } from 'class-validator';
 
-import { Transaction } from '../../transactions/schemas/transaction.schema';
-import { User } from '../../users/schemas/user.schema';
-import { TransactionCategoryMapping } from '../schemas/transaction-category-mapping.schema';
+import { ObjectId } from '../../../types/objectId';
 export class TransactionCategoryMappingDto {
   @IsMongoId()
-  _id: string;
+  _id: ObjectId;
 
   @IsMongoId()
-  owner: User;
+  owner: ObjectId;
 
   @IsOptional()
   @IsString({ message: 'Description must not be empty.' })
   description: string;
 
   @IsMongoId()
-  category_id: TransactionCategoryMapping;
+  category_id: ObjectId;
 
   @IsMongoId()
-  transaction_id: Transaction;
+  transaction_id: ObjectId;
 
   @Min(0.01, { message: 'Amount must be a positive number.' })
   amount: number;

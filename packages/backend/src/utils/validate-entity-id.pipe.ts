@@ -1,6 +1,8 @@
 import { BadRequestException, Injectable, PipeTransform } from '@nestjs/common';
 import mongoose from 'mongoose';
 
+import { parseObjectId } from '../types/objectId';
+
 @Injectable()
 export class ValidateEntityId implements PipeTransform<string> {
   async transform(value: string) {
@@ -8,6 +10,6 @@ export class ValidateEntityId implements PipeTransform<string> {
     if (!isValid) {
       throw new BadRequestException('Invalid entity ID provided!');
     }
-    return value;
+    return parseObjectId(value);
   }
 }

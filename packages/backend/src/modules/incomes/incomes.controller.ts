@@ -8,6 +8,7 @@ import {
   Post,
 } from '@nestjs/common';
 
+import { ObjectId } from '../../types/objectId';
 import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
 import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
 import { UserId } from '../users/users.decorators';
@@ -22,21 +23,21 @@ export class IncomesController {
   constructor(private readonly incomesService: IncomesService) {}
 
   @Get()
-  async findAllByUser(@UserId() userId: string) {
+  async findAllByUser(@UserId() userId: ObjectId) {
     return this.incomesService.findAllByUser(userId);
   }
 
   @Get(':id')
   async findOne(
-    @UserId() userId: string,
-    @Param('id', ValidateEntityId) id: string,
+    @UserId() userId: ObjectId,
+    @Param('id', ValidateEntityId) id: ObjectId,
   ) {
     return this.incomesService.findOne(userId, id);
   }
 
   @Post()
   async create(
-    @UserId() userId: string,
+    @UserId() userId: ObjectId,
     @Body() createIncome: CreateIncomeDto,
   ) {
     return this.incomesService.create(userId, createIncome);
@@ -44,15 +45,18 @@ export class IncomesController {
 
   @Patch(':id')
   update(
-    @UserId() userId: string,
-    @Param('id', ValidateEntityId) id: string,
+    @UserId() userId: ObjectId,
+    @Param('id', ValidateEntityId) id: ObjectId,
     @Body() updateTransactionDto: UpdateIncomeDto,
   ) {
     return this.incomesService.update(userId, id, updateTransactionDto);
   }
 
   @Delete(':id')
-  remove(@UserId() userId: string, @Param('id', ValidateEntityId) id: string) {
+  remove(
+    @UserId() userId: ObjectId,
+    @Param('id', ValidateEntityId) id: ObjectId,
+  ) {
     return this.incomesService.remove(userId, id);
   }
 }

@@ -1,33 +1,35 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Schema as MogooseSchema } from 'mongoose';
+import { Document, Types as MogooseTypes } from 'mongoose';
 
+import { ObjectId } from '../../../types/objectId';
+import { TransactionCategory } from '../../transaction-categories/schemas/transaction-category.schema';
 import { Transaction } from '../../transactions/schemas/transaction.schema';
 import { User } from '../../users/schemas/user.schema';
 
 export type TransactionCategoryMappingDocument = TransactionCategoryMapping &
-  Document;
+  Document<MogooseTypes.ObjectId>;
 
 @Schema({ collection: 'transaction-category-mappings' })
 export class TransactionCategoryMapping {
-  @Prop({ required: true, type: MogooseSchema.Types.ObjectId, ref: 'User' })
-  owner: User;
+  @Prop({ required: true, type: MogooseTypes.ObjectId, ref: User.name })
+  owner: ObjectId;
 
   @Prop({ default: '' })
   description: string;
 
   @Prop({
-    type: MogooseSchema.Types.ObjectId,
-    ref: 'TransactionCategory',
+    type: MogooseTypes.ObjectId,
+    ref: TransactionCategory.name,
     required: true,
   })
-  category_id: TransactionCategoryMapping;
+  category_id: ObjectId;
 
   @Prop({
-    type: MogooseSchema.Types.ObjectId,
-    ref: 'Transaction',
+    type: MogooseTypes.ObjectId,
+    ref: Transaction.name,
     required: true,
   })
-  transaction_id: Transaction;
+  transaction_id: ObjectId;
 
   @Prop({ required: true })
   amount: number;
