@@ -6,33 +6,38 @@ export enum UserPreferenceProperties {
   DEFAULT_TRANSFER_SOURCE_ACCOUNT = 'DEFAULT_TRANSFER_SOURCE_ACCOUNT',
   DEFAULT_TRANSFER_TARGET_ACCOUNT = 'DEFAULT_TRANSFER_TARGET_ACCOUNT',
   TRANSACTION_LIST_CHUNK_SIZE = 'TRANSACTION_LIST_CHUNK_SIZE',
+  UPDATE_INVESTMENT_MARKET_VALUE = 'UPDATE_INVESTMENT_MARKET_VALUE',
 }
 
-type UserPrefenceBase<Key, Value> = {
+type UserPreferenceBase<Key, Value> = {
   type: Key;
   payload: Value;
 };
 
 export type UserPreference =
-  | UserPrefenceBase<
+  | UserPreferenceBase<
       typeof UserPreferenceProperties.DEFAULT_INCOME_ACCOUNT,
       string
     >
-  | UserPrefenceBase<
+  | UserPreferenceBase<
       typeof UserPreferenceProperties.DEFAULT_EXPENSE_ACCOUNT,
       string
     >
-  | UserPrefenceBase<
+  | UserPreferenceBase<
       typeof UserPreferenceProperties.DEFAULT_TRANSFER_SOURCE_ACCOUNT,
       string
     >
-  | UserPrefenceBase<
+  | UserPreferenceBase<
       typeof UserPreferenceProperties.DEFAULT_TRANSFER_TARGET_ACCOUNT,
       string
     >
-  | UserPrefenceBase<
+  | UserPreferenceBase<
       typeof UserPreferenceProperties.TRANSACTION_LIST_CHUNK_SIZE,
       number
+    >
+  | UserPreferenceBase<
+      typeof UserPreferenceProperties.UPDATE_INVESTMENT_MARKET_VALUE,
+      { transactionDescription: string; category?: string }
     >;
 
 export const useUserPreferences = (): [
