@@ -13,6 +13,7 @@ interface IModalCustomProps {
   onConfirm(): void;
   submitButtonLabel: string;
   submitButtonAccentColor?: AccentColor;
+  buttonStyle?: 'quick-link' | 'default';
 }
 
 export const ModalCustom = ({
@@ -22,6 +23,7 @@ export const ModalCustom = ({
   submitButtonLabel,
   submitButtonAccentColor = 'blue',
   accentColor,
+  buttonStyle = 'default',
 }: IModalCustomProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -36,7 +38,7 @@ export const ModalCustom = ({
       toggleOpen={handleToggleOpen}
       isOpen={isOpen}
       accentColor={accentColor}
-      buttonStyle="quick-link"
+      buttonStyle={buttonStyle}
     >
       <ModalCustomContent>{children}</ModalCustomContent>
       <ModalCustomActions
