@@ -102,7 +102,10 @@ export const Account = (): JSX.Element => {
     navigate('/accounts');
   };
 
-  const handleMarketValueUpdate = async (newMarketValue: number) => {
+  const handleMarketValueUpdate = async (
+    newMarketValue: number,
+    date: Date
+  ) => {
     if (!id) {
       console.error('Failure to update market value: no id');
       return;
@@ -132,7 +135,7 @@ export const Account = (): JSX.Element => {
           toAccount: id,
           amount: marketValueChangeAmount,
           description: transactionDescription,
-          date: new Date(),
+          date: date ?? new Date(),
           categories: marketSettings?.category ? [mappedCategory] : undefined,
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } as any);
@@ -193,8 +196,8 @@ export const Account = (): JSX.Element => {
           {account.type === 'investment' && (
             <AccountUpdateMarketValueModal
               currentValue={account.balance}
-              handleUpdate={(newMarketValue) =>
-                handleMarketValueUpdate(newMarketValue)
+              handleUpdate={(newMarketValue, newDate) =>
+                handleMarketValueUpdate(newMarketValue, newDate)
               }
             />
           )}
