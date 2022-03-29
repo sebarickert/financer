@@ -1,3 +1,4 @@
+import { Transform } from 'class-transformer';
 import {
   IsBoolean,
   IsEnum,
@@ -7,6 +8,7 @@ import {
 } from 'class-validator';
 
 import { ObjectId } from '../../../types/objectId';
+import { objectIdTransformer } from '../../../utils/object-id-transformer';
 import { VisibilityType } from '../schemas/transaction-category.schema';
 
 export class TransactionCategoryDto {
@@ -28,8 +30,8 @@ export class TransactionCategoryDto {
   visibility: VisibilityType[];
 
   @IsOptional()
-  @IsMongoId()
-  parent_category_id: ObjectId;
+  @Transform(objectIdTransformer)
+  parent_category_id: ObjectId | null;
 
   @IsOptional()
   @IsBoolean()

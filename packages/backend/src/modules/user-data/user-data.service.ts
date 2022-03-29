@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { ObjectId } from '../../types/objectId';
+import { ObjectId, parseObjectId } from '../../types/objectId';
 import { AccountsService } from '../accounts/accounts.service';
 import { AccountDocument } from '../accounts/schemas/account.schema';
 import { TransactionCategoryDocument } from '../transaction-categories/schemas/transaction-category.schema';
@@ -82,37 +82,43 @@ export class UserDataService {
       this.transactionCategoryMappingService.removeAllByUser(userId),
     ]);
 
-    const accountsWithCurrentUserId = accounts.map((account) => ({
+    const parsedAccounts = accounts.map((account) => ({
       ...account,
       owner: userId,
     }));
 
-    const transactionsWithCurrentUserId = transactions.map((transaction) => ({
-      ...transaction,
-      user: userId,
-    }));
+    const parsedTransactions = transactions.map(
+      ({ toAccount, fromAccount, ...transaction }) => ({
+        ...transaction,
+        toAccount: parseObjectId(toAccount),
+        fromAccount: parseObjectId(fromAccount),
+        user: userId,
+      }),
+    );
 
-    const transactionCategoriesWithCurrentUserId = transactionCategories.map(
-      (transactionCategory) => ({
+    const parsedTransactionCategories = transactionCategories.map(
+      ({ parent_category_id, ...transactionCategory }) => ({
         ...transactionCategory,
+        parent_category_id: parseObjectId(parent_category_id),
         owner: userId,
       }),
     );
 
-    const transactionCategoryMappingsWithCurrentUserId =
-      transactionCategoryMappings.map((transactionCategoryMapping) => ({
+    const parsedTransactionCategoryMappings = transactionCategoryMappings.map(
+      ({ category_id, transaction_id, ...transactionCategoryMapping }) => ({
         ...transactionCategoryMapping,
+        category_id: parseObjectId(category_id),
+        transaction_id: parseObjectId(transaction_id),
         owner: userId,
-      }));
+      }),
+    );
 
     await Promise.all([
-      this.accountService.createMany(accountsWithCurrentUserId),
-      this.transactionService.createMany(transactionsWithCurrentUserId),
-      this.transactionCategoriesService.createMany(
-        transactionCategoriesWithCurrentUserId,
-      ),
+      this.accountService.createMany(parsedAccounts),
+      this.transactionService.createMany(parsedTransactions),
+      this.transactionCategoriesService.createMany(parsedTransactionCategories),
       this.transactionCategoryMappingService.createMany(
-        transactionCategoryMappingsWithCurrentUserId,
+        parsedTransactionCategoryMappings,
       ),
     ]);
 
