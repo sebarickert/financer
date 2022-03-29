@@ -1,13 +1,8 @@
 import { Transform } from 'class-transformer';
-import {
-  IsMongoId,
-  IsString,
-  Min,
-  IsOptional,
-  IsNotEmpty,
-} from 'class-validator';
+import { IsMongoId, IsString, Min, IsOptional } from 'class-validator';
 
 import { ObjectId } from '../../../types/objectId';
+import { IsInstanceOfObjectId } from '../../../utils/is-instance-of-object-id.decorator';
 import { objectIdTransformer } from '../../../utils/object-id-transformer';
 
 export class TransactionCategoryMappingDto {
@@ -21,11 +16,11 @@ export class TransactionCategoryMappingDto {
   @IsString({ message: 'Description must not be empty.' })
   description: string;
 
-  @IsNotEmpty()
+  @IsInstanceOfObjectId({ message: 'category_id must not be empty.' })
   @Transform(objectIdTransformer)
   category_id: ObjectId;
 
-  @IsNotEmpty()
+  @IsInstanceOfObjectId({ message: 'transaction_id must not be empty.' })
   @Transform(objectIdTransformer)
   transaction_id: ObjectId;
 

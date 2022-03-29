@@ -301,8 +301,9 @@ export class TransactionsService {
     const newerTransaction = await this.findOneNewer(accountId, date);
 
     if (newerTransaction) {
-      const isNextTransactionExpense =
-        (newerTransaction?.fromAccount as unknown as ObjectId) === accountId;
+      const isNextTransactionExpense = accountId.equals(
+        newerTransaction?.fromAccount,
+      );
 
       return isNextTransactionExpense
         ? newerTransaction.fromAccountBalance
