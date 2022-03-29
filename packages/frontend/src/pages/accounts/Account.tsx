@@ -1,21 +1,24 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import { Alert } from '../../components/alert/alert';
 import { Banner } from '../../components/banner/banner';
 import { BannerText } from '../../components/banner/banner.text';
 import { Button } from '../../components/button/button';
 import { ButtonGroup } from '../../components/button/button.group';
 import { Heading } from '../../components/heading/heading';
 import { Loader } from '../../components/loader/loader';
-import { ModalConfirm } from '../../components/modal/confirm/modal.confirm';
 import { SEO } from '../../components/seo/seo';
 import { TransactionStackedList } from '../../components/transaction-stacked-list/transaction-stacked-list';
 import { ITransactionStackedListRowProps } from '../../components/transaction-stacked-list/transaction-stacked-list.row';
 import { useAccountById } from '../../hooks/account/useAccountById';
 import { useDeleteAccount } from '../../hooks/account/useDeleteAccount';
+import { useAddExpense } from '../../hooks/expense/useAddExpense';
+import { useAddIncome } from '../../hooks/income/useAddIncome';
 import { useTransactionsByAccountId } from '../../hooks/transaction/useTransactionsByAccountId';
 import { useAllTransactionCategories } from '../../hooks/transactionCategories/useAllTransactionCategories';
 import { useAllTransactionCategoryMappings } from '../../hooks/transactionCategoryMapping/useAllTransactionCategoryMappings';
+import { parseErrorMessagesToArray } from '../../utils/apiHelper';
 import { capitalize } from '../../utils/capitalize';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDate } from '../../utils/formatDate';
@@ -24,24 +27,9 @@ import {
   mapTransactionTypeToUrlPrefix,
 } from '../statistics/Statistics';
 
+import { AccountDeleteModal } from './account-modals/AccountDeleteModal';
+import { AccountUpdateMarketValueModal } from './account-modals/AccountUpdateMarketValueModal';
 import { AccountBalanceHistoryChart } from './AccountBalanceHistoryChart';
-
-interface IAccountDeleteModalProps {
-  handleDelete(): void;
-}
-
-const AccountDeleteModal = ({ handleDelete }: IAccountDeleteModalProps) => (
-  <ModalConfirm
-    label="Delete account"
-    submitButtonLabel="Delete"
-    onConfirm={handleDelete}
-    modalOpenButtonLabel="Delete account"
-    accentColor="red"
-  >
-    Are you sure you want to delete your account? All of your data will be
-    permanently removed. This action cannot be undone.
-  </ModalConfirm>
-);
 
 export const Account = (): JSX.Element => {
   const { id } = useParams<{ id: string }>();
@@ -54,6 +42,10 @@ export const Account = (): JSX.Element => {
   const [rawTransactions] = useTransactionsByAccountId(id);
   const transactionCategoryMappings = useAllTransactionCategoryMappings();
   const transactionCategories = useAllTransactionCategories();
+
+  const [errors, setErrors] = useState<string[]>([]);
+  const addIncome = useAddIncome();
+  const addExpense = useAddExpense();
 
   useEffect(() => {
     if (!rawTransactions) return;
@@ -107,11 +99,75 @@ export const Account = (): JSX.Element => {
     navigate('/accounts');
   };
 
+  const handleMarketValueUpdate = async (newMarketValue: number) => {
+    if (!id) {
+      console.error('Failure to update market value: no id');
+      return;
+    }
+
+    if (!account) {
+      console.error(
+        'Failure to update market value: no account data available'
+      );
+      return;
+    }
+
+    const transactionDescription = 'Market value change';
+    const marketValueChangeAmount = newMarketValue - account.balance;
+
+    if (marketValueChangeAmount > 0) {
+      try {
+        const newIncomeJson = await addIncome({
+          toAccount: id,
+          amount: marketValueChangeAmount,
+          description: transactionDescription,
+          date: new Date(),
+          // categories: newTransactionCategoryMappingsData,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } as any);
+
+        if ('message' in newIncomeJson) {
+          setErrors(parseErrorMessagesToArray(newIncomeJson.message));
+          return;
+        }
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.log(error);
+      }
+    } else if (marketValueChangeAmount < 0) {
+      try {
+        const newExpenseJson = await addExpense({
+          fromAccount: id,
+          amount: Math.abs(marketValueChangeAmount),
+          description: transactionDescription,
+          date: new Date(),
+          // categories: newTransactionCategoryMappingsData,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } as any);
+
+        if ('message' in newExpenseJson) {
+          setErrors(parseErrorMessagesToArray(newExpenseJson.message));
+          return;
+        }
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.log(error);
+      }
+    } else {
+      console.log('Current value is same as previous no update needed.');
+    }
+  };
+
   return !account || !transactions ? (
     <Loader loaderColor="blue" />
   ) : (
     <>
       <SEO title={`${account.name}`} />
+      {errors.length > 0 && (
+        <Alert additionalInformation={errors} testId="account-page-errors">
+          There were {errors.length} errors with your submission
+        </Alert>
+      )}
       <Banner
         title={account.name}
         headindType="h1"
@@ -123,6 +179,14 @@ export const Account = (): JSX.Element => {
           history.
         </BannerText>
         <ButtonGroup className="mt-6">
+          {account.type === 'investment' && (
+            <AccountUpdateMarketValueModal
+              currentValue={account.balance}
+              handleUpdate={(newMarketValue) =>
+                handleMarketValueUpdate(newMarketValue)
+              }
+            />
+          )}
           <Button
             accentColor="blue"
             link={`/accounts/${id}/edit`}

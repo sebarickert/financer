@@ -45,9 +45,17 @@ export const Accounts = (): JSX.Element => {
           />
         </section>
         <AccountsList
-          label="Savings accounts"
+          label="Savings"
           rows={accounts.filter(
-            ({ accountType }) => accountType.toLowerCase() !== 'loan'
+            ({ accountType }) =>
+              accountType.toLowerCase() !== 'loan' &&
+              accountType.toLowerCase() !== 'investment'
+          )}
+        />
+        <AccountsList
+          label="Investments"
+          rows={accounts.filter(
+            ({ accountType }) => accountType.toLowerCase() === 'investment'
           )}
         />
         <AccountsList
