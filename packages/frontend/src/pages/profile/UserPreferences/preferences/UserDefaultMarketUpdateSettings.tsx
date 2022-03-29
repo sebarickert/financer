@@ -9,9 +9,12 @@ import { useAllTransactionCategories } from '../../../../hooks/transactionCatego
 export const UserDefaultMarketUpdateSettings = (): JSX.Element => {
   const [defaultMarketSettings, setDefaultMarketUpdateSettings] =
     useUserDefaultMarketUpdateSettings();
-  const [transactionDescription, setTransactionDescription] = useState('');
-  const [category, setCategory] = useState('');
-
+  const [transactionDescription, setTransactionDescription] = useState(
+    defaultMarketSettings?.transactionDescription ?? ''
+  );
+  const [category, setCategory] = useState(
+    defaultMarketSettings?.category ?? ''
+  );
   const categories = useAllTransactionCategories();
 
   const handleTransactionDescriptionInputValueChange = (
@@ -46,10 +49,12 @@ export const UserDefaultMarketUpdateSettings = (): JSX.Element => {
       <Select
         className="mt-4"
         id="category"
-        options={categories.map(({ name, _id }) => ({
-          label: name,
-          value: _id,
-        }))}
+        options={[{ name: 'None', _id: undefined }, ...categories].map(
+          ({ name, _id }) => ({
+            label: name,
+            value: _id,
+          })
+        )}
         defaultValue={defaultMarketSettings?.category}
         isRequired
         handleOnChange={handleSelectChange}
