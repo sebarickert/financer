@@ -9,11 +9,7 @@ export type TransactionDocument = Transaction & Document<MogooseTypes.ObjectId>;
 
 @Schema()
 export class Transaction {
-  @Prop({
-    type: MogooseTypes.ObjectId,
-    ref: Account.name,
-    default: null,
-  })
+  @Prop({ type: MogooseTypes.ObjectId, ref: Account.name, default: null })
   fromAccount: ObjectId;
 
   @Prop({ type: MogooseTypes.ObjectId, ref: Account.name, default: null })

@@ -1,26 +1,26 @@
-import { Type } from 'class-transformer';
+import { Transform } from 'class-transformer';
 import {
   IsDateString,
   IsMongoId,
   IsNotEmpty,
   IsNumber,
-  IsOptional,
   IsString,
   Min,
-  ValidateNested,
 } from 'class-validator';
 
 import { ObjectId } from '../../../types/objectId';
-import { TransactionCategoryMappingDto } from '../../transaction-category-mappings/dto/transaction-category-mapping.dto';
+import { objectIdTransformer } from '../../../utils/object-id-transformer';
 
 export class TransactionDto {
   @IsMongoId()
   readonly _id: ObjectId;
 
-  @IsMongoId({ message: 'fromAccount must not be empty.' })
+  @IsNotEmpty({ message: 'fromAccount must not be empty.' })
+  @Transform(objectIdTransformer)
   readonly fromAccount: ObjectId;
 
-  @IsMongoId({ message: 'toAccount must not be empty.' })
+  @IsNotEmpty({ message: 'toAccount must not be empty.' })
+  @Transform(objectIdTransformer)
   readonly toAccount: ObjectId;
 
   @IsNumber()
