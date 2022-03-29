@@ -8,6 +8,7 @@ import {
 } from 'class-validator';
 
 import { ObjectId } from '../../../types/objectId';
+import { IsInstanceOfObjectId } from '../../../utils/is-instance-of-object-id.decorator';
 import { objectIdTransformer } from '../../../utils/object-id-transformer';
 import { VisibilityType } from '../schemas/transaction-category.schema';
 
@@ -30,6 +31,7 @@ export class TransactionCategoryDto {
   visibility: VisibilityType[];
 
   @IsOptional()
+  @IsInstanceOfObjectId({ message: 'parent_category_id must not be empty.' })
   @Transform(objectIdTransformer)
   parent_category_id: ObjectId | null;
 

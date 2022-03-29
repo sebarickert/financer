@@ -13,7 +13,10 @@ export class IsNotEqualConstraint implements ValidatorConstraintInterface {
     const [relatedPropertyName] = args.constraints;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const relatedValue = (args.object as any)[relatedPropertyName];
-    return value !== relatedValue;
+    return (
+      (value?.toString() ?? value) !==
+      (relatedValue?.toString() ?? relatedValue)
+    );
   }
 }
 

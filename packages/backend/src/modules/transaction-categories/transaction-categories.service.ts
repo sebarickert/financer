@@ -29,9 +29,9 @@ export class TransactionCategoriesService {
     newParentId: ObjectId,
   ): Promise<boolean> {
     const categories = await this.findAllChildrensById([id]);
-    const ids = categories.map((category) => category._id + '');
+    const ids = categories.map((category) => category._id.toString());
 
-    return ids.includes(newParentId);
+    return ids.includes(newParentId.toString());
   }
 
   async create(

@@ -5,6 +5,9 @@ export type ObjectId = MongooseTypes.ObjectId;
 export const isValidObjectId = (id: string): boolean =>
   MongooseTypes.ObjectId.isValid(id);
 
+export const isIntanceOfObjectId = (id: unknown) =>
+  id instanceof MongooseTypes.ObjectId;
+
 export const parseObjectId = (id: string | ObjectId): ObjectId => {
   if (id instanceof MongooseTypes.ObjectId) return id;
 

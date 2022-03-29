@@ -9,17 +9,18 @@ import {
 } from 'class-validator';
 
 import { ObjectId } from '../../../types/objectId';
+import { IsInstanceOfObjectId } from '../../../utils/is-instance-of-object-id.decorator';
 import { objectIdTransformer } from '../../../utils/object-id-transformer';
 
 export class TransactionDto {
   @IsMongoId()
   readonly _id: ObjectId;
 
-  @IsNotEmpty({ message: 'fromAccount must not be empty.' })
+  @IsInstanceOfObjectId({ message: 'fromAccount must not be empty.' })
   @Transform(objectIdTransformer)
   readonly fromAccount: ObjectId;
 
-  @IsNotEmpty({ message: 'toAccount must not be empty.' })
+  @IsInstanceOfObjectId({ message: 'toAccount must not be empty.' })
   @Transform(objectIdTransformer)
   readonly toAccount: ObjectId;
 
