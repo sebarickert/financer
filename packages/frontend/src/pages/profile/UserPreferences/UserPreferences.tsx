@@ -4,6 +4,7 @@ import { SEO } from '../../../components/seo/seo';
 
 import { UserDefaultExpenseAccount } from './preferences/UserDefaultExpenseAccount';
 import { UserDefaultIncomeAccount } from './preferences/UserDefaultIncomeAccount';
+import { UserDefaultMarketUpdateSettings } from './preferences/UserDefaultMarketUpdateSettings';
 import { UserDefaultTransferSourceAccount } from './preferences/UserDefaultTransferSourceAccount';
 import { UserDefaultTransferTargetAccount } from './preferences/UserDefaultTransferTargetAccount';
 import { UserTransactionListChunkSize } from './preferences/UserTransactionListChunkSize';
@@ -21,6 +22,7 @@ export const UserPreferences = (): JSX.Element => {
         <UserDefaultTransferSourceAccount />
         <UserDefaultTransferTargetAccount />
         <UserTransactionListChunkSize />
+        <UserDefaultMarketUpdateSettings />
       </QuickLinks>
     </>
   );
