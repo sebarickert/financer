@@ -1,3 +1,4 @@
+import { ITransactionCategoryMapping } from '@local/types/src/transaction-category-mapping';
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -15,6 +16,7 @@ import { useAccountById } from '../../hooks/account/useAccountById';
 import { useDeleteAccount } from '../../hooks/account/useDeleteAccount';
 import { useAddExpense } from '../../hooks/expense/useAddExpense';
 import { useAddIncome } from '../../hooks/income/useAddIncome';
+import { useUserDefaultMarketUpdateSettings } from '../../hooks/profile/user-preference/useDefaultMarketUpdateSettings';
 import { useTransactionsByAccountId } from '../../hooks/transaction/useTransactionsByAccountId';
 import { useAllTransactionCategories } from '../../hooks/transactionCategories/useAllTransactionCategories';
 import { useAllTransactionCategoryMappings } from '../../hooks/transactionCategoryMapping/useAllTransactionCategoryMappings';
@@ -42,6 +44,7 @@ export const Account = (): JSX.Element => {
   const [rawTransactions] = useTransactionsByAccountId(id);
   const transactionCategoryMappings = useAllTransactionCategoryMappings();
   const transactionCategories = useAllTransactionCategories();
+  const [marketSettings] = useUserDefaultMarketUpdateSettings();
 
   const [errors, setErrors] = useState<string[]>([]);
   const addIncome = useAddIncome();
@@ -112,8 +115,16 @@ export const Account = (): JSX.Element => {
       return;
     }
 
-    const transactionDescription = 'Market value change';
+    const transactionDescription =
+      marketSettings?.transactionDescription ?? 'Market value change';
     const marketValueChangeAmount = newMarketValue - account.balance;
+
+    const mappedCategory: ITransactionCategoryMapping = {
+      amount: Math.abs(marketValueChangeAmount),
+      description: transactionDescription,
+      category_id:
+        marketSettings?.category !== undefined ? marketSettings.category : '',
+    };
 
     if (marketValueChangeAmount > 0) {
       try {
@@ -122,7 +133,7 @@ export const Account = (): JSX.Element => {
           amount: marketValueChangeAmount,
           description: transactionDescription,
           date: new Date(),
-          // categories: newTransactionCategoryMappingsData,
+          categories: marketSettings?.category ? [mappedCategory] : undefined,
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } as any);
 
@@ -141,7 +152,7 @@ export const Account = (): JSX.Element => {
           amount: Math.abs(marketValueChangeAmount),
           description: transactionDescription,
           date: new Date(),
-          // categories: newTransactionCategoryMappingsData,
+          categories: marketSettings?.category ? [mappedCategory] : undefined,
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } as any);
 
