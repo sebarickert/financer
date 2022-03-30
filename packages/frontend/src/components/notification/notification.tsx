@@ -1,6 +1,8 @@
 import { Transition } from '@headlessui/react';
 import { useEffect, useState } from 'react';
 
+import { isIOSDevice } from '../../utils/isIOSDevice';
+import { isStandaloneMode } from '../../utils/isStandaloneMode';
 import { Container } from '../container/container';
 
 import { NotificationClose } from './notification.close';
@@ -36,7 +38,9 @@ export const Notification = ({
 
   return (
     <Container
-      className={`fixed inset-0 flex items-end justify-center px-4 py-6 pointer-events-none sm:p-6 sm:items-start sm:justify-end ${className}`}
+      className={`fixed inset-0 flex items-end justify-center px-4 pt-6 pointer-events-none sm:p-6 sm:items-start sm:justify-end z-20 ${
+        isIOSDevice() && isStandaloneMode() ? 'pb-28' : 'pb-20'
+      } ${className}`}
     >
       <Transition
         show={isOpen}

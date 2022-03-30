@@ -11,11 +11,7 @@ export const App = (): JSX.Element => {
   ) : (
     <>
       {authenticationStatus.errors && (
-        <Notification
-          type="error"
-          label="Something went wrong!"
-          className="z-20"
-        >
+        <Notification type="error" label="Something went wrong!">
           {authenticationStatus.errors?.join(' ') || ''}
         </Notification>
       )}
