@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dev-webapp-deployment
+  namespace: financer
+  labels:
+    name: webapp-dev
+    env: development
+    app: financer-dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapp-dev
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: webapp-dev
+    spec:
+      containers:
+        - image: ghcr.io/shamalainen/financer:latest-dev
+          name: webapp-dev
+          imagePullPolicy: Always
+          resources:
+            limits:
+              cpu: "0.5"
+              memory: "500Mi"
+            requests:
+              cpu: "0.002"
+              memory: "30Mi"
+          ports:
+            - containerPort: 4000
+              name: webapp-dev
+          envFrom:
+            - secretRef:
+                name: webapp-environment-secret
+            - configMapRef:
+                name: webapp-environment-config
+          env:
+            - name: PUBLIC_URL
+              value: https://financer-dev.silte.fi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: financer
+  name: financer-dev
+  labels:
+    app: financer-dev
+spec:
+  ports:
+    - port: 80
+      targetPort: 4000
+  selector:
+    app: webapp-dev
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: financer-dev
+  namespace: financer
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/redirect-entry-point: https
+spec:
+  rules:
+    - host: financer-dev.silte.fi
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: financer-dev
+                port:
+                  number: 80
