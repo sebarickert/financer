@@ -10,7 +10,7 @@ import {
   ImportUserDataDto,
 } from '../user-data/user-data.service';
 
-import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdateUserDto, UpdateUserOwnUserDto } from './dto/update-user.dto';
 import { Role } from './schemas/user.schema';
 import { UserId } from './users.decorators';
 import { UsersService } from './users.service';
@@ -45,7 +45,7 @@ export class UsersController {
   @Patch('my-user')
   updateOwnUser(
     @UserId() userId: ObjectId,
-    @Body() updateUserDto: UpdateUserDto,
+    @Body() updateUserDto: UpdateUserOwnUserDto,
   ) {
     return this.usersService.update(userId, updateUserDto);
   }
