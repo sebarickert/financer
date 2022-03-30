@@ -2,6 +2,8 @@ import { IconArrowLeft } from './icon.arrowLeft';
 import { IconArrowRight } from './icon.arrowRight';
 import { IconChartBar } from './icon.chartBar';
 import { IconChevronDown } from './icon.chevronDown';
+import { IconChevronLeft } from './icon.chevronLeft';
+import { IconChevronRight } from './icon.chevronRight';
 import { IconCloudDownload } from './icon.cloudDownload';
 import { IconCog } from './icon.cog';
 import { IconCollection } from './icon.collection';
@@ -41,6 +43,8 @@ export type IconName =
   | 'arrow-right'
   | 'view-grid-add'
   | 'cog'
+  | 'chevron-right'
+  | 'chevron-left'
   | 'collection';
 interface IconProps {
   type: IconName;
@@ -102,6 +106,12 @@ export const Icon = ({ type, className = '' }: IconProps): JSX.Element => {
 
     case 'chevron-down':
       return <IconChevronDown className={defaultIconClasses} />;
+
+    case 'chevron-right':
+      return <IconChevronRight className={defaultIconClasses} />;
+
+    case 'chevron-left':
+      return <IconChevronLeft className={defaultIconClasses} />;
 
     case 'collection':
       return <IconCollection className={defaultIconClasses} />;

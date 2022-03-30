@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
+import { Heading } from '../../../../components/heading/heading';
+import { Icon } from '../../../../components/icon/icon';
 import { Input } from '../../../../components/input/input';
 import { ModalCustom } from '../../../../components/modal/custom/modal.custom';
 import { Select } from '../../../../components/select/select';
@@ -47,35 +50,55 @@ export const UserDefaultMarketUpdateSettings = (): JSX.Element => {
   };
 
   return (
-    <ModalCustom
-      modalOpenButtonLabel="Set default market value update settings "
-      onConfirm={handleSave}
-      submitButtonLabel="Save"
-    >
-      <Input
-        id="transactionDescription"
-        type="text"
-        isRequired
-        value={defaultMarketSettings?.transactionDescription}
-        onChange={handleTransactionDescriptionInputValueChange}
+    <>
+      <div className="bg-blue-financer -mx-6 -mt-8 text-center pt-6 pb-4 mb-6 px-6 relative">
+        <NavLink
+          to={'/profile/user-preferences'}
+          className="absolute left-6 top-1/2 -translate-y-1/2 pt-2"
+        >
+          <span className="sr-only">Go back</span>
+          <Icon
+            type={'chevron-left'}
+            className="stroke-white -translate-x-1/2"
+          />
+        </NavLink>
+        <Heading
+          variant="h1"
+          className="!text-base !tracking-tight !text-white"
+        >
+          Market update settings
+        </Heading>
+      </div>
+      <ModalCustom
+        modalOpenButtonLabel="Set default market value update settings "
+        onConfirm={handleSave}
+        submitButtonLabel="Save"
       >
-        Transaction description
-      </Input>
-      <Select
-        className="mt-4"
-        id="category"
-        options={[{ name: 'None', _id: undefined }, ...categories].map(
-          ({ name, _id }) => ({
-            label: name,
-            value: _id,
-          })
-        )}
-        defaultValue={defaultMarketSettings?.category}
-        isRequired
-        handleOnChange={handleSelectChange}
-      >
-        Category
-      </Select>
-    </ModalCustom>
+        <Input
+          id="transactionDescription"
+          type="text"
+          isRequired
+          value={defaultMarketSettings?.transactionDescription}
+          onChange={handleTransactionDescriptionInputValueChange}
+        >
+          Transaction description
+        </Input>
+        <Select
+          className="mt-4"
+          id="category"
+          options={[{ name: 'None', _id: undefined }, ...categories].map(
+            ({ name, _id }) => ({
+              label: name,
+              value: _id,
+            })
+          )}
+          defaultValue={defaultMarketSettings?.category}
+          isRequired
+          handleOnChange={handleSelectChange}
+        >
+          Category
+        </Select>
+      </ModalCustom>
+    </>
   );
 };
