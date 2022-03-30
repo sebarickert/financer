@@ -100,7 +100,10 @@ export class TransactionsService {
   }
 
   async findAllByUser(userId: ObjectId): Promise<TransactionDocument[]> {
-    return this.transactionModel.find({ user: userId }).exec();
+    return this.transactionModel
+      .find({ user: userId })
+      .sort({ date: 'asc' })
+      .exec();
   }
 
   async findAllByAccount(
@@ -119,6 +122,47 @@ export class TransactionsService {
           },
         ],
       })
+      .sort({ date: 'asc' })
+
+      .exec();
+  }
+
+  async findAllIncomesByUser(userId: ObjectId): Promise<TransactionDocument[]> {
+    return this.transactionModel
+      .find({
+        user: userId,
+        toAccount: { $ne: undefined },
+        fromAccount: { $eq: undefined },
+      })
+      .sort({ date: 'asc' })
+
+      .exec();
+  }
+
+  async findAllExpensesByUser(
+    userId: ObjectId,
+  ): Promise<TransactionDocument[]> {
+    return this.transactionModel
+      .find({
+        user: userId,
+        fromAccount: { $ne: undefined },
+        toAccount: { $eq: undefined },
+      })
+      .sort({ date: 'asc' })
+
+      .exec();
+  }
+
+  async findAllTransfersByUser(
+    userId: ObjectId,
+  ): Promise<TransactionDocument[]> {
+    return this.transactionModel
+      .find({
+        user: userId,
+        fromAccount: { $ne: undefined },
+        toAccount: { $ne: undefined },
+      })
+      .sort({ date: 'asc' })
       .exec();
   }
 
@@ -245,40 +289,6 @@ export class TransactionsService {
 
   async removeAllByUser(userId: ObjectId): Promise<any> {
     await this.transactionModel.deleteMany({ user: userId }).exec();
-  }
-
-  async findAllIncomesByUser(userId: ObjectId): Promise<TransactionDocument[]> {
-    return this.transactionModel
-      .find({
-        user: userId,
-        toAccount: { $ne: undefined },
-        fromAccount: { $eq: undefined },
-      })
-      .exec();
-  }
-
-  async findAllExpensesByUser(
-    userId: ObjectId,
-  ): Promise<TransactionDocument[]> {
-    return this.transactionModel
-      .find({
-        user: userId,
-        fromAccount: { $ne: undefined },
-        toAccount: { $eq: undefined },
-      })
-      .exec();
-  }
-
-  async findAllTransfersByUser(
-    userId: ObjectId,
-  ): Promise<TransactionDocument[]> {
-    return this.transactionModel
-      .find({
-        user: userId,
-        fromAccount: { $ne: undefined },
-        toAccount: { $ne: undefined },
-      })
-      .exec();
   }
 
   private async verifyTransactionAccountOwnership(
