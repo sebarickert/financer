@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Input } from '../../../../components/input/input';
 import { ModalCustom } from '../../../../components/modal/custom/modal.custom';
@@ -9,13 +9,25 @@ import { useAllTransactionCategories } from '../../../../hooks/transactionCatego
 export const UserDefaultMarketUpdateSettings = (): JSX.Element => {
   const [defaultMarketSettings, setDefaultMarketUpdateSettings] =
     useUserDefaultMarketUpdateSettings();
-  const [transactionDescription, setTransactionDescription] = useState(
-    defaultMarketSettings?.transactionDescription ?? ''
-  );
-  const [category, setCategory] = useState(
-    defaultMarketSettings?.category ?? ''
+  const [transactionDescription, setTransactionDescription] = useState<
+    string | undefined
+  >(defaultMarketSettings?.transactionDescription);
+  const [category, setCategory] = useState<string | undefined>(
+    defaultMarketSettings?.category
   );
   const categories = useAllTransactionCategories();
+
+  useEffect(() => {
+    if (typeof transactionDescription !== 'undefined') return;
+
+    setTransactionDescription(defaultMarketSettings?.transactionDescription);
+  }, [defaultMarketSettings?.transactionDescription, transactionDescription]);
+
+  useEffect(() => {
+    if (typeof category !== 'undefined') return;
+
+    setCategory(defaultMarketSettings?.category);
+  }, [defaultMarketSettings?.category, category]);
 
   const handleTransactionDescriptionInputValueChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -28,7 +40,10 @@ export const UserDefaultMarketUpdateSettings = (): JSX.Element => {
   };
 
   const handleSave = () => {
-    setDefaultMarketUpdateSettings({ transactionDescription, category });
+    setDefaultMarketUpdateSettings({
+      transactionDescription: transactionDescription ?? '',
+      category,
+    });
   };
 
   return (
