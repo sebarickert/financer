@@ -11,6 +11,7 @@ import mongoose from 'mongoose';
 import passport from 'passport';
 
 import { configuration } from './config/configuration';
+import { AccountBalanceChangesModule } from './modules/account-balance-changes/account-balance-changes.module';
 import { AccountsModule } from './modules/accounts/accounts.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { ExpensesModule } from './modules/expenses/expenses.module';
@@ -49,6 +50,7 @@ import { UsersModule } from './modules/users/users.module';
     ExpensesModule,
     IncomesModule,
     TransfersModule,
+    AccountBalanceChangesModule,
   ],
 })
 export class AppModule implements NestModule {

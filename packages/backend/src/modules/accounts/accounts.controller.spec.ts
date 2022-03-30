@@ -2,6 +2,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { rootMongooseTestModule } from '../../../test/rootMongooseTest.module';
+import { AccountBalanceChangesModule } from '../account-balance-changes/account-balance-changes.module';
 
 import { AccountsController } from './accounts.controller';
 import { AccountsService } from './accounts.service';
@@ -17,6 +18,7 @@ describe('AccountsController', () => {
         MongooseModule.forFeature([
           { name: Account.name, schema: AccountSchema },
         ]),
+        AccountBalanceChangesModule,
       ],
       controllers: [AccountsController],
       providers: [AccountsService],
