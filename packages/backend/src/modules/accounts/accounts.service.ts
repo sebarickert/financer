@@ -7,8 +7,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import { ObjectId } from '../../types/objectId';
-import { TransactionCategory } from '../transaction-categories/schemas/transaction-category.schema';
-import { User } from '../users/schemas/user.schema';
+import { AccountBalanceChangesService } from '../account-balance-changes/account-balance-changes.service';
 
 import { CreateAccountDto } from './dto/create-account.dto';
 import { UpdateAccountDto } from './dto/update-account.dto';
@@ -18,6 +17,7 @@ import { Account, AccountDocument } from './schemas/account.schema';
 export class AccountsService {
   constructor(
     @InjectModel(Account.name) private accountModel: Model<AccountDocument>,
+    private accountBalanceChangesService: AccountBalanceChangesService,
   ) {}
 
   async create(
@@ -54,7 +54,21 @@ export class AccountsService {
     id: ObjectId,
     updateAccountDto: UpdateAccountDto,
   ): Promise<AccountDocument> {
-    await this.findOne(userId, id);
+    const accountBeforeChange = await this.findOne(userId, id);
+
+    if (
+      updateAccountDto.balance &&
+      updateAccountDto.balance !== accountBeforeChange.balance
+    ) {
+      const balanceChangeAmount =
+        updateAccountDto.balance - accountBeforeChange.balance;
+      await this.accountBalanceChangesService.create({
+        accountId: id,
+        userId,
+        amount: balanceChangeAmount,
+        date: new Date(),
+      });
+    }
 
     return this.accountModel.findByIdAndUpdate(id, updateAccountDto).exec();
   }
