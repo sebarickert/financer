@@ -17,7 +17,7 @@ import {
 } from 'recharts/types/component/DefaultTooltipContent';
 
 import { MONTH_IN_MS } from '../../constants/months';
-import { useTransactionsByAccountId } from '../../hooks/transaction/useTransactionsByAccountId';
+import { useAccountBalanceHistoryById } from '../../hooks/account/useAccountBalanceHistoryById';
 import {
   formatCurrency,
   formatCurrencyAbbreviation,
@@ -78,35 +78,23 @@ export const AccountBalanceHistoryChart = ({
   accountId,
 }: IAccountBalanceHistoryChartProps): JSX.Element => {
   const [chartData, setChartData] = useState<IChartData[]>([]);
-  const [transactions] = useTransactionsByAccountId(accountId);
+  const [accountBalanceHistory] = useAccountBalanceHistoryById(accountId);
 
   useEffect(() => {
-    if (!transactions) return;
-
+    if (!accountBalanceHistory) {
+      setChartData([]);
+      return;
+    }
     setChartData(
-      transactions
-        .map(
-          ({
-            toAccount,
-            toAccountBalance = 0,
-            fromAccountBalance = 0,
-            date,
-            amount,
-          }) => ({
-            dateStr: formatDate(new Date(date)),
-            date: new Date(date),
-            balance:
-              toAccount === accountId
-                ? toAccountBalance + amount
-                : fromAccountBalance - amount,
-          })
-        )
-        .sort(
-          ({ date: dateA }, { date: dateB }) =>
-            dateA.getTime() - dateB.getTime()
-        )
+      accountBalanceHistory
+        .map(({ date, balance }) => ({
+          date: new Date(date),
+          balance,
+          dateStr: formatDate(new Date(date)),
+        }))
+        .sort((a, b) => a.date.getTime() - b.date.getTime())
     );
-  }, [transactions, accountId]);
+  }, [accountBalanceHistory]);
 
   const monthAgoDate = new Date().getTime() - MONTH_IN_MS;
   const monthAgoIndex = chartData.indexOf(
@@ -114,7 +102,7 @@ export const AccountBalanceHistoryChart = ({
   );
 
   return (
-    <div className="bg-white border rounded-lg min-h-[300px] h-[20vh] md:h-auto md:min-h-0 md:aspect-video pl-2 py-6 pr-2">
+    <div className="bg-white border rounded-lg min-h-[{300px] h-[20vh] md:h-auto md:min-h-0 md:aspect-video pl-2 py-6 pr-2">
       <ResponsiveContainer>
         <AreaChart
           data={chartData}

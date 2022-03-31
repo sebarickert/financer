@@ -23,7 +23,7 @@ export class AccountsController {
   constructor(private readonly accountsService: AccountsService) {}
 
   @Post()
-  create(
+  async create(
     @UserId() userId: ObjectId,
     @Body() createAccountDto: CreateAccountDto,
   ) {
@@ -31,12 +31,12 @@ export class AccountsController {
   }
 
   @Get()
-  findAllByUser(@UserId() userId: ObjectId) {
+  async findAllByUser(@UserId() userId: ObjectId) {
     return this.accountsService.findAllByUser(userId);
   }
 
   @Get(':id')
-  findOne(
+  async findOne(
     @UserId() userId: ObjectId,
     @Param('id', ValidateEntityId) id: ObjectId,
   ) {
@@ -44,7 +44,7 @@ export class AccountsController {
   }
 
   @Patch(':id')
-  update(
+  async update(
     @UserId() userId: ObjectId,
     @Param('id', ValidateEntityId) id: ObjectId,
     @Body() updateAccountDto: UpdateAccountDto,
@@ -55,5 +55,13 @@ export class AccountsController {
   @Delete(':id')
   remove(@Param('id') id: ObjectId) {
     return this.accountsService.remove(+id);
+  }
+
+  @Get(':id/balance-history')
+  async getAccountBalanceHistory(
+    @UserId() userId: ObjectId,
+    @Param('id', ValidateEntityId) id: ObjectId,
+  ) {
+    return this.accountsService.getAccountBalanceHistory(userId, id);
   }
 }

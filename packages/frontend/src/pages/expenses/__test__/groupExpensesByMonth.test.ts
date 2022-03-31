@@ -7,7 +7,6 @@ const testData: IExpenseWithCategories[] = [
   {
     categoryMappings: ['Category 1', 'Category 2'],
     fromAccount: '5fbd39c804bcfa18c50dbf31',
-    fromAccountBalance: 1000.0000000010477,
     description: '123',
     _id: '5fc7ce00df7e9e067f57c826',
     amount: 10,
@@ -17,7 +16,6 @@ const testData: IExpenseWithCategories[] = [
   {
     categoryMappings: ['Category 1', 'Category 2'],
     fromAccount: '5fbd39c804bcfa18c50dbf31',
-    fromAccountBalance: 990.0000000010477,
     description: '123',
     _id: '5fc7ce04df7e9e067f57c827',
     amount: 20,
@@ -27,7 +25,6 @@ const testData: IExpenseWithCategories[] = [
   {
     categoryMappings: ['Category 1', 'Category 2'],
     fromAccount: '5fbd39c804bcfa18c50dbf31',
-    fromAccountBalance: 970.0000000010477,
     description: '123',
     _id: '5fc7ce09df7e9e067f57c828',
     amount: 30,

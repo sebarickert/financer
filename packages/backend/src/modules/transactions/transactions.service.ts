@@ -1,4 +1,6 @@
 import {
+  forwardRef,
+  Inject,
   Injectable,
   NotFoundException,
   UnauthorizedException,
@@ -20,6 +22,7 @@ export class TransactionsService {
   constructor(
     @InjectModel(Transaction.name)
     private transactionModel: Model<TransactionDocument>,
+    @Inject(forwardRef(() => AccountsService))
     private accountService: AccountsService,
     private transactionCategoriesService: TransactionCategoriesService,
     private transactionCategoryMappingsService: TransactionCategoryMappingsService,
@@ -99,11 +102,19 @@ export class TransactionsService {
     });
   }
 
+  private removeBalances = (transaction: TransactionDocument) => {
+    transaction.fromAccountBalance = undefined;
+    transaction.toAccountBalance = undefined;
+    return transaction;
+  };
+
   async findAllByUser(userId: ObjectId): Promise<TransactionDocument[]> {
-    return this.transactionModel
-      .find({ user: userId })
-      .sort({ date: 'asc' })
-      .exec();
+    return (
+      await this.transactionModel
+        .find({ user: userId })
+        .sort({ date: 'asc' })
+        .exec()
+    ).map(this.removeBalances);
   }
 
   async findAllByAccount(
@@ -111,59 +122,64 @@ export class TransactionsService {
     accountId: ObjectId,
   ): Promise<TransactionDocument[]> {
     await this.accountService.findOne(userId, accountId);
-    return this.transactionModel
-      .find({
-        $or: [
-          {
-            toAccount: accountId,
-          },
-          {
-            fromAccount: accountId,
-          },
-        ],
-      })
-      .sort({ date: 'asc' })
-
-      .exec();
+    return (
+      await this.transactionModel
+        .find({
+          $or: [
+            {
+              toAccount: accountId,
+            },
+            {
+              fromAccount: accountId,
+            },
+          ],
+        })
+        .sort({ date: 'asc' })
+        .exec()
+    ).map(this.removeBalances);
   }
 
   async findAllIncomesByUser(userId: ObjectId): Promise<TransactionDocument[]> {
-    return this.transactionModel
-      .find({
-        user: userId,
-        toAccount: { $ne: undefined },
-        fromAccount: { $eq: undefined },
-      })
-      .sort({ date: 'asc' })
-
-      .exec();
+    return (
+      await this.transactionModel
+        .find({
+          user: userId,
+          toAccount: { $ne: undefined },
+          fromAccount: { $eq: undefined },
+        })
+        .sort({ date: 'asc' })
+        .exec()
+    ).map(this.removeBalances);
   }
 
   async findAllExpensesByUser(
     userId: ObjectId,
   ): Promise<TransactionDocument[]> {
-    return this.transactionModel
-      .find({
-        user: userId,
-        fromAccount: { $ne: undefined },
-        toAccount: { $eq: undefined },
-      })
-      .sort({ date: 'asc' })
-
-      .exec();
+    return (
+      await this.transactionModel
+        .find({
+          user: userId,
+          fromAccount: { $ne: undefined },
+          toAccount: { $eq: undefined },
+        })
+        .sort({ date: 'asc' })
+        .exec()
+    ).map(this.removeBalances);
   }
 
   async findAllTransfersByUser(
     userId: ObjectId,
   ): Promise<TransactionDocument[]> {
-    return this.transactionModel
-      .find({
-        user: userId,
-        fromAccount: { $ne: undefined },
-        toAccount: { $ne: undefined },
-      })
-      .sort({ date: 'asc' })
-      .exec();
+    return (
+      await this.transactionModel
+        .find({
+          user: userId,
+          fromAccount: { $ne: undefined },
+          toAccount: { $ne: undefined },
+        })
+        .sort({ date: 'asc' })
+        .exec()
+    ).map(this.removeBalances);
   }
 
   async update(
