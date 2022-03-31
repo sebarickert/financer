@@ -1,4 +1,14 @@
-import { Controller, Get, Body, Patch, Param, Post, Res } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Body,
+  Patch,
+  Param,
+  Post,
+  Res,
+  forwardRef,
+  Inject,
+} from '@nestjs/common';
 import { Response } from 'express';
 
 import { ObjectId } from '../../types/objectId';
@@ -20,6 +30,7 @@ import { UsersService } from './users.service';
 export class UsersController {
   constructor(
     private readonly usersService: UsersService,
+    @Inject(forwardRef(() => UserDataService))
     private readonly userDataService: UserDataService,
   ) {}
 
@@ -65,12 +76,11 @@ export class UsersController {
   @Get(':id/my-data')
   @Auth(Role.admin)
   async getAllOneUserData(
-    @Param('id', ValidateEntityId) id: ObjectId,
+    @Param('id', ValidateEntityId) userId: ObjectId,
     @Res() res: Response,
   ) {
-    const user = await this.usersService.findOne(id);
     const { filename, data } = await this.userDataService.findAllOneUserData(
-      user,
+      userId,
     );
 
     res.setHeader('Content-disposition', `attachment; filename= ${filename}`);
