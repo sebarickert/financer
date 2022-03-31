@@ -33,7 +33,7 @@ export const Accounts = (): JSX.Element => {
       <SEO title="Accounts" />
       <section className="grid gap-8">
         <section>
-          <Heading variant="h1" className="mb-6">
+          <Heading variant="h1" className="mb-4 lg:mb-6">
             Accounts
           </Heading>
           <QuickLinksItem

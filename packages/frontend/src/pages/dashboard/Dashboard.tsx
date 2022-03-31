@@ -11,7 +11,7 @@ import { SEO } from '../../components/seo/seo';
 export const Dashboard = (): JSX.Element => {
   return (
     <>
-      <SEO title="Dashboard" />
+      <SEO title="Dashboard" toolbarColor="white" />
       <Heading variant="h1" className="mb-4 lg:mb-6">
         Dashboard
       </Heading>

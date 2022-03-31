@@ -1,12 +1,10 @@
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
 
 import { Heading } from '../../../../components/heading/heading';
-import { Icon } from '../../../../components/icon/icon';
 import { Loader } from '../../../../components/loader/loader';
-import { MobileHeader } from '../../../../components/mobile-header/mobile-header';
 import { ModalCustom } from '../../../../components/modal/custom/modal.custom';
 import { Select } from '../../../../components/select/select';
+import { SEO } from '../../../../components/seo/seo';
 import { useAllAccounts } from '../../../../hooks/account/useAllAccounts';
 import { useUserDefaultExpenseAccount } from '../../../../hooks/profile/user-preference/useUserDefaultExpenseAccount';
 
@@ -28,9 +26,13 @@ export const UserDefaultExpenseAccount = (): JSX.Element => {
     <Loader loaderColor="blue" />
   ) : (
     <>
-      <MobileHeader backLink={'/profile/user-preferences'}>
+      <SEO
+        title="Default expense account"
+        backLink={'/profile/user-preferences'}
+      />
+      <Heading variant="h1" className="mb-4 lg:mb-6">
         Default expense account
-      </MobileHeader>
+      </Heading>
       <ModalCustom
         modalOpenButtonLabel="Set default expense account"
         onConfirm={handleSave}

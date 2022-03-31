@@ -2,7 +2,6 @@ import { NavLink } from 'react-router-dom';
 
 import { Heading } from '../../../components/heading/heading';
 import { Icon } from '../../../components/icon/icon';
-import { MobileHeader } from '../../../components/mobile-header/mobile-header';
 import { SEO } from '../../../components/seo/seo';
 
 const MvpLink = ({
@@ -31,8 +30,10 @@ const MvpLink = ({
 export const UserPreferences = (): JSX.Element => {
   return (
     <>
-      <SEO title="User preferences" />
-      <MobileHeader backLink={'/profile'}>User preferences</MobileHeader>
+      <SEO title="User preferences" backLink={'/profile'} />
+      <Heading variant="h1" className="mb-4 lg:mb-6">
+        User preferences
+      </Heading>
       <ul className="-mx-6">
         <MvpLink link="default-income-account">Default income account</MvpLink>
         <MvpLink link="default-expense-account">
