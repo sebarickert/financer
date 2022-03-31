@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 
 import { ObjectId, parseObjectId } from '../../types/objectId';
 import { AccountBalanceChangesService } from '../account-balance-changes/account-balance-changes.service';
@@ -12,6 +12,7 @@ import { TransactionCategoryMappingsService } from '../transaction-category-mapp
 import { TransactionDocument } from '../transactions/schemas/transaction.schema';
 import { TransactionsService } from '../transactions/transactions.service';
 import { UserDocument } from '../users/schemas/user.schema';
+import { UsersService } from '../users/users.service';
 
 export type ImportUserDataDto = {
   transactions: TransactionDocument[];
@@ -40,7 +41,9 @@ const getMyDataFilename = (): string => {
 @Injectable()
 export class UserDataService {
   constructor(
-    private accountService: AccountsService,
+    @Inject(forwardRef(() => UsersService))
+    private usersService: UsersService,
+    private accountsService: AccountsService,
     private accountBalanceChangesService: AccountBalanceChangesService,
     private transactionService: TransactionsService,
     private transactionCategoriesService: TransactionCategoriesService,
@@ -48,10 +51,10 @@ export class UserDataService {
   ) {}
 
   async findAllOneUserData(
-    user: UserDocument,
+    userId: ObjectId,
   ): Promise<{ filename: string; data: ExportUserDataDto }> {
-    const userId = user._id;
-    const accounts = await this.accountService.findAllByUser(userId);
+    const user = await this.usersService.findOne(userId);
+    const accounts = await this.accountsService.findAllByUser(userId);
     const accountBalanceChanges =
       await this.accountBalanceChangesService.findAllByUser(userId);
     const transactions = await this.transactionService.findAllByUser(userId);
@@ -84,7 +87,7 @@ export class UserDataService {
     }: ImportUserDataDto,
   ) {
     await Promise.all([
-      this.accountService.removeAllByUser(userId),
+      this.accountsService.removeAllByUser(userId),
       this.accountBalanceChangesService.removeAllByUser(userId),
       this.transactionService.removeAllByUser(userId),
       this.transactionCategoriesService.removeAllByUser(userId),
@@ -131,7 +134,7 @@ export class UserDataService {
     );
 
     await Promise.all([
-      this.accountService.createMany(parsedAccounts),
+      this.accountsService.createMany(parsedAccounts),
       this.accountBalanceChangesService.createMany(parsedAccountBalanceChanges),
       this.transactionService.createMany(parsedTransactions),
       this.transactionCategoriesService.createMany(parsedTransactionCategories),
