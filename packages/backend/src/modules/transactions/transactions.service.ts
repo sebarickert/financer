@@ -11,6 +11,7 @@ import { Model } from 'mongoose';
 import { ObjectId } from '../../types/objectId';
 import { AccountsService } from '../accounts/accounts.service';
 import { TransactionCategoriesService } from '../transaction-categories/transaction-categories.service';
+import { CreateTransactionCategoryMappingDto } from '../transaction-category-mappings/dto/create-transaction-category-mapping.dto';
 import { TransactionCategoryMappingsService } from '../transaction-category-mappings/transaction-category-mappings.service';
 
 import { CreateTransactionDto } from './dto/create-transaction.dto';
@@ -32,45 +33,22 @@ export class TransactionsService {
     userId: ObjectId,
     createTransactionDto: CreateTransactionDto,
   ): Promise<TransactionDocument> {
-    const { categories: rawCategories, ...transactionData } =
+    const { categories: rawCategories, ...transactionRawData } =
       createTransactionDto;
 
-    await this.verifyTransactionAccountOwnership(userId, transactionData);
+    await this.verifyTransactionAccountOwnership(userId, transactionRawData);
+    await this.verifyCategoriesExists(rawCategories);
 
-    if (transactionData.fromAccount) {
-      (transactionData as unknown as Transaction).fromAccountBalance =
-        await this.parseTransactionAccountBalanceBefore(
-          userId,
-          transactionData.fromAccount,
-          transactionData.date,
-        );
-    }
-
-    if (transactionData.toAccount) {
-      (transactionData as unknown as Transaction).toAccountBalance =
-        await this.parseTransactionAccountBalanceBefore(
-          userId,
-          transactionData.toAccount,
-          transactionData.date,
-        );
-    }
-
-    if (rawCategories) {
-      await this.transactionCategoriesService.ensureCategoriesExist(
-        rawCategories.map((category) => category.category_id),
-      );
-    }
-
+    const transactionData = { ...transactionRawData, user: userId };
     const transaction = await this.transactionModel.create(transactionData);
 
-    if (rawCategories) {
-      const categories = rawCategories.map((category) => ({
-        ...category,
-        transaction_id: transaction._id,
-        owner: userId,
-      }));
-      await this.transactionCategoryMappingsService.createMany(categories);
-    }
+    await this.createCategories(userId, transaction._id, rawCategories);
+    await this.updateRelatedAccountBalance(
+      userId,
+      transaction,
+      transaction.amount,
+      'add',
+    );
 
     return transaction;
   }
@@ -102,19 +80,11 @@ export class TransactionsService {
     });
   }
 
-  private removeBalances = (transaction: TransactionDocument) => {
-    transaction.fromAccountBalance = undefined;
-    transaction.toAccountBalance = undefined;
-    return transaction;
-  };
-
   async findAllByUser(userId: ObjectId): Promise<TransactionDocument[]> {
-    return (
-      await this.transactionModel
-        .find({ user: userId })
-        .sort({ date: 'asc' })
-        .exec()
-    ).map(this.removeBalances);
+    return this.transactionModel
+      .find({ user: userId })
+      .sort({ date: 'asc' })
+      .exec();
   }
 
   async findAllByAccount(
@@ -122,103 +92,77 @@ export class TransactionsService {
     accountId: ObjectId,
   ): Promise<TransactionDocument[]> {
     await this.accountService.findOne(userId, accountId);
-    return (
-      await this.transactionModel
-        .find({
-          $or: [
-            {
-              toAccount: accountId,
-            },
-            {
-              fromAccount: accountId,
-            },
-          ],
-        })
-        .sort({ date: 'asc' })
-        .exec()
-    ).map(this.removeBalances);
+    return this.transactionModel
+      .find({
+        $or: [
+          {
+            toAccount: accountId,
+          },
+          {
+            fromAccount: accountId,
+          },
+        ],
+      })
+      .sort({ date: 'asc' })
+      .exec();
   }
 
   async findAllIncomesByUser(userId: ObjectId): Promise<TransactionDocument[]> {
-    return (
-      await this.transactionModel
-        .find({
-          user: userId,
-          toAccount: { $ne: undefined },
-          fromAccount: { $eq: undefined },
-        })
-        .sort({ date: 'asc' })
-        .exec()
-    ).map(this.removeBalances);
+    return this.transactionModel
+      .find({
+        user: userId,
+        toAccount: { $ne: undefined },
+        fromAccount: { $eq: undefined },
+      })
+      .sort({ date: 'asc' })
+      .exec();
   }
 
   async findAllExpensesByUser(
     userId: ObjectId,
   ): Promise<TransactionDocument[]> {
-    return (
-      await this.transactionModel
-        .find({
-          user: userId,
-          fromAccount: { $ne: undefined },
-          toAccount: { $eq: undefined },
-        })
-        .sort({ date: 'asc' })
-        .exec()
-    ).map(this.removeBalances);
+    return this.transactionModel
+      .find({
+        user: userId,
+        fromAccount: { $ne: undefined },
+        toAccount: { $eq: undefined },
+      })
+      .sort({ date: 'asc' })
+      .exec();
   }
 
   async findAllTransfersByUser(
     userId: ObjectId,
   ): Promise<TransactionDocument[]> {
-    return (
-      await this.transactionModel
-        .find({
-          user: userId,
-          fromAccount: { $ne: undefined },
-          toAccount: { $ne: undefined },
-        })
-        .sort({ date: 'asc' })
-        .exec()
-    ).map(this.removeBalances);
+    return this.transactionModel
+      .find({
+        user: userId,
+        fromAccount: { $ne: undefined },
+        toAccount: { $ne: undefined },
+      })
+      .sort({ date: 'asc' })
+      .exec();
   }
 
   async update(
     userId: ObjectId,
     id: ObjectId,
     updateTransactionDto: UpdateTransactionDto,
-    correctionBalance: { fromAccount?: number; toAccount?: number },
   ): Promise<TransactionDocument> {
     const { categories: rawCategories, ...transactionData } =
       updateTransactionDto;
 
-    await this.findOne(userId, id);
+    const transactionBefore = await this.findOne(userId, id);
     await this.verifyTransactionAccountOwnership(userId, transactionData);
+    await this.verifyCategoriesExists(rawCategories);
+    await this.updateRelatedAccountBalance(
+      userId,
+      transactionBefore,
+      transactionBefore.amount,
+      'remove',
+    );
 
-    if (transactionData.fromAccount) {
-      (transactionData as unknown as Transaction).fromAccountBalance =
-        (await this.parseTransactionAccountBalanceBefore(
-          userId,
-          transactionData.fromAccount,
-          transactionData.date,
-        )) + (correctionBalance.fromAccount || 0);
-    }
-
-    if (transactionData.toAccount) {
-      (transactionData as unknown as Transaction).toAccountBalance =
-        (await this.parseTransactionAccountBalanceBefore(
-          userId,
-          transactionData.toAccount,
-          transactionData.date,
-        )) - (correctionBalance.toAccount || 0);
-    }
-
-    if (rawCategories) {
-      await this.transactionCategoriesService.ensureCategoriesExist(
-        rawCategories.map((category) => category.category_id),
-      );
-    }
-
-    const transaction = this.transactionModel
+    const transaction = await this.transactionModel
       .findByIdAndUpdate(id, transactionData, { new: true })
       .exec();
 
@@ -226,85 +170,56 @@ export class TransactionsService {
       userId,
       id,
     );
-    if (rawCategories) {
-      const categories = rawCategories.map((category) => ({
-        ...category,
-        transaction_id: id,
-        owner: userId,
-      }));
-      await this.transactionCategoryMappingsService.createMany(categories);
-    }
+    await this.createCategories(userId, id, rawCategories);
+    await this.updateRelatedAccountBalance(
+      userId,
+      transaction,
+      transaction.amount,
+      'add',
+    );
 
     return transaction;
   }
 
-  async updateTransactionHistoryAndAccount(
-    userId,
-    accountId,
-    date,
-    amount,
+  async remove(
+    transaction: TransactionDocument,
+    userId: ObjectId,
   ): Promise<void> {
-    await Promise.all([
-      this.updateAccountBalanceBeforeByAfterDate(accountId, date, amount),
-      this.accountService.updateAccountBalance(userId, accountId, amount),
-    ]);
-  }
-
-  private async updateAccountBalanceBeforeByAfterDate(
-    accountId: ObjectId,
-    date: Date,
-    balanceChange: number,
-  ): Promise<void> {
-    await Promise.all([
-      this.updateToAccountBalanceBeforeByAfterDate(
-        accountId,
-        date,
-        balanceChange,
-      ),
-      this.updateFromAccountBalanceBeforeByAfterDate(
-        accountId,
-        date,
-        balanceChange,
-      ),
-    ]);
-  }
-
-  private async updateToAccountBalanceBeforeByAfterDate(
-    accountId: ObjectId,
-    date: Date,
-    balanceChange: number,
-  ): Promise<any> {
-    return this.transactionModel.updateMany(
-      {
-        toAccount: accountId,
-        date: { $gt: date },
-      },
-      { $inc: { toAccountBalance: balanceChange } },
+    await this.updateRelatedAccountBalance(
+      userId,
+      transaction,
+      transaction.amount,
+      'remove',
     );
+    await transaction.delete();
   }
 
-  private async updateFromAccountBalanceBeforeByAfterDate(
-    accountId: ObjectId,
-    date: Date,
-    balanceChange: number,
-  ): Promise<any> {
-    return this.transactionModel
-      .updateMany(
-        {
-          fromAccount: accountId,
-          date: { $gt: date },
-        },
-        { $inc: { fromAccountBalance: balanceChange } },
-      )
-      .exec();
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} transaction`;
-  }
-
-  async removeAllByUser(userId: ObjectId): Promise<any> {
+  async removeAllByUser(userId: ObjectId): Promise<void> {
     await this.transactionModel.deleteMany({ user: userId }).exec();
+  }
+
+  private async updateRelatedAccountBalance(
+    userId: ObjectId,
+    transaction: Partial<Transaction>,
+    amount: number,
+    type: 'add' | 'remove',
+  ): Promise<void> {
+    const amountToApply = type === 'add' ? amount : -amount;
+
+    if (transaction.toAccount) {
+      await this.accountService.updateBalance(
+        userId,
+        transaction.toAccount,
+        amountToApply,
+      );
+    }
+    if (transaction.fromAccount) {
+      await this.accountService.updateBalance(
+        userId,
+        transaction.fromAccount,
+        -amountToApply,
+      );
+    }
   }
 
   private async verifyTransactionAccountOwnership(
@@ -319,24 +234,35 @@ export class TransactionsService {
     }
   }
 
-  private async parseTransactionAccountBalanceBefore(
-    userId: ObjectId,
-    accountId: ObjectId,
-    date: Date,
-  ): Promise<number> {
-    const newerTransaction = await this.findOneNewer(accountId, date);
-
-    if (newerTransaction) {
-      const isNextTransactionExpense = accountId.equals(
-        newerTransaction?.fromAccount,
-      );
-
-      return isNextTransactionExpense
-        ? newerTransaction.fromAccountBalance
-        : newerTransaction.toAccountBalance;
+  private async verifyCategoriesExists(
+    categories?: CreateTransactionCategoryMappingDto[],
+  ) {
+    if (!categories) {
+      return;
     }
 
-    const account = await this.accountService.findOne(userId, accountId);
-    return account.balance;
+    await this.transactionCategoriesService.ensureCategoriesExist(
+      categories.map((category) => category.category_id),
+    );
+  }
+
+  private async createCategories(
+    userId: ObjectId,
+    transactionId: ObjectId,
+    categories?: CreateTransactionCategoryMappingDto[],
+  ) {
+    if (!categories) {
+      return;
+    }
+
+    const categoriesWithAllFields = categories.map((category) => ({
+      ...category,
+      transaction_id: transactionId,
+      owner: userId,
+    }));
+
+    await this.transactionCategoryMappingsService.createMany(
+      categoriesWithAllFields,
+    );
   }
 }

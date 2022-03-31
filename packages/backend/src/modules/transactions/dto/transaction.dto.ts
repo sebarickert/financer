@@ -24,12 +24,6 @@ export class TransactionDto {
   @Transform(objectIdTransformer)
   readonly toAccount: ObjectId;
 
-  @IsNumber()
-  readonly fromAccountBalance: number;
-
-  @IsNumber()
-  readonly toAccountBalance: number;
-
   @Min(0.01, { message: 'Amount must be a positive number.' })
   readonly amount: number;
 
