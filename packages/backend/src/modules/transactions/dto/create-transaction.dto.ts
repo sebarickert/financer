@@ -19,8 +19,7 @@ export class CreateTransactionBaseWithCategoryDto {
 export class CreateTransactionDto extends IntersectionType(
   OmitType(TransactionDto, [
     '_id',
-    'toAccountBalance',
-    'fromAccountBalance',
+    'user',
     'toAccount',
     'fromAccount',
   ] as const),

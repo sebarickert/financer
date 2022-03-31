@@ -15,12 +15,6 @@ export class Transaction {
   @Prop({ type: MogooseTypes.ObjectId, ref: Account.name, default: null })
   toAccount: ObjectId;
 
-  @Prop({ default: null })
-  fromAccountBalance: number;
-
-  @Prop({ default: null })
-  toAccountBalance: number;
-
   @Prop({ required: true })
   amount: number;
 
