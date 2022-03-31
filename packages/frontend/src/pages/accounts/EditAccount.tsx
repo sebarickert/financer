@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { Loader } from '../../components/loader/loader';
-import { SEO } from '../../components/seo/seo';
+import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { useAccountById } from '../../hooks/account/useAccountById';
 import { useEditAccount } from '../../hooks/account/useEditAccount';
 import { parseErrorMessagesToArray } from '../../utils/apiHelper';
@@ -43,7 +43,7 @@ export const EditAccount = (): JSX.Element => {
     <Loader loaderColor="blue" />
   ) : (
     <>
-      <SEO title={`Edit ${account.name}`} />
+      <UpdatePageInfo title={`Edit ${account.name}`} />
       <AccountForm
         onSubmit={handleSubmit}
         errors={errors}

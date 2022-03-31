@@ -4,7 +4,7 @@ import { Heading } from '../../../../components/heading/heading';
 import { Loader } from '../../../../components/loader/loader';
 import { ModalCustom } from '../../../../components/modal/custom/modal.custom';
 import { Select } from '../../../../components/select/select';
-import { SEO } from '../../../../components/seo/seo';
+import { UpdatePageInfo } from '../../../../components/seo/updatePageInfo';
 import { useAllAccounts } from '../../../../hooks/account/useAllAccounts';
 import { useUserDefaultExpenseAccount } from '../../../../hooks/profile/user-preference/useUserDefaultExpenseAccount';
 
@@ -26,7 +26,7 @@ export const UserDefaultExpenseAccount = (): JSX.Element => {
     <Loader loaderColor="blue" />
   ) : (
     <>
-      <SEO
+      <UpdatePageInfo
         title="Default expense account"
         backLink={'/profile/user-preferences'}
       />

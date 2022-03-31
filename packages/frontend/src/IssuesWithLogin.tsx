@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { SEO } from './components/seo/seo';
+import { UpdatePageInfo } from './components/seo/updatePageInfo';
 
 const { REACT_APP_IS_GITHUB_OAUTH_ENABLED, REACT_APP_IS_AUTH0_OAUTH_ENABLED } =
   process.env;
@@ -42,7 +42,7 @@ const ResolveAuth0Issues = (): JSX.Element => {
 export const IssuesWithLogin = (): JSX.Element => {
   return (
     <>
-      <SEO title="Issues with login" />
+      <UpdatePageInfo title="Issues with login" />
       <div className="relative py-16 bg-white overflow-hidden">
         <div className="hidden lg:block lg:absolute lg:inset-y-0 lg:h-full lg:w-full">
           <div

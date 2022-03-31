@@ -6,12 +6,12 @@ import { DashboardStats } from '../../components/dashboard-stats/dashboard.stats
 import { Heading } from '../../components/heading/heading';
 import { QuickLinks } from '../../components/quick-links/quick-links';
 import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
-import { SEO } from '../../components/seo/seo';
+import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 
 export const Dashboard = (): JSX.Element => {
   return (
     <>
-      <SEO title="Dashboard" toolbarColor="white" />
+      <UpdatePageInfo title="Dashboard" toolbarColor="white" />
       <Heading variant="h1" className="mb-4 lg:mb-6">
         Dashboard
       </Heading>

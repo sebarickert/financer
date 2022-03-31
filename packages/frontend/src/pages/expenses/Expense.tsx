@@ -7,7 +7,7 @@ import { DescriptionListItem } from '../../components/description-list/descripti
 import { Icon } from '../../components/icon/icon';
 import { Loader } from '../../components/loader/loader';
 import { ModalConfirm } from '../../components/modal/confirm/modal.confirm';
-import { SEO } from '../../components/seo/seo';
+import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { useDeleteExpense } from '../../hooks/expense/useDeleteExpense';
 import { useExpenseById } from '../../hooks/expense/useExpenseById';
 import { useAllTransactionCategoriesWithCategoryTree } from '../../hooks/transactionCategories/useAllTransactionCategories';
@@ -59,7 +59,7 @@ export const Expense = (): JSX.Element => {
     <Loader loaderColor="blue" />
   ) : (
     <>
-      <SEO title={`${expense.description} | Expenses`} />
+      <UpdatePageInfo title={`${expense.description} | Expenses`} />
       <section className="bg-white border divide-y rounded-lg sm:grid sm:divide-y-0 sm:divide-x">
         <div className="p-6">
           <header className="flex items-center mb-6">

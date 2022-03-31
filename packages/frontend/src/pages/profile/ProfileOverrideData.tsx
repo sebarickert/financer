@@ -9,7 +9,7 @@ import {
   Notification,
   INotificationProps,
 } from '../../components/notification/notification';
-import { SEO } from '../../components/seo/seo';
+import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { useOverrideProfileData } from '../../hooks/profile/useOverrideProfileData';
 import { IOverrideProfileData } from '../../services/ProfileService';
 
@@ -113,7 +113,7 @@ export const ProfileOverrideData = (): JSX.Element => {
 
   return (
     <>
-      <SEO title="Override data (DANGER ZONE)" />
+      <UpdatePageInfo title="Override data (DANGER ZONE)" />
       {notification && (
         <Notification
           type={notification.type}

@@ -6,7 +6,7 @@ import { Heading } from '../../components/heading/heading';
 import { Loader } from '../../components/loader/loader';
 import { QuickLinks } from '../../components/quick-links/quick-links';
 import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
-import { SEO } from '../../components/seo/seo';
+import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { StatsGroup } from '../../components/stats/stats.group';
 import { StatsItem } from '../../components/stats/stats.item';
 import { TransactionStackedList } from '../../components/transaction-stacked-list/transaction-stacked-list';
@@ -186,7 +186,7 @@ export const Statistics = (): JSX.Element => {
     <Loader loaderColor="blue" />
   ) : (
     <>
-      <SEO title="Statistics" />
+      <UpdatePageInfo title="Statistics" />
       <Heading variant="h1" className="mb-4 lg:mb-6">
         Statistics
       </Heading>

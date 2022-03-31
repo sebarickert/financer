@@ -1,17 +1,10 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 
-interface ISEOProps {
-  title: string;
-  toolbarColor?: 'white' | 'brand';
-  backLink?: string;
-}
+import { usePageInfoContext } from '../../context/pageInfoContext';
 
-export const SEO = ({
-  title,
-  toolbarColor = 'brand',
-  backLink,
-}: ISEOProps): JSX.Element => {
+export const SEO = (): JSX.Element => {
+  const [{ title, toolbarColor = 'white', backLink }] = usePageInfoContext();
   const toolbarColorMapping = {
     white: '#FAFAFA',
     brand: '#0E6AC7',

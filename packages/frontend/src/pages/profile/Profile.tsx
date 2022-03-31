@@ -2,7 +2,7 @@ import { Button } from '../../components/button/button';
 import { Heading } from '../../components/heading/heading';
 import { QuickLinks } from '../../components/quick-links/quick-links';
 import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
-import { SEO } from '../../components/seo/seo';
+import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { useProfileInformation } from '../../hooks/profile/useProfileInformation';
 
 export const Profile = (): JSX.Element => {
@@ -10,7 +10,7 @@ export const Profile = (): JSX.Element => {
 
   return (
     <>
-      <SEO title="Profile" />
+      <UpdatePageInfo title="Profile" />
       <Heading variant="h1" className="mb-4 lg:mb-6">
         Profile
       </Heading>

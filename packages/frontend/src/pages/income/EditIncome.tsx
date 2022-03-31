@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { Loader } from '../../components/loader/loader';
-import { SEO } from '../../components/seo/seo';
+import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { useEditIncome } from '../../hooks/income/useEditIncome';
 import { useIncomeById } from '../../hooks/income/useIncomeById';
 import { useTransactionCategoryMappingsByTransactionId } from '../../hooks/transactionCategoryMapping/useTransactionCategoryMappingsByTransactionId';
@@ -55,7 +55,7 @@ export const EditIncome = (): JSX.Element => {
     <Loader loaderColor="blue" />
   ) : (
     <>
-      <SEO title={`Edit ${income.description} | Incomes`} />
+      <UpdatePageInfo title={`Edit ${income.description} | Incomes`} />
       <IncomeForm
         onSubmit={handleSubmit}
         errors={errors}

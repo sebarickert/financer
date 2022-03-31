@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { Loader } from '../../components/loader/loader';
-import { SEO } from '../../components/seo/seo';
+import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { useTransactionCategoryMappingsByTransactionId } from '../../hooks/transactionCategoryMapping/useTransactionCategoryMappingsByTransactionId';
 import { useEditTransfer } from '../../hooks/transfer/useEditTransfer';
 import { useTransferById } from '../../hooks/transfer/useTransferById';
@@ -55,7 +55,7 @@ export const EditTransfer = (): JSX.Element => {
     <Loader loaderColor="blue" />
   ) : (
     <>
-      <SEO title="Edit transfer" />
+      <UpdatePageInfo title="Edit transfer" />
       <TransferForm
         onSubmit={handleSubmit}
         errors={errors}

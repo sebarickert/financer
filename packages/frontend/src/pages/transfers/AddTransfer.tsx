@@ -2,7 +2,7 @@ import { ITransaction, ITransactionCategoryMapping } from '@local/types';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { SEO } from '../../components/seo/seo';
+import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { useUserDefaultTransferSourceAccount } from '../../hooks/profile/user-preference/useUserDefaultTransferSourceAccount';
 import { useUserDefaultTransferTargetAccount } from '../../hooks/profile/user-preference/useUserDefaultTransferTargetAccount';
 import { useAddTransfer } from '../../hooks/transfer/useAddTransfer';
@@ -43,7 +43,7 @@ export const AddTransfer = (): JSX.Element => {
 
   return (
     <>
-      <SEO title="Add transfer" />
+      <UpdatePageInfo title="Add transfer" />
       <TransferForm
         onSubmit={handleSubmit}
         errors={errors}
