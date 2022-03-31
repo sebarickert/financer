@@ -1,4 +1,4 @@
-import { ApiResponse, IAccount } from '@local/types';
+import { AccountBalanceHistoryDto, ApiResponse, IAccount } from '@local/types';
 
 import { parseApiResponse } from '../utils/apiHelper';
 
@@ -9,6 +9,13 @@ export const getAllAccounts = async (): Promise<IAccount[]> => {
 
 export const getAccountById = async (id: string): Promise<IAccount> => {
   const account = await fetch(`/api/accounts/${id}`);
+  return account.json();
+};
+
+export const getAccountBalanceHistoryById = async (
+  id: string
+): Promise<AccountBalanceHistoryDto[]> => {
+  const account = await fetch(`/api/accounts/${id}/balance-history`);
   return account.json();
 };
 
