@@ -4,6 +4,7 @@ import { NavLink, Outlet } from 'react-router-dom';
 import { ReactComponent as Logo } from '../../assets/logo.svg';
 import { Container } from '../container/container';
 import { DesktopNavigation } from '../desktop-navigation/desktop-navigation';
+import { MobileHeader } from '../mobile-header/mobile-header';
 import { MobileNavigation } from '../mobile-navigation/mobile-navigation';
 
 export const Layout = (): JSX.Element => {
@@ -62,11 +63,12 @@ export const Layout = (): JSX.Element => {
   return (
     <div className="flex flex-col h-full min-h-screen overflow-y-scroll lg:hidden disable-scrollbars">
       <main className="flex-grow bg-white-off lg:pb-24">
-        <div className={`px-6 pt-[70px] pb-24`}>
+        <div className={`px-6 pt-[78px] pb-24`}>
           <Outlet />
         </div>
       </main>
       <header>
+        <MobileHeader />
         <MobileNavigation />
       </header>
     </div>

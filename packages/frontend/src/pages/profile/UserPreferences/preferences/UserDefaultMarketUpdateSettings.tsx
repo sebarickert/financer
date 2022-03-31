@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
 
 import { Heading } from '../../../../components/heading/heading';
-import { Icon } from '../../../../components/icon/icon';
 import { Input } from '../../../../components/input/input';
-import { MobileHeader } from '../../../../components/mobile-header/mobile-header';
 import { ModalCustom } from '../../../../components/modal/custom/modal.custom';
 import { Select } from '../../../../components/select/select';
+import { SEO } from '../../../../components/seo/seo';
 import { useUserDefaultMarketUpdateSettings } from '../../../../hooks/profile/user-preference/useDefaultMarketUpdateSettings';
 import { useAllTransactionCategories } from '../../../../hooks/transactionCategories/useAllTransactionCategories';
 
@@ -52,9 +50,13 @@ export const UserDefaultMarketUpdateSettings = (): JSX.Element => {
 
   return (
     <>
-      <MobileHeader backLink={'/profile/user-preferences'}>
+      <SEO
+        title="Market update settings"
+        backLink={'/profile/user-preferences'}
+      />
+      <Heading variant="h1" className="mb-4 lg:mb-6">
         Market update settings
-      </MobileHeader>
+      </Heading>
       <ModalCustom
         modalOpenButtonLabel="Set default market value update settings "
         onConfirm={handleSave}

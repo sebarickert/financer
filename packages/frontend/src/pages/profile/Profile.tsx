@@ -11,10 +11,10 @@ export const Profile = (): JSX.Element => {
   return (
     <>
       <SEO title="Profile" />
-      <Heading variant="h1" className="mb-6">
+      <Heading variant="h1" className="mb-4 lg:mb-6">
         Profile
       </Heading>
-      <QuickLinks className="mt-8">
+      <QuickLinks>
         <QuickLinksItem
           title="User preferences"
           link="/profile/user-preferences"

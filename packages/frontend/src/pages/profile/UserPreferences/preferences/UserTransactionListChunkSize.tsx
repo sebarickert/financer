@@ -1,11 +1,9 @@
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
 
 import { Heading } from '../../../../components/heading/heading';
-import { Icon } from '../../../../components/icon/icon';
 import { Input } from '../../../../components/input/input';
-import { MobileHeader } from '../../../../components/mobile-header/mobile-header';
 import { ModalCustom } from '../../../../components/modal/custom/modal.custom';
+import { SEO } from '../../../../components/seo/seo';
 import { useUserTransactionListChunkSize } from '../../../../hooks/profile/user-preference/useUserTransactionListChunkSize';
 
 export const UserTransactionListChunkSize = (): JSX.Element => {
@@ -25,9 +23,13 @@ export const UserTransactionListChunkSize = (): JSX.Element => {
 
   return (
     <>
-      <MobileHeader backLink={'/profile/user-preferences'}>
+      <SEO
+        title="Transaction list chunk size"
+        backLink={'/profile/user-preferences'}
+      />
+      <Heading variant="h1" className="mb-4 lg:mb-6">
         Transaction list chunk size
-      </MobileHeader>
+      </Heading>
       <ModalCustom
         modalOpenButtonLabel="Set transaction list chunk size"
         onConfirm={handleSave}
