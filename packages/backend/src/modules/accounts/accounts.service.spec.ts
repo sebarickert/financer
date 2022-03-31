@@ -1,8 +1,10 @@
+import { forwardRef } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { rootMongooseTestModule } from '../../../test/rootMongooseTest.module';
 import { AccountBalanceChangesModule } from '../account-balance-changes/account-balance-changes.module';
+import { TransactionsModule } from '../transactions/transactions.module';
 
 import { AccountsService } from './accounts.service';
 import { Account, AccountSchema } from './schemas/account.schema';
@@ -18,6 +20,7 @@ describe('AccountsService', () => {
           { name: Account.name, schema: AccountSchema },
         ]),
         AccountBalanceChangesModule,
+        forwardRef(() => TransactionsModule),
       ],
       providers: [AccountsService],
     }).compile();
