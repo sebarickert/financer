@@ -5,3 +5,9 @@ export type IAccount = {
   balance: number;
   owner?: string;
 };
+
+export type AccountBalanceHistoryDto = {
+  date: Date;
+  amount: number;
+  balance: number;
+};
