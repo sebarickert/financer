@@ -1,7 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { rootMongooseTestModule } from '../../../test/rootMongooseTest.module';
-import { AccountsModule } from '../accounts/accounts.module';
 import { TransactionsModule } from '../transactions/transactions.module';
 
 import { ExpensesService } from './expenses.service';
@@ -11,7 +10,7 @@ describe('ExpensesService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [rootMongooseTestModule(), TransactionsModule, AccountsModule],
+      imports: [rootMongooseTestModule(), TransactionsModule],
       providers: [ExpensesService],
     }).compile();
 

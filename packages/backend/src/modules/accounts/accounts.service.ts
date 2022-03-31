@@ -80,7 +80,7 @@ export class AccountsService {
     return this.accountModel.findByIdAndUpdate(id, updateAccountDto).exec();
   }
 
-  async updateAccountBalance(
+  async updateBalance(
     userId: ObjectId,
     id: ObjectId,
     amount: number,

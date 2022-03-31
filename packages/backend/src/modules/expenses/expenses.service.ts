@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
 import { ObjectId } from '../../types/objectId';
-import { AccountsService } from '../accounts/accounts.service';
 import { TransactionDocument } from '../transactions/schemas/transaction.schema';
 import { TransactionsService } from '../transactions/transactions.service';
 
@@ -10,10 +9,7 @@ import { UpdateExpenseDto } from './dto/update-expense.dto';
 
 @Injectable()
 export class ExpensesService {
-  constructor(
-    private transactionService: TransactionsService,
-    private accountService: AccountsService,
-  ) {}
+  constructor(private transactionService: TransactionsService) {}
 
   async findAllByUser(userId: ObjectId): Promise<TransactionDocument[]> {
     return this.transactionService.findAllExpensesByUser(userId);
@@ -24,24 +20,7 @@ export class ExpensesService {
   }
 
   async create(userId: ObjectId, createExpense: CreateExpenseDto) {
-    const newExpenseData = {
-      ...createExpense,
-      user: userId,
-    };
-
-    const newExpense = await this.transactionService.create(
-      userId,
-      newExpenseData,
-    );
-
-    await this.transactionService.updateTransactionHistoryAndAccount(
-      userId,
-      createExpense.fromAccount,
-      createExpense.date,
-      -createExpense.amount,
-    );
-
-    return newExpense;
+    return this.transactionService.create(userId, createExpense);
   }
 
   async update(
@@ -49,50 +28,12 @@ export class ExpensesService {
     id: ObjectId,
     updateTransactionDto: UpdateExpenseDto,
   ) {
-    const expenseBefore = await this.findOne(userId, id);
-
-    const balanceBeforeCorrection =
-      updateTransactionDto.fromAccount + '' ===
-        expenseBefore.fromAccount + '' &&
-      new Date(updateTransactionDto.date).getTime() >=
-        expenseBefore.date.getTime()
-        ? expenseBefore.amount
-        : 0;
-
-    const updatedExpense = await this.transactionService.update(
-      userId,
-      id,
-      updateTransactionDto,
-      { fromAccount: balanceBeforeCorrection },
-    );
-
-    await this.transactionService.updateTransactionHistoryAndAccount(
-      userId,
-      expenseBefore.fromAccount,
-      expenseBefore.date,
-      expenseBefore.amount,
-    );
-
-    await this.transactionService.updateTransactionHistoryAndAccount(
-      userId,
-      updatedExpense.fromAccount,
-      updatedExpense.date,
-      -updatedExpense.amount,
-    );
-
-    return updatedExpense;
+    await this.findOne(userId, id);
+    return this.transactionService.update(userId, id, updateTransactionDto);
   }
 
   async remove(userId: ObjectId, id: ObjectId) {
     const transaction = await this.findOne(userId, id);
-
-    await this.transactionService.updateTransactionHistoryAndAccount(
-      userId,
-      transaction.fromAccount,
-      transaction.date,
-      transaction.amount,
-    );
-
-    await transaction.delete();
+    await this.transactionService.remove(transaction, userId);
   }
 }

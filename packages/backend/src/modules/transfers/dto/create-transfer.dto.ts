@@ -5,11 +5,6 @@ import { CreateTransactionBaseWithCategoryDto } from '../../transactions/dto/cre
 import { TransferDto } from './transfer.dto';
 
 export class CreateTransferDto extends IntersectionType(
-  OmitType(TransferDto, [
-    '_id',
-    'toAccountBalance',
-    'fromAccountBalance',
-    'user',
-  ] as const),
+  OmitType(TransferDto, ['_id', 'user'] as const),
   CreateTransactionBaseWithCategoryDto,
 ) {}
