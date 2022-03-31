@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Container } from '../../../components/container/container';
-import { SEO } from '../../../components/seo/seo';
+import { UpdatePageInfo } from '../../../components/seo/updatePageInfo';
 import { useAddTransactionCategory } from '../../../hooks/transactionCategories/useAddTransactionCategory';
 import { parseErrorMessagesToArray } from '../../../utils/apiHelper';
 
@@ -36,7 +36,7 @@ export const AddTransactionCategory = (): JSX.Element => {
 
   return (
     <Container>
-      <SEO title="Add transaction category" />
+      <UpdatePageInfo title="Add transaction category" />
       <TransactionCategoryForm
         onSubmit={handleSubmit}
         errors={errors}

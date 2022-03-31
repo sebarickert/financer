@@ -9,7 +9,7 @@ import { Button } from '../../components/button/button';
 import { ButtonGroup } from '../../components/button/button.group';
 import { Heading } from '../../components/heading/heading';
 import { Loader } from '../../components/loader/loader';
-import { SEO } from '../../components/seo/seo';
+import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { TransactionStackedList } from '../../components/transaction-stacked-list/transaction-stacked-list';
 import { ITransactionStackedListRowProps } from '../../components/transaction-stacked-list/transaction-stacked-list.row';
 import { useAccountById } from '../../hooks/account/useAccountById';
@@ -176,7 +176,7 @@ export const Account = (): JSX.Element => {
     <Loader loaderColor="blue" />
   ) : (
     <>
-      <SEO title={`${account.name}`} />
+      <UpdatePageInfo title={`${account.name}`} />
       {errors.length > 0 && (
         <Alert additionalInformation={errors} testId="account-page-errors">
           There were {errors.length} errors with your submission

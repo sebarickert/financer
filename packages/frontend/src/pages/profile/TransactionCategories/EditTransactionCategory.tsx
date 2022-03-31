@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Container } from '../../../components/container/container';
 import { Loader } from '../../../components/loader/loader';
 import { ModalConfirm } from '../../../components/modal/confirm/modal.confirm';
-import { SEO } from '../../../components/seo/seo';
+import { UpdatePageInfo } from '../../../components/seo/updatePageInfo';
 import { useDeleteTransactionCategory } from '../../../hooks/transactionCategories/useDeleteTransactionCategory';
 import { useEditTransactionCategory } from '../../../hooks/transactionCategories/useEditTransactionCategory';
 import { useTransactionCategoryById } from '../../../hooks/transactionCategories/useTransactionCategoryById';
@@ -80,7 +80,7 @@ export const EditTransactionCategory = (): JSX.Element => {
     <Loader loaderColor="blue" />
   ) : (
     <Container>
-      <SEO title="Add expense" />
+      <UpdatePageInfo title="Add expense" />
       <TransactionCategoryForm
         onSubmit={handleSubmit}
         errors={errors}

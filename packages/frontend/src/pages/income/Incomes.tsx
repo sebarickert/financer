@@ -1,7 +1,7 @@
 import { Heading } from '../../components/heading/heading';
 import { Loader } from '../../components/loader/loader';
 import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
-import { SEO } from '../../components/seo/seo';
+import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { TransactionStackedList } from '../../components/transaction-stacked-list/transaction-stacked-list';
 import { monthNames } from '../../constants/months';
 import { useAllIncomesGroupByMonth } from '../../hooks/income/useAllIncomes';
@@ -14,7 +14,7 @@ export const Incomes = (): JSX.Element => {
     <Loader loaderColor="blue" />
   ) : (
     <>
-      <SEO title="Incomes" />
+      <UpdatePageInfo title="Incomes" />
       <section className="mb-8">
         <Heading variant="h1" className="mb-6">
           Incomes

@@ -2,7 +2,7 @@ import { IExpense, ITransactionCategoryMapping } from '@local/types';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { SEO } from '../../components/seo/seo';
+import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { useAddExpense } from '../../hooks/expense/useAddExpense';
 import { useUserDefaultExpenseAccount } from '../../hooks/profile/user-preference/useUserDefaultExpenseAccount';
 import { parseErrorMessagesToArray } from '../../utils/apiHelper';
@@ -40,7 +40,7 @@ export const AddExpense = (): JSX.Element => {
 
   return (
     <>
-      <SEO title="Add expense" />
+      <UpdatePageInfo title="Add expense" />
       <ExpenseForm
         onSubmit={handleSubmit}
         errors={errors}

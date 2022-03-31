@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Heading } from '../../../../components/heading/heading';
 import { Input } from '../../../../components/input/input';
 import { ModalCustom } from '../../../../components/modal/custom/modal.custom';
-import { SEO } from '../../../../components/seo/seo';
+import { UpdatePageInfo } from '../../../../components/seo/updatePageInfo';
 import { useUserTransactionListChunkSize } from '../../../../hooks/profile/user-preference/useUserTransactionListChunkSize';
 
 export const UserTransactionListChunkSize = (): JSX.Element => {
@@ -23,7 +23,7 @@ export const UserTransactionListChunkSize = (): JSX.Element => {
 
   return (
     <>
-      <SEO
+      <UpdatePageInfo
         title="Transaction list chunk size"
         backLink={'/profile/user-preferences'}
       />

@@ -2,7 +2,7 @@ import { IIncome, ITransactionCategoryMapping } from '@local/types';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { SEO } from '../../components/seo/seo';
+import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { useAddIncome } from '../../hooks/income/useAddIncome';
 import { useUserDefaultIncomeAccount } from '../../hooks/profile/user-preference/useUserDefaultIncomeAccount';
 import { parseErrorMessagesToArray } from '../../utils/apiHelper';
@@ -40,7 +40,7 @@ export const AddIncome = (): JSX.Element => {
 
   return (
     <>
-      <SEO title="Add income" />
+      <UpdatePageInfo title="Add income" />
       <IncomeForm
         onSubmit={handleSubmit}
         errors={errors}

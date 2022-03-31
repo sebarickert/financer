@@ -7,7 +7,7 @@ import { DescriptionListItem } from '../../components/description-list/descripti
 import { Icon } from '../../components/icon/icon';
 import { Loader } from '../../components/loader/loader';
 import { ModalConfirm } from '../../components/modal/confirm/modal.confirm';
-import { SEO } from '../../components/seo/seo';
+import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { useAllTransactionCategoriesWithCategoryTree } from '../../hooks/transactionCategories/useAllTransactionCategories';
 import { useTransactionCategoryMappingsByTransactionId } from '../../hooks/transactionCategoryMapping/useTransactionCategoryMappingsByTransactionId';
 import { useDeleteTransfer } from '../../hooks/transfer/useDeleteTransfer';
@@ -59,7 +59,7 @@ export const Transfer = (): JSX.Element => {
     <Loader loaderColor="blue" />
   ) : (
     <>
-      <SEO title={`${transfer.description} | Transfers`} />
+      <UpdatePageInfo title={`${transfer.description} | Transfers`} />
       <section className="bg-white border divide-y rounded-lg sm:grid sm:divide-y-0 sm:divide-x">
         <div className="p-6">
           <header className="flex items-center mb-6">

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Heading } from '../../../components/heading/heading';
 import { Loader } from '../../../components/loader/loader';
 import { QuickLinksItem } from '../../../components/quick-links/quick-links.item';
-import { SEO } from '../../../components/seo/seo';
+import { UpdatePageInfo } from '../../../components/seo/updatePageInfo';
 import { StackedList } from '../../../components/stacked-list/stacked-list';
 import { IStackedListRowProps } from '../../../components/stacked-list/stacked-list.row';
 import { useAllTransactionCategoriesWithCategoryTree } from '../../../hooks/transactionCategories/useAllTransactionCategories';
@@ -41,7 +41,7 @@ export const TransactionCategories = (): JSX.Element => {
     <Loader loaderColor="blue" />
   ) : (
     <>
-      <SEO title="Categories" />
+      <UpdatePageInfo title="Categories" />
       <section className="mb-8">
         <Heading variant="h1" className="mb-6">
           Categories

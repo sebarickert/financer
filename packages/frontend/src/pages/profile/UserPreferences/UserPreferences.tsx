@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 
 import { Heading } from '../../../components/heading/heading';
 import { Icon } from '../../../components/icon/icon';
-import { SEO } from '../../../components/seo/seo';
+import { UpdatePageInfo } from '../../../components/seo/updatePageInfo';
 
 const MvpLink = ({
   link,
@@ -30,7 +30,7 @@ const MvpLink = ({
 export const UserPreferences = (): JSX.Element => {
   return (
     <>
-      <SEO title="User preferences" backLink={'/profile'} />
+      <UpdatePageInfo title="User preferences" backLink={'/profile'} />
       <Heading variant="h1" className="mb-4 lg:mb-6">
         User preferences
       </Heading>

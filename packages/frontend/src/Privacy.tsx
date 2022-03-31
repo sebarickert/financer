@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { SEO } from './components/seo/seo';
+import { UpdatePageInfo } from './components/seo/updatePageInfo';
 
 export const PrivacyPolicy = (): JSX.Element => {
   return (
     <>
-      <SEO title="Privacy policy" />
+      <UpdatePageInfo title="Privacy policy" />
       <div className="relative py-16 bg-white overflow-hidden">
         <div className="hidden lg:block lg:absolute lg:inset-y-0 lg:h-full lg:w-full">
           <div

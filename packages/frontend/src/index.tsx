@@ -5,6 +5,8 @@ import { BrowserRouter as Router, useLocation } from 'react-router-dom';
 
 import { App } from './App';
 import './assets/tailwind.css';
+import { SEO } from './components/seo/seo';
+import { PageInfoProvider } from './context/pageInfoContext';
 import { reportWebVitals } from './reportWebVitals';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { isUpdateAllowed } from './utils/allowedUpdateLocations';
@@ -42,7 +44,10 @@ const Root = (): JSX.Element => {
   return (
     <React.StrictMode>
       <QueryClientProvider client={queryClient}>
-        <App />
+        <PageInfoProvider>
+          <SEO />
+          <App />
+        </PageInfoProvider>
       </QueryClientProvider>
     </React.StrictMode>
   );

@@ -2,7 +2,7 @@ import { IAccount } from '@local/types';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { SEO } from '../../components/seo/seo';
+import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { useAddAccount } from '../../hooks/account/useAddAccount';
 import { parseErrorMessagesToArray } from '../../utils/apiHelper';
 
@@ -31,7 +31,7 @@ export const AddAccount = (): JSX.Element => {
 
   return (
     <>
-      <SEO title="Add account" />
+      <UpdatePageInfo title="Add account" />
       <AccountForm
         onSubmit={handleSubmit}
         errors={errors}

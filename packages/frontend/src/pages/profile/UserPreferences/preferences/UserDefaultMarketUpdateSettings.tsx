@@ -4,7 +4,7 @@ import { Heading } from '../../../../components/heading/heading';
 import { Input } from '../../../../components/input/input';
 import { ModalCustom } from '../../../../components/modal/custom/modal.custom';
 import { Select } from '../../../../components/select/select';
-import { SEO } from '../../../../components/seo/seo';
+import { UpdatePageInfo } from '../../../../components/seo/updatePageInfo';
 import { useUserDefaultMarketUpdateSettings } from '../../../../hooks/profile/user-preference/useDefaultMarketUpdateSettings';
 import { useAllTransactionCategories } from '../../../../hooks/transactionCategories/useAllTransactionCategories';
 
@@ -50,7 +50,7 @@ export const UserDefaultMarketUpdateSettings = (): JSX.Element => {
 
   return (
     <>
-      <SEO
+      <UpdatePageInfo
         title="Market update settings"
         backLink={'/profile/user-preferences'}
       />
