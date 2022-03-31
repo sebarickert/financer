@@ -24,20 +24,17 @@ export const UserTransactionListChunkSize = (): JSX.Element => {
 
   return (
     <>
-      <div className="bg-blue-financer -mx-6 -mt-8 text-center pt-6 pb-4 mb-6 px-6 relative">
+      <div className="bg-blue-financer -mx-6 -mt-8 text-center py-4 mb-6 px-6 relative">
         <NavLink
           to={'/profile/user-preferences'}
-          className="absolute left-6 top-1/2 -translate-y-1/2 pt-2"
+          className="absolute left-6 top-1/2 -translate-y-1/2 -translate-x-1/2"
         >
           <span className="sr-only">Go back</span>
-          <Icon
-            type={'chevron-left'}
-            className="stroke-white -translate-x-1/2"
-          />
+          <Icon type={'chevron-left'} className="stroke-white" />
         </NavLink>
         <Heading
           variant="h1"
-          className="!text-base !tracking-tight !text-white"
+          className="!text-base !tracking-tight !text-white !font-semibold"
         >
           Transaction list chunk size
         </Heading>
