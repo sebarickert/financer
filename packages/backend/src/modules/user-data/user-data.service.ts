@@ -76,11 +76,11 @@ export class UserDataService {
   async overrideUserData(
     userId: ObjectId,
     {
-      accounts,
-      accountBalanceChanges,
-      transactions,
-      transactionCategories,
-      transactionCategoryMappings,
+      accounts = [],
+      accountBalanceChanges = [],
+      transactions = [],
+      transactionCategories = [],
+      transactionCategoryMappings = [],
     }: ImportUserDataDto,
   ) {
     await Promise.all([
