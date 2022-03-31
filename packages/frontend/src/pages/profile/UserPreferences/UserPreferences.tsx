@@ -16,7 +16,7 @@ const MvpLink = ({
       <div className="relative text-base flex justify-between font-semibold tracking-tight py-4 px-6 after:h-[1px] after:w-full after:absolute after:bg-gray-200 after:bottom-0 focus-within:bg-gray-200 hover:bg-gray-200 group-last:after:hidden overflow-hidden">
         <NavLink to={link} className="focus:outline-none truncate">
           <span className="absolute inset-0" aria-hidden="true" />
-          {children}
+          <span className="select-none">{children}</span>
         </NavLink>
         <Icon
           type={'chevron-right'}
@@ -31,10 +31,17 @@ export const UserPreferences = (): JSX.Element => {
   return (
     <>
       <SEO title="User preferences" />
-      <div className="bg-blue-financer -mx-6 -mt-8 text-center pt-6 pb-4 mb-6">
+      <div className="bg-blue-financer -mx-6 -mt-8 text-center py-4 mb-6 px-6 relative">
+        <NavLink
+          to={'/profile'}
+          className="absolute left-6 top-1/2 -translate-y-1/2 -translate-x-1/2"
+        >
+          <span className="sr-only">Go back</span>
+          <Icon type={'chevron-left'} className="stroke-white" />
+        </NavLink>
         <Heading
           variant="h1"
-          className="!text-base !tracking-tight !text-white"
+          className="!text-base !tracking-tight !text-white !font-semibold"
         >
           User preferences
         </Heading>
