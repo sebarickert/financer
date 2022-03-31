@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { Heading } from '../../../../components/heading/heading';
 import { Icon } from '../../../../components/icon/icon';
 import { Input } from '../../../../components/input/input';
+import { MobileHeader } from '../../../../components/mobile-header/mobile-header';
 import { ModalCustom } from '../../../../components/modal/custom/modal.custom';
 import { useUserTransactionListChunkSize } from '../../../../hooks/profile/user-preference/useUserTransactionListChunkSize';
 
@@ -24,21 +25,9 @@ export const UserTransactionListChunkSize = (): JSX.Element => {
 
   return (
     <>
-      <div className="bg-blue-financer -mx-6 -mt-8 text-center py-4 mb-6 px-6 relative">
-        <NavLink
-          to={'/profile/user-preferences'}
-          className="absolute left-6 top-1/2 -translate-y-1/2 -translate-x-1/2"
-        >
-          <span className="sr-only">Go back</span>
-          <Icon type={'chevron-left'} className="stroke-white" />
-        </NavLink>
-        <Heading
-          variant="h1"
-          className="!text-base !tracking-tight !text-white !font-semibold"
-        >
-          Transaction list chunk size
-        </Heading>
-      </div>
+      <MobileHeader backLink={'/profile/user-preferences'}>
+        Transaction list chunk size
+      </MobileHeader>
       <ModalCustom
         modalOpenButtonLabel="Set transaction list chunk size"
         onConfirm={handleSave}
