@@ -1,7 +1,7 @@
 import { IAccount, ITransaction } from '@local/types';
 
 import {
-  getAllUserTransaction,
+  getAllTransaction,
   getAccount,
   getTransactionById,
   ITransactionWithDateObject,
@@ -9,48 +9,48 @@ import {
   getTransactionByIdRaw,
 } from '../apiHelpers';
 
-const verifyAccountBalanceChangeByTransactionBeforeAmount = () =>
-  cy.get<IAccount>('@accountBefore').then((accountBefore) =>
-    cy.get<IAccount>('@accountAfter').then((accountAfter) =>
-      cy
-        .get<ITransaction>('@targetTransactionBefore')
-        .then((targetTransactionBefore) => {
-          const changedAmount = roundToTwoDecimal(
-            targetTransactionBefore.amount
-          );
-          const balanceBefore = roundToTwoDecimal(accountBefore.balance);
-          const balanceAfter = roundToTwoDecimal(accountAfter.balance);
-          const balanceBeforeWithChangedAmount = roundToTwoDecimal(
-            balanceBefore + changedAmount
-          );
-
-          expect(balanceBeforeWithChangedAmount).to.be.eq(balanceAfter);
-        })
-    )
-  );
-
-const verifyTargetTransactionDoesNotExistsAfter = () => {
-  cy.get<ITransaction>('@targetTransactionBefore').then(
-    (targetTransactionBefore) =>
-      cy.saveAsyncData('targetTransactionAfter', () =>
-        getTransactionByIdRaw(targetTransactionBefore._id)
-      )
-  );
-  cy.get<ITransactionWithDateObject>('@targetTransactionAfter').then(
-    (targetTransactionAfter) => {
-      expect((targetTransactionAfter as any).statusCode).to.be.equal(404);
-    }
-  );
-};
-
 describe('Delete expense', () => {
   beforeEach(() => {
     cy.applyFixture('large');
     cy.visit('http://localhost:3000/statistics/expenses');
   });
 
+  const verifyAccountBalanceChangeByTargetTransactionAmount = () =>
+    cy.get<IAccount>('@accountBefore').then((accountBefore) =>
+      cy.get<IAccount>('@accountAfter').then((accountAfter) =>
+        cy
+          .get<ITransaction>('@targetTransactionBefore')
+          .then((targetTransactionBefore) => {
+            const changedAmount = roundToTwoDecimal(
+              targetTransactionBefore.amount
+            );
+            const balanceBefore = roundToTwoDecimal(accountBefore.balance);
+            const balanceAfter = roundToTwoDecimal(accountAfter.balance);
+            const balanceBeforeWithChangedAmount = roundToTwoDecimal(
+              balanceBefore + changedAmount
+            );
+
+            expect(balanceBeforeWithChangedAmount).to.be.eq(balanceAfter);
+          })
+      )
+    );
+
+  const verifyTargetTransactionDoesNotExistsAfter = () => {
+    cy.get<ITransaction>('@targetTransactionBefore').then(
+      (targetTransactionBefore) =>
+        cy.saveAsyncData('targetTransactionAfter', () =>
+          getTransactionByIdRaw(targetTransactionBefore._id)
+        )
+    );
+    cy.get<ITransactionWithDateObject>('@targetTransactionAfter').then(
+      (targetTransactionAfter) => {
+        expect((targetTransactionAfter as any).statusCode).to.be.equal(404);
+      }
+    );
+  };
+
   it('Delete newest expense', () => {
-    cy.saveAsyncData('transactionsBefore', getAllUserTransaction);
+    cy.saveAsyncData('transactionsBefore', getAllTransaction);
 
     cy.get<ITransactionWithDateObject[]>('@transactionsBefore').then(
       (transactionsBefore) => {
@@ -95,35 +95,12 @@ describe('Delete expense', () => {
       }
     );
 
-    verifyAccountBalanceChangeByTransactionBeforeAmount();
+    verifyAccountBalanceChangeByTargetTransactionAmount();
     verifyTargetTransactionDoesNotExistsAfter();
-
-    cy.get<ITransactionWithDateObject>(
-      '@olderTransactionWithSameAccountBefore'
-    ).then((olderTransactionWithSameAccountBefore) =>
-      cy
-        .get<ITransactionWithDateObject>(
-          '@olderTransactionWithSameAccountAfter'
-        )
-        .then((olderTransactionWithSameAccountAfter) => {
-          const olderTransactionWithSameAccountAfterToAccountBalance =
-            roundToTwoDecimal(
-              olderTransactionWithSameAccountAfter.fromAccountBalance
-            );
-          const olderTransactionWithSameAccountBeforeToAccountBalance =
-            roundToTwoDecimal(
-              olderTransactionWithSameAccountBefore.fromAccountBalance
-            );
-
-          expect(
-            olderTransactionWithSameAccountBeforeToAccountBalance
-          ).to.be.eq(olderTransactionWithSameAccountAfterToAccountBalance);
-        })
-    );
   });
 
   it('Delete oldest expense', () => {
-    cy.saveAsyncData('transactionsBefore', getAllUserTransaction);
+    cy.saveAsyncData('transactionsBefore', getAllTransaction);
 
     cy.get<ITransactionWithDateObject[]>('@transactionsBefore').then(
       (transactionsBefore) => {
@@ -167,39 +144,7 @@ describe('Delete expense', () => {
       }
     );
 
-    verifyAccountBalanceChangeByTransactionBeforeAmount();
+    verifyAccountBalanceChangeByTargetTransactionAmount();
     verifyTargetTransactionDoesNotExistsAfter();
-
-    cy.get<ITransactionWithDateObject>(
-      '@olderTransactionWithSameAccountBefore'
-    ).then((olderTransactionWithSameAccountBefore) =>
-      cy
-        .get<ITransactionWithDateObject>(
-          '@olderTransactionWithSameAccountAfter'
-        )
-        .then((olderTransactionWithSameAccountAfter) =>
-          cy
-            .get<ITransaction>('@targetTransactionBefore')
-            .then((targetTransactionBefore) => {
-              const changedAmount = roundToTwoDecimal(
-                targetTransactionBefore.amount
-              );
-
-              const olderTransactionWithSameAccountAfterToAccountBalance =
-                roundToTwoDecimal(
-                  olderTransactionWithSameAccountAfter.fromAccountBalance
-                );
-              const olderTransactionWithSameAccountBeforeToAccountBalance =
-                roundToTwoDecimal(
-                  olderTransactionWithSameAccountBefore.fromAccountBalance
-                );
-
-              expect(
-                olderTransactionWithSameAccountBeforeToAccountBalance +
-                  changedAmount
-              ).to.be.eq(olderTransactionWithSameAccountAfterToAccountBalance);
-            })
-        )
-    );
   });
 });

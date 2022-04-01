@@ -1,7 +1,7 @@
 import { IAccount, ITransaction } from '@local/types';
 
 import {
-  getAllUserTransaction,
+  getAllTransaction,
   getAccount,
   MINUTE_IN_MS,
   formatDate,
@@ -9,7 +9,7 @@ import {
   ITransactionWithDateObject,
   roundToTwoDecimal,
   getAccountFromTransactions,
-  getAccountBalanceFromTransactionByAccountId,
+  getAllTransfers,
 } from '../apiHelpers';
 
 describe('Add transfer', () => {
@@ -39,71 +39,18 @@ describe('Add transfer', () => {
     });
   };
 
-  const verifyTargetTransactionBalance = (amount: number) =>
-    cy.get<IAccount>('@toAccountBefore').then(({ _id: accountId }) => {
-      cy.get<ITransaction>('@targetToAccountTransactionBefore').then(
-        (targetTransactionBefore) => {
-          cy.get<ITransaction>('@targetToAccountTransactionAfter').then(
-            (targetTransactionAfter) => {
-              const targetTransactionBeforeBalance =
-                getAccountBalanceFromTransactionByAccountId(
-                  targetTransactionBefore,
-                  accountId
-                );
-              const targetTransactionAfterBalance =
-                getAccountBalanceFromTransactionByAccountId(
-                  targetTransactionAfter,
-                  accountId
-                );
-
-              expect(targetTransactionBeforeBalance + amount).to.be.eq(
-                targetTransactionAfterBalance
-              );
-            }
-          );
-        }
-      );
+  const verifyNewTransfersCreated = () =>
+    cy.get<ITransaction[]>('@transfersBefore').then((transfersBefore) => {
+      cy.get<ITransaction[]>('@transfersAfter').then((transfersAfter) => {
+        expect(transfersBefore.length + 1).to.be.eq(
+          roundToTwoDecimal(transfersAfter.length)
+        );
+      });
     });
-
-  const verifyNewTransactionBalance = (positionInTransactions: number) => {
-    cy.get<ITransaction[]>('@transactionsAfter').then((transactionsAfter) => {
-      cy.get<number>('@expectedToAccountBalance').then(
-        (expectedToAccountBalance) => {
-          cy.get<number>('@expectedFromAccountBalance').then(
-            (expectedFromAccountBalance) => {
-              const newTransaction = transactionsAfter.at(
-                positionInTransactions
-              );
-
-              const newTransactionToAccountBalance = roundToTwoDecimal(
-                newTransaction.toAccountBalance
-              );
-              const newTransactionFromAccountBalance = roundToTwoDecimal(
-                newTransaction.fromAccountBalance
-              );
-              const roundedExpectedToAccountBalance = roundToTwoDecimal(
-                expectedToAccountBalance
-              );
-              const roundedExpectedFromAccountBalance = roundToTwoDecimal(
-                expectedFromAccountBalance
-              );
-
-              expect(newTransactionToAccountBalance).to.be.eq(
-                roundedExpectedToAccountBalance
-              );
-
-              expect(newTransactionFromAccountBalance).to.be.eq(
-                roundedExpectedFromAccountBalance
-              );
-            }
-          );
-        }
-      );
-    });
-  };
 
   it('Add newest transfer', () => {
-    cy.saveAsyncData('transactionsBefore', getAllUserTransaction);
+    cy.saveAsyncData('transactionsBefore', getAllTransaction);
+    cy.saveAsyncData('transfersBefore', getAllTransfers);
 
     cy.get<ITransactionWithDateObject[]>('@transactionsBefore').then(
       (transactionsBefore) => {
@@ -125,21 +72,11 @@ describe('Add transfer', () => {
           targetToAccountTransactionBefore.dateObj.getTime() + MINUTE_IN_MS
         );
 
-        cy.saveData(
-          'targetToAccountTransactionBefore',
-          targetToAccountTransactionBefore
-        );
         cy.saveAsyncData('toAccountBefore', () =>
           getAccount(targetToAccountId)
         );
         cy.saveAsyncData('fromAccountBefore', () =>
           getAccount(targetFromAccountId)
-        );
-        cy.get<IAccount>('@toAccountBefore').then((accountBefore) =>
-          cy.saveData('expectedToAccountBalance', accountBefore.balance)
-        );
-        cy.get<IAccount>('@fromAccountBefore').then((accountBefore) =>
-          cy.saveData('expectedFromAccountBalance', accountBefore.balance)
         );
 
         cy.getById('add-transfer').click();
@@ -162,21 +99,18 @@ describe('Add transfer', () => {
             cy.saveAsyncData('fromAccountAfter', () =>
               getAccount(targetFromAccountId)
             );
-            cy.saveAsyncData('transactionsAfter', getAllUserTransaction);
-            cy.saveAsyncData('targetToAccountTransactionAfter', () =>
-              getTransactionById(targetToAccountTransactionBefore._id)
-            );
+            cy.saveAsyncData('transfersAfter', getAllTransfers);
           });
       }
     );
 
     verifyAccountBalanceChange(newTransactionAmount);
-    verifyTargetTransactionBalance(0);
-    verifyNewTransactionBalance(-1);
+    verifyNewTransfersCreated();
   });
 
   it('Add second latest transfer', () => {
-    cy.saveAsyncData('transactionsBefore', getAllUserTransaction);
+    cy.saveAsyncData('transactionsBefore', getAllTransaction);
+    cy.saveAsyncData('transfersBefore', getAllTransfers);
 
     cy.get<ITransactionWithDateObject[]>('@transactionsBefore').then(
       (transactionsBefore) => {
@@ -202,29 +136,11 @@ describe('Add transfer', () => {
           targetToAccountTransactionBefore.dateObj.getTime() - MINUTE_IN_MS
         );
 
-        cy.saveData(
-          'targetToAccountTransactionBefore',
-          targetToAccountTransactionBefore
-        );
         cy.saveAsyncData('toAccountBefore', () =>
           getAccount(targetToAccountId)
         );
         cy.saveAsyncData('fromAccountBefore', () =>
           getAccount(targetFromAccountId)
-        );
-        cy.saveData(
-          'expectedToAccountBalance',
-          getAccountBalanceFromTransactionByAccountId(
-            targetToAccountTransactionBefore,
-            targetToAccountId
-          )
-        );
-        cy.saveData(
-          'expectedFromAccountBalance',
-          getAccountBalanceFromTransactionByAccountId(
-            targetFromAccountTransactionBefore,
-            targetFromAccountId
-          ) - targetFromAccountTransactionBefore.amount
         );
 
         cy.getById('add-transfer').click();
@@ -247,20 +163,17 @@ describe('Add transfer', () => {
             cy.saveAsyncData('fromAccountAfter', () =>
               getAccount(targetFromAccountId)
             );
-            cy.saveAsyncData('transactionsAfter', getAllUserTransaction);
-            cy.saveAsyncData('targetToAccountTransactionAfter', () =>
-              getTransactionById(targetToAccountTransactionBefore._id)
-            );
+            cy.saveAsyncData('transfersAfter', getAllTransfers);
           });
       }
     );
     verifyAccountBalanceChange(newTransactionAmount);
-    verifyTargetTransactionBalance(newTransactionAmount);
-    verifyNewTransactionBalance(-2);
+    verifyNewTransfersCreated();
   });
 
   it('Add oldest transfer', () => {
-    cy.saveAsyncData('transactionsBefore', getAllUserTransaction);
+    cy.saveAsyncData('transactionsBefore', getAllTransaction);
+    cy.saveAsyncData('transfersBefore', getAllTransfers);
 
     cy.get<ITransactionWithDateObject[]>('@transactionsBefore').then(
       (transactionsBefore) => {
@@ -282,29 +195,11 @@ describe('Add transfer', () => {
           targetToAccountTransactionBefore.dateObj.getTime() - MINUTE_IN_MS
         );
 
-        cy.saveData(
-          'targetToAccountTransactionBefore',
-          targetToAccountTransactionBefore
-        );
         cy.saveAsyncData('toAccountBefore', () =>
           getAccount(targetToAccountId)
         );
         cy.saveAsyncData('fromAccountBefore', () =>
           getAccount(targetFromAccountId)
-        );
-        cy.saveData(
-          'expectedToAccountBalance',
-          getAccountBalanceFromTransactionByAccountId(
-            targetToAccountTransactionBefore,
-            targetToAccountId
-          )
-        );
-        cy.saveData(
-          'expectedFromAccountBalance',
-          getAccountBalanceFromTransactionByAccountId(
-            targetFromAccountTransactionBefore,
-            targetFromAccountId
-          )
         );
 
         cy.getById('add-transfer').click();
@@ -327,16 +222,12 @@ describe('Add transfer', () => {
             cy.saveAsyncData('fromAccountAfter', () =>
               getAccount(targetFromAccountId)
             );
-            cy.saveAsyncData('transactionsAfter', getAllUserTransaction);
-            cy.saveAsyncData('targetToAccountTransactionAfter', () =>
-              getTransactionById(targetToAccountTransactionBefore._id)
-            );
+            cy.saveAsyncData('transfersAfter', getAllTransfers);
           });
       }
     );
     verifyAccountBalanceChange(newTransactionAmount);
-    verifyTargetTransactionBalance(newTransactionAmount);
-    verifyNewTransactionBalance(0);
+    verifyNewTransfersCreated();
   });
 
   it('Check that date is correct', () => {
