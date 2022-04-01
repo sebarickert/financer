@@ -1,7 +1,7 @@
 import { IAccount, ITransaction } from '@local/types';
 
 import {
-  getAllUserTransaction,
+  getAllTransaction,
   getAccount,
   getTransactionById,
   ITransactionWithDateObject,
@@ -9,7 +9,7 @@ import {
   getTransactionByIdRaw,
 } from '../apiHelpers';
 
-const verifyAccountBalanceChangeByTransactionBeforeAmount = () =>
+const verifyAccountBalanceChangeByTargetTransactionAmount = () =>
   cy.get<IAccount>('@accountBefore').then((accountBefore) =>
     cy.get<IAccount>('@accountAfter').then((accountAfter) =>
       cy
@@ -50,7 +50,7 @@ describe('Delete income', () => {
   });
 
   it('Delete newest income', () => {
-    cy.saveAsyncData('transactionsBefore', getAllUserTransaction);
+    cy.saveAsyncData('transactionsBefore', getAllTransaction);
 
     cy.get<ITransactionWithDateObject[]>('@transactionsBefore').then(
       (transactionsBefore) => {
@@ -94,35 +94,12 @@ describe('Delete income', () => {
       }
     );
 
-    verifyAccountBalanceChangeByTransactionBeforeAmount();
+    verifyAccountBalanceChangeByTargetTransactionAmount();
     verifyTargetTransactionDoesNotExistsAfter();
-
-    cy.get<ITransactionWithDateObject>(
-      '@olderTransactionWithSameAccountBefore'
-    ).then((olderTransactionWithSameAccountBefore) =>
-      cy
-        .get<ITransactionWithDateObject>(
-          '@olderTransactionWithSameAccountAfter'
-        )
-        .then((olderTransactionWithSameAccountAfter) => {
-          const olderTransactionWithSameAccountAfterToAccountBalance =
-            roundToTwoDecimal(
-              olderTransactionWithSameAccountAfter.toAccountBalance
-            );
-          const olderTransactionWithSameAccountBeforeToAccountBalance =
-            roundToTwoDecimal(
-              olderTransactionWithSameAccountBefore.toAccountBalance
-            );
-
-          expect(
-            olderTransactionWithSameAccountBeforeToAccountBalance
-          ).to.be.eq(olderTransactionWithSameAccountAfterToAccountBalance);
-        })
-    );
   });
 
   it('Delete oldest income', () => {
-    cy.saveAsyncData('transactionsBefore', getAllUserTransaction);
+    cy.saveAsyncData('transactionsBefore', getAllTransaction);
 
     cy.get<ITransactionWithDateObject[]>('@transactionsBefore').then(
       (transactionsBefore) => {
@@ -166,39 +143,7 @@ describe('Delete income', () => {
       }
     );
 
-    verifyAccountBalanceChangeByTransactionBeforeAmount();
+    verifyAccountBalanceChangeByTargetTransactionAmount();
     verifyTargetTransactionDoesNotExistsAfter();
-
-    cy.get<ITransactionWithDateObject>(
-      '@olderTransactionWithSameAccountBefore'
-    ).then((olderTransactionWithSameAccountBefore) =>
-      cy
-        .get<ITransactionWithDateObject>(
-          '@olderTransactionWithSameAccountAfter'
-        )
-        .then((olderTransactionWithSameAccountAfter) =>
-          cy
-            .get<ITransaction>('@targetTransactionBefore')
-            .then((targetTransactionBefore) => {
-              const changedAmount = roundToTwoDecimal(
-                targetTransactionBefore.amount
-              );
-
-              const olderTransactionWithSameAccountAfterToAccountBalance =
-                roundToTwoDecimal(
-                  olderTransactionWithSameAccountAfter.toAccountBalance
-                );
-              const olderTransactionWithSameAccountBeforeToAccountBalance =
-                roundToTwoDecimal(
-                  olderTransactionWithSameAccountBefore.toAccountBalance
-                );
-
-              expect(
-                olderTransactionWithSameAccountBeforeToAccountBalance -
-                  changedAmount
-              ).to.be.eq(olderTransactionWithSameAccountAfterToAccountBalance);
-            })
-        )
-    );
   });
 });

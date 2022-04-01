@@ -1,7 +1,7 @@
 import { IAccount } from '@local/types';
 
 import {
-  getAllUserTransaction,
+  getAllTransaction,
   getAccount,
   getTransactionById,
   ITransactionWithDateObject,
@@ -18,8 +18,44 @@ describe('Edit income', () => {
   const amountToChangeTransaction = parseFloat(amountToChangeTransactionStr);
   const editedTransactionName = 'edited dummy transaction created by test code';
 
+  const verifyAccountBalanceChanges = (amount: number) =>
+    cy.get<IAccount>('@accountBefore').then((accountBefore) =>
+      cy.get<IAccount>('@accountAfter').then((accountAfter) => {
+        const balanceBefore = roundToTwoDecimal(accountBefore.balance);
+        const balanceAfter = roundToTwoDecimal(accountAfter.balance);
+
+        expect(balanceBefore + amount).to.be.eq(balanceAfter);
+      })
+    );
+
+  const verifyTargetTransactionChanged = (
+    newName: string,
+    changedAmount: number
+  ) =>
+    cy
+      .get<ITransactionWithDateObject>('@targetTransactionBefore')
+      .then((targetTransactionBefore) =>
+        cy
+          .get<ITransactionWithDateObject>('@targetTransactionAfter')
+          .then((targetTransactionAfter) => {
+            const nameAfter = targetTransactionAfter.description;
+            const amountAfter = roundToTwoDecimal(
+              targetTransactionAfter.amount
+            );
+
+            const nameBefore = targetTransactionBefore.description;
+            const amountBefore = roundToTwoDecimal(
+              targetTransactionBefore.amount
+            );
+
+            expect(nameBefore).not.to.be.eq(newName);
+            expect(nameAfter).to.be.eq(newName);
+            expect(amountBefore + changedAmount).to.be.eq(amountAfter);
+          })
+      );
+
   it('Edit newest income', () => {
-    cy.saveAsyncData('transactionsBefore', getAllUserTransaction);
+    cy.saveAsyncData('transactionsBefore', getAllTransaction);
 
     cy.get<ITransactionWithDateObject[]>('@transactionsBefore').then(
       (transactionsBefore) => {
@@ -71,69 +107,16 @@ describe('Edit income', () => {
           });
       }
     );
-    cy.get<IAccount>('@accountBefore').then((accountBefore) =>
-      cy.get<IAccount>('@accountAfter').then((accountAfter) => {
-        const balanceBefore = roundToTwoDecimal(accountBefore.balance);
-        const balanceAfter = roundToTwoDecimal(accountAfter.balance);
 
-        expect(balanceBefore + amountToChangeTransaction).to.be.eq(
-          balanceAfter
-        );
-      })
-    );
-
-    cy.get<ITransactionWithDateObject>('@targetTransactionBefore').then(
-      (targetTransactionBefore) =>
-        cy
-          .get<ITransactionWithDateObject>('@targetTransactionAfter')
-          .then((targetTransactionAfter) => {
-            const targetTransactionAfterName =
-              targetTransactionAfter.description;
-            const targetTransactionAfterAmount = roundToTwoDecimal(
-              targetTransactionAfter.amount
-            );
-            const targetTransactionBeforeName =
-              targetTransactionBefore.description;
-            const targetTransactionBeforeAmount = roundToTwoDecimal(
-              targetTransactionBefore.amount
-            );
-
-            expect(targetTransactionBeforeName).not.to.be.eq(
-              editedTransactionName
-            );
-            expect(targetTransactionAfterName).to.be.eq(editedTransactionName);
-            expect(
-              targetTransactionBeforeAmount + amountToChangeTransaction
-            ).to.be.eq(targetTransactionAfterAmount);
-          })
-    );
-
-    cy.get<ITransactionWithDateObject>(
-      '@laterTransactionWithSameAccountBefore'
-    ).then((laterTransactionWithSameAccountBefore) =>
-      cy
-        .get<ITransactionWithDateObject>(
-          '@laterTransactionWithSameAccountAfter'
-        )
-        .then((laterTransactionWithSameAccountAfter) => {
-          const laterTransactionWithSameAccountAfterToAccountBalance =
-            roundToTwoDecimal(
-              laterTransactionWithSameAccountAfter.toAccountBalance
-            );
-          const laterTransactionWithSameAccountBeforeToAccountBalance =
-            roundToTwoDecimal(
-              laterTransactionWithSameAccountBefore.toAccountBalance
-            );
-
-          expect(
-            laterTransactionWithSameAccountBeforeToAccountBalance
-          ).to.be.eq(laterTransactionWithSameAccountAfterToAccountBalance);
-        })
+    verifyAccountBalanceChanges(amountToChangeTransaction);
+    verifyTargetTransactionChanged(
+      editedTransactionName,
+      amountToChangeTransaction
     );
   });
 
   it('Edit oldest income', () => {
-    cy.saveAsyncData('transactionsBefore', getAllUserTransaction);
+    cy.saveAsyncData('transactionsBefore', getAllTransaction);
 
     cy.get<ITransactionWithDateObject[]>('@transactionsBefore').then(
       (transactionsBefore) => {
@@ -185,56 +168,11 @@ describe('Edit income', () => {
           });
       }
     );
-    cy.get<IAccount>('@accountBefore').then((accountBefore) =>
-      cy.get<IAccount>('@accountAfter').then((accountAfter) => {
-        const balanceBefore = roundToTwoDecimal(accountBefore.balance);
-        const balanceAfter = roundToTwoDecimal(accountAfter.balance);
 
-        expect(balanceBefore + amountToChangeTransaction).to.be.eq(
-          balanceAfter
-        );
-      })
-    );
-
-    cy.get<ITransactionWithDateObject>('@targetTransactionBefore').then(
-      (targetTransactionBefore) =>
-        cy
-          .get<ITransactionWithDateObject>('@targetTransactionAfter')
-          .then((targetTransactionAfter) => {
-            const targetTransactionAfterToAccountBalance = roundToTwoDecimal(
-              targetTransactionAfter.toAccountBalance
-            );
-            const targetTransactionBeforeToAccountBalance = roundToTwoDecimal(
-              targetTransactionBefore.toAccountBalance
-            );
-
-            expect(targetTransactionAfterToAccountBalance).to.be.eq(
-              targetTransactionBeforeToAccountBalance
-            );
-          })
-    );
-    cy.get<ITransactionWithDateObject>(
-      '@laterTransactionWithSameAccountBefore'
-    ).then((laterTransactionWithSameAccountBefore) =>
-      cy
-        .get<ITransactionWithDateObject>(
-          '@laterTransactionWithSameAccountAfter'
-        )
-        .then((laterTransactionWithSameAccountAfter) => {
-          const laterTransactionWithSameAccountAfterToAccountBalance =
-            roundToTwoDecimal(
-              laterTransactionWithSameAccountAfter.toAccountBalance
-            );
-          const laterTransactionWithSameAccountBeforeToAccountBalance =
-            roundToTwoDecimal(
-              laterTransactionWithSameAccountBefore.toAccountBalance
-            );
-
-          expect(
-            laterTransactionWithSameAccountBeforeToAccountBalance +
-              amountToChangeTransaction
-          ).to.be.eq(laterTransactionWithSameAccountAfterToAccountBalance);
-        })
+    verifyAccountBalanceChanges(amountToChangeTransaction);
+    verifyTargetTransactionChanged(
+      editedTransactionName,
+      amountToChangeTransaction
     );
   });
 });

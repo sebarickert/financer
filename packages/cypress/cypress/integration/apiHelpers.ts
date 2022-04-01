@@ -28,20 +28,55 @@ export const getAccount = async (accountId: string): Promise<IAccount> => {
   return rawAccount.json();
 };
 
-export const getAllUserTransaction = async (): Promise<
-  ITransactionWithDateObject[]
-> => {
-  const transactions = (await (
-    await fetch('http://localhost:3000/api/transactions')
-  ).json()) as ITransaction[];
-
-  return transactions
+const parseTransactionDate = (
+  transactions: ITransaction[]
+): ITransactionWithDateObject[] =>
+  transactions
     .map(({ date, ...rest }) => ({
       ...rest,
       date,
       dateObj: new Date(date),
     }))
     .sort((a, b) => (a.date < b.date ? -1 : 1));
+
+export const getAllTransaction = async (): Promise<
+  ITransactionWithDateObject[]
+> => {
+  const transactions = (await (
+    await fetch('http://localhost:3000/api/transactions')
+  ).json()) as ITransaction[];
+
+  return parseTransactionDate(transactions);
+};
+
+export const getAllIncomes = async (): Promise<
+  ITransactionWithDateObject[]
+> => {
+  const transactions = (await (
+    await fetch('http://localhost:3000/api/incomes')
+  ).json()) as ITransaction[];
+
+  return parseTransactionDate(transactions);
+};
+
+export const getAllExpenses = async (): Promise<
+  ITransactionWithDateObject[]
+> => {
+  const transactions = (await (
+    await fetch('http://localhost:3000/api/expenses')
+  ).json()) as ITransaction[];
+
+  return parseTransactionDate(transactions);
+};
+
+export const getAllTransfers = async (): Promise<
+  ITransactionWithDateObject[]
+> => {
+  const transactions = (await (
+    await fetch('http://localhost:3000/api/transfers')
+  ).json()) as ITransaction[];
+
+  return parseTransactionDate(transactions);
 };
 
 export const getTransactionByIdRaw = async (
@@ -60,7 +95,7 @@ export const getTransactionById = async (
   return { ...transaction, dateObj: new Date(transaction?.date) };
 };
 
-export const getAllAccountTransactionsById = async (
+export const getAllTransactionsByAccountId = async (
   accountId: string
 ): Promise<ITransactionWithDateObject[]> => {
   const transactions = (await (
