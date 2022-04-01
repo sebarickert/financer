@@ -16,6 +16,7 @@ import { IconPlus } from './icon.plus';
 import { IconPlusCircle } from './icon.plusCircle';
 import { IconSwitchHorizontal } from './icon.switchHorizontal';
 import { IconTag } from './icon.tag';
+import { IconTrash } from './icon.trash';
 import { IconUpload } from './icon.upload';
 import { IconUser } from './icon.user';
 import { IconUserCircle } from './icon.userCircle';
@@ -45,6 +46,7 @@ export type IconName =
   | 'cog'
   | 'chevron-right'
   | 'chevron-left'
+  | 'trash'
   | 'collection';
 interface IconProps {
   type: IconName;
@@ -124,6 +126,9 @@ export const Icon = ({ type, className = '' }: IconProps): JSX.Element => {
 
     case 'arrow-right':
       return <IconArrowRight className={defaultIconClasses} />;
+
+    case 'trash':
+      return <IconTrash className={defaultIconClasses} />;
 
     case 'cog':
       return <IconCog className={defaultIconClasses} />;

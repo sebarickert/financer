@@ -3,11 +3,9 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { Alert } from '../../components/alert/alert';
-import { Banner } from '../../components/banner/banner';
-import { BannerText } from '../../components/banner/banner.text';
-import { Button } from '../../components/button/button';
-import { ButtonGroup } from '../../components/button/button.group';
 import { Heading } from '../../components/heading/heading';
+import { LinkList } from '../../components/link-list/link-list';
+import { LinkListLink } from '../../components/link-list/link-list.link';
 import { Loader } from '../../components/loader/loader';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { TransactionStackedList } from '../../components/transaction-stacked-list/transaction-stacked-list';
@@ -176,42 +174,16 @@ export const Account = (): JSX.Element => {
     <Loader loaderColor="blue" />
   ) : (
     <>
-      <UpdatePageInfo title={`${account.name}`} />
+      <UpdatePageInfo title={`${account.name}`} backLink="/accounts" />
       {errors.length > 0 && (
         <Alert additionalInformation={errors} testId="account-page-errors">
           There were {errors.length} errors with your submission
         </Alert>
       )}
-      <Banner
-        title={account.name}
-        headindType="h1"
-        testId="account-banner"
-        className="mb-4 lg:mb-6"
-      >
-        <BannerText>
-          Manage your account information and review your account transaction
-          history.
-        </BannerText>
-        <ButtonGroup className="mt-6">
-          {account.type === 'investment' && (
-            <AccountUpdateMarketValueModal
-              currentValue={account.balance}
-              handleUpdate={(newMarketValue, newDate) =>
-                handleMarketValueUpdate(newMarketValue, newDate)
-              }
-            />
-          )}
-          <Button
-            accentColor="blue"
-            link={`/accounts/${id}/edit`}
-            testId="edit-account"
-          >
-            Edit account
-          </Button>
-          <AccountDeleteModal handleDelete={handleDelete} />
-        </ButtonGroup>
-      </Banner>
-      <section className={`bg-white border rounded-lg mb-4 lg:mb-6`}>
+      <Heading variant="h1" className="mb-4 lg:mb-6">
+        {account.name}
+      </Heading>
+      <section className={`bg-white border rounded-lg mb-6`}>
         <dl className="relative px-6 pt-10 pb-6 border-b">
           <dt className="absolute text-sm font-medium text-gray-700 truncate lg:text-base top-4 left-6">
             Balance
@@ -246,10 +218,28 @@ export const Account = (): JSX.Element => {
         </section>
       </section>
       <AccountBalanceHistoryChart accountId={id} />
-      <section className="mt-4 lg:mt-6">
+      <section className="my-6">
         <Heading>History</Heading>
         <TransactionStackedList className="mt-4" rows={transactions} />
       </section>
+      <LinkList label="Actions">
+        {account.type === 'investment' && (
+          <AccountUpdateMarketValueModal
+            currentValue={account.balance}
+            handleUpdate={(newMarketValue, newDate) =>
+              handleMarketValueUpdate(newMarketValue, newDate)
+            }
+          />
+        )}
+        <LinkListLink
+          link={`/accounts/${id}/edit`}
+          testId="edit-account"
+          icon="cog"
+        >
+          Edit account
+        </LinkListLink>
+        <AccountDeleteModal handleDelete={handleDelete} />
+      </LinkList>
     </>
   );
 };

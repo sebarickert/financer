@@ -41,7 +41,7 @@ export const TransactionCategories = (): JSX.Element => {
     <Loader loaderColor="blue" />
   ) : (
     <>
-      <UpdatePageInfo title="Categories" />
+      <UpdatePageInfo title="Categories" backLink="/profile" />
       <section className="mb-8">
         <Heading variant="h1" className="mb-6">
           Categories

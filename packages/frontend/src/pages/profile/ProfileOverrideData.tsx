@@ -113,7 +113,7 @@ export const ProfileOverrideData = (): JSX.Element => {
 
   return (
     <>
-      <UpdatePageInfo title="Override data (DANGER ZONE)" />
+      <UpdatePageInfo title="Override data (DANGER ZONE)" backLink="/profile" />
       {notification && (
         <Notification
           type={notification.type}

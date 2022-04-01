@@ -73,6 +73,7 @@ export const AccountForm = ({
         formHeading={formHeading}
         handleSubmit={handleSubmit}
         accentColor="blue"
+        formFooterBackLink="/accounts"
       >
         <section>
           <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">

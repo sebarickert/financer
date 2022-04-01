@@ -43,7 +43,10 @@ export const EditAccount = (): JSX.Element => {
     <Loader loaderColor="blue" />
   ) : (
     <>
-      <UpdatePageInfo title={`Edit ${account.name}`} />
+      <UpdatePageInfo
+        title={`Edit ${account.name}`}
+        backLink={`/accounts/${account._id}`}
+      />
       <AccountForm
         onSubmit={handleSubmit}
         errors={errors}

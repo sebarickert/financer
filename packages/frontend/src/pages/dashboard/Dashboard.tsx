@@ -11,7 +11,7 @@ import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 export const Dashboard = (): JSX.Element => {
   return (
     <>
-      <UpdatePageInfo title="Dashboard" toolbarColor="white" />
+      <UpdatePageInfo title="Dashboard" />
       <Heading variant="h1" className="mb-4 lg:mb-6">
         Dashboard
       </Heading>

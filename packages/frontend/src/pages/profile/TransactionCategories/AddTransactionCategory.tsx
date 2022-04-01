@@ -36,7 +36,10 @@ export const AddTransactionCategory = (): JSX.Element => {
 
   return (
     <Container>
-      <UpdatePageInfo title="Add transaction category" />
+      <UpdatePageInfo
+        title="Add transaction category"
+        backLink="/profile/transaction-categories"
+      />
       <TransactionCategoryForm
         onSubmit={handleSubmit}
         errors={errors}

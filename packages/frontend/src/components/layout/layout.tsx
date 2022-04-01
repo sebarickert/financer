@@ -63,7 +63,7 @@ export const Layout = (): JSX.Element => {
   return (
     <div className="flex flex-col h-full min-h-screen overflow-y-scroll lg:hidden disable-scrollbars">
       <main className="flex-grow bg-white-off lg:pb-24">
-        <div className={`px-6 pt-[78px] pb-24`}>
+        <div className={`px-4 mt-[44px] pt-4 pb-24`}>
           <Outlet />
         </div>
       </main>
