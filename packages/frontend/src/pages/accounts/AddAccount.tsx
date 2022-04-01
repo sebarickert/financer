@@ -31,7 +31,7 @@ export const AddAccount = (): JSX.Element => {
 
   return (
     <>
-      <UpdatePageInfo title="Add account" />
+      <UpdatePageInfo title="Add account" backLink="/accounts" />
       <AccountForm
         onSubmit={handleSubmit}
         errors={errors}

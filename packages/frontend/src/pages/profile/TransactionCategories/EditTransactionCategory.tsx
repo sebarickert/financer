@@ -80,7 +80,10 @@ export const EditTransactionCategory = (): JSX.Element => {
     <Loader loaderColor="blue" />
   ) : (
     <Container>
-      <UpdatePageInfo title="Add expense" />
+      <UpdatePageInfo
+        title="Edit transaction category"
+        backLink="/profile/transaction-categories"
+      />
       <TransactionCategoryForm
         onSubmit={handleSubmit}
         errors={errors}

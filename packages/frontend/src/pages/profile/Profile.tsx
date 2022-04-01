@@ -1,7 +1,6 @@
-import { Button } from '../../components/button/button';
 import { Heading } from '../../components/heading/heading';
-import { QuickLinks } from '../../components/quick-links/quick-links';
-import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
+import { LinkList } from '../../components/link-list/link-list';
+import { LinkListLink } from '../../components/link-list/link-list.link';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { useProfileInformation } from '../../hooks/profile/useProfileInformation';
 
@@ -14,42 +13,25 @@ export const Profile = (): JSX.Element => {
       <Heading variant="h1" className="mb-4 lg:mb-6">
         Profile
       </Heading>
-      <QuickLinks>
-        <QuickLinksItem
-          title="User preferences"
-          link="/profile/user-preferences"
-          iconName="cog"
-          description="Go to user preferences page where you are able to set available settings to your preference."
-        />
-        <QuickLinksItem
-          title="Categories"
-          link="/profile/transaction-categories"
-          iconName="tag"
-          description="Go to transaction categories page where you are able to manage or create them."
-        />
-        <QuickLinksItem
-          title="Download your data"
-          link="/api/users/my-user/my-data"
-          iconName="cloud-download"
-          description="Download your complete financer data as a JSON-file."
-        />
+      <LinkList>
+        <LinkListLink link="/profile/user-preferences" icon="cog">
+          User preferences
+        </LinkListLink>
+        <LinkListLink link="/profile/transaction-categories" icon="tag">
+          Categories
+        </LinkListLink>
+        <LinkListLink link="/api/users/my-user/my-data" icon="cloud-download">
+          Download your data
+        </LinkListLink>
         {profileInfo?.roles.includes('test-user') && (
-          <QuickLinksItem
-            title="Override data"
-            link="/profile/override-data"
-            iconName="exclamation"
-            iconBackgroundColor="red"
-            description="Go to override data page where you are able to override your current financer data."
-          />
+          <LinkListLink link="/profile/override-data" icon="exclamation">
+            Override data
+          </LinkListLink>
         )}
-      </QuickLinks>
-      <Button
-        className="mt-4 !w-full lg:hidden"
-        accentColor="plain"
-        link="/auth/logout"
-      >
-        Sign out
-      </Button>
+        <LinkListLink link="/auth/logout" icon="logout" className="lg:hidden">
+          Sign out
+        </LinkListLink>
+      </LinkList>
     </>
   );
 };

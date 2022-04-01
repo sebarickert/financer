@@ -1,31 +1,7 @@
-import { NavLink } from 'react-router-dom';
-
 import { Heading } from '../../../components/heading/heading';
-import { Icon } from '../../../components/icon/icon';
+import { LinkList } from '../../../components/link-list/link-list';
+import { LinkListLink } from '../../../components/link-list/link-list.link';
 import { UpdatePageInfo } from '../../../components/seo/updatePageInfo';
-
-const MvpLink = ({
-  link,
-  children,
-}: {
-  link: string;
-  children: string;
-}): JSX.Element => {
-  return (
-    <li className="group">
-      <div className="relative text-base flex justify-between font-semibold tracking-tight py-4 px-6 after:h-[1px] after:w-full after:absolute after:bg-gray-200 after:bottom-0 focus-within:bg-gray-200 hover:bg-gray-200 group-last:after:hidden overflow-hidden select-none">
-        <NavLink to={link} className="focus:outline-none truncate">
-          <span className="absolute inset-0 select-none" aria-hidden="true" />
-          <span className="select-none">{children}</span>
-        </NavLink>
-        <Icon
-          type={'chevron-right'}
-          className="translate-x-1/2 stroke-gray-300"
-        />
-      </div>
-    </li>
-  );
-};
 
 export const UserPreferences = (): JSX.Element => {
   return (
@@ -34,22 +10,26 @@ export const UserPreferences = (): JSX.Element => {
       <Heading variant="h1" className="mb-4 lg:mb-6">
         User preferences
       </Heading>
-      <ul className="-mx-6">
-        <MvpLink link="default-income-account">Default income account</MvpLink>
-        <MvpLink link="default-expense-account">
+      <LinkList>
+        <LinkListLink link="default-income-account" icon="cog">
+          Default income account
+        </LinkListLink>
+        <LinkListLink link="default-expense-account" icon="cog">
           Default expense account
-        </MvpLink>
-        <MvpLink link="default-transfer-source-account">
+        </LinkListLink>
+        <LinkListLink link="default-transfer-source-account" icon="cog">
           Default transfer source account
-        </MvpLink>
-        <MvpLink link="default-transfer-target-account">
+        </LinkListLink>
+        <LinkListLink link="default-transfer-target-account" icon="cog">
           Default transfer target account
-        </MvpLink>
-        <MvpLink link="transaction-list-chunk-size">
+        </LinkListLink>
+        <LinkListLink link="transaction-list-chunk-size" icon="cog">
           Transaction list chunk size
-        </MvpLink>
-        <MvpLink link="market-update-settings">Market update settings</MvpLink>
-      </ul>
+        </LinkListLink>
+        <LinkListLink link="market-update-settings" icon="cog">
+          Market update settings
+        </LinkListLink>
+      </LinkList>
     </>
   );
 };

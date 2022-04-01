@@ -33,11 +33,15 @@ export const MobileHeader = ({
 
   return (
     <>
-      <div className="bg-blue-financer text-center py-4 px-6 fixed top-0 left-0 right-0 z-50">
+      <div
+        className={`bg-blue-financer text-center fixed top-0 left-0 right-0 z-50 grid items-center ${
+          backLink ? 'grid-cols-[44px,1fr,44px]' : 'grid-cols-1'
+        }`}
+      >
         {backLink && (
           <NavLink
             to={backLink}
-            className="absolute left-6 top-1/2 -translate-y-1/2 -translate-x-1/2 h-11 w-11 items-center justify-center inline-flex"
+            className="h-11 w-11 inline-flex items-center justify-center"
           >
             <span className="sr-only">Go back</span>
             <Icon type={'chevron-left'} className="stroke-white" />
@@ -45,7 +49,7 @@ export const MobileHeader = ({
         )}
         <Heading
           variant="h1"
-          className="!text-lg !tracking-tight !text-white !font-semibold !block"
+          className={`!text-base !tracking-tight !text-white !font-semibold !block py-3 truncate`}
         >
           {title ?? children}
         </Heading>
