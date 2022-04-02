@@ -5,6 +5,7 @@ import { BrowserRouter as Router, useLocation } from 'react-router-dom';
 
 import { App } from './App';
 import './assets/tailwind.css';
+import { ScrollToTop } from './components/scroll-to-top/scroll-to-top';
 import { SEO } from './components/seo/seo';
 import { PageInfoProvider } from './context/pageInfoContext';
 import { reportWebVitals } from './reportWebVitals';
@@ -46,6 +47,7 @@ const Root = (): JSX.Element => {
       <QueryClientProvider client={queryClient}>
         <PageInfoProvider>
           <SEO />
+          <ScrollToTop />
           <App />
         </PageInfoProvider>
       </QueryClientProvider>
