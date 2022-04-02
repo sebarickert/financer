@@ -7,6 +7,7 @@ interface HeadingProps {
   style?: HeadingVariants;
   children: string;
   className?: string;
+  testId?: string;
 }
 
 export const Heading = ({
@@ -14,6 +15,7 @@ export const Heading = ({
   children,
   className = '',
   style,
+  testId,
 }: HeadingProps) => {
   const HeadingType = variant;
   const styleToApply = style || variant;
@@ -26,6 +28,7 @@ export const Heading = ({
         ${styleToApply === 'h3' ? 'text-lg lg:text-xl' : ''}
         ${styleToApply === 'h4' ? 'text-md lg:text-lg' : ''}
       `}
+      data-testid={testId}
     >
       {children}
     </HeadingType>

@@ -180,7 +180,11 @@ export const Account = (): JSX.Element => {
           There were {errors.length} errors with your submission
         </Alert>
       )}
-      <Heading variant="h1" className="mb-4 lg:mb-6">
+      <Heading
+        variant="h1"
+        className="mb-4 lg:mb-6"
+        testId="account-page-heading"
+      >
         {account.name}
       </Heading>
       <section className={`bg-white border rounded-lg mb-6`}>

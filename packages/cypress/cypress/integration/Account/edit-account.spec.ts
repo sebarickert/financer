@@ -21,7 +21,7 @@ const verifyAccountPage = (
   accountBalance: string,
   accountType: string
 ) => {
-  cy.getById('account-banner').find('h1').should('contain.text', accountName);
+  cy.getById('account-page-heading').should('contain.text', accountName);
 
   cy.getById('account-type').should('have.text', accountType);
 
@@ -49,8 +49,10 @@ const editAccountNameAndVerify = (
   cy.get<string>('@accountBalance').then((accountBalance) => {
     verifyAccountPage(oldAccountName, accountBalance, accountType);
   });
-  // Account page
 
+  // Account page
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
+  cy.wait(100);
   cy.getById('edit-account').click();
 
   // Edit account form
@@ -199,7 +201,7 @@ describe('Account editing', () => {
     cy.visit('http://localhost:3000/accounts');
   });
 
-  it('Change Cash account name', () => {
+  it.only('Change Cash account name', () => {
     editAccountNameAndVerify('Cash account', 'Cash Renamed account', 'Cash');
   });
   it('Change Saving account name', () => {
@@ -209,7 +211,7 @@ describe('Account editing', () => {
       'Savings'
     );
   });
-  it('Change Ivestment account name', () => {
+  it('Change Investment account name', () => {
     editAccountNameAndVerify(
       'Investment account',
       'Investment Renamed account',
