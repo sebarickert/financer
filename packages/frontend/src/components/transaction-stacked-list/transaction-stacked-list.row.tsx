@@ -27,8 +27,8 @@ export const TransactionStackedListRow = ({
   const iconTypeMapping: {
     [key in 'expense' | 'income' | 'transfer']: IconName;
   } = {
-    expense: 'download',
-    income: 'upload',
+    expense: 'upload',
+    income: 'download',
     transfer: 'switch-horizontal',
   };
 
