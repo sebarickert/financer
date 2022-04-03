@@ -49,7 +49,8 @@ export const Accounts = (): JSX.Element => {
           rows={accounts.filter(
             ({ accountType }) =>
               accountType.toLowerCase() !== 'loan' &&
-              accountType.toLowerCase() !== 'investment'
+              accountType.toLowerCase() !== 'investment' &&
+              accountType.toLowerCase() !== 'credit'
           )}
         />
         <AccountsList
@@ -59,9 +60,11 @@ export const Accounts = (): JSX.Element => {
           )}
         />
         <AccountsList
-          label="Loans"
+          label="Credits and Loans"
           rows={accounts.filter(
-            ({ accountType }) => accountType.toLowerCase() === 'loan'
+            ({ accountType }) =>
+              accountType.toLowerCase() === 'loan' ||
+              accountType.toLowerCase() === 'credit'
           )}
         />
       </section>
