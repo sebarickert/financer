@@ -30,6 +30,7 @@ export const AccountsList = ({
           <LinkListLink
             link={link ?? ''}
             icon={accountTypeIconMapping[accountType.toLowerCase()]}
+            testId="account-row"
           >
             <span className="grid">
               <span>{rowLabel}</span>
