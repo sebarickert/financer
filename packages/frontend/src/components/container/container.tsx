@@ -15,7 +15,7 @@ export const Container = ({
 }: IContainerProps): JSX.Element => {
   return (
     <div
-      className={`mx-auto px-4 max-w-screen-xl ${className} ${
+      className={`mx-auto max-w-screen-xl ${className} ${
         sidebarComponent ? 'lg:flex' : ''
       }`}
     >
