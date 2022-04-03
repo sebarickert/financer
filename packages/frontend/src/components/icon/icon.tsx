@@ -1,5 +1,6 @@
 import { IconArrowLeft } from './icon.arrowLeft';
 import { IconArrowRight } from './icon.arrowRight';
+import { IconCash } from './icon.cash';
 import { IconChartBar } from './icon.chartBar';
 import { IconChevronDown } from './icon.chevronDown';
 import { IconChevronLeft } from './icon.chevronLeft';
@@ -7,16 +8,21 @@ import { IconChevronRight } from './icon.chevronRight';
 import { IconCloudDownload } from './icon.cloudDownload';
 import { IconCog } from './icon.cog';
 import { IconCollection } from './icon.collection';
+import { IconCreditCard } from './icon.creditCard';
 import { IconDownload } from './icon.download';
 import { IconExclamation } from './icon.exclamation';
 import { IconHome } from './icon.home';
+import { IconLibrary } from './icon.library';
 import { IconLogout } from './icon.logout';
 import { IconMinusCircle } from './icon.minusCircle';
 import { IconPlus } from './icon.plus';
 import { IconPlusCircle } from './icon.plusCircle';
+import { IconStar } from './icon.star';
 import { IconSwitchHorizontal } from './icon.switchHorizontal';
 import { IconTag } from './icon.tag';
 import { IconTrash } from './icon.trash';
+import { IconTrendingDown } from './icon.trendingDown';
+import { IconTrendingUp } from './icon.trendingUp';
 import { IconUpload } from './icon.upload';
 import { IconUser } from './icon.user';
 import { IconUserCircle } from './icon.userCircle';
@@ -47,6 +53,12 @@ export type IconName =
   | 'chevron-right'
   | 'chevron-left'
   | 'trash'
+  | 'cash'
+  | 'credit-card'
+  | 'trending-up'
+  | 'trending-down'
+  | 'library'
+  | 'star'
   | 'collection';
 interface IconProps {
   type: IconName;
@@ -130,8 +142,26 @@ export const Icon = ({ type, className = '' }: IconProps): JSX.Element => {
     case 'trash':
       return <IconTrash className={defaultIconClasses} />;
 
+    case 'cash':
+      return <IconCash className={defaultIconClasses} />;
+
+    case 'credit-card':
+      return <IconCreditCard className={defaultIconClasses} />;
+
     case 'cog':
       return <IconCog className={defaultIconClasses} />;
+
+    case 'trending-up':
+      return <IconTrendingUp className={defaultIconClasses} />;
+
+    case 'trending-down':
+      return <IconTrendingDown className={defaultIconClasses} />;
+
+    case 'library':
+      return <IconLibrary className={defaultIconClasses} />;
+
+    case 'star':
+      return <IconStar className={defaultIconClasses} />;
 
     default:
       break;

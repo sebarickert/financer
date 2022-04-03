@@ -1,4 +1,4 @@
-import React from 'react';
+import { IconSvgBase } from './icon.svgBase';
 
 interface IconElementProps {
   className?: string;
@@ -6,13 +6,7 @@ interface IconElementProps {
 
 export const IconCog = ({ className = '' }: IconElementProps): JSX.Element => {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-    >
+    <IconSvgBase className={className}>
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -25,6 +19,6 @@ export const IconCog = ({ className = '' }: IconElementProps): JSX.Element => {
         strokeWidth={2}
         d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
       />
-    </svg>
+    </IconSvgBase>
   );
 };

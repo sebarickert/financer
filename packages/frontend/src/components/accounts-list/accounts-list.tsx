@@ -1,8 +1,8 @@
-import React from 'react';
+import { IconName } from '../icon/icon';
+import { LinkList } from '../link-list/link-list';
+import { LinkListLink } from '../link-list/link-list.link';
 
-import { Heading } from '../heading/heading';
-
-import { AccountsListRow, IAccountsListRowProps } from './accounts-list.row';
+import { IAccountsListRowProps } from './accounts-list.row';
 
 interface IAccountsListProps {
   label?: string;
@@ -16,24 +16,31 @@ export const AccountsList = ({
   className,
 }: IAccountsListProps): JSX.Element => {
   return (
-    <section className={`${className}`}>
-      {label && <Heading className="mb-4">{label}</Heading>}
-      <ul className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
-        {rows.map(
-          ({ balanceAmount, accountType, label: rowLabel, link, id }) => (
-            <li key={id}>
-              <AccountsListRow
-                label={rowLabel}
-                balanceAmount={balanceAmount}
-                accountType={accountType}
-                link={link}
-                id={id}
-                key={id}
-              />
-            </li>
-          )
-        )}
-      </ul>
-    </section>
+    <LinkList label={label} className={`${className}`}>
+      {rows.map(({ balanceAmount, label: rowLabel, link, accountType }) => {
+        const accountTypeIconMapping: { [key: string]: IconName } = {
+          cash: 'cash',
+          savings: 'star',
+          investment: 'trending-up',
+          credit: 'credit-card',
+          loan: 'library',
+        };
+
+        return (
+          <LinkListLink
+            link={link ?? ''}
+            icon={accountTypeIconMapping[accountType.toLowerCase()]}
+          >
+            <span className="grid">
+              <span>{rowLabel}</span>
+              <span className="text-sm lg:text-base font-normal text-gray-600">
+                <span className="sr-only">Balance: </span>
+                {balanceAmount}
+              </span>
+            </span>
+          </LinkListLink>
+        );
+      })}
+    </LinkList>
   );
 };
