@@ -24,7 +24,7 @@ export const Form = ({
   optionalFooterComponent,
 }: IFormProps): JSX.Element => {
   return (
-    <form onSubmit={handleSubmit} method="post">
+    <form onSubmit={handleSubmit} method="post" className="pb-[83px] lg:pb-0">
       <FormHeader>{formHeading}</FormHeader>
       {children}
       <FormFooter

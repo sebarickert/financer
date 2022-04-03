@@ -18,8 +18,8 @@ export const FormFooter = ({
 }: IFormFooterProps): JSX.Element => {
   return (
     <>
-      <div className="mt-8 border-t border-gray-200 pt-5">
-        <ButtonGroup isReverse>
+      <div className="py-4 fixed lg:static left-0 right-0 bottom-[62px] px-4 bg-white lg:bg-transparent lg:mt-8 border-t lg:px-0">
+        <ButtonGroup isReverse isHorizontal>
           <Button accentColor={accentColor} type="submit" testId="submit">
             {submitLabel}
           </Button>
@@ -29,7 +29,7 @@ export const FormFooter = ({
         </ButtonGroup>
       </div>
       {optionalComponent && (
-        <div className="mt-8 border-t border-gray-200 pt-5 sm:flex sm:flex-row-reverse">
+        <div className="mt-8 lg:mt-0 border-t border-gray-200 py-4 sm:flex sm:flex-row-reverse">
           {optionalComponent}
         </div>
       )}
