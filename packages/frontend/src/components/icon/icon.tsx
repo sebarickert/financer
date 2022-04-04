@@ -12,6 +12,7 @@ import { IconCreditCard } from './icon.creditCard';
 import { IconDownload } from './icon.download';
 import { IconExclamation } from './icon.exclamation';
 import { IconHome } from './icon.home';
+import { IconHomeSolid } from './icon.home.solid';
 import { IconLibrary } from './icon.library';
 import { IconLogout } from './icon.logout';
 import { IconMinusCircle } from './icon.minusCircle';
@@ -34,6 +35,7 @@ export type IconName =
   | 'plus-circle'
   | 'minus-circle'
   | 'home'
+  | 'home-solid'
   | 'user'
   | 'chart-bar'
   | 'view-grid'
@@ -84,6 +86,9 @@ export const Icon = ({ type, className = '' }: IconProps): JSX.Element => {
 
     case 'home':
       return <IconHome className={defaultIconClasses} />;
+
+    case 'home-solid':
+      return <IconHomeSolid className={defaultIconClasses} />;
 
     case 'user':
       return <IconUser className={defaultIconClasses} />;
