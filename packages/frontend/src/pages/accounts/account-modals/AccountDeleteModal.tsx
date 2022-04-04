@@ -3,8 +3,6 @@ import { useState } from 'react';
 import { LinkListButton } from '../../../components/link-list/link-list.button';
 import { ModalConfirmActions } from '../../../components/modal/confirm/modal.confirm.actions';
 import { ModalConfirmHeader } from '../../../components/modal/confirm/modal.confirm.header';
-import { isIOSDevice } from '../../../utils/isIOSDevice';
-import { isStandaloneMode } from '../../../utils/isStandaloneMode';
 
 interface IAccountDeleteModalProps {
   handleDelete(): void;
@@ -28,9 +26,7 @@ export const AccountDeleteModal = ({
             <div className="absolute inset-0 bg-gray-500 opacity-75" />
           </div>
           <div
-            className={`flex items-end justify-center min-h-screen pt-4 px-4 text-center sm:block sm:p-0 ${
-              isIOSDevice() && isStandaloneMode() ? 'pb-28' : 'pb-20'
-            }`}
+            className={`flex items-end justify-center min-h-screen pt-4 px-4 text-center sm:block sm:p-0 pb-[calc(78px+env(safe-area-inset-bottom))]`}
           >
             <span className="hidden sm:inline-block sm:align-middle sm:h-screen" />
             &#8203;
