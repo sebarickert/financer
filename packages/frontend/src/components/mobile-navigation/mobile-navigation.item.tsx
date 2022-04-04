@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom';
 
 import { useIsActiveLink } from '../../hooks/useIsActiveLink';
 import { Icon, IconName } from '../icon/icon';
+import { IconSolid } from '../icon/icon.solid';
 
 interface IMobileNavigationItemProps {
   link: string;
@@ -33,13 +34,14 @@ export const MobileNavigationItem = ({
       <li>
         <NavLink
           to={link}
-          className={`flex flex-col items-center justify-center focus:text-blue-financer hover:text-blue-financer py-4 pb-3 after:h-1.5 after:w-1.5 after:bg-transparent after:rounded-full after:mt-1 ${
-            isActive ? 'text-blue-financer after:!bg-blue-financer' : ''
-          }`}
+          className={`flex flex-col items-center justify-center focus:text-blue-financer hover:text-blue-financer h-11`}
           onClick={onClick}
           aria-label={ariaLabel}
         >
-          <Icon type={iconName} />
+          {!isActive && <Icon type={iconName} />}
+          {isActive && (
+            <IconSolid type={iconName} className="fill-blue-financer" />
+          )}
           <span
             className={`text-xs mt-1 sr-only ${
               hasDarkBackground ? 'text-gray-300' : 'text-gray-600'
