@@ -33,7 +33,7 @@ export const MobileNavigationItem = ({
       <li>
         <NavLink
           to={link}
-          className={`flex flex-col items-center justify-center focus:text-blue-financer hover:text-blue-financer pt-4 pb-3 after:h-1.5 after:w-1.5 after:bg-transparent after:rounded-full after:mt-1 ${
+          className={`flex flex-col items-center justify-center focus:text-blue-financer hover:text-blue-financer py-4 pb-3 after:h-1.5 after:w-1.5 after:bg-transparent after:rounded-full after:mt-1 ${
             isActive ? 'text-blue-financer after:!bg-blue-financer' : ''
           }`}
           onClick={onClick}
