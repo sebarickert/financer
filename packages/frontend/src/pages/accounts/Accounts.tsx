@@ -10,11 +10,14 @@ import { useAllAccounts } from '../../hooks/account/useAllAccounts';
 import { formatCurrency } from '../../utils/formatCurrency';
 
 export const Accounts = (): JSX.Element => {
-  const accountsRaw = useAllAccounts();
+  const { data: accountsRaw, isLoading } = useAllAccounts();
   const [accounts, setAccounts] = useState<IAccountsListRowProps[]>([]);
 
   useEffect(() => {
-    if (accountsRaw === null) return;
+    if (!accountsRaw || isLoading) {
+      setAccounts([]);
+      return;
+    }
     setAccounts(
       accountsRaw.map(({ _id, balance, name, type }) => ({
         label: name,
@@ -24,9 +27,9 @@ export const Accounts = (): JSX.Element => {
         id: _id,
       }))
     );
-  }, [accountsRaw]);
+  }, [accountsRaw, isLoading]);
 
-  return accountsRaw === null ? (
+  return isLoading ? (
     <Loader loaderColor="blue" />
   ) : (
     <>

@@ -38,7 +38,7 @@ export const IncomeForm = ({
   toAccount,
   transactionCategoryMapping = null,
 }: IIncomeFormProps): JSX.Element => {
-  const accountsRaw = useAllAccounts();
+  const { data: accountsRaw, isLoading: isLoadingAccounts } = useAllAccounts();
   const [accounts, setAccounts] = useState<IOption[] | null>(null);
   const transactionCategoriesRaw =
     useAllTransactionCategoriesForIncomeWithCategoryTree();
@@ -91,7 +91,10 @@ export const IncomeForm = ({
   };
 
   useEffect(() => {
-    if (accountsRaw === null) return;
+    if (!accountsRaw || isLoadingAccounts) {
+      setAccounts(null);
+      return;
+    }
 
     setAccounts(
       accountsRaw.map(({ _id, name }) => ({
@@ -99,7 +102,7 @@ export const IncomeForm = ({
         label: name,
       }))
     );
-  }, [accountsRaw]);
+  }, [accountsRaw, isLoadingAccounts]);
 
   useEffect(() => {
     if (transactionCategoriesRaw === null) return;

@@ -10,7 +10,7 @@ interface IDashboardStatsProps {
 export const DashboardStats = ({
   className = '',
 }: IDashboardStatsProps): JSX.Element => {
-  const totalBalance = useTotalBalance();
+  const { data: totalBalance = NaN } = useTotalBalance();
   const totalIncomes = useCurrentMonthIncomesTotalAmount();
   const totalExpenses = useCurrentMonthExpensesTotalAmount();
 

@@ -9,7 +9,7 @@ import { useAllAccounts } from '../../../../hooks/account/useAllAccounts';
 import { useUserDefaultIncomeAccount } from '../../../../hooks/profile/user-preference/useUserDefaultIncomeAccount';
 
 export const UserDefaultIncomeAccount = (): JSX.Element => {
-  const accounts = useAllAccounts();
+  const { data: accounts, isLoading: isLoadingAccounts } = useAllAccounts();
   const [account, setAccount] = useState('');
   const [defaultIncomeAccount, setDefaultIncomeAccount] =
     useUserDefaultIncomeAccount();
@@ -22,7 +22,7 @@ export const UserDefaultIncomeAccount = (): JSX.Element => {
     setDefaultIncomeAccount(account);
   };
 
-  return accounts === null ? (
+  return isLoadingAccounts || !accounts ? (
     <Loader loaderColor="blue" />
   ) : (
     <>

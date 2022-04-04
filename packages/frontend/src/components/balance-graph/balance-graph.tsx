@@ -56,7 +56,7 @@ const CustomTooltip = ({
       lastDataItem.date.getTime() === new Date(label).getTime();
 
     return (
-      <div className="px-4 py-2 bg-gray-800 shadow-lg rounded-md">
+      <div className="px-4 py-2 bg-gray-800 rounded-md shadow-lg">
         <p className="text-white">
           Balance {formatCurrency(payload[0].value as number)}
         </p>
@@ -140,7 +140,7 @@ const SimpleLineChart = ({ data }: ISimpleLineChartProps): JSX.Element => {
 export const BalanceGraph = ({
   className = '',
 }: BalanceGraphProps): JSX.Element => {
-  const totalBalance = useTotalBalance();
+  const { data: totalBalance } = useTotalBalance();
   const allIncomes = useAllIncomes();
   const allExpenses = useAllExpenses();
   const [groupedIncomes] = useAllIncomesGroupByMonth(['loan']);
@@ -228,7 +228,7 @@ export const BalanceGraph = ({
       className={`bg-gray-25 rounded-lg border ${className} aspect-video md:aspect-auto relative`}
     >
       {balanceHistory === null ? (
-        <Loader loaderColor="blue" className="scale-50 h-full" />
+        <Loader loaderColor="blue" className="h-full scale-50" />
       ) : (
         <>
           <SimpleLineChart data={balanceHistory} />

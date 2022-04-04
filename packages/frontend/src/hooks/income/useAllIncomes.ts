@@ -56,7 +56,9 @@ export const useAllIncomesGroupByMonth = (
   React.Dispatch<React.SetStateAction<IAccount['type'][]>>
 ] => {
   const incomes = useAllIncomes();
-  const [allForbiddenAccounts, setTargetTypes] = useAllAccountsByType([]);
+  const [{ data: allForbiddenAccounts }, setTargetTypes] = useAllAccountsByType(
+    []
+  );
   const [groupedIncomes, setGroupedIncomes] = useState<IIncomesPerMonth[]>([]);
   const transactionCategoryMappings = useAllTransactionCategoryMappings();
   const transactionCategories = useAllTransactionCategories();

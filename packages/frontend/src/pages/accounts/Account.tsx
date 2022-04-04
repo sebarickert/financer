@@ -35,7 +35,7 @@ export const Account = (): JSX.Element => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const deleteAccount = useDeleteAccount();
-  const [account] = useAccountById(id);
+  const [{ data: account, isLoading: isLoadingAccount }] = useAccountById(id);
   const [transactions, setTransactions] = useState<
     ITransactionStackedListRowProps[]
   >([]);
@@ -170,7 +170,7 @@ export const Account = (): JSX.Element => {
     }
   };
 
-  return !account || !transactions ? (
+  return isLoadingAccount || !account || !transactions ? (
     <Loader loaderColor="blue" />
   ) : (
     <>

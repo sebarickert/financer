@@ -40,7 +40,7 @@ export const TransferForm = ({
   toAccount,
   transactionCategoryMapping = null,
 }: ITransferFormProps): JSX.Element => {
-  const accountsRaw = useAllAccounts();
+  const { data: accountsRaw, isLoading: isLoadingAccounts } = useAllAccounts();
   const [accounts, setAccounts] = useState<IOption[] | null>(null);
   const transactionCategoriesRaw =
     useAllTransactionCategoriesForTransferWithCategoryTree();
@@ -93,7 +93,10 @@ export const TransferForm = ({
   };
 
   useEffect(() => {
-    if (accountsRaw === null) return;
+    if (!accountsRaw || isLoadingAccounts) {
+      setAccounts(null);
+      return;
+    }
 
     setAccounts(
       accountsRaw.map(({ _id, name }) => ({
@@ -101,7 +104,7 @@ export const TransferForm = ({
         label: name,
       }))
     );
-  }, [accountsRaw]);
+  }, [accountsRaw, isLoadingAccounts]);
 
   useEffect(() => {
     if (transactionCategoriesRaw === null) return;

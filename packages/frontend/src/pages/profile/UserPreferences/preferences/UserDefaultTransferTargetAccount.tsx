@@ -9,7 +9,7 @@ import { useAllAccounts } from '../../../../hooks/account/useAllAccounts';
 import { useUserDefaultTransferTargetAccount } from '../../../../hooks/profile/user-preference/useUserDefaultTransferTargetAccount';
 
 export const UserDefaultTransferTargetAccount = (): JSX.Element => {
-  const accounts = useAllAccounts();
+  const { data: accounts, isLoading: isLoadingAccounts } = useAllAccounts();
   const [account, setAccount] = useState('');
   const [defaultTransferTargetAccount, setDefaultTransferTargetAccount] =
     useUserDefaultTransferTargetAccount();
@@ -22,7 +22,7 @@ export const UserDefaultTransferTargetAccount = (): JSX.Element => {
     setDefaultTransferTargetAccount(account);
   };
 
-  return accounts === null ? (
+  return isLoadingAccounts || !accounts ? (
     <Loader loaderColor="blue" />
   ) : (
     <>

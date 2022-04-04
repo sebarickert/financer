@@ -56,7 +56,9 @@ export const useAllExpensesGroupByMonth = (
   React.Dispatch<React.SetStateAction<IAccount['type'][]>>
 ] => {
   const expenses = useAllExpenses();
-  const [allForbiddenAccounts, setTargetTypes] = useAllAccountsByType([]);
+  const [{ data: allForbiddenAccounts }, setTargetTypes] = useAllAccountsByType(
+    []
+  );
   const [groupedExpenses, setGroupedExpenses] = useState<IExpensesPerMonth[]>(
     []
   );
@@ -67,7 +69,7 @@ export const useAllExpensesGroupByMonth = (
   >(initialForbiddenAccountTypes);
 
   useEffect(() => {
-    if (expenses === null) return;
+    if (!expenses) return;
 
     const forbiddenAccountIds = allForbiddenAccounts?.map(({ _id }) => _id);
 
