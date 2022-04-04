@@ -16,11 +16,14 @@ interface IDashboardAccountsProps {
 export const DashboardAccounts = ({
   className = '',
 }: IDashboardAccountsProps): JSX.Element => {
-  const accountsRaw = useAllAccounts();
+  const { data: accountsRaw, isLoading: isLoadingAccounts } = useAllAccounts();
   const [accounts, setAccounts] = useState<IAccountsListRowProps[]>([]);
 
   useEffect(() => {
-    if (accountsRaw === null) return;
+    if (!accountsRaw || isLoadingAccounts) {
+      setAccounts([]);
+      return;
+    }
     setAccounts(
       accountsRaw.map(({ _id, balance, name, type }) => ({
         label: name,
@@ -30,7 +33,7 @@ export const DashboardAccounts = ({
         id: _id,
       }))
     );
-  }, [accountsRaw]);
+  }, [accountsRaw, isLoadingAccounts]);
 
   return (
     <section className={`bg-white border rounded-lg py-1 ${className}`}>

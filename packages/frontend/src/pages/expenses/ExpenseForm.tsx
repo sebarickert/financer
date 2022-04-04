@@ -38,7 +38,7 @@ export const ExpenseForm = ({
   fromAccount,
   transactionCategoryMapping = null,
 }: IExpenseFormProps): JSX.Element => {
-  const accountsRaw = useAllAccounts();
+  const { data: accountsRaw, isLoading: isLoadingAccounts } = useAllAccounts();
   const [accounts, setAccounts] = useState<IOption[] | null>(null);
   const transactionCategoriesRaw =
     useAllTransactionCategoriesForExpenseWithCategoryTree();
@@ -91,7 +91,10 @@ export const ExpenseForm = ({
   };
 
   useEffect(() => {
-    if (accountsRaw === null) return;
+    if (!accountsRaw || isLoadingAccounts) {
+      setAccounts(null);
+      return;
+    }
 
     setAccounts(
       accountsRaw.map(({ _id, name }) => ({
@@ -99,7 +102,7 @@ export const ExpenseForm = ({
         label: name,
       }))
     );
-  }, [accountsRaw]);
+  }, [accountsRaw, isLoadingAccounts]);
 
   useEffect(() => {
     if (transactionCategoriesRaw === null) return;

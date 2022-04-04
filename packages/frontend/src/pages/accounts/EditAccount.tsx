@@ -17,7 +17,7 @@ export const EditAccount = (): JSX.Element => {
 
   const [errors, setErrors] = useState<string[]>([]);
 
-  const [account] = useAccountById(id);
+  const [{ data: account, isLoading }] = useAccountById(id);
 
   const handleSubmit = async (newAccountData: IAccount) => {
     /* eslint-disable no-param-reassign */
@@ -39,7 +39,7 @@ export const EditAccount = (): JSX.Element => {
     }
   };
 
-  return !account ? (
+  return isLoading || !account ? (
     <Loader loaderColor="blue" />
   ) : (
     <>

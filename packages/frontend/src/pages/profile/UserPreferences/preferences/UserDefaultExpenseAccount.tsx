@@ -9,7 +9,7 @@ import { useAllAccounts } from '../../../../hooks/account/useAllAccounts';
 import { useUserDefaultExpenseAccount } from '../../../../hooks/profile/user-preference/useUserDefaultExpenseAccount';
 
 export const UserDefaultExpenseAccount = (): JSX.Element => {
-  const accounts = useAllAccounts();
+  const { data: accounts, isLoading: isLoadingAccounts } = useAllAccounts();
   const [account, setAccount] = useState('');
   const [defaultExpenseAccount, setDefaultExpenseAccount] =
     useUserDefaultExpenseAccount();
@@ -22,7 +22,7 @@ export const UserDefaultExpenseAccount = (): JSX.Element => {
     setDefaultExpenseAccount(account);
   };
 
-  return accounts === null ? (
+  return isLoadingAccounts || !accounts ? (
     <Loader loaderColor="blue" />
   ) : (
     <>

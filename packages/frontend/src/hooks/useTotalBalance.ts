@@ -1,13 +1,17 @@
 import { useState, useEffect } from 'react';
+import { UseQueryResult } from 'react-query';
 
 import { useAllAccounts } from './account/useAllAccounts';
 
-export const useTotalBalance = (): number => {
-  const accounts = useAllAccounts();
+export const useTotalBalance = (): UseQueryResult<number> => {
+  const { data: accounts, isLoading, ...allAccountQuery } = useAllAccounts();
   const [totalBalance, setTotalBalance] = useState<number>(NaN);
 
   useEffect(() => {
-    if (accounts === null) return;
+    if (!accounts || isLoading) {
+      setTotalBalance(NaN);
+      return;
+    }
 
     const total = accounts.reduce(
       (currentTotal, { balance, type }) =>
@@ -16,7 +20,11 @@ export const useTotalBalance = (): number => {
     );
 
     setTotalBalance(total);
-  }, [accounts]);
+  }, [accounts, isLoading]);
 
-  return totalBalance;
+  return {
+    ...allAccountQuery,
+    isLoading,
+    data: totalBalance,
+  } as UseQueryResult<number>;
 };

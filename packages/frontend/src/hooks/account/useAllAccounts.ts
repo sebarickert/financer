@@ -1,33 +1,43 @@
 import { IAccount } from '@local/types';
 import { useEffect, useState } from 'react';
-import { useQuery } from 'react-query';
+import { useQuery, UseQueryResult } from 'react-query';
 
 import { getAllAccounts } from '../../services/AccountService';
 
-export const useAllAccounts = (): IAccount[] | null => {
-  const accountsQuery = useQuery<IAccount[]>('accounts', getAllAccounts, {
+export const useAllAccounts = (): UseQueryResult<IAccount[]> => {
+  return useQuery<IAccount[]>('accounts', getAllAccounts, {
     staleTime: 300000,
   });
-
-  return accountsQuery.data || null;
 };
 
 export const useAllAccountsByType = (
   types: IAccount['type'][]
-): [IAccount[] | null, (types: IAccount['type'][]) => void] => {
-  const allAccounts = useAllAccounts();
-  const [targetAccounts, setTargetAccounts] = useState<IAccount[] | null>(null);
+): [UseQueryResult<IAccount[]>, (types: IAccount['type'][]) => void] => {
+  const {
+    data: allAccounts,
+    isLoading,
+    ...allAccountsQuery
+  } = useAllAccounts();
+  const [targetAccounts, setTargetAccounts] = useState<IAccount[]>();
   const [targetTypes, setTargetTypes] = useState(types);
 
   useEffect(() => {
-    if (!allAccounts) return;
+    if (!allAccounts || isLoading) {
+      setTargetAccounts(undefined);
+      return;
+    }
 
     const newTargetAccounts = allAccounts.filter(({ type }) =>
       targetTypes.includes(type)
     );
 
-    setTargetAccounts(newTargetAccounts);
-  }, [allAccounts, targetTypes]);
+    setTargetAccounts(newTargetAccounts ?? []);
+  }, [allAccounts, isLoading, targetTypes]);
 
-  return [targetAccounts, setTargetTypes];
+  return [
+    { ...allAccountsQuery, isLoading, data: targetAccounts } as UseQueryResult<
+      IAccount[]
+    >,
+    setTargetTypes,
+  ];
 };
