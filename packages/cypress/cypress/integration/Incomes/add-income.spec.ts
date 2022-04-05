@@ -12,10 +12,18 @@ import {
 } from '../apiHelpers';
 
 describe('Add income', () => {
-  beforeEach(() => {
+  before(() => {
     cy.applyFixture('large');
+  });
+
+  beforeEach(() => {
     cy.visit('http://localhost:3000/statistics/incomes');
   });
+
+  const newTransactionAmountStr = '15.50';
+  const newTransactionAmount = parseFloat(newTransactionAmountStr);
+  const getNewTransactionName = () =>
+    `new dummy transaction created by test code ${Math.random()}`;
 
   const verifyAccountBalanceChange = (amount: number) =>
     cy.get<IAccount>('@accountBefore').then((accountBefore) => {
@@ -35,11 +43,8 @@ describe('Add income', () => {
       });
     });
 
-  const newTransactionAmountStr = '15.50';
-  const newTransactionAmount = parseFloat(newTransactionAmountStr);
-  const newTransactionName = 'new dummy transaction created by test code';
-
   it('Add newest income', () => {
+    const newTransactionName = getNewTransactionName();
     cy.saveAsyncData('transactionsBefore', getAllTransaction);
     cy.saveAsyncData('incomesBefore', getAllIncomes);
 
@@ -81,6 +86,7 @@ describe('Add income', () => {
   });
 
   it('Add second newest income', () => {
+    const newTransactionName = getNewTransactionName();
     cy.saveAsyncData('transactionsBefore', getAllTransaction);
     cy.saveAsyncData('incomesBefore', getAllIncomes);
 
@@ -122,6 +128,7 @@ describe('Add income', () => {
   });
 
   it('Add oldest income', () => {
+    const newTransactionName = getNewTransactionName();
     cy.saveAsyncData('transactionsBefore', getAllTransaction);
     cy.saveAsyncData('incomesBefore', getAllIncomes);
 
@@ -163,6 +170,7 @@ describe('Add income', () => {
   });
 
   it('Check that date is correct', () => {
+    const newTransactionName = getNewTransactionName();
     const date = new Date();
     date.setSeconds(0);
     date.setMilliseconds(0);

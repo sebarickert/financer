@@ -1,29 +1,32 @@
 describe('Account creation', () => {
+  before(() => {
+    cy.applyFixture('accounts-only');
+  });
+
+  beforeEach(() => {
+    cy.visit('http://localhost:3000/accounts');
+  });
+
   const addAccountAndVerifyDetails = (
     accountType,
     accountBalance,
     expectedType,
     expextedBalance
   ) => {
-    cy.getById('account-row').should(
-      'not.have.text',
-      `New Test ${expectedType} Account`
-    );
+    const newAccountName = `New Test ${expectedType} Account ${Math.random()}`;
+    cy.getById('account-row').should('not.have.text', newAccountName);
 
     cy.getById('add-account').click();
 
     // Add account form
     cy.get('#account').clear();
-    cy.get('#account').type(`New Test ${expectedType} Account`);
+    cy.get('#account').type(newAccountName);
     cy.get('#amount').clear();
     cy.get('#amount').type(accountBalance);
     cy.get('#type').select(accountType);
     cy.getById('submit').click();
 
-    cy.getById('account-row').should('have.length', 7);
-    cy.getById('account-row')
-      .contains(`New Test ${expectedType} Account`)
-      .click();
+    cy.contains(newAccountName).click();
 
     cy.getById('account-type').should('have.text', expectedType);
     cy.getById('account-balance')
@@ -31,15 +34,6 @@ describe('Account creation', () => {
       .invoke('replace', /\u00a0/g, ' ')
       .should('equal', expextedBalance);
   };
-
-  beforeEach(() => {
-    cy.applyFixture('accounts-only');
-    cy.visit('http://localhost:3000/accounts');
-  });
-
-  it('Verify accounts in fixture', () => {
-    cy.getById('account-row').should('have.length', 6);
-  });
 
   it('Add Cash account', () => {
     addAccountAndVerifyDetails('credit', 1000, 'Credit', '1 000,00 €');

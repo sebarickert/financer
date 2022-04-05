@@ -9,14 +9,18 @@ import {
 } from '../apiHelpers';
 
 describe('Edit income', () => {
-  beforeEach(() => {
+  before(() => {
     cy.applyFixture('large');
+  });
+
+  beforeEach(() => {
     cy.visit('http://localhost:3000/statistics/incomes');
   });
 
   const amountToChangeTransactionStr = '15.50';
   const amountToChangeTransaction = parseFloat(amountToChangeTransactionStr);
-  const editedTransactionName = 'edited dummy transaction created by test code';
+  const getEditedTransactionName = () =>
+    `edited dummy transaction created by test code ${Math.random()}`;
 
   const verifyAccountBalanceChanges = (amount: number) =>
     cy.get<IAccount>('@accountBefore').then((accountBefore) =>
@@ -55,6 +59,7 @@ describe('Edit income', () => {
       );
 
   it('Edit newest income', () => {
+    const editedTransactionName = getEditedTransactionName();
     cy.saveAsyncData('transactionsBefore', getAllTransaction);
 
     cy.get<ITransactionWithDateObject[]>('@transactionsBefore').then(
@@ -116,6 +121,7 @@ describe('Edit income', () => {
   });
 
   it('Edit oldest income', () => {
+    const editedTransactionName = getEditedTransactionName();
     cy.saveAsyncData('transactionsBefore', getAllTransaction);
 
     cy.get<ITransactionWithDateObject[]>('@transactionsBefore').then(

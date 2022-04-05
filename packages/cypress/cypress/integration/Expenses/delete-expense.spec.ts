@@ -10,9 +10,8 @@ import {
 } from '../apiHelpers';
 
 describe('Delete expense', () => {
-  beforeEach(() => {
+  before(() => {
     cy.applyFixture('large');
-    cy.visit('http://localhost:3000/statistics/expenses');
   });
 
   const verifyAccountBalanceChangeByTargetTransactionAmount = () =>

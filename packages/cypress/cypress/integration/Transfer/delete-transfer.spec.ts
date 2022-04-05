@@ -9,65 +9,64 @@ import {
   getTransactionByIdRaw,
 } from '../apiHelpers';
 
-const verifyToAccountBalanceChangeByTargetTransactionAmount = () =>
-  cy.get<IAccount>('@toAccountBefore').then((accountBefore) =>
-    cy.get<IAccount>('@toAccountAfter').then((accountAfter) =>
-      cy
-        .get<ITransaction>('@targetTransactionBefore')
-        .then((targetTransactionBefore) => {
-          const changedAmount = roundToTwoDecimal(
-            targetTransactionBefore.amount
-          );
-          const balanceBefore = roundToTwoDecimal(accountBefore.balance);
-          const balanceAfter = roundToTwoDecimal(accountAfter.balance);
-          const balanceBeforeWithChangedAmount = roundToTwoDecimal(
-            balanceBefore - changedAmount
-          );
-
-          expect(balanceBeforeWithChangedAmount).to.be.eq(balanceAfter);
-        })
-    )
-  );
-
-const verifyFromAccountBalanceChangeByTargetTransactionAmount = () =>
-  cy.get<IAccount>('@fromAccountBefore').then((accountBefore) =>
-    cy.get<IAccount>('@fromAccountAfter').then((accountAfter) =>
-      cy
-        .get<ITransaction>('@targetTransactionBefore')
-        .then((targetTransactionBefore) => {
-          const changedAmount = roundToTwoDecimal(
-            targetTransactionBefore.amount
-          );
-          const balanceBefore = roundToTwoDecimal(accountBefore.balance);
-          const balanceAfter = roundToTwoDecimal(accountAfter.balance);
-          const balanceBeforeWithChangedAmount = roundToTwoDecimal(
-            balanceBefore + changedAmount
-          );
-
-          expect(balanceBeforeWithChangedAmount).to.be.eq(balanceAfter);
-        })
-    )
-  );
-
-const verifyTargetTransactionDoesNotExistsAfter = () => {
-  cy.get<ITransaction>('@targetTransactionBefore').then(
-    (targetTransactionBefore) =>
-      cy.saveAsyncData('targetTransactionAfter', () =>
-        getTransactionByIdRaw(targetTransactionBefore._id)
-      )
-  );
-  cy.get<ITransactionWithDateObject>('@targetTransactionAfter').then(
-    (targetTransactionAfter) => {
-      expect((targetTransactionAfter as any).statusCode).to.be.equal(404);
-    }
-  );
-};
-
 describe('Delete transfer', () => {
-  beforeEach(() => {
+  before(() => {
     cy.applyFixture('large');
-    cy.visit('http://localhost:3000/statistics/transfers');
   });
+
+  const verifyToAccountBalanceChangeByTargetTransactionAmount = () =>
+    cy.get<IAccount>('@toAccountBefore').then((accountBefore) =>
+      cy.get<IAccount>('@toAccountAfter').then((accountAfter) =>
+        cy
+          .get<ITransaction>('@targetTransactionBefore')
+          .then((targetTransactionBefore) => {
+            const changedAmount = roundToTwoDecimal(
+              targetTransactionBefore.amount
+            );
+            const balanceBefore = roundToTwoDecimal(accountBefore.balance);
+            const balanceAfter = roundToTwoDecimal(accountAfter.balance);
+            const balanceBeforeWithChangedAmount = roundToTwoDecimal(
+              balanceBefore - changedAmount
+            );
+
+            expect(balanceBeforeWithChangedAmount).to.be.eq(balanceAfter);
+          })
+      )
+    );
+
+  const verifyFromAccountBalanceChangeByTargetTransactionAmount = () =>
+    cy.get<IAccount>('@fromAccountBefore').then((accountBefore) =>
+      cy.get<IAccount>('@fromAccountAfter').then((accountAfter) =>
+        cy
+          .get<ITransaction>('@targetTransactionBefore')
+          .then((targetTransactionBefore) => {
+            const changedAmount = roundToTwoDecimal(
+              targetTransactionBefore.amount
+            );
+            const balanceBefore = roundToTwoDecimal(accountBefore.balance);
+            const balanceAfter = roundToTwoDecimal(accountAfter.balance);
+            const balanceBeforeWithChangedAmount = roundToTwoDecimal(
+              balanceBefore + changedAmount
+            );
+
+            expect(balanceBeforeWithChangedAmount).to.be.eq(balanceAfter);
+          })
+      )
+    );
+
+  const verifyTargetTransactionDoesNotExistsAfter = () => {
+    cy.get<ITransaction>('@targetTransactionBefore').then(
+      (targetTransactionBefore) =>
+        cy.saveAsyncData('targetTransactionAfter', () =>
+          getTransactionByIdRaw(targetTransactionBefore._id)
+        )
+    );
+    cy.get<ITransactionWithDateObject>('@targetTransactionAfter').then(
+      (targetTransactionAfter) => {
+        expect((targetTransactionAfter as any).statusCode).to.be.equal(404);
+      }
+    );
+  };
 
   it('Delete newest transfer', () => {
     cy.saveAsyncData('transactionsBefore', getAllTransaction);
