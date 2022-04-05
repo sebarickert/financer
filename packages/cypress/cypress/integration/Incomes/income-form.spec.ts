@@ -1,6 +1,9 @@
 describe('Income form', () => {
-  beforeEach(() => {
+  before(() => {
     cy.applyFixture('accounts-only');
+  });
+
+  beforeEach(() => {
     cy.visit('http://localhost:3000/statistics/incomes/add');
   });
 

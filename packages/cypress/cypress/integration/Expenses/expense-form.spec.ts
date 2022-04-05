@@ -1,6 +1,9 @@
 describe('Expense form', () => {
-  beforeEach(() => {
+  before(() => {
     cy.applyFixture('accounts-only');
+  });
+
+  beforeEach(() => {
     cy.visit('http://localhost:3000/statistics/expenses/add');
   });
 

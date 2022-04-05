@@ -1,6 +1,9 @@
 describe('Account form', () => {
-  beforeEach(() => {
+  before(() => {
     cy.applyFixture('empty');
+  });
+
+  beforeEach(() => {
     cy.visit('http://localhost:3000/accounts/add');
   });
 

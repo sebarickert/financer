@@ -1,205 +1,203 @@
-const parseFloatFromText = (text: string) => {
-  return parseFloat(
-    text
-      .replace(',', '.')
-      .replace(/\u00a0/g, ' ')
-      .replace(/ /g, '')
-      .replace(String.fromCharCode(8722), String.fromCharCode(45))
-  );
-};
-
-const verifyDifferentBalanaces = (balanceA: string, balanceB: string) => {
-  const a = parseFloatFromText(balanceA);
-  const b = parseFloatFromText(balanceB);
-  expect(a).not.to.be.NaN;
-  expect(b).not.to.be.NaN;
-
-  expect(a).to.not.equal(b);
-};
-const verifyAccountPage = (
-  accountName: string,
-  accountBalance: string,
-  accountType: string
-) => {
-  cy.getById('account-page-heading').should('contain.text', accountName);
-
-  cy.getById('account-type').should('have.text', accountType);
-
-  cy.getById('account-balance')
-    .invoke('text')
-    .then((currentBalance) => {
-      expect(parseFloatFromText(currentBalance)).to.equal(
-        parseFloatFromText(accountBalance)
-      );
-    });
-};
-
-const editAccountNameAndVerify = (
-  oldAccountName: string,
-  newAccountName: string,
-  accountType: string
-) => {
-  cy.getById('account-row').should('not.contain.text', newAccountName);
-
-  cy.getById('account-row').contains(oldAccountName).click();
-  cy.getById('account-balance').then(($balanceElement) => {
-    cy.wrap($balanceElement.text()).as('accountBalance');
-  });
-
-  cy.get<string>('@accountBalance').then((accountBalance) => {
-    verifyAccountPage(oldAccountName, accountBalance, accountType);
-  });
-
-  // Account page
-  // eslint-disable-next-line cypress/no-unnecessary-waiting
-  cy.wait(100);
-  cy.getById('edit-account').click();
-
-  // Edit account form
-  cy.get('#account').clear();
-  cy.get('#account').type(newAccountName);
-  cy.getById('submit').click();
-
-  cy.location('pathname').should('not.contain', '/edit');
-  cy.visit('http://localhost:3000/accounts');
-
-  // All accounts list
-  cy.getById('account-row').should('contain.text', newAccountName);
-  cy.getById('account-row').contains(newAccountName).click();
-
-  // Account page
-  cy.get<string>('@accountBalance').then((accountBalance) => {
-    verifyAccountPage(newAccountName, accountBalance, accountType);
-  });
-};
-
-const editAccountTypeAndVerify = (
-  accountName: string,
-  oldAccountType: string,
-  newAccountType: string
-) => {
-  cy.getById('account-row').contains(accountName).click();
-  // Account page
-
-  cy.getById('account-balance').then(($balanceElement) => {
-    cy.wrap($balanceElement.text()).as('accountBalance');
-  });
-
-  cy.get<string>('@accountBalance').then((accountBalance) => {
-    verifyAccountPage(accountName, accountBalance, oldAccountType);
-  });
-
-  cy.getById('edit-account').click();
-
-  // Edit account form
-  cy.get('#type').select(newAccountType);
-  cy.getById('submit').click();
-
-  cy.location('pathname').should('not.contain', '/edit');
-  cy.visit('http://localhost:3000/accounts');
-
-  // All accounts list
-  cy.getById('account-row').contains(accountName).click();
-
-  // Account page
-  cy.get<string>('@accountBalance').then((accountBalance) => {
-    verifyAccountPage(accountName, accountBalance, newAccountType);
-  });
-};
-
-const editAccountBalanceAndVerify = (
-  accountName: string,
-  newAccountBalance: string,
-  accountType: string
-) => {
-  cy.getById('account-row').contains(accountName).click();
-  cy.getById('account-balance').then(($balanceElement) => {
-    cy.wrap($balanceElement.text()).as('oldAccountBalance');
-  });
-
-  cy.get<string>('@oldAccountBalance').then((oldAccountBalance) => {
-    verifyAccountPage(accountName, oldAccountBalance, accountType);
-    verifyDifferentBalanaces(oldAccountBalance, newAccountBalance);
-  });
-
-  // Account page
-
-  cy.getById('edit-account').click();
-
-  // Edit account form
-  cy.get('#amount').clear();
-  cy.get('#amount').type(
-    newAccountBalance
-      .replace(',', '.')
-      .replace(/ /g, '')
-      .replace('€', '')
-      .replace(String.fromCharCode(8722), String.fromCharCode(45)) // charcodes for different kind of `-`
-  );
-
-  cy.getById('submit').click();
-
-  cy.location('pathname').should('not.contain', '/edit');
-  cy.visit('http://localhost:3000/accounts');
-
-  // All accounts list
-  cy.getById('account-row').contains(accountName).click();
-
-  // Account page
-  verifyAccountPage(accountName, newAccountBalance, accountType);
-};
-
-const editAccountAllDetailsAndVerify = (
-  oldAccountName: string,
-  newAccountName: string,
-  newAccountBalance: string,
-  oldAccountType: string,
-  newAccountType: string
-) => {
-  cy.getById('account-row').contains(oldAccountName).click();
-  // Account page
-
-  cy.getById('account-balance').then(($balanceElement) => {
-    cy.wrap($balanceElement.text()).as('oldAccountBalance');
-  });
-
-  cy.get<string>('@oldAccountBalance').then((oldAccountBalance) => {
-    verifyAccountPage(oldAccountName, oldAccountBalance, oldAccountType);
-    verifyDifferentBalanaces(oldAccountBalance, newAccountBalance);
-  });
-
-  cy.getById('edit-account').click();
-
-  // Edit account form
-  cy.get('#account').clear();
-  cy.get('#account').type(newAccountName);
-  cy.get('#type').select(newAccountType);
-  cy.get('#amount').clear();
-  cy.get('#amount').type(
-    newAccountBalance
-      .replace(',', '.')
-      .replace(/ /g, '')
-      .replace('€', '')
-      .replace(String.fromCharCode(8722), String.fromCharCode(45)) // charcodes for different kind of `-`
-  );
-
-  cy.getById('submit').click();
-
-  cy.location('pathname').should('not.contain', '/edit');
-  cy.visit('http://localhost:3000/accounts');
-
-  // All accounts list
-  cy.getById('account-row').should('contain.text', newAccountName);
-  cy.getById('account-row').contains(newAccountName).click();
-
-  // Account page
-  verifyAccountPage(newAccountName, newAccountBalance, newAccountType);
-};
-
 describe('Account editing', () => {
   beforeEach(() => {
     cy.applyFixture('accounts-only');
     cy.visit('http://localhost:3000/accounts');
   });
+
+  const parseFloatFromText = (text: string) => {
+    return parseFloat(
+      text
+        .replace(',', '.')
+        .replace(/\u00a0/g, ' ')
+        .replace(/ /g, '')
+        .replace(String.fromCharCode(8722), String.fromCharCode(45))
+    );
+  };
+
+  const verifyDifferentBalanaces = (balanceA: string, balanceB: string) => {
+    const a = parseFloatFromText(balanceA);
+    const b = parseFloatFromText(balanceB);
+    expect(a).not.to.be.NaN;
+    expect(b).not.to.be.NaN;
+
+    expect(a).to.not.equal(b);
+  };
+  const verifyAccountPage = (
+    accountName: string,
+    accountBalance: string,
+    accountType: string
+  ) => {
+    cy.getById('account-banner').find('h1').should('contain.text', accountName);
+
+    cy.getById('account-type').should('have.text', accountType);
+
+    cy.getById('account-balance')
+      .invoke('text')
+      .then((currentBalance) => {
+        expect(parseFloatFromText(currentBalance)).to.equal(
+          parseFloatFromText(accountBalance)
+        );
+      });
+  };
+
+  const editAccountNameAndVerify = (
+    oldAccountName: string,
+    newAccountName: string,
+    accountType: string
+  ) => {
+    cy.getById('account-row').should('not.contain.text', newAccountName);
+
+    cy.getById('account-row').contains(oldAccountName).click();
+    cy.getById('account-balance').then(($balanceElement) => {
+      cy.wrap($balanceElement.text()).as('accountBalance');
+    });
+
+    cy.get<string>('@accountBalance').then((accountBalance) => {
+      verifyAccountPage(oldAccountName, accountBalance, accountType);
+    });
+    // Account page
+
+    cy.getById('edit-account').click();
+
+    // Edit account form
+    cy.get('#account').clear();
+    cy.get('#account').type(newAccountName);
+    cy.getById('submit').click();
+
+    cy.location('pathname').should('not.contain', '/edit');
+    cy.visit('http://localhost:3000/accounts');
+
+    // All accounts list
+    cy.getById('account-row').should('contain.text', newAccountName);
+    cy.getById('account-row').contains(newAccountName).click();
+
+    // Account page
+    cy.get<string>('@accountBalance').then((accountBalance) => {
+      verifyAccountPage(newAccountName, accountBalance, accountType);
+    });
+  };
+
+  const editAccountTypeAndVerify = (
+    accountName: string,
+    oldAccountType: string,
+    newAccountType: string
+  ) => {
+    cy.getById('account-row').contains(accountName).click();
+    // Account page
+
+    cy.getById('account-balance').then(($balanceElement) => {
+      cy.wrap($balanceElement.text()).as('accountBalance');
+    });
+
+    cy.get<string>('@accountBalance').then((accountBalance) => {
+      verifyAccountPage(accountName, accountBalance, oldAccountType);
+    });
+
+    cy.getById('edit-account').click();
+
+    // Edit account form
+    cy.get('#type').select(newAccountType);
+    cy.getById('submit').click();
+
+    cy.location('pathname').should('not.contain', '/edit');
+    cy.visit('http://localhost:3000/accounts');
+
+    // All accounts list
+    cy.getById('account-row').contains(accountName).click();
+
+    // Account page
+    cy.get<string>('@accountBalance').then((accountBalance) => {
+      verifyAccountPage(accountName, accountBalance, newAccountType);
+    });
+  };
+
+  const editAccountBalanceAndVerify = (
+    accountName: string,
+    newAccountBalance: string,
+    accountType: string
+  ) => {
+    cy.getById('account-row').contains(accountName).click();
+    cy.getById('account-balance').then(($balanceElement) => {
+      cy.wrap($balanceElement.text()).as('oldAccountBalance');
+    });
+
+    cy.get<string>('@oldAccountBalance').then((oldAccountBalance) => {
+      verifyAccountPage(accountName, oldAccountBalance, accountType);
+      verifyDifferentBalanaces(oldAccountBalance, newAccountBalance);
+    });
+
+    // Account page
+
+    cy.getById('edit-account').click();
+
+    // Edit account form
+    cy.get('#amount').clear();
+    cy.get('#amount').type(
+      newAccountBalance
+        .replace(',', '.')
+        .replace(/ /g, '')
+        .replace('€', '')
+        .replace(String.fromCharCode(8722), String.fromCharCode(45)) // charcodes for different kind of `-`
+    );
+
+    cy.getById('submit').click();
+
+    cy.location('pathname').should('not.contain', '/edit');
+    cy.visit('http://localhost:3000/accounts');
+
+    // All accounts list
+    cy.getById('account-row').contains(accountName).click();
+
+    // Account page
+    verifyAccountPage(accountName, newAccountBalance, accountType);
+  };
+
+  const editAccountAllDetailsAndVerify = (
+    oldAccountName: string,
+    newAccountName: string,
+    newAccountBalance: string,
+    oldAccountType: string,
+    newAccountType: string
+  ) => {
+    cy.getById('account-row').contains(oldAccountName).click();
+    // Account page
+
+    cy.getById('account-balance').then(($balanceElement) => {
+      cy.wrap($balanceElement.text()).as('oldAccountBalance');
+    });
+
+    cy.get<string>('@oldAccountBalance').then((oldAccountBalance) => {
+      verifyAccountPage(oldAccountName, oldAccountBalance, oldAccountType);
+      verifyDifferentBalanaces(oldAccountBalance, newAccountBalance);
+    });
+
+    cy.getById('edit-account').click();
+
+    // Edit account form
+    cy.get('#account').clear();
+    cy.get('#account').type(newAccountName);
+    cy.get('#type').select(newAccountType);
+    cy.get('#amount').clear();
+    cy.get('#amount').type(
+      newAccountBalance
+        .replace(',', '.')
+        .replace(/ /g, '')
+        .replace('€', '')
+        .replace(String.fromCharCode(8722), String.fromCharCode(45)) // charcodes for different kind of `-`
+    );
+
+    cy.getById('submit').click();
+
+    cy.location('pathname').should('not.contain', '/edit');
+    cy.visit('http://localhost:3000/accounts');
+
+    // All accounts list
+    cy.getById('account-row').should('contain.text', newAccountName);
+    cy.getById('account-row').contains(newAccountName).click();
+
+    // Account page
+    verifyAccountPage(newAccountName, newAccountBalance, newAccountType);
+  };
 
   it.only('Change Cash account name', () => {
     editAccountNameAndVerify('Cash account', 'Cash Renamed account', 'Cash');
