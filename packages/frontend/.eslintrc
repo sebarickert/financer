@@ -22,6 +22,7 @@
     "react/require-default-props": "off",
     "linebreak-style": "off",
     "no-underscore-dangle":  ["error", { "allow": ["_id"] }],
+    "prefer-template": "error",
     "import/prefer-default-export": "off",
     "import/no-default-export": "error",
     "import/order": [
