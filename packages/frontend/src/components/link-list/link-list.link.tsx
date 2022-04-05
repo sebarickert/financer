@@ -18,7 +18,7 @@ export const LinkListLink = ({
   testId,
   className = '',
 }: LinkListLinkProps): JSX.Element => {
-  const linkClasses = `relative flex gap-4 items-center focus-within:bg-gray-200 hover:bg-gray-200 overflow-hidden pl-4 ${className}`;
+  const linkClasses = `relative flex gap-4 items-center focus-within:bg-gray-100 hover:bg-gray-100 overflow-hidden pl-4 lg:rounded-md ${className}`;
 
   const linkContent = (
     <>

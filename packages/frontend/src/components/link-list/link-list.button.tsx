@@ -15,7 +15,7 @@ export const LinkListButton = ({
 }: LinkListButtonProps): JSX.Element => {
   return (
     <button
-      className="relative flex gap-4 items-center focus-within:bg-gray-200 hover:bg-gray-200 overflow-hidden pl-4 w-full"
+      className="relative flex gap-4 items-center focus-within:bg-gray-100 hover:bg-gray-100 overflow-hidden pl-4 w-full lg:rounded-md"
       onClick={handleClick}
       data-testid={testId}
     >

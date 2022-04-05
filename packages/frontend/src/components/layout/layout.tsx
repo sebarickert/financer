@@ -35,9 +35,9 @@ export const Layout = (): JSX.Element => {
 
   if (currentWindowWidth > 1024) {
     return (
-      <div className="bg-white-off">
+      <div className="bg-white">
         <Container className="grid grid-cols-[16rem,1fr] min-h-screen px-0">
-          <aside className="after:bg-white after:ml-[-100vw] after:pr-[100vw] after:absolute after:top-0 after:bottom-0 after:right-0 relative border-r">
+          <aside className="after:bg-white-off after:ml-[-100vw] after:pr-[100vw] after:absolute after:top-0 after:bottom-0 after:right-0 relative border-r">
             <div className="sticky top-0 z-10 min-h-screen px-4 pt-12 pb-12 bottom-12">
               <header>
                 <NavLink to="/" className="inline-flex items-center gap-3 mb-8">
@@ -62,7 +62,7 @@ export const Layout = (): JSX.Element => {
 
   return (
     <div className="flex flex-col h-full min-h-screen overflow-y-scroll lg:hidden">
-      <main className="flex-grow bg-white-off lg:pb-24 min-h-screen-safe mb-safe">
+      <main className="flex-grow bg-white lg:pb-24 min-h-screen-safe pb-safe">
         <div className={`px-4 mt-[44px] pt-4 pb-24`}>
           <Outlet />
         </div>

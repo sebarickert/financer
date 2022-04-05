@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { useIsActiveLink } from '../../hooks/useIsActiveLink';
 import { isExternalLink } from '../button/button';
 import { Icon, IconName } from '../icon/icon';
+import { IconSolid } from '../icon/icon.solid';
 
 interface IDesktopNavigationItemProps {
   link: string;
@@ -50,7 +51,10 @@ export const DesktopNavigationItem = ({
         onClick={onClick}
         aria-label={ariaLabel}
       >
-        <Icon type={iconName} />
+        {!isActive && <Icon type={iconName} />}
+        {isActive && (
+          <IconSolid type={iconName} className="fill-blue-financer" />
+        )}
         <span className="ml-4 text-sm text-gray-600">{label}</span>
       </NavLink>
     </li>
