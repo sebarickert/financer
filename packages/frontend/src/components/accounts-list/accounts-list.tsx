@@ -33,8 +33,8 @@ export const AccountsList = ({
             testId="account-row"
           >
             <span className="grid">
-              <span>{rowLabel}</span>
-              <span className="text-sm lg:text-base font-normal text-gray-600">
+              <span className="truncate">{rowLabel}</span>
+              <span className="text-sm font-normal text-gray-600 truncate">
                 <span className="sr-only">Balance: </span>
                 {balanceAmount}
               </span>
