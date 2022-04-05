@@ -30,7 +30,7 @@ export const LinkList = ({
 
           return (
             child && (
-              <LinkListRow key={'LinkListRow-' + Math.random()}>
+              <LinkListRow key={`LinkListRow-${Math.random()}`}>
                 {child}
               </LinkListRow>
             )
