@@ -30,12 +30,10 @@ export const Incomes = (): JSX.Element => {
       {incomes.map(({ year, month, rows, total }) => (
         <section
           className="mb-12"
-          aria-label={`IOverview of income transactions for ${monthNames[month]}, ${year}`}
+          aria-label={`Overview of income transactions for ${monthNames[month]}, ${year}`}
         >
-          <div className="grid grid-cols-[1fr,auto] gap-4 items-end justify-between sticky top-0 z-10 bg-white-off py-4 -mt-4">
-            <h2 className="text-2xl font-bold tracking-tighter truncate sm:text-3xl">
-              {`${monthNames[month]}, ${year}`}
-            </h2>
+          <div className="grid grid-cols-[1fr,auto] gap-4 items-end justify-between sticky top-[-1px] z-10 bg-white py-4 -mt-4">
+            <Heading>{`${monthNames[month]}, ${year}`}</Heading>
             <p className="font-semibold text-gray-600">
               <span className="sr-only">Total: </span>
               {Number.isNaN(total) ? '-' : formatCurrency(total)}

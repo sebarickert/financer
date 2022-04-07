@@ -12,7 +12,7 @@ export const StatsGroup = ({
   return (
     <section className={`${className}`}>
       <div
-        className={`grid bg-white rounded-lg border divide-x ${
+        className={`grid bg-gray-25 rounded-lg border divide-x ${
           children.filter((child) => typeof child !== 'undefined' && child)
             .length %
             3 ===

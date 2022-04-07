@@ -225,7 +225,7 @@ export const BalanceGraph = ({
 
   return (
     <section
-      className={`bg-white rounded-lg border ${className} aspect-video md:aspect-auto relative`}
+      className={`bg-gray-25 rounded-lg border ${className} aspect-video md:aspect-auto relative`}
     >
       {balanceHistory === null ? (
         <Loader loaderColor="blue" className="scale-50 h-full" />

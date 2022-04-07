@@ -26,7 +26,7 @@ export const DropdownBody = ({
       leaveTo="transform opacity-0 scale-95"
     >
       <div
-        className={`origin-top-right absolute right-0 mt-2 w-44 rounded-lg shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none ${className}`}
+        className={`origin-top-right absolute right-0 mt-2 w-44 rounded-lg shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none z-10 ${className}`}
         ref={outsideClickRef}
       >
         <div className="py-1">{children}</div>

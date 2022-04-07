@@ -190,25 +190,23 @@ export const Statistics = (): JSX.Element => {
       <Heading variant="h1" className="mb-4 lg:mb-6">
         Statistics
       </Heading>
-      <section className="mt-4">
-        <div className="grid grid-cols-[1fr,auto] gap-4 items-end justify-between sticky top-0 z-10 bg-white-off py-4">
-          <Heading>{`${pageVisibleMonth}, ${pageVisibleYear}`}</Heading>
-          <Dropdown
-            items={filterItems}
-            label="Filter"
-            className="mb-[-3px] sm:mb-[-1px]"
-          />
-        </div>
-        <StatsGroup>
-          <StatsItem statLabel="Incomes">
-            {Number.isNaN(totalIncomes) ? '-' : formatCurrency(totalIncomes)}
-          </StatsItem>
-          <StatsItem statLabel="Expenses">
-            {Number.isNaN(totalExpenses) ? '-' : formatCurrency(totalExpenses)}
-          </StatsItem>
-        </StatsGroup>
-        <TransactionStackedList className="mt-4" rows={visibleTransactions} />
-      </section>
+      <div className="grid grid-cols-[1fr,auto] gap-4 items-end justify-between bg-white mb-4">
+        <Heading>{`${pageVisibleMonth}, ${pageVisibleYear}`}</Heading>
+        <Dropdown
+          items={filterItems}
+          label="Filter"
+          className="mb-[-3px] sm:mb-[-1px]"
+        />
+      </div>
+      <StatsGroup>
+        <StatsItem statLabel="Incomes">
+          {Number.isNaN(totalIncomes) ? '-' : formatCurrency(totalIncomes)}
+        </StatsItem>
+        <StatsItem statLabel="Expenses">
+          {Number.isNaN(totalExpenses) ? '-' : formatCurrency(totalExpenses)}
+        </StatsItem>
+      </StatsGroup>
+      <TransactionStackedList className="mt-4" rows={visibleTransactions} />
       <QuickLinks className="mt-8">
         <QuickLinksItem
           title="Incomes"
