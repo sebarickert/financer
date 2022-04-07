@@ -187,7 +187,7 @@ export const Account = (): JSX.Element => {
       >
         {account.name}
       </Heading>
-      <section className={`bg-white border rounded-lg mb-6`}>
+      <section className={`bg-gray-25 border rounded-lg mb-6`}>
         <dl className="relative px-6 pt-10 pb-6 border-b">
           <dt className="absolute text-sm font-medium text-gray-700 truncate lg:text-base top-4 left-6">
             Balance

@@ -10,6 +10,7 @@ module.exports = {
       colors: {
         'blue-financer': '#0E6AC7',
         'white-off': '#FAFAFA',
+        'gray-25': '#fdfdfd',
         'black-off': '#1E253A',
         'gray-financer': '#838690',
       },

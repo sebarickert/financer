@@ -102,7 +102,7 @@ export const AccountBalanceHistoryChart = ({
   );
 
   return (
-    <div className="bg-white border rounded-lg min-h-[{300px] h-[20vh] md:h-auto md:min-h-0 md:aspect-video pl-2 py-6 pr-2">
+    <div className="bg-gray-25 border rounded-lg min-h-[{300px] h-[20vh] md:h-auto md:min-h-0 md:aspect-video pl-2 py-6 pr-2">
       <ResponsiveContainer>
         <AreaChart
           data={chartData}

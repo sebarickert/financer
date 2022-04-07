@@ -18,7 +18,7 @@ export const FormFooter = ({
 }: IFormFooterProps): JSX.Element => {
   return (
     <>
-      <div className="py-4 fixed lg:static left-0 right-0 bottom-[calc(44px+env(safe-area-inset-bottom))] px-4 bg-white-off lg:bg-transparent lg:mt-8 border-t lg:px-0">
+      <div className="py-4 fixed lg:static left-0 right-0 bottom-[calc(44px+env(safe-area-inset-bottom))] px-4 bg-gray-25 lg:bg-transparent lg:mt-8 border-t lg:px-0">
         <ButtonGroup isReverse isHorizontal>
           <Button accentColor={accentColor} type="submit" testId="submit">
             {submitLabel}

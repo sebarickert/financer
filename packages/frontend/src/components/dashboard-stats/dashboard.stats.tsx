@@ -15,7 +15,7 @@ export const DashboardStats = ({
   const totalExpenses = useCurrentMonthExpensesTotalAmount();
 
   return (
-    <section className={`bg-white border rounded-lg ${className}`}>
+    <section className={`bg-gray-25 border rounded-lg ${className}`}>
       <dl className="relative px-6 pt-10 pb-6 border-b">
         <dt className="absolute text-sm font-medium text-gray-700 truncate lg:text-base top-4 left-6">
           Balance

@@ -51,10 +51,7 @@ export const DesktopNavigationItem = ({
         onClick={onClick}
         aria-label={ariaLabel}
       >
-        {!isActive && <Icon type={iconName} />}
-        {isActive && (
-          <IconSolid type={iconName} className="fill-blue-financer" />
-        )}
+        <Icon type={iconName} />
         <span className="ml-4 text-sm text-gray-600">{label}</span>
       </NavLink>
     </li>

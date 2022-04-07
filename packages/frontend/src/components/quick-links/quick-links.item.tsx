@@ -23,7 +23,7 @@ export const QuickLinksItem = ({
 }: IQuickLinksItemProps): JSX.Element => {
   if (!description) {
     return (
-      <div className="relative inline-flex items-center gap-4 w-full md:w-auto p-6 pr-20 bg-white border rounded-lg group focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-500 hover:bg-gray-50">
+      <div className="relative inline-flex items-center gap-4 w-full md:w-auto p-6 pr-20 bg-gray-25 border rounded-lg group focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-500 hover:bg-gray-50">
         {iconName && (
           <div>
             <span
@@ -74,7 +74,7 @@ export const QuickLinksItem = ({
   }
 
   return (
-    <div className="relative p-6 bg-white border rounded-lg group focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-500">
+    <div className="relative p-6 bg-gray-25 border rounded-lg group focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-500">
       {iconName && (
         <div>
           <span

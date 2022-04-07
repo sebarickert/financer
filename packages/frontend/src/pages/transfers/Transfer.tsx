@@ -59,8 +59,11 @@ export const Transfer = (): JSX.Element => {
     <Loader loaderColor="blue" />
   ) : (
     <>
-      <UpdatePageInfo title={`${transfer.description} | Transfers`} />
-      <section className="bg-white border divide-y rounded-lg sm:grid sm:divide-y-0 sm:divide-x">
+      <UpdatePageInfo
+        title={`${transfer.description}`}
+        backLink="/statistics/transfers"
+      />
+      <section className="bg-gray-25 border divide-y rounded-lg sm:grid sm:divide-y-0 sm:divide-x">
         <div className="p-6">
           <header className="flex items-center mb-6">
             <span className="inline-flex p-3 text-white rounded-lg bg-blue-financer">

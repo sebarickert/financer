@@ -34,7 +34,7 @@ export const MobileHeader = ({
   return (
     <>
       <div
-        className={`bg-blue-financer text-center fixed top-0 left-0 right-0 z-50 grid items-center h-11 ${
+        className={`bg-white-off border-b text-center fixed top-0 left-0 right-0 z-50 grid items-center h-11 ${
           backLink ? 'grid-cols-[44px,1fr,44px]' : 'grid-cols-1'
         }`}
       >
@@ -44,12 +44,12 @@ export const MobileHeader = ({
             className="h-11 w-11 inline-flex items-center justify-center"
           >
             <span className="sr-only">Go back</span>
-            <Icon type={'chevron-left'} className="stroke-white" />
+            <Icon type={'chevron-left'} />
           </NavLink>
         )}
         <Heading
           variant="h1"
-          className={`!text-lg !tracking-tight !text-white !font-semibold !block truncate`}
+          className={`!text-lg !tracking-tight !font-semibold !block truncate`}
         >
           {title ?? children}
         </Heading>

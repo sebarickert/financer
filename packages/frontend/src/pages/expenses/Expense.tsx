@@ -59,8 +59,11 @@ export const Expense = (): JSX.Element => {
     <Loader loaderColor="blue" />
   ) : (
     <>
-      <UpdatePageInfo title={`${expense.description} | Expenses`} />
-      <section className="bg-white border divide-y rounded-lg sm:grid sm:divide-y-0 sm:divide-x">
+      <UpdatePageInfo
+        title={`${expense.description}`}
+        backLink="/statistics/expenses"
+      />
+      <section className="bg-gray-25 border divide-y rounded-lg sm:grid sm:divide-y-0 sm:divide-x">
         <div className="p-6">
           <header className="flex items-center mb-6">
             <span className="inline-flex p-3 text-white bg-red-600 rounded-lg">

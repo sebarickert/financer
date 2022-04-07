@@ -16,33 +16,31 @@ export const Dashboard = (): JSX.Element => {
         Dashboard
       </Heading>
       <section className="grid">
-        <section className="-mx-4 -mt-4 bg-white-off lg:bg-transparent px-4 pt-4 pb-8 lg:m-0 lg:p-0">
-          <section className="grid md:grid-cols-[40%,1fr] gap-4 md:auto-rows-[fit-content(0)]">
-            <section className="grid gap-4 md:self-baseline">
-              <DashboardStats />
-              <CtaBlock label="Quick transaction links">
-                <CtaBlockItem
-                  label="Income"
-                  iconName="download"
-                  link="/statistics/incomes/add"
-                  ariaLabel="Add new income transaction"
-                />
-                <CtaBlockItem
-                  label="Expense"
-                  iconName="upload"
-                  link="/statistics/expenses/add"
-                  ariaLabel="Add new expense transaction"
-                />
-                <CtaBlockItem
-                  label="Transfer"
-                  iconName="switch-horizontal"
-                  link="/statistics/transfers/add"
-                  ariaLabel="Add new transfer transaction"
-                />
-              </CtaBlock>
-            </section>
-            <BalanceGraph className="overflow-y-auto" />
+        <section className="grid md:grid-cols-[40%,1fr] gap-4 md:auto-rows-[fit-content(0)]">
+          <section className="grid gap-4 md:self-baseline">
+            <DashboardStats />
+            <CtaBlock label="Quick transaction links">
+              <CtaBlockItem
+                label="Income"
+                iconName="download"
+                link="/statistics/incomes/add"
+                ariaLabel="Add new income transaction"
+              />
+              <CtaBlockItem
+                label="Expense"
+                iconName="upload"
+                link="/statistics/expenses/add"
+                ariaLabel="Add new expense transaction"
+              />
+              <CtaBlockItem
+                label="Transfer"
+                iconName="switch-horizontal"
+                link="/statistics/transfers/add"
+                ariaLabel="Add new transfer transaction"
+              />
+            </CtaBlock>
           </section>
+          <BalanceGraph className="overflow-y-auto" />
         </section>
         <section className="mt-6 lg:mt-8 mb-8">
           <Heading className="mb-2">Recent transactions</Heading>
