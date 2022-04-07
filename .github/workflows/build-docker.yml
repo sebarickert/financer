@@ -2,12 +2,10 @@ name: Build and publish docker
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - production
+  workflow_call:
 
 concurrency:
-  group: docker-build-${{ github.ref }}
+  group: build-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:

@@ -1,0 +1,9 @@
+name: "Install dependencies"
+description: "Install dependencies for the project and cache node_modules"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Run backend tests
+      shell: bash
+      run: npm -w backend run test

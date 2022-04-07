@@ -1,0 +1,24 @@
+name: "Run cypress tests"
+description: "Run cypress tests"
+
+inputs:
+  cypress-spec-folder:
+    description: "The folder containing the cypress tests"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Copy package-lock for cypress action
+      shell: bash
+      run: cp package-lock.json ./packages/cypress/package-lock.json
+    - name: Run cypress
+      uses: cypress-io/github-action@v2
+      with:
+        spec: cypress/integration/${{ inputs.cypress-spec-folder }}/**
+        install-command: echo "npm already installed, skipping"
+        working-directory: packages/cypress
+        start: npm run start:ci --prefix ../../
+        wait-on: "http://localhost:3000"
+        wait-on-timeout: 60
+        headless: true
