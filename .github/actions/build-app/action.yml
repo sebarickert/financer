@@ -1,0 +1,9 @@
+name: "Build"
+description: "Build the application"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Build app
+      shell: bash
+      run: npm run build

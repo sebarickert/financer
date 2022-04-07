@@ -1,0 +1,12 @@
+name: "Install dependencies"
+description: "Install dependencies for the project and cache node_modules"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Run frontend lint
+      shell: bash
+      run: npm -w frontend run lint
+    - name: Run backend lint
+      shell: bash
+      run: npm -w backend run lint
