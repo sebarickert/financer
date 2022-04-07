@@ -23,15 +23,15 @@ export class TransactionCategoryMappingsController {
     private readonly transactionCategoryMappingsService: TransactionCategoryMappingsService,
   ) {}
 
-  @Post()
-  create(
-    @Body()
-    createTransactionCategoryMappingDto: CreateTransactionCategoryMappingDto,
-  ) {
-    return this.transactionCategoryMappingsService.create(
-      createTransactionCategoryMappingDto,
-    );
-  }
+  // @Post()
+  // create(
+  //   @Body()
+  //   createTransactionCategoryMappingDto: CreateTransactionCategoryMappingDto,
+  // ) {
+  //   return this.transactionCategoryMappingsService.create(
+  //     createTransactionCategoryMappingDto,
+  //   );
+  // }
 
   @Get()
   findAllByUser(@UserId() userId: ObjectId) {

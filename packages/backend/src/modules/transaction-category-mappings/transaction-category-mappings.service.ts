@@ -18,11 +18,11 @@ export class TransactionCategoryMappingsService {
     private transactionCategoryMappingModel: Model<TransactionCategoryMappingDocument>,
   ) {}
 
-  create(
-    createTransactionCategoryMappingDto: CreateTransactionCategoryMappingDto,
-  ) {
-    return 'This action adds a new transactionCategoryMapping';
-  }
+  // create(
+  //   createTransactionCategoryMappingDto: CreateTransactionCategoryMappingDto,
+  // ) {
+  //   return 'This action adds a new transactionCategoryMapping';
+  // }
 
   async createMany(
     createTransactionCategoryMappingDto: CreateTransactionCategoryMappingDto[],

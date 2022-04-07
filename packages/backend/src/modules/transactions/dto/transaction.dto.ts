@@ -3,7 +3,6 @@ import {
   IsDateString,
   IsMongoId,
   IsNotEmpty,
-  IsNumber,
   IsString,
   Min,
 } from 'class-validator';

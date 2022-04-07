@@ -3,7 +3,6 @@ import { NavLink } from 'react-router-dom';
 import { useIsActiveLink } from '../../hooks/useIsActiveLink';
 import { isExternalLink } from '../button/button';
 import { Icon, IconName } from '../icon/icon';
-import { IconSolid } from '../icon/icon.solid';
 
 interface IDesktopNavigationItemProps {
   link: string;
