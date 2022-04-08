@@ -22,3 +22,4 @@ runs:
         wait-on: "http://localhost:3000"
         wait-on-timeout: 60
         headless: true
+        config: video=false
