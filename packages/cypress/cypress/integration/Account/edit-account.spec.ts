@@ -27,7 +27,7 @@ describe('Account editing', () => {
     accountBalance: string,
     accountType: string
   ) => {
-    cy.getById('account-banner').find('h1').should('contain.text', accountName);
+    cy.getById('account-page-heading').should('contain.text', accountName);
 
     cy.getById('account-type').should('have.text', accountType);
 
@@ -55,8 +55,10 @@ describe('Account editing', () => {
     cy.get<string>('@accountBalance').then((accountBalance) => {
       verifyAccountPage(oldAccountName, accountBalance, accountType);
     });
-    // Account page
 
+    // Account page
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(100);
     cy.getById('edit-account').click();
 
     // Edit account form
@@ -93,6 +95,8 @@ describe('Account editing', () => {
       verifyAccountPage(accountName, accountBalance, oldAccountType);
     });
 
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(100);
     cy.getById('edit-account').click();
 
     // Edit account form
@@ -128,6 +132,8 @@ describe('Account editing', () => {
 
     // Account page
 
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(100);
     cy.getById('edit-account').click();
 
     // Edit account form
@@ -171,6 +177,8 @@ describe('Account editing', () => {
       verifyDifferentBalanaces(oldAccountBalance, newAccountBalance);
     });
 
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(100);
     cy.getById('edit-account').click();
 
     // Edit account form
@@ -199,9 +207,10 @@ describe('Account editing', () => {
     verifyAccountPage(newAccountName, newAccountBalance, newAccountType);
   };
 
-  it.only('Change Cash account name', () => {
+  it('Change Cash account name', () => {
     editAccountNameAndVerify('Cash account', 'Cash Renamed account', 'Cash');
   });
+
   it('Change Saving account name', () => {
     editAccountNameAndVerify(
       'Saving account 2',
@@ -209,6 +218,7 @@ describe('Account editing', () => {
       'Savings'
     );
   });
+
   it('Change Investment account name', () => {
     editAccountNameAndVerify(
       'Investment account',
@@ -216,6 +226,7 @@ describe('Account editing', () => {
       'Investment'
     );
   });
+
   it('Change Credit account name', () => {
     editAccountNameAndVerify(
       'Credit account',
@@ -223,6 +234,7 @@ describe('Account editing', () => {
       'Credit'
     );
   });
+
   it('Change Loan account name', () => {
     editAccountNameAndVerify('Loan account', 'Loan Renamed account', 'Loan');
   });
@@ -230,15 +242,19 @@ describe('Account editing', () => {
   it('Change Cash account type', () => {
     editAccountTypeAndVerify('Cash account', 'Cash', 'Loan');
   });
+
   it('Change Saving account type', () => {
     editAccountTypeAndVerify('Saving account 2', 'Savings', 'Cash');
   });
+
   it('Change Ivestment account type', () => {
     editAccountTypeAndVerify('Investment account', 'Investment', 'Savings');
   });
+
   it('Change Credit account type', () => {
     editAccountTypeAndVerify('Credit account', 'Credit', 'Investment');
   });
+
   it('Change Loan account type', () => {
     editAccountTypeAndVerify('Loan account', 'Loan', 'Credit');
   });
@@ -246,9 +262,11 @@ describe('Account editing', () => {
   it('Change Cash account balance', () => {
     editAccountBalanceAndVerify('Cash account', '−1 040 350,00 €', 'Cash');
   });
+
   it('Change Saving account balance', () => {
     editAccountBalanceAndVerify('Saving account 2', '0,10 €', 'Savings');
   });
+
   it('Change Ivestment account balance', () => {
     editAccountBalanceAndVerify(
       'Investment account',
@@ -256,9 +274,11 @@ describe('Account editing', () => {
       'Investment'
     );
   });
+
   it('Change Credit account balance', () => {
     editAccountBalanceAndVerify('Credit account', '−251 950,00 €', 'Credit');
   });
+
   it('Change Loan account balance', () => {
     editAccountBalanceAndVerify('Loan account', '0,00 €', 'Loan');
   });
@@ -272,6 +292,7 @@ describe('Account editing', () => {
       'Savings'
     );
   });
+
   it('Change Saving account all fields', () => {
     editAccountAllDetailsAndVerify(
       'Saving account 2',
@@ -281,6 +302,7 @@ describe('Account editing', () => {
       'Investment'
     );
   });
+
   it('Change Ivestment account all fields', () => {
     editAccountAllDetailsAndVerify(
       'Investment account',
@@ -290,6 +312,7 @@ describe('Account editing', () => {
       'Credit'
     );
   });
+
   it('Change Credit account all fields', () => {
     editAccountAllDetailsAndVerify(
       'Credit account',
@@ -299,6 +322,7 @@ describe('Account editing', () => {
       'Loan'
     );
   });
+
   it('Change Loan account all fields', () => {
     editAccountAllDetailsAndVerify(
       'Loan account',
