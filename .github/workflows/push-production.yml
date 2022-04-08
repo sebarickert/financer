@@ -80,3 +80,6 @@ jobs:
       - unit-test
       - run-cypress-test
     uses: ./.github/workflows/build-docker.yml
+    secrets:
+      REGISTERY_TOKEN: ${{ secrets.REGISTERY_TOKEN }}
+      DOCKER_TARGET_PLATFORMS: ${{ secrets.DOCKER_TARGET_PLATFORMS }}

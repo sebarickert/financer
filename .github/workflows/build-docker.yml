@@ -3,6 +3,13 @@ name: Build and publish docker
 on:
   workflow_dispatch:
   workflow_call:
+    secrets:
+      REGISTERY_TOKEN:
+        description: "The docker registery token"
+        required: true
+      DOCKER_TARGET_PLATFORMS:
+        description: "The docker target platforms"
+        required: false
 
 concurrency:
   group: build-${{ github.ref }}
