@@ -75,7 +75,6 @@ jobs:
           cypress-spec-folder: ${{ matrix.spec }}
 
   build-docker:
-    runs-on: ubuntu-latest
     needs:
       - lint
       - unit-test
