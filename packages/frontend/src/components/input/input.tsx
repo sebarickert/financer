@@ -71,7 +71,6 @@ export const Input = ({
           id={id}
           type={type}
           inputMode={type === 'number' ? 'decimal' : undefined}
-          pattern={type === 'number' ? '[0-9,.]*' : undefined}
           min={min}
           max={max}
           step={step}
@@ -83,7 +82,6 @@ export const Input = ({
           required={isRequired}
           ref={ref}
           onChange={handleChange}
-          lang="fi"
           data-testid={testId}
         />
       </div>
