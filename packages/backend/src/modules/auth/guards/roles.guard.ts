@@ -1,7 +1,6 @@
+import { Role } from '@local/types';
 import { ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-
-import { Role } from '../../users/schemas/user.schema';
 
 import { BaseGuard } from './base.guard';
 

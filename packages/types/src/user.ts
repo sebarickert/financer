@@ -1,3 +1,8 @@
+export enum Role {
+  admin = 'admin',
+  testUser = 'test-user',
+}
+
 export type IUser = {
   _id: any;
   name: any;
@@ -5,5 +10,5 @@ export type IUser = {
   githubId?: string;
   auth0Id?: string;
   profileImageUrl: string;
-  roles: string[];
+  roles: Role[];
 };

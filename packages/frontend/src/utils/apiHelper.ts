@@ -1,10 +1,4 @@
-// Copied from @local/types due to CRA issues to import enum from linked project
-enum SuccessApifulResponseCode {
-  Ok = 200,
-  Created = 201,
-  Accepted = 202,
-  NoContent = 204,
-}
+import { SuccessApifulResponseCode } from '@local/types';
 
 const isSuccessfulApiResponseCode = (responseCode: number): boolean =>
   Object.values(SuccessApifulResponseCode).includes(responseCode);

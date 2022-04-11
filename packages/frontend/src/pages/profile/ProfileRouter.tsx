@@ -1,3 +1,4 @@
+import { Role } from '@local/types';
 import { Routes, Route } from 'react-router-dom';
 
 import { useProfileInformation } from '../../hooks/profile/useProfileInformation';
@@ -18,7 +19,7 @@ export const ProfileRouter = (): JSX.Element => {
         element={<TransactionCategoriesRouter />}
       />
       <Route path="user-preferences/*" element={<UserPreferencesRouter />} />
-      {profileInfo?.roles.includes('test-user') && (
+      {profileInfo?.roles.includes(Role.testUser) && (
         <Route path="override-data" element={<ProfileOverrideData />} />
       )}
     </Routes>

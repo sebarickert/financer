@@ -2,5 +2,7 @@ node_modules
 docker/.env.production
 .vscode
 build
+dist
+tsconfig.tsbuildinfo
 
 !.vscode/settings.json

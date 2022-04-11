@@ -1,3 +1,5 @@
+import { Role } from '@local/types';
+
 import { Heading } from '../../components/heading/heading';
 import { LinkList } from '../../components/link-list/link-list';
 import { LinkListLink } from '../../components/link-list/link-list.link';
@@ -23,7 +25,7 @@ export const Profile = (): JSX.Element => {
         <LinkListLink link="/api/users/my-user/my-data" icon="cloud-download">
           Download your data
         </LinkListLink>
-        {profileInfo?.roles.includes('test-user') && (
+        {profileInfo?.roles.includes(Role.testUser) && (
           <LinkListLink link="/profile/override-data" icon="exclamation">
             Override data
           </LinkListLink>

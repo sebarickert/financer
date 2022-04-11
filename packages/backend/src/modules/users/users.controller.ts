@@ -1,3 +1,4 @@
+import { Role } from '@local/types';
 import {
   Controller,
   Get,
@@ -21,7 +22,6 @@ import {
 } from '../user-data/user-data.service';
 
 import { UpdateUserDto, UpdateUserOwnUserDto } from './dto/update-user.dto';
-import { Role } from './schemas/user.schema';
 import { UserId } from './users.decorators';
 import { UsersService } from './users.service';
 

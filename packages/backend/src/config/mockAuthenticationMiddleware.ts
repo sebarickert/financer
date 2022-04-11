@@ -1,6 +1,7 @@
+import { Role } from '@local/types';
 import { NextFunction, Request, Response } from 'express';
 
-import { Role, UserDocument } from '../modules/users/schemas/user.schema';
+import { UserDocument } from '../modules/users/schemas/user.schema';
 import { parseObjectId } from '../types/objectId';
 
 export const DUMMY_TEST_USER: Partial<UserDocument> = {

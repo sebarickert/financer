@@ -1,12 +1,8 @@
+import { Role } from '@local/types';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types as MogooseTypes } from 'mongoose';
 
 export type UserDocument = User & Document<MogooseTypes.ObjectId>;
-
-export enum Role {
-  admin = 'admin',
-  testUser = 'test-user',
-}
 
 @Schema()
 export class User {
