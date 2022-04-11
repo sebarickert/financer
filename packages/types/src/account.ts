@@ -1,7 +1,15 @@
+export enum AccounType {
+  cash = 'cash',
+  savings = 'savings',
+  investment = 'investment',
+  credit = 'credit',
+  loan = 'loan',
+}
+
 export type IAccount = {
   _id?: any;
   name: string;
-  type: 'cash' | 'savings' | 'investment' | 'credit' | 'loan';
+  type: AccounType;
   balance: number;
   owner?: string;
 };

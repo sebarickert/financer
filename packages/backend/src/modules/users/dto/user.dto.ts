@@ -1,7 +1,7 @@
+import { Role } from '@local/types';
 import { IsEnum, IsNotEmpty, IsOptional, IsMongoId } from 'class-validator';
 
 import { ObjectId } from '../../../types/objectId';
-import { Role } from '../schemas/user.schema';
 
 export class UserDto {
   @IsMongoId()

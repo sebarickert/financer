@@ -1,3 +1,4 @@
+import { AccounType } from '@local/types';
 import { useEffect, useState } from 'react';
 import {
   ResponsiveContainer,
@@ -143,8 +144,8 @@ export const BalanceGraph = ({
   const { data: totalBalance } = useTotalBalance();
   const allIncomes = useAllIncomes();
   const allExpenses = useAllExpenses();
-  const [groupedIncomes] = useAllIncomesGroupByMonth(['loan']);
-  const [groupedExpenses] = useAllExpensesGroupByMonth(['loan']);
+  const [groupedIncomes] = useAllIncomesGroupByMonth([AccounType.loan]);
+  const [groupedExpenses] = useAllExpensesGroupByMonth([AccounType.loan]);
   const allTransactions = useAllTransactions();
   const [balanceHistory, setBalanceHistory] = useState<null | BalanceHistory[]>(
     null

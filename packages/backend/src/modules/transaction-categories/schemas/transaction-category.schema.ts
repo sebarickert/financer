@@ -1,3 +1,4 @@
+import { VisibilityType } from '@local/types';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types as MogooseTypes } from 'mongoose';
 
@@ -6,12 +7,6 @@ import { User } from '../../users/schemas/user.schema';
 
 export type TransactionCategoryDocument = TransactionCategory &
   Document<MogooseTypes.ObjectId>;
-
-export enum VisibilityType {
-  income = 'income',
-  expense = 'expense',
-  transfer = 'transfer',
-}
 
 @Schema({ collection: 'transaction-categories' })
 export class TransactionCategory {

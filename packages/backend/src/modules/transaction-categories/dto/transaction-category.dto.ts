@@ -1,3 +1,4 @@
+import { VisibilityType } from '@local/types';
 import { Transform } from 'class-transformer';
 import {
   IsBoolean,
@@ -10,7 +11,6 @@ import {
 import { ObjectId } from '../../../types/objectId';
 import { IsInstanceOfObjectId } from '../../../utils/is-instance-of-object-id.decorator';
 import { objectIdTransformer } from '../../../utils/object-id-transformer';
-import { VisibilityType } from '../schemas/transaction-category.schema';
 
 export class TransactionCategoryDto {
   @IsMongoId()

@@ -1,3 +1,4 @@
+import { AccounType } from '@local/types';
 import {
   IsEnum,
   IsMongoId,
@@ -7,7 +8,6 @@ import {
 } from 'class-validator';
 
 import { ObjectId } from '../../../types/objectId';
-import { AccounType } from '../schemas/account.schema';
 
 export class AccountDto {
   @IsMongoId()

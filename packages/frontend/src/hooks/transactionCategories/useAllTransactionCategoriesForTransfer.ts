@@ -1,4 +1,4 @@
-import { ITransactionCategory } from '@local/types';
+import { ITransactionCategory, VisibilityType } from '@local/types';
 import { useState, useEffect } from 'react';
 
 import { ITransactionCategoryWithCategoryTree } from '../../services/TransactionCategoriesService';
@@ -18,7 +18,7 @@ export const useAllTransactionCategoriesForTransfer =
     useEffect(() => {
       setIncomeCategories(
         allTransactionCategories?.filter(({ visibility }) =>
-          visibility.includes('transfer')
+          visibility.includes(VisibilityType.transfer)
         ) || []
       );
     }, [allTransactionCategories]);
@@ -37,7 +37,7 @@ export const useAllTransactionCategoriesForTransferWithCategoryTree = ():
   useEffect(() => {
     setIncomeCategories(
       transactionCategoriesWithTree?.filter(({ visibility }) =>
-        visibility.includes('transfer')
+        visibility.includes(VisibilityType.transfer)
       ) || []
     );
   }, [transactionCategoriesWithTree]);

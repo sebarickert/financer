@@ -1,4 +1,8 @@
-type VisibilityType = 'income' | 'expense' | 'transfer';
+export enum VisibilityType {
+  income = 'income',
+  expense = 'expense',
+  transfer = 'transfer',
+}
 
 export type ITransactionCategory = {
   _id?: any;
