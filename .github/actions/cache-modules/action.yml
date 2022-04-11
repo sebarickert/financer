@@ -9,8 +9,11 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - uses: actions/cache@v2
+    - uses: actions/cache@v3
       id: cache-modules
       with:
-        path: "**/node_modules"
+        path: |
+          **/node_modules
+          packages/types/dist
+          ~/.cache/Cypress
         key: ${{ runner.os }}-modules-${{ hashFiles('./package-lock.json') }}

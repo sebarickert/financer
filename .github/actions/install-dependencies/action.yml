@@ -4,13 +4,9 @@ description: "Install dependencies for the project and cache cypress binaries"
 runs:
   using: "composite"
   steps:
-    - name: Copy package-lock for cypress action
+    - name: remove cache cypress
+      run: rm -rf packages/cypress/node_modules node_modules
       shell: bash
-      run: cp package-lock.json ./packages/cypress/package-lock.json
     - name: Install dependencies
-      if: steps.modules-cache.outputs.cache-hit != 'true'
-      uses: cypress-io/github-action@v2
-      with:
-        runTests: false
-        working-directory: packages/cypress
-        install-command: npm ci --prefix ../../
+      shell: bash
+      run: npm ci
