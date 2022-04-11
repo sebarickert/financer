@@ -83,7 +83,6 @@ export const Input = ({
           ref={ref}
           onChange={handleChange}
           data-testid={testId}
-          lang="en"
         />
       </div>
       {help && (
