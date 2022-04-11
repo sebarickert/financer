@@ -70,6 +70,7 @@ export const Input = ({
         <input
           id={id}
           type={type}
+          inputMode={type === 'number' ? 'decimal' : undefined}
           min={min}
           max={max}
           step={step}
