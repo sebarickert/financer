@@ -145,19 +145,15 @@ export const Statistics = (): JSX.Element => {
     const now = new Date();
 
     setTransactions(
-      transactionsRaw
-        .filter(({ date: dateStr }) => {
-          const date = new Date(dateStr);
-          const currentYear = new Date().getFullYear();
+      transactionsRaw.filter(({ date: dateStr }) => {
+        const date = new Date(dateStr);
+        const currentYear = new Date().getFullYear();
 
-          return (
-            date.getMonth() === now.getMonth() &&
-            currentYear === date.getFullYear()
-          );
-        })
-        .sort(({ date: dateA }, { date: dateB }) => {
-          return new Date(dateB).getTime() - new Date(dateA).getTime();
-        })
+        return (
+          date.getMonth() === now.getMonth() &&
+          currentYear === date.getFullYear()
+        );
+      })
     );
   }, [transactionsRaw]);
 

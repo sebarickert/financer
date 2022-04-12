@@ -83,7 +83,7 @@ export class TransactionsService {
   async findAllByUser(userId: ObjectId): Promise<TransactionDocument[]> {
     return this.transactionModel
       .find({ user: userId })
-      .sort({ date: 'asc' })
+      .sort({ date: 'desc' })
       .exec();
   }
 
@@ -103,7 +103,7 @@ export class TransactionsService {
           },
         ],
       })
-      .sort({ date: 'asc' })
+      .sort({ date: 'desc' })
       .exec();
   }
 
@@ -114,7 +114,7 @@ export class TransactionsService {
         toAccount: { $ne: undefined },
         fromAccount: { $eq: undefined },
       })
-      .sort({ date: 'asc' })
+      .sort({ date: 'desc' })
       .exec();
   }
 
@@ -140,7 +140,7 @@ export class TransactionsService {
         fromAccount: { $ne: undefined },
         toAccount: { $ne: undefined },
       })
-      .sort({ date: 'asc' })
+      .sort({ date: 'desc' })
       .exec();
   }
 
