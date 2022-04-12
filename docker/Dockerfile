@@ -8,7 +8,7 @@ WORKDIR /app
 
 RUN npm ci --quiet
 RUN npm run build
-RUN npm ci --only=production -w backend --ignore-scripts
+# RUN npm ci --only=production -w backend --ignore-scripts
 
 RUN ls -al /app/build
 
