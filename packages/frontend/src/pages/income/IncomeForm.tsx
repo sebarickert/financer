@@ -17,7 +17,6 @@ interface IIncomeFormProps {
   date?: Date;
   description?: string;
   errors: string[];
-  formHeading: string;
   toAccount?: string;
   onSubmit(
     account: IExpense,
@@ -32,7 +31,6 @@ export const IncomeForm = ({
   date,
   description,
   errors,
-  formHeading,
   onSubmit,
   submitLabel,
   toAccount,
@@ -173,7 +171,6 @@ export const IncomeForm = ({
       )}
       <Form
         submitLabel={submitLabel}
-        formHeading={formHeading}
         handleSubmit={handleSubmit}
         formFooterBackLink="/"
       >

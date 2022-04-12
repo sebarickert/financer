@@ -44,7 +44,6 @@ export const AddIncome = (): JSX.Element => {
       <IncomeForm
         onSubmit={handleSubmit}
         errors={errors}
-        formHeading="Add income"
         submitLabel="Submit"
         toAccount={defaultIncomeAccount}
       />

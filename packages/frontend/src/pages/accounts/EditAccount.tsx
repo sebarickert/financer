@@ -1,5 +1,5 @@
 import { IAccount } from '@local/types';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { Loader } from '../../components/loader/loader';
@@ -50,7 +50,6 @@ export const EditAccount = (): JSX.Element => {
       <AccountForm
         onSubmit={handleSubmit}
         errors={errors}
-        formHeading="Edit account"
         submitLabel="Update"
         name={account.name}
         balance={account.balance}

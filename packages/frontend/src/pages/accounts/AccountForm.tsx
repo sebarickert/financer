@@ -1,5 +1,4 @@
 import { IAccount } from '@local/types';
-import React from 'react';
 
 import { Alert } from '../../components/alert/alert';
 import { Form } from '../../components/form/form';
@@ -12,7 +11,6 @@ interface IAccountFormProps {
   balance?: number;
   type?: string;
   onSubmit(account: IAccount): void;
-  formHeading: string;
   submitLabel: string;
 }
 
@@ -22,7 +20,6 @@ export const AccountForm = ({
   balance = NaN,
   type = 'savings',
   onSubmit,
-  formHeading,
   submitLabel,
 }: IAccountFormProps): JSX.Element => {
   const accountTypes: IOption[] = [
@@ -70,7 +67,6 @@ export const AccountForm = ({
       )}
       <Form
         submitLabel={submitLabel}
-        formHeading={formHeading}
         handleSubmit={handleSubmit}
         accentColor="blue"
         formFooterBackLink="/accounts"

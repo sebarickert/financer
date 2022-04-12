@@ -59,7 +59,6 @@ export const EditExpense = (): JSX.Element => {
       <ExpenseForm
         onSubmit={handleSubmit}
         errors={errors}
-        formHeading="Edit expense"
         submitLabel="Update"
         amount={expense.amount}
         description={expense.description}

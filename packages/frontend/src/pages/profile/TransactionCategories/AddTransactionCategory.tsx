@@ -43,7 +43,6 @@ export const AddTransactionCategory = (): JSX.Element => {
       <TransactionCategoryForm
         onSubmit={handleSubmit}
         errors={errors}
-        formHeading="Add transaction category"
         submitLabel="Add"
       />
     </Container>

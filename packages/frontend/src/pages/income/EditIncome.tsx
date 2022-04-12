@@ -59,7 +59,6 @@ export const EditIncome = (): JSX.Element => {
       <IncomeForm
         onSubmit={handleSubmit}
         errors={errors}
-        formHeading="Edit income"
         submitLabel="Update"
         amount={income.amount}
         description={income.description}

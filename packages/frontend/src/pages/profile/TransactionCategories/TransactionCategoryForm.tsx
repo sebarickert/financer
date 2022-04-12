@@ -13,7 +13,6 @@ import { useAllTransactionCategoriesWithCategoryTree } from '../../../hooks/tran
 interface ITransactionCategoryFormProps {
   errors: string[];
   onSubmit(transactionCategory: ITransactionCategory): void;
-  formHeading: string;
   submitLabel: string;
   name?: string;
   visibility?: ITransactionCategory['visibility'];
@@ -24,7 +23,6 @@ interface ITransactionCategoryFormProps {
 
 export const TransactionCategoryForm = ({
   errors,
-  formHeading,
   onSubmit,
   parentTransactioCategoryId,
   submitLabel,
@@ -93,7 +91,6 @@ export const TransactionCategoryForm = ({
       )}
       <Form
         submitLabel={submitLabel}
-        formHeading={formHeading}
         handleSubmit={handleSubmit}
         accentColor="green"
         formFooterBackLink="/profile/transaction-categories"

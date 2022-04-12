@@ -44,7 +44,6 @@ export const AddExpense = (): JSX.Element => {
       <ExpenseForm
         onSubmit={handleSubmit}
         errors={errors}
-        formHeading="Add expense"
         submitLabel="Submit"
         fromAccount={defaultExpenseAccount}
       />

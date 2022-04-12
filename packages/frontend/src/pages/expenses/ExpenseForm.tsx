@@ -17,7 +17,6 @@ interface IExpenseFormProps {
   date?: Date;
   description?: string;
   errors: string[];
-  formHeading: string;
   fromAccount?: string;
   onSubmit(
     account: IExpense,
@@ -32,7 +31,6 @@ export const ExpenseForm = ({
   date,
   description,
   errors,
-  formHeading,
   onSubmit,
   submitLabel,
   fromAccount,
@@ -173,7 +171,6 @@ export const ExpenseForm = ({
       )}
       <Form
         submitLabel={submitLabel}
-        formHeading={formHeading}
         handleSubmit={handleSubmit}
         formFooterBackLink="/"
       >
