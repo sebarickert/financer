@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-import { Heading } from '../../../../components/heading/heading';
 import { Loader } from '../../../../components/loader/loader';
 import { ModalCustom } from '../../../../components/modal/custom/modal.custom';
 import { Select } from '../../../../components/select/select';
@@ -30,9 +29,6 @@ export const UserDefaultTransferTargetAccount = (): JSX.Element => {
         title="Default transfer target account"
         backLink={'/profile/user-preferences'}
       />
-      <Heading variant="h1" className="mb-4 lg:mb-6">
-        Default transfer target account
-      </Heading>
       <ModalCustom
         modalOpenButtonLabel="Set default transfer target account"
         onConfirm={handleSave}

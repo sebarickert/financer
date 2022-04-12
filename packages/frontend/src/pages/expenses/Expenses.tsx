@@ -16,9 +16,6 @@ export const Expenses = (): JSX.Element => {
     <>
       <UpdatePageInfo title="Expenses" />
       <section className="mb-8">
-        <Heading variant="h1" className="mb-6">
-          Expenses
-        </Heading>
         <QuickLinksItem
           title="Add expense"
           link="/statistics/expenses/add"

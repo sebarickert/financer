@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-import { Heading } from '../../../../components/heading/heading';
 import { Input } from '../../../../components/input/input';
 import { ModalCustom } from '../../../../components/modal/custom/modal.custom';
 import { UpdatePageInfo } from '../../../../components/seo/updatePageInfo';
@@ -27,9 +26,6 @@ export const UserTransactionListChunkSize = (): JSX.Element => {
         title="Transaction list chunk size"
         backLink={'/profile/user-preferences'}
       />
-      <Heading variant="h1" className="mb-4 lg:mb-6">
-        Transaction list chunk size
-      </Heading>
       <ModalCustom
         modalOpenButtonLabel="Set transaction list chunk size"
         onConfirm={handleSave}

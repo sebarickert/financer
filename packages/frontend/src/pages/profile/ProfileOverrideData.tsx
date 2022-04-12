@@ -4,7 +4,6 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { Button } from '../../components/button/button';
 import { DescriptionList } from '../../components/description-list/description-list';
 import { DescriptionListItem } from '../../components/description-list/description-list.item';
-import { Heading } from '../../components/heading/heading';
 import {
   Notification,
   INotificationProps,
@@ -123,9 +122,6 @@ export const ProfileOverrideData = (): JSX.Element => {
           {notification.children}
         </Notification>
       )}
-      <Heading variant="h1" className="mb-4 lg:mb-6">
-        Override your data
-      </Heading>
       <div>
         <label
           htmlFor="selectFiles"

@@ -1,11 +1,9 @@
 import React from 'react';
 
 import { FormFooter } from './form.footer';
-import { FormHeader } from './form.header';
 
 interface IFormProps {
   children: React.ReactNode;
-  formHeading: string;
   submitLabel: string;
   accentColor?: 'red' | 'green' | 'blue';
   formFooterBackLink?: string;
@@ -17,7 +15,6 @@ interface IFormProps {
 export const Form = ({
   children,
   submitLabel,
-  formHeading,
   handleSubmit,
   accentColor = 'blue',
   formFooterBackLink,
@@ -30,7 +27,6 @@ export const Form = ({
       className="pb-[83px] lg:pb-0"
       lang="en-150"
     >
-      <FormHeader>{formHeading}</FormHeader>
       {children}
       <FormFooter
         submitLabel={submitLabel}

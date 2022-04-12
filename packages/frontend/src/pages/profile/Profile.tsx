@@ -1,6 +1,5 @@
 import { Role } from '@local/types';
 
-import { Heading } from '../../components/heading/heading';
 import { LinkList } from '../../components/link-list/link-list';
 import { LinkListLink } from '../../components/link-list/link-list.link';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
@@ -12,9 +11,6 @@ export const Profile = (): JSX.Element => {
   return (
     <>
       <UpdatePageInfo title="Profile" />
-      <Heading variant="h1" className="mb-4 lg:mb-6">
-        Profile
-      </Heading>
       <LinkList>
         <LinkListLink link="/profile/user-preferences" icon="cog">
           User preferences

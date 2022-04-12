@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 
-import { Heading } from '../../../components/heading/heading';
 import { Loader } from '../../../components/loader/loader';
 import { QuickLinksItem } from '../../../components/quick-links/quick-links.item';
 import { UpdatePageInfo } from '../../../components/seo/updatePageInfo';
@@ -43,9 +42,6 @@ export const TransactionCategories = (): JSX.Element => {
     <>
       <UpdatePageInfo title="Categories" backLink="/profile" />
       <section className="mb-8">
-        <Heading variant="h1" className="mb-6">
-          Categories
-        </Heading>
         <QuickLinksItem
           title="Add category"
           link="/profile/transaction-categories/add"
