@@ -19,7 +19,7 @@ export const DesktopHeader = (): JSX.Element => {
             <Icon type={'chevron-left'} className="stroke-gray-300" />
           </NavLink>
         )}
-        <Heading variant="h1" data-testId="pageMainHeading">
+        <Heading variant="h1" testId="page-main-heading">
           {title ?? '-'}
         </Heading>
       </div>

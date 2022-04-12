@@ -1,5 +1,6 @@
 {
   "experimentalStudio": true,
   "chromeWebSecurity": false,
-  "projectId": "m8tf11"
+  "projectId": "m8tf11",
+  "viewportWidth": 1024
 }
