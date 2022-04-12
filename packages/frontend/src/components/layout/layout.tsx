@@ -34,7 +34,7 @@ export const Layout = (): JSX.Element => {
     setCurrentWindowWidth(window.outerWidth)
   );
 
-  if (currentWindowWidth > 1024) {
+  if (currentWindowWidth >= 1024) {
     return (
       <div className="bg-white">
         <Container className="grid grid-cols-[16rem,1fr] min-h-screen px-0">

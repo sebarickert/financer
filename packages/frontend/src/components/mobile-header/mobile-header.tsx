@@ -26,7 +26,7 @@ export const MobileHeader = (): JSX.Element => {
         <Heading
           variant="h1"
           className={`!text-lg !tracking-tight !font-semibold !block truncate`}
-          data-testId="pageMainHeading"
+          testId="page-main-heading"
         >
           {title ?? '-'}
         </Heading>

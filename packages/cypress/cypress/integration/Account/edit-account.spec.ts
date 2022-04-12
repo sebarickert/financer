@@ -27,7 +27,9 @@ describe('Account editing', () => {
     accountBalance: string,
     accountType: string
   ) => {
-    cy.getById('account-page-heading').should('contain.text', accountName);
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(100);
+    cy.getById('page-main-heading').should('contain.text', accountName);
 
     cy.getById('account-type').should('have.text', accountType);
 
