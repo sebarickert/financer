@@ -170,7 +170,7 @@ export const Account = (): JSX.Element => {
     }
   };
 
-  return isLoadingAccount || !account || !transactions ? (
+  return isLoadingAccount || !account || !transactions || !id ? (
     <Loader loaderColor="blue" />
   ) : (
     <>

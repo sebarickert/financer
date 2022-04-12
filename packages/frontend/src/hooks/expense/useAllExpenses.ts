@@ -1,4 +1,4 @@
-import { IAccount, IExpense } from '@local/types';
+import { AccountType, IExpense } from '@local/types';
 import { useState, useEffect } from 'react';
 import { useQuery } from 'react-query';
 
@@ -50,10 +50,10 @@ export const useCurrentMonthExpensesTotalAmount = (): number => {
 };
 
 export const useAllExpensesGroupByMonth = (
-  initialForbiddenAccountTypes: IAccount['type'][] = []
+  initialForbiddenAccountTypes: AccountType[] = []
 ): [
   IExpensesPerMonth[],
-  React.Dispatch<React.SetStateAction<IAccount['type'][]>>
+  React.Dispatch<React.SetStateAction<AccountType[]>>
 ] => {
   const expenses = useAllExpenses();
   const [{ data: allForbiddenAccounts }, setTargetTypes] = useAllAccountsByType(
@@ -65,7 +65,7 @@ export const useAllExpensesGroupByMonth = (
   const transactionCategoryMappings = useAllTransactionCategoryMappings();
   const transactionCategories = useAllTransactionCategories();
   const [forbiddenAccountTypes, setForbiddenAccountTypes] = useState<
-    IAccount['type'][]
+    AccountType[]
   >(initialForbiddenAccountTypes);
 
   useEffect(() => {

@@ -1,7 +1,7 @@
-import { IAccount, ITransaction, IUser } from '@local/types';
+import { AccountDto, ITransaction, IUser } from '@local/types';
 
 export interface IOverrideProfileData {
-  accounts: IAccount[];
+  accounts: AccountDto[];
   transactions: ITransaction[];
   user: IUser;
 }

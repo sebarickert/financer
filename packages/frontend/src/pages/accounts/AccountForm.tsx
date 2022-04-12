@@ -1,4 +1,4 @@
-import { IAccount } from '@local/types';
+import { CreateAccountDto } from '@local/types';
 
 import { Alert } from '../../components/alert/alert';
 import { Form } from '../../components/form/form';
@@ -10,7 +10,7 @@ interface IAccountFormProps {
   name?: string;
   balance?: number;
   type?: string;
-  onSubmit(account: IAccount): void;
+  onSubmit(account: CreateAccountDto): void;
   submitLabel: string;
 }
 
@@ -49,7 +49,7 @@ export const AccountForm = ({
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     const { account, amount, type: newType } = event.target;
-    const newAccountData: IAccount = {
+    const newAccountData: CreateAccountDto = {
       balance: parseFloat((amount.value as string).replace(',', '.')),
       name: account.value,
       type: newType.value,

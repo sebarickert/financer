@@ -1,13 +1,19 @@
-import { AccountBalanceHistoryDto, ApiResponse, IAccount } from '@local/types';
+import {
+  AccountBalanceHistoryDto,
+  AccountDto,
+  ApiResponse,
+  CreateAccountDto,
+  UpdateAccountDto,
+} from '@local/types';
 
 import { parseApiResponse } from '../utils/apiHelper';
 
-export const getAllAccounts = async (): Promise<IAccount[]> => {
+export const getAllAccounts = async (): Promise<AccountDto[]> => {
   const accounts = await fetch('/api/accounts');
   return accounts.json();
 };
 
-export const getAccountById = async (id: string): Promise<IAccount> => {
+export const getAccountById = async (id: string): Promise<AccountDto> => {
   const account = await fetch(`/api/accounts/${id}`);
   return account.json();
 };
@@ -20,8 +26,8 @@ export const getAccountBalanceHistoryById = async (
 };
 
 export const addAccount = async (
-  newAccountData: IAccount
-): Promise<ApiResponse<IAccount>> => {
+  newAccountData: CreateAccountDto
+): Promise<ApiResponse<AccountDto>> => {
   const newAccount = await fetch('/api/accounts', {
     method: 'POST',
     headers: {
@@ -36,8 +42,8 @@ export const addAccount = async (
 
 export const editAccount = async (
   id: string,
-  targetAccountData: IAccount
-): Promise<ApiResponse<IAccount>> => {
+  targetAccountData: UpdateAccountDto
+): Promise<ApiResponse<AccountDto>> => {
   const targetAccount = await fetch(`/api/accounts/${id}`, {
     method: 'PATCH',
     headers: {

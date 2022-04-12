@@ -1,4 +1,4 @@
-import { IAccount } from '@local/types';
+import { AccountDto } from '@local/types';
 import { useState, useEffect } from 'react';
 import { UseQueryResult } from 'react-query';
 
@@ -7,11 +7,11 @@ import { useAllAccounts } from './useAllAccounts';
 export const useAccountById = (
   id: string | null = null
 ): [
-  UseQueryResult<IAccount>,
+  UseQueryResult<AccountDto>,
   React.Dispatch<React.SetStateAction<string | null>>
 ] => {
   const [targetId, setTargetId] = useState(id);
-  const [targetAccount, setTargetAccount] = useState<IAccount>();
+  const [targetAccount, setTargetAccount] = useState<AccountDto>();
   const { data: accounts, isLoading, ...allAccountsQuery } = useAllAccounts();
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export const useAccountById = (
       ...allAccountsQuery,
       isLoading,
       data: targetAccount,
-    } as UseQueryResult<IAccount>,
+    } as UseQueryResult<AccountDto>,
     setTargetId,
   ];
 };
