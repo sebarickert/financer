@@ -1,4 +1,3 @@
-import { AccounType } from '@local/types';
 import {
   IsEnum,
   IsMongoId,
@@ -7,25 +6,25 @@ import {
   IsString,
 } from 'class-validator';
 
-import { ObjectId } from '../../../types/objectId';
+import { AccountType } from './account-type';
 
-export class AccountDto {
+export class AccountDto<ObjectType = string> {
   @IsMongoId()
-  readonly _id: ObjectId;
+  readonly _id: ObjectType;
 
   @IsNotEmpty({ message: 'Name must not be empty.' })
   @IsString()
   readonly name: string;
 
-  @IsEnum(AccounType, {
+  @IsEnum(AccountType, {
     message:
       'Type must be one of the following: cash, savings, investment, credit, loan.',
   })
-  readonly type: AccounType;
+  readonly type: AccountType;
 
   @IsNumber({}, { message: 'Balance must be a number.' })
   readonly balance: number;
 
   @IsMongoId()
-  readonly owner: ObjectId;
+  readonly owner: ObjectType;
 }

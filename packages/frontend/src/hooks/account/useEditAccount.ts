@@ -1,4 +1,4 @@
-import { IAccount } from '@local/types';
+import { UpdateAccountDto } from '@local/types';
 import { useCallback } from 'react';
 import { useQueryClient } from 'react-query';
 
@@ -8,7 +8,7 @@ export const useEditAccount = () => {
   const queryClient = useQueryClient();
 
   return useCallback(
-    async (id: string, targetAccountData: IAccount) => {
+    async (id: string, targetAccountData: UpdateAccountDto) => {
       const editedAccount = await editAccount(id, targetAccountData);
       queryClient.invalidateQueries('accounts');
 

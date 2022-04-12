@@ -9,6 +9,8 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
+    "strictPropertyInitialization": false,
+    "experimentalDecorators": true,
     "module": "ESNext",
     "moduleResolution": "node",
     "resolveJsonModule": true,

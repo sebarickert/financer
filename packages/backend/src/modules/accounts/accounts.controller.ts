@@ -1,3 +1,4 @@
+import { CreateAccountDto, UpdateAccountDto } from '@local/types';
 import {
   Controller,
   Get,
@@ -14,8 +15,6 @@ import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
 import { UserId } from '../users/users.decorators';
 
 import { AccountsService } from './accounts.service';
-import { CreateAccountDto } from './dto/create-account.dto';
-import { UpdateAccountDto } from './dto/update-account.dto';
 
 @Controller('api/accounts')
 @LoggedIn()
@@ -25,7 +24,7 @@ export class AccountsController {
   @Post()
   async create(
     @UserId() userId: ObjectId,
-    @Body() createAccountDto: CreateAccountDto,
+    @Body() createAccountDto: CreateAccountDto<ObjectId>,
   ) {
     return this.accountsService.create(userId, createAccountDto);
   }
@@ -47,7 +46,7 @@ export class AccountsController {
   async update(
     @UserId() userId: ObjectId,
     @Param('id', ValidateEntityId) id: ObjectId,
-    @Body() updateAccountDto: UpdateAccountDto,
+    @Body() updateAccountDto: UpdateAccountDto<ObjectId>,
   ) {
     return this.accountsService.update(userId, id, updateAccountDto);
   }

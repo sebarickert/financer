@@ -1,4 +1,4 @@
-import { IAccount } from '@local/types';
+import { CreateAccountDto } from '@local/types';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -19,13 +19,13 @@ export const EditAccount = (): JSX.Element => {
 
   const [{ data: account, isLoading }] = useAccountById(id);
 
-  const handleSubmit = async (newAccountData: IAccount) => {
-    /* eslint-disable no-param-reassign */
-    newAccountData.owner = account?.owner;
-    newAccountData._id = account?._id;
-    /* eslint-enable no-param-reassign */
+  const handleSubmit = async (newAccountData: CreateAccountDto) => {
+    if (!account?._id) {
+      setErrors(['Account not found']);
+      return;
+    }
     try {
-      const newAccount = await editAccount(newAccountData._id, newAccountData);
+      const newAccount = await editAccount(account._id, newAccountData);
 
       if ('message' in newAccount) {
         setErrors(parseErrorMessagesToArray(newAccount.message));

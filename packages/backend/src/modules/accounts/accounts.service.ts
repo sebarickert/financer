@@ -1,4 +1,9 @@
 import {
+  CreateAccountDto,
+  UpdateAccountDto,
+  AccountBalanceHistoryDto,
+} from '@local/types';
+import {
   forwardRef,
   Inject,
   Injectable,
@@ -13,9 +18,6 @@ import { sumArrayItems } from '../../utils/arrays';
 import { AccountBalanceChangesService } from '../account-balance-changes/account-balance-changes.service';
 import { TransactionsService } from '../transactions/transactions.service';
 
-import { AccountBalanceHistoryDto } from './dto/account-balance-history.dto';
-import { CreateAccountDto } from './dto/create-account.dto';
-import { UpdateAccountDto } from './dto/update-account.dto';
 import { Account, AccountDocument } from './schemas/account.schema';
 
 @Injectable()
@@ -29,13 +31,13 @@ export class AccountsService {
 
   async create(
     userId: ObjectId,
-    createAccountDto: CreateAccountDto,
+    createAccountDto: CreateAccountDto<ObjectId>,
   ): Promise<AccountDocument> {
     return this.accountModel.create({ ...createAccountDto, owner: userId });
   }
 
   async createMany(
-    createAccountDto: CreateAccountDto[],
+    createAccountDto: CreateAccountDto<ObjectId>[],
   ): Promise<AccountDocument[]> {
     return this.accountModel.insertMany(createAccountDto);
   }
@@ -59,7 +61,7 @@ export class AccountsService {
   async update(
     userId: ObjectId,
     id: ObjectId,
-    updateAccountDto: UpdateAccountDto,
+    updateAccountDto: UpdateAccountDto<ObjectId>,
   ): Promise<AccountDocument> {
     const accountBeforeChange = await this.findOne(userId, id);
 

@@ -1,4 +1,4 @@
-import { IAccount } from '@local/types';
+import { CreateAccountDto } from '@local/types';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,7 +13,7 @@ export const AddAccount = (): JSX.Element => {
   const addAccount = useAddAccount();
   const [errors, setErrors] = useState<string[]>([]);
 
-  const handleSubmit = async (newAccountData: IAccount) => {
+  const handleSubmit = async (newAccountData: CreateAccountDto) => {
     try {
       const newAccount = await addAccount(newAccountData);
 

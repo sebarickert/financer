@@ -1,4 +1,4 @@
-import { IAccount, ITransaction } from '@local/types';
+import { AccountDto, ITransaction } from '@local/types';
 
 export interface ITransactionWithDateObject extends ITransaction {
   dateObj: Date;
@@ -21,7 +21,7 @@ export const formatDate = (date: Date): string => {
   )}T${addLeadingZero(hours)}:${addLeadingZero(minutes)}`;
 };
 
-export const getAccount = async (accountId: string): Promise<IAccount> => {
+export const getAccount = async (accountId: string): Promise<AccountDto> => {
   const rawAccount = await fetch(
     `http://localhost:3000/api/accounts/${accountId}`
   );

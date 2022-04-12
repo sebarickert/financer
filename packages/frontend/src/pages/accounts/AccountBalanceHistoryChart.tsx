@@ -1,4 +1,4 @@
-import { IAccount } from '@local/types';
+import { AccountDto } from '@local/types';
 import { useState, useEffect } from 'react';
 import {
   Area,
@@ -71,7 +71,7 @@ const CustomYAxisTick = ({
 };
 
 interface IAccountBalanceHistoryChartProps {
-  accountId: IAccount['_id'];
+  accountId: AccountDto['_id'];
 }
 
 export const AccountBalanceHistoryChart = ({
