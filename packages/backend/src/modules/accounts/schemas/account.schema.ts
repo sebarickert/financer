@@ -1,4 +1,4 @@
-import { AccounType } from '@local/types';
+import { AccountType } from '@local/types';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types as MogooseTypes } from 'mongoose';
 
@@ -13,7 +13,7 @@ export class Account {
   name: string;
 
   @Prop({ required: true })
-  type: AccounType;
+  type: AccountType;
 
   @Prop({ required: true })
   balance: number;
