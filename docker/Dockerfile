@@ -11,7 +11,6 @@ RUN npm run build
 RUN npm ci --only=production -w backend --ignore-scripts
 
 RUN ls -al /app/build
-RUN cp -rda node_modules node_modules-fixed
 
 FROM node:16.14.0-alpine
 
@@ -19,7 +18,9 @@ ENV NODE_ENV production
 
 WORKDIR /app
 COPY --from=builder /app/build /app
-COPY --from=builder /app/node_modules-fixed /app/node_modules
+COPY --from=builder /app/node_modules /app/node_modules
+RUN mkdir -p /app/node_modules/@local/types/
+COPY --from=builder /app/packages/types/* /app/node_modules/@local/types/
 
 CMD [ "node", "/app/server/main.js" ]
 
