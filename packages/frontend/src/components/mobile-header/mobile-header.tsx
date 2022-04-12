@@ -1,35 +1,11 @@
-import { useState } from 'react';
-import { Helmet } from 'react-helmet';
 import { NavLink } from 'react-router-dom';
 
+import { usePageInfoContext } from '../../context/pageInfoContext';
 import { Heading } from '../heading/heading';
 import { Icon } from '../icon/icon';
 
-interface MobileHeaderProps {
-  children?: string;
-}
-
-export const MobileHeader = ({
-  children = 'Title not found',
-}: MobileHeaderProps): JSX.Element => {
-  const [title, setTitle] = useState('');
-  const [backLink, setBackLink] = useState('');
-
-  const onHelmetChange = ({
-    title: helmetTitle,
-    metaTags,
-  }: {
-    title: string;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    metaTags: any;
-  }) => {
-    const backLinkString = metaTags.filter(
-      ({ name }: { name: string }) => name === 'back-link'
-    )[0]?.content;
-
-    setBackLink(backLinkString ?? '');
-    setTitle(helmetTitle[0]);
-  };
+export const MobileHeader = (): JSX.Element => {
+  const [{ title, backLink }] = usePageInfoContext();
 
   return (
     <>
@@ -50,11 +26,11 @@ export const MobileHeader = ({
         <Heading
           variant="h1"
           className={`!text-lg !tracking-tight !font-semibold !block truncate`}
+          data-testId="pageMainHeading"
         >
-          {title ?? children}
+          {title ?? '-'}
         </Heading>
       </div>
-      <Helmet onChangeClientState={onHelmetChange} />
     </>
   );
 };
