@@ -87,7 +87,6 @@ export const EditTransactionCategory = (): JSX.Element => {
       <TransactionCategoryForm
         onSubmit={handleSubmit}
         errors={errors}
-        formHeading="Edit transaction category"
         submitLabel="Update"
         name={transactionCategory.name}
         visibility={transactionCategory.visibility}

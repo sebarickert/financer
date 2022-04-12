@@ -59,7 +59,6 @@ export const EditTransfer = (): JSX.Element => {
       <TransferForm
         onSubmit={handleSubmit}
         errors={errors}
-        formHeading="Edit transfer"
         submitLabel="Update"
         amount={transfer.amount}
         date={new Date(transfer.date)}

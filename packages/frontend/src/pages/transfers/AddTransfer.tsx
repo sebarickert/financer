@@ -47,7 +47,6 @@ export const AddTransfer = (): JSX.Element => {
       <TransferForm
         onSubmit={handleSubmit}
         errors={errors}
-        formHeading="Add transfer"
         submitLabel="Submit"
         fromAccount={defaultTransferSourceAccount}
         toAccount={defaultTransferTargetAccount}

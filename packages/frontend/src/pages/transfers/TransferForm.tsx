@@ -17,7 +17,6 @@ interface ITransferFormProps {
   date?: Date;
   description?: string;
   errors: string[];
-  formHeading: string;
   fromAccount?: string;
   toAccount?: string;
   onSubmit(
@@ -33,7 +32,6 @@ export const TransferForm = ({
   date,
   description,
   errors,
-  formHeading,
   onSubmit,
   submitLabel,
   fromAccount,
@@ -177,7 +175,6 @@ export const TransferForm = ({
       )}
       <Form
         submitLabel={submitLabel}
-        formHeading={formHeading}
         handleSubmit={handleSubmit}
         formFooterBackLink="/"
       >

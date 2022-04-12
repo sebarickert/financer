@@ -35,7 +35,6 @@ export const AddAccount = (): JSX.Element => {
       <AccountForm
         onSubmit={handleSubmit}
         errors={errors}
-        formHeading="Add account"
         submitLabel="Submit"
       />
     </>
