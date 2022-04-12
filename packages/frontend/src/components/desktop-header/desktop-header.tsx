@@ -1,35 +1,11 @@
-import { useState } from 'react';
-import { Helmet } from 'react-helmet';
 import { NavLink } from 'react-router-dom';
 
+import { usePageInfoContext } from '../../context/pageInfoContext';
 import { Heading } from '../heading/heading';
 import { Icon } from '../icon/icon';
 
-interface DesktopHeaderProps {
-  children?: string;
-}
-
-export const DesktopHeader = ({
-  children = 'Title not found',
-}: DesktopHeaderProps): JSX.Element => {
-  const [title, setTitle] = useState('');
-  const [backLink, setBackLink] = useState('');
-
-  const onHelmetChange = ({
-    title: helmetTitle,
-    metaTags,
-  }: {
-    title: string;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    metaTags: any;
-  }) => {
-    const backLinkString = metaTags.filter(
-      ({ name }: { name: string }) => name === 'back-link'
-    )[0]?.content;
-
-    setBackLink(backLinkString ?? '');
-    setTitle(helmetTitle[0]);
-  };
+export const DesktopHeader = (): JSX.Element => {
+  const [{ title, backLink }] = usePageInfoContext();
 
   return (
     <>
@@ -43,9 +19,10 @@ export const DesktopHeader = ({
             <Icon type={'chevron-left'} className="stroke-gray-300" />
           </NavLink>
         )}
-        <Heading variant="h1">{title ?? children}</Heading>
+        <Heading variant="h1" data-testId="pageMainHeading">
+          {title ?? '-'}
+        </Heading>
       </div>
-      <Helmet onChangeClientState={onHelmetChange} />
     </>
   );
 };
