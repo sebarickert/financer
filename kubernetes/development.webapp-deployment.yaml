@@ -41,6 +41,18 @@ spec:
           env:
             - name: PUBLIC_URL
               value: https://financer-dev.silte.fi
+          livenessProbe:
+            httpGet:
+              path: /health-check/ping
+              port: 4000
+            initialDelaySeconds: 15
+            periodSeconds: 60
+          readinessProbe:
+            httpGet:
+              path: /health-check/ping
+              port: 4000
+            initialDelaySeconds: 5
+            periodSeconds: 10
 ---
 apiVersion: v1
 kind: Service
