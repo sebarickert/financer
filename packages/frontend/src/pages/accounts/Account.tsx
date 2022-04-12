@@ -50,44 +50,41 @@ export const Account = (): JSX.Element => {
 
   useEffect(() => {
     if (!rawTransactions) return;
+
     setTransactions(
-      rawTransactions
-        .map(
-          ({
-            date: dateRaw,
-            fromAccount,
-            toAccount,
-            description = 'Unknown',
-            amount,
-            _id,
-          }): ITransactionStackedListRowProps => {
-            const date = new Date(dateRaw);
-            const transactionType = getTransactionType(toAccount, fromAccount);
+      rawTransactions.map(
+        ({
+          date: dateRaw,
+          fromAccount,
+          toAccount,
+          description = 'Unknown',
+          amount,
+          _id,
+        }): ITransactionStackedListRowProps => {
+          const date = new Date(dateRaw);
+          const transactionType = getTransactionType(toAccount, fromAccount);
 
-            const categoryMappings = transactionCategoryMappings
-              ?.filter(({ transaction_id }) => transaction_id === _id)
-              .map(
-                ({ category_id }) =>
-                  transactionCategories.find(
-                    ({ _id: categoryId }) => category_id === categoryId
-                  )?.name
-              )
-              .filter((categoryName) => typeof categoryName !== 'undefined');
+          const categoryMappings = transactionCategoryMappings
+            ?.filter(({ transaction_id }) => transaction_id === _id)
+            .map(
+              ({ category_id }) =>
+                transactionCategories.find(
+                  ({ _id: categoryId }) => category_id === categoryId
+                )?.name
+            )
+            .filter((categoryName) => typeof categoryName !== 'undefined');
 
-            return {
-              transactionCategories: categoryMappings.join(', '),
-              transactionAmount: formatCurrency(amount),
-              date: formatDate(date),
-              label: description,
-              link: `/statistics/${mapTransactionTypeToUrlPrefix[transactionType]}/${_id}`,
-              transactionType,
-              id: _id,
-            } as ITransactionStackedListRowProps;
-          }
-        )
-        .sort((a, b) =>
-          new Date(b.date).getTime() > new Date(a.date).getTime() ? 1 : -1
-        )
+          return {
+            transactionCategories: categoryMappings.join(', '),
+            transactionAmount: formatCurrency(amount),
+            date: formatDate(date),
+            label: description,
+            link: `/statistics/${mapTransactionTypeToUrlPrefix[transactionType]}/${_id}`,
+            transactionType,
+            id: _id,
+          } as ITransactionStackedListRowProps;
+        }
+      )
     );
   }, [id, rawTransactions, transactionCategories, transactionCategoryMappings]);
 

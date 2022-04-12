@@ -1,5 +1,4 @@
-import { TransactionDto } from '@local/types';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useAllTransactions } from '../../hooks/transaction/useAllTransactions';
 import { useAllTransactionCategories } from '../../hooks/transactionCategories/useAllTransactionCategories';
@@ -24,62 +23,49 @@ export const DashboardLatestTransactions = ({
   const [visibleTransactions, setVisibleTransactions] = useState<
     ITransactionStackedListRowProps[] | null
   >(null);
-  const transactionsRaw = useAllTransactions();
-  const [transactions, setTransactions] = useState<TransactionDto[] | null>(
-    null
-  );
+  const transactions = useAllTransactions();
   const transactionCategoryMappings = useAllTransactionCategoryMappings();
   const transactionCategories = useAllTransactionCategories();
-
-  useEffect(() => {
-    if (transactionsRaw === null) return;
-
-    setTransactions(
-      transactionsRaw
-        .sort(({ date: dateA }, { date: dateB }) => {
-          return new Date(dateB).getTime() - new Date(dateA).getTime();
-        })
-        .slice(0, 5)
-    );
-  }, [transactionsRaw]);
 
   useEffect(() => {
     if (transactions === null) return;
 
     setVisibleTransactions(
-      transactions.map<ITransactionStackedListRowProps>(
-        ({
-          amount,
-          _id,
-          description,
-          date: dateRaw,
-          toAccount,
-          fromAccount,
-        }) => {
-          const date = new Date(dateRaw);
-          const transactionType = getTransactionType(toAccount, fromAccount);
+      transactions
+        .slice(0, 5)
+        .map<ITransactionStackedListRowProps>(
+          ({
+            amount,
+            _id,
+            description,
+            date: dateRaw,
+            toAccount,
+            fromAccount,
+          }) => {
+            const date = new Date(dateRaw);
+            const transactionType = getTransactionType(toAccount, fromAccount);
 
-          const categoryMappings = transactionCategoryMappings
-            ?.filter(({ transaction_id }) => transaction_id === _id)
-            .map(
-              ({ category_id }) =>
-                transactionCategories.find(
-                  ({ _id: categoryId }) => category_id === categoryId
-                )?.name
-            )
-            .filter((categoryName) => typeof categoryName !== 'undefined');
+            const categoryMappings = transactionCategoryMappings
+              ?.filter(({ transaction_id }) => transaction_id === _id)
+              .map(
+                ({ category_id }) =>
+                  transactionCategories.find(
+                    ({ _id: categoryId }) => category_id === categoryId
+                  )?.name
+              )
+              .filter((categoryName) => typeof categoryName !== 'undefined');
 
-          return {
-            transactionCategories: categoryMappings.join(', '),
-            transactionAmount: formatCurrency(amount),
-            date: formatDate(date),
-            label: description,
-            link: `/statistics/${mapTransactionTypeToUrlPrefix[transactionType]}/${_id}`,
-            transactionType,
-            id: _id,
-          } as ITransactionStackedListRowProps;
-        }
-      )
+            return {
+              transactionCategories: categoryMappings.join(', '),
+              transactionAmount: formatCurrency(amount),
+              date: formatDate(date),
+              label: description,
+              link: `/statistics/${mapTransactionTypeToUrlPrefix[transactionType]}/${_id}`,
+              transactionType,
+              id: _id,
+            } as ITransactionStackedListRowProps;
+          }
+        )
     );
   }, [transactions, transactionCategoryMappings, transactionCategories]);
 
