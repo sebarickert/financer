@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 
-import { Heading } from '../../../../components/heading/heading';
 import { Input } from '../../../../components/input/input';
 import { ModalCustom } from '../../../../components/modal/custom/modal.custom';
 import { Select } from '../../../../components/select/select';
@@ -54,9 +53,6 @@ export const UserDefaultMarketUpdateSettings = (): JSX.Element => {
         title="Market update settings"
         backLink={'/profile/user-preferences'}
       />
-      <Heading variant="h1" className="mb-4 lg:mb-6">
-        Market update settings
-      </Heading>
       <ModalCustom
         modalOpenButtonLabel="Set default market value update settings "
         onConfirm={handleSave}

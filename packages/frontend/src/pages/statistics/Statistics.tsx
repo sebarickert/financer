@@ -187,9 +187,6 @@ export const Statistics = (): JSX.Element => {
   ) : (
     <>
       <UpdatePageInfo title="Statistics" />
-      <Heading variant="h1" className="mb-4 lg:mb-6">
-        Statistics
-      </Heading>
       <div className="grid grid-cols-[1fr,auto] gap-4 items-end justify-between bg-white mb-4">
         <Heading>{`${pageVisibleMonth}, ${pageVisibleYear}`}</Heading>
         <Dropdown

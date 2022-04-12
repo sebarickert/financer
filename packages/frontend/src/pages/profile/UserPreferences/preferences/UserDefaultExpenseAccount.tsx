@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-import { Heading } from '../../../../components/heading/heading';
 import { Loader } from '../../../../components/loader/loader';
 import { ModalCustom } from '../../../../components/modal/custom/modal.custom';
 import { Select } from '../../../../components/select/select';
@@ -30,9 +29,6 @@ export const UserDefaultExpenseAccount = (): JSX.Element => {
         title="Default expense account"
         backLink={'/profile/user-preferences'}
       />
-      <Heading variant="h1" className="mb-4 lg:mb-6">
-        Default expense account
-      </Heading>
       <ModalCustom
         modalOpenButtonLabel="Set default expense account"
         onConfirm={handleSave}

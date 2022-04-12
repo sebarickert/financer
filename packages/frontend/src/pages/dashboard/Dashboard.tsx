@@ -12,9 +12,6 @@ export const Dashboard = (): JSX.Element => {
   return (
     <>
       <UpdatePageInfo title="Dashboard" />
-      <Heading variant="h1" className="mb-4 lg:mb-6">
-        Dashboard
-      </Heading>
       <section className="grid">
         <section className="grid md:grid-cols-[40%,1fr] gap-4 md:auto-rows-[fit-content(0)]">
           <section className="grid gap-4 md:self-baseline">

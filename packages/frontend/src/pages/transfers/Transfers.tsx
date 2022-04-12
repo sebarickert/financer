@@ -16,9 +16,6 @@ export const Transfers = (): JSX.Element => {
     <>
       <UpdatePageInfo title="Transfers" />
       <section className="mb-8">
-        <Heading variant="h1" className="mb-6">
-          Transfers
-        </Heading>
         <QuickLinksItem
           title="Add transfer"
           link="/statistics/transfers/add"

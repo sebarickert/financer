@@ -3,6 +3,7 @@ import { NavLink, Outlet } from 'react-router-dom';
 
 import { ReactComponent as Logo } from '../../assets/logo.svg';
 import { Container } from '../container/container';
+import { DesktopHeader } from '../desktop-header/desktop-header';
 import { DesktopNavigation } from '../desktop-navigation/desktop-navigation';
 import { MobileHeader } from '../mobile-header/mobile-header';
 import { MobileNavigation } from '../mobile-navigation/mobile-navigation';
@@ -52,6 +53,7 @@ export const Layout = (): JSX.Element => {
           </aside>
           <main>
             <div className="px-8 py-12">
+              <DesktopHeader />
               <Outlet />
             </div>
           </main>
