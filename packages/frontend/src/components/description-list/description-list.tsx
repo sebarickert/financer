@@ -1,33 +1,35 @@
 import React from 'react';
 
+import { IconName } from '../icon/icon';
+
 import { DescriptionListBody } from './description-list.body';
 import { DescriptionListHeader } from './description-list.header';
 
 interface IDescriptionListProps {
   label: string;
   className?: string;
-  children: React.ReactNode;
+  children: React.ReactNode | React.ReactNode[];
   testId?: string;
-  visibleLabel?: boolean;
+  icon?: IconName;
 }
 
 export const DescriptionList = ({
+  icon,
   label,
   className = '',
   children,
   testId,
-  visibleLabel = false,
 }: IDescriptionListProps): JSX.Element => {
   return (
-    <div className={`${className}`} data-testid={testId}>
+    <section className={`${className}`} data-testid={testId}>
       <DescriptionListHeader
+        icon={icon}
         label={label}
-        visibleLabel={visibleLabel}
         testId={`${testId}_list-header`}
       />
       <DescriptionListBody testId={`${testId}_list-body`}>
         {children}
       </DescriptionListBody>
-    </div>
+    </section>
   );
 };

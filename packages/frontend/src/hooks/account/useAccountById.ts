@@ -20,7 +20,7 @@ export const useAccountById = (
       return;
     }
     setTargetAccount(accounts?.find(({ _id }) => _id === targetId));
-  }, [targetId, accounts, isLoading]);
+  }, [targetId, accounts, isLoading, targetAccount]);
 
   return [
     {

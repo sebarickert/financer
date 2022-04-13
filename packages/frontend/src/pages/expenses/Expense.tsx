@@ -1,13 +1,14 @@
+import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { Button } from '../../components/button/button';
 import { ButtonGroup } from '../../components/button/button.group';
 import { DescriptionList } from '../../components/description-list/description-list';
 import { DescriptionListItem } from '../../components/description-list/description-list.item';
-import { Icon } from '../../components/icon/icon';
 import { Loader } from '../../components/loader/loader';
 import { ModalConfirm } from '../../components/modal/confirm/modal.confirm';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
+import { useAccountById } from '../../hooks/account/useAccountById';
 import { useDeleteExpense } from '../../hooks/expense/useDeleteExpense';
 import { useExpenseById } from '../../hooks/expense/useExpenseById';
 import { useAllTransactionCategoriesWithCategoryTree } from '../../hooks/transactionCategories/useAllTransactionCategories';
@@ -37,10 +38,19 @@ export const Expense = (): JSX.Element => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const [expense] = useExpenseById(id);
+  const [{ data: account }, setTargetAccountId] = useAccountById(
+    expense?.fromAccount
+  );
   const [transactionCategoryMapping] =
     useTransactionCategoryMappingsByTransactionId(id);
   const transactionCategories = useAllTransactionCategoriesWithCategoryTree();
   const deleteExpense = useDeleteExpense();
+
+  useEffect(() => {
+    if (!expense?.fromAccount) return;
+
+    setTargetAccountId(expense.fromAccount);
+  }, [expense, setTargetAccountId]);
 
   const getCategoryNameById = (categoryId: string) =>
     transactionCategories?.find((category) => category._id === categoryId)
@@ -63,44 +73,32 @@ export const Expense = (): JSX.Element => {
         title={`${expense.description}`}
         backLink="/statistics/expenses"
       />
-      <section className="bg-gray-25 border divide-y rounded-lg sm:grid sm:divide-y-0 sm:divide-x">
-        <div className="p-6">
-          <header className="flex items-center mb-6">
-            <span className="inline-flex p-3 text-white bg-red-600 rounded-lg">
-              <Icon type="download" />
-            </span>
-            <h1 className="ml-4 text-2xl font-bold tracking-tighter sm:text-3xl">
-              {expense.description}
-            </h1>
-          </header>
-          <DescriptionList label="Transaction details">
-            <DescriptionListItem label="Amount">
-              {formatCurrency(expense.amount)}
-            </DescriptionListItem>
-            <DescriptionListItem label="Date">
-              {formatDate(new Date(expense.date))}
-            </DescriptionListItem>
-          </DescriptionList>
-          {transactionCategoryMapping.length > 0 && (
-            <DescriptionList
-              label="Categories"
-              className="mt-6"
-              visibleLabel
-              testId="categories-wrapper"
-            >
-              {transactionCategoryMapping?.map(({ amount, category_id }) => (
-                <DescriptionListItem
-                  label={getCategoryNameById(category_id)}
-                  testId="category-row"
-                >
-                  {formatCurrency(amount)}
-                </DescriptionListItem>
-              ))}
-            </DescriptionList>
-          )}
-        </div>
-      </section>
-      <ButtonGroup className="mt-6">
+      <DescriptionList label="Details of expense" className="mb-6">
+        <DescriptionListItem label="Amount">
+          {formatCurrency(expense.amount)}
+        </DescriptionListItem>
+        <DescriptionListItem label="Date">
+          {formatDate(new Date(expense.date))}
+        </DescriptionListItem>
+        <DescriptionListItem label="From account">
+          {account?.name ?? '-'}
+        </DescriptionListItem>
+      </DescriptionList>
+      {transactionCategoryMapping.length > 0 && (
+        <DescriptionList label="Categories">
+          {transactionCategoryMapping?.map(({ amount, category_id }) => (
+            <>
+              <DescriptionListItem label="Category">
+                {getCategoryNameById(category_id)}
+              </DescriptionListItem>
+              <DescriptionListItem label="Amount">
+                {formatCurrency(amount)}
+              </DescriptionListItem>
+            </>
+          ))}
+        </DescriptionList>
+      )}
+      <ButtonGroup className="mt-8">
         <Button
           link={`/statistics/expenses/${id}/edit`}
           testId="edit-expense-button"

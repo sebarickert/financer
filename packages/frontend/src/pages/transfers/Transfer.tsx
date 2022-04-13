@@ -1,13 +1,14 @@
+import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { Button } from '../../components/button/button';
 import { ButtonGroup } from '../../components/button/button.group';
 import { DescriptionList } from '../../components/description-list/description-list';
 import { DescriptionListItem } from '../../components/description-list/description-list.item';
-import { Icon } from '../../components/icon/icon';
 import { Loader } from '../../components/loader/loader';
 import { ModalConfirm } from '../../components/modal/confirm/modal.confirm';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
+import { useAccountById } from '../../hooks/account/useAccountById';
 import { useAllTransactionCategoriesWithCategoryTree } from '../../hooks/transactionCategories/useAllTransactionCategories';
 import { useTransactionCategoryMappingsByTransactionId } from '../../hooks/transactionCategoryMapping/useTransactionCategoryMappingsByTransactionId';
 import { useDeleteTransfer } from '../../hooks/transfer/useDeleteTransfer';
@@ -42,6 +43,13 @@ export const Transfer = (): JSX.Element => {
   const [transfer] = useTransferById(id);
   const deleteTransfer = useDeleteTransfer();
 
+  const [{ data: fromAccount }, setTargetFromAccountId] = useAccountById(
+    transfer?.fromAccount
+  );
+  const [{ data: toAccount }, setTargetToAccountId] = useAccountById(
+    transfer?.toAccount
+  );
+
   const getCategoryNameById = (categoryId: string) =>
     transactionCategories?.find((category) => category._id === categoryId)
       ?.categoryTree || categoryId;
@@ -55,6 +63,13 @@ export const Transfer = (): JSX.Element => {
     navigate('/statistics/transfers');
   };
 
+  useEffect(() => {
+    if (!transfer?.fromAccount || !transfer?.toAccount) return;
+
+    setTargetFromAccountId(transfer.fromAccount);
+    setTargetToAccountId(transfer.toAccount);
+  }, [transfer, setTargetFromAccountId, setTargetToAccountId]);
+
   return !transfer || !transactionCategoryMapping || !transactionCategories ? (
     <Loader loaderColor="blue" />
   ) : (
@@ -63,44 +78,35 @@ export const Transfer = (): JSX.Element => {
         title={`${transfer.description}`}
         backLink="/statistics/transfers"
       />
-      <section className="bg-gray-25 border divide-y rounded-lg sm:grid sm:divide-y-0 sm:divide-x">
-        <div className="p-6">
-          <header className="flex items-center mb-6">
-            <span className="inline-flex p-3 text-white rounded-lg bg-blue-financer">
-              <Icon type="switch-horizontal" />
-            </span>
-            <h1 className="ml-4 text-2xl font-bold tracking-tighter sm:text-3xl">
-              {transfer.description}
-            </h1>
-          </header>
-          <DescriptionList label="Transaction details">
-            <DescriptionListItem label="Amount">
-              {formatCurrency(transfer.amount)}
-            </DescriptionListItem>
-            <DescriptionListItem label="Date">
-              {formatDate(new Date(transfer.date))}
-            </DescriptionListItem>
-          </DescriptionList>
-          {transactionCategoryMapping.length > 0 && (
-            <DescriptionList
-              label="Categories"
-              className="mt-6"
-              visibleLabel
-              testId="categories-wrapper"
-            >
-              {transactionCategoryMapping?.map(({ amount, category_id }) => (
-                <DescriptionListItem
-                  label={getCategoryNameById(category_id)}
-                  testId="category-row"
-                >
-                  {formatCurrency(amount)}
-                </DescriptionListItem>
-              ))}
-            </DescriptionList>
-          )}
-        </div>
-      </section>
-      <ButtonGroup className="mt-6">
+      <DescriptionList label="Details of transfer" className="mb-6">
+        <DescriptionListItem label="Amount">
+          {formatCurrency(transfer.amount)}
+        </DescriptionListItem>
+        <DescriptionListItem label="Date">
+          {formatDate(new Date(transfer.date))}
+        </DescriptionListItem>
+        <DescriptionListItem label="From account">
+          {fromAccount?.name ?? '-'}
+        </DescriptionListItem>
+        <DescriptionListItem label="To account">
+          {toAccount?.name ?? '-'}
+        </DescriptionListItem>
+      </DescriptionList>
+      {transactionCategoryMapping.length > 0 && (
+        <DescriptionList label="Categories">
+          {transactionCategoryMapping?.map(({ amount, category_id }) => (
+            <>
+              <DescriptionListItem label="Category">
+                {getCategoryNameById(category_id)}
+              </DescriptionListItem>
+              <DescriptionListItem label="Amount">
+                {formatCurrency(amount)}
+              </DescriptionListItem>
+            </>
+          ))}
+        </DescriptionList>
+      )}
+      <ButtonGroup className="mt-8">
         <Button
           link={`/statistics/transfers/${id}/edit`}
           testId="edit-transfer-button"
