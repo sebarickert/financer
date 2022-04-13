@@ -1,4 +1,4 @@
-import { ITransactionCategory } from '@local/types';
+import { TransactionCategoryDto } from '@local/types';
 import { useState, useEffect } from 'react';
 import { useQuery } from 'react-query';
 
@@ -8,7 +8,7 @@ import {
   parseParentCategoryPath,
 } from '../../services/TransactionCategoriesService';
 
-export const useAllTransactionCategories = (): ITransactionCategory[] => {
+export const useAllTransactionCategories = (): TransactionCategoryDto[] => {
   const transactionCategoriesQuery = useQuery(
     'transactionCategories',
     getAllTransactionCategories,

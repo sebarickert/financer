@@ -1,4 +1,4 @@
-import { ITransactionCategory } from '@local/types';
+import { UpdateTransactionCategoryDto } from '@local/types';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -43,15 +43,15 @@ export const EditTransactionCategory = (): JSX.Element => {
   const editTransactionCategory = useEditTransactionCategory();
 
   const handleSubmit = async (
-    newTransactionCategoryData: ITransactionCategory
+    newTransactionCategoryData: UpdateTransactionCategoryDto
   ) => {
-    /* eslint-disable no-param-reassign */
-    newTransactionCategoryData.owner = transactionCategory?.owner;
-    newTransactionCategoryData._id = transactionCategory?._id;
-    /* eslint-enable no-param-reassign */
+    if (!transactionCategory?._id) {
+      console.error('transactionCategory is not defined');
+      return;
+    }
     try {
       const newTransactionCategory = await editTransactionCategory(
-        newTransactionCategoryData._id,
+        transactionCategory._id,
         newTransactionCategoryData
       );
 

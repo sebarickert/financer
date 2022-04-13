@@ -1,4 +1,4 @@
-import { ITransactionCategory, VisibilityType } from '@local/types';
+import { TransactionCategoryDto, VisibilityType } from '@local/types';
 import { useState, useEffect } from 'react';
 
 import { ITransactionCategoryWithCategoryTree } from '../../services/TransactionCategoriesService';
@@ -9,9 +9,9 @@ import {
 } from './useAllTransactionCategories';
 
 export const useAllTransactionCategoriesForIncome =
-  (): ITransactionCategory[] => {
+  (): TransactionCategoryDto[] => {
     const [incomeCategories, setIncomeCategories] = useState<
-      ITransactionCategory[]
+      TransactionCategoryDto[]
     >([]);
     const allTransactionCategories = useAllTransactionCategories();
 

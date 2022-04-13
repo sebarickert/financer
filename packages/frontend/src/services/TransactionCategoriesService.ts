@@ -1,14 +1,19 @@
-import { ApiResponse, ITransactionCategory } from '@local/types';
+import {
+  ApiResponse,
+  CreateTransactionCategoryDto,
+  TransactionCategoryDto,
+  UpdateTransactionCategoryDto,
+} from '@local/types';
 
 import { parseApiResponse } from '../utils/apiHelper';
 
 export interface ITransactionCategoryWithCategoryTree
-  extends ITransactionCategory {
+  extends TransactionCategoryDto {
   categoryTree: string;
 }
 
 export const parseParentCategoryPath = (
-  allCategories: ITransactionCategory[],
+  allCategories: TransactionCategoryDto[],
   categoryId: string
 ): string => {
   const targetCategory = allCategories.find(({ _id }) => _id === categoryId);
@@ -24,10 +29,10 @@ export const parseParentCategoryPath = (
 };
 
 export const getAllTransactionCategories = async (): Promise<
-  ITransactionCategory[]
+  TransactionCategoryDto[]
 > => {
   const transactionCategories = await fetch('/api/transaction-categories');
-  return (await transactionCategories.json()) as ITransactionCategory[];
+  return (await transactionCategories.json()) as TransactionCategoryDto[];
 };
 
 export const getAllTransactionCategoriesWithCategoryTree = async (): Promise<
@@ -35,7 +40,7 @@ export const getAllTransactionCategoriesWithCategoryTree = async (): Promise<
 > => {
   const transactionCategoriesRaw = await fetch('/api/transaction-categories');
   const transactionCategories =
-    (await transactionCategoriesRaw.json()) as ITransactionCategory[];
+    (await transactionCategoriesRaw.json()) as TransactionCategoryDto[];
 
   return transactionCategories
     .map((transactionCategory) => ({
@@ -57,14 +62,14 @@ export const getAllTransactionCategoriesWithCategoryTree = async (): Promise<
 
 export const getTransactionCategoryById = async (
   id: string
-): Promise<ITransactionCategory> => {
+): Promise<TransactionCategoryDto> => {
   const transactionCategory = await fetch(`/api/transaction-categories/${id}`);
   return transactionCategory.json();
 };
 
 export const addTransactionCategory = async (
-  newTransactionCategoryData: ITransactionCategory
-): Promise<ApiResponse<ITransactionCategory>> => {
+  newTransactionCategoryData: CreateTransactionCategoryDto
+): Promise<ApiResponse<TransactionCategoryDto>> => {
   const newTransactionCategory = await fetch('/api/transaction-categories', {
     method: 'POST',
     headers: {
@@ -79,8 +84,8 @@ export const addTransactionCategory = async (
 
 export const editTransactionCategory = async (
   id: string,
-  targetTransactionCategoryData: ITransactionCategory
-): Promise<ApiResponse<ITransactionCategory>> => {
+  targetTransactionCategoryData: UpdateTransactionCategoryDto
+): Promise<ApiResponse<TransactionCategoryDto>> => {
   const targetTransactionCategory = await fetch(
     `/api/transaction-categories/${id}`,
     {
