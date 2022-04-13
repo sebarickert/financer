@@ -21,7 +21,7 @@ export class CreateTransferDto extends SharedCreateTransferDto<
   @Transform(objectIdTransformer)
   fromAccount: ObjectId;
 
-  @IsInstanceOfObjectId({ message: 'fromAccount must not be empty.' })
+  @IsInstanceOfObjectId({ message: 'toAccount must not be empty.' })
   @Transform(objectIdTransformer)
   readonly toAccount: ObjectId;
 
