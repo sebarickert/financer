@@ -85,7 +85,7 @@ export const Income = (): JSX.Element => {
         </DescriptionListItem>
       </DescriptionList>
       {transactionCategoryMapping.length > 0 && (
-        <DescriptionList label="Categories">
+        <DescriptionList label="Categories" testId="categories-wrapper">
           {transactionCategoryMapping?.map(({ amount, category_id }) => (
             <>
               <DescriptionListItem label="Category">
