@@ -1,4 +1,4 @@
-import { ITransactionCategoryMapping } from '@local/types';
+import { TransactionCategoryMappingDto } from '@local/types';
 import React from 'react';
 
 import { Button } from '../button/button';
@@ -13,7 +13,7 @@ interface ITransactionCategoriesFormItemProps {
   amountMaxValue: number;
   arrayIndex: number;
   categories: IOption[];
-  categoryMapping: ITransactionCategoryMapping | undefined;
+  categoryMapping: TransactionCategoryMappingDto | undefined;
   deleteTransactionCategoryItem(): void;
   setUnallocatedAmount(): void;
   setTransactionCategoryItemAmount(newValue: number): void;

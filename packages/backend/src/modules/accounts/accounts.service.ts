@@ -31,13 +31,13 @@ export class AccountsService {
 
   async create(
     userId: ObjectId,
-    createAccountDto: CreateAccountDto<ObjectId>,
+    createAccountDto: CreateAccountDto,
   ): Promise<AccountDocument> {
     return this.accountModel.create({ ...createAccountDto, owner: userId });
   }
 
   async createMany(
-    createAccountDto: CreateAccountDto<ObjectId>[],
+    createAccountDto: CreateAccountDto[],
   ): Promise<AccountDocument[]> {
     return this.accountModel.insertMany(createAccountDto);
   }
@@ -61,7 +61,7 @@ export class AccountsService {
   async update(
     userId: ObjectId,
     id: ObjectId,
-    updateAccountDto: UpdateAccountDto<ObjectId>,
+    updateAccountDto: UpdateAccountDto,
   ): Promise<AccountDocument> {
     const accountBeforeChange = await this.findOne(userId, id);
 

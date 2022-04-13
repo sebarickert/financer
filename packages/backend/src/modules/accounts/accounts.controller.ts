@@ -24,7 +24,7 @@ export class AccountsController {
   @Post()
   async create(
     @UserId() userId: ObjectId,
-    @Body() createAccountDto: CreateAccountDto<ObjectId>,
+    @Body() createAccountDto: CreateAccountDto,
   ) {
     return this.accountsService.create(userId, createAccountDto);
   }
@@ -46,7 +46,7 @@ export class AccountsController {
   async update(
     @UserId() userId: ObjectId,
     @Param('id', ValidateEntityId) id: ObjectId,
-    @Body() updateAccountDto: UpdateAccountDto<ObjectId>,
+    @Body() updateAccountDto: UpdateAccountDto,
   ) {
     return this.accountsService.update(userId, id, updateAccountDto);
   }

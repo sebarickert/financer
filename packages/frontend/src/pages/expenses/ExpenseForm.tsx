@@ -1,4 +1,8 @@
-import { IExpense, ITransactionCategoryMapping } from '@local/types';
+import {
+  CreateExpenseDto,
+  CreateTransactionCategoryMappingDtoWithoutTransaction,
+  TransactionCategoryMappingDto,
+} from '@local/types';
 import { ChangeEvent, useEffect, useState } from 'react';
 
 import { Alert } from '../../components/alert/alert';
@@ -19,11 +23,11 @@ interface IExpenseFormProps {
   errors: string[];
   fromAccount?: string;
   onSubmit(
-    account: IExpense,
-    transactionCategoryMappings: ITransactionCategoryMapping[]
+    account: CreateExpenseDto,
+    transactionCategoryMappings: CreateTransactionCategoryMappingDtoWithoutTransaction[]
   ): void;
   submitLabel: string;
-  transactionCategoryMapping?: ITransactionCategoryMapping[] | null;
+  transactionCategoryMapping?: TransactionCategoryMappingDto[] | null;
 }
 
 export const ExpenseForm = ({
@@ -132,14 +136,14 @@ export const ExpenseForm = ({
       fromAccount: newFromAccount,
     } = event.target;
 
-    const newExpenseData: IExpense = {
+    const newExpenseData: CreateExpenseDto = {
       fromAccount: newFromAccount.value,
       amount: parseFloat((newAmount.value as string).replace(',', '.')),
       description: newDescription.value,
       date: newDate.value ? new Date(newDate.value) : newDate.value,
     };
 
-    const transactionCategoryMappings: ITransactionCategoryMapping[] =
+    const transactionCategoryMappings: CreateTransactionCategoryMappingDtoWithoutTransaction[] =
       Object.keys(categoryAmount).map((item) => {
         const newTransactionCategories =
           event.target[`transactionCategory[${item}]category`];

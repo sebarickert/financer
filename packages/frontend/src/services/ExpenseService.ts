@@ -1,20 +1,25 @@
-import { ApiResponse, IExpense } from '@local/types';
+import {
+  ApiResponse,
+  CreateExpenseDto,
+  ExpenseDto,
+  UpdateExpenseDto,
+} from '@local/types';
 
 import { parseApiResponse } from '../utils/apiHelper';
 
-export const getAllExpenses = async (): Promise<IExpense[]> => {
+export const getAllExpenses = async (): Promise<ExpenseDto[]> => {
   const expenses = await fetch('/api/expenses');
   return expenses.json();
 };
 
-export const getExpenseById = async (id: string): Promise<IExpense> => {
+export const getExpenseById = async (id: string): Promise<ExpenseDto> => {
   const expense = await fetch(`/api/expenses/${id}`);
   return expense.json();
 };
 
 export const addExpense = async (
-  newExpenseData: IExpense
-): Promise<ApiResponse<IExpense>> => {
+  newExpenseData: CreateExpenseDto
+): Promise<ApiResponse<ExpenseDto>> => {
   const newExpense = await fetch('/api/expenses', {
     method: 'POST',
     headers: {
@@ -28,9 +33,9 @@ export const addExpense = async (
 };
 
 export const updateExpense = async (
-  targetExpense: IExpense,
+  targetExpense: UpdateExpenseDto,
   id: string
-): Promise<ApiResponse<IExpense>> => {
+): Promise<ApiResponse<ExpenseDto>> => {
   const updatedExpense = await fetch(`/api/expenses/${id}`, {
     method: 'PATCH',
     headers: {

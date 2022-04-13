@@ -1,4 +1,4 @@
-import { ITransactionCategoryMapping } from '@local/types/src/transaction-category-mapping';
+import { CreateTransactionCategoryMappingDtoWithoutTransaction } from '@local/types';
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -120,12 +120,13 @@ export const Account = (): JSX.Element => {
       marketSettings?.transactionDescription ?? 'Market value change';
     const marketValueChangeAmount = newMarketValue - account.balance;
 
-    const mappedCategory: ITransactionCategoryMapping = {
-      amount: Math.abs(marketValueChangeAmount),
-      description: transactionDescription,
-      category_id:
-        marketSettings?.category !== undefined ? marketSettings.category : '',
-    };
+    const mappedCategory: CreateTransactionCategoryMappingDtoWithoutTransaction =
+      {
+        amount: Math.abs(marketValueChangeAmount),
+        description: transactionDescription,
+        category_id:
+          marketSettings?.category !== undefined ? marketSettings.category : '',
+      };
 
     if (marketValueChangeAmount > 0) {
       try {

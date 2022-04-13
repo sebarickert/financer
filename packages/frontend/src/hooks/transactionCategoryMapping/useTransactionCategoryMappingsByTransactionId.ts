@@ -1,4 +1,4 @@
-import { ITransactionCategoryMapping } from '@local/types';
+import { TransactionCategoryMappingDto } from '@local/types';
 import { useState, useEffect } from 'react';
 
 import { useAllTransactionCategoryMappings } from './useAllTransactionCategoryMappings';
@@ -6,14 +6,14 @@ import { useAllTransactionCategoryMappings } from './useAllTransactionCategoryMa
 export const useTransactionCategoryMappingsByTransactionId = (
   id: string | null = null
 ): [
-  ITransactionCategoryMapping[] | null,
+  TransactionCategoryMappingDto[] | null,
   React.Dispatch<React.SetStateAction<string | null>>
 ] => {
   const [targetId, setTargetId] = useState(id);
   const [
     targetTransactionCategoryMappings,
     setTargetTransactionCategoryMappings,
-  ] = useState<ITransactionCategoryMapping[] | null>(null);
+  ] = useState<TransactionCategoryMappingDto[] | null>(null);
   const transactionCategoryMappings = useAllTransactionCategoryMappings();
 
   useEffect(() => {
