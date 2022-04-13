@@ -1,12 +1,12 @@
-import { AccountDto, TransactionDto, IUser } from '@local/types';
+import { AccountDto, TransactionDto, UserDto } from '@local/types';
 
 export interface IOverrideProfileData {
   accounts: AccountDto[];
   transactions: TransactionDto[];
-  user: IUser;
+  user: UserDto;
 }
 
-export const getProfileInformation = async (): Promise<IUser> => {
+export const getProfileInformation = async (): Promise<UserDto> => {
   const profile = await fetch('/api/users/my-user');
   return profile.json();
 };

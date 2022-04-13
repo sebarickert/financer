@@ -1,11 +1,10 @@
-import { Role } from '@local/types';
-import { IsEnum, IsNotEmpty, IsOptional, IsMongoId } from 'class-validator';
+import { IsMongoId, IsNotEmpty, IsOptional, IsEnum } from 'class-validator';
 
-import { ObjectId } from '../../../types/objectId';
+import { Role } from './role';
 
-export class UserDto {
+export class UserDto<ObjectIdType = string> {
   @IsMongoId()
-  _id: ObjectId;
+  _id: ObjectIdType;
 
   @IsNotEmpty()
   name: string;
@@ -29,7 +28,7 @@ export class UserDto {
   @IsEnum(Role, {
     each: true,
     message: `Role must be one of followings: ${Object.values(Role).join(
-      ', ',
+      ', '
     )}.`,
   })
   roles: Role[];
