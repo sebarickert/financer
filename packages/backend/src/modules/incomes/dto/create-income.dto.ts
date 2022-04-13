@@ -12,7 +12,7 @@ export class CreateIncomeDto extends SharedCreateIncomeDto<
   ObjectId,
   CreateTransactionCategoryMappingDto
 > {
-  @IsInstanceOfObjectId({ message: 'fromAccount must not be empty.' })
+  @IsInstanceOfObjectId({ message: 'toAccount must not be empty.' })
   @Transform(objectIdTransformer)
   readonly toAccount: ObjectId;
 
