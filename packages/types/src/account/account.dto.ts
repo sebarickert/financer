@@ -8,9 +8,9 @@ import {
 
 import { AccountType } from './account-type';
 
-export class AccountDto<ObjectType = string> {
+export class AccountDto<ObjectIdType = string> {
   @IsMongoId()
-  readonly _id: ObjectType;
+  readonly _id: ObjectIdType;
 
   @IsNotEmpty({ message: 'Name must not be empty.' })
   @IsString()
@@ -26,5 +26,5 @@ export class AccountDto<ObjectType = string> {
   readonly balance: number;
 
   @IsMongoId()
-  readonly owner: ObjectType;
+  readonly owner: ObjectIdType;
 }
