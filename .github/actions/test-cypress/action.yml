@@ -17,6 +17,6 @@ runs:
         spec: cypress/integration/${{ inputs.cypress-spec-folder }}/**
         start: npm run start:ci --prefix ../../
         wait-on: "http://localhost:3000"
-        wait-on-timeout: 60
+        wait-on-timeout: 120
         headless: true
         config: video=false
