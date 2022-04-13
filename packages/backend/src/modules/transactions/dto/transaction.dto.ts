@@ -1,20 +1,11 @@
+import { TransactionDto as SharedTransactionDto } from '@local/types';
 import { Transform } from 'class-transformer';
-import {
-  IsDateString,
-  IsMongoId,
-  IsNotEmpty,
-  IsString,
-  Min,
-} from 'class-validator';
 
 import { ObjectId } from '../../../types/objectId';
 import { IsInstanceOfObjectId } from '../../../utils/is-instance-of-object-id.decorator';
 import { objectIdTransformer } from '../../../utils/object-id-transformer';
 
-export class TransactionDto {
-  @IsMongoId()
-  readonly _id: ObjectId;
-
+export class TransactionDto extends SharedTransactionDto<ObjectId> {
   @IsInstanceOfObjectId({ message: 'fromAccount must not be empty.' })
   @Transform(objectIdTransformer)
   readonly fromAccount: ObjectId;
@@ -22,17 +13,4 @@ export class TransactionDto {
   @IsInstanceOfObjectId({ message: 'toAccount must not be empty.' })
   @Transform(objectIdTransformer)
   readonly toAccount: ObjectId;
-
-  @Min(0.01, { message: 'Amount must be a positive number.' })
-  readonly amount: number;
-
-  @IsNotEmpty({ message: 'Description must not be empty.' })
-  @IsString()
-  readonly description: string;
-
-  @IsDateString({}, { message: 'Date must not be empty.' })
-  readonly date: Date;
-
-  @IsMongoId()
-  readonly user: ObjectId;
 }

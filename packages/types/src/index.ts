@@ -5,5 +5,6 @@ export * from './expense';
 export * from './income';
 export * from './transaction-category-mapping';
 export * from './transaction-category';
-export * from './transaction';
+export * from './transfer';
+export * from './transaction.dto';
 export * from './user';

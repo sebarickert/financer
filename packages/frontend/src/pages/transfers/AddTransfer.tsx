@@ -1,4 +1,4 @@
-import { ITransaction, TransactionCategoryMappingDto } from '@local/types';
+import { CreateTransferDto, TransactionCategoryMappingDto } from '@local/types';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -19,7 +19,7 @@ export const AddTransfer = (): JSX.Element => {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = async (
-    newTransfer: ITransaction,
+    newTransfer: CreateTransferDto,
     transactionCategoryMappings: TransactionCategoryMappingDto[]
   ) => {
     try {

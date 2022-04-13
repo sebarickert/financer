@@ -1,4 +1,4 @@
-import { ITransaction, TransactionCategoryMappingDto } from '@local/types';
+import { TransactionCategoryMappingDto, UpdateTransferDto } from '@local/types';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -22,7 +22,7 @@ export const EditTransfer = (): JSX.Element => {
   const editTransaction = useEditTransfer();
 
   const handleSubmit = async (
-    targetTransferData: ITransaction,
+    targetTransferData: UpdateTransferDto,
     transactionCategoryMappings: TransactionCategoryMappingDto[]
   ) => {
     if (!id) {

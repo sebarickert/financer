@@ -1,4 +1,4 @@
-import { ITransaction } from '@local/types';
+import { UpdateTransferDto } from '@local/types';
 import { useCallback } from 'react';
 import { useQueryClient } from 'react-query';
 
@@ -8,7 +8,7 @@ export const useEditTransfer = () => {
   const queryClient = useQueryClient();
 
   return useCallback(
-    async (targetTransactionData: ITransaction, id: string) => {
+    async (targetTransactionData: UpdateTransferDto, id: string) => {
       const editedTransaction = await updateTransfer(targetTransactionData, id);
       queryClient.invalidateQueries('transfers');
       queryClient.invalidateQueries('transactions');

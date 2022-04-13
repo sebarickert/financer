@@ -1,6 +1,6 @@
-import { ITransaction } from '@local/types';
+import { TransactionDto } from '@local/types';
 
-export const getAllTransactions = async (): Promise<ITransaction[]> => {
+export const getAllTransactions = async (): Promise<TransactionDto[]> => {
   const transactions = await fetch('/api/transactions', {
     headers: {
       Accept: 'application/json',
@@ -13,7 +13,7 @@ export const getAllTransactions = async (): Promise<ITransaction[]> => {
 
 export const getTransactionsByAccountId = async (
   id: string
-): Promise<ITransaction[]> => {
+): Promise<TransactionDto[]> => {
   const transactions = await fetch(`/api/transactions/account/${id}`);
   return transactions.json();
 };
