@@ -1,4 +1,4 @@
-import { IIncome, AccountType } from '@local/types';
+import { IncomeDto, AccountType } from '@local/types';
 import React, { useState, useEffect } from 'react';
 import { useQuery } from 'react-query';
 
@@ -13,7 +13,7 @@ import { useAllAccountsByType } from '../account/useAllAccounts';
 import { useAllTransactionCategories } from '../transactionCategories/useAllTransactionCategories';
 import { useAllTransactionCategoryMappings } from '../transactionCategoryMapping/useAllTransactionCategoryMappings';
 
-export const useAllIncomes = (): IIncome[] | null => {
+export const useAllIncomes = (): IncomeDto[] | null => {
   const incomesQuery = useQuery('incomes', getAllIncomes, {
     staleTime: 300000,
   });

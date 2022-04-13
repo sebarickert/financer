@@ -1,4 +1,4 @@
-import { IIncome, TransactionCategoryMappingDto } from '@local/types';
+import { CreateIncomeDto, TransactionCategoryMappingDto } from '@local/types';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -16,7 +16,7 @@ export const AddIncome = (): JSX.Element => {
   const [defaultIncomeAccount] = useUserDefaultIncomeAccount();
 
   const handleSubmit = async (
-    newIncomeData: IIncome,
+    newIncomeData: CreateIncomeDto,
     newTransactionCategoryMappingsData: TransactionCategoryMappingDto[]
   ) => {
     try {

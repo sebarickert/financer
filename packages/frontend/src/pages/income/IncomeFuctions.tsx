@@ -1,10 +1,10 @@
-import { IIncome } from '@local/types';
+import { IncomeDto } from '@local/types';
 
 import { ITransactionStackedListRowProps } from '../../components/transaction-stacked-list/transaction-stacked-list.row';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDate } from '../../utils/formatDate';
 
-export interface IIncomeWithCategories extends IIncome {
+export interface IIncomeWithCategories extends IncomeDto {
   categoryMappings: string[];
 }
 export interface IIncomesPerMonth {

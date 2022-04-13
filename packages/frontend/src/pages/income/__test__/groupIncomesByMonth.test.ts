@@ -7,7 +7,7 @@ const testData: IIncomeWithCategories[] = [
     description: 'asd',
     _id: '5fc7e34bdf7e9e067f57c829',
     amount: 10,
-    date: '2020-11-18T00:00:00.000Z',
+    date: new Date('2020-11-18T00:00:00.000Z'),
     user: '5fbd378ede5ab913b62a75f3',
   },
   {
@@ -16,7 +16,7 @@ const testData: IIncomeWithCategories[] = [
     description: 'asd',
     _id: '5fc7e351df7e9e067f57c82a',
     amount: 20,
-    date: '2020-12-02T00:00:00.000Z',
+    date: new Date('2020-12-02T00:00:00.000Z'),
     user: '5fbd378ede5ab913b62a75f3',
   },
   {
@@ -25,7 +25,7 @@ const testData: IIncomeWithCategories[] = [
     description: 'ad',
     _id: '5fc7e355df7e9e067f57c82b',
     amount: 30,
-    date: '2020-12-02T00:00:00.000Z',
+    date: new Date('2020-12-02T00:00:00.000Z'),
     user: '5fbd378ede5ab913b62a75f3',
   },
 ];

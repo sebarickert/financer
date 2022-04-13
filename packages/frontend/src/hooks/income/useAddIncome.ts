@@ -1,4 +1,4 @@
-import { IIncome } from '@local/types';
+import { CreateIncomeDto } from '@local/types';
 import { useCallback } from 'react';
 import { useQueryClient } from 'react-query';
 
@@ -8,7 +8,7 @@ export const useAddIncome = () => {
   const queryClient = useQueryClient();
 
   return useCallback(
-    async (newIncomeData: IIncome) => {
+    async (newIncomeData: CreateIncomeDto) => {
       const newIncome = await addIncome(newIncomeData);
       queryClient.invalidateQueries('incomes');
       queryClient.invalidateQueries('transactions');
