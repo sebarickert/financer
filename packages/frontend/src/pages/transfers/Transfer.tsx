@@ -96,10 +96,10 @@ export const Transfer = (): JSX.Element => {
         <DescriptionList label="Categories" testId="categories-wrapper">
           {transactionCategoryMapping?.map(({ amount, category_id }) => (
             <>
-              <DescriptionListItem label="Category">
+              <DescriptionListItem label="Category" testId="category_label">
                 {getCategoryNameById(category_id)}
               </DescriptionListItem>
-              <DescriptionListItem label="Amount">
+              <DescriptionListItem label="Amount" testId="category_amount">
                 {formatCurrency(amount)}
               </DescriptionListItem>
             </>

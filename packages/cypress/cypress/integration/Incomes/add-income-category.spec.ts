@@ -26,12 +26,12 @@ describe('Add income with category', () => {
       'contain.text',
       'Categories'
     );
-    cy.getById('category-row').should('have.length', 1);
-    cy.getById('category-row_label').should(
+    cy.getById('categories-wrapper_list-body').should('have.length', 1);
+    cy.getById('category_label').should(
       'contain.text',
       'Category for all types'
     );
-    cy.getById('category-row_content').should('contain.text', '50,00');
+    cy.getById('category_amount').should('contain.text', '50,00');
   });
 
   it('Verify selected category must exists', () => {
