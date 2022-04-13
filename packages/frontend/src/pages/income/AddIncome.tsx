@@ -1,4 +1,4 @@
-import { IIncome, ITransactionCategoryMapping } from '@local/types';
+import { IIncome, TransactionCategoryMappingDto } from '@local/types';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -17,7 +17,7 @@ export const AddIncome = (): JSX.Element => {
 
   const handleSubmit = async (
     newIncomeData: IIncome,
-    newTransactionCategoryMappingsData: ITransactionCategoryMapping[]
+    newTransactionCategoryMappingsData: TransactionCategoryMappingDto[]
   ) => {
     try {
       const newIncomeJson = await addIncome({

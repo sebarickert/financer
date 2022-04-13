@@ -1,4 +1,4 @@
-import { IExpense } from '@local/types';
+import { CreateExpenseDto } from '@local/types';
 import { useCallback } from 'react';
 import { useQueryClient } from 'react-query';
 
@@ -8,7 +8,7 @@ export const useAddExpense = () => {
   const queryClient = useQueryClient();
 
   return useCallback(
-    async (newExpenseData: IExpense) => {
+    async (newExpenseData: CreateExpenseDto) => {
       const newExpense = await addExpense(newExpenseData);
       queryClient.invalidateQueries('expenses');
       queryClient.invalidateQueries('transactions');

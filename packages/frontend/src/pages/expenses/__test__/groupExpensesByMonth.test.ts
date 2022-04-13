@@ -10,7 +10,7 @@ const testData: IExpenseWithCategories[] = [
     description: '123',
     _id: '5fc7ce00df7e9e067f57c826',
     amount: 10,
-    date: '2020-11-30T00:00:00.000Z',
+    date: new Date('2020-11-30T00:00:00.000Z'),
     user: '5fbd378ede5ab913b62a75f3',
   },
   {
@@ -19,7 +19,7 @@ const testData: IExpenseWithCategories[] = [
     description: '123',
     _id: '5fc7ce04df7e9e067f57c827',
     amount: 20,
-    date: '2020-12-02T00:00:00.000Z',
+    date: new Date('2020-12-02T00:00:00.000Z'),
     user: '5fbd378ede5ab913b62a75f3',
   },
   {
@@ -28,7 +28,7 @@ const testData: IExpenseWithCategories[] = [
     description: '123',
     _id: '5fc7ce09df7e9e067f57c828',
     amount: 30,
-    date: '2020-12-02T00:00:00.000Z',
+    date: new Date('2020-12-02T00:00:00.000Z'),
     user: '5fbd378ede5ab913b62a75f3',
   },
 ];

@@ -1,4 +1,8 @@
-import { ITransaction, ITransactionCategoryMapping } from '@local/types';
+import {
+  CreateTransactionCategoryMappingDtoWithoutTransaction,
+  ITransaction,
+  TransactionCategoryMappingDto,
+} from '@local/types';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 
 import { Alert } from '../../components/alert/alert';
@@ -21,10 +25,10 @@ interface ITransferFormProps {
   toAccount?: string;
   onSubmit(
     newTransfer: ITransaction,
-    transactionCategoryMappings: ITransactionCategoryMapping[]
+    transactionCategoryMappings: CreateTransactionCategoryMappingDtoWithoutTransaction[]
   ): void;
   submitLabel: string;
-  transactionCategoryMapping?: ITransactionCategoryMapping[] | null;
+  transactionCategoryMapping?: TransactionCategoryMappingDto[] | null;
 }
 
 export const TransferForm = ({
@@ -143,7 +147,7 @@ export const TransferForm = ({
       date: newDate.value ? new Date(newDate.value) : newDate.value,
     };
 
-    const transactionCategoryMappings: ITransactionCategoryMapping[] =
+    const transactionCategoryMappings: CreateTransactionCategoryMappingDtoWithoutTransaction[] =
       Object.keys(categoryAmount).map((item) => {
         const newTransactionCategories =
           event.target[`transactionCategory[${item}]category`];

@@ -1,13 +1,13 @@
-import { IExpense } from '@local/types';
+import { ExpenseDto } from '@local/types';
 import { useState, useEffect } from 'react';
 
 import { useAllExpenses } from './useAllExpenses';
 
 export const useExpenseById = (
   id: string | null = null
-): [IExpense | null, React.Dispatch<React.SetStateAction<string | null>>] => {
+): [ExpenseDto | null, React.Dispatch<React.SetStateAction<string | null>>] => {
   const [targetId, setTargetId] = useState(id);
-  const [targetExpense, setTargetExpense] = useState<IExpense | null>(null);
+  const [targetExpense, setTargetExpense] = useState<ExpenseDto | null>(null);
   const expenses = useAllExpenses();
 
   useEffect(() => {

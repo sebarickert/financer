@@ -1,4 +1,4 @@
-import { IExpense, ITransactionCategoryMapping } from '@local/types';
+import { CreateExpenseDto, TransactionCategoryMappingDto } from '@local/types';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -16,8 +16,8 @@ export const AddExpense = (): JSX.Element => {
   const [defaultExpenseAccount] = useUserDefaultExpenseAccount();
 
   const handleSubmit = async (
-    newExpenseData: IExpense,
-    newTransactionCategoryMappingsData: ITransactionCategoryMapping[]
+    newExpenseData: CreateExpenseDto,
+    newTransactionCategoryMappingsData: TransactionCategoryMappingDto[]
   ) => {
     try {
       const newExpenseJson = await addExpense({

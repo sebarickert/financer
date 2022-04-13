@@ -1,4 +1,4 @@
-import { ITransaction, ITransactionCategoryMapping } from '@local/types';
+import { ITransaction, TransactionCategoryMappingDto } from '@local/types';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -23,7 +23,7 @@ export const EditTransfer = (): JSX.Element => {
 
   const handleSubmit = async (
     targetTransferData: ITransaction,
-    transactionCategoryMappings: ITransactionCategoryMapping[]
+    transactionCategoryMappings: TransactionCategoryMappingDto[]
   ) => {
     if (!id) {
       console.error('Failed to edit transfer: no id');

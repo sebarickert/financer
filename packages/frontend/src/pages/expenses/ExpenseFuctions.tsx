@@ -1,10 +1,10 @@
-import { IExpense } from '@local/types';
+import { ExpenseDto } from '@local/types';
 
 import { ITransactionStackedListRowProps } from '../../components/transaction-stacked-list/transaction-stacked-list.row';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDate } from '../../utils/formatDate';
 
-export interface IExpenseWithCategories extends IExpense {
+export interface IExpenseWithCategories extends ExpenseDto {
   categoryMappings: string[];
 }
 
