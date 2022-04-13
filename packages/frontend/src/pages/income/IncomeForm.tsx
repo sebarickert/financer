@@ -1,6 +1,6 @@
 import {
+  CreateIncomeDto,
   CreateTransactionCategoryMappingDtoWithoutTransaction,
-  IIncome,
   TransactionCategoryMappingDto,
 } from '@local/types';
 import React, { ChangeEvent, useEffect, useState } from 'react';
@@ -23,7 +23,7 @@ interface IIncomeFormProps {
   errors: string[];
   toAccount?: string;
   onSubmit(
-    account: IIncome,
+    account: CreateIncomeDto,
     transactionCategoryMappings: CreateTransactionCategoryMappingDtoWithoutTransaction[]
   ): void;
   submitLabel: string;
@@ -136,7 +136,7 @@ export const IncomeForm = ({
       toAccount: newToAccount,
     } = event.target;
 
-    const newIncomeData: IIncome = {
+    const newIncomeData: CreateIncomeDto = {
       toAccount: newToAccount.value,
       amount: parseFloat((newAmount.value as string).replace(',', '.')),
       description: newDescription.value,

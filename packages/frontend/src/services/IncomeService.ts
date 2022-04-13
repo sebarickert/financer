@@ -1,20 +1,25 @@
-import { ApiResponse, IIncome } from '@local/types';
+import {
+  ApiResponse,
+  CreateIncomeDto,
+  IncomeDto,
+  UpdateIncomeDto,
+} from '@local/types';
 
 import { parseApiResponse } from '../utils/apiHelper';
 
-export const getAllIncomes = async (): Promise<IIncome[]> => {
+export const getAllIncomes = async (): Promise<IncomeDto[]> => {
   const incomes = await fetch('/api/incomes');
   return incomes.json();
 };
 
-export const getIncomeById = async (id: string): Promise<IIncome> => {
+export const getIncomeById = async (id: string): Promise<IncomeDto> => {
   const income = await fetch(`/api/incomes/${id}`);
   return income.json();
 };
 
 export const addIncome = async (
-  newIncomeData: IIncome
-): Promise<ApiResponse<IIncome>> => {
+  newIncomeData: CreateIncomeDto
+): Promise<ApiResponse<IncomeDto>> => {
   const newIncome = await fetch('/api/incomes', {
     method: 'POST',
     headers: {
@@ -28,9 +33,9 @@ export const addIncome = async (
 };
 
 export const updateIncome = async (
-  targetIncome: IIncome,
+  targetIncome: UpdateIncomeDto,
   id: string
-): Promise<ApiResponse<IIncome>> => {
+): Promise<ApiResponse<IncomeDto>> => {
   const updatedIncome = await fetch(`/api/incomes/${id}`, {
     method: 'PATCH',
     headers: {

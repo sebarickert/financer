@@ -1,4 +1,4 @@
-import { IIncome, TransactionCategoryMappingDto } from '@local/types';
+import { TransactionCategoryMappingDto, UpdateIncomeDto } from '@local/types';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -22,7 +22,7 @@ export const EditIncome = (): JSX.Element => {
   const editIncome = useEditIncome();
 
   const handleSubmit = async (
-    targetIncomeData: IIncome,
+    targetIncomeData: UpdateIncomeDto,
     newTransactionCategoryMappingsData: TransactionCategoryMappingDto[]
   ) => {
     if (!id) {
