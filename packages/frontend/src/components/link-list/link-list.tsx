@@ -26,8 +26,6 @@ export const LinkList = ({
         }`}
       >
         {Children.map(children, (child) => {
-          console.log(child);
-
           return (
             child && (
               <LinkListRow key={`LinkListRow-${Math.random()}`}>

@@ -1,5 +1,3 @@
-import React from 'react';
-
 export interface IDescriptionListItemProps {
   label: string;
   children: string;
@@ -12,16 +10,13 @@ export const DescriptionListItem = ({
   testId,
 }: IDescriptionListItemProps): JSX.Element => {
   return (
-    <div className="grid grid-cols-2 gap-4 py-4" data-testid={testId}>
-      <dt
-        className="text-sm font-medium text-gray-500"
-        data-testid={`${testId}_label`}
-      >
+    <>
+      <dt className="text-xs font-medium text-gray-700 truncate lg:text-sm">
         {label}
       </dt>
-      <dd className="text-sm text-gray-900" data-testid={`${testId}_content`}>
+      <dd className="text-xl font-bold tracking-tight" data-testid={testId}>
         {children}
       </dd>
-    </div>
+    </>
   );
 };

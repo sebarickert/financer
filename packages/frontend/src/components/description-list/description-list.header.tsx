@@ -1,25 +1,24 @@
-import React from 'react';
+import { Heading } from '../heading/heading';
+import { Icon, IconName } from '../icon/icon';
 
 interface IDescriptionListHeaderProps {
   label: string;
   testId?: string;
-  visibleLabel: boolean;
+  icon?: IconName;
 }
 
 export const DescriptionListHeader = ({
   label,
   testId,
-  visibleLabel,
+  icon,
 }: IDescriptionListHeaderProps): JSX.Element => {
   return (
-    <div className="pb-2" data-testid={testId}>
-      <h3
-        className={`text-lg leading-6 font-medium text-gray-900 ${
-          !visibleLabel && 'sr-only'
-        }`}
-      >
-        {label}
-      </h3>
-    </div>
+    <section
+      className="mb-4 inline-flex items-center gap-2"
+      data-testid={testId}
+    >
+      {icon && <Icon type="upload" />}
+      <Heading>{label}</Heading>
+    </section>
   );
 };

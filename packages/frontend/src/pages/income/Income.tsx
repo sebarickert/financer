@@ -1,13 +1,14 @@
+import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { Button } from '../../components/button/button';
 import { ButtonGroup } from '../../components/button/button.group';
 import { DescriptionList } from '../../components/description-list/description-list';
 import { DescriptionListItem } from '../../components/description-list/description-list.item';
-import { Icon } from '../../components/icon/icon';
 import { Loader } from '../../components/loader/loader';
 import { ModalConfirm } from '../../components/modal/confirm/modal.confirm';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
+import { useAccountById } from '../../hooks/account/useAccountById';
 import { useDeleteIncome } from '../../hooks/income/useDeleteIncome';
 import { useIncomeById } from '../../hooks/income/useIncomeById';
 import { useAllTransactionCategoriesWithCategoryTree } from '../../hooks/transactionCategories/useAllTransactionCategories';
@@ -37,6 +38,9 @@ export const Income = (): JSX.Element => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const [income] = useIncomeById(id);
+  const [{ data: account }, setTargetAccountId] = useAccountById(
+    income?.toAccount
+  );
   const [transactionCategoryMapping] =
     useTransactionCategoryMappingsByTransactionId(id);
   const transactionCategories = useAllTransactionCategoriesWithCategoryTree();
@@ -55,6 +59,12 @@ export const Income = (): JSX.Element => {
     navigate('/statistics/incomes');
   };
 
+  useEffect(() => {
+    if (!income?.toAccount) return;
+
+    setTargetAccountId(income.toAccount);
+  }, [income, setTargetAccountId]);
+
   return !income || !transactionCategoryMapping || !transactionCategories ? (
     <Loader loaderColor="blue" />
   ) : (
@@ -63,44 +73,32 @@ export const Income = (): JSX.Element => {
         title={`${income.description}`}
         backLink="/statistics/incomes"
       />
-      <section className="bg-gray-25 border divide-y rounded-lg sm:grid sm:divide-y-0 sm:divide-x">
-        <div className="p-6">
-          <header className="flex items-center mb-6">
-            <span className="inline-flex p-3 text-white rounded-lg bg-emerald-600">
-              <Icon type="upload" />
-            </span>
-            <h1 className="ml-4 text-2xl font-bold tracking-tighter sm:text-3xl">
-              {income.description}
-            </h1>
-          </header>
-          <DescriptionList label="Transaction details">
-            <DescriptionListItem label="Amount">
-              {formatCurrency(income.amount)}
-            </DescriptionListItem>
-            <DescriptionListItem label="Date">
-              {formatDate(new Date(income.date))}
-            </DescriptionListItem>
-          </DescriptionList>
-          {transactionCategoryMapping.length > 0 && (
-            <DescriptionList
-              label="Categories"
-              className="mt-6"
-              visibleLabel
-              testId="categories-wrapper"
-            >
-              {transactionCategoryMapping?.map(({ amount, category_id }) => (
-                <DescriptionListItem
-                  label={getCategoryNameById(category_id)}
-                  testId="category-row"
-                >
-                  {formatCurrency(amount)}
-                </DescriptionListItem>
-              ))}
-            </DescriptionList>
-          )}
-        </div>
-      </section>
-      <ButtonGroup className="mt-6">
+      <DescriptionList label="Details of income" className="mb-6">
+        <DescriptionListItem label="Amount">
+          {formatCurrency(income.amount)}
+        </DescriptionListItem>
+        <DescriptionListItem label="Date">
+          {formatDate(new Date(income.date))}
+        </DescriptionListItem>
+        <DescriptionListItem label="To account">
+          {account?.name ?? '-'}
+        </DescriptionListItem>
+      </DescriptionList>
+      {transactionCategoryMapping.length > 0 && (
+        <DescriptionList label="Categories">
+          {transactionCategoryMapping?.map(({ amount, category_id }) => (
+            <>
+              <DescriptionListItem label="Category">
+                {getCategoryNameById(category_id)}
+              </DescriptionListItem>
+              <DescriptionListItem label="Amount">
+                {formatCurrency(amount)}
+              </DescriptionListItem>
+            </>
+          ))}
+        </DescriptionList>
+      )}
+      <ButtonGroup className="mt-8">
         <Button
           link={`/statistics/incomes/${id}/edit`}
           testId="edit-income-button"
