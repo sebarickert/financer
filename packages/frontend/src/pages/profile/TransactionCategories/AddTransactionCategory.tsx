@@ -1,4 +1,4 @@
-import { ITransactionCategory } from '@local/types';
+import { CreateTransactionCategoryDto } from '@local/types';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,7 +15,7 @@ export const AddTransactionCategory = (): JSX.Element => {
   const addTransactionCategory = useAddTransactionCategory();
 
   const handleSubmit = async (
-    newTransactionCategoryData: ITransactionCategory
+    newTransactionCategoryData: CreateTransactionCategoryDto
   ) => {
     try {
       const newExpenseJson = await addTransactionCategory(

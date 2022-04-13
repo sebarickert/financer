@@ -1,4 +1,4 @@
-import { ITransactionCategory } from '@local/types';
+import { UpdateTransactionCategoryDto } from '@local/types';
 import { useCallback } from 'react';
 import { useQueryClient } from 'react-query';
 
@@ -8,7 +8,10 @@ export const useEditTransactionCategory = () => {
   const queryClient = useQueryClient();
 
   return useCallback(
-    async (id: string, targetTransactionCategoryData: ITransactionCategory) => {
+    async (
+      id: string,
+      targetTransactionCategoryData: UpdateTransactionCategoryDto
+    ) => {
       const editedExpense = await editTransactionCategory(
         id,
         targetTransactionCategoryData

@@ -1,4 +1,4 @@
-import { ITransactionCategory } from '@local/types';
+import { CreateTransactionCategoryDto, VisibilityType } from '@local/types';
 import React, { useEffect, useState } from 'react';
 
 import { Alert } from '../../../components/alert/alert';
@@ -12,11 +12,11 @@ import { useAllTransactionCategoriesWithCategoryTree } from '../../../hooks/tran
 
 interface ITransactionCategoryFormProps {
   errors: string[];
-  onSubmit(transactionCategory: ITransactionCategory): void;
+  onSubmit(transactionCategory: CreateTransactionCategoryDto): void;
   submitLabel: string;
   name?: string;
-  visibility?: ITransactionCategory['visibility'];
-  parentTransactioCategoryId?: string;
+  visibility?: VisibilityType[];
+  parentTransactioCategoryId?: string | null;
   optionalFooterComponent?: React.ReactNode;
   currentCategoryId?: string;
 }
@@ -66,9 +66,9 @@ export const TransactionCategoryForm = ({
       newIncomeVisible.checked ? 'income' : '',
       newExpenseVisible.checked ? 'expense' : '',
       newTransferVisible.checked ? 'transfer' : '',
-    ].filter((i) => i !== '') as ITransactionCategory['visibility'];
+    ].filter((i) => i !== '') as VisibilityType[];
 
-    const newTransactionCategoryData: ITransactionCategory = {
+    const newTransactionCategoryData: CreateTransactionCategoryDto = {
       name: newCategoryName.value,
       parent_category_id:
         newParentTransactionCategory.value === 'None'
@@ -125,7 +125,7 @@ export const TransactionCategoryForm = ({
           <Select
             id="parentTransactionCategory"
             options={transactionCategories}
-            defaultValue={parentTransactioCategoryId}
+            defaultValue={parentTransactioCategoryId || undefined}
             isRequired
           >
             Parent transaction category

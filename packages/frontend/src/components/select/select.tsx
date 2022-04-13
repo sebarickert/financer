@@ -13,7 +13,7 @@ interface ISelectProps {
 }
 
 export interface IOption {
-  value: string;
+  value?: string;
   label: string;
 }
 
