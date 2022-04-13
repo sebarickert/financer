@@ -19,4 +19,4 @@ runs:
         wait-on: "http://localhost:3000"
         wait-on-timeout: 120
         headless: true
-        config: video=false
+        config: video=false,screenshotOnRunFailure=false
