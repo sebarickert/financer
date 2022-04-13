@@ -1,4 +1,4 @@
-import { ITransaction } from '@local/types';
+import { TransactionDto } from '@local/types';
 import { useEffect, useState } from 'react';
 
 import { Dropdown } from '../../components/dropdown/dropdown';
@@ -52,7 +52,7 @@ export const mapTransactionTypeToUrlPrefix: {
 
 export const filterTransactionsByType = (
   visibilityFilter: TransactionVisibilityFilterType,
-  { toAccount, fromAccount }: ITransaction
+  { toAccount, fromAccount }: TransactionDto
 ) => {
   if (visibilityFilter === 'all') return true;
 
@@ -63,7 +63,9 @@ export const Statistics = (): JSX.Element => {
   const [transactionVisibilityFilter, setTransactionVisibilityFilter] =
     useState<TransactionVisibilityFilterType>('all');
   const transactionsRaw = useAllTransactions();
-  const [transactions, setTransactions] = useState<ITransaction[] | null>(null);
+  const [transactions, setTransactions] = useState<TransactionDto[] | null>(
+    null
+  );
   const [visibleTransactions, setVisibleTransactions] = useState<
     ITransactionStackedListRowProps[] | null
   >(null);

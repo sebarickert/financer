@@ -1,4 +1,4 @@
-import { ITransaction } from '@local/types';
+import { TransactionDto } from '@local/types';
 import React, { useEffect, useState } from 'react';
 
 import { useAllTransactions } from '../../hooks/transaction/useAllTransactions';
@@ -25,7 +25,9 @@ export const DashboardLatestTransactions = ({
     ITransactionStackedListRowProps[] | null
   >(null);
   const transactionsRaw = useAllTransactions();
-  const [transactions, setTransactions] = useState<ITransaction[] | null>(null);
+  const [transactions, setTransactions] = useState<TransactionDto[] | null>(
+    null
+  );
   const transactionCategoryMappings = useAllTransactionCategoryMappings();
   const transactionCategories = useAllTransactionCategories();
 

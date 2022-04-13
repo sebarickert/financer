@@ -1,4 +1,4 @@
-import { ITransaction } from '@local/types';
+import { TransactionDto } from '@local/types';
 import { useEffect, useState } from 'react';
 
 import { useAllTransactions } from './useAllTransactions';
@@ -6,12 +6,12 @@ import { useAllTransactions } from './useAllTransactions';
 export const useTransactionsByAccountId = (
   accountId: string | null = null
 ): [
-  ITransaction[] | null,
+  TransactionDto[] | null,
   React.Dispatch<React.SetStateAction<string | null>>
 ] => {
   const [targetAccountId, setTargetId] = useState(accountId);
   const [targetAccountTransactions, setTargetAccountTransactions] = useState<
-    ITransaction[] | null
+    TransactionDto[] | null
   >(null);
   const transactions = useAllTransactions();
 

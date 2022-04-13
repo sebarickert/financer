@@ -1,6 +1,6 @@
 import {
   CreateTransactionCategoryMappingDtoWithoutTransaction,
-  ITransaction,
+  CreateTransferDto,
   TransactionCategoryMappingDto,
 } from '@local/types';
 import React, { ChangeEvent, useEffect, useState } from 'react';
@@ -24,7 +24,7 @@ interface ITransferFormProps {
   fromAccount?: string;
   toAccount?: string;
   onSubmit(
-    newTransfer: ITransaction,
+    newTransfer: CreateTransferDto,
     transactionCategoryMappings: CreateTransactionCategoryMappingDtoWithoutTransaction[]
   ): void;
   submitLabel: string;
@@ -139,7 +139,7 @@ export const TransferForm = ({
       toAccount: newToAccount,
     } = event.target;
 
-    const newTransferData: ITransaction = {
+    const newTransferData: CreateTransferDto = {
       fromAccount: newFromAccount.value,
       toAccount: newToAccount.value,
       amount: parseFloat((newAmount.value as string).replace(',', '.')),

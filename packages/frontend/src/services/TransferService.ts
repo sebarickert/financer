@@ -1,10 +1,15 @@
-import { ApiResponse, ITransaction } from '@local/types';
+import {
+  ApiResponse,
+  CreateTransferDto,
+  TransferDto,
+  UpdateTransferDto,
+} from '@local/types';
 
 import { parseApiResponse } from '../utils/apiHelper';
 
 export const addTransfer = async (
-  newTransactionData: ITransaction
-): Promise<ApiResponse<ITransaction>> => {
+  newTransactionData: CreateTransferDto
+): Promise<ApiResponse<TransferDto>> => {
   const newTransaction = await fetch('/api/transfers', {
     method: 'POST',
     headers: {
@@ -18,9 +23,9 @@ export const addTransfer = async (
 };
 
 export const updateTransfer = async (
-  targetTransactionData: ITransaction,
+  targetTransactionData: UpdateTransferDto,
   id: string
-): Promise<ApiResponse<ITransaction>> => {
+): Promise<ApiResponse<TransferDto>> => {
   const updatedTransaction = await fetch(`/api/transfers/${id}`, {
     method: 'PATCH',
     headers: {
@@ -33,12 +38,12 @@ export const updateTransfer = async (
   return parseApiResponse(updatedTransaction);
 };
 
-export const getAllTransferTranscations = async (): Promise<ITransaction[]> => {
+export const getAllTransfers = async (): Promise<TransferDto[]> => {
   const transfers = await fetch('/api/transfers');
   return transfers.json();
 };
 
-export const getTransferById = async (id: string): Promise<ITransaction> => {
+export const getTransferById = async (id: string): Promise<TransferDto> => {
   const transfer = await fetch(`/api/transfers/${id}`);
   return transfer.json();
 };

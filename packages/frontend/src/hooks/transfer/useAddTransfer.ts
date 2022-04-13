@@ -1,4 +1,4 @@
-import { ITransaction } from '@local/types';
+import { CreateTransferDto } from '@local/types';
 import { useCallback } from 'react';
 import { useQueryClient } from 'react-query';
 
@@ -8,7 +8,7 @@ export const useAddTransfer = () => {
   const queryClient = useQueryClient();
 
   return useCallback(
-    async (newTransactionData: ITransaction) => {
+    async (newTransactionData: CreateTransferDto) => {
       const newTransaction = await addTransfer(newTransactionData);
       queryClient.invalidateQueries('transfers');
       queryClient.invalidateQueries('transactions');

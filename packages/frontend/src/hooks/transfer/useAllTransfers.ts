@@ -1,4 +1,4 @@
-import { ITransaction } from '@local/types';
+import { TransferDto } from '@local/types';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 
@@ -10,12 +10,12 @@ import {
   ITransfersPerMonth,
   groupTransfersByMonth,
 } from '../../pages/transfers/TransferFuctions';
-import { getAllTransferTranscations } from '../../services/TransferService';
+import { getAllTransfers } from '../../services/TransferService';
 import { useAllTransactionCategories } from '../transactionCategories/useAllTransactionCategories';
 import { useAllTransactionCategoryMappings } from '../transactionCategoryMapping/useAllTransactionCategoryMappings';
 
-export const useAllTransfers = (): ITransaction[] | null => {
-  const transfersQuery = useQuery('transfers', getAllTransferTranscations, {
+export const useAllTransfers = (): TransferDto[] | null => {
+  const transfersQuery = useQuery('transfers', getAllTransfers, {
     staleTime: 300000,
   });
 
