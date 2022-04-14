@@ -9,7 +9,7 @@ export const useDeleteTransactionCategory = () => {
   return useCallback(
     async (id: string) => {
       await deleteTransactionCategory(id);
-      queryClient.invalidateQueries('transactionCategories');
+      queryClient.invalidateQueries(['transactionCategories']);
     },
     [queryClient]
   );

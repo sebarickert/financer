@@ -10,7 +10,7 @@ export const useAddAccount = () => {
   return useCallback(
     async (newAccountData: CreateAccountDto) => {
       const newAccount = await addAccount(newAccountData);
-      queryClient.invalidateQueries('accounts');
+      queryClient.invalidateQueries(['accounts']);
 
       return newAccount;
     },

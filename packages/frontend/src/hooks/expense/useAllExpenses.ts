@@ -14,7 +14,7 @@ import { useAllTransactionCategories } from '../transactionCategories/useAllTran
 import { useAllTransactionCategoryMappings } from '../transactionCategoryMapping/useAllTransactionCategoryMappings';
 
 export const useAllExpenses = (): ExpenseDto[] | null => {
-  const expenseQuery = useQuery('expenses', getAllExpenses, {
+  const expenseQuery = useQuery(['expenses'], getAllExpenses, {
     staleTime: 300000,
   });
 

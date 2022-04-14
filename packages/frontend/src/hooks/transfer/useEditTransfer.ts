@@ -10,10 +10,10 @@ export const useEditTransfer = () => {
   return useCallback(
     async (targetTransactionData: UpdateTransferDto, id: string) => {
       const editedTransaction = await updateTransfer(targetTransactionData, id);
-      queryClient.invalidateQueries('transfers');
-      queryClient.invalidateQueries('transactions');
-      queryClient.invalidateQueries('transactionCategoryMappings');
-      queryClient.invalidateQueries('accounts');
+      queryClient.invalidateQueries(['transfers']);
+      queryClient.invalidateQueries(['transactions']);
+      queryClient.invalidateQueries(['transactionCategoryMappings']);
+      queryClient.invalidateQueries(['accounts']);
 
       return editedTransaction;
     },

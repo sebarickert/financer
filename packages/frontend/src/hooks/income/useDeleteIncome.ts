@@ -9,9 +9,9 @@ export const useDeleteIncome = () => {
   return useCallback(
     async (id: string) => {
       await deleteIncome(id);
-      queryClient.invalidateQueries('incomes');
-      queryClient.invalidateQueries('transactions');
-      queryClient.invalidateQueries('accounts');
+      queryClient.invalidateQueries(['incomes']);
+      queryClient.invalidateQueries(['transactions']);
+      queryClient.invalidateQueries(['accounts']);
     },
     [queryClient]
   );

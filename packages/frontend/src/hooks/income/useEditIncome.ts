@@ -10,10 +10,10 @@ export const useEditIncome = () => {
   return useCallback(
     async (targetIncomeData: UpdateIncomeDto, id: string) => {
       const editedExpense = await updateIncome(targetIncomeData, id);
-      queryClient.invalidateQueries('incomes');
-      queryClient.invalidateQueries('transactions');
-      queryClient.invalidateQueries('transactionCategoryMappings');
-      queryClient.invalidateQueries('accounts');
+      queryClient.invalidateQueries(['incomes']);
+      queryClient.invalidateQueries(['transactions']);
+      queryClient.invalidateQueries(['transactionCategoryMappings']);
+      queryClient.invalidateQueries(['accounts']);
 
       return editedExpense;
     },

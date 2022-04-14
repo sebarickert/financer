@@ -10,10 +10,10 @@ export const useAddIncome = () => {
   return useCallback(
     async (newIncomeData: CreateIncomeDto) => {
       const newIncome = await addIncome(newIncomeData);
-      queryClient.invalidateQueries('incomes');
-      queryClient.invalidateQueries('transactions');
-      queryClient.invalidateQueries('transactionCategoryMappings');
-      queryClient.invalidateQueries('accounts');
+      queryClient.invalidateQueries(['incomes']);
+      queryClient.invalidateQueries(['transactions']);
+      queryClient.invalidateQueries(['transactionCategoryMappings']);
+      queryClient.invalidateQueries(['accounts']);
 
       return newIncome;
     },

@@ -9,9 +9,9 @@ export const useDeleteTransfer = () => {
   return useCallback(
     async (id: string) => {
       await deleteTransfer(id);
-      queryClient.invalidateQueries('transfers');
-      queryClient.invalidateQueries('transactions');
-      queryClient.invalidateQueries('accounts');
+      queryClient.invalidateQueries(['transfers']);
+      queryClient.invalidateQueries(['transactions']);
+      queryClient.invalidateQueries(['accounts']);
     },
     [queryClient]
   );

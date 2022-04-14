@@ -16,7 +16,7 @@ export const useEditTransactionCategory = () => {
         id,
         targetTransactionCategoryData
       );
-      queryClient.invalidateQueries('transactionCategories');
+      queryClient.invalidateQueries(['transactionCategories']);
 
       return editedExpense;
     },
