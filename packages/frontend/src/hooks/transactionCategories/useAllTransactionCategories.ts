@@ -10,7 +10,7 @@ import {
 
 export const useAllTransactionCategories = (): TransactionCategoryDto[] => {
   const transactionCategoriesQuery = useQuery(
-    'transactionCategories',
+    ['transactionCategories'],
     getAllTransactionCategories,
     {
       staleTime: 300000,

@@ -14,7 +14,7 @@ import { useAllTransactionCategories } from '../transactionCategories/useAllTran
 import { useAllTransactionCategoryMappings } from '../transactionCategoryMapping/useAllTransactionCategoryMappings';
 
 export const useAllIncomes = (): IncomeDto[] | null => {
-  const incomesQuery = useQuery('incomes', getAllIncomes, {
+  const incomesQuery = useQuery(['incomes'], getAllIncomes, {
     staleTime: 300000,
   });
 

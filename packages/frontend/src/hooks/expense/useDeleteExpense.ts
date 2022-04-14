@@ -9,9 +9,9 @@ export const useDeleteExpense = () => {
   return useCallback(
     async (id: string) => {
       await deleteExpense(id);
-      queryClient.invalidateQueries('expenses');
-      queryClient.invalidateQueries('transactions');
-      queryClient.invalidateQueries('accounts');
+      queryClient.invalidateQueries(['expenses']);
+      queryClient.invalidateQueries(['transactions']);
+      queryClient.invalidateQueries(['accounts']);
     },
     [queryClient]
   );

@@ -10,7 +10,7 @@ export const useEditAccount = () => {
   return useCallback(
     async (id: string, targetAccountData: UpdateAccountDto) => {
       const editedAccount = await editAccount(id, targetAccountData);
-      queryClient.invalidateQueries('accounts');
+      queryClient.invalidateQueries(['accounts']);
 
       return editedAccount;
     },

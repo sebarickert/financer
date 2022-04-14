@@ -10,10 +10,10 @@ export const useAddTransfer = () => {
   return useCallback(
     async (newTransactionData: CreateTransferDto) => {
       const newTransaction = await addTransfer(newTransactionData);
-      queryClient.invalidateQueries('transfers');
-      queryClient.invalidateQueries('transactions');
-      queryClient.invalidateQueries('transactionCategoryMappings');
-      queryClient.invalidateQueries('accounts');
+      queryClient.invalidateQueries(['transfers']);
+      queryClient.invalidateQueries(['transactions']);
+      queryClient.invalidateQueries(['transactionCategoryMappings']);
+      queryClient.invalidateQueries(['accounts']);
 
       return newTransaction;
     },

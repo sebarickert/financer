@@ -4,7 +4,7 @@ import { getAuthenticationStatus } from '../services/AuthenticationService';
 
 export const useAuthenticationStatus = () => {
   const authenticationStatusQuery = useQuery(
-    'authenticationStatus',
+    ['authenticationStatus'],
     getAuthenticationStatus,
     {
       staleTime: 300000,

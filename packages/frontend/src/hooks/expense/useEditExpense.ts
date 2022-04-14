@@ -10,10 +10,10 @@ export const useEditExpense = () => {
   return useCallback(
     async (targetExpenseData: UpdateExpenseDto, id: string) => {
       const editedExpense = await updateExpense(targetExpenseData, id);
-      queryClient.invalidateQueries('expenses');
-      queryClient.invalidateQueries('transactions');
-      queryClient.invalidateQueries('transactionCategoryMappings');
-      queryClient.invalidateQueries('accounts');
+      queryClient.invalidateQueries(['expenses']);
+      queryClient.invalidateQueries(['transactions']);
+      queryClient.invalidateQueries(['transactionCategoryMappings']);
+      queryClient.invalidateQueries(['accounts']);
 
       return editedExpense;
     },
