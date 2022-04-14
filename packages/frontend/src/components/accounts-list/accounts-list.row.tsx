@@ -1,8 +1,10 @@
+import { AccountType } from '@local/types';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-export interface IAccountsListRowProps {
+export interface AccountsListRowProps {
   accountType: string;
+  type: AccountType;
   balanceAmount: string;
   label: string;
   link?: string;
@@ -14,7 +16,7 @@ export const AccountsListRow = ({
   balanceAmount,
   label,
   link,
-}: IAccountsListRowProps): JSX.Element => {
+}: AccountsListRowProps): JSX.Element => {
   return (
     <article
       className="relative h-full p-6 overflow-hidden bg-white border rounded-lg group focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-500 hover:bg-gray-50"
