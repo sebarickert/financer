@@ -9,8 +9,8 @@ import { Alert } from '../../components/alert/alert';
 import { Button } from '../../components/button/button';
 import { Form } from '../../components/form/form';
 import { Input } from '../../components/input/input';
-import { Loader } from '../../components/loader/loader';
-import { Select, Option as Option } from '../../components/select/select';
+import { Loader, LoaderColor } from '../../components/loader/loader';
+import { Select, Option } from '../../components/select/select';
 import { TransactionCategoriesForm } from '../../components/transaction-categories-form/transaction-categories-form';
 import { useAllAccounts } from '../../hooks/account/useAllAccounts';
 import { useAllTransactionCategoriesForIncomeWithCategoryTree } from '../../hooks/transactionCategories/useAllTransactionCategoriesForIncome';
@@ -163,7 +163,7 @@ export const IncomeForm = ({
   };
 
   return accounts === null || transactionCategories === null ? (
-    <Loader loaderColor="blue" />
+    <Loader loaderColor={LoaderColor.blue} />
   ) : (
     <>
       {errors.length > 0 && (

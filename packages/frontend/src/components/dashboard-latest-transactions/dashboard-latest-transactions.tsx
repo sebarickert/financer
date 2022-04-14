@@ -9,7 +9,7 @@ import {
 } from '../../pages/statistics/Statistics';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDate } from '../../utils/formatDate';
-import { Loader } from '../loader/loader';
+import { Loader, LoaderColor } from '../loader/loader';
 import { TransactionStackedList } from '../transaction-stacked-list/transaction-stacked-list';
 import { ITransactionStackedListRowProps } from '../transaction-stacked-list/transaction-stacked-list.row';
 
@@ -71,7 +71,7 @@ export const DashboardLatestTransactions = ({
 
   return visibleTransactions === null ? (
     <section className={`bg-white border rounded-lg py-1 ${className}`}>
-      <Loader loaderColor="blue" />
+      <Loader loaderColor={LoaderColor.blue} />
     </section>
   ) : (
     <TransactionStackedList

@@ -6,7 +6,7 @@ import { Checkbox } from '../../../components/checkbox/checkbox';
 import { CheckboxGroup } from '../../../components/checkbox/checkbox.group';
 import { Form } from '../../../components/form/form';
 import { Input } from '../../../components/input/input';
-import { Loader } from '../../../components/loader/loader';
+import { Loader, LoaderColor } from '../../../components/loader/loader';
 import { Select, Option } from '../../../components/select/select';
 import { useAllTransactionCategoriesWithCategoryTree } from '../../../hooks/transactionCategories/useAllTransactionCategories';
 
@@ -81,7 +81,7 @@ export const TransactionCategoryForm = ({
   };
 
   return transactionCategories === null ? (
-    <Loader loaderColor="blue" />
+    <Loader loaderColor={LoaderColor.blue} />
   ) : (
     <>
       {errors.length > 0 && (

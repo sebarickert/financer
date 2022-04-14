@@ -15,9 +15,7 @@ import { useAllTransactionCategories } from '../transactionCategories/useAllTran
 import { useAllTransactionCategoryMappings } from '../transactionCategoryMapping/useAllTransactionCategoryMappings';
 
 export const useAllTransfers = (): TransferDto[] | null => {
-  const transfersQuery = useQuery(['transfers'], getAllTransfers, {
-    staleTime: 300000,
-  });
+  const transfersQuery = useQuery(['transfers'], getAllTransfers);
 
   return transfersQuery.data || null;
 };

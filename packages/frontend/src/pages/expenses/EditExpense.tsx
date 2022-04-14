@@ -2,7 +2,7 @@ import { CreateExpenseDto } from '@local/types';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { Loader } from '../../components/loader/loader';
+import { Loader, LoaderColor } from '../../components/loader/loader';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { useEditExpense } from '../../hooks/expense/useEditExpense';
 import { useExpenseById } from '../../hooks/expense/useExpenseById';
@@ -42,7 +42,7 @@ export const EditExpense = (): JSX.Element => {
   };
 
   return !expense || !transactionCategoryMapping ? (
-    <Loader loaderColor="blue" />
+    <Loader loaderColor={LoaderColor.blue} />
   ) : (
     <>
       <UpdatePageInfo title={`Edit ${expense.description} | Expenses`} />

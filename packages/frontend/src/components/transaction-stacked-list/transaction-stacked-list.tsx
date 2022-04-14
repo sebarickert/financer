@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { useUserTransactionListChunkSize } from '../../hooks/profile/user-preference/useUserTransactionListChunkSize';
-import { Loader } from '../loader/loader';
+import { Loader, LoaderColor } from '../loader/loader';
 import { Pager } from '../pager/pager';
 
 import {
@@ -52,7 +52,7 @@ export const TransactionStackedList = ({
   }, [chunkAmount, rows]);
 
   return !pages || !pages[currentPage] ? (
-    <Loader loaderColor="blue" />
+    <Loader loaderColor={LoaderColor.blue} />
   ) : (
     <section className={`${className}`}>
       {title && <h2 className="sr-only">{title}</h2>}

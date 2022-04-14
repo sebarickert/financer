@@ -27,7 +27,7 @@ import { useAllTransactions } from '../../hooks/transaction/useAllTransactions';
 import { useTotalBalance } from '../../hooks/useTotalBalance';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDateShort } from '../../utils/formatDate';
-import { Loader } from '../loader/loader';
+import { Loader, LoaderColor } from '../loader/loader';
 
 interface BalanceGraphProps {
   className?: string;
@@ -229,7 +229,7 @@ export const BalanceGraph = ({
       className={`bg-gray-25 rounded-lg border ${className} aspect-video md:aspect-auto relative`}
     >
       {balanceHistory === null ? (
-        <Loader loaderColor="blue" className="h-full scale-50" />
+        <Loader loaderColor={LoaderColor.blue} className="h-full scale-50" />
       ) : (
         <>
           <SimpleLineChart data={balanceHistory} />

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { Container } from '../../../components/container/container';
-import { Loader } from '../../../components/loader/loader';
+import { Loader, LoaderColor } from '../../../components/loader/loader';
 import { ModalConfirm } from '../../../components/modal/confirm/modal.confirm';
 import { UpdatePageInfo } from '../../../components/seo/updatePageInfo';
 import { useDeleteTransactionCategory } from '../../../hooks/transactionCategories/useDeleteTransactionCategory';
@@ -77,7 +77,7 @@ export const EditTransactionCategory = (): JSX.Element => {
   };
 
   return !transactionCategory ? (
-    <Loader loaderColor="blue" />
+    <Loader loaderColor={LoaderColor.blue} />
   ) : (
     <Container>
       <UpdatePageInfo
