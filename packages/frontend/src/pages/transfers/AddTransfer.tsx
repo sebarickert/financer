@@ -1,4 +1,4 @@
-import { CreateTransferDto, TransactionCategoryMappingDto } from '@local/types';
+import { CreateTransferDto } from '@local/types';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -18,16 +18,9 @@ export const AddTransfer = (): JSX.Element => {
   const [defaultTransferTargetAccount] = useUserDefaultTransferTargetAccount();
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleSubmit = async (
-    newTransfer: CreateTransferDto,
-    transactionCategoryMappings: TransactionCategoryMappingDto[]
-  ) => {
+  const handleSubmit = async (newTransfer: CreateTransferDto) => {
     try {
-      const newTransactionJson = await addTransaction({
-        ...newTransfer,
-        categories: transactionCategoryMappings,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } as any);
+      const newTransactionJson = await addTransaction(newTransfer);
 
       if ('message' in newTransactionJson) {
         setErrors(parseErrorMessagesToArray(newTransactionJson.message));

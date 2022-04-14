@@ -5,14 +5,14 @@ import { Button } from '../button/button';
 import { Divider } from '../divider/divider';
 import { Icon } from '../icon/icon';
 import { Input } from '../input/input';
-import { Select, IOption } from '../select/select';
+import { Select, Option } from '../select/select';
 
 interface ITransactionCategoriesFormItemProps {
   className?: string;
   categoryAmountIndex: number;
   amountMaxValue: number;
   arrayIndex: number;
-  categories: IOption[];
+  categories: Option[];
   categoryMapping: TransactionCategoryMappingDto | undefined;
   deleteTransactionCategoryItem(): void;
   setUnallocatedAmount(): void;

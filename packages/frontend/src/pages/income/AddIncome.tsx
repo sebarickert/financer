@@ -1,4 +1,4 @@
-import { CreateIncomeDto, TransactionCategoryMappingDto } from '@local/types';
+import { CreateIncomeDto } from '@local/types';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,16 +15,9 @@ export const AddIncome = (): JSX.Element => {
   const addIncome = useAddIncome();
   const [defaultIncomeAccount] = useUserDefaultIncomeAccount();
 
-  const handleSubmit = async (
-    newIncomeData: CreateIncomeDto,
-    newTransactionCategoryMappingsData: TransactionCategoryMappingDto[]
-  ) => {
+  const handleSubmit = async (newIncomeData: CreateIncomeDto) => {
     try {
-      const newIncomeJson = await addIncome({
-        ...newIncomeData,
-        categories: newTransactionCategoryMappingsData,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } as any);
+      const newIncomeJson = await addIncome(newIncomeData);
 
       if ('message' in newIncomeJson) {
         setErrors(parseErrorMessagesToArray(newIncomeJson.message));

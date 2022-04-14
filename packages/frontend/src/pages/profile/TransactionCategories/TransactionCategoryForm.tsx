@@ -7,7 +7,7 @@ import { CheckboxGroup } from '../../../components/checkbox/checkbox.group';
 import { Form } from '../../../components/form/form';
 import { Input } from '../../../components/input/input';
 import { Loader } from '../../../components/loader/loader';
-import { Select, IOption } from '../../../components/select/select';
+import { Select, Option } from '../../../components/select/select';
 import { useAllTransactionCategoriesWithCategoryTree } from '../../../hooks/transactionCategories/useAllTransactionCategories';
 
 interface ITransactionCategoryFormProps {
@@ -34,7 +34,7 @@ export const TransactionCategoryForm = ({
   const transactionCategoriesRaw =
     useAllTransactionCategoriesWithCategoryTree(currentCategoryId);
   const [transactionCategories, setTransactionCategories] = useState<
-    IOption[] | null
+    Option[] | null
   >(null);
 
   useEffect(() => {

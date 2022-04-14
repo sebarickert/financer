@@ -10,7 +10,7 @@ import { Button } from '../../components/button/button';
 import { Form } from '../../components/form/form';
 import { Input } from '../../components/input/input';
 import { Loader } from '../../components/loader/loader';
-import { Select, IOption } from '../../components/select/select';
+import { Select, Option } from '../../components/select/select';
 import { TransactionCategoriesForm } from '../../components/transaction-categories-form/transaction-categories-form';
 import { useAllAccounts } from '../../hooks/account/useAllAccounts';
 import { useAllTransactionCategoriesForExpenseWithCategoryTree } from '../../hooks/transactionCategories/useAllTransactionCategoriesForExpense';
@@ -22,10 +22,7 @@ interface IExpenseFormProps {
   description?: string;
   errors: string[];
   fromAccount?: string;
-  onSubmit(
-    account: CreateExpenseDto,
-    transactionCategoryMappings: CreateTransactionCategoryMappingDtoWithoutTransaction[]
-  ): void;
+  onSubmit(account: CreateExpenseDto): void;
   submitLabel: string;
   transactionCategoryMapping?: TransactionCategoryMappingDto[] | null;
 }
@@ -41,11 +38,11 @@ export const ExpenseForm = ({
   transactionCategoryMapping = null,
 }: IExpenseFormProps): JSX.Element => {
   const { data: accountsRaw, isLoading: isLoadingAccounts } = useAllAccounts();
-  const [accounts, setAccounts] = useState<IOption[] | null>(null);
+  const [accounts, setAccounts] = useState<Option[] | null>(null);
   const transactionCategoriesRaw =
     useAllTransactionCategoriesForExpenseWithCategoryTree();
   const [transactionCategories, setTransactionCategories] = useState<
-    IOption[] | null
+    Option[] | null
   >(null);
   const [inputAmountValue, setInputAmountValue] = useState<number | null>(null);
 
@@ -136,13 +133,6 @@ export const ExpenseForm = ({
       fromAccount: newFromAccount,
     } = event.target;
 
-    const newExpenseData: CreateExpenseDto = {
-      fromAccount: newFromAccount.value,
-      amount: parseFloat((newAmount.value as string).replace(',', '.')),
-      description: newDescription.value,
-      date: newDate.value ? new Date(newDate.value) : newDate.value,
-    };
-
     const transactionCategoryMappings: CreateTransactionCategoryMappingDtoWithoutTransaction[] =
       Object.keys(categoryAmount).map((item) => {
         const newTransactionCategories =
@@ -161,7 +151,15 @@ export const ExpenseForm = ({
         };
       });
 
-    onSubmit(newExpenseData, transactionCategoryMappings);
+    const newExpenseData: CreateExpenseDto = {
+      fromAccount: newFromAccount.value,
+      amount: parseFloat((newAmount.value as string).replace(',', '.')),
+      description: newDescription.value,
+      date: newDate.value ? new Date(newDate.value) : newDate.value,
+      categories: transactionCategoryMappings,
+    };
+
+    onSubmit(newExpenseData);
   };
 
   return accounts === null || transactionCategories === null ? (

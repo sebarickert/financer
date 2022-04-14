@@ -3,29 +3,26 @@ import {
   CreateTransactionCategoryMappingDtoWithoutTransaction,
   TransactionCategoryMappingDto,
 } from '@local/types';
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 import { Alert } from '../../components/alert/alert';
 import { Button } from '../../components/button/button';
 import { Form } from '../../components/form/form';
 import { Input } from '../../components/input/input';
 import { Loader } from '../../components/loader/loader';
-import { Select, IOption } from '../../components/select/select';
+import { Select, Option as Option } from '../../components/select/select';
 import { TransactionCategoriesForm } from '../../components/transaction-categories-form/transaction-categories-form';
 import { useAllAccounts } from '../../hooks/account/useAllAccounts';
 import { useAllTransactionCategoriesForIncomeWithCategoryTree } from '../../hooks/transactionCategories/useAllTransactionCategoriesForIncome';
 import { inputDateFormat } from '../../utils/formatDate';
 
-interface IIncomeFormProps {
+interface IncomeFormProps {
   amount?: number;
   date?: Date;
   description?: string;
   errors: string[];
   toAccount?: string;
-  onSubmit(
-    account: CreateIncomeDto,
-    transactionCategoryMappings: CreateTransactionCategoryMappingDtoWithoutTransaction[]
-  ): void;
+  onSubmit(account: CreateIncomeDto): void;
   submitLabel: string;
   transactionCategoryMapping?: TransactionCategoryMappingDto[] | null;
 }
@@ -39,13 +36,13 @@ export const IncomeForm = ({
   submitLabel,
   toAccount,
   transactionCategoryMapping = null,
-}: IIncomeFormProps): JSX.Element => {
+}: IncomeFormProps): JSX.Element => {
   const { data: accountsRaw, isLoading: isLoadingAccounts } = useAllAccounts();
-  const [accounts, setAccounts] = useState<IOption[] | null>(null);
+  const [accounts, setAccounts] = useState<Option[] | null>(null);
   const transactionCategoriesRaw =
     useAllTransactionCategoriesForIncomeWithCategoryTree();
   const [transactionCategories, setTransactionCategories] = useState<
-    IOption[] | null
+    Option[] | null
   >(null);
   const [inputAmountValue, setInputAmountValue] = useState<number | null>(null);
 
@@ -136,13 +133,6 @@ export const IncomeForm = ({
       toAccount: newToAccount,
     } = event.target;
 
-    const newIncomeData: CreateIncomeDto = {
-      toAccount: newToAccount.value,
-      amount: parseFloat((newAmount.value as string).replace(',', '.')),
-      description: newDescription.value,
-      date: newDate.value ? new Date(newDate.value) : newDate.value,
-    };
-
     const transactionCategoryMappings: CreateTransactionCategoryMappingDtoWithoutTransaction[] =
       Object.keys(categoryAmount).map((item) => {
         const newTransactionCategories =
@@ -161,7 +151,15 @@ export const IncomeForm = ({
         };
       });
 
-    onSubmit(newIncomeData, transactionCategoryMappings);
+    const newIncomeData: CreateIncomeDto = {
+      toAccount: newToAccount.value,
+      amount: parseFloat((newAmount.value as string).replace(',', '.')),
+      description: newDescription.value,
+      date: newDate.value ? new Date(newDate.value) : newDate.value,
+      categories: transactionCategoryMappings,
+    };
+
+    onSubmit(newIncomeData);
   };
 
   return accounts === null || transactionCategories === null ? (

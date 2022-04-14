@@ -1,7 +1,4 @@
-import {
-  CreateTransactionCategoryMappingDtoWithoutTransaction,
-  CreateExpenseDto,
-} from '@local/types';
+import { CreateExpenseDto } from '@local/types';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -24,23 +21,13 @@ export const EditExpense = (): JSX.Element => {
   const [transactionCategoryMapping] =
     useTransactionCategoryMappingsByTransactionId(id);
 
-  const handleSubmit = async (
-    targetExpenseData: CreateExpenseDto,
-    newTransactionCategoryMappingsData: CreateTransactionCategoryMappingDtoWithoutTransaction[]
-  ) => {
+  const handleSubmit = async (targetExpenseData: CreateExpenseDto) => {
     if (!id) {
       console.error('Failed to edit expense: no id');
       return;
     }
     try {
-      const targetExpenseJson = await editExpense(
-        {
-          ...targetExpenseData,
-          categories: newTransactionCategoryMappingsData,
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } as any,
-        id
-      );
+      const targetExpenseJson = await editExpense(targetExpenseData, id);
 
       if ('message' in targetExpenseJson) {
         setErrors(parseErrorMessagesToArray(targetExpenseJson.message));

@@ -1,4 +1,4 @@
-import { TransactionCategoryMappingDto, UpdateIncomeDto } from '@local/types';
+import { UpdateIncomeDto } from '@local/types';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -21,23 +21,13 @@ export const EditIncome = (): JSX.Element => {
     useTransactionCategoryMappingsByTransactionId(id);
   const editIncome = useEditIncome();
 
-  const handleSubmit = async (
-    targetIncomeData: UpdateIncomeDto,
-    newTransactionCategoryMappingsData: TransactionCategoryMappingDto[]
-  ) => {
+  const handleSubmit = async (targetIncomeData: UpdateIncomeDto) => {
     if (!id) {
       console.error('Failed to edit income: no id');
       return;
     }
     try {
-      const targetIncomeJson = await editIncome(
-        {
-          ...targetIncomeData,
-          categories: newTransactionCategoryMappingsData,
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } as any,
-        id
-      );
+      const targetIncomeJson = await editIncome(targetIncomeData, id);
 
       if ('message' in targetIncomeJson) {
         setErrors(parseErrorMessagesToArray(targetIncomeJson.message));
