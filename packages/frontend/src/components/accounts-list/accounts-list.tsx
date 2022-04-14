@@ -2,11 +2,11 @@ import { IconName } from '../icon/icon';
 import { LinkList } from '../link-list/link-list';
 import { LinkListLink } from '../link-list/link-list.link';
 
-import { IAccountsListRowProps } from './accounts-list.row';
+import { AccountsListRowProps } from './accounts-list.row';
 
 interface IAccountsListProps {
   label?: string;
-  rows: IAccountsListRowProps[];
+  rows: AccountsListRowProps[];
   className?: string;
 }
 

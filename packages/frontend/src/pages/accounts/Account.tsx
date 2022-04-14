@@ -9,7 +9,7 @@ import { LinkListLink } from '../../components/link-list/link-list.link';
 import { Loader } from '../../components/loader/loader';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { TransactionStackedList } from '../../components/transaction-stacked-list/transaction-stacked-list';
-import { ITransactionStackedListRowProps } from '../../components/transaction-stacked-list/transaction-stacked-list.row';
+import { ITransactionStackedListRowProps as TransactionStackedListRowProps } from '../../components/transaction-stacked-list/transaction-stacked-list.row';
 import { useAccountById } from '../../hooks/account/useAccountById';
 import { useDeleteAccount } from '../../hooks/account/useDeleteAccount';
 import { useAddExpense } from '../../hooks/expense/useAddExpense';
@@ -37,7 +37,7 @@ export const Account = (): JSX.Element => {
   const deleteAccount = useDeleteAccount();
   const [{ data: account, isLoading: isLoadingAccount }] = useAccountById(id);
   const [transactions, setTransactions] = useState<
-    ITransactionStackedListRowProps[]
+    TransactionStackedListRowProps[]
   >([]);
   const [rawTransactions] = useTransactionsByAccountId(id);
   const transactionCategoryMappings = useAllTransactionCategoryMappings();
@@ -60,7 +60,7 @@ export const Account = (): JSX.Element => {
           description = 'Unknown',
           amount,
           _id,
-        }): ITransactionStackedListRowProps => {
+        }): TransactionStackedListRowProps => {
           const date = new Date(dateRaw);
           const transactionType = getTransactionType(toAccount, fromAccount);
 
@@ -82,7 +82,7 @@ export const Account = (): JSX.Element => {
             link: `/statistics/${mapTransactionTypeToUrlPrefix[transactionType]}/${_id}`,
             transactionType,
             id: _id,
-          } as ITransactionStackedListRowProps;
+          } as TransactionStackedListRowProps;
         }
       )
     );

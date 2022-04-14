@@ -2,7 +2,7 @@ import { AccountType } from '@local/types';
 import { useState, useEffect } from 'react';
 
 import { AccountsList } from '../../components/accounts-list/accounts-list';
-import { IAccountsListRowProps } from '../../components/accounts-list/accounts-list.row';
+import { AccountsListRowProps } from '../../components/accounts-list/accounts-list.row';
 import { Loader } from '../../components/loader/loader';
 import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
@@ -11,7 +11,7 @@ import { formatCurrency } from '../../utils/formatCurrency';
 
 export const Accounts = (): JSX.Element => {
   const { data: accountsRaw, isLoading } = useAllAccounts();
-  const [accounts, setAccounts] = useState<IAccountsListRowProps[]>([]);
+  const [accounts, setAccounts] = useState<AccountsListRowProps[]>([]);
 
   useEffect(() => {
     if (!accountsRaw || isLoading) {
@@ -23,6 +23,7 @@ export const Accounts = (): JSX.Element => {
         label: name,
         link: `/accounts/${_id}`,
         balanceAmount: formatCurrency(balance),
+        type,
         accountType: type.charAt(0).toUpperCase() + type.slice(1),
         id: _id,
       }))
@@ -30,19 +31,18 @@ export const Accounts = (): JSX.Element => {
   }, [accountsRaw, isLoading]);
 
   const savingsAccounts = accounts.filter(
-    ({ accountType }) =>
-      accountType !== AccountType.loan &&
-      accountType !== AccountType.investment &&
-      accountType !== AccountType.credit
+    ({ type }) =>
+      type !== AccountType.loan &&
+      type !== AccountType.investment &&
+      type !== AccountType.credit
   );
 
   const investmentAccounts = accounts.filter(
-    ({ accountType }) => accountType === AccountType.investment
+    ({ type }) => type === AccountType.investment
   );
 
   const creditAndLoanAccounts = accounts.filter(
-    ({ accountType }) =>
-      accountType === AccountType.loan || accountType === AccountType.credit
+    ({ type }) => type === AccountType.loan || type === AccountType.credit
   );
 
   return isLoading ? (
