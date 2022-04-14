@@ -194,7 +194,7 @@ export const BalanceGraph = ({
     const latestTransactionTimestamp = new Date(
       allTransactions.sort(
         (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-      )[0].date ?? now
+      )?.[0]?.date ?? now
     );
 
     const oldestVisibleDate = new Date();
