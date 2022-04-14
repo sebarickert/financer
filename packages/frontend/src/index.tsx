@@ -1,18 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter as Router, useLocation } from 'react-router-dom';
 
 import { App } from './App';
 import './assets/tailwind.css';
+import { LoaderSuspense } from './components/loader/loader-suspense';
 import { ScrollToTop } from './components/scroll-to-top/scroll-to-top';
 import { SEO } from './components/seo/seo';
 import { PageInfoProvider } from './context/pageInfoContext';
+import { ErrorBoundaryHandler } from './ErrorBoundary';
 import { reportWebVitals } from './reportWebVitals';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { isUpdateAllowed } from './utils/allowedUpdateLocations';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      suspense: true,
+      staleTime: 300000,
+    },
+  },
+});
 
 const Root = (): JSX.Element => {
   const { pathname } = useLocation();
@@ -45,21 +54,29 @@ const Root = (): JSX.Element => {
   return (
     <React.StrictMode>
       <QueryClientProvider client={queryClient}>
-        <PageInfoProvider>
-          <SEO />
-          <ScrollToTop />
-          <App />
-        </PageInfoProvider>
+        <ErrorBoundaryHandler>
+          <LoaderSuspense>
+            <PageInfoProvider>
+              <SEO />
+              <ScrollToTop />
+              <App />
+            </PageInfoProvider>
+          </LoaderSuspense>
+        </ErrorBoundaryHandler>
       </QueryClientProvider>
     </React.StrictMode>
   );
 };
 
-ReactDOM.render(
+const container = document.getElementById('root');
+if (!container) {
+  throw new Error('No container found');
+}
+const root = createRoot(container);
+root.render(
   <Router>
     <Root />
-  </Router>,
-  document.getElementById('root')
+  </Router>
 );
 
 // If you want your app to work offline and load faster, you can change

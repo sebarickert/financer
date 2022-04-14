@@ -7,7 +7,6 @@ import { Heading } from '../../components/heading/heading';
 import { IconName } from '../../components/icon/icon';
 import { LinkList } from '../../components/link-list/link-list';
 import { LinkListLink } from '../../components/link-list/link-list.link';
-import { Loader } from '../../components/loader/loader';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { TransactionStackedList } from '../../components/transaction-stacked-list/transaction-stacked-list';
 import { ITransactionStackedListRowProps as TransactionStackedListRowProps } from '../../components/transaction-stacked-list/transaction-stacked-list.row';
@@ -32,7 +31,7 @@ import { AccountDeleteModal } from './account-modals/AccountDeleteModal';
 import { AccountUpdateMarketValueModal } from './account-modals/AccountUpdateMarketValueModal';
 import { AccountBalanceHistoryChart } from './AccountBalanceHistoryChart';
 
-export const Account = (): JSX.Element => {
+export const Account = (): JSX.Element | null => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const deleteAccount = useDeleteAccount();
@@ -169,9 +168,9 @@ export const Account = (): JSX.Element => {
     }
   };
 
-  return isLoadingAccount || !account || !transactions || !id ? (
-    <Loader loaderColor="blue" />
-  ) : (
+  if (isLoadingAccount || !account || !transactions || !id) return null;
+
+  return (
     <>
       <UpdatePageInfo title={`${account.name}`} backLink="/accounts" />
       {errors.length > 0 && (

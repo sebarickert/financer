@@ -1,6 +1,6 @@
 import { Heading } from '../../components/heading/heading';
 import { IconName } from '../../components/icon/icon';
-import { Loader } from '../../components/loader/loader';
+import { Loader, LoaderColor } from '../../components/loader/loader';
 import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { TransactionStackedList } from '../../components/transaction-stacked-list/transaction-stacked-list';
@@ -12,7 +12,7 @@ export const Expenses = (): JSX.Element => {
   const [expenses] = useAllExpensesGroupByMonth();
 
   return expenses === null ? (
-    <Loader loaderColor="blue" />
+    <Loader loaderColor={LoaderColor.blue} />
   ) : (
     <>
       <UpdatePageInfo title="Expenses" />

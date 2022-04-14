@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Loader } from '../../../../components/loader/loader';
+import { Loader, LoaderColor } from '../../../../components/loader/loader';
 import { ModalCustom } from '../../../../components/modal/custom/modal.custom';
 import { Select } from '../../../../components/select/select';
 import { UpdatePageInfo } from '../../../../components/seo/updatePageInfo';
@@ -22,7 +22,7 @@ export const UserDefaultTransferSourceAccount = (): JSX.Element => {
   };
 
   return isLoadingAccounts || !accounts ? (
-    <Loader loaderColor="blue" />
+    <Loader loaderColor={LoaderColor.blue} />
   ) : (
     <>
       <UpdatePageInfo

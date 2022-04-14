@@ -5,10 +5,7 @@ import { getAllTransactionCategoryMappings } from '../../services/TransactionCat
 export const useAllTransactionCategoryMappings = () => {
   const transactionCategoryMappingsQuery = useQuery(
     ['transactionCategoryMappings'],
-    getAllTransactionCategoryMappings,
-    {
-      staleTime: 300000,
-    }
+    getAllTransactionCategoryMappings
   );
 
   return transactionCategoryMappingsQuery.data || [];

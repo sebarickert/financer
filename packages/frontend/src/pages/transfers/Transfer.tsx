@@ -5,7 +5,7 @@ import { Button } from '../../components/button/button';
 import { ButtonGroup } from '../../components/button/button.group';
 import { DescriptionList } from '../../components/description-list/description-list';
 import { DescriptionListItem } from '../../components/description-list/description-list.item';
-import { Loader } from '../../components/loader/loader';
+import { Loader, LoaderColor } from '../../components/loader/loader';
 import { ModalConfirm } from '../../components/modal/confirm/modal.confirm';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { useAccountById } from '../../hooks/account/useAccountById';
@@ -71,7 +71,7 @@ export const Transfer = (): JSX.Element => {
   }, [transfer, setTargetFromAccountId, setTargetToAccountId]);
 
   return !transfer || !transactionCategoryMapping || !transactionCategories ? (
-    <Loader loaderColor="blue" />
+    <Loader loaderColor={LoaderColor.blue} />
   ) : (
     <>
       <UpdatePageInfo

@@ -2,7 +2,7 @@ import { CreateAccountDto } from '@local/types';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { Loader } from '../../components/loader/loader';
+import { Loader, LoaderColor } from '../../components/loader/loader';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { useAccountById } from '../../hooks/account/useAccountById';
 import { useEditAccount } from '../../hooks/account/useEditAccount';
@@ -40,7 +40,7 @@ export const EditAccount = (): JSX.Element => {
   };
 
   return isLoading || !account ? (
-    <Loader loaderColor="blue" />
+    <Loader loaderColor={LoaderColor.blue} />
   ) : (
     <>
       <UpdatePageInfo

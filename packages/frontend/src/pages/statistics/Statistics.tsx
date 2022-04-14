@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { DescriptionList } from '../../components/description-list/description-list';
 import { DescriptionListItem } from '../../components/description-list/description-list.item';
 import { IconName } from '../../components/icon/icon';
-import { Loader } from '../../components/loader/loader';
+import { Loader, LoaderColor } from '../../components/loader/loader';
 import { QuickLinks } from '../../components/quick-links/quick-links';
 import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
@@ -180,7 +180,7 @@ export const Statistics = (): JSX.Element => {
   ];
 
   return visibleTransactions === null ? (
-    <Loader loaderColor="blue" />
+    <Loader loaderColor={LoaderColor.blue} />
   ) : (
     <>
       <UpdatePageInfo title="Statistics" />

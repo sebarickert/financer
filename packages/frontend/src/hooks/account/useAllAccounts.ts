@@ -5,9 +5,7 @@ import { useQuery, UseQueryResult } from 'react-query';
 import { getAllAccounts } from '../../services/AccountService';
 
 export const useAllAccounts = (): UseQueryResult<AccountDto[]> => {
-  return useQuery<AccountDto[]>(['accounts'], getAllAccounts, {
-    staleTime: 300000,
-  });
+  return useQuery<AccountDto[]>(['accounts'], getAllAccounts);
 };
 
 export const useAllAccountsByType = (

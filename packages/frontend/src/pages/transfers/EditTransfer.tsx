@@ -2,7 +2,7 @@ import { UpdateTransferDto } from '@local/types';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { Loader } from '../../components/loader/loader';
+import { Loader, LoaderColor } from '../../components/loader/loader';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { useTransactionCategoryMappingsByTransactionId } from '../../hooks/transactionCategoryMapping/useTransactionCategoryMappingsByTransactionId';
 import { useEditTransfer } from '../../hooks/transfer/useEditTransfer';
@@ -42,7 +42,7 @@ export const EditTransfer = (): JSX.Element => {
   };
 
   return !transfer || !transactionCategoryMapping ? (
-    <Loader loaderColor="blue" />
+    <Loader loaderColor={LoaderColor.blue} />
   ) : (
     <>
       <UpdatePageInfo title="Edit transfer" />

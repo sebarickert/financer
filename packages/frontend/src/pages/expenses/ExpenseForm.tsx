@@ -9,7 +9,7 @@ import { Alert } from '../../components/alert/alert';
 import { Button } from '../../components/button/button';
 import { Form } from '../../components/form/form';
 import { Input } from '../../components/input/input';
-import { Loader } from '../../components/loader/loader';
+import { Loader, LoaderColor } from '../../components/loader/loader';
 import { Select, Option } from '../../components/select/select';
 import { TransactionCategoriesForm } from '../../components/transaction-categories-form/transaction-categories-form';
 import { useAllAccounts } from '../../hooks/account/useAllAccounts';
@@ -163,7 +163,7 @@ export const ExpenseForm = ({
   };
 
   return accounts === null || transactionCategories === null ? (
-    <Loader loaderColor="blue" />
+    <Loader loaderColor={LoaderColor.blue} />
   ) : (
     <>
       {errors.length > 0 && (

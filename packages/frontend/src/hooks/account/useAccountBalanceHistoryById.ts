@@ -13,10 +13,7 @@ export const useAccountBalanceHistoryById = (
   const [targetId, setTargetId] = useState(id);
   const balanceHistoryQuery = useQuery(
     ['account', 'account-balance-history', id],
-    () => getAccountBalanceHistoryById(targetId ?? ''),
-    {
-      staleTime: 300000,
-    }
+    () => getAccountBalanceHistoryById(targetId ?? '')
   );
 
   return [balanceHistoryQuery.data ?? null, setTargetId];

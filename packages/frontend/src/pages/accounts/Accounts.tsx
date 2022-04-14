@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { AccountsList } from '../../components/accounts-list/accounts-list';
 import { AccountsListRowProps } from '../../components/accounts-list/accounts-list.row';
 import { IconName } from '../../components/icon/icon';
-import { Loader } from '../../components/loader/loader';
+import { Loader, LoaderColor } from '../../components/loader/loader';
 import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { useAllAccounts } from '../../hooks/account/useAllAccounts';
@@ -47,7 +47,7 @@ export const Accounts = (): JSX.Element => {
   );
 
   return isLoading ? (
-    <Loader loaderColor="blue" />
+    <Loader loaderColor={LoaderColor.blue} />
   ) : (
     <>
       <UpdatePageInfo title="Accounts" />
