@@ -73,7 +73,7 @@ export const Income = (): JSX.Element => {
         title={`${income.description}`}
         backLink="/statistics/incomes"
       />
-      <DescriptionList label="Details of income" className="mb-6">
+      <DescriptionList label="Details" className="mb-6">
         <DescriptionListItem label="Amount">
           {formatCurrency(income.amount)}
         </DescriptionListItem>
@@ -83,6 +83,7 @@ export const Income = (): JSX.Element => {
         <DescriptionListItem label="To account">
           {account?.name ?? '-'}
         </DescriptionListItem>
+        <DescriptionListItem label="Type">Income</DescriptionListItem>
       </DescriptionList>
       {transactionCategoryMapping.length > 0 && (
         <DescriptionList label="Categories" testId="categories-wrapper">

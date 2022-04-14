@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { Alert } from '../../components/alert/alert';
 import { Heading } from '../../components/heading/heading';
+import { IconName } from '../../components/icon/icon';
 import { LinkList } from '../../components/link-list/link-list';
 import { LinkListLink } from '../../components/link-list/link-list.link';
 import { Loader } from '../../components/loader/loader';
@@ -229,7 +230,7 @@ export const Account = (): JSX.Element => {
         <LinkListLink
           link={`/accounts/${id}/edit`}
           testId="edit-account"
-          icon="cog"
+          icon={IconName.cog}
         >
           Edit account
         </LinkListLink>

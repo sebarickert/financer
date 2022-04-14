@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { IconName } from '../../../components/icon/icon';
 import { LinkListButton } from '../../../components/link-list/link-list.button';
 import { ModalConfirmActions } from '../../../components/modal/confirm/modal.confirm.actions';
 import { ModalConfirmHeader } from '../../../components/modal/confirm/modal.confirm.header';
@@ -18,7 +19,7 @@ export const AccountDeleteModal = ({
   return (
     <>
       <LinkListButton
-        icon="trash"
+        icon={IconName.trash}
         handleClick={handleToggleOpen}
         testId="delete-account"
       >

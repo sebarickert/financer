@@ -1,4 +1,5 @@
 import { Heading } from '../../components/heading/heading';
+import { IconName } from '../../components/icon/icon';
 import { Loader } from '../../components/loader/loader';
 import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
@@ -19,7 +20,7 @@ export const Expenses = (): JSX.Element => {
         <QuickLinksItem
           title="Add expense"
           link="/statistics/expenses/add"
-          iconName="download"
+          iconName={IconName.download}
           iconBackgroundColor="red"
           testId="add-expense"
         />

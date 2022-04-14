@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 
 import { AccountsList } from '../../components/accounts-list/accounts-list';
 import { AccountsListRowProps } from '../../components/accounts-list/accounts-list.row';
+import { IconName } from '../../components/icon/icon';
 import { Loader } from '../../components/loader/loader';
 import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
@@ -55,7 +56,7 @@ export const Accounts = (): JSX.Element => {
           <QuickLinksItem
             title="Add account"
             link="/accounts/add"
-            iconName="view-grid-add"
+            iconName={IconName.viewGridAdd}
             iconBackgroundColor="blue"
             testId="add-account"
           />

@@ -1,6 +1,8 @@
 import { Transition } from '@headlessui/react';
 import React from 'react';
 
+import { IconName } from '../icon/icon';
+
 import { MobileNavigationItem } from './mobile-navigation.item';
 
 interface IMobileNavigationActionsBodyProps {
@@ -35,7 +37,7 @@ export const MobileNavigationActionsBody = ({
         <ul className="grid grid-cols-3 justify-center items-center">
           <MobileNavigationItem
             label="Income"
-            iconName="download"
+            iconName={IconName.download}
             link="/statistics/incomes/add"
             ariaLabel="Add new income transaction"
             onClick={() => onClick(true)}
@@ -43,7 +45,7 @@ export const MobileNavigationActionsBody = ({
           />
           <MobileNavigationItem
             label="Expense"
-            iconName="upload"
+            iconName={IconName.upload}
             link="/statistics/expenses/add"
             ariaLabel="Add new expense transaction"
             onClick={() => onClick(true)}
@@ -51,7 +53,7 @@ export const MobileNavigationActionsBody = ({
           />
           <MobileNavigationItem
             label="Transfer"
-            iconName="switch-horizontal"
+            iconName={IconName.switchHorizontal}
             link="/statistics/transfers/add"
             ariaLabel="Add new transfer transaction"
             onClick={() => onClick(true)}

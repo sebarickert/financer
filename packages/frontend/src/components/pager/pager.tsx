@@ -1,4 +1,4 @@
-import { Icon } from '../icon/icon';
+import { Icon, IconName } from '../icon/icon';
 
 interface PagerProps {
   pageCount: number;
@@ -34,7 +34,7 @@ const PagerButton = ({
     >
       <span className="sr-only">{children}</span>
       <Icon
-        type={isNext ? 'arrow-right' : 'arrow-left'}
+        type={isNext ? IconName.arrowRight : IconName.arrowLeft}
         className="group-disabled:opacity-50"
       />
     </button>

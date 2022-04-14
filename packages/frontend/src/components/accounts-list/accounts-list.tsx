@@ -19,11 +19,11 @@ export const AccountsList = ({
     <LinkList label={label} className={`${className}`}>
       {rows.map(({ balanceAmount, label: rowLabel, link, accountType }) => {
         const accountTypeIconMapping: { [key: string]: IconName } = {
-          cash: 'cash',
-          savings: 'star',
-          investment: 'trending-up',
-          credit: 'credit-card',
-          loan: 'library',
+          cash: IconName.cash,
+          savings: IconName.star,
+          investment: IconName.trendingUp,
+          credit: IconName.creditCard,
+          loan: IconName.library,
         };
 
         return (

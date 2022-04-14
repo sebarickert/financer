@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+import { IconName } from '../../../components/icon/icon';
 import { Loader } from '../../../components/loader/loader';
 import { QuickLinksItem } from '../../../components/quick-links/quick-links.item';
 import { UpdatePageInfo } from '../../../components/seo/updatePageInfo';
@@ -45,7 +46,7 @@ export const TransactionCategories = (): JSX.Element => {
         <QuickLinksItem
           title="Add category"
           link="/profile/transaction-categories/add"
-          iconName="tag"
+          iconName={IconName.tag}
           iconBackgroundColor="blue"
           testId="add-category"
         />

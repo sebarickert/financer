@@ -1,9 +1,8 @@
 import { TransactionCategoryMappingDto } from '@local/types';
-import React from 'react';
 
 import { Button } from '../button/button';
 import { Divider } from '../divider/divider';
-import { Icon } from '../icon/icon';
+import { Icon, IconName } from '../icon/icon';
 import { Input } from '../input/input';
 import { Select, Option } from '../select/select';
 
@@ -80,7 +79,7 @@ export const TransactionCategoriesFormItem = ({
                 onClick={setUnallocatedAmount}
               >
                 <span className="sr-only">Add unallocated amount</span>
-                <Icon type="plus-circle" />
+                <Icon type={IconName.plusCircle} />
               </button>
             </div>
           </div>
