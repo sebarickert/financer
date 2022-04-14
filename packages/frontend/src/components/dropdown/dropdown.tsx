@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import { Icon } from '../icon/icon';
+import { Icon, IconName } from '../icon/icon';
 
 import { DropdownBody } from './dropdown.body';
 import { DropdownItem } from './dropdown.item';
@@ -72,7 +72,7 @@ export const Dropdown = ({
         >
           {label}
           <Icon
-            type="chevron-down"
+            type={IconName.chevronDown}
             aria-hidden="true"
             className="-mr-1 ml-1 !h-5 !w-5"
           />

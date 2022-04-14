@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-import { Icon } from '../icon/icon';
+import { Icon, IconName } from '../icon/icon';
 
 import { MobileNavigationActionsBody } from './mobile-navigation.actions.body';
 
@@ -55,15 +55,13 @@ export const MobileNavigationActions = (): JSX.Element => {
         onClick={() => setIsActionsModalHidden(!isActionsModalHidden)}
         ref={mobileNavigationToggleButtonRef}
       >
-        {/* <span className="p-1 text-white bg-blue-financer rounded-lg"> */}
         <span
           className={`${
             !isActionsModalHidden ? 'rotate-45' : ''
           } transition duration-250 ease-in-out block`}
         >
-          <Icon type="plus" />
+          <Icon type={IconName.plus} />
         </span>
-        {/* </span> */}
       </button>
       <MobileNavigationActionsBody
         isModalHidden={isActionsModalHidden}

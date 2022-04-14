@@ -1,3 +1,5 @@
+import { IconName } from '../icon/icon';
+
 import { MobileNavigationActions } from './mobile-navigation.actions';
 import { MobileNavigationItem } from './mobile-navigation.item';
 
@@ -8,14 +10,14 @@ export const MobileNavigation = (): JSX.Element => {
         <ul className={`grid grid-cols-5 relative`}>
           <MobileNavigationItem
             label="Home"
-            iconName="home"
+            iconName={IconName.home}
             link="/"
             isExact
             type="standalone"
           />
           <MobileNavigationItem
             label="Statistics"
-            iconName="chart-bar"
+            iconName={IconName.chartBar}
             link="/statistics"
             disallowedPathEndings={['add']}
             type="standalone"
@@ -23,13 +25,13 @@ export const MobileNavigation = (): JSX.Element => {
           <MobileNavigationActions />
           <MobileNavigationItem
             label="Accounts"
-            iconName="view-grid"
+            iconName={IconName.viewGrid}
             link="/accounts"
             type="standalone"
           />
           <MobileNavigationItem
             label="Profile"
-            iconName="user-circle"
+            iconName={IconName.userCircle}
             link="/profile"
             type="standalone"
           />

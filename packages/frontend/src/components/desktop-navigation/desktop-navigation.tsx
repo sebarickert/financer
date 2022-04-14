@@ -1,3 +1,5 @@
+import { IconName } from '../icon/icon';
+
 import { DesktopNavigationItem } from './desktop-navigation.item';
 
 export const DesktopNavigation = (): JSX.Element => {
@@ -7,24 +9,24 @@ export const DesktopNavigation = (): JSX.Element => {
         <ul className="-mr-4">
           <DesktopNavigationItem
             label="Home"
-            iconName="home"
+            iconName={IconName.home}
             link="/"
             isExact
           />
           <DesktopNavigationItem
             label="Statistics"
-            iconName="chart-bar"
+            iconName={IconName.chartBar}
             link="/statistics"
             disallowedPathEndings={['add']}
           />
           <DesktopNavigationItem
             label="Accounts"
-            iconName="view-grid"
+            iconName={IconName.viewGrid}
             link="/accounts"
           />
           <DesktopNavigationItem
             label="Profile"
-            iconName="user-circle"
+            iconName={IconName.userCircle}
             link="/profile"
           />
         </ul>
@@ -36,19 +38,19 @@ export const DesktopNavigation = (): JSX.Element => {
         <ul className="-mr-4">
           <DesktopNavigationItem
             label="Income"
-            iconName="download"
+            iconName={IconName.download}
             link="/statistics/incomes/add"
             ariaLabel="Add new income transaction"
           />
           <DesktopNavigationItem
             label="Expense"
-            iconName="upload"
+            iconName={IconName.upload}
             link="/statistics/expenses/add"
             ariaLabel="Add new expense transaction"
           />
           <DesktopNavigationItem
             label="Transfer"
-            iconName="switch-horizontal"
+            iconName={IconName.switchHorizontal}
             link="/statistics/transfers/add"
             ariaLabel="Add new transfer transaction"
           />
@@ -61,7 +63,7 @@ export const DesktopNavigation = (): JSX.Element => {
         <ul className="-mr-4">
           <DesktopNavigationItem
             label="Sign out"
-            iconName="logout"
+            iconName={IconName.logout}
             link="/auth/logout"
           />
         </ul>

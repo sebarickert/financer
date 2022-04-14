@@ -1,14 +1,13 @@
 import { TransactionDto } from '@local/types';
 import { useEffect, useState } from 'react';
 
-import { Dropdown } from '../../components/dropdown/dropdown';
-import { Heading } from '../../components/heading/heading';
+import { DescriptionList } from '../../components/description-list/description-list';
+import { DescriptionListItem } from '../../components/description-list/description-list.item';
+import { IconName } from '../../components/icon/icon';
 import { Loader } from '../../components/loader/loader';
 import { QuickLinks } from '../../components/quick-links/quick-links';
 import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
-import { StatsGroup } from '../../components/stats/stats.group';
-import { StatsItem } from '../../components/stats/stats.item';
 import { TransactionStackedList } from '../../components/transaction-stacked-list/transaction-stacked-list';
 import {
   ITransactionStackedListRowProps,
@@ -185,42 +184,37 @@ export const Statistics = (): JSX.Element => {
   ) : (
     <>
       <UpdatePageInfo title="Statistics" />
-      <div className="grid grid-cols-[1fr,auto] gap-4 items-end justify-between bg-white mb-4">
-        <Heading>{`${pageVisibleMonth}, ${pageVisibleYear}`}</Heading>
-        <Dropdown
-          items={filterItems}
-          label="Filter"
-          className="mb-[-3px] sm:mb-[-1px]"
-        />
-      </div>
-      <StatsGroup>
-        <StatsItem statLabel="Incomes">
+      <DescriptionList
+        label={`${pageVisibleMonth}, ${pageVisibleYear}`}
+        filterOptions={filterItems}
+      >
+        <DescriptionListItem label="Incomes">
           {Number.isNaN(totalIncomes) ? '-' : formatCurrency(totalIncomes)}
-        </StatsItem>
-        <StatsItem statLabel="Expenses">
+        </DescriptionListItem>
+        <DescriptionListItem label="Expenses">
           {Number.isNaN(totalExpenses) ? '-' : formatCurrency(totalExpenses)}
-        </StatsItem>
-      </StatsGroup>
+        </DescriptionListItem>
+      </DescriptionList>
       <TransactionStackedList className="mt-4" rows={visibleTransactions} />
       <QuickLinks className="mt-8">
         <QuickLinksItem
           title="Incomes"
           link="/statistics/incomes"
-          iconName="download"
+          iconName={IconName.download}
           iconBackgroundColor="green"
           description="Go to incomes page where you are able to manage your income transactions."
         />
         <QuickLinksItem
           title="Expenses"
           link="/statistics/expenses"
-          iconName="upload"
+          iconName={IconName.upload}
           iconBackgroundColor="red"
           description="Go to expenses page where you are able to manage your expense transactions."
         />
         <QuickLinksItem
           title="Transfers"
           link="/statistics/transfers"
-          iconName="switch-horizontal"
+          iconName={IconName.switchHorizontal}
           description="Go to transfers page where you are able to manage your transfer transactions."
         />
       </QuickLinks>

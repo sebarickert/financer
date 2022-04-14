@@ -4,6 +4,7 @@ import { CtaBlockItem } from '../../components/cta-block/cta-block.item';
 import { DashboardLatestTransactions } from '../../components/dashboard-latest-transactions/dashboard-latest-transactions';
 import { DashboardStats } from '../../components/dashboard-stats/dashboard.stats';
 import { Heading } from '../../components/heading/heading';
+import { IconName } from '../../components/icon/icon';
 import { QuickLinks } from '../../components/quick-links/quick-links';
 import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
@@ -19,19 +20,19 @@ export const Dashboard = (): JSX.Element => {
             <CtaBlock label="Quick transaction links">
               <CtaBlockItem
                 label="Income"
-                iconName="download"
+                iconName={IconName.download}
                 link="/statistics/incomes/add"
                 ariaLabel="Add new income transaction"
               />
               <CtaBlockItem
                 label="Expense"
-                iconName="upload"
+                iconName={IconName.upload}
                 link="/statistics/expenses/add"
                 ariaLabel="Add new expense transaction"
               />
               <CtaBlockItem
                 label="Transfer"
-                iconName="switch-horizontal"
+                iconName={IconName.switchHorizontal}
                 link="/statistics/transfers/add"
                 ariaLabel="Add new transfer transaction"
               />
@@ -47,21 +48,21 @@ export const Dashboard = (): JSX.Element => {
           <QuickLinksItem
             title="Incomes"
             link="/statistics/incomes"
-            iconName="download"
+            iconName={IconName.download}
             iconBackgroundColor="green"
             description="Go to incomes page where you are able to manage your income transactions."
           />
           <QuickLinksItem
             title="Expenses"
             link="/statistics/expenses"
-            iconName="upload"
+            iconName={IconName.upload}
             iconBackgroundColor="red"
             description="Go to expenses page where you are able to manage your expense transactions."
           />
           <QuickLinksItem
             title="Transfers"
             link="/statistics/transfers"
-            iconName="switch-horizontal"
+            iconName={IconName.switchHorizontal}
             description="Go to transfers page where you are able to manage your transfer transactions."
           />
         </QuickLinks>

@@ -14,7 +14,10 @@ export const DescriptionListItem = ({
       <dt className="text-xs font-medium text-gray-700 truncate lg:text-sm">
         {label}
       </dt>
-      <dd className="text-xl font-bold tracking-tight" data-testid={testId}>
+      <dd
+        className="text-xl font-bold tracking-tight truncate"
+        data-testid={testId}
+      >
         {children}
       </dd>
     </>

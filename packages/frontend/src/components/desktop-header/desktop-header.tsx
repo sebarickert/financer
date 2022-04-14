@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 
 import { usePageInfoContext } from '../../context/pageInfoContext';
 import { Heading } from '../heading/heading';
-import { Icon } from '../icon/icon';
+import { Icon, IconName } from '../icon/icon';
 
 export const DesktopHeader = (): JSX.Element => {
   const [{ title, backLink }] = usePageInfoContext();
@@ -17,7 +17,7 @@ export const DesktopHeader = (): JSX.Element => {
             data-testid="header-back-link"
           >
             <span className="sr-only">Go back</span>
-            <Icon type={'chevron-left'} className="stroke-gray-300" />
+            <Icon type={IconName.chevronLeft} className="stroke-gray-300" />
           </NavLink>
         )}
         <Heading variant="h1" testId="page-main-heading">

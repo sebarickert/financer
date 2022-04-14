@@ -30,38 +30,39 @@ import { IconUserCircle } from './icon.userCircle';
 import { IconViewGrid } from './icon.viewGrid';
 import { IconViewGridAdd } from './icon.viewGridAdd';
 
-export type IconName =
-  | 'switch-horizontal'
-  | 'plus-circle'
-  | 'minus-circle'
-  | 'home'
-  | 'home-solid'
-  | 'user'
-  | 'chart-bar'
-  | 'view-grid'
-  | 'user-circle'
-  | 'plus'
-  | 'download'
-  | 'upload'
-  | 'logout'
-  | 'tag'
-  | 'exclamation'
-  | 'cloud-download'
-  | 'chevron-down'
-  | 'arrow-left'
-  | 'arrow-right'
-  | 'view-grid-add'
-  | 'cog'
-  | 'chevron-right'
-  | 'chevron-left'
-  | 'trash'
-  | 'cash'
-  | 'credit-card'
-  | 'trending-up'
-  | 'trending-down'
-  | 'library'
-  | 'star'
-  | 'collection';
+export enum IconName {
+  switchHorizontal = 'switch-horizontal',
+  plusCircle = 'plus-circle',
+  minusCircle = 'minus-circle',
+  home = 'home',
+  homeSolid = 'home-solid',
+  user = 'user',
+  chartBar = 'chart-bar',
+  viewGrid = 'view-grid',
+  userCircle = 'user-circle',
+  plus = 'plus',
+  download = 'download',
+  upload = 'upload',
+  logout = 'logout',
+  tag = 'tag',
+  exclamation = 'exclamation',
+  cloudDownload = 'cloud-download',
+  chevronDown = 'chevron-down',
+  arrowLeft = 'arrow-left',
+  arrowRight = 'arrow-right',
+  viewGridAdd = 'view-grid-add',
+  cog = 'cog',
+  chevronRight = 'chevron-right',
+  chevronLeft = 'chevron-left',
+  trash = 'trash',
+  cash = 'cash',
+  creditCard = 'credit-card',
+  trendingUp = 'trending-up',
+  trendingDown = 'trending-down',
+  library = 'library',
+  star = 'star',
+  collection = 'collection',
+}
 interface IconProps {
   type: IconName;
   className?: string;

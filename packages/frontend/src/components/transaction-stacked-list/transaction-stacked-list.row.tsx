@@ -27,9 +27,9 @@ export const TransactionStackedListRow = ({
   const iconTypeMapping: {
     [key in 'expense' | 'income' | 'transfer']: IconName;
   } = {
-    expense: 'upload',
-    income: 'download',
-    transfer: 'switch-horizontal',
+    expense: IconName.upload,
+    income: IconName.download,
+    transfer: IconName.switchHorizontal,
   };
 
   return (
@@ -74,7 +74,7 @@ export const TransactionStackedListRow = ({
             {transactionAmount}
           </span>
           <Icon
-            type={'chevron-right'}
+            type={IconName.chevronRight}
             className=" stroke-gray-300 flex-shrink-0 pointer-events-none"
           />
         </span>

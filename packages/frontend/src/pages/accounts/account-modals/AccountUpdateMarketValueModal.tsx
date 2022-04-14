@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { IconName } from '../../../components/icon/icon';
 import { Input } from '../../../components/input/input';
 import { LinkListButton } from '../../../components/link-list/link-list.button';
 import { ModalCustomActions } from '../../../components/modal/custom/modal.custom.actions';
@@ -35,7 +36,7 @@ export const AccountUpdateMarketValueModal = ({
 
   return (
     <>
-      <LinkListButton icon="trash" handleClick={handleToggleOpen}>
+      <LinkListButton icon={IconName.trash} handleClick={handleToggleOpen}>
         Update current market value
       </LinkListButton>
       {isOpen && (

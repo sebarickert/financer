@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 
 import { usePageInfoContext } from '../../context/pageInfoContext';
 import { Heading } from '../heading/heading';
-import { Icon } from '../icon/icon';
+import { Icon, IconName } from '../icon/icon';
 
 export const MobileHeader = (): JSX.Element => {
   const [{ title, backLink }] = usePageInfoContext();
@@ -21,7 +21,7 @@ export const MobileHeader = (): JSX.Element => {
             data-testid="header-back-link"
           >
             <span className="sr-only">Go back</span>
-            <Icon type={'chevron-left'} />
+            <Icon type={IconName.chevronLeft} />
           </NavLink>
         )}
         <Heading
