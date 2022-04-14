@@ -1,3 +1,4 @@
+import { AccountType } from '@local/types';
 import { useState, useEffect } from 'react';
 
 import { AccountsList } from '../../components/accounts-list/accounts-list';
@@ -28,6 +29,22 @@ export const Accounts = (): JSX.Element => {
     );
   }, [accountsRaw, isLoading]);
 
+  const savingsAccounts = accounts.filter(
+    ({ accountType }) =>
+      accountType !== AccountType.loan &&
+      accountType !== AccountType.investment &&
+      accountType !== AccountType.credit
+  );
+
+  const investmentAccounts = accounts.filter(
+    ({ accountType }) => accountType === AccountType.investment
+  );
+
+  const creditAndLoanAccounts = accounts.filter(
+    ({ accountType }) =>
+      accountType === AccountType.loan || accountType === AccountType.credit
+  );
+
   return isLoading ? (
     <Loader loaderColor="blue" />
   ) : (
@@ -43,29 +60,18 @@ export const Accounts = (): JSX.Element => {
             testId="add-account"
           />
         </section>
-        <AccountsList
-          label="Savings"
-          rows={accounts.filter(
-            ({ accountType }) =>
-              accountType.toLowerCase() !== 'loan' &&
-              accountType.toLowerCase() !== 'investment' &&
-              accountType.toLowerCase() !== 'credit'
-          )}
-        />
-        <AccountsList
-          label="Investments"
-          rows={accounts.filter(
-            ({ accountType }) => accountType.toLowerCase() === 'investment'
-          )}
-        />
-        <AccountsList
-          label="Credits and Loans"
-          rows={accounts.filter(
-            ({ accountType }) =>
-              accountType.toLowerCase() === 'loan' ||
-              accountType.toLowerCase() === 'credit'
-          )}
-        />
+        {savingsAccounts?.length > 0 && (
+          <AccountsList label="Savings" rows={savingsAccounts} />
+        )}
+        {investmentAccounts?.length > 0 && (
+          <AccountsList label="Investments" rows={investmentAccounts} />
+        )}
+        {creditAndLoanAccounts?.length > 0 && (
+          <AccountsList
+            label="Credits and Loans"
+            rows={creditAndLoanAccounts}
+          />
+        )}
       </section>
     </>
   );
