@@ -20,6 +20,9 @@ export class Account {
 
   @Prop({ required: true, type: MogooseTypes.ObjectId, ref: User.name })
   owner: ObjectId;
+
+  @Prop({ default: false })
+  isDeleted: boolean;
 }
 
 export const AccountSchema = SchemaFactory.createForClass(Account);
