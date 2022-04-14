@@ -1,4 +1,6 @@
 import {
+  IsBoolean,
+  isBoolean,
   IsEnum,
   IsMongoId,
   IsNotEmpty,
@@ -27,4 +29,7 @@ export class AccountDto<ObjectIdType = string> {
 
   @IsMongoId()
   readonly owner: ObjectIdType;
+
+  @IsBoolean()
+  isDeleted?: boolean;
 }

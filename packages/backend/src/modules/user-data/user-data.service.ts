@@ -54,7 +54,9 @@ export class UserDataService {
     userId: ObjectId,
   ): Promise<{ filename: string; data: ExportUserDataDto }> {
     const user = await this.usersService.findOne(userId);
-    const accounts = await this.accountsService.findAllByUser(userId);
+    const accounts = await this.accountsService.findAllIncludeDeletedByUser(
+      userId,
+    );
     const accountBalanceChanges =
       await this.accountBalanceChangesService.findAllByUser(userId);
     const transactions = await this.transactionService.findAllByUser(userId);

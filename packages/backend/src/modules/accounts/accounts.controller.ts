@@ -52,8 +52,8 @@ export class AccountsController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: ObjectId) {
-    return this.accountsService.remove(+id);
+  remove(@UserId() userId: ObjectId, @Param('id') id: ObjectId) {
+    return this.accountsService.remove(id, userId);
   }
 
   @Get(':id/balance-history')

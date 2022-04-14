@@ -55,6 +55,12 @@ export class AccountsService {
   }
 
   async findAllByUser(userId: ObjectId): Promise<AccountDocument[]> {
+    return this.accountModel.find({ owner: userId, isDeleted: { $ne: true } });
+  }
+
+  async findAllIncludeDeletedByUser(
+    userId: ObjectId,
+  ): Promise<AccountDocument[]> {
     return this.accountModel.find({ owner: userId });
   }
 
@@ -100,8 +106,9 @@ export class AccountsService {
       .exec();
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} account`;
+  async remove(id: ObjectId, userId: ObjectId) {
+    await this.findOne(userId, id);
+    await this.accountModel.findByIdAndUpdate(id, { isDeleted: true });
   }
 
   async removeAllByUser(userId: ObjectId) {

@@ -17,7 +17,11 @@ export const AccountDeleteModal = ({
 
   return (
     <>
-      <LinkListButton icon="trash" handleClick={handleToggleOpen}>
+      <LinkListButton
+        icon="trash"
+        handleClick={handleToggleOpen}
+        testId="delete-account"
+      >
         Delete account
       </LinkListButton>
       {isOpen && (
@@ -44,6 +48,7 @@ export const AccountDeleteModal = ({
                 submitButtonLabel="Delete"
                 onCancel={handleToggleOpen}
                 onConfirm={handleDelete}
+                testId="delete-account"
               />
             </div>
           </div>

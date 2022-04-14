@@ -1,4 +1,11 @@
-import { IsEnum, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import {
+  IsBoolean,
+  IsEnum,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 import { AccountType } from './account-type';
 
@@ -15,4 +22,8 @@ export class UpdateAccountDto {
 
   @IsNumber({}, { message: 'Balance must be a number.' })
   readonly balance?: number;
+
+  @IsOptional()
+  @IsBoolean()
+  isDeleted?: boolean;
 }

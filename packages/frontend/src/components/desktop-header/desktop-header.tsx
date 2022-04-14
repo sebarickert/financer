@@ -14,6 +14,7 @@ export const DesktopHeader = (): JSX.Element => {
           <NavLink
             to={backLink}
             className="h-11 w-11 inline-flex items-center justify-center -ml-4"
+            data-testid="header-back-link"
           >
             <span className="sr-only">Go back</span>
             <Icon type={'chevron-left'} className="stroke-gray-300" />
