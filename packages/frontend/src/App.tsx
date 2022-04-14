@@ -14,11 +14,22 @@ export const App = (): JSX.Element => {
   const [isOnboardingVisible, setOnboardingVisible] = useState(false);
 
   useEffect(() => {
-    if (!accounts || accounts.length || isOnboardingVisible) return;
+    if (
+      !authenticationStatus?.authenticated ||
+      !accounts ||
+      accounts.length ||
+      isOnboardingVisible
+    )
+      return;
 
     setOnboardingVisible(true);
     navigate('/accounts/add');
-  }, [accounts, navigate, isOnboardingVisible]);
+  }, [
+    accounts,
+    navigate,
+    isOnboardingVisible,
+    authenticationStatus?.authenticated,
+  ]);
 
   return !authenticationStatus ? (
     <Loader />

@@ -7,7 +7,7 @@ import { DescriptionListBody } from './description-list.body';
 import { DescriptionListHeader } from './description-list.header';
 
 interface DescriptionListProps {
-  label: string;
+  label?: string;
   className?: string;
   children: React.ReactNode | React.ReactNode[];
   testId?: string;
@@ -25,12 +25,14 @@ export const DescriptionList = ({
 }: DescriptionListProps): JSX.Element => {
   return (
     <section className={`${className}`} data-testid={testId}>
-      <DescriptionListHeader
-        icon={icon}
-        label={label}
-        filterOptions={filterOptions}
-        testId={`${testId}_list-header`}
-      />
+      {label && (
+        <DescriptionListHeader
+          icon={icon}
+          label={label}
+          filterOptions={filterOptions}
+          testId={`${testId}_list-header`}
+        />
+      )}
       <DescriptionListBody testId={`${testId}_list-body`}>
         {children}
       </DescriptionListBody>

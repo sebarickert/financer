@@ -9,6 +9,10 @@ export const DescriptionListBody = ({
   children,
   testId,
 }: IDescriptionListBodyProps): JSX.Element => {
+  const isLargeCount = Children.toArray(children).filter(
+    (child) => (child as React.ReactElement).props.isLarge
+  ).length;
+
   return (
     <dl
       className="grid grid-cols-2 bg-gray-25 rounded-lg border"
@@ -20,34 +24,48 @@ export const DescriptionListBody = ({
         if ((child as React.ReactElement).type === React.Fragment) {
           return Children.map(
             (child as React.ReactElement).props.children,
-            (plaa, plaaIndex) => {
-              const plaaChildrenCount = Children.count(
+            (fragmentChildren, fragmentChildIndex) => {
+              const fragmentChildrenCount = Children.count(
                 (child as React.ReactElement).props.children
               );
 
+              const isEven = (fragmentChildIndex + 1) % 2 === 0;
+              const isSecondRow = fragmentChildIndex + 1 > 2;
+              const isTotalChildrenCountOdd = fragmentChildrenCount % 2 === 1;
+
               return (
                 <section
-                  className={`py-4 pl-6 pr-4 ${
-                    (plaaIndex + 1) % 2 === 0 ? 'border-l' : ''
-                  } ${plaaIndex + 1 > 2 ? 'border-t' : ''} ${
-                    plaaChildrenCount % 2 === 1 ? 'last:col-span-full' : ''
-                  }`}
+                  className={`py-4 pl-6 pr-4 ${isEven ? 'border-l' : ''} ${
+                    isSecondRow ? 'border-t' : ''
+                  } ${isTotalChildrenCountOdd ? 'last:col-span-full' : ''}`}
                 >
-                  {plaa}
+                  {fragmentChildren}
                 </section>
               );
             }
           );
         }
 
+        const isLarge = (child as React.ReactElement).props.isLarge;
+        const countOfIsLargeBefore = Children.toArray(children)
+          .slice(0, index)
+          .filter(
+            (currentChild) => (currentChild as React.ReactElement).props.isLarge
+          ).length;
+
+        const isEven = (index + 1 + countOfIsLargeBefore) % 2 === 0;
+        const isSecondRow = index + 1 + countOfIsLargeBefore > 2;
+        const isTotalChildrenCountOdd =
+          (childrenCount + isLargeCount) % 2 === 1;
+
         return (
           child && (
             <section
               className={`py-4 pl-6 pr-4 ${
-                (index + 1) % 2 === 0 ? 'border-l' : ''
-              } ${index + 1 > 2 ? 'border-t' : ''} ${
-                childrenCount % 2 === 1 ? 'last:col-span-full' : ''
-              }`}
+                isEven && !isLarge ? 'border-l' : ''
+              } ${isSecondRow || (isLarge && index > 0) ? 'border-t' : ''} ${
+                isTotalChildrenCountOdd ? 'last:col-span-full' : ''
+              } ${isLarge ? 'col-span-full' : ''}`}
             >
               {child}
             </section>
