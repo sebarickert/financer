@@ -1,6 +1,6 @@
 describe('Transaction category form', () => {
   beforeEach(() => {
-    cy.applyFixture('empty');
+    cy.applyFixture('accounts-only');
     cy.visit('http://localhost:3000/profile/transaction-categories/add');
   });
 
@@ -116,7 +116,6 @@ describe('Transaction category form', () => {
   });
 
   it('Should not allow set child category as parent', () => {
-    cy.applyFixture('accounts-only');
     cy.visit(
       'http://localhost:3000/profile/transaction-categories/623b58ada3deba9879422fbf/edit'
     );

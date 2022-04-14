@@ -10,7 +10,7 @@ import { Loader } from '../../../components/loader/loader';
 import { Select, Option } from '../../../components/select/select';
 import { useAllTransactionCategoriesWithCategoryTree } from '../../../hooks/transactionCategories/useAllTransactionCategories';
 
-interface ITransactionCategoryFormProps {
+interface TransactionCategoryFormProps {
   errors: string[];
   onSubmit(transactionCategory: CreateTransactionCategoryDto): void;
   submitLabel: string;
@@ -30,7 +30,7 @@ export const TransactionCategoryForm = ({
   visibility,
   optionalFooterComponent,
   currentCategoryId,
-}: ITransactionCategoryFormProps): JSX.Element => {
+}: TransactionCategoryFormProps): JSX.Element => {
   const transactionCategoriesRaw =
     useAllTransactionCategoriesWithCategoryTree(currentCategoryId);
   const [transactionCategories, setTransactionCategories] = useState<
