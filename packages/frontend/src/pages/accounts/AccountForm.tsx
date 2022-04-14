@@ -3,7 +3,7 @@ import { CreateAccountDto } from '@local/types';
 import { Alert } from '../../components/alert/alert';
 import { Form } from '../../components/form/form';
 import { Input } from '../../components/input/input';
-import { Select, IOption } from '../../components/select/select';
+import { Select, Option } from '../../components/select/select';
 
 interface IAccountFormProps {
   errors: string[];
@@ -22,7 +22,7 @@ export const AccountForm = ({
   onSubmit,
   submitLabel,
 }: IAccountFormProps): JSX.Element => {
-  const accountTypes: IOption[] = [
+  const accountTypes: Option[] = [
     {
       value: 'cash',
       label: 'Cash',

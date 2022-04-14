@@ -1,4 +1,4 @@
-import { TransactionCategoryMappingDto, UpdateTransferDto } from '@local/types';
+import { UpdateTransferDto } from '@local/types';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -21,23 +21,13 @@ export const EditTransfer = (): JSX.Element => {
     useTransactionCategoryMappingsByTransactionId(id);
   const editTransaction = useEditTransfer();
 
-  const handleSubmit = async (
-    targetTransferData: UpdateTransferDto,
-    transactionCategoryMappings: TransactionCategoryMappingDto[]
-  ) => {
+  const handleSubmit = async (targetTransferData: UpdateTransferDto) => {
     if (!id) {
       console.error('Failed to edit transfer: no id');
       return;
     }
     try {
-      const newTransactionJson = await editTransaction(
-        {
-          ...targetTransferData,
-          categories: transactionCategoryMappings,
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } as any,
-        id
-      );
+      const newTransactionJson = await editTransaction(targetTransferData, id);
 
       if ('message' in newTransactionJson) {
         setErrors(parseErrorMessagesToArray(newTransactionJson.message));

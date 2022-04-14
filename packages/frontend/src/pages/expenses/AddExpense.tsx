@@ -1,4 +1,4 @@
-import { CreateExpenseDto, TransactionCategoryMappingDto } from '@local/types';
+import { CreateExpenseDto } from '@local/types';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,16 +15,9 @@ export const AddExpense = (): JSX.Element => {
   const addExpense = useAddExpense();
   const [defaultExpenseAccount] = useUserDefaultExpenseAccount();
 
-  const handleSubmit = async (
-    newExpenseData: CreateExpenseDto,
-    newTransactionCategoryMappingsData: TransactionCategoryMappingDto[]
-  ) => {
+  const handleSubmit = async (newExpenseData: CreateExpenseDto) => {
     try {
-      const newExpenseJson = await addExpense({
-        ...newExpenseData,
-        categories: newTransactionCategoryMappingsData,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } as any);
+      const newExpenseJson = await addExpense(newExpenseData);
 
       if ('message' in newExpenseJson) {
         setErrors(parseErrorMessagesToArray(newExpenseJson.message));

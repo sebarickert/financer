@@ -1,18 +1,18 @@
 import React from 'react';
 
-interface ISelectProps {
+interface SelectProps {
   children: React.ReactNode;
   help?: string;
   id: string;
   isRequired?: boolean;
-  options: IOption[];
+  options: Option[];
   defaultValue?: string;
   className?: string;
   handleOnChange?(event: React.ChangeEvent<HTMLSelectElement>): void;
   testId?: string;
 }
 
-export interface IOption {
+export interface Option {
   value?: string;
   label: string;
 }
@@ -27,7 +27,7 @@ export const Select = ({
   className = '',
   testId,
   handleOnChange = () => {},
-}: ISelectProps): JSX.Element => {
+}: SelectProps): JSX.Element => {
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     if (!handleOnChange) return null;
 

@@ -1,7 +1,7 @@
 import { TransactionCategoryMappingDto } from '@local/types';
 import React from 'react';
 
-import { IOption } from '../select/select';
+import { Option } from '../select/select';
 
 import { TransactionCategoriesFormItem } from './transaction-categories-form.item';
 
@@ -9,7 +9,7 @@ interface ITransactionCategoriesFormProps {
   className?: string;
   categoryAmount: { [key in number]: number };
   amountMaxValue: number;
-  transactionCategories: IOption[];
+  transactionCategories: Option[];
   transactionCategoryMapping: TransactionCategoryMappingDto[] | null;
   deleteTransactionCategoryItem(itemKey: number): void;
   setTransactionCategoryItemAmount(itemKey: number, itemValue: number): void;
