@@ -8,5 +8,5 @@ export const useAllTransactionCategoryMappings = () => {
     getAllTransactionCategoryMappings
   );
 
-  return transactionCategoryMappingsQuery.data || [];
+  return transactionCategoryMappingsQuery.data ?? [];
 };

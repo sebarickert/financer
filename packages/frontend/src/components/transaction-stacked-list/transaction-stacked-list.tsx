@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useTransition } from 'react';
 
 import { useUserTransactionListChunkSize } from '../../hooks/profile/user-preference/useUserTransactionListChunkSize';
-import { Loader, LoaderColor } from '../loader/loader';
+import { LoaderIfProcessing } from '../loader/loader-if-processing';
 import { Pager } from '../pager/pager';
 
 import {
@@ -21,74 +21,75 @@ export const TransactionStackedList = ({
   rows,
   className = '',
 }: ITransactionStackedListProps): JSX.Element => {
-  const [pages, setPages] = useState<
-    null | ITransactionStackedListRowProps[][]
-  >(null);
+  const [isProcessing, startProcessing] = useTransition();
+  const [pages, setPages] = useState<ITransactionStackedListRowProps[][]>([[]]);
   const [currentPage, setCurrentPage] = useState(0);
 
   const [chunkAmount] = useUserTransactionListChunkSize();
 
   useEffect(() => {
-    setPages(
-      rows.reduce(
-        (
-          resultArray: ITransactionStackedListRowProps[][],
-          item,
-          index: number
-        ) => {
-          const chunkIndex = Math.floor(index / chunkAmount);
+    startProcessing(() => {
+      setPages(
+        rows.reduce(
+          (
+            resultArray: ITransactionStackedListRowProps[][],
+            item,
+            index: number
+          ) => {
+            const chunkIndex = Math.floor(index / chunkAmount);
 
-          if (!resultArray[chunkIndex]) {
-            resultArray[chunkIndex] = [];
-          }
+            if (!resultArray[chunkIndex]) {
+              resultArray[chunkIndex] = [];
+            }
 
-          resultArray[chunkIndex].push(item);
+            resultArray[chunkIndex].push(item);
 
-          return resultArray;
-        },
-        []
-      )
-    );
+            return resultArray;
+          },
+          []
+        )
+      );
+    });
   }, [chunkAmount, rows]);
 
-  return !pages || !pages[currentPage] ? (
-    <Loader loaderColor={LoaderColor.blue} />
-  ) : (
-    <section className={`${className}`}>
-      {title && <h2 className="sr-only">{title}</h2>}
-      <TransactionStackedListRows>
-        {pages[currentPage].map(
-          ({
-            transactionCategories,
-            transactionAmount,
-            date,
-            label,
-            link,
-            transactionType,
-            id,
-          }) => (
-            <TransactionStackedListRow
-              key={id}
-              transactionAmount={transactionAmount}
-              transactionCategories={transactionCategories}
-              date={date}
-              label={label}
-              link={link}
-              transactionType={transactionType}
-              id={id}
-            />
-          )
+  return (
+    <LoaderIfProcessing isProcessing={isProcessing}>
+      <section className={`${className}`}>
+        {title && <h2 className="sr-only">{title}</h2>}
+        <TransactionStackedListRows>
+          {pages[currentPage].map(
+            ({
+              transactionCategories,
+              transactionAmount,
+              date,
+              label,
+              link,
+              transactionType,
+              id,
+            }) => (
+              <TransactionStackedListRow
+                key={id}
+                transactionAmount={transactionAmount}
+                transactionCategories={transactionCategories}
+                date={date}
+                label={label}
+                link={link}
+                transactionType={transactionType}
+                id={id}
+              />
+            )
+          )}
+        </TransactionStackedListRows>
+        {chunkAmount < rows.length && (
+          <Pager
+            currentPage={currentPage}
+            pageCount={pages.length}
+            handlePageUpdate={setCurrentPage}
+            isCentered
+            className="mt-4"
+          />
         )}
-      </TransactionStackedListRows>
-      {chunkAmount < rows.length && (
-        <Pager
-          currentPage={currentPage}
-          pageCount={pages.length}
-          handlePageUpdate={setCurrentPage}
-          isCentered
-          className="mt-4"
-        />
-      )}
-    </section>
+      </section>
+    </LoaderIfProcessing>
   );
 };

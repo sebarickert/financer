@@ -9,7 +9,7 @@ export const useDeleteAccount = () => {
   return useCallback(
     async (id: string) => {
       await deleteAccount(id);
-      queryClient.invalidateQueries(['accounts']);
+      queryClient.invalidateQueries(['accounts', id]);
     },
     [queryClient]
   );

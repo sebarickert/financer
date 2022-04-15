@@ -1,14 +1,13 @@
 import { useState, useEffect } from 'react';
-import { UseQueryResult } from 'react-query';
 
 import { useAllAccounts } from './account/useAllAccounts';
 
-export const useTotalBalance = (): UseQueryResult<number> => {
-  const { data: accounts, isLoading, ...allAccountQuery } = useAllAccounts();
+export const useTotalBalance = (): number => {
+  const accounts = useAllAccounts();
   const [totalBalance, setTotalBalance] = useState<number>(NaN);
 
   useEffect(() => {
-    if (!accounts || isLoading) {
+    if (!accounts.length) {
       setTotalBalance(NaN);
       return;
     }
@@ -20,11 +19,7 @@ export const useTotalBalance = (): UseQueryResult<number> => {
     );
 
     setTotalBalance(total);
-  }, [accounts, isLoading]);
+  }, [accounts]);
 
-  return {
-    ...allAccountQuery,
-    isLoading,
-    data: totalBalance,
-  } as UseQueryResult<number>;
+  return totalBalance;
 };

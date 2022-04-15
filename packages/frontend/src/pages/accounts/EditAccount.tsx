@@ -2,7 +2,6 @@ import { CreateAccountDto } from '@local/types';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { Loader, LoaderColor } from '../../components/loader/loader';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { useAccountById } from '../../hooks/account/useAccountById';
 import { useEditAccount } from '../../hooks/account/useEditAccount';
@@ -17,7 +16,7 @@ export const EditAccount = (): JSX.Element => {
 
   const [errors, setErrors] = useState<string[]>([]);
 
-  const [{ data: account, isLoading }] = useAccountById(id);
+  const account = useAccountById(id);
 
   const handleSubmit = async (newAccountData: CreateAccountDto) => {
     if (!account?._id) {
@@ -39,9 +38,7 @@ export const EditAccount = (): JSX.Element => {
     }
   };
 
-  return isLoading || !account ? (
-    <Loader loaderColor={LoaderColor.blue} />
-  ) : (
+  return (
     <>
       <UpdatePageInfo
         title={`Edit ${account.name}`}

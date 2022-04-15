@@ -1,41 +1,34 @@
 import { AccountDto, AccountType } from '@local/types';
 import { useEffect, useState } from 'react';
-import { useQuery, UseQueryResult } from 'react-query';
+import { useQuery } from 'react-query';
 
 import { getAllAccounts } from '../../services/AccountService';
 
-export const useAllAccounts = (): UseQueryResult<AccountDto[]> => {
-  return useQuery<AccountDto[]>(['accounts'], getAllAccounts);
+export const useAllAccounts = (): AccountDto[] => {
+  const { data } = useQuery<AccountDto[]>(['accounts'], getAllAccounts);
+
+  return data ?? [];
 };
 
 export const useAllAccountsByType = (
   types: AccountType[]
-): [UseQueryResult<AccountDto[]>, (types: AccountType[]) => void] => {
-  const {
-    data: allAccounts,
-    isLoading,
-    ...allAccountsQuery
-  } = useAllAccounts();
+): [AccountDto[], (types: AccountType[]) => void] => {
+  const accounts = useAllAccounts();
   const [targetAccounts, setTargetAccounts] = useState<AccountDto[]>();
   const [targetTypes, setTargetTypes] = useState(types);
 
   useEffect(() => {
-    if (!allAccounts || isLoading) {
+    if (!accounts) {
       setTargetAccounts(undefined);
       return;
     }
 
-    const newTargetAccounts = allAccounts.filter(({ type }) =>
+    const newTargetAccounts = accounts.filter(({ type }) =>
       targetTypes.includes(type)
     );
 
     setTargetAccounts(newTargetAccounts ?? []);
-  }, [allAccounts, isLoading, targetTypes]);
+  }, [accounts, targetTypes]);
 
-  return [
-    { ...allAccountsQuery, isLoading, data: targetAccounts } as UseQueryResult<
-      AccountDto[]
-    >,
-    setTargetTypes,
-  ];
+  return [targetAccounts ?? [], setTargetTypes];
 };

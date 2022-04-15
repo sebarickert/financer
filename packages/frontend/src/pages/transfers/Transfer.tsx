@@ -1,11 +1,9 @@
-import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { Button } from '../../components/button/button';
 import { ButtonGroup } from '../../components/button/button.group';
 import { DescriptionList } from '../../components/description-list/description-list';
 import { DescriptionListItem } from '../../components/description-list/description-list.item';
-import { Loader, LoaderColor } from '../../components/loader/loader';
 import { ModalConfirm } from '../../components/modal/confirm/modal.confirm';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { useAccountById } from '../../hooks/account/useAccountById';
@@ -40,15 +38,11 @@ export const Transfer = (): JSX.Element => {
   const [transactionCategoryMapping] =
     useTransactionCategoryMappingsByTransactionId(id);
   const transactionCategories = useAllTransactionCategoriesWithCategoryTree();
-  const [transfer] = useTransferById(id);
+  const transfer = useTransferById(id);
   const deleteTransfer = useDeleteTransfer();
 
-  const [{ data: fromAccount }, setTargetFromAccountId] = useAccountById(
-    transfer?.fromAccount
-  );
-  const [{ data: toAccount }, setTargetToAccountId] = useAccountById(
-    transfer?.toAccount
-  );
+  const fromAccount = useAccountById(transfer?.fromAccount);
+  const toAccount = useAccountById(transfer?.toAccount);
 
   const getCategoryNameById = (categoryId: string) =>
     transactionCategories?.find((category) => category._id === categoryId)
@@ -63,16 +57,7 @@ export const Transfer = (): JSX.Element => {
     navigate('/statistics/transfers');
   };
 
-  useEffect(() => {
-    if (!transfer?.fromAccount || !transfer?.toAccount) return;
-
-    setTargetFromAccountId(transfer.fromAccount);
-    setTargetToAccountId(transfer.toAccount);
-  }, [transfer, setTargetFromAccountId, setTargetToAccountId]);
-
-  return !transfer || !transactionCategoryMapping || !transactionCategories ? (
-    <Loader loaderColor={LoaderColor.blue} />
-  ) : (
+  return (
     <>
       <UpdatePageInfo
         title={`${transfer.description}`}

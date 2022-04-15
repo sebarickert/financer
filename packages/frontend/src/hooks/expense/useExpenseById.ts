@@ -1,18 +1,16 @@
 import { ExpenseDto } from '@local/types';
-import { useState, useEffect } from 'react';
+import { useQuery } from 'react-query';
 
-import { useAllExpenses } from './useAllExpenses';
+import { getExpenseById } from '../../services/ExpenseService';
 
-export const useExpenseById = (
-  id: string | null = null
-): [ExpenseDto | null, React.Dispatch<React.SetStateAction<string | null>>] => {
-  const [targetId, setTargetId] = useState(id);
-  const [targetExpense, setTargetExpense] = useState<ExpenseDto | null>(null);
-  const expenses = useAllExpenses();
+export const useExpenseById = (id?: string): ExpenseDto => {
+  const { data } = useQuery(
+    ['expenses', `expense-id${id}`],
+    () => getExpenseById(id ?? 'missing-id'),
+    {
+      enabled: Boolean(id),
+    }
+  );
 
-  useEffect(() => {
-    setTargetExpense(expenses?.find(({ _id }) => _id === targetId) || null);
-  }, [targetId, expenses]);
-
-  return [targetExpense, setTargetId];
+  return data ?? ({} as ExpenseDto);
 };

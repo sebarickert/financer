@@ -6,7 +6,6 @@ import { Checkbox } from '../../../components/checkbox/checkbox';
 import { CheckboxGroup } from '../../../components/checkbox/checkbox.group';
 import { Form } from '../../../components/form/form';
 import { Input } from '../../../components/input/input';
-import { Loader, LoaderColor } from '../../../components/loader/loader';
 import { Select, Option } from '../../../components/select/select';
 import { useAllTransactionCategoriesWithCategoryTree } from '../../../hooks/transactionCategories/useAllTransactionCategories';
 
@@ -33,9 +32,9 @@ export const TransactionCategoryForm = ({
 }: TransactionCategoryFormProps): JSX.Element => {
   const transactionCategoriesRaw =
     useAllTransactionCategoriesWithCategoryTree(currentCategoryId);
-  const [transactionCategories, setTransactionCategories] = useState<
-    Option[] | null
-  >(null);
+  const [transactionCategories, setTransactionCategories] = useState<Option[]>(
+    []
+  );
 
   useEffect(() => {
     if (transactionCategoriesRaw === null) return;
@@ -80,9 +79,7 @@ export const TransactionCategoryForm = ({
     onSubmit(newTransactionCategoryData);
   };
 
-  return transactionCategories === null ? (
-    <Loader loaderColor={LoaderColor.blue} />
-  ) : (
+  return (
     <>
       {errors.length > 0 && (
         <Alert additionalInformation={errors} testId="form-errors">

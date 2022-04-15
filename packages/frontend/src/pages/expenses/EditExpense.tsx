@@ -2,7 +2,6 @@ import { CreateExpenseDto } from '@local/types';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { Loader, LoaderColor } from '../../components/loader/loader';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { useEditExpense } from '../../hooks/expense/useEditExpense';
 import { useExpenseById } from '../../hooks/expense/useExpenseById';
@@ -17,7 +16,7 @@ export const EditExpense = (): JSX.Element => {
   const [errors, setErrors] = useState<string[]>([]);
   const editExpense = useEditExpense();
 
-  const [expense] = useExpenseById(id);
+  const expense = useExpenseById(id);
   const [transactionCategoryMapping] =
     useTransactionCategoryMappingsByTransactionId(id);
 
@@ -41,9 +40,7 @@ export const EditExpense = (): JSX.Element => {
     }
   };
 
-  return !expense || !transactionCategoryMapping ? (
-    <Loader loaderColor={LoaderColor.blue} />
-  ) : (
+  return (
     <>
       <UpdatePageInfo title={`Edit ${expense.description} | Expenses`} />
       <ExpenseForm

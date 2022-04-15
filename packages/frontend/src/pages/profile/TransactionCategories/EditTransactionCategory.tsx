@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { Container } from '../../../components/container/container';
-import { Loader, LoaderColor } from '../../../components/loader/loader';
 import { ModalConfirm } from '../../../components/modal/confirm/modal.confirm';
 import { UpdatePageInfo } from '../../../components/seo/updatePageInfo';
 import { useDeleteTransactionCategory } from '../../../hooks/transactionCategories/useDeleteTransactionCategory';
@@ -76,9 +75,7 @@ export const EditTransactionCategory = (): JSX.Element => {
     navigate('/profile/transaction-categories');
   };
 
-  return !transactionCategory ? (
-    <Loader loaderColor={LoaderColor.blue} />
-  ) : (
+  return (
     <Container>
       <UpdatePageInfo
         title="Edit transaction category"

@@ -2,7 +2,6 @@ import { UpdateIncomeDto } from '@local/types';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { Loader, LoaderColor } from '../../components/loader/loader';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { useEditIncome } from '../../hooks/income/useEditIncome';
 import { useIncomeById } from '../../hooks/income/useIncomeById';
@@ -14,9 +13,9 @@ import { IncomeForm } from './IncomeForm';
 export const EditIncome = (): JSX.Element => {
   const navigate = useNavigate();
   const [errors, setErrors] = useState<string[]>([]);
-  const { id } = useParams<{ id: string }>();
+  const { id = 'missing-id' } = useParams<{ id: string }>();
 
-  const [income] = useIncomeById(id);
+  const income = useIncomeById(id);
   const [transactionCategoryMapping] =
     useTransactionCategoryMappingsByTransactionId(id);
   const editIncome = useEditIncome();
@@ -41,9 +40,7 @@ export const EditIncome = (): JSX.Element => {
     }
   };
 
-  return !income || typeof transactionCategoryMapping === 'undefined' ? (
-    <Loader loaderColor={LoaderColor.blue} />
-  ) : (
+  return (
     <>
       <UpdatePageInfo title={`Edit ${income.description} | Incomes`} />
       <IncomeForm

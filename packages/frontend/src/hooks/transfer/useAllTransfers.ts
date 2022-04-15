@@ -14,10 +14,10 @@ import { getAllTransfers } from '../../services/TransferService';
 import { useAllTransactionCategories } from '../transactionCategories/useAllTransactionCategories';
 import { useAllTransactionCategoryMappings } from '../transactionCategoryMapping/useAllTransactionCategoryMappings';
 
-export const useAllTransfers = (): TransferDto[] | null => {
-  const transfersQuery = useQuery(['transfers'], getAllTransfers);
+export const useAllTransfers = (): TransferDto[] => {
+  const { data } = useQuery(['transfers'], getAllTransfers);
 
-  return transfersQuery.data || null;
+  return data ?? [];
 };
 
 export const useAllTransfersGroupByMonth = () => {

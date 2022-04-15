@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useTransition } from 'react';
 
 import { useAllTransactions } from '../../hooks/transaction/useAllTransactions';
 import { useAllTransactionCategories } from '../../hooks/transactionCategories/useAllTransactionCategories';
@@ -9,7 +9,7 @@ import {
 } from '../../pages/statistics/Statistics';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDate } from '../../utils/formatDate';
-import { Loader, LoaderColor } from '../loader/loader';
+import { LoaderIfProcessing } from '../loader/loader-if-processing';
 import { TransactionStackedList } from '../transaction-stacked-list/transaction-stacked-list';
 import { ITransactionStackedListRowProps } from '../transaction-stacked-list/transaction-stacked-list.row';
 
@@ -20,63 +20,65 @@ interface IDashboardLatestTransactionsProps {
 export const DashboardLatestTransactions = ({
   className = '',
 }: IDashboardLatestTransactionsProps): JSX.Element => {
+  const [isProcessing, startProcessing] = useTransition();
   const [visibleTransactions, setVisibleTransactions] = useState<
-    ITransactionStackedListRowProps[] | null
-  >(null);
+    ITransactionStackedListRowProps[]
+  >([]);
   const transactions = useAllTransactions();
   const transactionCategoryMappings = useAllTransactionCategoryMappings();
   const transactionCategories = useAllTransactionCategories();
 
   useEffect(() => {
-    if (transactions === null) return;
+    startProcessing(() => {
+      setVisibleTransactions(
+        transactions
+          .slice(0, 5)
+          .map<ITransactionStackedListRowProps>(
+            ({
+              amount,
+              _id,
+              description,
+              date: dateRaw,
+              toAccount,
+              fromAccount,
+            }) => {
+              const date = new Date(dateRaw);
+              const transactionType = getTransactionType(
+                toAccount,
+                fromAccount
+              );
 
-    setVisibleTransactions(
-      transactions
-        .slice(0, 5)
-        .map<ITransactionStackedListRowProps>(
-          ({
-            amount,
-            _id,
-            description,
-            date: dateRaw,
-            toAccount,
-            fromAccount,
-          }) => {
-            const date = new Date(dateRaw);
-            const transactionType = getTransactionType(toAccount, fromAccount);
+              const categoryMappings = transactionCategoryMappings
+                ?.filter(({ transaction_id }) => transaction_id === _id)
+                .map(
+                  ({ category_id }) =>
+                    transactionCategories.find(
+                      ({ _id: categoryId }) => category_id === categoryId
+                    )?.name
+                )
+                .filter((categoryName) => typeof categoryName !== 'undefined');
 
-            const categoryMappings = transactionCategoryMappings
-              ?.filter(({ transaction_id }) => transaction_id === _id)
-              .map(
-                ({ category_id }) =>
-                  transactionCategories.find(
-                    ({ _id: categoryId }) => category_id === categoryId
-                  )?.name
-              )
-              .filter((categoryName) => typeof categoryName !== 'undefined');
-
-            return {
-              transactionCategories: categoryMappings.join(', '),
-              transactionAmount: formatCurrency(amount),
-              date: formatDate(date),
-              label: description,
-              link: `/statistics/${mapTransactionTypeToUrlPrefix[transactionType]}/${_id}`,
-              transactionType,
-              id: _id,
-            } as ITransactionStackedListRowProps;
-          }
-        )
-    );
+              return {
+                transactionCategories: categoryMappings.join(', '),
+                transactionAmount: formatCurrency(amount),
+                date: formatDate(date),
+                label: description,
+                link: `/statistics/${mapTransactionTypeToUrlPrefix[transactionType]}/${_id}`,
+                transactionType,
+                id: _id,
+              } as ITransactionStackedListRowProps;
+            }
+          )
+      );
+    });
   }, [transactions, transactionCategoryMappings, transactionCategories]);
 
-  return visibleTransactions === null ? (
-    <section className={`bg-white border rounded-lg py-1 ${className}`}>
-      <Loader loaderColor={LoaderColor.blue} />
-    </section>
-  ) : (
-    <TransactionStackedList
-      className={`${className}`}
-      rows={visibleTransactions}
-    />
+  return (
+    <LoaderIfProcessing isProcessing={isProcessing}>
+      <TransactionStackedList
+        className={`${className}`}
+        rows={visibleTransactions}
+      />
+    </LoaderIfProcessing>
   );
 };

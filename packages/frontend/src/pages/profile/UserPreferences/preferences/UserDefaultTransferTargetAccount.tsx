@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-import { Loader, LoaderColor } from '../../../../components/loader/loader';
 import { ModalCustom } from '../../../../components/modal/custom/modal.custom';
 import { Select } from '../../../../components/select/select';
 import { UpdatePageInfo } from '../../../../components/seo/updatePageInfo';
@@ -8,7 +7,7 @@ import { useAllAccounts } from '../../../../hooks/account/useAllAccounts';
 import { useUserDefaultTransferTargetAccount } from '../../../../hooks/profile/user-preference/useUserDefaultTransferTargetAccount';
 
 export const UserDefaultTransferTargetAccount = (): JSX.Element => {
-  const { data: accounts, isLoading: isLoadingAccounts } = useAllAccounts();
+  const accounts = useAllAccounts();
   const [account, setAccount] = useState('');
   const [defaultTransferTargetAccount, setDefaultTransferTargetAccount] =
     useUserDefaultTransferTargetAccount();
@@ -21,9 +20,7 @@ export const UserDefaultTransferTargetAccount = (): JSX.Element => {
     setDefaultTransferTargetAccount(account);
   };
 
-  return isLoadingAccounts || !accounts ? (
-    <Loader loaderColor={LoaderColor.blue} />
-  ) : (
+  return (
     <>
       <UpdatePageInfo
         title="Default transfer target account"

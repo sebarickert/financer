@@ -1,39 +1,29 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Loader } from './components/loader/loader';
 import { Notification } from './components/notification/notification';
 import { Financer } from './Financer';
-import { useAllAccounts } from './hooks/account/useAllAccounts';
 import { useAuthenticationStatus } from './hooks/useAuthenticationStatus';
 
 export const App = (): JSX.Element => {
   const authenticationStatus = useAuthenticationStatus();
-  const { data: accounts } = useAllAccounts();
   const navigate = useNavigate();
   const [isOnboardingVisible, setOnboardingVisible] = useState(false);
 
   useEffect(() => {
     if (
       !authenticationStatus?.authenticated ||
-      !accounts ||
-      accounts.length ||
+      authenticationStatus.hasAccounts ||
       isOnboardingVisible
-    )
+    ) {
       return;
+    }
 
     setOnboardingVisible(true);
     navigate('/accounts/add');
-  }, [
-    accounts,
-    navigate,
-    isOnboardingVisible,
-    authenticationStatus?.authenticated,
-  ]);
+  }, [navigate, isOnboardingVisible, authenticationStatus]);
 
-  return !authenticationStatus ? (
-    <Loader />
-  ) : (
+  return (
     <>
       {authenticationStatus.errors && (
         <Notification type="error" label="Something went wrong!">

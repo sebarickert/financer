@@ -9,12 +9,12 @@ import {
 } from '../../services/TransactionCategoriesService';
 
 export const useAllTransactionCategories = (): TransactionCategoryDto[] => {
-  const transactionCategoriesQuery = useQuery(
+  const { data } = useQuery(
     ['transactionCategories'],
     getAllTransactionCategories
   );
 
-  return transactionCategoriesQuery.data || [];
+  return data ?? [];
 };
 
 export const useAllTransactionCategoriesWithCategoryTree = (

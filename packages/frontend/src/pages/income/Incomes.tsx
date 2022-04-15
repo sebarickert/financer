@@ -1,6 +1,5 @@
 import { Heading } from '../../components/heading/heading';
 import { IconName } from '../../components/icon/icon';
-import { Loader, LoaderColor } from '../../components/loader/loader';
 import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { TransactionStackedList } from '../../components/transaction-stacked-list/transaction-stacked-list';
@@ -11,9 +10,7 @@ import { formatCurrency } from '../../utils/formatCurrency';
 export const Incomes = (): JSX.Element => {
   const [incomes] = useAllIncomesGroupByMonth();
 
-  return incomes === null ? (
-    <Loader loaderColor={LoaderColor.blue} />
-  ) : (
+  return (
     <>
       <UpdatePageInfo title="Incomes" />
       <section className="mb-8">

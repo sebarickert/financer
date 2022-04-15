@@ -5,6 +5,7 @@ import {
   isAuth0AuthEnabled,
   isGithubAuthEnabled,
 } from '../../config/configuration';
+import { AccountsModule } from '../accounts/accounts.module';
 import { UsersModule } from '../users/users.module';
 
 import { AuthController } from './auth.controller';
@@ -29,6 +30,7 @@ export class AuthModule {
       module: AuthModule,
       imports: [
         UsersModule,
+        AccountsModule,
         PassportModule.register({ defaultStrategy: 'github', session: true }),
       ],
       controllers: [AuthController],

@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
 import { IconName } from '../../../components/icon/icon';
-import { Loader, LoaderColor } from '../../../components/loader/loader';
 import { QuickLinksItem } from '../../../components/quick-links/quick-links.item';
 import { UpdatePageInfo } from '../../../components/seo/updatePageInfo';
 import { StackedList } from '../../../components/stacked-list/stacked-list';
@@ -37,9 +36,7 @@ export const TransactionCategories = (): JSX.Element => {
     );
   }, [transactionCategoriesRaw]);
 
-  return transactionCategoriesRaw === null ? (
-    <Loader loaderColor={LoaderColor.blue} />
-  ) : (
+  return (
     <>
       <UpdatePageInfo title="Categories" backLink="/profile" />
       <section className="mb-8">
