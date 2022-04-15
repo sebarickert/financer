@@ -57,7 +57,7 @@ export const TransactionStackedList = ({
       <section className={`${className}`}>
         {title && <h2 className="sr-only">{title}</h2>}
         <TransactionStackedListRows>
-          {pages[currentPage].map(
+          {pages[currentPage]?.map(
             ({
               transactionCategories,
               transactionAmount,
