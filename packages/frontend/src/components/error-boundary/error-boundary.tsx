@@ -1,9 +1,9 @@
 import { ErrorBoundary } from 'react-error-boundary';
 import { useQueryErrorResetBoundary } from 'react-query';
 
-import { Button } from './components/button/button';
-import { Container } from './components/container/container';
-import { Heading } from './components/heading/heading';
+import { Button } from '../button/button';
+import { Container } from '../container/container';
+import { Heading } from '../heading/heading';
 
 type ErrorBoundaryProps = {
   children: React.ReactNode;

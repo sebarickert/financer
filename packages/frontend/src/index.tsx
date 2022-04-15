@@ -5,11 +5,11 @@ import { BrowserRouter as Router, useLocation } from 'react-router-dom';
 
 import { App } from './App';
 import './assets/tailwind.css';
+import { ErrorBoundaryHandler } from './components/error-boundary/error-boundary';
 import { LoaderSuspense } from './components/loader/loader-suspense';
 import { ScrollToTop } from './components/scroll-to-top/scroll-to-top';
 import { SEO } from './components/seo/seo';
 import { PageInfoProvider } from './context/pageInfoContext';
-import { ErrorBoundaryHandler } from './ErrorBoundary';
 import { reportWebVitals } from './reportWebVitals';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { isUpdateAllowed } from './utils/allowedUpdateLocations';
