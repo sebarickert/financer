@@ -1,4 +1,4 @@
-import { IAccount, ITransaction } from '@local/types';
+import { AccountDto, TransactionDto } from '@local/types';
 
 import {
   getAllTransaction,
@@ -26,8 +26,8 @@ describe('Add income', () => {
     `new dummy transaction created by test code ${Math.random()}`;
 
   const verifyAccountBalanceChange = (amount: number) =>
-    cy.get<IAccount>('@accountBefore').then((accountBefore) => {
-      cy.get<IAccount>('@accountAfter').then((accountAfter) => {
+    cy.get<AccountDto>('@accountBefore').then((accountBefore) => {
+      cy.get<AccountDto>('@accountAfter').then((accountAfter) => {
         expect(roundToTwoDecimal(accountBefore.balance + amount)).to.be.eq(
           roundToTwoDecimal(accountAfter.balance)
         );
@@ -35,8 +35,8 @@ describe('Add income', () => {
     });
 
   const verifyNewIncomeCreated = () =>
-    cy.get<ITransaction[]>('@incomesBefore').then((incomesBefore) => {
-      cy.get<ITransaction[]>('@incomesAfter').then((incomesAfter) => {
+    cy.get<TransactionDto[]>('@incomesBefore').then((incomesBefore) => {
+      cy.get<TransactionDto[]>('@incomesAfter').then((incomesAfter) => {
         expect(incomesBefore.length + 1).to.be.eq(
           roundToTwoDecimal(incomesAfter.length)
         );
