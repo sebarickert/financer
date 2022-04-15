@@ -13,10 +13,10 @@ import { useAllAccountsByType } from '../account/useAllAccounts';
 import { useAllTransactionCategories } from '../transactionCategories/useAllTransactionCategories';
 import { useAllTransactionCategoryMappings } from '../transactionCategoryMapping/useAllTransactionCategoryMappings';
 
-export const useAllIncomes = (): IncomeDto[] | null => {
+export const useAllIncomes = (): IncomeDto[] => {
   const incomesQuery = useQuery(['incomes'], getAllIncomes);
 
-  return incomesQuery.data || null;
+  return incomesQuery.data ?? [];
 };
 
 export const useCurrentMonthIncomesTotalAmount = (): number => {
@@ -54,9 +54,7 @@ export const useAllIncomesGroupByMonth = (
   React.Dispatch<React.SetStateAction<AccountType[]>>
 ] => {
   const incomes = useAllIncomes();
-  const [{ data: allForbiddenAccounts }, setTargetTypes] = useAllAccountsByType(
-    []
-  );
+  const [allForbiddenAccounts, setTargetTypes] = useAllAccountsByType([]);
   const [groupedIncomes, setGroupedIncomes] = useState<IIncomesPerMonth[]>([]);
   const transactionCategoryMappings = useAllTransactionCategoryMappings();
   const transactionCategories = useAllTransactionCategories();
@@ -65,8 +63,6 @@ export const useAllIncomesGroupByMonth = (
   >(initialForbiddenAccountTypes);
 
   useEffect(() => {
-    if (incomes === null) return;
-
     const forbiddenAccountIds = allForbiddenAccounts?.map(({ _id }) => _id);
 
     setGroupedIncomes(

@@ -1,12 +1,10 @@
+import { IAuthenticationStatus } from '@local/types';
 import { useQuery } from 'react-query';
 
 import { getAuthenticationStatus } from '../services/AuthenticationService';
 
-export const useAuthenticationStatus = () => {
-  const authenticationStatusQuery = useQuery(
-    ['authenticationStatus'],
-    getAuthenticationStatus
-  );
+export const useAuthenticationStatus = (): IAuthenticationStatus => {
+  const { data } = useQuery(['authenticationStatus'], getAuthenticationStatus);
 
-  return authenticationStatusQuery.data || null;
+  return data ?? ({} as IAuthenticationStatus);
 };

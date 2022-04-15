@@ -1,11 +1,9 @@
-import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { Button } from '../../components/button/button';
 import { ButtonGroup } from '../../components/button/button.group';
 import { DescriptionList } from '../../components/description-list/description-list';
 import { DescriptionListItem } from '../../components/description-list/description-list.item';
-import { Loader, LoaderColor } from '../../components/loader/loader';
 import { ModalConfirm } from '../../components/modal/confirm/modal.confirm';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { useAccountById } from '../../hooks/account/useAccountById';
@@ -36,11 +34,9 @@ const IncomeDeleteModal = ({ handleDelete }: IIncomeDeleteModalProps) => (
 
 export const Income = (): JSX.Element => {
   const navigate = useNavigate();
-  const { id } = useParams<{ id: string }>();
-  const [income] = useIncomeById(id);
-  const [{ data: account }, setTargetAccountId] = useAccountById(
-    income?.toAccount
-  );
+  const { id = 'missing-id' } = useParams<{ id: string }>();
+  const income = useIncomeById(id);
+  const account = useAccountById(income?.toAccount);
   const [transactionCategoryMapping] =
     useTransactionCategoryMappingsByTransactionId(id);
   const transactionCategories = useAllTransactionCategoriesWithCategoryTree();
@@ -59,15 +55,7 @@ export const Income = (): JSX.Element => {
     navigate('/statistics/incomes');
   };
 
-  useEffect(() => {
-    if (!income?.toAccount) return;
-
-    setTargetAccountId(income.toAccount);
-  }, [income, setTargetAccountId]);
-
-  return !income || !transactionCategoryMapping || !transactionCategories ? (
-    <Loader loaderColor={LoaderColor.blue} />
-  ) : (
+  return (
     <>
       <UpdatePageInfo
         title={`${income.description}`}

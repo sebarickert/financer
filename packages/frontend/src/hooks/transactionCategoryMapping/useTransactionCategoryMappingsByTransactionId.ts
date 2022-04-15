@@ -6,7 +6,7 @@ import { useAllTransactionCategoryMappings } from './useAllTransactionCategoryMa
 export const useTransactionCategoryMappingsByTransactionId = (
   id: string | null = null
 ): [
-  TransactionCategoryMappingDto[] | null,
+  TransactionCategoryMappingDto[],
   React.Dispatch<React.SetStateAction<string | null>>
 ] => {
   const [targetId, setTargetId] = useState(id);
@@ -24,5 +24,5 @@ export const useTransactionCategoryMappingsByTransactionId = (
     );
   }, [targetId, transactionCategoryMappings]);
 
-  return [targetTransactionCategoryMappings, setTargetId];
+  return [targetTransactionCategoryMappings ?? [], setTargetId];
 };

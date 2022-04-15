@@ -9,7 +9,6 @@ import { Alert } from '../../components/alert/alert';
 import { Button } from '../../components/button/button';
 import { Form } from '../../components/form/form';
 import { Input } from '../../components/input/input';
-import { Loader, LoaderColor } from '../../components/loader/loader';
 import { Select, Option } from '../../components/select/select';
 import { TransactionCategoriesForm } from '../../components/transaction-categories-form/transaction-categories-form';
 import { useAllAccounts } from '../../hooks/account/useAllAccounts';
@@ -37,13 +36,13 @@ export const ExpenseForm = ({
   fromAccount,
   transactionCategoryMapping = null,
 }: IExpenseFormProps): JSX.Element => {
-  const { data: accountsRaw, isLoading: isLoadingAccounts } = useAllAccounts();
-  const [accounts, setAccounts] = useState<Option[] | null>(null);
+  const accountsRaw = useAllAccounts();
+  const [accounts, setAccounts] = useState<Option[]>([]);
   const transactionCategoriesRaw =
     useAllTransactionCategoriesForExpenseWithCategoryTree();
-  const [transactionCategories, setTransactionCategories] = useState<
-    Option[] | null
-  >(null);
+  const [transactionCategories, setTransactionCategories] = useState<Option[]>(
+    []
+  );
   const [inputAmountValue, setInputAmountValue] = useState<number | null>(null);
 
   const handleAmountInputValueChange = (
@@ -90,18 +89,13 @@ export const ExpenseForm = ({
   };
 
   useEffect(() => {
-    if (!accountsRaw || isLoadingAccounts) {
-      setAccounts(null);
-      return;
-    }
-
     setAccounts(
       accountsRaw.map(({ _id, name }) => ({
         value: _id,
         label: name,
       }))
     );
-  }, [accountsRaw, isLoadingAccounts]);
+  }, [accountsRaw]);
 
   useEffect(() => {
     if (transactionCategoriesRaw === null) return;
@@ -162,9 +156,7 @@ export const ExpenseForm = ({
     onSubmit(newExpenseData);
   };
 
-  return accounts === null || transactionCategories === null ? (
-    <Loader loaderColor={LoaderColor.blue} />
-  ) : (
+  return (
     <>
       {errors.length > 0 && (
         <Alert additionalInformation={errors} testId="form-errors">

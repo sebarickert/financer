@@ -4,21 +4,16 @@ import { useState, useEffect } from 'react';
 import { AccountsList } from '../../components/accounts-list/accounts-list';
 import { AccountsListRowProps } from '../../components/accounts-list/accounts-list.row';
 import { IconName } from '../../components/icon/icon';
-import { Loader, LoaderColor } from '../../components/loader/loader';
 import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { useAllAccounts } from '../../hooks/account/useAllAccounts';
 import { formatCurrency } from '../../utils/formatCurrency';
 
 export const Accounts = (): JSX.Element => {
-  const { data: accountsRaw, isLoading } = useAllAccounts();
+  const accountsRaw = useAllAccounts();
   const [accounts, setAccounts] = useState<AccountsListRowProps[]>([]);
 
   useEffect(() => {
-    if (!accountsRaw || isLoading) {
-      setAccounts([]);
-      return;
-    }
     setAccounts(
       accountsRaw.map(({ _id, balance, name, type }) => ({
         label: name,
@@ -29,7 +24,7 @@ export const Accounts = (): JSX.Element => {
         id: _id,
       }))
     );
-  }, [accountsRaw, isLoading]);
+  }, [accountsRaw]);
 
   const savingsAccounts = accounts.filter(
     ({ type }) =>
@@ -46,9 +41,7 @@ export const Accounts = (): JSX.Element => {
     ({ type }) => type === AccountType.loan || type === AccountType.credit
   );
 
-  return isLoading ? (
-    <Loader loaderColor={LoaderColor.blue} />
-  ) : (
+  return (
     <>
       <UpdatePageInfo title="Accounts" />
       <section className="grid gap-8">

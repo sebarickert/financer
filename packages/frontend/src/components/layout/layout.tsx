@@ -5,8 +5,18 @@ import { ReactComponent as Logo } from '../../assets/logo.svg';
 import { Container } from '../container/container';
 import { DesktopHeader } from '../desktop-header/desktop-header';
 import { DesktopNavigation } from '../desktop-navigation/desktop-navigation';
+import { ErrorBoundaryHandler } from '../error-boundary/error-boundary';
+import { LoaderSuspense } from '../loader/loader-suspense';
 import { MobileHeader } from '../mobile-header/mobile-header';
 import { MobileNavigation } from '../mobile-navigation/mobile-navigation';
+
+const OutletWithErrorBoundary = (): JSX.Element => (
+  <ErrorBoundaryHandler>
+    <LoaderSuspense>
+      <Outlet />
+    </LoaderSuspense>
+  </ErrorBoundaryHandler>
+);
 
 export const Layout = (): JSX.Element => {
   const [currentWindowWidth, setCurrentWindowWidth] = useState(
@@ -54,7 +64,7 @@ export const Layout = (): JSX.Element => {
           <main>
             <div className="px-8 py-12">
               <DesktopHeader />
-              <Outlet />
+              <OutletWithErrorBoundary />
             </div>
           </main>
         </Container>
@@ -66,7 +76,7 @@ export const Layout = (): JSX.Element => {
     <div className="flex flex-col h-full min-h-screen overflow-y-scroll lg:hidden">
       <main className="flex-grow bg-white lg:pb-24 min-h-screen-safe pb-safe">
         <div className={`px-4 mt-[44px] pt-4 pb-24`}>
-          <Outlet />
+          <OutletWithErrorBoundary />
         </div>
       </main>
       <header>

@@ -1,23 +1,16 @@
 import { TransferDto } from '@local/types';
-import { useState, useEffect } from 'react';
+import { useQuery } from 'react-query';
 
-import { useAllTransfers } from './useAllTransfers';
+import { getTransferById } from '../../services/TransferService';
 
-export const useTransferById = (
-  id: string | null = null
-): [
-  TransferDto | null,
-  React.Dispatch<React.SetStateAction<string | null>>
-] => {
-  const [targetId, setTargetId] = useState(id);
-  const [targetTransfer, setTargetTransfer] = useState<TransferDto | null>(
-    null
+export const useTransferById = (id = 'missing-id'): TransferDto => {
+  const { data } = useQuery(
+    ['transfers', `transfer-id-${id}`],
+    () => getTransferById(id),
+
+    {
+      enabled: Boolean(id),
+    }
   );
-  const transfers = useAllTransfers();
-
-  useEffect(() => {
-    setTargetTransfer(transfers?.find(({ _id }) => _id === targetId) || null);
-  }, [targetId, transfers]);
-
-  return [targetTransfer, setTargetId];
+  return data ?? ({} as TransferDto);
 };

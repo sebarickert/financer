@@ -1,20 +1,18 @@
 import { AccountBalanceHistoryDto } from '@local/types';
-import { useState } from 'react';
 import { useQuery } from 'react-query';
 
 import { getAccountBalanceHistoryById } from '../../services/AccountService';
 
 export const useAccountBalanceHistoryById = (
-  id: string | null = null
-): [
-  AccountBalanceHistoryDto[] | null,
-  React.Dispatch<React.SetStateAction<string | null>>
-] => {
-  const [targetId, setTargetId] = useState(id);
-  const balanceHistoryQuery = useQuery(
-    ['account', 'account-balance-history', id],
-    () => getAccountBalanceHistoryById(targetId ?? '')
+  id?: string
+): AccountBalanceHistoryDto[] => {
+  const { data } = useQuery(
+    ['accounts', 'account-balance-history', id],
+    () => getAccountBalanceHistoryById(id ?? 'missing-id'),
+    {
+      enabled: Boolean(id),
+    }
   );
 
-  return [balanceHistoryQuery.data ?? null, setTargetId];
+  return data ?? [];
 };

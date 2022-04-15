@@ -1,10 +1,10 @@
 import { TransactionDto } from '@local/types';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useTransition } from 'react';
 
 import { DescriptionList } from '../../components/description-list/description-list';
 import { DescriptionListItem } from '../../components/description-list/description-list.item';
 import { IconName } from '../../components/icon/icon';
-import { Loader, LoaderColor } from '../../components/loader/loader';
+import { LoaderIfProcessing } from '../../components/loader/loader-if-processing';
 import { QuickLinks } from '../../components/quick-links/quick-links';
 import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
@@ -59,78 +59,80 @@ export const filterTransactionsByType = (
 };
 
 export const Statistics = (): JSX.Element => {
+  const [isProcessing, startProcessing] = useTransition();
   const [transactionVisibilityFilter, setTransactionVisibilityFilter] =
     useState<TransactionVisibilityFilterType>('all');
   const transactionsRaw = useAllTransactions();
-  const [transactions, setTransactions] = useState<TransactionDto[] | null>(
-    null
-  );
+  const [transactions, setTransactions] = useState<TransactionDto[]>([]);
   const [visibleTransactions, setVisibleTransactions] = useState<
-    ITransactionStackedListRowProps[] | null
-  >(null);
+    ITransactionStackedListRowProps[]
+  >([]);
   const transactionCategoryMappings = useAllTransactionCategoryMappings();
   const transactionCategories = useAllTransactionCategories();
   const [totalExpenses, setTotalExpenses] = useState<number>(NaN);
   const [totalIncomes, setTotalIncomes] = useState<number>(NaN);
 
   useEffect(() => {
-    if (transactions === null) return;
+    startProcessing(() => {
+      setVisibleTransactions(
+        transactions
+          .filter((transaction) =>
+            filterTransactionsByType(transactionVisibilityFilter, transaction)
+          )
+          .map<ITransactionStackedListRowProps>(
+            ({
+              amount,
+              _id,
+              description,
+              date: dateRaw,
+              toAccount,
+              fromAccount,
+            }) => {
+              const date = new Date(dateRaw);
+              const transactionType = getTransactionType(
+                toAccount,
+                fromAccount
+              );
 
-    setVisibleTransactions(
-      transactions
-        .filter((transaction) =>
-          filterTransactionsByType(transactionVisibilityFilter, transaction)
-        )
-        .map<ITransactionStackedListRowProps>(
-          ({
-            amount,
-            _id,
-            description,
-            date: dateRaw,
-            toAccount,
-            fromAccount,
-          }) => {
-            const date = new Date(dateRaw);
-            const transactionType = getTransactionType(toAccount, fromAccount);
+              const categoryMappings = transactionCategoryMappings
+                ?.filter(({ transaction_id }) => transaction_id === _id)
+                .map(
+                  ({ category_id }) =>
+                    transactionCategories.find(
+                      ({ _id: categoryId }) => category_id === categoryId
+                    )?.name
+                )
+                .filter((categoryName) => typeof categoryName !== 'undefined');
 
-            const categoryMappings = transactionCategoryMappings
-              ?.filter(({ transaction_id }) => transaction_id === _id)
-              .map(
-                ({ category_id }) =>
-                  transactionCategories.find(
-                    ({ _id: categoryId }) => category_id === categoryId
-                  )?.name
-              )
-              .filter((categoryName) => typeof categoryName !== 'undefined');
+              return {
+                transactionCategories: categoryMappings.join(', '),
+                transactionAmount: formatCurrency(amount),
+                date: formatDate(date),
+                label: description,
+                link: `/statistics/${mapTransactionTypeToUrlPrefix[transactionType]}/${_id}`,
+                transactionType,
+                id: _id,
+              } as ITransactionStackedListRowProps;
+            }
+          )
+      );
 
-            return {
-              transactionCategories: categoryMappings.join(', '),
-              transactionAmount: formatCurrency(amount),
-              date: formatDate(date),
-              label: description,
-              link: `/statistics/${mapTransactionTypeToUrlPrefix[transactionType]}/${_id}`,
-              transactionType,
-              id: _id,
-            } as ITransactionStackedListRowProps;
-          }
-        )
-    );
+      setTotalIncomes(
+        transactions
+          .filter((transaction) =>
+            filterTransactionsByType('income', transaction)
+          )
+          .reduce((currentTotal, { amount }) => currentTotal + amount, 0)
+      );
 
-    setTotalIncomes(
-      transactions
-        .filter((transaction) =>
-          filterTransactionsByType('income', transaction)
-        )
-        .reduce((currentTotal, { amount }) => currentTotal + amount, 0)
-    );
-
-    setTotalExpenses(
-      transactions
-        .filter((transaction) =>
-          filterTransactionsByType('expense', transaction)
-        )
-        .reduce((currentTotal, { amount }) => currentTotal + amount, 0)
-    );
+      setTotalExpenses(
+        transactions
+          .filter((transaction) =>
+            filterTransactionsByType('expense', transaction)
+          )
+          .reduce((currentTotal, { amount }) => currentTotal + amount, 0)
+      );
+    });
   }, [
     transactions,
     transactionVisibilityFilter,
@@ -139,8 +141,6 @@ export const Statistics = (): JSX.Element => {
   ]);
 
   useEffect(() => {
-    if (transactionsRaw === null) return;
-
     const now = new Date();
 
     setTransactions(
@@ -179,10 +179,8 @@ export const Statistics = (): JSX.Element => {
     },
   ];
 
-  return visibleTransactions === null ? (
-    <Loader loaderColor={LoaderColor.blue} />
-  ) : (
-    <>
+  return (
+    <LoaderIfProcessing isProcessing={isProcessing}>
       <UpdatePageInfo title="Statistics" />
       <DescriptionList
         label={`${pageVisibleMonth}, ${pageVisibleYear}`}
@@ -218,6 +216,6 @@ export const Statistics = (): JSX.Element => {
           description="Go to transfers page where you are able to manage your transfer transactions."
         />
       </QuickLinks>
-    </>
+    </LoaderIfProcessing>
   );
 };

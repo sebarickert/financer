@@ -2,7 +2,6 @@ import { UpdateTransferDto } from '@local/types';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { Loader, LoaderColor } from '../../components/loader/loader';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { useTransactionCategoryMappingsByTransactionId } from '../../hooks/transactionCategoryMapping/useTransactionCategoryMappingsByTransactionId';
 import { useEditTransfer } from '../../hooks/transfer/useEditTransfer';
@@ -13,10 +12,10 @@ import { TransferForm } from './TransferForm';
 
 export const EditTransfer = (): JSX.Element => {
   const navigate = useNavigate();
-  const { id } = useParams<{ id: string }>();
+  const { id = 'missing-id' } = useParams<{ id: string }>();
   const [errors, setErrors] = useState<string[]>([]);
 
-  const [transfer] = useTransferById(id);
+  const transfer = useTransferById(id);
   const [transactionCategoryMapping] =
     useTransactionCategoryMappingsByTransactionId(id);
   const editTransaction = useEditTransfer();
@@ -41,9 +40,7 @@ export const EditTransfer = (): JSX.Element => {
     }
   };
 
-  return !transfer || !transactionCategoryMapping ? (
-    <Loader loaderColor={LoaderColor.blue} />
-  ) : (
+  return (
     <>
       <UpdatePageInfo title="Edit transfer" />
       <TransferForm

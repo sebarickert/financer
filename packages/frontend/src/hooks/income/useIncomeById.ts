@@ -1,18 +1,15 @@
 import { IncomeDto } from '@local/types';
-import { useState, useEffect } from 'react';
+import { useQuery } from 'react-query';
 
-import { useAllIncomes } from './useAllIncomes';
+import { getIncomeById } from '../../services/IncomeService';
 
-export const useIncomeById = (
-  id: string | null = null
-): [IncomeDto | null, React.Dispatch<React.SetStateAction<string | null>>] => {
-  const [targetId, setTargetId] = useState(id);
-  const [targetIncome, setTargetIncome] = useState<IncomeDto | null>(null);
-  const incomes = useAllIncomes();
-
-  useEffect(() => {
-    setTargetIncome(incomes?.find(({ _id }) => _id === targetId) || null);
-  }, [targetId, incomes]);
-
-  return [targetIncome, setTargetId];
+export const useIncomeById = (id?: string): IncomeDto => {
+  const { data } = useQuery(
+    ['incomes', `income-id-${id}`],
+    () => getIncomeById(id ?? 'missing-id'),
+    {
+      enabled: Boolean(id),
+    }
+  );
+  return data ?? ({} as IncomeDto);
 };

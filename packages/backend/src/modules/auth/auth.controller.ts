@@ -11,19 +11,22 @@ import { ConfigService } from '@nestjs/config';
 import { NextFunction, Request, Response } from 'express';
 import passport from 'passport';
 
+import { UserDocument } from '../users/schemas/user.schema';
+
+import { AuthService } from './auth.service';
 import { Auth0Guard } from './guards/auth0.guard';
 import { GithubGuard } from './guards/github.guard';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private configService: ConfigService) {}
+  constructor(
+    private configService: ConfigService,
+    private authService: AuthService,
+  ) {}
 
   @Get('status')
-  getAuthenticationStatus(@Req() req: Request) {
-    return {
-      authenticated: Boolean(req.user),
-      payload: req.user,
-    };
+  async getAuthenticationStatus(@Req() req: Request) {
+    return this.authService.getAuthenticationStatus(req.user as UserDocument);
   }
 
   @Get('github')

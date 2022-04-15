@@ -1,11 +1,9 @@
-import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { Button } from '../../components/button/button';
 import { ButtonGroup } from '../../components/button/button.group';
 import { DescriptionList } from '../../components/description-list/description-list';
 import { DescriptionListItem } from '../../components/description-list/description-list.item';
-import { Loader, LoaderColor } from '../../components/loader/loader';
 import { ModalConfirm } from '../../components/modal/confirm/modal.confirm';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { useAccountById } from '../../hooks/account/useAccountById';
@@ -37,20 +35,12 @@ const ExpenseDeleteModal = ({ handleDelete }: IExpenseDeleteModalProps) => (
 export const Expense = (): JSX.Element => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
-  const [expense] = useExpenseById(id);
-  const [{ data: account }, setTargetAccountId] = useAccountById(
-    expense?.fromAccount
-  );
+  const expense = useExpenseById(id);
+  const account = useAccountById(expense?.fromAccount);
   const [transactionCategoryMapping] =
     useTransactionCategoryMappingsByTransactionId(id);
   const transactionCategories = useAllTransactionCategoriesWithCategoryTree();
   const deleteExpense = useDeleteExpense();
-
-  useEffect(() => {
-    if (!expense?.fromAccount) return;
-
-    setTargetAccountId(expense.fromAccount);
-  }, [expense, setTargetAccountId]);
 
   const getCategoryNameById = (categoryId: string) =>
     transactionCategories?.find((category) => category._id === categoryId)
@@ -65,9 +55,7 @@ export const Expense = (): JSX.Element => {
     navigate('/statistics/expenses');
   };
 
-  return !expense || !transactionCategoryMapping || !transactionCategories ? (
-    <Loader loaderColor={LoaderColor.blue} />
-  ) : (
+  return (
     <>
       <UpdatePageInfo
         title={`${expense.description}`}

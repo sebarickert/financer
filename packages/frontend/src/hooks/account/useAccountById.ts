@@ -1,33 +1,16 @@
 import { AccountDto } from '@local/types';
-import { useState, useEffect } from 'react';
-import { UseQueryResult } from 'react-query';
+import { useQuery } from 'react-query';
 
-import { useAllAccounts } from './useAllAccounts';
+import { getAccountById } from '../../services/AccountService';
 
-export const useAccountById = (
-  id: string | null = null
-): [
-  UseQueryResult<AccountDto>,
-  React.Dispatch<React.SetStateAction<string | null>>
-] => {
-  const [targetId, setTargetId] = useState(id);
-  const [targetAccount, setTargetAccount] = useState<AccountDto>();
-  const { data: accounts, isLoading, ...allAccountsQuery } = useAllAccounts();
-
-  useEffect(() => {
-    if (isLoading) {
-      setTargetAccount(undefined);
-      return;
-    }
-    setTargetAccount(accounts?.find(({ _id }) => _id === targetId));
-  }, [targetId, accounts, isLoading, targetAccount]);
-
-  return [
+export const useAccountById = (id?: string): AccountDto => {
+  const { data } = useQuery(
+    ['accounts', id],
+    () => getAccountById(id ?? 'missing-id'),
     {
-      ...allAccountsQuery,
-      isLoading,
-      data: targetAccount,
-    } as UseQueryResult<AccountDto>,
-    setTargetId,
-  ];
+      enabled: Boolean(id),
+    }
+  );
+
+  return data ?? ({} as AccountDto);
 };

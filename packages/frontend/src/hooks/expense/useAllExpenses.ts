@@ -13,10 +13,10 @@ import { useAllAccountsByType } from '../account/useAllAccounts';
 import { useAllTransactionCategories } from '../transactionCategories/useAllTransactionCategories';
 import { useAllTransactionCategoryMappings } from '../transactionCategoryMapping/useAllTransactionCategoryMappings';
 
-export const useAllExpenses = (): ExpenseDto[] | null => {
+export const useAllExpenses = (): ExpenseDto[] => {
   const expenseQuery = useQuery(['expenses'], getAllExpenses);
 
-  return expenseQuery.data || null;
+  return expenseQuery.data ?? [];
 };
 
 export const useCurrentMonthExpensesTotalAmount = (): number => {
@@ -54,9 +54,7 @@ export const useAllExpensesGroupByMonth = (
   React.Dispatch<React.SetStateAction<AccountType[]>>
 ] => {
   const expenses = useAllExpenses();
-  const [{ data: allForbiddenAccounts }, setTargetTypes] = useAllAccountsByType(
-    []
-  );
+  const [allForbiddenAccounts, setTargetTypes] = useAllAccountsByType([]);
   const [groupedExpenses, setGroupedExpenses] = useState<IExpensesPerMonth[]>(
     []
   );
@@ -67,8 +65,6 @@ export const useAllExpensesGroupByMonth = (
   >(initialForbiddenAccountTypes);
 
   useEffect(() => {
-    if (!expenses) return;
-
     const forbiddenAccountIds = allForbiddenAccounts?.map(({ _id }) => _id);
 
     setGroupedExpenses(

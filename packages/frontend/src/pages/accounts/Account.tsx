@@ -35,7 +35,7 @@ export const Account = (): JSX.Element | null => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const deleteAccount = useDeleteAccount();
-  const [{ data: account, isLoading: isLoadingAccount }] = useAccountById(id);
+  const account = useAccountById(id);
   const [transactions, setTransactions] = useState<
     TransactionStackedListRowProps[]
   >([]);
@@ -168,8 +168,6 @@ export const Account = (): JSX.Element | null => {
     }
   };
 
-  if (isLoadingAccount || !account || !transactions || !id) return null;
-
   return (
     <>
       <UpdatePageInfo title={`${account.name}`} backLink="/accounts" />
@@ -212,7 +210,7 @@ export const Account = (): JSX.Element | null => {
           </dl>
         </section>
       </section>
-      <AccountBalanceHistoryChart accountId={id} />
+      <AccountBalanceHistoryChart accountId={account._id} />
       <section className="my-6">
         <Heading>History</Heading>
         <TransactionStackedList className="mt-4" rows={transactions} />

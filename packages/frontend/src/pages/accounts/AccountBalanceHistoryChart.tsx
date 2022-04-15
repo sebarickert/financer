@@ -78,13 +78,9 @@ export const AccountBalanceHistoryChart = ({
   accountId,
 }: IAccountBalanceHistoryChartProps): JSX.Element => {
   const [chartData, setChartData] = useState<IChartData[]>([]);
-  const [accountBalanceHistory] = useAccountBalanceHistoryById(accountId);
+  const accountBalanceHistory = useAccountBalanceHistoryById(accountId);
 
   useEffect(() => {
-    if (!accountBalanceHistory) {
-      setChartData([]);
-      return;
-    }
     setChartData(
       accountBalanceHistory
         .map(({ date, balance }) => ({
