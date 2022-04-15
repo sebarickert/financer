@@ -1,3 +1,5 @@
+# NOTE:     "reflect-metadata": "^0.1.13", moved to from devDependencies to dependencies, because have to use --legacy-peer-dependencies with install script,
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
 </p>
