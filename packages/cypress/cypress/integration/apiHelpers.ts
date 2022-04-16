@@ -1,6 +1,6 @@
-import { AccountDto, ITransaction } from '@local/types';
+import { AccountDto, TransactionDto } from '@local/types';
 
-export interface ITransactionWithDateObject extends ITransaction {
+export interface ITransactionWithDateObject extends TransactionDto {
   dateObj: Date;
 }
 
@@ -29,7 +29,7 @@ export const getAccount = async (accountId: string): Promise<AccountDto> => {
 };
 
 const parseTransactionDate = (
-  transactions: ITransaction[]
+  transactions: TransactionDto[]
 ): ITransactionWithDateObject[] =>
   transactions
     .map(({ date, ...rest }) => ({
@@ -44,7 +44,7 @@ export const getAllTransaction = async (): Promise<
 > => {
   const transactions = (await (
     await fetch('http://localhost:3000/api/transactions')
-  ).json()) as ITransaction[];
+  ).json()) as TransactionDto[];
 
   return parseTransactionDate(transactions);
 };
@@ -54,7 +54,7 @@ export const getAllIncomes = async (): Promise<
 > => {
   const transactions = (await (
     await fetch('http://localhost:3000/api/incomes')
-  ).json()) as ITransaction[];
+  ).json()) as TransactionDto[];
 
   return parseTransactionDate(transactions);
 };
@@ -64,7 +64,7 @@ export const getAllExpenses = async (): Promise<
 > => {
   const transactions = (await (
     await fetch('http://localhost:3000/api/expenses')
-  ).json()) as ITransaction[];
+  ).json()) as TransactionDto[];
 
   return parseTransactionDate(transactions);
 };
@@ -74,17 +74,17 @@ export const getAllTransfers = async (): Promise<
 > => {
   const transactions = (await (
     await fetch('http://localhost:3000/api/transfers')
-  ).json()) as ITransaction[];
+  ).json()) as TransactionDto[];
 
   return parseTransactionDate(transactions);
 };
 
 export const getTransactionByIdRaw = async (
   transactionId: string
-): Promise<ITransaction> => {
+): Promise<TransactionDto> => {
   return (await (
     await fetch(`http://localhost:3000/api/transactions/${transactionId}`)
-  ).json()) as ITransaction;
+  ).json()) as TransactionDto;
 };
 
 export const getTransactionById = async (
@@ -100,7 +100,7 @@ export const getAllTransactionsByAccountId = async (
 ): Promise<ITransactionWithDateObject[]> => {
   const transactions = (await (
     await fetch(`http://localhost:3000/api/transactions/account/${accountId}`)
-  ).json()) as ITransaction[];
+  ).json()) as TransactionDto[];
 
   return transactions
     .map(({ date, ...rest }) => ({
@@ -111,7 +111,7 @@ export const getAllTransactionsByAccountId = async (
     .sort((a, b) => (a.date < b.date ? -1 : 1));
 };
 
-export const getAccountFromTransactions = (transaction: ITransaction) =>
+export const getAccountFromTransactions = (transaction: TransactionDto) =>
   transaction.toAccount || transaction.fromAccount;
 
 export const roundToTwoDecimal = (number: number): number =>

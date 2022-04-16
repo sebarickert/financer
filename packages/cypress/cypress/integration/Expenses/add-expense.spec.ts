@@ -1,4 +1,4 @@
-import { IAccount, ITransaction } from '@local/types';
+import { AccountDto, TransactionDto } from '@local/types';
 
 import {
   getAllTransaction,
@@ -26,8 +26,8 @@ describe('Add expense', () => {
     `new dummy transaction created by test code ${Math.random()}`;
 
   const verifyAccountBalanceChange = (amount: number) =>
-    cy.get<IAccount>('@accountBefore').then((accountBefore) => {
-      cy.get<IAccount>('@accountAfter').then((accountAfter) => {
+    cy.get<AccountDto>('@accountBefore').then((accountBefore) => {
+      cy.get<AccountDto>('@accountAfter').then((accountAfter) => {
         expect(roundToTwoDecimal(accountBefore.balance - amount)).to.be.eq(
           roundToTwoDecimal(accountAfter.balance)
         );
@@ -35,8 +35,8 @@ describe('Add expense', () => {
     });
 
   const verifyNewExpenseCreated = () =>
-    cy.get<ITransaction[]>('@expensesBefore').then((expensesBefore) => {
-      cy.get<ITransaction[]>('@expensesAfter').then((expensesAfter) => {
+    cy.get<TransactionDto[]>('@expensesBefore').then((expensesBefore) => {
+      cy.get<TransactionDto[]>('@expensesAfter').then((expensesAfter) => {
         expect(expensesBefore.length + 1).to.be.eq(
           roundToTwoDecimal(expensesAfter.length)
         );
@@ -183,6 +183,8 @@ describe('Add expense', () => {
     cy.get('#amount').type(newTransactionAmountStr);
     cy.getById('submit').click();
 
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(100);
     cy.getById('transaction-stacked-list-container')
       .contains(newTransactionName)
       .click();
