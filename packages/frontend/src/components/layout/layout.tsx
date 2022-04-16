@@ -11,7 +11,7 @@ import { MobileHeader } from '../mobile-header/mobile-header';
 import { MobileNavigation } from '../mobile-navigation/mobile-navigation';
 
 const OutletWithErrorBoundary = (): JSX.Element => (
-  <ErrorBoundaryHandler>
+  <ErrorBoundaryHandler errorPage="in-app">
     <LoaderSuspense>
       <Outlet />
     </LoaderSuspense>

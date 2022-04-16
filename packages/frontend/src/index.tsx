@@ -54,7 +54,7 @@ const Root = (): JSX.Element => {
   return (
     <React.StrictMode>
       <QueryClientProvider client={queryClient}>
-        <ErrorBoundaryHandler>
+        <ErrorBoundaryHandler errorPage="full-app">
           <LoaderSuspense>
             <PageInfoProvider>
               <SEO />
