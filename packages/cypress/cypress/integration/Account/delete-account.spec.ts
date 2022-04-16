@@ -29,6 +29,8 @@ describe('Account deleting', () => {
     cy.getById('delete-account').click();
     cy.getById('delete-account_cancel-button').click();
 
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(100);
     cy.getById('header-back-link').click();
 
     cy.getById('account-row').should('contain.text', 'Saving account 2');

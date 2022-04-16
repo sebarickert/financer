@@ -1,4 +1,4 @@
-import { IAccount, ITransaction } from '@local/types';
+import { AccountDto, TransactionDto } from '@local/types';
 
 import {
   getAllTransaction,
@@ -26,15 +26,15 @@ describe('Add transfer', () => {
     `new dummy transaction created by test code ${Math.random()}`;
 
   const verifyAccountBalanceChange = (amount: number) => {
-    cy.get<IAccount>('@toAccountBefore').then((accountBefore) => {
-      cy.get<IAccount>('@toAccountAfter').then((accountAfter) => {
+    cy.get<AccountDto>('@toAccountBefore').then((accountBefore) => {
+      cy.get<AccountDto>('@toAccountAfter').then((accountAfter) => {
         expect(roundToTwoDecimal(accountBefore.balance + amount)).to.be.eq(
           roundToTwoDecimal(accountAfter.balance)
         );
       });
     });
-    cy.get<IAccount>('@fromAccountBefore').then((accountBefore) => {
-      cy.get<IAccount>('@fromAccountAfter').then((accountAfter) => {
+    cy.get<AccountDto>('@fromAccountBefore').then((accountBefore) => {
+      cy.get<AccountDto>('@fromAccountAfter').then((accountAfter) => {
         expect(roundToTwoDecimal(accountBefore.balance - amount)).to.be.eq(
           roundToTwoDecimal(accountAfter.balance)
         );
@@ -43,8 +43,8 @@ describe('Add transfer', () => {
   };
 
   const verifyNewTransfersCreated = () =>
-    cy.get<ITransaction[]>('@transfersBefore').then((transfersBefore) => {
-      cy.get<ITransaction[]>('@transfersAfter').then((transfersAfter) => {
+    cy.get<TransactionDto[]>('@transfersBefore').then((transfersBefore) => {
+      cy.get<TransactionDto[]>('@transfersAfter').then((transfersAfter) => {
         expect(transfersBefore.length + 1).to.be.eq(
           roundToTwoDecimal(transfersAfter.length)
         );
@@ -253,6 +253,8 @@ describe('Add transfer', () => {
     cy.get('#fromAccount').select('Saving account 2');
     cy.getById('submit').click();
 
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(100);
     cy.getById('transaction-stacked-list-container')
       .contains(newTransactionName)
       .click();
