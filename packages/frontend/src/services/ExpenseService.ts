@@ -5,16 +5,16 @@ import {
   UpdateExpenseDto,
 } from '@local/types';
 
-import { parseApiResponse } from '../utils/apiHelper';
+import { parseApiResponse, parseJsonOrThrowError } from '../utils/apiHelper';
 
 export const getAllExpenses = async (): Promise<ExpenseDto[]> => {
   const expenses = await fetch('/api/expenses');
-  return expenses.json();
+  return parseJsonOrThrowError(expenses);
 };
 
 export const getExpenseById = async (id: string): Promise<ExpenseDto> => {
   const expense = await fetch(`/api/expenses/${id}`);
-  return expense.json();
+  return parseJsonOrThrowError(expense);
 };
 
 export const addExpense = async (

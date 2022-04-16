@@ -24,6 +24,7 @@ export const Expenses = (): JSX.Element => {
       </section>
       {expenses.map(({ year, month, rows, total }) => (
         <section
+          key={`${year}-${month}`}
           className="mb-12"
           aria-label={`IOverview of income transactions for ${monthNames[month]}, ${year}`}
         >

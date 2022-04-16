@@ -4,7 +4,7 @@ import { useQuery } from 'react-query';
 import { getExpenseById } from '../../services/ExpenseService';
 
 export const useExpenseById = (id?: string): ExpenseDto => {
-  const { data } = useQuery(
+  const { data, error } = useQuery(
     ['expenses', `expense-id${id}`],
     () => getExpenseById(id ?? 'missing-id'),
     {
@@ -12,5 +12,9 @@ export const useExpenseById = (id?: string): ExpenseDto => {
     }
   );
 
-  return data ?? ({} as ExpenseDto);
+  if (error || !data) {
+    throw new Error(`Missing data. Error: ${JSON.stringify(error ?? data)}`);
+  }
+
+  return data;
 };

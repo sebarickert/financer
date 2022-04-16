@@ -20,3 +20,10 @@ export const parseErrorMessagesToArray = (
 
   return typeof error === 'string' ? [error] : error;
 };
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const parseJsonOrThrowError = (response: Response): Promise<any> => {
+  if (!response.ok) throw new Error(response.statusText);
+
+  return response.json();
+};

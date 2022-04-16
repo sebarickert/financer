@@ -4,7 +4,7 @@ import { useQuery } from 'react-query';
 import { getTransferById } from '../../services/TransferService';
 
 export const useTransferById = (id = 'missing-id'): TransferDto => {
-  const { data } = useQuery(
+  const { data, error } = useQuery(
     ['transfers', `transfer-id-${id}`],
     () => getTransferById(id),
 
@@ -12,5 +12,9 @@ export const useTransferById = (id = 'missing-id'): TransferDto => {
       enabled: Boolean(id),
     }
   );
-  return data ?? ({} as TransferDto);
+  if (error || !data) {
+    throw new Error(`Missing data. Error: ${JSON.stringify(error ?? data)}`);
+  }
+
+  return data;
 };
