@@ -5,16 +5,16 @@ import {
   UpdateIncomeDto,
 } from '@local/types';
 
-import { parseApiResponse } from '../utils/apiHelper';
+import { parseApiResponse, parseJsonOrThrowError } from '../utils/apiHelper';
 
 export const getAllIncomes = async (): Promise<IncomeDto[]> => {
   const incomes = await fetch('/api/incomes');
-  return incomes.json();
+  return parseJsonOrThrowError(incomes);
 };
 
 export const getIncomeById = async (id: string): Promise<IncomeDto> => {
   const income = await fetch(`/api/incomes/${id}`);
-  return income.json();
+  return parseJsonOrThrowError(income);
 };
 
 export const addIncome = async (

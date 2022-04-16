@@ -4,12 +4,17 @@ import { useQuery } from 'react-query';
 import { getIncomeById } from '../../services/IncomeService';
 
 export const useIncomeById = (id?: string): IncomeDto => {
-  const { data } = useQuery(
-    ['incomes', `income-id-${id}`],
+  const { data, error } = useQuery(
+    ['incomes', id],
     () => getIncomeById(id ?? 'missing-id'),
     {
       enabled: Boolean(id),
     }
   );
-  return data ?? ({} as IncomeDto);
+
+  if (error || !data) {
+    throw new Error(`Missing data. Error: ${JSON.stringify(error ?? data)}`);
+  }
+
+  return data;
 };

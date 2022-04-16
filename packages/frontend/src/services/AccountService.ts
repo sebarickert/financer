@@ -6,23 +6,23 @@ import {
   UpdateAccountDto,
 } from '@local/types';
 
-import { parseApiResponse } from '../utils/apiHelper';
+import { parseApiResponse, parseJsonOrThrowError } from '../utils/apiHelper';
 
 export const getAllAccounts = async (): Promise<AccountDto[]> => {
   const accounts = await fetch('/api/accounts');
-  return accounts.json();
+  return parseJsonOrThrowError(accounts);
 };
 
 export const getAccountById = async (id: string): Promise<AccountDto> => {
   const account = await fetch(`/api/accounts/${id}`);
-  return account.json();
+  return parseJsonOrThrowError(account);
 };
 
 export const getAccountBalanceHistoryById = async (
   id: string
 ): Promise<AccountBalanceHistoryDto[]> => {
   const account = await fetch(`/api/accounts/${id}/balance-history`);
-  return account.json();
+  return parseJsonOrThrowError(account);
 };
 
 export const addAccount = async (

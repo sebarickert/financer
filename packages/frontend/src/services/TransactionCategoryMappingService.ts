@@ -1,6 +1,6 @@
 import { ApiResponse, TransactionCategoryMappingDto } from '@local/types';
 
-import { parseApiResponse } from '../utils/apiHelper';
+import { parseApiResponse, parseJsonOrThrowError } from '../utils/apiHelper';
 
 export const addTransactionCategoryMapping = async (
   newTransactionCategoryMappingData: TransactionCategoryMappingDto[]
@@ -26,9 +26,13 @@ export const getTransactionCategoryMappingByTransactionId = async (
   const transactionCategoryMapping = await fetch(
     `/api/transaction-category-mappings/by-transaction/${id}`
   );
-  return transactionCategoryMapping.json();
+  return parseJsonOrThrowError(transactionCategoryMapping);
 };
 
 export const getAllTransactionCategoryMappings = async (): Promise<
   TransactionCategoryMappingDto[]
-> => (await fetch('/api/transaction-category-mappings')).json();
+> => {
+  const mappings = await fetch('/api/transaction-category-mappings');
+
+  return parseJsonOrThrowError(mappings);
+};

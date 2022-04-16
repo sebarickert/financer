@@ -1,5 +1,7 @@
 import { AccountDto, TransactionDto, UserDto } from '@local/types';
 
+import { parseJsonOrThrowError } from '../utils/apiHelper';
+
 export interface IOverrideProfileData {
   accounts: AccountDto[];
   transactions: TransactionDto[];
@@ -8,7 +10,7 @@ export interface IOverrideProfileData {
 
 export const getProfileInformation = async (): Promise<UserDto> => {
   const profile = await fetch('/api/users/my-user');
-  return profile.json();
+  return parseJsonOrThrowError(profile);
 };
 
 export const postOverrideProfileData = async (

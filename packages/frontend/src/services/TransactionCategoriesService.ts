@@ -5,7 +5,7 @@ import {
   UpdateTransactionCategoryDto,
 } from '@local/types';
 
-import { parseApiResponse } from '../utils/apiHelper';
+import { parseApiResponse, parseJsonOrThrowError } from '../utils/apiHelper';
 
 export interface ITransactionCategoryWithCategoryTree
   extends TransactionCategoryDto {
@@ -32,15 +32,13 @@ export const getAllTransactionCategories = async (): Promise<
   TransactionCategoryDto[]
 > => {
   const transactionCategories = await fetch('/api/transaction-categories');
-  return (await transactionCategories.json()) as TransactionCategoryDto[];
+  return parseJsonOrThrowError(transactionCategories);
 };
 
 export const getAllTransactionCategoriesWithCategoryTree = async (): Promise<
   ITransactionCategoryWithCategoryTree[]
 > => {
-  const transactionCategoriesRaw = await fetch('/api/transaction-categories');
-  const transactionCategories =
-    (await transactionCategoriesRaw.json()) as TransactionCategoryDto[];
+  const transactionCategories = await getAllTransactionCategories();
 
   return transactionCategories
     .map((transactionCategory) => ({
@@ -64,7 +62,7 @@ export const getTransactionCategoryById = async (
   id: string
 ): Promise<TransactionCategoryDto> => {
   const transactionCategory = await fetch(`/api/transaction-categories/${id}`);
-  return transactionCategory.json();
+  return parseJsonOrThrowError(transactionCategory);
 };
 
 export const addTransactionCategory = async (

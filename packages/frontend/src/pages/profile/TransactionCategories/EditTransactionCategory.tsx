@@ -37,7 +37,7 @@ export const EditTransactionCategory = (): JSX.Element => {
   const { id } = useParams<{ id: string }>();
   const [errors, setErrors] = useState<string[]>([]);
 
-  const [transactionCategory] = useTransactionCategoryById(id);
+  const transactionCategory = useTransactionCategoryById(id);
   const deleteTransactionCategory = useDeleteTransactionCategory();
   const editTransactionCategory = useEditTransactionCategory();
 

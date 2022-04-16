@@ -51,7 +51,7 @@ export const Income = (): JSX.Element => {
       console.error('Failed to delete income: no id');
       return;
     }
-    deleteIncome(id);
+    await deleteIncome(id);
     navigate('/statistics/incomes');
   };
 

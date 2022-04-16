@@ -5,7 +5,7 @@ import {
   UpdateTransferDto,
 } from '@local/types';
 
-import { parseApiResponse } from '../utils/apiHelper';
+import { parseApiResponse, parseJsonOrThrowError } from '../utils/apiHelper';
 
 export const addTransfer = async (
   newTransactionData: CreateTransferDto
@@ -40,12 +40,12 @@ export const updateTransfer = async (
 
 export const getAllTransfers = async (): Promise<TransferDto[]> => {
   const transfers = await fetch('/api/transfers');
-  return transfers.json();
+  return parseJsonOrThrowError(transfers);
 };
 
 export const getTransferById = async (id: string): Promise<TransferDto> => {
   const transfer = await fetch(`/api/transfers/${id}`);
-  return transfer.json();
+  return parseJsonOrThrowError(transfer);
 };
 
 export const deleteTransfer = async (id: string): Promise<void> => {

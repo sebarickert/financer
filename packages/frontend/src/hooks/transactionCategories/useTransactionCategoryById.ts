@@ -1,27 +1,21 @@
 import { TransactionCategoryDto } from '@local/types';
-import { useState, useEffect } from 'react';
+import { useQuery } from 'react-query';
 
-import { useAllTransactionCategories } from './useAllTransactionCategories';
+import { getTransactionCategoryById } from '../../services/TransactionCategoriesService';
 
 export const useTransactionCategoryById = (
-  id: string | null = null
-): [
-  TransactionCategoryDto,
-  React.Dispatch<React.SetStateAction<string | null>>
-] => {
-  const [targetId, setTargetId] = useState(id);
-  const [targetTransactionCategory, setTargetTransactionCategory] =
-    useState<TransactionCategoryDto>();
-  const transactionCategories = useAllTransactionCategories();
+  id?: string
+): TransactionCategoryDto => {
+  const { data, error } = useQuery(
+    ['transactionCategories', id],
+    () => getTransactionCategoryById(id ?? 'missing-id'),
+    {
+      enabled: Boolean(id),
+    }
+  );
 
-  useEffect(() => {
-    setTargetTransactionCategory(
-      transactionCategories?.find(({ _id }) => _id === targetId)
-    );
-  }, [targetId, transactionCategories]);
-
-  return [
-    targetTransactionCategory ?? ({} as TransactionCategoryDto),
-    setTargetId,
-  ];
+  if (!data) {
+    throw new Error(`Missing data. Error: ${JSON.stringify(error ?? data)}`);
+  }
+  return data;
 };
