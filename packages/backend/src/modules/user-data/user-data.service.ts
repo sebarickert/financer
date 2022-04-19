@@ -11,6 +11,8 @@ import { TransactionCategoryMappingDocument } from '../transaction-category-mapp
 import { TransactionCategoryMappingsService } from '../transaction-category-mappings/transaction-category-mappings.service';
 import { TransactionDocument } from '../transactions/schemas/transaction.schema';
 import { TransactionsService } from '../transactions/transactions.service';
+import { UserPreferenceDocument } from '../user-preferences/schemas/user-preference.schema';
+import { UserPreferencesService } from '../user-preferences/user-preferences.service';
 import { UserDocument } from '../users/schemas/user.schema';
 import { UsersService } from '../users/users.service';
 
@@ -20,6 +22,7 @@ export type ImportUserDataDto = {
   accountBalanceChanges: AccountBalanceChangeDocument[];
   transactionCategories: TransactionCategoryDocument[];
   transactionCategoryMappings: TransactionCategoryMappingDocument[];
+  userPreferences: UserPreferenceDocument[];
 };
 
 export type ExportUserDataDto = ImportUserDataDto & {
@@ -48,6 +51,7 @@ export class UserDataService {
     private transactionService: TransactionsService,
     private transactionCategoriesService: TransactionCategoriesService,
     private transactionCategoryMappingService: TransactionCategoryMappingsService,
+    private userPreferencesService: UserPreferencesService,
   ) {}
 
   async findAllOneUserData(
@@ -64,6 +68,7 @@ export class UserDataService {
       await this.transactionCategoriesService.findAllByUser(userId);
     const transactionCategoryMappings =
       await this.transactionCategoryMappingService.findAllByUser(userId);
+    const userPreferences = await this.userPreferencesService.findAll(userId);
 
     const filename = getMyDataFilename();
     const data = {
@@ -73,6 +78,7 @@ export class UserDataService {
       transactions,
       transactionCategories,
       transactionCategoryMappings,
+      userPreferences,
     };
 
     return { filename, data };
@@ -86,6 +92,7 @@ export class UserDataService {
       transactions = [],
       transactionCategories = [],
       transactionCategoryMappings = [],
+      userPreferences = [],
     }: ImportUserDataDto,
   ) {
     await Promise.all([
@@ -94,6 +101,7 @@ export class UserDataService {
       this.transactionService.removeAllByUser(userId),
       this.transactionCategoriesService.removeAllByUser(userId),
       this.transactionCategoryMappingService.removeAllByUser(userId),
+      this.userPreferencesService.removeAllByUser(userId),
     ]);
 
     const parsedAccounts = accounts.map((account) => ({
@@ -135,6 +143,11 @@ export class UserDataService {
       }),
     );
 
+    const parsedUserPreferences = userPreferences.map((userPreference) => ({
+      ...userPreference,
+      userId,
+    }));
+
     await Promise.all([
       this.accountsService.createMany(parsedAccounts),
       this.accountBalanceChangesService.createMany(parsedAccountBalanceChanges),
@@ -143,6 +156,7 @@ export class UserDataService {
       this.transactionCategoryMappingService.createMany(
         parsedTransactionCategoryMappings,
       ),
+      this.userPreferencesService.createMany(parsedUserPreferences),
     ]);
 
     return { payload: 'Successfully overrided data.' };

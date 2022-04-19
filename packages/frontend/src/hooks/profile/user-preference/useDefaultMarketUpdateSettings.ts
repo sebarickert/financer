@@ -1,8 +1,9 @@
+import { UserPreferenceProperty } from '@local/types';
+
 import { useSingleUserPreferenceProperty } from './useSingleUserPreferenceProperty';
-import { UserPreferenceProperties } from './useUserPreferences';
 
 const targetUserPreference =
-  UserPreferenceProperties.UPDATE_INVESTMENT_MARKET_VALUE;
+  UserPreferenceProperty.UPDATE_INVESTMENT_MARKET_VALUE;
 
 export const useUserDefaultMarketUpdateSettings = (): [
   defaultMarketSettings:

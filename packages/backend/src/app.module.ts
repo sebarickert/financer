@@ -22,6 +22,7 @@ import { TransactionCategoryMappingsModule } from './modules/transaction-categor
 import { TransactionsModule } from './modules/transactions/transactions.module';
 import { TransfersModule } from './modules/transfers/transfers.module';
 import { UserDataModule } from './modules/user-data/user-data.module';
+import { UserPreferencesModule } from './modules/user-preferences/user-preferences.module';
 import { UsersModule } from './modules/users/users.module';
 
 @Module({
@@ -54,6 +55,7 @@ import { UsersModule } from './modules/users/users.module';
     TransfersModule,
     AccountBalanceChangesModule,
     HealthCheckModule,
+    UserPreferencesModule,
   ],
 })
 export class AppModule implements NestModule {

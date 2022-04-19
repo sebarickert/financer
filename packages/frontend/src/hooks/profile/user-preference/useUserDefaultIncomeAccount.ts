@@ -1,7 +1,8 @@
-import { useSingleUserPreferenceProperty } from './useSingleUserPreferenceProperty';
-import { UserPreferenceProperties } from './useUserPreferences';
+import { UserPreferenceProperty } from '@local/types';
 
-const targetUserPreference = UserPreferenceProperties.DEFAULT_INCOME_ACCOUNT;
+import { useSingleUserPreferenceProperty } from './useSingleUserPreferenceProperty';
+
+const targetUserPreference = UserPreferenceProperty.DEFAULT_INCOME_ACCOUNT;
 
 export const useUserDefaultIncomeAccount = (): [
   defaultIncomeAccount: string | undefined,

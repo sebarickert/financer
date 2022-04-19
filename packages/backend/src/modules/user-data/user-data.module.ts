@@ -5,6 +5,7 @@ import { AccountsModule } from '../accounts/accounts.module';
 import { TransactionCategoriesModule } from '../transaction-categories/transaction-categories.module';
 import { TransactionCategoryMappingsModule } from '../transaction-category-mappings/transaction-category-mappings.module';
 import { TransactionsModule } from '../transactions/transactions.module';
+import { UserPreferencesModule } from '../user-preferences/user-preferences.module';
 import { UsersModule } from '../users/users.module';
 
 import { UserDataService } from './user-data.service';
@@ -17,6 +18,7 @@ import { UserDataService } from './user-data.service';
     TransactionsModule,
     TransactionCategoriesModule,
     TransactionCategoryMappingsModule,
+    UserPreferencesModule,
   ],
   providers: [UserDataService],
   exports: [UserDataService],
