@@ -1,4 +1,5 @@
-import { NavLink } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 
 import { ReactComponent as Logo } from '../../assets/logo.svg';
 import { Button } from '../button/button';
@@ -15,6 +16,15 @@ export const ErrorPage = ({
   resetErrorBoundary,
   errorPageType,
 }: ErrorPageProps) => {
+  const { pathname } = useLocation();
+  const [errorPathname] = useState(pathname);
+
+  useEffect(() => {
+    if (pathname !== errorPathname) {
+      resetErrorBoundary();
+    }
+  }, [pathname, errorPathname, resetErrorBoundary]);
+
   if (errorPageType === 'full-app') {
     return (
       <Container>
@@ -28,7 +38,7 @@ export const ErrorPage = ({
           <Heading variant="h1" className="mb-6">
             Error
           </Heading>
-          <p className="max-w-xl text-lg mb-4">
+          <p className="max-w-xl mb-4 text-lg">
             Oops... Something went horribly wrong. We are not sure what
             happened, but we are trying to fix the issue as we speak.
             <br />
@@ -70,7 +80,7 @@ export const ErrorPage = ({
   return (
     <>
       <UpdatePageInfo title={`Error`} />
-      <p className="max-w-xl text-lg mb-4">
+      <p className="max-w-xl mb-4 text-lg">
         Oops... Something went wrong. We are not sure what happened. Click the
         button below to try to fix the error.
       </p>
