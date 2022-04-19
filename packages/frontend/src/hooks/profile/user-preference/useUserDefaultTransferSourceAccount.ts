@@ -1,6 +1,11 @@
 import { UserPreferenceProperty } from '@local/types';
+import { useCallback } from 'react';
+import { useQueryClient, useQuery } from 'react-query';
 
-import { useSingleUserPreferenceProperty } from './useSingleUserPreferenceProperty';
+import {
+  getUserPreferenceByProperty,
+  editUserPreference,
+} from '../../../services/user-preference-service';
 
 const targetUserPreference =
   UserPreferenceProperty.DEFAULT_TRANSFER_SOURCE_ACCOUNT;
@@ -9,8 +14,29 @@ export const useUserDefaultTransferSourceAccount = (): [
   defaultTransferSourceAccount: string | undefined,
   setDefaultTransferSourceAccount: (value: string) => void
 ] => {
-  const [account, setAccout] =
-    useSingleUserPreferenceProperty<string>(targetUserPreference);
+  const queryClient = useQueryClient();
+  const { data, error } = useQuery(
+    ['user-preferences', targetUserPreference],
+    () => getUserPreferenceByProperty(targetUserPreference)
+  );
 
-  return [account, setAccout];
+  if (error) {
+    throw new Error(
+      `Failed to fetch user preference for ${targetUserPreference}`
+    );
+  }
+
+  const updateDefaultMarketSettings = useCallback(
+    async (value: string) => {
+      const newUserPreferenceData = {
+        key: targetUserPreference,
+        value: value,
+      };
+      await editUserPreference(newUserPreferenceData);
+      queryClient.invalidateQueries(['user-preferences', targetUserPreference]);
+    },
+    [queryClient]
+  );
+
+  return [data?.value, updateDefaultMarketSettings];
 };

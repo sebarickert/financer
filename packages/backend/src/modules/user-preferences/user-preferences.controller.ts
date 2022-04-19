@@ -15,24 +15,30 @@ export class UserPreferencesController {
   ) {}
 
   @Get()
-  findAll(@UserId() userId: ObjectId) {
+  async findAll(@UserId() userId: ObjectId) {
     return this.userPreferencesService.findAll(userId);
   }
 
   @Get(':userPreferenceProperty')
-  findOne(
+  async findOne(
     @Param('userPreferenceProperty')
     userPreferenceProperty: UserPreferenceProperty,
     @UserId() userId: ObjectId,
   ) {
-    return this.userPreferencesService.findOneByUserAndProperty(
-      userPreferenceProperty,
-      userId,
+    return (
+      (await this.userPreferencesService.findOneByUserAndProperty(
+        userPreferenceProperty,
+        userId,
+      )) || {
+        key: userPreferenceProperty,
+        value: '',
+        userId,
+      }
     );
   }
 
   @Patch()
-  update(
+  async update(
     @UserId() userId: ObjectId,
     @Body() updateUserPreferenceDto: UpdateUserPreferenceDto,
   ) {
