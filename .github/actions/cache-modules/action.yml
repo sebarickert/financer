@@ -16,4 +16,4 @@ runs:
           **/node_modules
           packages/types/dist
           ~/.cache/Cypress
-        key: ${{ runner.os }}-modules-${{ hashFiles('./package-lock.json') }}
+        key: ${{ runner.os }}-modules-${{ hashFiles('./package-lock.json') }}-${{ hashFiles('./packages/types/src/*') }}
