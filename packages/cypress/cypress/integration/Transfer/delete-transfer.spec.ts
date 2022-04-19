@@ -14,6 +14,10 @@ describe('Delete transfer', () => {
     cy.applyFixture('large');
   });
 
+  beforeEach(() => {
+    cy.visit('http://localhost:3000/statistics/transfers');
+  });
+
   const verifyToAccountBalanceChangeByTargetTransactionAmount = () =>
     cy.get<AccountDto>('@toAccountBefore').then((accountBefore) =>
       cy.get<AccountDto>('@toAccountAfter').then((accountAfter) =>
