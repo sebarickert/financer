@@ -1,8 +1,8 @@
-import { useSingleUserPreferenceProperty } from './useSingleUserPreferenceProperty';
-import { UserPreferenceProperties } from './useUserPreferences';
+import { UserPreferenceProperty } from '@local/types';
 
-const targetUserPreference =
-  UserPreferenceProperties.TRANSACTION_LIST_CHUNK_SIZE;
+import { useSingleUserPreferenceProperty } from './useSingleUserPreferenceProperty';
+
+const targetUserPreference = UserPreferenceProperty.TRANSACTION_LIST_CHUNK_SIZE;
 
 export const useUserTransactionListChunkSize = (): [
   chunkSize: number,

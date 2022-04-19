@@ -8,3 +8,4 @@ export * from './transaction-category';
 export * from './transfer';
 export * from './transaction.dto';
 export * from './user';
+export * from './user-preference';

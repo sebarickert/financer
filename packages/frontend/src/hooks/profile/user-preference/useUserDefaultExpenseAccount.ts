@@ -1,7 +1,8 @@
-import { useSingleUserPreferenceProperty } from './useSingleUserPreferenceProperty';
-import { UserPreferenceProperties } from './useUserPreferences';
+import { UserPreferenceProperty } from '@local/types';
 
-const targetUserPreference = UserPreferenceProperties.DEFAULT_EXPENSE_ACCOUNT;
+import { useSingleUserPreferenceProperty } from './useSingleUserPreferenceProperty';
+
+const targetUserPreference = UserPreferenceProperty.DEFAULT_EXPENSE_ACCOUNT;
 
 export const useUserDefaultExpenseAccount = (): [
   defaultExpenseAccount: string | undefined,

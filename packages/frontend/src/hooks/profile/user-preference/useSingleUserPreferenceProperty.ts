@@ -1,12 +1,10 @@
+import { UserPreferenceProperty } from '@local/types';
 import { useEffect, useState } from 'react';
 
-import {
-  UserPreferenceProperties,
-  useUserPreferences,
-} from './useUserPreferences';
+import { useUserPreferences } from './useUserPreferences';
 
 export const useSingleUserPreferenceProperty = <PropertyPayload>(
-  targetUserPreferenceProperty: UserPreferenceProperties
+  targetUserPreferenceProperty: UserPreferenceProperty
 ): [PropertyPayload | undefined, (value: PropertyPayload) => void] => {
   const [userPreferences, setUserPreferences] = useUserPreferences();
   const [propertyValue, setPropertyValue] = useState<
