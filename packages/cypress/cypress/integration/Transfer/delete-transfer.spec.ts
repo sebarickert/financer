@@ -1,4 +1,4 @@
-import { IAccount, ITransaction } from '@local/types';
+import { AccountDto, TransactionDto } from '@local/types';
 
 import {
   getAllTransaction,
@@ -15,10 +15,10 @@ describe('Delete transfer', () => {
   });
 
   const verifyToAccountBalanceChangeByTargetTransactionAmount = () =>
-    cy.get<IAccount>('@toAccountBefore').then((accountBefore) =>
-      cy.get<IAccount>('@toAccountAfter').then((accountAfter) =>
+    cy.get<AccountDto>('@toAccountBefore').then((accountBefore) =>
+      cy.get<AccountDto>('@toAccountAfter').then((accountAfter) =>
         cy
-          .get<ITransaction>('@targetTransactionBefore')
+          .get<TransactionDto>('@targetTransactionBefore')
           .then((targetTransactionBefore) => {
             const changedAmount = roundToTwoDecimal(
               targetTransactionBefore.amount
@@ -35,10 +35,10 @@ describe('Delete transfer', () => {
     );
 
   const verifyFromAccountBalanceChangeByTargetTransactionAmount = () =>
-    cy.get<IAccount>('@fromAccountBefore').then((accountBefore) =>
-      cy.get<IAccount>('@fromAccountAfter').then((accountAfter) =>
+    cy.get<AccountDto>('@fromAccountBefore').then((accountBefore) =>
+      cy.get<AccountDto>('@fromAccountAfter').then((accountAfter) =>
         cy
-          .get<ITransaction>('@targetTransactionBefore')
+          .get<TransactionDto>('@targetTransactionBefore')
           .then((targetTransactionBefore) => {
             const changedAmount = roundToTwoDecimal(
               targetTransactionBefore.amount
@@ -55,7 +55,7 @@ describe('Delete transfer', () => {
     );
 
   const verifyTargetTransactionDoesNotExistsAfter = () => {
-    cy.get<ITransaction>('@targetTransactionBefore').then(
+    cy.get<TransactionDto>('@targetTransactionBefore').then(
       (targetTransactionBefore) =>
         cy.saveAsyncData('targetTransactionAfter', () =>
           getTransactionByIdRaw(targetTransactionBefore._id)
@@ -102,11 +102,9 @@ describe('Delete transfer', () => {
           getAccount(targetFromAccountId)
         );
 
-        // cy.getById(targetTransactionId).click();
-        // Due to pager on transfers page, we need this workaround and navigate to url manually
-        cy.visit(
-          `http://localhost:3000/statistics/transfers/${targetTransactionId}`
-        );
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(500);
+        cy.getById(targetTransactionId).click();
 
         cy.getById('transfer-delete-modal_open-button').click();
         cy.getById('transfer-delete-modal_confirm-button').click();
@@ -165,11 +163,9 @@ describe('Delete transfer', () => {
           getAccount(targetFromAccountId)
         );
 
-        // cy.getById(targetTransactionBefore._id).click();
-        // Due to pager on transfers page, we need this workaround and navigate to url manually
-        cy.visit(
-          `http://localhost:3000/statistics/transfers/${targetTransactionBefore._id}`
-        );
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(500);
+        cy.getById(targetTransactionBefore._id).click();
 
         cy.getById('transfer-delete-modal_open-button').click();
         cy.getById('transfer-delete-modal_confirm-button').click();

@@ -142,5 +142,6 @@
       "__v": 0
     }
   ],
-  "transactionCategoryMappings": []
+  "transactionCategoryMappings": [],
+  "userPreferences":[{"_id": "625f084041b9bbf9ccf4851d","key": "TRANSACTION_LIST_CHUNK_SIZE","value": "500","userId": "61460d7354ea082ad0256749","__v": 0}]
 }

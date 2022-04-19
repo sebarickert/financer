@@ -2,5 +2,6 @@
   "accounts": [],
   "transactions": [],
   "transactionCategories": [],
-  "transactionCategoryMappings": []
+  "transactionCategoryMappings": [],
+  "userPreferences": []
 }

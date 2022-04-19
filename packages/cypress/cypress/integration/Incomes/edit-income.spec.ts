@@ -1,4 +1,4 @@
-import { IAccount } from '@local/types';
+import { AccountDto } from '@local/types';
 
 import {
   getAllTransaction,
@@ -23,8 +23,8 @@ describe('Edit income', () => {
     `edited dummy transaction created by test code ${Math.random()}`;
 
   const verifyAccountBalanceChanges = (amount: number) =>
-    cy.get<IAccount>('@accountBefore').then((accountBefore) =>
-      cy.get<IAccount>('@accountAfter').then((accountAfter) => {
+    cy.get<AccountDto>('@accountBefore').then((accountBefore) =>
+      cy.get<AccountDto>('@accountAfter').then((accountAfter) => {
         const balanceBefore = roundToTwoDecimal(accountBefore.balance);
         const balanceAfter = roundToTwoDecimal(accountAfter.balance);
 
@@ -86,11 +86,10 @@ describe('Edit income', () => {
         const newAmount =
           targetTransactionBefore.amount + amountToChangeTransaction;
 
-        // cy.getById(targetTransactionBefore._id).click();
-        // Due to pager on incomes page, we need this workaround and navigate to url manually
-        cy.visit(
-          `http://localhost:3000/statistics/incomes/${targetTransactionBefore._id}`
-        );
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(500);
+        cy.getById(targetTransactionBefore._id).click();
+
         cy.getById(`edit-income-button`).click();
         cy.get('#description').clear();
         cy.get('#description').type(editedTransactionName);
@@ -148,11 +147,10 @@ describe('Edit income', () => {
         const newAmount =
           targetTransactionBefore.amount + amountToChangeTransaction;
 
-        // cy.getById(targetTransactionBefore._id).click();
-        // Due to pager on incomes page, we need this workaround and navigate to url manually
-        cy.visit(
-          `http://localhost:3000/statistics/incomes/${targetTransactionBefore._id}`
-        );
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(500);
+        cy.getById(targetTransactionBefore._id).click();
+
         cy.getById(`edit-income-button`).click();
         cy.get('#description').clear();
         cy.get('#description').type(editedTransactionName);
