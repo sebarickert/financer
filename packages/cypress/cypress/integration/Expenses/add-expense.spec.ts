@@ -184,7 +184,7 @@ describe('Add expense', () => {
     cy.getById('submit').click();
 
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100);
+    cy.wait(500);
     cy.getById('transaction-stacked-list-container')
       .contains(newTransactionName)
       .click();

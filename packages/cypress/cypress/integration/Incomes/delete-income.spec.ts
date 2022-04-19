@@ -1,4 +1,4 @@
-import { IAccount, ITransaction } from '@local/types';
+import { AccountDto, TransactionDto } from '@local/types';
 
 import {
   getAllTransaction,
@@ -15,10 +15,10 @@ describe('Delete income', () => {
   });
 
   const verifyAccountBalanceChangeByTargetTransactionAmount = () =>
-    cy.get<IAccount>('@accountBefore').then((accountBefore) =>
-      cy.get<IAccount>('@accountAfter').then((accountAfter) =>
+    cy.get<AccountDto>('@accountBefore').then((accountBefore) =>
+      cy.get<AccountDto>('@accountAfter').then((accountAfter) =>
         cy
-          .get<ITransaction>('@targetTransactionBefore')
+          .get<TransactionDto>('@targetTransactionBefore')
           .then((targetTransactionBefore) => {
             const changedAmount = roundToTwoDecimal(
               targetTransactionBefore.amount
@@ -35,7 +35,7 @@ describe('Delete income', () => {
     );
 
   const verifyTargetTransactionDoesNotExistsAfter = () => {
-    cy.get<ITransaction>('@targetTransactionBefore').then(
+    cy.get<TransactionDto>('@targetTransactionBefore').then(
       (targetTransactionBefore) =>
         cy.saveAsyncData('targetTransactionAfter', () =>
           getTransactionByIdRaw(targetTransactionBefore._id)
@@ -73,11 +73,9 @@ describe('Delete income', () => {
         cy.saveData('targetTransactionBefore', targetTransactionBefore);
         cy.saveAsyncData('accountBefore', () => getAccount(targetAccountId));
 
-        // cy.getById(targetTransactionId).click();
-        // Due to pager on incomes page, we need this workaround and navigate to url manually
-        cy.visit(
-          `http://localhost:3000/statistics/incomes/${targetTransactionId}`
-        );
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(500);
+        cy.getById(targetTransactionId).click();
 
         cy.getById('income-delete-modal_open-button').click();
         cy.getById('income-delete-modal_confirm-button').click();
@@ -122,11 +120,9 @@ describe('Delete income', () => {
         cy.saveData('targetTransactionBefore', targetTransactionBefore);
         cy.saveAsyncData('accountBefore', () => getAccount(targetAccountId));
 
-        // cy.getById(targetTransactionId).click();
-        // Due to pager on incomes page, we need this workaround and navigate to url manually
-        cy.visit(
-          `http://localhost:3000/statistics/incomes/${targetTransactionId}`
-        );
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(500);
+        cy.getById(targetTransactionId).click();
 
         cy.getById('income-delete-modal_open-button').click();
         cy.getById('income-delete-modal_confirm-button').click();

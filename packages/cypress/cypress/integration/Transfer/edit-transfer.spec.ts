@@ -1,4 +1,4 @@
-import { IAccount } from '@local/types';
+import { AccountDto } from '@local/types';
 
 import {
   getAllTransaction,
@@ -23,8 +23,8 @@ describe('Edit transfer', () => {
     `edited dummy transaction created by test code ${Math.random()}`;
 
   const verifyToAccountBalanceChanges = (amount: number) =>
-    cy.get<IAccount>('@toAccountBefore').then((accountBefore) =>
-      cy.get<IAccount>('@toAccountAfter').then((accountAfter) => {
+    cy.get<AccountDto>('@toAccountBefore').then((accountBefore) =>
+      cy.get<AccountDto>('@toAccountAfter').then((accountAfter) => {
         const balanceBefore = roundToTwoDecimal(accountBefore.balance);
         const balanceAfter = roundToTwoDecimal(accountAfter.balance);
 
@@ -33,8 +33,8 @@ describe('Edit transfer', () => {
     );
 
   const verifyFromAccountBalanceChanges = (amount: number) =>
-    cy.get<IAccount>('@fromAccountBefore').then((accountBefore) =>
-      cy.get<IAccount>('@fromAccountAfter').then((accountAfter) => {
+    cy.get<AccountDto>('@fromAccountBefore').then((accountBefore) =>
+      cy.get<AccountDto>('@fromAccountAfter').then((accountAfter) => {
         const balanceBefore = roundToTwoDecimal(accountBefore.balance);
         const balanceAfter = roundToTwoDecimal(accountAfter.balance);
 
@@ -106,11 +106,10 @@ describe('Edit transfer', () => {
         const newAmount =
           targetTransactionBefore.amount + amountToChangeTransaction;
 
-        // cy.getById(targetTransactionBefore._id).click();
-        // Due to pager on transfers page, we need this workaround and navigate to url manually
-        cy.visit(
-          `http://localhost:3000/statistics/transfers/${targetTransactionBefore._id}`
-        );
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(500);
+        cy.getById(targetTransactionBefore._id).click();
+
         cy.getById(`edit-transfer-button`).click();
         cy.get('#description').clear();
         cy.get('#description').type(editedTransactionName);
@@ -184,11 +183,10 @@ describe('Edit transfer', () => {
         const newAmount =
           targetTransactionBefore.amount + amountToChangeTransaction;
 
-        // cy.getById(targetTransactionBefore._id).click();
-        // Due to pager on transfers page, we need this workaround and navigate to url manually
-        cy.visit(
-          `http://localhost:3000/statistics/transfers/${targetTransactionBefore._id}`
-        );
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(500);
+        cy.getById(targetTransactionBefore._id).click();
+
         cy.getById(`edit-transfer-button`).click();
         cy.get('#description').clear();
         cy.get('#description').type(editedTransactionName);
