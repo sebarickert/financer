@@ -14,6 +14,10 @@ describe('Delete income', () => {
     cy.applyFixture('large');
   });
 
+  beforeEach(() => {
+    cy.visit('http://localhost:3000/statistics/incomes');
+  });
+
   const verifyAccountBalanceChangeByTargetTransactionAmount = () =>
     cy.get<AccountDto>('@accountBefore').then((accountBefore) =>
       cy.get<AccountDto>('@accountAfter').then((accountAfter) =>
