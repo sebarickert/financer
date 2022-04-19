@@ -11,8 +11,10 @@ export class AuthService {
     private accountsService: AccountsService,
   ) {}
 
-  async getAuthenticationStatus(user: UserDocument) {
-    const accounts = await this.accountsService.findAllByUser(user._id);
+  async getAuthenticationStatus(user?: UserDocument) {
+    const accounts = user
+      ? await this.accountsService.findAllByUser(user._id)
+      : [];
     return {
       authenticated: Boolean(user),
       payload: user,
