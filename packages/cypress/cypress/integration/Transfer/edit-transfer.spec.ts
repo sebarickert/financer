@@ -14,7 +14,7 @@ describe('Edit transfer', () => {
   });
 
   beforeEach(() => {
-    cy.visit('http://localhost:3000/statistics/incomes');
+    cy.visit('http://localhost:3000/statistics/transfers');
   });
 
   const amountToChangeTransactionStr = '15.50';
