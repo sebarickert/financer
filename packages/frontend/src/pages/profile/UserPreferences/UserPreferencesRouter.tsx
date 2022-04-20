@@ -14,7 +14,7 @@ export const UserPreferencesRouter = (): JSX.Element => {
         element={<UserDefaultAccountSettings />}
       />
       <Route
-        path="transaction-list-chunk-size"
+        path="maximum-items-per-page"
         element={<UserTransactionListChunkSize />}
       />
       <Route

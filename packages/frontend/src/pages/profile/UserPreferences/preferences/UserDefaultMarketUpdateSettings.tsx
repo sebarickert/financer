@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
+import { Form } from '../../../../components/form/form';
 import { Input } from '../../../../components/input/input';
-import { ModalCustom } from '../../../../components/modal/custom/modal.custom';
 import { Select } from '../../../../components/select/select';
 import { UpdatePageInfo } from '../../../../components/seo/updatePageInfo';
 import { useUserDefaultMarketUpdateSettings } from '../../../../hooks/profile/user-preference/useDefaultMarketUpdateSettings';
 import { useAllTransactionCategoriesWithCategoryTree } from '../../../../hooks/transactionCategories/useAllTransactionCategories';
 
 export const UserDefaultMarketUpdateSettings = (): JSX.Element => {
+  const navigate = useNavigate();
   const [defaultMarketSettings, setDefaultMarketUpdateSettings] =
     useUserDefaultMarketUpdateSettings();
   const [transactionDescription, setTransactionDescription] = useState<
@@ -30,21 +32,25 @@ export const UserDefaultMarketUpdateSettings = (): JSX.Element => {
     setCategory(defaultMarketSettings?.category);
   }, [defaultMarketSettings?.category, category]);
 
-  const handleTransactionDescriptionInputValueChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setTransactionDescription(event.target.value);
-  };
+  const handleSave = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
-  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setCategory(event.target.value);
-  };
+    const {
+      transactionDescription: { value: transactionDescriptionValue },
+      category: { value: categoryValue },
+    } = event.target as unknown as {
+      transactionDescription: HTMLInputElement;
+      category: HTMLSelectElement;
+    };
 
-  const handleSave = () => {
-    setDefaultMarketUpdateSettings({
-      transactionDescription: transactionDescription ?? '',
-      category,
-    });
+    await Promise.all([
+      setDefaultMarketUpdateSettings({
+        transactionDescription: transactionDescriptionValue ?? '',
+        category: categoryValue,
+      }),
+    ]);
+
+    navigate('/profile/user-preferences');
   };
 
   return (
@@ -53,36 +59,35 @@ export const UserDefaultMarketUpdateSettings = (): JSX.Element => {
         title="Market update settings"
         backLink={'/profile/user-preferences'}
       />
-      <ModalCustom
-        modalOpenButtonLabel="Set default market value update settings "
-        onConfirm={handleSave}
-        submitButtonLabel="Save"
+      <Form
+        handleSubmit={handleSave}
+        submitLabel="Save"
+        formFooterBackLink="/profile/user-preferences"
       >
-        <Input
-          id="transactionDescription"
-          type="text"
-          isRequired
-          value={defaultMarketSettings?.transactionDescription}
-          onChange={handleTransactionDescriptionInputValueChange}
-        >
-          Transaction description
-        </Input>
-        <Select
-          className="mt-4"
-          id="category"
-          options={[{ name: 'None', _id: '' }, ...categories].map(
-            ({ name, _id }) => ({
-              label: name,
-              value: _id,
-            })
-          )}
-          defaultValue={defaultMarketSettings?.category}
-          isRequired
-          handleOnChange={handleSelectChange}
-        >
-          Category
-        </Select>
-      </ModalCustom>
+        <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
+          <Input
+            id="transactionDescription"
+            type="text"
+            isRequired
+            value={defaultMarketSettings?.transactionDescription}
+          >
+            Transaction description
+          </Input>
+          <Select
+            id="category"
+            options={[{ name: 'None', _id: '' }, ...categories].map(
+              ({ name, _id }) => ({
+                label: name,
+                value: _id,
+              })
+            )}
+            defaultValue={defaultMarketSettings?.category}
+            isRequired
+          >
+            Category
+          </Select>
+        </div>
+      </Form>
     </>
   );
 };
