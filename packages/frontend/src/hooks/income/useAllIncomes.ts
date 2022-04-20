@@ -14,9 +14,13 @@ import { useAllTransactionCategories } from '../transactionCategories/useAllTran
 import { useAllTransactionCategoryMappings } from '../transactionCategoryMapping/useAllTransactionCategoryMappings';
 
 export const useAllIncomes = (): IncomeDto[] => {
-  const incomesQuery = useQuery(['incomes'], getAllIncomes);
+  const { data, error } = useQuery(['incomes'], getAllIncomes);
 
-  return incomesQuery.data ?? [];
+  if (error || !data) {
+    throw new Error(`Missing data. Error: ${JSON.stringify(error ?? data)}`);
+  }
+
+  return data;
 };
 
 export const useCurrentMonthIncomesTotalAmount = (): number => {

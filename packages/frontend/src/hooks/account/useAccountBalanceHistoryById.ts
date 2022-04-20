@@ -6,7 +6,7 @@ import { getAccountBalanceHistoryById } from '../../services/AccountService';
 export const useAccountBalanceHistoryById = (
   id?: string
 ): AccountBalanceHistoryDto[] => {
-  const { data } = useQuery(
+  const { data, error } = useQuery(
     ['accounts', 'account-balance-history', id],
     () => getAccountBalanceHistoryById(id ?? 'missing-id'),
     {
@@ -14,5 +14,9 @@ export const useAccountBalanceHistoryById = (
     }
   );
 
-  return data ?? [];
+  if (error || !data) {
+    throw new Error(`Missing data. Error: ${JSON.stringify(error ?? data)}`);
+  }
+
+  return data;
 };

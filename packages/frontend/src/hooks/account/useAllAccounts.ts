@@ -5,9 +5,13 @@ import { useQuery } from 'react-query';
 import { getAllAccounts } from '../../services/AccountService';
 
 export const useAllAccounts = (): AccountDto[] => {
-  const { data } = useQuery<AccountDto[]>(['accounts'], getAllAccounts);
+  const { data, error } = useQuery<AccountDto[]>(['accounts'], getAllAccounts);
 
-  return data ?? [];
+  if (error || !data) {
+    throw new Error(`Missing data. Error: ${JSON.stringify(error ?? data)}`);
+  }
+
+  return data;
 };
 
 export const useAllAccountsByType = (

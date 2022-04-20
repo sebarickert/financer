@@ -3,10 +3,14 @@ import { useQuery } from 'react-query';
 import { getAllTransactionCategoryMappings } from '../../services/TransactionCategoryMappingService';
 
 export const useAllTransactionCategoryMappings = () => {
-  const transactionCategoryMappingsQuery = useQuery(
+  const { data, error } = useQuery(
     ['transactionCategoryMappings'],
     getAllTransactionCategoryMappings
   );
 
-  return transactionCategoryMappingsQuery.data ?? [];
+  if (error || !data) {
+    throw new Error(`Missing data. Error: ${JSON.stringify(error ?? data)}`);
+  }
+
+  return data;
 };

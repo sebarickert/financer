@@ -3,7 +3,11 @@ import { useQuery } from 'react-query';
 import { getAllTransactions } from '../../services/TransactionService';
 
 export const useAllTransactions = () => {
-  const transactionsQuery = useQuery(['transactions'], getAllTransactions);
+  const { data, error } = useQuery(['transactions'], getAllTransactions);
 
-  return transactionsQuery.data ?? [];
+  if (error || !data) {
+    throw new Error(`Missing data. Error: ${JSON.stringify(error ?? data)}`);
+  }
+
+  return data;
 };
