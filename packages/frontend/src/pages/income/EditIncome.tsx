@@ -42,7 +42,7 @@ export const EditIncome = (): JSX.Element => {
 
   return (
     <>
-      <UpdatePageInfo title={`Edit ${income.description} | Incomes`} />
+      <UpdatePageInfo title={`Edit ${income.description}`} />
       <IncomeForm
         onSubmit={handleSubmit}
         errors={errors}

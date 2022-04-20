@@ -42,7 +42,7 @@ export const EditExpense = (): JSX.Element => {
 
   return (
     <>
-      <UpdatePageInfo title={`Edit ${expense.description} | Expenses`} />
+      <UpdatePageInfo title={`Edit ${expense.description}`} />
       <ExpenseForm
         onSubmit={handleSubmit}
         errors={errors}
