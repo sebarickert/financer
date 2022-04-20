@@ -17,7 +17,7 @@ export const AccountsList = ({
 }: IAccountsListProps): JSX.Element => {
   return (
     <LinkList label={label} className={`${className}`}>
-      {rows.map(({ balanceAmount, label: rowLabel, link, accountType }) => {
+      {rows.map(({ id, balanceAmount, label: rowLabel, link, accountType }) => {
         const accountTypeIconMapping: { [key: string]: IconName } = {
           cash: IconName.cash,
           savings: IconName.star,
@@ -31,6 +31,7 @@ export const AccountsList = ({
             link={link ?? ''}
             icon={accountTypeIconMapping[accountType.toLowerCase()]}
             testId="account-row"
+            key={id}
           >
             <span className="grid">
               <span className="truncate">{rowLabel}</span>

@@ -53,6 +53,7 @@ export const TransactionCategoriesForm = ({
             );
           }}
           testId={testId}
+          key={index}
         />
       ))}
     </div>

@@ -13,7 +13,7 @@ interface SelectProps {
 }
 
 export interface Option {
-  value?: string;
+  value: string;
   label: string;
 }
 
@@ -49,9 +49,10 @@ export const Select = ({
           required={isRequired}
           aria-describedby={help && `${id}-description`}
           onChange={handleChange}
+          defaultValue={defaultValue}
         >
           {options.map(({ value, label }) => (
-            <option value={value} key={value} selected={value === defaultValue}>
+            <option value={value} key={value}>
               {label}
             </option>
           ))}

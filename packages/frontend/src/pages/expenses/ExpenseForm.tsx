@@ -35,9 +35,9 @@ export const ExpenseForm = ({
   submitLabel,
   fromAccount,
   transactionCategoryMapping = null,
-}: IExpenseFormProps): JSX.Element => {
+}: IExpenseFormProps): JSX.Element | null => {
   const accountsRaw = useAllAccounts();
-  const [accounts, setAccounts] = useState<Option[]>([]);
+  const [accounts, setAccounts] = useState<Option[]>();
   const transactionCategoriesRaw =
     useAllTransactionCategoriesForExpenseWithCategoryTree();
   const [transactionCategories, setTransactionCategories] = useState<Option[]>(
@@ -155,6 +155,8 @@ export const ExpenseForm = ({
 
     onSubmit(newExpenseData);
   };
+
+  if (!accounts) return null;
 
   return (
     <>
