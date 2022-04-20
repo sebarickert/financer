@@ -11,29 +11,8 @@ export const UserPreferences = (): JSX.Element => {
         <LinkListLink link="default-account-settings" icon={IconName.viewGrid}>
           Default account settings
         </LinkListLink>
-        {/* <LinkListLink link="default-income-account" icon={IconName.download}>
-          Default income account
-        </LinkListLink>
-        <LinkListLink link="default-expense-account" icon={IconName.upload}>
-          Default expense account
-        </LinkListLink> */}
-        {/* <LinkListLink
-          link="default-transfer-source-account"
-          icon={IconName.switchHorizontal}
-        >
-          Default transfer source account
-        </LinkListLink>
-        <LinkListLink
-          link="default-transfer-target-account"
-          icon={IconName.switchHorizontal}
-        >
-          Default transfer target account
-        </LinkListLink> */}
-        <LinkListLink
-          link="transaction-list-chunk-size"
-          icon={IconName.collection}
-        >
-          Transaction list chunk size
+        <LinkListLink link="maximum-items-per-page" icon={IconName.collection}>
+          Max amount of items per page
         </LinkListLink>
         <LinkListLink link="market-update-settings" icon={IconName.trendingUp}>
           Market update settings
