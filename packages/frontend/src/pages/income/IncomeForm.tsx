@@ -35,9 +35,9 @@ export const IncomeForm = ({
   submitLabel,
   toAccount,
   transactionCategoryMapping = null,
-}: IncomeFormProps): JSX.Element => {
+}: IncomeFormProps): JSX.Element | null => {
   const accountsRaw = useAllAccounts();
-  const [accounts, setAccounts] = useState<Option[]>([]);
+  const [accounts, setAccounts] = useState<Option[]>();
   const transactionCategoriesRaw =
     useAllTransactionCategoriesForIncomeWithCategoryTree();
   const [transactionCategories, setTransactionCategories] = useState<Option[]>(
@@ -155,6 +155,8 @@ export const IncomeForm = ({
 
     onSubmit(newIncomeData);
   };
+
+  if (!accounts) return null;
 
   return (
     <>

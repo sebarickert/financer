@@ -5,7 +5,7 @@ import { ModalCustom } from '../../../../components/modal/custom/modal.custom';
 import { Select } from '../../../../components/select/select';
 import { UpdatePageInfo } from '../../../../components/seo/updatePageInfo';
 import { useUserDefaultMarketUpdateSettings } from '../../../../hooks/profile/user-preference/useDefaultMarketUpdateSettings';
-import { useAllTransactionCategories } from '../../../../hooks/transactionCategories/useAllTransactionCategories';
+import { useAllTransactionCategoriesWithCategoryTree } from '../../../../hooks/transactionCategories/useAllTransactionCategories';
 
 export const UserDefaultMarketUpdateSettings = (): JSX.Element => {
   const [defaultMarketSettings, setDefaultMarketUpdateSettings] =
@@ -16,7 +16,7 @@ export const UserDefaultMarketUpdateSettings = (): JSX.Element => {
   const [category, setCategory] = useState<string | undefined>(
     defaultMarketSettings?.category
   );
-  const categories = useAllTransactionCategories();
+  const categories = useAllTransactionCategoriesWithCategoryTree();
 
   useEffect(() => {
     if (typeof transactionDescription !== 'undefined') return;
@@ -70,7 +70,7 @@ export const UserDefaultMarketUpdateSettings = (): JSX.Element => {
         <Select
           className="mt-4"
           id="category"
-          options={[{ name: 'None', _id: undefined }, ...categories].map(
+          options={[{ name: 'None', _id: '' }, ...categories].map(
             ({ name, _id }) => ({
               label: name,
               value: _id,

@@ -40,7 +40,7 @@ export const TransactionCategoryForm = ({
     if (transactionCategoriesRaw === null) return;
 
     setTransactionCategories([
-      { label: 'None', value: undefined },
+      { label: 'None', value: '' },
       ...transactionCategoriesRaw.map(
         ({ _id, categoryTree: transactionCategoryName }) => ({
           value: _id,
