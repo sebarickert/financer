@@ -9,12 +9,16 @@ import {
 } from '../../services/TransactionCategoriesService';
 
 export const useAllTransactionCategories = (): TransactionCategoryDto[] => {
-  const { data } = useQuery(
+  const { data, error } = useQuery(
     ['transactionCategories'],
     getAllTransactionCategories
   );
 
-  return data ?? [];
+  if (error || !data) {
+    throw new Error(`Missing data. Error: ${JSON.stringify(error ?? data)}`);
+  }
+
+  return data;
 };
 
 export const useAllTransactionCategoriesWithCategoryTree = (

@@ -15,9 +15,13 @@ import { useAllTransactionCategories } from '../transactionCategories/useAllTran
 import { useAllTransactionCategoryMappings } from '../transactionCategoryMapping/useAllTransactionCategoryMappings';
 
 export const useAllTransfers = (): TransferDto[] => {
-  const { data } = useQuery(['transfers'], getAllTransfers);
+  const { data, error } = useQuery(['transfers'], getAllTransfers);
 
-  return data ?? [];
+  if (error || !data) {
+    throw new Error(`Missing data. Error: ${JSON.stringify(error ?? data)}`);
+  }
+
+  return data;
 };
 
 export const useAllTransfersGroupByMonth = () => {
