@@ -26,7 +26,7 @@ describe('Edit income with category', () => {
     cy.getById('submit').click();
 
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100);
+    cy.wait(200);
     cy.getById('623de1f2c839cf72d59b0d91').click();
     cy.getById('edit-income-button').click();
 
@@ -88,7 +88,7 @@ describe('Edit income with category', () => {
     cy.getById('submit').click();
 
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100);
+    cy.wait(200);
     cy.getById('623de213c839cf72d59b0da6').click();
     cy.getById('edit-income-button').click();
 
@@ -128,7 +128,7 @@ describe('Edit income with category', () => {
     cy.getById('submit').click();
 
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100);
+    cy.wait(200);
     cy.getById('623de213c839cf72d59b0da6').click();
     cy.getById('edit-income-button').click();
 

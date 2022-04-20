@@ -26,7 +26,7 @@ describe('Edit transfer with category', () => {
     cy.getById('submit').click();
 
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100);
+    cy.wait(200);
     cy.getById('623de2a0c839cf72d59b0df2').click();
     cy.getById('edit-transfer-button').click();
 
@@ -90,7 +90,7 @@ describe('Edit transfer with category', () => {
     cy.getById('submit').click();
 
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100);
+    cy.wait(200);
     cy.getById('623de2c0c839cf72d59b0e10').click();
     cy.getById('edit-transfer-button').click();
 
@@ -133,7 +133,7 @@ describe('Edit transfer with category', () => {
     cy.getById('submit').click();
 
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100);
+    cy.wait(200);
     cy.getById('623de2c0c839cf72d59b0e10').click();
     cy.getById('edit-transfer-button').click();
 
