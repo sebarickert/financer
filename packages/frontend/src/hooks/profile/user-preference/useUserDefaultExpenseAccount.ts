@@ -11,7 +11,7 @@ const targetUserPreference = UserPreferenceProperty.DEFAULT_EXPENSE_ACCOUNT;
 
 export const useUserDefaultExpenseAccount = (): [
   defaultExpenseAccount: string | undefined,
-  setDefaultExpenseAccount: (value: string) => void
+  setDefaultExpenseAccount: (value: string) => Promise<void>
 ] => {
   const queryClient = useQueryClient();
   const { data, error } = useQuery(
