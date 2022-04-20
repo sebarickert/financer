@@ -7,8 +7,7 @@ interface IFormProps {
   submitLabel: string;
   accentColor?: 'red' | 'green' | 'blue';
   formFooterBackLink?: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  handleSubmit(event: any): void;
+  handleSubmit(event: React.FormEvent<HTMLFormElement>): void;
   optionalFooterComponent?: React.ReactNode;
 }
 

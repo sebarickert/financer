@@ -8,13 +8,16 @@ export const UserPreferences = (): JSX.Element => {
     <>
       <UpdatePageInfo title="User preferences" backLink={'/profile'} />
       <LinkList>
-        <LinkListLink link="default-income-account" icon={IconName.download}>
+        <LinkListLink link="default-account-settings" icon={IconName.viewGrid}>
+          Default account settings
+        </LinkListLink>
+        {/* <LinkListLink link="default-income-account" icon={IconName.download}>
           Default income account
         </LinkListLink>
         <LinkListLink link="default-expense-account" icon={IconName.upload}>
           Default expense account
-        </LinkListLink>
-        <LinkListLink
+        </LinkListLink> */}
+        {/* <LinkListLink
           link="default-transfer-source-account"
           icon={IconName.switchHorizontal}
         >
@@ -25,7 +28,7 @@ export const UserPreferences = (): JSX.Element => {
           icon={IconName.switchHorizontal}
         >
           Default transfer target account
-        </LinkListLink>
+        </LinkListLink> */}
         <LinkListLink
           link="transaction-list-chunk-size"
           icon={IconName.collection}

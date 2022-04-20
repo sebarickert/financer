@@ -12,7 +12,7 @@ const targetUserPreference =
 
 export const useUserDefaultTransferTargetAccount = (): [
   defaultTransferTargetAccount: string | undefined,
-  setDefaultTransferTargetAccount: (value: string) => void
+  setDefaultTransferTargetAccount: (value: string) => Promise<void>
 ] => {
   const queryClient = useQueryClient();
   const { data, error } = useQuery(

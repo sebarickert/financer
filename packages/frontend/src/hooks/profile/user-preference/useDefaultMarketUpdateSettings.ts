@@ -20,7 +20,7 @@ export const useUserDefaultMarketUpdateSettings = (): [
   }: {
     transactionDescription: string;
     category?: string;
-  }) => void
+  }) => Promise<void>
 ] => {
   const queryClient = useQueryClient();
   const { data, error } = useQuery(
