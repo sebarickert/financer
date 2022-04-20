@@ -29,7 +29,7 @@ describe('Edit expense with category', () => {
     cy.getById('submit').click();
 
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100);
+    cy.wait(200);
     cy.getById('623de25fc839cf72d59b0dbd').click();
     cy.getById('edit-expense-button').click();
 
@@ -90,7 +90,7 @@ describe('Edit expense with category', () => {
     cy.getById('submit').click();
 
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100);
+    cy.wait(200);
     cy.getById('623de288c839cf72d59b0dd2').click();
     cy.getById('edit-expense-button').click();
 
@@ -130,7 +130,7 @@ describe('Edit expense with category', () => {
     cy.getById('submit').click();
 
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100);
+    cy.wait(200);
     cy.getById('623de288c839cf72d59b0dd2').click();
     cy.getById('edit-expense-button').click();
 

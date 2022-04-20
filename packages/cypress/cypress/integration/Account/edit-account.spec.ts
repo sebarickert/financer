@@ -28,7 +28,7 @@ describe('Account editing', () => {
     accountType: string
   ) => {
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100);
+    cy.wait(200);
     cy.getById('page-main-heading').should('contain.text', accountName);
 
     cy.getById('account-type').should('have.text', accountType);
@@ -60,7 +60,7 @@ describe('Account editing', () => {
 
     // Account page
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100);
+    cy.wait(200);
     cy.getById('edit-account').click();
 
     // Edit account form
@@ -98,7 +98,7 @@ describe('Account editing', () => {
     });
 
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100);
+    cy.wait(200);
     cy.getById('edit-account').click();
 
     // Edit account form
@@ -135,7 +135,7 @@ describe('Account editing', () => {
     // Account page
 
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100);
+    cy.wait(200);
     cy.getById('edit-account').click();
 
     // Edit account form
@@ -180,7 +180,7 @@ describe('Account editing', () => {
     });
 
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100);
+    cy.wait(200);
     cy.getById('edit-account').click();
 
     // Edit account form

@@ -11,7 +11,7 @@ describe('Account deleting', () => {
     cy.getById('account-row').contains('Saving account 2').click();
 
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100);
+    cy.wait(200);
     cy.getById('delete-account').click();
     cy.getById('delete-account_confirm-button').click();
 
@@ -25,12 +25,12 @@ describe('Account deleting', () => {
     cy.getById('account-row').contains('Saving account 2').click();
 
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100);
+    cy.wait(200);
     cy.getById('delete-account').click();
     cy.getById('delete-account_cancel-button').click();
 
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100);
+    cy.wait(200);
     cy.getById('header-back-link').click();
 
     cy.getById('account-row').should('contain.text', 'Saving account 2');
