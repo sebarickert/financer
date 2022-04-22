@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Delete,
+  Query,
 } from '@nestjs/common';
 
 import { ObjectId } from '../../types/objectId';
@@ -23,8 +24,19 @@ export class ExpensesController {
   constructor(private readonly expensesService: ExpensesService) {}
 
   @Get()
-  async findAllByUser(@UserId() userId: ObjectId) {
-    return this.expensesService.findAllByUser(userId);
+  async findAllByUser(
+    @UserId() userId: ObjectId,
+    @Query('month') month: number,
+    @Query('year') year: number,
+    @Query('page') page: number,
+    @Query('limit') limit: number,
+  ) {
+    return this.expensesService.findAllByUser(userId, page, limit, year, month);
+  }
+
+  @Get('monthly-summaries')
+  async findMonthlySummariesByuser(@UserId() userId: ObjectId) {
+    return this.expensesService.findMonthlySummariesByUser(userId);
   }
 
   @Get(':id')

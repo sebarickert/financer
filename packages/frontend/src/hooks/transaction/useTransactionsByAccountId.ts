@@ -1,28 +1,55 @@
-import { TransactionDto } from '@local/types';
-import { useEffect, useState } from 'react';
+import { PaginationDto, TransactionDto } from '@local/types';
+import { useQuery } from 'react-query';
 
-import { useAllTransactions } from './useAllTransactions';
+import {
+  getTransactionsByAccountId,
+  TransactionFilterOptions,
+} from '../../services/TransactionService';
+import { useUserTransactionListChunkSize } from '../profile/user-preference/useUserTransactionListChunkSize';
+import { PagerOptions, usePager } from '../usePager';
+
+type UseAllTransactionsPagedReturn = {
+  data: PaginationDto<TransactionDto<string>[]>;
+  pagerOptions: PagerOptions;
+};
 
 export const useTransactionsByAccountId = (
-  accountId: string | null = null
-): [
-  TransactionDto[] | null,
-  React.Dispatch<React.SetStateAction<string | null>>
-] => {
-  const [targetAccountId, setTargetId] = useState(accountId);
-  const [targetAccountTransactions, setTargetAccountTransactions] = useState<
-    TransactionDto[] | null
-  >(null);
-  const transactions = useAllTransactions();
+  accountId: string
+): TransactionDto[] | null => {
+  const { data, error } = useQuery(['transactions', accountId], () =>
+    getTransactionsByAccountId(accountId)
+  );
+  if (error || !data) {
+    throw new Error(`Missing data. Error: ${JSON.stringify(error ?? data)}`);
+  }
 
-  useEffect(() => {
-    setTargetAccountTransactions(
-      transactions?.filter(
-        ({ toAccount, fromAccount }) =>
-          fromAccount === targetAccountId || toAccount === targetAccountId
-      ) || null
-    );
-  }, [targetAccountId, transactions]);
+  return data.data;
+};
 
-  return [targetAccountTransactions, setTargetId];
+export const useTransactionsByAccountIdPaged = (
+  accountId: string,
+  intialPage = 1,
+  requestParams: Omit<TransactionFilterOptions, 'page'> = {}
+): UseAllTransactionsPagedReturn => {
+  const [chunkAmount] = useUserTransactionListChunkSize();
+  const { page, getLoadPageFunctions } = usePager(intialPage);
+
+  const { data, error } = useQuery(
+    ['transactions', accountId, page, requestParams],
+    () =>
+      getTransactionsByAccountId(accountId, {
+        limit: chunkAmount,
+        ...requestParams,
+        page,
+      })
+  );
+
+  if (!data || error) {
+    throw new Error(`Missing data. Error: ${JSON.stringify(error ?? data)}`);
+  }
+
+  return {
+    data: data,
+    pagerOptions: getLoadPageFunctions(data),
+  };
 };

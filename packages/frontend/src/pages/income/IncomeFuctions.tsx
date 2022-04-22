@@ -1,36 +1,51 @@
 import { IncomeDto } from '@local/types';
 
-import { ITransactionStackedListRowProps } from '../../components/transaction-stacked-list/transaction-stacked-list.row';
+import {
+  TransactionStackedListRowProps,
+  TransactionType,
+} from '../../components/transaction-stacked-list/transaction-stacked-list.row';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDate } from '../../utils/formatDate';
 
-export interface IIncomeWithCategories extends IncomeDto {
+export interface IncomeDtoWithCategories extends IncomeDto {
   categoryMappings: string[];
 }
-export interface IIncomesPerMonth {
+export interface IncomesPerMonth {
   month: number;
   total: number;
   year: number;
-  rows: ITransactionStackedListRowProps[];
+  rows: TransactionStackedListRowProps[];
 }
 
+export const convertIncomeToTransactionStackedListRow = (
+  income: IncomeDtoWithCategories
+): TransactionStackedListRowProps => ({
+  transactionCategories: income.categoryMappings?.join(', '),
+  transactionAmount: formatCurrency(income.amount),
+  date: formatDate(new Date(income.date)),
+  label: income.description,
+  link: `/statistics/incomes/${income._id}`,
+  transactionType: TransactionType.INCOME,
+  id: income._id,
+});
+
 export const groupIncomesByMonth = (
-  dateStack: IIncomesPerMonth[],
-  { _id, amount, date: dateRaw, description, ...rest }: IIncomeWithCategories
-): IIncomesPerMonth[] => {
+  dateStack: IncomesPerMonth[],
+  { _id, amount, date: dateRaw, description, ...rest }: IncomeDtoWithCategories
+): IncomesPerMonth[] => {
   const date = new Date(dateRaw);
   const month = date.getMonth();
   const year = date.getFullYear();
 
   const { categoryMappings } = rest;
 
-  const income: ITransactionStackedListRowProps = {
+  const income: TransactionStackedListRowProps = {
     transactionCategories: categoryMappings?.join(', '),
     transactionAmount: formatCurrency(amount),
     date: formatDate(date),
     label: description,
     link: `/statistics/incomes/${_id}`,
-    transactionType: 'income',
+    transactionType: TransactionType.INCOME,
     id: _id,
   };
 
@@ -71,8 +86,8 @@ export const groupIncomesByMonth = (
 };
 
 export const sortIncomeStacksByMonth = (
-  a: IIncomesPerMonth,
-  b: IIncomesPerMonth
+  a: IncomesPerMonth,
+  b: IncomesPerMonth
 ): 0 | 1 | -1 => {
   if (a.year > b.year) {
     return -1;
@@ -93,9 +108,7 @@ export const sortIncomeStacksByMonth = (
   return 0;
 };
 
-export const sortIncomesByDate = (
-  stack: IIncomesPerMonth
-): IIncomesPerMonth => {
+export const sortIncomesByDate = (stack: IncomesPerMonth): IncomesPerMonth => {
   stack.rows.sort((a, b) =>
     new Date(b.date).getTime() > new Date(a.date).getTime() ? 1 : -1
   );

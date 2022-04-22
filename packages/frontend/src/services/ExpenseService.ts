@@ -2,18 +2,45 @@ import {
   ApiResponse,
   CreateExpenseDto,
   ExpenseDto,
+  PaginationDto,
+  TransactionMonthSummaryDto,
   UpdateExpenseDto,
 } from '@local/types';
 
 import { parseApiResponse, parseJsonOrThrowError } from '../utils/apiHelper';
 
-export const getAllExpenses = async (): Promise<ExpenseDto[]> => {
-  const expenses = await fetch('/api/expenses');
+import {
+  parseFilterQueryString,
+  TransactionFilterOptions,
+} from './TransactionService';
+
+export const getAllExpenses = async (
+  options: TransactionFilterOptions = {}
+): Promise<PaginationDto<ExpenseDto[]>> => {
+  const queryString = parseFilterQueryString(options);
+
+  const expenses = await fetch(`/api/expenses?${queryString.join('&')}`);
+  return parseJsonOrThrowError(expenses);
+};
+
+export const getAllExpensesPaged = async ({
+  pageParam = 1,
+}: {
+  pageParam?: number;
+}): Promise<PaginationDto<ExpenseDto[]>> => {
+  const expenses = await fetch(`/api/expenses?page=${pageParam}&year=2022`);
   return parseJsonOrThrowError(expenses);
 };
 
 export const getExpenseById = async (id: string): Promise<ExpenseDto> => {
   const expense = await fetch(`/api/expenses/${id}`);
+  return parseJsonOrThrowError(expense);
+};
+
+export const getExpenseMonthlySummaries = async (): Promise<
+  TransactionMonthSummaryDto[]
+> => {
+  const expense = await fetch(`/api/expenses/monthly-summaries`);
   return parseJsonOrThrowError(expense);
 };
 

@@ -16,7 +16,10 @@ import { Model } from 'mongoose';
 import { ObjectId } from '../../types/objectId';
 import { sumArrayItems } from '../../utils/arrays';
 import { AccountBalanceChangesService } from '../account-balance-changes/account-balance-changes.service';
-import { TransactionsService } from '../transactions/transactions.service';
+import {
+  TransactionsService,
+  TransactionType,
+} from '../transactions/transactions.service';
 
 import { Account, AccountDocument } from './schemas/account.schema';
 
@@ -129,8 +132,16 @@ export class AccountsService {
     ).map(({ amount, date }) => ({ amount, date }));
 
     const accountTransactions = (
-      await this.transactionsService.findAllByAccount(userId, accountId)
-    ).map(({ amount, date, toAccount }) => ({
+      await this.transactionsService.findAllByUser(
+        userId,
+        TransactionType.ANY,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        accountId,
+      )
+    ).data.map(({ amount, date, toAccount }) => ({
       date,
       amount: accountId.equals(toAccount) ? amount : -amount,
     }));

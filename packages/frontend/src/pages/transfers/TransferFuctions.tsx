@@ -1,43 +1,58 @@
 import { TransferDto } from '@local/types';
 
-import { ITransactionStackedListRowProps } from '../../components/transaction-stacked-list/transaction-stacked-list.row';
+import {
+  TransactionStackedListRowProps,
+  TransactionType,
+} from '../../components/transaction-stacked-list/transaction-stacked-list.row';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDate } from '../../utils/formatDate';
 
-interface ITransactionWithCategories extends TransferDto {
+interface TransferDtoWithCategories extends TransferDto {
   categoryMappings: string[];
 }
 
-export interface ITransfersPerMonth {
+export interface TransfersPerMonth {
   month: number;
   total: number;
   year: number;
-  rows: ITransactionStackedListRowProps[];
+  rows: TransactionStackedListRowProps[];
 }
 
+export const convertTransferToTransactionStackedListRow = (
+  transfer: TransferDtoWithCategories
+): TransactionStackedListRowProps => ({
+  transactionCategories: transfer.categoryMappings?.join(', '),
+  transactionAmount: formatCurrency(transfer.amount),
+  date: formatDate(new Date(transfer.date)),
+  label: transfer.description,
+  link: `/statistics/transfers/${transfer._id}`,
+  transactionType: TransactionType.TRANSFER,
+  id: transfer._id,
+});
+
 export const groupTransfersByMonth = (
-  dateStack: ITransfersPerMonth[],
+  dateStack: TransfersPerMonth[],
   {
     _id,
     amount,
     date: dateRaw,
     description,
     ...rest
-  }: ITransactionWithCategories
-): ITransfersPerMonth[] => {
+  }: TransferDtoWithCategories
+): TransfersPerMonth[] => {
   const date = new Date(dateRaw);
   const month = date.getMonth();
   const year = date.getFullYear();
 
   const { categoryMappings } = rest;
 
-  const transfer: ITransactionStackedListRowProps = {
+  const transfer: TransactionStackedListRowProps = {
     transactionCategories: categoryMappings?.join(', '),
     transactionAmount: formatCurrency(amount),
     date: formatDate(date),
     label: description || 'plaa',
     link: `/statistics/transfers/${_id}`,
-    transactionType: 'transfer',
+    transactionType: TransactionType.TRANSFER,
     id: _id,
   };
 
@@ -78,8 +93,8 @@ export const groupTransfersByMonth = (
 };
 
 export const sortIncomeStacksByMonth = (
-  a: ITransfersPerMonth,
-  b: ITransfersPerMonth
+  a: TransfersPerMonth,
+  b: TransfersPerMonth
 ): 0 | 1 | -1 => {
   if (a.year > b.year) {
     return -1;
@@ -101,8 +116,8 @@ export const sortIncomeStacksByMonth = (
 };
 
 export const sortIncomesByDate = (
-  stack: ITransfersPerMonth
-): ITransfersPerMonth => {
+  stack: TransfersPerMonth
+): TransfersPerMonth => {
   stack.rows.sort((a, b) =>
     new Date(b.date).getTime() > new Date(a.date).getTime() ? 1 : -1
   );

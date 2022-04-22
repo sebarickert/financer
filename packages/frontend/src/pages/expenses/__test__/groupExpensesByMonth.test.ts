@@ -1,9 +1,9 @@
 import {
   groupExpensesByMonth,
-  IExpenseWithCategories,
+  ExpenseDtoWithCategories,
 } from '../ExpenseFuctions';
 
-const testData: IExpenseWithCategories[] = [
+const testData: ExpenseDtoWithCategories[] = [
   {
     categoryMappings: ['Category 1', 'Category 2'],
     fromAccount: '5fbd39c804bcfa18c50dbf31',

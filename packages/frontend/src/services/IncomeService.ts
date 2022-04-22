@@ -2,19 +2,37 @@ import {
   ApiResponse,
   CreateIncomeDto,
   IncomeDto,
+  PaginationDto,
+  TransactionMonthSummaryDto,
   UpdateIncomeDto,
 } from '@local/types';
 
 import { parseApiResponse, parseJsonOrThrowError } from '../utils/apiHelper';
 
-export const getAllIncomes = async (): Promise<IncomeDto[]> => {
-  const incomes = await fetch('/api/incomes');
+import {
+  TransactionFilterOptions,
+  parseFilterQueryString,
+} from './TransactionService';
+
+export const getAllIncomes = async (
+  options: TransactionFilterOptions = {}
+): Promise<PaginationDto<IncomeDto[]>> => {
+  const queryString = parseFilterQueryString(options);
+
+  const incomes = await fetch(`/api/incomes?${queryString.join('&')}`);
   return parseJsonOrThrowError(incomes);
 };
 
 export const getIncomeById = async (id: string): Promise<IncomeDto> => {
   const income = await fetch(`/api/incomes/${id}`);
   return parseJsonOrThrowError(income);
+};
+
+export const getIncomeMonthlySummaries = async (): Promise<
+  TransactionMonthSummaryDto[]
+> => {
+  const expense = await fetch(`/api/incomes/monthly-summaries`);
+  return parseJsonOrThrowError(expense);
 };
 
 export const addIncome = async (

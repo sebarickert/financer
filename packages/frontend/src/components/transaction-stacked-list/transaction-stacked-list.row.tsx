@@ -3,9 +3,13 @@ import { NavLink } from 'react-router-dom';
 
 import { Icon, IconName } from '../icon/icon';
 
-export type TransactionType = 'expense' | 'income' | 'transfer';
+export enum TransactionType {
+  INCOME = 'income',
+  EXPENSE = 'expense',
+  TRANSFER = 'transfer',
+}
 
-export interface ITransactionStackedListRowProps {
+export interface TransactionStackedListRowProps {
   transactionCategories?: string;
   transactionAmount: string;
   date: string;
@@ -23,7 +27,7 @@ export const TransactionStackedListRow = ({
   link,
   transactionType,
   id,
-}: ITransactionStackedListRowProps): JSX.Element => {
+}: TransactionStackedListRowProps): JSX.Element => {
   const iconTypeMapping: {
     [key in 'expense' | 'income' | 'transfer']: IconName;
   } = {
@@ -75,7 +79,7 @@ export const TransactionStackedListRow = ({
           </span>
           <Icon
             type={IconName.chevronRight}
-            className=" stroke-gray-300 flex-shrink-0 pointer-events-none"
+            className="flex-shrink-0 pointer-events-none stroke-gray-300"
           />
         </span>
       </NavLink>
@@ -90,12 +94,12 @@ export const TransactionStackedListRow = ({
             >
               <Icon
                 type={iconTypeMapping[transactionType]}
-                className="h-5 w-5 sm:h-6 sm:w-6"
+                className="w-5 h-5 sm:h-6 sm:w-6"
               />
             </span>
           </div>
           <div className="flex flex-col justify-center overflow-hidden">
-            <h2 className="text-sm sm:text-base font-semibold truncate">
+            <h2 className="text-sm font-semibold truncate sm:text-base">
               <NavLink to={link} className="focus:outline-none">
                 <span className="absolute inset-0" aria-hidden="true" />
                 {label}
