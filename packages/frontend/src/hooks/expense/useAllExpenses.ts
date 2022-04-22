@@ -1,26 +1,55 @@
-import { AccountType, ExpenseDto } from '@local/types';
+import { AccountType, ExpenseDto, PaginationDto } from '@local/types';
 import { useState, useEffect } from 'react';
 import { useQuery } from 'react-query';
 
 import {
   groupExpensesByMonth,
-  IExpensesPerMonth,
+  ExpensesPerMonth,
   sortExpensesByDate,
   sortExpenseStacksByMonth,
 } from '../../pages/expenses/ExpenseFuctions';
 import { getAllExpenses } from '../../services/ExpenseService';
+import { TransactionFilterOptions } from '../../services/TransactionService';
 import { useAllAccountsByType } from '../account/useAllAccounts';
+import { useUserTransactionListChunkSize } from '../profile/user-preference/useUserTransactionListChunkSize';
 import { useAllTransactionCategories } from '../transactionCategories/useAllTransactionCategories';
 import { useAllTransactionCategoryMappings } from '../transactionCategoryMapping/useAllTransactionCategoryMappings';
+import { PagerOptions, usePager } from '../usePager';
+
+type UseAllExpensesPagedReturn = {
+  data: PaginationDto<ExpenseDto<string>[]>;
+  pagerOptions: PagerOptions;
+};
 
 export const useAllExpenses = (): ExpenseDto[] => {
-  const { data, error } = useQuery(['expenses'], getAllExpenses);
+  const { data, error } = useQuery(['expenses'], () => getAllExpenses());
 
   if (error || !data) {
     throw new Error(`Missing data. Error: ${JSON.stringify(error ?? data)}`);
   }
 
-  return data;
+  return data.data;
+};
+
+export const useAllExpensesPaged = (
+  intialPage = 1,
+  requestParams: Omit<TransactionFilterOptions, 'page'> = {}
+): UseAllExpensesPagedReturn => {
+  const [chunkAmount] = useUserTransactionListChunkSize();
+  const { page, getLoadPageFunctions } = usePager(intialPage);
+
+  const { data, error } = useQuery(['expenses', page, requestParams], () =>
+    getAllExpenses({ limit: chunkAmount, ...requestParams, page })
+  );
+
+  if (!data || error) {
+    throw new Error(`Missing data. Error: ${JSON.stringify(error ?? data)}`);
+  }
+
+  return {
+    data: data,
+    pagerOptions: getLoadPageFunctions(data),
+  };
 };
 
 export const useCurrentMonthExpensesTotalAmount = (): number => {
@@ -54,12 +83,12 @@ export const useCurrentMonthExpensesTotalAmount = (): number => {
 export const useAllExpensesGroupByMonth = (
   initialForbiddenAccountTypes: AccountType[] = []
 ): [
-  IExpensesPerMonth[],
+  ExpensesPerMonth[],
   React.Dispatch<React.SetStateAction<AccountType[]>>
 ] => {
   const expenses = useAllExpenses();
   const [allForbiddenAccounts, setTargetTypes] = useAllAccountsByType([]);
-  const [groupedExpenses, setGroupedExpenses] = useState<IExpensesPerMonth[]>(
+  const [groupedExpenses, setGroupedExpenses] = useState<ExpensesPerMonth[]>(
     []
   );
   const transactionCategoryMappings = useAllTransactionCategoryMappings();
@@ -90,7 +119,7 @@ export const useAllExpensesGroupByMonth = (
 
           return { _id, ...rest, categoryMappings };
         })
-        .reduce<IExpensesPerMonth[]>(groupExpensesByMonth, [])
+        .reduce<ExpensesPerMonth[]>(groupExpensesByMonth, [])
         .sort(sortExpenseStacksByMonth)
         .map(sortExpensesByDate)
     );

@@ -1,6 +1,9 @@
-import { groupIncomesByMonth, IIncomeWithCategories } from '../IncomeFuctions';
+import {
+  groupIncomesByMonth,
+  IncomeDtoWithCategories,
+} from '../IncomeFuctions';
 
-const testData: IIncomeWithCategories[] = [
+const testData: IncomeDtoWithCategories[] = [
   {
     categoryMappings: ['Category 1', 'Category 2'],
     toAccount: '5fbd39c804bcfa18c50dbf31',

@@ -4,50 +4,23 @@ import { useEffect, useState, useTransition } from 'react';
 import { DescriptionList } from '../../components/description-list/description-list';
 import { DescriptionListItem } from '../../components/description-list/description-list.item';
 import { IconName } from '../../components/icon/icon';
+import {
+  getTransactionType,
+  LatestTransactions,
+} from '../../components/latest-transactions/latest-transactions';
 import { LoaderIfProcessing } from '../../components/loader/loader-if-processing';
 import { QuickLinks } from '../../components/quick-links/quick-links';
 import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
-import { TransactionStackedList } from '../../components/transaction-stacked-list/transaction-stacked-list';
-import {
-  ITransactionStackedListRowProps,
-  TransactionType,
-} from '../../components/transaction-stacked-list/transaction-stacked-list.row';
 import { monthNames } from '../../constants/months';
 import { useAllTransactions } from '../../hooks/transaction/useAllTransactions';
-import { useAllTransactionCategories } from '../../hooks/transactionCategories/useAllTransactionCategories';
-import { useAllTransactionCategoryMappings } from '../../hooks/transactionCategoryMapping/useAllTransactionCategoryMappings';
 import { formatCurrency } from '../../utils/formatCurrency';
-import { formatDate } from '../../utils/formatDate';
 
 type TransactionVisibilityFilterType =
   | 'all'
   | 'income'
   | 'expense'
   | 'transfer';
-
-export const getTransactionType = (
-  toAccount: string | null | undefined,
-  fromAccount: string | null | undefined
-): TransactionType => {
-  if (toAccount && !fromAccount) {
-    return 'income';
-  }
-
-  if (!toAccount && fromAccount) {
-    return 'expense';
-  }
-
-  return 'transfer';
-};
-
-export const mapTransactionTypeToUrlPrefix: {
-  [key in TransactionType]: 'incomes' | 'expenses' | 'transfers';
-} = {
-  income: 'incomes',
-  expense: 'expenses',
-  transfer: 'transfers',
-};
 
 export const filterTransactionsByType = (
   visibilityFilter: TransactionVisibilityFilterType,
@@ -60,63 +33,16 @@ export const filterTransactionsByType = (
 
 export const Statistics = (): JSX.Element => {
   const [isProcessing, startProcessing] = useTransition();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [transactionVisibilityFilter, setTransactionVisibilityFilter] =
     useState<TransactionVisibilityFilterType>('all');
   const transactionsRaw = useAllTransactions();
   const [transactions, setTransactions] = useState<TransactionDto[]>([]);
-  const [visibleTransactions, setVisibleTransactions] = useState<
-    ITransactionStackedListRowProps[]
-  >([]);
-  const transactionCategoryMappings = useAllTransactionCategoryMappings();
-  const transactionCategories = useAllTransactionCategories();
   const [totalExpenses, setTotalExpenses] = useState<number>(NaN);
   const [totalIncomes, setTotalIncomes] = useState<number>(NaN);
 
   useEffect(() => {
     startProcessing(() => {
-      setVisibleTransactions(
-        transactions
-          .filter((transaction) =>
-            filterTransactionsByType(transactionVisibilityFilter, transaction)
-          )
-          .map<ITransactionStackedListRowProps>(
-            ({
-              amount,
-              _id,
-              description,
-              date: dateRaw,
-              toAccount,
-              fromAccount,
-            }) => {
-              const date = new Date(dateRaw);
-              const transactionType = getTransactionType(
-                toAccount,
-                fromAccount
-              );
-
-              const categoryMappings = transactionCategoryMappings
-                ?.filter(({ transaction_id }) => transaction_id === _id)
-                .map(
-                  ({ category_id }) =>
-                    transactionCategories.find(
-                      ({ _id: categoryId }) => category_id === categoryId
-                    )?.name
-                )
-                .filter((categoryName) => typeof categoryName !== 'undefined');
-
-              return {
-                transactionCategories: categoryMappings.join(', '),
-                transactionAmount: formatCurrency(amount),
-                date: formatDate(date),
-                label: description,
-                link: `/statistics/${mapTransactionTypeToUrlPrefix[transactionType]}/${_id}`,
-                transactionType,
-                id: _id,
-              } as ITransactionStackedListRowProps;
-            }
-          )
-      );
-
       setTotalIncomes(
         transactions
           .filter((transaction) =>
@@ -133,12 +59,7 @@ export const Statistics = (): JSX.Element => {
           .reduce((currentTotal, { amount }) => currentTotal + amount, 0)
       );
     });
-  }, [
-    transactions,
-    transactionVisibilityFilter,
-    transactionCategoryMappings,
-    transactionCategories,
-  ]);
+  }, [transactions]);
 
   useEffect(() => {
     const now = new Date();
@@ -193,7 +114,7 @@ export const Statistics = (): JSX.Element => {
           {Number.isNaN(totalExpenses) ? '-' : formatCurrency(totalExpenses)}
         </DescriptionListItem>
       </DescriptionList>
-      <TransactionStackedList className="mt-4" rows={visibleTransactions} />
+      <LatestTransactions className="mt-4" />
       <QuickLinks className="mt-8">
         <QuickLinksItem
           title="Incomes"

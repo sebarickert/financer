@@ -1,11 +1,10 @@
+import { PagerOptions } from '../../hooks/usePager';
 import { Icon, IconName } from '../icon/icon';
 
 interface PagerProps {
-  pageCount: number;
-  currentPage: number;
   className?: string;
-  handlePageUpdate(pageNumber: number): void;
   isCentered?: boolean;
+  pagerOptions: PagerOptions;
 }
 
 interface PagerButtonProps {
@@ -42,49 +41,36 @@ const PagerButton = ({
 };
 
 export const Pager = ({
-  pageCount,
-  currentPage,
   className = '',
-  handlePageUpdate,
   isCentered,
+  pagerOptions,
 }: PagerProps): JSX.Element => {
-  const handlePagerPreviousClick = () => {
-    if (currentPage !== 0) {
-      handlePageUpdate(currentPage - 1);
-    }
-  };
-
-  const handlePagerNextClick = () => {
-    if (currentPage + 1 !== pageCount) {
-      handlePageUpdate(currentPage + 1);
-    }
-  };
-
+  const { nextPage, previousPage, pageCount, currentPage } = pagerOptions;
   return (
     <section
       className={`${
         isCentered ? 'flex justify-center' : 'inline-flex'
       } ${className}`}
     >
-      <div className="inline-flex bg-white border rounded-lg overflow-hidden divide-x">
+      <div className="inline-flex overflow-hidden bg-white border divide-x rounded-lg">
         <PagerButton
-          handleClick={handlePagerPreviousClick}
-          isDisabled={currentPage === 0}
+          handleClick={previousPage.load}
+          isDisabled={!previousPage.isAvailable}
         >
           Previous page
         </PagerButton>
-        <p className="py-4 px-8">
+        <p className="px-8 py-4">
           <span className="sr-only">
-            Current page: {currentPage + 1} of {pageCount}
+            Current page: {currentPage} of {pageCount}
           </span>
           <span aria-hidden="true">
-            {currentPage + 1} / {pageCount}
+            {currentPage} / {pageCount}
           </span>
         </p>
         <PagerButton
           className={``}
-          isDisabled={currentPage + 1 === pageCount}
-          handleClick={handlePagerNextClick}
+          isDisabled={!nextPage.isAvailable}
+          handleClick={nextPage.load}
           isNext
         >
           Next page

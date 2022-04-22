@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 
 import { ObjectId } from '../../types/objectId';
@@ -23,8 +24,25 @@ export class TransfersController {
   constructor(private readonly transfersService: TransfersService) {}
 
   @Get()
-  async findAllByUser(@UserId() userId: ObjectId) {
-    return this.transfersService.findAllByUser(userId);
+  async findAllByUser(
+    @UserId() userId: ObjectId,
+    @Query('month') month: number,
+    @Query('year') year: number,
+    @Query('page') page: number,
+    @Query('limit') limit: number,
+  ) {
+    return this.transfersService.findAllByUser(
+      userId,
+      page,
+      limit,
+      year,
+      month,
+    );
+  }
+
+  @Get('monthly-summaries')
+  async findMonthlySummariesByuser(@UserId() userId: ObjectId) {
+    return this.transfersService.findMonthlySummariesByUser(userId);
   }
 
   @Get(':id')

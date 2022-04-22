@@ -1,11 +1,18 @@
 import {
   ApiResponse,
   CreateTransferDto,
+  PaginationDto,
+  TransactionMonthSummaryDto,
   TransferDto,
   UpdateTransferDto,
 } from '@local/types';
 
 import { parseApiResponse, parseJsonOrThrowError } from '../utils/apiHelper';
+
+import {
+  TransactionFilterOptions,
+  parseFilterQueryString,
+} from './TransactionService';
 
 export const addTransfer = async (
   newTransactionData: CreateTransferDto
@@ -38,14 +45,25 @@ export const updateTransfer = async (
   return parseApiResponse(updatedTransaction);
 };
 
-export const getAllTransfers = async (): Promise<TransferDto[]> => {
-  const transfers = await fetch('/api/transfers');
+export const getAllTransfers = async (
+  options: TransactionFilterOptions = {}
+): Promise<PaginationDto<TransferDto[]>> => {
+  const queryString = parseFilterQueryString(options);
+
+  const transfers = await fetch(`/api/transfers?${queryString.join('&')}`);
   return parseJsonOrThrowError(transfers);
 };
 
 export const getTransferById = async (id: string): Promise<TransferDto> => {
   const transfer = await fetch(`/api/transfers/${id}`);
   return parseJsonOrThrowError(transfer);
+};
+
+export const getTransferMonthlySummaries = async (): Promise<
+  TransactionMonthSummaryDto[]
+> => {
+  const expense = await fetch(`/api/transfers/monthly-summaries`);
+  return parseJsonOrThrowError(expense);
 };
 
 export const deleteTransfer = async (id: string): Promise<void> => {

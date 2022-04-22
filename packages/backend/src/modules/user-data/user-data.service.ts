@@ -10,7 +10,10 @@ import { TransactionCategoriesService } from '../transaction-categories/transact
 import { TransactionCategoryMappingDocument } from '../transaction-category-mappings/schemas/transaction-category-mapping.schema';
 import { TransactionCategoryMappingsService } from '../transaction-category-mappings/transaction-category-mappings.service';
 import { TransactionDocument } from '../transactions/schemas/transaction.schema';
-import { TransactionsService } from '../transactions/transactions.service';
+import {
+  TransactionsService,
+  TransactionType,
+} from '../transactions/transactions.service';
 import { UserPreferenceDocument } from '../user-preferences/schemas/user-preference.schema';
 import { UserPreferencesService } from '../user-preferences/user-preferences.service';
 import { UserDocument } from '../users/schemas/user.schema';
@@ -63,7 +66,10 @@ export class UserDataService {
     );
     const accountBalanceChanges =
       await this.accountBalanceChangesService.findAllByUser(userId);
-    const transactions = await this.transactionService.findAllByUser(userId);
+    const transactions = await this.transactionService.findAllByUser(
+      userId,
+      TransactionType.ANY,
+    );
     const transactionCategories =
       await this.transactionCategoriesService.findAllByUser(userId);
     const transactionCategoryMappings =
@@ -75,7 +81,7 @@ export class UserDataService {
       user,
       accounts,
       accountBalanceChanges,
-      transactions,
+      transactions: transactions.data,
       transactionCategories,
       transactionCategoryMappings,
       userPreferences,

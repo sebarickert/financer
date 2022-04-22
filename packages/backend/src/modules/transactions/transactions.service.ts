@@ -1,4 +1,6 @@
+import { PaginationDto, TransactionMonthSummaryDto } from '@local/types';
 import {
+  BadRequestException,
   forwardRef,
   Inject,
   Injectable,
@@ -17,6 +19,13 @@ import { TransactionCategoryMappingsService } from '../transaction-category-mapp
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { Transaction, TransactionDocument } from './schemas/transaction.schema';
+
+export enum TransactionType {
+  INCOME = 'income',
+  EXPENSE = 'expense',
+  TRANSFER = 'transfer',
+  ANY = 'any',
+}
 
 @Injectable()
 export class TransactionsService {
@@ -73,74 +82,83 @@ export class TransactionsService {
     return transaction;
   }
 
-  async findOneNewer(accountId, date) {
-    return this.transactionModel.findOne({
-      $or: [{ toAccount: accountId }, { fromAccount: accountId }],
-      date: { $gt: date },
-    });
-  }
-
-  async findAllByUser(userId: ObjectId): Promise<TransactionDocument[]> {
-    return this.transactionModel
-      .find({ user: userId })
-      .sort({ date: 'desc' })
-      .exec();
-  }
-
-  async findAllByAccount(
+  async findAllByUser(
     userId: ObjectId,
-    accountId: ObjectId,
-  ): Promise<TransactionDocument[]> {
-    await this.accountService.findOne(userId, accountId);
+    transactionType: TransactionType,
+    page?: number,
+    limit = 10,
+    year?: number,
+    month?: number,
+    linkedAccount?: ObjectId,
+  ): Promise<PaginationDto<TransactionDocument[]>> {
+    if (!year && month) {
+      throw new BadRequestException('Year is required when month is provided');
+    }
+
+    const query = {
+      user: userId,
+      ...this.getTransactionTypeFilter(transactionType),
+      ...this.getYearAndMonthFilter(year, month),
+      ...this.getLinkedAccountFilter(linkedAccount),
+    };
+    const totalCount = await this.transactionModel
+      .find(query)
+      .countDocuments()
+      .exec();
+    const lastPage = page ? Math.ceil(totalCount / limit) : 1;
+
+    if (page && (page < 1 || page > lastPage)) {
+      throw new NotFoundException(
+        `Page "${page}" not found. First page is "1" and last page is "${lastPage}"`,
+      );
+    }
+
+    const transaction = await this.transactionModel
+      .find(query)
+      .sort({ date: 'desc' })
+      .skip(page ? (page - 1) * limit : 0)
+      .limit(page ? limit : 0)
+      .exec();
+
+    return {
+      data: transaction,
+      currentPage: page ?? 1,
+      limit: page ? limit : totalCount,
+      totalPageCount: lastPage,
+      hasNextPage: (page ?? 1) < lastPage,
+      hasPreviousPage: (page ?? 1) > 1,
+      totalRowCount: totalCount,
+    };
+  }
+
+  async findMonthlySummariesByUser(
+    userId: ObjectId,
+    getTransactionType: TransactionType,
+  ): Promise<TransactionMonthSummaryDto[]> {
     return this.transactionModel
-      .find({
-        $or: [
-          {
-            toAccount: accountId,
+      .aggregate([
+        {
+          $match: {
+            user: userId,
+            ...this.getTransactionTypeFilter(getTransactionType),
           },
-          {
-            fromAccount: accountId,
+        },
+        {
+          $group: {
+            _id: {
+              year: { $year: '$date' },
+              month: { $month: '$date' },
+            },
+            count: { $sum: 1 },
+            totalAmount: { $sum: '$amount' },
           },
-        ],
-      })
-      .sort({ date: 'desc' })
-      .exec();
-  }
-
-  async findAllIncomesByUser(userId: ObjectId): Promise<TransactionDocument[]> {
-    return this.transactionModel
-      .find({
-        user: userId,
-        toAccount: { $ne: undefined },
-        fromAccount: { $eq: undefined },
-      })
-      .sort({ date: 'desc' })
-      .exec();
-  }
-
-  async findAllExpensesByUser(
-    userId: ObjectId,
-  ): Promise<TransactionDocument[]> {
-    return this.transactionModel
-      .find({
-        user: userId,
-        fromAccount: { $ne: undefined },
-        toAccount: { $eq: undefined },
-      })
-      .sort({ date: 'asc' })
-      .exec();
-  }
-
-  async findAllTransfersByUser(
-    userId: ObjectId,
-  ): Promise<TransactionDocument[]> {
-    return this.transactionModel
-      .find({
-        user: userId,
-        fromAccount: { $ne: undefined },
-        toAccount: { $ne: undefined },
-      })
-      .sort({ date: 'desc' })
+        },
+        {
+          $sort: {
+            _id: -1,
+          },
+        },
+      ])
       .exec();
   }
 
@@ -264,5 +282,61 @@ export class TransactionsService {
     await this.transactionCategoryMappingsService.createMany(
       categoriesWithAllFields,
     );
+  }
+
+  private getTransactionTypeFilter(transactionType: TransactionType): {
+    [key: string]: unknown;
+  } {
+    switch (transactionType) {
+      case TransactionType.INCOME:
+        return {
+          toAccount: { $ne: undefined },
+          fromAccount: { $eq: undefined },
+        };
+      case TransactionType.EXPENSE:
+        return {
+          fromAccount: { $ne: undefined },
+          toAccount: { $eq: undefined },
+        };
+      case TransactionType.TRANSFER:
+        return {
+          fromAccount: { $ne: undefined },
+          toAccount: { $ne: undefined },
+        };
+      case TransactionType.ANY:
+        return {};
+      default:
+        throw new Error(`Invalid transaction type: ${transactionType}`);
+    }
+  }
+
+  private getYearAndMonthFilter(year?: number, month?: number) {
+    if (!year && !month) {
+      return {};
+    }
+
+    return {
+      date: {
+        $gte: new Date(year, month - 1 || 0, 1),
+        $lt: new Date(year, month || 12, 1),
+      },
+    };
+  }
+
+  private getLinkedAccountFilter(accountId?: ObjectId) {
+    if (!accountId) {
+      return {};
+    }
+
+    return {
+      $or: [
+        {
+          toAccount: accountId,
+        },
+        {
+          fromAccount: accountId,
+        },
+      ],
+    };
   }
 }

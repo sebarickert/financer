@@ -1,5 +1,5 @@
 import { CreateTransactionCategoryMappingDtoWithoutTransaction } from '@local/types';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { Alert } from '../../components/alert/alert';
@@ -9,23 +9,16 @@ import { LinkList } from '../../components/link-list/link-list';
 import { LinkListLink } from '../../components/link-list/link-list.link';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { TransactionStackedList } from '../../components/transaction-stacked-list/transaction-stacked-list';
-import { ITransactionStackedListRowProps as TransactionStackedListRowProps } from '../../components/transaction-stacked-list/transaction-stacked-list.row';
 import { useAccountById } from '../../hooks/account/useAccountById';
 import { useDeleteAccount } from '../../hooks/account/useDeleteAccount';
 import { useAddExpense } from '../../hooks/expense/useAddExpense';
 import { useAddIncome } from '../../hooks/income/useAddIncome';
 import { useUserDefaultMarketUpdateSettings } from '../../hooks/profile/user-preference/useDefaultMarketUpdateSettings';
-import { useTransactionsByAccountId } from '../../hooks/transaction/useTransactionsByAccountId';
-import { useAllTransactionCategories } from '../../hooks/transactionCategories/useAllTransactionCategories';
-import { useAllTransactionCategoryMappings } from '../../hooks/transactionCategoryMapping/useAllTransactionCategoryMappings';
+import { useTransactionsByAccountIdPaged } from '../../hooks/transaction/useTransactionsByAccountId';
 import { parseErrorMessagesToArray } from '../../utils/apiHelper';
 import { capitalize } from '../../utils/capitalize';
 import { formatCurrency } from '../../utils/formatCurrency';
-import { formatDate } from '../../utils/formatDate';
-import {
-  getTransactionType,
-  mapTransactionTypeToUrlPrefix,
-} from '../statistics/Statistics';
+import { convertTransferToTransactionStackedListRow } from '../transfers/TransferFuctions';
 
 import { AccountDeleteModal } from './account-modals/AccountDeleteModal';
 import { AccountUpdateMarketValueModal } from './account-modals/AccountUpdateMarketValueModal';
@@ -33,60 +26,17 @@ import { AccountBalanceHistoryChart } from './AccountBalanceHistoryChart';
 
 export const Account = (): JSX.Element | null => {
   const { id } = useParams<{ id: string }>();
+  if (!id) throw new Error('Account id is not defined');
   const navigate = useNavigate();
   const deleteAccount = useDeleteAccount();
   const account = useAccountById(id);
-  const [transactions, setTransactions] = useState<
-    TransactionStackedListRowProps[]
-  >([]);
-  const [rawTransactions] = useTransactionsByAccountId(id);
-  const transactionCategoryMappings = useAllTransactionCategoryMappings();
-  const transactionCategories = useAllTransactionCategories();
   const [marketSettings] = useUserDefaultMarketUpdateSettings();
+  const { data: transactionsData, pagerOptions: transactionsPagerOptions } =
+    useTransactionsByAccountIdPaged(id);
 
   const [errors, setErrors] = useState<string[]>([]);
   const addIncome = useAddIncome();
   const addExpense = useAddExpense();
-
-  useEffect(() => {
-    if (!rawTransactions) return;
-
-    setTransactions(
-      rawTransactions.map(
-        ({
-          date: dateRaw,
-          fromAccount,
-          toAccount,
-          description = 'Unknown',
-          amount,
-          _id,
-        }): TransactionStackedListRowProps => {
-          const date = new Date(dateRaw);
-          const transactionType = getTransactionType(toAccount, fromAccount);
-
-          const categoryMappings = transactionCategoryMappings
-            ?.filter(({ transaction_id }) => transaction_id === _id)
-            .map(
-              ({ category_id }) =>
-                transactionCategories.find(
-                  ({ _id: categoryId }) => category_id === categoryId
-                )?.name
-            )
-            .filter((categoryName) => typeof categoryName !== 'undefined');
-
-          return {
-            transactionCategories: categoryMappings.join(', '),
-            transactionAmount: formatCurrency(amount),
-            date: formatDate(date),
-            label: description,
-            link: `/statistics/${mapTransactionTypeToUrlPrefix[transactionType]}/${_id}`,
-            transactionType,
-            id: _id,
-          } as TransactionStackedListRowProps;
-        }
-      )
-    );
-  }, [id, rawTransactions, transactionCategories, transactionCategoryMappings]);
 
   const handleDelete = async () => {
     if (!id) {
@@ -205,7 +155,7 @@ export const Account = (): JSX.Element | null => {
               Transactions
             </dt>
             <dd className="text-xl font-bold tracking-tight">
-              {transactions.length}
+              {transactionsData.totalRowCount}
             </dd>
           </dl>
         </section>
@@ -213,7 +163,16 @@ export const Account = (): JSX.Element | null => {
       <AccountBalanceHistoryChart accountId={account._id} />
       <section className="my-6">
         <Heading>History</Heading>
-        <TransactionStackedList className="mt-4" rows={transactions} />
+        <TransactionStackedList
+          className="mt-4"
+          rows={transactionsData.data.map((transaction) =>
+            convertTransferToTransactionStackedListRow({
+              ...transaction,
+              categoryMappings: [],
+            })
+          )}
+          pagerOptions={transactionsPagerOptions}
+        />
       </section>
       <LinkList label="Actions">
         {account.type === 'investment' && (

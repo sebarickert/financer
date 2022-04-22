@@ -1,8 +1,12 @@
+import { PaginationDto, TransactionMonthSummaryDto } from '@local/types';
 import { Injectable } from '@nestjs/common';
 
 import { ObjectId } from '../../types/objectId';
 import { TransactionDocument } from '../transactions/schemas/transaction.schema';
-import { TransactionsService } from '../transactions/transactions.service';
+import {
+  TransactionsService,
+  TransactionType,
+} from '../transactions/transactions.service';
 
 import { CreateTransferDto } from './dto/create-transfer.dto';
 import { UpdateTransferDto } from './dto/update-transfer.dto';
@@ -11,8 +15,30 @@ import { UpdateTransferDto } from './dto/update-transfer.dto';
 export class TransfersService {
   constructor(private transactionService: TransactionsService) {}
 
-  async findAllByUser(userId: ObjectId): Promise<TransactionDocument[]> {
-    return this.transactionService.findAllTransfersByUser(userId);
+  async findAllByUser(
+    userId: ObjectId,
+    page: number,
+    limit: number,
+    year: number,
+    month: number,
+  ): Promise<PaginationDto<TransactionDocument[]>> {
+    return this.transactionService.findAllByUser(
+      userId,
+      TransactionType.TRANSFER,
+      page || undefined,
+      limit || undefined,
+      year || undefined,
+      month || undefined,
+    );
+  }
+
+  async findMonthlySummariesByUser(
+    userId: ObjectId,
+  ): Promise<TransactionMonthSummaryDto[]> {
+    return this.transactionService.findMonthlySummariesByUser(
+      userId,
+      TransactionType.TRANSFER,
+    );
   }
 
   async findOne(userId: ObjectId, id: ObjectId): Promise<TransactionDocument> {

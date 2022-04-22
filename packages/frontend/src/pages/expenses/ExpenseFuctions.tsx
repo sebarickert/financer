@@ -1,37 +1,52 @@
 import { ExpenseDto } from '@local/types';
 
-import { ITransactionStackedListRowProps } from '../../components/transaction-stacked-list/transaction-stacked-list.row';
+import {
+  TransactionStackedListRowProps,
+  TransactionType,
+} from '../../components/transaction-stacked-list/transaction-stacked-list.row';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDate } from '../../utils/formatDate';
 
-export interface IExpenseWithCategories extends ExpenseDto {
+export interface ExpenseDtoWithCategories extends ExpenseDto {
   categoryMappings: string[];
 }
 
-export interface IExpensesPerMonth {
+export interface ExpensesPerMonth {
   month: number;
   total: number;
   year: number;
-  rows: ITransactionStackedListRowProps[];
+  rows: TransactionStackedListRowProps[];
 }
 
+export const convertExpenseToTransactionStackedListRow = (
+  expense: ExpenseDtoWithCategories
+): TransactionStackedListRowProps => ({
+  transactionCategories: expense.categoryMappings?.join(', '),
+  transactionAmount: formatCurrency(expense.amount),
+  date: formatDate(new Date(expense.date)),
+  label: expense.description,
+  link: `/statistics/expenses/${expense._id}`,
+  transactionType: TransactionType.EXPENSE,
+  id: expense._id,
+});
+
 export const groupExpensesByMonth = (
-  dateStack: IExpensesPerMonth[],
-  { _id, amount, date: dateRaw, description, ...rest }: IExpenseWithCategories
-): IExpensesPerMonth[] => {
+  dateStack: ExpensesPerMonth[],
+  { _id, amount, date: dateRaw, description, ...rest }: ExpenseDtoWithCategories
+): ExpensesPerMonth[] => {
   const date = new Date(dateRaw);
   const month = date.getMonth();
   const year = date.getFullYear();
 
   const { categoryMappings } = rest;
 
-  const expense: ITransactionStackedListRowProps = {
+  const expense: TransactionStackedListRowProps = {
     transactionCategories: categoryMappings?.join(', '),
     transactionAmount: formatCurrency(amount),
     date: formatDate(date),
     label: description,
     link: `/statistics/expenses/${_id}`,
-    transactionType: 'expense',
+    transactionType: TransactionType.EXPENSE,
     id: _id,
   };
 
@@ -72,8 +87,8 @@ export const groupExpensesByMonth = (
 };
 
 export const sortExpenseStacksByMonth = (
-  a: IExpensesPerMonth,
-  b: IExpensesPerMonth
+  a: ExpensesPerMonth,
+  b: ExpensesPerMonth
 ): 0 | 1 | -1 => {
   if (a.year > b.year) {
     return -1;
@@ -95,8 +110,8 @@ export const sortExpenseStacksByMonth = (
 };
 
 export const sortExpensesByDate = (
-  stack: IExpensesPerMonth
-): IExpensesPerMonth => {
+  stack: ExpensesPerMonth
+): ExpensesPerMonth => {
   stack.rows.sort((a, b) =>
     new Date(b.date).getTime() > new Date(a.date).getTime() ? 1 : -1
   );

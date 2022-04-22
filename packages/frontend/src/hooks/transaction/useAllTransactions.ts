@@ -1,13 +1,47 @@
+import { PaginationDto, TransactionDto } from '@local/types';
 import { useQuery } from 'react-query';
 
-import { getAllTransactions } from '../../services/TransactionService';
+import {
+  getAllTransactions,
+  TransactionFilterOptions,
+} from '../../services/TransactionService';
+import { useUserTransactionListChunkSize } from '../profile/user-preference/useUserTransactionListChunkSize';
+import { PagerOptions, usePager } from '../usePager';
 
-export const useAllTransactions = () => {
-  const { data, error } = useQuery(['transactions'], getAllTransactions);
+type UseAllTransactionsPagedReturn = {
+  data: PaginationDto<TransactionDto<string>[]>;
+  pagerOptions: PagerOptions;
+};
+
+export const useAllTransactions = (): TransactionDto[] => {
+  const { data, error } = useQuery(['transactions'], () =>
+    getAllTransactions()
+  );
 
   if (error || !data) {
     throw new Error(`Missing data. Error: ${JSON.stringify(error ?? data)}`);
   }
 
-  return data;
+  return data.data;
+};
+
+export const useAllTransactionsPaged = (
+  intialPage = 1,
+  requestParams: Omit<TransactionFilterOptions, 'page'> = {}
+): UseAllTransactionsPagedReturn => {
+  const [chunkAmount] = useUserTransactionListChunkSize();
+  const { page, getLoadPageFunctions } = usePager(intialPage);
+
+  const { data, error } = useQuery(['transactions', page, requestParams], () =>
+    getAllTransactions({ limit: chunkAmount, ...requestParams, page })
+  );
+
+  if (!data || error) {
+    throw new Error(`Missing data. Error: ${JSON.stringify(error ?? data)}`);
+  }
+
+  return {
+    data: data,
+    pagerOptions: getLoadPageFunctions(data),
+  };
 };

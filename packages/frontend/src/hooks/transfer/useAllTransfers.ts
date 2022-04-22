@@ -1,4 +1,4 @@
-import { TransferDto } from '@local/types';
+import { PaginationDto, TransferDto } from '@local/types';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 
@@ -7,28 +7,57 @@ import {
   sortIncomesByDate,
 } from '../../pages/income/IncomeFuctions';
 import {
-  ITransfersPerMonth,
+  TransfersPerMonth,
   groupTransfersByMonth,
 } from '../../pages/transfers/TransferFuctions';
+import { TransactionFilterOptions } from '../../services/TransactionService';
 import { getAllTransfers } from '../../services/TransferService';
+import { useUserTransactionListChunkSize } from '../profile/user-preference/useUserTransactionListChunkSize';
 import { useAllTransactionCategories } from '../transactionCategories/useAllTransactionCategories';
 import { useAllTransactionCategoryMappings } from '../transactionCategoryMapping/useAllTransactionCategoryMappings';
+import { PagerOptions, usePager } from '../usePager';
+
+type UseAllTransfersPagedReturn = {
+  data: PaginationDto<TransferDto<string>[]>;
+  pagerOptions: PagerOptions;
+};
 
 export const useAllTransfers = (): TransferDto[] => {
-  const { data, error } = useQuery(['transfers'], getAllTransfers);
+  const { data, error } = useQuery(['transfers'], () => getAllTransfers());
 
   if (error || !data) {
     throw new Error(`Missing data. Error: ${JSON.stringify(error ?? data)}`);
   }
 
-  return data;
+  return data.data;
+};
+
+export const useAllTransfersPaged = (
+  intialPage = 1,
+  requestParams: Omit<TransactionFilterOptions, 'page'> = {}
+): UseAllTransfersPagedReturn => {
+  const [chunkAmount] = useUserTransactionListChunkSize();
+  const { page, getLoadPageFunctions } = usePager(intialPage);
+
+  const { data, error } = useQuery(['transfers', page, requestParams], () =>
+    getAllTransfers({ limit: chunkAmount, ...requestParams, page })
+  );
+
+  if (!data || error) {
+    throw new Error(`Missing data. Error: ${JSON.stringify(error ?? data)}`);
+  }
+
+  return {
+    data: data,
+    pagerOptions: getLoadPageFunctions(data),
+  };
 };
 
 export const useAllTransfersGroupByMonth = () => {
   const transfers = useAllTransfers();
-  const [groupedTransfers, setGroupedTransfers] = useState<
-    ITransfersPerMonth[]
-  >([]);
+  const [groupedTransfers, setGroupedTransfers] = useState<TransfersPerMonth[]>(
+    []
+  );
   const transactionCategoryMappings = useAllTransactionCategoryMappings();
   const transactionCategories = useAllTransactionCategories();
 
@@ -53,7 +82,7 @@ export const useAllTransfersGroupByMonth = () => {
 
           return { _id, ...rest, categoryMappings };
         })
-        .reduce<ITransfersPerMonth[]>(groupTransfersByMonth, [])
+        .reduce<TransfersPerMonth[]>(groupTransfersByMonth, [])
         .sort(sortIncomeStacksByMonth)
         .map(sortIncomesByDate)
     );

@@ -1,26 +1,55 @@
-import { IncomeDto, AccountType } from '@local/types';
+import { IncomeDto, AccountType, PaginationDto } from '@local/types';
 import React, { useState, useEffect } from 'react';
 import { useQuery } from 'react-query';
 
 import {
   groupIncomesByMonth,
-  IIncomesPerMonth,
+  IncomesPerMonth,
   sortIncomesByDate,
   sortIncomeStacksByMonth,
 } from '../../pages/income/IncomeFuctions';
 import { getAllIncomes } from '../../services/IncomeService';
+import { TransactionFilterOptions } from '../../services/TransactionService';
 import { useAllAccountsByType } from '../account/useAllAccounts';
+import { useUserTransactionListChunkSize } from '../profile/user-preference/useUserTransactionListChunkSize';
 import { useAllTransactionCategories } from '../transactionCategories/useAllTransactionCategories';
 import { useAllTransactionCategoryMappings } from '../transactionCategoryMapping/useAllTransactionCategoryMappings';
+import { PagerOptions, usePager } from '../usePager';
+
+type UseAllIncomesPagedReturn = {
+  data: PaginationDto<IncomeDto<string>[]>;
+  pagerOptions: PagerOptions;
+};
 
 export const useAllIncomes = (): IncomeDto[] => {
-  const { data, error } = useQuery(['incomes'], getAllIncomes);
+  const { data, error } = useQuery(['incomes'], () => getAllIncomes());
 
   if (error || !data) {
     throw new Error(`Missing data. Error: ${JSON.stringify(error ?? data)}`);
   }
 
-  return data;
+  return data.data;
+};
+
+export const useAllIncomesPaged = (
+  intialPage = 1,
+  requestParams: Omit<TransactionFilterOptions, 'page'> = {}
+): UseAllIncomesPagedReturn => {
+  const [chunkAmount] = useUserTransactionListChunkSize();
+  const { page, getLoadPageFunctions } = usePager(intialPage);
+
+  const { data, error } = useQuery(['incomes', page, requestParams], () =>
+    getAllIncomes({ limit: chunkAmount, ...requestParams, page })
+  );
+
+  if (!data || error) {
+    throw new Error(`Missing data. Error: ${JSON.stringify(error ?? data)}`);
+  }
+
+  return {
+    data: data,
+    pagerOptions: getLoadPageFunctions(data),
+  };
 };
 
 export const useCurrentMonthIncomesTotalAmount = (): number => {
@@ -53,13 +82,10 @@ export const useCurrentMonthIncomesTotalAmount = (): number => {
 
 export const useAllIncomesGroupByMonth = (
   initialForbiddenAccountTypes: AccountType[] = []
-): [
-  IIncomesPerMonth[],
-  React.Dispatch<React.SetStateAction<AccountType[]>>
-] => {
+): [IncomesPerMonth[], React.Dispatch<React.SetStateAction<AccountType[]>>] => {
   const incomes = useAllIncomes();
   const [allForbiddenAccounts, setTargetTypes] = useAllAccountsByType([]);
-  const [groupedIncomes, setGroupedIncomes] = useState<IIncomesPerMonth[]>([]);
+  const [groupedIncomes, setGroupedIncomes] = useState<IncomesPerMonth[]>([]);
   const transactionCategoryMappings = useAllTransactionCategoryMappings();
   const transactionCategories = useAllTransactionCategories();
   const [forbiddenAccountTypes, setForbiddenAccountTypes] = useState<
@@ -88,7 +114,7 @@ export const useAllIncomesGroupByMonth = (
 
           return { _id, ...rest, categoryMappings };
         })
-        .reduce<IIncomesPerMonth[]>(groupIncomesByMonth, [])
+        .reduce<IncomesPerMonth[]>(groupIncomesByMonth, [])
         .sort(sortIncomeStacksByMonth)
         .map(sortIncomesByDate)
     );

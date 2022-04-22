@@ -1,10 +1,10 @@
 import { BalanceGraph } from '../../components/balance-graph/balance-graph';
 import { CtaBlock } from '../../components/cta-block/cta-block';
 import { CtaBlockItem } from '../../components/cta-block/cta-block.item';
-import { DashboardLatestTransactions } from '../../components/dashboard-latest-transactions/dashboard-latest-transactions';
 import { DashboardStats } from '../../components/dashboard-stats/dashboard.stats';
 import { Heading } from '../../components/heading/heading';
 import { IconName } from '../../components/icon/icon';
+import { LatestTransactions } from '../../components/latest-transactions/latest-transactions';
 import { QuickLinks } from '../../components/quick-links/quick-links';
 import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
@@ -40,9 +40,9 @@ export const Dashboard = (): JSX.Element => {
           </section>
           <BalanceGraph className="overflow-y-auto" />
         </section>
-        <section className="mt-6 lg:mt-8 mb-8">
+        <section className="mt-6 mb-8 lg:mt-8">
           <Heading className="mb-2">Recent transactions</Heading>
-          <DashboardLatestTransactions />
+          <LatestTransactions isPagerHidden itemsOnPage={5} />
         </section>
         <QuickLinks>
           <QuickLinksItem
