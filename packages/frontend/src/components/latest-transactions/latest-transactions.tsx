@@ -6,12 +6,13 @@ import {
   TransactionStackedListRowProps,
 } from '../../components/transaction-stacked-list/transaction-stacked-list.row';
 import { useAllTransactionsPaged } from '../../hooks/transaction/useAllTransactions';
+import { TransactionFilterOptions } from '../../services/TransactionService';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDate } from '../../utils/formatDate';
 
 type LatestTransactionsProps = {
   isPagerHidden?: boolean;
-  itemsOnPage?: number;
+  filterOptions?: TransactionFilterOptions;
   className?: string;
 };
 
@@ -63,15 +64,13 @@ export const convertTransactionToTransactionStackedListRow = (
 
 export const LatestTransactions = ({
   isPagerHidden,
-  itemsOnPage,
+  filterOptions = {
+    year: new Date().getFullYear(),
+    month: new Date().getMonth() + 1,
+  },
   className,
 }: LatestTransactionsProps): JSX.Element => {
-  const now = new Date();
-  const { data, pagerOptions } = useAllTransactionsPaged(1, {
-    year: now.getFullYear(),
-    month: now.getMonth() + 1,
-    limit: itemsOnPage,
-  });
+  const { data, pagerOptions } = useAllTransactionsPaged(1, filterOptions);
 
   return (
     <TransactionStackedList
