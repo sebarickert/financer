@@ -1,14 +1,15 @@
 import { CreateTransactionCategoryMappingDtoWithoutTransaction } from '@local/types';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { Alert } from '../../components/alert/alert';
 import { Heading } from '../../components/heading/heading';
 import { IconName } from '../../components/icon/icon';
+import { LatestAccountTransactions } from '../../components/latest-transactions/latest-account-transactions';
 import { LinkList } from '../../components/link-list/link-list';
 import { LinkListLink } from '../../components/link-list/link-list.link';
+import { LoaderSuspense } from '../../components/loader/loader-suspense';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
-import { TransactionStackedList } from '../../components/transaction-stacked-list/transaction-stacked-list';
 import { useAccountById } from '../../hooks/account/useAccountById';
 import { useDeleteAccount } from '../../hooks/account/useDeleteAccount';
 import { useAddExpense } from '../../hooks/expense/useAddExpense';
@@ -18,11 +19,20 @@ import { useTransactionsByAccountIdPaged } from '../../hooks/transaction/useTran
 import { parseErrorMessagesToArray } from '../../utils/apiHelper';
 import { capitalize } from '../../utils/capitalize';
 import { formatCurrency } from '../../utils/formatCurrency';
-import { convertTransferToTransactionStackedListRow } from '../transfers/TransferFuctions';
 
 import { AccountDeleteModal } from './account-modals/AccountDeleteModal';
 import { AccountUpdateMarketValueModal } from './account-modals/AccountUpdateMarketValueModal';
 import { AccountBalanceHistoryChart } from './AccountBalanceHistoryChart';
+
+const AccountTransactionAmount = ({
+  accountId,
+}: {
+  accountId: string;
+}): JSX.Element => {
+  const { data } = useTransactionsByAccountIdPaged(accountId);
+
+  return <>{data.totalRowCount}</>;
+};
 
 export const Account = (): JSX.Element | null => {
   const { id } = useParams<{ id: string }>();
@@ -31,8 +41,6 @@ export const Account = (): JSX.Element | null => {
   const deleteAccount = useDeleteAccount();
   const account = useAccountById(id);
   const [marketSettings] = useUserDefaultMarketUpdateSettings();
-  const { data: transactionsData, pagerOptions: transactionsPagerOptions } =
-    useTransactionsByAccountIdPaged(id);
 
   const [errors, setErrors] = useState<string[]>([]);
   const addIncome = useAddIncome();
@@ -155,7 +163,9 @@ export const Account = (): JSX.Element | null => {
               Transactions
             </dt>
             <dd className="text-xl font-bold tracking-tight">
-              {transactionsData.totalRowCount}
+              <Suspense fallback="-">
+                <AccountTransactionAmount accountId={id} />
+              </Suspense>
             </dd>
           </dl>
         </section>
@@ -163,16 +173,9 @@ export const Account = (): JSX.Element | null => {
       <AccountBalanceHistoryChart accountId={account._id} />
       <section className="my-6">
         <Heading>History</Heading>
-        <TransactionStackedList
-          className="mt-4"
-          rows={transactionsData.data.map((transaction) =>
-            convertTransferToTransactionStackedListRow({
-              ...transaction,
-              categoryMappings: [],
-            })
-          )}
-          pagerOptions={transactionsPagerOptions}
-        />
+        <LoaderSuspense>
+          <LatestAccountTransactions accountId={id} />
+        </LoaderSuspense>
       </section>
       <LinkList label="Actions">
         {account.type === 'investment' && (

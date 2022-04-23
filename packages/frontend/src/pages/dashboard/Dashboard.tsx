@@ -42,7 +42,7 @@ export const Dashboard = (): JSX.Element => {
         </section>
         <section className="mt-6 mb-8 lg:mt-8">
           <Heading className="mb-2">Recent transactions</Heading>
-          <LatestTransactions isPagerHidden itemsOnPage={5} />
+          <LatestTransactions isPagerHidden filterOptions={{ limit: 5 }} />
         </section>
         <QuickLinks>
           <QuickLinksItem
