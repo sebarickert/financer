@@ -8,6 +8,7 @@ import { Form } from '../../../components/form/form';
 import { Input } from '../../../components/input/input';
 import { Select, Option } from '../../../components/select/select';
 import { useAllTransactionCategoriesWithCategoryTree } from '../../../hooks/transactionCategories/useAllTransactionCategories';
+import { getAllChildCategoryIds } from '../../../services/TransactionCategoriesService';
 
 interface TransactionCategoryFormProps {
   errors: string[];
@@ -31,21 +32,28 @@ export const TransactionCategoryForm = ({
   currentCategoryId,
 }: TransactionCategoryFormProps): JSX.Element | null => {
   const transactionCategoriesRaw =
-    useAllTransactionCategoriesWithCategoryTree(currentCategoryId);
+    useAllTransactionCategoriesWithCategoryTree();
   const [transactionCategories, setTransactionCategories] =
     useState<Option[]>();
 
   useEffect(() => {
+    const forbiddenIds = currentCategoryId
+      ? getAllChildCategoryIds(
+          currentCategoryId,
+          transactionCategoriesRaw
+        ).concat(currentCategoryId)
+      : [];
+
     setTransactionCategories([
-      { label: 'None', value: '' },
-      ...transactionCategoriesRaw.map(
-        ({ _id, categoryTree: transactionCategoryName }) => ({
+      { label: 'None', value: 'none' },
+      ...transactionCategoriesRaw
+        .filter(({ _id }) => !forbiddenIds.includes(_id))
+        .map(({ _id, categoryTree: transactionCategoryName }) => ({
           value: _id,
           label: transactionCategoryName,
-        })
-      ),
+        })),
     ]);
-  }, [transactionCategoriesRaw]);
+  }, [currentCategoryId, transactionCategoriesRaw]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = async (event: any) => {
@@ -67,7 +75,7 @@ export const TransactionCategoryForm = ({
     const newTransactionCategoryData: CreateTransactionCategoryDto = {
       name: newCategoryName.value,
       parent_category_id:
-        newParentTransactionCategory.value === 'None'
+        newParentTransactionCategory.value === 'none'
           ? null
           : newParentTransactionCategory.value,
       visibility: newVisibility,
