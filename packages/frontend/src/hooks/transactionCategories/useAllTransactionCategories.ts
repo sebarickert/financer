@@ -1,12 +1,10 @@
 import { TransactionCategoryDto } from '@local/types';
-import { useState, useEffect } from 'react';
 import { useQuery } from 'react-query';
 
 import {
   getAllTransactionCategories,
   getAllTransactionCategoriesWithCategoryTree,
   ITransactionCategoryWithCategoryTree,
-  parseParentCategoryPath,
 } from '../../services/TransactionCategoriesService';
 
 export const useAllTransactionCategories = (): TransactionCategoryDto[] => {
@@ -22,71 +20,16 @@ export const useAllTransactionCategories = (): TransactionCategoryDto[] => {
   return data;
 };
 
-export const useAllTransactionCategoriesWithCategoryTree = (
-  initialForbiddenId?: string
-): ITransactionCategoryWithCategoryTree[] => {
-  // const { data, error } = useQuery(
-  //   ['transactionCategories', 'transactionCategoriesTree'],
-  //   getAllTransactionCategoriesWithCategoryTree
-  // );
-
-  // if (error || !data) {
-  //   throw new Error(`Missing data. Error: ${JSON.stringify(error ?? data)}`);
-  // }
-
-  // return data;
-  const transactionCategories = useAllTransactionCategories();
-
-  const [categoryTree, setCategoryTree] = useState<
-    ITransactionCategoryWithCategoryTree[]
-  >([]);
-  const [forbiddenId, setForbiddenId] = useState(initialForbiddenId);
-
-  useEffect(() => {
-    setForbiddenId(initialForbiddenId);
-  }, [initialForbiddenId]);
-
-  useEffect(() => {
-    const getAllChildCategoryIds = (parentId: string, depth = 0): string[] => {
-      if (depth > 10) {
-        return [];
-      }
-
-      const ids = transactionCategories
-        .filter((category) => category.parent_category_id === parentId)
-        .map<string>((category) => category._id);
-
-      const childIds = ids
-        .map((id) => getAllChildCategoryIds(id, depth + 1))
-        .flat(1);
-
-      return [...ids, ...childIds];
-    };
-
-    const idsToExclude = forbiddenId
-      ? getAllChildCategoryIds(forbiddenId).concat(forbiddenId)
-      : [];
-
-    setCategoryTree(
-      transactionCategories
-        .filter((category) => !idsToExclude.includes(category._id))
-        .map((transactionCategory) => ({
-          ...transactionCategory,
-          categoryTree: parseParentCategoryPath(
-            transactionCategories,
-            transactionCategory._id
-          ),
-        }))
-        .sort((a, b) =>
-          // eslint-disable-next-line no-nested-ternary
-          a.categoryTree > b.categoryTree
-            ? 1
-            : b.categoryTree > a.categoryTree
-            ? -1
-            : 0
-        ) || []
+export const useAllTransactionCategoriesWithCategoryTree =
+  (): ITransactionCategoryWithCategoryTree[] => {
+    const { data, error } = useQuery(
+      ['transactionCategories', 'transactionCategoriesTree'],
+      getAllTransactionCategoriesWithCategoryTree
     );
-  }, [transactionCategories, forbiddenId]);
 
-  return categoryTree;
-};
+    if (error || !data) {
+      throw new Error(`Missing data. Error: ${JSON.stringify(error ?? data)}`);
+    }
+
+    return data;
+  };

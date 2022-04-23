@@ -28,6 +28,26 @@ export const parseParentCategoryPath = (
   return `${parentPath} > ${targetCategory?.name}`;
 };
 
+export const getAllChildCategoryIds = (
+  parentId: string,
+  transactionCategories: TransactionCategoryDto[],
+  depth = 0
+): string[] => {
+  if (depth > 10) {
+    return [];
+  }
+
+  const ids = transactionCategories
+    .filter((category) => category.parent_category_id === parentId)
+    .map<string>((category) => category._id);
+
+  const childIds = ids
+    .map((id) => getAllChildCategoryIds(id, transactionCategories, depth + 1))
+    .flat(1);
+
+  return [...ids, ...childIds];
+};
+
 export const getAllTransactionCategories = async (): Promise<
   TransactionCategoryDto[]
 > => {
