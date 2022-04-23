@@ -5,7 +5,7 @@ import { Option } from '../select/select';
 
 import { TransactionCategoriesFormItem } from './transaction-categories-form.item';
 
-interface ITransactionCategoriesFormProps {
+interface TransactionCategoriesFormProps {
   className?: string;
   categoryAmount: { [key in number]: number };
   amountMaxValue: number;
@@ -25,7 +25,7 @@ export const TransactionCategoriesForm = ({
   deleteTransactionCategoryItem,
   setTransactionCategoryItemAmount,
   testId = 'transaction-categories-form',
-}: ITransactionCategoriesFormProps): JSX.Element => {
+}: TransactionCategoriesFormProps): JSX.Element => {
   const totalAllocatedAmount = Object.values(categoryAmount)
     .filter((item) => !Number.isNaN(item))
     .reduce((current, previous) => current + previous, 0);

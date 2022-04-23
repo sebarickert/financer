@@ -108,6 +108,7 @@ describe('Edit expense with category', () => {
       'transaction-categories-form_transaction-category_description'
     ).should('contain.value', 'Changed description');
   });
+
   it('Delete all categories with multiple categories', () => {
     cy.getById('623de288c839cf72d59b0dd2').click();
     cy.getById('edit-expense-button').click();
@@ -121,7 +122,6 @@ describe('Edit expense with category', () => {
       multiple: true,
       force: true,
     });
-    cy.getById('transaction-categories-form_delete-button').click();
 
     cy.getById('transaction-categories-form_transaction-category_row').should(
       'not.exist'

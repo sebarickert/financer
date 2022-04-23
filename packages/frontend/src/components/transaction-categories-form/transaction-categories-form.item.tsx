@@ -6,7 +6,7 @@ import { Icon, IconName } from '../icon/icon';
 import { Input } from '../input/input';
 import { Select, Option } from '../select/select';
 
-interface ITransactionCategoriesFormItemProps {
+interface TransactionCategoriesFormItemProps {
   className?: string;
   categoryAmountIndex: number;
   amountMaxValue: number;
@@ -32,7 +32,7 @@ export const TransactionCategoriesFormItem = ({
   amountValue,
   setUnallocatedAmount,
   testId = '',
-}: ITransactionCategoriesFormItemProps): JSX.Element => {
+}: TransactionCategoriesFormItemProps): JSX.Element => {
   return (
     <div
       className={className}

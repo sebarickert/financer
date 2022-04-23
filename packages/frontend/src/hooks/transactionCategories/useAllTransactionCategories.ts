@@ -4,6 +4,7 @@ import { useQuery } from 'react-query';
 
 import {
   getAllTransactionCategories,
+  getAllTransactionCategoriesWithCategoryTree,
   ITransactionCategoryWithCategoryTree,
   parseParentCategoryPath,
 } from '../../services/TransactionCategoriesService';
@@ -24,6 +25,16 @@ export const useAllTransactionCategories = (): TransactionCategoryDto[] => {
 export const useAllTransactionCategoriesWithCategoryTree = (
   initialForbiddenId?: string
 ): ITransactionCategoryWithCategoryTree[] => {
+  // const { data, error } = useQuery(
+  //   ['transactionCategories', 'transactionCategoriesTree'],
+  //   getAllTransactionCategoriesWithCategoryTree
+  // );
+
+  // if (error || !data) {
+  //   throw new Error(`Missing data. Error: ${JSON.stringify(error ?? data)}`);
+  // }
+
+  // return data;
   const transactionCategories = useAllTransactionCategories();
 
   const [categoryTree, setCategoryTree] = useState<
@@ -36,10 +47,7 @@ export const useAllTransactionCategoriesWithCategoryTree = (
   }, [initialForbiddenId]);
 
   useEffect(() => {
-    const parseForbiddenIdFromHierarcy = (
-      parentId: string,
-      depth = 0
-    ): string[] => {
+    const getAllChildCategoryIds = (parentId: string, depth = 0): string[] => {
       if (depth > 10) {
         return [];
       }
@@ -49,14 +57,14 @@ export const useAllTransactionCategoriesWithCategoryTree = (
         .map<string>((category) => category._id);
 
       const childIds = ids
-        .map((id) => parseForbiddenIdFromHierarcy(id, depth + 1))
+        .map((id) => getAllChildCategoryIds(id, depth + 1))
         .flat(1);
 
       return [...ids, ...childIds];
     };
 
     const idsToExclude = forbiddenId
-      ? parseForbiddenIdFromHierarcy(forbiddenId).concat(forbiddenId)
+      ? getAllChildCategoryIds(forbiddenId).concat(forbiddenId)
       : [];
 
     setCategoryTree(

@@ -45,10 +45,12 @@ describe('Transaction category creation', () => {
       newName
     );
 
-    cy.get('#parentTransactionCategory option:selected').should(
-      'have.text',
-      parent
-    );
+    cy.get('#parentTransactionCategory').then(($select) => {
+      const selectedValue = $select.val();
+      cy.wrap($select)
+        .get(`option[value="${selectedValue}"]`)
+        .should('have.text', parent);
+    });
   };
 
   beforeEach(() => {
