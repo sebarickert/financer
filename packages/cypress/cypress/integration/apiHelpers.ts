@@ -1,4 +1,4 @@
-import { AccountDto, TransactionDto } from '@local/types';
+import { AccountDto, TransactionDto, PaginationDto } from '@local/types';
 
 export interface ITransactionWithDateObject extends TransactionDto {
   dateObj: Date;
@@ -29,9 +29,9 @@ export const getAccount = async (accountId: string): Promise<AccountDto> => {
 };
 
 const parseTransactionDate = (
-  transactions: TransactionDto[]
+  transactions: PaginationDto<TransactionDto[]>
 ): ITransactionWithDateObject[] =>
-  transactions
+  transactions.data
     .map(({ date, ...rest }) => ({
       ...rest,
       date,
@@ -44,7 +44,7 @@ export const getAllTransaction = async (): Promise<
 > => {
   const transactions = (await (
     await fetch('http://localhost:3000/api/transactions')
-  ).json()) as TransactionDto[];
+  ).json()) as PaginationDto<TransactionDto[]>;
 
   return parseTransactionDate(transactions);
 };
@@ -54,7 +54,7 @@ export const getAllIncomes = async (): Promise<
 > => {
   const transactions = (await (
     await fetch('http://localhost:3000/api/incomes')
-  ).json()) as TransactionDto[];
+  ).json()) as PaginationDto<TransactionDto[]>;
 
   return parseTransactionDate(transactions);
 };
@@ -64,7 +64,7 @@ export const getAllExpenses = async (): Promise<
 > => {
   const transactions = (await (
     await fetch('http://localhost:3000/api/expenses')
-  ).json()) as TransactionDto[];
+  ).json()) as PaginationDto<TransactionDto[]>;
 
   return parseTransactionDate(transactions);
 };
@@ -74,7 +74,7 @@ export const getAllTransfers = async (): Promise<
 > => {
   const transactions = (await (
     await fetch('http://localhost:3000/api/transfers')
-  ).json()) as TransactionDto[];
+  ).json()) as PaginationDto<TransactionDto[]>;
 
   return parseTransactionDate(transactions);
 };
@@ -100,9 +100,9 @@ export const getAllTransactionsByAccountId = async (
 ): Promise<ITransactionWithDateObject[]> => {
   const transactions = (await (
     await fetch(`http://localhost:3000/api/transactions/account/${accountId}`)
-  ).json()) as TransactionDto[];
+  ).json()) as PaginationDto<TransactionDto[]>;
 
-  return transactions
+  return transactions.data
     .map(({ date, ...rest }) => ({
       ...rest,
       date,
