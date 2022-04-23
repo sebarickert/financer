@@ -119,7 +119,6 @@ describe('Edit income with category', () => {
       multiple: true,
       force: true,
     });
-    cy.getById('transaction-categories-form_delete-button').click();
 
     cy.getById('transaction-categories-form_transaction-category_row').should(
       'not.exist'

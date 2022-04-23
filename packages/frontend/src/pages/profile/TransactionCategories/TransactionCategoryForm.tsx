@@ -29,16 +29,13 @@ export const TransactionCategoryForm = ({
   visibility,
   optionalFooterComponent,
   currentCategoryId,
-}: TransactionCategoryFormProps): JSX.Element => {
+}: TransactionCategoryFormProps): JSX.Element | null => {
   const transactionCategoriesRaw =
     useAllTransactionCategoriesWithCategoryTree(currentCategoryId);
-  const [transactionCategories, setTransactionCategories] = useState<Option[]>(
-    []
-  );
+  const [transactionCategories, setTransactionCategories] =
+    useState<Option[]>();
 
   useEffect(() => {
-    if (transactionCategoriesRaw === null) return;
-
     setTransactionCategories([
       { label: 'None', value: '' },
       ...transactionCategoriesRaw.map(
@@ -48,7 +45,7 @@ export const TransactionCategoryForm = ({
         })
       ),
     ]);
-  }, [currentCategoryId, transactionCategoriesRaw]);
+  }, [transactionCategoriesRaw]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = async (event: any) => {
@@ -78,6 +75,8 @@ export const TransactionCategoryForm = ({
 
     onSubmit(newTransactionCategoryData);
   };
+
+  if (!transactionCategories) return null;
 
   return (
     <>
@@ -123,7 +122,6 @@ export const TransactionCategoryForm = ({
             id="parentTransactionCategory"
             options={transactionCategories}
             defaultValue={parentTransactioCategoryId || undefined}
-            isRequired
           >
             Parent transaction category
           </Select>
