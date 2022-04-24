@@ -4,9 +4,15 @@ import {
   IsNotEmpty,
   IsString,
   IsDateString,
+  ValidateNested,
 } from 'class-validator';
 
-export class IncomeDto<ObjectIdType = string> {
+import { TransactionCategoryMappingDto } from '../transaction-category-mapping/transaction-category-mapping.dto';
+
+export class IncomeDto<
+  ObjectIdType = string,
+  CategoriesType = TransactionCategoryMappingDto
+> {
   @IsMongoId()
   readonly _id: ObjectIdType;
 
@@ -25,4 +31,7 @@ export class IncomeDto<ObjectIdType = string> {
 
   @IsMongoId()
   readonly user: ObjectIdType;
+
+  @ValidateNested({ each: true })
+  categories: CategoriesType[];
 }

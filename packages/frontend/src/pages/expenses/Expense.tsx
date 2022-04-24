@@ -10,7 +10,6 @@ import { useAccountById } from '../../hooks/account/useAccountById';
 import { useDeleteExpense } from '../../hooks/expense/useDeleteExpense';
 import { useExpenseById } from '../../hooks/expense/useExpenseById';
 import { useAllTransactionCategoriesWithCategoryTree } from '../../hooks/transactionCategories/useAllTransactionCategories';
-import { useTransactionCategoryMappingsByTransactionId } from '../../hooks/transactionCategoryMapping/useTransactionCategoryMappingsByTransactionId';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDate } from '../../utils/formatDate';
 
@@ -37,8 +36,6 @@ export const Expense = (): JSX.Element => {
   const { id } = useParams<{ id: string }>();
   const expense = useExpenseById(id);
   const account = useAccountById(expense?.fromAccount);
-  const [transactionCategoryMapping] =
-    useTransactionCategoryMappingsByTransactionId(id);
   const transactionCategories = useAllTransactionCategoriesWithCategoryTree();
   const deleteExpense = useDeleteExpense();
 
@@ -73,9 +70,9 @@ export const Expense = (): JSX.Element => {
         </DescriptionListItem>
         <DescriptionListItem label="Type">Expense</DescriptionListItem>
       </DescriptionList>
-      {transactionCategoryMapping.length > 0 && (
+      {expense.categories.length > 0 && (
         <DescriptionList label="Categories" testId="categories-wrapper">
-          {transactionCategoryMapping?.map(({ amount, category_id }) => (
+          {expense.categories.map(({ amount, category_id }) => (
             <>
               <DescriptionListItem label="Category" testId="category_label">
                 {getCategoryNameById(category_id)}

@@ -5,6 +5,7 @@ import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { TransactionStackedList } from '../../components/transaction-stacked-list/transaction-stacked-list';
 import { monthNames } from '../../constants/months';
+import { useTransactionCategoryName } from '../../hooks/transactionCategories/useTransactionCategoryName';
 import { useAllTransfersPaged } from '../../hooks/transfer/useAllTransfers';
 import { useTransferMonthlySummaries } from '../../hooks/transfer/useTransferMonthlySummaries';
 import { formatCurrency } from '../../utils/formatCurrency';
@@ -22,6 +23,7 @@ const TransfersMonthSummary = ({
   month,
   total,
 }: IncomesMonthSummaryProps) => {
+  const getCategoryName = useTransactionCategoryName();
   const { data, pagerOptions } = useAllTransfersPaged(1, {
     year,
     month,
@@ -43,10 +45,7 @@ const TransfersMonthSummary = ({
       </div>
       <TransactionStackedList
         rows={data.data.map((transfer) =>
-          convertTransferToTransactionStackedListRow({
-            ...transfer,
-            categoryMappings: [],
-          })
+          convertTransferToTransactionStackedListRow(transfer, getCategoryName)
         )}
         pagerOptions={pagerOptions}
       />

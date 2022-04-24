@@ -14,9 +14,12 @@ import { ObjectId } from '../../types/objectId';
 import { AccountsService } from '../accounts/accounts.service';
 import { TransactionCategoriesService } from '../transaction-categories/transaction-categories.service';
 import { CreateTransactionCategoryMappingDto } from '../transaction-category-mappings/dto/create-transaction-category-mapping.dto';
+import { TransactionCategoryMappingDto } from '../transaction-category-mappings/dto/transaction-category-mapping.dto';
+import { UpdateTransactionCategoryMappingDto } from '../transaction-category-mappings/dto/update-transaction-category-mapping.dto';
 import { TransactionCategoryMappingsService } from '../transaction-category-mappings/transaction-category-mappings.service';
 
 import { CreateTransactionDto } from './dto/create-transaction.dto';
+import { TransactionDto } from './dto/transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { Transaction, TransactionDocument } from './schemas/transaction.schema';
 
@@ -68,7 +71,7 @@ export class TransactionsService {
     return this.transactionModel.insertMany(createTransactionDto);
   }
 
-  async findOne(userId: ObjectId, id: ObjectId): Promise<TransactionDocument> {
+  async findOne(userId: ObjectId, id: ObjectId): Promise<TransactionDto> {
     const transaction = await this.transactionModel.findOne({ _id: id });
 
     if (!transaction) {
@@ -79,7 +82,16 @@ export class TransactionsService {
       );
     }
 
-    return transaction;
+    const categories =
+      (await this.transactionCategoryMappingsService.findAllByUserAndTransaction(
+        userId,
+        transaction._id,
+      )) as TransactionCategoryMappingDto[];
+
+    return {
+      ...transaction.toObject(),
+      categories,
+    };
   }
 
   async findAllByUser(
@@ -90,7 +102,7 @@ export class TransactionsService {
     year?: number,
     month?: number,
     linkedAccount?: ObjectId,
-  ): Promise<PaginationDto<TransactionDocument[]>> {
+  ): Promise<PaginationDto<TransactionDto[]>> {
     if (!year && month) {
       throw new BadRequestException('Year is required when month is provided');
     }
@@ -113,15 +125,26 @@ export class TransactionsService {
       );
     }
 
-    const transaction = await this.transactionModel
+    const transactions = await this.transactionModel
       .find(query)
       .sort({ date: 'desc' })
       .skip(page ? (page - 1) * limit : 0)
       .limit(page ? limit : 0)
       .exec();
 
+    const data = await Promise.all(
+      transactions.map(async (transaction) => {
+        const categories =
+          (await this.transactionCategoryMappingsService.findAllByUserAndTransaction(
+            userId,
+            transaction._id,
+          )) as TransactionCategoryMappingDto[];
+        return { ...transaction.toObject(), categories };
+      }),
+    );
+
     return {
-      data: transaction,
+      data,
       currentPage: page ?? 1,
       limit: page ? limit : totalCount,
       totalPageCount: lastPage,
@@ -129,6 +152,12 @@ export class TransactionsService {
       hasPreviousPage: (page ?? 1) > 1,
       totalRowCount: totalCount,
     };
+  }
+
+  async findAllByUserForExport(
+    userId: ObjectId,
+  ): Promise<TransactionDocument[]> {
+    return this.transactionModel.find({ user: userId });
   }
 
   async findMonthlySummariesByUser(
@@ -200,7 +229,7 @@ export class TransactionsService {
   }
 
   async remove(
-    transaction: TransactionDocument,
+    transaction: Partial<TransactionDto>,
     userId: ObjectId,
   ): Promise<void> {
     await this.updateRelatedAccountBalance(
@@ -209,7 +238,7 @@ export class TransactionsService {
       transaction.amount,
       'remove',
     );
-    await transaction.delete();
+    await this.transactionModel.findByIdAndDelete(transaction._id).exec();
   }
 
   async removeAllByUser(userId: ObjectId): Promise<void> {
@@ -253,7 +282,9 @@ export class TransactionsService {
   }
 
   private async verifyCategoriesExists(
-    categories?: CreateTransactionCategoryMappingDto[],
+    categories?:
+      | CreateTransactionCategoryMappingDto[]
+      | UpdateTransactionCategoryMappingDto[],
   ) {
     if (!categories) {
       return;
@@ -267,7 +298,9 @@ export class TransactionsService {
   private async createCategories(
     userId: ObjectId,
     transactionId: ObjectId,
-    categories?: CreateTransactionCategoryMappingDto[],
+    categories?:
+      | CreateTransactionCategoryMappingDto[]
+      | UpdateTransactionCategoryMappingDto[],
   ) {
     if (!categories) {
       return;

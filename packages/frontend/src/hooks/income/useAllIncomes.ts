@@ -13,7 +13,6 @@ import { TransactionFilterOptions } from '../../services/TransactionService';
 import { useAllAccountsByType } from '../account/useAllAccounts';
 import { useUserTransactionListChunkSize } from '../profile/user-preference/useUserTransactionListChunkSize';
 import { useAllTransactionCategories } from '../transactionCategories/useAllTransactionCategories';
-import { useAllTransactionCategoryMappings } from '../transactionCategoryMapping/useAllTransactionCategoryMappings';
 import { PagerOptions, usePager } from '../usePager';
 
 type UseAllIncomesPagedReturn = {
@@ -86,7 +85,6 @@ export const useAllIncomesGroupByMonth = (
   const incomes = useAllIncomes();
   const [allForbiddenAccounts, setTargetTypes] = useAllAccountsByType([]);
   const [groupedIncomes, setGroupedIncomes] = useState<IncomesPerMonth[]>([]);
-  const transactionCategoryMappings = useAllTransactionCategoryMappings();
   const transactionCategories = useAllTransactionCategories();
   const [forbiddenAccountTypes, setForbiddenAccountTypes] = useState<
     AccountType[]
@@ -98,9 +96,8 @@ export const useAllIncomesGroupByMonth = (
     setGroupedIncomes(
       incomes
         .filter(({ _id }) => !forbiddenAccountIds?.includes(_id))
-        .map(({ _id, ...rest }) => {
-          const categoryMappings = transactionCategoryMappings
-            ?.filter(({ transaction_id }) => transaction_id === _id)
+        .map(({ _id, categories, ...rest }) => {
+          const categoryMappings = categories
             .map(
               ({ category_id }) =>
                 transactionCategories.find(
@@ -112,18 +109,13 @@ export const useAllIncomesGroupByMonth = (
               // @todo: Fix this type.
             ) as string[];
 
-          return { _id, ...rest, categoryMappings };
+          return { _id, categories, ...rest, categoryMappings };
         })
         .reduce<IncomesPerMonth[]>(groupIncomesByMonth, [])
         .sort(sortIncomeStacksByMonth)
         .map(sortIncomesByDate)
     );
-  }, [
-    allForbiddenAccounts,
-    incomes,
-    transactionCategories,
-    transactionCategoryMappings,
-  ]);
+  }, [allForbiddenAccounts, incomes, transactionCategories]);
 
   useEffect(() => {
     setTargetTypes(forbiddenAccountTypes);

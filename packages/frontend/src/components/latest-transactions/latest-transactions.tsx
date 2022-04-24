@@ -6,6 +6,7 @@ import {
   TransactionStackedListRowProps,
 } from '../../components/transaction-stacked-list/transaction-stacked-list.row';
 import { useAllTransactionsPaged } from '../../hooks/transaction/useAllTransactions';
+import { useTransactionCategoryName } from '../../hooks/transactionCategories/useTransactionCategoryName';
 import { TransactionFilterOptions } from '../../services/TransactionService';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDate } from '../../utils/formatDate';
@@ -15,10 +16,6 @@ type LatestTransactionsProps = {
   filterOptions?: TransactionFilterOptions;
   className?: string;
 };
-
-interface TransactionDtoWithCategories extends TransactionDto {
-  categoryMappings: string[];
-}
 
 export const getTransactionType = (
   toAccount: string | null | undefined,
@@ -44,7 +41,8 @@ export const mapTransactionTypeToUrlPrefix: {
 };
 
 export const convertTransactionToTransactionStackedListRow = (
-  transaction: TransactionDtoWithCategories
+  transaction: TransactionDto,
+  getCategoryName: (id: string) => string | undefined
 ): TransactionStackedListRowProps => {
   const transactionType = getTransactionType(
     transaction.toAccount,
@@ -52,7 +50,9 @@ export const convertTransactionToTransactionStackedListRow = (
   );
 
   return {
-    transactionCategories: transaction.categoryMappings?.join(', '),
+    transactionCategories: transaction.categories
+      .map(({ category_id }) => getCategoryName(category_id))
+      .join(', '),
     transactionAmount: formatCurrency(transaction.amount),
     date: formatDate(new Date(transaction.date)),
     label: transaction.description,
@@ -70,15 +70,16 @@ export const LatestTransactions = ({
   },
   className,
 }: LatestTransactionsProps): JSX.Element => {
+  const getCategoryName = useTransactionCategoryName();
   const { data, pagerOptions } = useAllTransactionsPaged(1, filterOptions);
 
   return (
     <TransactionStackedList
-      rows={data.data.map((transfer) =>
-        convertTransactionToTransactionStackedListRow({
-          ...transfer,
-          categoryMappings: [],
-        })
+      rows={data.data.map((transaction) =>
+        convertTransactionToTransactionStackedListRow(
+          transaction,
+          getCategoryName
+        )
       )}
       pagerOptions={pagerOptions}
       className={className}

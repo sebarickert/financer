@@ -19,9 +19,12 @@ export interface ExpensesPerMonth {
 }
 
 export const convertExpenseToTransactionStackedListRow = (
-  expense: ExpenseDtoWithCategories
+  expense: ExpenseDto,
+  getCategoryName: (id: string) => string | undefined
 ): TransactionStackedListRowProps => ({
-  transactionCategories: expense.categoryMappings?.join(', '),
+  transactionCategories: expense.categories
+    .map(({ category_id }) => getCategoryName(category_id))
+    .join(', '),
   transactionAmount: formatCurrency(expense.amount),
   date: formatDate(new Date(expense.date)),
   label: expense.description,

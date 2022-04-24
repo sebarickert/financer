@@ -1,5 +1,6 @@
 import { TransactionStackedList } from '../../components/transaction-stacked-list/transaction-stacked-list';
 import { useTransactionsByAccountIdPaged } from '../../hooks/transaction/useTransactionsByAccountId';
+import { useTransactionCategoryName } from '../../hooks/transactionCategories/useTransactionCategoryName';
 import { TransactionFilterOptions } from '../../services/TransactionService';
 
 import { convertTransactionToTransactionStackedListRow } from './latest-transactions';
@@ -20,6 +21,7 @@ export const LatestAccountTransactions = ({
   },
   className,
 }: LatestAccountTransactionsProps): JSX.Element => {
+  const getCategoryName = useTransactionCategoryName();
   const { data, pagerOptions } = useTransactionsByAccountIdPaged(
     accountId,
     1,
@@ -28,11 +30,11 @@ export const LatestAccountTransactions = ({
 
   return (
     <TransactionStackedList
-      rows={data.data.map((transfer) =>
-        convertTransactionToTransactionStackedListRow({
-          ...transfer,
-          categoryMappings: [],
-        })
+      rows={data.data.map((transaction) =>
+        convertTransactionToTransactionStackedListRow(
+          transaction,
+          getCategoryName
+        )
       )}
       pagerOptions={pagerOptions}
       className={className}

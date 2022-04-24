@@ -8,7 +8,6 @@ import { ModalConfirm } from '../../components/modal/confirm/modal.confirm';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { useAccountById } from '../../hooks/account/useAccountById';
 import { useAllTransactionCategoriesWithCategoryTree } from '../../hooks/transactionCategories/useAllTransactionCategories';
-import { useTransactionCategoryMappingsByTransactionId } from '../../hooks/transactionCategoryMapping/useTransactionCategoryMappingsByTransactionId';
 import { useDeleteTransfer } from '../../hooks/transfer/useDeleteTransfer';
 import { useTransferById } from '../../hooks/transfer/useTransferById';
 import { formatCurrency } from '../../utils/formatCurrency';
@@ -35,8 +34,6 @@ const TransferDeleteModal = ({ handleDelete }: ITransferDeleteModalProps) => (
 export const Transfer = (): JSX.Element => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
-  const [transactionCategoryMapping] =
-    useTransactionCategoryMappingsByTransactionId(id);
   const transactionCategories = useAllTransactionCategoriesWithCategoryTree();
   const transfer = useTransferById(id);
   const deleteTransfer = useDeleteTransfer();
@@ -78,9 +75,9 @@ export const Transfer = (): JSX.Element => {
         </DescriptionListItem>
         <DescriptionListItem label="Type">Transfer</DescriptionListItem>
       </DescriptionList>
-      {transactionCategoryMapping.length > 0 && (
+      {transfer.categories.length > 0 && (
         <DescriptionList label="Categories" testId="categories-wrapper">
-          {transactionCategoryMapping?.map(({ amount, category_id }) => (
+          {transfer.categories.map(({ amount, category_id }) => (
             <>
               <DescriptionListItem label="Category" testId="category_label">
                 {getCategoryNameById(category_id)}

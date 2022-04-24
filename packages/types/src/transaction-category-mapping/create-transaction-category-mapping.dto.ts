@@ -3,7 +3,7 @@ import { IsOptional, IsString, IsMongoId, Min } from 'class-validator';
 export class CreateTransactionCategoryMappingDto<ObjectIdType = string> {
   @IsOptional()
   @IsString({ message: 'Description must not be empty.' })
-  description: string;
+  description?: string;
 
   @IsMongoId()
   category_id: ObjectIdType;
@@ -20,7 +20,7 @@ export class CreateTransactionCategoryMappingDtoWithoutTransaction<
 > {
   @IsOptional()
   @IsString({ message: 'Description must not be empty.' })
-  description: string;
+  description?: string;
 
   @IsMongoId()
   category_id: ObjectIdType;

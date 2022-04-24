@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
-import { useTransactionCategoryMappingsByTransactionId } from '../../hooks/transactionCategoryMapping/useTransactionCategoryMappingsByTransactionId';
 import { useEditTransfer } from '../../hooks/transfer/useEditTransfer';
 import { useTransferById } from '../../hooks/transfer/useTransferById';
 import { parseErrorMessagesToArray } from '../../utils/apiHelper';
@@ -16,8 +15,6 @@ export const EditTransfer = (): JSX.Element => {
   const [errors, setErrors] = useState<string[]>([]);
 
   const transfer = useTransferById(id);
-  const [transactionCategoryMapping] =
-    useTransactionCategoryMappingsByTransactionId(id);
   const editTransaction = useEditTransfer();
 
   const handleSubmit = async (targetTransferData: UpdateTransferDto) => {
@@ -52,7 +49,7 @@ export const EditTransfer = (): JSX.Element => {
         description={transfer.description}
         fromAccount={transfer.fromAccount}
         toAccount={transfer.toAccount}
-        transactionCategoryMapping={transactionCategoryMapping}
+        transactionCategoryMapping={transfer.categories}
       />
     </>
   );

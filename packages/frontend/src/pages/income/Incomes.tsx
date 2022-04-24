@@ -7,6 +7,7 @@ import { TransactionStackedList } from '../../components/transaction-stacked-lis
 import { monthNames } from '../../constants/months';
 import { useAllIncomesPaged } from '../../hooks/income/useAllIncomes';
 import { useIncomeMonthlySummaries } from '../../hooks/income/useIncomeMonthlySummaries';
+import { useTransactionCategoryName } from '../../hooks/transactionCategories/useTransactionCategoryName';
 import { formatCurrency } from '../../utils/formatCurrency';
 
 import { convertIncomeToTransactionStackedListRow } from './IncomeFuctions';
@@ -22,6 +23,7 @@ const IncomesMonthSummary = ({
   month,
   total,
 }: IncomesMonthSummaryProps) => {
+  const getCategoryName = useTransactionCategoryName();
   const { data, pagerOptions } = useAllIncomesPaged(1, {
     year,
     month,
@@ -43,10 +45,7 @@ const IncomesMonthSummary = ({
       </div>
       <TransactionStackedList
         rows={data.data.map((income) =>
-          convertIncomeToTransactionStackedListRow({
-            ...income,
-            categoryMappings: [],
-          })
+          convertIncomeToTransactionStackedListRow(income, getCategoryName)
         )}
         pagerOptions={pagerOptions}
       />

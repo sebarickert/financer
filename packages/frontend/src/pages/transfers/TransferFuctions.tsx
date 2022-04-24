@@ -19,9 +19,12 @@ export interface TransfersPerMonth {
 }
 
 export const convertTransferToTransactionStackedListRow = (
-  transfer: TransferDtoWithCategories
+  transfer: TransferDto,
+  getCategoryName: (id: string) => string | undefined
 ): TransactionStackedListRowProps => ({
-  transactionCategories: transfer.categoryMappings?.join(', '),
+  transactionCategories: transfer.categories
+    .map(({ category_id }) => getCategoryName(category_id))
+    .join(', '),
   transactionAmount: formatCurrency(transfer.amount),
   date: formatDate(new Date(transfer.date)),
   label: transfer.description,

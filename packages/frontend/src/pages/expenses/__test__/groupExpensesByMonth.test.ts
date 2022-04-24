@@ -12,6 +12,7 @@ const testData: ExpenseDtoWithCategories[] = [
     amount: 10,
     date: new Date('2020-11-30T00:00:00.000Z'),
     user: '5fbd378ede5ab913b62a75f3',
+    categories: [],
   },
   {
     categoryMappings: ['Category 1', 'Category 2'],
@@ -21,6 +22,7 @@ const testData: ExpenseDtoWithCategories[] = [
     amount: 20,
     date: new Date('2020-12-02T00:00:00.000Z'),
     user: '5fbd378ede5ab913b62a75f3',
+    categories: [],
   },
   {
     categoryMappings: ['Category 1', 'Category 2'],
@@ -30,6 +32,7 @@ const testData: ExpenseDtoWithCategories[] = [
     amount: 30,
     date: new Date('2020-12-02T00:00:00.000Z'),
     user: '5fbd378ede5ab913b62a75f3',
+    categories: [],
   },
 ];
 
