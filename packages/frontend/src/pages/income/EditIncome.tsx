@@ -5,7 +5,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { useEditIncome } from '../../hooks/income/useEditIncome';
 import { useIncomeById } from '../../hooks/income/useIncomeById';
-import { useTransactionCategoryMappingsByTransactionId } from '../../hooks/transactionCategoryMapping/useTransactionCategoryMappingsByTransactionId';
 import { parseErrorMessagesToArray } from '../../utils/apiHelper';
 
 import { IncomeForm } from './IncomeForm';
@@ -16,8 +15,6 @@ export const EditIncome = (): JSX.Element => {
   const { id = 'missing-id' } = useParams<{ id: string }>();
 
   const income = useIncomeById(id);
-  const [transactionCategoryMapping] =
-    useTransactionCategoryMappingsByTransactionId(id);
   const editIncome = useEditIncome();
 
   const handleSubmit = async (targetIncomeData: UpdateIncomeDto) => {
@@ -51,7 +48,7 @@ export const EditIncome = (): JSX.Element => {
         description={income.description}
         date={new Date(income.date)}
         toAccount={income.toAccount}
-        transactionCategoryMapping={transactionCategoryMapping}
+        transactionCategoryMapping={income.categories}
       />
     </>
   );

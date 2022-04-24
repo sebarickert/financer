@@ -7,11 +7,11 @@ import { ObjectId } from '../../../types/objectId';
 import { IsInstanceOfObjectId } from '../../../utils/is-instance-of-object-id.decorator';
 import { IsNotEqual } from '../../../utils/is-not-equal.decorator';
 import { objectIdTransformer } from '../../../utils/object-id-transformer';
-import { CreateTransactionCategoryMappingDto } from '../../transaction-category-mappings/dto/create-transaction-category-mapping.dto';
+import { UpdateTransactionCategoryMappingDto } from '../../transaction-category-mappings/dto/update-transaction-category-mapping.dto';
 
 class TmpClass extends SharedUpdateTransferDto<
   ObjectId,
-  CreateTransactionCategoryMappingDto
+  UpdateTransactionCategoryMappingDto
 > {}
 
 export class UpdateTransferDto extends PartialType(TmpClass) {
@@ -30,7 +30,7 @@ export class UpdateTransferDto extends PartialType(TmpClass) {
   @IsOptional()
   @ValidateNested({ each: true })
   @Type(() =>
-    OmitType(CreateTransactionCategoryMappingDto, ['transaction_id'] as const),
+    OmitType(UpdateTransactionCategoryMappingDto, ['transaction_id'] as const),
   )
-  categories?: CreateTransactionCategoryMappingDto[];
+  categories?: UpdateTransactionCategoryMappingDto[];
 }

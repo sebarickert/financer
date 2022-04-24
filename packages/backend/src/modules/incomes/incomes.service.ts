@@ -9,6 +9,7 @@ import {
 } from '../transactions/transactions.service';
 
 import { CreateIncomeDto } from './dto/create-income.dto';
+import { IncomeDto } from './dto/income.dto';
 import { UpdateIncomeDto } from './dto/update-income.dto';
 
 @Injectable()
@@ -21,7 +22,7 @@ export class IncomesService {
     limit: number,
     year: number,
     month: number,
-  ): Promise<PaginationDto<TransactionDocument[]>> {
+  ): Promise<PaginationDto<IncomeDto[]>> {
     return this.transactionService.findAllByUser(
       userId,
       TransactionType.INCOME,
@@ -41,7 +42,7 @@ export class IncomesService {
     );
   }
 
-  async findOne(userId: ObjectId, id: ObjectId): Promise<TransactionDocument> {
+  async findOne(userId: ObjectId, id: ObjectId): Promise<IncomeDto> {
     return this.transactionService.findOne(userId, id);
   }
 

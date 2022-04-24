@@ -18,9 +18,12 @@ export interface IncomesPerMonth {
 }
 
 export const convertIncomeToTransactionStackedListRow = (
-  income: IncomeDtoWithCategories
+  income: IncomeDto,
+  getCategoryName: (id: string) => string | undefined
 ): TransactionStackedListRowProps => ({
-  transactionCategories: income.categoryMappings?.join(', '),
+  transactionCategories: income.categories
+    .map(({ category_id }) => getCategoryName(category_id))
+    .join(', '),
   transactionAmount: formatCurrency(income.amount),
   date: formatDate(new Date(income.date)),
   label: income.description,

@@ -2,13 +2,13 @@ import { PaginationDto, TransactionMonthSummaryDto } from '@local/types';
 import { Injectable } from '@nestjs/common';
 
 import { ObjectId } from '../../types/objectId';
-import { TransactionDocument } from '../transactions/schemas/transaction.schema';
 import {
   TransactionsService,
   TransactionType,
 } from '../transactions/transactions.service';
 
 import { CreateExpenseDto } from './dto/create-expense.dto';
+import { ExpenseDto } from './dto/expense.dto';
 import { UpdateExpenseDto } from './dto/update-expense.dto';
 
 @Injectable()
@@ -21,7 +21,7 @@ export class ExpensesService {
     limit: number,
     year: number,
     month: number,
-  ): Promise<PaginationDto<TransactionDocument[]>> {
+  ): Promise<PaginationDto<ExpenseDto[]>> {
     return this.transactionService.findAllByUser(
       userId,
       TransactionType.EXPENSE,
@@ -41,7 +41,7 @@ export class ExpensesService {
     );
   }
 
-  async findOne(userId: ObjectId, id: ObjectId): Promise<TransactionDocument> {
+  async findOne(userId: ObjectId, id: ObjectId): Promise<ExpenseDto> {
     return this.transactionService.findOne(userId, id);
   }
 

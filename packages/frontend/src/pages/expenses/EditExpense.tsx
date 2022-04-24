@@ -5,7 +5,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { useEditExpense } from '../../hooks/expense/useEditExpense';
 import { useExpenseById } from '../../hooks/expense/useExpenseById';
-import { useTransactionCategoryMappingsByTransactionId } from '../../hooks/transactionCategoryMapping/useTransactionCategoryMappingsByTransactionId';
 import { parseErrorMessagesToArray } from '../../utils/apiHelper';
 
 import { ExpenseForm } from './ExpenseForm';
@@ -17,8 +16,6 @@ export const EditExpense = (): JSX.Element => {
   const editExpense = useEditExpense();
 
   const expense = useExpenseById(id);
-  const [transactionCategoryMapping] =
-    useTransactionCategoryMappingsByTransactionId(id);
 
   const handleSubmit = async (targetExpenseData: CreateExpenseDto) => {
     if (!id) {
@@ -51,7 +48,7 @@ export const EditExpense = (): JSX.Element => {
         description={expense.description}
         date={new Date(expense.date)}
         fromAccount={expense.fromAccount}
-        transactionCategoryMapping={transactionCategoryMapping}
+        transactionCategoryMapping={expense.categories}
       />
     </>
   );

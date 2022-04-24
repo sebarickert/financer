@@ -18,12 +18,6 @@ export class TransactionCategoryMappingsService {
     private transactionCategoryMappingModel: Model<TransactionCategoryMappingDocument>,
   ) {}
 
-  // create(
-  //   createTransactionCategoryMappingDto: CreateTransactionCategoryMappingDto,
-  // ) {
-  //   return 'This action adds a new transactionCategoryMapping';
-  // }
-
   async createMany(
     createTransactionCategoryMappingDto: CreateTransactionCategoryMappingDto[],
   ) {
@@ -44,6 +38,15 @@ export class TransactionCategoryMappingsService {
     userId: ObjectId,
   ): Promise<TransactionCategoryMappingDocument[]> {
     return this.transactionCategoryMappingModel.find({ owner: userId }).exec();
+  }
+
+  async findAllByUserAndTransaction(
+    userId: ObjectId,
+    transactionId: ObjectId,
+  ): Promise<TransactionCategoryMappingDocument[]> {
+    return this.transactionCategoryMappingModel
+      .find({ owner: userId, transaction_id: transactionId })
+      .exec();
   }
 
   update(

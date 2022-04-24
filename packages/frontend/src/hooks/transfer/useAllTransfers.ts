@@ -14,7 +14,6 @@ import { TransactionFilterOptions } from '../../services/TransactionService';
 import { getAllTransfers } from '../../services/TransferService';
 import { useUserTransactionListChunkSize } from '../profile/user-preference/useUserTransactionListChunkSize';
 import { useAllTransactionCategories } from '../transactionCategories/useAllTransactionCategories';
-import { useAllTransactionCategoryMappings } from '../transactionCategoryMapping/useAllTransactionCategoryMappings';
 import { PagerOptions, usePager } from '../usePager';
 
 type UseAllTransfersPagedReturn = {
@@ -58,7 +57,6 @@ export const useAllTransfersGroupByMonth = () => {
   const [groupedTransfers, setGroupedTransfers] = useState<TransfersPerMonth[]>(
     []
   );
-  const transactionCategoryMappings = useAllTransactionCategoryMappings();
   const transactionCategories = useAllTransactionCategories();
 
   useEffect(() => {
@@ -66,9 +64,8 @@ export const useAllTransfersGroupByMonth = () => {
 
     setGroupedTransfers(
       transfers
-        .map(({ _id, ...rest }) => {
-          const categoryMappings = transactionCategoryMappings
-            ?.filter(({ transaction_id }) => transaction_id === _id)
+        .map(({ _id, categories, ...rest }) => {
+          const categoryMappings = categories
             .map(
               ({ category_id }) =>
                 transactionCategories.find(
@@ -80,13 +77,13 @@ export const useAllTransfersGroupByMonth = () => {
               // @todo: Fix this type.
             ) as string[];
 
-          return { _id, ...rest, categoryMappings };
+          return { _id, categories, ...rest, categoryMappings };
         })
         .reduce<TransfersPerMonth[]>(groupTransfersByMonth, [])
         .sort(sortIncomeStacksByMonth)
         .map(sortIncomesByDate)
     );
-  }, [transactionCategoryMappings, transactionCategories, transfers]);
+  }, [transactionCategories, transfers]);
 
   return groupedTransfers;
 };

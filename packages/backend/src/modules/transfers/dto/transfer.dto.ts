@@ -6,7 +6,11 @@ import { ObjectId } from '../../../types/objectId';
 import { IsInstanceOfObjectId } from '../../../utils/is-instance-of-object-id.decorator';
 import { IsNotEqual } from '../../../utils/is-not-equal.decorator';
 import { objectIdTransformer } from '../../../utils/object-id-transformer';
-export class TransferDto extends SharedTransferDto<ObjectId> {
+import { TransactionCategoryMappingDto } from '../../transaction-category-mappings/dto/transaction-category-mapping.dto';
+export class TransferDto extends SharedTransferDto<
+  ObjectId,
+  TransactionCategoryMappingDto
+> {
   @Allow()
   @IsNotEqual('toAccount', {
     message: "Target and source accounts can't be the same account.",

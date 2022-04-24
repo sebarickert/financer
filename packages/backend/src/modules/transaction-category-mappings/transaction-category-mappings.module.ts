@@ -5,7 +5,6 @@ import {
   TransactionCategoryMapping,
   TransactionCategoryMappingSchema,
 } from './schemas/transaction-category-mapping.schema';
-import { TransactionCategoryMappingsController } from './transaction-category-mappings.controller';
 import { TransactionCategoryMappingsService } from './transaction-category-mappings.service';
 
 @Module({
@@ -17,7 +16,6 @@ import { TransactionCategoryMappingsService } from './transaction-category-mappi
       },
     ]),
   ],
-  controllers: [TransactionCategoryMappingsController],
   providers: [TransactionCategoryMappingsService],
   exports: [TransactionCategoryMappingsService],
 })
