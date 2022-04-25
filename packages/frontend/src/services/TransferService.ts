@@ -59,11 +59,15 @@ export const getTransferById = async (id: string): Promise<TransferDto> => {
   return parseJsonOrThrowError(transfer);
 };
 
-export const getTransferMonthlySummaries = async (): Promise<
-  TransactionMonthSummaryDto[]
-> => {
-  const expense = await fetch(`/api/transfers/monthly-summaries`);
-  return parseJsonOrThrowError(expense);
+export const getTransferMonthlySummaries = async (
+  options: Omit<TransactionFilterOptions, 'page'> = {}
+): Promise<TransactionMonthSummaryDto[]> => {
+  const queryString = parseFilterQueryString(options);
+
+  const transfer = await fetch(
+    `/api/transfers/monthly-summaries?${queryString.join('&')}`
+  );
+  return parseJsonOrThrowError(transfer);
 };
 
 export const deleteTransfer = async (id: string): Promise<void> => {

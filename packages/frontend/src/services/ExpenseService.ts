@@ -37,10 +37,14 @@ export const getExpenseById = async (id: string): Promise<ExpenseDto> => {
   return parseJsonOrThrowError(expense);
 };
 
-export const getExpenseMonthlySummaries = async (): Promise<
-  TransactionMonthSummaryDto[]
-> => {
-  const expense = await fetch(`/api/expenses/monthly-summaries`);
+export const getExpenseMonthlySummaries = async (
+  options: Omit<TransactionFilterOptions, 'page'> = {}
+): Promise<TransactionMonthSummaryDto[]> => {
+  const queryString = parseFilterQueryString(options);
+
+  const expense = await fetch(
+    `/api/expenses/monthly-summaries?${queryString.join('&')}`
+  );
   return parseJsonOrThrowError(expense);
 };
 

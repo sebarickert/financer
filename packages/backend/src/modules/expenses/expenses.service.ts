@@ -34,10 +34,16 @@ export class ExpensesService {
 
   async findMonthlySummariesByUser(
     userId: ObjectId,
+    limit: number,
+    year: number,
+    month: number,
   ): Promise<TransactionMonthSummaryDto[]> {
     return this.transactionService.findMonthlySummariesByUser(
       userId,
       TransactionType.EXPENSE,
+      limit || undefined,
+      year || undefined,
+      month || undefined,
     );
   }
 

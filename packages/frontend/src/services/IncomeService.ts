@@ -28,11 +28,15 @@ export const getIncomeById = async (id: string): Promise<IncomeDto> => {
   return parseJsonOrThrowError(income);
 };
 
-export const getIncomeMonthlySummaries = async (): Promise<
-  TransactionMonthSummaryDto[]
-> => {
-  const expense = await fetch(`/api/incomes/monthly-summaries`);
-  return parseJsonOrThrowError(expense);
+export const getIncomeMonthlySummaries = async (
+  options: Omit<TransactionFilterOptions, 'page'> = {}
+): Promise<TransactionMonthSummaryDto[]> => {
+  const queryString = parseFilterQueryString(options);
+
+  const income = await fetch(
+    `/api/incomes/monthly-summaries?${queryString.join('&')}`
+  );
+  return parseJsonOrThrowError(income);
 };
 
 export const addIncome = async (
