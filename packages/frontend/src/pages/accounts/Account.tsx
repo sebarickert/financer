@@ -138,10 +138,10 @@ export const Account = (): JSX.Element | null => {
       )}
       <section className={'mb-6 grid md:grid-cols-2 gap-6'}>
         <DescriptionList>
-          <DescriptionListItem label="Balance" isLarge>
+          <DescriptionListItem label="Balance" isLarge testId="account-balance">
             {formatCurrency(account.balance)}
           </DescriptionListItem>
-          <DescriptionListItem label="Type">
+          <DescriptionListItem label="Type" testId="account-type">
             {capitalize(account.type)}
           </DescriptionListItem>
           <DescriptionListItem label="Transactions">
