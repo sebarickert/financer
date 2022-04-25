@@ -173,7 +173,7 @@ export const Account = (): JSX.Element | null => {
       <section className="my-6">
         <Heading>History</Heading>
         <LoaderSuspense>
-          <LatestAccountTransactions accountId={id} />
+          <LatestAccountTransactions accountId={id} filterOptions={{}} />
         </LoaderSuspense>
       </section>
     </>
