@@ -93,9 +93,15 @@ export const AccountBalanceHistoryChart = ({
   }, [accountBalanceHistory]);
 
   const monthAgoDate = new Date().getTime() - MONTH_IN_MS;
+
   const monthAgoIndex = chartData.indexOf(
     chartData.find((tick) => tick.date.getTime() > monthAgoDate) || chartData[0]
   );
+
+  const startIndex =
+    chartData.length - monthAgoIndex > 12
+      ? monthAgoIndex
+      : chartData.length - 12;
 
   return (
     <div className="bg-gray-25 border rounded-lg min-h-[{300px] h-[20vh] md:h-auto md:min-h-0 md:aspect-video pl-2 py-6 pr-2">
@@ -134,7 +140,7 @@ export const AccountBalanceHistoryChart = ({
             strokeWidth={2}
             isAnimationActive={false}
           />
-          <Brush dataKey="dateStr" stroke="#1c64f2" startIndex={monthAgoIndex}>
+          <Brush dataKey="dateStr" stroke="#1c64f2" startIndex={startIndex}>
             <AreaChart>
               <CartesianGrid />
               <YAxis hide domain={['dataMin', 'dataMax']} />
