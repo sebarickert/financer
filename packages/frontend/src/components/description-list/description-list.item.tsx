@@ -1,6 +1,8 @@
+import { ReactNode } from 'react';
+
 export interface IDescriptionListItemProps {
   label: string;
-  children: string;
+  children: string | ReactNode;
   testId?: string;
   isLarge?: boolean;
 }
