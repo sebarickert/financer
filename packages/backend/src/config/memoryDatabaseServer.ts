@@ -5,7 +5,7 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 
 export const memoryDatabaseServer = new MongoMemoryServer({
   binary: {
-    version: '4.2.16',
+    version: '5.0.7',
   },
 });
 
