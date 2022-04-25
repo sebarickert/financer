@@ -25,11 +25,11 @@ spec:
           imagePullPolicy: Always
           resources:
             limits:
-              cpu: "0.5"
+              cpu: "1"
               memory: "500Mi"
             requests:
-              cpu: "0.002"
-              memory: "30Mi"
+              cpu: "0.1"
+              memory: "100Mi"
           ports:
             - containerPort: 4000
               name: webapp

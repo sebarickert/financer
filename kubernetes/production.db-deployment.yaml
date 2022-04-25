@@ -24,14 +24,14 @@ spec:
         - image: mongo:4.4.8
           name: mongodb-server
           ports:
-          - containerPort: 27017
-            name: mongodb
+            - containerPort: 27017
+              name: mongodb
           resources:
             limits:
-              cpu: "0.5"
+              cpu: "1"
               memory: "1Gi"
             requests:
-              cpu: "0.1"
+              cpu: "0.2"
               memory: "200Mi"
           envFrom:
             - secretRef:
@@ -55,7 +55,6 @@ spec:
             name: mongodb-initial-config
 
 ---
-
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -78,7 +77,6 @@ data:
     echo ======================================================
 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -86,13 +84,12 @@ metadata:
   name: mongodb
 spec:
   ports:
-  - port: 27017
+    - port: 27017
   selector:
     app: mongodb
   clusterIP: None
 
 ---
-
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -107,7 +104,6 @@ spec:
       storage: 2Gi
 
 ---
-
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
