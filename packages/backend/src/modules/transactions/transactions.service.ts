@@ -119,7 +119,7 @@ export class TransactionsService {
       .exec();
     const lastPage = page ? Math.ceil(totalCount / limit) : 1;
 
-    if (page && (page < 1 || page > lastPage)) {
+    if (page && (page < 1 || page > lastPage) && page !== 1) {
       throw new NotFoundException(
         `Page "${page}" not found. First page is "1" and last page is "${lastPage}"`,
       );
