@@ -1,5 +1,5 @@
 import { TransactionDto } from '@local/types';
-import { useEffect, useState, useTransition } from 'react';
+import { useState } from 'react';
 
 import { DescriptionList } from '../../components/description-list/description-list';
 import { DescriptionListItem } from '../../components/description-list/description-list.item';
@@ -8,17 +8,15 @@ import {
   getTransactionType,
   LatestTransactions,
 } from '../../components/latest-transactions/latest-transactions';
-import { LoaderIfProcessing } from '../../components/loader/loader-if-processing';
 import { QuickLinks } from '../../components/quick-links/quick-links';
 import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { monthNames } from '../../constants/months';
 import { useAllExpensesPaged } from '../../hooks/expense/useAllExpenses';
+import { useExpenseMonthlySummaries } from '../../hooks/expense/useExpenseMonthlySummaries';
 import { useAllIncomesPaged } from '../../hooks/income/useAllIncomes';
-import {
-  useAllTransactions,
-  useAllTransactionsPaged,
-} from '../../hooks/transaction/useAllTransactions';
+import { useIncomeMonthlySummaries } from '../../hooks/income/useIncomeMonthlySummaries';
+import { useAllTransactionsPaged } from '../../hooks/transaction/useAllTransactions';
 import { useAllTransfersPaged } from '../../hooks/transfer/useAllTransfers';
 import { formatCurrency } from '../../utils/formatCurrency';
 
@@ -37,50 +35,20 @@ export const filterTransactionsByType = (
   return getTransactionType(toAccount, fromAccount) === visibilityFilter;
 };
 
+const currentMonthFilterOptions = {
+  year: new Date().getFullYear(),
+  month: new Date().getMonth() + 1,
+};
+
 export const Statistics = (): JSX.Element => {
-  const [isProcessing, startProcessing] = useTransition();
   const [transactionVisibilityFilter, setTransactionVisibilityFilter] =
     useState<TransactionVisibilityFilterType>('all');
-  const transactionsRaw = useAllTransactions();
-  const [transactions, setTransactions] = useState<TransactionDto[]>([]);
-  const [totalExpenses, setTotalExpenses] = useState<number>(NaN);
-  const [totalIncomes, setTotalIncomes] = useState<number>(NaN);
-
-  useEffect(() => {
-    startProcessing(() => {
-      setTotalIncomes(
-        transactions
-          .filter((transaction) =>
-            filterTransactionsByType('income', transaction)
-          )
-          .reduce((currentTotal, { amount }) => currentTotal + amount, 0)
-      );
-
-      setTotalExpenses(
-        transactions
-          .filter((transaction) =>
-            filterTransactionsByType('expense', transaction)
-          )
-          .reduce((currentTotal, { amount }) => currentTotal + amount, 0)
-      );
-    });
-  }, [transactions]);
-
-  useEffect(() => {
-    const now = new Date();
-
-    setTransactions(
-      transactionsRaw.filter(({ date: dateStr }) => {
-        const date = new Date(dateStr);
-        const currentYear = new Date().getFullYear();
-
-        return (
-          date.getMonth() === now.getMonth() &&
-          currentYear === date.getFullYear()
-        );
-      })
-    );
-  }, [transactionsRaw]);
+  const [{ totalAmount: totalIncomes }] = useIncomeMonthlySummaries(
+    currentMonthFilterOptions
+  );
+  const [{ totalAmount: totalExpenses }] = useExpenseMonthlySummaries(
+    currentMonthFilterOptions
+  );
 
   const now = new Date();
   const pageVisibleYear = now.getFullYear();
@@ -118,7 +86,7 @@ export const Statistics = (): JSX.Element => {
   };
 
   return (
-    <LoaderIfProcessing isProcessing={isProcessing}>
+    <>
       <UpdatePageInfo title="Statistics" />
       <DescriptionList
         label={`${pageVisibleMonth}, ${pageVisibleYear}`}
@@ -154,6 +122,6 @@ export const Statistics = (): JSX.Element => {
           description="Go to transfers page where you are able to manage your transfer transactions."
         />
       </QuickLinks>
-    </LoaderIfProcessing>
+    </>
   );
 };
