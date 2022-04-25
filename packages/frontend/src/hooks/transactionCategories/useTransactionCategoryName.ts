@@ -7,8 +7,6 @@ export const useTransactionCategoryName = (): ((
 ) => string | undefined) => {
   const categories = useAllTransactionCategories();
 
-  console.log('useTransactionCategoryName', categories);
-
   return useCallback(
     (categoryId) => categories.find(({ _id }) => _id === categoryId)?.name,
     [categories]
