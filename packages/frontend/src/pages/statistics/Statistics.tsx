@@ -8,6 +8,7 @@ import {
   getTransactionType,
   LatestTransactions,
 } from '../../components/latest-transactions/latest-transactions';
+import { MonthlySummaryGraph } from '../../components/monthly-summary-graph/monthly-summary-graph';
 import { QuickLinks } from '../../components/quick-links/quick-links';
 import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
@@ -88,6 +89,7 @@ export const Statistics = (): JSX.Element => {
   return (
     <>
       <UpdatePageInfo title="Statistics" />
+      <MonthlySummaryGraph className="mb-6" />
       <DescriptionList
         label={`${pageVisibleMonth}, ${pageVisibleYear}`}
         filterOptions={filterItems}
