@@ -3,6 +3,8 @@ import { Suspense, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { Alert } from '../../components/alert/alert';
+import { DescriptionList } from '../../components/description-list/description-list';
+import { DescriptionListItem } from '../../components/description-list/description-list.item';
 import { Heading } from '../../components/heading/heading';
 import { IconName } from '../../components/icon/icon';
 import { LatestAccountTransactions } from '../../components/latest-transactions/latest-account-transactions';
@@ -134,41 +136,38 @@ export const Account = (): JSX.Element | null => {
           There were {errors.length} errors with your submission
         </Alert>
       )}
-      <section className={`bg-gray-25 border rounded-lg mb-6`}>
-        <dl className="relative px-6 pt-10 pb-6 border-b">
-          <dt className="absolute text-sm font-medium text-gray-700 truncate lg:text-base top-4 left-6">
-            Balance
-          </dt>
-          <dd
-            className="text-3xl font-bold tracking-tight"
-            data-testid="account-balance"
-          >
+      <section className={'mb-6 grid md:grid-cols-2 gap-6'}>
+        <DescriptionList>
+          <DescriptionListItem label="Balance" isLarge>
             {formatCurrency(account.balance)}
-          </dd>
-        </dl>
-        <section className="grid grid-cols-2 divide-x">
-          <dl className="py-4 pl-6 pr-4">
-            <dt className="text-xs font-medium text-gray-700 truncate lg:text-sm">
-              Type
-            </dt>
-            <dd
-              className="text-xl font-bold tracking-tight"
-              data-testid="account-type"
-            >
-              {capitalize(account.type)}
-            </dd>
-          </dl>
-          <dl className="py-4 pl-6 pr-4">
-            <dt className="text-xs font-medium text-gray-700 truncate lg:text-sm">
-              Transactions
-            </dt>
-            <dd className="text-xl font-bold tracking-tight">
-              <Suspense fallback="-">
-                <AccountTransactionAmount accountId={id} />
-              </Suspense>
-            </dd>
-          </dl>
-        </section>
+          </DescriptionListItem>
+          <DescriptionListItem label="Type">
+            {capitalize(account.type)}
+          </DescriptionListItem>
+          <DescriptionListItem label="Transactions">
+            <Suspense fallback="-">
+              <AccountTransactionAmount accountId={id} />
+            </Suspense>
+          </DescriptionListItem>
+        </DescriptionList>
+        <LinkList isVertical>
+          {account.type === 'investment' && (
+            <AccountUpdateMarketValueModal
+              currentValue={account.balance}
+              handleUpdate={(newMarketValue, newDate) =>
+                handleMarketValueUpdate(newMarketValue, newDate)
+              }
+            />
+          )}
+          <LinkListLink
+            link={`/accounts/${id}/edit`}
+            testId="edit-account"
+            icon={IconName.cog}
+          >
+            Edit account
+          </LinkListLink>
+          <AccountDeleteModal handleDelete={handleDelete} />
+        </LinkList>
       </section>
       <AccountBalanceHistoryChart accountId={account._id} />
       <section className="my-6">
@@ -177,24 +176,6 @@ export const Account = (): JSX.Element | null => {
           <LatestAccountTransactions accountId={id} />
         </LoaderSuspense>
       </section>
-      <LinkList label="Actions">
-        {account.type === 'investment' && (
-          <AccountUpdateMarketValueModal
-            currentValue={account.balance}
-            handleUpdate={(newMarketValue, newDate) =>
-              handleMarketValueUpdate(newMarketValue, newDate)
-            }
-          />
-        )}
-        <LinkListLink
-          link={`/accounts/${id}/edit`}
-          testId="edit-account"
-          icon={IconName.cog}
-        >
-          Edit account
-        </LinkListLink>
-        <AccountDeleteModal handleDelete={handleDelete} />
-      </LinkList>
     </>
   );
 };
