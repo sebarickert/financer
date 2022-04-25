@@ -18,7 +18,12 @@ export class Account {
   @Prop({ required: true })
   balance: number;
 
-  @Prop({ required: true, type: MogooseTypes.ObjectId, ref: User.name })
+  @Prop({
+    required: true,
+    index: true,
+    type: MogooseTypes.ObjectId,
+    ref: User.name,
+  })
   owner: ObjectId;
 
   @Prop({ default: false })

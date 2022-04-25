@@ -9,10 +9,20 @@ export type TransactionDocument = Transaction & Document<MogooseTypes.ObjectId>;
 
 @Schema()
 export class Transaction {
-  @Prop({ type: MogooseTypes.ObjectId, ref: Account.name, default: null })
+  @Prop({
+    index: true,
+    type: MogooseTypes.ObjectId,
+    ref: Account.name,
+    default: null,
+  })
   fromAccount: ObjectId;
 
-  @Prop({ type: MogooseTypes.ObjectId, ref: Account.name, default: null })
+  @Prop({
+    index: true,
+    type: MogooseTypes.ObjectId,
+    ref: Account.name,
+    default: null,
+  })
   toAccount: ObjectId;
 
   @Prop({ required: true })
@@ -21,10 +31,15 @@ export class Transaction {
   @Prop({ default: '' })
   description: string;
 
-  @Prop({ default: '' })
+  @Prop({ default: '', index: true })
   date: Date;
 
-  @Prop({ required: true, type: MogooseTypes.ObjectId, ref: User.name })
+  @Prop({
+    required: true,
+    index: true,
+    type: MogooseTypes.ObjectId,
+    ref: User.name,
+  })
   user: ObjectId;
 }
 
