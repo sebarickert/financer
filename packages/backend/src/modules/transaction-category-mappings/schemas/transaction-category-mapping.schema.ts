@@ -11,7 +11,12 @@ export type TransactionCategoryMappingDocument = TransactionCategoryMapping &
 
 @Schema({ collection: 'transaction-category-mappings' })
 export class TransactionCategoryMapping {
-  @Prop({ required: true, type: MogooseTypes.ObjectId, ref: User.name })
+  @Prop({
+    required: true,
+    index: true,
+    type: MogooseTypes.ObjectId,
+    ref: User.name,
+  })
   owner: ObjectId;
 
   @Prop({ default: '' })
@@ -26,6 +31,7 @@ export class TransactionCategoryMapping {
 
   @Prop({
     type: MogooseTypes.ObjectId,
+    index: true,
     ref: Transaction.name,
     required: true,
   })

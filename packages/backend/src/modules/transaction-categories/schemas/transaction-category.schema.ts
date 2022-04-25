@@ -10,13 +10,18 @@ export type TransactionCategoryDocument = TransactionCategory &
 
 @Schema({ collection: 'transaction-categories' })
 export class TransactionCategory {
-  @Prop({ required: true, type: MogooseTypes.ObjectId, ref: User.name })
+  @Prop({
+    required: true,
+    index: true,
+    type: MogooseTypes.ObjectId,
+    ref: User.name,
+  })
   owner: ObjectId;
 
   @Prop({ required: true })
   name: string;
 
-  @Prop([String])
+  @Prop({ type: [String], index: true })
   visibility: VisibilityType[];
 
   @Prop({
@@ -26,7 +31,7 @@ export class TransactionCategory {
   })
   parent_category_id: ObjectId;
 
-  @Prop({ default: false })
+  @Prop({ default: false, index: true })
   deleted: boolean;
 }
 
