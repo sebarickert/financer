@@ -5,8 +5,11 @@ import {
   TransactionType,
   TransactionStackedListRowProps,
 } from '../../components/transaction-stacked-list/transaction-stacked-list.row';
+import { useAllExpensesPaged } from '../../hooks/expense/useAllExpenses';
+import { useAllIncomesPaged } from '../../hooks/income/useAllIncomes';
 import { useAllTransactionsPaged } from '../../hooks/transaction/useAllTransactions';
 import { useTransactionCategoryName } from '../../hooks/transactionCategories/useTransactionCategoryName';
+import { useAllTransfersPaged } from '../../hooks/transfer/useAllTransfers';
 import { TransactionFilterOptions } from '../../services/TransactionService';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDate } from '../../utils/formatDate';
@@ -15,6 +18,11 @@ type LatestTransactionsProps = {
   isPagerHidden?: boolean;
   filterOptions?: TransactionFilterOptions;
   className?: string;
+  useDataHook?:
+    | typeof useAllTransactionsPaged
+    | typeof useAllIncomesPaged
+    | typeof useAllExpensesPaged
+    | typeof useAllTransfersPaged;
 };
 
 export const getTransactionType = (
@@ -40,8 +48,16 @@ export const mapTransactionTypeToUrlPrefix: {
   transfer: 'transfers',
 };
 
+type TransactionDtoForConvert = Omit<
+  TransactionDto,
+  'fromAccount' | 'toAccount'
+> & {
+  fromAccount?: string;
+  toAccount?: string;
+};
+
 export const convertTransactionToTransactionStackedListRow = (
-  transaction: TransactionDto,
+  transaction: TransactionDtoForConvert,
   getCategoryName: (id: string) => string | undefined
 ): TransactionStackedListRowProps => {
   const transactionType = getTransactionType(
@@ -69,9 +85,10 @@ export const LatestTransactions = ({
     month: new Date().getMonth() + 1,
   },
   className,
+  useDataHook = useAllTransactionsPaged,
 }: LatestTransactionsProps): JSX.Element => {
   const getCategoryName = useTransactionCategoryName();
-  const { data, pagerOptions } = useAllTransactionsPaged(1, filterOptions);
+  const { data, pagerOptions } = useDataHook(1, filterOptions);
 
   return (
     <TransactionStackedList

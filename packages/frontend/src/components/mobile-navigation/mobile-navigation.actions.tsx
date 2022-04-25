@@ -1,39 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
+import { useOnClickOutside } from '../../hooks/useOnClickOutside';
 import { Icon, IconName } from '../icon/icon';
 
 import { MobileNavigationActionsBody } from './mobile-navigation.actions.body';
-
-function useOnClickOutside(
-  /* eslint-disable @typescript-eslint/no-explicit-any */
-  ref: any,
-  handler: any,
-  secondaryRef: any = undefined
-  /* eslint-enable @typescript-eslint/no-explicit-any */
-) {
-  useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const listener = (event: any) => {
-      if (!ref.current || ref.current.contains(event.target)) {
-        return;
-      }
-      if (
-        typeof secondaryRef !== 'undefined' &&
-        (!secondaryRef.current || secondaryRef.current.contains(event.target))
-      ) {
-        return;
-      }
-
-      handler(event);
-    };
-    document.addEventListener('mousedown', listener);
-    document.addEventListener('touchstart', listener);
-    return () => {
-      document.removeEventListener('mousedown', listener);
-      document.removeEventListener('touchstart', listener);
-    };
-  }, [ref, secondaryRef, handler]);
-}
 
 export const MobileNavigationActions = (): JSX.Element => {
   const mobileNavigationActionsBodyRef = useRef();

@@ -13,7 +13,13 @@ import { QuickLinks } from '../../components/quick-links/quick-links';
 import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { monthNames } from '../../constants/months';
-import { useAllTransactions } from '../../hooks/transaction/useAllTransactions';
+import { useAllExpensesPaged } from '../../hooks/expense/useAllExpenses';
+import { useAllIncomesPaged } from '../../hooks/income/useAllIncomes';
+import {
+  useAllTransactions,
+  useAllTransactionsPaged,
+} from '../../hooks/transaction/useAllTransactions';
+import { useAllTransfersPaged } from '../../hooks/transfer/useAllTransfers';
 import { formatCurrency } from '../../utils/formatCurrency';
 
 type TransactionVisibilityFilterType =
@@ -33,7 +39,6 @@ export const filterTransactionsByType = (
 
 export const Statistics = (): JSX.Element => {
   const [isProcessing, startProcessing] = useTransition();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [transactionVisibilityFilter, setTransactionVisibilityFilter] =
     useState<TransactionVisibilityFilterType>('all');
   const transactionsRaw = useAllTransactions();
@@ -100,6 +105,18 @@ export const Statistics = (): JSX.Element => {
     },
   ];
 
+  const getCorrectHook = () => {
+    if (transactionVisibilityFilter === 'income') {
+      return useAllIncomesPaged;
+    } else if (transactionVisibilityFilter === 'expense') {
+      return useAllExpensesPaged;
+    } else if (transactionVisibilityFilter === 'transfer') {
+      return useAllTransfersPaged;
+    }
+
+    return useAllTransactionsPaged;
+  };
+
   return (
     <LoaderIfProcessing isProcessing={isProcessing}>
       <UpdatePageInfo title="Statistics" />
@@ -114,7 +131,7 @@ export const Statistics = (): JSX.Element => {
           {Number.isNaN(totalExpenses) ? '-' : formatCurrency(totalExpenses)}
         </DescriptionListItem>
       </DescriptionList>
-      <LatestTransactions className="mt-4" />
+      <LatestTransactions className="mt-4" useDataHook={getCorrectHook()} />
       <QuickLinks className="mt-8">
         <QuickLinksItem
           title="Incomes"
