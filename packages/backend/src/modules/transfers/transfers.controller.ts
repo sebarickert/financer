@@ -41,8 +41,18 @@ export class TransfersController {
   }
 
   @Get('monthly-summaries')
-  async findMonthlySummariesByuser(@UserId() userId: ObjectId) {
-    return this.transfersService.findMonthlySummariesByUser(userId);
+  async findMonthlySummariesByuser(
+    @UserId() userId: ObjectId,
+    @Query('month') month: number,
+    @Query('year') year: number,
+    @Query('limit') limit: number,
+  ) {
+    return this.transfersService.findMonthlySummariesByUser(
+      userId,
+      limit,
+      year,
+      month,
+    );
   }
 
   @Get(':id')

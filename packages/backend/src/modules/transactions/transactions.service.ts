@@ -103,10 +103,6 @@ export class TransactionsService {
     month?: number,
     linkedAccount?: ObjectId,
   ): Promise<PaginationDto<TransactionDto[]>> {
-    if (!year && month) {
-      throw new BadRequestException('Year is required when month is provided');
-    }
-
     const query = {
       user: userId,
       ...this.getTransactionTypeFilter(transactionType),
@@ -163,6 +159,9 @@ export class TransactionsService {
   async findMonthlySummariesByUser(
     userId: ObjectId,
     getTransactionType: TransactionType,
+    limit?: number,
+    year?: number,
+    month?: number,
   ): Promise<TransactionMonthSummaryDto[]> {
     return this.transactionModel
       .aggregate([
@@ -170,6 +169,7 @@ export class TransactionsService {
           $match: {
             user: userId,
             ...this.getTransactionTypeFilter(getTransactionType),
+            ...this.getYearAndMonthFilter(year, month),
           },
         },
         {
@@ -188,6 +188,7 @@ export class TransactionsService {
           },
         },
       ])
+      .limit(limit ?? Infinity)
       .exec();
   }
 
@@ -344,6 +345,10 @@ export class TransactionsService {
   }
 
   private getYearAndMonthFilter(year?: number, month?: number) {
+    if (!year && month) {
+      throw new BadRequestException('Year is required when month is provided');
+    }
+
     if (!year && !month) {
       return {};
     }

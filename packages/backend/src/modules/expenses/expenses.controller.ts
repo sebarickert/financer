@@ -35,8 +35,18 @@ export class ExpensesController {
   }
 
   @Get('monthly-summaries')
-  async findMonthlySummariesByuser(@UserId() userId: ObjectId) {
-    return this.expensesService.findMonthlySummariesByUser(userId);
+  async findMonthlySummariesByuser(
+    @UserId() userId: ObjectId,
+    @Query('month') month: number,
+    @Query('year') year: number,
+    @Query('limit') limit: number,
+  ) {
+    return this.expensesService.findMonthlySummariesByUser(
+      userId,
+      limit,
+      year,
+      month,
+    );
   }
 
   @Get(':id')
