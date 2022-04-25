@@ -169,7 +169,7 @@ export class TransactionsService {
           $match: {
             user: userId,
             ...this.getTransactionTypeFilter(getTransactionType),
-            ...this.getYearAndMonthFilter(year, month),
+            ...this.getYearAndMonthFilter(year, month, 'laterThan'),
           },
         },
         {
@@ -344,13 +344,25 @@ export class TransactionsService {
     }
   }
 
-  private getYearAndMonthFilter(year?: number, month?: number) {
+  private getYearAndMonthFilter(
+    year?: number,
+    month?: number,
+    filterMode: 'targetMonth' | 'laterThan' = 'targetMonth',
+  ) {
     if (!year && month) {
       throw new BadRequestException('Year is required when month is provided');
     }
 
     if (!year && !month) {
       return {};
+    }
+
+    if (filterMode === 'laterThan') {
+      return {
+        date: {
+          $gte: new Date(year, month - 1 || 0, 1),
+        },
+      };
     }
 
     return {
