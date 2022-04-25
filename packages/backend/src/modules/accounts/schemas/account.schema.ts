@@ -12,7 +12,7 @@ export class Account {
   @Prop({ required: true })
   name: string;
 
-  @Prop({ required: true })
+  @Prop({ required: true, index: true })
   type: AccountType;
 
   @Prop({ required: true })
@@ -26,7 +26,7 @@ export class Account {
   })
   owner: ObjectId;
 
-  @Prop({ default: false })
+  @Prop({ default: false, index: true })
   isDeleted: boolean;
 }
 

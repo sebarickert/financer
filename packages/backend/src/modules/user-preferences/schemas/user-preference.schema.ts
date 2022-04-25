@@ -16,7 +16,12 @@ export class UserPreference {
   @Prop({ required: true })
   value: string;
 
-  @Prop({ required: true, type: MogooseTypes.ObjectId, ref: User.name })
+  @Prop({
+    required: true,
+    index: true,
+    type: MogooseTypes.ObjectId,
+    ref: User.name,
+  })
   userId: ObjectId;
 }
 
