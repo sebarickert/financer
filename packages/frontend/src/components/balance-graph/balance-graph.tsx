@@ -22,7 +22,7 @@ export const BalanceGraph = ({
 }: BalanceGraphProps): JSX.Element => {
   const [isProcessing, startProcessing] = useTransition();
   const totalBalance = useTotalBalance();
-  const allTransactions = useAllTransactions();
+  const [latestTransaction] = useAllTransactionsPaged(1, {limit: 1});
   const [balanceHistory, setBalanceHistory] = useState<BalanceHistory[]>([]);
 
   const incomeMonthSummaries = useIncomeMonthlySummaries(yearAgoFilterOptions);
@@ -31,8 +31,6 @@ export const BalanceGraph = ({
 
   useEffect(() => {
     startProcessing(() => {
-      const now = new Date();
-
       const getDateFromYearAndMonth = (year: number, month: number): Date =>
         new Date(`${year}-${(month + 1).toString().padStart(2, '0')}-01`);
 
@@ -68,21 +66,10 @@ export const BalanceGraph = ({
         ),
       ];
 
-      console.log(allIncomesAndExpenses);
-
-      const latestTransactionTimestamp = new Date(
-        allTransactions.sort(
-          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-        )?.[0]?.date ?? now
-      );
-
-      const oldestVisibleDate = new Date();
-
-      oldestVisibleDate.setFullYear(oldestVisibleDate.getFullYear() - 1);
+      const latestTransactionTimestamp = new Date(latestTransaction.date ?? new Date());
 
       const newBalanceHistory = allIncomesAndExpenses
         .sort((a, b) => b.date.getTime() - a.date.getTime())
-        .filter(({ date }) => date > oldestVisibleDate)
         .reduce(
           (previousBalance, { date, amount }) => {
             const { balance: latestBalance } = previousBalance[0];
@@ -95,7 +82,7 @@ export const BalanceGraph = ({
       setBalanceHistory(newBalanceHistory);
     });
   }, [
-    allTransactions,
+    latestTransaction,
     expenseMonthSummaries,
     incomeMonthSummaries,
     totalBalance,
