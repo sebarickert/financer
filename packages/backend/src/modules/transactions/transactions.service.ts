@@ -188,7 +188,7 @@ export class TransactionsService {
           },
         },
       ])
-      .limit(limit ?? 0)
+      .limit(limit ?? 1000)
       .exec();
   }
 
