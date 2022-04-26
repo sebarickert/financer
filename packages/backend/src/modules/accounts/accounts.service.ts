@@ -67,9 +67,9 @@ export class AccountsService {
     page?: number,
   ): Promise<PaginationDto<AccountDto<ObjectId>[]>> {
     const query = {
-      user: userId,
-      ...this.getAccountTypeFilter(accountTypes),
+      owner: userId,
       isDeleted: { $ne: true },
+      ...this.getAccountTypeFilter(accountTypes),
     };
 
     const totalCount = await this.accountModel
