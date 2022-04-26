@@ -2,7 +2,7 @@ import { useEffect, useState, useTransition } from 'react';
 
 import { useExpenseMonthlySummaries } from '../../hooks/expense/useExpenseMonthlySummaries';
 import { useIncomeMonthlySummaries } from '../../hooks/income/useIncomeMonthlySummaries';
-import { useAllTransactions } from '../../hooks/transaction/useAllTransactions';
+import { useAllTransactionsPaged } from '../../hooks/transaction/useAllTransactions';
 import { useTotalBalance } from '../../hooks/useTotalBalance';
 import { LoaderIfProcessing } from '../loader/loader-if-processing';
 
@@ -66,7 +66,9 @@ export const BalanceGraph = ({
         ),
       ];
 
-      const latestTransactionTimestamp = new Date(latestTransaction.date ?? new Date());
+      const latestTransactionTimestamp = new Date(
+        latestTransaction.date ?? new Date()
+        );
 
       const newBalanceHistory = allIncomesAndExpenses
         .sort((a, b) => b.date.getTime() - a.date.getTime())
