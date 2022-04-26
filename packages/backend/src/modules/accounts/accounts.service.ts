@@ -69,6 +69,7 @@ export class AccountsService {
     const query = {
       user: userId,
       ...this.getAccountTypeFilter(accountTypes),
+      isDeleted: { $ne: true },
     };
 
     const totalCount = await this.accountModel
