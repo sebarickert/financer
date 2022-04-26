@@ -137,7 +137,7 @@ export const MonthlySummaryGraph = ({
 
   return (
     <section
-      className={`bg-gray-25 border rounded-lg min-h-[{300px] h-[20vh] md:h-auto md:min-h-0 md:aspect-video pl-2 py-6 pr-2 ${className}`}
+      className={`bg-gray-25 min-h-[300px] h-[20vh] md:h-auto md:min-h-0 md:aspect-video -mx-2 md:-mx-0 ${className}`}
     >
       <LoaderIfProcessing isProcessing={isProcessing}>
         <ResponsiveContainer>
