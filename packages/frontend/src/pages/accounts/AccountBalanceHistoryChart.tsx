@@ -63,7 +63,7 @@ const CustomYAxisTick = ({
 
   return (
     <g className={`text-xs md:text-sm`}>
-      <text x={x} y={y + 5} textAnchor="start" fill="#666">
+      <text x={x} y={y + 5} textAnchor="end" fill="#666">
         {formatCurrencyAbbreviation(payload.value)}
       </text>
     </g>
@@ -104,7 +104,7 @@ export const AccountBalanceHistoryChart = ({
       : chartData.length - 12;
 
   return (
-    <div className="bg-gray-25 border rounded-lg min-h-[{300px] h-[20vh] md:h-auto md:min-h-0 md:aspect-video pl-2 py-6 pr-2">
+    <div className="min-h-[300px] h-[20vh] md:h-auto md:min-h-0 md:aspect-video -mx-2 md:-mx-0">
       <ResponsiveContainer>
         <AreaChart
           data={chartData}
@@ -124,6 +124,7 @@ export const AccountBalanceHistoryChart = ({
             type="number"
             orientation="right"
             tick={(props) => <CustomYAxisTick {...props} />}
+            mirror
           />
           <XAxis
             dataKey="dateStr"

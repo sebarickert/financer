@@ -103,7 +103,7 @@ export const BalanceGraph = ({
 
   return (
     <section
-      className={`bg-gray-25 rounded-lg border ${className} aspect-video md:aspect-auto relative`}
+      className={`md:bg-gray-25 md:rounded-lg md:border ${className} min-h-[300px] h-[20vh] md:h-auto md:min-h-0 md:aspect-auto relative -mx-2 md:-mx-0`}
     >
       <LoaderIfProcessing isProcessing={isProcessing}>
         <SimpleLineChart data={balanceHistory} />
