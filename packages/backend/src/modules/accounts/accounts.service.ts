@@ -2,6 +2,9 @@ import {
   CreateAccountDto,
   UpdateAccountDto,
   AccountBalanceHistoryDto,
+  AccountDto,
+  PaginationDto,
+  AccountType,
 } from '@local/types';
 import {
   forwardRef,
@@ -57,8 +60,45 @@ export class AccountsService {
     return account;
   }
 
-  async findAllByUser(userId: ObjectId): Promise<AccountDocument[]> {
-    return this.accountModel.find({ owner: userId, isDeleted: { $ne: true } });
+  async findAllByUser(
+    userId: ObjectId,
+    accountTypes?: AccountType[],
+    limit = 20,
+    page?: number,
+  ): Promise<PaginationDto<AccountDto<ObjectId>[]>> {
+    const query = {
+      user: userId,
+      ...this.getAccountTypeFilter(accountTypes),
+    };
+
+    const totalCount = await this.accountModel
+      .find(query)
+      .countDocuments()
+      .exec();
+    const lastPage = page ? Math.ceil(totalCount / limit) : 1;
+
+    if (page && (page < 1 || page > lastPage) && page !== 1) {
+      throw new NotFoundException(
+        `Page "${page}" not found. First page is "1" and last page is "${lastPage}"`,
+      );
+    }
+
+    const accounts = await this.accountModel
+      .find(query)
+      .sort({ date: 'desc' })
+      .skip(page ? (page - 1) * limit : 0)
+      .limit(page ? limit : 0)
+      .exec();
+
+    return {
+      data: accounts,
+      currentPage: page ?? 1,
+      limit: page ? limit : totalCount,
+      totalPageCount: lastPage,
+      hasNextPage: (page ?? 1) < lastPage,
+      hasPreviousPage: (page ?? 1) > 1,
+      totalRowCount: totalCount,
+    };
   }
 
   async findAllIncludeDeletedByUser(
@@ -182,5 +222,15 @@ export class AccountsService {
       }, [] as AccountBalanceHistoryDto[]);
 
     return summarizedBalanceChanges;
+  }
+
+  private getAccountTypeFilter(accountTypes?: AccountType[]) {
+    if (!accountTypes?.length) return {};
+
+    return {
+      type: {
+        $in: accountTypes,
+      },
+    };
   }
 }

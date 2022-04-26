@@ -1,9 +1,13 @@
 import { useState, useEffect } from 'react';
 
+import { TransactionFilterOptions } from '../services/TransactionService';
+
 import { useAllAccounts } from './account/useAllAccounts';
 
-export const useTotalBalance = (): number => {
-  const accounts = useAllAccounts();
+export const useTotalBalance = (
+  filterOptions: Pick<TransactionFilterOptions, 'accountTypes'> = {}
+): number => {
+  const { data: accounts } = useAllAccounts(filterOptions);
   const [totalBalance, setTotalBalance] = useState<number>(NaN);
 
   useEffect(() => {
@@ -13,8 +17,7 @@ export const useTotalBalance = (): number => {
     }
 
     const total = accounts.reduce(
-      (currentTotal, { balance, type }) =>
-        currentTotal + (type !== 'loan' ? balance : 0),
+      (currentTotal, { balance }) => currentTotal + balance,
       0
     );
 

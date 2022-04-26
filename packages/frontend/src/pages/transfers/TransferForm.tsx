@@ -38,7 +38,7 @@ export const TransferForm = ({
   toAccount,
   transactionCategoryMapping = null,
 }: ITransferFormProps): JSX.Element | null => {
-  const accountsRaw = useAllAccounts();
+  const { data: accountsRaw } = useAllAccounts();
   const [accounts, setAccounts] = useState<Option[]>();
   const transactionCategoriesRaw =
     useAllTransactionCategoriesForTransferWithCategoryTree();

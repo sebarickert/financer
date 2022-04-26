@@ -2,6 +2,8 @@ import { UserPreferenceProperty } from '@local/types';
 
 import { useLocalStorage } from '../../useLocalStorage';
 
+import { UserDefaultMarketUpdateSettings } from './useDefaultMarketUpdateSettings';
+
 type UserPreferenceBase<Key, Value> = {
   type: Key;
   payload: Value;
@@ -30,7 +32,12 @@ export type UserPreference =
     >
   | UserPreferenceBase<
       typeof UserPreferenceProperty.UPDATE_INVESTMENT_MARKET_VALUE,
-      { transactionDescription: string; category?: string }
+      UserDefaultMarketUpdateSettings
+    >
+  | UserPreferenceBase<typeof UserPreferenceProperty.DASHBOARD_SETTINGS, number>
+  | UserPreferenceBase<
+      typeof UserPreferenceProperty.STATISTICS_SETTINGS,
+      number
     >;
 
 export const useUserPreferences = (): [

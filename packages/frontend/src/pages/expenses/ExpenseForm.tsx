@@ -36,7 +36,7 @@ export const ExpenseForm = ({
   fromAccount,
   transactionCategoryMapping = null,
 }: IExpenseFormProps): JSX.Element | null => {
-  const accountsRaw = useAllAccounts();
+  const { data: accountsRaw } = useAllAccounts();
   const [accounts, setAccounts] = useState<Option[]>();
   const transactionCategoriesRaw =
     useAllTransactionCategoriesForExpenseWithCategoryTree();

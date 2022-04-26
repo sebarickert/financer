@@ -1,4 +1,4 @@
-import { PaginationDto, TransactionDto } from '@local/types';
+import { AccountType, PaginationDto, TransactionDto } from '@local/types';
 
 import { parseJsonOrThrowError } from '../utils/apiHelper';
 
@@ -7,6 +7,7 @@ export type TransactionFilterOptions = {
   month?: number;
   page?: number;
   limit?: number;
+  accountTypes?: AccountType[];
 };
 
 export const parseFilterQueryString = ({
@@ -14,6 +15,7 @@ export const parseFilterQueryString = ({
   month,
   page,
   limit,
+  accountTypes,
 }: TransactionFilterOptions): string[] => {
   const queryOptions: string[] = [];
   if (month && !year) {
@@ -26,6 +28,7 @@ export const parseFilterQueryString = ({
   if (month) queryOptions.push(`month=${month}`);
   if (page) queryOptions.push(`page=${page}`);
   if (limit) queryOptions.push(`limit=${limit}`);
+  if (accountTypes) queryOptions.push(`accountTypes=${accountTypes.join('|')}`);
 
   return queryOptions;
 };

@@ -1,5 +1,6 @@
 import { useExpenseMonthlySummaries } from '../../hooks/expense/useExpenseMonthlySummaries';
 import { useIncomeMonthlySummaries } from '../../hooks/income/useIncomeMonthlySummaries';
+import { useUserDashboardSettings } from '../../hooks/profile/user-preference/useDashboardSettings';
 import { useTotalBalance } from '../../hooks/useTotalBalance';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { DescriptionList } from '../description-list/description-list';
@@ -17,13 +18,18 @@ const currentMonthFilterOptions = {
 export const DashboardStats = ({
   className = '',
 }: IDashboardStatsProps): JSX.Element => {
-  const totalBalance = useTotalBalance();
-  const [{ totalAmount: totalIncomes }] = useIncomeMonthlySummaries(
-    currentMonthFilterOptions
-  );
-  const [{ totalAmount: totalExpenses }] = useExpenseMonthlySummaries(
-    currentMonthFilterOptions
-  );
+  const [dashboardSettings] = useUserDashboardSettings();
+  const accountTypeFilter = { accountTypes: dashboardSettings?.accountTypes };
+
+  const totalBalance = useTotalBalance(accountTypeFilter);
+  const [{ totalAmount: totalIncomes }] = useIncomeMonthlySummaries({
+    ...currentMonthFilterOptions,
+    ...accountTypeFilter,
+  });
+  const [{ totalAmount: totalExpenses }] = useExpenseMonthlySummaries({
+    ...currentMonthFilterOptions,
+    ...accountTypeFilter,
+  });
 
   return (
     <DescriptionList className={className}>

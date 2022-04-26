@@ -2,7 +2,8 @@ import { useEffect, useState, useTransition } from 'react';
 
 import { useExpenseMonthlySummaries } from '../../hooks/expense/useExpenseMonthlySummaries';
 import { useIncomeMonthlySummaries } from '../../hooks/income/useIncomeMonthlySummaries';
-import { useAllTransactions } from '../../hooks/transaction/useAllTransactions';
+import { useUserDashboardSettings } from '../../hooks/profile/user-preference/useDashboardSettings';
+import { useAllTransactionsPaged } from '../../hooks/transaction/useAllTransactions';
 import { useTotalBalance } from '../../hooks/useTotalBalance';
 import { LoaderIfProcessing } from '../loader/loader-if-processing';
 
@@ -20,21 +21,31 @@ const yearAgoFilterOptions = {
 export const BalanceGraph = ({
   className = '',
 }: BalanceGraphProps): JSX.Element => {
+  const [dashboardSettings] = useUserDashboardSettings();
+  const accountTypeFilter = { accountTypes: dashboardSettings?.accountTypes };
+
   const [isProcessing, startProcessing] = useTransition();
-  const totalBalance = useTotalBalance();
-  const allTransactions = useAllTransactions();
+  const totalBalance = useTotalBalance(accountTypeFilter);
+  const {
+    data: {
+      data: [latestTransaction],
+    },
+  } = useAllTransactionsPaged(1, { limit: 1 });
   const [balanceHistory, setBalanceHistory] = useState<BalanceHistory[]>([]);
 
-  const incomeMonthSummaries = useIncomeMonthlySummaries(yearAgoFilterOptions);
-  const expenseMonthSummaries =
-    useExpenseMonthlySummaries(yearAgoFilterOptions);
+  const incomeMonthSummaries = useIncomeMonthlySummaries({
+    ...yearAgoFilterOptions,
+    ...accountTypeFilter,
+  });
+  const expenseMonthSummaries = useExpenseMonthlySummaries({
+    ...yearAgoFilterOptions,
+    ...accountTypeFilter,
+  });
 
   useEffect(() => {
     startProcessing(() => {
-      const now = new Date();
-
       const getDateFromYearAndMonth = (year: number, month: number): Date =>
-        new Date(`${year}-${(month + 1).toString().padStart(2, '0')}-01`);
+        new Date(`${year}-${month.toString().padStart(2, '0')}-01`);
 
       const groupedIncomesFormatted = incomeMonthSummaries.map(
         ({ _id: { month, year }, totalAmount }) => ({
@@ -68,21 +79,12 @@ export const BalanceGraph = ({
         ),
       ];
 
-      console.log(allIncomesAndExpenses);
-
       const latestTransactionTimestamp = new Date(
-        allTransactions.sort(
-          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-        )?.[0]?.date ?? now
+        latestTransaction?.date ?? new Date()
       );
-
-      const oldestVisibleDate = new Date();
-
-      oldestVisibleDate.setFullYear(oldestVisibleDate.getFullYear() - 1);
 
       const newBalanceHistory = allIncomesAndExpenses
         .sort((a, b) => b.date.getTime() - a.date.getTime())
-        .filter(({ date }) => date > oldestVisibleDate)
         .reduce(
           (previousBalance, { date, amount }) => {
             const { balance: latestBalance } = previousBalance[0];
@@ -95,9 +97,9 @@ export const BalanceGraph = ({
       setBalanceHistory(newBalanceHistory);
     });
   }, [
-    allTransactions,
     expenseMonthSummaries,
     incomeMonthSummaries,
+    latestTransaction?.date,
     totalBalance,
   ]);
 

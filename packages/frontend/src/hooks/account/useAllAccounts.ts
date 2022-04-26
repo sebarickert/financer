@@ -1,11 +1,16 @@
-import { AccountDto, AccountType } from '@local/types';
+import { AccountDto, AccountType, PaginationDto } from '@local/types';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 
 import { getAllAccounts } from '../../services/AccountService';
+import { TransactionFilterOptions } from '../../services/TransactionService';
 
-export const useAllAccounts = (): AccountDto[] => {
-  const { data, error } = useQuery<AccountDto[]>(['accounts'], getAllAccounts);
+export const useAllAccounts = (
+  filterOptions: Omit<TransactionFilterOptions, 'month' | 'year'> = {}
+): PaginationDto<AccountDto[]> => {
+  const { data, error } = useQuery(['accounts', filterOptions], () =>
+    getAllAccounts(filterOptions)
+  );
 
   if (error || !data) {
     throw new Error(`Missing data. Error: ${JSON.stringify(error ?? data)}`);
@@ -17,7 +22,7 @@ export const useAllAccounts = (): AccountDto[] => {
 export const useAllAccountsByType = (
   types: AccountType[]
 ): [AccountDto[], (types: AccountType[]) => void] => {
-  const accounts = useAllAccounts();
+  const { data: accounts } = useAllAccounts();
   const [targetAccounts, setTargetAccounts] = useState<AccountDto[]>();
   const [targetTypes, setTargetTypes] = useState(types);
 

@@ -9,7 +9,7 @@ import { useUserDefaultIncomeAccount } from '../../../../hooks/profile/user-pref
 import { useUserDefaultTransferSourceAccount } from '../../../../hooks/profile/user-preference/useUserDefaultTransferSourceAccount';
 import { useUserDefaultTransferTargetAccount } from '../../../../hooks/profile/user-preference/useUserDefaultTransferTargetAccount';
 
-export const UserDefaultAccountSettings = (): JSX.Element => {
+export const UserStatisticsSettings = (): JSX.Element => {
   const navigate = useNavigate();
   const { data: accounts } = useAllAccounts();
   const [defaultIncomeAccount, setDefaultIncomeAccount] =
