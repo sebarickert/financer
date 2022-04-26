@@ -36,7 +36,7 @@ export const AccountUpdateMarketValueModal = ({
 
   return (
     <>
-      <LinkListButton icon={IconName.trash} handleClick={handleToggleOpen}>
+      <LinkListButton icon={IconName.trendingUp} handleClick={handleToggleOpen}>
         Update current market value
       </LinkListButton>
       {isOpen && (
