@@ -1,4 +1,4 @@
-import { CreateAccountDto, UpdateAccountDto } from '@local/types';
+import { AccountType, CreateAccountDto, UpdateAccountDto } from '@local/types';
 import {
   Controller,
   Get,
@@ -7,6 +7,8 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
+  ParseArrayPipe,
 } from '@nestjs/common';
 
 import { ObjectId } from '../../types/objectId';
@@ -30,8 +32,22 @@ export class AccountsController {
   }
 
   @Get()
-  async findAllByUser(@UserId() userId: ObjectId) {
-    return this.accountsService.findAllByUser(userId);
+  async findAllByUser(
+    @UserId() userId: ObjectId,
+    @Query('limit') limit?: number,
+    @Query('page') page?: number,
+    @Query(
+      'accountTypes',
+      new ParseArrayPipe({ separator: '|', optional: true }),
+    )
+    accountTypes?: AccountType[],
+  ) {
+    return this.accountsService.findAllByUser(
+      userId,
+      accountTypes,
+      limit || undefined,
+      page || undefined,
+    );
   }
 
   @Get(':id')

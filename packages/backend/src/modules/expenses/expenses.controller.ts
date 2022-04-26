@@ -1,3 +1,4 @@
+import { AccountType } from '@local/types';
 import {
   Body,
   Controller,
@@ -7,6 +8,7 @@ import {
   Patch,
   Delete,
   Query,
+  ParseArrayPipe,
 } from '@nestjs/common';
 
 import { ObjectId } from '../../types/objectId';
@@ -30,8 +32,20 @@ export class ExpensesController {
     @Query('year') year: number,
     @Query('page') page: number,
     @Query('limit') limit: number,
+    @Query(
+      'accountTypes',
+      new ParseArrayPipe({ separator: '|', optional: true }),
+    )
+    accountTypes?: AccountType[],
   ) {
-    return this.expensesService.findAllByUser(userId, page, limit, year, month);
+    return this.expensesService.findAllByUser(
+      userId,
+      page,
+      limit,
+      year,
+      month,
+      accountTypes,
+    );
   }
 
   @Get('monthly-summaries')
@@ -40,12 +54,18 @@ export class ExpensesController {
     @Query('month') month: number,
     @Query('year') year: number,
     @Query('limit') limit: number,
+    @Query(
+      'accountTypes',
+      new ParseArrayPipe({ separator: '|', optional: true }),
+    )
+    accountTypes?: AccountType[],
   ) {
     return this.expensesService.findMonthlySummariesByUser(
       userId,
       limit,
       year,
       month,
+      accountTypes,
     );
   }
 

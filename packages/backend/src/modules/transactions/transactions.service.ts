@@ -1,4 +1,8 @@
-import { PaginationDto, TransactionMonthSummaryDto } from '@local/types';
+import {
+  AccountType,
+  PaginationDto,
+  TransactionMonthSummaryDto,
+} from '@local/types';
 import {
   BadRequestException,
   forwardRef,
@@ -102,12 +106,14 @@ export class TransactionsService {
     year?: number,
     month?: number,
     linkedAccount?: ObjectId,
+    accountTypes?: AccountType[],
   ): Promise<PaginationDto<TransactionDto[]>> {
     const query = {
       user: userId,
       ...this.getTransactionTypeFilter(transactionType),
       ...this.getYearAndMonthFilter(year, month),
       ...this.getLinkedAccountFilter(linkedAccount),
+      ...(await this.getAccountTypesFilter(userId, accountTypes)),
     };
     const totalCount = await this.transactionModel
       .find(query)
@@ -162,6 +168,7 @@ export class TransactionsService {
     limit?: number,
     year?: number,
     month?: number,
+    accountTypes?: AccountType[],
   ): Promise<TransactionMonthSummaryDto[]> {
     return this.transactionModel
       .aggregate([
@@ -170,6 +177,7 @@ export class TransactionsService {
             user: userId,
             ...this.getTransactionTypeFilter(getTransactionType),
             ...this.getYearAndMonthFilter(year, month, 'laterThan'),
+            ...(await this.getAccountTypesFilter(userId, accountTypes)),
           },
         },
         {
@@ -385,6 +393,31 @@ export class TransactionsService {
         },
         {
           fromAccount: accountId,
+        },
+      ],
+    };
+  }
+
+  private async getAccountTypesFilter(
+    userId: ObjectId,
+    accountTypes?: AccountType[],
+  ) {
+    if (!accountTypes?.length) return {};
+
+    const accounts = await this.accountService.findAllByUser(
+      userId,
+      accountTypes,
+    );
+
+    const accountIds = accounts.data.map(({ _id }) => _id);
+
+    return {
+      $or: [
+        {
+          toAccount: { $in: accountIds },
+        },
+        {
+          fromAccount: { $in: accountIds },
         },
       ],
     };

@@ -10,7 +10,7 @@ import { useAllAccounts } from '../../hooks/account/useAllAccounts';
 import { formatCurrency } from '../../utils/formatCurrency';
 
 export const Accounts = (): JSX.Element => {
-  const accountsRaw = useAllAccounts();
+  const { data: accountsRaw } = useAllAccounts();
   const [accounts, setAccounts] = useState<AccountsListRowProps[]>([]);
 
   useEffect(() => {
@@ -28,17 +28,17 @@ export const Accounts = (): JSX.Element => {
 
   const savingsAccounts = accounts.filter(
     ({ type }) =>
-      type !== AccountType.loan &&
-      type !== AccountType.investment &&
-      type !== AccountType.credit
+      type !== AccountType.LOAN &&
+      type !== AccountType.INVESTMENT &&
+      type !== AccountType.CREDIT
   );
 
   const investmentAccounts = accounts.filter(
-    ({ type }) => type === AccountType.investment
+    ({ type }) => type === AccountType.INVESTMENT
   );
 
   const creditAndLoanAccounts = accounts.filter(
-    ({ type }) => type === AccountType.loan || type === AccountType.credit
+    ({ type }) => type === AccountType.LOAN || type === AccountType.CREDIT
   );
 
   return (

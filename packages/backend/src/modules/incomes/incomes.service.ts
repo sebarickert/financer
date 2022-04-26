@@ -1,4 +1,8 @@
-import { PaginationDto, TransactionMonthSummaryDto } from '@local/types';
+import {
+  AccountType,
+  PaginationDto,
+  TransactionMonthSummaryDto,
+} from '@local/types';
 import { Injectable } from '@nestjs/common';
 
 import { ObjectId } from '../../types/objectId';
@@ -22,6 +26,7 @@ export class IncomesService {
     limit: number,
     year: number,
     month: number,
+    accountTypes: AccountType[],
   ): Promise<PaginationDto<IncomeDto[]>> {
     return this.transactionService.findAllByUser(
       userId,
@@ -30,6 +35,8 @@ export class IncomesService {
       limit || undefined,
       year || undefined,
       month || undefined,
+      undefined,
+      accountTypes || undefined,
     );
   }
 
@@ -38,6 +45,7 @@ export class IncomesService {
     limit: number,
     year: number,
     month: number,
+    accountTypes: AccountType[],
   ): Promise<TransactionMonthSummaryDto[]> {
     return this.transactionService.findMonthlySummariesByUser(
       userId,
@@ -45,6 +53,7 @@ export class IncomesService {
       limit || undefined,
       year || undefined,
       month || undefined,
+      accountTypes || undefined,
     );
   }
 

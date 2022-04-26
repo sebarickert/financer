@@ -18,12 +18,15 @@ export const Checkbox = ({
           id={id}
           name={id}
           type="checkbox"
-          className="focus:ring-emerald-500 h-4 w-4 text-emerald-600 border-gray-300 rounded"
+          className="focus:ring-financer-blue h-4 w-4 text-financer-blue border-gray-300 rounded hover:cursor-pointer"
           defaultChecked={checked}
         />
       </div>
       <div className="ml-3 text-sm">
-        <label htmlFor={id} className="font-medium text-gray-700">
+        <label
+          htmlFor={id}
+          className="font-medium text-gray-700 hover:cursor-pointer"
+        >
           {label}
         </label>
       </div>

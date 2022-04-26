@@ -1,4 +1,4 @@
-import { UserPreferenceProperty } from '@local/types';
+import { AccountType, UserPreferenceProperty } from '@local/types';
 import { useCallback } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 
@@ -7,20 +7,17 @@ import {
   editUserPreference,
 } from '../../../services/user-preference-service';
 
-const targetUserPreference =
-  UserPreferenceProperty.UPDATE_INVESTMENT_MARKET_VALUE;
+const targetUserPreference = UserPreferenceProperty.DASHBOARD_SETTINGS;
 
-export type UserDefaultMarketUpdateSettings = {
-  transactionDescription: string;
-  category?: string;
+type UserDashboardSettings = {
+  accountTypes: AccountType[];
 };
 
-export const useUserDefaultMarketUpdateSettings = (): [
-  defaultMarketSettings: UserDefaultMarketUpdateSettings | undefined,
-  setDefaultTransferTargetAccount: ({
-    transactionDescription,
-    category,
-  }: UserDefaultMarketUpdateSettings) => Promise<void>
+export const useUserDashboardSettings = (): [
+  dashboardSettings: UserDashboardSettings | undefined,
+  setDashboardSettings: ({
+    accountTypes,
+  }: UserDashboardSettings) => Promise<void>
 ] => {
   const queryClient = useQueryClient();
   const { data, error } = useQuery(
@@ -34,14 +31,11 @@ export const useUserDefaultMarketUpdateSettings = (): [
     );
   }
 
-  const updateDefaultMarketSettings = useCallback(
-    async ({
-      transactionDescription,
-      category,
-    }: UserDefaultMarketUpdateSettings) => {
+  const updateDashboardSettings = useCallback(
+    async ({ accountTypes }: UserDashboardSettings) => {
       const newUserPreferenceData = {
         key: targetUserPreference,
-        value: JSON.stringify({ transactionDescription, category }),
+        value: JSON.stringify({ accountTypes }),
       };
       await editUserPreference(newUserPreferenceData);
       queryClient.invalidateQueries(['user-preferences', targetUserPreference]);
@@ -51,6 +45,6 @@ export const useUserDefaultMarketUpdateSettings = (): [
 
   return [
     data?.value ? JSON.parse(data.value) : undefined,
-    updateDefaultMarketSettings,
+    updateDashboardSettings,
   ];
 };

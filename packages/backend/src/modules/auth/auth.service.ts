@@ -14,11 +14,11 @@ export class AuthService {
   async getAuthenticationStatus(user?: UserDocument) {
     const accounts = user
       ? await this.accountsService.findAllByUser(user._id)
-      : [];
+      : { data: [] };
     return {
       authenticated: Boolean(user),
       payload: user,
-      hasAccounts: Boolean(accounts.length),
+      hasAccounts: Boolean(accounts?.data?.length),
     };
   }
 

@@ -1,9 +1,11 @@
+import { AccountType } from '@local/types';
 import {
   Body,
   Controller,
   Delete,
   Get,
   Param,
+  ParseArrayPipe,
   Patch,
   Post,
   Query,
@@ -30,6 +32,11 @@ export class TransfersController {
     @Query('year') year: number,
     @Query('page') page: number,
     @Query('limit') limit: number,
+    @Query(
+      'accountTypes',
+      new ParseArrayPipe({ separator: '|', optional: true }),
+    )
+    accountTypes?: AccountType[],
   ) {
     return this.transfersService.findAllByUser(
       userId,
@@ -37,6 +44,7 @@ export class TransfersController {
       limit,
       year,
       month,
+      accountTypes,
     );
   }
 
@@ -46,12 +54,18 @@ export class TransfersController {
     @Query('month') month: number,
     @Query('year') year: number,
     @Query('limit') limit: number,
+    @Query(
+      'accountTypes',
+      new ParseArrayPipe({ separator: '|', optional: true }),
+    )
+    accountTypes?: AccountType[],
   ) {
     return this.transfersService.findMonthlySummariesByUser(
       userId,
       limit,
       year,
       month,
+      accountTypes,
     );
   }
 

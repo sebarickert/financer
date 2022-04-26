@@ -36,7 +36,7 @@ export const IncomeForm = ({
   toAccount,
   transactionCategoryMapping = null,
 }: IncomeFormProps): JSX.Element | null => {
-  const accountsRaw = useAllAccounts();
+  const { data: accountsRaw } = useAllAccounts();
   const [accounts, setAccounts] = useState<Option[]>();
   const transactionCategoriesRaw =
     useAllTransactionCategoriesForIncomeWithCategoryTree();
