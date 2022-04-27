@@ -192,14 +192,18 @@ export class TransactionsService {
               ),
               {
                 $in: [
-                  TransactionType.EXPENSE ? '$fromAccount' : '$toAccount',
+                  transactionType === TransactionType.EXPENSE
+                    ? '$fromAccount'
+                    : '$toAccount',
                   accountIds,
                 ],
               },
               {
                 $not: {
                   $in: [
-                    TransactionType.EXPENSE ? '$toAccount' : '$fromAccount',
+                    transactionType === TransactionType.EXPENSE
+                      ? '$toAccount'
+                      : '$fromAccount',
                     accountIds,
                   ],
                 },
