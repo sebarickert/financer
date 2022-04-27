@@ -164,20 +164,56 @@ export class TransactionsService {
 
   async findMonthlySummariesByUser(
     userId: ObjectId,
-    getTransactionType: TransactionType,
+    transactionType: Exclude<TransactionType, TransactionType.ANY>,
     limit?: number,
     year?: number,
     month?: number,
     accountTypes?: AccountType[],
   ): Promise<TransactionMonthSummaryDto[]> {
+    const accountIds = await this.getAccountIdsByType(userId, accountTypes);
+
+    const accountTypeFilter = accountIds.length
+      ? await this.getAggregateAccountTypesFilter(userId, accountTypes)
+      : {};
+
+    const selectedQuery = {
+      $and: [
+        ...this.getAggregationTransactionTypeFilter(transactionType),
+        accountTypeFilter,
+      ],
+    };
+
+    const queryTransfersToExcludedAccounts =
+      accountIds.length && (TransactionType.EXPENSE || TransactionType.INCOME)
+        ? {
+            $and: [
+              ...this.getAggregationTransactionTypeFilter(
+                TransactionType.TRANSFER,
+              ),
+              {
+                $in: [
+                  TransactionType.EXPENSE ? '$fromAccount' : '$toAccount',
+                  accountIds,
+                ],
+              },
+              {
+                $not: {
+                  $in: [
+                    TransactionType.EXPENSE ? '$toAccount' : '$fromAccount',
+                    accountIds,
+                  ],
+                },
+              },
+            ],
+          }
+        : { $eq: [true, false] };
+
     return this.transactionModel
       .aggregate([
         {
           $match: {
             user: userId,
-            ...this.getTransactionTypeFilter(getTransactionType),
             ...this.getYearAndMonthFilter(year, month, 'laterThan'),
-            ...(await this.getAccountTypesFilter(userId, accountTypes)),
           },
         },
         {
@@ -186,8 +222,20 @@ export class TransactionsService {
               year: { $year: '$date' },
               month: { $month: '$date' },
             },
-            count: { $sum: 1 },
-            totalAmount: { $sum: '$amount' },
+            count: {
+              $sum: {
+                $cond: [selectedQuery, 1, 0],
+              },
+            },
+            totalAmount: {
+              $sum: {
+                $cond: [
+                  selectedQuery,
+                  '$amount',
+                  { $cond: [queryTransfersToExcludedAccounts, '$amount', 0] },
+                ],
+              },
+            },
           },
         },
         {
@@ -329,24 +377,47 @@ export class TransactionsService {
   private getTransactionTypeFilter(transactionType: TransactionType): {
     [key: string]: unknown;
   } {
+    const isEmpty = { $eq: undefined };
+    const isNotEmpty = { $ne: undefined };
+
     switch (transactionType) {
       case TransactionType.INCOME:
         return {
-          toAccount: { $ne: undefined },
-          fromAccount: { $eq: undefined },
+          toAccount: isNotEmpty,
+          fromAccount: isEmpty,
         };
       case TransactionType.EXPENSE:
         return {
-          fromAccount: { $ne: undefined },
-          toAccount: { $eq: undefined },
+          fromAccount: isNotEmpty,
+          toAccount: isEmpty,
         };
       case TransactionType.TRANSFER:
         return {
-          fromAccount: { $ne: undefined },
-          toAccount: { $ne: undefined },
+          fromAccount: isNotEmpty,
+          toAccount: isNotEmpty,
         };
       case TransactionType.ANY:
         return {};
+      default:
+        throw new Error(`Invalid transaction type: ${transactionType}`);
+    }
+  }
+
+  private getAggregationTransactionTypeFilter(
+    transactionType: TransactionType,
+  ): { [key in string]: unknown }[] {
+    const isEmpty = (fieldName) => ({ $eq: [fieldName, undefined] });
+    const isNotEmpty = (fieldName) => ({ $ne: [fieldName, undefined] });
+
+    switch (transactionType) {
+      case TransactionType.INCOME:
+        return [isNotEmpty('$toAccount'), isEmpty('$fromAccount')];
+      case TransactionType.EXPENSE:
+        return [isNotEmpty('$fromAccount'), isEmpty('$toAccount')];
+      case TransactionType.TRANSFER:
+        return [isNotEmpty('$fromAccount'), isNotEmpty('$toAccount')];
+      case TransactionType.ANY:
+        return [];
       default:
         throw new Error(`Invalid transaction type: ${transactionType}`);
     }
@@ -398,18 +469,27 @@ export class TransactionsService {
     };
   }
 
-  private async getAccountTypesFilter(
+  private async getAccountIdsByType(
     userId: ObjectId,
     accountTypes?: AccountType[],
   ) {
-    if (!accountTypes?.length) return {};
+    if (!accountTypes?.length) return [];
 
     const accounts = await this.accountService.findAllByUser(
       userId,
       accountTypes,
     );
 
-    const accountIds = accounts.data.map(({ _id }) => _id);
+    return accounts.data.map(({ _id }) => _id);
+  }
+
+  private async getAccountTypesFilter(
+    userId: ObjectId,
+    accountTypes?: AccountType[],
+  ) {
+    if (!accountTypes?.length) return {};
+
+    const accountIds = await this.getAccountIdsByType(userId, accountTypes);
 
     return {
       $or: [
@@ -418,6 +498,27 @@ export class TransactionsService {
         },
         {
           fromAccount: { $in: accountIds },
+        },
+      ],
+    };
+  }
+
+  private async getAggregateAccountTypesFilter(
+    userId: ObjectId,
+    accountTypes?: AccountType[],
+    operator: '$in' | '$nin' = '$in',
+  ) {
+    if (!accountTypes?.length) return {};
+
+    const accountIds = await this.getAccountIdsByType(userId, accountTypes);
+
+    return {
+      $or: [
+        {
+          [operator]: ['$toAccount', accountIds],
+        },
+        {
+          [operator]: ['$fromAccount', accountIds],
         },
       ],
     };
