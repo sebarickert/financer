@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import { UserDashboardSettings } from './preferences/UserDashboardSettings';
 import { UserDefaultAccountSettings } from './preferences/UserDefaultAccountSettings';
 import { UserDefaultMarketUpdateSettings } from './preferences/UserDefaultMarketUpdateSettings';
-// import { UserStatisticsSettings } from './preferences/UserStatisticsSettings';
+import { UserStatisticsSettings } from './preferences/UserStatisticsSettings';
 import { UserTransactionListChunkSize } from './preferences/UserTransactionListChunkSize';
 import { UserPreferences } from './UserPreferences';
 
@@ -12,7 +12,7 @@ export const UserPreferencesRouter = (): JSX.Element => {
     <Routes>
       <Route index element={<UserPreferences />} />
       <Route path="dashboard-settings" element={<UserDashboardSettings />} />
-      {/* <Route path="statistics-settings" element={<UserStatisticsSettings />} /> */}
+      <Route path="statistics-settings" element={<UserStatisticsSettings />} />
       <Route
         path="default-account-settings"
         element={<UserDefaultAccountSettings />}

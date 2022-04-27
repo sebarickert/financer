@@ -1,47 +1,39 @@
+import { AccountType } from '@local/types';
 import { useNavigate } from 'react-router-dom';
 
+import { Checkbox } from '../../../../components/checkbox/checkbox';
+import { CheckboxGroup } from '../../../../components/checkbox/checkbox.group';
 import { Form } from '../../../../components/form/form';
-import { Select } from '../../../../components/select/select';
+import { Heading } from '../../../../components/heading/heading';
 import { UpdatePageInfo } from '../../../../components/seo/updatePageInfo';
-import { useAllAccounts } from '../../../../hooks/account/useAllAccounts';
-import { useUserDefaultExpenseAccount } from '../../../../hooks/profile/user-preference/useUserDefaultExpenseAccount';
-import { useUserDefaultIncomeAccount } from '../../../../hooks/profile/user-preference/useUserDefaultIncomeAccount';
-import { useUserDefaultTransferSourceAccount } from '../../../../hooks/profile/user-preference/useUserDefaultTransferSourceAccount';
-import { useUserDefaultTransferTargetAccount } from '../../../../hooks/profile/user-preference/useUserDefaultTransferTargetAccount';
+import { useUserStatisticsSettings } from '../../../../hooks/profile/user-preference/useStatisticsSettings';
+import { capitalize } from '../../../../utils/capitalize';
+
+const allAccountTypes = Object.values(AccountType);
 
 export const UserStatisticsSettings = (): JSX.Element => {
   const navigate = useNavigate();
-  const { data: accounts } = useAllAccounts();
-  const [defaultIncomeAccount, setDefaultIncomeAccount] =
-    useUserDefaultIncomeAccount();
-  const [defaultExpenseAccount, setDefaultExpenseAccount] =
-    useUserDefaultExpenseAccount();
-  const [defaultTransferSourceAccount, setDefaultTransferSourceAccount] =
-    useUserDefaultTransferSourceAccount();
-  const [defaultTransferTargetAccount, setDefaultTransferTargetAccount] =
-    useUserDefaultTransferTargetAccount();
+  const [statisticsSettings, setStatisticsSettings] =
+    useUserStatisticsSettings();
+
+  const { accountTypes } = statisticsSettings ?? {};
 
   const handleSave = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const {
-      toAccountIncome: { value: toAccountIncomeValue },
-      fromAccountExpense: { value: fromAccountExpenseValue },
-      toAccountTransfer: { value: toAccountTransferValue },
-      fromAccountTransfer: { value: fromAccountTransferValue },
-    } = event.target as unknown as {
-      toAccountIncome: HTMLSelectElement;
-      fromAccountExpense: HTMLSelectElement;
-      toAccountTransfer: HTMLSelectElement;
-      fromAccountTransfer: HTMLSelectElement;
-    };
-
-    await Promise.all([
-      setDefaultIncomeAccount(toAccountIncomeValue),
-      setDefaultExpenseAccount(fromAccountExpenseValue),
-      setDefaultTransferSourceAccount(fromAccountTransferValue),
-      setDefaultTransferTargetAccount(toAccountTransferValue),
-    ]);
+    await setStatisticsSettings({
+      accountTypes: allAccountTypes
+        .map((type) => ({
+          type,
+          value: (
+            event.target as unknown as {
+              [key in AccountType]: HTMLInputElement;
+            }
+          )[type].checked,
+        }))
+        .filter(({ value }) => value)
+        .map(({ type }) => type),
+    });
 
     navigate('/profile/user-preferences');
   };
@@ -49,7 +41,7 @@ export const UserStatisticsSettings = (): JSX.Element => {
   return (
     <>
       <UpdatePageInfo
-        title="Default account settings"
+        title="Statistics settings"
         backLink={'/profile/user-preferences'}
       />
       <Form
@@ -57,52 +49,17 @@ export const UserStatisticsSettings = (): JSX.Element => {
         submitLabel="Save"
         formFooterBackLink="/profile/user-preferences"
       >
-        <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
-          <Select
-            id="toAccountIncome"
-            options={accounts.map(({ name, _id }) => ({
-              label: name,
-              value: _id,
-            }))}
-            defaultValue={defaultIncomeAccount}
-            isRequired
-          >
-            Default income account
-          </Select>
-          <Select
-            id="fromAccountExpense"
-            options={accounts.map(({ name, _id }) => ({
-              label: name,
-              value: _id,
-            }))}
-            defaultValue={defaultExpenseAccount}
-            isRequired
-          >
-            Default expense account
-          </Select>
-          <Select
-            id="fromAccountTransfer"
-            options={accounts.map(({ name, _id }) => ({
-              label: name,
-              value: _id,
-            }))}
-            defaultValue={defaultTransferSourceAccount}
-            isRequired
-          >
-            Default transfer source account
-          </Select>
-          <Select
-            id="toAccountTransfer"
-            options={accounts.map(({ name, _id }) => ({
-              label: name,
-              value: _id,
-            }))}
-            defaultValue={defaultTransferTargetAccount}
-            isRequired
-          >
-            Default transfer target account
-          </Select>
-        </div>
+        <Heading className="mb-4">Account types for stats and graph</Heading>
+        <CheckboxGroup testId="statistics-account-checkboxes">
+          {allAccountTypes.map((type) => (
+            <Checkbox
+              key={type}
+              id={type}
+              label={capitalize(type)}
+              checked={accountTypes?.some((item) => item === type)}
+            />
+          ))}
+        </CheckboxGroup>
       </Form>
     </>
   );

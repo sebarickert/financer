@@ -11,9 +11,9 @@ export const UserPreferences = (): JSX.Element => {
         <LinkListLink link="dashboard-settings" icon={IconName.home}>
           Dashboard settings
         </LinkListLink>
-        {/* <LinkListLink link="statistics-settings" icon={IconName.chartBar}>
+        <LinkListLink link="statistics-settings" icon={IconName.chartBar}>
           Statistics settings
-        </LinkListLink> */}
+        </LinkListLink>
         <LinkListLink link="default-account-settings" icon={IconName.viewGrid}>
           Default account settings
         </LinkListLink>

@@ -17,6 +17,7 @@ import {
 
 import { useExpenseMonthlySummaries } from '../../hooks/expense/useExpenseMonthlySummaries';
 import { useIncomeMonthlySummaries } from '../../hooks/income/useIncomeMonthlySummaries';
+import { useUserStatisticsSettings } from '../../hooks/profile/user-preference/useStatisticsSettings';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDateShort } from '../../utils/formatDate';
 import { LoaderIfProcessing } from '../loader/loader-if-processing';
@@ -94,9 +95,17 @@ export const MonthlySummaryGraph = ({
     MonthlySummaryHistory[]
   >([]);
 
-  const incomeMonthSummaries = useIncomeMonthlySummaries(yearAgoFilterOptions);
-  const expenseMonthSummaries =
-    useExpenseMonthlySummaries(yearAgoFilterOptions);
+  const [statisticsSettings] = useUserStatisticsSettings();
+  const accountTypeFilter = { accountTypes: statisticsSettings?.accountTypes };
+
+  const incomeMonthSummaries = useIncomeMonthlySummaries({
+    ...yearAgoFilterOptions,
+    ...accountTypeFilter,
+  });
+  const expenseMonthSummaries = useExpenseMonthlySummaries({
+    ...yearAgoFilterOptions,
+    ...accountTypeFilter,
+  });
 
   useEffect(() => {
     startProcessing(() => {
