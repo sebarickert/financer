@@ -170,48 +170,6 @@ export class TransactionsService {
     month?: number,
     accountTypes?: AccountType[],
   ): Promise<TransactionMonthSummaryDto[]> {
-    const accountIds = await this.getAccountIdsByType(userId, accountTypes);
-
-    const accountTypeFilter = accountIds.length
-      ? await this.getAggregateAccountTypesFilter(userId, accountTypes)
-      : {};
-
-    const selectedQuery = {
-      $and: [
-        ...this.getAggregationTransactionTypeFilter(transactionType),
-        accountTypeFilter,
-      ],
-    };
-
-    const queryTransfersToExcludedAccounts =
-      accountIds.length && (TransactionType.EXPENSE || TransactionType.INCOME)
-        ? {
-            $and: [
-              ...this.getAggregationTransactionTypeFilter(
-                TransactionType.TRANSFER,
-              ),
-              {
-                $in: [
-                  transactionType === TransactionType.EXPENSE
-                    ? '$fromAccount'
-                    : '$toAccount',
-                  accountIds,
-                ],
-              },
-              {
-                $not: {
-                  $in: [
-                    transactionType === TransactionType.EXPENSE
-                      ? '$toAccount'
-                      : '$fromAccount',
-                    accountIds,
-                  ],
-                },
-              },
-            ],
-          }
-        : { $eq: [true, false] };
-
     return this.transactionModel
       .aggregate([
         {
@@ -227,18 +185,20 @@ export class TransactionsService {
               month: { $month: '$date' },
             },
             count: {
-              $sum: {
-                $cond: [selectedQuery, 1, 0],
-              },
+              $sum: await this.getMonthlySummaryCondition(
+                userId,
+                1,
+                transactionType,
+                accountTypes,
+              ),
             },
             totalAmount: {
-              $sum: {
-                $cond: [
-                  selectedQuery,
-                  '$amount',
-                  { $cond: [queryTransfersToExcludedAccounts, '$amount', 0] },
-                ],
-              },
+              $sum: await this.getMonthlySummaryCondition(
+                userId,
+                '$amount',
+                transactionType,
+                accountTypes,
+              ),
             },
           },
         },
@@ -524,6 +484,80 @@ export class TransactionsService {
         {
           [operator]: ['$fromAccount', accountIds],
         },
+      ],
+    };
+  }
+
+  private async getMonthlySummaryCondition(
+    userId: ObjectId,
+    operator: '$amount' | 1 | 0,
+    transactionType: Exclude<TransactionType, TransactionType.ANY>,
+    accountTypes?: AccountType[],
+  ) {
+    const accountIds = await this.getAccountIdsByType(userId, accountTypes);
+
+    const accountTypeFilter = accountIds.length
+      ? await this.getAggregateAccountTypesFilter(userId, accountTypes)
+      : {};
+
+    const selectedQuery = [
+      ...this.getAggregationTransactionTypeFilter(transactionType),
+      accountTypeFilter,
+    ];
+
+    if (!accountIds?.length) {
+      return { $cond: [{ $and: selectedQuery }, operator, 0] };
+    }
+
+    if (transactionType === TransactionType.TRANSFER) {
+      return {
+        $cond: [
+          {
+            $and: [
+              ...selectedQuery,
+              {
+                $in: ['$toAccount', accountIds],
+              },
+              {
+                $in: ['$fromAccount', accountIds],
+              },
+            ],
+          },
+          operator,
+          0,
+        ],
+      };
+    }
+
+    const inAccount =
+      transactionType === TransactionType.EXPENSE
+        ? '$fromAccount'
+        : '$toAccount';
+
+    const notInAccount =
+      transactionType === TransactionType.EXPENSE
+        ? '$toAccount'
+        : '$fromAccount';
+
+    return {
+      $cond: [
+        {
+          $or: [
+            { $and: selectedQuery },
+            {
+              $and: [
+                {
+                  $in: [inAccount, accountIds],
+                },
+                {
+                  $not: { $in: [notInAccount, accountIds] },
+                },
+              ],
+            },
+          ],
+        },
+        operator,
+        0,
       ],
     };
   }
