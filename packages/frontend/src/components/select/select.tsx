@@ -34,9 +34,6 @@ export const Select = ({
     handleOnChange(event);
   };
 
-  console.log(defaultValue);
-  console.log('plaa', options);
-
   return (
     <div className={className}>
       <label
