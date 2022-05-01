@@ -14,6 +14,7 @@ const currentMonthFilterOptions = {
   year: new Date().getFullYear(),
   month: new Date().getMonth() + 1,
 };
+const emptyTotalAmount = { totalAmount: 0 };
 
 export const DashboardStats = ({
   className = '',
@@ -22,14 +23,16 @@ export const DashboardStats = ({
   const accountTypeFilter = { accountTypes: dashboardSettings?.accountTypes };
 
   const totalBalance = useTotalBalance(accountTypeFilter);
-  const [{ totalAmount: totalIncomes }] = useIncomeMonthlySummaries({
-    ...currentMonthFilterOptions,
-    ...accountTypeFilter,
-  });
-  const [{ totalAmount: totalExpenses }] = useExpenseMonthlySummaries({
-    ...currentMonthFilterOptions,
-    ...accountTypeFilter,
-  });
+  const [{ totalAmount: totalIncomes } = emptyTotalAmount] =
+    useIncomeMonthlySummaries({
+      ...currentMonthFilterOptions,
+      ...accountTypeFilter,
+    });
+  const [{ totalAmount: totalExpenses } = emptyTotalAmount] =
+    useExpenseMonthlySummaries({
+      ...currentMonthFilterOptions,
+      ...accountTypeFilter,
+    });
 
   return (
     <DescriptionList className={className}>
