@@ -41,15 +41,15 @@ const currentMonthFilterOptions = {
   month: new Date().getMonth() + 1,
 };
 
+const emptyTotalAmount = { totalAmount: 0 };
+
 export const Statistics = (): JSX.Element => {
   const [transactionVisibilityFilter, setTransactionVisibilityFilter] =
     useState<TransactionVisibilityFilterType>('all');
-  const [{ totalAmount: totalIncomes }] = useIncomeMonthlySummaries(
-    currentMonthFilterOptions
-  );
-  const [{ totalAmount: totalExpenses }] = useExpenseMonthlySummaries(
-    currentMonthFilterOptions
-  );
+  const [{ totalAmount: totalIncomes } = emptyTotalAmount] =
+    useIncomeMonthlySummaries(currentMonthFilterOptions);
+  const [{ totalAmount: totalExpenses } = emptyTotalAmount] =
+    useExpenseMonthlySummaries(currentMonthFilterOptions);
 
   const now = new Date();
   const pageVisibleYear = now.getFullYear();
