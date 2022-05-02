@@ -1,3 +1,5 @@
+import { AccountType } from '@local/types';
+
 import { IconName } from '../icon/icon';
 import { LinkList } from '../link-list/link-list';
 import { LinkListLink } from '../link-list/link-list.link';
@@ -17,19 +19,21 @@ export const AccountsList = ({
 }: IAccountsListProps): JSX.Element => {
   return (
     <LinkList label={label} className={`${className}`}>
-      {rows.map(({ id, balanceAmount, label: rowLabel, link, accountType }) => {
-        const accountTypeIconMapping: { [key: string]: IconName } = {
+      {rows.map(({ id, balanceAmount, label: rowLabel, link, type }) => {
+        const accountTypeIconMapping: { [key in AccountType]: IconName } = {
           cash: IconName.cash,
           savings: IconName.star,
           investment: IconName.trendingUp,
           credit: IconName.creditCard,
           loan: IconName.library,
+          'long-term savings': IconName.star,
+          'pre-assigned cash': IconName.paperAirplane,
         };
 
         return (
           <LinkListLink
             link={link ?? ''}
-            icon={accountTypeIconMapping[accountType.toLowerCase()]}
+            icon={accountTypeIconMapping[type]}
             testId="account-row"
             key={id}
           >
