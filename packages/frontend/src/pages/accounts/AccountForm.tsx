@@ -1,9 +1,10 @@
-import { CreateAccountDto } from '@local/types';
+import { AccountType, CreateAccountDto } from '@local/types';
 
 import { Alert } from '../../components/alert/alert';
 import { Form } from '../../components/form/form';
 import { Input } from '../../components/input/input';
 import { Select, Option } from '../../components/select/select';
+import { capitalize } from '../../utils/capitalize';
 
 interface IAccountFormProps {
   errors: string[];
@@ -22,28 +23,10 @@ export const AccountForm = ({
   onSubmit,
   submitLabel,
 }: IAccountFormProps): JSX.Element => {
-  const accountTypes: Option[] = [
-    {
-      value: 'cash',
-      label: 'Cash',
-    },
-    {
-      value: 'savings',
-      label: 'Savings',
-    },
-    {
-      value: 'investment',
-      label: 'Investment',
-    },
-    {
-      value: 'credit',
-      label: 'Credit',
-    },
-    {
-      value: 'loan',
-      label: 'Loan',
-    },
-  ];
+  const accountTypes: Option[] = Object.values(AccountType).map((value) => ({
+    value,
+    label: capitalize(value),
+  }));
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = async (event: any) => {

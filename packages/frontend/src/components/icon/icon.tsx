@@ -16,8 +16,10 @@ import { IconHomeSolid } from './icon.home.solid';
 import { IconLibrary } from './icon.library';
 import { IconLogout } from './icon.logout';
 import { IconMinusCircle } from './icon.minusCircle';
+import { IconPaperAirplane } from './icon.paperAirplane';
 import { IconPlus } from './icon.plus';
 import { IconPlusCircle } from './icon.plusCircle';
+import { IconSparkles } from './icon.sparkles';
 import { IconStar } from './icon.star';
 import { IconSwitchHorizontal } from './icon.switchHorizontal';
 import { IconTag } from './icon.tag';
@@ -62,6 +64,8 @@ export enum IconName {
   library = 'library',
   star = 'star',
   collection = 'collection',
+  sparkles = 'sparkles',
+  paperAirplane = 'paper-airplane',
 }
 interface IconProps {
   type: IconName;
@@ -168,6 +172,12 @@ export const Icon = ({ type, className = '' }: IconProps): JSX.Element => {
 
     case 'star':
       return <IconStar className={defaultIconClasses} />;
+
+    case 'sparkles':
+      return <IconSparkles className={defaultIconClasses} />;
+
+    case 'paper-airplane':
+      return <IconPaperAirplane className={defaultIconClasses} />;
 
     default:
       break;
