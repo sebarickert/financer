@@ -90,7 +90,7 @@ describe('Account form', () => {
   });
 
   it('Verify Accounts types', () => {
-    cy.get('#type option').should('have.length', 5);
+    cy.get('#type option').should('have.length', 7);
 
     cy.get('#type option').contains('Savings').should('have.value', 'savings');
     cy.get('#type option').contains('Cash').should('have.value', 'cash');
