@@ -1,99 +1,46 @@
-import { TransactionDto } from '@local/types';
+import { SortOrder } from '@local/types';
 import { useState } from 'react';
 
 import { DescriptionList } from '../../components/description-list/description-list';
 import { DescriptionListItem } from '../../components/description-list/description-list.item';
+import { Heading } from '../../components/heading/heading';
 import { IconName } from '../../components/icon/icon';
-import {
-  getTransactionType,
-  LatestTransactions,
-} from '../../components/latest-transactions/latest-transactions';
+import { LatestTransactions } from '../../components/latest-transactions/latest-transactions';
+import { LoaderSuspense } from '../../components/loader/loader-suspense';
 import { MonthlySummaryGraph } from '../../components/monthly-summary-graph/monthly-summary-graph';
+import { Pager } from '../../components/pager/pager';
 import { QuickLinks } from '../../components/quick-links/quick-links';
 import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { monthNames } from '../../constants/months';
-import { useAllExpensesPaged } from '../../hooks/expense/useAllExpenses';
 import { useExpenseMonthlySummaries } from '../../hooks/expense/useExpenseMonthlySummaries';
-import { useAllIncomesPaged } from '../../hooks/income/useAllIncomes';
 import { useIncomeMonthlySummaries } from '../../hooks/income/useIncomeMonthlySummaries';
 import { useAllTransactionsPaged } from '../../hooks/transaction/useAllTransactions';
-import { useAllTransfersPaged } from '../../hooks/transfer/useAllTransfers';
 import { formatCurrency } from '../../utils/formatCurrency';
 
-type TransactionVisibilityFilterType =
-  | 'all'
-  | 'income'
-  | 'expense'
-  | 'transfer';
-
-export const filterTransactionsByType = (
-  visibilityFilter: TransactionVisibilityFilterType,
-  { toAccount, fromAccount }: TransactionDto
-) => {
-  if (visibilityFilter === 'all') return true;
-
-  return getTransactionType(toAccount, fromAccount) === visibilityFilter;
-};
-
-const currentMonthFilterOptions = {
+const initialFilterOptions = {
   year: new Date().getFullYear(),
   month: new Date().getMonth() + 1,
 };
 
 const emptyTotalAmount = { totalAmount: 0 };
 
-export const Statistics = (): JSX.Element => {
-  const [transactionVisibilityFilter, setTransactionVisibilityFilter] =
-    useState<TransactionVisibilityFilterType>('all');
-  const [{ totalAmount: totalIncomes } = emptyTotalAmount] =
-    useIncomeMonthlySummaries(currentMonthFilterOptions);
-  const [{ totalAmount: totalExpenses } = emptyTotalAmount] =
-    useExpenseMonthlySummaries(currentMonthFilterOptions);
+const MonthStatistics = ({
+  monthFilterOptions,
+}: {
+  monthFilterOptions: typeof initialFilterOptions;
+}) => {
+  const incomeSummaries = useIncomeMonthlySummaries(monthFilterOptions);
+  const expenseSummaries = useExpenseMonthlySummaries(monthFilterOptions);
 
-  const now = new Date();
-  const pageVisibleYear = now.getFullYear();
-  const pageVisibleMonth = monthNames[now.getMonth()];
-
-  const filterItems = [
-    {
-      label: 'All',
-      onClick: () => setTransactionVisibilityFilter('all'),
-    },
-    {
-      label: 'Income',
-      onClick: () => setTransactionVisibilityFilter('income'),
-    },
-    {
-      label: 'Expense',
-      onClick: () => setTransactionVisibilityFilter('expense'),
-    },
-    {
-      label: 'Transfer',
-      onClick: () => setTransactionVisibilityFilter('transfer'),
-    },
-  ];
-
-  const getCorrectHook = () => {
-    if (transactionVisibilityFilter === 'income') {
-      return useAllIncomesPaged;
-    } else if (transactionVisibilityFilter === 'expense') {
-      return useAllExpensesPaged;
-    } else if (transactionVisibilityFilter === 'transfer') {
-      return useAllTransfersPaged;
-    }
-
-    return useAllTransactionsPaged;
-  };
+  const { totalAmount: totalIncomes } =
+    incomeSummaries.at(-1) ?? emptyTotalAmount;
+  const { totalAmount: totalExpenses } =
+    expenseSummaries.at(-1) ?? emptyTotalAmount;
 
   return (
     <>
-      <UpdatePageInfo title="Statistics" />
-      <MonthlySummaryGraph className="mb-6" />
-      <DescriptionList
-        label={`${pageVisibleMonth}, ${pageVisibleYear}`}
-        filterOptions={filterItems}
-      >
+      <DescriptionList>
         <DescriptionListItem label="Incomes">
           {Number.isNaN(totalIncomes) ? '-' : formatCurrency(totalIncomes)}
         </DescriptionListItem>
@@ -101,7 +48,72 @@ export const Statistics = (): JSX.Element => {
           {Number.isNaN(totalExpenses) ? '-' : formatCurrency(totalExpenses)}
         </DescriptionListItem>
       </DescriptionList>
-      <LatestTransactions className="mt-4" useDataHook={getCorrectHook()} />
+      <LatestTransactions filterOptions={monthFilterOptions} className="mt-4" />
+    </>
+  );
+};
+
+export const Statistics = (): JSX.Element => {
+  const [monthFilterOptions, setMonthFilterOptions] =
+    useState(initialFilterOptions);
+  const {
+    data: {
+      data: [transaction],
+    },
+  } = useAllTransactionsPaged(1, {
+    limit: 1,
+    sortOrder: SortOrder.ASC,
+  });
+
+  const firstTransactionEverDate = new Date(transaction?.date || new Date());
+
+  const pageVisibleYear = monthFilterOptions.year;
+  const pageVisibleMonth = monthNames[monthFilterOptions.month - 1];
+
+  const handleMonthOptionChange = (direction: 'next' | 'previous') => {
+    const { month, year } = monthFilterOptions;
+    const selectedMonth = new Date(`${year}-${month}-01`);
+
+    selectedMonth.setMonth(
+      selectedMonth.getMonth() + (direction === 'next' ? 1 : -1)
+    );
+
+    setMonthFilterOptions({
+      month: selectedMonth.getMonth() + 1,
+      year: selectedMonth.getFullYear(),
+    });
+  };
+
+  return (
+    <>
+      <UpdatePageInfo title="Statistics" />
+      <MonthlySummaryGraph className="mb-6" />
+      <section className="flex items-center justify-between mb-4">
+        <Heading>{`${pageVisibleMonth}, ${pageVisibleYear}`}</Heading>
+        <Pager
+          pagerOptions={{
+            nextPage: {
+              isAvailable: !(
+                monthFilterOptions.month === initialFilterOptions.month &&
+                monthFilterOptions.year === initialFilterOptions.year
+              ),
+              load: () => handleMonthOptionChange('next'),
+            },
+            previousPage: {
+              isAvailable: !(
+                monthFilterOptions.month ===
+                  firstTransactionEverDate.getMonth() + 1 &&
+                monthFilterOptions.year ===
+                  firstTransactionEverDate.getFullYear()
+              ),
+              load: () => handleMonthOptionChange('previous'),
+            },
+          }}
+        ></Pager>
+      </section>
+      <LoaderSuspense>
+        <MonthStatistics monthFilterOptions={monthFilterOptions} />
+      </LoaderSuspense>
       <QuickLinks className="mt-8">
         <QuickLinksItem
           title="Incomes"

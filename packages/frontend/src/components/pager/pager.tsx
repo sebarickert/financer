@@ -24,7 +24,7 @@ const PagerButton = ({
 }: PagerButtonProps) => {
   return (
     <button
-      className={`p-4 group disabled:hover:cursor-not-allowed hover:not() ${className} ${
+      className={`h-11 w-11 inline-flex justify-center items-center group disabled:hover:cursor-not-allowed ${className} ${
         !isDisabled ? 'hover:bg-gray-50' : ''
       }`}
       onClick={handleClick}
@@ -52,21 +52,27 @@ export const Pager = ({
         isCentered ? 'flex justify-center' : 'inline-flex'
       } ${className}`}
     >
-      <div className="inline-flex overflow-hidden bg-white border divide-x rounded-lg">
+      <div
+        className={`inline-flex overflow-hidden items-center bg-white border rounded-md ${
+          !currentPage && !pageCount ? 'divide-x' : ''
+        }`}
+      >
         <PagerButton
           handleClick={previousPage.load}
           isDisabled={!previousPage.isAvailable}
         >
           Previous page
         </PagerButton>
-        <p className="px-8 py-4">
-          <span className="sr-only">
-            Current page: {currentPage} of {pageCount}
-          </span>
-          <span aria-hidden="true">
-            {currentPage} / {pageCount}
-          </span>
-        </p>
+        {currentPage && pageCount && (
+          <p className="px-8 h-11 border-l border-r inline-flex items-center">
+            <span className="sr-only">
+              Current page: {currentPage} of {pageCount}
+            </span>
+            <span aria-hidden="true">
+              {currentPage} / {pageCount}
+            </span>
+          </p>
+        )}
         <PagerButton
           className={``}
           isDisabled={!nextPage.isAvailable}

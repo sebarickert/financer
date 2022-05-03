@@ -1,6 +1,7 @@
 import {
   AccountType,
   PaginationDto,
+  SortOrder,
   TransactionMonthSummaryDto,
 } from '@local/types';
 import {
@@ -107,6 +108,7 @@ export class TransactionsService {
     month?: number,
     linkedAccount?: ObjectId,
     accountTypes?: AccountType[],
+    sortOrder: SortOrder = SortOrder.DESC,
   ): Promise<PaginationDto<TransactionDto[]>> {
     const query = {
       user: userId,
@@ -129,7 +131,7 @@ export class TransactionsService {
 
     const transactions = await this.transactionModel
       .find(query)
-      .sort({ date: 'desc' })
+      .sort({ date: sortOrder })
       .skip(page ? (page - 1) * limit : 0)
       .limit(page ? limit : 0)
       .exec();
