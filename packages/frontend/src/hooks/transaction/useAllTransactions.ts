@@ -1,4 +1,5 @@
 import { PaginationDto, TransactionDto } from '@local/types';
+import { useEffect } from 'react';
 import { useQuery } from 'react-query';
 
 import {
@@ -30,7 +31,14 @@ export const useAllTransactionsPaged = (
   requestParams: Omit<TransactionFilterOptions, 'page'> = {}
 ): UseAllTransactionsPagedReturn => {
   const [chunkAmount] = useUserTransactionListChunkSize();
-  const { page, getLoadPageFunctions } = usePager(intialPage);
+  const { page, getLoadPageFunctions, setPage } = usePager(intialPage);
+
+  const stringifiedParams = JSON.stringify(requestParams);
+
+  useEffect(() => {
+    setPage(intialPage);
+    console.log(stringifiedParams);
+  }, [intialPage, setPage, stringifiedParams]);
 
   const { data, error } = useQuery(['transactions', page, requestParams], () =>
     getAllTransactions({ limit: chunkAmount, ...requestParams, page })

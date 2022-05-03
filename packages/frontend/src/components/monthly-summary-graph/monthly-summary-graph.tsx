@@ -146,7 +146,7 @@ export const MonthlySummaryGraph = ({
 
   return (
     <section
-      className={`bg-gray-25 min-h-[300px] h-[20vh] md:h-auto md:min-h-0 md:aspect-video -mx-2 md:-mx-0 ${className}`}
+      className={`bg-gray-25 min-h-[300px] h-[20vh] md:h-auto md:min-h-0 md:aspect-video -mx-4 md:-mx-0 ${className}`}
     >
       <LoaderIfProcessing isProcessing={isProcessing}>
         <ResponsiveContainer>
@@ -158,37 +158,6 @@ export const MonthlySummaryGraph = ({
             }))}
             margin={{ top: 0, left: 0, right: 0, bottom: 0 }}
           >
-            <defs>
-              <linearGradient id="color" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#1c64f2" stopOpacity={0.4} />
-                <stop offset="75%" stopColor="#1c64f2" stopOpacity={0.05} />
-              </linearGradient>
-            </defs>
-            <YAxis
-              dataKey="netStatus"
-              domain={['data-min', 'auto']}
-              orientation="right"
-              hide
-            />
-            <YAxis
-              dataKey="expenses"
-              domain={[0, 'auto']}
-              yAxisId="income-expense"
-              hide
-            />
-            <YAxis
-              dataKey="incomes"
-              domain={[0, 'auto']}
-              yAxisId="income-expense"
-            />
-            <XAxis
-              dataKey="dateStr"
-              axisLine={false}
-              tickLine={false}
-              height={40}
-              interval={1}
-              tick={(props) => <CustomXAxisTick {...props} />}
-            />
             <Tooltip
               content={(props) => (
                 <CustomTooltip
@@ -200,6 +169,42 @@ export const MonthlySummaryGraph = ({
               )}
               isAnimationActive={false}
             />
+            <YAxis
+              dataKey="netStatus"
+              domain={['data-min', 'auto']}
+              orientation="right"
+              hide
+            />
+            <YAxis
+              dataKey="expenses"
+              domain={[
+                0,
+                (dataMax: number) => (dataMax > 7500 ? 7500 : 'auto'),
+              ]}
+              yAxisId="income-expense"
+              hide
+              allowDataOverflow={true}
+            />
+            <YAxis
+              dataKey="incomes"
+              domain={[
+                0,
+                (dataMax: number) => (dataMax > 7500 ? 7500 : 'auto'),
+              ]}
+              yAxisId="income-expense"
+              allowDataOverflow={true}
+            />
+            <XAxis
+              dataKey="dateStr"
+              axisLine={false}
+              tickLine={false}
+              height={40}
+              interval={1}
+              tick={(props) => <CustomXAxisTick {...props} />}
+            />
+
+            <Bar dataKey="incomes" fill="#059669" yAxisId="income-expense" />
+            <Bar dataKey="expenses" fill="#dc2626" yAxisId="income-expense" />
             <Area
               dataKey="netStatus"
               stroke="#1c64f2"
@@ -207,8 +212,12 @@ export const MonthlySummaryGraph = ({
               strokeWidth={2}
               isAnimationActive={false}
             />
-            <Bar dataKey="incomes" fill="#059669" yAxisId="income-expense" />
-            <Bar dataKey="expenses" fill="#dc2626" yAxisId="income-expense" />
+            <defs>
+              <linearGradient id="color" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#1c64f2" stopOpacity={0.4} />
+                <stop offset="75%" stopColor="#1c64f2" stopOpacity={0.05} />
+              </linearGradient>
+            </defs>
             <CartesianGrid vertical={false} opacity={0.25} />
           </ComposedChart>
         </ResponsiveContainer>

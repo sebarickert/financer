@@ -104,7 +104,7 @@ export const AccountBalanceHistoryChart = ({
       : chartData.length - 12;
 
   return (
-    <div className="min-h-[300px] h-[20vh] md:h-auto md:min-h-0 md:aspect-video -mx-2 md:-mx-0">
+    <div className="min-h-[300px] h-[20vh] md:h-auto md:min-h-0 md:aspect-video -mx-4 md:-mx-0">
       <ResponsiveContainer>
         <AreaChart
           data={chartData}

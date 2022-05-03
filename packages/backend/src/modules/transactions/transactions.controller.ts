@@ -1,4 +1,13 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { AccountType, SortOrder } from '@local/types';
+import {
+  Controller,
+  DefaultValuePipe,
+  Get,
+  Param,
+  ParseArrayPipe,
+  ParseEnumPipe,
+  Query,
+} from '@nestjs/common';
 
 import { ObjectId } from '../../types/objectId';
 import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
@@ -19,6 +28,17 @@ export class TransactionsController {
     @Query('year') year: number,
     @Query('page') page: number,
     @Query('limit') limit: number,
+    @Query(
+      'accountTypes',
+      new ParseArrayPipe({ separator: '|', optional: true }),
+    )
+    accountTypes?: AccountType[],
+    @Query(
+      'sortOrder',
+      new DefaultValuePipe(SortOrder.DESC),
+      new ParseEnumPipe(SortOrder),
+    )
+    sortOrder?: SortOrder,
   ) {
     return this.transactionsService.findAllByUser(
       userId,
@@ -27,6 +47,9 @@ export class TransactionsController {
       limit || undefined,
       year || undefined,
       month || undefined,
+      undefined,
+      accountTypes || undefined,
+      sortOrder || undefined,
     );
   }
 
