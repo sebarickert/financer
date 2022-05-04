@@ -72,7 +72,7 @@ export const Statistics = (): JSX.Element => {
 
   const handleMonthOptionChange = (direction: 'next' | 'previous') => {
     const { month, year } = monthFilterOptions;
-    const monthWithTwoDigits = month.toString().padStart(2, "0");
+    const monthWithTwoDigits = month.toString().padStart(2, '0');
     const selectedMonth = new Date(`${year}-${monthWithTwoDigits}-01`);
 
     selectedMonth.setMonth(
