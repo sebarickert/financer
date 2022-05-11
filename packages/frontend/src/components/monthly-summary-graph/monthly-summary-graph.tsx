@@ -1,19 +1,40 @@
-import { useEffect, useState, useTransition } from 'react';
 import {
-  Area,
-  Bar,
-  CartesianGrid,
-  ComposedChart,
-  ResponsiveContainer,
+  Chart as ChartJS,
+  LinearScale,
+  CategoryScale,
+  BarElement,
+  PointElement,
+  LineElement,
+  Legend,
   Tooltip,
-  TooltipProps,
-  XAxis,
-  YAxis,
-} from 'recharts';
+} from 'chart.js';
+import { useEffect, useState, useTransition } from 'react';
+import { Chart } from 'react-chartjs-2';
+// import {
+//   Area,
+//   Bar,
+//   CartesianGrid,
+//   ComposedChart,
+//   ResponsiveContainer,
+//   Tooltip,
+//   TooltipProps,
+//   XAxis,
+//   YAxis,
+// } from 'recharts';
 import {
   ValueType,
   NameType,
 } from 'recharts/types/component/DefaultTooltipContent';
+
+ChartJS.register(
+  LinearScale,
+  CategoryScale,
+  BarElement,
+  PointElement,
+  LineElement,
+  Legend,
+  Tooltip
+);
 
 import { useExpenseMonthlySummaries } from '../../hooks/expense/useExpenseMonthlySummaries';
 import { useIncomeMonthlySummaries } from '../../hooks/income/useIncomeMonthlySummaries';
@@ -48,44 +69,44 @@ type MonthlySummaryHistory = {
   netStatus: number;
 };
 
-type TooltopPropsWithLastDataItem = TooltipProps<ValueType, NameType> & {
-  lastDataItem: MonthlySummaryHistory;
-};
+// type TooltopPropsWithLastDataItem = TooltipProps<ValueType, NameType> & {
+//   lastDataItem: MonthlySummaryHistory;
+// };
 
-const CustomTooltip = ({
-  active,
-  payload,
-  label,
-  lastDataItem,
-}: TooltopPropsWithLastDataItem): JSX.Element => {
-  if (active && payload && payload.length && lastDataItem) {
-    const isLastItem =
-      lastDataItem.date.getTime() === new Date(label).getTime();
+// const CustomTooltip = ({
+//   active,
+//   payload,
+//   label,
+//   lastDataItem,
+// }: TooltopPropsWithLastDataItem): JSX.Element => {
+//   if (active && payload && payload.length && lastDataItem) {
+//     const isLastItem =
+//       lastDataItem.date.getTime() === new Date(label).getTime();
 
-    const netStatusValue = (payload.find(
-      ({ dataKey }) => dataKey === 'netStatus'
-    )?.value ?? 0) as number;
+//     const netStatusValue = (payload.find(
+//       ({ dataKey }) => dataKey === 'netStatus'
+//     )?.value ?? 0) as number;
 
-    const incomesValue = (payload.find(({ dataKey }) => dataKey === 'incomes')
-      ?.value ?? 0) as number;
+//     const incomesValue = (payload.find(({ dataKey }) => dataKey === 'incomes')
+//       ?.value ?? 0) as number;
 
-    const expensesValue = (payload.find(({ dataKey }) => dataKey === 'expenses')
-      ?.value ?? 0) as number;
+//     const expensesValue = (payload.find(({ dataKey }) => dataKey === 'expenses')
+//       ?.value ?? 0) as number;
 
-    return (
-      <div className="px-4 py-2 bg-gray-800 rounded-md shadow-lg">
-        <p className="text-white">Net total {formatCurrency(netStatusValue)}</p>
-        <p className="text-white">Incomes {formatCurrency(incomesValue)}</p>
-        <p className="text-white">Expenses {formatCurrency(expensesValue)}</p>
-        <p className="text-white">
-          {isLastItem ? 'Current' : formatDateShort(new Date(label))}
-        </p>
-      </div>
-    );
-  }
+//     return (
+//       <div className="px-4 py-2 bg-gray-800 rounded-md shadow-lg">
+//         <p className="text-white">Net total {formatCurrency(netStatusValue)}</p>
+//         <p className="text-white">Incomes {formatCurrency(incomesValue)}</p>
+//         <p className="text-white">Expenses {formatCurrency(expensesValue)}</p>
+//         <p className="text-white">
+//           {isLastItem ? 'Current' : formatDateShort(new Date(label))}
+//         </p>
+//       </div>
+//     );
+//   }
 
-  return <div />;
-};
+//   return <div />;
+// };
 
 export const MonthlySummaryGraph = ({
   className = '',
@@ -144,12 +165,53 @@ export const MonthlySummaryGraph = ({
     });
   }, [expenseMonthSummaries, incomeMonthSummaries]);
 
+  const labels = monthlySummaryHistory.map(({ date }) => formatDateShort(date));
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: true,
+
+    scales: {
+      x: {
+        display: false,
+      },
+      y: {
+        display: false,
+      },
+    },
+  };
+
+  const data = {
+    labels,
+    datasets: [
+      {
+        type: 'line' as const,
+        label: 'Net status',
+        borderColor: '#1c64f2',
+        data: monthlySummaryHistory.map(({ netStatus }) => netStatus),
+      },
+      {
+        type: 'bar' as const,
+        label: 'Incomes',
+        backgroundColor: '#059669',
+        data: monthlySummaryHistory.map(({ incomes }) => incomes),
+      },
+      {
+        type: 'bar' as const,
+        label: 'Expenses',
+        backgroundColor: '#dc2626',
+        data: monthlySummaryHistory.map(({ expenses }) => expenses),
+      },
+    ],
+  };
+
   return (
     <section
       className={`bg-gray-25 min-h-[300px] h-[20vh] md:h-auto md:min-h-0 md:aspect-video -mx-4 md:-mx-0 ${className}`}
     >
       <LoaderIfProcessing isProcessing={isProcessing}>
-        <ResponsiveContainer>
+        <Chart type="bar" data={data} options={options} />
+        {/* <ResponsiveContainer>
           <ComposedChart
             data={monthlySummaryHistory.map(({ date, ...rest }) => ({
               dateStr: date.toISOString(),
@@ -221,7 +283,7 @@ export const MonthlySummaryGraph = ({
             </defs>
             <CartesianGrid vertical={false} opacity={0.25} />
           </ComposedChart>
-        </ResponsiveContainer>
+        </ResponsiveContainer> */}
       </LoaderIfProcessing>
     </section>
   );
