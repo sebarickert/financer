@@ -15,6 +15,7 @@ import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { monthNames } from '../../constants/months';
 import { useExpenseMonthlySummaries } from '../../hooks/expense/useExpenseMonthlySummaries';
 import { useIncomeMonthlySummaries } from '../../hooks/income/useIncomeMonthlySummaries';
+import { useUserStatisticsSettings } from '../../hooks/profile/user-preference/useStatisticsSettings';
 import { useAllTransactionsPaged } from '../../hooks/transaction/useAllTransactions';
 import { formatCurrency } from '../../utils/formatCurrency';
 
@@ -30,8 +31,17 @@ const MonthStatistics = ({
 }: {
   monthFilterOptions: typeof initialFilterOptions;
 }) => {
-  const incomeSummaries = useIncomeMonthlySummaries(monthFilterOptions);
-  const expenseSummaries = useExpenseMonthlySummaries(monthFilterOptions);
+  const [statisticsSettings] = useUserStatisticsSettings();
+  const accountTypeFilter = { accountTypes: statisticsSettings?.accountTypes };
+
+  const incomeSummaries = useIncomeMonthlySummaries({
+    ...monthFilterOptions,
+    ...accountTypeFilter,
+  });
+  const expenseSummaries = useExpenseMonthlySummaries({
+    ...monthFilterOptions,
+    ...accountTypeFilter,
+  });
 
   const { totalAmount: totalIncomes } =
     incomeSummaries.at(-1) ?? emptyTotalAmount;
