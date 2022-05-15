@@ -37,7 +37,6 @@ export const useAllTransactionsPaged = (
 
   useEffect(() => {
     setPage(intialPage);
-    console.log(stringifiedParams);
   }, [intialPage, setPage, stringifiedParams]);
 
   const { data, error } = useQuery(['transactions', page, requestParams], () =>
