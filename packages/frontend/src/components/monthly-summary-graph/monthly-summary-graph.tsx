@@ -7,6 +7,7 @@ import {
   LineElement,
   Legend,
   Tooltip,
+  Filler,
 } from 'chart.js';
 import { useEffect, useState, useTransition } from 'react';
 import { Chart } from 'react-chartjs-2';
@@ -33,7 +34,8 @@ ChartJS.register(
   PointElement,
   LineElement,
   Legend,
-  Tooltip
+  Tooltip,
+  Filler
 );
 
 import { useExpenseMonthlySummaries } from '../../hooks/expense/useExpenseMonthlySummaries';
@@ -170,13 +172,40 @@ export const MonthlySummaryGraph = ({
   const options = {
     responsive: true,
     maintainAspectRatio: true,
-
     scales: {
       x: {
-        display: false,
+        grid: {
+          display: false,
+          drawBorder: false,
+        },
       },
       y: {
+        max: 7500,
+        grid: {
+          drawBorder: false,
+          color: '#cccccc40',
+        },
+        ticks: {
+          display: false,
+        },
+      },
+      trendLine: {
+        axis: 'y' as any,
+        grid: {
+          display: false,
+          drawBorder: false,
+        },
+        ticks: {
+          display: false,
+        },
+      },
+    },
+    plugins: {
+      legend: {
         display: false,
+      },
+      filler: {
+        propagate: true,
       },
     },
   };
@@ -188,19 +217,27 @@ export const MonthlySummaryGraph = ({
         type: 'line' as const,
         label: 'Net status',
         borderColor: '#1c64f2',
+        fill: {
+          target: 'origin',
+          above: '#1c64f21A',
+          below: '#1c64f21A',
+        },
         data: monthlySummaryHistory.map(({ netStatus }) => netStatus),
+        yAxisID: 'trendLine',
       },
       {
         type: 'bar' as const,
         label: 'Incomes',
         backgroundColor: '#059669',
         data: monthlySummaryHistory.map(({ incomes }) => incomes),
+        yAxisID: 'y',
       },
       {
         type: 'bar' as const,
         label: 'Expenses',
         backgroundColor: '#dc2626',
         data: monthlySummaryHistory.map(({ expenses }) => expenses),
+        yAxisID: 'y',
       },
     ],
   };
