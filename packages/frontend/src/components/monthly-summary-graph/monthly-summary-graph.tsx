@@ -179,7 +179,8 @@ export const MonthlySummaryGraph = ({
               dataKey="expenses"
               domain={[
                 0,
-                (dataMax: number) => (dataMax > 7500 ? 7500 : 'auto'),
+                (dataMax: number) =>
+                  isFinite(dataMax) || dataMax > 7500 ? 7500 : 'auto',
               ]}
               yAxisId="income-expense"
               hide
@@ -189,7 +190,8 @@ export const MonthlySummaryGraph = ({
               dataKey="incomes"
               domain={[
                 0,
-                (dataMax: number) => (dataMax > 7500 ? 7500 : 'auto'),
+                (dataMax: number) =>
+                  isFinite(dataMax) || dataMax > 7500 ? 7500 : 'auto',
               ]}
               yAxisId="income-expense"
               allowDataOverflow={true}
@@ -202,7 +204,6 @@ export const MonthlySummaryGraph = ({
               interval={1}
               tick={(props) => <CustomXAxisTick {...props} />}
             />
-
             <Bar dataKey="incomes" fill="#059669" yAxisId="income-expense" />
             <Bar dataKey="expenses" fill="#dc2626" yAxisId="income-expense" />
             <Area
