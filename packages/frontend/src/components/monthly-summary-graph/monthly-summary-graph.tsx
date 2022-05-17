@@ -11,21 +11,6 @@ import {
 } from 'chart.js';
 import { useEffect, useState, useTransition } from 'react';
 import { Chart } from 'react-chartjs-2';
-// import {
-//   Area,
-//   Bar,
-//   CartesianGrid,
-//   ComposedChart,
-//   ResponsiveContainer,
-//   Tooltip,
-//   TooltipProps,
-//   XAxis,
-//   YAxis,
-// } from 'recharts';
-import {
-  ValueType,
-  NameType,
-} from 'recharts/types/component/DefaultTooltipContent';
 
 ChartJS.register(
   LinearScale,
@@ -44,8 +29,6 @@ import { useUserStatisticsSettings } from '../../hooks/profile/user-preference/u
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDateShort } from '../../utils/formatDate';
 import { LoaderIfProcessing } from '../loader/loader-if-processing';
-
-import { CustomXAxisTick } from './simple-line-chart';
 
 interface BalanceGraphProps {
   className?: string;
@@ -70,45 +53,6 @@ type MonthlySummaryHistory = {
   expenses: number;
   netStatus: number;
 };
-
-// type TooltopPropsWithLastDataItem = TooltipProps<ValueType, NameType> & {
-//   lastDataItem: MonthlySummaryHistory;
-// };
-
-// const CustomTooltip = ({
-//   active,
-//   payload,
-//   label,
-//   lastDataItem,
-// }: TooltopPropsWithLastDataItem): JSX.Element => {
-//   if (active && payload && payload.length && lastDataItem) {
-//     const isLastItem =
-//       lastDataItem.date.getTime() === new Date(label).getTime();
-
-//     const netStatusValue = (payload.find(
-//       ({ dataKey }) => dataKey === 'netStatus'
-//     )?.value ?? 0) as number;
-
-//     const incomesValue = (payload.find(({ dataKey }) => dataKey === 'incomes')
-//       ?.value ?? 0) as number;
-
-//     const expensesValue = (payload.find(({ dataKey }) => dataKey === 'expenses')
-//       ?.value ?? 0) as number;
-
-//     return (
-//       <div className="px-4 py-2 bg-gray-800 rounded-md shadow-lg">
-//         <p className="text-white">Net total {formatCurrency(netStatusValue)}</p>
-//         <p className="text-white">Incomes {formatCurrency(incomesValue)}</p>
-//         <p className="text-white">Expenses {formatCurrency(expensesValue)}</p>
-//         <p className="text-white">
-//           {isLastItem ? 'Current' : formatDateShort(new Date(label))}
-//         </p>
-//       </div>
-//     );
-//   }
-
-//   return <div />;
-// };
 
 export const MonthlySummaryGraph = ({
   className = '',
@@ -178,6 +122,13 @@ export const MonthlySummaryGraph = ({
           display: false,
           drawBorder: false,
         },
+        ticks: {
+          font: {
+            size: 14,
+            color: '#666666',
+            family: 'Inter',
+          },
+        },
       },
       y: {
         max: 7500,
@@ -207,24 +158,42 @@ export const MonthlySummaryGraph = ({
       filler: {
         propagate: true,
       },
+      tooltip: {
+        backgroundColor: 'rgb(31 41 55)',
+        padding: 16,
+        mode: 'index' as any,
+        intersect: true,
+        position: 'nearest' as any,
+        bodySpacing: 6,
+        displayColors: false,
+        titleSpacing: 0,
+        titleFont: {
+          size: 16,
+          family: 'Inter',
+          weight: 'bold',
+        },
+        bodyFont: {
+          size: 16,
+          family: 'Inter',
+        },
+        callbacks: {
+          label: (context: any) => {
+            const label = context.dataset.label || '';
+
+            if (!context.parsed.y) {
+              return label;
+            }
+
+            return `${label} ${formatCurrency(context.parsed.y as number)}`;
+          },
+        },
+      },
     },
   };
 
   const data = {
     labels,
     datasets: [
-      {
-        type: 'line' as const,
-        label: 'Net status',
-        borderColor: '#1c64f2',
-        fill: {
-          target: 'origin',
-          above: '#1c64f21A',
-          below: '#1c64f21A',
-        },
-        data: monthlySummaryHistory.map(({ netStatus }) => netStatus),
-        yAxisID: 'trendLine',
-      },
       {
         type: 'bar' as const,
         label: 'Incomes',
@@ -239,88 +208,25 @@ export const MonthlySummaryGraph = ({
         data: monthlySummaryHistory.map(({ expenses }) => expenses),
         yAxisID: 'y',
       },
+      {
+        type: 'line' as const,
+        label: 'Net total',
+        borderColor: '#1c64f2',
+        fill: {
+          target: 'origin',
+          above: '#1c64f21A',
+          below: '#1c64f21A',
+        },
+        data: monthlySummaryHistory.map(({ netStatus }) => netStatus),
+        yAxisID: 'trendLine',
+      },
     ],
   };
 
   return (
-    <section
-      className={`bg-gray-25 min-h-[300px] h-[20vh] md:h-auto md:min-h-0 md:aspect-video -mx-4 md:-mx-0 ${className}`}
-    >
+    <section className={` ${className}`}>
       <LoaderIfProcessing isProcessing={isProcessing}>
         <Chart type="bar" data={data} options={options} />
-        {/* <ResponsiveContainer>
-          <ComposedChart
-            data={monthlySummaryHistory.map(({ date, ...rest }) => ({
-              dateStr: date.toISOString(),
-              date,
-              ...rest,
-            }))}
-            margin={{ top: 0, left: 0, right: 0, bottom: 0 }}
-          >
-            <Tooltip
-              content={(props) => (
-                <CustomTooltip
-                  {...props}
-                  lastDataItem={
-                    monthlySummaryHistory[monthlySummaryHistory.length - 1]
-                  }
-                />
-              )}
-              isAnimationActive={false}
-            />
-            <YAxis
-              dataKey="netStatus"
-              domain={['data-min', 'auto']}
-              orientation="right"
-              hide
-            />
-            <YAxis
-              dataKey="expenses"
-              domain={[
-                0,
-                (dataMax: number) =>
-                  isFinite(dataMax) || dataMax > 7500 ? 7500 : 'auto',
-              ]}
-              yAxisId="income-expense"
-              hide
-              allowDataOverflow={true}
-            />
-            <YAxis
-              dataKey="incomes"
-              domain={[
-                0,
-                (dataMax: number) =>
-                  isFinite(dataMax) || dataMax > 7500 ? 7500 : 'auto',
-              ]}
-              yAxisId="income-expense"
-              allowDataOverflow={true}
-            />
-            <XAxis
-              dataKey="dateStr"
-              axisLine={false}
-              tickLine={false}
-              height={40}
-              interval={1}
-              tick={(props) => <CustomXAxisTick {...props} />}
-            />
-            <Bar dataKey="incomes" fill="#059669" yAxisId="income-expense" />
-            <Bar dataKey="expenses" fill="#dc2626" yAxisId="income-expense" />
-            <Area
-              dataKey="netStatus"
-              stroke="#1c64f2"
-              fill="url(#color)"
-              strokeWidth={2}
-              isAnimationActive={false}
-            />
-            <defs>
-              <linearGradient id="color" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#1c64f2" stopOpacity={0.4} />
-                <stop offset="75%" stopColor="#1c64f2" stopOpacity={0.05} />
-              </linearGradient>
-            </defs>
-            <CartesianGrid vertical={false} opacity={0.25} />
-          </ComposedChart>
-        </ResponsiveContainer> */}
       </LoaderIfProcessing>
     </section>
   );

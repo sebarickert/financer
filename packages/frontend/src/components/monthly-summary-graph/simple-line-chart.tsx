@@ -69,7 +69,7 @@ export const CustomXAxisTick = ({
 
   return (
     <g className={`text-xs md:text-sm`}>
-      <text x={x} y={y + 18} textAnchor="middle" fill="#666">
+      <text x={x} y={y + 18} textAnchor="middle" fill="">
         {formatDateShort(new Date(payload.value))}
       </text>
     </g>
