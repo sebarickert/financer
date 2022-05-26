@@ -8,6 +8,7 @@ import {
   Legend,
   Tooltip,
   Filler,
+  ChartOptions,
 } from 'chart.js';
 import { useEffect, useState, useTransition } from 'react';
 import { Chart } from 'react-chartjs-2';
@@ -82,40 +83,49 @@ export const MonthlySummaryGraph = ({
         )
       ).map((item) => JSON.parse(item));
 
+      const monthlySummaryHistoryStack = allMonths
+        .map(({ year: targetYear, month: targetMonth }) => {
+          const incomeSummary = incomeMonthSummaries.find(
+            ({ _id: { year, month } }) =>
+              year === targetYear && month === targetMonth
+          );
+          const expenseSummary = expenseMonthSummaries.find(
+            ({ _id: { year, month } }) =>
+              year === targetYear && month === targetMonth
+          );
+
+          const incomes = incomeSummary?.totalAmount ?? 0;
+          const expenses = expenseSummary?.totalAmount ?? 0;
+
+          return {
+            year: targetYear,
+            month: targetMonth,
+            date: getDateFromYearAndMonth(targetYear, targetMonth),
+            incomes,
+            expenses,
+            netStatus: incomes - expenses,
+          };
+        })
+        .sort((a, b) => a.date.getTime() - b.date.getTime());
+
       setMonthlySummaryHistory(
-        allMonths
-          .map(({ year: targetYear, month: targetMonth }) => {
-            const incomeSummary = incomeMonthSummaries.find(
-              ({ _id: { year, month } }) =>
-                year === targetYear && month === targetMonth
-            );
-            const expenseSummary = expenseMonthSummaries.find(
-              ({ _id: { year, month } }) =>
-                year === targetYear && month === targetMonth
-            );
-
-            const incomes = incomeSummary?.totalAmount ?? 0;
-            const expenses = expenseSummary?.totalAmount ?? 0;
-
-            return {
-              year: targetYear,
-              month: targetMonth,
-              date: getDateFromYearAndMonth(targetYear, targetMonth),
-              incomes,
-              expenses,
-              netStatus: incomes - expenses,
-            };
-          })
-          .sort((a, b) => a.date.getTime() - b.date.getTime())
+        monthlySummaryHistoryStack.length > 12
+          ? monthlySummaryHistoryStack.slice(-12)
+          : monthlySummaryHistoryStack
       );
     });
   }, [expenseMonthSummaries, incomeMonthSummaries]);
 
   const labels = monthlySummaryHistory.map(({ date }) => formatDateShort(date));
 
-  const options = {
+  const options: ChartOptions = {
     responsive: true,
-    maintainAspectRatio: true,
+    maintainAspectRatio: false,
+    layout: {
+      padding: {
+        left: -20,
+      },
+    },
     scales: {
       x: {
         grid: {
@@ -123,9 +133,18 @@ export const MonthlySummaryGraph = ({
           drawBorder: false,
         },
         ticks: {
+          minRotation: 0,
+          maxRotation: 0,
+          callback: function (val, index, ticks) {
+            if (ticks.length === 12) {
+              return index % 3 === 1 ? this.getLabelForValue(Number(val)) : '';
+            }
+
+            return this.getLabelForValue(Number(val));
+          },
+          color: '#666666',
           font: {
             size: 14,
-            color: '#666666',
             family: 'Inter',
           },
         },
@@ -141,7 +160,7 @@ export const MonthlySummaryGraph = ({
         },
       },
       trendLine: {
-        axis: 'y' as any,
+        axis: 'y',
         grid: {
           display: false,
           drawBorder: false,
@@ -149,6 +168,19 @@ export const MonthlySummaryGraph = ({
         ticks: {
           display: false,
         },
+      },
+    },
+    elements: {
+      point: {
+        hitRadius: 32,
+        radius: 0,
+        hoverBorderWidth: 3,
+        hoverRadius: 5,
+        hoverBorderColor: '#ffffff',
+        hoverBackgroundColor: '#1c64f2',
+      },
+      line: {
+        borderWidth: 2,
       },
     },
     plugins: {
@@ -161,9 +193,9 @@ export const MonthlySummaryGraph = ({
       tooltip: {
         backgroundColor: 'rgb(31 41 55)',
         padding: 16,
-        mode: 'index' as any,
+        mode: 'index',
         intersect: true,
-        position: 'nearest' as any,
+        position: 'nearest',
         bodySpacing: 6,
         displayColors: false,
         titleSpacing: 0,
@@ -177,7 +209,7 @@ export const MonthlySummaryGraph = ({
           family: 'Inter',
         },
         callbacks: {
-          label: (context: any) => {
+          label: (context) => {
             const label = context.dataset.label || '';
 
             if (!context.parsed.y) {
@@ -224,7 +256,9 @@ export const MonthlySummaryGraph = ({
   };
 
   return (
-    <section className={` ${className}`}>
+    <section
+      className={`min-h-[300px] h-[20vh] md:h-auto md:min-h-0 md:aspect-video -mx-4 md:-mx-0 ${className}`}
+    >
       <LoaderIfProcessing isProcessing={isProcessing}>
         <Chart type="bar" data={data} options={options} />
       </LoaderIfProcessing>
