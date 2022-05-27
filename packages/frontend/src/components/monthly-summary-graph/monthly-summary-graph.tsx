@@ -157,6 +157,7 @@ export const MonthlySummaryGraph = ({
         },
         ticks: {
           display: false,
+          maxTicksLimit: 4,
         },
       },
       trendLine: {
