@@ -25,8 +25,6 @@ import {
 import { formatDateShort } from '../../utils/formatDate';
 import { LoaderIfProcessing } from '../loader/loader-if-processing';
 
-import { BalanceHistory } from './simple-line-chart';
-
 ChartJS.register(
   LinearScale,
   CategoryScale,
@@ -37,6 +35,11 @@ ChartJS.register(
   Tooltip,
   Filler
 );
+
+export type BalanceHistory = {
+  date: Date;
+  balance: number;
+};
 
 interface BalanceGraphProps {
   className?: string;
