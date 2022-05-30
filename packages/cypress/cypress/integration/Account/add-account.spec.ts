@@ -28,6 +28,9 @@ describe('Account creation', () => {
 
     cy.contains(newAccountName).click();
 
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(200);
+
     cy.getById('account-type').should('have.text', expectedType);
     cy.getById('account-balance')
       .invoke('text')
