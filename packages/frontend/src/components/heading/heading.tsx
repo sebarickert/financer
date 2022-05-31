@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 type HeadingVariants = 'h1' | 'h2' | 'h3' | 'h4';
 
 interface HeadingProps {
   variant?: HeadingVariants;
   style?: HeadingVariants;
-  children: string;
+  children: string | ReactNode;
   className?: string;
   testId?: string;
 }
