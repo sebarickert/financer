@@ -1,4 +1,5 @@
 import { Children } from 'react';
+import { NavLink } from 'react-router-dom';
 
 import { Heading } from '../heading/heading';
 
@@ -6,6 +7,7 @@ import { LinkListRow } from './link-list.row';
 
 interface LinkListProps {
   label?: string;
+  link?: string;
   children: React.ReactNode | React.ReactNode[];
   className?: string;
   isVertical?: boolean;
@@ -13,13 +15,18 @@ interface LinkListProps {
 
 export const LinkList = ({
   label,
+  link,
   children,
   className = '',
   isVertical,
 }: LinkListProps): JSX.Element => {
   return (
     <section className={`${className}`}>
-      {label && <Heading className="mb-2">{label}</Heading>}
+      {label && (
+        <Heading className={`mb-2 ${link ? 'underline' : ''}`}>
+          {link ? <NavLink to={link}>{label}</NavLink> : label}
+        </Heading>
+      )}
       <ul
         className={`-mx-4 ${
           !isVertical ? 'lg:grid lg:grid-cols-2 lg:gap-0' : ''
