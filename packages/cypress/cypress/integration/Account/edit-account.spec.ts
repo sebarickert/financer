@@ -28,11 +28,13 @@ describe('Account editing', () => {
     accountType: string
   ) => {
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(200);
+    cy.wait(100);
     cy.getById('page-main-heading').should('contain.text', accountName);
 
     cy.getById('account-type').should('have.text', accountType);
 
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(1000);
     cy.getById('account-balance')
       .invoke('text')
       .then((currentBalance) => {
@@ -50,6 +52,9 @@ describe('Account editing', () => {
     cy.getById('account-row').should('not.contain.text', newAccountName);
 
     cy.getById('account-row').contains(oldAccountName).click();
+
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(1000);
     cy.getById('account-balance').then(($balanceElement) => {
       cy.wrap($balanceElement.text()).as('accountBalance');
     });
@@ -89,6 +94,8 @@ describe('Account editing', () => {
     cy.getById('account-row').contains(accountName).click();
     // Account page
 
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(1000);
     cy.getById('account-balance').then(($balanceElement) => {
       cy.wrap($balanceElement.text()).as('accountBalance');
     });
@@ -123,6 +130,9 @@ describe('Account editing', () => {
     accountType: string
   ) => {
     cy.getById('account-row').contains(accountName).click();
+
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(1000);
     cy.getById('account-balance').then(($balanceElement) => {
       cy.wrap($balanceElement.text()).as('oldAccountBalance');
     });
@@ -170,6 +180,8 @@ describe('Account editing', () => {
     cy.getById('account-row').contains(oldAccountName).click();
     // Account page
 
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(1000);
     cy.getById('account-balance').then(($balanceElement) => {
       cy.wrap($balanceElement.text()).as('oldAccountBalance');
     });
