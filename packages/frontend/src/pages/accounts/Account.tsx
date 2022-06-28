@@ -24,7 +24,7 @@ import { formatCurrency } from '../../utils/formatCurrency';
 
 import { AccountDeleteModal } from './account-modals/AccountDeleteModal';
 import { AccountUpdateMarketValueModal } from './account-modals/AccountUpdateMarketValueModal';
-import { AccountBalanceHistoryChart } from './AccountBalanceHistoryChart';
+// import { AccountBalanceHistoryChart } from './AccountBalanceHistoryChart';
 
 const AccountTransactionAmount = ({
   accountId,
@@ -169,7 +169,7 @@ export const Account = (): JSX.Element | null => {
           <AccountDeleteModal handleDelete={handleDelete} />
         </LinkList>
       </section>
-      <AccountBalanceHistoryChart accountId={account._id} />
+      {/* <AccountBalanceHistoryChart accountId={account._id} /> */}
       <section className="my-6">
         <Heading>History</Heading>
         <LoaderSuspense>
