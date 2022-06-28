@@ -103,11 +103,13 @@ export class TransactionsService {
     linkedAccount?: ObjectId,
     accountTypes?: AccountType[],
     sortOrder: SortOrder = SortOrder.DESC,
+    transactionCategories?: string[],
   ): Promise<PaginationDto<TransactionDto[]>> {
     const query = {
       user: userId,
       ...this.getTransactionTypeFilter(transactionType),
       ...this.getYearAndMonthFilter(year, month),
+      ...this.getTransactionsByCategoryFilter(transactionCategories),
       ...this.getLinkedAccountFilter(linkedAccount),
       ...(await this.getAccountTypesFilter(userId, accountTypes)),
     };
@@ -408,6 +410,18 @@ export class TransactionsService {
       date: {
         $gte: new Date(year, month - 1 || 0, 1),
         $lt: new Date(year, month || 12, 1),
+      },
+    };
+  }
+
+  private getTransactionsByCategoryFilter(categoryIds?: string[]) {
+    if (!categoryIds) {
+      return {};
+    }
+
+    return {
+      categories: {
+        $in: categoryIds,
       },
     };
   }

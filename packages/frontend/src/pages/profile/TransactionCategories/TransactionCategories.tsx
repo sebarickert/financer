@@ -29,7 +29,7 @@ const generateCategoryGroupChild = (
   id: childId,
   label: childName,
   tree: showTree ? tree : '',
-  link: `/profile/transaction-categories/${childId}/edit`,
+  link: `/profile/transaction-categories/${childId}`,
 });
 
 export const TransactionCategories = (): JSX.Element => {
