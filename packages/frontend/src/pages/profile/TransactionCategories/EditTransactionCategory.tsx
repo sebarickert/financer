@@ -79,7 +79,7 @@ export const EditTransactionCategory = (): JSX.Element => {
     <Container>
       <UpdatePageInfo
         title="Edit transaction category"
-        backLink="/profile/transaction-categories"
+        backLink={`/profile/transaction-categories/${id}`}
       />
       <TransactionCategoryForm
         onSubmit={handleSubmit}
