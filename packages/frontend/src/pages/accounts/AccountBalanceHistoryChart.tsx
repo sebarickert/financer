@@ -78,6 +78,7 @@ export const AccountBalanceHistoryChart = ({
   });
 
   const options: ChartOptions = {
+    animation: false,
     maintainAspectRatio: false,
     layout: {
       autoPadding: false,
@@ -224,7 +225,13 @@ export const AccountBalanceHistoryChart = ({
 
   return (
     <div className="min-h-[300px] h-[20vh] md:h-auto md:min-h-0 md:aspect-video -mx-4 md:-mx-0">
-      <Chart type="line" data={data} options={options} />
+      <Chart
+        type="line"
+        data={data}
+        options={options}
+        redraw
+        datasetIdKey="account-page-chart"
+      />
     </div>
   );
 };
