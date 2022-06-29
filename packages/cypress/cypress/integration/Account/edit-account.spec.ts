@@ -14,7 +14,7 @@ describe('Account editing', () => {
     );
   };
 
-  const verifyDifferentBalanaces = (balanceA: string, balanceB: string) => {
+  const verifyDifferentBalances = (balanceA: string, balanceB: string) => {
     const a = parseFloatFromText(balanceA);
     const b = parseFloatFromText(balanceB);
     expect(a).not.to.be.NaN;
@@ -28,7 +28,7 @@ describe('Account editing', () => {
     accountType: string
   ) => {
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100);
+    cy.wait(1000);
     cy.getById('page-main-heading').should('contain.text', accountName);
 
     cy.getById('account-type').should('have.text', accountType);
@@ -132,20 +132,20 @@ describe('Account editing', () => {
     cy.getById('account-row').contains(accountName).click();
 
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(10000);
+    cy.wait(1000);
     cy.getById('account-balance').then(($balanceElement) => {
       cy.wrap($balanceElement.text()).as('oldAccountBalance');
     });
 
     cy.get<string>('@oldAccountBalance').then((oldAccountBalance) => {
       verifyAccountPage(accountName, oldAccountBalance, accountType);
-      verifyDifferentBalanaces(oldAccountBalance, newAccountBalance);
+      verifyDifferentBalances(oldAccountBalance, newAccountBalance);
     });
 
     // Account page
 
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(200);
+    cy.wait(1000);
     cy.getById('edit-account').click();
 
     // Edit account form
@@ -188,7 +188,7 @@ describe('Account editing', () => {
 
     cy.get<string>('@oldAccountBalance').then((oldAccountBalance) => {
       verifyAccountPage(oldAccountName, oldAccountBalance, oldAccountType);
-      verifyDifferentBalanaces(oldAccountBalance, newAccountBalance);
+      verifyDifferentBalances(oldAccountBalance, newAccountBalance);
     });
 
     // eslint-disable-next-line cypress/no-unnecessary-waiting
@@ -261,7 +261,7 @@ describe('Account editing', () => {
     editAccountTypeAndVerify('Saving account 2', 'Savings', 'Cash');
   });
 
-  it('Change Ivestment account type', () => {
+  it('Change Investment account type', () => {
     editAccountTypeAndVerify('Investment account', 'Investment', 'Savings');
   });
 
@@ -281,7 +281,7 @@ describe('Account editing', () => {
     editAccountBalanceAndVerify('Saving account 2', '0,10 €', 'Savings');
   });
 
-  it('Change Ivestment account balance', () => {
+  it('Change Investment account balance', () => {
     editAccountBalanceAndVerify(
       'Investment account',
       '1 000 000,00 €',
@@ -317,7 +317,7 @@ describe('Account editing', () => {
     );
   });
 
-  it('Change Ivestment account all fields', () => {
+  it('Change Investment account all fields', () => {
     editAccountAllDetailsAndVerify(
       'Investment account',
       'Changed to Credit',
