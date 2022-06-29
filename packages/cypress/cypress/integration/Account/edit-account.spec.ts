@@ -28,13 +28,13 @@ describe('Account editing', () => {
     accountType: string
   ) => {
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(1000);
+    cy.wait(10000);
     cy.getById('page-main-heading').should('contain.text', accountName);
 
     cy.getById('account-type').should('have.text', accountType);
 
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(1000);
+    cy.wait(10000);
     cy.getById('account-balance')
       .invoke('text')
       .then((currentBalance) => {
@@ -132,7 +132,7 @@ describe('Account editing', () => {
     cy.getById('account-row').contains(accountName).click();
 
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(1000);
+    cy.wait(10000);
     cy.getById('account-balance').then(($balanceElement) => {
       cy.wrap($balanceElement.text()).as('oldAccountBalance');
     });
@@ -145,7 +145,7 @@ describe('Account editing', () => {
     // Account page
 
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(1000);
+    cy.wait(10000);
     cy.getById('edit-account').click();
 
     // Edit account form
