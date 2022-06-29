@@ -58,8 +58,7 @@ describe('Edit transaction category', () => {
 
     // TODO: This is a workaround to give react time refetch content instead of showing cached list
     // to fix we have to implement new loader logic by checking if react-query is loading
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(200);
+
     cy.contains(newName).parents('article').contains('Edit').click();
 
     cy.location('pathname').should('contain', '/edit');

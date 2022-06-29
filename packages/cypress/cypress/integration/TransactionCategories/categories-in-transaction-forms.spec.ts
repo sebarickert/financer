@@ -36,7 +36,7 @@ describe('Transaction categories visibility in transaction forms', () => {
   it('Verify add income categories', () => {
     cy.visit('http://localhost:3000/statistics/incomes/add');
     cy.get('#amount').clear().type('100');
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
+
     cy.getById('add-category-button').click();
     verifyIncomeCategories();
   });
@@ -44,7 +44,7 @@ describe('Transaction categories visibility in transaction forms', () => {
   it('Verify add expense categories', () => {
     cy.visit('http://localhost:3000/statistics/expenses/add');
     cy.get('#amount').clear().type('100');
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
+
     cy.getById('add-category-button').click();
     verifyExpenseCategories();
   });
@@ -52,7 +52,7 @@ describe('Transaction categories visibility in transaction forms', () => {
   it('Verify add transfer categories', () => {
     cy.visit('http://localhost:3000/statistics/transfers/add');
     cy.get('#amount').clear().type('100');
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
+
     cy.getById('add-category-button').click();
     verifyTransferCategories();
   });

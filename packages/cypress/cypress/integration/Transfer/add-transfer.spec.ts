@@ -253,8 +253,6 @@ describe('Add transfer', () => {
     cy.get('#fromAccount').select('Saving account 2');
     cy.getById('submit').click();
 
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(500);
     cy.getById('transaction-stacked-list-container')
       .contains(newTransactionName)
       .click();
