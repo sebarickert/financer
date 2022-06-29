@@ -46,7 +46,7 @@ interface IAccountBalanceHistoryChartProps {
 
 export const AccountBalanceHistoryChart = ({
   accountId,
-}: IAccountBalanceHistoryChartProps): JSX.Element => {
+}: IAccountBalanceHistoryChartProps): JSX.Element | null => {
   const [chartData, setChartData] = useState<IChartData[]>([]);
   const accountBalanceHistory = useAccountBalanceHistoryById(accountId);
 
@@ -222,6 +222,10 @@ export const AccountBalanceHistoryChart = ({
       },
     ],
   };
+
+  if (!chartData?.length) {
+    return null;
+  }
 
   return (
     <div className="min-h-[300px] h-[20vh] md:h-auto md:min-h-0 md:aspect-video -mx-4 md:-mx-0">
