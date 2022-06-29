@@ -169,7 +169,9 @@ export const Account = (): JSX.Element | null => {
           <AccountDeleteModal handleDelete={handleDelete} />
         </LinkList>
       </section>
-      <AccountBalanceHistoryChart accountId={account._id} />
+      <LoaderSuspense>
+        <AccountBalanceHistoryChart accountId={account._id} />
+      </LoaderSuspense>
       <section className="my-6">
         <Heading>History</Heading>
         <LoaderSuspense>
