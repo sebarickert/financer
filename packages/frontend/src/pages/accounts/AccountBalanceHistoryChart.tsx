@@ -1,17 +1,5 @@
 import { AccountDto } from '@local/types';
-import {
-  Chart as ChartJS,
-  LinearScale,
-  CategoryScale,
-  BarElement,
-  PointElement,
-  LineElement,
-  Legend,
-  Tooltip,
-  Filler,
-  ChartOptions,
-} from 'chart.js';
-import zoomPlugin from 'chartjs-plugin-zoom';
+import { ChartOptions } from 'chart.js';
 import { useEffect, useState } from 'react';
 import { Chart } from 'react-chartjs-2';
 
@@ -27,18 +15,6 @@ interface IChartData {
   date: Date;
   balance: number;
 }
-
-ChartJS.register(
-  LinearScale,
-  CategoryScale,
-  BarElement,
-  PointElement,
-  LineElement,
-  Legend,
-  Tooltip,
-  Filler,
-  zoomPlugin
-);
 
 interface IAccountBalanceHistoryChartProps {
   accountId: AccountDto['_id'];

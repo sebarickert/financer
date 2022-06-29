@@ -1,15 +1,4 @@
-import {
-  Chart as ChartJS,
-  LinearScale,
-  CategoryScale,
-  BarElement,
-  PointElement,
-  LineElement,
-  Legend,
-  Tooltip,
-  Filler,
-  ChartOptions,
-} from 'chart.js';
+import { ChartOptions } from 'chart.js';
 import { useEffect, useState, useTransition } from 'react';
 import { Chart } from 'react-chartjs-2';
 
@@ -24,17 +13,6 @@ import {
 } from '../../utils/formatCurrency';
 import { formatDateShort } from '../../utils/formatDate';
 import { LoaderIfProcessing } from '../loader/loader-if-processing';
-
-ChartJS.register(
-  LinearScale,
-  CategoryScale,
-  BarElement,
-  PointElement,
-  LineElement,
-  Legend,
-  Tooltip,
-  Filler
-);
 
 export type BalanceHistory = {
   date: Date;
