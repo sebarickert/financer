@@ -77,8 +77,6 @@ describe('Delete income', () => {
         cy.saveData('targetTransactionBefore', targetTransactionBefore);
         cy.saveAsyncData('accountBefore', () => getAccount(targetAccountId));
 
-        // eslint-disable-next-line cypress/no-unnecessary-waiting
-        cy.wait(500);
         cy.getById(targetTransactionId).click();
 
         cy.getById('income-delete-modal_open-button').click();
@@ -124,8 +122,6 @@ describe('Delete income', () => {
         cy.saveData('targetTransactionBefore', targetTransactionBefore);
         cy.saveAsyncData('accountBefore', () => getAccount(targetAccountId));
 
-        // eslint-disable-next-line cypress/no-unnecessary-waiting
-        cy.wait(500);
         cy.getById(targetTransactionId).click();
 
         cy.getById('income-delete-modal_open-button').click();

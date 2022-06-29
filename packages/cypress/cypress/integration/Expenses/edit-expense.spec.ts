@@ -88,8 +88,6 @@ describe('Edit expense', () => {
         const newAmount =
           targetTransactionBefore.amount + amountToChangeTransaction;
 
-        // eslint-disable-next-line cypress/no-unnecessary-waiting
-        cy.wait(500);
         cy.getById(targetTransactionBefore._id).click();
 
         cy.getById(`edit-expense-button`).click();
@@ -150,8 +148,6 @@ describe('Edit expense', () => {
         const newAmount =
           targetTransactionBefore.amount + amountToChangeTransaction;
 
-        // eslint-disable-next-line cypress/no-unnecessary-waiting
-        cy.wait(500);
         cy.getById(targetTransactionBefore._id).click();
 
         cy.getById(`edit-expense-button`).click();

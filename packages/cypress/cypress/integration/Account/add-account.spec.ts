@@ -36,9 +36,6 @@ describe('Account creation', () => {
       (path) => expect(path.endsWith('/accounts')).to.be.false
     );
 
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(10000);
-
     cy.getById('account-type').should('have.text', expectedType);
     cy.getById('account-balance')
       .invoke('text')

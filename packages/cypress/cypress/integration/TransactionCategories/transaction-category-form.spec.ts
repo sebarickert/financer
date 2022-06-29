@@ -126,8 +126,6 @@ describe('Transaction category form', () => {
     // Verify that we have correct category
     cy.get('#name').should('have.value', categoryName);
 
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(200);
     cy.get('#parentTransactionCategory option').should(
       'not.contain.text',
       categoryName
