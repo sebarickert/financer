@@ -62,7 +62,7 @@ export const Layout = (): JSX.Element => {
             </div>
           </aside>
           <main>
-            <div className="px-8 py-12">
+            <div className="px-8 py-12" data-testid="layout-root">
               <DesktopHeader />
               <OutletWithErrorBoundary />
             </div>
@@ -75,7 +75,7 @@ export const Layout = (): JSX.Element => {
   return (
     <div className="flex flex-col h-full min-h-screen overflow-y-scroll lg:hidden">
       <main className="flex-grow bg-white lg:pb-24 min-h-screen-safe pb-safe">
-        <div className={`px-4 mt-[44px] pt-4 pb-24`}>
+        <div className={`px-4 mt-[44px] pt-4 pb-24`} data-testid="layout-root">
           <OutletWithErrorBoundary />
         </div>
       </main>

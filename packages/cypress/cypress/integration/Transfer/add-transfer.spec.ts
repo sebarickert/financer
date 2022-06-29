@@ -253,9 +253,7 @@ describe('Add transfer', () => {
     cy.get('#fromAccount').select('Saving account 2');
     cy.getById('submit').click();
 
-    cy.getById('transaction-stacked-list-container')
-      .contains(newTransactionName)
-      .click();
+    cy.getById('layout-root').contains(newTransactionName).click();
     cy.getById('edit-transfer-button').click();
     cy.get('#date').then(($input) => {
       const inputValue = $input.val() as string;
