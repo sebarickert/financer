@@ -181,7 +181,7 @@ describe('Account editing', () => {
     // Account page
 
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(1000);
+    cy.wait(10000);
     cy.getById('account-balance').then(($balanceElement) => {
       cy.wrap($balanceElement.text()).as('oldAccountBalance');
     });
