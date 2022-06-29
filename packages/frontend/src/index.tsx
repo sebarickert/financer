@@ -1,14 +1,4 @@
-import {
-  Chart as ChartJS,
-  LinearScale,
-  CategoryScale,
-  BarElement,
-  PointElement,
-  LineElement,
-  Legend,
-  Tooltip,
-  Filler,
-} from 'chart.js';
+import ChartJS from 'chart.js/auto';
 import zoomPlugin from 'chartjs-plugin-zoom';
 import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
@@ -27,17 +17,7 @@ import { isUpdateAllowed } from './utils/allowedUpdateLocations';
 
 import './assets/tailwind.css';
 
-ChartJS.register(
-  LinearScale,
-  CategoryScale,
-  BarElement,
-  PointElement,
-  LineElement,
-  Legend,
-  Tooltip,
-  Filler,
-  zoomPlugin
-);
+ChartJS.register(zoomPlugin);
 
 const queryClient = new QueryClient({
   defaultOptions: {
