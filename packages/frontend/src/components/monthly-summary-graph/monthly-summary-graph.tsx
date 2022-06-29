@@ -1,28 +1,6 @@
-import {
-  Chart as ChartJS,
-  LinearScale,
-  CategoryScale,
-  BarElement,
-  PointElement,
-  LineElement,
-  Legend,
-  Tooltip,
-  Filler,
-  ChartOptions,
-} from 'chart.js';
+import { ChartOptions } from 'chart.js';
 import { useEffect, useState, useTransition } from 'react';
 import { Chart } from 'react-chartjs-2';
-
-ChartJS.register(
-  LinearScale,
-  CategoryScale,
-  BarElement,
-  PointElement,
-  LineElement,
-  Legend,
-  Tooltip,
-  Filler
-);
 
 import { useExpenseMonthlySummaries } from '../../hooks/expense/useExpenseMonthlySummaries';
 import { useIncomeMonthlySummaries } from '../../hooks/income/useIncomeMonthlySummaries';

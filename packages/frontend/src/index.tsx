@@ -1,10 +1,21 @@
+import {
+  Chart as ChartJS,
+  LinearScale,
+  CategoryScale,
+  BarElement,
+  PointElement,
+  LineElement,
+  Legend,
+  Tooltip,
+  Filler,
+} from 'chart.js';
+import zoomPlugin from 'chartjs-plugin-zoom';
 import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter as Router, useLocation } from 'react-router-dom';
 
 import { App } from './App';
-import './assets/tailwind.css';
 import { ErrorBoundaryHandler } from './components/error-boundary/error-boundary';
 import { LoaderSuspense } from './components/loader/loader-suspense';
 import { ScrollToTop } from './components/scroll-to-top/scroll-to-top';
@@ -13,6 +24,20 @@ import { PageInfoProvider } from './context/pageInfoContext';
 import { reportWebVitals } from './reportWebVitals';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { isUpdateAllowed } from './utils/allowedUpdateLocations';
+
+import './assets/tailwind.css';
+
+ChartJS.register(
+  LinearScale,
+  CategoryScale,
+  BarElement,
+  PointElement,
+  LineElement,
+  Legend,
+  Tooltip,
+  Filler,
+  zoomPlugin
+);
 
 const queryClient = new QueryClient({
   defaultOptions: {
