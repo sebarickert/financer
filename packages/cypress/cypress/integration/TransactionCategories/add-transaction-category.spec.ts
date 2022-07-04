@@ -5,7 +5,8 @@ describe('Transaction category creation', () => {
   ) => {
     const newName = `New Test ${visibility.join(', ') || 'invisible'} category`;
 
-    cy.getById('category-row').should('not.have.text', newName);
+    cy.getById('category-parent-row').should('not.have.text', newName);
+    cy.getById('category-child-row').should('not.have.text', newName);
     cy.getById('add-category').click();
 
     cy.get('#name').clear();
@@ -24,7 +25,7 @@ describe('Transaction category creation', () => {
     cy.getById('submit').click();
     cy.location('pathname').should('not.contain', '/add');
 
-    cy.contains(newName).parents('article').contains('Edit').click();
+    cy.contains(newName).click();
 
     cy.get('#name').should('have.value', newName);
 
@@ -59,7 +60,8 @@ describe('Transaction category creation', () => {
   });
 
   it('Verify category in fixture', () => {
-    cy.getById('category-row').should('have.length', 10);
+    cy.getById('category-parent-row').should('have.length', 3);
+    cy.getById('category-child-row').should('have.length', 8);
   });
 
   it('Add category without visibility options and without parent', () => {

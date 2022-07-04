@@ -11,6 +11,7 @@ interface LinkListProps {
   children: React.ReactNode | React.ReactNode[];
   className?: string;
   isVertical?: boolean;
+  testId?: string;
 }
 
 export const LinkList = ({
@@ -19,9 +20,10 @@ export const LinkList = ({
   children,
   className = '',
   isVertical,
+  testId,
 }: LinkListProps): JSX.Element => {
   return (
-    <section className={`${className}`}>
+    <section className={`${className}`} data-testid={testId}>
       {label && (
         <Heading className={`mb-2 ${link ? 'underline' : ''}`}>
           {link ? <NavLink to={link}>{label}</NavLink> : label}
