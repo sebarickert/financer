@@ -21,7 +21,9 @@ export const TransactionStackedList = ({
   className = '',
   pagerOptions,
   isPagerHidden,
-}: TransactionStackedListProps): JSX.Element => {
+}: TransactionStackedListProps): JSX.Element | null => {
+  if (!rows.length) return null;
+
   return (
     <section className={`${className}`}>
       {title && <h2 className="sr-only">{title}</h2>}
