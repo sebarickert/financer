@@ -2,7 +2,7 @@ describe('Delete transaction category', () => {
   const deleteAndVerifyTransactionCategory = (targetCategoryName: string) => {
     cy.contains(targetCategoryName).should('have.length', 1);
 
-    cy.contains(targetCategoryName).parents('article').contains('Edit').click();
+    cy.contains(targetCategoryName).click();
 
     cy.getById('delete-transaction-category-modal_open-button').click();
     cy.getById('delete-transaction-category-modal_confirm-button').click();

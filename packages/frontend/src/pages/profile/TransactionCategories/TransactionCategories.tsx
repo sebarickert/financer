@@ -98,9 +98,18 @@ export const TransactionCategories = (): JSX.Element => {
         {transactionCategories.map(
           ({ label: parentLabel, link: parentLink, items }) => {
             return (
-              <LinkList label={parentLabel} link={parentLink} key={parentLabel}>
+              <LinkList
+                label={parentLabel}
+                link={parentLink}
+                key={parentLabel}
+                testId="category-parent-row"
+              >
                 {items.map(({ label, id, link, tree }) => (
-                  <LinkListLink link={link} key={id}>
+                  <LinkListLink
+                    link={link}
+                    key={id}
+                    testId="category-child-row"
+                  >
                     <span className="grid">
                       <span className="truncate">{label}</span>
                       <span className="text-sm font-normal text-gray-600 truncate">
