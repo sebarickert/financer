@@ -14,6 +14,7 @@ import { IconExclamation } from './icon.exclamation';
 import { IconHome } from './icon.home';
 import { IconHomeSolid } from './icon.home.solid';
 import { IconLibrary } from './icon.library';
+import { IconLightningBolt } from './icon.lightningBolt';
 import { IconLogout } from './icon.logout';
 import { IconMinusCircle } from './icon.minusCircle';
 import { IconPaperAirplane } from './icon.paperAirplane';
@@ -66,6 +67,7 @@ export enum IconName {
   collection = 'collection',
   sparkles = 'sparkles',
   paperAirplane = 'paper-airplane',
+  lightningBolt = 'lightning-bolt',
 }
 interface IconProps {
   type: IconName;
@@ -178,6 +180,9 @@ export const Icon = ({ type, className = '' }: IconProps): JSX.Element => {
 
     case 'paper-airplane':
       return <IconPaperAirplane className={defaultIconClasses} />;
+
+    case 'lightning-bolt':
+      return <IconLightningBolt className={defaultIconClasses} />;
 
     default:
       break;
