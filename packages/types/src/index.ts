@@ -7,6 +7,7 @@ export * from './transaction-category-mapping';
 export * from './transaction-category';
 export * from './transfer';
 export * from './transaction';
+export * from './transaction-template';
 export * from './user';
 export * from './user-preference';
 export * from './pagination.dto';

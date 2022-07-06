@@ -3,6 +3,7 @@ import {
   PaginationDto,
   SortOrder,
   TransactionMonthSummaryDto,
+  TransactionType,
 } from '@local/types';
 import {
   BadRequestException,
@@ -27,13 +28,6 @@ import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { TransactionDto } from './dto/transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { Transaction, TransactionDocument } from './schemas/transaction.schema';
-
-export enum TransactionType {
-  INCOME = 'income',
-  EXPENSE = 'expense',
-  TRANSFER = 'transfer',
-  ANY = 'any',
-}
 
 @Injectable()
 export class TransactionsService {

@@ -1,4 +1,4 @@
-import { AccountType, SortOrder } from '@local/types';
+import { AccountType, SortOrder, TransactionType } from '@local/types';
 import {
   Controller,
   DefaultValuePipe,
@@ -14,7 +14,7 @@ import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
 import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
 import { UserId } from '../users/users.decorators';
 
-import { TransactionsService, TransactionType } from './transactions.service';
+import { TransactionsService } from './transactions.service';
 
 @Controller('api/transactions')
 @LoggedIn()

@@ -5,6 +5,7 @@ import {
   AccountDto,
   PaginationDto,
   AccountType,
+  TransactionType,
 } from '@local/types';
 import {
   forwardRef,
@@ -19,10 +20,7 @@ import { Model } from 'mongoose';
 import { ObjectId } from '../../types/objectId';
 import { sumArrayItems } from '../../utils/arrays';
 import { AccountBalanceChangesService } from '../account-balance-changes/account-balance-changes.service';
-import {
-  TransactionsService,
-  TransactionType,
-} from '../transactions/transactions.service';
+import { TransactionsService } from '../transactions/transactions.service';
 
 import { Account, AccountDocument } from './schemas/account.schema';
 

@@ -2,14 +2,12 @@ import {
   AccountType,
   PaginationDto,
   TransactionMonthSummaryDto,
+  TransactionType,
 } from '@local/types';
 import { Injectable } from '@nestjs/common';
 
 import { ObjectId } from '../../types/objectId';
-import {
-  TransactionsService,
-  TransactionType,
-} from '../transactions/transactions.service';
+import { TransactionsService } from '../transactions/transactions.service';
 
 import { CreateTransferDto } from './dto/create-transfer.dto';
 import { TransferDto } from './dto/transfer.dto';
