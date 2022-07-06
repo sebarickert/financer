@@ -5,9 +5,9 @@ import { DashboardStats } from '../../components/dashboard-stats/dashboard.stats
 import { Heading } from '../../components/heading/heading';
 import { IconName } from '../../components/icon/icon';
 import { LatestTransactions } from '../../components/latest-transactions/latest-transactions';
-import { QuickLinks } from '../../components/quick-links/quick-links';
-import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
+import { Shortcut } from '../../components/shortcut/shortcut';
+import { ShortcutList } from '../../components/shortcut/shortcut.list';
 
 export const Dashboard = (): JSX.Element => {
   return (
@@ -40,32 +40,20 @@ export const Dashboard = (): JSX.Element => {
           </section>
           <BalanceGraph className="overflow-y-auto" />
         </section>
-        <section className="mt-6 mb-8 lg:mt-8">
-          <Heading className="mb-2">Recent transactions</Heading>
+        <section className="mt-6 lg:mt-8">
+          <Heading className="mb-2">Recent activity</Heading>
           <LatestTransactions isPagerHidden filterOptions={{ limit: 5 }} />
         </section>
-        <QuickLinks>
-          <QuickLinksItem
-            title="Incomes"
-            link="/statistics/incomes"
-            iconName={IconName.download}
-            iconBackgroundColor="green"
-            description="Go to incomes page where you are able to manage your income transactions."
-          />
-          <QuickLinksItem
-            title="Expenses"
-            link="/statistics/expenses"
-            iconName={IconName.upload}
-            iconBackgroundColor="red"
-            description="Go to expenses page where you are able to manage your expense transactions."
-          />
-          <QuickLinksItem
-            title="Transfers"
-            link="/statistics/transfers"
-            iconName={IconName.switchHorizontal}
-            description="Go to transfers page where you are able to manage your transfer transactions."
-          />
-        </QuickLinks>
+        <section className="mt-6 lg:mt-8">
+          <Heading className="mb-6">Shortcuts</Heading>
+          <ShortcutList>
+            <Shortcut link="/">Diesel</Shortcut>
+            <Shortcut link="/">Asuntolaina lyhennys</Shortcut>
+            <Shortcut link="/">Asuntolaina korko</Shortcut>
+            <Shortcut link="/">Autolaina lyhennys</Shortcut>
+            <Shortcut link="/">Autolaina korko</Shortcut>
+          </ShortcutList>
+        </section>
       </section>
     </>
   );
