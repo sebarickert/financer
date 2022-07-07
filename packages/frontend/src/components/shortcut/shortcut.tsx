@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { Heading } from '../heading/heading';
 import { Icon, IconName } from '../icon/icon';
 
-interface IDividerProps {
+interface ShortcutProps {
   link: string;
   children: string;
   className?: string;
@@ -13,7 +13,7 @@ export const Shortcut = ({
   link,
   children,
   className = '',
-}: IDividerProps): JSX.Element => {
+}: ShortcutProps): JSX.Element => {
   return (
     <div
       className={`relative p-4 bg-gray-25 border rounded-lg group focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-500 overflow-hidden ${
