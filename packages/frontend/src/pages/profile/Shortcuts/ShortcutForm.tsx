@@ -1,11 +1,9 @@
 import {
-  CreateTransactionCategoryMappingDtoWithoutTransaction,
-  CreateTransferDto,
   TransactionCategoryMappingDto,
   TransactionTemplateType,
   TransactionType,
 } from '@local/types';
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 import { Alert } from '../../../components/alert/alert';
 import { Button } from '../../../components/button/button';
@@ -14,13 +12,15 @@ import { Input } from '../../../components/input/input';
 import { Select, Option } from '../../../components/select/select';
 import { TransactionCategoriesForm } from '../../../components/transaction-categories-form/transaction-categories-form';
 import { useAllAccounts } from '../../../hooks/account/useAllAccounts';
+import { useAllTransactionCategoriesForExpenseWithCategoryTree } from '../../../hooks/transactionCategories/useAllTransactionCategoriesForExpense';
+import { useAllTransactionCategoriesForIncomeWithCategoryTree } from '../../../hooks/transactionCategories/useAllTransactionCategoriesForIncome';
 import { useAllTransactionCategoriesForTransferWithCategoryTree } from '../../../hooks/transactionCategories/useAllTransactionCategoriesForTransfer';
+import { ITransactionCategoryWithCategoryTree } from '../../../services/TransactionCategoriesService';
 import { capitalize } from '../../../utils/capitalize';
-import { inputDateFormat } from '../../../utils/formatDate';
 
 interface ShortcutFormProps {
   amount?: number;
-  date?: Date;
+  dayOfMonth?: number;
   description?: string;
   errors: string[];
   fromAccount?: string;
@@ -32,7 +32,7 @@ interface ShortcutFormProps {
 
 export const ShortcutForm = ({
   amount,
-  date,
+  dayOfMonth,
   description,
   errors,
   // onSubmit,
@@ -43,21 +43,12 @@ export const ShortcutForm = ({
 }: ShortcutFormProps): JSX.Element | null => {
   const { data: accountsRaw } = useAllAccounts();
   const [accounts, setAccounts] = useState<Option[]>();
-  const transactionCategoriesRaw =
-    useAllTransactionCategoriesForTransferWithCategoryTree();
-  const [transactionCategories, setTransactionCategories] = useState<Option[]>(
-    []
-  );
   const [inputAmountValue, setInputAmountValue] = useState<number | null>(null);
   const [selectedTransactionType, setSelectedTransactionType] = useState(
     TransactionType.INCOME
   );
-
-  const handleAmountInputValueChange = (
-    event: ChangeEvent<HTMLInputElement>
-  ) => {
-    setInputAmountValue(parseFloat(event.target.value));
-  };
+  const [selectedTransactionTemplateType, setSelectedTransactionTemplateType] =
+    useState(TransactionTemplateType.MANUAL);
 
   const handleTransactionTypeChange = (
     event: ChangeEvent<HTMLSelectElement>
@@ -65,6 +56,14 @@ export const ShortcutForm = ({
     const value =
       event.target.value.toUpperCase() as keyof typeof TransactionType;
     setSelectedTransactionType(TransactionType[value]);
+  };
+
+  const handleTransactionTemplateTypeChange = (
+    event: ChangeEvent<HTMLSelectElement>
+  ) => {
+    const value =
+      event.target.value.toUpperCase() as keyof typeof TransactionTemplateType;
+    setSelectedTransactionTemplateType(TransactionTemplateType[value]);
   };
 
   useEffect(() => {
@@ -131,26 +130,6 @@ export const ShortcutForm = ({
     );
   }, [accountsRaw]);
 
-  useEffect(() => {
-    if (transactionCategoriesRaw === null) return;
-
-    setTransactionCategories(
-      transactionCategoriesRaw.map(({ _id, categoryTree }) => ({
-        value: _id,
-        label: categoryTree,
-      }))
-    );
-  }, [transactionCategoriesRaw]);
-
-  useEffect(() => {
-    if (!transactionCategoryMapping) return;
-    const newCategoryAmount: number[] = [];
-    transactionCategoryMapping.forEach((_, index) =>
-      newCategoryAmount.push(index)
-    );
-    setCategoryAmount(newCategoryAmount);
-  }, [transactionCategoryMapping]);
-
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = async (event: any) => {
     event.preventDefault();
@@ -192,6 +171,61 @@ export const ShortcutForm = ({
     // onSubmit(newTransferData);
   };
 
+  const getUseDataHook = () => {
+    if (selectedTransactionType === TransactionType.INCOME)
+      return useAllTransactionCategoriesForIncomeWithCategoryTree;
+    if (selectedTransactionType === TransactionType.EXPENSE)
+      return useAllTransactionCategoriesForExpenseWithCategoryTree;
+
+    return useAllTransactionCategoriesForTransferWithCategoryTree;
+  };
+
+  const TransactionCategoriesFormWrapper = ({
+    useData,
+  }: {
+    useData: () => ITransactionCategoryWithCategoryTree[];
+  }): JSX.Element => {
+    const transactionCategoriesRaw: ITransactionCategoryWithCategoryTree[] =
+      useData();
+
+    const [transactionCategories, setTransactionCategories] = useState<
+      Option[]
+    >([]);
+
+    useEffect(() => {
+      if (transactionCategoriesRaw === null) return;
+
+      setTransactionCategories(
+        transactionCategoriesRaw.map(({ _id, categoryTree }) => ({
+          value: _id,
+          label: categoryTree,
+        }))
+      );
+    }, [transactionCategoriesRaw]);
+
+    useEffect(() => {
+      if (!transactionCategoryMapping) return;
+      const newCategoryAmount: number[] = [];
+      transactionCategoryMapping.forEach((_, index) =>
+        newCategoryAmount.push(index)
+      );
+      setCategoryAmount(newCategoryAmount);
+    }, []);
+
+    return (
+      <TransactionCategoriesForm
+        className="my-8 space-y-8"
+        categoryAmount={categoryAmount}
+        transactionCategories={transactionCategories}
+        transactionCategoryMapping={transactionCategoryMapping}
+        amountMaxValue={inputAmountValue || 0}
+        deleteTransactionCategoryItem={deleteTransactionCategoryItem}
+        setTransactionCategoryItemAmount={setTransactionCategoryItemAmount}
+        categorySelectOnly
+      />
+    );
+  };
+
   if (!accounts) return null;
 
   return (
@@ -214,8 +248,9 @@ export const ShortcutForm = ({
             <Select
               id="shortcutType"
               options={templateTypes}
-              defaultValue={fromAccount}
+              defaultValue={selectedTransactionTemplateType}
               isRequired
+              handleOnChange={handleTransactionTemplateTypeChange}
             >
               Shortcut type
             </Select>
@@ -239,7 +274,6 @@ export const ShortcutForm = ({
               isCurrency
               isRequired
               value={Number.isNaN(amount) ? '' : amount}
-              // onChange={handleAmountInputValueChange}
             >
               Amount
             </Input>
@@ -265,29 +299,24 @@ export const ShortcutForm = ({
                 To Account
               </Select>
             )}
-            <Input
-              id="dayOfMonth"
-              type="number"
-              min={1}
-              max={31}
-              // value={typeof date !== 'undefined' ? inputDateFormat(date) : ''}
-              isDate
-            >
-              Day of month
-            </Input>
+            {selectedTransactionTemplateType ===
+              TransactionTemplateType.AUTO && (
+              <Input
+                id="dayOfMonth"
+                type="number"
+                min={1}
+                max={31}
+                isDate
+                value={Number.isNaN(dayOfMonth) ? '' : dayOfMonth}
+              >
+                Day of month
+              </Input>
+            )}
           </div>
         </section>
         <section className="mt-8">
           <h2 className="sr-only">Categories</h2>
-          <TransactionCategoriesForm
-            className="my-8 space-y-8"
-            categoryAmount={categoryAmount}
-            transactionCategories={transactionCategories}
-            transactionCategoryMapping={transactionCategoryMapping}
-            amountMaxValue={inputAmountValue || 0}
-            deleteTransactionCategoryItem={deleteTransactionCategoryItem}
-            setTransactionCategoryItemAmount={setTransactionCategoryItemAmount}
-          />
+          <TransactionCategoriesFormWrapper useData={getUseDataHook()} />
           <Button
             onClick={addNewCategory}
             accentColor="plain"

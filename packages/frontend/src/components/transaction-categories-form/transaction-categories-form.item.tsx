@@ -18,6 +18,7 @@ interface TransactionCategoriesFormItemProps {
   setTransactionCategoryItemAmount(newValue: number): void;
   amountValue: number;
   testId?: string;
+  categorySelectOnly?: boolean;
 }
 
 export const TransactionCategoriesFormItem = ({
@@ -32,6 +33,7 @@ export const TransactionCategoriesFormItem = ({
   amountValue,
   setUnallocatedAmount,
   testId = '',
+  categorySelectOnly,
 }: TransactionCategoriesFormItemProps): JSX.Element => {
   return (
     <div
@@ -54,42 +56,46 @@ export const TransactionCategoriesFormItem = ({
             >
               Category
             </Select>
-            <div className="grid grid-cols-[1fr,auto] gap-2 items-end">
-              <Input
-                id={`transactionCategory[${categoryAmountIndex}]amount`}
-                type="number"
-                min={0.01}
-                step={0.01}
-                max={amountMaxValue}
-                isCurrency
-                isRequired
-                value={amountValue || categoryMapping?.amount || ''}
-                onChange={(event) =>
-                  setTransactionCategoryItemAmount(
-                    parseFloat(event.target.value)
-                  )
-                }
-                testId={`${testId}_transaction-category_amount`}
-              >
-                Amount
-              </Input>
-              <button
-                type="button"
-                className="border-gray-300 bg-white text-gray-700 shadow-sm hover:text-gray-500 inline-flex justify-center w-16 rounded-md items-center py-3 border font-medium text-base  focus-within:ring-2 focus:ring-inset focus:ring-blue-500 focus:outline-none transition ease-in-out duration-150 h-[50px]"
-                onClick={setUnallocatedAmount}
-              >
-                <span className="sr-only">Add unallocated amount</span>
-                <Icon type={IconName.plusCircle} />
-              </button>
-            </div>
+            {!categorySelectOnly && (
+              <>
+                <div className="grid grid-cols-[1fr,auto] gap-2 items-end">
+                  <Input
+                    id={`transactionCategory[${categoryAmountIndex}]amount`}
+                    type="number"
+                    min={0.01}
+                    step={0.01}
+                    max={amountMaxValue}
+                    isCurrency
+                    isRequired
+                    value={amountValue || categoryMapping?.amount || ''}
+                    onChange={(event) =>
+                      setTransactionCategoryItemAmount(
+                        parseFloat(event.target.value)
+                      )
+                    }
+                    testId={`${testId}_transaction-category_amount`}
+                  >
+                    Amount
+                  </Input>
+                  <button
+                    type="button"
+                    className="border-gray-300 bg-white text-gray-700 shadow-sm hover:text-gray-500 inline-flex justify-center w-16 rounded-md items-center py-3 border font-medium text-base  focus-within:ring-2 focus:ring-inset focus:ring-blue-500 focus:outline-none transition ease-in-out duration-150 h-[50px]"
+                    onClick={setUnallocatedAmount}
+                  >
+                    <span className="sr-only">Add unallocated amount</span>
+                    <Icon type={IconName.plusCircle} />
+                  </button>
+                </div>
+                <Input
+                  id={`transactionCategory[${categoryAmountIndex}]description`}
+                  value={categoryMapping?.description || ''}
+                  testId={`${testId}_transaction-category_description`}
+                >
+                  Description
+                </Input>
+              </>
+            )}
           </div>
-          <Input
-            id={`transactionCategory[${categoryAmountIndex}]description`}
-            value={categoryMapping?.description || ''}
-            testId={`${testId}_transaction-category_description`}
-          >
-            Description
-          </Input>
         </div>
         <Button
           className="sm:mt-6"
