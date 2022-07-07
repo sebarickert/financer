@@ -14,6 +14,7 @@ interface TransactionCategoriesFormProps {
   deleteTransactionCategoryItem(itemKey: number): void;
   setTransactionCategoryItemAmount(itemKey: number, itemValue: number): void;
   testId?: string;
+  categorySelectOnly?: boolean;
 }
 
 export const TransactionCategoriesForm = ({
@@ -25,6 +26,7 @@ export const TransactionCategoriesForm = ({
   deleteTransactionCategoryItem,
   setTransactionCategoryItemAmount,
   testId = 'transaction-categories-form',
+  categorySelectOnly,
 }: TransactionCategoriesFormProps): JSX.Element => {
   const totalAllocatedAmount = Object.values(categoryAmount)
     .filter((item) => !Number.isNaN(item))
@@ -54,6 +56,7 @@ export const TransactionCategoriesForm = ({
           }}
           testId={testId}
           key={index}
+          categorySelectOnly={categorySelectOnly}
         />
       ))}
     </div>
