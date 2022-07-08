@@ -36,8 +36,8 @@ export class TransactionTemplateController {
   }
 
   @Get()
-  findAll(@UserId() userId: ObjectId) {
-    return this.transactionTemplateService.findAll(userId);
+  findAllByUser(@UserId() userId: ObjectId) {
+    return this.transactionTemplateService.findAllByUser(userId);
   }
 
   @Get(':id')

@@ -3,9 +3,9 @@ import {
   Min,
   IsNotEmpty,
   IsString,
-  IsDateString,
   ValidateNested,
   IsEnum,
+  Max,
 } from 'class-validator';
 
 import { TransactionType } from '../transaction/transaction-type';
@@ -41,8 +41,9 @@ export class CreateTransactionTemplateDto<ObjectIdType = string> {
   @IsString()
   readonly description?: string;
 
-  @IsDateString({}, { message: 'Date must not be empty.' })
-  readonly dayOfMonth?: Date;
+  @Min(1, { message: 'Day of month must be a positive number.' })
+  @Max(31, { message: 'Day of month must not be greater than 31.' })
+  readonly dayOfMonth?: number;
 
   @ValidateNested({ each: true })
   readonly categories?: ObjectIdType[];
