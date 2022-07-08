@@ -174,7 +174,7 @@ export const ShortcutForm = ({
       fromAccount: isExpenseOrTransfer ? newFromAccount.value : undefined,
       toAccount: isIncomeOrTransfer ? newToAccount.value : undefined,
       amount: parseFloat((newAmount.value as string).replace(',', '.')),
-      description: newDescription.value,
+      description: newDescription.value || '',
       dayOfMonth: isShortcutTypeOfAuto
         ? Number(newDayOfMonth.value)
         : undefined,
@@ -277,7 +277,7 @@ export const ShortcutForm = ({
             >
               Transaction type
             </Select>
-            <Input id="description" isRequired value={description}>
+            <Input id="description" value={description}>
               Description
             </Input>
             <Input
@@ -286,7 +286,6 @@ export const ShortcutForm = ({
               min={0.01}
               step={0.01}
               isCurrency
-              isRequired
               value={Number.isNaN(amount) ? '' : amount}
             >
               Amount
