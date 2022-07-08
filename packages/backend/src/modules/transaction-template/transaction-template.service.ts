@@ -32,7 +32,15 @@ export class TransactionTemplateService {
     });
   }
 
-  async findAll(userId: ObjectId) {
+  async createMany(
+    createTransactionTemplateDto: CreateTransactionTemplateDto[],
+  ) {
+    return this.transactionTemplateModel.insertMany(
+      createTransactionTemplateDto,
+    );
+  }
+
+  async findAllByUser(userId: ObjectId) {
     return this.transactionTemplateModel.find({ userId });
   }
 
@@ -66,5 +74,9 @@ export class TransactionTemplateService {
   async remove(id: ObjectId, userId: ObjectId) {
     await this.findOne(id, userId);
     return this.transactionTemplateModel.deleteOne({ _id: id });
+  }
+
+  async removeAllByUser(userId: ObjectId) {
+    await this.transactionTemplateModel.deleteMany({ userId }).exec();
   }
 }

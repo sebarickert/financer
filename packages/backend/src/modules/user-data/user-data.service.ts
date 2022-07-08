@@ -9,6 +9,8 @@ import { TransactionCategoryDocument } from '../transaction-categories/schemas/t
 import { TransactionCategoriesService } from '../transaction-categories/transaction-categories.service';
 import { TransactionCategoryMappingDocument } from '../transaction-category-mappings/schemas/transaction-category-mapping.schema';
 import { TransactionCategoryMappingsService } from '../transaction-category-mappings/transaction-category-mappings.service';
+import { TransactionTemplateDocument } from '../transaction-template/schemas/transaction-template.schema';
+import { TransactionTemplateService } from '../transaction-template/transaction-template.service';
 import { TransactionDocument } from '../transactions/schemas/transaction.schema';
 import { TransactionsService } from '../transactions/transactions.service';
 import { UserPreferenceDocument } from '../user-preferences/schemas/user-preference.schema';
@@ -23,6 +25,7 @@ export type ImportUserDataDto = {
   transactionCategories: TransactionCategoryDocument[];
   transactionCategoryMappings: TransactionCategoryMappingDocument[];
   userPreferences: UserPreferenceDocument[];
+  transactionTemplates: TransactionTemplateDocument[];
 };
 
 export type ExportUserDataDto = ImportUserDataDto & {
@@ -52,6 +55,7 @@ export class UserDataService {
     private transactionCategoriesService: TransactionCategoriesService,
     private transactionCategoryMappingService: TransactionCategoryMappingsService,
     private userPreferencesService: UserPreferencesService,
+    private transactionTemplateService: TransactionTemplateService,
   ) {}
 
   async findAllOneUserData(
@@ -71,6 +75,8 @@ export class UserDataService {
     const transactionCategoryMappings =
       await this.transactionCategoryMappingService.findAllByUser(userId);
     const userPreferences = await this.userPreferencesService.findAll(userId);
+    const transactionTemplates =
+      await this.transactionTemplateService.findAllByUser(userId);
 
     const filename = getMyDataFilename();
     const data = {
@@ -81,6 +87,7 @@ export class UserDataService {
       transactionCategories,
       transactionCategoryMappings,
       userPreferences,
+      transactionTemplates,
     };
 
     return { filename, data };
@@ -95,6 +102,7 @@ export class UserDataService {
       transactionCategories = [],
       transactionCategoryMappings = [],
       userPreferences = [],
+      transactionTemplates = [],
     }: ImportUserDataDto,
   ) {
     await Promise.all([
@@ -104,6 +112,7 @@ export class UserDataService {
       this.transactionCategoriesService.removeAllByUser(userId),
       this.transactionCategoryMappingService.removeAllByUser(userId),
       this.userPreferencesService.removeAllByUser(userId),
+      this.transactionTemplateService.removeAllByUser(userId),
     ]);
 
     const parsedAccounts = accounts.map((account) => ({
@@ -151,6 +160,16 @@ export class UserDataService {
       userId,
     }));
 
+    const parsedTransactionTemplates = transactionTemplates.map(
+      ({ toAccount, fromAccount, categories = [], ...template }) => ({
+        ...template,
+        toAccount: parseObjectId(toAccount),
+        fromAccount: parseObjectId(fromAccount),
+        categories: categories.map((category) => parseObjectId(category)),
+        userId,
+      }),
+    );
+
     await Promise.all([
       this.accountsService.createMany(parsedAccounts),
       this.accountBalanceChangesService.createMany(parsedAccountBalanceChanges),
@@ -160,6 +179,7 @@ export class UserDataService {
         parsedTransactionCategoryMappings,
       ),
       this.userPreferencesService.createMany(parsedUserPreferences),
+      this.transactionTemplateService.createMany(parsedTransactionTemplates),
     ]);
 
     return { payload: 'Successfully overrided data.' };
