@@ -6,6 +6,7 @@ import {
   ValidateNested,
   IsEnum,
   Max,
+  IsOptional,
 } from 'class-validator';
 
 import { TransactionType } from '../transaction/transaction-type';
@@ -34,6 +35,7 @@ export class CreateTransactionTemplateDto<ObjectIdType = string> {
   @IsMongoId()
   readonly toAccount?: ObjectIdType;
 
+  @IsOptional()
   @Min(0.01, { message: 'Amount must be a positive number.' })
   readonly amount?: number;
 
@@ -41,6 +43,7 @@ export class CreateTransactionTemplateDto<ObjectIdType = string> {
   @IsString()
   readonly description?: string;
 
+  @IsOptional()
   @Min(1, { message: 'Day of month must be a positive number.' })
   @Max(31, { message: 'Day of month must not be greater than 31.' })
   readonly dayOfMonth?: number;
