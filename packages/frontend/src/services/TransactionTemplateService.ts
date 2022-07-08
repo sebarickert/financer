@@ -4,7 +4,14 @@ import {
   TransactionTemplateDto,
 } from '@local/types';
 
-import { parseApiResponse } from '../utils/apiHelper';
+import { parseApiResponse, parseJsonOrThrowError } from '../utils/apiHelper';
+
+export const getAllTransactionTemplates = async (): Promise<
+  TransactionTemplateDto[]
+> => {
+  const transactionTemplates = await fetch('/api/transaction-template');
+  return parseJsonOrThrowError(transactionTemplates);
+};
 
 export const addTransactionTemplate = async (
   newTransactionTemplateData: CreateTransactionTemplateDto
