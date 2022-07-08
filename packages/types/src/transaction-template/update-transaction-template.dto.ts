@@ -29,21 +29,21 @@ export class UpdateTransactionTemplateDto<ObjectIdType = string> {
   readonly templateVisibility: TransactionType;
 
   @IsMongoId()
-  readonly fromAccount: ObjectIdType;
+  readonly fromAccount?: ObjectIdType;
 
   @IsMongoId()
-  readonly toAccount: ObjectIdType;
+  readonly toAccount?: ObjectIdType;
 
   @Min(0.01, { message: 'Amount must be a positive number.' })
-  readonly amount: number;
+  readonly amount?: number;
 
   @IsNotEmpty({ message: 'Description must not be empty.' })
   @IsString()
-  readonly description: string;
+  readonly description?: string;
 
   @IsDateString({}, { message: 'Date must not be empty.' })
-  readonly dayOfMonth: Date;
+  readonly dayOfMonth?: Date;
 
   @ValidateNested({ each: true })
-  categories: ObjectIdType[];
+  readonly categories?: ObjectIdType[];
 }

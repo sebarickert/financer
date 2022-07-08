@@ -3,9 +3,9 @@ import {
   Min,
   IsNotEmpty,
   IsString,
-  IsDateString,
   ValidateNested,
   IsEnum,
+  Max,
 } from 'class-validator';
 
 import { TransactionType } from '../transaction/transaction-type';
@@ -27,29 +27,29 @@ export class TransactionTemplateDto<ObjectIdType = string> {
   readonly templateType: TransactionTemplateType[];
 
   @IsEnum(TransactionType, {
-    message: 'Type must defined.',
+    message: 'Visibility must defined.',
   })
   readonly templateVisibility: TransactionType;
 
   @IsMongoId()
-  readonly fromAccount: ObjectIdType;
+  readonly fromAccount?: ObjectIdType;
 
   @IsMongoId()
-  readonly toAccount: ObjectIdType;
+  readonly toAccount?: ObjectIdType;
 
   @Min(0.01, { message: 'Amount must be a positive number.' })
-  readonly amount: number;
+  readonly amount?: number;
 
-  @IsNotEmpty({ message: 'Description must not be empty.' })
   @IsString()
-  readonly description: string;
+  readonly description?: string;
 
-  @IsDateString({}, { message: 'Date must not be empty.' })
-  readonly dayOfMonth: Date;
+  @Min(1, { message: 'Day of month must be a positive number.' })
+  @Max(31, { message: 'Day of month must not be greater than 31.' })
+  readonly dayOfMonth?: Date;
 
   @IsMongoId()
   readonly userId: ObjectIdType;
 
   @ValidateNested({ each: true })
-  categories: ObjectIdType[];
+  readonly categories?: ObjectIdType[];
 }
