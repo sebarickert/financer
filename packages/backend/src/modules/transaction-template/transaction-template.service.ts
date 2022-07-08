@@ -1,3 +1,4 @@
+import { TransactionTemplateType } from '@local/types';
 import {
   Injectable,
   NotFoundException,
@@ -42,6 +43,16 @@ export class TransactionTemplateService {
 
   async findAllByUser(userId: ObjectId) {
     return this.transactionTemplateModel.find({ userId });
+  }
+
+  async findAllByUserAndType(
+    userId: ObjectId,
+    templateType: TransactionTemplateType,
+  ) {
+    return this.transactionTemplateModel.find({
+      userId,
+      templateType,
+    });
   }
 
   async findOne(id: ObjectId, userId: ObjectId) {

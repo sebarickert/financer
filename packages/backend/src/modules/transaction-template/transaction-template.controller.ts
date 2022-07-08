@@ -1,3 +1,4 @@
+import { TransactionTemplateType } from '@local/types';
 import {
   Controller,
   Get,
@@ -38,6 +39,14 @@ export class TransactionTemplateController {
   @Get()
   findAllByUser(@UserId() userId: ObjectId) {
     return this.transactionTemplateService.findAllByUser(userId);
+  }
+
+  @Get('/manual')
+  findAllManualTypeByUser(@UserId() userId: ObjectId) {
+    return this.transactionTemplateService.findAllByUserAndType(
+      userId,
+      TransactionTemplateType.MANUAL,
+    );
   }
 
   @Get(':id')
