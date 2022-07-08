@@ -31,25 +31,33 @@ export class TransactionTemplate {
   @Prop({
     type: MogooseTypes.ObjectId,
     ref: Transaction.name,
+    default: null,
   })
   fromAccount: ObjectId;
 
   @Prop({
     type: MogooseTypes.ObjectId,
     ref: Transaction.name,
+    default: null,
   })
   toAccount: ObjectId;
 
-  @Prop(Number)
+  @Prop({ type: Number, default: null })
   amount: number;
 
-  @Prop({})
+  @Prop({
+    default: null,
+  })
   description: string;
 
-  @Prop({ index: true, type: Number })
+  @Prop({
+    index: true,
+    type: Number,
+    default: null,
+  })
   dayOfMonth: number;
 
-  @Prop({ type: [String] })
+  @Prop({ type: [String], default: [] })
   categories: ObjectId[];
 }
 
