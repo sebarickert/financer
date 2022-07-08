@@ -1,4 +1,5 @@
 import {
+  CreateTransactionTemplateDto,
   TransactionCategoryMappingDto,
   TransactionTemplateType,
   TransactionType,
@@ -25,7 +26,7 @@ interface ShortcutFormProps {
   errors: string[];
   fromAccount?: string;
   toAccount?: string;
-  // onSubmit(newTransfer: CreateTransferDto): void;
+  onSubmit(newShortcut: CreateTransactionTemplateDto): void;
   submitLabel: string;
   transactionCategoryMapping?: TransactionCategoryMappingDto[] | null;
 }
@@ -35,7 +36,7 @@ export const ShortcutForm = ({
   dayOfMonth,
   description,
   errors,
-  // onSubmit,
+  onSubmit,
   submitLabel,
   fromAccount,
   toAccount,
@@ -133,42 +134,54 @@ export const ShortcutForm = ({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-    // const {
-    //   description: newDescription,
-    //   amount: newAmount,
-    //   date: newDate,
-    //   fromAccount: newFromAccount,
-    //   toAccount: newToAccount,
-    // } = event.target;
+    const {
+      shortcutName: newShortcutName,
+      shortcutType: newShortcutType,
+      transactionType: newTransactionType,
+      description: newDescription,
+      amount: newAmount,
+      dayOfMonth: newDayOfMonth,
+      fromAccount: newFromAccount,
+      toAccount: newToAccount,
+    } = event.target;
 
-    // const transactionCategoryMappings: CreateTransactionCategoryMappingDtoWithoutTransaction[] =
-    //   Object.keys(categoryAmount).map((item) => {
-    //     const newTransactionCategories =
-    //       event.target[`transactionCategory[${item}]category`];
-    //     const newTransactionCategoriesAmount =
-    //       event.target[`transactionCategory[${item}]amount`];
-    //     const newTransactionCategoriesDescription =
-    //       event.target[`transactionCategory[${item}]description`];
+    const transactionCategoryMappings = Object.keys(categoryAmount).map(
+      (item) => {
+        const newTransactionCategories =
+          event.target[`transactionCategory[${item}]category`];
 
-    //     return {
-    //       category_id: newTransactionCategories.value,
-    //       amount: parseFloat(
-    //         (newTransactionCategoriesAmount.value as string).replace(',', '.')
-    //       ),
-    //       description: newTransactionCategoriesDescription.value,
-    //     };
-    //   });
+        return newTransactionCategories.value;
+      }
+    );
 
-    // const newTransferData: CreateTransferDto = {
-    //   fromAccount: newFromAccount.value,
-    //   toAccount: newToAccount.value,
-    //   amount: parseFloat((newAmount.value as string).replace(',', '.')),
-    //   description: newDescription.value,
-    //   date: newDate.value ? new Date(newDate.value) : newDate.value,
-    //   categories: transactionCategoryMappings,
-    // };
+    const isExpenseOrTransfer =
+      newTransactionType.value === 'expense' ||
+      newTransactionType.value === 'transfer';
 
-    // onSubmit(newTransferData);
+    const isIncomeOrTransfer =
+      newTransactionType.value === 'income' ||
+      newTransactionType.value === 'transfer';
+
+    const isShortcutTypeOfAuto = newShortcutType.value === 'auto';
+
+    const newShortcutData: CreateTransactionTemplateDto = {
+      templateName: newShortcutName.value,
+      templateType: newShortcutType.value,
+      templateVisibility:
+        TransactionType[
+          newTransactionType.value.toUpperCase() as keyof typeof TransactionType
+        ],
+      fromAccount: isExpenseOrTransfer ? newFromAccount.value : undefined,
+      toAccount: isIncomeOrTransfer ? newToAccount.value : undefined,
+      amount: parseFloat((newAmount.value as string).replace(',', '.')),
+      description: newDescription.value,
+      dayOfMonth: isShortcutTypeOfAuto
+        ? Number(newDayOfMonth.value)
+        : undefined,
+      categories: transactionCategoryMappings,
+    };
+
+    onSubmit(newShortcutData);
   };
 
   const getUseDataHook = () => {
@@ -251,6 +264,7 @@ export const ShortcutForm = ({
               defaultValue={selectedTransactionTemplateType}
               isRequired
               handleOnChange={handleTransactionTemplateTypeChange}
+              isDisabled
             >
               Shortcut type
             </Select>

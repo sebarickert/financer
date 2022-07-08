@@ -5,6 +5,7 @@ interface SelectProps {
   help?: string;
   id: string;
   isRequired?: boolean;
+  isDisabled?: boolean;
   options: Option[];
   defaultValue?: string;
   className?: string;
@@ -26,6 +27,7 @@ export const Select = ({
   defaultValue,
   className = '',
   testId,
+  isDisabled = false,
   handleOnChange = () => {},
 }: SelectProps): JSX.Element => {
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -50,6 +52,7 @@ export const Select = ({
           aria-describedby={help && `${id}-description`}
           onChange={handleChange}
           defaultValue={defaultValue}
+          disabled={isDisabled}
         >
           {options.map(({ value, label }) => (
             <option value={value} key={value}>
