@@ -6,8 +6,7 @@ import { Heading } from '../../components/heading/heading';
 import { IconName } from '../../components/icon/icon';
 import { LatestTransactions } from '../../components/latest-transactions/latest-transactions';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
-import { Shortcut } from '../../components/shortcut/shortcut';
-import { ShortcutList } from '../../components/shortcut/shortcut.list';
+import { TransactionTemplatesList } from '../../components/transaction-templates-list/transaction-templates-list';
 
 export const Dashboard = (): JSX.Element => {
   return (
@@ -44,16 +43,7 @@ export const Dashboard = (): JSX.Element => {
           <Heading className="mb-2">Recent activity</Heading>
           <LatestTransactions isPagerHidden filterOptions={{ limit: 5 }} />
         </section>
-        <section className="mt-6 lg:mt-8">
-          <Heading className="mb-6">Shortcuts</Heading>
-          <ShortcutList>
-            <Shortcut link="/">Diesel</Shortcut>
-            <Shortcut link="/">Asuntolaina lyhennys</Shortcut>
-            <Shortcut link="/">Asuntolaina korko</Shortcut>
-            <Shortcut link="/">Autolaina lyhennys</Shortcut>
-            <Shortcut link="/">Autolaina korko</Shortcut>
-          </ShortcutList>
-        </section>
+        <TransactionTemplatesList className="mt-6 lg:mt-8" />
       </section>
     </>
   );
