@@ -7,11 +7,10 @@ import {
   TransactionTemplate,
   TransactionTemplateSchema,
 } from './schemas/transaction-template.schema';
-import { TransactionTemplateController } from './transaction-template.controller';
-import { TransactionTemplateService } from './transaction-template.service';
+import { TransactionTemplatesService as TransactionTemplatesService } from './transaction-templates.service';
 
-describe('TransactionTemplateController', () => {
-  let controller: TransactionTemplateController;
+describe('TransactionTemplatesService', () => {
+  let service: TransactionTemplatesService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -21,16 +20,15 @@ describe('TransactionTemplateController', () => {
           { name: TransactionTemplate.name, schema: TransactionTemplateSchema },
         ]),
       ],
-      controllers: [TransactionTemplateController],
-      providers: [TransactionTemplateService],
+      providers: [TransactionTemplatesService],
     }).compile();
 
-    controller = module.get<TransactionTemplateController>(
-      TransactionTemplateController,
+    service = module.get<TransactionTemplatesService>(
+      TransactionTemplatesService,
     );
   });
 
   it('should be defined', () => {
-    expect(controller).toBeDefined();
+    expect(service).toBeDefined();
   });
 });

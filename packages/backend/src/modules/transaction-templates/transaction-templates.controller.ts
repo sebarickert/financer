@@ -16,13 +16,13 @@ import { UserId } from '../users/users.decorators';
 
 import { CreateTransactionTemplateDto } from './dto/create-transaction-template.dto';
 import { UpdateTransactionTemplateDto } from './dto/update-transaction-template.dto';
-import { TransactionTemplateService } from './transaction-template.service';
+import { TransactionTemplatesService as TransactionTemplatesService } from './transaction-templates.service';
 
-@Controller('api/transaction-template')
+@Controller('api/transaction-templates')
 @LoggedIn()
-export class TransactionTemplateController {
+export class TransactionTemplatesController {
   constructor(
-    private readonly transactionTemplateService: TransactionTemplateService,
+    private readonly transactionTemplatesService: TransactionTemplatesService,
   ) {}
 
   @Post()
@@ -30,7 +30,7 @@ export class TransactionTemplateController {
     @UserId() userId: ObjectId,
     @Body() createTransactionTemplateDto: CreateTransactionTemplateDto,
   ) {
-    return this.transactionTemplateService.create(
+    return this.transactionTemplatesService.create(
       createTransactionTemplateDto,
       userId,
     );
@@ -38,12 +38,12 @@ export class TransactionTemplateController {
 
   @Get()
   findAllByUser(@UserId() userId: ObjectId) {
-    return this.transactionTemplateService.findAllByUser(userId);
+    return this.transactionTemplatesService.findAllByUser(userId);
   }
 
   @Get('/manual')
   findAllManualTypeByUser(@UserId() userId: ObjectId) {
-    return this.transactionTemplateService.findAllByUserAndType(
+    return this.transactionTemplatesService.findAllByUserAndType(
       userId,
       TransactionTemplateType.MANUAL,
     );
@@ -54,7 +54,7 @@ export class TransactionTemplateController {
     @UserId() userId: ObjectId,
     @Param('id', ValidateEntityId) id: ObjectId,
   ) {
-    return this.transactionTemplateService.findOne(id, userId);
+    return this.transactionTemplatesService.findOne(id, userId);
   }
 
   @Patch(':id')
@@ -63,7 +63,7 @@ export class TransactionTemplateController {
     @Param('id', ValidateEntityId) id: ObjectId,
     @Body() updateTransactionTemplateDto: UpdateTransactionTemplateDto,
   ) {
-    return this.transactionTemplateService.update(
+    return this.transactionTemplatesService.update(
       id,
       updateTransactionTemplateDto,
       userId,
@@ -75,6 +75,6 @@ export class TransactionTemplateController {
     @UserId() userId: ObjectId,
     @Param('id', ValidateEntityId) id: ObjectId,
   ) {
-    return this.transactionTemplateService.remove(id, userId);
+    return this.transactionTemplatesService.remove(id, userId);
   }
 }

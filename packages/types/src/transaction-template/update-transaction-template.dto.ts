@@ -6,6 +6,7 @@ import {
   ValidateNested,
   IsEnum,
   Max,
+  IsOptional,
 } from 'class-validator';
 
 import { TransactionType } from '../transaction/transaction-type';
@@ -37,7 +38,7 @@ export class UpdateTransactionTemplateDto<ObjectIdType = string> {
   @Min(0.01, { message: 'Amount must be a positive number.' })
   readonly amount?: number;
 
-  @IsNotEmpty({ message: 'Description must not be empty.' })
+  @IsOptional()
   @IsString()
   readonly description?: string;
 

@@ -10,6 +10,7 @@ import { Alert } from '../../../components/alert/alert';
 import { Button } from '../../../components/button/button';
 import { Form } from '../../../components/form/form';
 import { Input } from '../../../components/input/input';
+import { Loader } from '../../../components/loader/loader';
 import { Select, Option } from '../../../components/select/select';
 import { TransactionCategoriesForm } from '../../../components/transaction-categories-form/transaction-categories-form';
 import { useAllAccounts } from '../../../hooks/account/useAllAccounts';
@@ -26,6 +27,9 @@ interface ShortcutFormProps {
   errors: string[];
   fromAccount?: string;
   toAccount?: string;
+  shortcutName?: string;
+  shortcutType?: string;
+  transactionType?: string;
   onSubmit(newShortcut: CreateTransactionTemplateDto): void;
   submitLabel: string;
   transactionCategoryMapping?: TransactionCategoryMappingDto[] | null;
@@ -41,12 +45,15 @@ export const ShortcutForm = ({
   fromAccount,
   toAccount,
   transactionCategoryMapping = null,
+  shortcutName,
+  transactionType,
+  shortcutType,
 }: ShortcutFormProps): JSX.Element | null => {
   const { data: accountsRaw } = useAllAccounts();
   const [accounts, setAccounts] = useState<Option[]>();
   const [inputAmountValue, setInputAmountValue] = useState<number | null>(null);
   const [selectedTransactionType, setSelectedTransactionType] = useState(
-    TransactionType.INCOME
+    transactionType || TransactionType.INCOME
   );
   const [selectedTransactionTemplateType, setSelectedTransactionTemplateType] =
     useState(TransactionTemplateType.MANUAL);
@@ -184,6 +191,15 @@ export const ShortcutForm = ({
     onSubmit(newShortcutData);
   };
 
+  useEffect(() => {
+    if (!transactionCategoryMapping) return;
+    const newCategoryAmount: number[] = [];
+    transactionCategoryMapping.forEach((_, index) =>
+      newCategoryAmount.push(index)
+    );
+    setCategoryAmount(newCategoryAmount);
+  }, [transactionCategoryMapping]);
+
   const getUseDataHook = () => {
     if (selectedTransactionType === TransactionType.INCOME)
       return useAllTransactionCategoriesForIncomeWithCategoryTree;
@@ -216,14 +232,7 @@ export const ShortcutForm = ({
       );
     }, [transactionCategoriesRaw]);
 
-    useEffect(() => {
-      if (!transactionCategoryMapping) return;
-      const newCategoryAmount: number[] = [];
-      transactionCategoryMapping.forEach((_, index) =>
-        newCategoryAmount.push(index)
-      );
-      setCategoryAmount(newCategoryAmount);
-    }, []);
+    if (!transactionCategories.length) return <Loader />;
 
     return (
       <TransactionCategoriesForm
@@ -255,13 +264,13 @@ export const ShortcutForm = ({
       >
         <section>
           <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
-            <Input id="shortcutName" isRequired>
+            <Input id="shortcutName" isRequired value={shortcutName}>
               Shortcut name
             </Input>
             <Select
               id="shortcutType"
               options={templateTypes}
-              defaultValue={selectedTransactionTemplateType}
+              defaultValue={shortcutType ?? selectedTransactionTemplateType}
               isRequired
               handleOnChange={handleTransactionTemplateTypeChange}
               isDisabled
@@ -271,7 +280,7 @@ export const ShortcutForm = ({
             <Select
               id="transactionType"
               options={transactionTypes}
-              defaultValue={selectedTransactionType}
+              defaultValue={transactionType ?? selectedTransactionType}
               isRequired
               handleOnChange={handleTransactionTypeChange}
             >
