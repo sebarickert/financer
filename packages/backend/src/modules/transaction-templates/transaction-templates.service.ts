@@ -17,7 +17,7 @@ import {
 } from './schemas/transaction-template.schema';
 
 @Injectable()
-export class TransactionTemplateService {
+export class TransactionTemplatesService {
   constructor(
     @InjectModel(TransactionTemplate.name)
     private transactionTemplateModel: Model<TransactionTemplateDocument>,
@@ -59,12 +59,14 @@ export class TransactionTemplateService {
     const template = await this.transactionTemplateModel.findOne({ _id: id });
 
     if (!template) {
-      throw new NotFoundException('Account not found.');
+      throw new NotFoundException('Transaction template not found.');
     } else if (!template.userId.equals(userId)) {
       throw new UnauthorizedException(
         'Unauthorized to access this transaction template.',
       );
     }
+
+    return template;
   }
 
   async update(

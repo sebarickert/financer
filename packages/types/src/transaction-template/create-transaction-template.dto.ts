@@ -39,7 +39,7 @@ export class CreateTransactionTemplateDto<ObjectIdType = string> {
   @Min(0.01, { message: 'Amount must be a positive number.' })
   readonly amount?: number;
 
-  @IsNotEmpty({ message: 'Description must not be empty.' })
+  @IsOptional()
   @IsString()
   readonly description?: string;
 

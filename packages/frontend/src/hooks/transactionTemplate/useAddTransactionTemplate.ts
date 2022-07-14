@@ -12,7 +12,7 @@ export const useAddTransactionTemplate = () => {
       const newTransactionCategory = await addTransactionTemplate(
         newTransactionTemplateData
       );
-      queryClient.invalidateQueries(['transactionCategories']);
+      queryClient.invalidateQueries(['transactionTemplates']);
 
       return newTransactionCategory;
     },

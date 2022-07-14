@@ -5,8 +5,8 @@ import {
   TransactionTemplate,
   TransactionTemplateSchema,
 } from './schemas/transaction-template.schema';
-import { TransactionTemplateController } from './transaction-template.controller';
-import { TransactionTemplateService } from './transaction-template.service';
+import { TransactionTemplatesController } from './transaction-templates.controller';
+import { TransactionTemplatesService } from './transaction-templates.service';
 
 @Module({
   imports: [
@@ -14,8 +14,8 @@ import { TransactionTemplateService } from './transaction-template.service';
       { name: TransactionTemplate.name, schema: TransactionTemplateSchema },
     ]),
   ],
-  controllers: [TransactionTemplateController],
-  providers: [TransactionTemplateService],
-  exports: [TransactionTemplateService],
+  controllers: [TransactionTemplatesController],
+  providers: [TransactionTemplatesService],
+  exports: [TransactionTemplatesService],
 })
 export class TransactionTemplateModule {}

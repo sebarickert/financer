@@ -9,8 +9,8 @@ import { TransactionCategoryDocument } from '../transaction-categories/schemas/t
 import { TransactionCategoriesService } from '../transaction-categories/transaction-categories.service';
 import { TransactionCategoryMappingDocument } from '../transaction-category-mappings/schemas/transaction-category-mapping.schema';
 import { TransactionCategoryMappingsService } from '../transaction-category-mappings/transaction-category-mappings.service';
-import { TransactionTemplateDocument } from '../transaction-template/schemas/transaction-template.schema';
-import { TransactionTemplateService } from '../transaction-template/transaction-template.service';
+import { TransactionTemplateDocument } from '../transaction-templates/schemas/transaction-template.schema';
+import { TransactionTemplatesService } from '../transaction-templates/transaction-templates.service';
 import { TransactionDocument } from '../transactions/schemas/transaction.schema';
 import { TransactionsService } from '../transactions/transactions.service';
 import { UserPreferenceDocument } from '../user-preferences/schemas/user-preference.schema';
@@ -55,7 +55,7 @@ export class UserDataService {
     private transactionCategoriesService: TransactionCategoriesService,
     private transactionCategoryMappingService: TransactionCategoryMappingsService,
     private userPreferencesService: UserPreferencesService,
-    private transactionTemplateService: TransactionTemplateService,
+    private transactionTemplateService: TransactionTemplatesService,
   ) {}
 
   async findAllOneUserData(
