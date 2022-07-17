@@ -1,6 +1,6 @@
 import { TransactionTypeMapping } from '@local/types';
 
-import { useAllTransactionTemplates } from '../../hooks/transactionTemplate/useAllTransactionTemplates';
+import { useAllManualTransactionTemplates } from '../../hooks/transactionTemplate/useAllTransactionTemplates';
 import { Heading } from '../heading/heading';
 import { Shortcut } from '../shortcut/shortcut';
 import { ShortcutList } from '../shortcut/shortcut.list';
@@ -11,8 +11,10 @@ interface TransactionTemplatesListProps {
 
 export const TransactionTemplatesList = ({
   className,
-}: TransactionTemplatesListProps): JSX.Element => {
-  const transactionTemplates = useAllTransactionTemplates();
+}: TransactionTemplatesListProps): JSX.Element | null => {
+  const transactionTemplates = useAllManualTransactionTemplates();
+
+  if (!transactionTemplates.length) return null;
 
   return (
     <section className={className}>
