@@ -14,6 +14,13 @@ export const getAllTransactionTemplates = async (): Promise<
   return parseJsonOrThrowError(transactionTemplates);
 };
 
+export const getAllManualTransactionTemplates = async (): Promise<
+  TransactionTemplateDto[]
+> => {
+  const transactionTemplates = await fetch('/api/transaction-templates/manual');
+  return parseJsonOrThrowError(transactionTemplates);
+};
+
 export const addTransactionTemplate = async (
   newTransactionTemplateData: CreateTransactionTemplateDto
 ): Promise<ApiResponse<TransactionTemplateDto>> => {
