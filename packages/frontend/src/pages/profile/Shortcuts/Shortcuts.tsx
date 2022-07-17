@@ -5,31 +5,6 @@ import { QuickLinksItem } from '../../../components/quick-links/quick-links.item
 import { UpdatePageInfo } from '../../../components/seo/updatePageInfo';
 import { useAllTransactionTemplates } from '../../../hooks/transactionTemplate/useAllTransactionTemplates';
 
-// export interface CategoriesListRowProps {
-//   label: string;
-//   items: CategoriesListRowItemProps[];
-//   link?: string;
-// }
-
-// export interface CategoriesListRowItemProps {
-//   label: string;
-//   link: string;
-//   tree: string;
-//   id: string;
-// }
-
-// const generateCategoryGroupChild = (
-//   childName: CategoriesListRowItemProps['label'],
-//   childId: CategoriesListRowItemProps['id'],
-//   tree: CategoriesListRowItemProps['tree'],
-//   showTree = true
-// ) => ({
-//   id: childId,
-//   label: childName,
-//   tree: showTree ? tree : '',
-//   link: `/profile/transaction-categories/${childId}/edit`,
-// });
-
 export const Shortcuts = (): JSX.Element => {
   const transactionTemplatesRaw = useAllTransactionTemplates();
 

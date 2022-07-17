@@ -12,13 +12,13 @@ import { parseErrorMessagesToArray } from '../../../utils/apiHelper';
 
 import { TransactionCategoryForm } from './TransactionCategoryForm';
 
-interface ITransactionCategoryDeleteModalProps {
+interface TransactionCategoryDeleteModalProps {
   handleDelete(): void;
 }
 
 const TransactionCategoryDeleteModal = ({
   handleDelete,
-}: ITransactionCategoryDeleteModalProps) => (
+}: TransactionCategoryDeleteModalProps) => (
   <ModalConfirm
     label="Delete transaction category"
     submitButtonLabel="Delete"

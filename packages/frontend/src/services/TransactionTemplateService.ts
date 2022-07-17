@@ -54,3 +54,13 @@ export const editTransactionTemplate = async (
 
   return parseApiResponse(targetTransactionTemplate);
 };
+
+export const deleteTransactionTemplate = async (id: string): Promise<void> => {
+  await fetch(`/api/transaction-templates/${id}`, {
+    method: 'DELETE',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  });
+};
