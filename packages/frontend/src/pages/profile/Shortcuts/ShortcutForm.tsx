@@ -33,6 +33,7 @@ interface ShortcutFormProps {
   onSubmit(newShortcut: CreateTransactionTemplateDto): void;
   submitLabel: string;
   transactionCategoryMapping?: TransactionCategoryMappingDto[] | null;
+  optionalFooterComponent?: React.ReactNode;
 }
 
 export const ShortcutForm = ({
@@ -48,6 +49,7 @@ export const ShortcutForm = ({
   shortcutName,
   transactionType,
   shortcutType,
+  optionalFooterComponent,
 }: ShortcutFormProps): JSX.Element | null => {
   const { data: accountsRaw } = useAllAccounts();
   const [accounts, setAccounts] = useState<Option[]>();
@@ -261,6 +263,7 @@ export const ShortcutForm = ({
         submitLabel={submitLabel}
         handleSubmit={handleSubmit}
         formFooterBackLink="/"
+        optionalFooterComponent={optionalFooterComponent}
       >
         <section>
           <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
