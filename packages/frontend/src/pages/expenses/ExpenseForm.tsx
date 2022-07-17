@@ -43,7 +43,9 @@ export const ExpenseForm = ({
   const [transactionCategories, setTransactionCategories] = useState<Option[]>(
     []
   );
-  const [inputAmountValue, setInputAmountValue] = useState<number | null>(null);
+  const [inputAmountValue, setInputAmountValue] = useState<number | undefined>(
+    undefined
+  );
 
   const handleAmountInputValueChange = (
     event: ChangeEvent<HTMLInputElement>
