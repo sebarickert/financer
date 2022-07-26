@@ -5,28 +5,28 @@ import { QuickLinksItem } from '../../../components/quick-links/quick-links.item
 import { UpdatePageInfo } from '../../../components/seo/updatePageInfo';
 import { useAllTransactionTemplates } from '../../../hooks/transactionTemplate/useAllTransactionTemplates';
 
-export const Shortcuts = (): JSX.Element => {
+export const TransactionTemplates = (): JSX.Element => {
   const transactionTemplatesRaw = useAllTransactionTemplates();
 
   return (
     <>
-      <UpdatePageInfo title="Shortcuts" backLink="/profile" />
+      <UpdatePageInfo title="Templates" backLink="/profile" />
       <section className="grid gap-8">
         <section>
           <QuickLinksItem
-            title="Add shortcut"
-            link="/profile/shortcuts/add"
+            title="Add templates"
+            link="/profile/transaction-templates/add"
             iconName={IconName.lightningBolt}
             iconBackgroundColor="blue"
-            testId="add-shortcut"
+            testId="add-template"
           />
         </section>
-        <LinkList testId="shortcuts-link-list">
+        <LinkList testId="transaction-templates-link-list">
           {transactionTemplatesRaw.map(({ templateName, _id: id }) => (
             <LinkListLink
-              link={`/profile/shortcuts/${id}/edit`}
+              link={`/profile/transaction-templates/${id}/edit`}
               key={id}
-              testId="shortcuts-row"
+              testId="transaction-templates-row"
             >
               {templateName}
             </LinkListLink>

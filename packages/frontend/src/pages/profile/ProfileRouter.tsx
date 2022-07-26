@@ -5,8 +5,8 @@ import { useProfileInformation } from '../../hooks/profile/useProfileInformation
 
 import { Profile } from './Profile';
 import { ProfileOverrideData } from './ProfileOverrideData';
-import { ShortcutsRouter } from './Shortcuts/ShortcutsRouter';
 import { TransactionCategoriesRouter } from './TransactionCategories/TransactionCategoriesRouter';
+import { TransactionTemplatesRouter } from './TransactionTemplates/TransactionTemplatesRouter';
 import { UserPreferencesRouter } from './UserPreferences/UserPreferencesRouter';
 
 export const ProfileRouter = (): JSX.Element => {
@@ -19,7 +19,10 @@ export const ProfileRouter = (): JSX.Element => {
         path="transaction-categories/*"
         element={<TransactionCategoriesRouter />}
       />
-      <Route path="shortcuts/*" element={<ShortcutsRouter />} />
+      <Route
+        path="transaction-templates/*"
+        element={<TransactionTemplatesRouter />}
+      />
       <Route path="user-preferences/*" element={<UserPreferencesRouter />} />
       {profileInfo?.roles.includes(Role.testUser) && (
         <Route path="override-data" element={<ProfileOverrideData />} />

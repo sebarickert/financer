@@ -2,6 +2,7 @@ import {
   CreateTransactionTemplateDto,
   TransactionCategoryMappingDto,
   TransactionTemplateType,
+  TransactionTemplateTypeMapping,
   TransactionType,
 } from '@local/types';
 import { ChangeEvent, useEffect, useState } from 'react';
@@ -20,15 +21,15 @@ import { useAllTransactionCategoriesForTransferWithCategoryTree } from '../../..
 import { ITransactionCategoryWithCategoryTree } from '../../../services/TransactionCategoriesService';
 import { capitalize } from '../../../utils/capitalize';
 
-interface ShortcutFormProps {
+interface TransactionTemplateFormProps {
   amount?: number;
   dayOfMonth?: number;
   description?: string;
   errors: string[];
   fromAccount?: string;
   toAccount?: string;
-  shortcutName?: string;
-  shortcutType?: string;
+  templateName?: string;
+  templateType?: string;
   transactionType?: string;
   onSubmit(newShortcut: CreateTransactionTemplateDto): void;
   submitLabel: string;
@@ -36,7 +37,7 @@ interface ShortcutFormProps {
   optionalFooterComponent?: React.ReactNode;
 }
 
-export const ShortcutForm = ({
+export const TransactionTemplateForm = ({
   amount,
   dayOfMonth,
   description,
@@ -46,11 +47,11 @@ export const ShortcutForm = ({
   fromAccount,
   toAccount,
   transactionCategoryMapping = null,
-  shortcutName,
+  templateName,
   transactionType,
-  shortcutType,
+  templateType,
   optionalFooterComponent,
-}: ShortcutFormProps): JSX.Element | null => {
+}: TransactionTemplateFormProps): JSX.Element | null => {
   const { data: accountsRaw } = useAllAccounts();
   const [accounts, setAccounts] = useState<Option[]>();
   const [inputAmountValue, setInputAmountValue] = useState<number | null>(null);
@@ -119,7 +120,7 @@ export const ShortcutForm = ({
     ) as (keyof typeof TransactionTemplateType)[]
   ).map((type) => ({
     value: TransactionTemplateType[type],
-    label: capitalize(TransactionTemplateType[type]),
+    label: capitalize(TransactionTemplateTypeMapping[type]),
   }));
 
   const transactionTypes = (
@@ -144,8 +145,8 @@ export const ShortcutForm = ({
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     const {
-      shortcutName: newShortcutName,
-      shortcutType: newShortcutType,
+      templateName: newTemplateName,
+      templateType: newTemplateType,
       transactionType: newTransactionType,
       description: newDescription,
       amount: newAmount,
@@ -171,11 +172,11 @@ export const ShortcutForm = ({
       newTransactionType.value === 'income' ||
       newTransactionType.value === 'transfer';
 
-    const isShortcutTypeOfAuto = newShortcutType.value === 'auto';
+    const isShortcutTypeOfAuto = newTemplateType.value === 'auto';
 
     const newShortcutData: CreateTransactionTemplateDto = {
-      templateName: newShortcutName.value,
-      templateType: newShortcutType.value,
+      templateName: newTemplateName.value,
+      templateType: newTemplateType.value,
       templateVisibility:
         TransactionType[
           newTransactionType.value.toUpperCase() as keyof typeof TransactionType
@@ -267,18 +268,18 @@ export const ShortcutForm = ({
       >
         <section>
           <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
-            <Input id="shortcutName" isRequired value={shortcutName}>
-              Shortcut name
+            <Input id="templateName" isRequired value={templateName}>
+              Template name
             </Input>
             <Select
-              id="shortcutType"
+              id="templateType"
               options={templateTypes}
-              defaultValue={shortcutType ?? selectedTransactionTemplateType}
+              defaultValue={templateType ?? selectedTransactionTemplateType}
               isRequired
               handleOnChange={handleTransactionTemplateTypeChange}
               isDisabled
             >
-              Shortcut type
+              Template type
             </Select>
             <Select
               id="transactionType"
