@@ -6,19 +6,19 @@ import { UpdatePageInfo } from '../../../components/seo/updatePageInfo';
 import { useAddTransactionTemplate } from '../../../hooks/transactionTemplate/useAddTransactionTemplate';
 import { parseErrorMessagesToArray } from '../../../utils/apiHelper';
 
-import { ShortcutForm } from './ShortcutForm';
+import { TransactionTemplateForm } from './TransactionTemplateForm';
 
-export const AddShortcut = (): JSX.Element => {
+export const AddTransactionTemplate = (): JSX.Element => {
   const navigate = useNavigate();
   const [errors, setErrors] = useState<string[]>([]);
   const addTransactionTemplate = useAddTransactionTemplate();
 
   const handleSubmit = async (
-    newShortcutData: CreateTransactionTemplateDto
+    newTransactionTemplateData: CreateTransactionTemplateDto
   ) => {
     try {
       const newTransactionTemplateJson = await addTransactionTemplate(
-        newShortcutData
+        newTransactionTemplateData
       );
 
       if ('message' in newTransactionTemplateJson) {
@@ -28,7 +28,7 @@ export const AddShortcut = (): JSX.Element => {
         return;
       }
 
-      navigate('/profile/shortcuts');
+      navigate('/profile/transaction-templates');
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log(error);
@@ -37,8 +37,15 @@ export const AddShortcut = (): JSX.Element => {
 
   return (
     <>
-      <UpdatePageInfo title="Add shortcut" backLink="/profile/shortcuts" />
-      <ShortcutForm onSubmit={handleSubmit} errors={errors} submitLabel="Add" />
+      <UpdatePageInfo
+        title="Add template"
+        backLink="/profile/transaction-templates"
+      />
+      <TransactionTemplateForm
+        onSubmit={handleSubmit}
+        errors={errors}
+        submitLabel="Add"
+      />
     </>
   );
 };

@@ -12,27 +12,29 @@ import { useEditTransactionTemplate } from '../../../hooks/transactionTemplate/u
 import { useTransactionTemplateById } from '../../../hooks/transactionTemplate/useTransactionTemplateById';
 import { parseErrorMessagesToArray } from '../../../utils/apiHelper';
 
-import { ShortcutForm } from './ShortcutForm';
+import { TransactionTemplateForm } from './TransactionTemplateForm';
 
-interface ShortcutDeleteModalProps {
+interface TransactionTemplateDeleteModalProps {
   handleDelete(): void;
 }
 
-const ShortcutDeleteModal = ({ handleDelete }: ShortcutDeleteModalProps) => (
+const TransactionTemplateDeleteModal = ({
+  handleDelete,
+}: TransactionTemplateDeleteModalProps) => (
   <ModalConfirm
-    label="Delete shortcut"
+    label="Delete template"
     submitButtonLabel="Delete"
     onConfirm={handleDelete}
-    modalOpenButtonLabel="Delete shortcut"
+    modalOpenButtonLabel="Delete template"
     accentColor="red"
-    testId="delete-shortcut-modal"
+    testId="delete-transaction-template-modal"
   >
-    Are you sure you want to delete this shortcut? All of your data will be
+    Are you sure you want to delete this template? All of your data will be
     permanently removed. This action cannot be undone.
   </ModalConfirm>
 );
 
-export const EditShortcut = (): JSX.Element => {
+export const EditTransactionTemplate = (): JSX.Element => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const [errors, setErrors] = useState<string[]>([]);
@@ -41,7 +43,7 @@ export const EditShortcut = (): JSX.Element => {
   const transactionTemplate = useTransactionTemplateById(id);
 
   const handleSubmit = async (
-    newShortcutData: UpdateTransactionTemplateDto
+    newTransactionTemplateData: UpdateTransactionTemplateDto
   ) => {
     if (!transactionTemplate?._id) {
       console.error('transactionTemplate is not defined');
@@ -51,7 +53,7 @@ export const EditShortcut = (): JSX.Element => {
     try {
       const newTransactionTemplateJson = await editTransactionTemplate(
         transactionTemplate._id,
-        newShortcutData
+        newTransactionTemplateData
       );
 
       if ('message' in newTransactionTemplateJson) {
@@ -61,7 +63,7 @@ export const EditShortcut = (): JSX.Element => {
         return;
       }
 
-      navigate('/profile/shortcuts');
+      navigate('/profile/transaction-templates');
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log(error);
@@ -70,17 +72,20 @@ export const EditShortcut = (): JSX.Element => {
 
   const handleDelete = async () => {
     if (!id) {
-      console.error('Failed to delete shortcut: no id');
+      console.error('Failed to delete template: no id');
       return;
     }
     deleteTransactionTemplate(id);
-    navigate('/profile/shortcuts');
+    navigate('/profile/templates');
   };
 
   return (
     <>
-      <UpdatePageInfo title="Edit shortcut" backLink="/profile/shortcuts" />
-      <ShortcutForm
+      <UpdatePageInfo
+        title="Edit template"
+        backLink="/profile/transaction-templates"
+      />
+      <TransactionTemplateForm
         onSubmit={handleSubmit}
         errors={errors}
         submitLabel="Update"
@@ -89,8 +94,8 @@ export const EditShortcut = (): JSX.Element => {
         description={transactionTemplate.description ?? undefined}
         fromAccount={transactionTemplate.fromAccount ?? undefined}
         toAccount={transactionTemplate.toAccount ?? undefined}
-        shortcutName={transactionTemplate.templateName ?? undefined}
-        shortcutType={transactionTemplate.templateType[0] as string}
+        templateName={transactionTemplate.templateName ?? undefined}
+        templateType={transactionTemplate.templateType[0] as string}
         transactionType={transactionTemplate.templateVisibility}
         transactionCategoryMapping={
           transactionTemplate.categories?.map((category) => ({
@@ -98,7 +103,7 @@ export const EditShortcut = (): JSX.Element => {
           })) as TransactionCategoryMappingDto[]
         }
         optionalFooterComponent={
-          <ShortcutDeleteModal handleDelete={handleDelete} />
+          <TransactionTemplateDeleteModal handleDelete={handleDelete} />
         }
       />
     </>

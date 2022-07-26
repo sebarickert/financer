@@ -22,8 +22,11 @@ export const Profile = (): JSX.Element => {
         >
           Categories
         </LinkListLink>
-        <LinkListLink link="/profile/shortcuts" icon={IconName.lightningBolt}>
-          Shortcuts
+        <LinkListLink
+          link="/profile/transaction-templates"
+          icon={IconName.lightningBolt}
+        >
+          Templates
         </LinkListLink>
         <LinkListLink
           link="/api/users/my-user/my-data"
