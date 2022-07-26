@@ -7,7 +7,7 @@ interface HeadingProps {
   variant?: HeadingVariants;
   style?: HeadingVariants;
   children: string | ReactNode;
-  headingClassName?: string;
+  titleClassName?: string;
   className?: string;
   testId?: string;
   ctaUrl?: string;
@@ -17,7 +17,7 @@ interface HeadingProps {
 export const Heading = ({
   variant = 'h2',
   children,
-  headingClassName = '',
+  titleClassName = '',
   className = '',
   style,
   testId,
@@ -30,7 +30,7 @@ export const Heading = ({
   return (
     <section className={`flex justify-between items-end ${className}`}>
       <HeadingType
-        className={`!font-bold !leading-tight tracking-tighter text-gray-900 truncate ${headingClassName}
+        className={`!font-bold !leading-tight tracking-tighter text-gray-900 truncate ${titleClassName}
         ${styleToApply === 'h1' ? 'text-2xl lg:text-3xl' : ''}
         ${styleToApply === 'h2' ? 'text-xl lg:text-2xl' : ''}
         ${styleToApply === 'h3' ? 'text-lg lg:text-xl' : ''}
