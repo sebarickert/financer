@@ -25,7 +25,7 @@ export const Shortcut = ({
           <Icon type={IconName.lightningBolt} />
         </span>
         <Heading
-          headingClassName="truncate flex-grow !leading-snug"
+          titleClassName="truncate flex-grow !leading-snug"
           variant="h3"
           style="h4"
         >
