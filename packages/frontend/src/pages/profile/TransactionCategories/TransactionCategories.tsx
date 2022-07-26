@@ -85,16 +85,16 @@ export const TransactionCategories = (): JSX.Element => {
   return (
     <>
       <UpdatePageInfo title="Categories" backLink="/profile" />
-      <section className="grid gap-8">
-        <section>
-          <QuickLinksItem
-            title="Add category"
-            link="/profile/transaction-categories/add"
-            iconName={IconName.tag}
-            iconBackgroundColor="blue"
-            testId="add-category"
-          />
-        </section>
+      <section className="mb-8">
+        <QuickLinksItem
+          title="Add category"
+          link="/profile/transaction-categories/add"
+          iconName={IconName.tag}
+          iconBackgroundColor="blue"
+          testId="add-category"
+        />
+      </section>
+      <section className="grid gap-12">
         {transactionCategories.map(
           ({ label: parentLabel, link: parentLink, items }) => {
             return (
