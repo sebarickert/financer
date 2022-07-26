@@ -35,7 +35,7 @@ export const ErrorPage = ({
               Financer
             </h2>
           </span>
-          <Heading variant="h1" className="mb-6">
+          <Heading variant="h1" headingClassName="mb-6">
             Error
           </Heading>
           <p className="max-w-xl mb-4 text-lg">

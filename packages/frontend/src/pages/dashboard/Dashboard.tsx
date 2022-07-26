@@ -40,7 +40,9 @@ export const Dashboard = (): JSX.Element => {
           <BalanceGraph className="overflow-y-auto" />
         </section>
         <section className="mt-6 lg:mt-8">
-          <Heading className="mb-2">Recent activity</Heading>
+          <Heading className="mb-2" ctaLabel="See all" ctaUrl="/statistics">
+            Recent activity
+          </Heading>
           <LatestTransactions isPagerHidden filterOptions={{ limit: 5 }} />
         </section>
         <TransactionTemplatesList className="mt-6 lg:mt-8" />

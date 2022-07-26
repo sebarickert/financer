@@ -1,5 +1,4 @@
 import { Children } from 'react';
-import { NavLink } from 'react-router-dom';
 
 import { Heading } from '../heading/heading';
 
@@ -25,8 +24,8 @@ export const LinkList = ({
   return (
     <section className={`${className}`} data-testid={testId}>
       {label && (
-        <Heading className={`mb-2 ${link ? 'underline' : ''}`}>
-          {link ? <NavLink to={link}>{label}</NavLink> : label}
+        <Heading className={'mb-2'} ctaLabel={`Edit '${label}'`} ctaUrl={link}>
+          {label}
         </Heading>
       )}
       <ul
