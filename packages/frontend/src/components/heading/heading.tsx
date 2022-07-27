@@ -30,7 +30,11 @@ export const Heading = ({
   const styleToApply = style || variant;
 
   return (
-    <section className={`flex justify-between items-end ${className}`}>
+    <section
+      className={`flex ${
+        ctaUrl && ctaLabel ? 'justify-between items-end' : ''
+      } ${className}`}
+    >
       <HeadingType
         className={`!font-bold !leading-tight tracking-tighter text-gray-900 truncate ${titleClassName}
         ${styleToApply === 'h1' ? 'text-2xl lg:text-3xl' : ''}
