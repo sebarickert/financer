@@ -12,6 +12,7 @@ interface HeadingProps {
   testId?: string;
   ctaUrl?: string;
   ctaLabel?: string;
+  ctaEntityTitle?: string;
 }
 
 export const Heading = ({
@@ -23,6 +24,7 @@ export const Heading = ({
   testId,
   ctaLabel,
   ctaUrl,
+  ctaEntityTitle,
 }: HeadingProps) => {
   const HeadingType = variant;
   const styleToApply = style || variant;
@@ -44,6 +46,7 @@ export const Heading = ({
         <NavLink
           to={ctaUrl}
           className="flex-shrink-0 font-medium text-blue-financer hover:underline"
+          data-entity-title={ctaEntityTitle ?? undefined}
         >
           {ctaLabel}
         </NavLink>

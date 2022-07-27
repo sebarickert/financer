@@ -8,6 +8,7 @@ interface LinkListLinkProps {
   children: React.ReactNode;
   link: string;
   testId?: string;
+  entityTitle?: string;
   className?: string;
 }
 
@@ -17,6 +18,7 @@ export const LinkListLink = ({
   children,
   testId,
   className = '',
+  entityTitle,
 }: LinkListLinkProps): JSX.Element => {
   const linkClasses = `relative flex gap-4 items-center focus-within:bg-gray-100 hover:bg-gray-100 overflow-hidden pl-4 lg:rounded-md ${className}`;
 
@@ -41,11 +43,21 @@ export const LinkListLink = ({
   return (
     <>
       {isExternalLink(link) ? (
-        <a href={link} className={linkClasses} data-testid={testId}>
+        <a
+          href={link}
+          className={linkClasses}
+          data-testid={testId}
+          data-entity-title={entityTitle ?? undefined}
+        >
           {linkContent}
         </a>
       ) : (
-        <NavLink to={link} className={linkClasses} data-testid={testId}>
+        <NavLink
+          to={link}
+          className={linkClasses}
+          data-testid={testId}
+          data-entity-title={entityTitle ?? undefined}
+        >
           {linkContent}
         </NavLink>
       )}
