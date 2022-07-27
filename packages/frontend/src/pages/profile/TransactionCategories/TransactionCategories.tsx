@@ -109,6 +109,7 @@ export const TransactionCategories = (): JSX.Element => {
                     link={link}
                     key={id}
                     testId="category-child-row"
+                    entityTitle={label}
                   >
                     <span className="grid">
                       <span className="truncate">{label}</span>

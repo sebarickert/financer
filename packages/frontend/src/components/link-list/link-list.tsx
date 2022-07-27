@@ -24,7 +24,12 @@ export const LinkList = ({
   return (
     <section className={`${className}`} data-testid={testId}>
       {label && (
-        <Heading className={'mb-2'} ctaLabel={`Edit '${label}'`} ctaUrl={link}>
+        <Heading
+          className={'mb-2'}
+          ctaLabel={`Edit '${label}'`}
+          ctaUrl={link}
+          ctaEntityTitle={label}
+        >
           {label}
         </Heading>
       )}

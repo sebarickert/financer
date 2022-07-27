@@ -9,7 +9,7 @@ describe('Edit transaction category', () => {
       ? `Changed Test ${newVisibility?.join(', ') || 'invisible'} category`
       : targetCategoryName;
 
-    cy.contains(targetCategoryName).click();
+    cy.get(`[data-entity-title="${targetCategoryName}"]`).click();
 
     cy.get('#name').clear();
     cy.get('#name').type(newName);
@@ -62,7 +62,7 @@ describe('Edit transaction category', () => {
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(100);
 
-    cy.contains(newName).click();
+    cy.get(`[data-entity-title="${newName}"]`).click();
 
     cy.location('pathname').should('contain', '/edit');
 
