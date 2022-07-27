@@ -21,7 +21,7 @@ export const TransactionTemplates = (): JSX.Element => {
             testId="add-template"
           />
         </section>
-        <LinkList testId="transaction-templates-link-list">
+        <LinkList testId="transaction-templates-link-list" label="Shortcuts">
           {transactionTemplatesRaw.map(({ templateName, _id: id }) => (
             <LinkListLink
               link={`/profile/transaction-templates/${id}/edit`}
