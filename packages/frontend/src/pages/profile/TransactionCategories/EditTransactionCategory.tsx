@@ -3,34 +3,12 @@ import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { Container } from '../../../components/container/container';
-import { ModalConfirm } from '../../../components/modal/confirm/modal.confirm';
 import { UpdatePageInfo } from '../../../components/seo/updatePageInfo';
-import { useDeleteTransactionCategory } from '../../../hooks/transactionCategories/useDeleteTransactionCategory';
 import { useEditTransactionCategory } from '../../../hooks/transactionCategories/useEditTransactionCategory';
 import { useTransactionCategoryById } from '../../../hooks/transactionCategories/useTransactionCategoryById';
 import { parseErrorMessagesToArray } from '../../../utils/apiHelper';
 
 import { TransactionCategoryForm } from './TransactionCategoryForm';
-
-interface TransactionCategoryDeleteModalProps {
-  handleDelete(): void;
-}
-
-const TransactionCategoryDeleteModal = ({
-  handleDelete,
-}: TransactionCategoryDeleteModalProps) => (
-  <ModalConfirm
-    label="Delete transaction category"
-    submitButtonLabel="Delete"
-    onConfirm={handleDelete}
-    modalOpenButtonLabel="Delete transaction category"
-    accentColor="red"
-    testId="delete-transaction-category-modal"
-  >
-    Are you sure you want to delete this transaction category? All of your data
-    will be permanently removed. This action cannot be undone.
-  </ModalConfirm>
-);
 
 export const EditTransactionCategory = (): JSX.Element => {
   const navigate = useNavigate();
@@ -38,7 +16,6 @@ export const EditTransactionCategory = (): JSX.Element => {
   const [errors, setErrors] = useState<string[]>([]);
 
   const transactionCategory = useTransactionCategoryById(id);
-  const deleteTransactionCategory = useDeleteTransactionCategory();
   const editTransactionCategory = useEditTransactionCategory();
 
   const handleSubmit = async (
@@ -66,15 +43,6 @@ export const EditTransactionCategory = (): JSX.Element => {
     }
   };
 
-  const handleDelete = async () => {
-    if (!id) {
-      console.error('Failed to delete transaction category: no id');
-      return;
-    }
-    deleteTransactionCategory(id);
-    navigate('/profile/transaction-categories');
-  };
-
   return (
     <Container>
       <UpdatePageInfo
@@ -89,9 +57,6 @@ export const EditTransactionCategory = (): JSX.Element => {
         visibility={transactionCategory.visibility}
         parentTransactioCategoryId={transactionCategory.parent_category_id}
         currentCategoryId={id}
-        optionalFooterComponent={
-          <TransactionCategoryDeleteModal handleDelete={handleDelete} />
-        }
       />
     </Container>
   );
