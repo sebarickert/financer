@@ -11,8 +11,7 @@ import { LinkList } from '../../../components/link-list/link-list';
 import { LinkListLink } from '../../../components/link-list/link-list.link';
 import { UpdatePageInfo } from '../../../components/seo/updatePageInfo';
 import { MONTH_IN_MS } from '../../../constants/months';
-import { useAllExpensesGroupByMonth } from '../../../hooks/expense/useAllExpenses';
-import { useAllIncomesGroupByMonth } from '../../../hooks/income/useAllIncomes';
+import { useTransactionsMonthlySummaries } from '../../../hooks/transaction/useTransactionsMonthlySummaries';
 import { useDeleteTransactionCategory } from '../../../hooks/transactionCategories/useDeleteTransactionCategory';
 import { useTransactionCategoryById } from '../../../hooks/transactionCategories/useTransactionCategoryById';
 import { capitalize } from '../../../utils/capitalize';
@@ -49,8 +48,9 @@ export const ViewTransactionCategory = (): JSX.Element => {
     navigate('/profile/transaction-categories');
   };
 
-  const incomeMonthSummaries = useAllIncomesGroupByMonth();
-  const expenseMonthSummaries = useAllExpensesGroupByMonth();
+  const transactionsMonthlySummaries = useTransactionsMonthlySummaries({
+    limit: 1000,
+  });
 
   useEffect(() => {
     if (!transactionCategory) return;
@@ -59,91 +59,22 @@ export const ViewTransactionCategory = (): JSX.Element => {
       const getDateFromYearAndMonth = (year: number, month: number): Date =>
         new Date(`${year}-${month.toString().padStart(2, '0')}-01`);
 
-      const parsedIncomeSummaries = incomeMonthSummaries[0].map(
-        (incomeItem) => {
-          const filteredRows = incomeItem.rows.filter((transaction) =>
-            transaction.transactionCategories?.includes(
-              transactionCategory.name
-            )
-          );
-
-          const updatedTotal = filteredRows.reduce(
-            (total, { transactionAmount }) => {
-              const parsedTransactionAmount =
-                Number(transactionAmount.replace(/[^0-9-]+/g, '')) / 100;
-
-              return total + parsedTransactionAmount;
-            },
-            0
-          );
-
-          return {
-            date: getDateFromYearAndMonth(
-              incomeItem.year,
-              incomeItem.month + 1
-            ),
-            amount: updatedTotal,
-          };
-        }
-      );
-
-      const parsedExpenseSummaries = expenseMonthSummaries[0].map(
-        (expenseItem) => {
-          const filteredRows = expenseItem.rows.filter((transaction) =>
-            transaction.transactionCategories?.includes(
-              transactionCategory.name
-            )
-          );
-
-          const updatedTotal = filteredRows.reduce(
-            (total, { transactionAmount }) => {
-              const parsedTransactionAmount =
-                Number(transactionAmount.replace(/[^0-9-]+/g, '')) / 100;
-
-              return total + parsedTransactionAmount;
-            },
-            0
-          );
-
-          return {
-            date: getDateFromYearAndMonth(
-              expenseItem.year,
-              expenseItem.month + 1
-            ),
-            amount: updatedTotal,
-          };
-        }
-      );
-
-      const allIncomesAndExpenses = [
-        ...parsedIncomeSummaries.map(({ date, amount }) => ({
-          date,
-          amount:
-            amount +
-            (parsedExpenseSummaries.find(
-              ({ date: expenseDate }) =>
-                expenseDate.getTime() === date.getTime()
-            )?.amount || 0),
-        })),
-        ...parsedExpenseSummaries.filter(
-          ({ date }) =>
-            !parsedIncomeSummaries.some(
-              ({ date: incomeDate }) => incomeDate.getTime() === date.getTime()
-            )
-        ),
-      ];
-
-      const transactionCategoryTransactionHistoryStack = allIncomesAndExpenses
-        .map(({ date, amount }) => ({
-          date: new Date(date),
-          balance: amount,
-          dateStr: formatDate(new Date(date)),
-        }))
-        .sort((a, b) => a.date.getTime() - b.date.getTime());
+      const transactionCategoryTransactionHistoryStack =
+        transactionsMonthlySummaries
+          .map(({ totalAmount, _id: { year, month } }) => ({
+            date: getDateFromYearAndMonth(year, month),
+            amount: totalAmount,
+          }))
+          .map(({ date, amount }) => ({
+            date: new Date(date),
+            balance: amount,
+            dateStr: formatDate(new Date(date)),
+          }))
+          .sort((a, b) => a.date.getTime() - b.date.getTime());
 
       setChartData(transactionCategoryTransactionHistoryStack);
     });
-  }, [expenseMonthSummaries, incomeMonthSummaries, transactionCategory]);
+  }, [transactionCategory, transactionsMonthlySummaries]);
 
   const labels = chartData.map(({ dateStr }) => {
     return dateStr;

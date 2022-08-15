@@ -162,11 +162,12 @@ export class TransactionsService {
 
   async findMonthlySummariesByUser(
     userId: ObjectId,
-    transactionType: Exclude<TransactionType, TransactionType.ANY>,
+    transactionType: TransactionType,
     limit?: number,
     year?: number,
     month?: number,
     accountTypes?: AccountType[],
+    transactionCategories?: string[],
   ): Promise<TransactionMonthSummaryDto[]> {
     return this.transactionModel
       .aggregate([
@@ -174,6 +175,7 @@ export class TransactionsService {
           $match: {
             user: userId,
             ...this.getYearAndMonthFilter(year, month, 'laterThan'),
+            ...this.getTransactionsByCategoryFilter(transactionCategories),
           },
         },
         {
@@ -501,7 +503,7 @@ export class TransactionsService {
   private async getMonthlySummaryCondition(
     userId: ObjectId,
     operator: '$amount' | 1 | 0,
-    transactionType: Exclude<TransactionType, TransactionType.ANY>,
+    transactionType: TransactionType,
     accountTypes?: AccountType[],
   ) {
     const accountIds = await this.getAccountIdsByType(userId, accountTypes);
@@ -519,7 +521,7 @@ export class TransactionsService {
       return { $cond: [{ $and: selectedQuery }, operator, 0] };
     }
 
-    if (transactionType === TransactionType.TRANSFER) {
+    if (transactionType === (TransactionType.TRANSFER || TransactionType.ANY)) {
       return {
         $cond: [
           {

@@ -53,6 +53,34 @@ export class TransactionsController {
     );
   }
 
+  @Get('monthly-summaries')
+  async findMonthlySummariesByUser(
+    @UserId() userId: ObjectId,
+    @Query('month') month: number,
+    @Query('year') year: number,
+    @Query('limit') limit: number,
+    @Query(
+      'accountTypes',
+      new ParseArrayPipe({ separator: '|', optional: true }),
+    )
+    @Query(
+      'transactionCategories',
+      new ParseArrayPipe({ items: Number, separator: '|' }),
+    )
+    transactionCategories: string[],
+    accountTypes?: AccountType[],
+  ) {
+    return this.transactionsService.findMonthlySummariesByUser(
+      userId,
+      TransactionType.ANY,
+      limit,
+      year,
+      month,
+      accountTypes,
+      transactionCategories,
+    );
+  }
+
   @Get('/account/:id')
   async findAllByAccount(
     @UserId() userId: ObjectId,
