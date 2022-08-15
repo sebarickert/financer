@@ -3,6 +3,7 @@ import {
   PaginationDto,
   SortOrder,
   TransactionDto,
+  TransactionMonthSummaryDto,
 } from '@local/types';
 
 import { parseJsonOrThrowError } from '../utils/apiHelper';
@@ -68,4 +69,15 @@ export const getTransactionsByAccountId = async (
     `/api/transactions/account/${id}?${queryString.join('&')}`
   );
   return parseJsonOrThrowError(transactions);
+};
+
+export const getTransactionsMonthlySummaries = async (
+  options: Omit<TransactionFilterOptions, 'page'> = {}
+): Promise<TransactionMonthSummaryDto[]> => {
+  const queryString = parseFilterQueryString(options);
+
+  const expense = await fetch(
+    `/api/transactions/monthly-summaries?${queryString.join('&')}`
+  );
+  return parseJsonOrThrowError(expense);
 };
