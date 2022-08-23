@@ -104,12 +104,20 @@ export class TransactionsService {
     accountTypes?: AccountType[],
     sortOrder: SortOrder = SortOrder.DESC,
     transactionCategories?: string[],
+    parentTransactionCategory?: ObjectId,
   ): Promise<PaginationDto<TransactionDto[]>> {
+    const targetCategoryIds =
+      transactionCategories ||
+      (await this.findChildrenCategoryIds(parentTransactionCategory));
+
     const query = {
       user: userId,
       ...this.getTransactionTypeFilter(transactionType),
       ...this.getYearAndMonthFilter(year, month),
-      ...this.getTransactionsByCategoryFilter(transactionCategories),
+      ...(await this.getTransactionsByCategoryFilter(
+        userId,
+        targetCategoryIds,
+      )),
       ...this.getLinkedAccountFilter(linkedAccount),
       ...(await this.getAccountTypesFilter(userId, accountTypes)),
     };
@@ -167,15 +175,25 @@ export class TransactionsService {
     year?: number,
     month?: number,
     accountTypes?: AccountType[],
-    transactionCategories?: string[],
+    transactionCategories?: ObjectId[],
+    parentTransactionCategory?: ObjectId,
   ): Promise<TransactionMonthSummaryDto[]> {
+    const targetCategoryIds =
+      transactionCategories ||
+      (await this.findChildrenCategoryIds(parentTransactionCategory));
+
+    console.log(targetCategoryIds);
+
     return this.transactionModel
       .aggregate([
         {
           $match: {
             user: userId,
             ...this.getYearAndMonthFilter(year, month, 'laterThan'),
-            ...this.getTransactionsByCategoryFilter(transactionCategories),
+            ...(await this.getTransactionsByCategoryFilter(
+              userId,
+              targetCategoryIds,
+            )),
           },
         },
         {
@@ -208,7 +226,7 @@ export class TransactionsService {
           },
         },
       ])
-      .limit(limit ?? 1000)
+      .limit(limit || 1000)
       .exec();
   }
 
@@ -416,14 +434,24 @@ export class TransactionsService {
     };
   }
 
-  private getTransactionsByCategoryFilter(categoryIds?: string[]) {
+  private async getTransactionsByCategoryFilter(
+    userId: ObjectId,
+    categoryIds?: ObjectId[],
+  ) {
     if (!categoryIds) {
       return {};
     }
 
+    const transactionIds = (
+      await this.transactionCategoryMappingsService.findAllByUserAndCategoryIds(
+        userId,
+        categoryIds,
+      )
+    ).map(({ transaction_id }) => transaction_id);
+
     return {
-      categories: {
-        $in: categoryIds,
+      _id: {
+        $in: transactionIds,
       },
     };
   }
@@ -572,5 +600,19 @@ export class TransactionsService {
         0,
       ],
     };
+  }
+
+  private async findChildrenCategoryIds(parentId: ObjectId) {
+    if (!parentId) {
+      return null;
+    }
+
+    const a = (
+      await this.transactionCategoriesService.findAllChildrensById([parentId])
+    ).map(({ _id }) => _id);
+
+    console.log([parentId, ...a]);
+
+    return [parentId, ...a];
   }
 }

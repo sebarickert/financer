@@ -49,7 +49,7 @@ export const ViewTransactionCategory = (): JSX.Element => {
   };
 
   const transactionsMonthlySummaries = useTransactionsMonthlySummaries({
-    limit: 1000,
+    parentTransactionCategory: id,
   });
 
   useEffect(() => {

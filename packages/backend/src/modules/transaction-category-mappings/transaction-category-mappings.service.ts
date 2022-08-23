@@ -40,6 +40,18 @@ export class TransactionCategoryMappingsService {
     return this.transactionCategoryMappingModel.find({ owner: userId }).exec();
   }
 
+  async findAllByUserAndCategoryIds(
+    userId: ObjectId,
+    categoryIds: ObjectId[],
+  ): Promise<TransactionCategoryMappingDocument[]> {
+    return this.transactionCategoryMappingModel
+      .find({
+        owner: userId,
+        category_id: { $in: categoryIds },
+      })
+      .exec();
+  }
+
   async findAllByUserAndTransaction(
     userId: ObjectId,
     transactionId: ObjectId,
