@@ -1,66 +1,21 @@
 import { SortOrder } from '@local/types';
 import { useState } from 'react';
 
-import { DescriptionList } from '../../components/description-list/description-list';
-import { DescriptionListItem } from '../../components/description-list/description-list.item';
 import { Heading } from '../../components/heading/heading';
 import { IconName } from '../../components/icon/icon';
-import { LatestTransactions } from '../../components/latest-transactions/latest-transactions';
 import { LoaderSuspense } from '../../components/loader/loader-suspense';
 import { MonthlySummaryGraph } from '../../components/monthly-summary-graph/monthly-summary-graph';
+import { MonthlyTransactionList } from '../../components/monthly-transaction-list/monthly-transaction-list';
 import { Pager } from '../../components/pager/pager';
 import { QuickLinks } from '../../components/quick-links/quick-links';
 import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { monthNames } from '../../constants/months';
-import { useExpenseMonthlySummaries } from '../../hooks/expense/useExpenseMonthlySummaries';
-import { useIncomeMonthlySummaries } from '../../hooks/income/useIncomeMonthlySummaries';
-import { useUserStatisticsSettings } from '../../hooks/profile/user-preference/useStatisticsSettings';
 import { useAllTransactionsPaged } from '../../hooks/transaction/useAllTransactions';
-import { formatCurrency } from '../../utils/formatCurrency';
 
 const initialFilterOptions = {
   year: new Date().getFullYear(),
   month: new Date().getMonth() + 1,
-};
-
-const emptyTotalAmount = { totalAmount: 0 };
-
-const MonthStatistics = ({
-  monthFilterOptions,
-}: {
-  monthFilterOptions: typeof initialFilterOptions;
-}) => {
-  const [statisticsSettings] = useUserStatisticsSettings();
-  const accountTypeFilter = { accountTypes: statisticsSettings?.accountTypes };
-
-  const incomeSummaries = useIncomeMonthlySummaries({
-    ...monthFilterOptions,
-    ...accountTypeFilter,
-  });
-  const expenseSummaries = useExpenseMonthlySummaries({
-    ...monthFilterOptions,
-    ...accountTypeFilter,
-  });
-
-  const { totalAmount: totalIncomes } =
-    incomeSummaries.at(-1) ?? emptyTotalAmount;
-  const { totalAmount: totalExpenses } =
-    expenseSummaries.at(-1) ?? emptyTotalAmount;
-
-  return (
-    <>
-      <DescriptionList>
-        <DescriptionListItem label="Incomes">
-          {Number.isNaN(totalIncomes) ? '-' : formatCurrency(totalIncomes)}
-        </DescriptionListItem>
-        <DescriptionListItem label="Expenses">
-          {Number.isNaN(totalExpenses) ? '-' : formatCurrency(totalExpenses)}
-        </DescriptionListItem>
-      </DescriptionList>
-      <LatestTransactions filterOptions={monthFilterOptions} className="mt-4" />
-    </>
-  );
 };
 
 export const Statistics = (): JSX.Element => {
@@ -123,7 +78,10 @@ export const Statistics = (): JSX.Element => {
         ></Pager>
       </section>
       <LoaderSuspense>
-        <MonthStatistics monthFilterOptions={monthFilterOptions} />
+        <MonthlyTransactionList
+          monthFilterOptions={monthFilterOptions}
+          isSummaryVisible
+        />
       </LoaderSuspense>
       <QuickLinks className="mt-8">
         <QuickLinksItem

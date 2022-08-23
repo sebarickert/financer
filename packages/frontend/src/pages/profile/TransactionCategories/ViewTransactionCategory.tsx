@@ -1,3 +1,4 @@
+import { SortOrder } from '@local/types';
 import { ChartOptions } from 'chart.js';
 import { useEffect, useState, useTransition } from 'react';
 import { Chart } from 'react-chartjs-2';
@@ -6,14 +7,20 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Container } from '../../../components/container/container';
 import { DescriptionList } from '../../../components/description-list/description-list';
 import { DescriptionListItem } from '../../../components/description-list/description-list.item';
+import { Heading } from '../../../components/heading/heading';
 import { IconName } from '../../../components/icon/icon';
 import { LinkList } from '../../../components/link-list/link-list';
 import { LinkListLink } from '../../../components/link-list/link-list.link';
+import { LoaderSuspense } from '../../../components/loader/loader-suspense';
+import { MonthlyTransactionList } from '../../../components/monthly-transaction-list/monthly-transaction-list';
+import { Pager } from '../../../components/pager/pager';
 import { UpdatePageInfo } from '../../../components/seo/updatePageInfo';
-import { MONTH_IN_MS } from '../../../constants/months';
+import { monthNames, MONTH_IN_MS } from '../../../constants/months';
+import { useAllTransactionsPaged } from '../../../hooks/transaction/useAllTransactions';
 import { useTransactionsMonthlySummaries } from '../../../hooks/transaction/useTransactionsMonthlySummaries';
 import { useDeleteTransactionCategory } from '../../../hooks/transactionCategories/useDeleteTransactionCategory';
 import { useTransactionCategoryById } from '../../../hooks/transactionCategories/useTransactionCategoryById';
+import { TransactionFilterOptions } from '../../../services/TransactionService';
 import { capitalize } from '../../../utils/capitalize';
 import {
   formatCurrencyAbbreviation,
@@ -22,6 +29,14 @@ import {
 import { formatDate } from '../../../utils/formatDate';
 
 import { TransactionCategoryDeleteModal } from './TransactionCategoryDeleteModal';
+
+const initialFilterOptions: {
+  month: number;
+  year: number;
+} & TransactionFilterOptions = {
+  year: new Date().getFullYear(),
+  month: new Date().getMonth() + 1,
+};
 
 interface IChartData {
   dateStr: string;
@@ -33,10 +48,53 @@ export const ViewTransactionCategory = (): JSX.Element => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
 
+  const [monthFilterOptions, setMonthFilterOptions] =
+    useState(initialFilterOptions);
+
   const transactionCategory = useTransactionCategoryById(id);
   const deleteTransactionCategory = useDeleteTransactionCategory();
 
-  const [isProcessing, startProcessing] = useTransition();
+  const {
+    data: {
+      data: [transaction],
+    },
+  } = useAllTransactionsPaged(1, {
+    limit: 1,
+    sortOrder: SortOrder.ASC,
+    parentTransactionCategory: id,
+  });
+
+  const firstTransactionEverDate = new Date(transaction?.date || new Date());
+
+  const pageVisibleYear = monthFilterOptions.year;
+  const pageVisibleMonth = monthNames[monthFilterOptions.month - 1];
+
+  const handleMonthOptionChange = (direction: 'next' | 'previous') => {
+    const { month, year } = monthFilterOptions;
+    const monthWithTwoDigits = month.toString().padStart(2, '0');
+    const selectedMonth = new Date(`${year}-${monthWithTwoDigits}-01`);
+
+    selectedMonth.setMonth(
+      selectedMonth.getMonth() + (direction === 'next' ? 1 : -1)
+    );
+
+    setMonthFilterOptions({
+      ...monthFilterOptions,
+      month: selectedMonth.getMonth() + 1,
+      year: selectedMonth.getFullYear(),
+    });
+  };
+
+  useEffect(() => {
+    if (!id) return;
+
+    setMonthFilterOptions({
+      ...initialFilterOptions,
+      parentTransactionCategory: id,
+    });
+  }, [id]);
+
+  const [, startProcessing] = useTransition();
   const [chartData, setChartData] = useState<IChartData[]>([]);
 
   const handleDelete = async () => {
@@ -264,6 +322,32 @@ export const ViewTransactionCategory = (): JSX.Element => {
       <div className="min-h-[300px] h-[20vh] md:h-auto md:min-h-0 md:aspect-video -mx-4 md:-mx-0">
         <Chart type="line" data={data} options={options} />
       </div>
+      <section className="flex items-center justify-between mt-6 mb-4">
+        <Heading>{`${pageVisibleMonth}, ${pageVisibleYear}`}</Heading>
+        <Pager
+          pagerOptions={{
+            nextPage: {
+              isAvailable: !(
+                monthFilterOptions.month === initialFilterOptions.month &&
+                monthFilterOptions.year === initialFilterOptions.year
+              ),
+              load: () => handleMonthOptionChange('next'),
+            },
+            previousPage: {
+              isAvailable: !(
+                monthFilterOptions.month ===
+                  firstTransactionEverDate.getMonth() + 1 &&
+                monthFilterOptions.year ===
+                  firstTransactionEverDate.getFullYear()
+              ),
+              load: () => handleMonthOptionChange('previous'),
+            },
+          }}
+        ></Pager>
+      </section>
+      <LoaderSuspense>
+        <MonthlyTransactionList monthFilterOptions={monthFilterOptions} />
+      </LoaderSuspense>
     </Container>
   );
 };

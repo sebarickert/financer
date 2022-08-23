@@ -182,8 +182,6 @@ export class TransactionsService {
       transactionCategories ||
       (await this.findChildrenCategoryIds(parentTransactionCategory));
 
-    console.log(targetCategoryIds);
-
     return this.transactionModel
       .aggregate([
         {
@@ -610,8 +608,6 @@ export class TransactionsService {
     const a = (
       await this.transactionCategoriesService.findAllChildrensById([parentId])
     ).map(({ _id }) => _id);
-
-    console.log([parentId, ...a]);
 
     return [parentId, ...a];
   }
