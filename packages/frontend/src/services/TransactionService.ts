@@ -15,6 +15,8 @@ export type TransactionFilterOptions = {
   limit?: number;
   accountTypes?: AccountType[];
   sortOrder?: SortOrder;
+  transactionCategories?: string[];
+  parentTransactionCategory?: string;
 };
 
 export const parseFilterQueryString = ({
@@ -24,6 +26,8 @@ export const parseFilterQueryString = ({
   limit,
   accountTypes,
   sortOrder,
+  parentTransactionCategory,
+  transactionCategories,
 }: TransactionFilterOptions): string[] => {
   const queryOptions: string[] = [];
   if (month && !year) {
@@ -38,6 +42,10 @@ export const parseFilterQueryString = ({
   if (limit) queryOptions.push(`limit=${limit}`);
   if (accountTypes) queryOptions.push(`accountTypes=${accountTypes.join('|')}`);
   if (sortOrder) queryOptions.push(`sortOrder=${sortOrder}`);
+  if (transactionCategories)
+    queryOptions.push(`transactionCategories=${transactionCategories}`);
+  if (parentTransactionCategory)
+    queryOptions.push(`parentTransactionCategory=${parentTransactionCategory}`);
 
   return queryOptions;
 };

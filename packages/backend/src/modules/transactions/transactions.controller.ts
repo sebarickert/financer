@@ -9,7 +9,7 @@ import {
   Query,
 } from '@nestjs/common';
 
-import { ObjectId } from '../../types/objectId';
+import { ObjectId, parseObjectId } from '../../types/objectId';
 import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
 import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
 import { UserId } from '../users/users.decorators';
@@ -39,6 +39,8 @@ export class TransactionsController {
       new ParseEnumPipe(SortOrder),
     )
     sortOrder?: SortOrder,
+    @Query('parentTransactionCategory', ValidateEntityId)
+    parentTransactionCategory?: ObjectId,
   ) {
     return this.transactionsService.findAllByUser(
       userId,
@@ -50,6 +52,8 @@ export class TransactionsController {
       undefined,
       accountTypes || undefined,
       sortOrder || undefined,
+      undefined,
+      parentTransactionCategory,
     );
   }
 
@@ -63,12 +67,17 @@ export class TransactionsController {
       'accountTypes',
       new ParseArrayPipe({ separator: '|', optional: true }),
     )
+    accountTypes?: AccountType[],
     @Query(
       'transactionCategories',
-      new ParseArrayPipe({ items: Number, separator: '|' }),
+      new ParseArrayPipe({
+        separator: '|',
+        optional: true,
+      }),
     )
-    transactionCategories: string[],
-    accountTypes?: AccountType[],
+    transactionCategories?: string[],
+    @Query('parentTransactionCategory', ValidateEntityId)
+    parentTransactionCategory?: ObjectId,
   ) {
     return this.transactionsService.findMonthlySummariesByUser(
       userId,
@@ -77,7 +86,8 @@ export class TransactionsController {
       year,
       month,
       accountTypes,
-      transactionCategories,
+      transactionCategories?.map((id) => parseObjectId(id)),
+      parentTransactionCategory,
     );
   }
 
