@@ -33,7 +33,7 @@ export const EditExpense = (): JSX.Element => {
       navigate('/statistics/expenses');
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.log(error);
+      console.error(error);
     }
   };
 

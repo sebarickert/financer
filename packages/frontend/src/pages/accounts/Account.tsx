@@ -102,7 +102,7 @@ export const Account = (): JSX.Element | null => {
         }
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.log(error);
+        console.error(error);
       }
     } else if (marketValueChangeAmount < 0) {
       try {
@@ -121,7 +121,7 @@ export const Account = (): JSX.Element | null => {
         }
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.log(error);
+        console.error(error);
       }
     } else {
       console.log('Current value is same as previous no update needed.');

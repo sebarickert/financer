@@ -33,7 +33,7 @@ export const EditTransfer = (): JSX.Element => {
       navigate('/statistics/transfers');
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.log(error);
+      console.error(error);
     }
   };
 

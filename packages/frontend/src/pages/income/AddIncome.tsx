@@ -27,7 +27,7 @@ export const AddIncome = (): JSX.Element => {
       navigate('/statistics/incomes');
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.log(error);
+      console.error(error);
     }
   };
 
