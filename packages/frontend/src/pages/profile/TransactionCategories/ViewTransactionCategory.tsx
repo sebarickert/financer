@@ -303,7 +303,11 @@ export const ViewTransactionCategory = (): JSX.Element => {
       />
       <section className={'mb-6 grid md:grid-cols-2 gap-6'}>
         <DescriptionList>
-          <DescriptionListItem label="Type" testId="account-type" isLarge>
+          <DescriptionListItem
+            label="Type"
+            testId="transaction-category-type"
+            isLarge
+          >
             {capitalize(transactionCategory.visibility.join(', '))}
           </DescriptionListItem>
           <DescriptionListItem label="Transactions">10</DescriptionListItem>
@@ -311,7 +315,7 @@ export const ViewTransactionCategory = (): JSX.Element => {
         <LinkList isVertical>
           <LinkListLink
             link={`/profile/transaction-categories/${id}/edit`}
-            testId="edit-account"
+            testId="edit-transaction-category"
             icon={IconName.cog}
           >
             Edit transaction category
