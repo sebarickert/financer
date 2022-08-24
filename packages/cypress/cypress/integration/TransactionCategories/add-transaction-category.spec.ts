@@ -27,6 +27,11 @@ describe('Transaction category creation', () => {
 
     cy.contains(newName).click();
 
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(500);
+
+    cy.getById('edit-transaction-category').click();
+
     cy.get('#name').should('have.value', newName);
 
     cy.getById('visibility-checkboxes')

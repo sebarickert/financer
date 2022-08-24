@@ -4,8 +4,11 @@ describe('Delete transaction category', () => {
 
     cy.get(`[data-entity-title="${targetCategoryName}"]`).click();
 
-    cy.getById('delete-transaction-category-modal_open-button').click();
-    cy.getById('delete-transaction-category-modal_confirm-button').click();
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(500);
+
+    cy.getById('delete-transaction-category').click();
+    cy.getById('delete-transaction-category_confirm-button').click();
 
     cy.contains(targetCategoryName).should('not.exist');
   };

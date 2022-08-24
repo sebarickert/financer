@@ -11,6 +11,11 @@ describe('Edit transaction category', () => {
 
     cy.get(`[data-entity-title="${targetCategoryName}"]`).click();
 
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(500);
+
+    cy.getById('edit-transaction-category').click();
+
     cy.get('#name').clear();
     cy.get('#name').type(newName);
 
@@ -63,6 +68,11 @@ describe('Edit transaction category', () => {
     cy.wait(100);
 
     cy.get(`[data-entity-title="${newName}"]`).click();
+
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(500);
+
+    cy.getById('edit-transaction-category').click();
 
     cy.location('pathname').should('contain', '/edit');
 
