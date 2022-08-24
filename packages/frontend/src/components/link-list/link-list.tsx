@@ -26,7 +26,7 @@ export const LinkList = ({
       {label && (
         <Heading
           className={'mb-2'}
-          ctaLabel={`Edit '${label}'`}
+          ctaLabel={`View '${label}'`}
           ctaUrl={link}
           ctaEntityTitle={label}
         >
