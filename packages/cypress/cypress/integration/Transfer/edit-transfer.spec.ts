@@ -106,6 +106,8 @@ describe('Edit transfer', () => {
         const newAmount =
           targetTransactionBefore.amount + amountToChangeTransaction;
 
+        cy.visit('http://localhost:3000/statistics/transfers/2022-01');
+
         cy.getById(targetTransactionBefore._id).click();
 
         cy.getById(`edit-transfer-button`).click();
@@ -180,6 +182,8 @@ describe('Edit transfer', () => {
 
         const newAmount =
           targetTransactionBefore.amount + amountToChangeTransaction;
+
+        cy.visit('http://localhost:3000/statistics/transfers/2021-02');
 
         cy.getById(targetTransactionBefore._id).click();
 

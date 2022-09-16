@@ -83,6 +83,9 @@ describe('Add transfer', () => {
           getAccount(targetFromAccountId)
         );
 
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(100);
+
         cy.getById('add-transfer').click();
         cy.get('#description').clear();
         cy.get('#description').type(newTransactionName);
@@ -148,6 +151,9 @@ describe('Add transfer', () => {
           getAccount(targetFromAccountId)
         );
 
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(100);
+
         cy.getById('add-transfer').click();
         cy.get('#description').clear();
         cy.get('#description').type(newTransactionName);
@@ -208,6 +214,9 @@ describe('Add transfer', () => {
           getAccount(targetFromAccountId)
         );
 
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(100);
+
         cy.getById('add-transfer').click();
         cy.get('#description').clear();
         cy.get('#description').type(newTransactionName);
@@ -241,6 +250,9 @@ describe('Add transfer', () => {
     const date = new Date();
     date.setSeconds(0);
     date.setMilliseconds(0);
+
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(500);
 
     cy.getById('add-transfer').click();
     cy.get('#description').clear();

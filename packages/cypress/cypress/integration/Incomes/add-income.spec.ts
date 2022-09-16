@@ -62,6 +62,9 @@ describe('Add income', () => {
           targetTransactionBefore.dateObj.getTime() + MINUTE_IN_MS
         );
 
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(100);
+
         cy.getById('add-income').click();
         cy.get('#description').clear();
         cy.get('#description').type(newTransactionName);
@@ -103,6 +106,9 @@ describe('Add income', () => {
         const newTransactionDate = new Date(
           targetTransactionBefore.dateObj.getTime() - MINUTE_IN_MS
         );
+
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(100);
 
         cy.getById('add-income').click();
         cy.get('#description').clear();
@@ -146,6 +152,9 @@ describe('Add income', () => {
           targetTransactionBefore.dateObj.getTime() - MINUTE_IN_MS
         );
 
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(100);
+
         cy.getById('add-income').click();
         cy.get('#description').clear();
         cy.get('#description').type(newTransactionName);
@@ -174,6 +183,9 @@ describe('Add income', () => {
     const date = new Date();
     date.setSeconds(0);
     date.setMilliseconds(0);
+
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(500);
 
     cy.getById('add-income').click();
     cy.get('#description').clear();
