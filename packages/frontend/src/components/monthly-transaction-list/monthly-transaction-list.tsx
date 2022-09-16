@@ -1,6 +1,10 @@
+import { useAllExpensesPaged } from '../../hooks/expense/useAllExpenses';
 import { useExpenseMonthlySummaries } from '../../hooks/expense/useExpenseMonthlySummaries';
+import { useAllIncomesPaged } from '../../hooks/income/useAllIncomes';
 import { useIncomeMonthlySummaries } from '../../hooks/income/useIncomeMonthlySummaries';
 import { useUserStatisticsSettings } from '../../hooks/profile/user-preference/useStatisticsSettings';
+import { useAllTransactionsPaged } from '../../hooks/transaction/useAllTransactions';
+import { useAllTransfersPaged } from '../../hooks/transfer/useAllTransfers';
 import { TransactionFilterOptions } from '../../services/TransactionService';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { DescriptionList } from '../description-list/description-list';
@@ -12,11 +16,17 @@ const emptyTotalAmount = { totalAmount: 0 };
 interface MonthlyTransactionListProps {
   monthFilterOptions: TransactionFilterOptions;
   isSummaryVisible?: boolean;
+  useDataHook?:
+    | typeof useAllTransactionsPaged
+    | typeof useAllIncomesPaged
+    | typeof useAllExpensesPaged
+    | typeof useAllTransfersPaged;
 }
 
 export const MonthlyTransactionList = ({
   monthFilterOptions,
   isSummaryVisible,
+  useDataHook = useAllTransactionsPaged,
 }: MonthlyTransactionListProps) => {
   const [statisticsSettings] = useUserStatisticsSettings();
   const accountTypeFilter = { accountTypes: statisticsSettings?.accountTypes };
@@ -47,7 +57,11 @@ export const MonthlyTransactionList = ({
           </DescriptionListItem>
         </DescriptionList>
       )}
-      <LatestTransactions filterOptions={monthFilterOptions} className="mt-4" />
+      <LatestTransactions
+        filterOptions={monthFilterOptions}
+        className="mt-4"
+        useDataHook={useDataHook}
+      />
     </>
   );
 };
