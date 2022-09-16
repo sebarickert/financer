@@ -35,11 +35,17 @@ export const useAllExpensesPaged = (
   requestParams: Omit<TransactionFilterOptions, 'page'> = {}
 ): UseAllExpensesPagedReturn => {
   const [chunkAmount] = useUserTransactionListChunkSize();
-  const { page, getLoadPageFunctions } = usePager(intialPage);
+  const { page, getLoadPageFunctions, setPage } = usePager(intialPage);
 
   const { data, error } = useQuery(['expenses', page, requestParams], () =>
     getAllExpenses({ limit: chunkAmount, ...requestParams, page })
   );
+
+  const stringifiedParams = JSON.stringify(requestParams);
+
+  useEffect(() => {
+    setPage(intialPage);
+  }, [intialPage, setPage, stringifiedParams]);
 
   if (!data || error) {
     throw new Error(`Missing data. Error: ${JSON.stringify(error ?? data)}`);

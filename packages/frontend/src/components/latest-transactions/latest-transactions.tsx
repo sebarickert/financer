@@ -1,4 +1,5 @@
 import { TransactionDto } from '@local/types';
+import { useEffect } from 'react';
 
 import { TransactionStackedList } from '../../components/transaction-stacked-list/transaction-stacked-list';
 import {
@@ -23,6 +24,8 @@ type LatestTransactionsProps = {
     | typeof useAllIncomesPaged
     | typeof useAllExpensesPaged
     | typeof useAllTransfersPaged;
+  onPageChange?: (page: number) => void;
+  initialPage?: number;
 };
 
 export const getTransactionType = (
@@ -86,9 +89,17 @@ export const LatestTransactions = ({
   },
   className,
   useDataHook = useAllTransactionsPaged,
+  onPageChange,
+  initialPage = 1,
 }: LatestTransactionsProps): JSX.Element => {
   const getCategoryName = useTransactionCategoryName();
-  const { data, pagerOptions } = useDataHook(1, filterOptions);
+  const { data, pagerOptions } = useDataHook(initialPage, filterOptions);
+
+  useEffect(() => {
+    if (onPageChange) {
+      onPageChange(pagerOptions.currentPage ?? 1);
+    }
+  }, [onPageChange, pagerOptions.currentPage]);
 
   return (
     <TransactionStackedList
