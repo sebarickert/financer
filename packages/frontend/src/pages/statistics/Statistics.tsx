@@ -78,10 +78,7 @@ export const Statistics = (): JSX.Element => {
         ></Pager>
       </section>
       <LoaderSuspense>
-        <MonthlyTransactionList
-          monthFilterOptions={monthFilterOptions}
-          isSummaryVisible
-        />
+        <MonthlyTransactionList monthFilterOptions={monthFilterOptions} />
       </LoaderSuspense>
       <QuickLinks className="mt-8">
         <QuickLinksItem
