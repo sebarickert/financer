@@ -39,7 +39,7 @@ export const DashboardStats = ({
       <DescriptionListItem label="Balance" isLarge>
         {Number.isNaN(totalBalance) ? '-' : formatCurrency(totalBalance)}
       </DescriptionListItem>
-      <DescriptionListItem label="Income">
+      <DescriptionListItem label="Incomes">
         {Number.isNaN(totalIncomes) ? '-' : formatCurrency(totalIncomes)}
       </DescriptionListItem>
       <DescriptionListItem label="Expenses">
