@@ -1,7 +1,6 @@
 import { IconName } from '../../../components/icon/icon';
 import { LinkList } from '../../../components/link-list/link-list';
 import { LinkListLink } from '../../../components/link-list/link-list.link';
-import { QuickLinksItem } from '../../../components/quick-links/quick-links.item';
 import { UpdatePageInfo } from '../../../components/seo/updatePageInfo';
 import { useAllTransactionTemplates } from '../../../hooks/transactionTemplate/useAllTransactionTemplates';
 
@@ -13,13 +12,15 @@ export const TransactionTemplates = (): JSX.Element => {
       <UpdatePageInfo title="Templates" backLink="/profile" />
       <section className="grid gap-8">
         <section>
-          <QuickLinksItem
-            title="Add templates"
-            link="/profile/transaction-templates/add"
-            iconName={IconName.lightningBolt}
-            iconBackgroundColor="blue"
-            testId="add-template"
-          />
+          <LinkList>
+            <LinkListLink
+              testId="add-template"
+              link="/profile/transaction-templates/add"
+              icon={IconName.lightningBolt}
+            >
+              Add template
+            </LinkListLink>
+          </LinkList>
         </section>
         <LinkList testId="transaction-templates-link-list" label="Shortcuts">
           {transactionTemplatesRaw.map(({ templateName, _id: id }) => (
