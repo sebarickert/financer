@@ -86,6 +86,8 @@ describe('Edit income', () => {
         const newAmount =
           targetTransactionBefore.amount + amountToChangeTransaction;
 
+        cy.visit('http://localhost:3000/statistics/incomes/2022-01');
+
         cy.getById(targetTransactionBefore._id).click();
 
         cy.getById(`edit-income-button`).click();
@@ -144,6 +146,8 @@ describe('Edit income', () => {
 
         const newAmount =
           targetTransactionBefore.amount + amountToChangeTransaction;
+
+        cy.visit('http://localhost:3000/statistics/incomes/2021-02');
 
         cy.getById(targetTransactionBefore._id).click();
 

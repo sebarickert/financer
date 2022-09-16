@@ -62,6 +62,9 @@ describe('Add expense', () => {
           targetTransactionBefore.dateObj.getTime() + MINUTE_IN_MS
         );
 
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(100);
+
         cy.getById('add-expense').click();
         cy.get('#description').clear();
         cy.get('#description').type(newTransactionName);
@@ -104,6 +107,9 @@ describe('Add expense', () => {
 
         cy.saveAsyncData('accountBefore', () => getAccount(targetAccountId));
 
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(100);
+
         cy.getById('add-expense').click();
         cy.get('#description').clear();
         cy.get('#description').type(newTransactionName);
@@ -145,6 +151,9 @@ describe('Add expense', () => {
 
         cy.saveAsyncData('accountBefore', () => getAccount(targetAccountId));
 
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(100);
+
         cy.getById('add-expense').click();
         cy.get('#description').clear();
         cy.get('#description').type(newTransactionName);
@@ -173,6 +182,9 @@ describe('Add expense', () => {
     const date = new Date();
     date.setSeconds(0);
     date.setMilliseconds(0);
+
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(500);
 
     cy.getById('add-expense').click();
     cy.get('#description').clear();
