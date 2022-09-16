@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-import { LoaderColor } from '../../components/loader/loader';
 import { LoaderFullScreen } from '../../components/loader/loader.fullscreen';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 
@@ -22,9 +21,7 @@ export const Login = (): JSX.Element => {
   return (
     <>
       <UpdatePageInfo title="Login" />
-      {isLoadingOAuthPage && (
-        <LoaderFullScreen loaderColor={LoaderColor.blue} />
-      )}
+      {isLoadingOAuthPage && <LoaderFullScreen />}
       <div className="fixed inset-0 z-10 overflow-y-auto">
         <div className="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
           <div className="fixed inset-0 transition-opacity">
