@@ -1,9 +1,9 @@
 import { TransactionTypeMapping } from '@local/types';
 
 import { useAllManualTransactionTemplates } from '../../hooks/transactionTemplate/useAllTransactionTemplates';
-import { Heading } from '../heading/heading';
-import { Shortcut } from '../shortcut/shortcut';
-import { ShortcutList } from '../shortcut/shortcut.list';
+import { IconName } from '../icon/icon';
+import { LinkList } from '../link-list/link-list';
+import { LinkListLink } from '../link-list/link-list.link';
 
 interface TransactionTemplatesListProps {
   className?: string;
@@ -18,19 +18,19 @@ export const TransactionTemplatesList = ({
 
   return (
     <section className={className}>
-      <Heading className="mb-6">Shortcuts</Heading>
-      <ShortcutList>
+      <LinkList label="Shortcuts">
         {transactionTemplates.map(
           ({ _id: id, templateName, templateVisibility }) => (
-            <Shortcut
-              key={id}
+            <LinkListLink
+              icon={IconName.lightningBolt}
               link={`/statistics/${TransactionTypeMapping[templateVisibility]}/add/${id}`}
+              key={id}
             >
               {templateName}
-            </Shortcut>
+            </LinkListLink>
           )
         )}
-      </ShortcutList>
+      </LinkList>
     </section>
   );
 };
