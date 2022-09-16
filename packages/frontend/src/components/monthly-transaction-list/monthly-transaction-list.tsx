@@ -13,6 +13,11 @@ import { LatestTransactions } from '../latest-transactions/latest-transactions';
 
 const emptyTotalAmount = { totalAmount: 0 };
 
+export const initialMonthFilterOptions = {
+  year: new Date().getFullYear(),
+  month: new Date().getMonth() + 1,
+};
+
 interface MonthlyTransactionListProps {
   monthFilterOptions: TransactionFilterOptions;
   isSummaryVisible?: boolean;

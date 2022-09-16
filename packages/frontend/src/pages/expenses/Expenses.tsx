@@ -6,21 +6,20 @@ import { IconName } from '../../components/icon/icon';
 import { LinkList } from '../../components/link-list/link-list';
 import { LinkListLink } from '../../components/link-list/link-list.link';
 import { LoaderSuspense } from '../../components/loader/loader-suspense';
-import { MonthlyTransactionList } from '../../components/monthly-transaction-list/monthly-transaction-list';
+import {
+  initialMonthFilterOptions,
+  MonthlyTransactionList,
+} from '../../components/monthly-transaction-list/monthly-transaction-list';
 import { Pager } from '../../components/pager/pager';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { monthNames } from '../../constants/months';
 import { useAllExpensesPaged } from '../../hooks/expense/useAllExpenses';
 import { useAllTransactionsPaged } from '../../hooks/transaction/useAllTransactions';
 
-const initialFilterOptions = {
-  year: new Date().getFullYear(),
-  month: new Date().getMonth() + 1,
-};
-
 export const Expenses = (): JSX.Element => {
-  const [monthFilterOptions, setMonthFilterOptions] =
-    useState(initialFilterOptions);
+  const [monthFilterOptions, setMonthFilterOptions] = useState(
+    initialMonthFilterOptions
+  );
   const {
     data: {
       data: [transaction],
@@ -70,8 +69,8 @@ export const Expenses = (): JSX.Element => {
           pagerOptions={{
             nextPage: {
               isAvailable: !(
-                monthFilterOptions.month === initialFilterOptions.month &&
-                monthFilterOptions.year === initialFilterOptions.year
+                monthFilterOptions.month === initialMonthFilterOptions.month &&
+                monthFilterOptions.year === initialMonthFilterOptions.year
               ),
               load: () => handleMonthOptionChange('next'),
             },
