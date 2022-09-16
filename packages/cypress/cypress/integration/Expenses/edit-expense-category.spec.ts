@@ -5,6 +5,7 @@ describe('Edit expense with category', () => {
   });
 
   it('Edit with single category', () => {
+    cy.visit('http://localhost:3000/statistics/expenses/2022-03');
     cy.getById('623de25fc839cf72d59b0dbd').click();
     cy.getById('edit-expense-button').click();
 
@@ -28,6 +29,7 @@ describe('Edit expense with category', () => {
 
     cy.getById('submit').click();
 
+    cy.visit('http://localhost:3000/statistics/expenses/2022-03');
     cy.getById('623de25fc839cf72d59b0dbd').click();
     cy.getById('edit-expense-button').click();
 
@@ -43,6 +45,7 @@ describe('Edit expense with category', () => {
   });
 
   it('Delete one categories with multiple categories', () => {
+    cy.visit('http://localhost:3000/statistics/expenses/2022-03');
     cy.getById('623de288c839cf72d59b0dd2').click();
     cy.getById('edit-expense-button').click();
 
@@ -87,6 +90,7 @@ describe('Edit expense with category', () => {
 
     cy.getById('submit').click();
 
+    cy.visit('http://localhost:3000/statistics/expenses/2022-03');
     cy.getById('623de288c839cf72d59b0dd2').click();
     cy.getById('edit-expense-button').click();
 
@@ -106,6 +110,7 @@ describe('Edit expense with category', () => {
   });
 
   it('Delete all categories with multiple categories', () => {
+    cy.visit('http://localhost:3000/statistics/expenses/2022-03');
     cy.getById('623de288c839cf72d59b0dd2').click();
     cy.getById('edit-expense-button').click();
 
@@ -125,6 +130,7 @@ describe('Edit expense with category', () => {
 
     cy.getById('submit').click();
 
+    cy.visit('http://localhost:3000/statistics/expenses/2022-03');
     cy.getById('623de288c839cf72d59b0dd2').click();
     cy.getById('edit-expense-button').click();
 
