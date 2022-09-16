@@ -1,15 +1,14 @@
 import { SortOrder } from '@local/types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { Heading } from '../../components/heading/heading';
 import { IconName } from '../../components/icon/icon';
+import { LatestTransactions } from '../../components/latest-transactions/latest-transactions';
 import { LinkList } from '../../components/link-list/link-list';
 import { LinkListLink } from '../../components/link-list/link-list.link';
 import { LoaderSuspense } from '../../components/loader/loader-suspense';
-import {
-  initialMonthFilterOptions,
-  MonthlyTransactionList,
-} from '../../components/monthly-transaction-list/monthly-transaction-list';
+import { initialMonthFilterOptions } from '../../components/monthly-transaction-list/monthly-transaction-list';
 import { Pager } from '../../components/pager/pager';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { monthNames } from '../../constants/months';
@@ -17,8 +16,21 @@ import { useAllIncomesPaged } from '../../hooks/income/useAllIncomes';
 import { useAllTransactionsPaged } from '../../hooks/transaction/useAllTransactions';
 
 export const Incomes = (): JSX.Element => {
+  const {
+    year: initialYear,
+    month: initialMonth,
+    page: initialPage = '1',
+  } = useParams<{ year?: string; month?: string; page?: string }>();
+  const [selectedPage, setSelectedPage] = useState(parseInt(initialPage));
+
   const [monthFilterOptions, setMonthFilterOptions] = useState(
-    initialMonthFilterOptions
+    !initialYear || !initialMonth
+      ? initialMonthFilterOptions
+      : {
+          year: parseInt(initialYear),
+          month: parseInt(initialMonth),
+          page: selectedPage,
+        }
   );
   const {
     data: {
@@ -28,6 +40,27 @@ export const Incomes = (): JSX.Element => {
     limit: 1,
     sortOrder: SortOrder.ASC,
   });
+
+  const [initialPageToLoad, setInitialPage] = useState(selectedPage);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    navigate({
+      pathname: `/statistics/incomes/${
+        monthFilterOptions.year
+      }-${monthFilterOptions.month
+        .toString()
+        .padStart(2, '0')}/${selectedPage}`,
+    });
+
+    setInitialPage(1);
+  }, [
+    monthFilterOptions.year,
+    monthFilterOptions.month,
+    navigate,
+    selectedPage,
+  ]);
 
   const firstTransactionEverDate = new Date(transaction?.date || new Date());
 
@@ -87,9 +120,12 @@ export const Incomes = (): JSX.Element => {
         ></Pager>
       </section>
       <LoaderSuspense>
-        <MonthlyTransactionList
-          monthFilterOptions={monthFilterOptions}
+        <LatestTransactions
+          filterOptions={monthFilterOptions}
+          className="mt-4"
           useDataHook={useAllIncomesPaged}
+          onPageChange={setSelectedPage}
+          initialPage={initialPageToLoad}
         />
       </LoaderSuspense>
     </>

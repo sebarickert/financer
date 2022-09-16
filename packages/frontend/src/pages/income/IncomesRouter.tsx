@@ -10,6 +10,8 @@ export const IncomesRouter = (): JSX.Element => {
   return (
     <Routes>
       <Route index element={<Incomes />} />
+      <Route path="/:year-:month" element={<Incomes />} />
+      <Route path="/:year-:month/:page" element={<Incomes />} />
       <Route path="add" element={<AddIncome />} />
       <Route path="add/:id" element={<AddShortcutIncome />} />
       <Route path=":id" element={<Income />} />
