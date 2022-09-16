@@ -1,4 +1,7 @@
-import { CreateTransactionCategoryMappingDtoWithoutTransaction } from '@local/types';
+import {
+  CreateTransactionCategoryMappingDtoWithoutTransaction,
+  SortOrder,
+} from '@local/types';
 import { Suspense, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -11,12 +14,16 @@ import { LatestAccountTransactions } from '../../components/latest-transactions/
 import { LinkList } from '../../components/link-list/link-list';
 import { LinkListLink } from '../../components/link-list/link-list.link';
 import { LoaderSuspense } from '../../components/loader/loader-suspense';
+import { initialMonthFilterOptions } from '../../components/monthly-transaction-list/monthly-transaction-list';
+import { Pager } from '../../components/pager/pager';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
+import { monthNames } from '../../constants/months';
 import { useAccountById } from '../../hooks/account/useAccountById';
 import { useDeleteAccount } from '../../hooks/account/useDeleteAccount';
 import { useAddExpense } from '../../hooks/expense/useAddExpense';
 import { useAddIncome } from '../../hooks/income/useAddIncome';
 import { useUserDefaultMarketUpdateSettings } from '../../hooks/profile/user-preference/useDefaultMarketUpdateSettings';
+import { useAllTransactionsPaged } from '../../hooks/transaction/useAllTransactions';
 import { useTransactionsByAccountIdPaged } from '../../hooks/transaction/useTransactionsByAccountId';
 import { parseErrorMessagesToArray } from '../../utils/apiHelper';
 import { capitalize } from '../../utils/capitalize';
@@ -47,6 +54,18 @@ export const Account = (): JSX.Element | null => {
   const [errors, setErrors] = useState<string[]>([]);
   const addIncome = useAddIncome();
   const addExpense = useAddExpense();
+
+  const [monthFilterOptions, setMonthFilterOptions] = useState(
+    initialMonthFilterOptions
+  );
+  const {
+    data: {
+      data: [transaction],
+    },
+  } = useAllTransactionsPaged(1, {
+    limit: 1,
+    sortOrder: SortOrder.ASC,
+  });
 
   const handleDelete = async () => {
     if (!id) {
@@ -128,6 +147,26 @@ export const Account = (): JSX.Element | null => {
     }
   };
 
+  const firstTransactionEverDate = new Date(transaction?.date || new Date());
+
+  const pageVisibleYear = monthFilterOptions.year;
+  const pageVisibleMonth = monthNames[monthFilterOptions.month - 1];
+
+  const handleMonthOptionChange = (direction: 'next' | 'previous') => {
+    const { month, year } = monthFilterOptions;
+    const monthWithTwoDigits = month.toString().padStart(2, '0');
+    const selectedMonth = new Date(`${year}-${monthWithTwoDigits}-01`);
+
+    selectedMonth.setMonth(
+      selectedMonth.getMonth() + (direction === 'next' ? 1 : -1)
+    );
+
+    setMonthFilterOptions({
+      month: selectedMonth.getMonth() + 1,
+      year: selectedMonth.getFullYear(),
+    });
+  };
+
   return (
     <>
       <UpdatePageInfo title={`${account.name}`} backLink="/accounts" />
@@ -172,12 +211,35 @@ export const Account = (): JSX.Element | null => {
       <LoaderSuspense>
         <AccountBalanceHistoryChart accountId={account._id} />
       </LoaderSuspense>
-      <section className="my-6">
-        <Heading>History</Heading>
-        <LoaderSuspense>
-          <LatestAccountTransactions accountId={id} filterOptions={{}} />
-        </LoaderSuspense>
+      <section className="flex items-center justify-between mb-4 mt-8">
+        <Heading>{`${pageVisibleMonth}, ${pageVisibleYear}`}</Heading>
+        <Pager
+          pagerOptions={{
+            nextPage: {
+              isAvailable: !(
+                monthFilterOptions.month === initialMonthFilterOptions.month &&
+                monthFilterOptions.year === initialMonthFilterOptions.year
+              ),
+              load: () => handleMonthOptionChange('next'),
+            },
+            previousPage: {
+              isAvailable: !(
+                monthFilterOptions.month ===
+                  firstTransactionEverDate.getMonth() + 1 &&
+                monthFilterOptions.year ===
+                  firstTransactionEverDate.getFullYear()
+              ),
+              load: () => handleMonthOptionChange('previous'),
+            },
+          }}
+        ></Pager>
       </section>
+      <LoaderSuspense>
+        <LatestAccountTransactions
+          accountId={id}
+          filterOptions={monthFilterOptions}
+        />
+      </LoaderSuspense>
     </>
   );
 };
