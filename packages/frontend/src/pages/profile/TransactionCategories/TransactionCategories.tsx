@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { IconName } from '../../../components/icon/icon';
 import { LinkList } from '../../../components/link-list/link-list';
 import { LinkListLink } from '../../../components/link-list/link-list.link';
-import { QuickLinksItem } from '../../../components/quick-links/quick-links.item';
 import { UpdatePageInfo } from '../../../components/seo/updatePageInfo';
 import { useAllTransactionCategoriesWithCategoryTree } from '../../../hooks/transactionCategories/useAllTransactionCategories';
 
@@ -86,13 +85,15 @@ export const TransactionCategories = (): JSX.Element => {
     <>
       <UpdatePageInfo title="Categories" backLink="/profile" />
       <section className="mb-8">
-        <QuickLinksItem
-          title="Add category"
-          link="/profile/transaction-categories/add"
-          iconName={IconName.tag}
-          iconBackgroundColor="blue"
-          testId="add-category"
-        />
+        <LinkList>
+          <LinkListLink
+            testId="add-category"
+            link="/profile/transaction-categories/add"
+            icon={IconName.tag}
+          >
+            Add category
+          </LinkListLink>
+        </LinkList>
       </section>
       <section className="grid gap-12">
         {transactionCategories.map(

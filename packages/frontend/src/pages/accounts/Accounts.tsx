@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react';
 import { AccountsList } from '../../components/accounts-list/accounts-list';
 import { AccountsListRowProps } from '../../components/accounts-list/accounts-list.row';
 import { IconName } from '../../components/icon/icon';
-import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
+import { LinkList } from '../../components/link-list/link-list';
+import { LinkListLink } from '../../components/link-list/link-list.link';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { useAllAccounts } from '../../hooks/account/useAllAccounts';
 import { formatCurrency } from '../../utils/formatCurrency';
@@ -46,13 +47,15 @@ export const Accounts = (): JSX.Element => {
       <UpdatePageInfo title="Accounts" />
       <section className="grid gap-8">
         <section>
-          <QuickLinksItem
-            title="Add account"
-            link="/accounts/add"
-            iconName={IconName.viewGridAdd}
-            iconBackgroundColor="blue"
-            testId="add-account"
-          />
+          <LinkList>
+            <LinkListLink
+              testId="add-account"
+              link="/accounts/add"
+              icon={IconName.viewGridAdd}
+            >
+              Add account
+            </LinkListLink>
+          </LinkList>
         </section>
         {savingsAccounts?.length > 0 && (
           <AccountsList label="Savings" rows={savingsAccounts} />
