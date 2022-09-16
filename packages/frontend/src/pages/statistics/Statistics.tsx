@@ -5,7 +5,10 @@ import { Heading } from '../../components/heading/heading';
 import { IconName } from '../../components/icon/icon';
 import { LoaderSuspense } from '../../components/loader/loader-suspense';
 import { MonthlySummaryGraph } from '../../components/monthly-summary-graph/monthly-summary-graph';
-import { MonthlyTransactionList } from '../../components/monthly-transaction-list/monthly-transaction-list';
+import {
+  initialMonthFilterOptions,
+  MonthlyTransactionList,
+} from '../../components/monthly-transaction-list/monthly-transaction-list';
 import { Pager } from '../../components/pager/pager';
 import { QuickLinks } from '../../components/quick-links/quick-links';
 import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
@@ -13,14 +16,10 @@ import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { monthNames } from '../../constants/months';
 import { useAllTransactionsPaged } from '../../hooks/transaction/useAllTransactions';
 
-const initialFilterOptions = {
-  year: new Date().getFullYear(),
-  month: new Date().getMonth() + 1,
-};
-
 export const Statistics = (): JSX.Element => {
-  const [monthFilterOptions, setMonthFilterOptions] =
-    useState(initialFilterOptions);
+  const [monthFilterOptions, setMonthFilterOptions] = useState(
+    initialMonthFilterOptions
+  );
   const {
     data: {
       data: [transaction],
@@ -60,8 +59,8 @@ export const Statistics = (): JSX.Element => {
           pagerOptions={{
             nextPage: {
               isAvailable: !(
-                monthFilterOptions.month === initialFilterOptions.month &&
-                monthFilterOptions.year === initialFilterOptions.year
+                monthFilterOptions.month === initialMonthFilterOptions.month &&
+                monthFilterOptions.year === initialMonthFilterOptions.year
               ),
               load: () => handleMonthOptionChange('next'),
             },
