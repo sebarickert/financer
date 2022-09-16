@@ -192,7 +192,7 @@ export const MonthlySummaryGraph = ({
             const label = context.dataset.label || '';
 
             if (!context.parsed.y) {
-              return label;
+              return `${label} ${formatCurrency(0)}`;
             }
 
             return `${label} ${formatCurrency(context.parsed.y as number)}`;
