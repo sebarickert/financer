@@ -22,7 +22,13 @@ export const TransactionStackedList = ({
   pagerOptions,
   isPagerHidden,
 }: TransactionStackedListProps): JSX.Element | null => {
-  if (!rows.length) return null;
+  if (!rows.length) {
+    return (
+      <section className={`${className}`}>
+        <p className="text-gray-700">No transactions to show</p>
+      </section>
+    );
+  }
 
   return (
     <section className={`${className}`}>

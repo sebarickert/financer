@@ -64,7 +64,6 @@ export const MonthlyTransactionList = ({
       )}
       <LatestTransactions
         filterOptions={monthFilterOptions}
-        className="mt-4"
         useDataHook={useDataHook}
       />
     </>
