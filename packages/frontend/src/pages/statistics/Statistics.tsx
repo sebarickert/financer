@@ -53,7 +53,7 @@ export const Statistics = (): JSX.Element => {
     <>
       <UpdatePageInfo title="Statistics" />
       <MonthlySummaryGraph className="mb-6" />
-      <section className="flex items-center justify-between mb-4">
+      <section className="flex items-center justify-between mb-2">
         <Heading>{`${pageVisibleMonth}, ${pageVisibleYear}`}</Heading>
         <Pager
           pagerOptions={{

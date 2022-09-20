@@ -326,7 +326,7 @@ export const ViewTransactionCategory = (): JSX.Element => {
       <div className="min-h-[300px] h-[20vh] md:h-auto md:min-h-0 md:aspect-video -mx-4 md:-mx-0">
         <Chart type="line" data={data} options={options} />
       </div>
-      <section className="flex items-center justify-between mt-6 mb-4">
+      <section className="flex items-center justify-between mt-6 mb-2">
         <Heading>{`${pageVisibleMonth}, ${pageVisibleYear}`}</Heading>
         <Pager
           pagerOptions={{

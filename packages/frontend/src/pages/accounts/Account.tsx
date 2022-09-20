@@ -211,7 +211,7 @@ export const Account = (): JSX.Element | null => {
       <LoaderSuspense>
         <AccountBalanceHistoryChart accountId={account._id} />
       </LoaderSuspense>
-      <section className="flex items-center justify-between mb-4 mt-8">
+      <section className="flex items-center justify-between mb-2 mt-8">
         <Heading>{`${pageVisibleMonth}, ${pageVisibleYear}`}</Heading>
         <Pager
           pagerOptions={{
