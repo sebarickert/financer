@@ -35,7 +35,7 @@ type MonthlySummaryHistory = {
 
 export const MonthlySummaryGraph = ({
   className = '',
-}: BalanceGraphProps): JSX.Element => {
+}: BalanceGraphProps): JSX.Element | null => {
   const [isProcessing, startProcessing] = useTransition();
   const [monthlySummaryHistory, setMonthlySummaryHistory] = useState<
     MonthlySummaryHistory[]
@@ -233,6 +233,8 @@ export const MonthlySummaryGraph = ({
       },
     ],
   };
+
+  if (!monthlySummaryHistory?.length) return null;
 
   return (
     <section
