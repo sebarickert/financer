@@ -85,20 +85,17 @@ export const Statistics = (): JSX.Element => {
           link="/statistics/incomes"
           iconName={IconName.download}
           iconBackgroundColor="green"
-          description="Go to incomes page where you are able to manage your income transactions."
         />
         <QuickLinksItem
           title="Expenses"
           link="/statistics/expenses"
           iconName={IconName.upload}
           iconBackgroundColor="red"
-          description="Go to expenses page where you are able to manage your expense transactions."
         />
         <QuickLinksItem
           title="Transfers"
           link="/statistics/transfers"
           iconName={IconName.switchHorizontal}
-          description="Go to transfers page where you are able to manage your transfer transactions."
         />
       </QuickLinks>
     </>
