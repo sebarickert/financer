@@ -5,7 +5,7 @@
   "display": "standalone",
   "theme_color": "#0e6ac7",
   "background_color": "#0E6AC7",
-    "icons": [
+  "icons": [
     {
       "src": "/logo.svg",
       "type": "image/svg+xml",
@@ -29,6 +29,22 @@
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Add income",
+      "url": "/statistics/incomes/add",
+      "icons": [{ "src": "/android-icon-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Add expense",
+      "url": "/statistics/expenses/add",
+      "icons": [{ "src": "/android-icon-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Add transfer",
+      "url": "/statistics/transfers/add"
     }
   ]
 }
