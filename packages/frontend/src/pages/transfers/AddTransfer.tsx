@@ -1,8 +1,9 @@
-import { CreateTransferDto } from '@local/types';
+import { CreateTransferDto, TransactionType } from '@local/types';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
+import { TransactionTemplatesSwitcher } from '../../components/transaction-template-switcher/transaction-templates-switcher';
 import { useUserDefaultTransferSourceAccount } from '../../hooks/profile/user-preference/useUserDefaultTransferSourceAccount';
 import { useUserDefaultTransferTargetAccount } from '../../hooks/profile/user-preference/useUserDefaultTransferTargetAccount';
 import { useAddTransfer } from '../../hooks/transfer/useAddTransfer';
@@ -36,7 +37,14 @@ export const AddTransfer = (): JSX.Element => {
 
   return (
     <>
-      <UpdatePageInfo title="Add transfer" />
+      <UpdatePageInfo
+        title="Add transfer"
+        headerAction={
+          <TransactionTemplatesSwitcher
+            templateType={TransactionType.TRANSFER}
+          />
+        }
+      />
       <TransferForm
         onSubmit={handleSubmit}
         errors={errors}

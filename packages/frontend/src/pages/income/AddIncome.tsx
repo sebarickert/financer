@@ -1,8 +1,10 @@
-import { CreateIncomeDto } from '@local/types';
+import { CreateIncomeDto, TransactionType } from '@local/types';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { ButtonPlain } from '../../components/button/button.plain';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
+import { TransactionTemplatesSwitcher } from '../../components/transaction-template-switcher/transaction-templates-switcher';
 import { useAddIncome } from '../../hooks/income/useAddIncome';
 import { useUserDefaultIncomeAccount } from '../../hooks/profile/user-preference/useUserDefaultIncomeAccount';
 import { parseErrorMessagesToArray } from '../../utils/apiHelper';
@@ -33,7 +35,12 @@ export const AddIncome = (): JSX.Element => {
 
   return (
     <>
-      <UpdatePageInfo title="Add income" />
+      <UpdatePageInfo
+        title="Add income"
+        headerAction={
+          <TransactionTemplatesSwitcher templateType={TransactionType.INCOME} />
+        }
+      />
       <IncomeForm
         onSubmit={handleSubmit}
         errors={errors}

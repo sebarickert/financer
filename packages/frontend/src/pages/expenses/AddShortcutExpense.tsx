@@ -1,8 +1,13 @@
-import { CreateExpenseDto, TransactionCategoryMappingDto } from '@local/types';
+import {
+  CreateExpenseDto,
+  TransactionCategoryMappingDto,
+  TransactionType,
+} from '@local/types';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
+import { TransactionTemplatesSwitcher } from '../../components/transaction-template-switcher/transaction-templates-switcher';
 import { useAddExpense } from '../../hooks/expense/useAddExpense';
 import { useTransactionTemplateById } from '../../hooks/transactionTemplate/useTransactionTemplateById';
 import { parseErrorMessagesToArray } from '../../utils/apiHelper';
@@ -42,6 +47,12 @@ export const AddShortcutExpense = (): JSX.Element => {
     <>
       <UpdatePageInfo
         title={`Add ${transactionTemplate.description?.toLowerCase()}`}
+        headerAction={
+          <TransactionTemplatesSwitcher
+            templateType={TransactionType.EXPENSE}
+            selectedTemplate={id}
+          />
+        }
       />
       <ExpenseForm
         onSubmit={handleSubmit}

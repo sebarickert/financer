@@ -1,8 +1,13 @@
-import { CreateIncomeDto, TransactionCategoryMappingDto } from '@local/types';
+import {
+  CreateIncomeDto,
+  TransactionCategoryMappingDto,
+  TransactionType,
+} from '@local/types';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
+import { TransactionTemplatesSwitcher } from '../../components/transaction-template-switcher/transaction-templates-switcher';
 import { useAddIncome } from '../../hooks/income/useAddIncome';
 import { useTransactionTemplateById } from '../../hooks/transactionTemplate/useTransactionTemplateById';
 import { parseErrorMessagesToArray } from '../../utils/apiHelper';
@@ -42,6 +47,12 @@ export const AddShortcutIncome = (): JSX.Element => {
     <>
       <UpdatePageInfo
         title={`Add ${transactionTemplate.description?.toLowerCase()}`}
+        headerAction={
+          <TransactionTemplatesSwitcher
+            selectedTemplate={id}
+            templateType={TransactionType.INCOME}
+          />
+        }
       />
       <IncomeForm
         onSubmit={handleSubmit}

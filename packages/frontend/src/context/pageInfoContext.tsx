@@ -8,6 +8,7 @@ export type PageInfoData = {
   title: string;
   toolbarColor?: 'white' | 'brand';
   backLink?: string;
+  headerAction?: React.ReactNode;
 };
 
 type PageInfoContextType = [

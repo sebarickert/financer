@@ -1,10 +1,7 @@
-/* eslint-disable react/button-has-type */
-import React from 'react';
-
 interface IButtonPlainProps {
-  children: string;
+  children: React.ReactNode;
   onClick(): void;
-  className: string;
+  className?: string;
   type?: 'button' | 'submit' | 'reset' | undefined;
   testId?: string;
   isDisabled?: boolean;
@@ -22,7 +19,7 @@ export const ButtonPlain = ({
     <button
       type={type}
       onClick={onClick}
-      aria-label={children}
+      // aria-label={children}
       className={`${className} disabled:opacity-50 disabled:cursor-not-allowed`}
       data-testid={testId}
       disabled={isDisabled}

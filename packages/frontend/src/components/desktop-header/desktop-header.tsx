@@ -5,7 +5,7 @@ import { Heading } from '../heading/heading';
 import { Icon, IconName } from '../icon/icon';
 
 export const DesktopHeader = (): JSX.Element => {
-  const [{ title, backLink }] = usePageInfoContext();
+  const [{ title, backLink, headerAction }] = usePageInfoContext();
 
   return (
     <>
@@ -23,6 +23,7 @@ export const DesktopHeader = (): JSX.Element => {
         <Heading variant="h1" testId="page-main-heading">
           {title ?? '-'}
         </Heading>
+        {headerAction && <div className="ml-auto">{headerAction}</div>}
       </div>
     </>
   );
