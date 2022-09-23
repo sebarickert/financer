@@ -1,8 +1,9 @@
-import { CreateExpenseDto } from '@local/types';
+import { CreateExpenseDto, TransactionType } from '@local/types';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
+import { TransactionTemplatesSwitcher } from '../../components/transaction-template-switcher/transaction-templates-switcher';
 import { useAddExpense } from '../../hooks/expense/useAddExpense';
 import { useUserDefaultExpenseAccount } from '../../hooks/profile/user-preference/useUserDefaultExpenseAccount';
 import { parseErrorMessagesToArray } from '../../utils/apiHelper';
@@ -33,7 +34,14 @@ export const AddExpense = (): JSX.Element => {
 
   return (
     <>
-      <UpdatePageInfo title="Add expense" />
+      <UpdatePageInfo
+        title="Add expense"
+        headerAction={
+          <TransactionTemplatesSwitcher
+            templateType={TransactionType.EXPENSE}
+          />
+        }
+      />
       <ExpenseForm
         onSubmit={handleSubmit}
         errors={errors}

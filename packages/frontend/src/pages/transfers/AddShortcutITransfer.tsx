@@ -1,8 +1,13 @@
-import { CreateTransferDto, TransactionCategoryMappingDto } from '@local/types';
+import {
+  CreateTransferDto,
+  TransactionCategoryMappingDto,
+  TransactionType,
+} from '@local/types';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
+import { TransactionTemplatesSwitcher } from '../../components/transaction-template-switcher/transaction-templates-switcher';
 import { useTransactionTemplateById } from '../../hooks/transactionTemplate/useTransactionTemplateById';
 import { useAddTransfer } from '../../hooks/transfer/useAddTransfer';
 import { parseErrorMessagesToArray } from '../../utils/apiHelper';
@@ -42,6 +47,12 @@ export const AddShortcutTransfer = (): JSX.Element => {
     <>
       <UpdatePageInfo
         title={`Add ${transactionTemplate.description?.toLowerCase()}`}
+        headerAction={
+          <TransactionTemplatesSwitcher
+            templateType={TransactionType.TRANSFER}
+            selectedTemplate={id}
+          />
+        }
       />
       <TransferForm
         onSubmit={handleSubmit}
