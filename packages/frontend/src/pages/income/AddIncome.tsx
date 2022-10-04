@@ -2,7 +2,6 @@ import { CreateIncomeDto, TransactionType } from '@local/types';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { ButtonPlain } from '../../components/button/button.plain';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { TransactionTemplatesSwitcher } from '../../components/transaction-template-switcher/transaction-templates-switcher';
 import { useAddIncome } from '../../hooks/income/useAddIncome';

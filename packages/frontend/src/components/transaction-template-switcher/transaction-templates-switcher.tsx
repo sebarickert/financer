@@ -40,6 +40,7 @@ export const TransactionTemplatesSwitcher = ({
       setIsOpen(false);
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const clickOutside = (event: any) => {
       if (event.target === current) {
         current?.close();
@@ -61,6 +62,7 @@ export const TransactionTemplatesSwitcher = ({
     };
   }, [isOpen]);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     const { templateSwitcher } = event.target;
