@@ -25,12 +25,13 @@ export const MobileNavigationActions = (): JSX.Element => {
         onClick={() => setIsActionsModalHidden(!isActionsModalHidden)}
         ref={mobileNavigationToggleButtonRef}
       >
-        <span
-          className={`${
-            !isActionsModalHidden ? 'rotate-45' : ''
-          } transition duration-250 ease-in-out block`}
-        >
-          <Icon type={IconName.plus} />
+        <span className={`block bg-blue-financer p-2 rounded-lg text-white`}>
+          <Icon
+            type={IconName.plus}
+            className={`${
+              !isActionsModalHidden ? 'rotate-45' : ''
+            } transition duration-250 ease-in-out`}
+          />
         </span>
       </button>
       <MobileNavigationActionsBody
