@@ -8,10 +8,10 @@ import { MobileNavigationActionsBody } from './mobile-navigation.actions.body';
 export const MobileNavigationActions = (): JSX.Element => {
   const mobileNavigationActionsBodyRef = useRef();
   const mobileNavigationToggleButtonRef = useRef(null);
-  const [isActionsModalHidden, setIsActionsModalHidden] = useState(true);
+  const [isActionsModalOpen, setIsActionsModalOpen] = useState(false);
   useOnClickOutside(
     mobileNavigationActionsBodyRef,
-    () => setIsActionsModalHidden(true),
+    () => setIsActionsModalOpen(false),
     mobileNavigationToggleButtonRef
   );
 
@@ -20,24 +20,24 @@ export const MobileNavigationActions = (): JSX.Element => {
       <button
         type="button"
         className={`flex w-full h-full justify-center items-center`}
-        aria-expanded={!isActionsModalHidden}
+        aria-expanded={isActionsModalOpen}
         aria-label="Add new transaction"
-        onClick={() => setIsActionsModalHidden(!isActionsModalHidden)}
+        onClick={() => setIsActionsModalOpen(!isActionsModalOpen)}
         ref={mobileNavigationToggleButtonRef}
       >
         <span className={`block bg-blue-financer p-2 rounded-lg text-white`}>
           <Icon
             type={IconName.plus}
             className={`${
-              !isActionsModalHidden ? 'rotate-45' : ''
+              isActionsModalOpen ? 'rotate-45' : ''
             } transition duration-250 ease-in-out`}
           />
         </span>
       </button>
       <MobileNavigationActionsBody
-        isModalHidden={isActionsModalHidden}
+        isModalHidden={isActionsModalOpen}
         outsideClickRef={mobileNavigationActionsBodyRef}
-        onClick={setIsActionsModalHidden}
+        onClick={setIsActionsModalOpen}
       />
     </li>
   );
