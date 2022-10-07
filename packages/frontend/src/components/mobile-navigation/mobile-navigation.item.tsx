@@ -34,7 +34,7 @@ export const MobileNavigationItem = ({
       <li>
         <NavLink
           to={link}
-          className={`flex flex-col items-center justify-center focus:text-blue-financer hover:text-blue-financer h-11`}
+          className={`flex flex-col items-center justify-center focus:text-blue-financer hover:text-blue-financer h-14`}
           onClick={onClick}
           aria-label={ariaLabel}
         >
