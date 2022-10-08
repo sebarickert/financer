@@ -9,6 +9,7 @@ export const MobileNavigationActions = (): JSX.Element => {
   const mobileNavigationActionsBodyRef = useRef();
   const mobileNavigationToggleButtonRef = useRef(null);
   const [isActionsModalOpen, setIsActionsModalOpen] = useState(false);
+
   useOnClickOutside(
     mobileNavigationActionsBodyRef,
     () => setIsActionsModalOpen(false),
