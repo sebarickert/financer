@@ -6,7 +6,7 @@ import { Icon, IconName } from '../icon/icon';
 import { MobileNavigationActionsBody } from './mobile-navigation.actions.body';
 
 export const MobileNavigationActions = (): JSX.Element => {
-  const mobileNavigationActionsBodyRef = useRef();
+  const mobileNavigationActionsBodyRef = useRef(null);
   const mobileNavigationToggleButtonRef = useRef(null);
   const [isActionsModalOpen, setIsActionsModalOpen] = useState(false);
 

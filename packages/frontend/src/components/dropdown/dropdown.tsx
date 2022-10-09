@@ -19,7 +19,7 @@ export const Dropdown = ({
   items,
   className = '',
 }: IDropdownProps): JSX.Element => {
-  const dropdownBodyRef = useRef();
+  const dropdownBodyRef = useRef(null);
   const dropdownToggleButtonRef = useRef(null);
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
