@@ -10,13 +10,14 @@ export const useOnClickOutside = (
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const listener = (event: any) => {
-      if (!ref.current || ref.current?.contains(event.target)) {
+      if (!ref?.current || ref?.current?.contains(event.target)) {
         return;
       }
 
       if (
         typeof secondaryRef !== 'undefined' &&
-        (!secondaryRef.current || secondaryRef.current?.contains(event.target))
+        (!secondaryRef?.current ||
+          secondaryRef?.current?.contains(event.target))
       ) {
         return;
       }
