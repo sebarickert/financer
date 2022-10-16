@@ -1,23 +1,30 @@
-import React from 'react';
+import classNames from 'classnames';
+import React, { Children, cloneElement } from 'react';
 
-interface ICtaBlockProps {
+export interface CtaBlockProps {
   label?: string;
   className?: string;
   children: React.ReactNode;
+  variant?: 'gray' | 'black' | 'brand';
 }
 
 export const CtaBlock = ({
   label = '',
   className = '',
   children,
-}: ICtaBlockProps): JSX.Element => {
+  variant = 'gray',
+}: CtaBlockProps): JSX.Element => {
   return (
-    <section
-      className={`bg-gray-25 border p-2 rounded-lg whitespace-nowrap w-full ${className}`}
-    >
+    <section className={classNames(className)}>
       <nav aria-label={label}>
-        <ul className="grid grid-cols-3 justify-center items-center">
-          {children}
+        <ul
+          className={classNames(
+            'grid grid-cols-4 gap-2 justify-center items-center'
+          )}
+        >
+          {Children.map(children, (child) => {
+            return cloneElement(child as React.ReactElement, { variant });
+          })}
         </ul>
       </nav>
     </section>

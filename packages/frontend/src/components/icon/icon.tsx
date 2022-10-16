@@ -9,6 +9,7 @@ import { IconCloudDownload } from './icon.cloudDownload';
 import { IconCog } from './icon.cog';
 import { IconCollection } from './icon.collection';
 import { IconCreditCard } from './icon.creditCard';
+import { IconDotsHorizontal } from './icon.dotsHorizontal';
 import { IconDownload } from './icon.download';
 import { IconExclamation } from './icon.exclamation';
 import { IconHome } from './icon.home';
@@ -68,6 +69,7 @@ export enum IconName {
   sparkles = 'sparkles',
   paperAirplane = 'paper-airplane',
   lightningBolt = 'lightning-bolt',
+  dotsHorizontal = 'dots-horizontal',
 }
 interface IconProps {
   type: IconName;
@@ -183,6 +185,9 @@ export const Icon = ({ type, className = '' }: IconProps): JSX.Element => {
 
     case 'lightning-bolt':
       return <IconLightningBolt className={defaultIconClasses} />;
+
+    case 'dots-horizontal':
+      return <IconDotsHorizontal className={defaultIconClasses} />;
 
     default:
       break;
