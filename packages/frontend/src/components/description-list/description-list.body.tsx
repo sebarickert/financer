@@ -1,21 +1,30 @@
-import React, { Children } from 'react';
+import classNames from 'classnames';
+import React, { Children, cloneElement } from 'react';
 
-interface IDescriptionListBodyProps {
+import { DescriptionListProps } from './description-list';
+
+interface DescriptionListBodyProps {
   children: React.ReactNode | React.ReactNode[];
   testId?: string;
+  variant?: DescriptionListProps['variant'];
 }
 
 export const DescriptionListBody = ({
   children,
   testId,
-}: IDescriptionListBodyProps): JSX.Element => {
+  variant,
+}: DescriptionListBodyProps): JSX.Element => {
   const isLargeCount = Children.toArray(children).filter(
     (child) => (child as React.ReactElement).props.isLarge
   ).length;
 
   return (
     <dl
-      className="grid grid-cols-2 bg-gray-25 rounded-lg border"
+      className={classNames('grid grid-cols-2 rounded-lg border', {
+        'bg-gray-25': variant === 'gray',
+        'bg-gray-900 text-white border-gray-900': variant === 'black',
+        'bg-blue-financer text-white border-bg-financer': variant === 'brand',
+      })}
       data-testid={testId}
     >
       {Children.map(children, (child, index) => {
@@ -35,11 +44,15 @@ export const DescriptionListBody = ({
 
               return (
                 <section
-                  className={`py-4 pl-6 pr-4 ${isEven ? 'border-l' : ''} ${
-                    isSecondRow ? 'border-t' : ''
-                  } ${isTotalChildrenCountOdd ? 'last:col-span-full' : ''}`}
+                  className={classNames('p-6', {
+                    'border-l': isEven,
+                    'border-t': isSecondRow,
+                    'last:col-span-full': isTotalChildrenCountOdd,
+                  })}
                 >
-                  {fragmentChildren}
+                  {cloneElement(fragmentChildren as React.ReactElement, {
+                    variant,
+                  })}
                 </section>
               );
             }
@@ -61,13 +74,16 @@ export const DescriptionListBody = ({
         return (
           child && (
             <section
-              className={`py-4 pl-6 pr-4 ${
-                isEven && !isLarge ? 'border-l' : ''
-              } ${isSecondRow || (isLarge && index > 0) ? 'border-t' : ''} ${
-                isTotalChildrenCountOdd ? 'last:col-span-full' : ''
-              } ${isLarge ? 'col-span-full' : ''}`}
+              className={classNames('p-6', {
+                'border-l': isEven && !isLarge,
+                'border-t': isSecondRow || (isLarge && index > 0),
+                'last:col-span-full': isTotalChildrenCountOdd,
+                'col-span-full': isLarge,
+                'border-gray-800': variant === 'black',
+                'border-gray-200': variant === 'brand',
+              })}
             >
-              {child}
+              {cloneElement(child as React.ReactElement, { variant })}
             </section>
           )
         );
