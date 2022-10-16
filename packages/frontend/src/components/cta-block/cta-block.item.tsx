@@ -1,14 +1,18 @@
+import classNames from 'classnames';
 import { NavLink } from 'react-router-dom';
 
 import { useIsActiveLink } from '../../hooks/useIsActiveLink';
 import { Icon, IconName } from '../icon/icon';
 
-interface ICtaBlockItemProps {
+import { CtaBlockProps } from './cta-block';
+
+interface CtaBlockItemProps {
   link: string;
   iconName: IconName;
   label: string;
   ariaLabel?: string;
   isExact?: boolean;
+  variant?: CtaBlockProps['variant'];
 }
 
 export const CtaBlockItem = ({
@@ -17,20 +21,31 @@ export const CtaBlockItem = ({
   label,
   ariaLabel,
   isExact,
-}: ICtaBlockItemProps): JSX.Element => {
+  variant,
+}: CtaBlockItemProps): JSX.Element => {
   const isActive = useIsActiveLink({ link, isExact });
 
   return (
     <li>
       <NavLink
         to={link}
-        className={`flex flex-col items-center justify-center text-black focus:text-blue-financer hover:text-blue-financer pb-2 pt-4 ${
-          isActive ? 'text-blue-financer' : ''
-        }`}
+        className={classNames('flex flex-col items-center justify-center', {
+          'text-blue-financer': isActive,
+        })}
         aria-label={ariaLabel}
       >
-        <Icon type={iconName} />
-        <span className={`text-xs mt-1 text-gray-600 `}>{label}</span>
+        <span
+          className={classNames(
+            'aspect-square w-full flex items-center justify-center rounded-md border',
+            {
+              'bg-gray-25': variant === 'gray',
+              'bg-gray-900 text-white': variant === 'black',
+            }
+          )}
+        >
+          <Icon type={iconName} />
+        </span>
+        <span className={`text-sm mt-2 text-gray-600`}>{label}</span>
       </NavLink>
     </li>
   );

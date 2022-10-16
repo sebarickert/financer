@@ -1,6 +1,7 @@
 import { BalanceGraph } from '../../components/balance-graph/balance-graph';
 import { CtaBlock } from '../../components/cta-block/cta-block';
 import { CtaBlockItem } from '../../components/cta-block/cta-block.item';
+import { DashboardActionButtons } from '../../components/dashboard-action-buttons/dashboard.action.buttons';
 import { DashboardStats } from '../../components/dashboard-stats/dashboard.stats';
 import { Heading } from '../../components/heading/heading';
 import { IconName } from '../../components/icon/icon';
@@ -12,8 +13,9 @@ export const Dashboard = (): JSX.Element => {
   return (
     <>
       <UpdatePageInfo title="Dashboard" />
-      <section className="grid">
+      <section className="grid gap-4">
         <DashboardStats />
+        <DashboardActionButtons />
         {/* <section className="grid md:grid-cols-[40%,1fr] gap-4 md:auto-rows-[fit-content(0)]"> */}
         {/* <section className="grid gap-4 md:self-baseline">
             <DashboardStats />

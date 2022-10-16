@@ -6,7 +6,7 @@ import { formatCurrency } from '../../utils/formatCurrency';
 import { DescriptionList } from '../description-list/description-list';
 import { DescriptionListItem } from '../description-list/description-list.item';
 
-interface IDashboardStatsProps {
+interface DashboardStatsProps {
   className?: string;
 }
 
@@ -18,7 +18,7 @@ const emptyTotalAmount = { totalAmount: 0 };
 
 export const DashboardStats = ({
   className = '',
-}: IDashboardStatsProps): JSX.Element => {
+}: DashboardStatsProps): JSX.Element => {
   const [dashboardSettings] = useUserDashboardSettings();
   const accountTypeFilter = { accountTypes: dashboardSettings?.accountTypes };
 
