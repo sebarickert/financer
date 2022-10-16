@@ -6,13 +6,14 @@ import { IconName } from '../icon/icon';
 import { DescriptionListBody } from './description-list.body';
 import { DescriptionListHeader } from './description-list.header';
 
-interface DescriptionListProps {
+export interface DescriptionListProps {
   label?: string;
   className?: string;
   children: React.ReactNode | React.ReactNode[];
   testId?: string;
   icon?: IconName;
   filterOptions?: DropdownItemType[];
+  variant?: 'gray' | 'black' | 'brand';
 }
 
 export const DescriptionList = ({
@@ -22,6 +23,7 @@ export const DescriptionList = ({
   children,
   testId,
   filterOptions,
+  variant = 'gray',
 }: DescriptionListProps): JSX.Element => {
   return (
     <section className={`${className}`} data-testid={testId}>
@@ -33,7 +35,7 @@ export const DescriptionList = ({
           testId={`${testId}_list-header`}
         />
       )}
-      <DescriptionListBody testId={`${testId}_list-body`}>
+      <DescriptionListBody testId={`${testId}_list-body`} variant={variant}>
         {children}
       </DescriptionListBody>
     </section>

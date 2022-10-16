@@ -29,7 +29,7 @@ export const MobileNavigationActionsBody = ({
       aria-hidden={isModalHidden}
     >
       <nav
-        className="bg-black-off text-white p-2 rounded-lg shadow-md whitespace-nowrap mx-4 max-w-sm w-full"
+        className="bg-gray-900 text-white p-2 rounded-lg shadow-md whitespace-nowrap mx-4 max-w-sm w-full"
         ref={outsideClickRef}
         aria-label="Quick transaction actions navigation in mobile viewmode."
       >

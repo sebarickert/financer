@@ -13,8 +13,9 @@ export const Dashboard = (): JSX.Element => {
     <>
       <UpdatePageInfo title="Dashboard" />
       <section className="grid">
-        <section className="grid md:grid-cols-[40%,1fr] gap-4 md:auto-rows-[fit-content(0)]">
-          <section className="grid gap-4 md:self-baseline">
+        <DashboardStats />
+        {/* <section className="grid md:grid-cols-[40%,1fr] gap-4 md:auto-rows-[fit-content(0)]"> */}
+        {/* <section className="grid gap-4 md:self-baseline">
             <DashboardStats />
             <CtaBlock label="Quick transaction links">
               <CtaBlockItem
@@ -36,16 +37,16 @@ export const Dashboard = (): JSX.Element => {
                 ariaLabel="Add new transfer transaction"
               />
             </CtaBlock>
-          </section>
-          <BalanceGraph className="overflow-y-auto" />
-        </section>
+          </section> */}
+        {/* <BalanceGraph className="overflow-y-auto" /> */}
+        {/* </section> */}
         <section className="mt-6 lg:mt-8">
           <Heading className="mb-4" ctaLabel="See all" ctaUrl="/statistics">
             Recent activity
           </Heading>
           <LatestTransactions isPagerHidden filterOptions={{ limit: 5 }} />
         </section>
-        <TransactionTemplatesList className="mt-6 lg:mt-8" />
+        {/* <TransactionTemplatesList className="mt-6 lg:mt-8" /> */}
       </section>
     </>
   );

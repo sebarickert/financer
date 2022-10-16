@@ -1,10 +1,14 @@
+import classNames from 'classnames';
 import { ReactNode } from 'react';
 
-export interface IDescriptionListItemProps {
+import { DescriptionListProps } from './description-list';
+
+export interface DescriptionListItemProps {
   label: string;
   children: string | ReactNode;
   testId?: string;
   isLarge?: boolean;
+  variant?: DescriptionListProps['variant'];
 }
 
 export const DescriptionListItem = ({
@@ -12,20 +16,25 @@ export const DescriptionListItem = ({
   children,
   testId,
   isLarge,
-}: IDescriptionListItemProps): JSX.Element => {
+  variant,
+}: DescriptionListItemProps): JSX.Element => {
   return (
     <>
       <dt
-        className={`${
-          isLarge ? 'text-sm lg:text-base' : 'text-xs lg:text-sm'
-        } font-medium text-gray-700 truncate`}
+        className={classNames('font-medium truncate text-center', {
+          'text-sm lg:text-base': isLarge,
+          'text-xs lg:text-sm': !isLarge,
+          'text-gray-700': variant === 'gray',
+          'text-gray-400': variant === 'black',
+        })}
       >
         {label}
       </dt>
       <dd
-        className={`font-bold tracking-tight truncate ${
-          isLarge ? 'text-3xl' : 'text-xl'
-        }`}
+        className={classNames('font-bold tracking-tight truncate text-center', {
+          'text-3xl': isLarge,
+          'text-xl': !isLarge,
+        })}
         data-testid={testId}
       >
         {children}
