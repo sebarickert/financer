@@ -29,16 +29,20 @@ export const CtaBlockItem = ({
     <li>
       <NavLink
         to={link}
-        className={classNames('flex flex-col items-center justify-center', {
-          'text-blue-financer': isActive,
-        })}
+        className={classNames(
+          'flex flex-col items-center justify-center group',
+          {
+            'text-blue-financer': isActive,
+          }
+        )}
         aria-label={ariaLabel}
       >
         <span
           className={classNames(
             'aspect-square w-full flex items-center justify-center rounded-md border',
             {
-              'bg-gray-25': variant === 'gray',
+              'bg-gray-25 group-hover:bg-gray-100 group-focus:bg-gray-100':
+                variant === 'gray',
               'bg-gray-900 text-white': variant === 'black',
             }
           )}

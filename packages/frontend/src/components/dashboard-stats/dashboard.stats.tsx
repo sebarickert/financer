@@ -35,7 +35,7 @@ export const DashboardStats = ({
     });
 
   return (
-    <DescriptionList className={className} variant="black">
+    <DescriptionList className={className}>
       <DescriptionListItem label="Balance" isLarge>
         {Number.isNaN(totalBalance) ? '-' : formatCurrency(totalBalance)}
       </DescriptionListItem>

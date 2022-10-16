@@ -194,7 +194,7 @@ export const BalanceGraph = ({
         hoverBorderWidth: 3,
         hoverRadius: 5,
         hoverBorderColor: '#ffffff',
-        hoverBackgroundColor: '#1c64f2',
+        hoverBackgroundColor: '#111827',
       },
       line: {
         borderWidth: 2,
