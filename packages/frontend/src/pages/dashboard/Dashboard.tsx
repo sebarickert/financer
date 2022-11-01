@@ -1,5 +1,4 @@
 import { BalanceGraph } from '../../components/balance-graph/balance-graph';
-import { DashboardActionButtons } from '../../components/dashboard-action-buttons/dashboard.action.buttons';
 import { DashboardStats } from '../../components/dashboard-stats/dashboard.stats';
 import { Heading } from '../../components/heading/heading';
 import { LatestTransactions } from '../../components/latest-transactions/latest-transactions';
@@ -9,7 +8,19 @@ export const Dashboard = (): JSX.Element => {
   return (
     <>
       <UpdatePageInfo title="Dashboard" />
-      <section className="grid gap-4 md:grid-cols-[40%,1fr]">
+      <section className="grid gap-6">
+        <section>
+          <DashboardStats />
+          <BalanceGraph />
+        </section>
+        <section>
+          <Heading className="mb-4" ctaLabel="See all" ctaUrl="/statistics">
+            Recent activity
+          </Heading>
+          <LatestTransactions isPagerHidden filterOptions={{ limit: 5 }} />
+        </section>
+      </section>
+      {/* <section className="grid gap-4 md:grid-cols-[40%,1fr]">
         <section className="grid gap-4">
           <DashboardStats />
           <DashboardActionButtons />
@@ -21,7 +32,7 @@ export const Dashboard = (): JSX.Element => {
           </Heading>
           <LatestTransactions isPagerHidden filterOptions={{ limit: 5 }} />
         </section>
-      </section>
+      </section> */}
     </>
   );
 };
