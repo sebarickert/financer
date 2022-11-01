@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import { clsx } from 'clsx';
 import { ReactNode } from 'react';
 
 import { DescriptionListProps } from './description-list';
@@ -21,7 +21,7 @@ export const DescriptionListItem = ({
   return (
     <>
       <dt
-        className={classNames('font-medium truncate text-center', {
+        className={clsx('font-medium truncate text-center', {
           'text-sm lg:text-base': isLarge,
           'text-xs lg:text-sm': !isLarge,
           'text-gray-700': variant === 'gray',
@@ -31,7 +31,7 @@ export const DescriptionListItem = ({
         {label}
       </dt>
       <dd
-        className={classNames('font-bold tracking-tight truncate text-center', {
+        className={clsx('font-bold tracking-tight truncate text-center', {
           'text-3xl': isLarge,
           'text-xl': !isLarge,
         })}

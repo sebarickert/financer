@@ -1,3 +1,4 @@
+import { clsx } from 'clsx';
 import { ReactNode } from 'react';
 import { NavLink } from 'react-router-dom';
 
@@ -31,17 +32,22 @@ export const Heading = ({
 
   return (
     <section
-      className={`flex ${
-        ctaUrl && ctaLabel ? 'justify-between items-end' : ''
-      } ${className}`}
+      className={clsx('flex', {
+        ['justify-between items-end']: ctaUrl && ctaLabel,
+        [className]: true,
+      })}
     >
       <HeadingType
-        className={`!font-bold !leading-tight tracking-tighter text-gray-900 truncate ${titleClassName}
-        ${styleToApply === 'h1' ? 'text-2xl lg:text-3xl' : ''}
-        ${styleToApply === 'h2' ? 'text-xl lg:text-2xl' : ''}
-        ${styleToApply === 'h3' ? 'text-lg lg:text-xl' : ''}
-        ${styleToApply === 'h4' ? 'text-md lg:text-lg' : ''}
-        `}
+        className={clsx(
+          '!font-bold !leading-tight tracking-tighter text-gray-900 truncate',
+          {
+            [titleClassName]: true,
+            ['text-2xl lg:text-3xl']: styleToApply === 'h1',
+            ['text-xl lg:text-2xl']: styleToApply === 'h2',
+            ['text-lg lg:text-xl']: styleToApply === 'h3',
+            ['text-md lg:text-lg']: styleToApply === 'h4',
+          }
+        )}
         data-testid={testId}
       >
         {children}

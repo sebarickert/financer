@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import { clsx } from 'clsx';
 import React, { Children, cloneElement } from 'react';
 
 import { DescriptionListProps } from './description-list';
@@ -20,7 +20,7 @@ export const DescriptionListBody = ({
 
   return (
     <dl
-      className={classNames('grid grid-cols-2 rounded-lg border', {
+      className={clsx('grid grid-cols-2 rounded-lg border', {
         'bg-gray-25': variant === 'gray',
         'bg-gray-900 text-white border-gray-900': variant === 'black',
         'bg-blue-financer text-white border-bg-financer': variant === 'brand',
@@ -44,7 +44,7 @@ export const DescriptionListBody = ({
 
               return (
                 <section
-                  className={classNames('p-6', {
+                  className={clsx('p-6', {
                     'border-l': isEven,
                     'border-t': isSecondRow,
                     'last:col-span-full': isTotalChildrenCountOdd,
@@ -74,12 +74,12 @@ export const DescriptionListBody = ({
         return (
           child && (
             <section
-              className={classNames('p-6', {
+              className={clsx('p-6', {
                 'border-l': isEven && !isLarge,
                 'border-t': isSecondRow || (isLarge && index > 0),
                 'last:col-span-full': isTotalChildrenCountOdd,
                 'col-span-full': isLarge,
-                'border-gray-800': variant === 'black',
+                'border-gray-700': variant === 'black',
                 'border-gray-200': variant === 'brand',
               })}
             >

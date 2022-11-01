@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import { clsx } from 'clsx';
 import React, { Children, cloneElement } from 'react';
 
 export interface CtaBlockProps {
@@ -15,12 +15,10 @@ export const CtaBlock = ({
   variant = 'gray',
 }: CtaBlockProps): JSX.Element => {
   return (
-    <section className={classNames(className)}>
+    <section className={clsx(className)}>
       <nav aria-label={label}>
         <ul
-          className={classNames(
-            'grid grid-cols-4 gap-2 justify-center items-center'
-          )}
+          className={clsx('grid grid-cols-4 gap-2 justify-center items-center')}
         >
           {Children.map(children, (child) => {
             return cloneElement(child as React.ReactElement, { variant });
