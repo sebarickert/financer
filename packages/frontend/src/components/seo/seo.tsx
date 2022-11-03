@@ -6,7 +6,7 @@ import { usePageInfoContext } from '../../context/pageInfoContext';
 export const SEO = (): JSX.Element => {
   const [{ title, toolbarColor = 'white', backLink }] = usePageInfoContext();
   const toolbarColorMapping = {
-    white: '#FAFAFA',
+    white: '#FFFFFF',
     brand: '#0E6AC7',
     black: '#000000',
   };
