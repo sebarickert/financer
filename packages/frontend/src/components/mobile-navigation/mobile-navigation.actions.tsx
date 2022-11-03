@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { useRef, useState } from 'react';
 
 import { useOnClickOutside } from '../../hooks/useOnClickOutside';
@@ -26,12 +27,12 @@ export const MobileNavigationActions = (): JSX.Element => {
         onClick={() => setIsActionsModalOpen(!isActionsModalOpen)}
         ref={mobileNavigationToggleButtonRef}
       >
-        <span className={`block bg-blue-financer p-2 rounded-lg text-white`}>
+        <span className={`block bg-blue-financer p-2 rounded-full text-white`}>
           <Icon
             type={IconName.plus}
-            className={`${
-              isActionsModalOpen ? 'rotate-45' : ''
-            } transition duration-250 ease-in-out`}
+            className={clsx('transition duration-250 ease-in-out', {
+              ['rotate-45']: isActionsModalOpen,
+            })}
           />
         </span>
       </button>

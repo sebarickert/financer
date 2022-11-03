@@ -8,6 +8,7 @@ export const SEO = (): JSX.Element => {
   const toolbarColorMapping = {
     white: '#FAFAFA',
     brand: '#0E6AC7',
+    black: '#000000',
   };
 
   return (

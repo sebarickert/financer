@@ -17,7 +17,7 @@ export const Radio = ({
 }: RadioProps): JSX.Element => {
   return (
     <label
-      className={`flex items-center p-4 gap-4 rounded hover:bg-gray-100 hover:cursor-pointer ${className}`}
+      className={`flex items-center p-4 gap-4 rounded hover:bg-gray-50 hover:cursor-pointer ${className}`}
       htmlFor={`${name}-${value}`}
     >
       <div className="flex items-center h-5">

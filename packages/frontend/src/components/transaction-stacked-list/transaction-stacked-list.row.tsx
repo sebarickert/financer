@@ -40,17 +40,19 @@ export const TransactionStackedListRow = ({
     <li data-testid={id} className="group">
       <NavLink
         to={link}
-        className={`relative flex gap-4 items-center focus-within:bg-gray-100 hover:bg-gray-100 overflow-hidden pl-4 lg:rounded-md`}
+        className={`relative flex gap-4 items-center focus-within:bg-gray-50 hover:bg-gray-50 overflow-hidden pl-4 lg:rounded-md`}
       >
-        <Icon
-          type={iconTypeMapping[transactionType]}
-          className={`stroke-black flex-shrink-0 pointer-events-none`}
-        />
-        <span className="text-base items-center gap-4 flex justify-between font-semibold tracking-tight py-4 pr-4 after:h-[1px] after:w-full after:absolute after:bg-gray-200 after:bottom-0 flex-1 overflow-hidden group-last:after:hidden">
+        <span className="bg-gray-50 h-11 w-11 rounded-full inline-flex items-center justify-center">
+          <Icon
+            type={iconTypeMapping[transactionType]}
+            className={`stroke-black flex-shrink-0 pointer-events-none`}
+          />
+        </span>
+        <span className="text-base items-center gap-4 flex justify-between font-medium tracking-tight py-4 pr-4 after:h-[1px] after:w-full after:absolute after:bg-gray-100 after:bottom-0 flex-1 overflow-hidden group-last:after:hidden">
           <span>
             <span className="grid">
               <span className="truncate">{label}</span>
-              <span className="text-sm font-normal text-gray-600 truncate">
+              <span className="text-sm font-normal text-gray-500 truncate">
                 <span className="sr-only">Balance: </span>
                 <span>
                   <span className="sr-only">Date: </span>

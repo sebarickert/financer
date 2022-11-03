@@ -6,7 +6,8 @@ import { Heading } from '../heading/heading';
 import { Icon, IconName } from '../icon/icon';
 
 export const MobileHeader = (): JSX.Element => {
-  const [{ title, backLink, headerAction }] = usePageInfoContext();
+  const [{ title, backLink, headerAction, toolbarColor }] =
+    usePageInfoContext();
 
   const hasBackLinkAndOrAction =
     (backLink && headerAction) || (backLink && !headerAction);
@@ -15,18 +16,20 @@ export const MobileHeader = (): JSX.Element => {
   return (
     <div
       className={clsx(
-        'text-center fixed top-0 left-0 right-0 z-50 px-4 grid items-center h-16 bg-white',
+        'text-center fixed top-0 left-0 right-0 z-50 px-4 grid items-center h-16',
         {
           ['grid-cols-1']: !hasBackLinkAndOrAction || !hasActionOnly,
           ['grid-cols-[44px,1fr,44px]']: hasBackLinkAndOrAction,
           ['grid-cols-[1fr,44px]']: hasActionOnly,
+          ['bg-white']: !toolbarColor || toolbarColor === 'white',
+          ['bg-neutral-900']: toolbarColor === 'black',
         }
       )}
     >
       {backLink && (
         <NavLink
           to={backLink}
-          className="h-11 w-11 inline-flex items-center justify-center bg-gray-100 rounded-full"
+          className="h-11 w-11 inline-flex items-center justify-center bg-gray-50 rounded-full"
           data-testid="header-back-link"
         >
           <span className="sr-only">Go back</span>
@@ -40,6 +43,7 @@ export const MobileHeader = (): JSX.Element => {
           '!text-lg !tracking-tight !font-medium !block truncate',
           {
             ['pl-[44px]']: hasActionOnly,
+            ['text-white']: toolbarColor === 'black',
           }
         )}
         testId="page-main-heading"

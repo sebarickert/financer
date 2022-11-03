@@ -6,7 +6,7 @@ interface PageInfoProps {
 
 export type PageInfoData = {
   title: string;
-  toolbarColor?: 'white' | 'brand';
+  toolbarColor?: 'white' | 'brand' | 'black';
   backLink?: string;
   headerAction?: React.ReactNode;
 };

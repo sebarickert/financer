@@ -9,7 +9,7 @@ export const Dashboard = (): JSX.Element => {
     <>
       <UpdatePageInfo title="Dashboard" />
       <section className="grid gap-6">
-        <section>
+        <section className="grid md:gap-4 md:grid-cols-[40%,1fr]">
           <DashboardStats />
           <BalanceGraph />
         </section>
@@ -17,22 +17,9 @@ export const Dashboard = (): JSX.Element => {
           <Heading className="mb-4" ctaLabel="See all" ctaUrl="/statistics">
             Recent activity
           </Heading>
-          <LatestTransactions isPagerHidden filterOptions={{ limit: 5 }} />
+          <LatestTransactions isPagerHidden filterOptions={{ limit: 8 }} />
         </section>
       </section>
-      {/* <section className="grid gap-4 md:grid-cols-[40%,1fr]">
-        <section className="grid gap-4">
-          <DashboardStats />
-          <DashboardActionButtons />
-        </section>
-        <BalanceGraph className="" />
-        <section className="col-span-full mt-6 lg:mt-8">
-          <Heading className="mb-4" ctaLabel="See all" ctaUrl="/statistics">
-            Recent activity
-          </Heading>
-          <LatestTransactions isPagerHidden filterOptions={{ limit: 5 }} />
-        </section>
-      </section> */}
     </>
   );
 };
