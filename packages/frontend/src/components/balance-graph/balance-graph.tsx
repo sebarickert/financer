@@ -1,4 +1,5 @@
 import { ChartOptions } from 'chart.js';
+import clsx from 'clsx';
 import { useEffect, useState, useTransition } from 'react';
 import { Chart } from 'react-chartjs-2';
 
@@ -258,7 +259,12 @@ export const BalanceGraph = ({
 
   return (
     <section
-      className={`md:bg-gray-25 md:rounded-lg md:border ${className} min-h-[300px] h-[20vh] md:h-auto md:min-h-0 md:aspect-auto relative -mx-4 md:-mx-0 pb-1`}
+      className={clsx(
+        'min-h-[300px] h-[20vh] md:min-h-[500px] md:aspect-auto relative -mx-4 md:-mx-0 pb-1',
+        {
+          [className]: true,
+        }
+      )}
     >
       <LoaderIfProcessing isProcessing={isProcessing}>
         <Chart type="line" data={data} options={options} />

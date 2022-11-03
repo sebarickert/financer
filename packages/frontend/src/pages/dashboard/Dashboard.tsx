@@ -8,8 +8,8 @@ export const Dashboard = (): JSX.Element => {
   return (
     <>
       <UpdatePageInfo title="Dashboard" />
-      <section className="grid gap-6">
-        <section className="grid md:gap-4 md:grid-cols-[40%,1fr]">
+      <section className="grid gap-6 md:gap-8">
+        <section>
           <DashboardStats />
           <BalanceGraph />
         </section>
