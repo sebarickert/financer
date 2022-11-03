@@ -38,7 +38,7 @@ export const CtaBlockItem = ({
           className={clsx(
             'aspect-square w-full flex items-center justify-center rounded-md border',
             {
-              'bg-gray-25 group-hover:bg-gray-100 group-focus:bg-gray-100':
+              'bg-gray-25 group-hover:bg-gray-50 group-focus:bg-gray-50':
                 variant === 'gray',
               'bg-gray-900 text-white': variant === 'black',
             }

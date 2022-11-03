@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { NavLink } from 'react-router-dom';
 
 import { useIsActiveLink } from '../../hooks/useIsActiveLink';
@@ -43,9 +44,10 @@ export const MobileNavigationItem = ({
             <IconSolid type={iconName} className="fill-blue-financer" />
           )}
           <span
-            className={`text-xs mt-1 sr-only ${
-              hasDarkBackground ? 'text-gray-300' : 'text-gray-600'
-            }`}
+            className={clsx('text-xs mt-1 sr-only', {
+              ['text-gray-300']: hasDarkBackground,
+              ['text-gray-600']: !hasDarkBackground,
+            })}
           >
             {label}
           </span>
@@ -58,17 +60,31 @@ export const MobileNavigationItem = ({
     <li>
       <NavLink
         to={link}
-        className={`flex flex-col items-center justify-center pt-4 pb-2 focus:text-blue-financer hover:text-blue-financer ${
-          isActive ? 'text-blue-financer after:!bg-blue-financer' : ''
-        }`}
+        className={clsx(
+          'flex flex-col gap-1 items-center justify-center pt-4 pb-2 focus:text-blue-financer hover:text-blue-financer',
+          {
+            ['text-blue-financer after:!bg-blue-financer']: isActive,
+          }
+        )}
         onClick={onClick}
         aria-label={ariaLabel}
       >
-        <Icon type={iconName} />
         <span
-          className={`text-xs mt-1 ${
-            hasDarkBackground ? 'text-gray-300' : 'text-gray-600'
-          }`}
+          className={clsx(
+            'h-11 w-11 rounded-full inline-flex items-center justify-center',
+            {
+              ['bg-gray-800']: hasDarkBackground,
+              ['bg-gray-50']: !hasDarkBackground,
+            }
+          )}
+        >
+          <Icon type={iconName} />
+        </span>
+        <span
+          className={clsx('text-xs mt-1', {
+            ['text-gray-300']: hasDarkBackground,
+            ['text-gray-600']: !hasDarkBackground,
+          })}
         >
           {label}
         </span>

@@ -79,7 +79,7 @@ export const TransactionTemplatesSwitcher = ({
     <>
       <ButtonPlain
         onClick={() => setIsOpen(!isOpen)}
-        className="relative flex gap-1 justify-center items-center focus-within:bg-gray-100 hover:bg-gray-100 overflow-hidden lg:pl-2 lg:rounded-md h-full w-full bg-gray-100 rounded-full"
+        className="relative flex gap-1 justify-center items-center focus-within:bg-gray-50 hover:bg-gray-100 overflow-hidden lg:pl-2 lg:rounded-md h-full w-full bg-gray-50 rounded-full"
       >
         <Icon
           type={IconName.lightningBolt}
