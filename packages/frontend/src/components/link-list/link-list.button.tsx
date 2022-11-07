@@ -15,15 +15,15 @@ export const LinkListButton = ({
 }: LinkListButtonProps): JSX.Element => {
   return (
     <button
-      className="relative flex gap-4 items-center focus-within:bg-gray-50 hover:bg-gray-50 overflow-hidden pl-4 w-full lg:rounded-md"
+      className="relative flex items-center w-full gap-4 pl-4 overflow-hidden group focus-within:bg-gray-50 hover:bg-gray-50 lg:rounded-md"
       onClick={handleClick}
       data-testid={testId}
     >
       {icon && (
-        <span className="bg-gray-50 h-11 w-11 rounded-full inline-flex items-center justify-center">
+        <span className="inline-flex items-center justify-center rounded-full bg-gray-50 h-11 w-11">
           <Icon
             type={icon}
-            className="stroke-black flex-shrink-0 pointer-events-none"
+            className="flex-shrink-0 pointer-events-none stroke-black"
           />
         </span>
       )}
@@ -31,7 +31,7 @@ export const LinkListButton = ({
         <span className="truncate">{children}</span>
         <Icon
           type={IconName.chevronRight}
-          className=" stroke-gray-300 flex-shrink-0 pointer-events-none"
+          className="flex-shrink-0 pointer-events-none stroke-gray-300"
         />
       </span>
     </button>

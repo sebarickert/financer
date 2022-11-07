@@ -39,7 +39,7 @@ export const Heading = ({
     >
       <HeadingType
         className={clsx(
-          '!font-bold !leading-tight tracking-tighter text-gray-900 truncate',
+          'font-bold !leading-tight tracking-tighter text-gray-900 truncate',
           {
             [titleClassName]: true,
             ['text-2xl lg:text-3xl']: styleToApply === 'h1',

@@ -1,10 +1,12 @@
+import clsx from 'clsx';
+
 import { useExpenseMonthlySummaries } from '../../hooks/expense/useExpenseMonthlySummaries';
 import { useIncomeMonthlySummaries } from '../../hooks/income/useIncomeMonthlySummaries';
 import { useUserDashboardSettings } from '../../hooks/profile/user-preference/useDashboardSettings';
 import { useTotalBalance } from '../../hooks/useTotalBalance';
 import { formatCurrency } from '../../utils/formatCurrency';
-import { DescriptionList } from '../description-list/description-list';
-import { DescriptionListItem } from '../description-list/description-list.item';
+
+import { DashboardStatsItem } from './dashboard.stats.item';
 
 interface DashboardStatsProps {
   className?: string;
@@ -35,16 +37,25 @@ export const DashboardStats = ({
     });
 
   return (
-    <DescriptionList className={className}>
-      <DescriptionListItem label="Balance" isLarge>
+    <section
+      className={clsx('grid gap-2 md:gap-4 grid-cols-2 md:grid-cols-3', {
+        [className]: true,
+      })}
+    >
+      <DashboardStatsItem
+        label="Balance"
+        itemType={'balance'}
+        className={'max-md:col-span-full'}
+        isLarge
+      >
         {Number.isNaN(totalBalance) ? '-' : formatCurrency(totalBalance)}
-      </DescriptionListItem>
-      <DescriptionListItem label="Incomes">
+      </DashboardStatsItem>
+      <DashboardStatsItem label="Incomes" itemType={'income'}>
         {Number.isNaN(totalIncomes) ? '-' : formatCurrency(totalIncomes)}
-      </DescriptionListItem>
-      <DescriptionListItem label="Expenses">
+      </DashboardStatsItem>
+      <DashboardStatsItem label="Expenses" itemType={'expense'}>
         {Number.isNaN(totalExpenses) ? '-' : formatCurrency(totalExpenses)}
-      </DescriptionListItem>
-    </DescriptionList>
+      </DashboardStatsItem>
+    </section>
   );
 };
