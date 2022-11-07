@@ -30,14 +30,14 @@ export const InfoCard = ({
         className={clsx(
           'inline-flex items-center justify-center mb-6 bg-gray-900 rounded-full h-11 w-11',
           {
-            ['max-md:h-8 max-md:w-8 max-md:mb-4']: !isLarge,
+            ['max-md:h-9 max-md:w-9 max-md:mb-3']: !isLarge,
           }
         )}
       >
         <Icon
           type={iconName}
           className={clsx('flex-shrink-0 pointer-events-none stroke-white', {
-            ['max-md:h-5 max-md:w-5']: !isLarge,
+            ['max-md:h-6 max-md:w-6']: !isLarge,
           })}
         />
       </span>
