@@ -21,7 +21,7 @@ export const DescriptionListItem = ({
   return (
     <>
       <dt
-        className={clsx('font-medium truncate text-center', {
+        className={clsx('font-medium truncate', {
           'text-sm lg:text-base': isLarge,
           'text-xs lg:text-sm': !isLarge,
           'text-gray-700': variant === 'gray',
@@ -31,7 +31,7 @@ export const DescriptionListItem = ({
         {label}
       </dt>
       <dd
-        className={clsx('font-bold tracking-tight truncate text-center', {
+        className={clsx('font-bold tracking-tight truncate', {
           'text-3xl': isLarge,
           'text-xl': !isLarge,
         })}

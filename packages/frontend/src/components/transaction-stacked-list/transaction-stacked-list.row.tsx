@@ -42,7 +42,7 @@ export const TransactionStackedListRow = ({
         to={link}
         className={`relative flex gap-4 items-center focus-within:bg-gray-50 hover:bg-gray-50 overflow-hidden pl-4 lg:rounded-md`}
       >
-        <span className="bg-gray-50 h-11 w-11 rounded-full inline-flex items-center justify-center">
+        <span className="inline-flex items-center justify-center rounded-full bg-gray-50 h-11 w-11">
           <Icon
             type={iconTypeMapping[transactionType]}
             className={`stroke-black flex-shrink-0 pointer-events-none`}

@@ -260,7 +260,7 @@ export const BalanceGraph = ({
   return (
     <section
       className={clsx(
-        'min-h-[300px] h-[20vh] md:min-h-[500px] md:aspect-auto relative -mx-4 md:-mx-0 pb-1',
+        'min-h-[300px] h-[20vh] md:min-h-[500px] md:aspect-auto relative max-lg:-mx-4 pb-1',
         {
           [className]: true,
         }
