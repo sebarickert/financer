@@ -9,11 +9,11 @@ export const DesktopHeader = (): JSX.Element => {
 
   return (
     <>
-      <div className="mb-6 flex items-center gap-2">
+      <div className="flex items-center gap-4 mb-6">
         {backLink && (
           <NavLink
             to={backLink}
-            className="h-11 w-11 inline-flex items-center justify-center -ml-4"
+            className="inline-flex items-center justify-center rounded-full h-11 w-11 bg-gray-50"
             data-testid="header-back-link"
           >
             <span className="sr-only">Go back</span>

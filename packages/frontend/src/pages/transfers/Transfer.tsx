@@ -2,8 +2,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { Button } from '../../components/button/button';
 import { ButtonGroup } from '../../components/button/button.group';
-import { DescriptionList } from '../../components/description-list/description-list';
-import { DescriptionListItem } from '../../components/description-list/description-list.item';
+import { Divider } from '../../components/divider/divider';
+import { IconName } from '../../components/icon/icon';
+import { InfoCard } from '../../components/info-card/info-card';
 import { ModalConfirm } from '../../components/modal/confirm/modal.confirm';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { useAccountById } from '../../hooks/account/useAccountById';
@@ -60,44 +61,74 @@ export const Transfer = (): JSX.Element => {
         title={`${transfer.description}`}
         backLink="/statistics/transfers"
       />
-      <DescriptionList label="Details" className="mb-6">
-        <DescriptionListItem label="Amount">
-          {formatCurrency(transfer.amount)}
-        </DescriptionListItem>
-        <DescriptionListItem label="Date">
-          {formatDate(new Date(transfer.date))}
-        </DescriptionListItem>
-        <DescriptionListItem label="From account">
-          {fromAccount?.name ?? '-'}
-        </DescriptionListItem>
-        <DescriptionListItem label="To account">
-          {toAccount?.name ?? '-'}
-        </DescriptionListItem>
-        <DescriptionListItem label="Type">Transfer</DescriptionListItem>
-      </DescriptionList>
-      {transfer.categories.length > 0 && (
-        <DescriptionList label="Categories" testId="categories-wrapper">
-          {transfer.categories.map(({ amount, category_id }) => (
-            <>
-              <DescriptionListItem label="Category" testId="category_label">
-                {getCategoryNameById(category_id)}
-              </DescriptionListItem>
-              <DescriptionListItem label="Amount" testId="category_amount">
-                {formatCurrency(amount)}
-              </DescriptionListItem>
-            </>
-          ))}
-        </DescriptionList>
-      )}
-      <ButtonGroup className="mt-8">
-        <Button
-          link={`/statistics/transfers/${id}/edit`}
-          testId="edit-transfer-button"
-        >
-          Edit
-        </Button>
-        <TransferDeleteModal handleDelete={handleDelete} />
-      </ButtonGroup>
+      <section className="grid gap-2 lg:gap-4">
+        <section className="grid grid-cols-2 gap-2 lg:grid-cols-3 md:gap-4">
+          <InfoCard iconName={IconName.cash} label="Amount">
+            {formatCurrency(transfer.amount)}
+          </InfoCard>
+          <InfoCard iconName={IconName.calendar} label="Date">
+            {formatDate(new Date(transfer.date))}
+          </InfoCard>
+          <InfoCard
+            iconName={IconName.informationCircle}
+            label="Type"
+            className="max-lg:col-span-full"
+            isLarge
+          >
+            Transfer
+          </InfoCard>
+        </section>
+        <section className="grid grid-cols-2 gap-2 lg:gap-4">
+          <InfoCard
+            iconName={IconName.upload}
+            label="From account"
+            className="max-lg:col-span-full"
+            isLarge
+          >
+            {fromAccount?.name ?? '-'}
+          </InfoCard>
+          <InfoCard
+            iconName={IconName.download}
+            label="To account"
+            className="max-lg:col-span-full"
+            isLarge
+          >
+            {toAccount?.name ?? '-'}
+          </InfoCard>
+        </section>
+        <Divider>Categories</Divider>
+        {transfer.categories.length > 0 && (
+          <ul className="grid gap-2 lg:gap-4">
+            {transfer.categories?.map(({ amount, category_id }) => (
+              <li className="grid grid-cols-2 gap-2 lg:gap-4">
+                <InfoCard
+                  iconName={IconName.tag}
+                  label="Category"
+                  testId="category_label"
+                >
+                  {getCategoryNameById(category_id)}
+                </InfoCard>
+                <InfoCard
+                  iconName={IconName.cash}
+                  label="Amount"
+                  testId="category_amount"
+                >
+                  {formatCurrency(amount)}
+                </InfoCard>
+              </li>
+            ))}
+          </ul>
+        )}
+        <ButtonGroup className="mt-4">
+          <Button
+            link={`/statistics/transfers/${id}/edit`}
+            testId="edit-transfer-button"
+          >
+            Edit
+          </Button>
+          <TransferDeleteModal handleDelete={handleDelete} />
+        </ButtonGroup>
+      </section>
     </>
   );
 };
