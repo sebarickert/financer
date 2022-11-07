@@ -22,11 +22,6 @@ describe('Add expense with category', () => {
     cy.location('pathname').should('not.contain', '/add');
     cy.contains(EXPENSE_NAME).click();
 
-    cy.getById('categories-wrapper_list-header').should(
-      'contain.text',
-      'Categories'
-    );
-    cy.getById('categories-wrapper_list-body').should('have.length', 1);
     cy.getById('category_label').should(
       'contain.text',
       'Category for all types'
