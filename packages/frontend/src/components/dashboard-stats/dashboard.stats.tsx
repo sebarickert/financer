@@ -5,8 +5,8 @@ import { useIncomeMonthlySummaries } from '../../hooks/income/useIncomeMonthlySu
 import { useUserDashboardSettings } from '../../hooks/profile/user-preference/useDashboardSettings';
 import { useTotalBalance } from '../../hooks/useTotalBalance';
 import { formatCurrency } from '../../utils/formatCurrency';
-
-import { DashboardStatsItem } from './dashboard.stats.item';
+import { IconName } from '../icon/icon';
+import { InfoCard } from '../info-card/info-card';
 
 interface DashboardStatsProps {
   className?: string;
@@ -42,20 +42,20 @@ export const DashboardStats = ({
         [className]: true,
       })}
     >
-      <DashboardStatsItem
+      <InfoCard
+        iconName={IconName.documentReport}
         label="Balance"
-        itemType={'balance'}
-        className={'max-md:col-span-full'}
         isLarge
+        className={'max-md:col-span-full'}
       >
         {Number.isNaN(totalBalance) ? '-' : formatCurrency(totalBalance)}
-      </DashboardStatsItem>
-      <DashboardStatsItem label="Incomes" itemType={'income'}>
+      </InfoCard>
+      <InfoCard iconName={IconName.download} label="Incomes">
         {Number.isNaN(totalIncomes) ? '-' : formatCurrency(totalIncomes)}
-      </DashboardStatsItem>
-      <DashboardStatsItem label="Expenses" itemType={'expense'}>
+      </InfoCard>
+      <InfoCard iconName={IconName.upload} label="Expenses">
         {Number.isNaN(totalExpenses) ? '-' : formatCurrency(totalExpenses)}
-      </DashboardStatsItem>
+      </InfoCard>
     </section>
   );
 };
