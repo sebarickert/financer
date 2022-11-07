@@ -23,11 +23,6 @@ describe('Add transfer with category', () => {
     cy.location('pathname').should('not.contain', '/add');
     cy.contains(TRANSFER_NAME).click();
 
-    cy.getById('categories-wrapper_list-header').should(
-      'contain.text',
-      'Categories'
-    );
-    cy.getById('categories-wrapper_list-body').should('have.length', 1);
     cy.getById('category_label').should(
       'contain.text',
       'Category for all types'
