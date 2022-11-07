@@ -2,8 +2,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { Button } from '../../components/button/button';
 import { ButtonGroup } from '../../components/button/button.group';
-import { DescriptionList } from '../../components/description-list/description-list';
-import { DescriptionListItem } from '../../components/description-list/description-list.item';
+import { Divider } from '../../components/divider/divider';
+import { IconName } from '../../components/icon/icon';
+import { InfoCard } from '../../components/info-card/info-card';
 import { ModalConfirm } from '../../components/modal/confirm/modal.confirm';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { useAccountById } from '../../hooks/account/useAccountById';
@@ -58,41 +59,64 @@ export const Expense = (): JSX.Element => {
         title={`${expense.description}`}
         backLink="/statistics/expenses"
       />
-      <DescriptionList label="Details" className="mb-6">
-        <DescriptionListItem label="Amount">
-          {formatCurrency(expense.amount)}
-        </DescriptionListItem>
-        <DescriptionListItem label="Date">
-          {formatDate(new Date(expense.date))}
-        </DescriptionListItem>
-        <DescriptionListItem label="From account">
-          {account?.name ?? '-'}
-        </DescriptionListItem>
-        <DescriptionListItem label="Type">Expense</DescriptionListItem>
-      </DescriptionList>
-      {expense.categories.length > 0 && (
-        <DescriptionList label="Categories" testId="categories-wrapper">
-          {expense.categories.map(({ amount, category_id }) => (
-            <>
-              <DescriptionListItem label="Category" testId="category_label">
-                {getCategoryNameById(category_id)}
-              </DescriptionListItem>
-              <DescriptionListItem label="Amount" testId="category_amount">
-                {formatCurrency(amount)}
-              </DescriptionListItem>
-            </>
-          ))}
-        </DescriptionList>
-      )}
-      <ButtonGroup className="mt-8">
-        <Button
-          link={`/statistics/expenses/${id}/edit`}
-          testId="edit-expense-button"
-        >
-          Edit
-        </Button>
-        <ExpenseDeleteModal handleDelete={handleDelete} />
-      </ButtonGroup>
+      <section className="grid gap-2 lg:gap-4">
+        <section className="grid grid-cols-2 gap-2 lg:grid-cols-3 md:gap-4">
+          <InfoCard iconName={IconName.cash} label="Amount">
+            {formatCurrency(expense.amount)}
+          </InfoCard>
+          <InfoCard iconName={IconName.calendar} label="Date">
+            {formatDate(new Date(expense.date))}
+          </InfoCard>
+          <InfoCard
+            iconName={IconName.informationCircle}
+            label="Type"
+            className="max-lg:col-span-full"
+            isLarge
+          >
+            Expense
+          </InfoCard>
+          <InfoCard
+            iconName={IconName.upload}
+            label="From account"
+            className="col-span-full"
+            isLarge
+          >
+            {account?.name ?? '-'}
+          </InfoCard>
+        </section>
+        <Divider>Categories</Divider>
+        {expense.categories.length > 0 && (
+          <ul>
+            {expense.categories?.map(({ amount, category_id }) => (
+              <li className="grid grid-cols-2 gap-2">
+                <InfoCard
+                  iconName={IconName.tag}
+                  label="Category"
+                  testId="category_label"
+                >
+                  {getCategoryNameById(category_id)}
+                </InfoCard>
+                <InfoCard
+                  iconName={IconName.cash}
+                  label="Amount"
+                  testId="category_amount"
+                >
+                  {formatCurrency(amount)}
+                </InfoCard>
+              </li>
+            ))}
+          </ul>
+        )}
+        <ButtonGroup className="mt-4">
+          <Button
+            link={`/statistics/expenses/${id}/edit`}
+            testId="edit-expense-button"
+          >
+            Edit
+          </Button>
+          <ExpenseDeleteModal handleDelete={handleDelete} />
+        </ButtonGroup>
+      </section>
     </>
   );
 };

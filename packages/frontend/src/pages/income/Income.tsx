@@ -2,8 +2,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { Button } from '../../components/button/button';
 import { ButtonGroup } from '../../components/button/button.group';
-import { DescriptionList } from '../../components/description-list/description-list';
-import { DescriptionListItem } from '../../components/description-list/description-list.item';
+import { Divider } from '../../components/divider/divider';
+import { IconName } from '../../components/icon/icon';
+import { InfoCard } from '../../components/info-card/info-card';
 import { ModalConfirm } from '../../components/modal/confirm/modal.confirm';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { useAccountById } from '../../hooks/account/useAccountById';
@@ -58,41 +59,64 @@ export const Income = (): JSX.Element => {
         title={`${income.description}`}
         backLink="/statistics/incomes"
       />
-      <DescriptionList label="Details" className="mb-6">
-        <DescriptionListItem label="Amount">
-          {formatCurrency(income.amount)}
-        </DescriptionListItem>
-        <DescriptionListItem label="Date">
-          {formatDate(new Date(income.date))}
-        </DescriptionListItem>
-        <DescriptionListItem label="To account">
-          {account?.name ?? '-'}
-        </DescriptionListItem>
-        <DescriptionListItem label="Type">Income</DescriptionListItem>
-      </DescriptionList>
-      {income.categories.length > 0 && (
-        <DescriptionList label="Categories" testId="categories-wrapper">
-          {income.categories?.map(({ amount, category_id }) => (
-            <>
-              <DescriptionListItem label="Category" testId="category_label">
-                {getCategoryNameById(category_id)}
-              </DescriptionListItem>
-              <DescriptionListItem label="Amount" testId="category_amount">
-                {formatCurrency(amount)}
-              </DescriptionListItem>
-            </>
-          ))}
-        </DescriptionList>
-      )}
-      <ButtonGroup className="mt-8">
-        <Button
-          link={`/statistics/incomes/${id}/edit`}
-          testId="edit-income-button"
-        >
-          Edit
-        </Button>
-        <IncomeDeleteModal handleDelete={handleDelete} />
-      </ButtonGroup>
+      <section className="grid gap-2 lg:gap-4">
+        <section className="grid grid-cols-2 gap-2 lg:grid-cols-3 md:gap-4">
+          <InfoCard iconName={IconName.cash} label="Amount">
+            {formatCurrency(income.amount)}
+          </InfoCard>
+          <InfoCard iconName={IconName.calendar} label="Date">
+            {formatDate(new Date(income.date))}
+          </InfoCard>
+          <InfoCard
+            iconName={IconName.informationCircle}
+            label="Type"
+            className="max-lg:col-span-full"
+            isLarge
+          >
+            Income
+          </InfoCard>
+          <InfoCard
+            iconName={IconName.download}
+            label="To account"
+            className="col-span-full"
+            isLarge
+          >
+            {account?.name ?? '-'}
+          </InfoCard>
+        </section>
+        <Divider>Categories</Divider>
+        {income.categories.length > 0 && (
+          <ul>
+            {income.categories?.map(({ amount, category_id }) => (
+              <li className="grid grid-cols-2 gap-2">
+                <InfoCard
+                  iconName={IconName.tag}
+                  label="Category"
+                  testId="category_label"
+                >
+                  {getCategoryNameById(category_id)}
+                </InfoCard>
+                <InfoCard
+                  iconName={IconName.cash}
+                  label="Amount"
+                  testId="category_amount"
+                >
+                  {formatCurrency(amount)}
+                </InfoCard>
+              </li>
+            ))}
+          </ul>
+        )}
+        <ButtonGroup className="mt-4">
+          <Button
+            link={`/statistics/incomes/${id}/edit`}
+            testId="edit-income-button"
+          >
+            Edit
+          </Button>
+          <IncomeDeleteModal handleDelete={handleDelete} />
+        </ButtonGroup>
+      </section>
     </>
   );
 };

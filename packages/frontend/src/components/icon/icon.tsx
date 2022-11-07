@@ -1,5 +1,6 @@
 import { IconArrowLeft } from './icon.arrowLeft';
 import { IconArrowRight } from './icon.arrowRight';
+import { IconCalendar } from './icon.calendar';
 import { IconCash } from './icon.cash';
 import { IconChartBar } from './icon.chartBar';
 import { IconChevronDown } from './icon.chevronDown';
@@ -15,6 +16,7 @@ import { IconDownload } from './icon.download';
 import { IconExclamation } from './icon.exclamation';
 import { IconHome } from './icon.home';
 import { IconHomeSolid } from './icon.home.solid';
+import { IconInformationCircle } from './icon.informationCircle';
 import { IconLibrary } from './icon.library';
 import { IconLightningBolt } from './icon.lightningBolt';
 import { IconLogout } from './icon.logout';
@@ -72,6 +74,8 @@ export enum IconName {
   lightningBolt = 'lightning-bolt',
   dotsHorizontal = 'dots-horizontal',
   documentReport = 'document-report',
+  calendar = 'calendar',
+  informationCircle = 'information-circle',
 }
 interface IconProps {
   type: IconName;
@@ -193,6 +197,12 @@ export const Icon = ({ type, className = '' }: IconProps): JSX.Element => {
 
     case 'document-report':
       return <IconDocumentReport className={defaultIconClasses} />;
+
+    case 'calendar':
+      return <IconCalendar className={defaultIconClasses} />;
+
+    case 'information-circle':
+      return <IconInformationCircle className={defaultIconClasses} />;
 
     default:
       break;
