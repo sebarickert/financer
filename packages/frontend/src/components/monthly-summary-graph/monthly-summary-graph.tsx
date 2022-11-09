@@ -2,6 +2,7 @@ import { ChartOptions } from 'chart.js';
 import { useEffect, useState, useTransition } from 'react';
 import { Chart } from 'react-chartjs-2';
 
+import { colorPalette } from '../../constants/colorPalette';
 import { useExpenseMonthlySummaries } from '../../hooks/expense/useExpenseMonthlySummaries';
 import { useIncomeMonthlySummaries } from '../../hooks/income/useIncomeMonthlySummaries';
 import { useUserStatisticsSettings } from '../../hooks/profile/user-preference/useStatisticsSettings';
@@ -120,9 +121,9 @@ export const MonthlySummaryGraph = ({
 
             return this.getLabelForValue(Number(val));
           },
-          color: '#666666',
+          color: colorPalette.charcoal,
           font: {
-            size: 14,
+            size: 13,
             family: 'Inter',
           },
         },
@@ -131,7 +132,7 @@ export const MonthlySummaryGraph = ({
         max: 7500,
         grid: {
           drawBorder: false,
-          color: '#cccccc40',
+          color: colorPalette['gray-dark'],
         },
         ticks: {
           display: false,
@@ -154,9 +155,9 @@ export const MonthlySummaryGraph = ({
         hitRadius: 32,
         radius: 0,
         hoverBorderWidth: 3,
-        hoverRadius: 5,
-        hoverBorderColor: '#ffffff',
-        hoverBackgroundColor: '#1c64f2',
+        hoverRadius: 3,
+        hoverBorderColor: colorPalette.blue,
+        hoverBackgroundColor: colorPalette.blue,
       },
       line: {
         borderWidth: 2,
@@ -170,18 +171,17 @@ export const MonthlySummaryGraph = ({
         propagate: true,
       },
       tooltip: {
-        backgroundColor: 'rgb(31 41 55)',
+        backgroundColor: colorPalette.charcoal,
         padding: 16,
         mode: 'index',
         intersect: true,
         position: 'nearest',
         bodySpacing: 6,
         displayColors: false,
-        titleSpacing: 0,
         titleFont: {
           size: 16,
           family: 'Inter',
-          weight: 'bold',
+          weight: '600',
         },
         bodyFont: {
           size: 16,
@@ -208,25 +208,25 @@ export const MonthlySummaryGraph = ({
       {
         type: 'bar' as const,
         label: 'Incomes',
-        backgroundColor: '#059669',
+        backgroundColor: colorPalette.green,
         data: monthlySummaryHistory.map(({ incomes }) => incomes),
         yAxisID: 'y',
       },
       {
         type: 'bar' as const,
         label: 'Expenses',
-        backgroundColor: '#dc2626',
+        backgroundColor: colorPalette.red,
         data: monthlySummaryHistory.map(({ expenses }) => expenses),
         yAxisID: 'y',
       },
       {
         type: 'line' as const,
         label: 'Net total',
-        borderColor: '#1c64f2',
+        borderColor: colorPalette.blue,
         fill: {
           target: 'origin',
-          above: '#1c64f21A',
-          below: '#1c64f21A',
+          above: `${colorPalette.blue}1A`,
+          below: `${colorPalette.blue}1A`,
         },
         data: monthlySummaryHistory.map(({ netStatus }) => netStatus),
         yAxisID: 'trendLine',
@@ -238,7 +238,7 @@ export const MonthlySummaryGraph = ({
 
   return (
     <section
-      className={`min-h-[300px] h-[20vh] md:h-auto md:min-h-0 md:aspect-video -mx-4 md:-mx-0 ${className}`}
+      className={`min-h-[300px] h-[20vh] md:h-auto md:min-h-0 md:aspect-video max-md:-mx-4 ${className}`}
     >
       <LoaderIfProcessing isProcessing={isProcessing}>
         <Chart type="bar" data={data} options={options} />

@@ -3,9 +3,8 @@ import { NavLink } from 'react-router-dom';
 
 import { useIsActiveLink } from '../../hooks/useIsActiveLink';
 import { Icon, IconName } from '../icon/icon';
-import { IconSolid } from '../icon/icon.solid';
 
-interface IMobileNavigationItemProps {
+interface MobileNavigationItemProps {
   link: string;
   iconName: IconName;
   label: string;
@@ -27,7 +26,7 @@ export const MobileNavigationItem = ({
   hasDarkBackground,
   type = 'default',
   disallowedPathEndings,
-}: IMobileNavigationItemProps): JSX.Element => {
+}: MobileNavigationItemProps): JSX.Element => {
   const isActive = useIsActiveLink({ link, isExact, disallowedPathEndings });
 
   if (type === 'standalone') {
@@ -39,10 +38,7 @@ export const MobileNavigationItem = ({
           onClick={onClick}
           aria-label={ariaLabel}
         >
-          {!isActive && <Icon type={iconName} />}
-          {isActive && (
-            <IconSolid type={iconName} className="fill-blue-financer" />
-          )}
+          <Icon type={iconName} isSolid={isActive} />
           <span
             className={clsx('text-xs mt-1 sr-only', {
               ['text-gray-300']: hasDarkBackground,

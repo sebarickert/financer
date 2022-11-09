@@ -22,13 +22,13 @@ export const InfoCard = ({
 }: InfoCardProps): JSX.Element => {
   return (
     <section
-      className={clsx('rounded-md p-6 bg-gray-50', {
+      className={clsx('rounded-md p-6 bg-gray', {
         [className]: true,
       })}
     >
       <span
         className={clsx(
-          'inline-flex items-center justify-center mb-6 bg-gray-900 rounded-full h-11 w-11',
+          'inline-flex items-center justify-center mb-6 bg-charcoal rounded-full h-11 w-11',
           {
             ['max-md:h-9 max-md:w-9 max-md:mb-3']: !isLarge,
           }
@@ -42,16 +42,22 @@ export const InfoCard = ({
         />
       </span>
       <Heading
-        titleClassName={clsx('!font-medium truncate text-gray-600 !text-lg', {
-          ['max-md:!text-sm']: !isLarge,
-        })}
+        titleClassName={clsx(
+          '!font-medium truncate text-gray-darkest !text-lg',
+          {
+            ['max-md:!text-sm']: !isLarge,
+          }
+        )}
       >
         {label}
       </Heading>
       <p
-        className={clsx('font-bold tracking-tight truncate text-3xl', {
-          ['max-md:text-xl']: !isLarge,
-        })}
+        className={clsx(
+          'font-bold tracking-tight truncate text-3xl text-black',
+          {
+            ['max-md:text-xl']: !isLarge,
+          }
+        )}
         data-testid={testId}
       >
         {children}

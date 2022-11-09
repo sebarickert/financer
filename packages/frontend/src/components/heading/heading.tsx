@@ -39,7 +39,7 @@ export const Heading = ({
     >
       <HeadingType
         className={clsx(
-          'font-bold !leading-tight tracking-tighter text-gray-900 truncate',
+          'font-bold !leading-tight tracking-tighter text-black truncate',
           {
             [titleClassName]: true,
             ['text-2xl lg:text-3xl']: styleToApply === 'h1',
@@ -55,7 +55,7 @@ export const Heading = ({
       {ctaUrl && ctaLabel && (
         <NavLink
           to={ctaUrl}
-          className="flex-shrink-0 font-medium text-blue-financer hover:underline"
+          className="flex-shrink-0 font-medium tracking-tight text-charcoal hover:underline"
           data-entity-title={ctaEntityTitle ?? undefined}
         >
           {ctaLabel}

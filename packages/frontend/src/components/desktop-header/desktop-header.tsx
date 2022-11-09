@@ -13,11 +13,11 @@ export const DesktopHeader = (): JSX.Element => {
         {backLink && (
           <NavLink
             to={backLink}
-            className="inline-flex items-center justify-center rounded-full h-11 w-11 bg-gray-50"
+            className="inline-flex items-center justify-center rounded-full h-11 w-11 bg-gray hover:bg-gray-dark"
             data-testid="header-back-link"
           >
             <span className="sr-only">Go back</span>
-            <Icon type={IconName.chevronLeft} className="stroke-gray-300" />
+            <Icon type={IconName.chevronLeft} className="stroke-gray-darkest" />
           </NavLink>
         )}
         <Heading variant="h1" testId="page-main-heading">

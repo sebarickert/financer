@@ -6,7 +6,7 @@ export const DesktopNavigation = (): JSX.Element => {
   return (
     <div className="grid grid-cols-1">
       <nav aria-label="Main navigation in desktop viewmode.">
-        <ul className="-mr-4">
+        <ul className="-ml-4 space-y-2">
           <DesktopNavigationItem
             label="Home"
             iconName={IconName.home}
@@ -32,10 +32,10 @@ export const DesktopNavigation = (): JSX.Element => {
         </ul>
       </nav>
       <nav
-        className="pt-8 mt-8 border-t"
+        className="pt-8 mt-8 border-t border-gray-dark"
         aria-label="Quick transaction actions navigation in desktop viewmode."
       >
-        <ul className="-mr-4">
+        <ul className="-ml-4 space-y-2">
           <DesktopNavigationItem
             label="Income"
             iconName={IconName.download}
@@ -57,10 +57,10 @@ export const DesktopNavigation = (): JSX.Element => {
         </ul>
       </nav>
       <nav
-        className="pt-8 mt-8 border-t"
+        className="pt-8 mt-8 border-t border-gray-dark"
         aria-label="User action links navigation in desktop viewmode."
       >
-        <ul className="-mr-4">
+        <ul className="-ml-4">
           <DesktopNavigationItem
             label="Sign out"
             iconName={IconName.logout}

@@ -22,7 +22,7 @@ export const LinkListLink = ({
   entityTitle,
 }: LinkListLinkProps): JSX.Element => {
   const linkClasses = clsx(
-    'relative flex gap-4 items-center focus-within:bg-gray-50 hover:bg-gray-50 overflow-hidden pl-4 lg:rounded-md',
+    'relative flex gap-4 items-center focus-within:bg-gray-dark hover:bg-gray-dark overflow-hidden pl-4 lg:rounded-md',
     {
       [className]: true,
     }
@@ -31,18 +31,18 @@ export const LinkListLink = ({
   const linkContent = (
     <>
       {icon && (
-        <span className="bg-gray-50 h-11 w-11 rounded-full inline-flex items-center justify-center">
+        <span className="inline-flex items-center justify-center rounded-full bg-gray h-11 w-11">
           <Icon
             type={icon}
-            className="stroke-black flex-shrink-0 pointer-events-none"
+            className="flex-shrink-0 pointer-events-none stroke-charcoal"
           />
         </span>
       )}
-      <span className="text-base items-center flex justify-between font-medium tracking-tight py-4 pr-4 after:h-[1px] after:w-full after:absolute after:bg-gray-100 after:bottom-0 flex-1 overflow-hidden">
+      <span className="text-base items-center flex justify-between font-medium tracking-tight py-5 pr-4 after:h-[1px] after:w-full after:absolute after:bg-gray-dark after:bottom-0 flex-1 overflow-hidden">
         <span className="truncate">{children}</span>
         <Icon
           type={IconName.chevronRight}
-          className=" stroke-gray-300 flex-shrink-0 pointer-events-none"
+          className="flex-shrink-0 pointer-events-none stroke-gray-darkest"
         />
       </span>
     </>

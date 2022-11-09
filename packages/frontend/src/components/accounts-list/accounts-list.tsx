@@ -38,8 +38,8 @@ export const AccountsList = ({
             key={id}
           >
             <span className="grid">
-              <span className="truncate">{rowLabel}</span>
-              <span className="text-sm font-normal text-gray-600 truncate">
+              <span className="text-black truncate">{rowLabel}</span>
+              <span className="text-sm font-normal tracking-tight truncate text-gray-darkest">
                 <span className="sr-only">Balance: </span>
                 {balanceAmount}
               </span>

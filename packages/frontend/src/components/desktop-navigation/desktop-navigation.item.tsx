@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { NavLink } from 'react-router-dom';
 
 import { useIsActiveLink } from '../../hooks/useIsActiveLink';
@@ -25,16 +26,25 @@ export const DesktopNavigationItem = ({
 }: IDesktopNavigationItemProps): JSX.Element => {
   const isActive = useIsActiveLink({ link, isExact, disallowedPathEndings });
 
+  const linkClasses = clsx(
+    'flex items-center p-4 hover:bg-gray-dark rounded-md tracking-tight font-medium',
+    {
+      ['bg-gray-dark']: isActive,
+    }
+  );
+
+  const linkContent = (
+    <>
+      <Icon type={iconName} isSolid={isActive} />
+      <span className={clsx('ml-4 text-base')}>{label}</span>
+    </>
+  );
+
   if (isExternalLink(link)) {
     return (
       <li>
-        <a
-          href={link}
-          className="flex items-center py-4 focus:text-blue-financer hover:text-blue-financer"
-          aria-label={ariaLabel}
-        >
-          <Icon type={iconName} />
-          <span className="ml-4 text-sm text-gray-600">{label}</span>
+        <a href={link} className={linkClasses} aria-label={ariaLabel}>
+          {linkContent}
         </a>
       </li>
     );
@@ -44,14 +54,11 @@ export const DesktopNavigationItem = ({
     <li>
       <NavLink
         to={link}
-        className={`flex items-center py-4 focus:text-blue-financer hover:text-blue-financer ${
-          isActive ? 'text-blue-financer border-r-4 border-blue-financer' : ''
-        }`}
+        className={linkClasses}
         onClick={onClick}
         aria-label={ariaLabel}
       >
-        <Icon type={iconName} />
-        <span className="ml-4 text-sm text-gray-600">{label}</span>
+        {linkContent}
       </NavLink>
     </li>
   );

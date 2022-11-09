@@ -3,6 +3,7 @@ import { IconArrowRight } from './icon.arrowRight';
 import { IconCalendar } from './icon.calendar';
 import { IconCash } from './icon.cash';
 import { IconChartBar } from './icon.chartBar';
+import { IconChartBarSolid } from './icon.chartBar.solid';
 import { IconChevronDown } from './icon.chevronDown';
 import { IconChevronLeft } from './icon.chevronLeft';
 import { IconChevronRight } from './icon.chevronRight';
@@ -34,7 +35,9 @@ import { IconTrendingUp } from './icon.trendingUp';
 import { IconUpload } from './icon.upload';
 import { IconUser } from './icon.user';
 import { IconUserCircle } from './icon.userCircle';
+import { IconUserCircleSolid } from './icon.userCircle.solid';
 import { IconViewGrid } from './icon.viewGrid';
+import { IconViewGridSolid } from './icon.viewGrid.solid';
 import { IconViewGridAdd } from './icon.viewGridAdd';
 
 export enum IconName {
@@ -42,7 +45,6 @@ export enum IconName {
   plusCircle = 'plus-circle',
   minusCircle = 'minus-circle',
   home = 'home',
-  homeSolid = 'home-solid',
   user = 'user',
   chartBar = 'chart-bar',
   viewGrid = 'view-grid',
@@ -80,17 +82,25 @@ export enum IconName {
 interface IconProps {
   type: IconName;
   className?: string;
+  isSolid?: boolean;
 }
 
-export const Icon = ({ type, className = '' }: IconProps): JSX.Element => {
+export const Icon = ({
+  type,
+  className = '',
+  isSolid,
+}: IconProps): JSX.Element => {
   let defaultIconClasses = 'h-6 w-6';
 
   if (className) {
     defaultIconClasses = `${defaultIconClasses} ${className}`;
   }
 
-  switch (type) {
+  switch (isSolid ? `${type}-solid` : type) {
     case 'switch-horizontal':
+      return <IconSwitchHorizontal className={defaultIconClasses} />;
+
+    case 'switch-horizontal-solid':
       return <IconSwitchHorizontal className={defaultIconClasses} />;
 
     case 'plus-circle':
@@ -111,11 +121,20 @@ export const Icon = ({ type, className = '' }: IconProps): JSX.Element => {
     case 'chart-bar':
       return <IconChartBar className={defaultIconClasses} />;
 
+    case 'chart-bar-solid':
+      return <IconChartBarSolid className={defaultIconClasses} />;
+
     case 'view-grid':
       return <IconViewGrid className={defaultIconClasses} />;
 
+    case 'view-grid-solid':
+      return <IconViewGridSolid className={defaultIconClasses} />;
+
     case 'user-circle':
       return <IconUserCircle className={defaultIconClasses} />;
+
+    case 'user-circle-solid':
+      return <IconUserCircleSolid className={defaultIconClasses} />;
 
     case 'plus':
       return <IconPlus className={defaultIconClasses} />;
@@ -123,7 +142,13 @@ export const Icon = ({ type, className = '' }: IconProps): JSX.Element => {
     case 'download':
       return <IconDownload className={defaultIconClasses} />;
 
+    case 'download-solid':
+      return <IconDownload className={defaultIconClasses} />;
+
     case 'upload':
+      return <IconUpload className={defaultIconClasses} />;
+
+    case 'upload-solid':
       return <IconUpload className={defaultIconClasses} />;
 
     case 'logout':
