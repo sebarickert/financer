@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import { useEffect, useState, useTransition } from 'react';
 import { Chart } from 'react-chartjs-2';
 
+import { colorPalette } from '../../constants/colorPalette';
 import { useExpenseMonthlySummaries } from '../../hooks/expense/useExpenseMonthlySummaries';
 import { useIncomeMonthlySummaries } from '../../hooks/income/useIncomeMonthlySummaries';
 import { useUserDashboardSettings } from '../../hooks/profile/user-preference/useDashboardSettings';
@@ -163,7 +164,7 @@ export const BalanceGraph = ({
 
             return index % 2 === 1 ? this.getLabelForValue(Number(val)) : null;
           },
-          color: '#666666',
+          color: colorPalette.charcoal,
           font: {
             size: 13,
             family: 'Inter',
@@ -174,7 +175,7 @@ export const BalanceGraph = ({
       y: {
         position: 'right',
         grid: {
-          color: '#cccccc40',
+          color: colorPalette['gray-dark'],
           drawBorder: false,
         },
         ticks: {
@@ -193,9 +194,9 @@ export const BalanceGraph = ({
         hitRadius: 32,
         radius: 0,
         hoverBorderWidth: 3,
-        hoverRadius: 5,
-        hoverBorderColor: '#ffffff',
-        hoverBackgroundColor: '#111827',
+        hoverRadius: 3,
+        hoverBorderColor: colorPalette.blue,
+        hoverBackgroundColor: colorPalette.blue,
       },
       line: {
         borderWidth: 2,
@@ -209,18 +210,17 @@ export const BalanceGraph = ({
         propagate: true,
       },
       tooltip: {
-        backgroundColor: 'rgb(31 41 55)',
+        backgroundColor: colorPalette.charcoal,
         padding: 16,
         mode: 'index',
         intersect: true,
         position: 'nearest',
         bodySpacing: 6,
         displayColors: false,
-        titleSpacing: 0,
         titleFont: {
           size: 16,
           family: 'Inter',
-          weight: 'bold',
+          weight: '600',
         },
         bodyFont: {
           size: 16,
@@ -246,11 +246,11 @@ export const BalanceGraph = ({
     datasets: [
       {
         label: 'Balance',
-        borderColor: '#1c64f2',
+        borderColor: colorPalette.blue,
         fill: {
           target: 'origin',
-          above: '#1c64f21A',
-          below: '#1c64f21A',
+          above: `${colorPalette.blue}1A`,
+          below: `${colorPalette.blue}1A`,
         },
         data: balanceHistory.map(({ balance }) => balance),
       },
