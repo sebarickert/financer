@@ -3,6 +3,7 @@ import { ChartOptions } from 'chart.js';
 import { useEffect, useState } from 'react';
 import { Chart } from 'react-chartjs-2';
 
+import { colorPalette } from '../../constants/colorPalette';
 import { MONTH_IN_MS } from '../../constants/months';
 import { useAccountBalanceHistoryById } from '../../hooks/account/useAccountBalanceHistoryById';
 import {
@@ -81,7 +82,7 @@ export const AccountBalanceHistoryChart = ({
 
             return this.getLabelForValue(Number(val));
           },
-          color: '#666666',
+          color: colorPalette.charcoal,
           font: {
             size: 13,
             family: 'Inter',
@@ -92,7 +93,7 @@ export const AccountBalanceHistoryChart = ({
       y: {
         position: 'right',
         grid: {
-          color: '#cccccc40',
+          color: colorPalette['gray-dark'],
           drawBorder: false,
         },
         ticks: {
@@ -111,9 +112,9 @@ export const AccountBalanceHistoryChart = ({
         hitRadius: 32,
         radius: 0,
         hoverBorderWidth: 3,
-        hoverRadius: 5,
-        hoverBorderColor: '#ffffff',
-        hoverBackgroundColor: '#1c64f2',
+        hoverRadius: 3,
+        hoverBorderColor: colorPalette.blue,
+        hoverBackgroundColor: colorPalette.blue,
       },
       line: {
         borderWidth: 2,
@@ -127,18 +128,17 @@ export const AccountBalanceHistoryChart = ({
         propagate: true,
       },
       tooltip: {
-        backgroundColor: 'rgb(31 41 55)',
+        backgroundColor: colorPalette.charcoal,
         padding: 16,
         mode: 'index',
         intersect: true,
         position: 'nearest',
         bodySpacing: 6,
         displayColors: false,
-        titleSpacing: 0,
         titleFont: {
           size: 16,
           family: 'Inter',
-          weight: 'bold',
+          weight: '600',
         },
         bodyFont: {
           size: 16,
@@ -172,7 +172,7 @@ export const AccountBalanceHistoryChart = ({
           drag: {
             enabled: true,
             modifierKey: 'ctrl',
-            backgroundColor: '#1c64f21A',
+            backgroundColor: `${colorPalette.blue}1A`,
           },
           pinch: {
             enabled: true,
@@ -188,11 +188,11 @@ export const AccountBalanceHistoryChart = ({
     datasets: [
       {
         label: 'Balance',
-        borderColor: '#1c64f2',
+        borderColor: colorPalette.blue,
         fill: {
           target: 'origin',
-          above: '#1c64f21A',
-          below: '#1c64f21A',
+          above: `${colorPalette.blue}1A`,
+          below: `${colorPalette.blue}1A`,
         },
         data: chartData.map(({ balance }) => balance),
       },

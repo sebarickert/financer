@@ -96,28 +96,30 @@ export const Transfer = (): JSX.Element => {
             {toAccount?.name ?? '-'}
           </InfoCard>
         </section>
-        <Divider>Categories</Divider>
         {transfer.categories.length > 0 && (
-          <ul className="grid gap-2 lg:gap-4">
-            {transfer.categories?.map(({ amount, category_id }) => (
-              <li className="grid grid-cols-2 gap-2 lg:gap-4">
-                <InfoCard
-                  iconName={IconName.tag}
-                  label="Category"
-                  testId="category_label"
-                >
-                  {getCategoryNameById(category_id)}
-                </InfoCard>
-                <InfoCard
-                  iconName={IconName.cash}
-                  label="Amount"
-                  testId="category_amount"
-                >
-                  {formatCurrency(amount)}
-                </InfoCard>
-              </li>
-            ))}
-          </ul>
+          <>
+            <Divider>Categories</Divider>
+            <ul className="grid gap-2 lg:gap-4">
+              {transfer.categories?.map(({ amount, category_id }) => (
+                <li className="grid grid-cols-2 gap-2 lg:gap-4">
+                  <InfoCard
+                    iconName={IconName.tag}
+                    label="Category"
+                    testId="category_label"
+                  >
+                    {getCategoryNameById(category_id)}
+                  </InfoCard>
+                  <InfoCard
+                    iconName={IconName.cash}
+                    label="Amount"
+                    testId="category_amount"
+                  >
+                    {formatCurrency(amount)}
+                  </InfoCard>
+                </li>
+              ))}
+            </ul>
+          </>
         )}
         <ButtonGroup className="mt-4">
           <Button

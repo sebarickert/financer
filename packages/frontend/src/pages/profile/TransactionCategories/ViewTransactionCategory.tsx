@@ -1,20 +1,21 @@
 import { SortOrder } from '@local/types';
 import { ChartOptions } from 'chart.js';
+import clsx from 'clsx';
 import { useEffect, useState, useTransition } from 'react';
 import { Chart } from 'react-chartjs-2';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { Container } from '../../../components/container/container';
-import { DescriptionList } from '../../../components/description-list/description-list';
-import { DescriptionListItem } from '../../../components/description-list/description-list.item';
 import { Heading } from '../../../components/heading/heading';
 import { IconName } from '../../../components/icon/icon';
+import { InfoCard } from '../../../components/info-card/info-card';
 import { LinkList } from '../../../components/link-list/link-list';
 import { LinkListLink } from '../../../components/link-list/link-list.link';
 import { LoaderSuspense } from '../../../components/loader/loader-suspense';
 import { MonthlyTransactionList } from '../../../components/monthly-transaction-list/monthly-transaction-list';
 import { Pager } from '../../../components/pager/pager';
 import { UpdatePageInfo } from '../../../components/seo/updatePageInfo';
+import { colorPalette } from '../../../constants/colorPalette';
 import { monthNames, MONTH_IN_MS } from '../../../constants/months';
 import { useAllTransactionsPaged } from '../../../hooks/transaction/useAllTransactions';
 import { useTransactionsMonthlySummaries } from '../../../hooks/transaction/useTransactionsMonthlySummaries';
@@ -38,7 +39,7 @@ const initialFilterOptions: {
   month: new Date().getMonth() + 1,
 };
 
-interface IChartData {
+interface ChartData {
   dateStr: string;
   date: Date;
   balance: number;
@@ -95,7 +96,7 @@ export const ViewTransactionCategory = (): JSX.Element => {
   }, [id]);
 
   const [, startProcessing] = useTransition();
-  const [chartData, setChartData] = useState<IChartData[]>([]);
+  const [chartData, setChartData] = useState<ChartData[]>([]);
 
   const handleDelete = async () => {
     if (!id) {
@@ -177,7 +178,7 @@ export const ViewTransactionCategory = (): JSX.Element => {
 
             return this.getLabelForValue(Number(val));
           },
-          color: '#666666',
+          color: colorPalette.charcoal,
           font: {
             size: 13,
             family: 'Inter',
@@ -188,7 +189,7 @@ export const ViewTransactionCategory = (): JSX.Element => {
       y: {
         position: 'right',
         grid: {
-          color: '#cccccc40',
+          color: colorPalette['gray-dark'],
           drawBorder: false,
         },
         ticks: {
@@ -207,9 +208,9 @@ export const ViewTransactionCategory = (): JSX.Element => {
         hitRadius: 32,
         radius: 0,
         hoverBorderWidth: 3,
-        hoverRadius: 5,
-        hoverBorderColor: '#ffffff',
-        hoverBackgroundColor: '#1c64f2',
+        hoverRadius: 3,
+        hoverBorderColor: colorPalette.blue,
+        hoverBackgroundColor: colorPalette.blue,
       },
       line: {
         borderWidth: 2,
@@ -223,18 +224,17 @@ export const ViewTransactionCategory = (): JSX.Element => {
         propagate: true,
       },
       tooltip: {
-        backgroundColor: 'rgb(31 41 55)',
+        backgroundColor: colorPalette.charcoal,
         padding: 16,
         mode: 'index',
         intersect: true,
         position: 'nearest',
         bodySpacing: 6,
         displayColors: false,
-        titleSpacing: 0,
         titleFont: {
           size: 16,
           family: 'Inter',
-          weight: 'bold',
+          weight: '600',
         },
         bodyFont: {
           size: 16,
@@ -268,7 +268,7 @@ export const ViewTransactionCategory = (): JSX.Element => {
           drag: {
             enabled: true,
             modifierKey: 'ctrl',
-            backgroundColor: '#1c64f21A',
+            backgroundColor: `${colorPalette.blue}1A`,
           },
           pinch: {
             enabled: true,
@@ -284,11 +284,11 @@ export const ViewTransactionCategory = (): JSX.Element => {
     datasets: [
       {
         label: 'Balance',
-        borderColor: '#1c64f2',
+        borderColor: colorPalette.blue,
         fill: {
           target: 'origin',
-          above: '#1c64f21A',
-          below: '#1c64f21A',
+          above: `${colorPalette.blue}1A`,
+          below: `${colorPalette.blue}1A`,
         },
         data: chartData.map(({ balance }) => balance),
       },
@@ -301,17 +301,12 @@ export const ViewTransactionCategory = (): JSX.Element => {
         title={`${transactionCategory.name}`}
         backLink="/profile/transaction-categories"
       />
-      <section className={'mb-6 grid md:grid-cols-2 gap-6'}>
-        <DescriptionList>
-          <DescriptionListItem
-            label="Type"
-            testId="transaction-category-type"
-            isLarge
-          >
+      <section className={'mb-6 grid md:grid-cols-2 gap-4 md:gap-6'}>
+        <section className={clsx('grid gap-2')}>
+          <InfoCard label="Type" testId="transaction-category-type" isLarge>
             {capitalize(transactionCategory.visibility.join(', '))}
-          </DescriptionListItem>
-          <DescriptionListItem label="Transactions">10</DescriptionListItem>
-        </DescriptionList>
+          </InfoCard>
+        </section>
         <LinkList isVertical>
           <LinkListLink
             link={`/profile/transaction-categories/${id}/edit`}

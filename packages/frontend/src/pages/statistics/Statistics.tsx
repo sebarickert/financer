@@ -84,13 +84,11 @@ export const Statistics = (): JSX.Element => {
           title="Incomes"
           link="/statistics/incomes"
           iconName={IconName.download}
-          iconBackgroundColor="green"
         />
         <QuickLinksItem
           title="Expenses"
           link="/statistics/expenses"
           iconName={IconName.upload}
-          iconBackgroundColor="red"
         />
         <QuickLinksItem
           title="Transfers"

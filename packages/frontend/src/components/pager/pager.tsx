@@ -1,3 +1,5 @@
+import clsx from 'clsx';
+
 import { PagerOptions } from '../../hooks/usePager';
 import { Icon, IconName } from '../icon/icon';
 
@@ -24,9 +26,13 @@ const PagerButton = ({
 }: PagerButtonProps) => {
   return (
     <button
-      className={`h-11 w-11 inline-flex justify-center items-center group disabled:hover:cursor-not-allowed ${className} ${
-        !isDisabled ? 'hover:bg-gray-50' : ''
-      }`}
+      className={clsx(
+        'h-11 w-11 inline-flex justify-center items-center group disabled:hover:cursor-not-allowed bg-gray rounded-full',
+        {
+          [className]: true,
+          ['hover:bg-gray-dark']: !isDisabled,
+        }
+      )}
       onClick={handleClick}
       disabled={isDisabled}
       title={children}
@@ -34,7 +40,7 @@ const PagerButton = ({
       <span className="sr-only">{children}</span>
       <Icon
         type={isNext ? IconName.arrowRight : IconName.arrowLeft}
-        className="group-disabled:opacity-50"
+        className="stroke-gray-darkest group-disabled:opacity-50"
       />
     </button>
   );
@@ -48,15 +54,13 @@ export const Pager = ({
   const { nextPage, previousPage, pageCount, currentPage } = pagerOptions;
   return (
     <section
-      className={`${
-        isCentered ? 'flex justify-center' : 'inline-flex'
-      } ${className}`}
+      className={clsx({
+        [className]: true,
+        ['flex justify-center']: isCentered,
+        ['inline-flex']: !isCentered,
+      })}
     >
-      <div
-        className={`inline-flex overflow-hidden items-center bg-white border rounded-md ${
-          !currentPage && !pageCount ? 'divide-x' : ''
-        }`}
-      >
+      <div className={clsx('inline-flex items-center gap-2')}>
         <PagerButton
           handleClick={previousPage.load}
           isDisabled={!previousPage.isAvailable}
@@ -64,7 +68,7 @@ export const Pager = ({
           Previous page
         </PagerButton>
         {currentPage && pageCount && (
-          <p className="px-8 h-11 border-l border-r inline-flex items-center">
+          <p className="mx-4 font-medium tracking-tight text-charcoal">
             <span className="sr-only">
               Current page: {currentPage} of {pageCount}
             </span>
