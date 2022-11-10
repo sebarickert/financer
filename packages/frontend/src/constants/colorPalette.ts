@@ -1,2 +1,2 @@
-import colorPalette from './colorPalette.json';
+import colorPalette from './colorPaletteRaw.json';
 export { colorPalette };

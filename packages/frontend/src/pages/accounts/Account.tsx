@@ -2,14 +2,14 @@ import {
   CreateTransactionCategoryMappingDtoWithoutTransaction,
   SortOrder,
 } from '@local/types';
-import { Suspense, useState } from 'react';
+import clsx from 'clsx';
+import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { Alert } from '../../components/alert/alert';
-import { DescriptionList } from '../../components/description-list/description-list';
-import { DescriptionListItem } from '../../components/description-list/description-list.item';
 import { Heading } from '../../components/heading/heading';
 import { IconName } from '../../components/icon/icon';
+import { InfoCard } from '../../components/info-card/info-card';
 import { LatestAccountTransactions } from '../../components/latest-transactions/latest-account-transactions';
 import { LinkList } from '../../components/link-list/link-list';
 import { LinkListLink } from '../../components/link-list/link-list.link';
@@ -24,7 +24,6 @@ import { useAddExpense } from '../../hooks/expense/useAddExpense';
 import { useAddIncome } from '../../hooks/income/useAddIncome';
 import { useUserDefaultMarketUpdateSettings } from '../../hooks/profile/user-preference/useDefaultMarketUpdateSettings';
 import { useAllTransactionsPaged } from '../../hooks/transaction/useAllTransactions';
-import { useTransactionsByAccountIdPaged } from '../../hooks/transaction/useTransactionsByAccountId';
 import { parseErrorMessagesToArray } from '../../utils/apiHelper';
 import { capitalize } from '../../utils/capitalize';
 import { formatCurrency } from '../../utils/formatCurrency';
@@ -32,16 +31,6 @@ import { formatCurrency } from '../../utils/formatCurrency';
 import { AccountDeleteModal } from './account-modals/AccountDeleteModal';
 import { AccountUpdateMarketValueModal } from './account-modals/AccountUpdateMarketValueModal';
 import { AccountBalanceHistoryChart } from './AccountBalanceHistoryChart';
-
-const AccountTransactionAmount = ({
-  accountId,
-}: {
-  accountId: string;
-}): JSX.Element => {
-  const { data } = useTransactionsByAccountIdPaged(accountId);
-
-  return <>{data.totalRowCount}</>;
-};
 
 export const Account = (): JSX.Element | null => {
   const { id } = useParams<{ id: string }>();
@@ -175,20 +164,15 @@ export const Account = (): JSX.Element | null => {
           There were {errors.length} errors with your submission
         </Alert>
       )}
-      <section className={'mb-6 grid md:grid-cols-2 gap-6'}>
-        <DescriptionList>
-          <DescriptionListItem label="Balance" isLarge testId="account-balance">
+      <section className={'mb-6 grid md:grid-cols-2 gap-4 md:gap-6'}>
+        <section className={clsx('grid gap-2')}>
+          <InfoCard label="Balance" testId="account-balance" isLarge>
             {formatCurrency(account.balance)}
-          </DescriptionListItem>
-          <DescriptionListItem label="Type" testId="account-type">
+          </InfoCard>
+          <InfoCard label="Type" testId="account-type" isSmall>
             {capitalize(account.type)}
-          </DescriptionListItem>
-          <DescriptionListItem label="Transactions">
-            <Suspense fallback="-">
-              <AccountTransactionAmount accountId={id} />
-            </Suspense>
-          </DescriptionListItem>
-        </DescriptionList>
+          </InfoCard>
+        </section>
         <LinkList isVertical>
           {account.type === 'investment' && (
             <AccountUpdateMarketValueModal
@@ -211,7 +195,7 @@ export const Account = (): JSX.Element | null => {
       <LoaderSuspense>
         <AccountBalanceHistoryChart accountId={account._id} />
       </LoaderSuspense>
-      <section className="flex items-center justify-between mb-2 mt-8">
+      <section className="flex items-center justify-between mt-8 mb-2">
         <Heading>{`${pageVisibleMonth}, ${pageVisibleYear}`}</Heading>
         <Pager
           pagerOptions={{

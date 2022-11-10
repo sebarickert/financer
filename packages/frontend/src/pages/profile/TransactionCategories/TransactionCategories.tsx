@@ -113,8 +113,8 @@ export const TransactionCategories = (): JSX.Element => {
                     entityTitle={label}
                   >
                     <span className="grid">
-                      <span className="truncate">{label}</span>
-                      <span className="text-sm font-normal text-gray-600 truncate">
+                      <span className="text-black truncate">{label}</span>
+                      <span className="text-sm font-normal tracking-tight truncate text-gray-darkest">
                         <span className="sr-only">Tree structure: </span>
                         {tree}
                       </span>
