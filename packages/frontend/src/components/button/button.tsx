@@ -1,12 +1,13 @@
+import clsx from 'clsx';
 import React from 'react';
 
 import { ButtonExternal } from './button.external';
 import { ButtonInternal } from './button.internal';
 import { ButtonPlain } from './button.plain';
 
-export type AccentColor = 'red' | 'green' | 'blue' | 'plain';
-interface IButtonProps {
-  accentColor?: AccentColor;
+export type ButtonAccentColor = 'blue' | 'plain' | 'black';
+interface ButtonProps {
+  accentColor?: ButtonAccentColor;
   children: string;
   className?: string;
   link?: string;
@@ -17,28 +18,15 @@ interface IButtonProps {
 }
 
 export const isExternalLink = (link: string): boolean =>
-  link.substr(0, 8) === 'https://' ||
-  link.substr(0, 7) === 'http://' ||
-  link.substr(0, 2) === '//' ||
-  link.substr(0, 5) === 'blob:' ||
-  link.substr(0, 5) === '/api/' ||
-  link.substr(0, 6) === '/auth/';
-
-const getButtonColorClasses = (color: AccentColor): string => {
-  switch (color) {
-    case 'blue':
-      return 'bg-blue-financer hover:bg-blue-500 active:bg-blue-700 focus:ring-blue-500';
-    case 'green':
-      return 'bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 focus:ring-emerald-500';
-    case 'red':
-      return 'bg-red-600 hover:bg-red-500 active:bg-red-700 focus:ring-red-500';
-    default:
-      return '';
-  }
-};
+  link.substring(0, 8) === 'https://' ||
+  link.substring(0, 7) === 'http://' ||
+  link.substring(0, 2) === '//' ||
+  link.substring(0, 5) === 'blob:' ||
+  link.substring(0, 5) === '/api/' ||
+  link.substring(0, 6) === '/auth/';
 
 export const Button = ({
-  accentColor = 'blue',
+  accentColor = 'black',
   children,
   className = '',
   link,
@@ -46,27 +34,24 @@ export const Button = ({
   type = 'button',
   testId,
   isDisabled,
-}: IButtonProps): JSX.Element => {
-  const elementClasses = [
-    `inline-flex justify-center w-full sm:w-auto rounded-md items-center py-3 px-6 border font-medium text-base text-white focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:outline-none transition ease-in-out duration-150 ${className}`,
-  ];
-
-  if (accentColor === 'plain') {
-    elementClasses.push(
-      `border-gray-300 bg-white text-gray-700 shadow-sm hover:text-gray-500 focus:ring-blue-500`
-    );
-  } else {
-    elementClasses.push(
-      `border-transparent ${getButtonColorClasses(accentColor)}`
-    );
-  }
+}: ButtonProps): JSX.Element => {
+  const buttonClasses = clsx(
+    'inline-flex justify-center w-full sm:w-auto rounded-md items-center py-3 px-6 focus:ring-2 focus:ring-offset-2 focus:outline-none transition ease-in-out duration-150 tracking-tight font-medium text-base hover:opacity-75 focus:opacity-75',
+    {
+      ['bg-charcoal text-white focus:ring-charcoal']: accentColor === 'black',
+      ['bg-blue text-white focus:ring-blue']: accentColor === 'blue',
+      ['bg-gray text-black focus:ring-charcoal hover:bg-gray-dark border border-gray-dark focus:opacity-100 hover:opacity-100']:
+        accentColor === 'plain',
+      [className]: true,
+    }
+  );
 
   if (typeof link === 'string' && link.length > 0 && !isDisabled) {
     if (isExternalLink(link)) {
       return (
         <ButtonExternal
           link={link}
-          className={elementClasses.join(' ')}
+          className={buttonClasses}
           onClick={onClick}
           testId={testId}
         >
@@ -78,7 +63,7 @@ export const Button = ({
     return (
       <ButtonInternal
         link={link}
-        className={elementClasses.join(' ')}
+        className={buttonClasses}
         onClick={onClick}
         testId={testId}
       >
@@ -91,7 +76,7 @@ export const Button = ({
     <ButtonPlain
       type={type}
       onClick={onClick}
-      className={elementClasses.join(' ')}
+      className={buttonClasses}
       testId={testId}
       isDisabled={isDisabled}
     >

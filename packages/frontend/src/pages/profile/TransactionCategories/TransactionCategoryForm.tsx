@@ -96,7 +96,6 @@ export const TransactionCategoryForm = ({
       <Form
         submitLabel={submitLabel}
         handleSubmit={handleSubmit}
-        accentColor="green"
         formFooterBackLink="/profile/transaction-categories"
         optionalFooterComponent={optionalFooterComponent}
       >

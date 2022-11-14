@@ -1,11 +1,13 @@
 import React from 'react';
 
+import { ButtonAccentColor } from '../button/button';
+
 import { FormFooter } from './form.footer';
 
 interface IFormProps {
   children: React.ReactNode;
   submitLabel: string;
-  accentColor?: 'red' | 'green' | 'blue';
+  accentColor?: ButtonAccentColor;
   formFooterBackLink?: string;
   handleSubmit(event: React.FormEvent<HTMLFormElement>): void;
   optionalFooterComponent?: React.ReactNode;

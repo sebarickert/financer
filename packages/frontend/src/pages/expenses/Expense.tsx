@@ -24,7 +24,6 @@ const ExpenseDeleteModal = ({ handleDelete }: IExpenseDeleteModalProps) => (
     submitButtonLabel="Delete"
     onConfirm={handleDelete}
     modalOpenButtonLabel="Delete"
-    accentColor="red"
     testId="expense-delete-modal"
   >
     Are you sure you want to delete your expense? All of your data will be
