@@ -7,9 +7,9 @@ import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { Alert } from '../../components/alert/alert';
+import { InfoCard } from '../../components/elements/info-card/info-card';
 import { Heading } from '../../components/heading/heading';
 import { IconName } from '../../components/icon/icon';
-import { InfoCard } from '../../components/info-card/info-card';
 import { LatestAccountTransactions } from '../../components/latest-transactions/latest-account-transactions';
 import { LinkList } from '../../components/link-list/link-list';
 import { LinkListLink } from '../../components/link-list/link-list.link';

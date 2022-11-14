@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
-import { TransactionTemplatesSwitcher } from '../../components/transaction-template-switcher/transaction-templates-switcher';
+import { TransactionTemplateSwitcher } from '../../components/transaction-template-switcher/transaction-template-switcher';
 import { useUserDefaultTransferSourceAccount } from '../../hooks/profile/user-preference/useUserDefaultTransferSourceAccount';
 import { useUserDefaultTransferTargetAccount } from '../../hooks/profile/user-preference/useUserDefaultTransferTargetAccount';
 import { useAddTransfer } from '../../hooks/transfer/useAddTransfer';
@@ -40,7 +40,7 @@ export const AddTransfer = (): JSX.Element => {
       <UpdatePageInfo
         title="Add transfer"
         headerAction={
-          <TransactionTemplatesSwitcher
+          <TransactionTemplateSwitcher
             templateType={TransactionType.TRANSFER}
           />
         }

@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import { AddTransactionCategory } from './AddTransactionCategory';
 import { EditTransactionCategory } from './EditTransactionCategory';
 import { TransactionCategories } from './TransactionCategories';
-import { ViewTransactionCategory } from './ViewTransactionCategory';
+import { ViewTransactionCategory } from './TransactionCategory';
 
 export const TransactionCategoriesRouter = (): JSX.Element => {
   return (

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
-import { TransactionTemplatesSwitcher } from '../../components/transaction-template-switcher/transaction-templates-switcher';
+import { TransactionTemplateSwitcher } from '../../components/transaction-template-switcher/transaction-template-switcher';
 import { useAddIncome } from '../../hooks/income/useAddIncome';
 import { useUserDefaultIncomeAccount } from '../../hooks/profile/user-preference/useUserDefaultIncomeAccount';
 import { parseErrorMessagesToArray } from '../../utils/apiHelper';
@@ -37,7 +37,7 @@ export const AddIncome = (): JSX.Element => {
       <UpdatePageInfo
         title="Add income"
         headerAction={
-          <TransactionTemplatesSwitcher templateType={TransactionType.INCOME} />
+          <TransactionTemplateSwitcher templateType={TransactionType.INCOME} />
         }
       />
       <IncomeForm

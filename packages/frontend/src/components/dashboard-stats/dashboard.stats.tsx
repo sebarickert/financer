@@ -5,8 +5,8 @@ import { useIncomeMonthlySummaries } from '../../hooks/income/useIncomeMonthlySu
 import { useUserDashboardSettings } from '../../hooks/profile/user-preference/useDashboardSettings';
 import { useTotalBalance } from '../../hooks/useTotalBalance';
 import { formatCurrency } from '../../utils/formatCurrency';
+import { InfoCard } from '../elements/info-card/info-card';
 import { IconName } from '../icon/icon';
-import { InfoCard } from '../info-card/info-card';
 
 interface DashboardStatsProps {
   className?: string;

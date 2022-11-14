@@ -1,10 +1,10 @@
 import { useState } from 'react';
 
+import { DialogConfirmCustom } from '../../../components/elements/dialog/confirm/dialog.confirm.custom';
+import { Dialog } from '../../../components/elements/dialog/dialog';
 import { IconName } from '../../../components/icon/icon';
 import { Input } from '../../../components/input/input';
 import { LinkListButton } from '../../../components/link-list/link-list.button';
-import { ModalCustomActions } from '../../../components/modal/custom/modal.custom.actions';
-import { ModalCustomContent } from '../../../components/modal/custom/modal.custom.content';
 import { inputDateFormat } from '../../../utils/formatDate';
 
 interface IAccountUpdateMarketValueModalProps {
@@ -39,54 +39,34 @@ export const AccountUpdateMarketValueModal = ({
       <LinkListButton icon={IconName.trendingUp} handleClick={handleToggleOpen}>
         Update current market value
       </LinkListButton>
-      {isOpen && (
-        <div className="fixed inset-0 z-50">
-          <div className="fixed inset-0 transition-opacity">
-            <div className="absolute inset-0 bg-gray-500 opacity-75" />
-          </div>
-          <div
-            className={`flex items-end justify-center min-h-screen pt-4 px-4 text-center sm:block sm:p-0 pb-[calc(78px+env(safe-area-inset-bottom))]`}
-          >
-            <span className="hidden sm:inline-block sm:align-middle sm:h-screen" />
-            &#8203;
-            <div
-              className="inline-block w-full max-w-lg overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:w-full"
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="modal-headline"
+      <Dialog isDialogOpen={isOpen} setIsDialogOpen={setIsOpen}>
+        <DialogConfirmCustom
+          onCancel={handleToggleOpen}
+          onConfirm={() => handleUpdate(newMarketValue, newDate)}
+          submitButtonLabel="Update"
+        >
+          <div className="space-y-4">
+            <Input
+              id="currentMarketValue"
+              type="number"
+              isRequired
+              value={currentValue}
+              onChange={handleMarketValueInputUpdate}
             >
-              <ModalCustomContent>
-                <div className="space-y-4">
-                  <Input
-                    id="currentMarketValue"
-                    type="number"
-                    isRequired
-                    value={currentValue}
-                    onChange={handleMarketValueInputUpdate}
-                  >
-                    Current market value
-                  </Input>
-                  <Input
-                    id="date"
-                    type="datetime-local"
-                    value={inputDateFormat(new Date())}
-                    onChange={handleDateInputUpdate}
-                    isDate
-                  >
-                    Date
-                  </Input>
-                </div>
-              </ModalCustomContent>
-              <ModalCustomActions
-                submitButtonLabel="Update"
-                onCancel={handleToggleOpen}
-                onConfirm={() => handleUpdate(newMarketValue, newDate)}
-                submitButtonAccentColor={'blue'}
-              />
-            </div>
+              Current market value
+            </Input>
+            <Input
+              id="date"
+              type="datetime-local"
+              value={inputDateFormat(new Date())}
+              onChange={handleDateInputUpdate}
+              isDate
+            >
+              Date
+            </Input>
           </div>
-        </div>
-      )}
+        </DialogConfirmCustom>
+      </Dialog>
     </>
   );
 };

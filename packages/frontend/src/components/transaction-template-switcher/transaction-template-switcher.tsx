@@ -1,25 +1,26 @@
 import { TransactionType, TransactionTypeMapping } from '@local/types';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useAllManualTransactionTemplates } from '../../hooks/transactionTemplate/useAllTransactionTemplates';
 import { Button } from '../button/button';
 import { ButtonGroup } from '../button/button.group';
 import { ButtonPlain } from '../button/button.plain';
-import { Heading } from '../heading/heading';
+import { Dialog } from '../elements/dialog/dialog';
+import { DialogText } from '../elements/dialog/dialog.text';
 import { Icon, IconName } from '../icon/icon';
 import { Radio } from '../radio/radio';
 import { RadioGroup } from '../radio/radio.group';
 
-interface TransactionTemplatesSwitcherProps {
+interface TransactionTemplateSwitcherProps {
   selectedTemplate?: string;
   templateType: Exclude<TransactionType, 'ANY'>;
 }
 
-export const TransactionTemplatesSwitcher = ({
+export const TransactionTemplateSwitcher = ({
   selectedTemplate,
   templateType,
-}: TransactionTemplatesSwitcherProps): JSX.Element | null => {
+}: TransactionTemplateSwitcherProps): JSX.Element | null => {
   const [isOpen, setIsOpen] = useState(false);
   const transactionTemplates = useAllManualTransactionTemplates();
   const targetTemplates = useMemo(
@@ -30,37 +31,7 @@ export const TransactionTemplatesSwitcher = ({
     [templateType, transactionTemplates]
   );
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const ref: any = useRef(null);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const current = ref.current;
-
-    const closeModal = () => {
-      setIsOpen(false);
-    };
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const clickOutside = (event: any) => {
-      if (event.target === current) {
-        current?.close();
-      }
-    };
-
-    if (isOpen) {
-      current?.showModal?.();
-    } else {
-      current?.close();
-    }
-
-    current?.addEventListener('close', closeModal);
-    current?.addEventListener('click', clickOutside);
-
-    return () => {
-      current?.removeEventListener('close', closeModal);
-      current?.removeEventListener('close', clickOutside);
-    };
-  }, [isOpen]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = async (event: any) => {
@@ -73,31 +44,28 @@ export const TransactionTemplatesSwitcher = ({
     setIsOpen(false);
   };
 
+  const handleToggleOpen = () => setIsOpen(!isOpen);
+
   if (!targetTemplates.length) return null;
 
   return (
     <>
       <ButtonPlain
-        onClick={() => setIsOpen(!isOpen)}
-        className="relative flex gap-1 justify-center items-center focus-within:bg-gray-50 hover:bg-gray-100 overflow-hidden lg:pl-2 lg:rounded-md h-full w-full bg-gray-50 rounded-full"
+        onClick={handleToggleOpen}
+        className="relative flex items-center justify-center w-full h-full gap-1 overflow-hidden rounded-full focus-within:bg-gray-50 hover:bg-gray-100 lg:pl-2 lg:rounded-md bg-gray-50"
       >
         <Icon
           type={IconName.lightningBolt}
-          className="stroke-black flex-shrink-0 pointer-events-none"
+          className="flex-shrink-0 pointer-events-none stroke-black"
         />
-        <span className="sr-only lg:not-sr-only flex text-base items-center justify-between font-semibold tracking-tight lg:py-2 lg:pr-3 flex-1 overflow-hidden">
+        <span className="flex items-center justify-between flex-1 overflow-hidden text-base font-semibold tracking-tight sr-only lg:not-sr-only lg:py-2 lg:pr-3">
           <span className="truncate">Switch</span>
         </span>
       </ButtonPlain>
-      <dialog
-        className="bg-white z-10 border rounded-md p-0 w-full lg:max-w-screen-sm"
-        ref={ref}
-      >
-        <section className="px-4 pt-5 pb-4 sm:p-6">
-          <form onSubmit={handleSubmit}>
-            <Heading variant="h2" className="mb-2">
-              Switch template
-            </Heading>
+      <Dialog isDialogOpen={isOpen} setIsDialogOpen={setIsOpen}>
+        <DialogText label="Switch template" className="mb-4" />
+        <form onSubmit={handleSubmit}>
+          <section className="mb-6">
             <RadioGroup className="-mx-2">
               <Radio
                 name="templateSwitcher"
@@ -117,17 +85,15 @@ export const TransactionTemplatesSwitcher = ({
                 </Radio>
               ))}
             </RadioGroup>
-            <div className="pt-4 bg-transparent mt-4 border-t">
-              <ButtonGroup className="" isReverse>
-                <Button type="submit">Update</Button>
-                <Button onClick={() => setIsOpen(false)} accentColor="plain">
-                  Cancel
-                </Button>
-              </ButtonGroup>
-            </div>
-          </form>
-        </section>
-      </dialog>
+          </section>
+          <ButtonGroup className="" isReverse>
+            <Button type="submit">Update</Button>
+            <Button onClick={() => setIsOpen(false)} accentColor="plain">
+              Cancel
+            </Button>
+          </ButtonGroup>
+        </form>
+      </Dialog>
     </>
   );
 };
