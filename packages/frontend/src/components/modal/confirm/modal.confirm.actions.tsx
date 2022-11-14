@@ -16,11 +16,7 @@ export const ModalConfirmActions = ({
 }: IModalConfirmActionsProps): JSX.Element => {
   return (
     <ButtonGroup className="px-4 py-3 bg-gray-50 sm:px-6" isReverse>
-      <Button
-        onClick={onConfirm}
-        accentColor="red"
-        testId={`${testId}_confirm-button`}
-      >
+      <Button onClick={onConfirm} testId={`${testId}_confirm-button`}>
         {submitButtonLabel}
       </Button>
       <Button

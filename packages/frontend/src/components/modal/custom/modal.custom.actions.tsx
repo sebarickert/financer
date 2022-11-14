@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { AccentColor, Button } from '../../button/button';
+import { ButtonAccentColor, Button } from '../../button/button';
 import { ButtonGroup } from '../../button/button.group';
 
 interface IModalCustomActionsProps {
   onCancel(): void;
   onConfirm(): void;
   submitButtonLabel: string;
-  submitButtonAccentColor: AccentColor;
+  submitButtonAccentColor: ButtonAccentColor;
 }
 
 export const ModalCustomActions = ({

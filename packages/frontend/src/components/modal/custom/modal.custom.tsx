@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 
-import { AccentColor } from '../../button/button';
+import { ButtonAccentColor } from '../../button/button';
 import { Modal } from '../modal';
 
 import { ModalCustomActions } from './modal.custom.actions';
 import { ModalCustomContent } from './modal.custom.content';
 
 interface IModalCustomProps {
-  accentColor?: 'red' | 'green' | 'blue';
+  accentColor?: ButtonAccentColor;
   children: React.ReactNode;
   modalOpenButtonLabel: string;
   onConfirm(): void;
   submitButtonLabel: string;
-  submitButtonAccentColor?: AccentColor;
+  submitButtonAccentColor?: ButtonAccentColor;
   buttonStyle?: 'quick-link' | 'default';
 }
 

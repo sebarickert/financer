@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 
-import { Button } from '../button/button';
+import { ButtonAccentColor, Button } from '../button/button';
 
-interface IModalProps {
-  accentColor?: 'red' | 'green' | 'blue';
+interface ModalProps {
+  accentColor?: ButtonAccentColor;
   children: React.ReactNode;
   isOpen: boolean;
   modalOpenButtonLabel: string;
@@ -55,7 +55,7 @@ export const Modal = ({
   accentColor,
   buttonStyle = 'default',
   testId,
-}: IModalProps): JSX.Element => {
+}: ModalProps): JSX.Element => {
   useEffect(() => {
     const bodyElement = document.getElementsByTagName('body')[0];
 

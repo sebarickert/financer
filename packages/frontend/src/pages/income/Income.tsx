@@ -24,7 +24,6 @@ const IncomeDeleteModal = ({ handleDelete }: IIncomeDeleteModalProps) => (
     submitButtonLabel="Delete"
     onConfirm={handleDelete}
     modalOpenButtonLabel="Delete income"
-    accentColor="red"
     testId="income-delete-modal"
   >
     Are you sure you want to delete your income? All of your data will be

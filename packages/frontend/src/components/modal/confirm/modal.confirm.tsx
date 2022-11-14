@@ -1,12 +1,13 @@
 import { useState } from 'react';
 
+import { ButtonAccentColor } from '../../button/button';
 import { Modal } from '../modal';
 
 import { ModalConfirmActions } from './modal.confirm.actions';
 import { ModalConfirmHeader } from './modal.confirm.header';
 
 interface IModalConfirmProps {
-  accentColor?: 'red' | 'green' | 'blue';
+  accentColor?: ButtonAccentColor;
   children?: string;
   label: string;
   modalOpenButtonLabel: string;

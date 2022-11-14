@@ -26,7 +26,6 @@ const TransactionTemplateDeleteModal = ({
     submitButtonLabel="Delete"
     onConfirm={handleDelete}
     modalOpenButtonLabel="Delete template"
-    accentColor="red"
     testId="delete-transaction-template-modal"
   >
     Are you sure you want to delete this template? All of your data will be

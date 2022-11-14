@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { Button } from '../button/button';
+import { ButtonAccentColor, Button } from '../button/button';
 import { ButtonGroup } from '../button/button.group';
 
 interface IFormFooterProps {
   submitLabel: string;
-  accentColor?: 'red' | 'green' | 'blue';
+  accentColor?: ButtonAccentColor;
   formFooterBackLink?: string;
   optionalComponent?: React.ReactNode;
 }
@@ -29,7 +29,7 @@ export const FormFooter = ({
         </ButtonGroup>
       </div>
       {optionalComponent && (
-        <div className="mt-8 lg:mt-0 border-t border-gray-200 py-4 sm:flex sm:flex-row-reverse">
+        <div className="py-4 mt-8 border-t border-gray-200 lg:mt-0 sm:flex sm:flex-row-reverse">
           {optionalComponent}
         </div>
       )}

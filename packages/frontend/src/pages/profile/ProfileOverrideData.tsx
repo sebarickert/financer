@@ -147,7 +147,7 @@ export const ProfileOverrideData = (): JSX.Element => {
         </DescriptionListItem>
       </DescriptionList>
 
-      <Button onClick={handleOverrideData} accentColor="red" className="mt-6">
+      <Button onClick={handleOverrideData} className="mt-6">
         Override my data
       </Button>
     </>
