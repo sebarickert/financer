@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
-import { TransactionTemplatesSwitcher } from '../../components/transaction-template-switcher/transaction-templates-switcher';
+import { TransactionTemplateSwitcher } from '../../components/transaction-template-switcher/transaction-template-switcher';
 import { useAddExpense } from '../../hooks/expense/useAddExpense';
 import { useUserDefaultExpenseAccount } from '../../hooks/profile/user-preference/useUserDefaultExpenseAccount';
 import { parseErrorMessagesToArray } from '../../utils/apiHelper';
@@ -37,9 +37,7 @@ export const AddExpense = (): JSX.Element => {
       <UpdatePageInfo
         title="Add expense"
         headerAction={
-          <TransactionTemplatesSwitcher
-            templateType={TransactionType.EXPENSE}
-          />
+          <TransactionTemplateSwitcher templateType={TransactionType.EXPENSE} />
         }
       />
       <ExpenseForm

@@ -2,8 +2,8 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 
 import { Button } from '../../components/button/button';
+import { InfoCard } from '../../components/elements/info-card/info-card';
 import { Heading } from '../../components/heading/heading';
-import { InfoCard } from '../../components/info-card/info-card';
 import {
   Notification,
   INotificationProps,

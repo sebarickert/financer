@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
-import { TransactionTemplatesSwitcher } from '../../components/transaction-template-switcher/transaction-templates-switcher';
+import { TransactionTemplateSwitcher } from '../../components/transaction-template-switcher/transaction-template-switcher';
 import { useAddExpense } from '../../hooks/expense/useAddExpense';
 import { useTransactionTemplateById } from '../../hooks/transactionTemplate/useTransactionTemplateById';
 import { parseErrorMessagesToArray } from '../../utils/apiHelper';
@@ -48,7 +48,7 @@ export const AddShortcutExpense = (): JSX.Element => {
       <UpdatePageInfo
         title={`Add ${transactionTemplate.description?.toLowerCase()}`}
         headerAction={
-          <TransactionTemplatesSwitcher
+          <TransactionTemplateSwitcher
             templateType={TransactionType.EXPENSE}
             selectedTemplate={id}
           />

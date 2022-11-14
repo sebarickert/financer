@@ -6,9 +6,9 @@ import { Chart } from 'react-chartjs-2';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { Container } from '../../../components/container/container';
+import { InfoCard } from '../../../components/elements/info-card/info-card';
 import { Heading } from '../../../components/heading/heading';
 import { IconName } from '../../../components/icon/icon';
-import { InfoCard } from '../../../components/info-card/info-card';
 import { LinkList } from '../../../components/link-list/link-list';
 import { LinkListLink } from '../../../components/link-list/link-list.link';
 import { LoaderSuspense } from '../../../components/loader/loader-suspense';
