@@ -1,11 +1,13 @@
+import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { Button } from '../../components/button/button';
 import { ButtonGroup } from '../../components/button/button.group';
 import { Divider } from '../../components/divider/divider';
+import { DialogConfirm } from '../../components/elements/dialog/confirm/dialog.confirm';
+import { Dialog } from '../../components/elements/dialog/dialog';
 import { InfoCard } from '../../components/elements/info-card/info-card';
 import { IconName } from '../../components/icon/icon';
-import { ModalConfirm } from '../../components/modal/confirm/modal.confirm';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { useAccountById } from '../../hooks/account/useAccountById';
 import { useAllTransactionCategoriesWithCategoryTree } from '../../hooks/transactionCategories/useAllTransactionCategories';
@@ -18,18 +20,27 @@ interface ITransferDeleteModalProps {
   handleDelete(): void;
 }
 
-const TransferDeleteModal = ({ handleDelete }: ITransferDeleteModalProps) => (
-  <ModalConfirm
-    label="Delete transfer"
-    submitButtonLabel="Delete"
-    onConfirm={handleDelete}
-    modalOpenButtonLabel="Delete transfer"
-    testId="transfer-delete-modal"
-  >
-    Are you sure you want to delete your transfer? All of your data will be
-    permanently removed. This action cannot be undone.
-  </ModalConfirm>
-);
+const TransferDeleteModal = ({ handleDelete }: ITransferDeleteModalProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      <Button onClick={() => setIsOpen(!isOpen)}>Delete</Button>
+      <Dialog isDialogOpen={isOpen} setIsDialogOpen={setIsOpen}>
+        <DialogConfirm
+          label="Delete transfer"
+          onConfirm={handleDelete}
+          onCancel={() => setIsOpen(!isOpen)}
+          submitButtonLabel="Delete"
+          iconName={IconName.exclamation}
+        >
+          Are you sure you want to delete your transfer? All of your data will
+          be permanently removed. This action cannot be undone.
+        </DialogConfirm>
+      </Dialog>
+    </>
+  );
+};
 
 export const Transfer = (): JSX.Element => {
   const navigate = useNavigate();

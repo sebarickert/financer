@@ -1,11 +1,13 @@
+import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { Button } from '../../components/button/button';
 import { ButtonGroup } from '../../components/button/button.group';
 import { Divider } from '../../components/divider/divider';
+import { DialogConfirm } from '../../components/elements/dialog/confirm/dialog.confirm';
+import { Dialog } from '../../components/elements/dialog/dialog';
 import { InfoCard } from '../../components/elements/info-card/info-card';
 import { IconName } from '../../components/icon/icon';
-import { ModalConfirm } from '../../components/modal/confirm/modal.confirm';
 import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
 import { useAccountById } from '../../hooks/account/useAccountById';
 import { useDeleteExpense } from '../../hooks/expense/useDeleteExpense';
@@ -18,18 +20,27 @@ interface IExpenseDeleteModalProps {
   handleDelete(): void;
 }
 
-const ExpenseDeleteModal = ({ handleDelete }: IExpenseDeleteModalProps) => (
-  <ModalConfirm
-    label="Delete expense"
-    submitButtonLabel="Delete"
-    onConfirm={handleDelete}
-    modalOpenButtonLabel="Delete"
-    testId="expense-delete-modal"
-  >
-    Are you sure you want to delete your expense? All of your data will be
-    permanently removed. This action cannot be undone.
-  </ModalConfirm>
-);
+const ExpenseDeleteModal = ({ handleDelete }: IExpenseDeleteModalProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      <Button onClick={() => setIsOpen(!isOpen)}>Delete</Button>
+      <Dialog isDialogOpen={isOpen} setIsDialogOpen={setIsOpen}>
+        <DialogConfirm
+          label="Delete expense"
+          onConfirm={handleDelete}
+          onCancel={() => setIsOpen(!isOpen)}
+          submitButtonLabel="Delete"
+          iconName={IconName.exclamation}
+        >
+          Are you sure you want to delete your expense? All of your data will be
+          permanently removed. This action cannot be undone.
+        </DialogConfirm>
+      </Dialog>
+    </>
+  );
+};
 
 export const Expense = (): JSX.Element => {
   const navigate = useNavigate();
