@@ -2,8 +2,8 @@ import { CreateExpenseDto, TransactionType } from '@local/types';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
-import { TransactionTemplateSwitcher } from '../../components/transaction-template-switcher/transaction-template-switcher';
+import { TransactionTemplateSwitcher } from '../../components/blocks/transaction-template-switcher/transaction-template-switcher';
+import { UpdatePageInfo } from '../../components/renderers/seo/updatePageInfo';
 import { useAddExpense } from '../../hooks/expense/useAddExpense';
 import { useUserDefaultExpenseAccount } from '../../hooks/profile/user-preference/useUserDefaultExpenseAccount';
 import { parseErrorMessagesToArray } from '../../utils/apiHelper';

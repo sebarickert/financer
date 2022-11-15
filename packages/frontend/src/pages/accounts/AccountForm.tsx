@@ -1,9 +1,9 @@
 import { AccountType, CreateAccountDto } from '@local/types';
 
-import { Alert } from '../../components/alert/alert';
-import { Form } from '../../components/form/form';
-import { Input } from '../../components/input/input';
-import { Select, Option } from '../../components/select/select';
+import { Form } from '../../components/blocks/form/form';
+import { Alert } from '../../components/elements/alert/alert';
+import { Input } from '../../components/elements/input/input';
+import { Select, Option } from '../../components/elements/select/select';
 import { capitalize } from '../../utils/capitalize';
 
 interface IAccountFormProps {

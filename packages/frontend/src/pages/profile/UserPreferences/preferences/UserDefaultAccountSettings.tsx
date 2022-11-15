@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 
-import { Form } from '../../../../components/form/form';
-import { Select } from '../../../../components/select/select';
-import { UpdatePageInfo } from '../../../../components/seo/updatePageInfo';
+import { Form } from '../../../../components/blocks/form/form';
+import { Select } from '../../../../components/elements/select/select';
+import { UpdatePageInfo } from '../../../../components/renderers/seo/updatePageInfo';
 import { useAllAccounts } from '../../../../hooks/account/useAllAccounts';
 import { useUserDefaultExpenseAccount } from '../../../../hooks/profile/user-preference/useUserDefaultExpenseAccount';
 import { useUserDefaultIncomeAccount } from '../../../../hooks/profile/user-preference/useUserDefaultIncomeAccount';

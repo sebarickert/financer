@@ -2,9 +2,9 @@ import { useState } from 'react';
 
 import { DialogConfirmCustom } from '../../../components/elements/dialog/confirm/dialog.confirm.custom';
 import { Dialog } from '../../../components/elements/dialog/dialog';
-import { IconName } from '../../../components/icon/icon';
-import { Input } from '../../../components/input/input';
-import { LinkListButton } from '../../../components/link-list/link-list.button';
+import { IconName } from '../../../components/elements/icon/icon';
+import { Input } from '../../../components/elements/input/input';
+import { LinkListButton } from '../../../components/elements/link-list/link-list.button';
 import { inputDateFormat } from '../../../utils/formatDate';
 
 interface IAccountUpdateMarketValueModalProps {

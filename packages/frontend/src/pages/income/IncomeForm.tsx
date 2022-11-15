@@ -5,12 +5,12 @@ import {
 } from '@local/types';
 import { ChangeEvent, useEffect, useState } from 'react';
 
-import { Alert } from '../../components/alert/alert';
-import { Button } from '../../components/button/button';
-import { Form } from '../../components/form/form';
-import { Input } from '../../components/input/input';
-import { Select, Option } from '../../components/select/select';
-import { TransactionCategoriesForm } from '../../components/transaction-categories-form/transaction-categories-form';
+import { Form } from '../../components/blocks/form/form';
+import { TransactionCategoriesForm } from '../../components/blocks/transaction-categories-form/transaction-categories-form';
+import { Alert } from '../../components/elements/alert/alert';
+import { Button } from '../../components/elements/button/button';
+import { Input } from '../../components/elements/input/input';
+import { Select, Option } from '../../components/elements/select/select';
 import { useAllAccounts } from '../../hooks/account/useAllAccounts';
 import { useAllTransactionCategoriesForIncomeWithCategoryTree } from '../../hooks/transactionCategories/useAllTransactionCategoriesForIncome';
 import { inputDateFormat } from '../../utils/formatDate';

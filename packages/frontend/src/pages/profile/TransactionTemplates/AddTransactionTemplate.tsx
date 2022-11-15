@@ -2,7 +2,7 @@ import { CreateTransactionTemplateDto } from '@local/types';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { UpdatePageInfo } from '../../../components/seo/updatePageInfo';
+import { UpdatePageInfo } from '../../../components/renderers/seo/updatePageInfo';
 import { useAddTransactionTemplate } from '../../../hooks/transactionTemplate/useAddTransactionTemplate';
 import { parseErrorMessagesToArray } from '../../../utils/apiHelper';
 

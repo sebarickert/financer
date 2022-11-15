@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Notification } from './components/notification/notification';
+import { Notification } from './components/elements/notification/notification';
 import { Financer } from './Financer';
 import { useAuthenticationStatus } from './hooks/useAuthenticationStatus';
 

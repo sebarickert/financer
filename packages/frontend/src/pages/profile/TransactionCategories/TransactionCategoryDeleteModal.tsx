@@ -2,8 +2,8 @@ import { useState } from 'react';
 
 import { DialogConfirm } from '../../../components/elements/dialog/confirm/dialog.confirm';
 import { Dialog } from '../../../components/elements/dialog/dialog';
-import { IconName } from '../../../components/icon/icon';
-import { LinkListButton } from '../../../components/link-list/link-list.button';
+import { IconName } from '../../../components/elements/icon/icon';
+import { LinkListButton } from '../../../components/elements/link-list/link-list.button';
 
 interface TransactionCategoryDeleteModalProps {
   handleDelete(): void;

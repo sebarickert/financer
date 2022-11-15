@@ -3,7 +3,7 @@ import { TransferDto } from '@local/types';
 import {
   TransactionStackedListRowProps,
   TransactionType,
-} from '../../components/transaction-stacked-list/transaction-stacked-list.row';
+} from '../../components/elements/transaction-stacked-list/transaction-stacked-list.row';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDate } from '../../utils/formatDate';
 

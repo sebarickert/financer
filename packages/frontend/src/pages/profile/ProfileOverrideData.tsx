@@ -1,14 +1,14 @@
 /* eslint-disable consistent-return */
 import { ChangeEvent, useEffect, useState } from 'react';
 
-import { Button } from '../../components/button/button';
+import { Button } from '../../components/elements/button/button';
+import { Heading } from '../../components/elements/heading/heading';
 import { InfoCard } from '../../components/elements/info-card/info-card';
-import { Heading } from '../../components/heading/heading';
 import {
   Notification,
-  INotificationProps,
-} from '../../components/notification/notification';
-import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
+  NotificationProps,
+} from '../../components/elements/notification/notification';
+import { UpdatePageInfo } from '../../components/renderers/seo/updatePageInfo';
 import { useOverrideProfileData } from '../../hooks/profile/useOverrideProfileData';
 import { IOverrideProfileData } from '../../services/ProfileService';
 
@@ -22,7 +22,7 @@ export const ProfileOverrideData = (): JSX.Element => {
     number | null
   >(null);
   const [overrideFilename, setOverrideFilename] = useState<string | null>(null);
-  const [notification, setNotification] = useState<INotificationProps | null>(
+  const [notification, setNotification] = useState<NotificationProps | null>(
     null
   );
   const overrideProfileData = useOverrideProfileData();

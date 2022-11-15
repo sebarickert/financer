@@ -1,8 +1,8 @@
-import { BalanceGraph } from '../../components/balance-graph/balance-graph';
-import { DashboardStats } from '../../components/dashboard-stats/dashboard.stats';
-import { Heading } from '../../components/heading/heading';
-import { LatestTransactions } from '../../components/latest-transactions/latest-transactions';
-import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
+import { BalanceGraph } from '../../components/blocks/balance-graph/balance-graph';
+import { DashboardStats } from '../../components/blocks/dashboard-stats/dashboard.stats';
+import { LatestTransactions } from '../../components/blocks/latest-transactions/latest-transactions';
+import { Heading } from '../../components/elements/heading/heading';
+import { UpdatePageInfo } from '../../components/renderers/seo/updatePageInfo';
 
 export const Dashboard = (): JSX.Element => {
   return (

@@ -1,4 +1,4 @@
-import { Icon, IconName } from '../../icon/icon';
+import { Icon, IconName } from '../icon/icon';
 
 interface DialogCloseButtonProps {
   isDialogOpen?: boolean;

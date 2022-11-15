@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 
-import { IconName } from '../../../components/icon/icon';
-import { LinkList } from '../../../components/link-list/link-list';
-import { LinkListLink } from '../../../components/link-list/link-list.link';
-import { UpdatePageInfo } from '../../../components/seo/updatePageInfo';
+import { IconName } from '../../../components/elements/icon/icon';
+import { LinkList } from '../../../components/elements/link-list/link-list';
+import { LinkListLink } from '../../../components/elements/link-list/link-list.link';
+import { UpdatePageInfo } from '../../../components/renderers/seo/updatePageInfo';
 import { useAllTransactionCategoriesWithCategoryTree } from '../../../hooks/transactionCategories/useAllTransactionCategories';
 
 export interface CategoriesListRowProps {

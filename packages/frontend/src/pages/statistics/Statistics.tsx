@@ -1,18 +1,18 @@
 import { SortOrder } from '@local/types';
 import { useState } from 'react';
 
-import { Heading } from '../../components/heading/heading';
-import { IconName } from '../../components/icon/icon';
-import { LoaderSuspense } from '../../components/loader/loader-suspense';
-import { MonthlySummaryGraph } from '../../components/monthly-summary-graph/monthly-summary-graph';
+import { MonthlySummaryGraph } from '../../components/blocks/monthly-summary-graph/monthly-summary-graph';
 import {
   initialMonthFilterOptions,
   MonthlyTransactionList,
-} from '../../components/monthly-transaction-list/monthly-transaction-list';
-import { Pager } from '../../components/pager/pager';
-import { QuickLinks } from '../../components/quick-links/quick-links';
-import { QuickLinksItem } from '../../components/quick-links/quick-links.item';
-import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
+} from '../../components/blocks/monthly-transaction-list/monthly-transaction-list';
+import { Pager } from '../../components/blocks/pager/pager';
+import { Heading } from '../../components/elements/heading/heading';
+import { IconName } from '../../components/elements/icon/icon';
+import { LoaderSuspense } from '../../components/elements/loader/loader-suspense';
+import { QuickLinks } from '../../components/elements/quick-links/quick-links';
+import { QuickLinksItem } from '../../components/elements/quick-links/quick-links.item';
+import { UpdatePageInfo } from '../../components/renderers/seo/updatePageInfo';
 import { monthNames } from '../../constants/months';
 import { useAllTransactionsPaged } from '../../hooks/transaction/useAllTransactions';
 
@@ -53,7 +53,7 @@ export const Statistics = (): JSX.Element => {
     <>
       <UpdatePageInfo title="Statistics" />
       <MonthlySummaryGraph className="mb-6" />
-      <section className="flex items-center justify-between mb-2">
+      <section className="flex items-end justify-between mb-4">
         <Heading>{`${pageVisibleMonth}, ${pageVisibleYear}`}</Heading>
         <Pager
           pagerOptions={{
@@ -74,10 +74,13 @@ export const Statistics = (): JSX.Element => {
               load: () => handleMonthOptionChange('previous'),
             },
           }}
-        ></Pager>
+        />
       </section>
       <LoaderSuspense>
-        <MonthlyTransactionList monthFilterOptions={monthFilterOptions} />
+        <MonthlyTransactionList
+          monthFilterOptions={monthFilterOptions}
+          isSummaryVisible
+        />
       </LoaderSuspense>
       <QuickLinks className="mt-8">
         <QuickLinksItem

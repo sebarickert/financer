@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 
-import { Heading } from '../../heading/heading';
-import { Icon, IconName } from '../../icon/icon';
+import { Heading } from '../heading/heading';
+import { Icon, IconName } from '../icon/icon';
 import { Paragraph } from '../paragraph/paragraph';
 
 interface DialogTextProps {
