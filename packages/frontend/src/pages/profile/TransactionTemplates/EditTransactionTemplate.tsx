@@ -5,7 +5,10 @@ import {
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { ModalConfirm } from '../../../components/modal/confirm/modal.confirm';
+import { Button } from '../../../components/button/button';
+import { DialogConfirm } from '../../../components/elements/dialog/confirm/dialog.confirm';
+import { Dialog } from '../../../components/elements/dialog/dialog';
+import { IconName } from '../../../components/icon/icon';
 import { UpdatePageInfo } from '../../../components/seo/updatePageInfo';
 import { useDeleteTransactionTemplate } from '../../../hooks/transactionTemplate/useDeleteTransactionTemplate';
 import { useEditTransactionTemplate } from '../../../hooks/transactionTemplate/useEditTransactionTemplate';
@@ -20,18 +23,27 @@ interface TransactionTemplateDeleteModalProps {
 
 const TransactionTemplateDeleteModal = ({
   handleDelete,
-}: TransactionTemplateDeleteModalProps) => (
-  <ModalConfirm
-    label="Delete template"
-    submitButtonLabel="Delete"
-    onConfirm={handleDelete}
-    modalOpenButtonLabel="Delete template"
-    testId="delete-transaction-template-modal"
-  >
-    Are you sure you want to delete this template? All of your data will be
-    permanently removed. This action cannot be undone.
-  </ModalConfirm>
-);
+}: TransactionTemplateDeleteModalProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      <Button onClick={() => setIsOpen(!isOpen)}>Delete</Button>
+      <Dialog isDialogOpen={isOpen} setIsDialogOpen={setIsOpen}>
+        <DialogConfirm
+          label="Delete template"
+          onConfirm={handleDelete}
+          onCancel={() => setIsOpen(!isOpen)}
+          submitButtonLabel="Delete"
+          iconName={IconName.exclamation}
+        >
+          Are you sure you want to delete this template? All of your data will
+          be permanently removed. This action cannot be undone.
+        </DialogConfirm>
+      </Dialog>
+    </>
+  );
+};
 
 export const EditTransactionTemplate = (): JSX.Element => {
   const navigate = useNavigate();
