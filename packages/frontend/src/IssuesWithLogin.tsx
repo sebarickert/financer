@@ -1,7 +1,6 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { UpdatePageInfo } from './components/seo/updatePageInfo';
+import { UpdatePageInfo } from './components/renderers/seo/updatePageInfo';
 
 const { REACT_APP_IS_GITHUB_OAUTH_ENABLED, REACT_APP_IS_AUTH0_OAUTH_ENABLED } =
   process.env;
@@ -29,7 +28,7 @@ const ResolveAuth0Issues = (): JSX.Element => {
       <p>
         <a
           href="/auth/logout/auth0"
-          className="focus:outline-none focus:ring-2 focus:ring-offset-4 rounded-sm mb-12 text-blue-600"
+          className="mb-12 text-blue-600 rounded-sm focus:outline-none focus:ring-2 focus:ring-offset-4"
         >
           Click here
         </a>{' '}
@@ -43,14 +42,14 @@ export const IssuesWithLogin = (): JSX.Element => {
   return (
     <>
       <UpdatePageInfo title="Issues with login" />
-      <div className="relative py-16 bg-white overflow-hidden">
+      <div className="relative py-16 overflow-hidden bg-white">
         <div className="hidden lg:block lg:absolute lg:inset-y-0 lg:h-full lg:w-full">
           <div
-            className="relative h-full text-lg max-w-prose mx-auto"
+            className="relative h-full mx-auto text-lg max-w-prose"
             aria-hidden="true"
           >
             <svg
-              className="absolute top-12 left-full transform translate-x-32"
+              className="absolute transform translate-x-32 top-12 left-full"
               width="404"
               height="384"
               fill="none"
@@ -82,7 +81,7 @@ export const IssuesWithLogin = (): JSX.Element => {
               />
             </svg>
             <svg
-              className="absolute top-1/2 right-full transform -translate-y-1/2 -translate-x-32"
+              className="absolute transform -translate-x-32 -translate-y-1/2 top-1/2 right-full"
               width="404"
               height="384"
               fill="none"
@@ -114,7 +113,7 @@ export const IssuesWithLogin = (): JSX.Element => {
               />
             </svg>
             <svg
-              className="absolute bottom-12 left-full transform translate-x-32"
+              className="absolute transform translate-x-32 bottom-12 left-full"
               width="404"
               height="384"
               fill="none"
@@ -148,20 +147,20 @@ export const IssuesWithLogin = (): JSX.Element => {
           </div>
         </div>
         <div className="relative px-4 sm:px-6 lg:px-8">
-          <div className="text-lg max-w-prose mx-auto">
+          <div className="mx-auto text-lg max-w-prose">
             <Link
               to="/"
-              className="inline-block text-base uppercase font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-4 rounded-sm mb-12 text-blue-600"
+              className="inline-block mb-12 text-base font-semibold tracking-wide text-blue-600 uppercase rounded-sm focus:outline-none focus:ring-2 focus:ring-offset-4"
             >
               Go back
             </Link>
             <h1>
-              <span className="mt-2 block text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+              <span className="block mt-2 text-3xl font-extrabold leading-8 tracking-tight text-gray-900 sm:text-4xl">
                 Login issues to Financer
               </span>
             </h1>
           </div>
-          <div className="mt-6 prose prose-blue prose-lg text-gray-500 mx-auto">
+          <div className="mx-auto mt-6 prose prose-lg text-gray-500 prose-blue">
             {checkIsEnabled(REACT_APP_IS_GITHUB_OAUTH_ENABLED) && (
               <ResolveGithubIssues />
             )}

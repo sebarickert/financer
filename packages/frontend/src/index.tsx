@@ -6,10 +6,10 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter as Router, useLocation } from 'react-router-dom';
 
 import { App } from './App';
-import { ErrorBoundaryHandler } from './components/error-boundary/error-boundary';
-import { LoaderSuspense } from './components/loader/loader-suspense';
-import { ScrollToTop } from './components/scroll-to-top/scroll-to-top';
-import { SEO } from './components/seo/seo';
+import { ErrorBoundaryHandler } from './components/blocks/error-boundary/error-boundary';
+import { LoaderSuspense } from './components/elements/loader/loader-suspense';
+import { ScrollToTop } from './components/renderers/scroll-to-top/scroll-to-top';
+import { SEO } from './components/renderers/seo/seo';
 import { PageInfoProvider } from './context/pageInfoContext';
 import { reportWebVitals } from './reportWebVitals';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';

@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { Button } from '../../components/button/button';
-import { ButtonGroup } from '../../components/button/button.group';
-import { Divider } from '../../components/divider/divider';
+import { Button } from '../../components/elements/button/button';
+import { ButtonGroup } from '../../components/elements/button/button.group';
 import { DialogConfirm } from '../../components/elements/dialog/confirm/dialog.confirm';
 import { Dialog } from '../../components/elements/dialog/dialog';
+import { Divider } from '../../components/elements/divider/divider';
+import { IconName } from '../../components/elements/icon/icon';
 import { InfoCard } from '../../components/elements/info-card/info-card';
-import { IconName } from '../../components/icon/icon';
-import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
+import { UpdatePageInfo } from '../../components/renderers/seo/updatePageInfo';
 import { useAccountById } from '../../hooks/account/useAccountById';
 import { useDeleteIncome } from '../../hooks/income/useDeleteIncome';
 import { useIncomeById } from '../../hooks/income/useIncomeById';

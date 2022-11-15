@@ -1,6 +1,6 @@
-import { Button } from '../../../button/button';
-import { ButtonGroup } from '../../../button/button.group';
-import { IconName } from '../../../icon/icon';
+import { Button } from '../../button/button';
+import { ButtonGroup } from '../../button/button.group';
+import { IconName } from '../../icon/icon';
 import { DialogText } from '../dialog.text';
 
 interface DialogConfirmProps {

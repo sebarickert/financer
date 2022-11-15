@@ -2,8 +2,8 @@ import { CreateTransactionCategoryDto } from '@local/types';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Container } from '../../../components/container/container';
-import { UpdatePageInfo } from '../../../components/seo/updatePageInfo';
+import { Container } from '../../../components/layouts/container/container';
+import { UpdatePageInfo } from '../../../components/renderers/seo/updatePageInfo';
 import { useAddTransactionCategory } from '../../../hooks/transactionCategories/useAddTransactionCategory';
 import { parseErrorMessagesToArray } from '../../../utils/apiHelper';
 

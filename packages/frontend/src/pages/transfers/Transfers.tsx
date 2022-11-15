@@ -2,15 +2,15 @@ import { SortOrder } from '@local/types';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { Heading } from '../../components/heading/heading';
-import { IconName } from '../../components/icon/icon';
-import { LatestTransactions } from '../../components/latest-transactions/latest-transactions';
-import { LinkList } from '../../components/link-list/link-list';
-import { LinkListLink } from '../../components/link-list/link-list.link';
-import { LoaderSuspense } from '../../components/loader/loader-suspense';
-import { initialMonthFilterOptions } from '../../components/monthly-transaction-list/monthly-transaction-list';
-import { Pager } from '../../components/pager/pager';
-import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
+import { LatestTransactions } from '../../components/blocks/latest-transactions/latest-transactions';
+import { initialMonthFilterOptions } from '../../components/blocks/monthly-transaction-list/monthly-transaction-list';
+import { Pager } from '../../components/blocks/pager/pager';
+import { Heading } from '../../components/elements/heading/heading';
+import { IconName } from '../../components/elements/icon/icon';
+import { LinkList } from '../../components/elements/link-list/link-list';
+import { LinkListLink } from '../../components/elements/link-list/link-list.link';
+import { LoaderSuspense } from '../../components/elements/loader/loader-suspense';
+import { UpdatePageInfo } from '../../components/renderers/seo/updatePageInfo';
 import { monthNames } from '../../constants/months';
 import { useAllTransactionsPaged } from '../../hooks/transaction/useAllTransactions';
 import { useAllTransfersPaged } from '../../hooks/transfer/useAllTransfers';
@@ -117,7 +117,7 @@ export const Transfers = (): JSX.Element => {
               load: () => handleMonthOptionChange('previous'),
             },
           }}
-        ></Pager>
+        />
       </section>
       <LoaderSuspense>
         <LatestTransactions

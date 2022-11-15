@@ -5,11 +5,11 @@ import {
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { Button } from '../../../components/button/button';
+import { Button } from '../../../components/elements/button/button';
 import { DialogConfirm } from '../../../components/elements/dialog/confirm/dialog.confirm';
 import { Dialog } from '../../../components/elements/dialog/dialog';
-import { IconName } from '../../../components/icon/icon';
-import { UpdatePageInfo } from '../../../components/seo/updatePageInfo';
+import { IconName } from '../../../components/elements/icon/icon';
+import { UpdatePageInfo } from '../../../components/renderers/seo/updatePageInfo';
 import { useDeleteTransactionTemplate } from '../../../hooks/transactionTemplate/useDeleteTransactionTemplate';
 import { useEditTransactionTemplate } from '../../../hooks/transactionTemplate/useEditTransactionTemplate';
 import { useTransactionTemplateById } from '../../../hooks/transactionTemplate/useTransactionTemplateById';

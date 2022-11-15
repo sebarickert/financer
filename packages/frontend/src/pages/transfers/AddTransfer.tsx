@@ -2,8 +2,8 @@ import { CreateTransferDto, TransactionType } from '@local/types';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
-import { TransactionTemplateSwitcher } from '../../components/transaction-template-switcher/transaction-template-switcher';
+import { TransactionTemplateSwitcher } from '../../components/blocks/transaction-template-switcher/transaction-template-switcher';
+import { UpdatePageInfo } from '../../components/renderers/seo/updatePageInfo';
 import { useUserDefaultTransferSourceAccount } from '../../hooks/profile/user-preference/useUserDefaultTransferSourceAccount';
 import { useUserDefaultTransferTargetAccount } from '../../hooks/profile/user-preference/useUserDefaultTransferTargetAccount';
 import { useAddTransfer } from '../../hooks/transfer/useAddTransfer';

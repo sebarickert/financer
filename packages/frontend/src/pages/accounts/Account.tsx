@@ -6,17 +6,17 @@ import clsx from 'clsx';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { Alert } from '../../components/alert/alert';
+import { LatestAccountTransactions } from '../../components/blocks/latest-account-transactions/latest-account-transactions';
+import { initialMonthFilterOptions } from '../../components/blocks/monthly-transaction-list/monthly-transaction-list';
+import { Pager } from '../../components/blocks/pager/pager';
+import { Alert } from '../../components/elements/alert/alert';
+import { Heading } from '../../components/elements/heading/heading';
+import { IconName } from '../../components/elements/icon/icon';
 import { InfoCard } from '../../components/elements/info-card/info-card';
-import { Heading } from '../../components/heading/heading';
-import { IconName } from '../../components/icon/icon';
-import { LatestAccountTransactions } from '../../components/latest-transactions/latest-account-transactions';
-import { LinkList } from '../../components/link-list/link-list';
-import { LinkListLink } from '../../components/link-list/link-list.link';
-import { LoaderSuspense } from '../../components/loader/loader-suspense';
-import { initialMonthFilterOptions } from '../../components/monthly-transaction-list/monthly-transaction-list';
-import { Pager } from '../../components/pager/pager';
-import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
+import { LinkList } from '../../components/elements/link-list/link-list';
+import { LinkListLink } from '../../components/elements/link-list/link-list.link';
+import { LoaderSuspense } from '../../components/elements/loader/loader-suspense';
+import { UpdatePageInfo } from '../../components/renderers/seo/updatePageInfo';
 import { monthNames } from '../../constants/months';
 import { useAccountById } from '../../hooks/account/useAccountById';
 import { useDeleteAccount } from '../../hooks/account/useDeleteAccount';
@@ -216,7 +216,7 @@ export const Account = (): JSX.Element | null => {
               load: () => handleMonthOptionChange('previous'),
             },
           }}
-        ></Pager>
+        />
       </section>
       <LoaderSuspense>
         <LatestAccountTransactions

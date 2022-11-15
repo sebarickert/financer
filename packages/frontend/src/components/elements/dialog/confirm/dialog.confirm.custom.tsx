@@ -1,5 +1,5 @@
-import { Button } from '../../../button/button';
-import { ButtonGroup } from '../../../button/button.group';
+import { Button } from '../../button/button';
+import { ButtonGroup } from '../../button/button.group';
 
 interface DialogConfirmCustomProps {
   children: React.ReactNode;

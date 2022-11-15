@@ -2,7 +2,7 @@ import { CreateExpenseDto } from '@local/types';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
+import { UpdatePageInfo } from '../../components/renderers/seo/updatePageInfo';
 import { useEditExpense } from '../../hooks/expense/useEditExpense';
 import { useExpenseById } from '../../hooks/expense/useExpenseById';
 import { parseErrorMessagesToArray } from '../../utils/apiHelper';

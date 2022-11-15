@@ -6,8 +6,8 @@ import {
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
-import { TransactionTemplateSwitcher } from '../../components/transaction-template-switcher/transaction-template-switcher';
+import { TransactionTemplateSwitcher } from '../../components/blocks/transaction-template-switcher/transaction-template-switcher';
+import { UpdatePageInfo } from '../../components/renderers/seo/updatePageInfo';
 import { useAddIncome } from '../../hooks/income/useAddIncome';
 import { useTransactionTemplateById } from '../../hooks/transactionTemplate/useTransactionTemplateById';
 import { parseErrorMessagesToArray } from '../../utils/apiHelper';

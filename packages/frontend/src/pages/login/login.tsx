@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-import { LoaderFullScreen } from '../../components/loader/loader.fullscreen';
-import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
+import { LoaderFullScreen } from '../../components/elements/loader/loader.fullscreen';
+import { UpdatePageInfo } from '../../components/renderers/seo/updatePageInfo';
 
 import { LoginActions } from './login.actions';
 import { LoginFooter } from './login.footer';

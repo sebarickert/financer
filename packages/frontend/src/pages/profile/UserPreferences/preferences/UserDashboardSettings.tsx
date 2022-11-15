@@ -1,11 +1,11 @@
 import { AccountType } from '@local/types';
 import { useNavigate } from 'react-router-dom';
 
-import { Checkbox } from '../../../../components/checkbox/checkbox';
-import { CheckboxGroup } from '../../../../components/checkbox/checkbox.group';
-import { Form } from '../../../../components/form/form';
-import { Heading } from '../../../../components/heading/heading';
-import { UpdatePageInfo } from '../../../../components/seo/updatePageInfo';
+import { Form } from '../../../../components/blocks/form/form';
+import { Checkbox } from '../../../../components/elements/checkbox/checkbox';
+import { CheckboxGroup } from '../../../../components/elements/checkbox/checkbox.group';
+import { Heading } from '../../../../components/elements/heading/heading';
+import { UpdatePageInfo } from '../../../../components/renderers/seo/updatePageInfo';
 import { useUserDashboardSettings } from '../../../../hooks/profile/user-preference/useDashboardSettings';
 import { capitalize } from '../../../../utils/capitalize';
 

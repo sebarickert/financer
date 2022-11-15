@@ -2,7 +2,7 @@ import { UpdateIncomeDto } from '@local/types';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
+import { UpdatePageInfo } from '../../components/renderers/seo/updatePageInfo';
 import { useEditIncome } from '../../hooks/income/useEditIncome';
 import { useIncomeById } from '../../hooks/income/useIncomeById';
 import { parseErrorMessagesToArray } from '../../utils/apiHelper';

@@ -1,12 +1,12 @@
 import { CreateTransactionCategoryDto, VisibilityType } from '@local/types';
 import React, { useEffect, useState } from 'react';
 
-import { Alert } from '../../../components/alert/alert';
-import { Checkbox } from '../../../components/checkbox/checkbox';
-import { CheckboxGroup } from '../../../components/checkbox/checkbox.group';
-import { Form } from '../../../components/form/form';
-import { Input } from '../../../components/input/input';
-import { Select, Option } from '../../../components/select/select';
+import { Form } from '../../../components/blocks/form/form';
+import { Alert } from '../../../components/elements/alert/alert';
+import { Checkbox } from '../../../components/elements/checkbox/checkbox';
+import { CheckboxGroup } from '../../../components/elements/checkbox/checkbox.group';
+import { Input } from '../../../components/elements/input/input';
+import { Select, Option } from '../../../components/elements/select/select';
 import { useAllTransactionCategoriesWithCategoryTree } from '../../../hooks/transactionCategories/useAllTransactionCategories';
 import { getAllChildCategoryIds } from '../../../services/TransactionCategoriesService';
 

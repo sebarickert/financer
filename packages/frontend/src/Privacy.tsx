@@ -1,20 +1,19 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { UpdatePageInfo } from './components/seo/updatePageInfo';
+import { UpdatePageInfo } from './components/renderers/seo/updatePageInfo';
 
 export const PrivacyPolicy = (): JSX.Element => {
   return (
     <>
       <UpdatePageInfo title="Privacy policy" />
-      <div className="relative py-16 bg-white overflow-hidden">
+      <div className="relative py-16 overflow-hidden bg-white">
         <div className="hidden lg:block lg:absolute lg:inset-y-0 lg:h-full lg:w-full">
           <div
-            className="relative h-full text-lg max-w-prose mx-auto"
+            className="relative h-full mx-auto text-lg max-w-prose"
             aria-hidden="true"
           >
             <svg
-              className="absolute top-12 left-full transform translate-x-32"
+              className="absolute transform translate-x-32 top-12 left-full"
               width="404"
               height="384"
               fill="none"
@@ -46,7 +45,7 @@ export const PrivacyPolicy = (): JSX.Element => {
               />
             </svg>
             <svg
-              className="absolute top-1/2 right-full transform -translate-y-1/2 -translate-x-32"
+              className="absolute transform -translate-x-32 -translate-y-1/2 top-1/2 right-full"
               width="404"
               height="384"
               fill="none"
@@ -78,7 +77,7 @@ export const PrivacyPolicy = (): JSX.Element => {
               />
             </svg>
             <svg
-              className="absolute bottom-12 left-full transform translate-x-32"
+              className="absolute transform translate-x-32 bottom-12 left-full"
               width="404"
               height="384"
               fill="none"
@@ -112,27 +111,27 @@ export const PrivacyPolicy = (): JSX.Element => {
           </div>
         </div>
         <div className="relative px-4 sm:px-6 lg:px-8">
-          <div className="text-lg max-w-prose mx-auto">
+          <div className="mx-auto text-lg max-w-prose">
             <Link
               to="/"
-              className="inline-block text-base uppercase font-semibold tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-4 rounded-sm mb-12 text-blue-600"
+              className="inline-block mb-12 text-base font-semibold tracking-wide text-blue-600 uppercase rounded-sm focus:outline-none focus:ring-2 focus:ring-offset-4"
             >
               Go back
             </Link>
             <h1>
-              <span className="block text-base text-blue-600 font-semibold tracking-wide uppercase">
+              <span className="block text-base font-semibold tracking-wide text-blue-600 uppercase">
                 Privacy policy
               </span>
-              <span className="mt-2 block text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+              <span className="block mt-2 text-3xl font-extrabold leading-8 tracking-tight text-gray-900 sm:text-4xl">
                 Financer
               </span>
             </h1>
-            <p className="mt-8 text-xl text-gray-500 leading-8">
+            <p className="mt-8 text-xl leading-8 text-gray-500">
               Financer operates the https://financer.silte.fi website, which
               provides the SERVICE.
             </p>
           </div>
-          <div className="mt-6 prose prose-blue prose-lg text-gray-500 mx-auto">
+          <div className="mx-auto mt-6 prose prose-lg text-gray-500 prose-blue">
             <p>
               If you choose to use our Service, then you agree to the collection
               and use of information in relation with this policy. The Personal
@@ -142,14 +141,14 @@ export const PrivacyPolicy = (): JSX.Element => {
               created with the help of the{' '}
               <a
                 href="https://www.privacypolicytemplate.net"
-                className="focus:outline-none focus:ring-2 focus:ring-offset-4 rounded-sm text-blue-600"
+                className="text-blue-600 rounded-sm focus:outline-none focus:ring-2 focus:ring-offset-4"
               >
                 Privacy Policy Template
               </a>{' '}
               and the{' '}
               <a
                 href="https://www.generateprivacypolicy.com"
-                className="focus:outline-none focus:ring-2 focus:ring-offset-4 rounded-sm text-blue-600"
+                className="text-blue-600 rounded-sm focus:outline-none focus:ring-2 focus:ring-offset-4"
               >
                 Privacy Policy Generator
               </a>
@@ -205,7 +204,7 @@ export const PrivacyPolicy = (): JSX.Element => {
               For more general information on cookies, please read{' '}
               <a
                 href="https://www.cookieconsent.com/what-are-cookies/"
-                className="focus:outline-none focus:ring-2 focus:ring-offset-4 rounded-sm text-blue-600"
+                className="text-blue-600 rounded-sm focus:outline-none focus:ring-2 focus:ring-offset-4"
               >
                 &quot;What Are Cookies&quot;
               </a>

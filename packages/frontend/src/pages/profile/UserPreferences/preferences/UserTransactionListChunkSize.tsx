@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 
-import { Form } from '../../../../components/form/form';
-import { Input } from '../../../../components/input/input';
-import { UpdatePageInfo } from '../../../../components/seo/updatePageInfo';
+import { Form } from '../../../../components/blocks/form/form';
+import { Input } from '../../../../components/elements/input/input';
+import { UpdatePageInfo } from '../../../../components/renderers/seo/updatePageInfo';
 import { useUserTransactionListChunkSize } from '../../../../hooks/profile/user-preference/useUserTransactionListChunkSize';
 
 export const UserTransactionListChunkSize = (): JSX.Element => {

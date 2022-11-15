@@ -2,7 +2,7 @@ import { CreateAccountDto } from '@local/types';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { UpdatePageInfo } from '../../components/seo/updatePageInfo';
+import { UpdatePageInfo } from '../../components/renderers/seo/updatePageInfo';
 import { useAccountById } from '../../hooks/account/useAccountById';
 import { useEditAccount } from '../../hooks/account/useEditAccount';
 import { parseErrorMessagesToArray } from '../../utils/apiHelper';
