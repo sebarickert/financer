@@ -12,7 +12,10 @@ export const CheckboxGroup = ({
   testId,
 }: CheckboxGroupProps): JSX.Element => {
   return (
-    <fieldset className={`text-charcoal ${className}`} data-testid={testId}>
+    <fieldset
+      className={`text-charcoal space-y-1 ${className}`}
+      data-testid={testId}
+    >
       {label && <legend className="sr-only">{label}</legend>}
       {/* eslint-disable react/no-array-index-key */}
       {children.map((child, index) => {

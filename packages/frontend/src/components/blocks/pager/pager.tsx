@@ -27,7 +27,7 @@ const PagerButton = ({
   return (
     <button
       className={clsx(
-        'h-11 w-11 inline-flex justify-center items-center group disabled:hover:cursor-not-allowed bg-gray rounded-full',
+        'h-11 w-11 inline-flex justify-center items-center group disabled:hover:cursor-not-allowed bg-gray border border-gray-dark rounded-full ',
         {
           [className]: true,
           ['hover:bg-gray-dark']: !isDisabled,
