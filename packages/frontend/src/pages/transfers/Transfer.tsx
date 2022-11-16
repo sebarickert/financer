@@ -25,7 +25,12 @@ const TransferDeleteModal = ({ handleDelete }: ITransferDeleteModalProps) => {
 
   return (
     <>
-      <Button onClick={() => setIsOpen(!isOpen)}>Delete</Button>
+      <Button
+        testId="transfer-delete-modal_open-button"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        Delete
+      </Button>
       <Dialog isDialogOpen={isOpen} setIsDialogOpen={setIsOpen}>
         <DialogConfirm
           label="Delete transfer"
@@ -33,6 +38,7 @@ const TransferDeleteModal = ({ handleDelete }: ITransferDeleteModalProps) => {
           onCancel={() => setIsOpen(!isOpen)}
           submitButtonLabel="Delete"
           iconName={IconName.exclamation}
+          testId="transfer-delete-modal"
         >
           Are you sure you want to delete your transfer? All of your data will
           be permanently removed. This action cannot be undone.

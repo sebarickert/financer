@@ -1,8 +1,6 @@
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 
-import { Container } from '../../layouts/container/container';
-
 import { NotificationClose } from './notification.close';
 import { NotificationContent } from './notification.content';
 import { NotificationIcon } from './notification.icon';
@@ -35,27 +33,22 @@ export const Notification = ({
   };
 
   return (
-    <Container
+    <section
       className={clsx(
-        'fixed inset-0 flex items-end justify-center px-4 pt-6 lg:p-6 lg:items-start lg:justify-end z-20 pb-[calc(78px+env(safe-area-inset-bottom))]',
-        { [className]: true }
+        'fixed bottom-[calc(78px+env(safe-area-inset-bottom))] left-1/2 -translate-x-1/2 w-full max-w-sm overflow-hidden bg-charcoal rounded-md p-4 text-white z-20',
+        {
+          ['inline-block']: isOpen,
+          ['hidden']: !isOpen,
+          [className]: true,
+        }
       )}
+      role="status"
     >
-      <section
-        className={clsx(
-          'w-full max-w-sm overflow-hidden bg-charcoal rounded-md p-4 text-white relative',
-          {
-            ['inline-block']: isOpen,
-          }
-        )}
-        role="status"
-      >
-        <div className="grid-cols-[auto,1fr,auto] grid gap-4 items-start">
-          <NotificationIcon type={type} />
-          <NotificationContent label={label}>{children}</NotificationContent>
-          <NotificationClose onClick={handleClose} />
-        </div>
-      </section>
-    </Container>
+      <div className="grid-cols-[auto,1fr,auto] grid gap-4 items-start">
+        <NotificationIcon type={type} />
+        <NotificationContent label={label}>{children}</NotificationContent>
+        <NotificationClose onClick={handleClose} />
+      </div>
+    </section>
   );
 };

@@ -25,7 +25,12 @@ const IncomeDeleteModal = ({ handleDelete }: IIncomeDeleteModalProps) => {
 
   return (
     <>
-      <Button onClick={() => setIsOpen(!isOpen)}>Delete</Button>
+      <Button
+        testId="income-delete-modal_open-button"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        Delete
+      </Button>
       <Dialog isDialogOpen={isOpen} setIsDialogOpen={setIsOpen}>
         <DialogConfirm
           label="Delete income"
@@ -33,6 +38,7 @@ const IncomeDeleteModal = ({ handleDelete }: IIncomeDeleteModalProps) => {
           onCancel={() => setIsOpen(!isOpen)}
           submitButtonLabel="Delete"
           iconName={IconName.exclamation}
+          testId="income-delete-modal"
         >
           Are you sure you want to delete your income? All of your data will be
           permanently removed. This action cannot be undone.
