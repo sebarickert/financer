@@ -29,7 +29,7 @@ export const MobileHeader = (): JSX.Element => {
       {backLink && (
         <NavLink
           to={backLink}
-          className="inline-flex items-center justify-center rounded-full h-11 w-11 bg-gray-50"
+          className="inline-flex items-center justify-center border rounded-full h-11 w-11 bg-gray border-gray-dark"
           data-testid="header-back-link"
         >
           <span className="sr-only">Go back</span>
