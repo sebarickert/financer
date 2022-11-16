@@ -27,7 +27,7 @@ export const MobileNavigationActions = (): JSX.Element => {
         onClick={() => setIsActionsModalOpen(!isActionsModalOpen)}
         ref={mobileNavigationToggleButtonRef}
       >
-        <span className={`block bg-blue-financer p-2 rounded-full text-white`}>
+        <span className={`block bg-charcoal p-2 rounded-full text-white`}>
           <Icon
             type={IconName.plus}
             className={clsx('transition duration-250 ease-in-out', {
@@ -37,7 +37,7 @@ export const MobileNavigationActions = (): JSX.Element => {
         </span>
       </button>
       <MobileNavigationActionsBody
-        isModalHidden={isActionsModalOpen}
+        isModalOpen={isActionsModalOpen}
         outsideClickRef={mobileNavigationActionsBodyRef}
         onClick={setIsActionsModalOpen}
       />

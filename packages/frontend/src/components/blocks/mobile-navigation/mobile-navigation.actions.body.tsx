@@ -1,37 +1,33 @@
-import { Transition } from '@headlessui/react';
+import clsx from 'clsx';
 
 import { IconName } from '../../elements/icon/icon';
 
 import { MobileNavigationItem } from './mobile-navigation.item';
 
 interface IMobileNavigationActionsBodyProps {
-  isModalHidden: boolean;
+  isModalOpen: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   outsideClickRef: any;
   onClick?(param: boolean): void;
 }
 
 export const MobileNavigationActionsBody = ({
-  isModalHidden,
+  isModalOpen,
   outsideClickRef,
   onClick = () => {},
 }: IMobileNavigationActionsBodyProps): JSX.Element => {
   return (
-    <Transition
-      show={isModalHidden}
-      enter="transition ease-out duration-100"
-      enterFrom="transform opacity-0 scale-95"
-      enterTo="transform opacity-100 scale-100"
-      leave="transition ease-in duration-75"
-      leaveFrom="transform opacity-100 scale-100"
-      leaveTo="transform opacity-0 scale-95"
-      className="absolute left-0 right-0 flex justify-center -translate-y-3 bottom-full"
-      aria-hidden={isModalHidden}
+    <section
+      className={clsx(
+        'absolute left-0 right-0 flex justify-center -translate-y-3 bottom-full',
+        { ['hidden']: !isModalOpen }
+      )}
+      aria-hidden={!isModalOpen}
     >
       <nav
-        className="w-full max-w-sm p-2 mx-4 text-white bg-gray-900 rounded-lg shadow-md whitespace-nowrap"
+        className="w-full max-w-sm p-2 mx-4 rounded-md text-gray-dark bg-charcoal whitespace-nowrap"
         ref={outsideClickRef}
-        aria-label="Quick transaction actions navigation in mobile viewmode."
+        aria-label="Quick transaction actions navigation in mobile viewmode"
       >
         <ul className="grid items-center justify-center grid-cols-3">
           <MobileNavigationItem
@@ -40,7 +36,6 @@ export const MobileNavigationActionsBody = ({
             link="/statistics/incomes/add"
             ariaLabel="Add new income transaction"
             onClick={() => onClick(false)}
-            hasDarkBackground
           />
           <MobileNavigationItem
             label="Expense"
@@ -48,7 +43,6 @@ export const MobileNavigationActionsBody = ({
             link="/statistics/expenses/add"
             ariaLabel="Add new expense transaction"
             onClick={() => onClick(false)}
-            hasDarkBackground
           />
           <MobileNavigationItem
             label="Transfer"
@@ -56,10 +50,9 @@ export const MobileNavigationActionsBody = ({
             link="/statistics/transfers/add"
             ariaLabel="Add new transfer transaction"
             onClick={() => onClick(false)}
-            hasDarkBackground
           />
         </ul>
       </nav>
-    </Transition>
+    </section>
   );
 };
