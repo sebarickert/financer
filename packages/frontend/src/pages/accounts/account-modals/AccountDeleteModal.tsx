@@ -32,6 +32,7 @@ export const AccountDeleteModal = ({
           label="Delete account"
           submitButtonLabel="Delete"
           iconName={IconName.exclamation}
+          testId="delete-account"
         >
           Are you sure you want to delete your account? All of your data will be
           permanently removed. This action cannot be undone.

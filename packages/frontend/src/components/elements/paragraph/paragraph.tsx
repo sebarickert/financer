@@ -1,9 +1,5 @@
 import { clsx } from 'clsx';
 import { ReactNode } from 'react';
-import { NavLink } from 'react-router-dom';
-
-type HeadingVariants = 'h1' | 'h2' | 'h3' | 'h4';
-
 interface ParagraphProps {
   children: string | ReactNode;
   className?: string;

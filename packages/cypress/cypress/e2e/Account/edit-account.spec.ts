@@ -202,7 +202,7 @@ describe('Account editing', () => {
     verifyAccountPage(newAccountName, newAccountBalance, newAccountType);
   };
 
-  it.only('Change Cash account name', () => {
+  it('Change Cash account name', () => {
     editAccountNameAndVerify('Cash account', 'Cash Renamed account', 'Cash');
   });
 

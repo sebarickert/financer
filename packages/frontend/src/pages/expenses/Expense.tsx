@@ -25,7 +25,12 @@ const ExpenseDeleteModal = ({ handleDelete }: IExpenseDeleteModalProps) => {
 
   return (
     <>
-      <Button onClick={() => setIsOpen(!isOpen)}>Delete</Button>
+      <Button
+        testId="expense-delete-modal_open-button"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        Delete
+      </Button>
       <Dialog isDialogOpen={isOpen} setIsDialogOpen={setIsOpen}>
         <DialogConfirm
           label="Delete expense"
@@ -33,6 +38,7 @@ const ExpenseDeleteModal = ({ handleDelete }: IExpenseDeleteModalProps) => {
           onCancel={() => setIsOpen(!isOpen)}
           submitButtonLabel="Delete"
           iconName={IconName.exclamation}
+          testId="expense-delete-modal"
         >
           Are you sure you want to delete your expense? All of your data will be
           permanently removed. This action cannot be undone.
