@@ -51,7 +51,6 @@ export const AccountForm = ({
       <Form
         submitLabel={submitLabel}
         handleSubmit={handleSubmit}
-        accentColor="blue"
         formFooterBackLink="/accounts"
       >
         <section>

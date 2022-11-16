@@ -31,7 +31,7 @@ export const LinkListLink = ({
   const linkContent = (
     <>
       {icon && (
-        <span className="inline-flex items-center justify-center rounded-full bg-gray h-11 w-11">
+        <span className="inline-flex items-center justify-center border rounded-full bg-gray border-gray-dark h-11 w-11">
           <Icon
             type={icon}
             className="flex-shrink-0 pointer-events-none stroke-charcoal"
