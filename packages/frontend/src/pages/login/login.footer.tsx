@@ -1,22 +1,18 @@
-import { Link } from 'react-router-dom';
+import { Link } from '../../components/elements/link/link';
 
-interface ILoginFooterProps {
+interface LoginFooterProps {
   className: string;
 }
 
 export const LoginFooter = ({
   className = '',
-}: ILoginFooterProps): JSX.Element => {
+}: LoginFooterProps): JSX.Element => {
   return (
     <div
-      className={`bg-gray-900 py-3 pr-3 grid grid-cols-2 items-center justify-center ${className}`}
+      className={`${className} text-gray-dark flex gap-8 justify-end text-sm`}
     >
-      <Link to="/privacy-policy" className="text-sm  text-gray-400">
-        Privacy policy
-      </Link>
-      <Link to="/issues-with-login" className="text-sm  text-gray-400">
-        Issues with login?
-      </Link>
+      <Link url="/privacy-policy">Privacy policy</Link>
+      <Link url="/issues-with-login">Issues with login?</Link>
     </div>
   );
 };

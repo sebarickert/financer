@@ -18,7 +18,9 @@ export const Link = ({
   isAbsolute,
   url,
 }: LinkProps): JSX.Element => {
-  const linkClasses = clsx({ [className]: true });
+  const linkClasses = clsx('font-medium tracking-tight', {
+    [className]: true,
+  });
   const linkContent = (
     <>
       {isAbsolute && <span className="absolute inset-0" aria-hidden="true" />}
