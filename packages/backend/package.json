@@ -38,7 +38,7 @@
     "express-session": "^1.17.2",
     "mongodb-memory-server": "^8.4.2",
     "mongoose": "^6.3.0",
-    "passport": "^0.5.2",
+    "passport": "^0.6.0",
     "passport-auth0": "^1.4.2",
     "passport-github2": "^0.1.12",
     "reflect-metadata": "^0.1.13",
