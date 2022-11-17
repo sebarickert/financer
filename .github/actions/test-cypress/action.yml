@@ -10,7 +10,7 @@ runs:
   using: "composite"
   steps:
     - name: Run cypress
-      uses: cypress-io/github-action@v2
+      uses: cypress-io/github-action@v4
       with:
         install: false
         working-directory: packages/cypress
