@@ -14,7 +14,7 @@ runs:
       with:
         install: false
         working-directory: packages/cypress
-        spec: cypress/integration/${{ inputs.cypress-spec-folder }}/**
+        spec: cypress/e2e/${{ inputs.cypress-spec-folder }}/**
         start: npm run start:ci --prefix ../../
         wait-on: "http://localhost:3000"
         wait-on-timeout: 120
