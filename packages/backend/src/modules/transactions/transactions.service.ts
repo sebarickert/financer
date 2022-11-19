@@ -208,11 +208,67 @@ export class TransactionsService {
                 accountTypes,
               ),
             },
+            totalCount: {
+              $sum: await this.getMonthlySummaryCondition(
+                userId,
+                1,
+                transactionType,
+                accountTypes,
+              ),
+            },
+            incomesCount: {
+              $sum: await this.getMonthlySummaryCondition(
+                userId,
+                1,
+                TransactionType.INCOME,
+                accountTypes,
+              ),
+            },
+            expensesCount: {
+              $sum: await this.getMonthlySummaryCondition(
+                userId,
+                1,
+                TransactionType.EXPENSE,
+                accountTypes,
+              ),
+            },
+            transferCount: {
+              $sum: await this.getMonthlySummaryCondition(
+                userId,
+                1,
+                TransactionType.TRANSFER,
+                accountTypes,
+              ),
+            },
             totalAmount: {
               $sum: await this.getMonthlySummaryCondition(
                 userId,
                 '$amount',
                 transactionType,
+                accountTypes,
+              ),
+            },
+            incomeAmount: {
+              $sum: await this.getMonthlySummaryCondition(
+                userId,
+                '$amount',
+                TransactionType.INCOME,
+                accountTypes,
+              ),
+            },
+            expenseAmount: {
+              $sum: await this.getMonthlySummaryCondition(
+                userId,
+                '$amount',
+                TransactionType.EXPENSE,
+                accountTypes,
+              ),
+            },
+            transferAmount: {
+              $sum: await this.getMonthlySummaryCondition(
+                userId,
+                '$amount',
+                TransactionType.TRANSFER,
                 accountTypes,
               ),
             },
@@ -543,11 +599,30 @@ export class TransactionsService {
       accountTypeFilter,
     ];
 
-    if (!accountIds?.length) {
+    if (
+      !accountIds?.length &&
+      (transactionType !== TransactionType.ANY || typeof operator !== 'string')
+    ) {
       return { $cond: [{ $and: selectedQuery }, operator, 0] };
     }
 
-    if (transactionType === (TransactionType.TRANSFER || TransactionType.ANY)) {
+    if (!accountIds?.length) {
+      return {
+        $cond: [
+          { $and: [...selectedQuery, { $eq: ['$fromAccount', null] }] },
+          operator,
+          {
+            $cond: [
+              { $and: [...selectedQuery, { $eq: ['$toAccount', null] }] },
+              { $multiply: [operator, -1] },
+              0,
+            ],
+          },
+        ],
+      };
+    }
+
+    if (transactionType === TransactionType.TRANSFER) {
       return {
         $cond: [
           {
@@ -561,8 +636,46 @@ export class TransactionsService {
               },
             ],
           },
-          operator,
+          1,
           0,
+        ],
+      };
+    }
+
+    if (transactionType === TransactionType.ANY) {
+      return {
+        $cond: [
+          {
+            $and: [
+              ...selectedQuery,
+              {
+                $in: ['$toAccount', accountIds],
+                $and: [
+                  { $not: { $in: ['$fromAccount', accountIds] } },
+                  { $ne: ['$fromAccount', ''] },
+                ],
+              },
+            ],
+          },
+          operator,
+          {
+            $cond: [
+              {
+                $and: [
+                  ...selectedQuery,
+                  {
+                    $in: ['$fromAccount', accountIds],
+                    $and: [
+                      { $not: { $in: ['$toAccount', accountIds] } },
+                      { $ne: ['$toAccount', ''] },
+                    ],
+                  },
+                ],
+              },
+              { $multiply: [operator, -1] },
+              0,
+            ],
+          },
         ],
       };
     }
