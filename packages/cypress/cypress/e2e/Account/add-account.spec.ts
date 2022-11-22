@@ -26,15 +26,11 @@ describe('Account creation', () => {
     cy.get('#type').select(accountType);
     cy.getById('submit').click();
 
-    cy.location('pathname').then(
-      (path) => expect(path.endsWith('/accounts')).to.be.true
-    );
+    cy.location('pathname').should('match', /\/accounts$/);
 
     cy.contains(newAccountName).click();
 
-    cy.location('pathname').then(
-      (path) => expect(path.endsWith('/accounts')).to.be.false
-    );
+    cy.location('pathname').should('not.match', /\/accounts$/);
 
     cy.getById('account-type').should('have.text', expectedType);
     cy.getById('account-balance')

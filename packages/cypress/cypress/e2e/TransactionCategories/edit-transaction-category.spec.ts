@@ -65,12 +65,9 @@ describe('Edit transaction category', () => {
     // to fix we have to implement new loader logic by checking if react-query is loading
 
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100);
+    cy.wait(500);
 
     cy.get(`[data-entity-title="${newName}"]`).click();
-
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(500);
 
     cy.getById('edit-transaction-category').click();
 
