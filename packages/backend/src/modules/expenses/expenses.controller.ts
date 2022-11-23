@@ -11,7 +11,7 @@ import {
   ParseArrayPipe,
 } from '@nestjs/common';
 
-import { ObjectId } from '../../types/objectId';
+import { ObjectId, parseObjectId } from '../../types/objectId';
 import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
 import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
 import { UserId } from '../users/users.decorators';
@@ -59,6 +59,16 @@ export class ExpensesController {
       new ParseArrayPipe({ separator: '|', optional: true }),
     )
     accountTypes?: AccountType[],
+    @Query(
+      'transactionCategories',
+      new ParseArrayPipe({
+        separator: '|',
+        optional: true,
+      }),
+    )
+    transactionCategories?: string[],
+    @Query('parentTransactionCategory', ValidateEntityId)
+    parentTransactionCategory?: ObjectId,
   ) {
     return this.expensesService.findMonthlySummariesByUser(
       userId,
@@ -66,6 +76,8 @@ export class ExpensesController {
       year,
       month,
       accountTypes,
+      transactionCategories?.map((id) => parseObjectId(id)),
+      parentTransactionCategory,
     );
   }
 

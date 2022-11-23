@@ -43,6 +43,8 @@ export class TransfersService {
     year: number,
     month: number,
     accountTypes: AccountType[],
+    transactionCategories?: ObjectId[],
+    parentTransactionCategory?: ObjectId,
   ): Promise<TransactionMonthSummaryDto[]> {
     return this.transactionService.findMonthlySummariesByUser(
       userId,
@@ -51,6 +53,8 @@ export class TransfersService {
       year || undefined,
       month || undefined,
       accountTypes || undefined,
+      transactionCategories || undefined,
+      parentTransactionCategory || undefined,
     );
   }
 
