@@ -2,6 +2,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { rootMongooseTestModule } from '../../../test/rootMongooseTest.module';
+import { TransactionCategoryMappingsModule } from '../transaction-category-mappings/transaction-category-mappings.module';
 
 import {
   TransactionCategory,
@@ -20,6 +21,7 @@ describe('TransactionCategoriesController', () => {
         MongooseModule.forFeature([
           { name: TransactionCategory.name, schema: TransactionCategorySchema },
         ]),
+        TransactionCategoryMappingsModule,
       ],
       controllers: [TransactionCategoriesController],
       providers: [TransactionCategoriesService],
