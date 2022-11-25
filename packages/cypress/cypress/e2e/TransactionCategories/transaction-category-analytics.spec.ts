@@ -75,4 +75,30 @@ describe('Transaction category analytics', () => {
       expect(roundToTwoDecimals(body.transferAmount)).to.eq(0);
     });
   });
+
+  it('Should return correct amounts', () => {
+    // 623b58ada3deba9879422fbf = Category for all types
+    cy.request(
+      '/api/transaction-categories/623b58ada3deba9879422fbf/summary?year=2022&month=01&page=1&limit=500'
+    ).then((response) => {
+      expect(response.status).to.eq(200);
+      const [body] = response.body;
+
+      expect(body.total.count).to.eq(4);
+      expect(roundToTwoDecimals(body.total.amount)).to.eq(1135.55);
+      expect(roundToTwoDecimals(body.total.transactionAmount)).to.eq(872.95);
+
+      expect(body.income.count).to.eq(2);
+      expect(roundToTwoDecimals(body.income.amount)).to.eq(2271.53);
+      expect(roundToTwoDecimals(body.income.transactionAmount)).to.eq(3367.11);
+
+      expect(body.expense.count).to.eq(2);
+      expect(roundToTwoDecimals(body.expense.amount)).to.eq(1135.98);
+      expect(roundToTwoDecimals(body.expense.transactionAmount)).to.eq(2494.16);
+
+      expect(body.transfer.count).to.eq(0);
+      expect(roundToTwoDecimals(body.transfer.amount)).to.eq(0);
+      expect(roundToTwoDecimals(body.transfer.transactionAmount)).to.eq(0);
+    });
+  });
 });

@@ -1,3 +1,4 @@
+import { TransactionMonthSummaryDto } from '@local/types';
 import {
   BadRequestException,
   Injectable,
@@ -9,6 +10,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import { ObjectId } from '../../types/objectId';
+import { TransactionCategoryMappingsService } from '../transaction-category-mappings/transaction-category-mappings.service';
 
 import { CreateTransactionCategoryDto } from './dto/create-transaction-category.dto';
 import { UpdateTransactionCategoryDto } from './dto/update-transaction-category.dto';
@@ -22,6 +24,7 @@ export class TransactionCategoriesService {
   constructor(
     @InjectModel(TransactionCategory.name)
     private transactionCategoryModel: Model<TransactionCategoryDocument>,
+    private readonly transactionCategoryMappingsService: TransactionCategoryMappingsService,
   ) {}
 
   private async isParentIdInChildHierarchy(
@@ -102,6 +105,25 @@ export class TransactionCategoriesService {
     return this.transactionCategoryModel
       .find({ owner: userId, deleted: { $ne: true } })
       .exec();
+  }
+
+  async findMonthlySummariesByUserAndId(
+    userId: ObjectId,
+    parentCategoryId: ObjectId,
+    limit?: number,
+    year?: number,
+    month?: number,
+  ): Promise<TransactionMonthSummaryDto[]> {
+    const childrenIds = await this.findAllChildrensById([parentCategoryId]);
+    const targetIds = [parentCategoryId, ...childrenIds];
+
+    return this.transactionCategoryMappingsService.findMonthlySummariesByUserAndId(
+      userId,
+      targetIds,
+      limit,
+      year,
+      month,
+    );
   }
 
   async update(

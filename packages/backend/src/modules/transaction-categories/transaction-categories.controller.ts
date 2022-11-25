@@ -48,6 +48,17 @@ export class TransactionCategoriesController {
     return this.transactionCategoriesService.findOne(userId, id);
   }
 
+  @Get(':id/summary')
+  getCategorySummary(
+    @UserId() userId: ObjectId,
+    @Param('id', ValidateEntityId) id: ObjectId,
+  ) {
+    return this.transactionCategoriesService.findMonthlySummariesByUserAndId(
+      userId,
+      id,
+    );
+  }
+
   @Patch(':id')
   update(
     @UserId() userId: ObjectId,
