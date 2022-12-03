@@ -1,0 +1,40 @@
+{
+    "Financer component": {
+        "prefix": "component",
+        "body": [
+          "import clsx from \"clsx\"",
+          "",
+          "interface ${1}Props {",
+          "  className?: string;",
+          "  ${2}",
+          "}",
+          "",
+          "export const ${1} = ({ className = '', ${3} }: ${1}Props) => {",
+          "",
+          "  return (",
+          "    <div className={clsx('', {[className]: true})}>${1}</div>",
+          "  );",
+          "};",
+          ""
+        ]
+      },
+      "Financer sub component": {
+        "prefix": "subcomponent",
+        "body": [
+          "interface ${1}Props {",
+          "  children: string;",
+          "  className?: string;",
+          "  ${2}",
+          "}",
+          "",
+          "const ${1} = ({ children, className = '', ${3} }: ${1}Props) => {",
+          "",
+          "  return (",
+          "    <div className={clsx('', {[className]: true})}>{children}</div>",
+          "  );",
+          "};",
+          ""
+        ]
+      }
+  }
+  

@@ -6,3 +6,4 @@ dist
 tsconfig.tsbuildinfo
 
 !.vscode/settings.json
+!.vscode/jsx.code-snippets
