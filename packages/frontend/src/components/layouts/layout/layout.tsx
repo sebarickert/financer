@@ -52,8 +52,8 @@ export const Layout = (): JSX.Element => {
             <div className="sticky top-0 z-10 min-h-screen pt-12 pb-12 pl-8 pr-4 bottom-12">
               <header>
                 <NavLink to="/" className="inline-flex items-center gap-3 mb-8">
-                  <Logo className="block w-auto h-10" />
-                  <h2 className="text-2xl font-bold tracking-tight text-black">
+                  <Logo className="block w-12 h-12" />
+                  <h2 className="text-xl font-extrabold tracking-tighter text-black uppercase">
                     Financer
                   </h2>
                 </NavLink>
