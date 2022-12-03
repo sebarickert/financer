@@ -48,6 +48,15 @@ export class CreateTransactionTemplateDto<ObjectIdType = string> {
   @Max(31, { message: 'Day of month must not be greater than 31.' })
   readonly dayOfMonth?: number;
 
+  @IsOptional()
+  @Min(1, {
+    message: 'Day of month to create transaction must be a positive number.',
+  })
+  @Max(31, {
+    message: 'Day of month to create transaction must not be greater than 31.',
+  })
+  readonly dayOfMonthToCreate?: number;
+
   @ValidateNested({ each: true })
   readonly categories?: ObjectIdType[];
 }

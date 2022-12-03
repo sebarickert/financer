@@ -51,11 +51,17 @@ export class TransactionTemplate {
   description: string;
 
   @Prop({
-    index: true,
     type: Number,
     default: null,
   })
   dayOfMonth: number;
+
+  @Prop({
+    index: true,
+    type: Number,
+    default: null,
+  })
+  dayOfMonthToCreate: number;
 
   @Prop({ type: [String], default: [] })
   categories: ObjectId[];
