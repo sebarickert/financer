@@ -1,10 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewBox="0 0 1000 1000">
-  <g id="Financer" transform="translate(-1020)">
-    <rect width="1000" height="1000" rx="128" transform="translate(1020)" fill="#0e6ac7"/>
-    <g transform="translate(8 158)">
-      <rect width="435" height="135" rx="67.5" transform="translate(1295 110)" fill="#fff"/>
-      <rect width="435" height="135" rx="67.5" transform="translate(1295 275)" fill="#fff"/>
-      <rect width="135" height="135" rx="67.5" transform="translate(1295 440)" fill="#fff"/>
-    </g>
-  </g>
+<svg width="1000" height="1000" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
+  <rect width="1000" height="1000" rx="50" fill="#000" />
+  <path d="M314.907 647.093V352.907H187V775l127.907-127.907ZM686 352.907v294.186h127.907V225L686 352.907Z" fill="#fff" />
+  <rect width="127.907" height="127.907" rx="63.953" transform="matrix(0 -1 -1 0 647.466 647.093)" fill="#fff" />
+  <path fill="#fff" d="M647.466 480.814V352.907H519.559v127.907zM481.187 647.093V519.186H353.28v127.907z" />
+  <rect width="127.907" height="127.907" rx="63.953" transform="scale(-1 1) rotate(-90 -.186 481)" fill="#fff" />
 </svg>
