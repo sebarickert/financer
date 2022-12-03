@@ -47,6 +47,14 @@ export class TransactionTemplateDto<ObjectIdType = string> {
   @Max(31, { message: 'Day of month must not be greater than 31.' })
   readonly dayOfMonth?: number;
 
+  @Min(1, {
+    message: 'Day of month to create transaction must be a positive number.',
+  })
+  @Max(31, {
+    message: 'Day of month to create transaction must not be greater than 31.',
+  })
+  readonly dayOfMonthToCreate?: number;
+
   @IsMongoId()
   readonly userId: ObjectIdType;
 
