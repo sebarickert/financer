@@ -86,3 +86,10 @@ spec:
                 name: financer
                 port:
                   number: 80
+          - path: /tasks
+            pathType: Prefix
+            backend:
+              service:
+                name: defaultbackend
+                port:
+                  number: 80
