@@ -152,7 +152,7 @@ export class TransactionsService {
     );
 
     return {
-      data,
+      data: data as any,
       currentPage: page ?? 1,
       limit: page ? limit : totalCount,
       totalPageCount: lastPage,
