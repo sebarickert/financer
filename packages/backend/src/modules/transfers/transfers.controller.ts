@@ -10,22 +10,35 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
+import {
+  ApiBody,
+  ApiExtraModels,
+  ApiOkResponse,
+  ApiParam,
+  ApiTags,
+} from '@nestjs/swagger';
 
 import { ObjectId, parseObjectId } from '../../types/objectId';
+import { ApiPaginatedDto } from '../../utils/pagination.decorator';
 import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
 import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
+import { TransactionMonthSummaryDto } from '../transaction-categories/dto/transaction-month-summary.dto';
 import { UserId } from '../users/users.decorators';
 
 import { CreateTransferDto } from './dto/create-transfer.dto';
+import { TransferDto } from './dto/transfer.dto';
 import { UpdateTransferDto } from './dto/update-transfer.dto';
 import { TransfersService } from './transfers.service';
 
 @Controller('api/transfers')
+@ApiTags('Transfers')
+@ApiExtraModels(TransferDto, TransactionMonthSummaryDto)
 @LoggedIn()
 export class TransfersController {
   constructor(private readonly transfersService: TransfersService) {}
 
   @Get()
+  @ApiPaginatedDto(TransferDto)
   async findAllByUser(
     @UserId() userId: ObjectId,
     @Query('month') month: number,
@@ -49,6 +62,7 @@ export class TransfersController {
   }
 
   @Get('monthly-summaries')
+  @ApiPaginatedDto(TransactionMonthSummaryDto)
   async findMonthlySummariesByuser(
     @UserId() userId: ObjectId,
     @Query('month') month: number,
@@ -82,6 +96,14 @@ export class TransfersController {
   }
 
   @Get(':id')
+  @ApiOkResponse({
+    type: TransferDto,
+    description: 'Return transaction by id',
+  })
+  @ApiParam({
+    name: 'id',
+    type: String,
+  })
   async findOne(
     @UserId() userId: ObjectId,
     @Param('id', ValidateEntityId) id: ObjectId,
@@ -90,6 +112,8 @@ export class TransfersController {
   }
 
   @Post()
+  @ApiBody({ type: CreateTransferDto })
+  @ApiOkResponse({ schema: { properties: { payload: { type: 'string' } } } })
   async create(
     @UserId() userId: ObjectId,
     @Body() createTransfer: CreateTransferDto,
@@ -98,6 +122,8 @@ export class TransfersController {
   }
 
   @Patch(':id')
+  @ApiBody({ type: UpdateTransferDto })
+  @ApiOkResponse({ type: TransferDto })
   update(
     @UserId() userId: ObjectId,
     @Param('id', ValidateEntityId) id: ObjectId,
@@ -107,6 +133,10 @@ export class TransfersController {
   }
 
   @Delete(':id')
+  @ApiParam({
+    name: 'id',
+    type: String,
+  })
   remove(
     @UserId() userId: ObjectId,
     @Param('id', ValidateEntityId) id: ObjectId,
