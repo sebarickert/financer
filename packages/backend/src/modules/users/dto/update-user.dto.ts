@@ -1,10 +1,13 @@
-import {
-  UpdateUserDto as SharedUpdateUserDto,
-  UpdateUserOwnUserDto as SharedUpdateUserOwnUserDto,
-} from '@local/types';
-import { PartialType } from '@nestjs/mapped-types';
+import { PartialType, OmitType, PickType } from '@nestjs/swagger';
 
-export class UpdateUserDto extends PartialType(SharedUpdateUserDto) {}
-export class UpdateUserOwnUserDto extends PartialType(
-  SharedUpdateUserOwnUserDto,
+import { UserDto } from './user.dto';
+
+export class UpdateUserDto extends PartialType(
+  OmitType(UserDto, ['_id' as const]),
 ) {}
+
+export class UpdateUserOwnUserDto extends PickType(UpdateUserDto, [
+  'name',
+  'nickname',
+  'profileImageUrl',
+]) {}
