@@ -1,15 +1,7 @@
-import { IncomeDto as SharedIncomeDto } from '@local/types';
-import { Transform } from 'class-transformer';
+import { OmitType } from '@nestjs/swagger';
 
-import { ObjectId } from '../../../types/objectId';
-import { IsInstanceOfObjectId } from '../../../utils/is-instance-of-object-id.decorator';
-import { objectIdTransformer } from '../../../utils/object-id-transformer';
-import { TransactionCategoryMappingDto } from '../../transaction-category-mappings/dto/transaction-category-mapping.dto';
-export class IncomeDto extends SharedIncomeDto<
-  ObjectId,
-  TransactionCategoryMappingDto
-> {
-  @IsInstanceOfObjectId({ message: 'toAccount must not be empty.' })
-  @Transform(objectIdTransformer)
-  readonly toAccount: ObjectId;
-}
+import { TransactionDto } from '../../transactions/dto/transaction.dto';
+
+export class IncomeDto extends OmitType(TransactionDto, [
+  'fromAccount',
+] as const) {}

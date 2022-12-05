@@ -10,22 +10,28 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
+import { ApiBody, ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
 
 import { ObjectId, parseObjectId } from '../../types/objectId';
+import { ApiPaginatedDto } from '../../utils/pagination.decorator';
 import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
 import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
+import { TransactionMonthSummaryDto } from '../transactions/dto/transaction-month-summary.dto';
 import { UserId } from '../users/users.decorators';
 
 import { CreateIncomeDto } from './dto/create-income.dto';
+import { IncomeDto } from './dto/income.dto';
 import { UpdateIncomeDto } from './dto/update-income.dto';
 import { IncomesService } from './incomes.service';
 
 @Controller('api/incomes')
+@ApiTags('Incomes')
 @LoggedIn()
 export class IncomesController {
   constructor(private readonly incomesService: IncomesService) {}
 
   @Get()
+  @ApiPaginatedDto(IncomeDto)
   async findAllByUser(
     @UserId() userId: ObjectId,
     @Query('month') month: number,
@@ -49,6 +55,7 @@ export class IncomesController {
   }
 
   @Get('monthly-summaries')
+  @ApiPaginatedDto(TransactionMonthSummaryDto)
   async findMonthlySummariesByuser(
     @UserId() userId: ObjectId,
     @Query('month') month: number,
@@ -82,6 +89,14 @@ export class IncomesController {
   }
 
   @Get(':id')
+  @ApiOkResponse({
+    type: IncomeDto,
+    description: 'Return transaction by id',
+  })
+  @ApiParam({
+    name: 'id',
+    type: String,
+  })
   async findOne(
     @UserId() userId: ObjectId,
     @Param('id', ValidateEntityId) id: ObjectId,
@@ -90,6 +105,8 @@ export class IncomesController {
   }
 
   @Post()
+  @ApiBody({ type: CreateIncomeDto })
+  @ApiOkResponse({ schema: { properties: { payload: { type: 'string' } } } })
   async create(
     @UserId() userId: ObjectId,
     @Body() createIncome: CreateIncomeDto,
@@ -98,6 +115,12 @@ export class IncomesController {
   }
 
   @Patch(':id')
+  @ApiBody({ type: UpdateIncomeDto })
+  @ApiOkResponse({ type: IncomeDto })
+  @ApiParam({
+    name: 'id',
+    type: String,
+  })
   update(
     @UserId() userId: ObjectId,
     @Param('id', ValidateEntityId) id: ObjectId,
@@ -107,6 +130,10 @@ export class IncomesController {
   }
 
   @Delete(':id')
+  @ApiParam({
+    name: 'id',
+    type: String,
+  })
   remove(
     @UserId() userId: ObjectId,
     @Param('id', ValidateEntityId) id: ObjectId,

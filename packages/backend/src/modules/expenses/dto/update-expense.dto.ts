@@ -1,27 +1,5 @@
-import { UpdateExpenseDto as SharedUpdateExpenseDto } from '@local/types';
-import { OmitType, PartialType } from '@nestjs/mapped-types';
-import { Transform, Type } from 'class-transformer';
-import { IsOptional, ValidateNested } from 'class-validator';
+import { PartialType } from '@nestjs/swagger';
 
-import { ObjectId } from '../../../types/objectId';
-import { IsInstanceOfObjectId } from '../../../utils/is-instance-of-object-id.decorator';
-import { objectIdTransformer } from '../../../utils/object-id-transformer';
-import { CreateTransactionCategoryMappingDto } from '../../transaction-category-mappings/dto/create-transaction-category-mapping.dto';
+import { CreateExpenseDto } from './create-expense.dto';
 
-class TmpClass extends SharedUpdateExpenseDto<
-  ObjectId,
-  CreateTransactionCategoryMappingDto
-> {}
-
-export class UpdateExpenseDto extends PartialType(TmpClass) {
-  @IsInstanceOfObjectId({ message: 'fromAccount must not be empty.' })
-  @Transform(objectIdTransformer)
-  readonly fromAccount: ObjectId;
-
-  @IsOptional()
-  @ValidateNested({ each: true })
-  @Type(() =>
-    OmitType(CreateTransactionCategoryMappingDto, ['transaction_id'] as const),
-  )
-  categories?: CreateTransactionCategoryMappingDto[];
-}
+export class UpdateExpenseDto extends PartialType(CreateExpenseDto) {}

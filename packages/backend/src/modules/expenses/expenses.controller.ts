@@ -10,22 +10,28 @@ import {
   Query,
   ParseArrayPipe,
 } from '@nestjs/common';
+import { ApiBody, ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
 
 import { ObjectId, parseObjectId } from '../../types/objectId';
+import { ApiPaginatedDto } from '../../utils/pagination.decorator';
 import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
 import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
+import { TransactionMonthSummaryDto } from '../transactions/dto/transaction-month-summary.dto';
 import { UserId } from '../users/users.decorators';
 
 import { CreateExpenseDto } from './dto/create-expense.dto';
+import { ExpenseDto } from './dto/expense.dto';
 import { UpdateExpenseDto } from './dto/update-expense.dto';
 import { ExpensesService } from './expenses.service';
 
 @Controller('api/expenses')
+@ApiTags('Expenses')
 @LoggedIn()
 export class ExpensesController {
   constructor(private readonly expensesService: ExpensesService) {}
 
   @Get()
+  @ApiPaginatedDto(ExpenseDto)
   async findAllByUser(
     @UserId() userId: ObjectId,
     @Query('month') month: number,
@@ -49,6 +55,7 @@ export class ExpensesController {
   }
 
   @Get('monthly-summaries')
+  @ApiPaginatedDto(TransactionMonthSummaryDto)
   async findMonthlySummariesByuser(
     @UserId() userId: ObjectId,
     @Query('month') month: number,
@@ -82,6 +89,14 @@ export class ExpensesController {
   }
 
   @Get(':id')
+  @ApiOkResponse({
+    type: ExpenseDto,
+    description: 'Return transaction by id',
+  })
+  @ApiParam({
+    name: 'id',
+    type: String,
+  })
   async findOne(
     @UserId() userId: ObjectId,
     @Param('id', ValidateEntityId) id: ObjectId,
@@ -90,6 +105,8 @@ export class ExpensesController {
   }
 
   @Post()
+  @ApiBody({ type: CreateExpenseDto })
+  @ApiOkResponse({ schema: { properties: { payload: { type: 'string' } } } })
   async create(
     @UserId() userId: ObjectId,
     @Body() createExpense: CreateExpenseDto,
@@ -98,6 +115,12 @@ export class ExpensesController {
   }
 
   @Patch(':id')
+  @ApiBody({ type: UpdateExpenseDto })
+  @ApiOkResponse({ type: ExpenseDto })
+  @ApiParam({
+    name: 'id',
+    type: String,
+  })
   update(
     @UserId() userId: ObjectId,
     @Param('id', ValidateEntityId) id: ObjectId,
@@ -107,6 +130,10 @@ export class ExpensesController {
   }
 
   @Delete(':id')
+  @ApiParam({
+    name: 'id',
+    type: String,
+  })
   remove(
     @UserId() userId: ObjectId,
     @Param('id', ValidateEntityId) id: ObjectId,
