@@ -1,7 +1,6 @@
 import {
   CreateAccountDto,
   UpdateAccountDto,
-  AccountBalanceHistoryDto,
   AccountDto,
   PaginationDto,
   AccountType,
@@ -22,6 +21,7 @@ import { sumArrayItems } from '../../utils/arrays';
 import { AccountBalanceChangesService } from '../account-balance-changes/account-balance-changes.service';
 import { TransactionsService } from '../transactions/transactions.service';
 
+import { AccountBalanceHistoryDto } from './dto/account-balance-history.dto';
 import { Account, AccountDocument } from './schemas/account.schema';
 
 @Injectable()
