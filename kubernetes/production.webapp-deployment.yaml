@@ -79,17 +79,17 @@ spec:
     - host: financer.silte.fi
       http:
         paths:
-          - path: /
+          - path: /api/tasks
             pathType: Prefix
             backend:
               service:
                 name: financer
                 port:
-                  number: 80
-          - path: /tasks
+                  number: 88 # doesn't exist
+          - path: /
             pathType: Prefix
             backend:
               service:
-                name: defaultbackend
+                name: financer
                 port:
                   number: 80
