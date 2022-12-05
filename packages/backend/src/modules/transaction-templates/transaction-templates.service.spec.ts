@@ -4,6 +4,10 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { rootMongooseTestModule } from '../../../test/rootMongooseTest.module';
 
 import {
+  TransactionTemplateLog,
+  TransactionTemplateLogSchema,
+} from './schemas/transaction-template-log.schema';
+import {
   TransactionTemplate,
   TransactionTemplateSchema,
 } from './schemas/transaction-template.schema';
@@ -18,6 +22,10 @@ describe('TransactionTemplatesService', () => {
         rootMongooseTestModule(),
         MongooseModule.forFeature([
           { name: TransactionTemplate.name, schema: TransactionTemplateSchema },
+          {
+            name: TransactionTemplateLog.name,
+            schema: TransactionTemplateLogSchema,
+          },
         ]),
       ],
       providers: [TransactionTemplatesService],

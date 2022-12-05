@@ -17,6 +17,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { ExpensesModule } from './modules/expenses/expenses.module';
 import { HealthCheckModule } from './modules/health-check/health-check.module';
 import { IncomesModule } from './modules/incomes/incomes.module';
+import { TasksModule } from './modules/tasks/tasks.module';
 import { TransactionCategoriesModule } from './modules/transaction-categories/transaction-categories.module';
 import { TransactionCategoryMappingsModule } from './modules/transaction-category-mappings/transaction-category-mappings.module';
 import { TransactionsModule } from './modules/transactions/transactions.module';
@@ -34,7 +35,7 @@ import { UsersModule } from './modules/users/users.module';
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'client'),
-      exclude: ['/health-check/*', '/api/*', '/auth/*'],
+      exclude: ['/health-check/*', '/api/*', '/auth/*', '/tasks/*'],
     }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
@@ -56,6 +57,7 @@ import { UsersModule } from './modules/users/users.module';
     AccountBalanceChangesModule,
     HealthCheckModule,
     UserPreferencesModule,
+    TasksModule,
   ],
 })
 export class AppModule implements NestModule {
