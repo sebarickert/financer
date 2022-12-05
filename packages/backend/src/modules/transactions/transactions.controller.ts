@@ -8,20 +8,32 @@ import {
   ParseEnumPipe,
   Query,
 } from '@nestjs/common';
+import {
+  ApiExtraModels,
+  ApiOkResponse,
+  ApiParam,
+  ApiTags,
+} from '@nestjs/swagger';
 
 import { ObjectId, parseObjectId } from '../../types/objectId';
+import { ApiPaginatedDto } from '../../utils/pagination.decorator';
 import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
 import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
 import { UserId } from '../users/users.decorators';
 
+import { TransactionMonthSummaryDto } from './dto/transaction-month-summary.dto';
+import { TransactionDto } from './dto/transaction.dto';
 import { TransactionsService } from './transactions.service';
 
 @Controller('api/transactions')
+@ApiTags('Transactions')
+@ApiExtraModels(TransactionDto, TransactionMonthSummaryDto)
 @LoggedIn()
 export class TransactionsController {
   constructor(private readonly transactionsService: TransactionsService) {}
 
   @Get()
+  @ApiPaginatedDto(TransactionDto)
   async findAllByUser(
     @UserId() userId: ObjectId,
     @Query('month') month: number,
@@ -58,6 +70,7 @@ export class TransactionsController {
   }
 
   @Get('monthly-summaries')
+  @ApiPaginatedDto(TransactionMonthSummaryDto)
   async findMonthlySummariesByUser(
     @UserId() userId: ObjectId,
     @Query('month') month: number,
@@ -92,6 +105,11 @@ export class TransactionsController {
   }
 
   @Get('/account/:id')
+  @ApiPaginatedDto(TransactionDto)
+  @ApiParam({
+    name: 'id',
+    type: String,
+  })
   async findAllByAccount(
     @UserId() userId: ObjectId,
     @Param('id', ValidateEntityId) accountId: ObjectId,
@@ -112,6 +130,14 @@ export class TransactionsController {
   }
 
   @Get(':id')
+  @ApiOkResponse({
+    type: TransactionDto,
+    description: 'Return transaction by id',
+  })
+  @ApiParam({
+    name: 'id',
+    type: String,
+  })
   async findOne(
     @UserId() userId: ObjectId,
     @Param('id', ValidateEntityId) id: ObjectId,
