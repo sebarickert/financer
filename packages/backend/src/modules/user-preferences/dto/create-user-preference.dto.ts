@@ -1,10 +1,7 @@
 import { UserPreferenceDto } from '@local/types';
-import { OmitType } from '@nestjs/mapped-types';
+import { OmitType } from '@nestjs/swagger';
 
-import { ObjectId } from '../../../types/objectId';
-
-class TempClass extends UserPreferenceDto<ObjectId> {}
-
-export class CreateUserPreferenceDto extends OmitType(TempClass, [
-  '_id' as const,
-]) {}
+export class CreateUserPreferenceDto extends OmitType(UserPreferenceDto, [
+  '_id',
+  'userId',
+] as const) {}

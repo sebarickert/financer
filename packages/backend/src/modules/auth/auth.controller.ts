@@ -8,16 +8,19 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { ApiOkResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { NextFunction, Request, Response } from 'express';
 import passport from 'passport';
 
 import { UserDocument } from '../users/schemas/user.schema';
 
 import { AuthService } from './auth.service';
+import { AuthenticationStatusDto } from './dto/authtentication-status.dto';
 import { Auth0Guard } from './guards/auth0.guard';
 import { GithubGuard } from './guards/github.guard';
 
 @Controller('auth')
+@ApiTags('Authentication')
 export class AuthController {
   constructor(
     private configService: ConfigService,
@@ -25,19 +28,33 @@ export class AuthController {
   ) {}
 
   @Get('status')
+  @ApiOkResponse({
+    description:
+      "Returns the user's authentication status and user data if logged in",
+    type: AuthenticationStatusDto,
+  })
   async getAuthenticationStatus(@Req() req: Request) {
     return this.authService.getAuthenticationStatus(req.user as UserDocument);
   }
 
   @Get('github')
+  @ApiResponse({
+    description: 'If github oauth enabled redirects to github login page',
+  })
   @UseGuards(GithubGuard)
   loginGithub() {}
 
   @Get('auth0')
+  @ApiResponse({
+    description: 'If auth0 oauth enabled redirects to auth0 login page',
+  })
   @UseGuards(Auth0Guard)
   loginAuth0() {}
 
   @Get('github/redirect')
+  @ApiResponse({
+    description: 'Callback endpoint from github oauth',
+  })
   loginGithubCallback(
     @Req() req: Request,
     @Res() res: Response,
@@ -52,6 +69,9 @@ export class AuthController {
   }
 
   @Get('auth0/redirect')
+  @ApiResponse({
+    description: 'Callback endpoint from auth0 oauth',
+  })
   loginAuth0Callback(
     @Req() req: Request,
     @Res() res: Response,
@@ -66,14 +86,28 @@ export class AuthController {
   }
 
   @Get('logout')
+  @ApiResponse({
+    status: 302,
+    description: 'Logout user with current session from our system',
+  })
   logout(@Req() req: Request, @Res() res: Response) {
     const publicUrl = this.configService.get('publicUrl');
 
-    req.logout();
-    res.redirect(publicUrl);
+    req.logout((err) => {
+      if (err) {
+        console.error(err);
+      }
+
+      res.redirect(publicUrl);
+    });
   }
 
   @Get('logout/auth0')
+  @ApiResponse({
+    status: 302,
+    description:
+      'Terminates user session from Auth0 and redirects to public URL',
+  })
   logoutAuth0(@Res() res: Response) {
     const auth0Keys = this.configService.get('auth0Keys');
     const publicUrl = this.configService.get('publicUrl');
