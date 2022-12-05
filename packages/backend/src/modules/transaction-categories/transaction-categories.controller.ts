@@ -7,6 +7,13 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
+import {
+  ApiBody,
+  ApiExtraModels,
+  ApiOkResponse,
+  ApiParam,
+  ApiTags,
+} from '@nestjs/swagger';
 
 import { ObjectId } from '../../types/objectId';
 import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
@@ -14,10 +21,14 @@ import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
 import { UserId } from '../users/users.decorators';
 
 import { CreateTransactionCategoryDto } from './dto/create-transaction-category.dto';
+import { TransactionCategoryDto } from './dto/transaction-category.dto';
+import { TransactionMonthSummaryDto } from './dto/transaction-month-summary.dto';
 import { UpdateTransactionCategoryDto } from './dto/update-transaction-category.dto';
 import { TransactionCategoriesService } from './transaction-categories.service';
 
 @Controller('api/transaction-categories')
+@ApiTags('Transaction categories')
+@ApiExtraModels(TransactionCategoryDto, TransactionMonthSummaryDto)
 @LoggedIn()
 export class TransactionCategoriesController {
   constructor(
@@ -25,6 +36,8 @@ export class TransactionCategoriesController {
   ) {}
 
   @Post()
+  @ApiBody({ type: CreateTransactionCategoryDto })
+  @ApiOkResponse({ schema: { properties: { payload: { type: 'string' } } } })
   async create(
     @UserId() userId: ObjectId,
     @Body() createTransactionCategoryDto: CreateTransactionCategoryDto,
@@ -36,11 +49,22 @@ export class TransactionCategoriesController {
   }
 
   @Get()
+  @ApiOkResponse({
+    type: [TransactionCategoryDto],
+    description: 'Return transaction category by id',
+  })
   findAllByUser(@UserId() userId: ObjectId) {
     return this.transactionCategoriesService.findAllByUser(userId);
   }
 
   @Get(':id')
+  @ApiOkResponse({
+    type: TransactionCategoryDto,
+  })
+  @ApiParam({
+    name: 'id',
+    type: String,
+  })
   findOne(
     @UserId() userId: ObjectId,
     @Param('id', ValidateEntityId) id: ObjectId,
@@ -49,6 +73,13 @@ export class TransactionCategoriesController {
   }
 
   @Get(':id/summary')
+  @ApiOkResponse({
+    type: [TransactionMonthSummaryDto],
+  })
+  @ApiParam({
+    name: 'id',
+    type: String,
+  })
   getCategorySummary(
     @UserId() userId: ObjectId,
     @Param('id', ValidateEntityId) id: ObjectId,
@@ -60,6 +91,12 @@ export class TransactionCategoriesController {
   }
 
   @Patch(':id')
+  @ApiBody({ type: UpdateTransactionCategoryDto })
+  @ApiOkResponse({ type: TransactionCategoryDto })
+  @ApiParam({
+    name: 'id',
+    type: String,
+  })
   update(
     @UserId() userId: ObjectId,
     @Param('id', ValidateEntityId) id: ObjectId,
@@ -73,6 +110,10 @@ export class TransactionCategoriesController {
   }
 
   @Delete(':id')
+  @ApiParam({
+    name: 'id',
+    type: String,
+  })
   remove(
     @UserId() userId: ObjectId,
     @Param('id', ValidateEntityId) id: ObjectId,

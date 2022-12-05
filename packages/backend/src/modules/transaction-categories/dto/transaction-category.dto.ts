@@ -1,12 +1,50 @@
-import { TransactionCategoryDto as SharedTransactionCategoryDto } from '@local/types';
+import { VisibilityType } from '@local/types';
+import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import { IsOptional } from 'class-validator';
+import {
+  IsBoolean,
+  IsEnum,
+  IsMongoId,
+  IsNotEmpty,
+  IsOptional,
+} from 'class-validator';
 
 import { ObjectId } from '../../../types/objectId';
 import { IsInstanceOfObjectId } from '../../../utils/is-instance-of-object-id.decorator';
 import { objectIdTransformer } from '../../../utils/object-id-transformer';
 
-export class TransactionCategoryDto extends SharedTransactionCategoryDto<ObjectId> {
+export class TransactionCategoryDto {
+  @ApiProperty({ type: String })
+  @IsMongoId()
+  _id: ObjectId;
+
+  @ApiProperty({ type: String })
+  @IsMongoId()
+  owner: ObjectId;
+
+  @ApiProperty()
+  @IsNotEmpty({ message: 'Name must not be empty.' })
+  name: string;
+
+  @ApiProperty({
+    enum: VisibilityType,
+    enumName: 'VisibilityType',
+    type: VisibilityType,
+  })
+  @IsOptional()
+  @IsEnum(VisibilityType, {
+    each: true,
+    message:
+      'Visibility must be one of the following: income, expense, transfer.',
+  })
+  visibility: VisibilityType[];
+
+  @ApiProperty()
+  @IsOptional()
+  @IsBoolean()
+  deleted: boolean;
+
+  @ApiProperty({ type: String })
   @IsOptional()
   @IsInstanceOfObjectId({ message: 'parent_category_id must not be empty.' })
   @Transform(objectIdTransformer)
