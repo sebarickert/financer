@@ -8,6 +8,7 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
+import { ApiBody, ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
 
 import { ObjectId } from '../../types/objectId';
 import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
@@ -15,10 +16,12 @@ import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
 import { UserId } from '../users/users.decorators';
 
 import { CreateTransactionTemplateDto } from './dto/create-transaction-template.dto';
+import { TransactionTemplateDto } from './dto/transaction-template.dto';
 import { UpdateTransactionTemplateDto } from './dto/update-transaction-template.dto';
 import { TransactionTemplatesService as TransactionTemplatesService } from './transaction-templates.service';
 
 @Controller('api/transaction-templates')
+@ApiTags('Transaction templates')
 @LoggedIn()
 export class TransactionTemplatesController {
   constructor(
@@ -26,6 +29,8 @@ export class TransactionTemplatesController {
   ) {}
 
   @Post()
+  @ApiBody({ type: CreateTransactionTemplateDto })
+  @ApiOkResponse({ schema: { properties: { payload: { type: 'string' } } } })
   create(
     @UserId() userId: ObjectId,
     @Body() createTransactionTemplateDto: CreateTransactionTemplateDto,
@@ -37,11 +42,19 @@ export class TransactionTemplatesController {
   }
 
   @Get()
+  @ApiOkResponse({
+    type: [TransactionTemplateDto],
+    description: 'Return all transaction templates',
+  })
   findAllByUser(@UserId() userId: ObjectId) {
     return this.transactionTemplatesService.findAllByUser(userId);
   }
 
   @Get('/manual')
+  @ApiOkResponse({
+    type: [TransactionTemplateDto],
+    description: 'Return all transaction templates of type manual',
+  })
   findAllManualTypeByUser(@UserId() userId: ObjectId) {
     return this.transactionTemplatesService.findAllByUserAndType(
       userId,
@@ -50,6 +63,14 @@ export class TransactionTemplatesController {
   }
 
   @Get(':id')
+  @ApiOkResponse({
+    type: TransactionTemplateDto,
+    description: 'Return transaction template by id',
+  })
+  @ApiParam({
+    name: 'id',
+    type: String,
+  })
   findOne(
     @UserId() userId: ObjectId,
     @Param('id', ValidateEntityId) id: ObjectId,
@@ -58,6 +79,8 @@ export class TransactionTemplatesController {
   }
 
   @Patch(':id')
+  @ApiBody({ type: UpdateTransactionTemplateDto })
+  @ApiOkResponse({ type: TransactionTemplateDto })
   update(
     @UserId() userId: ObjectId,
     @Param('id', ValidateEntityId) id: ObjectId,
@@ -71,6 +94,10 @@ export class TransactionTemplatesController {
   }
 
   @Delete(':id')
+  @ApiParam({
+    name: 'id',
+    type: String,
+  })
   remove(
     @UserId() userId: ObjectId,
     @Param('id', ValidateEntityId) id: ObjectId,
