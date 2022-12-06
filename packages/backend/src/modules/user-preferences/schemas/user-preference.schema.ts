@@ -8,7 +8,7 @@ import { User } from '../../users/schemas/user.schema';
 export type UserPreferenceDocument = UserPreference &
   Document<MogooseTypes.ObjectId>;
 
-@Schema()
+@Schema({ timestamps: true })
 export class UserPreference {
   @Prop({ required: true })
   key: UserPreferenceProperty;

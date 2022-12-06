@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { rootMongooseTestModule } from '../../../test/rootMongooseTest.module';
+import { SystemModule } from '../system/system.module';
 import { TransactionTemplateModule } from '../transaction-templates/transaction-templates.module';
 import { TransactionsModule } from '../transactions/transactions.module';
 
@@ -17,6 +18,7 @@ describe('TasksController', () => {
         rootMongooseTestModule(),
         TransactionTemplateModule,
         TransactionsModule,
+        SystemModule,
       ],
       controllers: [TasksController],
       providers: [TasksService],
@@ -31,7 +33,7 @@ describe('TasksController', () => {
   });
 
   it('should be defined', async () => {
-    const result = { added: 1, skipped: 0 };
+    const result = { added: 1, skipped: 0, missingData: 0 };
     jest
       .spyOn(service, 'generateTransactions')
       .mockImplementation(() => Promise.resolve(result));

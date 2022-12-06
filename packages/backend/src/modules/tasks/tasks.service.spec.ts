@@ -4,6 +4,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { rootMongooseTestModule } from '../../../test/rootMongooseTest.module';
 import { getMongoConnection } from '../../config/memoryDatabaseServer';
 import { parseObjectId } from '../../types/objectId';
+import { SystemModule } from '../system/system.module';
 import { TransactionTemplateModule } from '../transaction-templates/transaction-templates.module';
 import { TransactionsModule } from '../transactions/transactions.module';
 import { TransactionsService } from '../transactions/transactions.service';
@@ -47,6 +48,7 @@ describe('TasksService', () => {
         UserDataModule,
         TransactionTemplateModule,
         TransactionsModule,
+        SystemModule,
       ],
       providers: [TasksService],
     }).compile();

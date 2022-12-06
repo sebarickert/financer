@@ -7,7 +7,7 @@ import { User } from '../../users/schemas/user.schema';
 
 export type AccountDocument = Account & Document<MogooseTypes.ObjectId>;
 
-@Schema()
+@Schema({ timestamps: true })
 export class Account {
   @Prop({ required: true })
   name: string;

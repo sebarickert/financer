@@ -7,7 +7,7 @@ import { User } from '../../users/schemas/user.schema';
 
 export type TransactionDocument = Transaction & Document<MogooseTypes.ObjectId>;
 
-@Schema()
+@Schema({ timestamps: true })
 export class Transaction {
   @Prop({
     index: true,
