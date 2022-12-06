@@ -24,6 +24,7 @@ import { capitalize } from '../../../utils/capitalize';
 interface TransactionTemplateFormProps {
   amount?: number;
   dayOfMonth?: number;
+  dayOfMonthToCreate?: number;
   description?: string;
   errors: string[];
   fromAccount?: string;
@@ -40,6 +41,7 @@ interface TransactionTemplateFormProps {
 export const TransactionTemplateForm = ({
   amount,
   dayOfMonth,
+  dayOfMonthToCreate,
   description,
   errors,
   onSubmit,
@@ -56,10 +58,10 @@ export const TransactionTemplateForm = ({
   const [accounts, setAccounts] = useState<Option[]>();
   const [inputAmountValue, setInputAmountValue] = useState<number | null>(null);
   const [selectedTransactionType, setSelectedTransactionType] = useState(
-    transactionType || TransactionType.INCOME
+    transactionType ?? TransactionType.INCOME
   );
   const [selectedTransactionTemplateType, setSelectedTransactionTemplateType] =
-    useState(TransactionTemplateType.MANUAL);
+    useState(templateType ?? TransactionTemplateType.MANUAL);
 
   const handleTransactionTypeChange = (
     event: ChangeEvent<HTMLSelectElement>
@@ -151,6 +153,7 @@ export const TransactionTemplateForm = ({
       description: newDescription,
       amount: newAmount,
       dayOfMonth: newDayOfMonth,
+      dayOfMonthToCreate: newDayOfMonthToCreate,
       fromAccount: newFromAccount,
       toAccount: newToAccount,
     } = event.target;
@@ -187,6 +190,9 @@ export const TransactionTemplateForm = ({
       description: newDescription.value || '',
       dayOfMonth: isShortcutTypeOfAuto
         ? Number(newDayOfMonth.value)
+        : undefined,
+      dayOfMonthToCreate: isShortcutTypeOfAuto
+        ? Number(newDayOfMonthToCreate.value)
         : undefined,
       categories: transactionCategoryMappings,
     };
@@ -274,17 +280,16 @@ export const TransactionTemplateForm = ({
             <Select
               id="templateType"
               options={templateTypes}
-              defaultValue={templateType ?? selectedTransactionTemplateType}
+              defaultValue={selectedTransactionTemplateType}
               isRequired
               handleOnChange={handleTransactionTemplateTypeChange}
-              isDisabled
             >
               Template type
             </Select>
             <Select
               id="transactionType"
               options={transactionTypes}
-              defaultValue={transactionType ?? selectedTransactionType}
+              defaultValue={selectedTransactionType}
               isRequired
               handleOnChange={handleTransactionTypeChange}
             >
@@ -327,16 +332,31 @@ export const TransactionTemplateForm = ({
             )}
             {selectedTransactionTemplateType ===
               TransactionTemplateType.AUTO && (
-              <Input
-                id="dayOfMonth"
-                type="number"
-                min={1}
-                max={31}
-                isDate
-                value={Number.isNaN(dayOfMonth) ? '' : dayOfMonth}
-              >
-                Day of month
-              </Input>
+              <>
+                {' '}
+                <Input
+                  id="dayOfMonth"
+                  type="number"
+                  min={1}
+                  max={31}
+                  isDate
+                  value={Number.isNaN(dayOfMonth) ? '' : dayOfMonth}
+                >
+                  Day of month for transaction
+                </Input>
+                <Input
+                  id="dayOfMonthToCreate"
+                  type="number"
+                  min={1}
+                  max={31}
+                  isDate
+                  value={
+                    Number.isNaN(dayOfMonthToCreate) ? '' : dayOfMonthToCreate
+                  }
+                >
+                  Day of month to create
+                </Input>
+              </>
             )}
           </div>
         </section>

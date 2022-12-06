@@ -102,6 +102,7 @@ export const EditTransactionTemplate = (): JSX.Element => {
         submitLabel="Update"
         amount={transactionTemplate.amount ?? undefined}
         dayOfMonth={transactionTemplate.dayOfMonth ?? undefined}
+        dayOfMonthToCreate={transactionTemplate.dayOfMonthToCreate ?? undefined}
         description={transactionTemplate.description ?? undefined}
         fromAccount={transactionTemplate.fromAccount ?? undefined}
         toAccount={transactionTemplate.toAccount ?? undefined}
