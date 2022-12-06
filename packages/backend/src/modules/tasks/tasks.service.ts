@@ -30,9 +30,7 @@ export class TasksService {
 
     const result = await Promise.all(
       templates.map(async (template) => {
-        const transactionData =
-          this.templateService.getTransactionFromTemplate(template);
-        const userId = template.userId;
+        if (!template.amount || !template.description) return 'missingData';
 
         const hasAddedTransactionThisMonth = templateLogEntries.some(
           (entry) => {
@@ -46,9 +44,11 @@ export class TasksService {
           },
         );
 
-        if (hasAddedTransactionThisMonth) {
-          return 'skipped';
-        }
+        if (hasAddedTransactionThisMonth) return 'skipped';
+
+        const transactionData =
+          this.templateService.getTransactionFromTemplate(template);
+        const userId = template.userId;
 
         const transaction = await this.transactionsService.create(
           userId,
@@ -71,13 +71,15 @@ export class TasksService {
       (acc, curr) => {
         if (curr === 'skipped') {
           acc.skipped += 1;
+        } else if (curr === 'missingData') {
+          acc.missingData += 1;
         } else {
           acc.added += 1;
         }
 
         return acc;
       },
-      { skipped: 0, added: 0 },
+      { skipped: 0, added: 0, missingData: 0 },
     );
   }
 }
