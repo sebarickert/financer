@@ -9,7 +9,7 @@ import { User } from '../../users/schemas/user.schema';
 export type TransactionTemplateDocument = TransactionTemplate &
   Document<MogooseTypes.ObjectId>;
 
-@Schema({ collection: 'transaction-templates' })
+@Schema({ timestamps: true, collection: 'transaction-templates' })
 export class TransactionTemplate {
   @Prop({
     required: true,

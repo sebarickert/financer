@@ -8,7 +8,7 @@ import { User } from '../../users/schemas/user.schema';
 export type AccountBalanceChangeDocument = AccountBalanceChange &
   Document<MogooseTypes.ObjectId>;
 
-@Schema({ collection: 'account-balance-changes' })
+@Schema({ timestamps: true, collection: 'account-balance-changes' })
 export class AccountBalanceChange {
   @Prop({ default: new Date(), required: true })
   date: Date;

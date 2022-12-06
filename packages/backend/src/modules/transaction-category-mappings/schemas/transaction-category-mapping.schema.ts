@@ -9,7 +9,7 @@ import { User } from '../../users/schemas/user.schema';
 export type TransactionCategoryMappingDocument = TransactionCategoryMapping &
   Document<MogooseTypes.ObjectId>;
 
-@Schema({ collection: 'transaction-category-mappings' })
+@Schema({ timestamps: true, collection: 'transaction-category-mappings' })
 export class TransactionCategoryMapping {
   @Prop({
     required: true,

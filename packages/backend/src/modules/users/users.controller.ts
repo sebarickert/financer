@@ -45,7 +45,7 @@ export class UsersController {
   }
 
   @Post('my-user/my-data')
-  @Auth('test-user')
+  @Auth(Role.testUser)
   overrideAllOwnUserData(
     @UserId() userId: ObjectId,
     @Body() userData: ImportUserDataDto,

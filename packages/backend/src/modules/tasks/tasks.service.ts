@@ -2,6 +2,8 @@ import { TransactionTemplateType } from '@local/types';
 import { Injectable } from '@nestjs/common';
 
 import { getLastDayOfMonth } from '../../utils/date-utils';
+import { SystemLogLevel } from '../system/dto/system-log-level';
+import { SystemService } from '../system/system.service';
 import { TransactionTemplatesService } from '../transaction-templates/transaction-templates.service';
 import { TransactionsService } from '../transactions/transactions.service';
 
@@ -10,6 +12,7 @@ export class TasksService {
   constructor(
     private readonly templateService: TransactionTemplatesService,
     private readonly transactionsService: TransactionsService,
+    private readonly systemService: SystemService,
   ) {}
 
   async generateTransactions() {
@@ -67,7 +70,7 @@ export class TasksService {
       }),
     );
 
-    return result.reduce(
+    const output = result.reduce(
       (acc, curr) => {
         if (curr === 'skipped') {
           acc.skipped += 1;
@@ -81,5 +84,14 @@ export class TasksService {
       },
       { skipped: 0, added: 0, missingData: 0 },
     );
+
+    await this.systemService.createSystemLogEntry({
+      module: 'tasks',
+      service: 'generateTransactions',
+      message: `Added ${output.added} transactions, skipped ${output.skipped} and found ${output.missingData} templates with missing data`,
+      level: SystemLogLevel.INFO,
+    });
+
+    return output;
   }
 }

@@ -4,7 +4,7 @@ import { Document, Types as MogooseTypes } from 'mongoose';
 
 export type UserDocument = User & Document<MogooseTypes.ObjectId>;
 
-@Schema()
+@Schema({ timestamps: true })
 export class User {
   @Prop({ required: true })
   name: string;

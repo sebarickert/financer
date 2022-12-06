@@ -8,7 +8,7 @@ import { User } from '../../users/schemas/user.schema';
 export type TransactionCategoryDocument = TransactionCategory &
   Document<MogooseTypes.ObjectId>;
 
-@Schema({ collection: 'transaction-categories' })
+@Schema({ timestamps: true, collection: 'transaction-categories' })
 export class TransactionCategory {
   @Prop({
     required: true,

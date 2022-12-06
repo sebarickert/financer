@@ -11,7 +11,7 @@ import { TransactionTemplate } from './transaction-template.schema';
 export type TransactionTemplateLogDocument = TransactionTemplateLog &
   Document<MogooseTypes.ObjectId>;
 
-@Schema({ collection: 'transaction-template-logs' })
+@Schema({ timestamps: true, collection: 'transaction-template-logs' })
 export class TransactionTemplateLog {
   @Prop({
     required: true,
