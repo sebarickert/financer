@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
+import { Provider } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { Notification } from './components/elements/notification/notification';
 import { Financer } from './Financer';
 import { useAuthenticationStatus } from './hooks/useAuthenticationStatus';
+import { store } from './redux/store';
 
 export const App = (): JSX.Element => {
   const authenticationStatus = useAuthenticationStatus();
@@ -24,7 +26,7 @@ export const App = (): JSX.Element => {
   }, [navigate, isOnboardingVisible, authenticationStatus]);
 
   return (
-    <>
+    <Provider store={store}>
       {authenticationStatus.errors && (
         <Notification type="error" label="Something went wrong!">
           {authenticationStatus.errors?.join(' ') || ''}
@@ -37,6 +39,6 @@ export const App = (): JSX.Element => {
         </Notification>
       )}
       <Financer isLoggedIn={authenticationStatus?.authenticated} />
-    </>
+    </Provider>
   );
 };
