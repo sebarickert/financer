@@ -21,6 +21,6 @@ export class RolesGuard extends BaseGuard {
       return true;
     }
     const user = this.getRequestUser(context);
-    return requiredRoles.some((role) => user.roles?.includes(role));
+    return requiredRoles.some((role) => user?.roles?.includes(role));
   }
 }
