@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: create-transaction-from-templates
+  namespace: financer
+spec:
+  schedule: "30 3 * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      template:
+        spec:
+          containers:
+            - name: create-transaction-from-templates
+              image: appropriate/curl
+              args:
+                - /bin/sh
+                - -c
+                - |
+                  echo "Starting transaction creation.."
+                  RESPONSE=$(curl -so /dev/null -w '%{response_code}' http://webapp-deployment:80/api/tasks/generate-transactions)
+                  if [ $RESPONSE == 200 ]; then
+                          echo "Transaction created, response code: ${RESPONSE}"
+                  else
+                          echo "Failed to create transactions, response code: ${RESPONSE}"
+                  fi
+          restartPolicy: Never
