@@ -19,7 +19,7 @@ spec:
                 - -c
                 - |
                   echo "Starting transaction creation.."
-                  RESPONSE=$(curl -so /dev/null -w '%{response_code}' http://webapp-deployment:80/api/tasks/generate-transactions)
+                  RESPONSE=$(curl -so /dev/null -w '%{response_code}' http://financer:80/api/tasks/generate-transactions)
                   if [ $RESPONSE == 200 ]; then
                           echo "Transaction created, response code: ${RESPONSE}"
                   else
