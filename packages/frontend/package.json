@@ -44,9 +44,7 @@
     "format": "eslint src/**/*.ts{,x} --fix",
     "lint": "eslint src/**/*.ts{,x}",
     "eject": "react-scripts eject",
-    "types:generate": "npx @rtk-query/codegen-openapi openapi-config.js && eslint redux/api/generated/*.ts --fix",
-    "types:download": "curl -o ./redux/schema/api-docs.json https://petstore.swagger.io/v2/swagger.json && prettier --write redux/schema/api-docs.json",
-    "types:refresh": "npm run types:download && npm run types:generate",
+    "types:generate": "npx @rtk-query/codegen-openapi openapi-config.js && eslint src/redux/api/generated/*.ts --fix",
     "postinstall": "npm run types:generate"
   },
   "eslintConfig": {
