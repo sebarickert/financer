@@ -81,6 +81,10 @@ export class TransactionTemplatesController {
   @Patch(':id')
   @ApiBody({ type: UpdateTransactionTemplateDto })
   @ApiOkResponse({ type: TransactionTemplateDto })
+  @ApiParam({
+    name: 'id',
+    type: String,
+  })
   update(
     @UserId() userId: ObjectId,
     @Param('id', ValidateEntityId) id: ObjectId,

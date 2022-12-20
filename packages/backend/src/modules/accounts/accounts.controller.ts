@@ -81,6 +81,10 @@ export class AccountsController {
   @Patch(':id')
   @ApiBody({ type: UpdateAccountDto })
   @ApiOkResponse({ type: AccountDto })
+  @ApiParam({
+    name: 'id',
+    type: String,
+  })
   async update(
     @UserId() userId: ObjectId,
     @Param('id', ValidateEntityId) id: ObjectId,
