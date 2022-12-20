@@ -124,6 +124,10 @@ export class TransfersController {
   @Patch(':id')
   @ApiBody({ type: UpdateTransferDto })
   @ApiOkResponse({ type: TransferDto })
+  @ApiParam({
+    name: 'id',
+    type: String,
+  })
   update(
     @UserId() userId: ObjectId,
     @Param('id', ValidateEntityId) id: ObjectId,
