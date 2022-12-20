@@ -1,8 +1,8 @@
 module.exports = {
-  schemaFile: './redux/schema/api-docs.json',
-  apiFile: './redux/api/emptyPortalApi.ts',
-  apiImport: 'emptyPortalApi',
-  outputFile: './redux/api/generated/portalApi.ts',
-  exportName: 'portalApi',
+  schemaFile: './src/redux/schema/api-spec.json',
+  apiFile: './src/redux/api/emptyFinancer.ts',
+  apiImport: 'emptyFinancerApi',
+  outputFile: './src/redux/api/generated/financerApi.ts',
+  exportName: 'financerApi',
   hooks: true,
 };
