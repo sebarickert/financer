@@ -1,4 +1,4 @@
-import { UpdateUserPreferenceDto, UserPreferenceProperty } from '@local/types';
+import { UserPreferenceProperty } from '@local/types';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -6,6 +6,7 @@ import { Model } from 'mongoose';
 import { ObjectId } from '../../types/objectId';
 
 import { CreateUserPreferenceDto } from './dto/create-user-preference.dto';
+import { UpdateUserPreferenceDto } from './dto/update-user-preference.dto';
 import {
   UserPreference,
   UserPreferenceDocument,

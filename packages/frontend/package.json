@@ -38,6 +38,7 @@
     "workbox-streams": "^6.5.3"
   },
   "scripts": {
+    "postinstall": "npm run types:generate",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

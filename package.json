@@ -6,7 +6,6 @@
     "packages/*"
   ],
   "scripts": {
-    "postinstall": "npm run types:update",
     "start": "run-p start:types start:backend start:frontend",
     "start:ci": "NODE_ENV=test PORT=3000 node build/server/main.js",
     "start:test": "run-p start:types start:backend:test start:frontend",

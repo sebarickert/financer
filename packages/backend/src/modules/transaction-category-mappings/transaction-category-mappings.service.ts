@@ -1,9 +1,10 @@
-import { TransactionMonthSummaryDto, TransactionType } from '@local/types';
+import { TransactionType } from '@local/types';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import { ObjectId } from '../../types/objectId';
+import { TransactionMonthSummaryDto } from '../transaction-categories/dto/transaction-month-summary.dto';
 
 import { CreateTransactionCategoryMappingDto } from './dto/create-transaction-category-mapping.dto';
 import { UpdateTransactionCategoryMappingDto } from './dto/update-transaction-category-mapping.dto';
