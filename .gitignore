@@ -5,5 +5,10 @@ build
 dist
 tsconfig.tsbuildinfo
 
+packages/backend/api-spec.json
+
 !.vscode/settings.json
 !.vscode/jsx.code-snippets
+
+packages/frontend/src/redux/api/generated/*
+!packages/frontend/src/redux/api/generated/.keepme

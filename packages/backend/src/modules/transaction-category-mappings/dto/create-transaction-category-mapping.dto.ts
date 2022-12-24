@@ -1,21 +1,8 @@
-import {
-  CreateTransactionCategoryMappingDto as SharedCreateTransactionCategoryMappingDto,
-  CreateTransactionCategoryMappingDtoWithoutTransaction as SharedCreateTransactionCategoryMappingDtoWithoutTransaction,
-} from '@local/types';
-import { Transform } from 'class-transformer';
+import { OmitType } from '@nestjs/swagger';
 
-import { ObjectId } from '../../../types/objectId';
-import { IsInstanceOfObjectId } from '../../../utils/is-instance-of-object-id.decorator';
-import { objectIdTransformer } from '../../../utils/object-id-transformer';
+import { TransactionCategoryMappingDto } from './transaction-category-mapping.dto';
 
-export class CreateTransactionCategoryMappingDto extends SharedCreateTransactionCategoryMappingDto<ObjectId> {
-  @IsInstanceOfObjectId({ message: 'category_id must not be empty.' })
-  @Transform(objectIdTransformer)
-  category_id: ObjectId;
-}
-
-export class CreateTransactionCategoryMappingDtoWithoutTransaction extends SharedCreateTransactionCategoryMappingDtoWithoutTransaction<ObjectId> {
-  @IsInstanceOfObjectId({ message: 'category_id must not be empty.' })
-  @Transform(objectIdTransformer)
-  category_id: ObjectId;
-}
+export class CreateTransactionCategoryMappingDto extends OmitType(
+  TransactionCategoryMappingDto,
+  ['_id', 'owner'] as const,
+) {}

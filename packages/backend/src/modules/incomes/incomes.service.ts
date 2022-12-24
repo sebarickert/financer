@@ -1,12 +1,9 @@
-import {
-  AccountType,
-  PaginationDto,
-  TransactionMonthSummaryDto,
-  TransactionType,
-} from '@local/types';
+import { AccountType, TransactionType } from '@local/types';
 import { Injectable } from '@nestjs/common';
 
 import { ObjectId } from '../../types/objectId';
+import { PaginationDto } from '../../types/pagination.dto';
+import { TransactionMonthSummaryDto } from '../transactions/dto/transaction-month-summary.dto';
 import { TransactionsService } from '../transactions/transactions.service';
 
 import { CreateIncomeDto } from './dto/create-income.dto';

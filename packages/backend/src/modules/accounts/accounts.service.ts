@@ -1,11 +1,4 @@
-import {
-  CreateAccountDto,
-  UpdateAccountDto,
-  AccountDto,
-  PaginationDto,
-  AccountType,
-  TransactionType,
-} from '@local/types';
+import { AccountType, TransactionType } from '@local/types';
 import {
   forwardRef,
   Inject,
@@ -17,11 +10,15 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import { ObjectId } from '../../types/objectId';
+import { PaginationDto } from '../../types/pagination.dto';
 import { sumArrayItems } from '../../utils/arrays';
 import { AccountBalanceChangesService } from '../account-balance-changes/account-balance-changes.service';
 import { TransactionsService } from '../transactions/transactions.service';
 
 import { AccountBalanceHistoryDto } from './dto/account-balance-history.dto';
+import { AccountDto } from './dto/account.dto';
+import { CreateAccountDto } from './dto/create-account.dto';
+import { UpdateAccountDto } from './dto/update-account.dto';
 import { Account, AccountDocument } from './schemas/account.schema';
 
 @Injectable()
