@@ -19,9 +19,12 @@ export const isAuth0AuthEnabled = () =>
   isNotEmptyString(process.env.AUTH0_CLIENT_SECRET);
 
 const parseMongoDbUri = async (): Promise<string> => {
-  if (!isNodeEnvInTest()) {
-    return `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/${process.env.DB_NAME}`;
+  if (!isNodeEnvInTest() && !shouldOnlyExportApiSpec()) {
+    return Promise.resolve(
+      `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/${process.env.DB_NAME}`,
+    );
   }
+
   return getMemoryDbUri();
 };
 
