@@ -18,6 +18,7 @@ export const ApiPaginatedDto = <TModel extends Type<any>>(model: TModel) => {
                 items: { $ref: getSchemaPath(model) },
               },
             },
+            required: ['data'],
           },
         ],
       },

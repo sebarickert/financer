@@ -25,6 +25,7 @@ import { UpdateAccountDto } from './dto/update-account.dto';
 
 @Controller('api/accounts')
 @ApiTags('Accounts')
+@ApiExtraModels(AccountDto)
 @LoggedIn()
 export class AccountsController {
   constructor(private readonly accountsService: AccountsService) {}
