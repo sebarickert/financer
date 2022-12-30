@@ -2,7 +2,11 @@ import fs from 'fs';
 
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import {
+  DocumentBuilder,
+  SwaggerDocumentOptions,
+  SwaggerModule,
+} from '@nestjs/swagger';
 import { json } from 'express';
 
 import { AppModule } from './app.module';
@@ -15,6 +19,11 @@ import { startMemoryDb } from './config/memoryDatabaseServer';
 import { mockAuthenticationMiddleware } from './config/mockAuthenticationMiddleware';
 
 const PORT = process.env.PORT || 4000;
+
+const options: SwaggerDocumentOptions = {
+  operationIdFactory: (controllerKey, methodKey) =>
+    `${controllerKey.replace('Controller', '')}_${methodKey}`,
+};
 
 async function bootstrap() {
   if (isNodeEnvInTest() || shouldOnlyExportApiSpec()) await startMemoryDb();
@@ -35,7 +44,7 @@ async function bootstrap() {
       .setTitle('Financer')
       .setVersion('1.0')
       .build();
-    const document = SwaggerModule.createDocument(app, config);
+    const document = SwaggerModule.createDocument(app, config, options);
     SwaggerModule.setup('api', app, document);
 
     if (shouldOnlyExportApiSpec()) {

@@ -3,7 +3,7 @@
   "paths": {
     "/auth/status": {
       "get": {
-        "operationId": "AuthController_getAuthenticationStatus",
+        "operationId": "Auth_getAuthenticationStatus",
         "parameters": [],
         "responses": {
           "200": {
@@ -22,7 +22,7 @@
     },
     "/auth/github": {
       "get": {
-        "operationId": "AuthController_loginGithub",
+        "operationId": "Auth_loginGithub",
         "parameters": [],
         "responses": {
           "default": {
@@ -34,7 +34,7 @@
     },
     "/auth/auth0": {
       "get": {
-        "operationId": "AuthController_loginAuth0",
+        "operationId": "Auth_loginAuth0",
         "parameters": [],
         "responses": {
           "default": {
@@ -46,7 +46,7 @@
     },
     "/auth/github/redirect": {
       "get": {
-        "operationId": "AuthController_loginGithubCallback",
+        "operationId": "Auth_loginGithubCallback",
         "parameters": [],
         "responses": {
           "default": { "description": "Callback endpoint from github oauth" }
@@ -56,7 +56,7 @@
     },
     "/auth/auth0/redirect": {
       "get": {
-        "operationId": "AuthController_loginAuth0Callback",
+        "operationId": "Auth_loginAuth0Callback",
         "parameters": [],
         "responses": {
           "default": { "description": "Callback endpoint from auth0 oauth" }
@@ -66,7 +66,7 @@
     },
     "/auth/logout": {
       "get": {
-        "operationId": "AuthController_logout",
+        "operationId": "Auth_logout",
         "parameters": [],
         "responses": {
           "302": {
@@ -78,7 +78,7 @@
     },
     "/auth/logout/auth0": {
       "get": {
-        "operationId": "AuthController_logoutAuth0",
+        "operationId": "Auth_logoutAuth0",
         "parameters": [],
         "responses": {
           "302": {
@@ -90,7 +90,7 @@
     },
     "/api/users/my-user": {
       "get": {
-        "operationId": "UsersController_findOwnUser",
+        "operationId": "Users_findOwnUser",
         "parameters": [],
         "responses": {
           "200": {
@@ -105,7 +105,7 @@
         "tags": ["Users"]
       },
       "patch": {
-        "operationId": "UsersController_updateOwnUser",
+        "operationId": "Users_updateOwnUser",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -130,7 +130,7 @@
     },
     "/api/users/my-user/my-data": {
       "get": {
-        "operationId": "UsersController_getAllOwnUserData",
+        "operationId": "Users_getAllOwnUserData",
         "parameters": [],
         "responses": {
           "200": {
@@ -145,7 +145,7 @@
         "tags": ["Users"]
       },
       "post": {
-        "operationId": "UsersController_overrideAllOwnUserData",
+        "operationId": "Users_overrideAllOwnUserData",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -170,7 +170,7 @@
     },
     "/api/users": {
       "get": {
-        "operationId": "UsersController_findAll",
+        "operationId": "Users_findAll",
         "parameters": [],
         "responses": {
           "200": {
@@ -190,7 +190,7 @@
     },
     "/api/users/{id}": {
       "get": {
-        "operationId": "UsersController_findOne",
+        "operationId": "Users_findOne",
         "parameters": [
           {
             "name": "id",
@@ -213,7 +213,7 @@
         "tags": ["Users"]
       },
       "patch": {
-        "operationId": "UsersController_update",
+        "operationId": "Users_update",
         "parameters": [
           {
             "name": "id",
@@ -246,7 +246,7 @@
     },
     "/api/users/{id}/my-data": {
       "get": {
-        "operationId": "UsersController_getAllOneUserData",
+        "operationId": "Users_getAllOneUserData",
         "parameters": [
           {
             "name": "id",
@@ -271,7 +271,7 @@
     },
     "/api/accounts": {
       "post": {
-        "operationId": "AccountsController_create",
+        "operationId": "Accounts_create",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -294,7 +294,7 @@
         "tags": ["Accounts"]
       },
       "get": {
-        "operationId": "AccountsController_findAllByUser",
+        "operationId": "Accounts_findAllByUser",
         "parameters": [
           {
             "name": "limit",
@@ -317,12 +317,22 @@
         ],
         "responses": {
           "200": {
-            "description": "Return all user accounts",
+            "description": "",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/AccountDto" }
+                  "allOf": [
+                    { "$ref": "#/components/schemas/PaginationDto" },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": { "$ref": "#/components/schemas/AccountDto" }
+                        }
+                      },
+                      "required": ["data"]
+                    }
+                  ]
                 }
               }
             }
@@ -333,7 +343,7 @@
     },
     "/api/accounts/{id}": {
       "get": {
-        "operationId": "AccountsController_findOne",
+        "operationId": "Accounts_findOne",
         "parameters": [
           {
             "name": "id",
@@ -355,7 +365,7 @@
         "tags": ["Accounts"]
       },
       "patch": {
-        "operationId": "AccountsController_update",
+        "operationId": "Accounts_update",
         "parameters": [
           {
             "name": "id",
@@ -385,7 +395,7 @@
         "tags": ["Accounts"]
       },
       "delete": {
-        "operationId": "AccountsController_remove",
+        "operationId": "Accounts_remove",
         "parameters": [
           {
             "name": "id",
@@ -400,7 +410,7 @@
     },
     "/api/accounts/{id}/balance-history": {
       "get": {
-        "operationId": "AccountsController_getAccountBalanceHistory",
+        "operationId": "Accounts_getAccountBalanceHistory",
         "parameters": [
           {
             "name": "id",
@@ -426,7 +436,7 @@
     },
     "/api/transactions": {
       "get": {
-        "operationId": "TransactionsController_findAllByUser",
+        "operationId": "Transactions_findAllByUser",
         "parameters": [
           {
             "name": "month",
@@ -481,7 +491,8 @@
                             "$ref": "#/components/schemas/TransactionDto"
                           }
                         }
-                      }
+                      },
+                      "required": ["data"]
                     }
                   ]
                 }
@@ -494,7 +505,7 @@
     },
     "/api/transactions/monthly-summaries": {
       "get": {
-        "operationId": "TransactionsController_findMonthlySummariesByUser",
+        "operationId": "Transactions_findMonthlySummariesByUser",
         "parameters": [
           {
             "name": "month",
@@ -543,7 +554,8 @@
                             "$ref": "#/components/schemas/TransactionMonthSummaryDto"
                           }
                         }
-                      }
+                      },
+                      "required": ["data"]
                     }
                   ]
                 }
@@ -556,7 +568,7 @@
     },
     "/api/transactions/account/{id}": {
       "get": {
-        "operationId": "TransactionsController_findAllByAccount",
+        "operationId": "Transactions_findAllByAccount",
         "parameters": [
           {
             "name": "month",
@@ -605,7 +617,8 @@
                             "$ref": "#/components/schemas/TransactionDto"
                           }
                         }
-                      }
+                      },
+                      "required": ["data"]
                     }
                   ]
                 }
@@ -618,7 +631,7 @@
     },
     "/api/transactions/{id}": {
       "get": {
-        "operationId": "TransactionsController_findOne",
+        "operationId": "Transactions_findOne",
         "parameters": [
           {
             "name": "id",
@@ -642,7 +655,7 @@
     },
     "/api/transaction-categories": {
       "post": {
-        "operationId": "TransactionCategoriesController_create",
+        "operationId": "TransactionCategories_create",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -667,7 +680,7 @@
         "tags": ["Transaction categories"]
       },
       "get": {
-        "operationId": "TransactionCategoriesController_findAllByUser",
+        "operationId": "TransactionCategories_findAllByUser",
         "parameters": [],
         "responses": {
           "200": {
@@ -689,7 +702,7 @@
     },
     "/api/transaction-categories/{id}": {
       "get": {
-        "operationId": "TransactionCategoriesController_findOne",
+        "operationId": "TransactionCategories_findOne",
         "parameters": [
           {
             "name": "id",
@@ -713,7 +726,7 @@
         "tags": ["Transaction categories"]
       },
       "patch": {
-        "operationId": "TransactionCategoriesController_update",
+        "operationId": "TransactionCategories_update",
         "parameters": [
           {
             "name": "id",
@@ -747,7 +760,7 @@
         "tags": ["Transaction categories"]
       },
       "delete": {
-        "operationId": "TransactionCategoriesController_remove",
+        "operationId": "TransactionCategories_remove",
         "parameters": [
           {
             "name": "id",
@@ -762,7 +775,7 @@
     },
     "/api/transaction-categories/{id}/summary": {
       "get": {
-        "operationId": "TransactionCategoriesController_getCategorySummary",
+        "operationId": "TransactionCategories_getCategorySummary",
         "parameters": [
           {
             "name": "id",
@@ -791,7 +804,7 @@
     },
     "/api/user-preferences": {
       "get": {
-        "operationId": "UserPreferencesController_findAll",
+        "operationId": "UserPreferences_findAll",
         "parameters": [],
         "responses": {
           "200": {
@@ -809,7 +822,7 @@
         "tags": ["User preferences"]
       },
       "patch": {
-        "operationId": "UserPreferencesController_update",
+        "operationId": "UserPreferences_update",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -836,7 +849,7 @@
     },
     "/api/user-preferences/{userPreferenceProperty}": {
       "get": {
-        "operationId": "UserPreferencesController_findOne",
+        "operationId": "UserPreferences_findOne",
         "parameters": [
           {
             "name": "userPreferenceProperty",
@@ -872,7 +885,7 @@
     },
     "/api/transaction-templates": {
       "post": {
-        "operationId": "TransactionTemplatesController_create",
+        "operationId": "TransactionTemplates_create",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -897,7 +910,7 @@
         "tags": ["Transaction templates"]
       },
       "get": {
-        "operationId": "TransactionTemplatesController_findAllByUser",
+        "operationId": "TransactionTemplates_findAllByUser",
         "parameters": [],
         "responses": {
           "200": {
@@ -919,7 +932,7 @@
     },
     "/api/transaction-templates/manual": {
       "get": {
-        "operationId": "TransactionTemplatesController_findAllManualTypeByUser",
+        "operationId": "TransactionTemplates_findAllManualTypeByUser",
         "parameters": [],
         "responses": {
           "200": {
@@ -941,7 +954,7 @@
     },
     "/api/transaction-templates/{id}": {
       "get": {
-        "operationId": "TransactionTemplatesController_findOne",
+        "operationId": "TransactionTemplates_findOne",
         "parameters": [
           {
             "name": "id",
@@ -965,7 +978,7 @@
         "tags": ["Transaction templates"]
       },
       "patch": {
-        "operationId": "TransactionTemplatesController_update",
+        "operationId": "TransactionTemplates_update",
         "parameters": [
           {
             "name": "id",
@@ -999,7 +1012,7 @@
         "tags": ["Transaction templates"]
       },
       "delete": {
-        "operationId": "TransactionTemplatesController_remove",
+        "operationId": "TransactionTemplates_remove",
         "parameters": [
           {
             "name": "id",
@@ -1014,7 +1027,7 @@
     },
     "/api/expenses": {
       "get": {
-        "operationId": "ExpensesController_findAllByUser",
+        "operationId": "Expenses_findAllByUser",
         "parameters": [
           {
             "name": "month",
@@ -1061,7 +1074,8 @@
                           "type": "array",
                           "items": { "$ref": "#/components/schemas/ExpenseDto" }
                         }
-                      }
+                      },
+                      "required": ["data"]
                     }
                   ]
                 }
@@ -1072,7 +1086,7 @@
         "tags": ["Expenses"]
       },
       "post": {
-        "operationId": "ExpensesController_create",
+        "operationId": "Expenses_create",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -1097,7 +1111,7 @@
     },
     "/api/expenses/monthly-summaries": {
       "get": {
-        "operationId": "ExpensesController_findMonthlySummariesByuser",
+        "operationId": "Expenses_findMonthlySummariesByuser",
         "parameters": [
           {
             "name": "month",
@@ -1146,7 +1160,8 @@
                             "$ref": "#/components/schemas/TransactionMonthSummaryDto"
                           }
                         }
-                      }
+                      },
+                      "required": ["data"]
                     }
                   ]
                 }
@@ -1159,7 +1174,7 @@
     },
     "/api/expenses/{id}": {
       "get": {
-        "operationId": "ExpensesController_findOne",
+        "operationId": "Expenses_findOne",
         "parameters": [
           {
             "name": "id",
@@ -1181,7 +1196,7 @@
         "tags": ["Expenses"]
       },
       "patch": {
-        "operationId": "ExpensesController_update",
+        "operationId": "Expenses_update",
         "parameters": [
           {
             "name": "id",
@@ -1211,7 +1226,7 @@
         "tags": ["Expenses"]
       },
       "delete": {
-        "operationId": "ExpensesController_remove",
+        "operationId": "Expenses_remove",
         "parameters": [
           {
             "name": "id",
@@ -1226,7 +1241,7 @@
     },
     "/api/incomes": {
       "get": {
-        "operationId": "IncomesController_findAllByUser",
+        "operationId": "Incomes_findAllByUser",
         "parameters": [
           {
             "name": "month",
@@ -1273,7 +1288,8 @@
                           "type": "array",
                           "items": { "$ref": "#/components/schemas/IncomeDto" }
                         }
-                      }
+                      },
+                      "required": ["data"]
                     }
                   ]
                 }
@@ -1284,7 +1300,7 @@
         "tags": ["Incomes"]
       },
       "post": {
-        "operationId": "IncomesController_create",
+        "operationId": "Incomes_create",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -1309,7 +1325,7 @@
     },
     "/api/incomes/monthly-summaries": {
       "get": {
-        "operationId": "IncomesController_findMonthlySummariesByuser",
+        "operationId": "Incomes_findMonthlySummariesByuser",
         "parameters": [
           {
             "name": "month",
@@ -1358,7 +1374,8 @@
                             "$ref": "#/components/schemas/TransactionMonthSummaryDto"
                           }
                         }
-                      }
+                      },
+                      "required": ["data"]
                     }
                   ]
                 }
@@ -1371,7 +1388,7 @@
     },
     "/api/incomes/{id}": {
       "get": {
-        "operationId": "IncomesController_findOne",
+        "operationId": "Incomes_findOne",
         "parameters": [
           {
             "name": "id",
@@ -1393,7 +1410,7 @@
         "tags": ["Incomes"]
       },
       "patch": {
-        "operationId": "IncomesController_update",
+        "operationId": "Incomes_update",
         "parameters": [
           {
             "name": "id",
@@ -1423,7 +1440,7 @@
         "tags": ["Incomes"]
       },
       "delete": {
-        "operationId": "IncomesController_remove",
+        "operationId": "Incomes_remove",
         "parameters": [
           {
             "name": "id",
@@ -1438,7 +1455,7 @@
     },
     "/api/transfers": {
       "get": {
-        "operationId": "TransfersController_findAllByUser",
+        "operationId": "Transfers_findAllByUser",
         "parameters": [
           {
             "name": "month",
@@ -1487,7 +1504,8 @@
                             "$ref": "#/components/schemas/TransferDto"
                           }
                         }
-                      }
+                      },
+                      "required": ["data"]
                     }
                   ]
                 }
@@ -1498,7 +1516,7 @@
         "tags": ["Transfers"]
       },
       "post": {
-        "operationId": "TransfersController_create",
+        "operationId": "Transfers_create",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -1523,7 +1541,7 @@
     },
     "/api/transfers/monthly-summaries": {
       "get": {
-        "operationId": "TransfersController_findMonthlySummariesByuser",
+        "operationId": "Transfers_findMonthlySummariesByuser",
         "parameters": [
           {
             "name": "month",
@@ -1572,7 +1590,8 @@
                             "$ref": "#/components/schemas/TransactionMonthSummaryDto"
                           }
                         }
-                      }
+                      },
+                      "required": ["data"]
                     }
                   ]
                 }
@@ -1585,7 +1604,7 @@
     },
     "/api/transfers/{id}": {
       "get": {
-        "operationId": "TransfersController_findOne",
+        "operationId": "Transfers_findOne",
         "parameters": [
           {
             "name": "id",
@@ -1607,7 +1626,7 @@
         "tags": ["Transfers"]
       },
       "patch": {
-        "operationId": "TransfersController_update",
+        "operationId": "Transfers_update",
         "parameters": [
           {
             "name": "id",
@@ -1637,7 +1656,7 @@
         "tags": ["Transfers"]
       },
       "delete": {
-        "operationId": "TransfersController_remove",
+        "operationId": "Transfers_remove",
         "parameters": [
           {
             "name": "id",
@@ -1652,7 +1671,7 @@
     },
     "/health-check/ping": {
       "get": {
-        "operationId": "HealthCheckController_stuff",
+        "operationId": "HealthCheck_stuff",
         "parameters": [],
         "responses": {
           "200": {
@@ -1993,6 +2012,27 @@
         },
         "required": ["name", "type", "balance", "owner", "isDeleted"]
       },
+      "PaginationDto": {
+        "type": "object",
+        "properties": {
+          "currentPage": { "type": "number" },
+          "totalPageCount": { "type": "number" },
+          "totalRowCount": { "type": "number" },
+          "limit": { "type": "number" },
+          "hasPreviousPage": { "type": "boolean" },
+          "hasNextPage": { "type": "boolean" },
+          "data": { "type": "object" }
+        },
+        "required": [
+          "currentPage",
+          "totalPageCount",
+          "totalRowCount",
+          "limit",
+          "hasPreviousPage",
+          "hasNextPage",
+          "data"
+        ]
+      },
       "UpdateAccountDto": {
         "type": "object",
         "properties": {
@@ -2028,27 +2068,6 @@
           "totalAmount": { "type": "number" }
         },
         "required": ["_id", "count", "totalAmount"]
-      },
-      "PaginationDto": {
-        "type": "object",
-        "properties": {
-          "currentPage": { "type": "number" },
-          "totalPageCount": { "type": "number" },
-          "totalRowCount": { "type": "number" },
-          "limit": { "type": "number" },
-          "hasPreviousPage": { "type": "boolean" },
-          "hasNextPage": { "type": "boolean" },
-          "data": { "type": "object" }
-        },
-        "required": [
-          "currentPage",
-          "totalPageCount",
-          "totalRowCount",
-          "limit",
-          "hasPreviousPage",
-          "hasNextPage",
-          "data"
-        ]
       },
       "CreateTransactionCategoryDto": {
         "type": "object",
