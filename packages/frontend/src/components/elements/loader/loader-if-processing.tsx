@@ -1,12 +1,12 @@
 import { Loader } from './loader';
 
 type LoaderIfProcessingProps = {
-  isProcessing: boolean;
+  isLoading: boolean;
   children: React.ReactNode;
 };
 
-export const LoaderIfProcessing = ({
-  isProcessing,
+export const LoaderIfLoading = ({
+  isLoading: isProcessing,
   children,
 }: LoaderIfProcessingProps): JSX.Element => {
   if (isProcessing) {

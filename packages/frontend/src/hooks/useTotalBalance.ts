@@ -1,28 +1,28 @@
-import { useState, useEffect } from 'react';
+import { useMemo } from 'react';
 
-import { TransactionFilterOptions } from '../services/TransactionService';
-
-import { useAllAccounts } from './account/useAllAccounts';
+import {
+  AccountsFindAllByUserApiArg,
+  useAccountsFindAllByUserQuery,
+} from '../redux/api/generated/financerApi';
 
 export const useTotalBalance = (
-  filterOptions: Pick<TransactionFilterOptions, 'accountTypes'> = {}
-): number => {
-  const { data: accounts } = useAllAccounts(filterOptions);
-  const [totalBalance, setTotalBalance] = useState<number>(NaN);
+  filterOptions: Pick<AccountsFindAllByUserApiArg, 'accountTypes'> = {
+    accountTypes: [],
+  }
+) => {
+  const { data: accounts, ...rest } =
+    useAccountsFindAllByUserQuery(filterOptions);
 
-  useEffect(() => {
-    if (!accounts.length) {
-      setTotalBalance(NaN);
-      return;
+  const totalBalance = useMemo(() => {
+    if (!accounts?.data.length) {
+      return NaN;
     }
 
-    const total = accounts.reduce(
+    return accounts?.data.reduce(
       (currentTotal, { balance }) => currentTotal + balance,
       0
     );
-
-    setTotalBalance(total);
   }, [accounts]);
 
-  return totalBalance;
+  return { ...rest, data: totalBalance };
 };

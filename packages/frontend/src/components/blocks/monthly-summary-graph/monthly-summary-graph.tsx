@@ -8,7 +8,7 @@ import { useIncomeMonthlySummaries } from '../../../hooks/income/useIncomeMonthl
 import { useUserStatisticsSettings } from '../../../hooks/profile/user-preference/useStatisticsSettings';
 import { formatCurrency } from '../../../utils/formatCurrency';
 import { formatDateShort } from '../../../utils/formatDate';
-import { LoaderIfProcessing } from '../../elements/loader/loader-if-processing';
+import { LoaderIfLoading } from '../../elements/loader/loader-if-processing';
 
 interface BalanceGraphProps {
   className?: string;
@@ -240,9 +240,9 @@ export const MonthlySummaryGraph = ({
     <section
       className={`min-h-[300px] h-[20vh] md:h-auto md:min-h-0 md:aspect-video max-md:-mx-4 ${className}`}
     >
-      <LoaderIfProcessing isProcessing={isProcessing}>
+      <LoaderIfLoading isLoading={isProcessing}>
         <Chart type="bar" data={data} options={options} />
-      </LoaderIfProcessing>
+      </LoaderIfLoading>
     </section>
   );
 };

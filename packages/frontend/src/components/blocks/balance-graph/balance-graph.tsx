@@ -14,7 +14,7 @@ import {
   formatCurrency,
 } from '../../../utils/formatCurrency';
 import { formatDateShort } from '../../../utils/formatDate';
-import { LoaderIfProcessing } from '../../elements/loader/loader-if-processing';
+import { LoaderIfLoading } from '../../elements/loader/loader-if-processing';
 
 export type BalanceHistory = {
   date: Date;
@@ -37,7 +37,8 @@ export const BalanceGraph = ({
   const accountTypeFilter = { accountTypes: dashboardSettings?.accountTypes };
 
   const [isProcessing, startProcessing] = useTransition();
-  const totalBalance = useTotalBalance(accountTypeFilter);
+  const { data: totalBalance, isFetching: isLoadingTotalBalance } =
+    useTotalBalance(accountTypeFilter);
   const {
     data: {
       data: [latestTransaction],
@@ -257,6 +258,8 @@ export const BalanceGraph = ({
     ],
   };
 
+  const isLoading = isProcessing || isLoadingTotalBalance;
+
   return (
     <section
       className={clsx(
@@ -266,9 +269,9 @@ export const BalanceGraph = ({
         }
       )}
     >
-      <LoaderIfProcessing isProcessing={isProcessing}>
+      <LoaderIfLoading isLoading={isLoading}>
         <Chart type="line" data={data} options={options} />
-      </LoaderIfProcessing>
+      </LoaderIfLoading>
     </section>
   );
 };
