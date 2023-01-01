@@ -298,19 +298,19 @@
         "parameters": [
           {
             "name": "limit",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "number" }
           },
           {
             "name": "page",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "number" }
           },
           {
             "name": "accountTypes",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "array", "items": { "type": "string" } }
           }
@@ -2020,8 +2020,7 @@
           "totalRowCount": { "type": "number" },
           "limit": { "type": "number" },
           "hasPreviousPage": { "type": "boolean" },
-          "hasNextPage": { "type": "boolean" },
-          "data": { "type": "object" }
+          "hasNextPage": { "type": "boolean" }
         },
         "required": [
           "currentPage",
@@ -2029,8 +2028,7 @@
           "totalRowCount",
           "limit",
           "hasPreviousPage",
-          "hasNextPage",
-          "data"
+          "hasNextPage"
         ]
       },
       "UpdateAccountDto": {

@@ -10,9 +10,17 @@ import {
   Query,
   ParseArrayPipe,
 } from '@nestjs/common';
-import { ApiBody, ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiExtraModels,
+  ApiOkResponse,
+  ApiParam,
+  ApiQuery,
+  ApiTags,
+} from '@nestjs/swagger';
 
 import { ObjectId } from '../../types/objectId';
+import { ApiPaginatedDto } from '../../utils/pagination.decorator';
 import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
 import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
 import { UserId } from '../users/users.decorators';
@@ -41,9 +49,18 @@ export class AccountsController {
   }
 
   @Get()
-  @ApiOkResponse({
-    type: [AccountDto],
-    description: 'Return all user accounts',
+  @ApiPaginatedDto(AccountDto)
+  @ApiQuery({
+    name: 'limit',
+    required: false,
+  })
+  @ApiQuery({
+    name: 'page',
+    required: false,
+  })
+  @ApiQuery({
+    name: 'accountTypes',
+    required: false,
   })
   async findAllByUser(
     @UserId() userId: ObjectId,
