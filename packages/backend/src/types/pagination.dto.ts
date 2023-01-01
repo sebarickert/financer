@@ -26,7 +26,6 @@ export class PaginationDto<DataType> {
   @Allow()
   hasNextPage: boolean;
 
-  @ApiProperty()
   @Allow()
   data: DataType;
 }
