@@ -1,20 +1,20 @@
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { Button } from '../../components/elements/button/button';
-import { ButtonGroup } from '../../components/elements/button/button.group';
-import { DialogConfirm } from '../../components/elements/dialog/confirm/dialog.confirm';
-import { Dialog } from '../../components/elements/dialog/dialog';
-import { Divider } from '../../components/elements/divider/divider';
-import { IconName } from '../../components/elements/icon/icon';
-import { InfoCard } from '../../components/elements/info-card/info-card';
-import { UpdatePageInfo } from '../../components/renderers/seo/updatePageInfo';
-import { useAccountById } from '../../hooks/account/useAccountById';
-import { useDeleteIncome } from '../../hooks/income/useDeleteIncome';
-import { useIncomeById } from '../../hooks/income/useIncomeById';
-import { useAllTransactionCategoriesWithCategoryTree } from '../../hooks/transactionCategories/useAllTransactionCategories';
-import { formatCurrency } from '../../utils/formatCurrency';
-import { formatDate } from '../../utils/formatDate';
+import { useAccountsFindOneByIdQuery } from '$api/generated/financerApi';
+import { Button } from '$elements/button/button';
+import { ButtonGroup } from '$elements/button/button.group';
+import { DialogConfirm } from '$elements/dialog/confirm/dialog.confirm';
+import { Dialog } from '$elements/dialog/dialog';
+import { Divider } from '$elements/divider/divider';
+import { IconName } from '$elements/icon/icon';
+import { InfoCard } from '$elements/info-card/info-card';
+import { useDeleteIncome } from '$hooks/income/useDeleteIncome';
+import { useIncomeById } from '$hooks/income/useIncomeById';
+import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
+import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { formatCurrency } from '$utils/formatCurrency';
+import { formatDate } from '$utils/formatDate';
 
 interface IIncomeDeleteModalProps {
   handleDelete(): void;
@@ -52,7 +52,10 @@ export const Income = (): JSX.Element => {
   const navigate = useNavigate();
   const { id = 'missing-id' } = useParams<{ id: string }>();
   const income = useIncomeById(id);
-  const account = useAccountById(income?.toAccount);
+
+  const accountData = useAccountsFindOneByIdQuery({ id: income.toAccount });
+  const account = accountData.data;
+
   const transactionCategories = useAllTransactionCategoriesWithCategoryTree();
   const deleteIncome = useDeleteIncome();
 

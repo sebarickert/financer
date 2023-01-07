@@ -1,20 +1,20 @@
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { Button } from '../../components/elements/button/button';
-import { ButtonGroup } from '../../components/elements/button/button.group';
-import { DialogConfirm } from '../../components/elements/dialog/confirm/dialog.confirm';
-import { Dialog } from '../../components/elements/dialog/dialog';
-import { Divider } from '../../components/elements/divider/divider';
-import { IconName } from '../../components/elements/icon/icon';
-import { InfoCard } from '../../components/elements/info-card/info-card';
-import { UpdatePageInfo } from '../../components/renderers/seo/updatePageInfo';
-import { useAccountById } from '../../hooks/account/useAccountById';
-import { useAllTransactionCategoriesWithCategoryTree } from '../../hooks/transactionCategories/useAllTransactionCategories';
-import { useDeleteTransfer } from '../../hooks/transfer/useDeleteTransfer';
-import { useTransferById } from '../../hooks/transfer/useTransferById';
-import { formatCurrency } from '../../utils/formatCurrency';
-import { formatDate } from '../../utils/formatDate';
+import { useAccountsFindOneByIdQuery } from '$api/generated/financerApi';
+import { Button } from '$elements/button/button';
+import { ButtonGroup } from '$elements/button/button.group';
+import { DialogConfirm } from '$elements/dialog/confirm/dialog.confirm';
+import { Dialog } from '$elements/dialog/dialog';
+import { Divider } from '$elements/divider/divider';
+import { IconName } from '$elements/icon/icon';
+import { InfoCard } from '$elements/info-card/info-card';
+import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
+import { useDeleteTransfer } from '$hooks/transfer/useDeleteTransfer';
+import { useTransferById } from '$hooks/transfer/useTransferById';
+import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { formatCurrency } from '$utils/formatCurrency';
+import { formatDate } from '$utils/formatDate';
 
 interface ITransferDeleteModalProps {
   handleDelete(): void;
@@ -55,8 +55,12 @@ export const Transfer = (): JSX.Element => {
   const transfer = useTransferById(id);
   const deleteTransfer = useDeleteTransfer();
 
-  const fromAccount = useAccountById(transfer?.fromAccount);
-  const toAccount = useAccountById(transfer?.toAccount);
+  const fromAccountData = useAccountsFindOneByIdQuery({
+    id: transfer.fromAccount,
+  });
+  const fromAccount = fromAccountData.data;
+  const toAccountData = useAccountsFindOneByIdQuery({ id: transfer.toAccount });
+  const toAccount = toAccountData.data;
 
   const getCategoryNameById = (categoryId: string) =>
     transactionCategories?.find((category) => category._id === categoryId)

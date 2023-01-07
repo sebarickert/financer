@@ -8,11 +8,6 @@ import {
 
 import { parseApiResponse, parseJsonOrThrowError } from '../utils/apiHelper';
 
-export const getAccountById = async (id: string): Promise<AccountDto> => {
-  const account = await fetch(`/api/accounts/${id}`);
-  return parseJsonOrThrowError(account);
-};
-
 export const getAccountBalanceHistoryById = async (
   id: string
 ): Promise<AccountBalanceHistoryDto[]> => {

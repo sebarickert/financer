@@ -343,7 +343,7 @@
     },
     "/api/accounts/{id}": {
       "get": {
-        "operationId": "Accounts_findOne",
+        "operationId": "Accounts_findOneById",
         "parameters": [
           {
             "name": "id",
