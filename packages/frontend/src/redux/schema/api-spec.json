@@ -1685,6 +1685,33 @@
         },
         "tags": ["Health Check"]
       }
+    },
+    "/api/tasks/generate-transactions": {
+      "get": {
+        "operationId": "Tasks_generateTransactions",
+        "parameters": [],
+        "responses": { "200": { "description": "" } }
+      }
+    },
+    "/api/system/logs": {
+      "get": {
+        "operationId": "System_getLogs",
+        "parameters": [
+          {
+            "name": "start",
+            "required": true,
+            "in": "query",
+            "schema": { "format": "date-time", "type": "string" }
+          },
+          {
+            "name": "end",
+            "required": true,
+            "in": "query",
+            "schema": { "format": "date-time", "type": "string" }
+          }
+        ],
+        "responses": { "200": { "description": "" } }
+      }
     }
   },
   "info": {
