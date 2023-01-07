@@ -1,13 +1,13 @@
-import { UpdateTransferDto } from '@local/types';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { UpdatePageInfo } from '../../components/renderers/seo/updatePageInfo';
-import { useEditTransfer } from '../../hooks/transfer/useEditTransfer';
-import { useTransferById } from '../../hooks/transfer/useTransferById';
-import { parseErrorMessagesToArray } from '../../utils/apiHelper';
-
 import { TransferForm } from './TransferForm';
+
+import { UpdateTransferDto } from '$api/generated/financerApi';
+import { useEditTransfer } from '$hooks/transfer/useEditTransfer';
+import { useTransferById } from '$hooks/transfer/useTransferById';
+import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 export const EditTransfer = (): JSX.Element => {
   const navigate = useNavigate();
@@ -23,7 +23,11 @@ export const EditTransfer = (): JSX.Element => {
       return;
     }
     try {
-      const newTransactionJson = await editTransaction(targetTransferData, id);
+      const newTransactionJson = await editTransaction(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        targetTransferData as any,
+        id
+      );
 
       if ('message' in newTransactionJson) {
         setErrors(parseErrorMessagesToArray(newTransactionJson.message));
@@ -49,7 +53,8 @@ export const EditTransfer = (): JSX.Element => {
         description={transfer.description}
         fromAccount={transfer.fromAccount}
         toAccount={transfer.toAccount}
-        transactionCategoryMapping={transfer.categories}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        transactionCategoryMapping={transfer.categories as any}
       />
     </>
   );

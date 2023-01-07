@@ -1,4 +1,4 @@
-import { CreateExpenseDto, TransactionType } from '@local/types';
+import { TransactionType } from '@local/types';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -10,6 +10,8 @@ import { parseErrorMessagesToArray } from '../../utils/apiHelper';
 
 import { ExpenseForm } from './ExpenseForm';
 
+import { CreateExpenseDto } from '$api/generated/financerApi';
+
 export const AddExpense = (): JSX.Element => {
   const navigate = useNavigate();
   const [errors, setErrors] = useState<string[]>([]);
@@ -18,7 +20,8 @@ export const AddExpense = (): JSX.Element => {
 
   const handleSubmit = async (newExpenseData: CreateExpenseDto) => {
     try {
-      const newExpenseJson = await addExpense(newExpenseData);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const newExpenseJson = await addExpense(newExpenseData as any);
 
       if ('message' in newExpenseJson) {
         setErrors(parseErrorMessagesToArray(newExpenseJson.message));

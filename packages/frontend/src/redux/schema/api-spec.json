@@ -1872,21 +1872,14 @@
           "userId": { "type": "string" },
           "fromAccount": { "type": "string" },
           "toAccount": { "type": "string" },
-          "categories": { "type": "string" }
+          "categories": { "type": "array", "items": { "type": "string" } }
         },
         "required": [
           "_id",
           "templateName",
           "templateType",
           "templateVisibility",
-          "amount",
-          "description",
-          "dayOfMonth",
-          "dayOfMonthToCreate",
-          "userId",
-          "fromAccount",
-          "toAccount",
-          "categories"
+          "userId"
         ]
       },
       "UserDataExportDto": {
@@ -2110,20 +2103,9 @@
           "dayOfMonthToCreate": { "type": "number" },
           "fromAccount": { "type": "string" },
           "toAccount": { "type": "string" },
-          "categories": { "type": "string" }
+          "categories": { "type": "array", "items": { "type": "string" } }
         },
-        "required": [
-          "templateName",
-          "templateType",
-          "templateVisibility",
-          "amount",
-          "description",
-          "dayOfMonth",
-          "dayOfMonthToCreate",
-          "fromAccount",
-          "toAccount",
-          "categories"
-        ]
+        "required": ["templateName", "templateType", "templateVisibility"]
       },
       "UpdateTransactionTemplateDto": {
         "type": "object",
@@ -2141,7 +2123,7 @@
           "dayOfMonthToCreate": { "type": "number" },
           "fromAccount": { "type": "string" },
           "toAccount": { "type": "string" },
-          "categories": { "type": "string" }
+          "categories": { "type": "array", "items": { "type": "string" } }
         }
       },
       "ExpenseDto": {

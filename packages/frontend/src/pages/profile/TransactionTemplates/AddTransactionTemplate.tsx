@@ -1,12 +1,12 @@
-import { CreateTransactionTemplateDto } from '@local/types';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { UpdatePageInfo } from '../../../components/renderers/seo/updatePageInfo';
-import { useAddTransactionTemplate } from '../../../hooks/transactionTemplate/useAddTransactionTemplate';
-import { parseErrorMessagesToArray } from '../../../utils/apiHelper';
-
 import { TransactionTemplateForm } from './TransactionTemplateForm';
+
+import { CreateTransactionTemplateDto } from '$api/generated/financerApi';
+import { useAddTransactionTemplate } from '$hooks/transactionTemplate/useAddTransactionTemplate';
+import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 export const AddTransactionTemplate = (): JSX.Element => {
   const navigate = useNavigate();
@@ -18,7 +18,8 @@ export const AddTransactionTemplate = (): JSX.Element => {
   ) => {
     try {
       const newTransactionTemplateJson = await addTransactionTemplate(
-        newTransactionTemplateData
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        newTransactionTemplateData as any
       );
 
       if ('message' in newTransactionTemplateJson) {

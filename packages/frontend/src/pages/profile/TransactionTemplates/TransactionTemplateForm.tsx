@@ -1,25 +1,27 @@
 import {
-  CreateTransactionTemplateDto,
-  TransactionCategoryMappingDto,
   TransactionTemplateType,
   TransactionTemplateTypeMapping,
   TransactionType,
 } from '@local/types';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useMemo, useState } from 'react';
+import { ITransactionCategoryWithCategoryTree } from 'services/TransactionCategoriesService';
 
-import { Form } from '../../../components/blocks/form/form';
-import { TransactionCategoriesForm } from '../../../components/blocks/transaction-categories-form/transaction-categories-form';
-import { Alert } from '../../../components/elements/alert/alert';
-import { Button } from '../../../components/elements/button/button';
-import { Input } from '../../../components/elements/input/input';
-import { Loader } from '../../../components/elements/loader/loader';
-import { Select, Option } from '../../../components/elements/select/select';
-import { useAllAccounts } from '../../../hooks/account/useAllAccounts';
-import { useAllTransactionCategoriesForExpenseWithCategoryTree } from '../../../hooks/transactionCategories/useAllTransactionCategoriesForExpense';
-import { useAllTransactionCategoriesForIncomeWithCategoryTree } from '../../../hooks/transactionCategories/useAllTransactionCategoriesForIncome';
-import { useAllTransactionCategoriesForTransferWithCategoryTree } from '../../../hooks/transactionCategories/useAllTransactionCategoriesForTransfer';
-import { ITransactionCategoryWithCategoryTree } from '../../../services/TransactionCategoriesService';
-import { capitalize } from '../../../utils/capitalize';
+import {
+  CreateTransactionTemplateDto,
+  TransactionCategoryMappingDto,
+  useAccountsFindAllByUserQuery,
+} from '$api/generated/financerApi';
+import { Form } from '$blocks/form/form';
+import { TransactionCategoriesForm } from '$blocks/transaction-categories-form/transaction-categories-form';
+import { Alert } from '$elements/alert/alert';
+import { Button } from '$elements/button/button';
+import { Input } from '$elements/input/input';
+import { Loader } from '$elements/loader/loader';
+import { Select, Option } from '$elements/select/select';
+import { useAllTransactionCategoriesForExpenseWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategoriesForExpense';
+import { useAllTransactionCategoriesForIncomeWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategoriesForIncome';
+import { useAllTransactionCategoriesForTransferWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategoriesForTransfer';
+import { capitalize } from '$utils/capitalize';
 
 interface TransactionTemplateFormProps {
   amount?: number;
@@ -54,8 +56,15 @@ export const TransactionTemplateForm = ({
   templateType,
   optionalFooterComponent,
 }: TransactionTemplateFormProps): JSX.Element | null => {
-  const { data: accountsRaw } = useAllAccounts();
-  const [accounts, setAccounts] = useState<Option[]>();
+  const { data: accounts, isLoading } = useAccountsFindAllByUserQuery({});
+  const accountOptions = useMemo(() => {
+    if (!accounts) return [];
+    return accounts.data.map(({ _id, name }) => ({
+      value: _id,
+      label: name,
+    }));
+  }, [accounts]);
+
   const [inputAmountValue, setInputAmountValue] = useState<number | null>(null);
   const [selectedTransactionType, setSelectedTransactionType] = useState(
     transactionType ?? TransactionType.INCOME
@@ -133,15 +142,6 @@ export const TransactionTemplateForm = ({
       value: TransactionType[type],
       label: capitalize(TransactionType[type]),
     }));
-
-  useEffect(() => {
-    setAccounts(
-      accountsRaw.map(({ _id, name }) => ({
-        value: _id,
-        label: name,
-      }))
-    );
-  }, [accountsRaw]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = async (event: any) => {
@@ -257,10 +257,8 @@ export const TransactionTemplateForm = ({
     );
   };
 
-  if (!accounts) return null;
-
   return (
-    <>
+    <Loader isLoading={isLoading}>
       {errors.length > 0 && (
         <Alert additionalInformation={errors} testId="form-errors">
           There were {errors.length} errors with your submission
@@ -312,7 +310,7 @@ export const TransactionTemplateForm = ({
               selectedTransactionType === TransactionType.TRANSFER) && (
               <Select
                 id="fromAccount"
-                options={accounts}
+                options={accountOptions}
                 defaultValue={fromAccount}
                 isRequired
               >
@@ -323,7 +321,7 @@ export const TransactionTemplateForm = ({
               selectedTransactionType === TransactionType.TRANSFER) && (
               <Select
                 id="toAccount"
-                options={accounts}
+                options={accountOptions}
                 defaultValue={toAccount}
                 isRequired
               >
@@ -372,6 +370,6 @@ export const TransactionTemplateForm = ({
           </Button>
         </section>
       </Form>
-    </>
+    </Loader>
   );
 };

@@ -1,21 +1,18 @@
-import {
-  TransactionCategoryMappingDto,
-  UpdateTransactionTemplateDto,
-} from '@local/types';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { Button } from '../../../components/elements/button/button';
-import { DialogConfirm } from '../../../components/elements/dialog/confirm/dialog.confirm';
-import { Dialog } from '../../../components/elements/dialog/dialog';
-import { IconName } from '../../../components/elements/icon/icon';
-import { UpdatePageInfo } from '../../../components/renderers/seo/updatePageInfo';
-import { useDeleteTransactionTemplate } from '../../../hooks/transactionTemplate/useDeleteTransactionTemplate';
-import { useEditTransactionTemplate } from '../../../hooks/transactionTemplate/useEditTransactionTemplate';
-import { useTransactionTemplateById } from '../../../hooks/transactionTemplate/useTransactionTemplateById';
-import { parseErrorMessagesToArray } from '../../../utils/apiHelper';
-
 import { TransactionTemplateForm } from './TransactionTemplateForm';
+
+import { UpdateTransactionTemplateDto } from '$api/generated/financerApi';
+import { Button } from '$elements/button/button';
+import { DialogConfirm } from '$elements/dialog/confirm/dialog.confirm';
+import { Dialog } from '$elements/dialog/dialog';
+import { IconName } from '$elements/icon/icon';
+import { useDeleteTransactionTemplate } from '$hooks/transactionTemplate/useDeleteTransactionTemplate';
+import { useEditTransactionTemplate } from '$hooks/transactionTemplate/useEditTransactionTemplate';
+import { useTransactionTemplateById } from '$hooks/transactionTemplate/useTransactionTemplateById';
+import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 interface TransactionTemplateDeleteModalProps {
   handleDelete(): void;
@@ -64,7 +61,8 @@ export const EditTransactionTemplate = (): JSX.Element => {
     try {
       const newTransactionTemplateJson = await editTransactionTemplate(
         transactionTemplate._id,
-        newTransactionTemplateData
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        newTransactionTemplateData as any
       );
 
       if ('message' in newTransactionTemplateJson) {
@@ -112,7 +110,8 @@ export const EditTransactionTemplate = (): JSX.Element => {
         transactionCategoryMapping={
           transactionTemplate.categories?.map((category) => ({
             category_id: category,
-          })) as TransactionCategoryMappingDto[]
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          })) as any[]
         }
         optionalFooterComponent={
           <TransactionTemplateDeleteModal handleDelete={handleDelete} />

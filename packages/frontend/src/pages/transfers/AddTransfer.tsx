@@ -1,15 +1,16 @@
-import { CreateTransferDto, TransactionType } from '@local/types';
+import { TransactionType } from '@local/types';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { TransactionTemplateSwitcher } from '../../components/blocks/transaction-template-switcher/transaction-template-switcher';
-import { UpdatePageInfo } from '../../components/renderers/seo/updatePageInfo';
-import { useUserDefaultTransferSourceAccount } from '../../hooks/profile/user-preference/useUserDefaultTransferSourceAccount';
-import { useUserDefaultTransferTargetAccount } from '../../hooks/profile/user-preference/useUserDefaultTransferTargetAccount';
-import { useAddTransfer } from '../../hooks/transfer/useAddTransfer';
-import { parseErrorMessagesToArray } from '../../utils/apiHelper';
-
 import { TransferForm } from './TransferForm';
+
+import { CreateTransferDto } from '$api/generated/financerApi';
+import { TransactionTemplateSwitcher } from '$blocks/transaction-template-switcher/transaction-template-switcher';
+import { useUserDefaultTransferSourceAccount } from '$hooks/profile/user-preference/useUserDefaultTransferSourceAccount';
+import { useUserDefaultTransferTargetAccount } from '$hooks/profile/user-preference/useUserDefaultTransferTargetAccount';
+import { useAddTransfer } from '$hooks/transfer/useAddTransfer';
+import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 export const AddTransfer = (): JSX.Element => {
   const navigate = useNavigate();
@@ -18,10 +19,10 @@ export const AddTransfer = (): JSX.Element => {
   const [defaultTransferSourceAccount] = useUserDefaultTransferSourceAccount();
   const [defaultTransferTargetAccount] = useUserDefaultTransferTargetAccount();
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = async (newTransfer: CreateTransferDto) => {
     try {
-      const newTransactionJson = await addTransaction(newTransfer);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const newTransactionJson = await addTransaction(newTransfer as any);
 
       if ('message' in newTransactionJson) {
         setErrors(parseErrorMessagesToArray(newTransactionJson.message));

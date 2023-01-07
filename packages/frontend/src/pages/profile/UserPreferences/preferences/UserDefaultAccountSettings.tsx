@@ -1,17 +1,19 @@
 import { useNavigate } from 'react-router-dom';
 
-import { Form } from '../../../../components/blocks/form/form';
-import { Select } from '../../../../components/elements/select/select';
-import { UpdatePageInfo } from '../../../../components/renderers/seo/updatePageInfo';
-import { useAllAccounts } from '../../../../hooks/account/useAllAccounts';
-import { useUserDefaultExpenseAccount } from '../../../../hooks/profile/user-preference/useUserDefaultExpenseAccount';
-import { useUserDefaultIncomeAccount } from '../../../../hooks/profile/user-preference/useUserDefaultIncomeAccount';
-import { useUserDefaultTransferSourceAccount } from '../../../../hooks/profile/user-preference/useUserDefaultTransferSourceAccount';
-import { useUserDefaultTransferTargetAccount } from '../../../../hooks/profile/user-preference/useUserDefaultTransferTargetAccount';
+import { useAccountsFindAllByUserQuery } from '$api/generated/financerApi';
+import { Form } from '$blocks/form/form';
+import { Loader } from '$elements/loader/loader';
+import { Select } from '$elements/select/select';
+import { useUserDefaultExpenseAccount } from '$hooks/profile/user-preference/useUserDefaultExpenseAccount';
+import { useUserDefaultIncomeAccount } from '$hooks/profile/user-preference/useUserDefaultIncomeAccount';
+import { useUserDefaultTransferSourceAccount } from '$hooks/profile/user-preference/useUserDefaultTransferSourceAccount';
+import { useUserDefaultTransferTargetAccount } from '$hooks/profile/user-preference/useUserDefaultTransferTargetAccount';
+import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
 export const UserDefaultAccountSettings = (): JSX.Element => {
   const navigate = useNavigate();
-  const { data: accounts } = useAllAccounts();
+  const { data: accounts, isLoading } = useAccountsFindAllByUserQuery({});
+
   const [defaultIncomeAccount, setDefaultIncomeAccount] =
     useUserDefaultIncomeAccount();
   const [defaultExpenseAccount, setDefaultExpenseAccount] =
@@ -47,7 +49,7 @@ export const UserDefaultAccountSettings = (): JSX.Element => {
   };
 
   return (
-    <>
+    <Loader isLoading={isLoading}>
       <UpdatePageInfo
         title="Default account settings"
         backLink={'/profile/user-preferences'}
@@ -60,10 +62,12 @@ export const UserDefaultAccountSettings = (): JSX.Element => {
         <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
           <Select
             id="toAccountIncome"
-            options={accounts.map(({ name, _id }) => ({
-              label: name,
-              value: _id,
-            }))}
+            options={
+              accounts?.data.map(({ name, _id }) => ({
+                label: name,
+                value: _id,
+              })) ?? []
+            }
             defaultValue={defaultIncomeAccount}
             isRequired
           >
@@ -71,10 +75,12 @@ export const UserDefaultAccountSettings = (): JSX.Element => {
           </Select>
           <Select
             id="fromAccountExpense"
-            options={accounts.map(({ name, _id }) => ({
-              label: name,
-              value: _id,
-            }))}
+            options={
+              accounts?.data.map(({ name, _id }) => ({
+                label: name,
+                value: _id,
+              })) ?? []
+            }
             defaultValue={defaultExpenseAccount}
             isRequired
           >
@@ -82,10 +88,12 @@ export const UserDefaultAccountSettings = (): JSX.Element => {
           </Select>
           <Select
             id="fromAccountTransfer"
-            options={accounts.map(({ name, _id }) => ({
-              label: name,
-              value: _id,
-            }))}
+            options={
+              accounts?.data.map(({ name, _id }) => ({
+                label: name,
+                value: _id,
+              })) ?? []
+            }
             defaultValue={defaultTransferSourceAccount}
             isRequired
           >
@@ -93,10 +101,12 @@ export const UserDefaultAccountSettings = (): JSX.Element => {
           </Select>
           <Select
             id="toAccountTransfer"
-            options={accounts.map(({ name, _id }) => ({
-              label: name,
-              value: _id,
-            }))}
+            options={
+              accounts?.data.map(({ name, _id }) => ({
+                label: name,
+                value: _id,
+              })) ?? []
+            }
             defaultValue={defaultTransferTargetAccount}
             isRequired
           >
@@ -104,6 +114,6 @@ export const UserDefaultAccountSettings = (): JSX.Element => {
           </Select>
         </div>
       </Form>
-    </>
+    </Loader>
   );
 };

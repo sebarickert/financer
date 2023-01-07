@@ -1,10 +1,10 @@
 import { AccountType } from '@local/types';
 
-import { IconName } from '../../elements/icon/icon';
-import { LinkList } from '../../elements/link-list/link-list';
-import { LinkListLink } from '../../elements/link-list/link-list.link';
-
 import { AccountsListRowProps } from './accounts-list.row';
+
+import { IconName } from '$elements/icon/icon';
+import { LinkList } from '$elements/link-list/link-list';
+import { LinkListLink } from '$elements/link-list/link-list.link';
 
 interface AccountsListProps {
   label?: string;
@@ -16,7 +16,9 @@ export const AccountsList = ({
   label,
   rows,
   className,
-}: AccountsListProps): JSX.Element => {
+}: AccountsListProps): JSX.Element | null => {
+  if (!rows?.length) return null;
+
   return (
     <LinkList label={label} className={`${className}`}>
       {rows.map(({ id, balanceAmount, label: rowLabel, link, type }) => {

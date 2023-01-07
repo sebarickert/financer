@@ -39,9 +39,9 @@
   },
   "scripts": {
     "postinstall": "npm run types:generate",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
     "format": "eslint src/**/*.ts{,x} --fix",
     "lint": "eslint src/**/*.ts{,x}",
     "eject": "react-scripts eject",
@@ -66,6 +66,7 @@
     ]
   },
   "devDependencies": {
+    "@craco/craco": "^7.0.0",
     "@rtk-query/codegen-openapi": "^1.0.0",
     "@tailwindcss/forms": "^0.5.0",
     "@tailwindcss/typography": "^0.5.8",
@@ -78,6 +79,7 @@
     "@typescript-eslint/eslint-plugin": "^5.19.0",
     "@typescript-eslint/parser": "^5.19.0",
     "autoprefixer": "^10.4.4",
+    "craco-alias": "^3.0.1",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-config-prettier": "^8.5.0",

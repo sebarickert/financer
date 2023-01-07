@@ -1,18 +1,15 @@
-import {
-  CreateExpenseDto,
-  TransactionCategoryMappingDto,
-  TransactionType,
-} from '@local/types';
+import { TransactionType } from '@local/types';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { TransactionTemplateSwitcher } from '../../components/blocks/transaction-template-switcher/transaction-template-switcher';
-import { UpdatePageInfo } from '../../components/renderers/seo/updatePageInfo';
-import { useAddExpense } from '../../hooks/expense/useAddExpense';
-import { useTransactionTemplateById } from '../../hooks/transactionTemplate/useTransactionTemplateById';
-import { parseErrorMessagesToArray } from '../../utils/apiHelper';
-
 import { ExpenseForm } from './ExpenseForm';
+
+import { CreateExpenseDto } from '$api/generated/financerApi';
+import { TransactionTemplateSwitcher } from '$blocks/transaction-template-switcher/transaction-template-switcher';
+import { useAddExpense } from '$hooks/expense/useAddExpense';
+import { useTransactionTemplateById } from '$hooks/transactionTemplate/useTransactionTemplateById';
+import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 export const AddShortcutExpense = (): JSX.Element => {
   const navigate = useNavigate();
@@ -29,7 +26,8 @@ export const AddShortcutExpense = (): JSX.Element => {
 
   const handleSubmit = async (newExpenseData: CreateExpenseDto) => {
     try {
-      const newExpenseJson = await addExpense(newExpenseData);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const newExpenseJson = await addExpense(newExpenseData as any);
 
       if ('message' in newExpenseJson) {
         setErrors(parseErrorMessagesToArray(newExpenseJson.message));
@@ -61,9 +59,8 @@ export const AddShortcutExpense = (): JSX.Element => {
         amount={transactionTemplate.amount ?? undefined}
         description={transactionTemplate.description ?? undefined}
         fromAccount={transactionTemplate.fromAccount ?? undefined}
-        transactionCategoryMapping={
-          (parsedCategories as TransactionCategoryMappingDto[]) ?? undefined
-        }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        transactionCategoryMapping={(parsedCategories as any[]) ?? undefined}
       />
     </>
   );

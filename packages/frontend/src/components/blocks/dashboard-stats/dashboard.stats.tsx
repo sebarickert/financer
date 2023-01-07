@@ -1,13 +1,13 @@
 import clsx from 'clsx';
 
-import { useExpenseMonthlySummaries } from '../../../hooks/expense/useExpenseMonthlySummaries';
-import { useIncomeMonthlySummaries } from '../../../hooks/income/useIncomeMonthlySummaries';
-import { useUserDashboardSettings } from '../../../hooks/profile/user-preference/useDashboardSettings';
-import { useTotalBalance } from '../../../hooks/useTotalBalance';
-import { formatCurrency } from '../../../utils/formatCurrency';
-import { IconName } from '../../elements/icon/icon';
-import { InfoCard } from '../../elements/info-card/info-card';
-import { LoaderIfLoading } from '../../elements/loader/loader-if-processing';
+import { IconName } from '$elements/icon/icon';
+import { InfoCard } from '$elements/info-card/info-card';
+import { Loader } from '$elements/loader/loader';
+import { useExpenseMonthlySummaries } from '$hooks/expense/useExpenseMonthlySummaries';
+import { useIncomeMonthlySummaries } from '$hooks/income/useIncomeMonthlySummaries';
+import { useUserDashboardSettings } from '$hooks/profile/user-preference/useDashboardSettings';
+import { useTotalBalance } from '$hooks/useTotalBalance';
+import { formatCurrency } from '$utils/formatCurrency';
 
 interface DashboardStatsProps {
   className?: string;
@@ -41,7 +41,7 @@ export const DashboardStats = ({
   const isLoading = isLoadingTotalBalance;
 
   return (
-    <LoaderIfLoading isLoading={isLoading}>
+    <Loader isLoading={isLoading}>
       <section
         className={clsx('grid gap-2 md:gap-4 grid-cols-2 md:grid-cols-3', {
           [className]: true,
@@ -62,6 +62,6 @@ export const DashboardStats = ({
           {Number.isNaN(totalExpenses) ? '-' : formatCurrency(totalExpenses)}
         </InfoCard>
       </section>
-    </LoaderIfLoading>
+    </Loader>
   );
 };

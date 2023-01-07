@@ -3,25 +3,10 @@ import {
   AccountDto,
   ApiResponse,
   CreateAccountDto,
-  PaginationDto,
   UpdateAccountDto,
 } from '@local/types';
 
 import { parseApiResponse, parseJsonOrThrowError } from '../utils/apiHelper';
-
-import {
-  parseFilterQueryString,
-  TransactionFilterOptions,
-} from './TransactionService';
-
-export const getAllAccounts = async (
-  options: Omit<TransactionFilterOptions, 'month' | 'year'> = {}
-): Promise<PaginationDto<AccountDto[]>> => {
-  const queryString = parseFilterQueryString(options);
-
-  const accounts = await fetch(`/api/accounts?${queryString.join('&')}`);
-  return parseJsonOrThrowError(accounts);
-};
 
 export const getAccountById = async (id: string): Promise<AccountDto> => {
   const account = await fetch(`/api/accounts/${id}`);

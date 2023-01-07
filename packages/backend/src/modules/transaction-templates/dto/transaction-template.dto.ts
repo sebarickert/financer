@@ -1,5 +1,5 @@
 import { TransactionTemplateType, TransactionType } from '@local/types';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import {
   IsEnum,
@@ -47,20 +47,20 @@ export class TransactionTemplateDto {
   })
   readonly templateVisibility: TransactionType;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @Min(0.01, { message: 'Amount must be a positive number.' })
   readonly amount?: number;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsString()
   readonly description?: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @Min(1, { message: 'Day of month must be a positive number.' })
   @Max(31, { message: 'Day of month must not be greater than 31.' })
   readonly dayOfMonth?: number;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @Min(1, {
     message: 'Day of month to create transaction must be a positive number.',
   })
@@ -73,7 +73,7 @@ export class TransactionTemplateDto {
   @IsMongoId()
   readonly userId: ObjectId;
 
-  @ApiProperty({ type: String })
+  @ApiPropertyOptional({ type: String })
   @IsOptional()
   @IsInstanceOfObjectId({
     message: 'fromAccount must be formatted as objectId.',
@@ -81,13 +81,13 @@ export class TransactionTemplateDto {
   @Transform(objectIdTransformer)
   readonly fromAccount?: ObjectId | null;
 
-  @ApiProperty({ type: String })
+  @ApiPropertyOptional({ type: String })
   @IsOptional()
   @IsInstanceOfObjectId({ message: 'toAccount must be formatted as objectId.' })
   @Transform(objectIdTransformer)
   readonly toAccount?: ObjectId | null;
 
-  @ApiProperty({ type: String })
+  @ApiPropertyOptional({ type: String, isArray: true })
   @IsOptional()
   @IsInstanceOfObjectId({
     message: 'categories must be formatted as array of objectIds.',
