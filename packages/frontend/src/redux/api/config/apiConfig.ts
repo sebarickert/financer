@@ -16,5 +16,11 @@ financerApi.enhanceEndpoints({
           []),
       ],
     },
+    accountsFindOneById: {
+      providesTags: (res) => [
+        ApiTag.ACCOUNT,
+        { type: ApiTag.ACCOUNT, id: res?._id },
+      ],
+    },
   },
 });
