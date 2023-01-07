@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import {
   AccountsFindAllByUserApiArg,
   useAccountsFindAllByUserQuery,
-} from '../redux/api/generated/financerApi';
+} from '$api/generated/financerApi';
 
 export const useTotalBalance = (
   filterOptions: Pick<AccountsFindAllByUserApiArg, 'accountTypes'> = {

@@ -89,7 +89,7 @@ export class AccountsController {
     name: 'id',
     type: String,
   })
-  async findOne(
+  async findOneById(
     @UserId() userId: ObjectId,
     @Param('id', ValidateEntityId) id: ObjectId,
   ) {

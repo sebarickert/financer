@@ -6,38 +6,43 @@ import clsx from 'clsx';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { LatestAccountTransactions } from '../../components/blocks/latest-account-transactions/latest-account-transactions';
-import { initialMonthFilterOptions } from '../../components/blocks/monthly-transaction-list/monthly-transaction-list';
-import { Pager } from '../../components/blocks/pager/pager';
-import { Alert } from '../../components/elements/alert/alert';
-import { Heading } from '../../components/elements/heading/heading';
-import { IconName } from '../../components/elements/icon/icon';
-import { InfoCard } from '../../components/elements/info-card/info-card';
-import { LinkList } from '../../components/elements/link-list/link-list';
-import { LinkListLink } from '../../components/elements/link-list/link-list.link';
-import { LoaderSuspense } from '../../components/elements/loader/loader-suspense';
-import { UpdatePageInfo } from '../../components/renderers/seo/updatePageInfo';
-import { monthNames } from '../../constants/months';
-import { useAccountById } from '../../hooks/account/useAccountById';
-import { useDeleteAccount } from '../../hooks/account/useDeleteAccount';
-import { useAddExpense } from '../../hooks/expense/useAddExpense';
-import { useAddIncome } from '../../hooks/income/useAddIncome';
-import { useUserDefaultMarketUpdateSettings } from '../../hooks/profile/user-preference/useDefaultMarketUpdateSettings';
-import { useAllTransactionsPaged } from '../../hooks/transaction/useAllTransactions';
-import { parseErrorMessagesToArray } from '../../utils/apiHelper';
-import { capitalize } from '../../utils/capitalize';
-import { formatCurrency } from '../../utils/formatCurrency';
-
 import { AccountDeleteModal } from './account-modals/AccountDeleteModal';
 import { AccountUpdateMarketValueModal } from './account-modals/AccountUpdateMarketValueModal';
 import { AccountBalanceHistoryChart } from './AccountBalanceHistoryChart';
 
+import { useAccountsFindOneByIdQuery } from '$api/generated/financerApi';
+import { DataHandler } from '$blocks/data-handler/data-handler';
+import { LatestAccountTransactions } from '$blocks/latest-account-transactions/latest-account-transactions';
+import { initialMonthFilterOptions } from '$blocks/monthly-transaction-list/monthly-transaction-list';
+import { Pager } from '$blocks/pager/pager';
+import { monthNames } from '$constants/months';
+import { Alert } from '$elements/alert/alert';
+import { Heading } from '$elements/heading/heading';
+import { IconName } from '$elements/icon/icon';
+import { InfoCard } from '$elements/info-card/info-card';
+import { LinkList } from '$elements/link-list/link-list';
+import { LinkListLink } from '$elements/link-list/link-list.link';
+import { LoaderSuspense } from '$elements/loader/loader-suspense';
+import { useDeleteAccount } from '$hooks/account/useDeleteAccount';
+import { useAddExpense } from '$hooks/expense/useAddExpense';
+import { useAddIncome } from '$hooks/income/useAddIncome';
+import { useUserDefaultMarketUpdateSettings } from '$hooks/profile/user-preference/useDefaultMarketUpdateSettings';
+import { useAllTransactionsPaged } from '$hooks/transaction/useAllTransactions';
+import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { parseErrorMessagesToArray } from '$utils/apiHelper';
+import { capitalize } from '$utils/capitalize';
+import { formatCurrency } from '$utils/formatCurrency';
+
 export const Account = (): JSX.Element | null => {
   const { id } = useParams<{ id: string }>();
+
   if (!id) throw new Error('Account id is not defined');
+
+  const data = useAccountsFindOneByIdQuery({ id });
+  const account = data.data;
+
   const navigate = useNavigate();
   const deleteAccount = useDeleteAccount();
-  const account = useAccountById(id);
   const [marketSettings] = useUserDefaultMarketUpdateSettings();
 
   const [errors, setErrors] = useState<string[]>([]);
@@ -108,9 +113,9 @@ export const Account = (): JSX.Element | null => {
           setErrors(parseErrorMessagesToArray(newIncomeJson.message));
           return;
         }
-      } catch (error) {
+      } catch (transactionError) {
         // eslint-disable-next-line no-console
-        console.error(error);
+        console.error(transactionError);
       }
     } else if (marketValueChangeAmount < 0) {
       try {
@@ -127,9 +132,9 @@ export const Account = (): JSX.Element | null => {
           setErrors(parseErrorMessagesToArray(newExpenseJson.message));
           return;
         }
-      } catch (error) {
+      } catch (transactionError) {
         // eslint-disable-next-line no-console
-        console.error(error);
+        console.error(transactionError);
       }
     } else {
       console.log('Current value is same as previous no update needed.');
@@ -158,72 +163,78 @@ export const Account = (): JSX.Element | null => {
 
   return (
     <>
-      <UpdatePageInfo title={`${account.name}`} backLink="/accounts" />
-      {errors.length > 0 && (
-        <Alert additionalInformation={errors} testId="account-page-errors">
-          There were {errors.length} errors with your submission
-        </Alert>
-      )}
-      <section className={'mb-6 grid md:grid-cols-2 gap-4 md:gap-6'}>
-        <section className={clsx('grid gap-2')}>
-          <InfoCard label="Balance" testId="account-balance" isLarge>
-            {formatCurrency(account.balance)}
-          </InfoCard>
-          <InfoCard label="Type" testId="account-type" isSmall>
-            {capitalize(account.type)}
-          </InfoCard>
-        </section>
-        <LinkList isVertical>
-          {account.type === 'investment' && (
-            <AccountUpdateMarketValueModal
-              currentValue={account.balance}
-              handleUpdate={(newMarketValue, newDate) =>
-                handleMarketValueUpdate(newMarketValue, newDate)
-              }
-            />
+      <DataHandler {...data} />
+      {!!account && (
+        <>
+          <UpdatePageInfo title={`${account.name}`} backLink="/accounts" />
+          {errors.length > 0 && (
+            <Alert additionalInformation={errors} testId="account-page-errors">
+              There were {errors.length} errors with your submission
+            </Alert>
           )}
-          <LinkListLink
-            link={`/accounts/${id}/edit`}
-            testId="edit-account"
-            icon={IconName.cog}
-          >
-            Edit account
-          </LinkListLink>
-          <AccountDeleteModal handleDelete={handleDelete} />
-        </LinkList>
-      </section>
-      <LoaderSuspense>
-        <AccountBalanceHistoryChart accountId={account._id} />
-      </LoaderSuspense>
-      <section className="flex items-center justify-between mt-8 mb-2">
-        <Heading>{`${pageVisibleMonth}, ${pageVisibleYear}`}</Heading>
-        <Pager
-          pagerOptions={{
-            nextPage: {
-              isAvailable: !(
-                monthFilterOptions.month === initialMonthFilterOptions.month &&
-                monthFilterOptions.year === initialMonthFilterOptions.year
-              ),
-              load: () => handleMonthOptionChange('next'),
-            },
-            previousPage: {
-              isAvailable: !(
-                monthFilterOptions.month ===
-                  firstTransactionEverDate.getMonth() + 1 &&
-                monthFilterOptions.year ===
-                  firstTransactionEverDate.getFullYear()
-              ),
-              load: () => handleMonthOptionChange('previous'),
-            },
-          }}
-        />
-      </section>
-      <LoaderSuspense>
-        <LatestAccountTransactions
-          accountId={id}
-          filterOptions={monthFilterOptions}
-        />
-      </LoaderSuspense>
+          <section className={'mb-6 grid md:grid-cols-2 gap-4 md:gap-6'}>
+            <section className={clsx('grid gap-2')}>
+              <InfoCard label="Balance" testId="account-balance" isLarge>
+                {formatCurrency(account.balance)}
+              </InfoCard>
+              <InfoCard label="Type" testId="account-type" isSmall>
+                {capitalize(account.type)}
+              </InfoCard>
+            </section>
+            <LinkList isVertical>
+              {account.type === 'investment' && (
+                <AccountUpdateMarketValueModal
+                  currentValue={account.balance}
+                  handleUpdate={(newMarketValue, newDate) =>
+                    handleMarketValueUpdate(newMarketValue, newDate)
+                  }
+                />
+              )}
+              <LinkListLink
+                link={`/accounts/${id}/edit`}
+                testId="edit-account"
+                icon={IconName.cog}
+              >
+                Edit account
+              </LinkListLink>
+              <AccountDeleteModal handleDelete={handleDelete} />
+            </LinkList>
+          </section>
+          <LoaderSuspense>
+            <AccountBalanceHistoryChart accountId={account._id} />
+          </LoaderSuspense>
+          <section className="flex items-center justify-between mt-8 mb-2">
+            <Heading>{`${pageVisibleMonth}, ${pageVisibleYear}`}</Heading>
+            <Pager
+              pagerOptions={{
+                nextPage: {
+                  isAvailable: !(
+                    monthFilterOptions.month ===
+                      initialMonthFilterOptions.month &&
+                    monthFilterOptions.year === initialMonthFilterOptions.year
+                  ),
+                  load: () => handleMonthOptionChange('next'),
+                },
+                previousPage: {
+                  isAvailable: !(
+                    monthFilterOptions.month ===
+                      firstTransactionEverDate.getMonth() + 1 &&
+                    monthFilterOptions.year ===
+                      firstTransactionEverDate.getFullYear()
+                  ),
+                  load: () => handleMonthOptionChange('previous'),
+                },
+              }}
+            />
+          </section>
+          <LoaderSuspense>
+            <LatestAccountTransactions
+              accountId={id}
+              filterOptions={monthFilterOptions}
+            />
+          </LoaderSuspense>
+        </>
+      )}
     </>
   );
 };
