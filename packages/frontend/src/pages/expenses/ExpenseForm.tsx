@@ -1,19 +1,20 @@
+import { CreateTransactionCategoryMappingDtoWithoutTransaction } from '@local/types';
+import { ChangeEvent, useEffect, useMemo, useState } from 'react';
+
 import {
   CreateExpenseDto,
-  CreateTransactionCategoryMappingDtoWithoutTransaction,
   TransactionCategoryMappingDto,
-} from '@local/types';
-import { ChangeEvent, useEffect, useState } from 'react';
-
-import { Form } from '../../components/blocks/form/form';
-import { TransactionCategoriesForm } from '../../components/blocks/transaction-categories-form/transaction-categories-form';
-import { Alert } from '../../components/elements/alert/alert';
-import { Button } from '../../components/elements/button/button';
-import { Input } from '../../components/elements/input/input';
-import { Select, Option } from '../../components/elements/select/select';
-import { useAllAccounts } from '../../hooks/account/useAllAccounts';
-import { useAllTransactionCategoriesForExpenseWithCategoryTree } from '../../hooks/transactionCategories/useAllTransactionCategoriesForExpense';
-import { inputDateFormat } from '../../utils/formatDate';
+  useAccountsFindAllByUserQuery,
+} from '$api/generated/financerApi';
+import { Form } from '$blocks/form/form';
+import { TransactionCategoriesForm } from '$blocks/transaction-categories-form/transaction-categories-form';
+import { Alert } from '$elements/alert/alert';
+import { Button } from '$elements/button/button';
+import { Input } from '$elements/input/input';
+import { Loader } from '$elements/loader/loader';
+import { Select, Option } from '$elements/select/select';
+import { useAllTransactionCategoriesForExpenseWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategoriesForExpense';
+import { inputDateFormat } from '$utils/formatDate';
 
 interface IExpenseFormProps {
   amount?: number;
@@ -36,8 +37,14 @@ export const ExpenseForm = ({
   fromAccount,
   transactionCategoryMapping = null,
 }: IExpenseFormProps): JSX.Element | null => {
-  const { data: accountsRaw } = useAllAccounts();
-  const [accounts, setAccounts] = useState<Option[]>();
+  const { data: accounts, isLoading } = useAccountsFindAllByUserQuery({});
+  const accountOptions = useMemo(() => {
+    if (!accounts) return [];
+    return accounts.data.map(({ _id, name }) => ({
+      value: _id,
+      label: name,
+    }));
+  }, [accounts]);
   const transactionCategoriesRaw =
     useAllTransactionCategoriesForExpenseWithCategoryTree();
   const [transactionCategories, setTransactionCategories] = useState<Option[]>(
@@ -89,15 +96,6 @@ export const ExpenseForm = ({
     newCategoryAmount[itemIndex] = itemAmount;
     setCategoryAmount(newCategoryAmount);
   };
-
-  useEffect(() => {
-    setAccounts(
-      accountsRaw.map(({ _id, name }) => ({
-        value: _id,
-        label: name,
-      }))
-    );
-  }, [accountsRaw]);
 
   useEffect(() => {
     if (transactionCategoriesRaw === null) return;
@@ -152,16 +150,17 @@ export const ExpenseForm = ({
       amount: parseFloat((newAmount.value as string).replace(',', '.')),
       description: newDescription.value,
       date: newDate.value ? new Date(newDate.value) : newDate.value,
-      categories: transactionCategoryMappings,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      categories: transactionCategoryMappings as any, // @TODO: fix type from backend
     };
 
     onSubmit(newExpenseData);
   };
 
-  if (!accounts) return null;
+  if (!accountOptions) return null;
 
   return (
-    <>
+    <Loader isLoading={isLoading}>
       {errors.length > 0 && (
         <Alert additionalInformation={errors} testId="form-errors">
           There were {errors.length} errors with your submission
@@ -199,7 +198,7 @@ export const ExpenseForm = ({
             </Input>
             <Select
               id="fromAccount"
-              options={accounts}
+              options={accountOptions}
               defaultValue={fromAccount}
               isRequired
             >
@@ -232,6 +231,6 @@ export const ExpenseForm = ({
           </section>
         )}
       </Form>
-    </>
+    </Loader>
   );
 };

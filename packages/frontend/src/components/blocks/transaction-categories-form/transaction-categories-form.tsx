@@ -1,8 +1,7 @@
-import { TransactionCategoryMappingDto } from '@local/types';
-
-import { Option } from '../../elements/select/select';
-
 import { TransactionCategoriesFormItem } from './transaction-categories-form.item';
+
+import { TransactionCategoryMappingDto } from '$api/generated/financerApi';
+import { Option } from '$elements/select/select';
 
 interface TransactionCategoriesFormProps {
   className?: string;
@@ -39,7 +38,8 @@ export const TransactionCategoriesForm = ({
           amountMaxValue={amountMaxValue}
           arrayIndex={arrayIndex}
           categories={transactionCategories}
-          categoryMapping={transactionCategoryMapping?.[arrayIndex]}
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          categoryMapping={transactionCategoryMapping?.[arrayIndex] as any}
           deleteTransactionCategoryItem={() =>
             deleteTransactionCategoryItem(parseInt(index, 10))
           }

@@ -1,13 +1,13 @@
-import { CreateExpenseDto } from '@local/types';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { UpdatePageInfo } from '../../components/renderers/seo/updatePageInfo';
-import { useEditExpense } from '../../hooks/expense/useEditExpense';
-import { useExpenseById } from '../../hooks/expense/useExpenseById';
-import { parseErrorMessagesToArray } from '../../utils/apiHelper';
-
 import { ExpenseForm } from './ExpenseForm';
+
+import { CreateExpenseDto } from '$api/generated/financerApi';
+import { useEditExpense } from '$hooks/expense/useEditExpense';
+import { useExpenseById } from '$hooks/expense/useExpenseById';
+import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 export const EditExpense = (): JSX.Element => {
   const navigate = useNavigate();
@@ -23,7 +23,8 @@ export const EditExpense = (): JSX.Element => {
       return;
     }
     try {
-      const targetExpenseJson = await editExpense(targetExpenseData, id);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const targetExpenseJson = await editExpense(targetExpenseData as any, id);
 
       if ('message' in targetExpenseJson) {
         setErrors(parseErrorMessagesToArray(targetExpenseJson.message));
@@ -48,7 +49,8 @@ export const EditExpense = (): JSX.Element => {
         description={expense.description}
         date={new Date(expense.date)}
         fromAccount={expense.fromAccount}
-        transactionCategoryMapping={expense.categories}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        transactionCategoryMapping={expense.categories as any}
       />
     </>
   );

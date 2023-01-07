@@ -2,13 +2,13 @@ import { ChartOptions } from 'chart.js';
 import { useEffect, useState, useTransition } from 'react';
 import { Chart } from 'react-chartjs-2';
 
-import { colorPalette } from '../../../constants/colorPalette';
-import { useExpenseMonthlySummaries } from '../../../hooks/expense/useExpenseMonthlySummaries';
-import { useIncomeMonthlySummaries } from '../../../hooks/income/useIncomeMonthlySummaries';
-import { useUserStatisticsSettings } from '../../../hooks/profile/user-preference/useStatisticsSettings';
-import { formatCurrency } from '../../../utils/formatCurrency';
-import { formatDateShort } from '../../../utils/formatDate';
-import { LoaderIfLoading } from '../../elements/loader/loader-if-processing';
+import { colorPalette } from '$constants/colorPalette';
+import { Loader } from '$elements/loader/loader';
+import { useExpenseMonthlySummaries } from '$hooks/expense/useExpenseMonthlySummaries';
+import { useIncomeMonthlySummaries } from '$hooks/income/useIncomeMonthlySummaries';
+import { useUserStatisticsSettings } from '$hooks/profile/user-preference/useStatisticsSettings';
+import { formatCurrency } from '$utils/formatCurrency';
+import { formatDateShort } from '$utils/formatDate';
 
 interface BalanceGraphProps {
   className?: string;
@@ -240,9 +240,9 @@ export const MonthlySummaryGraph = ({
     <section
       className={`min-h-[300px] h-[20vh] md:h-auto md:min-h-0 md:aspect-video max-md:-mx-4 ${className}`}
     >
-      <LoaderIfLoading isLoading={isProcessing}>
+      <Loader isLoading={isProcessing}>
         <Chart type="bar" data={data} options={options} />
-      </LoaderIfLoading>
+      </Loader>
     </section>
   );
 };

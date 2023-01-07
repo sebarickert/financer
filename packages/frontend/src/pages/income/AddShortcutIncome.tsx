@@ -1,18 +1,15 @@
-import {
-  CreateIncomeDto,
-  TransactionCategoryMappingDto,
-  TransactionType,
-} from '@local/types';
+import { TransactionType } from '@local/types';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { TransactionTemplateSwitcher } from '../../components/blocks/transaction-template-switcher/transaction-template-switcher';
-import { UpdatePageInfo } from '../../components/renderers/seo/updatePageInfo';
-import { useAddIncome } from '../../hooks/income/useAddIncome';
-import { useTransactionTemplateById } from '../../hooks/transactionTemplate/useTransactionTemplateById';
-import { parseErrorMessagesToArray } from '../../utils/apiHelper';
-
 import { IncomeForm } from './IncomeForm';
+
+import { CreateIncomeDto } from '$api/generated/financerApi';
+import { TransactionTemplateSwitcher } from '$blocks/transaction-template-switcher/transaction-template-switcher';
+import { useAddIncome } from '$hooks/income/useAddIncome';
+import { useTransactionTemplateById } from '$hooks/transactionTemplate/useTransactionTemplateById';
+import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 export const AddShortcutIncome = (): JSX.Element => {
   const navigate = useNavigate();
@@ -29,7 +26,8 @@ export const AddShortcutIncome = (): JSX.Element => {
 
   const handleSubmit = async (newIncomeData: CreateIncomeDto) => {
     try {
-      const newIncomeJson = await addIncome(newIncomeData);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const newIncomeJson = await addIncome(newIncomeData as any);
 
       if ('message' in newIncomeJson) {
         setErrors(parseErrorMessagesToArray(newIncomeJson.message));
@@ -61,9 +59,8 @@ export const AddShortcutIncome = (): JSX.Element => {
         amount={transactionTemplate.amount ?? undefined}
         description={transactionTemplate.description ?? undefined}
         toAccount={transactionTemplate.toAccount ?? undefined}
-        transactionCategoryMapping={
-          (parsedCategories as TransactionCategoryMappingDto[]) ?? undefined
-        }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        transactionCategoryMapping={(parsedCategories as any[]) ?? undefined}
       />
     </>
   );

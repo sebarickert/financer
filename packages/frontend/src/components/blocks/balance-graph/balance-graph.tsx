@@ -3,18 +3,18 @@ import clsx from 'clsx';
 import { useEffect, useState, useTransition } from 'react';
 import { Chart } from 'react-chartjs-2';
 
-import { colorPalette } from '../../../constants/colorPalette';
-import { useExpenseMonthlySummaries } from '../../../hooks/expense/useExpenseMonthlySummaries';
-import { useIncomeMonthlySummaries } from '../../../hooks/income/useIncomeMonthlySummaries';
-import { useUserDashboardSettings } from '../../../hooks/profile/user-preference/useDashboardSettings';
-import { useAllTransactionsPaged } from '../../../hooks/transaction/useAllTransactions';
-import { useTotalBalance } from '../../../hooks/useTotalBalance';
+import { colorPalette } from '$constants/colorPalette';
+import { Loader } from '$elements/loader/loader';
+import { useExpenseMonthlySummaries } from '$hooks/expense/useExpenseMonthlySummaries';
+import { useIncomeMonthlySummaries } from '$hooks/income/useIncomeMonthlySummaries';
+import { useUserDashboardSettings } from '$hooks/profile/user-preference/useDashboardSettings';
+import { useAllTransactionsPaged } from '$hooks/transaction/useAllTransactions';
+import { useTotalBalance } from '$hooks/useTotalBalance';
 import {
   formatCurrencyAbbreviation,
   formatCurrency,
-} from '../../../utils/formatCurrency';
-import { formatDateShort } from '../../../utils/formatDate';
-import { LoaderIfLoading } from '../../elements/loader/loader-if-processing';
+} from '$utils/formatCurrency';
+import { formatDateShort } from '$utils/formatDate';
 
 export type BalanceHistory = {
   date: Date;
@@ -269,9 +269,9 @@ export const BalanceGraph = ({
         }
       )}
     >
-      <LoaderIfLoading isLoading={isLoading}>
+      <Loader isLoading={isLoading}>
         <Chart type="line" data={data} options={options} />
-      </LoaderIfLoading>
+      </Loader>
     </section>
   );
 };

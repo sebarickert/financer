@@ -1,13 +1,13 @@
-import { UpdateIncomeDto } from '@local/types';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { UpdatePageInfo } from '../../components/renderers/seo/updatePageInfo';
-import { useEditIncome } from '../../hooks/income/useEditIncome';
-import { useIncomeById } from '../../hooks/income/useIncomeById';
-import { parseErrorMessagesToArray } from '../../utils/apiHelper';
-
 import { IncomeForm } from './IncomeForm';
+
+import { UpdateIncomeDto } from '$api/generated/financerApi';
+import { useEditIncome } from '$hooks/income/useEditIncome';
+import { useIncomeById } from '$hooks/income/useIncomeById';
+import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 export const EditIncome = (): JSX.Element => {
   const navigate = useNavigate();
@@ -23,7 +23,8 @@ export const EditIncome = (): JSX.Element => {
       return;
     }
     try {
-      const targetIncomeJson = await editIncome(targetIncomeData, id);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const targetIncomeJson = await editIncome(targetIncomeData as any, id);
 
       if ('message' in targetIncomeJson) {
         setErrors(parseErrorMessagesToArray(targetIncomeJson.message));
@@ -48,7 +49,8 @@ export const EditIncome = (): JSX.Element => {
         description={income.description}
         date={new Date(income.date)}
         toAccount={income.toAccount}
-        transactionCategoryMapping={income.categories}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        transactionCategoryMapping={income.categories as any}
       />
     </>
   );
