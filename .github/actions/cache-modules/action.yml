@@ -15,5 +15,6 @@ runs:
         path: |
           **/node_modules
           packages/types/dist
+          packages/frontend/src/redux/api/generated/*.ts
           ~/.cache/Cypress
         key: ${{ runner.os }}-modules-${{ hashFiles('./package-lock.json') }}-${{ hashFiles('./packages/types/src/*') }}
