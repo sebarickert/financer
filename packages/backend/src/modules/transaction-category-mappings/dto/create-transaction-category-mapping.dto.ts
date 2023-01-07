@@ -6,3 +6,8 @@ export class CreateTransactionCategoryMappingDto extends OmitType(
   TransactionCategoryMappingDto,
   ['_id', 'owner'] as const,
 ) {}
+
+export class CreateTransactionCategoryMappingWithoutTransactionDto extends OmitType(
+  CreateTransactionCategoryMappingDto,
+  ['transaction_id'] as const,
+) {}

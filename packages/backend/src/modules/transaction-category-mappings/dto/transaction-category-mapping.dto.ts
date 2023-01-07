@@ -18,7 +18,7 @@ export class TransactionCategoryMappingDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsString({ message: 'Description must not be empty.' })
-  description: string;
+  description?: string;
 
   @ApiProperty()
   @IsMongoId()
