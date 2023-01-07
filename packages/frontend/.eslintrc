@@ -29,9 +29,16 @@
       "error",
       {
         "newlines-between": "always",
-        "alphabetize": { "order": "asc", "caseInsensitive": true }
+        "alphabetize": { "order": "asc", "caseInsensitive": true },
+        "pathGroups": [
+          {
+            "pattern": "$**",
+            "group": "internal"
+          }
+        ]
       }
     ],
+    "import/extensions": "off",
     "prettier/prettier": [
       "error",
       {

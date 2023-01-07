@@ -16,7 +16,20 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "baseUrl": "./src",
+    "paths": {
+      "$api/*": ["redux/api/*"],
+      "$blocks/*": ["components/blocks/*"],
+      "$elements/*": ["components/elements/*"],
+      "$layouts/*": ["components/layouts/*"],
+      "$pages/*": ["components/pages/*"],
+      "$renderers/*": ["components/renderers/*"],
+      "$hooks/*": ["hooks/*"],
+      "$assets/*": ["assets/*"],
+      "$utils/*": ["utils/*"],
+      "$constants/*": ["constants/*"],
+    }
   },
   "include": ["src"]
 }
