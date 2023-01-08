@@ -1,26 +1,6 @@
-import {
-  AccountDto,
-  ApiResponse,
-  CreateAccountDto,
-  UpdateAccountDto,
-} from '@local/types';
+import { AccountDto, ApiResponse, UpdateAccountDto } from '@local/types';
 
 import { parseApiResponse } from '../utils/apiHelper';
-
-export const addAccount = async (
-  newAccountData: CreateAccountDto
-): Promise<ApiResponse<AccountDto>> => {
-  const newAccount = await fetch('/api/accounts', {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(newAccountData),
-  });
-
-  return parseApiResponse(newAccount);
-};
 
 export const editAccount = async (
   id: string,

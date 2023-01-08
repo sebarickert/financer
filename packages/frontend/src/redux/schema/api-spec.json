@@ -2029,11 +2029,9 @@
         "properties": {
           "name": { "type": "string" },
           "type": { "$ref": "#/components/schemas/AccountType" },
-          "balance": { "type": "number" },
-          "owner": { "type": "string" },
-          "isDeleted": { "type": "boolean" }
+          "balance": { "type": "number" }
         },
-        "required": ["name", "type", "balance", "owner", "isDeleted"]
+        "required": ["name", "type", "balance"]
       },
       "PaginationDto": {
         "type": "object",
@@ -2059,9 +2057,7 @@
         "properties": {
           "name": { "type": "string" },
           "type": { "$ref": "#/components/schemas/AccountType" },
-          "balance": { "type": "number" },
-          "owner": { "type": "string" },
-          "isDeleted": { "type": "boolean" }
+          "balance": { "type": "number" }
         }
       },
       "AccountBalanceHistoryDto": {
