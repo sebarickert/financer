@@ -425,7 +425,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AccountBalanceHistoryDto"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AccountBalanceHistoryDto"
+                  }
                 }
               }
             }

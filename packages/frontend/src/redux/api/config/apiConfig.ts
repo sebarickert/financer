@@ -2,6 +2,7 @@ import { financerApi } from '../generated/financerApi';
 
 enum ApiTag {
   ACCOUNT = 'accounts',
+  ACCOUNT_BALANCE = 'account-balance',
 }
 
 financerApi.enhanceEndpoints({
@@ -20,6 +21,14 @@ financerApi.enhanceEndpoints({
       providesTags: (res) => [
         ApiTag.ACCOUNT,
         { type: ApiTag.ACCOUNT, id: res?._id },
+      ],
+    },
+    accountsGetAccountBalanceHistory: {
+      providesTags: (res, err, args) => [
+        ApiTag.ACCOUNT,
+        ApiTag.ACCOUNT_BALANCE,
+        { type: ApiTag.ACCOUNT, id: args.id },
+        { type: ApiTag.ACCOUNT_BALANCE, id: args.id },
       ],
     },
   },

@@ -1,19 +1,11 @@
 import {
-  AccountBalanceHistoryDto,
   AccountDto,
   ApiResponse,
   CreateAccountDto,
   UpdateAccountDto,
 } from '@local/types';
 
-import { parseApiResponse, parseJsonOrThrowError } from '../utils/apiHelper';
-
-export const getAccountBalanceHistoryById = async (
-  id: string
-): Promise<AccountBalanceHistoryDto[]> => {
-  const account = await fetch(`/api/accounts/${id}/balance-history`);
-  return parseJsonOrThrowError(account);
-};
+import { parseApiResponse } from '../utils/apiHelper';
 
 export const addAccount = async (
   newAccountData: CreateAccountDto
