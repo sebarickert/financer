@@ -31,5 +31,8 @@ financerApi.enhanceEndpoints({
         { type: ApiTag.ACCOUNT_BALANCE, id: args.id },
       ],
     },
+    accountsCreate: {
+      invalidatesTags: [{ type: ApiTag.ACCOUNT, id: 'LIST' }],
+    },
   },
 });
