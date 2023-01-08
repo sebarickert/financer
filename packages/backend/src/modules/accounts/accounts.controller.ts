@@ -123,6 +123,7 @@ export class AccountsController {
   @Get(':id/balance-history')
   @ApiOkResponse({
     type: AccountBalanceHistoryDto,
+    isArray: true,
     description: 'Return account balance history by id',
   })
   @ApiParam({

@@ -1,16 +1,18 @@
 import { AccountDto } from '@local/types';
 import { ChartOptions } from 'chart.js';
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 import { Chart } from 'react-chartjs-2';
 
-import { colorPalette } from '../../constants/colorPalette';
-import { MONTH_IN_MS } from '../../constants/months';
-import { useAccountBalanceHistoryById } from '../../hooks/account/useAccountBalanceHistoryById';
+import { useAccountsGetAccountBalanceHistoryQuery } from '$api/generated/financerApi';
+import { colorPalette } from '$constants/colorPalette';
+import { MONTH_IN_MS } from '$constants/months';
+import { Loader } from '$elements/loader/loader';
 import {
   formatCurrency,
   formatCurrencyAbbreviation,
-} from '../../utils/formatCurrency';
-import { formatDate } from '../../utils/formatDate';
+} from '$utils/formatCurrency';
+import { formatDate } from '$utils/formatDate';
+
 interface IChartData {
   dateStr: string;
   date: Date;
@@ -24,21 +26,21 @@ interface IAccountBalanceHistoryChartProps {
 export const AccountBalanceHistoryChart = ({
   accountId,
 }: IAccountBalanceHistoryChartProps): JSX.Element | null => {
-  const [chartData, setChartData] = useState<IChartData[]>([]);
-  const accountBalanceHistory = useAccountBalanceHistoryById(accountId);
+  const { data: accountBalanceHistory, isLoading } =
+    useAccountsGetAccountBalanceHistoryQuery({ id: accountId });
 
   const monthAgoDate = new Date().getTime() - MONTH_IN_MS;
 
-  useEffect(() => {
-    const accountBalanceHistoryStack = accountBalanceHistory
+  const chartData: IChartData[] = useMemo(() => {
+    if (!accountBalanceHistory) return [];
+
+    return accountBalanceHistory
       .map(({ date, balance }) => ({
         date: new Date(date),
         balance,
         dateStr: formatDate(new Date(date)),
       }))
       .sort((a, b) => a.date.getTime() - b.date.getTime());
-
-    setChartData(accountBalanceHistoryStack);
   }, [accountBalanceHistory]);
 
   const monthAgoIndex = chartData.indexOf(
@@ -202,6 +204,8 @@ export const AccountBalanceHistoryChart = ({
   if (!chartData?.length) {
     return null;
   }
+
+  if (isLoading) return <Loader />;
 
   return (
     <div className="min-h-[300px] h-[20vh] md:h-auto md:min-h-0 md:aspect-video -mx-4 md:-mx-0">
