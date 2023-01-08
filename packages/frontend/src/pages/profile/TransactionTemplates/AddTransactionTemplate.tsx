@@ -3,27 +3,32 @@ import { useNavigate } from 'react-router-dom';
 
 import { TransactionTemplateForm } from './TransactionTemplateForm';
 
-import { CreateTransactionTemplateDto } from '$api/generated/financerApi';
-import { useAddTransactionTemplate } from '$hooks/transactionTemplate/useAddTransactionTemplate';
+import {
+  CreateTransactionTemplateDto,
+  useTransactionTemplatesCreateMutation,
+} from '$api/generated/financerApi';
+import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 export const AddTransactionTemplate = (): JSX.Element => {
   const navigate = useNavigate();
   const [errors, setErrors] = useState<string[]>([]);
-  const addTransactionTemplate = useAddTransactionTemplate();
+  const [addTransactionTemplate, { isLoading: isCreating }] =
+    useTransactionTemplatesCreateMutation();
 
   const handleSubmit = async (
     newTransactionTemplateData: CreateTransactionTemplateDto
   ) => {
     try {
-      const newTransactionTemplateJson = await addTransactionTemplate(
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        newTransactionTemplateData as any
-      );
+      const newTransactionTemplateJson = await addTransactionTemplate({
+        createTransactionTemplateDto: newTransactionTemplateData,
+      }).unwrap();
 
       if ('message' in newTransactionTemplateJson) {
         setErrors(
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           parseErrorMessagesToArray(newTransactionTemplateJson.message)
         );
         return;
@@ -38,6 +43,7 @@ export const AddTransactionTemplate = (): JSX.Element => {
 
   return (
     <>
+      {isCreating && <LoaderFullScreen />}
       <UpdatePageInfo
         title="Add template"
         backLink="/profile/transaction-templates"

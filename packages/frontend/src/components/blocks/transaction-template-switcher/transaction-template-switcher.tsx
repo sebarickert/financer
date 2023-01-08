@@ -2,15 +2,16 @@ import { TransactionType, TransactionTypeMapping } from '@local/types';
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useAllManualTransactionTemplates } from '../../../hooks/transactionTemplate/useAllTransactionTemplates';
-import { Button } from '../../elements/button/button';
-import { ButtonGroup } from '../../elements/button/button.group';
-import { ButtonPlain } from '../../elements/button/button.plain';
-import { Dialog } from '../../elements/dialog/dialog';
-import { DialogText } from '../../elements/dialog/dialog.text';
-import { Icon, IconName } from '../../elements/icon/icon';
-import { Radio } from '../../elements/radio/radio';
-import { RadioGroup } from '../../elements/radio/radio.group';
+import { useTransactionTemplatesFindAllManualTypeByUserQuery } from '$api/generated/financerApi';
+import { Button } from '$elements/button/button';
+import { ButtonGroup } from '$elements/button/button.group';
+import { ButtonPlain } from '$elements/button/button.plain';
+import { Dialog } from '$elements/dialog/dialog';
+import { DialogText } from '$elements/dialog/dialog.text';
+import { Icon, IconName } from '$elements/icon/icon';
+import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
+import { Radio } from '$elements/radio/radio';
+import { RadioGroup } from '$elements/radio/radio.group';
 
 interface TransactionTemplateSwitcherProps {
   selectedTemplate?: string;
@@ -22,7 +23,9 @@ export const TransactionTemplateSwitcher = ({
   templateType,
 }: TransactionTemplateSwitcherProps): JSX.Element | null => {
   const [isOpen, setIsOpen] = useState(false);
-  const transactionTemplates = useAllManualTransactionTemplates();
+  const { data: transactionTemplates = [], isLoading: isLoadingTemplates } =
+    useTransactionTemplatesFindAllManualTypeByUserQuery();
+
   const targetTemplates = useMemo(
     () =>
       transactionTemplates.filter(
@@ -50,6 +53,7 @@ export const TransactionTemplateSwitcher = ({
 
   return (
     <>
+      {isLoadingTemplates && <LoaderFullScreen />}
       <ButtonPlain
         onClick={handleToggleOpen}
         className="inline-flex items-center justify-center border rounded-full h-11 w-11 bg-gray hover:bg-gray-dark text-gray-darkest focus:ring-2 focus:ring-offset-2 focus:outline-none focus:ring-charcoal border-gray-dark"

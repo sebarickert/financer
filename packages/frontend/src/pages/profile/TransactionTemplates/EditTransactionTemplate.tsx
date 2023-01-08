@@ -3,14 +3,18 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { TransactionTemplateForm } from './TransactionTemplateForm';
 
-import { UpdateTransactionTemplateDto } from '$api/generated/financerApi';
+import {
+  UpdateTransactionTemplateDto,
+  useTransactionTemplatesFindOneQuery,
+  useTransactionTemplatesRemoveMutation,
+  useTransactionTemplatesUpdateMutation,
+} from '$api/generated/financerApi';
+import { DataHandler } from '$blocks/data-handler/data-handler';
 import { Button } from '$elements/button/button';
 import { DialogConfirm } from '$elements/dialog/confirm/dialog.confirm';
 import { Dialog } from '$elements/dialog/dialog';
 import { IconName } from '$elements/icon/icon';
-import { useDeleteTransactionTemplate } from '$hooks/transactionTemplate/useDeleteTransactionTemplate';
-import { useEditTransactionTemplate } from '$hooks/transactionTemplate/useEditTransactionTemplate';
-import { useTransactionTemplateById } from '$hooks/transactionTemplate/useTransactionTemplateById';
+import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
@@ -44,11 +48,14 @@ const TransactionTemplateDeleteModal = ({
 
 export const EditTransactionTemplate = (): JSX.Element => {
   const navigate = useNavigate();
-  const { id } = useParams<{ id: string }>();
+  const { id = 'id-not-found' } = useParams<{ id: string }>();
   const [errors, setErrors] = useState<string[]>([]);
-  const editTransactionTemplate = useEditTransactionTemplate();
-  const deleteTransactionTemplate = useDeleteTransactionTemplate();
-  const transactionTemplate = useTransactionTemplateById(id);
+  const [editTransactionTemplate, { isLoading: isSaving }] =
+    useTransactionTemplatesUpdateMutation();
+  const [deleteTransactionTemplate, { isLoading: isDeleting }] =
+    useTransactionTemplatesRemoveMutation();
+  const templateData = useTransactionTemplatesFindOneQuery({ id });
+  const { data: transactionTemplate } = templateData;
 
   const handleSubmit = async (
     newTransactionTemplateData: UpdateTransactionTemplateDto
@@ -59,14 +66,15 @@ export const EditTransactionTemplate = (): JSX.Element => {
     }
 
     try {
-      const newTransactionTemplateJson = await editTransactionTemplate(
-        transactionTemplate._id,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        newTransactionTemplateData as any
-      );
+      const newTransactionTemplateJson = await editTransactionTemplate({
+        id: transactionTemplate._id,
+        updateTransactionTemplateDto: newTransactionTemplateData,
+      });
 
       if ('message' in newTransactionTemplateJson) {
         setErrors(
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           parseErrorMessagesToArray(newTransactionTemplateJson.message)
         );
         return;
@@ -84,39 +92,45 @@ export const EditTransactionTemplate = (): JSX.Element => {
       console.error('Failed to delete template: no id');
       return;
     }
-    deleteTransactionTemplate(id);
+    deleteTransactionTemplate({ id });
     navigate('/profile/templates');
   };
 
   return (
     <>
+      {(isSaving || isDeleting) && <LoaderFullScreen />}
       <UpdatePageInfo
         title="Edit template"
         backLink="/profile/transaction-templates"
       />
-      <TransactionTemplateForm
-        onSubmit={handleSubmit}
-        errors={errors}
-        submitLabel="Update"
-        amount={transactionTemplate.amount ?? undefined}
-        dayOfMonth={transactionTemplate.dayOfMonth ?? undefined}
-        dayOfMonthToCreate={transactionTemplate.dayOfMonthToCreate ?? undefined}
-        description={transactionTemplate.description ?? undefined}
-        fromAccount={transactionTemplate.fromAccount ?? undefined}
-        toAccount={transactionTemplate.toAccount ?? undefined}
-        templateName={transactionTemplate.templateName ?? undefined}
-        templateType={transactionTemplate.templateType[0] as string}
-        transactionType={transactionTemplate.templateVisibility}
-        transactionCategoryMapping={
-          transactionTemplate.categories?.map((category) => ({
-            category_id: category,
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          })) as any[]
-        }
-        optionalFooterComponent={
-          <TransactionTemplateDeleteModal handleDelete={handleDelete} />
-        }
-      />
+      <DataHandler {...templateData} />
+      {transactionTemplate && (
+        <TransactionTemplateForm
+          onSubmit={handleSubmit}
+          errors={errors}
+          submitLabel="Update"
+          amount={transactionTemplate.amount ?? undefined}
+          dayOfMonth={transactionTemplate.dayOfMonth ?? undefined}
+          dayOfMonthToCreate={
+            transactionTemplate.dayOfMonthToCreate ?? undefined
+          }
+          description={transactionTemplate.description ?? undefined}
+          fromAccount={transactionTemplate.fromAccount ?? undefined}
+          toAccount={transactionTemplate.toAccount ?? undefined}
+          templateName={transactionTemplate.templateName ?? undefined}
+          templateType={transactionTemplate.templateType[0] as string}
+          transactionType={transactionTemplate.templateVisibility}
+          transactionCategoryMapping={
+            transactionTemplate.categories?.map((category) => ({
+              category_id: category,
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            })) as any[]
+          }
+          optionalFooterComponent={
+            <TransactionTemplateDeleteModal handleDelete={handleDelete} />
+          }
+        />
+      )}
     </>
   );
 };
