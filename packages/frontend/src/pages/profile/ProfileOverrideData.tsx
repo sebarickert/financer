@@ -1,41 +1,38 @@
-/* eslint-disable consistent-return */
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
+import { useMemo } from 'react';
 
-import { Button } from '../../components/elements/button/button';
-import { Heading } from '../../components/elements/heading/heading';
-import { InfoCard } from '../../components/elements/info-card/info-card';
+import {
+  UserDataImportDto,
+  useUsersOverrideAllOwnUserDataMutation,
+} from '$api/generated/financerApi';
+import { Button } from '$elements/button/button';
+import { Heading } from '$elements/heading/heading';
+import { InfoCard } from '$elements/info-card/info-card';
+import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import {
   Notification,
   NotificationProps,
-} from '../../components/elements/notification/notification';
-import { UpdatePageInfo } from '../../components/renderers/seo/updatePageInfo';
-import { useOverrideProfileData } from '../../hooks/profile/useOverrideProfileData';
-import { IOverrideProfileData } from '../../services/ProfileService';
+} from '$elements/notification/notification';
+import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
 export const ProfileOverrideData = (): JSX.Element => {
   const [uploadedUserData, setUploadedUserData] =
-    useState<IOverrideProfileData | null>(null);
-  const [overrideTranactionCount, setOverrideTranactionCount] = useState<
-    number | null
-  >(null);
-  const [overrideAccountCount, setOverrideAccountCount] = useState<
-    number | null
-  >(null);
+    useState<UserDataImportDto | null>(null);
   const [overrideFilename, setOverrideFilename] = useState<string | null>(null);
   const [notification, setNotification] = useState<NotificationProps | null>(
     null
   );
-  const overrideProfileData = useOverrideProfileData();
+  const [overrideProfileData, isLoading] =
+    useUsersOverrideAllOwnUserDataMutation();
 
-  useEffect(() => {
-    if (!uploadedUserData) {
-      setOverrideTranactionCount(null);
-      setOverrideAccountCount(null);
-      return;
-    }
+  const overrideTranactionCount = useMemo(() => {
+    if (!uploadedUserData) return null;
+    return uploadedUserData.transactions.length;
+  }, [uploadedUserData]);
 
-    setOverrideTranactionCount(uploadedUserData.transactions.length);
-    setOverrideAccountCount(uploadedUserData.accounts.length);
+  const overrideAccountCount = useMemo(() => {
+    if (!uploadedUserData) return null;
+    return uploadedUserData.accounts.length;
   }, [uploadedUserData]);
 
   const handleResetNotification = () => {
@@ -56,9 +53,11 @@ export const ProfileOverrideData = (): JSX.Element => {
       return;
     }
 
-    const { message: overrideMessage, status } = await overrideProfileData(
-      uploadedUserData
-    );
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const { message: overrideMessage, status } = await overrideProfileData({
+      userDataImportDto: uploadedUserData,
+    }).unwrap();
 
     if (status === 201) {
       setNotification({
@@ -112,6 +111,7 @@ export const ProfileOverrideData = (): JSX.Element => {
 
   return (
     <>
+      {isLoading && <LoaderFullScreen />}
       <UpdatePageInfo title="Override data (DANGER ZONE)" backLink="/profile" />
       {notification && (
         <Notification
