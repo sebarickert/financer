@@ -1,41 +1,42 @@
 import { UserPreferenceProperty } from '@local/types';
 import { useCallback } from 'react';
-import { useQueryClient, useQuery } from 'react-query';
 
 import {
-  getUserPreferenceByProperty,
-  editUserPreference,
-} from '../../../services/user-preference-service';
+  useUserPreferencesFindOneQuery,
+  useUserPreferencesUpdateMutation,
+} from '$api/generated/financerApi';
 
-const targetUserPreference = UserPreferenceProperty.TRANSACTION_LIST_CHUNK_SIZE;
+const userPreferenceProperty =
+  UserPreferenceProperty.TRANSACTION_LIST_CHUNK_SIZE;
 
-export const useUserTransactionListChunkSize = (): [
-  chunkSize: number,
-  setChunkSize: (value: number) => void
+export const useUserTransactionListChunkSize = () => {
+  const data = useUserPreferencesFindOneQuery({
+    userPreferenceProperty,
+  });
+
+  return {
+    ...data,
+    data: data.data?.value ? parseInt(data.data?.value) : 5,
+  };
+};
+
+export const useUpdateUserTransactionListChunkSize = (): [
+  (newValue: number) => void,
+  ReturnType<typeof useUserPreferencesUpdateMutation>[1]
 ] => {
-  const queryClient = useQueryClient();
-  const { data, error } = useQuery(
-    ['user-preferences', targetUserPreference],
-    () => getUserPreferenceByProperty(targetUserPreference)
-  );
+  const [updateMutation, data] = useUserPreferencesUpdateMutation();
 
-  if (error) {
-    throw new Error(
-      `Failed to fetch user preference for ${targetUserPreference}`
-    );
-  }
-
-  const updateDefaultMarketSettings = useCallback(
-    async (value: number) => {
-      const newUserPreferenceData = {
-        key: targetUserPreference,
-        value: value.toString(),
-      };
-      await editUserPreference(newUserPreferenceData);
-      queryClient.invalidateQueries(['user-preferences', targetUserPreference]);
+  const updateUserPreference = useCallback(
+    (newValue: number) => {
+      updateMutation({
+        updateUserPreferenceDto: {
+          key: userPreferenceProperty,
+          value: newValue.toString(),
+        },
+      });
     },
-    [queryClient]
+    [updateMutation]
   );
 
-  return [data?.value ? parseInt(data.value) : 5, updateDefaultMarketSettings];
+  return [updateUserPreference, data];
 };

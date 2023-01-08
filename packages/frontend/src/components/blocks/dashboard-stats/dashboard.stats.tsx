@@ -22,7 +22,9 @@ const emptyTotalAmount = { totalAmount: 0 };
 export const DashboardStats = ({
   className = '',
 }: DashboardStatsProps): JSX.Element => {
-  const [dashboardSettings] = useUserDashboardSettings();
+  const { data: dashboardSettings, isLoading: isLoadingSettings } =
+    useUserDashboardSettings();
+
   const accountTypeFilter = { accountTypes: dashboardSettings?.accountTypes };
 
   const { data: totalBalance, isFetching: isLoadingTotalBalance } =
@@ -38,7 +40,7 @@ export const DashboardStats = ({
       ...accountTypeFilter,
     });
 
-  const isLoading = isLoadingTotalBalance;
+  const isLoading = isLoadingTotalBalance || isLoadingSettings;
 
   return (
     <Loader isLoading={isLoading}>

@@ -6,6 +6,7 @@ import { TransferForm } from './TransferForm';
 
 import { CreateTransferDto } from '$api/generated/financerApi';
 import { TransactionTemplateSwitcher } from '$blocks/transaction-template-switcher/transaction-template-switcher';
+import { Loader } from '$elements/loader/loader';
 import { useUserDefaultTransferSourceAccount } from '$hooks/profile/user-preference/useUserDefaultTransferSourceAccount';
 import { useUserDefaultTransferTargetAccount } from '$hooks/profile/user-preference/useUserDefaultTransferTargetAccount';
 import { useAddTransfer } from '$hooks/transfer/useAddTransfer';
@@ -16,8 +17,14 @@ export const AddTransfer = (): JSX.Element => {
   const navigate = useNavigate();
   const [errors, setErrors] = useState<string[]>([]);
   const addTransaction = useAddTransfer();
-  const [defaultTransferSourceAccount] = useUserDefaultTransferSourceAccount();
-  const [defaultTransferTargetAccount] = useUserDefaultTransferTargetAccount();
+  const {
+    data: defaultTransferSourceAccount,
+    isLoading: isLoadingDefaultTransferSourceAccount,
+  } = useUserDefaultTransferSourceAccount();
+  const {
+    data: defaultTransferTargetAccount,
+    isLoading: isLoadingDefaultTransferTargetAccount,
+  } = useUserDefaultTransferTargetAccount();
 
   const handleSubmit = async (newTransfer: CreateTransferDto) => {
     try {
@@ -36,6 +43,10 @@ export const AddTransfer = (): JSX.Element => {
     }
   };
 
+  const isLoading =
+    isLoadingDefaultTransferSourceAccount ||
+    isLoadingDefaultTransferTargetAccount;
+
   return (
     <>
       <UpdatePageInfo
@@ -46,13 +57,17 @@ export const AddTransfer = (): JSX.Element => {
           />
         }
       />
-      <TransferForm
-        onSubmit={handleSubmit}
-        errors={errors}
-        submitLabel="Submit"
-        fromAccount={defaultTransferSourceAccount}
-        toAccount={defaultTransferTargetAccount}
-      />
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <TransferForm
+          onSubmit={handleSubmit}
+          errors={errors}
+          submitLabel="Submit"
+          fromAccount={defaultTransferSourceAccount}
+          toAccount={defaultTransferTargetAccount}
+        />
+      )}
     </>
   );
 };

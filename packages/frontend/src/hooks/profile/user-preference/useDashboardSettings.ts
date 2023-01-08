@@ -1,50 +1,47 @@
 import { AccountType, UserPreferenceProperty } from '@local/types';
 import { useCallback } from 'react';
-import { useQuery, useQueryClient } from 'react-query';
 
 import {
-  getUserPreferenceByProperty,
-  editUserPreference,
-} from '../../../services/user-preference-service';
+  useUserPreferencesFindOneQuery,
+  useUserPreferencesUpdateMutation,
+} from '$api/generated/financerApi';
 
-const targetUserPreference = UserPreferenceProperty.DASHBOARD_SETTINGS;
+const userPreferenceProperty = UserPreferenceProperty.DASHBOARD_SETTINGS;
 
 type UserDashboardSettings = {
   accountTypes: AccountType[];
 };
 
-export const useUserDashboardSettings = (): [
-  dashboardSettings: UserDashboardSettings | undefined,
-  setDashboardSettings: ({
-    accountTypes,
-  }: UserDashboardSettings) => Promise<void>
+export const useUserDashboardSettings = () => {
+  const data = useUserPreferencesFindOneQuery({
+    userPreferenceProperty,
+  });
+
+  return {
+    ...data,
+    data: data.data?.value
+      ? (JSON.parse(data.data.value) as UserDashboardSettings)
+      : undefined,
+  };
+};
+
+export const useUpdateUserDashboardSettings = (): [
+  (newValue: UserDashboardSettings) => void,
+  ReturnType<typeof useUserPreferencesUpdateMutation>[1]
 ] => {
-  const queryClient = useQueryClient();
-  const { data, error } = useQuery(
-    ['user-preferences', targetUserPreference],
-    () => getUserPreferenceByProperty(targetUserPreference)
-  );
+  const [updateMutation, data] = useUserPreferencesUpdateMutation();
 
-  if (error) {
-    throw new Error(
-      `Failed to fetch user preference for ${targetUserPreference}`
-    );
-  }
-
-  const updateDashboardSettings = useCallback(
-    async ({ accountTypes }: UserDashboardSettings) => {
-      const newUserPreferenceData = {
-        key: targetUserPreference,
-        value: JSON.stringify({ accountTypes }),
-      };
-      await editUserPreference(newUserPreferenceData);
-      queryClient.invalidateQueries(['user-preferences', targetUserPreference]);
+  const updateUserPreference = useCallback(
+    (newValue: UserDashboardSettings) => {
+      updateMutation({
+        updateUserPreferenceDto: {
+          key: userPreferenceProperty,
+          value: JSON.stringify(newValue),
+        },
+      });
     },
-    [queryClient]
+    [updateMutation]
   );
 
-  return [
-    data?.value ? JSON.parse(data.value) : undefined,
-    updateDashboardSettings,
-  ];
+  return [updateUserPreference, data];
 };

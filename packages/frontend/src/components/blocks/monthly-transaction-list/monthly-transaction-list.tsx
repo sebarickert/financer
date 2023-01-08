@@ -12,6 +12,8 @@ import { formatCurrency } from '../../../utils/formatCurrency';
 import { InfoCard } from '../../elements/info-card/info-card';
 import { LatestTransactions } from '../latest-transactions/latest-transactions';
 
+import { Loader } from '$elements/loader/loader';
+
 const emptyTotalAmount = { totalAmount: 0 };
 
 export const initialMonthFilterOptions = {
@@ -34,7 +36,8 @@ export const MonthlyTransactionList = ({
   isSummaryVisible,
   useDataHook = useAllTransactionsPaged,
 }: MonthlyTransactionListProps) => {
-  const [statisticsSettings] = useUserStatisticsSettings();
+  const { data: statisticsSettings, isLoading: isLoadingSettings } =
+    useUserStatisticsSettings();
   const accountTypeFilter = { accountTypes: statisticsSettings?.accountTypes };
 
   const incomeSummaries = useIncomeMonthlySummaries({
@@ -50,6 +53,10 @@ export const MonthlyTransactionList = ({
     incomeSummaries.at(-1) ?? emptyTotalAmount;
   const { totalAmount: totalExpenses } =
     expenseSummaries.at(-1) ?? emptyTotalAmount;
+
+  const isLoading = isLoadingSettings;
+
+  if (isLoading) return <Loader />;
 
   return (
     <>

@@ -45,8 +45,10 @@ export const Account = (): JSX.Element | null => {
   const account = data.data;
 
   const navigate = useNavigate();
-  const [deleteAccount, { isLoading }] = useAccountsRemoveMutation();
-  const [marketSettings] = useUserDefaultMarketUpdateSettings();
+  const [deleteAccount, { isLoading: isLoadingAccount }] =
+    useAccountsRemoveMutation();
+  const { data: marketSettings, isLoading: isLoadingMarketSettings } =
+    useUserDefaultMarketUpdateSettings();
 
   const [errors, setErrors] = useState<string[]>([]);
   const addIncome = useAddIncome();
@@ -164,6 +166,7 @@ export const Account = (): JSX.Element | null => {
     });
   };
 
+  const isLoading = isLoadingAccount || isLoadingMarketSettings;
   return (
     <>
       {isLoading && <LoaderFullScreen />}
