@@ -3,11 +3,15 @@ import { financerApi } from '../generated/financerApi';
 enum ApiTag {
   ACCOUNT = 'accounts',
   ACCOUNT_BALANCE = 'account-balance',
+  AUTHENTICATION = 'authentication',
 }
 
 financerApi.enhanceEndpoints({
   addTagTypes: Object.values(ApiTag),
   endpoints: {
+    //
+    // Accounts
+    //
     accountsFindAllByUser: {
       providesTags: (res) => [
         ApiTag.ACCOUNT,
@@ -42,6 +46,13 @@ financerApi.enhanceEndpoints({
         { type: ApiTag.ACCOUNT, id: args.id },
         { type: ApiTag.ACCOUNT, id: 'LIST' },
       ],
+    },
+
+    //
+    // Authentication
+    //
+    authGetAuthenticationStatus: {
+      providesTags: [ApiTag.AUTHENTICATION],
     },
   },
 });

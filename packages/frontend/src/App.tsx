@@ -1,21 +1,24 @@
 import { useEffect, useState } from 'react';
-import { Provider } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { Notification } from './components/elements/notification/notification';
 import { Financer } from './Financer';
-import { useAuthenticationStatus } from './hooks/useAuthenticationStatus';
-import { store } from './redux/store';
+
+import { useAuthGetAuthenticationStatusQuery } from '$api/generated/financerApi';
+import { Loader } from '$elements/loader/loader';
 
 export const App = (): JSX.Element => {
-  const authenticationStatus = useAuthenticationStatus();
+  const { data: authenticationStatus, isLoading } =
+    useAuthGetAuthenticationStatusQuery();
   const navigate = useNavigate();
   const [isOnboardingVisible, setOnboardingVisible] = useState(false);
 
   useEffect(() => {
     if (
       !authenticationStatus?.authenticated ||
-      authenticationStatus.hasAccounts ||
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      authenticationStatus?.hasAccounts ||
       isOnboardingVisible
     ) {
       return;
@@ -25,11 +28,16 @@ export const App = (): JSX.Element => {
     navigate('/accounts/add');
   }, [navigate, isOnboardingVisible, authenticationStatus]);
 
+  if (isLoading) return <Loader />;
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  const errors = authenticationStatus?.errors;
   return (
-    <Provider store={store}>
-      {authenticationStatus.errors && (
+    <>
+      {errors && (
         <Notification type="error" label="Something went wrong!">
-          {authenticationStatus.errors?.join(' ') || ''}
+          {errors.join(' ') || ''}
         </Notification>
       )}
       {isOnboardingVisible && (
@@ -38,7 +46,7 @@ export const App = (): JSX.Element => {
           Financer.
         </Notification>
       )}
-      <Financer isLoggedIn={authenticationStatus?.authenticated} />
-    </Provider>
+      <Financer isLoggedIn={!!authenticationStatus?.authenticated} />
+    </>
   );
 };
