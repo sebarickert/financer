@@ -4,21 +4,25 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { TransferForm } from './TransferForm';
 
-import { CreateTransferDto } from '$api/generated/financerApi';
+import {
+  CreateTransferDto,
+  useTransactionTemplatesFindOneQuery,
+} from '$api/generated/financerApi';
+import { DataHandler } from '$blocks/data-handler/data-handler';
 import { TransactionTemplateSwitcher } from '$blocks/transaction-template-switcher/transaction-template-switcher';
-import { useTransactionTemplateById } from '$hooks/transactionTemplate/useTransactionTemplateById';
 import { useAddTransfer } from '$hooks/transfer/useAddTransfer';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 export const AddShortcutTransfer = (): JSX.Element => {
   const navigate = useNavigate();
-  const { id } = useParams<{ id: string }>();
+  const { id = 'id-not-found' } = useParams<{ id: string }>();
   const [errors, setErrors] = useState<string[]>([]);
   const addTransfer = useAddTransfer();
 
-  const transactionTemplate = useTransactionTemplateById(id);
-  const parsedCategories = transactionTemplate.categories?.map(
+  const templateData = useTransactionTemplatesFindOneQuery({ id });
+  const { data: transactionTemplate } = templateData;
+  const parsedCategories = transactionTemplate?.categories?.map(
     (categoryId) => ({
       category_id: categoryId,
     })
@@ -43,26 +47,33 @@ export const AddShortcutTransfer = (): JSX.Element => {
 
   return (
     <>
-      <UpdatePageInfo
-        title={`Add ${transactionTemplate.description?.toLowerCase()}`}
-        headerAction={
-          <TransactionTemplateSwitcher
-            templateType={TransactionType.TRANSFER}
-            selectedTemplate={id}
+      <DataHandler {...templateData} />
+      {transactionTemplate && (
+        <>
+          <UpdatePageInfo
+            title={`Add ${transactionTemplate.description?.toLowerCase()}`}
+            headerAction={
+              <TransactionTemplateSwitcher
+                templateType={TransactionType.TRANSFER}
+                selectedTemplate={id}
+              />
+            }
           />
-        }
-      />
-      <TransferForm
-        onSubmit={handleSubmit}
-        errors={errors}
-        submitLabel="Add"
-        amount={transactionTemplate.amount ?? undefined}
-        description={transactionTemplate.description ?? undefined}
-        toAccount={transactionTemplate.toAccount ?? undefined}
-        fromAccount={transactionTemplate.fromAccount ?? undefined}
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        transactionCategoryMapping={(parsedCategories as any) ?? undefined}
-      />
+          <TransferForm
+            onSubmit={handleSubmit}
+            errors={errors}
+            submitLabel="Add"
+            amount={transactionTemplate.amount ?? undefined}
+            description={transactionTemplate.description ?? undefined}
+            toAccount={transactionTemplate.toAccount ?? undefined}
+            fromAccount={transactionTemplate.fromAccount ?? undefined}
+            transactionCategoryMapping={
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              (parsedCategories as any[]) ?? undefined
+            }
+          />
+        </>
+      )}
     </>
   );
 };

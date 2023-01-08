@@ -6,6 +6,7 @@ enum ApiTag {
   AUTHENTICATION = 'authentication',
   USER = 'user',
   USER_PREFERENCE = 'user-preference',
+  TRANSACTION_TEMPLATE = 'transaction-template',
 }
 
 financerApi.enhanceEndpoints({
@@ -83,6 +84,52 @@ financerApi.enhanceEndpoints({
     userPreferencesUpdate: {
       invalidatesTags: (res) => [
         { type: ApiTag.USER_PREFERENCE, id: res?.key },
+      ],
+    },
+
+    //
+    // Transaction Templates
+    //
+    transactionTemplatesFindAllByUser: {
+      providesTags: (res) => [
+        ApiTag.TRANSACTION_TEMPLATE,
+        { type: ApiTag.TRANSACTION_TEMPLATE, id: 'LIST' },
+        { type: ApiTag.TRANSACTION_TEMPLATE, id: 'LIST' },
+        ...(res?.map(({ _id }) => ({
+          type: ApiTag.TRANSACTION_TEMPLATE,
+          id: _id,
+        })) ?? []),
+      ],
+    },
+    transactionTemplatesFindAllManualTypeByUser: {
+      providesTags: (res) => [
+        ApiTag.TRANSACTION_TEMPLATE,
+        { type: ApiTag.TRANSACTION_TEMPLATE, id: 'LIST' },
+        { type: ApiTag.TRANSACTION_TEMPLATE, id: 'LIST-MANUAL' },
+        ...(res?.map(({ _id }) => ({
+          type: ApiTag.TRANSACTION_TEMPLATE,
+          id: _id,
+        })) ?? []),
+      ],
+    },
+    transactionTemplatesFindOne: {
+      providesTags: (res) => [
+        ApiTag.TRANSACTION_TEMPLATE,
+        { type: ApiTag.TRANSACTION_TEMPLATE, id: res?._id },
+      ],
+    },
+    transactionTemplatesCreate: {
+      invalidatesTags: [{ type: ApiTag.TRANSACTION_TEMPLATE, id: 'LIST' }],
+    },
+    transactionTemplatesUpdate: {
+      invalidatesTags: (res) => [
+        { type: ApiTag.TRANSACTION_TEMPLATE, id: res?._id },
+      ],
+    },
+    transactionTemplatesRemove: {
+      invalidatesTags: (res, err, args) => [
+        { type: ApiTag.TRANSACTION_TEMPLATE, id: args.id },
+        { type: ApiTag.TRANSACTION_TEMPLATE, id: 'LIST' },
       ],
     },
   },
