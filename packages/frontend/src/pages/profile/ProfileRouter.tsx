@@ -1,16 +1,16 @@
 import { Role } from '@local/types';
 import { Routes, Route } from 'react-router-dom';
 
-import { useProfileInformation } from '../../hooks/profile/useProfileInformation';
-
 import { Profile } from './Profile';
 import { ProfileOverrideData } from './ProfileOverrideData';
 import { TransactionCategoriesRouter } from './TransactionCategories/TransactionCategoriesRouter';
 import { TransactionTemplatesRouter } from './TransactionTemplates/TransactionTemplatesRouter';
 import { UserPreferencesRouter } from './UserPreferences/UserPreferencesRouter';
 
+import { useUsersFindOwnUserQuery } from '$api/generated/financerApi';
+
 export const ProfileRouter = (): JSX.Element => {
-  const profileInfo = useProfileInformation();
+  const { data: profileInfo } = useUsersFindOwnUserQuery();
 
   return (
     <Routes>

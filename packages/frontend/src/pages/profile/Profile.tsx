@@ -1,13 +1,13 @@
 import { Role } from '@local/types';
 
-import { IconName } from '../../components/elements/icon/icon';
-import { LinkList } from '../../components/elements/link-list/link-list';
-import { LinkListLink } from '../../components/elements/link-list/link-list.link';
-import { UpdatePageInfo } from '../../components/renderers/seo/updatePageInfo';
-import { useProfileInformation } from '../../hooks/profile/useProfileInformation';
+import { useUsersFindOwnUserQuery } from '$api/generated/financerApi';
+import { IconName } from '$elements/icon/icon';
+import { LinkList } from '$elements/link-list/link-list';
+import { LinkListLink } from '$elements/link-list/link-list.link';
+import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
 export const Profile = (): JSX.Element => {
-  const profileInfo = useProfileInformation();
+  const { data: profileInfo } = useUsersFindOwnUserQuery();
 
   return (
     <>
