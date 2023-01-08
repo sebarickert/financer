@@ -37,5 +37,11 @@ financerApi.enhanceEndpoints({
     accountsUpdate: {
       invalidatesTags: (res) => [{ type: ApiTag.ACCOUNT, id: res?._id }],
     },
+    accountsRemove: {
+      invalidatesTags: (res, err, args) => [
+        { type: ApiTag.ACCOUNT, id: args.id },
+        { type: ApiTag.ACCOUNT, id: 'LIST' },
+      ],
+    },
   },
 });

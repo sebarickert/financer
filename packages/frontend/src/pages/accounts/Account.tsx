@@ -10,7 +10,10 @@ import { AccountDeleteModal } from './account-modals/AccountDeleteModal';
 import { AccountUpdateMarketValueModal } from './account-modals/AccountUpdateMarketValueModal';
 import { AccountBalanceHistoryChart } from './AccountBalanceHistoryChart';
 
-import { useAccountsFindOneByIdQuery } from '$api/generated/financerApi';
+import {
+  useAccountsFindOneByIdQuery,
+  useAccountsRemoveMutation,
+} from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
 import { LatestAccountTransactions } from '$blocks/latest-account-transactions/latest-account-transactions';
 import { initialMonthFilterOptions } from '$blocks/monthly-transaction-list/monthly-transaction-list';
@@ -23,7 +26,7 @@ import { InfoCard } from '$elements/info-card/info-card';
 import { LinkList } from '$elements/link-list/link-list';
 import { LinkListLink } from '$elements/link-list/link-list.link';
 import { LoaderSuspense } from '$elements/loader/loader-suspense';
-import { useDeleteAccount } from '$hooks/account/useDeleteAccount';
+import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { useAddExpense } from '$hooks/expense/useAddExpense';
 import { useAddIncome } from '$hooks/income/useAddIncome';
 import { useUserDefaultMarketUpdateSettings } from '$hooks/profile/user-preference/useDefaultMarketUpdateSettings';
@@ -42,7 +45,7 @@ export const Account = (): JSX.Element | null => {
   const account = data.data;
 
   const navigate = useNavigate();
-  const deleteAccount = useDeleteAccount();
+  const [deleteAccount, { isLoading }] = useAccountsRemoveMutation();
   const [marketSettings] = useUserDefaultMarketUpdateSettings();
 
   const [errors, setErrors] = useState<string[]>([]);
@@ -66,7 +69,7 @@ export const Account = (): JSX.Element | null => {
       console.error('Failure to delete account: no id');
       return;
     }
-    await deleteAccount(id);
+    await deleteAccount({ id }).unwrap();
     navigate('/accounts');
   };
 
@@ -163,6 +166,7 @@ export const Account = (): JSX.Element | null => {
 
   return (
     <>
+      {isLoading && <LoaderFullScreen />}
       <DataHandler {...data} />
       {!!account && (
         <>
