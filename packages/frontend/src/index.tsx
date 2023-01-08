@@ -3,6 +3,7 @@ import zoomPlugin from 'chartjs-plugin-zoom';
 import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { Provider } from 'react-redux';
 import { BrowserRouter as Router, useLocation } from 'react-router-dom';
 
 import { App } from './App';
@@ -11,6 +12,7 @@ import { LoaderSuspense } from './components/elements/loader/loader-suspense';
 import { ScrollToTop } from './components/renderers/scroll-to-top/scroll-to-top';
 import { SEO } from './components/renderers/seo/seo';
 import { PageInfoProvider } from './context/pageInfoContext';
+import { store } from './redux/store';
 import { reportWebVitals } from './reportWebVitals';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { isUpdateAllowed } from './utils/allowedUpdateLocations';
@@ -58,17 +60,19 @@ const Root = (): JSX.Element => {
 
   return (
     <React.StrictMode>
-      <QueryClientProvider client={queryClient}>
-        <ErrorBoundaryHandler errorPage="full-app">
-          <LoaderSuspense>
-            <PageInfoProvider>
-              <SEO />
-              <ScrollToTop />
-              <App />
-            </PageInfoProvider>
-          </LoaderSuspense>
-        </ErrorBoundaryHandler>
-      </QueryClientProvider>
+      <Provider store={store}>
+        <QueryClientProvider client={queryClient}>
+          <ErrorBoundaryHandler errorPage="full-app">
+            <LoaderSuspense>
+              <PageInfoProvider>
+                <SEO />
+                <ScrollToTop />
+                <App />
+              </PageInfoProvider>
+            </LoaderSuspense>
+          </ErrorBoundaryHandler>
+        </QueryClientProvider>
+      </Provider>
     </React.StrictMode>
   );
 };
