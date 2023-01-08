@@ -5,6 +5,7 @@ enum ApiTag {
   ACCOUNT_BALANCE = 'account-balance',
   AUTHENTICATION = 'authentication',
   USER = 'user',
+  USER_PREFERENCE = 'user-preference',
 }
 
 financerApi.enhanceEndpoints({
@@ -68,6 +69,21 @@ financerApi.enhanceEndpoints({
     },
     usersOverrideAllOwnUserData: {
       invalidatesTags: [ApiTag.USER],
+    },
+
+    //
+    // User Preferences
+    //
+    userPreferencesFindOne: {
+      providesTags: (res) => [
+        ApiTag.USER_PREFERENCE,
+        { type: ApiTag.USER_PREFERENCE, id: res?.key },
+      ],
+    },
+    userPreferencesUpdate: {
+      invalidatesTags: (res) => [
+        { type: ApiTag.USER_PREFERENCE, id: res?.key },
+      ],
     },
   },
 });

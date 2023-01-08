@@ -1,56 +1,47 @@
 import { UserPreferenceProperty } from '@local/types';
 import { useCallback } from 'react';
-import { useQuery, useQueryClient } from 'react-query';
 
 import {
-  getUserPreferenceByProperty,
-  editUserPreference,
-} from '../../../services/user-preference-service';
-
-const targetUserPreference =
-  UserPreferenceProperty.UPDATE_INVESTMENT_MARKET_VALUE;
+  useUserPreferencesFindOneQuery,
+  useUserPreferencesUpdateMutation,
+} from '$api/generated/financerApi';
 
 export type UserDefaultMarketUpdateSettings = {
   transactionDescription: string;
   category?: string;
 };
 
-export const useUserDefaultMarketUpdateSettings = (): [
-  defaultMarketSettings: UserDefaultMarketUpdateSettings | undefined,
-  setDefaultTransferTargetAccount: ({
-    transactionDescription,
-    category,
-  }: UserDefaultMarketUpdateSettings) => Promise<void>
+const userPreferenceProperty =
+  UserPreferenceProperty.UPDATE_INVESTMENT_MARKET_VALUE;
+
+export const useUserDefaultMarketUpdateSettings = () => {
+  const data = useUserPreferencesFindOneQuery({
+    userPreferenceProperty,
+  });
+
+  return {
+    ...data,
+    data: data.data?.value ? JSON.parse(data.data.value) : undefined,
+  };
+};
+
+export const useUpdateUserDefaultMarketUpdateSettings = (): [
+  (newValue: UserDefaultMarketUpdateSettings) => void,
+  ReturnType<typeof useUserPreferencesUpdateMutation>[1]
 ] => {
-  const queryClient = useQueryClient();
-  const { data, error } = useQuery(
-    ['user-preferences', targetUserPreference],
-    () => getUserPreferenceByProperty(targetUserPreference)
-  );
+  const [updateMutation, data] = useUserPreferencesUpdateMutation();
 
-  if (error) {
-    throw new Error(
-      `Failed to fetch user preference for ${targetUserPreference}`
-    );
-  }
-
-  const updateDefaultMarketSettings = useCallback(
-    async ({
-      transactionDescription,
-      category,
-    }: UserDefaultMarketUpdateSettings) => {
-      const newUserPreferenceData = {
-        key: targetUserPreference,
-        value: JSON.stringify({ transactionDescription, category }),
-      };
-      await editUserPreference(newUserPreferenceData);
-      queryClient.invalidateQueries(['user-preferences', targetUserPreference]);
+  const updateUserPreference = useCallback(
+    (newValue: UserDefaultMarketUpdateSettings) => {
+      updateMutation({
+        updateUserPreferenceDto: {
+          key: userPreferenceProperty,
+          value: JSON.stringify(newValue),
+        },
+      });
     },
-    [queryClient]
+    [updateMutation]
   );
 
-  return [
-    data?.value ? JSON.parse(data.value) : undefined,
-    updateDefaultMarketSettings,
-  ];
+  return [updateUserPreference, data];
 };

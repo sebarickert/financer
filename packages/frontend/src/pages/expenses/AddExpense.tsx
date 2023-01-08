@@ -11,12 +11,14 @@ import { parseErrorMessagesToArray } from '../../utils/apiHelper';
 import { ExpenseForm } from './ExpenseForm';
 
 import { CreateExpenseDto } from '$api/generated/financerApi';
+import { Loader } from '$elements/loader/loader';
 
 export const AddExpense = (): JSX.Element => {
   const navigate = useNavigate();
   const [errors, setErrors] = useState<string[]>([]);
   const addExpense = useAddExpense();
-  const [defaultExpenseAccount] = useUserDefaultExpenseAccount();
+  const { data: defaultExpenseAccount, isLoading: isLoadingDefaultAccount } =
+    useUserDefaultExpenseAccount();
 
   const handleSubmit = async (newExpenseData: CreateExpenseDto) => {
     try {
@@ -35,6 +37,8 @@ export const AddExpense = (): JSX.Element => {
     }
   };
 
+  const isLoading = isLoadingDefaultAccount;
+
   return (
     <>
       <UpdatePageInfo
@@ -43,12 +47,16 @@ export const AddExpense = (): JSX.Element => {
           <TransactionTemplateSwitcher templateType={TransactionType.EXPENSE} />
         }
       />
-      <ExpenseForm
-        onSubmit={handleSubmit}
-        errors={errors}
-        submitLabel="Submit"
-        fromAccount={defaultExpenseAccount}
-      />
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <ExpenseForm
+          onSubmit={handleSubmit}
+          errors={errors}
+          submitLabel="Submit"
+          fromAccount={defaultExpenseAccount}
+        />
+      )}
     </>
   );
 };

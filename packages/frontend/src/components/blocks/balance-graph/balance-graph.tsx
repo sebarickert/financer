@@ -33,7 +33,8 @@ const yearAgoFilterOptions = {
 export const BalanceGraph = ({
   className = '',
 }: BalanceGraphProps): JSX.Element => {
-  const [dashboardSettings] = useUserDashboardSettings();
+  const { data: dashboardSettings, isLoading: isLoadingSettings } =
+    useUserDashboardSettings();
   const accountTypeFilter = { accountTypes: dashboardSettings?.accountTypes };
 
   const [isProcessing, startProcessing] = useTransition();
@@ -258,7 +259,7 @@ export const BalanceGraph = ({
     ],
   };
 
-  const isLoading = isProcessing || isLoadingTotalBalance;
+  const isLoading = isProcessing || isLoadingTotalBalance || isLoadingSettings;
 
   return (
     <section

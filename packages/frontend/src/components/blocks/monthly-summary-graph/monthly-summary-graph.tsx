@@ -42,7 +42,9 @@ export const MonthlySummaryGraph = ({
     MonthlySummaryHistory[]
   >([]);
 
-  const [statisticsSettings] = useUserStatisticsSettings();
+  const { data: statisticsSettings, isLoading: isLoadingSettings } =
+    useUserStatisticsSettings();
+
   const accountTypeFilter = { accountTypes: statisticsSettings?.accountTypes };
 
   const incomeMonthSummaries = useIncomeMonthlySummaries({
@@ -236,11 +238,13 @@ export const MonthlySummaryGraph = ({
 
   if (!monthlySummaryHistory?.length) return null;
 
+  const isLoading = isLoadingSettings || isProcessing;
+
   return (
     <section
       className={`min-h-[300px] h-[20vh] md:h-auto md:min-h-0 md:aspect-video max-md:-mx-4 ${className}`}
     >
-      <Loader isLoading={isProcessing}>
+      <Loader isLoading={isLoading}>
         <Chart type="bar" data={data} options={options} />
       </Loader>
     </section>
