@@ -4,9 +4,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { AccountForm } from './AccountForm';
 
-import { useAccountsFindOneByIdQuery } from '$api/generated/financerApi';
+import {
+  useAccountsFindOneByIdQuery,
+  useAccountsUpdateMutation,
+} from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
-import { useEditAccount } from '$hooks/account/useEditAccount';
+import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
@@ -16,7 +19,7 @@ export const EditAccount = (): JSX.Element => {
   if (!id) throw new Error('Account id is not defined');
 
   const navigate = useNavigate();
-  const editAccount = useEditAccount();
+  const [editAccount, { isLoading }] = useAccountsUpdateMutation();
 
   const [errors, setErrors] = useState<string[]>([]);
 
@@ -29,9 +32,14 @@ export const EditAccount = (): JSX.Element => {
       return;
     }
     try {
-      const newAccount = await editAccount(account._id, newAccountData);
+      const newAccount = await editAccount({
+        id: account._id,
+        updateAccountDto: newAccountData,
+      });
 
       if ('message' in newAccount) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         setErrors(parseErrorMessagesToArray(newAccount.message));
         return;
       }
@@ -45,6 +53,7 @@ export const EditAccount = (): JSX.Element => {
 
   return (
     <>
+      {isLoading && <LoaderFullScreen />}
       <DataHandler {...data} />
       {!!account && (
         <>

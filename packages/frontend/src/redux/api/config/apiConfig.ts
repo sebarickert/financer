@@ -34,5 +34,8 @@ financerApi.enhanceEndpoints({
     accountsCreate: {
       invalidatesTags: [{ type: ApiTag.ACCOUNT, id: 'LIST' }],
     },
+    accountsUpdate: {
+      invalidatesTags: (res) => [{ type: ApiTag.ACCOUNT, id: res?._id }],
+    },
   },
 });
