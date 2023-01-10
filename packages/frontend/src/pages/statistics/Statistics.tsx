@@ -1,33 +1,25 @@
-import { SortOrder } from '@local/types';
 import { useState } from 'react';
 
-import { MonthlySummaryGraph } from '../../components/blocks/monthly-summary-graph/monthly-summary-graph';
+import { MonthlySummaryGraph } from '$blocks/monthly-summary-graph/monthly-summary-graph';
 import {
   initialMonthFilterOptions,
   MonthlyTransactionList,
-} from '../../components/blocks/monthly-transaction-list/monthly-transaction-list';
-import { Pager } from '../../components/blocks/pager/pager';
-import { Heading } from '../../components/elements/heading/heading';
-import { IconName } from '../../components/elements/icon/icon';
-import { LoaderSuspense } from '../../components/elements/loader/loader-suspense';
-import { QuickLinks } from '../../components/elements/quick-links/quick-links';
-import { QuickLinksItem } from '../../components/elements/quick-links/quick-links.item';
-import { UpdatePageInfo } from '../../components/renderers/seo/updatePageInfo';
-import { monthNames } from '../../constants/months';
-import { useAllTransactionsPaged } from '../../hooks/transaction/useAllTransactions';
+} from '$blocks/monthly-transaction-list/monthly-transaction-list';
+import { Pager } from '$blocks/pager/pager';
+import { monthNames } from '$constants/months';
+import { Heading } from '$elements/heading/heading';
+import { IconName } from '$elements/icon/icon';
+import { LoaderSuspense } from '$elements/loader/loader-suspense';
+import { QuickLinks } from '$elements/quick-links/quick-links';
+import { QuickLinksItem } from '$elements/quick-links/quick-links.item';
+import { useFirstTransaction } from '$hooks/transaction/useFirstTransaction';
+import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
 export const Statistics = (): JSX.Element => {
   const [monthFilterOptions, setMonthFilterOptions] = useState(
     initialMonthFilterOptions
   );
-  const {
-    data: {
-      data: [transaction],
-    },
-  } = useAllTransactionsPaged(1, {
-    limit: 1,
-    sortOrder: SortOrder.ASC,
-  });
+  const { data: transaction } = useFirstTransaction();
 
   const firstTransactionEverDate = new Date(transaction?.date || new Date());
 

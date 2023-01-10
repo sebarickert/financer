@@ -310,5 +310,42 @@ financerApi.enhanceEndpoints({
         ApiTag.ACCOUNT,
       ],
     },
+
+    //
+    // Transaction
+    //
+    transactionsFindAllByUser: {
+      providesTags: (res) => [
+        ApiTag.TRANSACTION,
+        { type: ApiTag.TRANSACTION, id: 'LIST' },
+        { type: ApiTag.TRANSACTION, id: `PAGE-${res?.currentPage}` },
+        ...(res?.data.map(({ _id }) => ({
+          type: ApiTag.TRANSACTION,
+          id: _id,
+        })) ?? []),
+      ],
+    },
+    transactionsFindMonthlySummariesByUser: {
+      providesTags: (res) => [
+        ApiTag.TRANSACTION,
+        { type: ApiTag.TRANSACTION, id: 'SUMMARY' },
+        ...(res?.map(({ _id }) => ({
+          type: ApiTag.TRANSACTION,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          id: _id as any,
+        })) ?? []),
+      ],
+    },
+    transactionsFindAllByAccount: {
+      providesTags: (res) => [
+        ApiTag.TRANSACTION,
+        { type: ApiTag.TRANSACTION, id: 'LIST' },
+        { type: ApiTag.TRANSACTION, id: `PAGE-${res?.currentPage}` },
+        ...(res?.data.map(({ _id }) => ({
+          type: ApiTag.TRANSACTION,
+          id: _id,
+        })) ?? []),
+      ],
+    },
   },
 });

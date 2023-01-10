@@ -1,13 +1,17 @@
-import { useTransactionsByAccountIdPaged } from '../../../hooks/transaction/useTransactionsByAccountId';
-import { useTransactionCategoryName } from '../../../hooks/transactionCategories/useTransactionCategoryName';
-import { TransactionFilterOptions } from '../../../services/TransactionService';
-import { TransactionStackedList } from '../../elements/transaction-stacked-list/transaction-stacked-list';
-import { convertTransactionToTransactionStackedListRow } from '../latest-transactions/latest-transactions';
+import {
+  TransactionsFindAllByAccountApiArg,
+  useTransactionsFindAllByAccountQuery,
+} from '$api/generated/financerApi';
+import { DataHandler } from '$blocks/data-handler/data-handler';
+import { convertTransactionToTransactionStackedListRow } from '$blocks/latest-transactions/latest-transactions';
+import { TransactionStackedList } from '$elements/transaction-stacked-list/transaction-stacked-list';
+import { useTransactionCategoryName } from '$hooks/transactionCategories/useTransactionCategoryName';
+import { usePager } from '$hooks/usePager';
 
 type LatestAccountTransactionsProps = {
   accountId: string;
   isPagerHidden?: boolean;
-  filterOptions?: TransactionFilterOptions;
+  filterOptions?: Omit<TransactionsFindAllByAccountApiArg, 'id' | 'page'>;
   className?: string;
 };
 
@@ -21,24 +25,31 @@ export const LatestAccountTransactions = ({
   className,
 }: LatestAccountTransactionsProps): JSX.Element => {
   const getCategoryName = useTransactionCategoryName();
-  const { data, pagerOptions } = useTransactionsByAccountIdPaged(
-    accountId,
-    1,
-    filterOptions
-  );
+  const { page, getPagerOptions } = usePager(1);
+  const transactionData = useTransactionsFindAllByAccountQuery({
+    ...filterOptions,
+    page,
+    id: accountId,
+  });
+  const { data } = transactionData;
 
   return (
-    <TransactionStackedList
-      rows={data.data.map((transaction) =>
-        convertTransactionToTransactionStackedListRow(
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          transaction as any,
-          getCategoryName
-        )
+    <>
+      <DataHandler {...transactionData} />
+      {data && (
+        <TransactionStackedList
+          rows={data.data.map((transaction) =>
+            convertTransactionToTransactionStackedListRow(
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              transaction as any,
+              getCategoryName
+            )
+          )}
+          pagerOptions={getPagerOptions(data)}
+          className={className}
+          isPagerHidden={isPagerHidden}
+        />
       )}
-      pagerOptions={pagerOptions}
-      className={className}
-      isPagerHidden={isPagerHidden}
-    />
+    </>
   );
 };
