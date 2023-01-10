@@ -3,15 +3,15 @@ import clsx from 'clsx';
 import {
   TransactionsFindAllByUserApiArg,
   useExpensesFindAllByUserQuery,
+  useExpensesFindMonthlySummariesByuserQuery,
   useIncomesFindAllByUserQuery,
+  useIncomesFindMonthlySummariesByuserQuery,
   useTransactionsFindAllByUserQuery,
   useTransfersFindAllByUserQuery,
 } from '$api/generated/financerApi';
 import { LatestTransactions } from '$blocks/latest-transactions/latest-transactions';
 import { InfoCard } from '$elements/info-card/info-card';
 import { Loader } from '$elements/loader/loader';
-import { useExpenseMonthlySummaries } from '$hooks/expense/useExpenseMonthlySummaries';
-import { useIncomeMonthlySummaries } from '$hooks/income/useIncomeMonthlySummaries';
 import { useUserStatisticsSettings } from '$hooks/profile/user-preference/useStatisticsSettings';
 import { formatCurrency } from '$utils/formatCurrency';
 
@@ -41,21 +41,23 @@ export const MonthlyTransactionList = ({
     useUserStatisticsSettings();
   const accountTypeFilter = { accountTypes: statisticsSettings?.accountTypes };
 
-  const incomeSummaries = useIncomeMonthlySummaries({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ...(monthFilterOptions as any),
-    ...accountTypeFilter,
-  });
-  const expenseSummaries = useExpenseMonthlySummaries({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ...(monthFilterOptions as any),
+  const incomeMonthSummaryData = useIncomesFindMonthlySummariesByuserQuery({
+    ...monthFilterOptions,
     ...accountTypeFilter,
   });
 
+  const expenseMonthSummary = useExpensesFindMonthlySummariesByuserQuery({
+    ...monthFilterOptions,
+    ...accountTypeFilter,
+  });
+
+  const { data: incomeSummaries } = incomeMonthSummaryData;
+  const { data: expenseSummaries } = expenseMonthSummary;
+
   const { totalAmount: totalIncomes } =
-    incomeSummaries.at(-1) ?? emptyTotalAmount;
+    incomeSummaries?.at(-1) ?? emptyTotalAmount;
   const { totalAmount: totalExpenses } =
-    expenseSummaries.at(-1) ?? emptyTotalAmount;
+    expenseSummaries?.at(-1) ?? emptyTotalAmount;
 
   const isLoading = isLoadingSettings;
 

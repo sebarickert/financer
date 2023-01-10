@@ -95,12 +95,39 @@ export class TransactionsController {
   }
 
   @Get('monthly-summaries')
-  @ApiPaginatedDto(TransactionMonthSummaryDto)
+  @ApiOkResponse({
+    type: TransactionMonthSummaryDto,
+    isArray: true,
+  })
+  @ApiQuery({
+    name: 'month',
+    required: false,
+  })
+  @ApiQuery({
+    name: 'year',
+    required: false,
+  })
+  @ApiQuery({
+    name: 'limit',
+    required: false,
+  })
+  @ApiQuery({
+    name: 'accountTypes',
+    required: false,
+  })
+  @ApiQuery({
+    name: 'transactionCategories',
+    required: false,
+  })
+  @ApiQuery({
+    name: 'parentTransactionCategory',
+    required: false,
+  })
   async findMonthlySummariesByUser(
     @UserId() userId: ObjectId,
-    @Query('month') month: number,
-    @Query('year') year: number,
-    @Query('limit') limit: number,
+    @Query('month') month?: number,
+    @Query('year') year?: number,
+    @Query('limit') limit?: number,
     @Query(
       'accountTypes',
       new ParseArrayPipe({ separator: '|', optional: true }),
@@ -134,6 +161,22 @@ export class TransactionsController {
   @ApiParam({
     name: 'id',
     type: String,
+  })
+  @ApiQuery({
+    name: 'month',
+    required: false,
+  })
+  @ApiQuery({
+    name: 'year',
+    required: false,
+  })
+  @ApiQuery({
+    name: 'page',
+    required: false,
+  })
+  @ApiQuery({
+    name: 'limit',
+    required: false,
   })
   async findAllByAccount(
     @UserId() userId: ObjectId,

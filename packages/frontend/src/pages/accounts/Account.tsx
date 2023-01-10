@@ -13,6 +13,8 @@ import { AccountBalanceHistoryChart } from './AccountBalanceHistoryChart';
 import {
   useAccountsFindOneByIdQuery,
   useAccountsRemoveMutation,
+  useExpensesCreateMutation,
+  useIncomesCreateMutation,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
 import { LatestAccountTransactions } from '$blocks/latest-account-transactions/latest-account-transactions';
@@ -27,8 +29,6 @@ import { LinkList } from '$elements/link-list/link-list';
 import { LinkListLink } from '$elements/link-list/link-list.link';
 import { LoaderSuspense } from '$elements/loader/loader-suspense';
 import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
-import { useAddExpense } from '$hooks/expense/useAddExpense';
-import { useAddIncome } from '$hooks/income/useAddIncome';
 import { useUserDefaultMarketUpdateSettings } from '$hooks/profile/user-preference/useDefaultMarketUpdateSettings';
 import { useAllTransactionsPaged } from '$hooks/transaction/useAllTransactions';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
@@ -51,8 +51,10 @@ export const Account = (): JSX.Element | null => {
     useUserDefaultMarketUpdateSettings();
 
   const [errors, setErrors] = useState<string[]>([]);
-  const addIncome = useAddIncome();
-  const addExpense = useAddExpense();
+  const [addIncome, { isLoading: isCreatingIncome }] =
+    useIncomesCreateMutation();
+  const [addExpense, { isLoading: isCreatingExpense }] =
+    useExpensesCreateMutation();
 
   const [monthFilterOptions, setMonthFilterOptions] = useState(
     initialMonthFilterOptions
@@ -112,10 +114,11 @@ export const Account = (): JSX.Element | null => {
           date: date ?? new Date(),
           categories: marketSettings?.category ? [mappedCategory] : undefined,
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } as any);
+        } as any).unwrap();
 
         if ('message' in newIncomeJson) {
-          setErrors(parseErrorMessagesToArray(newIncomeJson.message));
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          setErrors(parseErrorMessagesToArray((newIncomeJson as any).message));
           return;
         }
       } catch (transactionError) {
@@ -131,10 +134,11 @@ export const Account = (): JSX.Element | null => {
           date: new Date(),
           categories: marketSettings?.category ? [mappedCategory] : undefined,
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } as any);
+        } as any).unwrap();
 
         if ('message' in newExpenseJson) {
-          setErrors(parseErrorMessagesToArray(newExpenseJson.message));
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          setErrors(parseErrorMessagesToArray((newExpenseJson as any).message));
           return;
         }
       } catch (transactionError) {
@@ -166,7 +170,11 @@ export const Account = (): JSX.Element | null => {
     });
   };
 
-  const isLoading = isLoadingAccount || isLoadingMarketSettings;
+  const isLoading =
+    isLoadingAccount ||
+    isLoadingMarketSettings ||
+    isCreatingIncome ||
+    isCreatingExpense;
   return (
     <>
       {isLoading && <LoaderFullScreen />}

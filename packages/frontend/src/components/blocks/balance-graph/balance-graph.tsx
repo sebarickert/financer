@@ -1,12 +1,14 @@
 import { ChartOptions } from 'chart.js';
 import clsx from 'clsx';
-import { useEffect, useState, useTransition } from 'react';
+import { useMemo } from 'react';
 import { Chart } from 'react-chartjs-2';
 
+import {
+  useExpensesFindMonthlySummariesByuserQuery,
+  useIncomesFindMonthlySummariesByuserQuery,
+} from '$api/generated/financerApi';
 import { colorPalette } from '$constants/colorPalette';
 import { Loader } from '$elements/loader/loader';
-import { useExpenseMonthlySummaries } from '$hooks/expense/useExpenseMonthlySummaries';
-import { useIncomeMonthlySummaries } from '$hooks/income/useIncomeMonthlySummaries';
 import { useUserDashboardSettings } from '$hooks/profile/user-preference/useDashboardSettings';
 import { useAllTransactionsPaged } from '$hooks/transaction/useAllTransactions';
 import { useTotalBalance } from '$hooks/useTotalBalance';
@@ -37,7 +39,6 @@ export const BalanceGraph = ({
     useUserDashboardSettings();
   const accountTypeFilter = { accountTypes: dashboardSettings?.accountTypes };
 
-  const [isProcessing, startProcessing] = useTransition();
   const { data: totalBalance, isFetching: isLoadingTotalBalance } =
     useTotalBalance(accountTypeFilter);
   const {
@@ -45,75 +46,77 @@ export const BalanceGraph = ({
       data: [latestTransaction],
     },
   } = useAllTransactionsPaged(1, { limit: 1 });
-  const [balanceHistory, setBalanceHistory] = useState<BalanceHistory[]>([]);
 
-  const incomeMonthSummaries = useIncomeMonthlySummaries({
-    ...yearAgoFilterOptions,
-    ...accountTypeFilter,
-  });
-  const expenseMonthSummaries = useExpenseMonthlySummaries({
+  const incomeMonthSummaryData = useIncomesFindMonthlySummariesByuserQuery({
     ...yearAgoFilterOptions,
     ...accountTypeFilter,
   });
 
-  useEffect(() => {
-    startProcessing(() => {
-      const getDateFromYearAndMonth = (year: number, month: number): Date =>
-        new Date(`${year}-${month.toString().padStart(2, '0')}-01`);
+  const expenseMonthSummary = useExpensesFindMonthlySummariesByuserQuery({
+    ...yearAgoFilterOptions,
+    ...accountTypeFilter,
+  });
 
-      const groupedIncomesFormatted = incomeMonthSummaries.map(
-        ({ _id: { month, year }, totalAmount }) => ({
-          date: getDateFromYearAndMonth(year, month),
-          amount: totalAmount,
-        })
+  const { data: incomeMonthSummaries } = incomeMonthSummaryData;
+  const { data: expenseMonthSummaries } = expenseMonthSummary;
+
+  const balanceHistory: BalanceHistory[] = useMemo(() => {
+    if (!incomeMonthSummaries || !expenseMonthSummaries) return [];
+
+    const getDateFromYearAndMonth = (year: number, month: number): Date =>
+      new Date(`${year}-${month.toString().padStart(2, '0')}-01`);
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const groupedIncomesFormatted = (incomeMonthSummaries as any[]).map(
+      ({ _id: { month, year }, totalAmount }) => ({
+        date: getDateFromYearAndMonth(year, month),
+        amount: totalAmount,
+      })
+    );
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const groupedExpensesFormatted = (expenseMonthSummaries as any[]).map(
+      ({ _id: { month, year }, totalAmount }) => ({
+        date: getDateFromYearAndMonth(year, month),
+        amount: totalAmount * -1,
+      })
+    );
+
+    const allIncomesAndExpenses = [
+      ...groupedIncomesFormatted.map(({ date, amount }) => ({
+        date,
+        amount:
+          amount +
+          (groupedExpensesFormatted.find(
+            ({ date: expenseDate }) => expenseDate.getTime() === date.getTime()
+          )?.amount || 0),
+      })),
+      ...groupedExpensesFormatted.filter(
+        ({ date }) =>
+          !groupedIncomesFormatted.some(
+            ({ date: incomeDate }) => incomeDate.getTime() === date.getTime()
+          )
+      ),
+    ];
+
+    const latestTransactionTimestamp = new Date(
+      latestTransaction?.date ?? new Date()
+    );
+
+    const newBalanceHistory = allIncomesAndExpenses
+      .sort((a, b) => b.date.getTime() - a.date.getTime())
+      .reduce(
+        (previousBalance, { date, amount }) => {
+          const { balance: latestBalance } = previousBalance[0];
+          const currentBalance = { date, balance: latestBalance - amount };
+          return [currentBalance, ...previousBalance];
+        },
+        [{ date: latestTransactionTimestamp, balance: totalBalance }]
       );
 
-      const groupedExpensesFormatted = expenseMonthSummaries.map(
-        ({ _id: { month, year }, totalAmount }) => ({
-          date: getDateFromYearAndMonth(year, month),
-          amount: totalAmount * -1,
-        })
-      );
-
-      const allIncomesAndExpenses = [
-        ...groupedIncomesFormatted.map(({ date, amount }) => ({
-          date,
-          amount:
-            amount +
-            (groupedExpensesFormatted.find(
-              ({ date: expenseDate }) =>
-                expenseDate.getTime() === date.getTime()
-            )?.amount || 0),
-        })),
-        ...groupedExpensesFormatted.filter(
-          ({ date }) =>
-            !groupedIncomesFormatted.some(
-              ({ date: incomeDate }) => incomeDate.getTime() === date.getTime()
-            )
-        ),
-      ];
-
-      const latestTransactionTimestamp = new Date(
-        latestTransaction?.date ?? new Date()
-      );
-
-      const newBalanceHistory = allIncomesAndExpenses
-        .sort((a, b) => b.date.getTime() - a.date.getTime())
-        .reduce(
-          (previousBalance, { date, amount }) => {
-            const { balance: latestBalance } = previousBalance[0];
-            const currentBalance = { date, balance: latestBalance - amount };
-            return [currentBalance, ...previousBalance];
-          },
-          [{ date: latestTransactionTimestamp, balance: totalBalance }]
-        );
-
-      setBalanceHistory(
-        newBalanceHistory.length > 12
-          ? newBalanceHistory.slice(-12)
-          : newBalanceHistory
-      );
-    });
+    return newBalanceHistory.length > 12
+      ? newBalanceHistory.slice(-12)
+      : newBalanceHistory;
   }, [
     expenseMonthSummaries,
     incomeMonthSummaries,
@@ -259,7 +262,7 @@ export const BalanceGraph = ({
     ],
   };
 
-  const isLoading = isProcessing || isLoadingTotalBalance || isLoadingSettings;
+  const isLoading = isLoadingTotalBalance || isLoadingSettings;
 
   return (
     <section

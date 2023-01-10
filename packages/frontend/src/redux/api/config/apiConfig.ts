@@ -7,6 +7,7 @@ enum ApiTag {
   USER = 'user',
   USER_PREFERENCE = 'user-preference',
   TRANSACTION_TEMPLATE = 'transaction-template',
+  TRANSACTION = 'transaction',
 }
 
 financerApi.enhanceEndpoints({
@@ -130,6 +131,64 @@ financerApi.enhanceEndpoints({
       invalidatesTags: (res, err, args) => [
         { type: ApiTag.TRANSACTION_TEMPLATE, id: args.id },
         { type: ApiTag.TRANSACTION_TEMPLATE, id: 'LIST' },
+      ],
+    },
+
+    //
+    // Expense
+    //
+    expensesFindAllByUser: {
+      providesTags: (res) => [
+        ApiTag.TRANSACTION,
+        { type: ApiTag.TRANSACTION, id: 'LIST' },
+        { type: ApiTag.TRANSACTION, id: 'EXPENSE-LIST' },
+        { type: ApiTag.TRANSACTION, id: `PAGE-${res?.currentPage}` },
+        ...(res?.data.map(({ _id }) => ({
+          type: ApiTag.TRANSACTION,
+          id: _id,
+        })) ?? []),
+      ],
+    },
+    expensesFindMonthlySummariesByuser: {
+      providesTags: (res) => [
+        ApiTag.TRANSACTION,
+        { type: ApiTag.TRANSACTION, id: 'SUMMARY' },
+        { type: ApiTag.TRANSACTION, id: 'EXPENSE-SUMMARY' },
+        ...(res?.map(({ _id }) => ({
+          type: ApiTag.TRANSACTION,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          id: _id as any,
+        })) ?? []),
+      ],
+    },
+    expensesFindOne: {
+      providesTags: (res) => [
+        ApiTag.TRANSACTION,
+        { type: ApiTag.TRANSACTION, id: res?._id },
+      ],
+    },
+    expensesCreate: {
+      invalidatesTags: (res, err, args) => [
+        { type: ApiTag.TRANSACTION, id: 'EXPENSE-LIST' },
+        { type: ApiTag.TRANSACTION, id: 'SUMMARY' },
+        { type: ApiTag.ACCOUNT, id: args.createExpenseDto.fromAccount },
+      ],
+    },
+    expensesUpdate: {
+      invalidatesTags: (res, err, args) => [
+        { type: ApiTag.TRANSACTION, id: res?._id },
+        { type: ApiTag.TRANSACTION, id: 'SUMMARY' },
+        { type: ApiTag.TRANSACTION, id: 'EXPENSE-LIST' },
+        { type: ApiTag.ACCOUNT, id: args.updateExpenseDto.fromAccount },
+        { type: ApiTag.ACCOUNT, id: res?.fromAccount },
+      ],
+    },
+    expensesRemove: {
+      invalidatesTags: (res, err, args) => [
+        { type: ApiTag.TRANSACTION, id: args.id },
+        { type: ApiTag.TRANSACTION, id: 'SUMMARY' },
+        { type: ApiTag.TRANSACTION, id: 'EXPENSE-LIST' },
+        ApiTag.ACCOUNT,
       ],
     },
   },

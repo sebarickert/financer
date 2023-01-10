@@ -6,11 +6,12 @@ import { ExpenseForm } from './ExpenseForm';
 
 import {
   CreateExpenseDto,
+  useExpensesCreateMutation,
   useTransactionTemplatesFindOneQuery,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
 import { TransactionTemplateSwitcher } from '$blocks/transaction-template-switcher/transaction-template-switcher';
-import { useAddExpense } from '$hooks/expense/useAddExpense';
+import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
@@ -18,7 +19,7 @@ export const AddShortcutExpense = (): JSX.Element => {
   const navigate = useNavigate();
   const { id = 'id-not-found' } = useParams<{ id: string }>();
   const [errors, setErrors] = useState<string[]>([]);
-  const addExpense = useAddExpense();
+  const [addExpense, { isLoading: isCreating }] = useExpensesCreateMutation();
 
   const templateData = useTransactionTemplatesFindOneQuery({ id });
   const { data: transactionTemplate } = templateData;
@@ -31,12 +32,13 @@ export const AddShortcutExpense = (): JSX.Element => {
 
   const handleSubmit = async (newExpenseData: CreateExpenseDto) => {
     try {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const newExpenseJson = await addExpense(newExpenseData as any);
+      const newExpenseJson = await addExpense({
+        createExpenseDto: newExpenseData,
+      }).unwrap();
 
       if ('message' in newExpenseJson) {
-        setErrors(parseErrorMessagesToArray(newExpenseJson.message));
-        return;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        setErrors(parseErrorMessagesToArray((newExpenseJson as any).message));
       }
 
       navigate('/statistics/expenses');
@@ -48,6 +50,7 @@ export const AddShortcutExpense = (): JSX.Element => {
 
   return (
     <>
+      {isCreating && <LoaderFullScreen />}
       <DataHandler {...templateData} />
       {transactionTemplate && (
         <>

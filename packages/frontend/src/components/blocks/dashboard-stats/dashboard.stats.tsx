@@ -1,10 +1,12 @@
 import clsx from 'clsx';
 
+import {
+  useExpensesFindMonthlySummariesByuserQuery,
+  useIncomesFindMonthlySummariesByuserQuery,
+} from '$api/generated/financerApi';
 import { IconName } from '$elements/icon/icon';
 import { InfoCard } from '$elements/info-card/info-card';
 import { Loader } from '$elements/loader/loader';
-import { useExpenseMonthlySummaries } from '$hooks/expense/useExpenseMonthlySummaries';
-import { useIncomeMonthlySummaries } from '$hooks/income/useIncomeMonthlySummaries';
 import { useUserDashboardSettings } from '$hooks/profile/user-preference/useDashboardSettings';
 import { useTotalBalance } from '$hooks/useTotalBalance';
 import { formatCurrency } from '$utils/formatCurrency';
@@ -17,7 +19,7 @@ const currentMonthFilterOptions = {
   year: new Date().getFullYear(),
   month: new Date().getMonth() + 1,
 };
-const emptyTotalAmount = { totalAmount: 0 };
+const emptyTotalAmount = [{ totalAmount: 0 }];
 
 export const DashboardStats = ({
   className = '',
@@ -29,16 +31,20 @@ export const DashboardStats = ({
 
   const { data: totalBalance, isFetching: isLoadingTotalBalance } =
     useTotalBalance(accountTypeFilter);
-  const [{ totalAmount: totalIncomes } = emptyTotalAmount] =
-    useIncomeMonthlySummaries({
-      ...currentMonthFilterOptions,
-      ...accountTypeFilter,
-    });
-  const [{ totalAmount: totalExpenses } = emptyTotalAmount] =
-    useExpenseMonthlySummaries({
-      ...currentMonthFilterOptions,
-      ...accountTypeFilter,
-    });
+  const incomeMonthSummaryData = useIncomesFindMonthlySummariesByuserQuery({
+    ...currentMonthFilterOptions,
+    ...accountTypeFilter,
+  });
+
+  const expenseMonthSummary = useExpensesFindMonthlySummariesByuserQuery({
+    ...currentMonthFilterOptions,
+    ...accountTypeFilter,
+  });
+
+  const { data: [{ totalAmount: totalIncomes }] = emptyTotalAmount } =
+    incomeMonthSummaryData;
+  const { data: [{ totalAmount: totalExpenses }] = emptyTotalAmount } =
+    expenseMonthSummary;
 
   const isLoading = isLoadingTotalBalance || isLoadingSettings;
 

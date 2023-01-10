@@ -2,31 +2,35 @@ import { TransactionType } from '@local/types';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { TransactionTemplateSwitcher } from '../../components/blocks/transaction-template-switcher/transaction-template-switcher';
-import { UpdatePageInfo } from '../../components/renderers/seo/updatePageInfo';
-import { useAddExpense } from '../../hooks/expense/useAddExpense';
-import { useUserDefaultExpenseAccount } from '../../hooks/profile/user-preference/useUserDefaultExpenseAccount';
-import { parseErrorMessagesToArray } from '../../utils/apiHelper';
-
 import { ExpenseForm } from './ExpenseForm';
 
-import { CreateExpenseDto } from '$api/generated/financerApi';
+import {
+  CreateExpenseDto,
+  useExpensesCreateMutation,
+} from '$api/generated/financerApi';
+import { TransactionTemplateSwitcher } from '$blocks/transaction-template-switcher/transaction-template-switcher';
 import { Loader } from '$elements/loader/loader';
+import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
+import { useUserDefaultExpenseAccount } from '$hooks/profile/user-preference/useUserDefaultExpenseAccount';
+import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 export const AddExpense = (): JSX.Element => {
   const navigate = useNavigate();
   const [errors, setErrors] = useState<string[]>([]);
-  const addExpense = useAddExpense();
+  const [addExpense, { isLoading: isCreating }] = useExpensesCreateMutation();
   const { data: defaultExpenseAccount, isLoading: isLoadingDefaultAccount } =
     useUserDefaultExpenseAccount();
 
   const handleSubmit = async (newExpenseData: CreateExpenseDto) => {
     try {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const newExpenseJson = await addExpense(newExpenseData as any);
+      const newExpenseJson = await addExpense({
+        createExpenseDto: newExpenseData,
+      }).unwrap();
 
       if ('message' in newExpenseJson) {
-        setErrors(parseErrorMessagesToArray(newExpenseJson.message));
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        setErrors(parseErrorMessagesToArray((newExpenseJson as any).message));
         return;
       }
 
@@ -41,6 +45,7 @@ export const AddExpense = (): JSX.Element => {
 
   return (
     <>
+      {isCreating && <LoaderFullScreen />}
       <UpdatePageInfo
         title="Add expense"
         headerAction={

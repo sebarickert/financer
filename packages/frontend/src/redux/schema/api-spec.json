@@ -512,33 +512,39 @@
         "parameters": [
           {
             "name": "month",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "number" }
           },
           {
             "name": "year",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "number" }
           },
           {
             "name": "limit",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "number" }
           },
           {
             "name": "accountTypes",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "array", "items": { "type": "string" } }
           },
           {
             "name": "transactionCategories",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "array", "items": { "type": "string" } }
+          },
+          {
+            "name": "parentTransactionCategory",
+            "required": false,
+            "in": "query",
+            "schema": {}
           }
         ],
         "responses": {
@@ -547,20 +553,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    { "$ref": "#/components/schemas/PaginationDto" },
-                    {
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/TransactionMonthSummaryDto"
-                          }
-                        }
-                      },
-                      "required": ["data"]
-                    }
-                  ]
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TransactionMonthSummaryDto"
+                  }
                 }
               }
             }
@@ -575,25 +571,25 @@
         "parameters": [
           {
             "name": "month",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "number" }
           },
           {
             "name": "year",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "number" }
           },
           {
             "name": "page",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "number" }
           },
           {
             "name": "limit",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "number" }
           },
@@ -1034,33 +1030,39 @@
         "parameters": [
           {
             "name": "month",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "number" }
           },
           {
             "name": "year",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "number" }
           },
           {
             "name": "page",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "number" }
           },
           {
             "name": "limit",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "number" }
           },
           {
             "name": "accountTypes",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "array", "items": { "type": "string" } }
+          },
+          {
+            "name": "sortOrder",
+            "required": false,
+            "in": "query",
+            "schema": {}
           }
         ],
         "responses": {
@@ -1118,33 +1120,39 @@
         "parameters": [
           {
             "name": "month",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "number" }
           },
           {
             "name": "year",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "number" }
           },
           {
             "name": "limit",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "number" }
           },
           {
             "name": "accountTypes",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "array", "items": { "type": "string" } }
           },
           {
             "name": "transactionCategories",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "array", "items": { "type": "string" } }
+          },
+          {
+            "name": "parentTransactionCategory",
+            "required": false,
+            "in": "query",
+            "schema": {}
           }
         ],
         "responses": {
@@ -1153,20 +1161,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    { "$ref": "#/components/schemas/PaginationDto" },
-                    {
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/TransactionMonthSummaryDto"
-                          }
-                        }
-                      },
-                      "required": ["data"]
-                    }
-                  ]
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TransactionMonthSummaryDto"
+                  }
                 }
               }
             }
@@ -1248,33 +1246,39 @@
         "parameters": [
           {
             "name": "month",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "number" }
           },
           {
             "name": "year",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "number" }
           },
           {
             "name": "page",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "number" }
           },
           {
             "name": "limit",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "number" }
           },
           {
             "name": "accountTypes",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "array", "items": { "type": "string" } }
+          },
+          {
+            "name": "sortOrder",
+            "required": false,
+            "in": "query",
+            "schema": {}
           }
         ],
         "responses": {
@@ -1332,33 +1336,39 @@
         "parameters": [
           {
             "name": "month",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "number" }
           },
           {
             "name": "year",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "number" }
           },
           {
             "name": "limit",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "number" }
           },
           {
             "name": "accountTypes",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "array", "items": { "type": "string" } }
           },
           {
             "name": "transactionCategories",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "array", "items": { "type": "string" } }
+          },
+          {
+            "name": "parentTransactionCategory",
+            "required": false,
+            "in": "query",
+            "schema": {}
           }
         ],
         "responses": {
@@ -1367,20 +1377,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    { "$ref": "#/components/schemas/PaginationDto" },
-                    {
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/TransactionMonthSummaryDto"
-                          }
-                        }
-                      },
-                      "required": ["data"]
-                    }
-                  ]
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TransactionMonthSummaryDto"
+                  }
                 }
               }
             }
@@ -1462,33 +1462,39 @@
         "parameters": [
           {
             "name": "month",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "number" }
           },
           {
             "name": "year",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "number" }
           },
           {
             "name": "page",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "number" }
           },
           {
             "name": "limit",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "number" }
           },
           {
             "name": "accountTypes",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "array", "items": { "type": "string" } }
+          },
+          {
+            "name": "sortOrder",
+            "required": false,
+            "in": "query",
+            "schema": {}
           }
         ],
         "responses": {
@@ -1548,33 +1554,39 @@
         "parameters": [
           {
             "name": "month",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "number" }
           },
           {
             "name": "year",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "number" }
           },
           {
             "name": "limit",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "number" }
           },
           {
             "name": "accountTypes",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "array", "items": { "type": "string" } }
           },
           {
             "name": "transactionCategories",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "array", "items": { "type": "string" } }
+          },
+          {
+            "name": "parentTransactionCategory",
+            "required": false,
+            "in": "query",
+            "schema": {}
           }
         ],
         "responses": {
@@ -1583,20 +1595,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    { "$ref": "#/components/schemas/PaginationDto" },
-                    {
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/TransactionMonthSummaryDto"
-                          }
-                        }
-                      },
-                      "required": ["data"]
-                    }
-                  ]
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TransactionMonthSummaryDto"
+                  }
                 }
               }
             }
