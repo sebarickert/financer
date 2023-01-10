@@ -2,18 +2,18 @@ import { SortOrder } from '@local/types';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { LatestTransactions } from '../../components/blocks/latest-transactions/latest-transactions';
-import { initialMonthFilterOptions } from '../../components/blocks/monthly-transaction-list/monthly-transaction-list';
-import { Pager } from '../../components/blocks/pager/pager';
-import { Heading } from '../../components/elements/heading/heading';
-import { IconName } from '../../components/elements/icon/icon';
-import { LinkList } from '../../components/elements/link-list/link-list';
-import { LinkListLink } from '../../components/elements/link-list/link-list.link';
-import { LoaderSuspense } from '../../components/elements/loader/loader-suspense';
-import { UpdatePageInfo } from '../../components/renderers/seo/updatePageInfo';
-import { monthNames } from '../../constants/months';
-import { useAllIncomesPaged } from '../../hooks/income/useAllIncomes';
-import { useAllTransactionsPaged } from '../../hooks/transaction/useAllTransactions';
+import { useIncomesFindAllByUserQuery } from '$api/generated/financerApi';
+import { LatestTransactions } from '$blocks/latest-transactions/latest-transactions';
+import { initialMonthFilterOptions } from '$blocks/monthly-transaction-list/monthly-transaction-list';
+import { Pager } from '$blocks/pager/pager';
+import { monthNames } from '$constants/months';
+import { Heading } from '$elements/heading/heading';
+import { IconName } from '$elements/icon/icon';
+import { LinkList } from '$elements/link-list/link-list';
+import { LinkListLink } from '$elements/link-list/link-list.link';
+import { LoaderSuspense } from '$elements/loader/loader-suspense';
+import { useAllTransactionsPaged } from '$hooks/transaction/useAllTransactions';
+import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
 export const Incomes = (): JSX.Element => {
   const {
@@ -123,7 +123,7 @@ export const Incomes = (): JSX.Element => {
         <LatestTransactions
           filterOptions={monthFilterOptions}
           className="mt-4"
-          useDataHook={useAllIncomesPaged}
+          useDataHook={useIncomesFindAllByUserQuery}
           onPageChange={setSelectedPage}
           initialPage={initialPageToLoad}
         />

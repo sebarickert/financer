@@ -443,37 +443,37 @@
         "parameters": [
           {
             "name": "month",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "number" }
           },
           {
             "name": "year",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "number" }
           },
           {
             "name": "page",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "number" }
           },
           {
             "name": "limit",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "number" }
           },
           {
             "name": "accountTypes",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "array", "items": { "type": "string" } }
           },
           {
             "name": "sortOrder",
-            "required": true,
+            "required": false,
             "in": "query",
             "schema": { "type": "string" }
           }

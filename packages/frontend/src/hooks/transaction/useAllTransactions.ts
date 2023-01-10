@@ -31,7 +31,11 @@ export const useAllTransactionsPaged = (
   requestParams: Omit<TransactionFilterOptions, 'page'> = {}
 ): UseAllTransactionsPagedReturn => {
   const { data: chunkAmount } = useUserTransactionListChunkSize();
-  const { page, getLoadPageFunctions, setPage } = usePager(intialPage);
+  const {
+    page,
+    getPagerOptions: getLoadPageFunctions,
+    setPage,
+  } = usePager(intialPage);
 
   const stringifiedParams = JSON.stringify(requestParams);
 

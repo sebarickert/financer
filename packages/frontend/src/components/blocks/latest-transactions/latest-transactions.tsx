@@ -1,29 +1,34 @@
-import { TransactionDto } from '@local/types';
 import { useEffect } from 'react';
 
-import { useAllExpensesPaged } from '../../../hooks/expense/useAllExpenses';
-import { useAllIncomesPaged } from '../../../hooks/income/useAllIncomes';
-import { useAllTransactionsPaged } from '../../../hooks/transaction/useAllTransactions';
-import { useTransactionCategoryName } from '../../../hooks/transactionCategories/useTransactionCategoryName';
-import { useAllTransfersPaged } from '../../../hooks/transfer/useAllTransfers';
-import { TransactionFilterOptions } from '../../../services/TransactionService';
-import { formatCurrency } from '../../../utils/formatCurrency';
-import { formatDate } from '../../../utils/formatDate';
-import { TransactionStackedList } from '../../elements/transaction-stacked-list/transaction-stacked-list';
+import {
+  TransactionCategoryMappingDto,
+  TransactionDto,
+  TransactionsFindAllByUserApiArg,
+  useExpensesFindAllByUserQuery,
+  useIncomesFindAllByUserQuery,
+  useTransactionsFindAllByUserQuery,
+  useTransfersFindAllByUserQuery,
+} from '$api/generated/financerApi';
+import { DataHandler } from '$blocks/data-handler/data-handler';
+import { TransactionStackedList } from '$elements/transaction-stacked-list/transaction-stacked-list';
 import {
   TransactionStackedListRowProps,
   TransactionType,
-} from '../../elements/transaction-stacked-list/transaction-stacked-list.row';
+} from '$elements/transaction-stacked-list/transaction-stacked-list.row';
+import { useTransactionCategoryName } from '$hooks/transactionCategories/useTransactionCategoryName';
+import { usePager } from '$hooks/usePager';
+import { formatCurrency } from '$utils/formatCurrency';
+import { formatDate } from '$utils/formatDate';
 
 type LatestTransactionsProps = {
   isPagerHidden?: boolean;
-  filterOptions?: TransactionFilterOptions;
+  filterOptions?: TransactionsFindAllByUserApiArg;
   className?: string;
   useDataHook?:
-    | typeof useAllTransactionsPaged
-    | typeof useAllIncomesPaged
-    | typeof useAllExpensesPaged
-    | typeof useAllTransfersPaged;
+    | typeof useTransactionsFindAllByUserQuery
+    | typeof useIncomesFindAllByUserQuery
+    | typeof useExpensesFindAllByUserQuery
+    | typeof useTransfersFindAllByUserQuery;
   onPageChange?: (page: number) => void;
   initialPage?: number;
 };
@@ -69,8 +74,12 @@ export const convertTransactionToTransactionStackedListRow = (
   );
 
   return {
-    transactionCategories: transaction.categories
-      .map(({ category_id }) => getCategoryName(category_id))
+    transactionCategories: (
+      transaction.categories as unknown as TransactionCategoryMappingDto[]
+    )
+      .map(({ category_id }) =>
+        getCategoryName(category_id as unknown as string)
+      )
       .join(', '),
     transactionAmount: formatCurrency(transaction.amount),
     date: formatDate(new Date(transaction.date)),
@@ -88,30 +97,37 @@ export const LatestTransactions = ({
     month: new Date().getMonth() + 1,
   },
   className,
-  useDataHook = useAllTransactionsPaged,
+  useDataHook = useTransactionsFindAllByUserQuery,
   onPageChange,
   initialPage = 1,
 }: LatestTransactionsProps): JSX.Element => {
   const getCategoryName = useTransactionCategoryName();
-  const { data, pagerOptions } = useDataHook(initialPage, filterOptions);
+  const { page, getPagerOptions } = usePager(initialPage);
+  const transactionData = useDataHook({ ...filterOptions, page } as any);
+  const { data } = transactionData;
 
   useEffect(() => {
     if (onPageChange) {
-      onPageChange(pagerOptions.currentPage ?? 1);
+      onPageChange(data?.currentPage ?? 1);
     }
-  }, [onPageChange, pagerOptions.currentPage]);
+  }, [onPageChange, data?.currentPage]);
 
   return (
-    <TransactionStackedList
-      rows={data.data.map((transaction) =>
-        convertTransactionToTransactionStackedListRow(
-          transaction,
-          getCategoryName
-        )
+    <>
+      <DataHandler {...transactionData} />
+      {data && (
+        <TransactionStackedList
+          rows={data?.data.map((transaction) =>
+            convertTransactionToTransactionStackedListRow(
+              transaction,
+              getCategoryName
+            )
+          )}
+          pagerOptions={{ ...getPagerOptions(data) }}
+          className={className}
+          isPagerHidden={isPagerHidden}
+        />
       )}
-      pagerOptions={pagerOptions}
-      className={className}
-      isPagerHidden={isPagerHidden}
-    />
+    </>
   );
 };

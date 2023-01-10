@@ -1,18 +1,20 @@
 import clsx from 'clsx';
 
-import { useAllExpensesPaged } from '../../../hooks/expense/useAllExpenses';
-import { useExpenseMonthlySummaries } from '../../../hooks/expense/useExpenseMonthlySummaries';
-import { useAllIncomesPaged } from '../../../hooks/income/useAllIncomes';
-import { useIncomeMonthlySummaries } from '../../../hooks/income/useIncomeMonthlySummaries';
-import { useUserStatisticsSettings } from '../../../hooks/profile/user-preference/useStatisticsSettings';
-import { useAllTransactionsPaged } from '../../../hooks/transaction/useAllTransactions';
-import { useAllTransfersPaged } from '../../../hooks/transfer/useAllTransfers';
 import { TransactionFilterOptions } from '../../../services/TransactionService';
-import { formatCurrency } from '../../../utils/formatCurrency';
-import { InfoCard } from '../../elements/info-card/info-card';
-import { LatestTransactions } from '../latest-transactions/latest-transactions';
 
+import {
+  useExpensesFindAllByUserQuery,
+  useIncomesFindAllByUserQuery,
+  useTransactionsFindAllByUserQuery,
+  useTransfersFindAllByUserQuery,
+} from '$api/generated/financerApi';
+import { LatestTransactions } from '$blocks/latest-transactions/latest-transactions';
+import { InfoCard } from '$elements/info-card/info-card';
 import { Loader } from '$elements/loader/loader';
+import { useExpenseMonthlySummaries } from '$hooks/expense/useExpenseMonthlySummaries';
+import { useIncomeMonthlySummaries } from '$hooks/income/useIncomeMonthlySummaries';
+import { useUserStatisticsSettings } from '$hooks/profile/user-preference/useStatisticsSettings';
+import { formatCurrency } from '$utils/formatCurrency';
 
 const emptyTotalAmount = { totalAmount: 0 };
 
@@ -25,16 +27,16 @@ interface MonthlyTransactionListProps {
   monthFilterOptions: TransactionFilterOptions;
   isSummaryVisible?: boolean;
   useDataHook?:
-    | typeof useAllTransactionsPaged
-    | typeof useAllIncomesPaged
-    | typeof useAllExpensesPaged
-    | typeof useAllTransfersPaged;
+    | typeof useTransactionsFindAllByUserQuery
+    | typeof useIncomesFindAllByUserQuery
+    | typeof useExpensesFindAllByUserQuery
+    | typeof useTransfersFindAllByUserQuery;
 }
 
 export const MonthlyTransactionList = ({
   monthFilterOptions,
   isSummaryVisible,
-  useDataHook = useAllTransactionsPaged,
+  useDataHook = useTransactionsFindAllByUserQuery,
 }: MonthlyTransactionListProps) => {
   const { data: statisticsSettings, isLoading: isLoadingSettings } =
     useUserStatisticsSettings();

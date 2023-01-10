@@ -14,24 +14,6 @@ import {
   TransactionFilterOptions,
 } from './TransactionService';
 
-export const getAllExpenses = async (
-  options: TransactionFilterOptions = {}
-): Promise<PaginationDto<ExpenseDto[]>> => {
-  const queryString = parseFilterQueryString(options);
-
-  const expenses = await fetch(`/api/expenses?${queryString.join('&')}`);
-  return parseJsonOrThrowError(expenses);
-};
-
-export const getAllExpensesPaged = async ({
-  pageParam = 1,
-}: {
-  pageParam?: number;
-}): Promise<PaginationDto<ExpenseDto[]>> => {
-  const expenses = await fetch(`/api/expenses?page=${pageParam}&year=2022`);
-  return parseJsonOrThrowError(expenses);
-};
-
 export const getExpenseById = async (id: string): Promise<ExpenseDto> => {
   const expense = await fetch(`/api/expenses/${id}`);
   return parseJsonOrThrowError(expense);

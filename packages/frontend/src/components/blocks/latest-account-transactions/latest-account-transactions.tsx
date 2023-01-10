@@ -31,7 +31,7 @@ export const LatestAccountTransactions = ({
     <TransactionStackedList
       rows={data.data.map((transaction) =>
         convertTransactionToTransactionStackedListRow(
-          transaction,
+          transaction as any,
           getCategoryName
         )
       )}
