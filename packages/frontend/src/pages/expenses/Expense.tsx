@@ -5,6 +5,7 @@ import {
   TransactionCategoryMappingDto,
   useAccountsFindOneByIdQuery,
   useExpensesFindOneQuery,
+  useExpensesRemoveMutation,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
 import { Button } from '$elements/button/button';
@@ -14,7 +15,7 @@ import { Dialog } from '$elements/dialog/dialog';
 import { Divider } from '$elements/divider/divider';
 import { IconName } from '$elements/icon/icon';
 import { InfoCard } from '$elements/info-card/info-card';
-import { useDeleteExpense } from '$hooks/expense/useDeleteExpense';
+import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { formatCurrency } from '$utils/formatCurrency';
@@ -65,7 +66,8 @@ export const Expense = (): JSX.Element => {
   const account = accountData.data;
 
   const transactionCategories = useAllTransactionCategoriesWithCategoryTree();
-  const deleteExpense = useDeleteExpense();
+  const [deleteExpense, { isLoading: isDeleting }] =
+    useExpensesRemoveMutation();
 
   const getCategoryNameById = (categoryId: string) =>
     transactionCategories?.find((category) => category._id === categoryId)
@@ -76,12 +78,13 @@ export const Expense = (): JSX.Element => {
       console.error('Failed to delete expense: no id');
       return;
     }
-    await deleteExpense(id);
+    await deleteExpense({ id }).unwrap();
     navigate('/statistics/expenses');
   };
 
   return (
     <>
+      {isDeleting && <LoaderFullScreen />}
       <DataHandler {...expenseData} />
       <UpdatePageInfo
         title={`${expense?.description}`}

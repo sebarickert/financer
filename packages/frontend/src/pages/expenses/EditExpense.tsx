@@ -6,9 +6,10 @@ import { ExpenseForm } from './ExpenseForm';
 import {
   CreateExpenseDto,
   useExpensesFindOneQuery,
+  useExpensesUpdateMutation,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
-import { useEditExpense } from '$hooks/expense/useEditExpense';
+import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
@@ -16,7 +17,7 @@ export const EditExpense = (): JSX.Element => {
   const navigate = useNavigate();
   const { id = 'id not found' } = useParams<{ id: string }>();
   const [errors, setErrors] = useState<string[]>([]);
-  const editExpense = useEditExpense();
+  const [editExpense, { isLoading: isSaving }] = useExpensesUpdateMutation();
 
   const expenseData = useExpensesFindOneQuery({ id });
   const { data: expense } = expenseData;
@@ -28,10 +29,16 @@ export const EditExpense = (): JSX.Element => {
     }
     try {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const targetExpenseJson = await editExpense(targetExpenseData as any, id);
+      const targetExpenseJson = await editExpense({
+        updateExpenseDto: targetExpenseData,
+        id,
+      }).unwrap();
 
       if ('message' in targetExpenseJson) {
-        setErrors(parseErrorMessagesToArray(targetExpenseJson.message));
+        setErrors(
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          parseErrorMessagesToArray((targetExpenseJson as any).message)
+        );
         return;
       }
 
@@ -44,6 +51,7 @@ export const EditExpense = (): JSX.Element => {
 
   return (
     <>
+      {isSaving && <LoaderFullScreen />}
       <DataHandler {...expenseData} />
       <UpdatePageInfo title={`Edit ${expense?.description}`} />
       {expense && (
