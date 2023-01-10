@@ -6,11 +6,12 @@ import { IncomeForm } from './IncomeForm';
 
 import {
   CreateIncomeDto,
+  useIncomesCreateMutation,
   useTransactionTemplatesFindOneQuery,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
 import { TransactionTemplateSwitcher } from '$blocks/transaction-template-switcher/transaction-template-switcher';
-import { useAddIncome } from '$hooks/income/useAddIncome';
+import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
@@ -18,7 +19,7 @@ export const AddShortcutIncome = (): JSX.Element => {
   const navigate = useNavigate();
   const { id = 'id-not-found' } = useParams<{ id: string }>();
   const [errors, setErrors] = useState<string[]>([]);
-  const addIncome = useAddIncome();
+  const [addIncome, { isLoading: isCreating }] = useIncomesCreateMutation();
 
   const templateData = useTransactionTemplatesFindOneQuery({ id });
   const { data: transactionTemplate } = templateData;
@@ -30,11 +31,13 @@ export const AddShortcutIncome = (): JSX.Element => {
 
   const handleSubmit = async (newIncomeData: CreateIncomeDto) => {
     try {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const newIncomeJson = await addIncome(newIncomeData as any);
+      const newIncomeJson = await addIncome({
+        createIncomeDto: newIncomeData,
+      }).unwrap();
 
       if ('message' in newIncomeJson) {
-        setErrors(parseErrorMessagesToArray(newIncomeJson.message));
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        setErrors(parseErrorMessagesToArray((newIncomeJson as any).message));
         return;
       }
 
@@ -47,6 +50,7 @@ export const AddShortcutIncome = (): JSX.Element => {
 
   return (
     <>
+      {isCreating && <LoaderFullScreen />}
       <DataHandler {...templateData} />
       {transactionTemplate && (
         <>

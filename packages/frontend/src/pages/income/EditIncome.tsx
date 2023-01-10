@@ -3,9 +3,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { IncomeForm } from './IncomeForm';
 
-import { UpdateIncomeDto } from '$api/generated/financerApi';
-import { useEditIncome } from '$hooks/income/useEditIncome';
-import { useIncomeById } from '$hooks/income/useIncomeById';
+import {
+  UpdateIncomeDto,
+  useIncomesFindOneQuery,
+  useIncomesUpdateMutation,
+} from '$api/generated/financerApi';
+import { DataHandler } from '$blocks/data-handler/data-handler';
+import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
@@ -14,8 +18,9 @@ export const EditIncome = (): JSX.Element => {
   const [errors, setErrors] = useState<string[]>([]);
   const { id = 'missing-id' } = useParams<{ id: string }>();
 
-  const income = useIncomeById(id);
-  const editIncome = useEditIncome();
+  const incomeData = useIncomesFindOneQuery({ id });
+  const { data: income } = incomeData;
+  const [editIncome, { isLoading: isSaving }] = useIncomesUpdateMutation();
 
   const handleSubmit = async (targetIncomeData: UpdateIncomeDto) => {
     if (!id) {
@@ -23,11 +28,14 @@ export const EditIncome = (): JSX.Element => {
       return;
     }
     try {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const targetIncomeJson = await editIncome(targetIncomeData as any, id);
+      const targetIncomeJson = await editIncome({
+        updateIncomeDto: targetIncomeData,
+        id,
+      }).unwrap();
 
       if ('message' in targetIncomeJson) {
-        setErrors(parseErrorMessagesToArray(targetIncomeJson.message));
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        setErrors(parseErrorMessagesToArray((targetIncomeJson as any).message));
         return;
       }
 
@@ -40,18 +48,22 @@ export const EditIncome = (): JSX.Element => {
 
   return (
     <>
-      <UpdatePageInfo title={`Edit ${income.description}`} />
-      <IncomeForm
-        onSubmit={handleSubmit}
-        errors={errors}
-        submitLabel="Update"
-        amount={income.amount}
-        description={income.description}
-        date={new Date(income.date)}
-        toAccount={income.toAccount}
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        transactionCategoryMapping={income.categories as any}
-      />
+      {isSaving && <LoaderFullScreen />}
+      <DataHandler {...incomeData} />
+      <UpdatePageInfo title={`Edit ${income?.description}`} />
+      {income && (
+        <IncomeForm
+          onSubmit={handleSubmit}
+          errors={errors}
+          submitLabel="Update"
+          amount={income.amount}
+          description={income.description}
+          date={new Date(income.date)}
+          toAccount={income.toAccount}
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          transactionCategoryMapping={income.categories as any}
+        />
+      )}
     </>
   );
 };
