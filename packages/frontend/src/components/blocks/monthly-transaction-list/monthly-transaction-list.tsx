@@ -1,8 +1,7 @@
 import clsx from 'clsx';
 
-import { TransactionFilterOptions } from '../../../services/TransactionService';
-
 import {
+  TransactionsFindAllByUserApiArg,
   useExpensesFindAllByUserQuery,
   useIncomesFindAllByUserQuery,
   useTransactionsFindAllByUserQuery,
@@ -21,10 +20,10 @@ const emptyTotalAmount = { totalAmount: 0 };
 export const initialMonthFilterOptions = {
   year: new Date().getFullYear(),
   month: new Date().getMonth() + 1,
-};
+} satisfies TransactionsFindAllByUserApiArg;
 
 interface MonthlyTransactionListProps {
-  monthFilterOptions: TransactionFilterOptions;
+  monthFilterOptions: TransactionsFindAllByUserApiArg;
   isSummaryVisible?: boolean;
   useDataHook?:
     | typeof useTransactionsFindAllByUserQuery
@@ -43,11 +42,13 @@ export const MonthlyTransactionList = ({
   const accountTypeFilter = { accountTypes: statisticsSettings?.accountTypes };
 
   const incomeSummaries = useIncomeMonthlySummaries({
-    ...monthFilterOptions,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ...(monthFilterOptions as any),
     ...accountTypeFilter,
   });
   const expenseSummaries = useExpenseMonthlySummaries({
-    ...monthFilterOptions,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ...(monthFilterOptions as any),
     ...accountTypeFilter,
   });
 

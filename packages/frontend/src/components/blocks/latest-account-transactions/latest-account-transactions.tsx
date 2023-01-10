@@ -31,6 +31,7 @@ export const LatestAccountTransactions = ({
     <TransactionStackedList
       rows={data.data.map((transaction) =>
         convertTransactionToTransactionStackedListRow(
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           transaction as any,
           getCategoryName
         )
