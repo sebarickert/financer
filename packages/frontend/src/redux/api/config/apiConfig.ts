@@ -191,5 +191,63 @@ financerApi.enhanceEndpoints({
         ApiTag.ACCOUNT,
       ],
     },
+
+    //
+    // Income
+    //
+    incomesFindAllByUser: {
+      providesTags: (res) => [
+        ApiTag.TRANSACTION,
+        { type: ApiTag.TRANSACTION, id: 'LIST' },
+        { type: ApiTag.TRANSACTION, id: 'INCOME-LIST' },
+        { type: ApiTag.TRANSACTION, id: `PAGE-${res?.currentPage}` },
+        ...(res?.data.map(({ _id }) => ({
+          type: ApiTag.TRANSACTION,
+          id: _id,
+        })) ?? []),
+      ],
+    },
+    incomesFindMonthlySummariesByuser: {
+      providesTags: (res) => [
+        ApiTag.TRANSACTION,
+        { type: ApiTag.TRANSACTION, id: 'SUMMARY' },
+        { type: ApiTag.TRANSACTION, id: 'INCOME-SUMMARY' },
+        ...(res?.map(({ _id }) => ({
+          type: ApiTag.TRANSACTION,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          id: _id as any,
+        })) ?? []),
+      ],
+    },
+    incomesFindOne: {
+      providesTags: (res) => [
+        ApiTag.TRANSACTION,
+        { type: ApiTag.TRANSACTION, id: res?._id },
+      ],
+    },
+    incomesCreate: {
+      invalidatesTags: (res, err, args) => [
+        { type: ApiTag.TRANSACTION, id: 'INCOME-LIST' },
+        { type: ApiTag.TRANSACTION, id: 'SUMMARY' },
+        { type: ApiTag.ACCOUNT, id: args.createIncomeDto.toAccount },
+      ],
+    },
+    incomesUpdate: {
+      invalidatesTags: (res, err, args) => [
+        { type: ApiTag.TRANSACTION, id: res?._id },
+        { type: ApiTag.TRANSACTION, id: 'SUMMARY' },
+        { type: ApiTag.TRANSACTION, id: 'INCOME-LIST' },
+        { type: ApiTag.ACCOUNT, id: args.updateIncomeDto.toAccount },
+        { type: ApiTag.ACCOUNT, id: res?.toAccount },
+      ],
+    },
+    incomesRemove: {
+      invalidatesTags: (res, err, args) => [
+        { type: ApiTag.TRANSACTION, id: args.id },
+        { type: ApiTag.TRANSACTION, id: 'SUMMARY' },
+        { type: ApiTag.TRANSACTION, id: 'INCOME-LIST' },
+        ApiTag.ACCOUNT,
+      ],
+    },
   },
 });
