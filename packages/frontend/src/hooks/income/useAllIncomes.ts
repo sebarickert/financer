@@ -27,7 +27,11 @@ export const useAllIncomesPaged = (
   requestParams: Omit<TransactionFilterOptions, 'page'> = {}
 ): UseAllIncomesPagedReturn => {
   const { data: chunkAmount } = useUserTransactionListChunkSize();
-  const { page, getLoadPageFunctions, setPage } = usePager(intialPage);
+  const {
+    page,
+    getPagerOptions: getLoadPageFunctions,
+    setPage,
+  } = usePager(intialPage);
 
   const { data, error } = useQuery(['incomes', page, requestParams], () =>
     getAllIncomes({ limit: chunkAmount, ...requestParams, page })

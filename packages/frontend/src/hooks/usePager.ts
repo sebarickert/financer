@@ -17,7 +17,7 @@ export type PagerOptions = {
 type UsePageReturn = {
   page: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
-  getLoadPageFunctions(pageData: PaginationDto<unknown>): PagerOptions;
+  getPagerOptions(pageData?: PaginationDto<unknown>): PagerOptions;
 };
 
 export const usePager = (initialPage = 1): UsePageReturn => {
@@ -26,18 +26,19 @@ export const usePager = (initialPage = 1): UsePageReturn => {
   return {
     page,
     setPage,
-    getLoadPageFunctions: (pageData) => ({
+    getPagerOptions: (pageData) => ({
       nextPage: {
-        load: () => pageData.hasNextPage && setPage((prevPage) => prevPage + 1),
-        isAvailable: pageData.hasNextPage,
+        load: () =>
+          pageData?.hasNextPage && setPage((prevPage) => prevPage + 1),
+        isAvailable: !!pageData?.hasNextPage,
       },
       previousPage: {
         load: () =>
-          pageData.hasPreviousPage && setPage((prevPage) => prevPage - 1),
-        isAvailable: pageData.hasPreviousPage,
+          pageData?.hasPreviousPage && setPage((prevPage) => prevPage - 1),
+        isAvailable: !!pageData?.hasPreviousPage,
       },
-      pageCount: pageData.totalPageCount,
-      currentPage: pageData.currentPage,
+      pageCount: pageData?.totalPageCount,
+      currentPage: pageData?.currentPage,
     }),
   };
 };

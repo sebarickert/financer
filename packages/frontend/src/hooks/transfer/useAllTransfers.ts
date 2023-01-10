@@ -36,7 +36,7 @@ export const useAllTransfersPaged = (
   requestParams: Omit<TransactionFilterOptions, 'page'> = {}
 ): UseAllTransfersPagedReturn => {
   const { data: chunkAmount } = useUserTransactionListChunkSize();
-  const { page, getLoadPageFunctions, setPage } = usePager(intialPage);
+  const { page, getPagerOptions, setPage } = usePager(intialPage);
 
   const { data, error } = useQuery(['transfers', page, requestParams], () =>
     getAllTransfers({ limit: chunkAmount, ...requestParams, page })
@@ -54,7 +54,7 @@ export const useAllTransfersPaged = (
 
   return {
     data: data,
-    pagerOptions: getLoadPageFunctions(data),
+    pagerOptions: getPagerOptions(data),
   };
 };
 

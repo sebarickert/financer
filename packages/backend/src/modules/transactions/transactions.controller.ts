@@ -12,6 +12,7 @@ import {
   ApiExtraModels,
   ApiOkResponse,
   ApiParam,
+  ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
 
@@ -34,12 +35,36 @@ export class TransactionsController {
 
   @Get()
   @ApiPaginatedDto(TransactionDto)
+  @ApiQuery({
+    name: 'month',
+    required: false,
+  })
+  @ApiQuery({
+    name: 'year',
+    required: false,
+  })
+  @ApiQuery({
+    name: 'page',
+    required: false,
+  })
+  @ApiQuery({
+    name: 'limit',
+    required: false,
+  })
+  @ApiQuery({
+    name: 'accountTypes',
+    required: false,
+  })
+  @ApiQuery({
+    name: 'sortOrder',
+    required: false,
+  })
   async findAllByUser(
     @UserId() userId: ObjectId,
-    @Query('month') month: number,
-    @Query('year') year: number,
-    @Query('page') page: number,
-    @Query('limit') limit: number,
+    @Query('month') month?: number,
+    @Query('year') year?: number,
+    @Query('page') page?: number,
+    @Query('limit') limit?: number,
     @Query(
       'accountTypes',
       new ParseArrayPipe({ separator: '|', optional: true }),

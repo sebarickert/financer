@@ -32,7 +32,7 @@ export const useTransactionsByAccountIdPaged = (
   requestParams: Omit<TransactionFilterOptions, 'page'> = {}
 ): UseAllTransactionsPagedReturn => {
   const { data: chunkAmount } = useUserTransactionListChunkSize();
-  const { page, getLoadPageFunctions } = usePager(intialPage);
+  const { page, getPagerOptions } = usePager(intialPage);
 
   const { data, error } = useQuery(
     ['transactions', accountId, page, requestParams],
@@ -50,6 +50,6 @@ export const useTransactionsByAccountIdPaged = (
 
   return {
     data: data,
-    pagerOptions: getLoadPageFunctions(data),
+    pagerOptions: getPagerOptions(data),
   };
 };
