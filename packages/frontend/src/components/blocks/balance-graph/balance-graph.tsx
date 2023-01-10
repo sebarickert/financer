@@ -10,7 +10,7 @@ import {
 import { colorPalette } from '$constants/colorPalette';
 import { Loader } from '$elements/loader/loader';
 import { useUserDashboardSettings } from '$hooks/profile/user-preference/useDashboardSettings';
-import { useAllTransactionsPaged } from '$hooks/transaction/useAllTransactions';
+import { useLatestTransaction } from '$hooks/transaction/useLatestTransaction';
 import { useTotalBalance } from '$hooks/useTotalBalance';
 import {
   formatCurrencyAbbreviation,
@@ -41,11 +41,7 @@ export const BalanceGraph = ({
 
   const { data: totalBalance, isFetching: isLoadingTotalBalance } =
     useTotalBalance(accountTypeFilter);
-  const {
-    data: {
-      data: [latestTransaction],
-    },
-  } = useAllTransactionsPaged(1, { limit: 1 });
+  const { data: latestTransaction } = useLatestTransaction();
 
   const incomeMonthSummaryData = useIncomesFindMonthlySummariesByuserQuery({
     ...yearAgoFilterOptions,
@@ -61,7 +57,8 @@ export const BalanceGraph = ({
   const { data: expenseMonthSummaries } = expenseMonthSummary;
 
   const balanceHistory: BalanceHistory[] = useMemo(() => {
-    if (!incomeMonthSummaries || !expenseMonthSummaries) return [];
+    if (!incomeMonthSummaries || !expenseMonthSummaries || !latestTransaction)
+      return [];
 
     const getDateFromYearAndMonth = (year: number, month: number): Date =>
       new Date(`${year}-${month.toString().padStart(2, '0')}-01`);
@@ -120,7 +117,7 @@ export const BalanceGraph = ({
   }, [
     expenseMonthSummaries,
     incomeMonthSummaries,
-    latestTransaction?.date,
+    latestTransaction,
     totalBalance,
   ]);
 

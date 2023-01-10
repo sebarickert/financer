@@ -1,4 +1,3 @@
-import { SortOrder } from '@local/types';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -12,7 +11,7 @@ import { IconName } from '$elements/icon/icon';
 import { LinkList } from '$elements/link-list/link-list';
 import { LinkListLink } from '$elements/link-list/link-list.link';
 import { LoaderSuspense } from '$elements/loader/loader-suspense';
-import { useAllTransactionsPaged } from '$hooks/transaction/useAllTransactions';
+import { useFirstTransaction } from '$hooks/transaction/useFirstTransaction';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
 export const Incomes = (): JSX.Element => {
@@ -32,14 +31,7 @@ export const Incomes = (): JSX.Element => {
           page: selectedPage,
         }
   );
-  const {
-    data: {
-      data: [transaction],
-    },
-  } = useAllTransactionsPaged(1, {
-    limit: 1,
-    sortOrder: SortOrder.ASC,
-  });
+  const { data: transaction } = useFirstTransaction();
 
   const [initialPageToLoad, setInitialPage] = useState(selectedPage);
 

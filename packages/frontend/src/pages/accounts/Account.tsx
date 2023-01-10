@@ -1,7 +1,4 @@
-import {
-  CreateTransactionCategoryMappingDtoWithoutTransaction,
-  SortOrder,
-} from '@local/types';
+import { CreateTransactionCategoryMappingDtoWithoutTransaction } from '@local/types';
 import clsx from 'clsx';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -30,7 +27,7 @@ import { LinkListLink } from '$elements/link-list/link-list.link';
 import { LoaderSuspense } from '$elements/loader/loader-suspense';
 import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { useUserDefaultMarketUpdateSettings } from '$hooks/profile/user-preference/useDefaultMarketUpdateSettings';
-import { useAllTransactionsPaged } from '$hooks/transaction/useAllTransactions';
+import { useFirstTransaction } from '$hooks/transaction/useFirstTransaction';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 import { capitalize } from '$utils/capitalize';
@@ -59,14 +56,7 @@ export const Account = (): JSX.Element | null => {
   const [monthFilterOptions, setMonthFilterOptions] = useState(
     initialMonthFilterOptions
   );
-  const {
-    data: {
-      data: [transaction],
-    },
-  } = useAllTransactionsPaged(1, {
-    limit: 1,
-    sortOrder: SortOrder.ASC,
-  });
+  const { data: transaction } = useFirstTransaction();
 
   const handleDelete = async () => {
     if (!id) {
