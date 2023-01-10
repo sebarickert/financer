@@ -2,7 +2,6 @@ import {
   ApiResponse,
   CreateExpenseDto,
   ExpenseDto,
-  PaginationDto,
   TransactionMonthSummaryDto,
   UpdateExpenseDto,
 } from '@local/types';
@@ -13,11 +12,6 @@ import {
   parseFilterQueryString,
   TransactionFilterOptions,
 } from './TransactionService';
-
-export const getExpenseById = async (id: string): Promise<ExpenseDto> => {
-  const expense = await fetch(`/api/expenses/${id}`);
-  return parseJsonOrThrowError(expense);
-};
 
 export const getExpenseMonthlySummaries = async (
   options: Omit<TransactionFilterOptions, 'page'> = {}
