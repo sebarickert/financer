@@ -46,12 +46,10 @@ export const Transfers = (): JSX.Element => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const month = monthFilterOptions?.month.toString().padStart(2, '0');
+    const year = monthFilterOptions?.year;
     navigate({
-      pathname: `/statistics/transfers/${
-        monthFilterOptions.year
-      }-${monthFilterOptions.month
-        .toString()
-        .padStart(2, '0')}/${selectedPage}`,
+      pathname: `/statistics/transfers/${year}-${month}`,
     });
 
     setInitialPage(1);
