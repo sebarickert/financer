@@ -7,10 +7,11 @@ import { TransferForm } from './TransferForm';
 import {
   CreateTransferDto,
   useTransactionTemplatesFindOneQuery,
+  useTransfersCreateMutation,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
 import { TransactionTemplateSwitcher } from '$blocks/transaction-template-switcher/transaction-template-switcher';
-import { useAddTransfer } from '$hooks/transfer/useAddTransfer';
+import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
@@ -18,7 +19,7 @@ export const AddShortcutTransfer = (): JSX.Element => {
   const navigate = useNavigate();
   const { id = 'id-not-found' } = useParams<{ id: string }>();
   const [errors, setErrors] = useState<string[]>([]);
-  const addTransfer = useAddTransfer();
+  const [addTransfer, { isLoading: isCreating }] = useTransfersCreateMutation();
 
   const templateData = useTransactionTemplatesFindOneQuery({ id });
   const { data: transactionTemplate } = templateData;
@@ -30,11 +31,13 @@ export const AddShortcutTransfer = (): JSX.Element => {
 
   const handleSubmit = async (newTransferData: CreateTransferDto) => {
     try {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const newTransferJson = await addTransfer(newTransferData as any);
+      const newTransferJson = await addTransfer({
+        createTransferDto: newTransferData,
+      });
 
       if ('message' in newTransferJson) {
-        setErrors(parseErrorMessagesToArray(newTransferJson.message));
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        setErrors(parseErrorMessagesToArray((newTransferJson as any).message));
         return;
       }
 
@@ -47,6 +50,7 @@ export const AddShortcutTransfer = (): JSX.Element => {
 
   return (
     <>
+      {isCreating && <LoaderFullScreen />}
       <DataHandler {...templateData} />
       {transactionTemplate && (
         <>

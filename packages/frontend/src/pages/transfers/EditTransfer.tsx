@@ -3,9 +3,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { TransferForm } from './TransferForm';
 
-import { UpdateTransferDto } from '$api/generated/financerApi';
-import { useEditTransfer } from '$hooks/transfer/useEditTransfer';
-import { useTransferById } from '$hooks/transfer/useTransferById';
+import {
+  UpdateTransferDto,
+  useTransfersFindOneQuery,
+  useTransfersUpdateMutation,
+} from '$api/generated/financerApi';
+import { DataHandler } from '$blocks/data-handler/data-handler';
+import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
@@ -14,8 +18,10 @@ export const EditTransfer = (): JSX.Element => {
   const { id = 'missing-id' } = useParams<{ id: string }>();
   const [errors, setErrors] = useState<string[]>([]);
 
-  const transfer = useTransferById(id);
-  const editTransaction = useEditTransfer();
+  const transferData = useTransfersFindOneQuery({ id });
+  const { data: transfer } = transferData;
+  const [editTransaction, { isLoading: isSaving }] =
+    useTransfersUpdateMutation();
 
   const handleSubmit = async (targetTransferData: UpdateTransferDto) => {
     if (!id) {
@@ -23,14 +29,16 @@ export const EditTransfer = (): JSX.Element => {
       return;
     }
     try {
-      const newTransactionJson = await editTransaction(
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        targetTransferData as any,
-        id
-      );
+      const newTransactionJson = await editTransaction({
+        updateTransferDto: targetTransferData,
+        id,
+      }).unwrap();
 
       if ('message' in newTransactionJson) {
-        setErrors(parseErrorMessagesToArray(newTransactionJson.message));
+        setErrors(
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          parseErrorMessagesToArray((newTransactionJson as any).message)
+        );
         return;
       }
 
@@ -43,19 +51,23 @@ export const EditTransfer = (): JSX.Element => {
 
   return (
     <>
+      {isSaving && <LoaderFullScreen />}
+      <DataHandler {...transferData} />
       <UpdatePageInfo title="Edit transfer" />
-      <TransferForm
-        onSubmit={handleSubmit}
-        errors={errors}
-        submitLabel="Update"
-        amount={transfer.amount}
-        date={new Date(transfer.date)}
-        description={transfer.description}
-        fromAccount={transfer.fromAccount}
-        toAccount={transfer.toAccount}
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        transactionCategoryMapping={transfer.categories as any}
-      />
+      {transfer && (
+        <TransferForm
+          onSubmit={handleSubmit}
+          errors={errors}
+          submitLabel="Update"
+          amount={transfer.amount}
+          date={new Date(transfer.date)}
+          description={transfer.description}
+          fromAccount={transfer.fromAccount}
+          toAccount={transfer.toAccount}
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          transactionCategoryMapping={transfer.categories as any}
+        />
+      )}
     </>
   );
 };

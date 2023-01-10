@@ -249,5 +249,66 @@ financerApi.enhanceEndpoints({
         ApiTag.ACCOUNT,
       ],
     },
+
+    //
+    // Transfer
+    //
+    transfersFindAllByUser: {
+      providesTags: (res) => [
+        ApiTag.TRANSACTION,
+        { type: ApiTag.TRANSACTION, id: 'LIST' },
+        { type: ApiTag.TRANSACTION, id: 'TRANSFER-LIST' },
+        { type: ApiTag.TRANSACTION, id: `PAGE-${res?.currentPage}` },
+        ...(res?.data.map(({ _id }) => ({
+          type: ApiTag.TRANSACTION,
+          id: _id,
+        })) ?? []),
+      ],
+    },
+    transfersFindMonthlySummariesByuser: {
+      providesTags: (res) => [
+        ApiTag.TRANSACTION,
+        { type: ApiTag.TRANSACTION, id: 'SUMMARY' },
+        { type: ApiTag.TRANSACTION, id: 'TRANSFER-SUMMARY' },
+        ...(res?.map(({ _id }) => ({
+          type: ApiTag.TRANSACTION,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          id: _id as any,
+        })) ?? []),
+      ],
+    },
+    transfersFindOne: {
+      providesTags: (res) => [
+        ApiTag.TRANSACTION,
+        { type: ApiTag.TRANSACTION, id: res?._id },
+      ],
+    },
+    transfersCreate: {
+      invalidatesTags: (res, err, args) => [
+        { type: ApiTag.TRANSACTION, id: 'TRANSFER-LIST' },
+        { type: ApiTag.TRANSACTION, id: 'SUMMARY' },
+        { type: ApiTag.ACCOUNT, id: args.createTransferDto.fromAccount },
+        { type: ApiTag.ACCOUNT, id: args.createTransferDto.toAccount },
+      ],
+    },
+    transfersUpdate: {
+      invalidatesTags: (res, err, args) => [
+        { type: ApiTag.TRANSACTION, id: res?._id },
+        { type: ApiTag.TRANSACTION, id: 'SUMMARY' },
+        { type: ApiTag.TRANSACTION, id: 'TRANSFER-LIST' },
+        { type: ApiTag.ACCOUNT, id: args.updateTransferDto.fromAccount },
+        { type: ApiTag.ACCOUNT, id: args.updateTransferDto.toAccount },
+        { type: ApiTag.ACCOUNT, id: res?.fromAccount },
+        { type: ApiTag.ACCOUNT, id: res?.toAccount },
+      ],
+    },
+    transfersRemove: {
+      invalidatesTags: (res, err, args) => [
+        { type: ApiTag.TRANSACTION, id: args.id },
+        { type: ApiTag.TRANSACTION, id: 'SUMMARY' },
+        { type: ApiTag.TRANSACTION, id: 'TRANSFER-LIST' },
+        ApiTag.ACCOUNT,
+      ],
+    },
   },
 });
