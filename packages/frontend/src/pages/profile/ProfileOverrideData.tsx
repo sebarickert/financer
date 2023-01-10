@@ -22,7 +22,7 @@ export const ProfileOverrideData = (): JSX.Element => {
   const [notification, setNotification] = useState<NotificationProps | null>(
     null
   );
-  const [overrideProfileData, isLoading] =
+  const [overrideProfileData, { isLoading }] =
     useUsersOverrideAllOwnUserDataMutation();
 
   const overrideTranactionCount = useMemo(() => {
@@ -53,23 +53,22 @@ export const ProfileOverrideData = (): JSX.Element => {
       return;
     }
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const { message: overrideMessage, status } = await overrideProfileData({
-      userDataImportDto: uploadedUserData,
-    }).unwrap();
+    try {
+      const { payload: overrideMessage = '' } = await overrideProfileData({
+        userDataImportDto: uploadedUserData,
+      }).unwrap();
 
-    if (status === 201) {
       setNotification({
         type: 'success',
         label: 'Successfully overridden',
         children: overrideMessage,
       });
-    } else {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
       setNotification({
         type: 'error',
         label: 'Overridde failed',
-        children: overrideMessage,
+        children: error.payload,
       });
     }
   };
