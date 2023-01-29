@@ -45,7 +45,7 @@
     "format": "eslint src/**/*.ts{,x} --fix",
     "lint": "eslint src/**/*.ts{,x}",
     "eject": "react-scripts eject",
-    "types:generate": "npx @rtk-query/codegen-openapi openapi-config.js && eslint src/redux/api/generated/*.ts --fix"
+    "types:generate": "npx @silte/rtk-codegen-openapi openapi-config.js && eslint src/redux/api/generated/*.ts --fix"
   },
   "eslintConfig": {
     "extends": [
@@ -67,7 +67,7 @@
   },
   "devDependencies": {
     "@craco/craco": "^7.0.0",
-    "@rtk-query/codegen-openapi": "^1.0.0",
+    "@silte/rtk-codegen-openapi": "1.0.2",
     "@tailwindcss/forms": "^0.5.0",
     "@tailwindcss/typography": "^0.5.8",
     "@types/jest": "^27.4.1",

@@ -2,6 +2,7 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 const colors = require('tailwindcss/colors')
 const colorPalette = require('./src/constants/colorPaletteRaw.json')
 
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx}', './public/**/*.html'],
   theme: {
