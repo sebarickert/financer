@@ -18,6 +18,7 @@
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
+  "ignorePatterns": ["src/redux/api/generated/*"],
   "rules": {
     "react/require-default-props": "off",
     "linebreak-style": "off",
