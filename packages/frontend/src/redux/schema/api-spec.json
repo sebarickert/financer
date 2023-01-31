@@ -854,19 +854,7 @@
             "name": "userPreferenceProperty",
             "required": true,
             "in": "path",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "DEFAULT_INCOME_ACCOUNT",
-                "DEFAULT_EXPENSE_ACCOUNT",
-                "DEFAULT_TRANSFER_SOURCE_ACCOUNT",
-                "DEFAULT_TRANSFER_TARGET_ACCOUNT",
-                "TRANSACTION_LIST_CHUNK_SIZE",
-                "UPDATE_INVESTMENT_MARKET_VALUE",
-                "DASHBOARD_SETTINGS",
-                "STATISTICS_SETTINGS"
-              ]
-            }
+            "schema": { "$ref": "#/components/schemas/UserPreferenceProperty" }
           }
         ],
         "responses": {
