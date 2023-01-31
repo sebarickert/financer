@@ -9,6 +9,7 @@ import { ITransactionCategoryWithCategoryTree } from 'services/TransactionCatego
 import {
   CreateTransactionTemplateDto,
   TransactionCategoryMappingDto,
+  TransactionTypeEnum,
   useAccountsFindAllByUserQuery,
 } from '$api/generated/financerApi';
 import { Form } from '$blocks/form/form';
@@ -181,8 +182,8 @@ export const TransactionTemplateForm = ({
       templateName: newTemplateName.value,
       templateType: newTemplateType.value,
       templateVisibility:
-        TransactionType[
-          newTransactionType.value.toUpperCase() as keyof typeof TransactionType
+        TransactionTypeEnum[
+          newTransactionType.value.toUpperCase() as keyof typeof TransactionTypeEnum
         ],
       fromAccount: isExpenseOrTransfer ? newFromAccount.value : undefined,
       toAccount: isIncomeOrTransfer ? newToAccount.value : undefined,

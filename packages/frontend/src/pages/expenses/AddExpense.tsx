@@ -1,4 +1,3 @@
-import { TransactionType } from '@local/types';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -6,6 +5,7 @@ import { ExpenseForm } from './ExpenseForm';
 
 import {
   CreateExpenseDto,
+  TransactionTypeEnum,
   useExpensesCreateMutation,
 } from '$api/generated/financerApi';
 import { TransactionTemplateSwitcher } from '$blocks/transaction-template-switcher/transaction-template-switcher';
@@ -49,7 +49,9 @@ export const AddExpense = (): JSX.Element => {
       <UpdatePageInfo
         title="Add expense"
         headerAction={
-          <TransactionTemplateSwitcher templateType={TransactionType.EXPENSE} />
+          <TransactionTemplateSwitcher
+            templateType={TransactionTypeEnum.Expense}
+          />
         }
       />
       {isLoading ? (

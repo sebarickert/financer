@@ -1,4 +1,3 @@
-import { TransactionType } from '@local/types';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -6,6 +5,7 @@ import { IncomeForm } from './IncomeForm';
 
 import {
   CreateIncomeDto,
+  TransactionTypeEnum,
   useIncomesCreateMutation,
 } from '$api/generated/financerApi';
 import { TransactionTemplateSwitcher } from '$blocks/transaction-template-switcher/transaction-template-switcher';
@@ -48,7 +48,9 @@ export const AddIncome = (): JSX.Element => {
       <UpdatePageInfo
         title="Add income"
         headerAction={
-          <TransactionTemplateSwitcher templateType={TransactionType.INCOME} />
+          <TransactionTemplateSwitcher
+            templateType={TransactionTypeEnum.Income}
+          />
         }
       />
       {isLoading ? (

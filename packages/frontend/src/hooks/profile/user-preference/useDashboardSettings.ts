@@ -1,15 +1,16 @@
-import { AccountType, UserPreferenceProperty } from '@local/types';
 import { useCallback } from 'react';
 
 import {
+  AccountTypeEnum,
+  UserPreferencePropertyEnum,
   useUserPreferencesFindOneQuery,
   useUserPreferencesUpdateMutation,
 } from '$api/generated/financerApi';
 
-const userPreferenceProperty = UserPreferenceProperty.DASHBOARD_SETTINGS;
+const userPreferenceProperty = UserPreferencePropertyEnum.DashboardSettings;
 
 type UserDashboardSettings = {
-  accountTypes: AccountType[];
+  accountTypes: AccountTypeEnum[];
 };
 
 export const useUserDashboardSettings = () => {

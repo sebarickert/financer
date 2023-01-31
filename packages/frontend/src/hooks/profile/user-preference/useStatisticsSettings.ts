@@ -1,16 +1,17 @@
-import { AccountType, UserPreferenceProperty } from '@local/types';
 import { useCallback } from 'react';
 
 import {
+  AccountTypeEnum,
+  UserPreferencePropertyEnum,
   useUserPreferencesFindOneQuery,
   useUserPreferencesUpdateMutation,
 } from '$api/generated/financerApi';
 
 type UserStatisticsSettings = {
-  accountTypes: AccountType[];
+  accountTypes: AccountTypeEnum[];
 };
 
-const userPreferenceProperty = UserPreferenceProperty.STATISTICS_SETTINGS;
+const userPreferenceProperty = UserPreferencePropertyEnum.StatisticsSettings;
 
 export const useUserStatisticsSettings = () => {
   const data = useUserPreferencesFindOneQuery({

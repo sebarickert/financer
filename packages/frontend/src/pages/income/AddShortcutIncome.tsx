@@ -1,4 +1,3 @@
-import { TransactionType } from '@local/types';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -6,6 +5,7 @@ import { IncomeForm } from './IncomeForm';
 
 import {
   CreateIncomeDto,
+  TransactionTypeEnum,
   useIncomesCreateMutation,
   useTransactionTemplatesFindOneQuery,
 } from '$api/generated/financerApi';
@@ -59,7 +59,7 @@ export const AddShortcutIncome = (): JSX.Element => {
             headerAction={
               <TransactionTemplateSwitcher
                 selectedTemplate={id}
-                templateType={TransactionType.INCOME}
+                templateType={TransactionTypeEnum.Income}
               />
             }
           />

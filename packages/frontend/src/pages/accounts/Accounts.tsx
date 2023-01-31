@@ -1,7 +1,9 @@
-import { AccountType } from '@local/types';
 import { useMemo } from 'react';
 
-import { useAccountsFindAllByUserQuery } from '$api/generated/financerApi';
+import {
+  AccountTypeEnum,
+  useAccountsFindAllByUserQuery,
+} from '$api/generated/financerApi';
 import { AccountsList } from '$blocks/accounts-list/accounts-list';
 import { AccountsListRowProps } from '$blocks/accounts-list/accounts-list.row';
 import { IconName } from '$elements/icon/icon';
@@ -30,7 +32,7 @@ export const Accounts = (): JSX.Element => {
         label: name,
         link: `/accounts/${_id}`,
         balanceAmount: formatCurrency(balance),
-        type: type as AccountType,
+        type: type as AccountTypeEnum,
         accountType: type.charAt(0).toUpperCase() + type.slice(1),
         id: _id,
       })
@@ -38,17 +40,18 @@ export const Accounts = (): JSX.Element => {
 
     const savings = formattedAccounts.filter(
       ({ type }) =>
-        type !== AccountType.LOAN &&
-        type !== AccountType.INVESTMENT &&
-        type !== AccountType.CREDIT
+        type !== AccountTypeEnum.Loan &&
+        type !== AccountTypeEnum.Investment &&
+        type !== AccountTypeEnum.Credit
     );
 
     const investments = formattedAccounts.filter(
-      ({ type }) => type === AccountType.INVESTMENT
+      ({ type }) => type === AccountTypeEnum.Investment
     );
 
     const loans = formattedAccounts.filter(
-      ({ type }) => type === AccountType.LOAN || type === AccountType.CREDIT
+      ({ type }) =>
+        type === AccountTypeEnum.Loan || type === AccountTypeEnum.Credit
     );
 
     return {

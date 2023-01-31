@@ -1,9 +1,10 @@
-import { AccountType } from '@local/types';
 import { NavLink } from 'react-router-dom';
+
+import { AccountTypeEnum } from '$api/generated/financerApi';
 
 export interface AccountsListRowProps {
   accountType: string;
-  type: AccountType;
+  type: AccountTypeEnum;
   balanceAmount: string;
   label: string;
   link?: string;
