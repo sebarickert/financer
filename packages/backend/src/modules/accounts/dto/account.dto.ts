@@ -1,5 +1,5 @@
 import { AccountType } from '@local/types';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty } from '@silte/nestjs-swagger';
 import {
   IsBoolean,
   IsEnum,

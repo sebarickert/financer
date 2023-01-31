@@ -1,4 +1,4 @@
-import { OmitType } from '@nestjs/swagger';
+import { OmitType } from '@silte/nestjs-swagger';
 
 import { TransferDto } from './transfer.dto';
 

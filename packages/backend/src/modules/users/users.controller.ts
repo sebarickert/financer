@@ -10,7 +10,7 @@ import {
   forwardRef,
   Inject,
 } from '@nestjs/common';
-import { ApiBody, ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiOkResponse, ApiParam, ApiTags } from '@silte/nestjs-swagger';
 import { Response } from 'express';
 
 import { ObjectId } from '../../types/objectId';

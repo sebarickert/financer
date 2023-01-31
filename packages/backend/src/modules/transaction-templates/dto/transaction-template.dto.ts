@@ -1,5 +1,5 @@
 import { TransactionTemplateType, TransactionType } from '@local/types';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@silte/nestjs-swagger';
 import { Transform } from 'class-transformer';
 import {
   IsEnum,
