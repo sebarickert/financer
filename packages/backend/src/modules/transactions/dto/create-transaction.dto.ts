@@ -4,7 +4,7 @@ import {
   OmitType,
   PartialType,
   PickType,
-} from '@nestjs/swagger';
+} from '@silte/nestjs-swagger';
 import { Type } from 'class-transformer';
 import { IsOptional, ValidateNested } from 'class-validator';
 

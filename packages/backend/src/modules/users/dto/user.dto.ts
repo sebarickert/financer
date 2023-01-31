@@ -1,5 +1,5 @@
 import { Role } from '@local/types';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty } from '@silte/nestjs-swagger';
 import { IsMongoId, IsNotEmpty, IsOptional, IsEnum } from 'class-validator';
 
 import { ObjectId } from '../../../types/objectId';

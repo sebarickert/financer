@@ -1,4 +1,4 @@
-import { PartialType, OmitType, PickType } from '@nestjs/swagger';
+import { PartialType, OmitType, PickType } from '@silte/nestjs-swagger';
 
 import { UserDto } from './user.dto';
 

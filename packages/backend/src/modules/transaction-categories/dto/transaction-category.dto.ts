@@ -1,5 +1,5 @@
 import { VisibilityType } from '@local/types';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty } from '@silte/nestjs-swagger';
 import { Transform } from 'class-transformer';
 import {
   IsBoolean,

@@ -1,5 +1,5 @@
 import { UserPreferenceProperty } from '@local/types';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty } from '@silte/nestjs-swagger';
 import { IsMongoId, IsEnum, IsNotEmpty } from 'class-validator';
 import { ObjectId } from 'mongoose';
 

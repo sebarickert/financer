@@ -17,7 +17,7 @@ import {
   ApiParam,
   ApiQuery,
   ApiTags,
-} from '@nestjs/swagger';
+} from '@silte/nestjs-swagger';
 
 import { ObjectId, parseObjectId } from '../../types/objectId';
 import { ApiPaginatedDto } from '../../utils/pagination.decorator';

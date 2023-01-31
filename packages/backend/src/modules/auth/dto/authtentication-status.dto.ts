@@ -1,4 +1,4 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@silte/nestjs-swagger';
 
 import { UserDto } from '../../users/dto/user.dto';
 

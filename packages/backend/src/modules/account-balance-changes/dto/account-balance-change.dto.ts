@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty } from '@silte/nestjs-swagger';
 import { IsDateString, IsMongoId, IsNumber } from 'class-validator';
 
 import { ObjectId } from '../../../types/objectId';

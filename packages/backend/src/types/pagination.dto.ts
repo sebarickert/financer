@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty } from '@silte/nestjs-swagger';
 import { Allow } from 'class-validator';
 
 export class PaginationDto<DataType> {

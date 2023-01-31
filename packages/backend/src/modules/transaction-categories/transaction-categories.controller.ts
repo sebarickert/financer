@@ -13,7 +13,7 @@ import {
   ApiOkResponse,
   ApiParam,
   ApiTags,
-} from '@nestjs/swagger';
+} from '@silte/nestjs-swagger';
 
 import { ObjectId } from '../../types/objectId';
 import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
