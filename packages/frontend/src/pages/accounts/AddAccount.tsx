@@ -18,21 +18,21 @@ export const AddAccount = (): JSX.Element => {
 
   const handleSubmit = async (newAccountData: CreateAccountDto) => {
     try {
-      const newAccount = await addAccount({
+      await addAccount({
         createAccountDto: newAccountData,
       }).unwrap();
 
-      if ('message' in newAccount) {
+      navigate('/accounts');
+    } catch (error: any) {
+      // eslint-disable-next-line no-console
+      if (error?.status !== 400) console.error(error);
+
+      if ('message' in error?.data) {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        setErrors(parseErrorMessagesToArray(newAccount.message));
+        setErrors(parseErrorMessagesToArray(error.data.message));
         return;
       }
-
-      navigate('/accounts');
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error);
     }
   };
 
