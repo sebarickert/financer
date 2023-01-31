@@ -17,6 +17,7 @@ describe('Account form', () => {
     // Remove form validation to test backend validation
     cy.get('#account').invoke('prop', 'required', false);
     cy.getById('submit').click();
+
     cy.getById('form-errors').should(
       'contain.text',
       'There were 1 errors with your submission'

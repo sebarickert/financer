@@ -57,6 +57,9 @@ describe('Account editing', () => {
       verifyAccountPage(oldAccountName, accountBalance, accountType);
     });
 
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(100);
+
     // Account page
 
     cy.getById('edit-account').click();
@@ -95,6 +98,9 @@ describe('Account editing', () => {
       verifyAccountPage(accountName, accountBalance, oldAccountType);
     });
 
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(100);
+
     cy.getById('edit-account').click();
 
     // Edit account form
@@ -128,6 +134,9 @@ describe('Account editing', () => {
       verifyAccountPage(accountName, oldAccountBalance, accountType);
       verifyDifferentBalances(oldAccountBalance, newAccountBalance);
     });
+
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(100);
 
     // Account page
 
@@ -173,6 +182,9 @@ describe('Account editing', () => {
       verifyAccountPage(oldAccountName, oldAccountBalance, oldAccountType);
       verifyDifferentBalances(oldAccountBalance, newAccountBalance);
     });
+
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(100);
 
     cy.getById('edit-account').click();
 

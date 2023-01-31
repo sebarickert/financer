@@ -14,7 +14,7 @@ import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { formatCurrency } from '$utils/formatCurrency';
 
 export const Accounts = (): JSX.Element => {
-  const { data: accountsRaw, isLoading } = useAccountsFindAllByUserQuery({});
+  const { data: accountsRaw, isFetching } = useAccountsFindAllByUserQuery({});
 
   // const [accounts, setAccounts] = useState<AccountsListRowProps[]>([]);
 
@@ -76,7 +76,7 @@ export const Accounts = (): JSX.Element => {
             </LinkListLink>
           </LinkList>
         </section>
-        <Loader isLoading={isLoading}>
+        <Loader isLoading={isFetching}>
           <AccountsList label="Savings" rows={accounts.savings} />
           <AccountsList label="Investments" rows={accounts.investments} />
           <AccountsList label="Credits and Loans" rows={accounts.loans} />
