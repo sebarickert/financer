@@ -1,13 +1,13 @@
-import { UserPreferenceProperty } from '@local/types';
 import { useCallback } from 'react';
 
 import {
+  UserPreferencePropertyEnum,
   useUserPreferencesFindOneQuery,
   useUserPreferencesUpdateMutation,
 } from '$api/generated/financerApi';
 
 const userPreferenceProperty =
-  UserPreferenceProperty.TRANSACTION_LIST_CHUNK_SIZE;
+  UserPreferencePropertyEnum.TransactionListChunkSize;
 
 export const useUserTransactionListChunkSize = () => {
   const data = useUserPreferencesFindOneQuery({

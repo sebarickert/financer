@@ -1,4 +1,3 @@
-import { TransactionType } from '@local/types';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -6,6 +5,7 @@ import { ExpenseForm } from './ExpenseForm';
 
 import {
   CreateExpenseDto,
+  TransactionTypeEnum,
   useExpensesCreateMutation,
   useTransactionTemplatesFindOneQuery,
 } from '$api/generated/financerApi';
@@ -58,7 +58,7 @@ export const AddShortcutExpense = (): JSX.Element => {
             title={`Add ${transactionTemplate.description?.toLowerCase()}`}
             headerAction={
               <TransactionTemplateSwitcher
-                templateType={TransactionType.EXPENSE}
+                templateType={TransactionTypeEnum.Expense}
                 selectedTemplate={id}
               />
             }

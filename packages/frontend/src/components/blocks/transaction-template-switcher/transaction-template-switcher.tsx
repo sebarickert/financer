@@ -1,8 +1,11 @@
-import { TransactionType, TransactionTypeMapping } from '@local/types';
+import { TransactionTypeMapping } from '@local/types';
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useTransactionTemplatesFindAllManualTypeByUserQuery } from '$api/generated/financerApi';
+import {
+  TransactionTypeEnum,
+  useTransactionTemplatesFindAllManualTypeByUserQuery,
+} from '$api/generated/financerApi';
 import { Button } from '$elements/button/button';
 import { ButtonGroup } from '$elements/button/button.group';
 import { ButtonPlain } from '$elements/button/button.plain';
@@ -15,7 +18,7 @@ import { RadioGroup } from '$elements/radio/radio.group';
 
 interface TransactionTemplateSwitcherProps {
   selectedTemplate?: string;
-  templateType: Exclude<TransactionType, 'ANY'>;
+  templateType: Exclude<TransactionTypeEnum, 'ANY'>;
 }
 
 export const TransactionTemplateSwitcher = ({

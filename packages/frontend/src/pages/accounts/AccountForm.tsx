@@ -1,10 +1,10 @@
-import { AccountType, CreateAccountDto } from '@local/types';
-
 import { Form } from '../../components/blocks/form/form';
 import { Alert } from '../../components/elements/alert/alert';
 import { Input } from '../../components/elements/input/input';
 import { Select, Option } from '../../components/elements/select/select';
 import { capitalize } from '../../utils/capitalize';
+
+import { AccountTypeEnum, CreateAccountDto } from '$api/generated/financerApi';
 
 interface IAccountFormProps {
   errors: string[];
@@ -23,10 +23,12 @@ export const AccountForm = ({
   onSubmit,
   submitLabel,
 }: IAccountFormProps): JSX.Element => {
-  const accountTypes: Option[] = Object.values(AccountType).map((value) => ({
-    value,
-    label: capitalize(value),
-  }));
+  const accountTypes: Option[] = Object.values(AccountTypeEnum).map(
+    (value) => ({
+      value,
+      label: capitalize(value),
+    })
+  );
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = async (event: any) => {

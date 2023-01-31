@@ -1,10 +1,12 @@
-import { CreateAccountDto } from '@local/types';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { AccountForm } from './AccountForm';
 
-import { useAccountsCreateMutation } from '$api/generated/financerApi';
+import {
+  CreateAccountDto,
+  useAccountsCreateMutation,
+} from '$api/generated/financerApi';
 import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';

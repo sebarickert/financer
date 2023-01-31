@@ -1,7 +1,7 @@
-import { UserPreferenceProperty } from '@local/types';
 import { useCallback } from 'react';
 
 import {
+  UserPreferencePropertyEnum,
   useUserPreferencesFindOneQuery,
   useUserPreferencesUpdateMutation,
 } from '$api/generated/financerApi';
@@ -12,7 +12,7 @@ export type UserDefaultMarketUpdateSettings = {
 };
 
 const userPreferenceProperty =
-  UserPreferenceProperty.UPDATE_INVESTMENT_MARKET_VALUE;
+  UserPreferencePropertyEnum.UpdateInvestmentMarketValue;
 
 export const useUserDefaultMarketUpdateSettings = () => {
   const data = useUserPreferencesFindOneQuery({

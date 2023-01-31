@@ -1,6 +1,4 @@
-import { Role } from '@local/types';
-
-import { useUsersFindOwnUserQuery } from '$api/generated/financerApi';
+import { RoleEnum, useUsersFindOwnUserQuery } from '$api/generated/financerApi';
 import { IconName } from '$elements/icon/icon';
 import { LinkList } from '$elements/link-list/link-list';
 import { LinkListLink } from '$elements/link-list/link-list.link';
@@ -34,7 +32,7 @@ export const Profile = (): JSX.Element => {
         >
           Download your data
         </LinkListLink>
-        {profileInfo?.roles.includes(Role.testUser) && (
+        {profileInfo?.roles.includes(RoleEnum.TestUser) && (
           <LinkListLink
             link="/profile/override-data"
             icon={IconName.exclamation}

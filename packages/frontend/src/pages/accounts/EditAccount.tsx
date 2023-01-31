@@ -1,10 +1,10 @@
-import { CreateAccountDto } from '@local/types';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { AccountForm } from './AccountForm';
 
 import {
+  CreateAccountDto,
   useAccountsFindOneByIdQuery,
   useAccountsUpdateMutation,
 } from '$api/generated/financerApi';

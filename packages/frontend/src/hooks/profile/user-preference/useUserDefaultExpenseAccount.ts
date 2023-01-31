@@ -1,12 +1,12 @@
-import { UserPreferenceProperty } from '@local/types';
 import { useCallback } from 'react';
 
 import {
+  UserPreferencePropertyEnum,
   useUserPreferencesFindOneQuery,
   useUserPreferencesUpdateMutation,
 } from '$api/generated/financerApi';
 
-const userPreferenceProperty = UserPreferenceProperty.DEFAULT_EXPENSE_ACCOUNT;
+const userPreferenceProperty = UserPreferencePropertyEnum.DefaultExpenseAccount;
 
 export const useUserDefaultExpenseAccount = () => {
   const data = useUserPreferencesFindOneQuery({

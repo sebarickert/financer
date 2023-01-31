@@ -1,6 +1,6 @@
-import { AccountType } from '@local/types';
 import { useNavigate } from 'react-router-dom';
 
+import { AccountTypeEnum } from '$api/generated/financerApi';
 import { Form } from '$blocks/form/form';
 import { Checkbox } from '$elements/checkbox/checkbox';
 import { CheckboxGroup } from '$elements/checkbox/checkbox.group';
@@ -14,7 +14,7 @@ import {
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { capitalize } from '$utils/capitalize';
 
-const allAccountTypes = Object.values(AccountType);
+const allAccountTypes = Object.values(AccountTypeEnum);
 
 export const UserDashboardSettings = (): JSX.Element => {
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ export const UserDashboardSettings = (): JSX.Element => {
           type,
           value: (
             event.target as unknown as {
-              [key in AccountType]: HTMLInputElement;
+              [key in AccountTypeEnum]: HTMLInputElement;
             }
           )[type].checked,
         }))
