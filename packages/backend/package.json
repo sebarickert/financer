@@ -14,6 +14,7 @@
     "start:dev": "NODE_ENV=development nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
+    "start:test": "NODE_ENV=test nest start --watch",
     "test": "jest --force-exit --detectOpenHandles",
     "test:watch": "npm run test -- --watch",
     "test:cov": "npm run test -- --coverage",
