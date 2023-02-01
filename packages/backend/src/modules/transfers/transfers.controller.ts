@@ -60,10 +60,6 @@ export class TransfersController {
     name: 'accountTypes',
     required: false,
   })
-  @ApiQuery({
-    name: 'sortOrder',
-    required: false,
-  })
   async findAllByUser(
     @UserId() userId: ObjectId,
     @Query('month') month: number,
@@ -114,6 +110,7 @@ export class TransfersController {
   @ApiQuery({
     name: 'parentTransactionCategory',
     required: false,
+    type: String,
   })
   async findMonthlySummariesByuser(
     @UserId() userId: ObjectId,

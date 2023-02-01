@@ -58,6 +58,8 @@ export class TransactionsController {
   @ApiQuery({
     name: 'sortOrder',
     required: false,
+    enum: SortOrder,
+    enumName: 'SortOrder',
   })
   async findAllByUser(
     @UserId() userId: ObjectId,
@@ -122,6 +124,7 @@ export class TransactionsController {
   @ApiQuery({
     name: 'parentTransactionCategory',
     required: false,
+    type: String,
   })
   async findMonthlySummariesByUser(
     @UserId() userId: ObjectId,

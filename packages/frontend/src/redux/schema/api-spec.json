@@ -475,7 +475,7 @@
             "name": "sortOrder",
             "required": false,
             "in": "query",
-            "schema": { "type": "string" }
+            "schema": { "$ref": "#/components/schemas/SortOrder" }
           }
         ],
         "responses": {
@@ -544,7 +544,7 @@
             "name": "parentTransactionCategory",
             "required": false,
             "in": "query",
-            "schema": {}
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
@@ -1045,12 +1045,6 @@
             "required": false,
             "in": "query",
             "schema": { "type": "array", "items": { "type": "string" } }
-          },
-          {
-            "name": "sortOrder",
-            "required": false,
-            "in": "query",
-            "schema": {}
           }
         ],
         "responses": {
@@ -1140,7 +1134,7 @@
             "name": "parentTransactionCategory",
             "required": false,
             "in": "query",
-            "schema": {}
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
@@ -1261,12 +1255,6 @@
             "required": false,
             "in": "query",
             "schema": { "type": "array", "items": { "type": "string" } }
-          },
-          {
-            "name": "sortOrder",
-            "required": false,
-            "in": "query",
-            "schema": {}
           }
         ],
         "responses": {
@@ -1356,7 +1344,7 @@
             "name": "parentTransactionCategory",
             "required": false,
             "in": "query",
-            "schema": {}
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
@@ -1477,12 +1465,6 @@
             "required": false,
             "in": "query",
             "schema": { "type": "array", "items": { "type": "string" } }
-          },
-          {
-            "name": "sortOrder",
-            "required": false,
-            "in": "query",
-            "schema": {}
           }
         ],
         "responses": {
@@ -1574,7 +1556,7 @@
             "name": "parentTransactionCategory",
             "required": false,
             "in": "query",
-            "schema": {}
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
@@ -2076,6 +2058,7 @@
         },
         "required": ["_id", "count", "totalAmount"]
       },
+      "SortOrder": { "type": "string", "enum": ["asc", "desc"] },
       "CreateTransactionCategoryDto": {
         "type": "object",
         "properties": {
