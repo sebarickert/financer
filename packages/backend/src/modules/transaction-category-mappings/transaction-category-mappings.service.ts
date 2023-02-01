@@ -4,7 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import { ObjectId } from '../../types/objectId';
-import { TransactionMonthSummaryDto } from '../transaction-categories/dto/transaction-month-summary.dto';
+import { CategoryMonthlySummaryDto } from '../transaction-categories/dto/transaction-month-summary.dto';
 
 import { CreateTransactionCategoryMappingDto } from './dto/create-transaction-category-mapping.dto';
 import { UpdateTransactionCategoryMappingDto } from './dto/update-transaction-category-mapping.dto';
@@ -69,7 +69,7 @@ export class TransactionCategoryMappingsService {
     limit?: number,
     year?: number,
     month?: number,
-  ): Promise<TransactionMonthSummaryDto[]> {
+  ): Promise<CategoryMonthlySummaryDto[]> {
     return this.transactionCategoryMappingModel
       .aggregate([
         {

@@ -791,7 +791,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/TransactionMonthSummaryDto"
+                    "$ref": "#/components/schemas/CategoryMonthlySummaryDto"
                   }
                 }
               }
@@ -1728,7 +1728,8 @@
         "type": "object",
         "properties": {
           "authenticated": { "type": "boolean" },
-          "payload": { "$ref": "#/components/schemas/UserDto" }
+          "payload": { "$ref": "#/components/schemas/UserDto" },
+          "hasAccounts": { "type": "boolean" }
         },
         "required": ["authenticated"]
       },
@@ -2052,13 +2053,24 @@
       "TransactionMonthSummaryDto": {
         "type": "object",
         "properties": {
-          "_id": { "type": "object" },
+          "_id": {
+            "$ref": "#/components/schemas/TransactionMonthSummaryIdDto"
+          },
           "count": { "type": "number" },
           "totalAmount": { "type": "number" }
         },
         "required": ["_id", "count", "totalAmount"]
       },
       "SortOrder": { "type": "string", "enum": ["asc", "desc"] },
+      "CategoryMonthlySummaryDto": {
+        "type": "object",
+        "properties": {
+          "_id": { "type": "object" },
+          "count": { "type": "number" },
+          "totalAmount": { "type": "number" }
+        },
+        "required": ["_id", "count", "totalAmount"]
+      },
       "CreateTransactionCategoryDto": {
         "type": "object",
         "properties": {

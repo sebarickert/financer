@@ -1,7 +1,7 @@
 import { ApiProperty } from '@silte/nestjs-swagger';
 import { Allow } from 'class-validator';
 
-export class TransactionMonthSummaryDto {
+export class CategoryMonthlySummaryDto {
   @ApiProperty()
   @Allow()
   readonly _id: {
