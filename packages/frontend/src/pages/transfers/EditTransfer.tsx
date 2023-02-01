@@ -64,8 +64,7 @@ export const EditTransfer = (): JSX.Element => {
           description={transfer.description}
           fromAccount={transfer.fromAccount}
           toAccount={transfer.toAccount}
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          transactionCategoryMapping={transfer.categories as any}
+          transactionCategoryMapping={transfer.categories}
         />
       )}
     </>

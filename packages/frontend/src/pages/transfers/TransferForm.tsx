@@ -25,7 +25,9 @@ interface ITransferFormProps {
   toAccount?: string;
   onSubmit(newTransfer: CreateTransferDto): void;
   submitLabel: string;
-  transactionCategoryMapping?: TransactionCategoryMappingDto[] | null;
+  transactionCategoryMapping?:
+    | Pick<TransactionCategoryMappingDto, 'category_id'>[]
+    | null;
 }
 
 export const TransferForm = ({

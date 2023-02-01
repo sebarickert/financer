@@ -24,7 +24,9 @@ interface IExpenseFormProps {
   fromAccount?: string;
   onSubmit(account: CreateExpenseDto): void;
   submitLabel: string;
-  transactionCategoryMapping?: TransactionCategoryMappingDto[] | null;
+  transactionCategoryMapping?:
+    | Pick<TransactionCategoryMappingDto, 'category_id'>[]
+    | null;
 }
 
 export const ExpenseForm = ({

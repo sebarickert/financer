@@ -1,5 +1,3 @@
-import { TransactionCategoryMappingDto } from '@local/types';
-
 import { Button } from '../../elements/button/button';
 import { Divider } from '../../elements/divider/divider';
 import { Icon, IconName } from '../../elements/icon/icon';
@@ -7,13 +5,18 @@ import { Input } from '../../elements/input/input';
 import { Option } from '../../elements/select/select';
 import { Select } from '../../elements/select/select';
 
+import { TransactionCategoryMappingDto } from '$api/generated/financerApi';
+
+type PartialMappingType = Pick<TransactionCategoryMappingDto, 'category_id'> &
+  Partial<TransactionCategoryMappingDto>;
+
 interface TransactionCategoriesFormItemProps {
   className?: string;
   categoryAmountIndex: number;
   amountMaxValue: number;
   arrayIndex: number;
   categories: Option[];
-  categoryMapping: TransactionCategoryMappingDto | undefined;
+  categoryMapping: PartialMappingType | undefined;
   deleteTransactionCategoryItem(): void;
   setUnallocatedAmount(): void;
   setTransactionCategoryItemAmount(newValue: number): void;

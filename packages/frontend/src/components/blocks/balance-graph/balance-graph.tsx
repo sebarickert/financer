@@ -63,8 +63,7 @@ export const BalanceGraph = ({
     const getDateFromYearAndMonth = (year: number, month: number): Date =>
       new Date(`${year}-${month.toString().padStart(2, '0')}-01`);
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const groupedIncomesFormatted = (incomeMonthSummaries as any[]).map(
+    const groupedIncomesFormatted = incomeMonthSummaries.map(
       ({ _id: { month, year }, totalAmount }) => ({
         date: getDateFromYearAndMonth(year, month),
         amount: totalAmount,
@@ -72,7 +71,7 @@ export const BalanceGraph = ({
     );
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const groupedExpensesFormatted = (expenseMonthSummaries as any[]).map(
+    const groupedExpensesFormatted = expenseMonthSummaries.map(
       ({ _id: { month, year }, totalAmount }) => ({
         date: getDateFromYearAndMonth(year, month),
         amount: totalAmount * -1,

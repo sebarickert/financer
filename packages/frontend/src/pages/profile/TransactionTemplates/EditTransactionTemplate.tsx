@@ -120,12 +120,11 @@ export const EditTransactionTemplate = (): JSX.Element => {
           templateName={transactionTemplate.templateName ?? undefined}
           templateType={transactionTemplate.templateType[0] as string}
           transactionType={transactionTemplate.templateVisibility}
-          transactionCategoryMapping={
-            transactionTemplate.categories?.map((category) => ({
+          transactionCategoryMapping={transactionTemplate.categories?.map(
+            (category) => ({
               category_id: category,
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            })) as any[]
-          }
+            })
+          )}
           optionalFooterComponent={
             <TransactionTemplateDeleteModal handleDelete={handleDelete} />
           }

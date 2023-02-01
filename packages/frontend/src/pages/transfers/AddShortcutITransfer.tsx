@@ -71,10 +71,7 @@ export const AddShortcutTransfer = (): JSX.Element => {
             description={transactionTemplate.description ?? undefined}
             toAccount={transactionTemplate.toAccount ?? undefined}
             fromAccount={transactionTemplate.fromAccount ?? undefined}
-            transactionCategoryMapping={
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              (parsedCategories as any[]) ?? undefined
-            }
+            transactionCategoryMapping={parsedCategories ?? undefined}
           />
         </>
       )}

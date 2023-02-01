@@ -110,8 +110,7 @@ export const ViewTransactionCategory = (): JSX.Element => {
       new Date(`${year}-${month.toString().padStart(2, '0')}-01`);
 
     const transactionCategoryTransactionHistoryStack =
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (transactionsMonthlySummaries as any[])
+      transactionsMonthlySummaries
         .map(({ totalAmount, _id: { year, month } }) => ({
           date: getDateFromYearAndMonth(year, month),
           amount: totalAmount,

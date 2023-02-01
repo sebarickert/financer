@@ -37,7 +37,9 @@ interface TransactionTemplateFormProps {
   transactionType?: string;
   onSubmit(newShortcut: CreateTransactionTemplateDto): void;
   submitLabel: string;
-  transactionCategoryMapping?: TransactionCategoryMappingDto[] | null;
+  transactionCategoryMapping?:
+    | Pick<TransactionCategoryMappingDto, 'category_id'>[]
+    | null;
   optionalFooterComponent?: React.ReactNode;
 }
 

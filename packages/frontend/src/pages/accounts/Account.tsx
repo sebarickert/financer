@@ -98,13 +98,18 @@ export const Account = (): JSX.Element | null => {
     if (marketValueChangeAmount > 0) {
       try {
         const newIncomeJson = await addIncome({
-          toAccount: id,
-          amount: marketValueChangeAmount,
-          description: transactionDescription,
-          date: date ?? new Date(),
-          categories: marketSettings?.category ? [mappedCategory] : undefined,
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } as any).unwrap();
+          createIncomeDto: {
+            toAccount: id,
+            amount: marketValueChangeAmount,
+            description: transactionDescription,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            date: (date ?? new Date()) as any,
+            categories: (marketSettings?.category
+              ? [mappedCategory]
+              : // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                undefined) as any,
+          },
+        }).unwrap();
 
         if ('message' in newIncomeJson) {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -118,13 +123,18 @@ export const Account = (): JSX.Element | null => {
     } else if (marketValueChangeAmount < 0) {
       try {
         const newExpenseJson = await addExpense({
-          fromAccount: id,
-          amount: Math.abs(marketValueChangeAmount),
-          description: transactionDescription,
-          date: new Date(),
-          categories: marketSettings?.category ? [mappedCategory] : undefined,
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } as any).unwrap();
+          createExpenseDto: {
+            fromAccount: id,
+            amount: Math.abs(marketValueChangeAmount),
+            description: transactionDescription,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            date: (date ?? new Date()) as any,
+            categories: (marketSettings?.category
+              ? [mappedCategory]
+              : // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                undefined) as any,
+          },
+        }).unwrap();
 
         if ('message' in newExpenseJson) {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any

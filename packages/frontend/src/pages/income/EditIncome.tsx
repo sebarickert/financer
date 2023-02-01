@@ -60,8 +60,7 @@ export const EditIncome = (): JSX.Element => {
           description={income.description}
           date={new Date(income.date)}
           toAccount={income.toAccount}
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          transactionCategoryMapping={income.categories as any}
+          transactionCategoryMapping={income.categories}
         />
       )}
     </>

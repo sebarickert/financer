@@ -103,8 +103,7 @@ export const LatestTransactions = ({
 }: LatestTransactionsProps): JSX.Element => {
   const getCategoryName = useTransactionCategoryName();
   const { page, getPagerOptions } = usePager(initialPage);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const transactionData = useDataHook({ ...filterOptions, page } as any);
+  const transactionData = useDataHook({ ...filterOptions, page });
   const { data } = transactionData;
 
   useEffect(() => {

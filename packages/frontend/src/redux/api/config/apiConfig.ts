@@ -156,8 +156,7 @@ financerApi.enhanceEndpoints({
         { type: ApiTag.TRANSACTION, id: 'EXPENSE-SUMMARY' },
         ...(res?.map(({ _id }) => ({
           type: ApiTag.TRANSACTION,
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          id: _id as any,
+          id: JSON.stringify(_id),
         })) ?? []),
       ],
     },
@@ -214,8 +213,7 @@ financerApi.enhanceEndpoints({
         { type: ApiTag.TRANSACTION, id: 'INCOME-SUMMARY' },
         ...(res?.map(({ _id }) => ({
           type: ApiTag.TRANSACTION,
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          id: _id as any,
+          id: JSON.stringify(_id),
         })) ?? []),
       ],
     },
@@ -272,8 +270,7 @@ financerApi.enhanceEndpoints({
         { type: ApiTag.TRANSACTION, id: 'TRANSFER-SUMMARY' },
         ...(res?.map(({ _id }) => ({
           type: ApiTag.TRANSACTION,
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          id: _id as any,
+          id: JSON.stringify(_id),
         })) ?? []),
       ],
     },
@@ -331,8 +328,7 @@ financerApi.enhanceEndpoints({
         { type: ApiTag.TRANSACTION, id: 'SUMMARY' },
         ...(res?.map(({ _id }) => ({
           type: ApiTag.TRANSACTION,
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          id: _id as any,
+          id: JSON.stringify(_id),
         })) ?? []),
       ],
     },
