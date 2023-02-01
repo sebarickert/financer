@@ -46,7 +46,10 @@ export class TransactionDto {
   @Transform(objectIdTransformer)
   readonly toAccount: ObjectId;
 
-  @ApiProperty()
+  @ApiProperty({
+    type: TransactionCategoryMappingDto,
+    isArray: true,
+  })
   @ValidateNested({ each: true })
   @Type(() => TransactionCategoryMappingDto)
   categories: TransactionCategoryMappingDto[];

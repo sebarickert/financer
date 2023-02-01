@@ -3,12 +3,16 @@ import { TransactionCategoriesFormItem } from './transaction-categories-form.ite
 import { TransactionCategoryMappingDto } from '$api/generated/financerApi';
 import { Option } from '$elements/select/select';
 
+type PartialMappingType = Pick<TransactionCategoryMappingDto, 'category_id'> &
+  Partial<TransactionCategoryMappingDto>;
+
 interface TransactionCategoriesFormProps {
   className?: string;
   categoryAmount: { [key in number]: number };
   amountMaxValue: number;
   transactionCategories: Option[];
-  transactionCategoryMapping: TransactionCategoryMappingDto[] | null;
+  transactionCategoryMapping?: PartialMappingType[] | null;
+
   deleteTransactionCategoryItem(itemKey: number): void;
   setTransactionCategoryItemAmount(itemKey: number, itemValue: number): void;
   testId?: string;
@@ -38,8 +42,7 @@ export const TransactionCategoriesForm = ({
           amountMaxValue={amountMaxValue}
           arrayIndex={arrayIndex}
           categories={transactionCategories}
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          categoryMapping={transactionCategoryMapping?.[arrayIndex] as any}
+          categoryMapping={transactionCategoryMapping?.[arrayIndex]}
           deleteTransactionCategoryItem={() =>
             deleteTransactionCategoryItem(parseInt(index, 10))
           }

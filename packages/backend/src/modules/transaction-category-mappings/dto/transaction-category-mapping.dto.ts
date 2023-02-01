@@ -7,11 +7,11 @@ import { IsInstanceOfObjectId } from '../../../utils/is-instance-of-object-id.de
 import { objectIdTransformer } from '../../../utils/object-id-transformer';
 
 export class TransactionCategoryMappingDto {
-  @ApiProperty()
+  @ApiProperty({ type: String })
   @IsMongoId()
   _id: ObjectId;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   @IsMongoId()
   owner: ObjectId;
 
@@ -20,13 +20,13 @@ export class TransactionCategoryMappingDto {
   @IsString({ message: 'Description must not be empty.' })
   description?: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   @IsMongoId()
   @IsInstanceOfObjectId({ message: 'category_id must not be empty.' })
   @Transform(objectIdTransformer)
   category_id: ObjectId;
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   @IsMongoId()
   @IsInstanceOfObjectId({ message: 'transaction_id must not be empty.' })
   @Transform(objectIdTransformer)

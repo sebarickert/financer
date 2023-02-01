@@ -63,8 +63,7 @@ export const EditExpense = (): JSX.Element => {
           description={expense.description}
           date={new Date(expense.date)}
           fromAccount={expense.fromAccount}
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          transactionCategoryMapping={expense.categories as any}
+          transactionCategoryMapping={expense.categories}
         />
       )}
     </>

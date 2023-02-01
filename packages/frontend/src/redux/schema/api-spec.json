@@ -1756,6 +1756,18 @@
         },
         "required": ["_id", "userId", "key", "value"]
       },
+      "TransactionCategoryMappingDto": {
+        "type": "object",
+        "properties": {
+          "_id": { "type": "string" },
+          "owner": { "type": "string" },
+          "description": { "type": "string" },
+          "category_id": { "type": "string" },
+          "transaction_id": { "type": "string" },
+          "amount": { "type": "number" }
+        },
+        "required": ["_id", "owner", "category_id", "transaction_id", "amount"]
+      },
       "TransactionDto": {
         "type": "object",
         "properties": {
@@ -1766,7 +1778,12 @@
           "user": { "type": "string" },
           "fromAccount": { "type": "string" },
           "toAccount": { "type": "string" },
-          "categories": { "type": "array", "items": { "type": "string" } }
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransactionCategoryMappingDto"
+            }
+          }
         },
         "required": [
           "_id",
@@ -1836,18 +1853,6 @@
           "deleted",
           "parent_category_id"
         ]
-      },
-      "TransactionCategoryMappingDto": {
-        "type": "object",
-        "properties": {
-          "_id": { "type": "object" },
-          "owner": { "type": "object" },
-          "description": { "type": "string" },
-          "category_id": { "type": "object" },
-          "transaction_id": { "type": "object" },
-          "amount": { "type": "number" }
-        },
-        "required": ["_id", "owner", "category_id", "transaction_id", "amount"]
       },
       "TransactionTemplateType": {
         "type": "string",
@@ -2146,7 +2151,12 @@
           "date": { "format": "date-time", "type": "string" },
           "user": { "type": "string" },
           "fromAccount": { "type": "string" },
-          "categories": { "type": "array", "items": { "type": "string" } }
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransactionCategoryMappingDto"
+            }
+          }
         },
         "required": [
           "_id",
@@ -2165,7 +2175,12 @@
           "description": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
           "fromAccount": { "type": "string" },
-          "categories": { "type": "array", "items": { "type": "string" } }
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransactionCategoryMappingDto"
+            }
+          }
         },
         "required": [
           "amount",
@@ -2182,7 +2197,12 @@
           "description": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
           "fromAccount": { "type": "string" },
-          "categories": { "type": "array", "items": { "type": "string" } }
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransactionCategoryMappingDto"
+            }
+          }
         }
       },
       "IncomeDto": {
@@ -2194,7 +2214,12 @@
           "date": { "format": "date-time", "type": "string" },
           "user": { "type": "string" },
           "toAccount": { "type": "string" },
-          "categories": { "type": "array", "items": { "type": "string" } }
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransactionCategoryMappingDto"
+            }
+          }
         },
         "required": [
           "_id",
@@ -2213,7 +2238,12 @@
           "description": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
           "toAccount": { "type": "string" },
-          "categories": { "type": "array", "items": { "type": "string" } }
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransactionCategoryMappingDto"
+            }
+          }
         },
         "required": ["amount", "description", "date", "toAccount", "categories"]
       },
@@ -2224,7 +2254,12 @@
           "description": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
           "toAccount": { "type": "string" },
-          "categories": { "type": "array", "items": { "type": "string" } }
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransactionCategoryMappingDto"
+            }
+          }
         }
       },
       "TransferDto": {
@@ -2237,7 +2272,12 @@
           "user": { "type": "string" },
           "fromAccount": { "type": "string" },
           "toAccount": { "type": "string" },
-          "categories": { "type": "array", "items": { "type": "string" } }
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransactionCategoryMappingDto"
+            }
+          }
         },
         "required": [
           "_id",
@@ -2258,7 +2298,12 @@
           "date": { "format": "date-time", "type": "string" },
           "fromAccount": { "type": "string" },
           "toAccount": { "type": "string" },
-          "categories": { "type": "array", "items": { "type": "string" } }
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransactionCategoryMappingDto"
+            }
+          }
         },
         "required": [
           "amount",
@@ -2277,7 +2322,12 @@
           "date": { "format": "date-time", "type": "string" },
           "fromAccount": { "type": "string" },
           "toAccount": { "type": "string" },
-          "categories": { "type": "array", "items": { "type": "string" } }
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransactionCategoryMappingDto"
+            }
+          }
         }
       }
     }

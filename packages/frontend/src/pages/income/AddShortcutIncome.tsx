@@ -70,10 +70,7 @@ export const AddShortcutIncome = (): JSX.Element => {
             amount={transactionTemplate.amount ?? undefined}
             description={transactionTemplate.description ?? undefined}
             toAccount={transactionTemplate.toAccount ?? undefined}
-            transactionCategoryMapping={
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              (parsedCategories as any[]) ?? undefined
-            }
+            transactionCategoryMapping={parsedCategories ?? undefined}
           />
         </>
       )}
