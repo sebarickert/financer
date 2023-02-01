@@ -58,10 +58,6 @@ export class IncomesController {
     name: 'accountTypes',
     required: false,
   })
-  @ApiQuery({
-    name: 'sortOrder',
-    required: false,
-  })
   async findAllByUser(
     @UserId() userId: ObjectId,
     @Query('month') month: number,
@@ -112,6 +108,7 @@ export class IncomesController {
   @ApiQuery({
     name: 'parentTransactionCategory',
     required: false,
+    type: String,
   })
   async findMonthlySummariesByuser(
     @UserId() userId: ObjectId,
