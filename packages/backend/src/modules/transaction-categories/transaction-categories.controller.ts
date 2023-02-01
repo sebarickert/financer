@@ -22,13 +22,13 @@ import { UserId } from '../users/users.decorators';
 
 import { CreateTransactionCategoryDto } from './dto/create-transaction-category.dto';
 import { TransactionCategoryDto } from './dto/transaction-category.dto';
-import { TransactionMonthSummaryDto } from './dto/transaction-month-summary.dto';
+import { CategoryMonthlySummaryDto } from './dto/transaction-month-summary.dto';
 import { UpdateTransactionCategoryDto } from './dto/update-transaction-category.dto';
 import { TransactionCategoriesService } from './transaction-categories.service';
 
 @Controller('api/transaction-categories')
 @ApiTags('Transaction categories')
-@ApiExtraModels(TransactionCategoryDto, TransactionMonthSummaryDto)
+@ApiExtraModels(TransactionCategoryDto, CategoryMonthlySummaryDto)
 @LoggedIn()
 export class TransactionCategoriesController {
   constructor(
@@ -74,7 +74,7 @@ export class TransactionCategoriesController {
 
   @Get(':id/summary')
   @ApiOkResponse({
-    type: [TransactionMonthSummaryDto],
+    type: [CategoryMonthlySummaryDto],
   })
   @ApiParam({
     name: 'id',

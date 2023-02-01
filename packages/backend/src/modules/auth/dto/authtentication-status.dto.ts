@@ -8,4 +8,7 @@ export class AuthenticationStatusDto {
 
   @ApiPropertyOptional()
   payload?: UserDto;
+
+  @ApiPropertyOptional()
+  hasAccounts?: boolean;
 }

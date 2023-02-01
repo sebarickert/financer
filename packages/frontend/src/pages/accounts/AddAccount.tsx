@@ -23,13 +23,12 @@ export const AddAccount = (): JSX.Element => {
       }).unwrap();
 
       navigate('/accounts');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       // eslint-disable-next-line no-console
       if (error?.status !== 400) console.error(error);
 
       if ('message' in error?.data) {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
         setErrors(parseErrorMessagesToArray(error.data.message));
         return;
       }

@@ -23,7 +23,7 @@ import { ObjectId, parseObjectId } from '../../types/objectId';
 import { ApiPaginatedDto } from '../../utils/pagination.decorator';
 import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
 import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
-import { TransactionMonthSummaryDto } from '../transaction-categories/dto/transaction-month-summary.dto';
+import { TransactionMonthSummaryDto } from '../transactions/dto/transaction-month-summary.dto';
 import { UserId } from '../users/users.decorators';
 
 import { CreateTransferDto } from './dto/create-transfer.dto';

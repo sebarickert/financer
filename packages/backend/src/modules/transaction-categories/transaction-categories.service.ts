@@ -12,7 +12,7 @@ import { ObjectId } from '../../types/objectId';
 import { TransactionCategoryMappingsService } from '../transaction-category-mappings/transaction-category-mappings.service';
 
 import { CreateTransactionCategoryDto } from './dto/create-transaction-category.dto';
-import { TransactionMonthSummaryDto } from './dto/transaction-month-summary.dto';
+import { CategoryMonthlySummaryDto } from './dto/transaction-month-summary.dto';
 import { UpdateTransactionCategoryDto } from './dto/update-transaction-category.dto';
 import {
   TransactionCategory,
@@ -113,7 +113,7 @@ export class TransactionCategoriesService {
     limit?: number,
     year?: number,
     month?: number,
-  ): Promise<TransactionMonthSummaryDto[]> {
+  ): Promise<CategoryMonthlySummaryDto[]> {
     const childrenIds = await this.findAllChildrensById([parentCategoryId]);
     const targetIds = [parentCategoryId, ...childrenIds];
 

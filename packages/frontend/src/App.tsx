@@ -16,8 +16,6 @@ export const App = (): JSX.Element => {
   useEffect(() => {
     if (
       !authenticationStatus?.authenticated ||
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       authenticationStatus?.hasAccounts ||
       isOnboardingVisible
     ) {

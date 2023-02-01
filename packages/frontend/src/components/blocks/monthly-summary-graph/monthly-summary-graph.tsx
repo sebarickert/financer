@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 import { Chart } from 'react-chartjs-2';
 
 import {
+  TransactionMonthSummaryIdDto,
   useExpensesFindMonthlySummariesByuserQuery,
   useIncomesFindMonthlySummariesByuserQuery,
 } from '$api/generated/financerApi';
@@ -24,8 +25,8 @@ const yearAgoFilterOptions = {
 const getDateFromYearAndMonth = (year: number, month: number): Date =>
   new Date(`${year}-${month.toString().padStart(2, '0')}-01`);
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const removeDuplicatesFromArray = (array: any[]) => Array.from(new Set(array));
+const removeDuplicatesFromArray = <T,>(array: T[]) =>
+  Array.from(new Set(array));
 
 type MonthlySummaryHistory = {
   year: number;
@@ -64,21 +65,15 @@ export const MonthlySummaryGraph = ({
       [...incomeMonthSummaries, ...expenseMonthSummaries].map(({ _id }) =>
         JSON.stringify(_id)
       )
-    ).map((item) => JSON.parse(item));
+    ).map<TransactionMonthSummaryIdDto>((item) => JSON.parse(item));
 
     const monthlySummaryHistoryStack = allMonths
       .map(({ year: targetYear, month: targetMonth }) => {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const incomeSummary = (incomeMonthSummaries as any).find(
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
+        const incomeSummary = incomeMonthSummaries.find(
           ({ _id: { year, month } }) =>
             year === targetYear && month === targetMonth
         );
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const expenseSummary = (expenseMonthSummaries as any).find(
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
+        const expenseSummary = expenseMonthSummaries.find(
           ({ _id: { year, month } }) =>
             year === targetYear && month === targetMonth
         );
