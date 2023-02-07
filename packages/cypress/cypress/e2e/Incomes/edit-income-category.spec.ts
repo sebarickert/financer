@@ -5,7 +5,7 @@ describe('Edit income with category', () => {
   });
 
   it('Edit with single category', () => {
-    cy.visit('http://localhost:3000/statistics/incomes/2022-03');
+    cy.visit('http://localhost:3000/statistics/incomes/2022-03/1');
     cy.getById('623de1f2c839cf72d59b0d91').click();
     cy.getById('edit-income-button').click();
 
@@ -26,7 +26,7 @@ describe('Edit income with category', () => {
 
     cy.getById('submit').click();
 
-    cy.visit('http://localhost:3000/statistics/incomes/2022-03');
+    cy.visit('http://localhost:3000/statistics/incomes/2022-03/1');
     cy.getById('623de1f2c839cf72d59b0d91').click();
     cy.getById('edit-income-button').click();
 
@@ -45,7 +45,7 @@ describe('Edit income with category', () => {
   });
 
   it('Delete one categories with multiple categories', () => {
-    cy.visit('http://localhost:3000/statistics/incomes/2022-03');
+    cy.visit('http://localhost:3000/statistics/incomes/2022-03/1');
     cy.getById('623de213c839cf72d59b0da6').click();
     cy.getById('edit-income-button').click();
 
@@ -88,7 +88,7 @@ describe('Edit income with category', () => {
 
     cy.getById('submit').click();
 
-    cy.visit('http://localhost:3000/statistics/incomes/2022-03');
+    cy.visit('http://localhost:3000/statistics/incomes/2022-03/1');
     cy.getById('623de213c839cf72d59b0da6').click();
     cy.getById('edit-income-button').click();
 
@@ -107,7 +107,7 @@ describe('Edit income with category', () => {
     ).should('contain.value', 'Changed description');
   });
   it('Delete all categories with multiple categories', () => {
-    cy.visit('http://localhost:3000/statistics/incomes/2022-03');
+    cy.visit('http://localhost:3000/statistics/incomes/2022-03/1');
     cy.getById('623de213c839cf72d59b0da6').click();
     cy.getById('edit-income-button').click();
 
@@ -127,7 +127,7 @@ describe('Edit income with category', () => {
 
     cy.getById('submit').click();
 
-    cy.visit('http://localhost:3000/statistics/incomes/2022-03');
+    cy.visit('http://localhost:3000/statistics/incomes/2022-03/1');
     cy.getById('623de213c839cf72d59b0da6').click();
     cy.getById('edit-income-button').click();
 
