@@ -21,13 +21,11 @@ export class TransactionCategoryMappingDto {
   description?: string;
 
   @ApiProperty({ type: String })
-  @IsMongoId()
   @IsInstanceOfObjectId({ message: 'category_id must not be empty.' })
   @Transform(objectIdTransformer)
   category_id: ObjectId;
 
   @ApiProperty({ type: String })
-  @IsMongoId()
   @IsInstanceOfObjectId({ message: 'transaction_id must not be empty.' })
   @Transform(objectIdTransformer)
   transaction_id: ObjectId;
