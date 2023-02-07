@@ -10,7 +10,6 @@ export const TransfersRouter = (): JSX.Element => {
   return (
     <Routes>
       <Route index element={<Transfers />} />
-      {/* <Route path="/:year-:month" element={<Transfers />} /> */}
       <Route path="/:date/:page" element={<Transfers />} />
       <Route path="add" element={<AddTransfer />} />
       <Route path="add/:id" element={<AddShortcutTransfer />} />
