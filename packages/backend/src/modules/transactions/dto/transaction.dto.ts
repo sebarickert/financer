@@ -12,7 +12,7 @@ import {
 import { ObjectId } from '../../../types/objectId';
 import { IsInstanceOfObjectId } from '../../../utils/is-instance-of-object-id.decorator';
 import { objectIdTransformer } from '../../../utils/object-id-transformer';
-import { TransactionCategoryMappingDto } from '../../transaction-category-mappings/dto/transaction-category-mapping.dto';
+import { CreateTransactionCategoryMappingWithoutTransactionDto } from '../../transaction-category-mappings/dto/create-transaction-category-mapping.dto';
 
 export class TransactionDto {
   @ApiProperty({ type: String })
@@ -47,10 +47,10 @@ export class TransactionDto {
   readonly toAccount: ObjectId;
 
   @ApiProperty({
-    type: TransactionCategoryMappingDto,
+    type: CreateTransactionCategoryMappingWithoutTransactionDto,
     isArray: true,
   })
   @ValidateNested({ each: true })
-  @Type(() => TransactionCategoryMappingDto)
-  categories: TransactionCategoryMappingDto[];
+  @Type(() => CreateTransactionCategoryMappingWithoutTransactionDto)
+  categories: CreateTransactionCategoryMappingWithoutTransactionDto[];
 }
