@@ -39,7 +39,7 @@ export const AddShortcutExpense = (): JSX.Element => {
       navigate('/statistics/expenses');
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      if (error.status === 400) {
+      if (error.status === 400 || error.status === 404) {
         setErrors(parseErrorMessagesToArray(error?.data?.message));
         return;
       }
