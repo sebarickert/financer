@@ -37,7 +37,7 @@ export const EditTransfer = (): JSX.Element => {
       navigate('/statistics/transfers');
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      if (error.status === 400) {
+      if (error.status === 400 || error.status === 404) {
         setErrors(parseErrorMessagesToArray(error?.data?.message));
         return;
       }
