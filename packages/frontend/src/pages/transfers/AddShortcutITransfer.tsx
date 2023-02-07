@@ -31,18 +31,18 @@ export const AddShortcutTransfer = (): JSX.Element => {
 
   const handleSubmit = async (newTransferData: CreateTransferDto) => {
     try {
-      const newTransferJson = await addTransfer({
+      await addTransfer({
         createTransferDto: newTransferData,
       });
 
-      if ('message' in newTransferJson) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        setErrors(parseErrorMessagesToArray((newTransferJson as any).message));
+      navigate('/statistics/transfers');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      if (error.status === 400) {
+        setErrors(parseErrorMessagesToArray(error?.data?.message));
         return;
       }
 
-      navigate('/statistics/transfers');
-    } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
     }

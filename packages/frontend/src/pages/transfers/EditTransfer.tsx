@@ -29,21 +29,19 @@ export const EditTransfer = (): JSX.Element => {
       return;
     }
     try {
-      const newTransactionJson = await editTransaction({
+      await editTransaction({
         updateTransferDto: targetTransferData,
         id,
       }).unwrap();
 
-      if ('message' in newTransactionJson) {
-        setErrors(
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          parseErrorMessagesToArray((newTransactionJson as any).message)
-        );
+      navigate('/statistics/transfers');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      if (error.status === 400) {
+        setErrors(parseErrorMessagesToArray(error?.data?.message));
         return;
       }
 
-      navigate('/statistics/transfers');
-    } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
     }

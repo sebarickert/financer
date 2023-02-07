@@ -24,18 +24,18 @@ export const AddIncome = (): JSX.Element => {
 
   const handleSubmit = async (newIncomeData: CreateIncomeDto) => {
     try {
-      const newIncomeJson = await addIncome({
+      await addIncome({
         createIncomeDto: newIncomeData,
       }).unwrap();
 
-      if ('message' in newIncomeJson) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        setErrors(parseErrorMessagesToArray((newIncomeJson as any).message));
+      navigate('/statistics/incomes');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      if (error.status === 400) {
+        setErrors(parseErrorMessagesToArray(error?.data?.message));
         return;
       }
 
-      navigate('/statistics/incomes');
-    } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
     }

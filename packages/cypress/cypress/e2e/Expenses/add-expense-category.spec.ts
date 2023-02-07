@@ -9,7 +9,7 @@ describe('Add expense with category', () => {
     cy.getById('add-category-button').click();
   });
 
-  it.skip('Add expense with category', () => {
+  it('Add expense with category', () => {
     cy.getById('transaction-categories-form_transaction-category_amount')
       .clear()
       .type('50');
@@ -29,7 +29,7 @@ describe('Add expense with category', () => {
     cy.getById('category_amount').should('contain.text', '50,00');
   });
 
-  it.skip('Verify selected category must exists', () => {
+  it('Verify selected category must exists', () => {
     cy.getById('transaction-categories-form_transaction-category_amount')
       .clear()
       .type('50');
@@ -53,7 +53,7 @@ describe('Add expense with category', () => {
     );
   });
 
-  it.skip('Verify amount cannot be empty', () => {
+  it('Verify amount cannot be empty', () => {
     cy.getById(
       'transaction-categories-form_transaction-category_amount'
     ).clear();
@@ -82,7 +82,7 @@ describe('Add expense with category', () => {
     );
   });
 
-  it.skip('Verify amount cannot be zero', () => {
+  it('Verify amount cannot be zero', () => {
     cy.getById('transaction-categories-form_transaction-category_amount')
       .clear()
       .type('0');

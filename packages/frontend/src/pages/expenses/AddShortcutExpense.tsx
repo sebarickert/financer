@@ -32,17 +32,18 @@ export const AddShortcutExpense = (): JSX.Element => {
 
   const handleSubmit = async (newExpenseData: CreateExpenseDto) => {
     try {
-      const newExpenseJson = await addExpense({
+      await addExpense({
         createExpenseDto: newExpenseData,
       }).unwrap();
 
-      if ('message' in newExpenseJson) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        setErrors(parseErrorMessagesToArray((newExpenseJson as any).message));
+      navigate('/statistics/expenses');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      if (error.status === 400) {
+        setErrors(parseErrorMessagesToArray(error?.data?.message));
+        return;
       }
 
-      navigate('/statistics/expenses');
-    } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
     }

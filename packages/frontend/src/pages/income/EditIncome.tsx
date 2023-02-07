@@ -28,19 +28,19 @@ export const EditIncome = (): JSX.Element => {
       return;
     }
     try {
-      const targetIncomeJson = await editIncome({
+      await editIncome({
         updateIncomeDto: targetIncomeData,
         id,
       }).unwrap();
 
-      if ('message' in targetIncomeJson) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        setErrors(parseErrorMessagesToArray((targetIncomeJson as any).message));
+      navigate('/statistics/incomes');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      if (error.status === 400) {
+        setErrors(parseErrorMessagesToArray(error?.data?.message));
         return;
       }
 
-      navigate('/statistics/incomes');
-    } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
     }
