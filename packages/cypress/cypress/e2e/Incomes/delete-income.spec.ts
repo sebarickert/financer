@@ -77,7 +77,7 @@ describe('Delete income', () => {
         cy.saveData('targetTransactionBefore', targetTransactionBefore);
         cy.saveAsyncData('accountBefore', () => getAccount(targetAccountId));
 
-        cy.visit('http://localhost:3000/statistics/incomes/2022-01');
+        cy.visit('http://localhost:3000/statistics/incomes/2022-01/1');
         cy.getById(targetTransactionId).click();
 
         cy.getById('income-delete-modal_open-button').click();
@@ -123,7 +123,7 @@ describe('Delete income', () => {
         cy.saveData('targetTransactionBefore', targetTransactionBefore);
         cy.saveAsyncData('accountBefore', () => getAccount(targetAccountId));
 
-        cy.visit('http://localhost:3000/statistics/incomes/2021-02');
+        cy.visit('http://localhost:3000/statistics/incomes/2021-02/1');
         cy.getById(targetTransactionId).click();
 
         cy.getById('income-delete-modal_open-button').click();

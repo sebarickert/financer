@@ -88,7 +88,7 @@ describe('Edit expense', () => {
         const newAmount =
           targetTransactionBefore.amount + amountToChangeTransaction;
 
-        cy.visit('http://localhost:3000/statistics/expenses/2022-01');
+        cy.visit('http://localhost:3000/statistics/expenses/2022-01/1');
 
         cy.getById(targetTransactionBefore._id).click();
 
@@ -150,7 +150,7 @@ describe('Edit expense', () => {
         const newAmount =
           targetTransactionBefore.amount + amountToChangeTransaction;
 
-        cy.visit('http://localhost:3000/statistics/expenses/2021-02');
+        cy.visit('http://localhost:3000/statistics/expenses/2021-02/1');
 
         cy.getById(targetTransactionBefore._id).click();
 
