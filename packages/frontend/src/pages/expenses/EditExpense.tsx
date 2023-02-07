@@ -28,22 +28,19 @@ export const EditExpense = (): JSX.Element => {
       return;
     }
     try {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const targetExpenseJson = await editExpense({
+      await editExpense({
         updateExpenseDto: targetExpenseData,
         id,
       }).unwrap();
 
-      if ('message' in targetExpenseJson) {
-        setErrors(
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          parseErrorMessagesToArray((targetExpenseJson as any).message)
-        );
+      navigate('/statistics/expenses');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      if (error.status === 400) {
+        setErrors(parseErrorMessagesToArray(error?.data?.message));
         return;
       }
 
-      navigate('/statistics/expenses');
-    } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
     }

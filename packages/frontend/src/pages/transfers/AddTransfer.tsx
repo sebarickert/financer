@@ -32,20 +32,18 @@ export const AddTransfer = (): JSX.Element => {
 
   const handleSubmit = async (newTransfer: CreateTransferDto) => {
     try {
-      const newTransactionJson = await addTransaction({
+      await addTransaction({
         createTransferDto: newTransfer,
       });
 
-      if ('message' in newTransactionJson) {
-        setErrors(
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          parseErrorMessagesToArray((newTransactionJson as any).message)
-        );
+      navigate('/statistics/transfers');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      if (error.status === 400) {
+        setErrors(parseErrorMessagesToArray(error?.data?.message));
         return;
       }
 
-      navigate('/statistics/transfers');
-    } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
     }
