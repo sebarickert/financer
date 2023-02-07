@@ -13,21 +13,21 @@ import { LinkListLink } from '$elements/link-list/link-list.link';
 import { LoaderSuspense } from '$elements/loader/loader-suspense';
 import { useFirstTransaction } from '$hooks/transaction/useFirstTransaction';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { parseYearMonthFromString } from '$utils/formatDate';
 
 export const Transfers = (): JSX.Element => {
-  const {
-    year: initialYear,
-    month: initialMonth,
-    page: initialPage = '1',
-  } = useParams<{ year?: string; month?: string; page?: string }>();
+  const { date: initialDate, page: initialPage = '1' } = useParams<{
+    date?: string;
+    page?: string;
+  }>();
   const [selectedPage, setSelectedPage] = useState(parseInt(initialPage));
 
   const [monthFilterOptions, setMonthFilterOptions] = useState(
-    !initialYear || !initialMonth
+    !parseYearMonthFromString(initialDate)
       ? initialMonthFilterOptions
       : {
-          year: parseInt(initialYear),
-          month: parseInt(initialMonth),
+          ...initialMonthFilterOptions,
+          ...parseYearMonthFromString(initialDate),
           page: selectedPage,
         }
   );

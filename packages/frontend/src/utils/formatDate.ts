@@ -26,3 +26,20 @@ export const inputDateFormat = (date: Date): string => {
     day
   )}T${addLeadingZero(hour)}:${addLeadingZero(minute)}`;
 };
+
+export const parseYearMonthFromString = (initialDate?: string) => {
+  const [year, month] = initialDate?.split('-') || [];
+
+  if (!year || !month) {
+    return undefined;
+  }
+
+  if (year.length !== 4 || (month.length !== 2 && month.length !== 1)) {
+    return undefined;
+  }
+
+  return {
+    year: parseInt(year),
+    month: parseInt(month),
+  };
+};
