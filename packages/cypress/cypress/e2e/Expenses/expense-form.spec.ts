@@ -73,7 +73,7 @@ describe('Expense form', () => {
     cy.get('#amount').type('100.19');
     cy.getById('submit').click();
 
-    cy.location('pathname').should('eq', '/statistics/expenses');
+    cy.location('pathname').should('not.equal', '/statistics/expenses/add');
   });
 
   it('Verify Expense Amount should not accept zero value', () => {

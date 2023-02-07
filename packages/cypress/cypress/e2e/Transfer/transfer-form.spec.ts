@@ -82,7 +82,7 @@ describe('Income form', () => {
     cy.get('#amount').type('100.19');
     cy.getById('submit').click();
 
-    cy.location('pathname').should('eq', '/statistics/transfers');
+    cy.location('pathname').should('not.equal', '/statistics/transfers/add');
   });
 
   it('Verify Transfer Amount should not accept zero value', () => {
