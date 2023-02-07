@@ -1,5 +1,3 @@
-import { SortOrder } from '@local/types';
-
 import {
   TransfersFindAllByUserApiArg,
   useTransfersFindAllByUserQuery,
@@ -12,7 +10,6 @@ export const useFirstTransaction = (
     ...args,
     limit: 1,
     page: 1,
-    sortOrder: SortOrder.ASC,
   });
 
   return { ...transactionData, data: transactionData.data?.data[0] };
