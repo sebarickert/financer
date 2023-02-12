@@ -1,3 +1,4 @@
+import { VisibilityType } from '@local/types';
 import {
   BadRequestException,
   Injectable,
@@ -101,9 +102,10 @@ export class TransactionCategoriesService {
 
   async findAllByUser(
     userId: ObjectId,
+    visibilityType?: VisibilityType,
   ): Promise<TransactionCategoryDocument[]> {
     return this.transactionCategoryModel
-      .find({ owner: userId, deleted: { $ne: true } })
+      .find({ owner: userId, deleted: { $ne: true }, visibilityType })
       .exec();
   }
 

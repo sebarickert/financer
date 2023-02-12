@@ -8,8 +8,11 @@ import { TransactionCategoryDeleteModal } from './TransactionCategoryDeleteModal
 
 import {
   TransactionsFindMonthlySummariesByUserApiArg,
+  useTransactionCategoriesFindOneQuery,
   useTransactionsFindMonthlySummariesByUserQuery,
+  useTransactionTemplatesRemoveMutation,
 } from '$api/generated/financerApi';
+import { DataHandler } from '$blocks/data-handler/data-handler';
 import { MonthlyTransactionList } from '$blocks/monthly-transaction-list/monthly-transaction-list';
 import { Pager } from '$blocks/pager/pager';
 import { colorPalette } from '$constants/colorPalette';
@@ -21,8 +24,6 @@ import { LinkList } from '$elements/link-list/link-list';
 import { LinkListLink } from '$elements/link-list/link-list.link';
 import { LoaderSuspense } from '$elements/loader/loader-suspense';
 import { useFirstTransaction } from '$hooks/transaction/useFirstTransaction';
-import { useDeleteTransactionCategory } from '$hooks/transactionCategories/useDeleteTransactionCategory';
-import { useTransactionCategoryById } from '$hooks/transactionCategories/useTransactionCategoryById';
 import { Container } from '$layouts/container/container';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { capitalize } from '$utils/capitalize';
@@ -45,17 +46,16 @@ interface ChartData {
 
 export const ViewTransactionCategory = (): JSX.Element => {
   const navigate = useNavigate();
-  const { id } = useParams<{ id: string }>();
+  const { id = 'id not found' } = useParams<{ id: string }>();
 
   const [monthFilterOptions, setMonthFilterOptions] =
     useState(initialFilterOptions);
 
-  const transactionCategory = useTransactionCategoryById(id);
-  const deleteTransactionCategory = useDeleteTransactionCategory();
+  const [deleteTransactionCategory] = useTransactionTemplatesRemoveMutation();
+  const transactionCategoryData = useTransactionCategoriesFindOneQuery({ id });
+  const { data: transactionCategory } = transactionCategoryData;
 
   const { data: transaction } = useFirstTransaction({
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     parentTransactionCategory: id,
   });
 
@@ -94,7 +94,7 @@ export const ViewTransactionCategory = (): JSX.Element => {
       console.error('Failed to delete transaction category: no id');
       return;
     }
-    deleteTransactionCategory(id);
+    await deleteTransactionCategory({ id });
     navigate('/profile/transaction-categories');
   };
 
@@ -290,57 +290,62 @@ export const ViewTransactionCategory = (): JSX.Element => {
   return (
     <Container>
       <UpdatePageInfo
-        title={`${transactionCategory.name}`}
+        title={transactionCategory?.name ?? ''}
         backLink="/profile/transaction-categories"
       />
-      <section className={'mb-6 grid md:grid-cols-2 gap-4 md:gap-6'}>
-        <section className={clsx('grid gap-2')}>
-          <InfoCard label="Type" testId="transaction-category-type" isLarge>
-            {capitalize(transactionCategory.visibility.join(', '))}
-          </InfoCard>
-        </section>
-        <LinkList isVertical>
-          <LinkListLink
-            link={`/profile/transaction-categories/${id}/edit`}
-            testId="edit-transaction-category"
-            icon={IconName.cog}
-          >
-            Edit transaction category
-          </LinkListLink>
-          <TransactionCategoryDeleteModal handleDelete={handleDelete} />
-        </LinkList>
-      </section>
-      {!chartData?.length ? null : (
-        <div className="min-h-[300px] h-[20vh] md:h-auto md:min-h-0 md:aspect-video -mx-4 md:-mx-0">
-          <Chart type="line" data={data} options={options} />
-        </div>
+      <DataHandler {...transactionCategoryData} />
+      {transactionCategory && (
+        <>
+          <section className={'mb-6 grid md:grid-cols-2 gap-4 md:gap-6'}>
+            <section className={clsx('grid gap-2')}>
+              <InfoCard label="Type" testId="transaction-category-type" isLarge>
+                {capitalize(transactionCategory.visibility.join(', '))}
+              </InfoCard>
+            </section>
+            <LinkList isVertical>
+              <LinkListLink
+                link={`/profile/transaction-categories/${id}/edit`}
+                testId="edit-transaction-category"
+                icon={IconName.cog}
+              >
+                Edit transaction category
+              </LinkListLink>
+              <TransactionCategoryDeleteModal handleDelete={handleDelete} />
+            </LinkList>
+          </section>
+          {!chartData?.length ? null : (
+            <div className="min-h-[300px] h-[20vh] md:h-auto md:min-h-0 md:aspect-video -mx-4 md:-mx-0">
+              <Chart type="line" data={data} options={options} />
+            </div>
+          )}
+          <section className="flex items-center justify-between mt-6 mb-2">
+            <Heading>{`${pageVisibleMonth}, ${pageVisibleYear}`}</Heading>
+            <Pager
+              pagerOptions={{
+                nextPage: {
+                  isAvailable: !(
+                    monthFilterOptions.month === initialFilterOptions.month &&
+                    monthFilterOptions.year === initialFilterOptions.year
+                  ),
+                  load: () => handleMonthOptionChange('next'),
+                },
+                previousPage: {
+                  isAvailable: !(
+                    monthFilterOptions.month ===
+                      firstTransactionEverDate.getMonth() + 1 &&
+                    monthFilterOptions.year ===
+                      firstTransactionEverDate.getFullYear()
+                  ),
+                  load: () => handleMonthOptionChange('previous'),
+                },
+              }}
+            ></Pager>
+          </section>
+          <LoaderSuspense>
+            <MonthlyTransactionList monthFilterOptions={monthFilterOptions} />
+          </LoaderSuspense>
+        </>
       )}
-      <section className="flex items-center justify-between mt-6 mb-2">
-        <Heading>{`${pageVisibleMonth}, ${pageVisibleYear}`}</Heading>
-        <Pager
-          pagerOptions={{
-            nextPage: {
-              isAvailable: !(
-                monthFilterOptions.month === initialFilterOptions.month &&
-                monthFilterOptions.year === initialFilterOptions.year
-              ),
-              load: () => handleMonthOptionChange('next'),
-            },
-            previousPage: {
-              isAvailable: !(
-                monthFilterOptions.month ===
-                  firstTransactionEverDate.getMonth() + 1 &&
-                monthFilterOptions.year ===
-                  firstTransactionEverDate.getFullYear()
-              ),
-              load: () => handleMonthOptionChange('previous'),
-            },
-          }}
-        ></Pager>
-      </section>
-      <LoaderSuspense>
-        <MonthlyTransactionList monthFilterOptions={monthFilterOptions} />
-      </LoaderSuspense>
     </Container>
   );
 };

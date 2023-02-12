@@ -65,7 +65,8 @@ export const Expense = (): JSX.Element => {
   );
   const account = accountData.data;
 
-  const transactionCategories = useAllTransactionCategoriesWithCategoryTree();
+  const { data: transactionCategories } =
+    useAllTransactionCategoriesWithCategoryTree();
   const [deleteExpense, { isLoading: isDeleting }] =
     useExpensesRemoveMutation();
 

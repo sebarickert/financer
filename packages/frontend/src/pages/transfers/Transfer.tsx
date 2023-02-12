@@ -56,7 +56,8 @@ const TransferDeleteModal = ({ handleDelete }: ITransferDeleteModalProps) => {
 export const Transfer = (): JSX.Element => {
   const navigate = useNavigate();
   const { id = 'id-missing' } = useParams<{ id: string }>();
-  const transactionCategories = useAllTransactionCategoriesWithCategoryTree();
+  const { data: transactionCategories } =
+    useAllTransactionCategoriesWithCategoryTree();
   const transferData = useTransfersFindOneQuery({ id });
   const { data: transfer } = transferData;
 

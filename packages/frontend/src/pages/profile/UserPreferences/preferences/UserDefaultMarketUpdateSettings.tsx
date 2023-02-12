@@ -26,7 +26,8 @@ export const UserDefaultMarketUpdateSettings = (): JSX.Element => {
   const [category, setCategory] = useState<string | undefined>(
     defaultMarketSettings?.category
   );
-  const categories = useAllTransactionCategoriesWithCategoryTree();
+  const { data: categories = [] } =
+    useAllTransactionCategoriesWithCategoryTree();
 
   useEffect(() => {
     if (typeof transactionDescription !== 'undefined') return;

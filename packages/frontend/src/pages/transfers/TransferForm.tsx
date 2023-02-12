@@ -5,6 +5,8 @@ import {
   CreateTransferDto,
   TransactionCategoryMappingDto,
   useAccountsFindAllByUserQuery,
+  VisibilityType2Enum,
+  VisibilityTypeEnum,
 } from '$api/generated/financerApi';
 import { Form } from '$blocks/form/form';
 import { TransactionCategoriesForm } from '$blocks/transaction-categories-form/transaction-categories-form';
@@ -13,7 +15,7 @@ import { Button } from '$elements/button/button';
 import { Input } from '$elements/input/input';
 import { Loader } from '$elements/loader/loader';
 import { Select, Option } from '$elements/select/select';
-import { useAllTransactionCategoriesForTransferWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategoriesForTransfer';
+import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
 import { inputDateFormat } from '$utils/formatDate';
 
 interface ITransferFormProps {
@@ -49,8 +51,11 @@ export const TransferForm = ({
       label: name,
     }));
   }, [accounts]);
-  const transactionCategoriesRaw =
-    useAllTransactionCategoriesForTransferWithCategoryTree();
+  const { data: transactionCategoriesRaw } =
+    useAllTransactionCategoriesWithCategoryTree({
+      visibilityType:
+        VisibilityTypeEnum.Expense as unknown as VisibilityType2Enum,
+    });
   const [transactionCategories, setTransactionCategories] = useState<Option[]>(
     []
   );
@@ -100,7 +105,7 @@ export const TransferForm = ({
   };
 
   useEffect(() => {
-    if (transactionCategoriesRaw === null) return;
+    if (!transactionCategoriesRaw) return;
 
     setTransactionCategories(
       transactionCategoriesRaw.map(({ _id, categoryTree }) => ({

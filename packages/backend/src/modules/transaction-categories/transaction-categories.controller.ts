@@ -1,3 +1,4 @@
+import { VisibilityType } from '@local/types';
 import {
   Controller,
   Get,
@@ -6,12 +7,14 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import {
   ApiBody,
   ApiExtraModels,
   ApiOkResponse,
   ApiParam,
+  ApiQuery,
   ApiTags,
 } from '@silte/nestjs-swagger';
 
@@ -53,8 +56,20 @@ export class TransactionCategoriesController {
     type: [TransactionCategoryDto],
     description: 'Return transaction category by id',
   })
-  findAllByUser(@UserId() userId: ObjectId) {
-    return this.transactionCategoriesService.findAllByUser(userId);
+  @ApiQuery({
+    name: 'visibilityType',
+    required: false,
+    enum: VisibilityType,
+    enumName: 'visibilityType',
+  })
+  findAllByUser(
+    @UserId() userId: ObjectId,
+    @Query('visibilityType') visibilityType?: VisibilityType,
+  ) {
+    return this.transactionCategoriesService.findAllByUser(
+      userId,
+      visibilityType,
+    );
   }
 
   @Get(':id')

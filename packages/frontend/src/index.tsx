@@ -2,7 +2,6 @@ import ChartJS from 'chart.js/auto';
 import zoomPlugin from 'chartjs-plugin-zoom';
 import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { QueryClient, QueryClientProvider } from 'react-query';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, useLocation } from 'react-router-dom';
 
@@ -20,15 +19,6 @@ import { isUpdateAllowed } from './utils/allowedUpdateLocations';
 import './assets/tailwind.css';
 
 ChartJS.register(zoomPlugin);
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      suspense: true,
-      staleTime: 300000,
-    },
-  },
-});
 
 const Root = (): JSX.Element => {
   const { pathname } = useLocation();
@@ -61,17 +51,15 @@ const Root = (): JSX.Element => {
   return (
     <React.StrictMode>
       <Provider store={store}>
-        <QueryClientProvider client={queryClient}>
-          <ErrorBoundaryHandler errorPage="full-app">
-            <LoaderSuspense>
-              <PageInfoProvider>
-                <SEO />
-                <ScrollToTop />
-                <App />
-              </PageInfoProvider>
-            </LoaderSuspense>
-          </ErrorBoundaryHandler>
-        </QueryClientProvider>
+        <ErrorBoundaryHandler errorPage="full-app">
+          <LoaderSuspense>
+            <PageInfoProvider>
+              <SEO />
+              <ScrollToTop />
+              <App />
+            </PageInfoProvider>
+          </LoaderSuspense>
+        </ErrorBoundaryHandler>
       </Provider>
     </React.StrictMode>
   );

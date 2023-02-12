@@ -1,21 +1,25 @@
-import { CreateTransactionCategoryDto, VisibilityType } from '@local/types';
 import React, { useEffect, useState } from 'react';
 
-import { Form } from '../../../components/blocks/form/form';
-import { Alert } from '../../../components/elements/alert/alert';
-import { Checkbox } from '../../../components/elements/checkbox/checkbox';
-import { CheckboxGroup } from '../../../components/elements/checkbox/checkbox.group';
-import { Input } from '../../../components/elements/input/input';
-import { Select, Option } from '../../../components/elements/select/select';
-import { useAllTransactionCategoriesWithCategoryTree } from '../../../hooks/transactionCategories/useAllTransactionCategories';
 import { getAllChildCategoryIds } from '../../../services/TransactionCategoriesService';
+
+import {
+  CreateTransactionCategoryDto,
+  VisibilityTypeEnum,
+} from '$api/generated/financerApi';
+import { Form } from '$blocks/form/form';
+import { Alert } from '$elements/alert/alert';
+import { Checkbox } from '$elements/checkbox/checkbox';
+import { CheckboxGroup } from '$elements/checkbox/checkbox.group';
+import { Input } from '$elements/input/input';
+import { Select, Option } from '$elements/select/select';
+import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
 
 interface TransactionCategoryFormProps {
   errors: string[];
   onSubmit(transactionCategory: CreateTransactionCategoryDto): void;
   submitLabel: string;
   name?: string;
-  visibility?: VisibilityType[];
+  visibility?: VisibilityTypeEnum[];
   parentTransactioCategoryId?: string | null;
   optionalFooterComponent?: React.ReactNode;
   currentCategoryId?: string;
@@ -31,12 +35,14 @@ export const TransactionCategoryForm = ({
   optionalFooterComponent,
   currentCategoryId,
 }: TransactionCategoryFormProps): JSX.Element | null => {
-  const transactionCategoriesRaw =
+  const { data: transactionCategoriesRaw } =
     useAllTransactionCategoriesWithCategoryTree();
   const [transactionCategories, setTransactionCategories] =
     useState<Option[]>();
 
   useEffect(() => {
+    if (!transactionCategoriesRaw) return;
+
     const forbiddenIds = currentCategoryId
       ? getAllChildCategoryIds(
           currentCategoryId,
@@ -70,7 +76,7 @@ export const TransactionCategoryForm = ({
       newIncomeVisible.checked ? 'income' : '',
       newExpenseVisible.checked ? 'expense' : '',
       newTransferVisible.checked ? 'transfer' : '',
-    ].filter((i) => i !== '') as VisibilityType[];
+    ].filter((i) => i !== '') as VisibilityTypeEnum[];
 
     const newTransactionCategoryData: CreateTransactionCategoryDto = {
       name: newCategoryName.value,
