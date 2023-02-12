@@ -1,22 +1,28 @@
-import { UpdateTransactionCategoryDto } from '@local/types';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { Container } from '../../../components/layouts/container/container';
-import { UpdatePageInfo } from '../../../components/renderers/seo/updatePageInfo';
-import { useEditTransactionCategory } from '../../../hooks/transactionCategories/useEditTransactionCategory';
-import { useTransactionCategoryById } from '../../../hooks/transactionCategories/useTransactionCategoryById';
-import { parseErrorMessagesToArray } from '../../../utils/apiHelper';
-
 import { TransactionCategoryForm } from './TransactionCategoryForm';
+
+import {
+  UpdateTransactionCategoryDto,
+  useTransactionCategoriesFindOneQuery,
+  useTransactionCategoriesUpdateMutation,
+} from '$api/generated/financerApi';
+import { DataHandler } from '$blocks/data-handler/data-handler';
+import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
+import { Container } from '$layouts/container/container';
+import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 export const EditTransactionCategory = (): JSX.Element => {
   const navigate = useNavigate();
-  const { id } = useParams<{ id: string }>();
+  const { id = 'id not found' } = useParams<{ id: string }>();
   const [errors, setErrors] = useState<string[]>([]);
 
-  const transactionCategory = useTransactionCategoryById(id);
-  const editTransactionCategory = useEditTransactionCategory();
+  const transactionCategoryData = useTransactionCategoriesFindOneQuery({ id });
+  const { data: transactionCategory } = transactionCategoryData;
+  const [editTransactionCategory, { isLoading: isSaving }] =
+    useTransactionCategoriesUpdateMutation();
 
   const handleSubmit = async (
     newTransactionCategoryData: UpdateTransactionCategoryDto
@@ -26,18 +32,20 @@ export const EditTransactionCategory = (): JSX.Element => {
       return;
     }
     try {
-      const newTransactionCategory = await editTransactionCategory(
-        transactionCategory._id,
-        newTransactionCategoryData
-      );
+      await editTransactionCategory({
+        id: transactionCategory._id,
+        updateTransactionCategoryDto: newTransactionCategoryData,
+      });
 
-      if ('message' in newTransactionCategory) {
-        setErrors(parseErrorMessagesToArray(newTransactionCategory.message));
+      navigate(`/profile/transaction-categories`);
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      if (error.status === 400 || error.status === 404) {
+        setErrors(parseErrorMessagesToArray(error?.data?.message));
         return;
       }
 
-      navigate(`/profile/transaction-categories`);
-    } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
     }
@@ -45,19 +53,23 @@ export const EditTransactionCategory = (): JSX.Element => {
 
   return (
     <Container>
+      {isSaving && <LoaderFullScreen />}
+      <DataHandler {...transactionCategoryData} />
       <UpdatePageInfo
         title="Edit transaction category"
         backLink={`/profile/transaction-categories/${id}`}
       />
-      <TransactionCategoryForm
-        onSubmit={handleSubmit}
-        errors={errors}
-        submitLabel="Update"
-        name={transactionCategory.name}
-        visibility={transactionCategory.visibility}
-        parentTransactioCategoryId={transactionCategory.parent_category_id}
-        currentCategoryId={id}
-      />
+      {transactionCategory && (
+        <TransactionCategoryForm
+          onSubmit={handleSubmit}
+          errors={errors}
+          submitLabel="Update"
+          name={transactionCategory.name}
+          visibility={transactionCategory.visibility}
+          parentTransactioCategoryId={transactionCategory.parent_category_id}
+          currentCategoryId={id}
+        />
+      )}
     </Container>
   );
 };

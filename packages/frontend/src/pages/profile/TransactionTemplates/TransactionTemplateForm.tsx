@@ -4,13 +4,14 @@ import {
   TransactionType,
 } from '@local/types';
 import { ChangeEvent, useEffect, useMemo, useState } from 'react';
-import { ITransactionCategoryWithCategoryTree } from 'services/TransactionCategoriesService';
 
 import {
   CreateTransactionTemplateDto,
   TransactionCategoryMappingDto,
   TransactionTypeEnum,
   useAccountsFindAllByUserQuery,
+  VisibilityType2Enum,
+  VisibilityTypeEnum,
 } from '$api/generated/financerApi';
 import { Form } from '$blocks/form/form';
 import { TransactionCategoriesForm } from '$blocks/transaction-categories-form/transaction-categories-form';
@@ -19,9 +20,7 @@ import { Button } from '$elements/button/button';
 import { Input } from '$elements/input/input';
 import { Loader } from '$elements/loader/loader';
 import { Select, Option } from '$elements/select/select';
-import { useAllTransactionCategoriesForExpenseWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategoriesForExpense';
-import { useAllTransactionCategoriesForIncomeWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategoriesForIncome';
-import { useAllTransactionCategoriesForTransferWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategoriesForTransfer';
+import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
 import { capitalize } from '$utils/capitalize';
 
 interface TransactionTemplateFormProps {
@@ -212,29 +211,31 @@ export const TransactionTemplateForm = ({
     setCategoryAmount(newCategoryAmount);
   }, [transactionCategoryMapping]);
 
-  const getUseDataHook = () => {
+  const getDataType = () => {
     if (selectedTransactionType === TransactionType.INCOME)
-      return useAllTransactionCategoriesForIncomeWithCategoryTree;
+      return VisibilityTypeEnum.Income;
     if (selectedTransactionType === TransactionType.EXPENSE)
-      return useAllTransactionCategoriesForExpenseWithCategoryTree;
+      return VisibilityTypeEnum.Expense;
 
-    return useAllTransactionCategoriesForTransferWithCategoryTree;
+    return VisibilityTypeEnum.Transfer;
   };
 
   const TransactionCategoriesFormWrapper = ({
-    useData,
+    type,
   }: {
-    useData: () => ITransactionCategoryWithCategoryTree[];
+    type: VisibilityTypeEnum;
   }): JSX.Element => {
-    const transactionCategoriesRaw: ITransactionCategoryWithCategoryTree[] =
-      useData();
+    const { data: transactionCategoriesRaw } =
+      useAllTransactionCategoriesWithCategoryTree({
+        visibilityType: type as unknown as VisibilityType2Enum,
+      });
 
     const [transactionCategories, setTransactionCategories] = useState<
       Option[]
     >([]);
 
     useEffect(() => {
-      if (transactionCategoriesRaw === null) return;
+      if (!transactionCategoriesRaw) return;
 
       setTransactionCategories(
         transactionCategoriesRaw.map(({ _id, categoryTree }) => ({
@@ -363,7 +364,7 @@ export const TransactionTemplateForm = ({
         </section>
         <section className="mt-8">
           <h2 className="sr-only">Categories</h2>
-          <TransactionCategoriesFormWrapper useData={getUseDataHook()} />
+          <TransactionCategoriesFormWrapper type={getDataType()} />
           <Button
             onClick={addNewCategory}
             accentColor="plain"

@@ -1,12 +1,15 @@
 import {
-  TransfersFindAllByUserApiArg,
-  useTransfersFindAllByUserQuery,
+  TransactionsFindAllByUserApiArg,
+  useTransactionsFindAllByUserQuery,
 } from '$api/generated/financerApi';
 
 export const useFirstTransaction = (
-  args: Omit<TransfersFindAllByUserApiArg, 'limit' | 'page' | 'sortOrder'> = {}
+  args: Omit<
+    TransactionsFindAllByUserApiArg,
+    'limit' | 'page' | 'sortOrder'
+  > = {}
 ) => {
-  const transactionData = useTransfersFindAllByUserQuery({
+  const transactionData = useTransactionsFindAllByUserQuery({
     ...args,
     limit: 1,
     page: 1,

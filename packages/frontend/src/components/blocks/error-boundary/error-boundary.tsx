@@ -1,5 +1,4 @@
 import { ErrorBoundary } from 'react-error-boundary';
-import { useQueryErrorResetBoundary } from 'react-query';
 
 import { ErrorPage } from '../../pages/error-page/error-page';
 
@@ -12,10 +11,9 @@ export const ErrorBoundaryHandler = ({
   children,
   errorPage,
 }: ErrorBoundaryProps) => {
-  const { reset } = useQueryErrorResetBoundary();
   return (
     <ErrorBoundary
-      onReset={reset}
+      onReset={() => console.log("Resetting the error boundary's state")}
       fallbackRender={({ resetErrorBoundary }) => (
         <ErrorPage
           resetErrorBoundary={resetErrorBoundary}

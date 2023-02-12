@@ -32,7 +32,7 @@ const generateCategoryGroupChild = (
 });
 
 export const TransactionCategories = (): JSX.Element => {
-  const transactionCategoriesRaw =
+  const { data: transactionCategoriesRaw } =
     useAllTransactionCategoriesWithCategoryTree();
 
   const [transactionCategories, setTransactionCategories] = useState<
@@ -40,7 +40,7 @@ export const TransactionCategories = (): JSX.Element => {
   >([]);
 
   useEffect(() => {
-    if (transactionCategoriesRaw === null) return;
+    if (!transactionCategoriesRaw) return;
 
     const allParentIds = transactionCategoriesRaw.map(
       ({ parent_category_id }) => parent_category_id

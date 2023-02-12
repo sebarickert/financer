@@ -65,7 +65,8 @@ export const Income = (): JSX.Element => {
   );
   const account = accountData.data;
 
-  const transactionCategories = useAllTransactionCategoriesWithCategoryTree();
+  const { data: transactionCategories } =
+    useAllTransactionCategoriesWithCategoryTree();
   const [deleteIncome, { isLoading: isDeleting }] = useIncomesRemoveMutation();
 
   const getCategoryNameById = (categoryId: string) =>

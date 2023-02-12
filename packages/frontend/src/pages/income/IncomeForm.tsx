@@ -5,6 +5,8 @@ import {
   CreateIncomeDto,
   TransactionCategoryMappingDto,
   useAccountsFindAllByUserQuery,
+  VisibilityType2Enum,
+  VisibilityTypeEnum,
 } from '$api/generated/financerApi';
 import { Form } from '$blocks/form/form';
 import { TransactionCategoriesForm } from '$blocks/transaction-categories-form/transaction-categories-form';
@@ -13,7 +15,7 @@ import { Button } from '$elements/button/button';
 import { Input } from '$elements/input/input';
 import { Loader } from '$elements/loader/loader';
 import { Select, Option } from '$elements/select/select';
-import { useAllTransactionCategoriesForIncomeWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategoriesForIncome';
+import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
 import { inputDateFormat } from '$utils/formatDate';
 
 interface IncomeFormProps {
@@ -47,8 +49,11 @@ export const IncomeForm = ({
       label: name,
     }));
   }, [accounts]);
-  const transactionCategoriesRaw =
-    useAllTransactionCategoriesForIncomeWithCategoryTree();
+  const { data: transactionCategoriesRaw } =
+    useAllTransactionCategoriesWithCategoryTree({
+      visibilityType:
+        VisibilityTypeEnum.Income as unknown as VisibilityType2Enum,
+    });
   const [transactionCategories, setTransactionCategories] = useState<Option[]>(
     []
   );
@@ -98,7 +103,7 @@ export const IncomeForm = ({
   };
 
   useEffect(() => {
-    if (transactionCategoriesRaw === null) return;
+    if (!transactionCategoriesRaw) return;
 
     setTransactionCategories(
       transactionCategoriesRaw.map(({ _id, categoryTree }) => ({

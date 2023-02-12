@@ -1,35 +1,34 @@
-import { TransactionCategoryDto } from '@local/types';
-import { useQuery } from 'react-query';
+import { useMemo } from 'react';
+
+import { parseParentCategoryPath } from '../../services/TransactionCategoriesService';
 
 import {
-  getAllTransactionCategories,
-  getAllTransactionCategoriesWithCategoryTree,
-  ITransactionCategoryWithCategoryTree,
-} from '../../services/TransactionCategoriesService';
+  TransactionCategoriesFindAllByUserApiArg,
+  useTransactionCategoriesFindAllByUserQuery,
+} from '$api/generated/financerApi';
 
-export const useAllTransactionCategories = (): TransactionCategoryDto[] => {
-  const { data, error } = useQuery(
-    ['transactionCategories'],
-    getAllTransactionCategories
-  );
+export const useAllTransactionCategoriesWithCategoryTree = (
+  args: TransactionCategoriesFindAllByUserApiArg = {}
+) => {
+  const categoryData = useTransactionCategoriesFindAllByUserQuery(args);
 
-  if (error || !data) {
-    throw new Error(`Missing data. Error: ${JSON.stringify(error ?? data)}`);
-  }
+  return useMemo(() => {
+    const { data: categories } = categoryData;
 
-  return data;
+    const categoriesWithTree = categories
+      ?.map((category) => ({
+        ...category,
+        categoryTree: parseParentCategoryPath(categories, category._id),
+      }))
+      .sort((a, b) =>
+        // eslint-disable-next-line no-nested-ternary
+        a.categoryTree > b.categoryTree
+          ? 1
+          : b.categoryTree > a.categoryTree
+          ? -1
+          : 0
+      );
+
+    return { ...categoryData, data: categoriesWithTree };
+  }, [categoryData]);
 };
-
-export const useAllTransactionCategoriesWithCategoryTree =
-  (): ITransactionCategoryWithCategoryTree[] => {
-    const { data, error } = useQuery(
-      ['transactionCategories', 'transactionCategoriesTree'],
-      getAllTransactionCategoriesWithCategoryTree
-    );
-
-    if (error || !data) {
-      throw new Error(`Missing data. Error: ${JSON.stringify(error ?? data)}`);
-    }
-
-    return data;
-  };

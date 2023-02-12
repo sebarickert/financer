@@ -30,6 +30,7 @@ export class TransactionCategoryDto {
     enum: VisibilityType,
     enumName: 'VisibilityType',
     type: VisibilityType,
+    isArray: true,
   })
   @IsOptional()
   @IsEnum(VisibilityType, {

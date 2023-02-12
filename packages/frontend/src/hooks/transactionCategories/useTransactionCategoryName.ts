@@ -1,14 +1,14 @@
 import { useCallback } from 'react';
 
-import { useAllTransactionCategories } from './useAllTransactionCategories';
+import { useTransactionCategoriesFindAllByUserQuery } from '$api/generated/financerApi';
 
 export const useTransactionCategoryName = (): ((
   categoryId: string
 ) => string | undefined) => {
-  const categories = useAllTransactionCategories();
+  const { data: categories } = useTransactionCategoriesFindAllByUserQuery({});
 
   return useCallback(
-    (categoryId) => categories.find(({ _id }) => _id === categoryId)?.name,
+    (categoryId) => categories?.find(({ _id }) => _id === categoryId)?.name,
     [categories]
   );
 };

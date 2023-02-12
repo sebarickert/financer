@@ -8,6 +8,7 @@ enum ApiTag {
   USER_PREFERENCE = 'user-preference',
   TRANSACTION_TEMPLATE = 'transaction-template',
   TRANSACTION = 'transaction',
+  CATEGORY = 'category',
 }
 
 financerApi.enhanceEndpoints({
@@ -341,6 +342,41 @@ financerApi.enhanceEndpoints({
           type: ApiTag.TRANSACTION,
           id: _id,
         })) ?? []),
+      ],
+    },
+
+    //
+    // Category
+    //
+    transactionCategoriesFindAllByUser: {
+      providesTags: (res) => [
+        ApiTag.CATEGORY,
+        { type: ApiTag.CATEGORY, id: 'LIST' },
+        ...(res?.map(({ _id }) => ({
+          type: ApiTag.CATEGORY,
+          id: _id,
+        })) ?? []),
+      ],
+    },
+    transactionCategoriesFindOne: {
+      providesTags: (res) => [
+        ApiTag.CATEGORY,
+        { type: ApiTag.CATEGORY, id: res?._id },
+      ],
+    },
+    transactionCategoriesCreate: {
+      invalidatesTags: [{ type: ApiTag.CATEGORY, id: 'LIST' }],
+    },
+    transactionCategoriesUpdate: {
+      invalidatesTags: (res) => [
+        { type: ApiTag.CATEGORY, id: res?._id },
+        { type: ApiTag.CATEGORY, id: 'LIST' },
+      ],
+    },
+    transactionCategoriesRemove: {
+      invalidatesTags: (res, err, args) => [
+        { type: ApiTag.CATEGORY, id: args.id },
+        { type: ApiTag.CATEGORY, id: 'LIST' },
       ],
     },
   },

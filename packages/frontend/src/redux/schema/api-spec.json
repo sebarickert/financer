@@ -476,6 +476,12 @@
             "required": false,
             "in": "query",
             "schema": { "$ref": "#/components/schemas/SortOrder" }
+          },
+          {
+            "name": "parentTransactionCategory",
+            "required": false,
+            "in": "query",
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
@@ -680,7 +686,14 @@
       },
       "get": {
         "operationId": "TransactionCategories_findAllByUser",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "visibilityType",
+            "required": false,
+            "in": "query",
+            "schema": { "$ref": "#/components/schemas/visibilityType" }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Return transaction category by id",
@@ -1756,17 +1769,14 @@
         },
         "required": ["_id", "userId", "key", "value"]
       },
-      "TransactionCategoryMappingDto": {
+      "CreateTransactionCategoryMappingWithoutTransactionDto": {
         "type": "object",
         "properties": {
-          "_id": { "type": "string" },
-          "owner": { "type": "string" },
           "description": { "type": "string" },
           "category_id": { "type": "string" },
-          "transaction_id": { "type": "string" },
           "amount": { "type": "number" }
         },
-        "required": ["_id", "owner", "category_id", "transaction_id", "amount"]
+        "required": ["category_id", "amount"]
       },
       "TransactionDto": {
         "type": "object",
@@ -1781,7 +1791,7 @@
           "categories": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/TransactionCategoryMappingDto"
+              "$ref": "#/components/schemas/CreateTransactionCategoryMappingWithoutTransactionDto"
             }
           }
         },
@@ -1841,7 +1851,10 @@
           "_id": { "type": "string" },
           "owner": { "type": "string" },
           "name": { "type": "string" },
-          "visibility": { "$ref": "#/components/schemas/VisibilityType" },
+          "visibility": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/VisibilityType" }
+          },
           "deleted": { "type": "boolean" },
           "parent_category_id": { "type": "string" }
         },
@@ -1853,6 +1866,18 @@
           "deleted",
           "parent_category_id"
         ]
+      },
+      "TransactionCategoryMappingDto": {
+        "type": "object",
+        "properties": {
+          "_id": { "type": "string" },
+          "owner": { "type": "string" },
+          "description": { "type": "string" },
+          "category_id": { "type": "string" },
+          "transaction_id": { "type": "string" },
+          "amount": { "type": "number" }
+        },
+        "required": ["_id", "owner", "category_id", "transaction_id", "amount"]
       },
       "TransactionTemplateType": {
         "type": "string",
@@ -2080,18 +2105,26 @@
         "type": "object",
         "properties": {
           "name": { "type": "string" },
-          "visibility": { "$ref": "#/components/schemas/VisibilityType" },
-          "deleted": { "type": "boolean" },
+          "visibility": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/VisibilityType" }
+          },
           "parent_category_id": { "type": "string" }
         },
-        "required": ["name", "visibility", "deleted", "parent_category_id"]
+        "required": ["name", "visibility", "parent_category_id"]
+      },
+      "visibilityType": {
+        "type": "string",
+        "enum": ["income", "expense", "transfer"]
       },
       "UpdateTransactionCategoryDto": {
         "type": "object",
         "properties": {
           "name": { "type": "string" },
-          "visibility": { "$ref": "#/components/schemas/VisibilityType" },
-          "deleted": { "type": "boolean" },
+          "visibility": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/VisibilityType" }
+          },
           "parent_category_id": { "type": "string" }
         }
       },
@@ -2154,7 +2187,7 @@
           "categories": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/TransactionCategoryMappingDto"
+              "$ref": "#/components/schemas/CreateTransactionCategoryMappingWithoutTransactionDto"
             }
           }
         },
@@ -2178,7 +2211,7 @@
           "categories": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/TransactionCategoryMappingDto"
+              "$ref": "#/components/schemas/CreateTransactionCategoryMappingWithoutTransactionDto"
             }
           }
         },
@@ -2200,7 +2233,7 @@
           "categories": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/TransactionCategoryMappingDto"
+              "$ref": "#/components/schemas/CreateTransactionCategoryMappingWithoutTransactionDto"
             }
           }
         }
@@ -2217,7 +2250,7 @@
           "categories": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/TransactionCategoryMappingDto"
+              "$ref": "#/components/schemas/CreateTransactionCategoryMappingWithoutTransactionDto"
             }
           }
         },
@@ -2241,7 +2274,7 @@
           "categories": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/TransactionCategoryMappingDto"
+              "$ref": "#/components/schemas/CreateTransactionCategoryMappingWithoutTransactionDto"
             }
           }
         },
@@ -2257,7 +2290,7 @@
           "categories": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/TransactionCategoryMappingDto"
+              "$ref": "#/components/schemas/CreateTransactionCategoryMappingWithoutTransactionDto"
             }
           }
         }
@@ -2275,7 +2308,7 @@
           "categories": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/TransactionCategoryMappingDto"
+              "$ref": "#/components/schemas/CreateTransactionCategoryMappingWithoutTransactionDto"
             }
           }
         },
@@ -2301,7 +2334,7 @@
           "categories": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/TransactionCategoryMappingDto"
+              "$ref": "#/components/schemas/CreateTransactionCategoryMappingWithoutTransactionDto"
             }
           }
         },
@@ -2325,7 +2358,7 @@
           "categories": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/TransactionCategoryMappingDto"
+              "$ref": "#/components/schemas/CreateTransactionCategoryMappingWithoutTransactionDto"
             }
           }
         }

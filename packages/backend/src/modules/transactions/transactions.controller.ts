@@ -61,6 +61,11 @@ export class TransactionsController {
     enum: SortOrder,
     enumName: 'SortOrder',
   })
+  @ApiQuery({
+    name: 'parentTransactionCategory',
+    required: false,
+    type: String,
+  })
   async findAllByUser(
     @UserId() userId: ObjectId,
     @Query('month') month?: number,

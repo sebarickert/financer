@@ -5,6 +5,8 @@ import {
   CreateExpenseDto,
   TransactionCategoryMappingDto,
   useAccountsFindAllByUserQuery,
+  VisibilityType2Enum,
+  VisibilityTypeEnum,
 } from '$api/generated/financerApi';
 import { Form } from '$blocks/form/form';
 import { TransactionCategoriesForm } from '$blocks/transaction-categories-form/transaction-categories-form';
@@ -13,7 +15,7 @@ import { Button } from '$elements/button/button';
 import { Input } from '$elements/input/input';
 import { Loader } from '$elements/loader/loader';
 import { Select, Option } from '$elements/select/select';
-import { useAllTransactionCategoriesForExpenseWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategoriesForExpense';
+import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
 import { inputDateFormat } from '$utils/formatDate';
 
 interface IExpenseFormProps {
@@ -47,8 +49,11 @@ export const ExpenseForm = ({
       label: name,
     }));
   }, [accounts]);
-  const transactionCategoriesRaw =
-    useAllTransactionCategoriesForExpenseWithCategoryTree();
+  const { data: transactionCategoriesRaw } =
+    useAllTransactionCategoriesWithCategoryTree({
+      visibilityType:
+        VisibilityTypeEnum.Expense as unknown as VisibilityType2Enum,
+    });
   const [transactionCategories, setTransactionCategories] = useState<Option[]>(
     []
   );
@@ -100,7 +105,7 @@ export const ExpenseForm = ({
   };
 
   useEffect(() => {
-    if (transactionCategoriesRaw === null) return;
+    if (!transactionCategoriesRaw) return;
 
     setTransactionCategories(
       transactionCategoriesRaw.map(({ _id, categoryTree }) => ({
