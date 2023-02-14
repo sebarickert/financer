@@ -1,6 +1,11 @@
 import { UserPreferenceProperty } from '@local/types';
 import { Controller, Get, Body, Patch, Param } from '@nestjs/common';
-import { ApiBody, ApiOkResponse, ApiParam, ApiTags } from '@silte/nestjs-swagger';
+import {
+  ApiBody,
+  ApiOkResponse,
+  ApiParam,
+  ApiTags,
+} from '@silte/nestjs-swagger';
 
 import { ObjectId } from '../../types/objectId';
 import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
