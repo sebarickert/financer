@@ -104,8 +104,13 @@ export class TransactionCategoriesService {
     userId: ObjectId,
     visibilityType?: VisibilityType,
   ): Promise<TransactionCategoryDocument[]> {
+    const filter = visibilityType ? { visibility: visibilityType } : {};
     return this.transactionCategoryModel
-      .find({ owner: userId, deleted: { $ne: true }, visibilityType })
+      .find({
+        owner: userId,
+        deleted: { $ne: true },
+        ...filter,
+      })
       .exec();
   }
 

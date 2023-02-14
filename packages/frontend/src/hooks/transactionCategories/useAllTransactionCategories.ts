@@ -11,14 +11,16 @@ export const useAllTransactionCategoriesWithCategoryTree = (
   args: TransactionCategoriesFindAllByUserApiArg = {}
 ) => {
   const categoryData = useTransactionCategoriesFindAllByUserQuery(args);
+  const categoryAllData = useTransactionCategoriesFindAllByUserQuery({});
 
   return useMemo(() => {
-    const { data: categories } = categoryData;
+    const { currentData: categories } = categoryData;
+    const allCategories = categoryAllData.data ?? [];
 
     const categoriesWithTree = categories
       ?.map((category) => ({
         ...category,
-        categoryTree: parseParentCategoryPath(categories, category._id),
+        categoryTree: parseParentCategoryPath(allCategories, category._id),
       }))
       .sort((a, b) =>
         // eslint-disable-next-line no-nested-ternary
@@ -30,5 +32,5 @@ export const useAllTransactionCategoriesWithCategoryTree = (
       );
 
     return { ...categoryData, data: categoriesWithTree };
-  }, [categoryData]);
+  }, [categoryData, categoryAllData]);
 };
