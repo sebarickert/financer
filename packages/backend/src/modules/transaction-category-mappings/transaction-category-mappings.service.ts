@@ -301,10 +301,7 @@ export class TransactionCategoryMappingsService {
     }
   }
 
-  update(
-    id: number,
-    updateTransactionCategoryMappingDto: UpdateTransactionCategoryMappingDto,
-  ) {
+  update(id: number) {
     return `This action updates a #${id} transactionCategoryMapping`;
   }
 
