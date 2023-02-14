@@ -34,7 +34,7 @@ export const AddTransfer = (): JSX.Element => {
     try {
       await addTransaction({
         createTransferDto: newTransfer,
-      });
+      }).unwrap();
 
       navigate('/statistics/transfers');
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

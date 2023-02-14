@@ -33,7 +33,7 @@ export const AddShortcutTransfer = (): JSX.Element => {
     try {
       await addTransfer({
         createTransferDto: newTransferData,
-      });
+      }).unwrap();
 
       navigate('/statistics/transfers');
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
