@@ -21,21 +21,18 @@ export const AddTransactionTemplate = (): JSX.Element => {
     newTransactionTemplateData: CreateTransactionTemplateDto
   ) => {
     try {
-      const newTransactionTemplateJson = await addTransactionTemplate({
+      await addTransactionTemplate({
         createTransactionTemplateDto: newTransactionTemplateData,
       }).unwrap();
 
-      if ('message' in newTransactionTemplateJson) {
-        setErrors(
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          parseErrorMessagesToArray(newTransactionTemplateJson.message)
-        );
+      navigate('/profile/transaction-templates');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      if (error.status === 400 || error.status === 404) {
+        setErrors(parseErrorMessagesToArray(error?.data?.message));
         return;
       }
 
-      navigate('/profile/transaction-templates');
-    } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
     }

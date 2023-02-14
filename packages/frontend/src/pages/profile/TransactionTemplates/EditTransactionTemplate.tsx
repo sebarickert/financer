@@ -66,22 +66,19 @@ export const EditTransactionTemplate = (): JSX.Element => {
     }
 
     try {
-      const newTransactionTemplateJson = await editTransactionTemplate({
+      await editTransactionTemplate({
         id: transactionTemplate._id,
         updateTransactionTemplateDto: newTransactionTemplateData,
-      });
+      }).unwrap();
 
-      if ('message' in newTransactionTemplateJson) {
-        setErrors(
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          parseErrorMessagesToArray(newTransactionTemplateJson.message)
-        );
+      navigate('/profile/transaction-templates');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      if (error.status === 400 || error.status === 404) {
+        setErrors(parseErrorMessagesToArray(error?.data?.message));
         return;
       }
 
-      navigate('/profile/transaction-templates');
-    } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
     }
