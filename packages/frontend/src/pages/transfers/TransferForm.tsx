@@ -54,7 +54,7 @@ export const TransferForm = ({
   const { data: transactionCategoriesRaw } =
     useAllTransactionCategoriesWithCategoryTree({
       visibilityType:
-        VisibilityTypeEnum.Expense as unknown as VisibilityType2Enum,
+        VisibilityTypeEnum.Transfer as unknown as VisibilityType2Enum,
     });
   const [transactionCategories, setTransactionCategories] = useState<Option[]>(
     []
