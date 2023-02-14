@@ -184,7 +184,9 @@ export const TransactionTemplateForm = ({
       templateType: newTemplateType.value,
       templateVisibility:
         TransactionTypeEnum[
-          newTransactionType.value.toUpperCase() as keyof typeof TransactionTypeEnum
+          capitalize(
+            newTransactionType.value
+          ) as keyof typeof TransactionTypeEnum
         ],
       fromAccount: isExpenseOrTransfer ? newFromAccount.value : undefined,
       toAccount: isIncomeOrTransfer ? newToAccount.value : undefined,
