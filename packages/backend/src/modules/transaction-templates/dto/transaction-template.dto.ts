@@ -49,6 +49,7 @@ export class TransactionTemplateDto {
 
   @ApiPropertyOptional()
   @Min(0.01, { message: 'Amount must be a positive number.' })
+  @IsOptional()
   readonly amount?: number;
 
   @ApiPropertyOptional()
