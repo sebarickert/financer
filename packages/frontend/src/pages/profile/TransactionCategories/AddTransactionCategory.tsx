@@ -24,7 +24,7 @@ export const AddTransactionCategory = (): JSX.Element => {
     try {
       await addTransactionCategory({
         createTransactionCategoryDto: newTransactionCategoryData,
-      });
+      }).unwrap();
 
       navigate('/profile/transaction-categories');
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
