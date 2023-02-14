@@ -35,7 +35,7 @@ export const EditTransactionCategory = (): JSX.Element => {
       await editTransactionCategory({
         id: transactionCategory._id,
         updateTransactionCategoryDto: newTransactionCategoryData,
-      });
+      }).unwrap();
 
       navigate(`/profile/transaction-categories`);
 
