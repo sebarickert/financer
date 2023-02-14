@@ -7,6 +7,10 @@ describe('Transaction category creation', () => {
 
     cy.getById('category-parent-row').should('not.have.text', newName);
     cy.getById('category-child-row').should('not.have.text', newName);
+
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(100);
+
     cy.getById('add-category').click();
 
     cy.get('#name').clear();
