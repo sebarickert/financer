@@ -9,8 +9,8 @@ import { TransactionCategoryDeleteModal } from './TransactionCategoryDeleteModal
 import {
   TransactionsFindMonthlySummariesByUserApiArg,
   useTransactionCategoriesFindOneQuery,
+  useTransactionCategoriesRemoveMutation,
   useTransactionsFindMonthlySummariesByUserQuery,
-  useTransactionTemplatesRemoveMutation,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
 import { MonthlyTransactionList } from '$blocks/monthly-transaction-list/monthly-transaction-list';
@@ -51,7 +51,7 @@ export const ViewTransactionCategory = (): JSX.Element => {
   const [monthFilterOptions, setMonthFilterOptions] =
     useState(initialFilterOptions);
 
-  const [deleteTransactionCategory] = useTransactionTemplatesRemoveMutation();
+  const [deleteTransactionCategory] = useTransactionCategoriesRemoveMutation();
   const transactionCategoryData = useTransactionCategoriesFindOneQuery({ id });
   const { data: transactionCategory } = transactionCategoryData;
 
