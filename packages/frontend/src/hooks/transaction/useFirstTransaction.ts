@@ -1,4 +1,5 @@
 import {
+  SortOrderEnum,
   TransactionsFindAllByUserApiArg,
   useTransactionsFindAllByUserQuery,
 } from '$api/generated/financerApi';
@@ -13,6 +14,7 @@ export const useFirstTransaction = (
     ...args,
     limit: 1,
     page: 1,
+    sortOrder: SortOrderEnum.Asc,
   });
 
   return { ...transactionData, data: transactionData.data?.data[0] };
