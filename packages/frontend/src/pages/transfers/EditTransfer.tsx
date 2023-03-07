@@ -57,12 +57,7 @@ export const EditTransfer = (): JSX.Element => {
           onSubmit={handleSubmit}
           errors={errors}
           submitLabel="Update"
-          amount={transfer.amount}
-          date={new Date(transfer.date)}
-          description={transfer.description}
-          fromAccount={transfer.fromAccount}
-          toAccount={transfer.toAccount}
-          transactionCategoryMapping={transfer.categories}
+          initialValues={transfer}
         />
       )}
     </>

@@ -56,11 +56,7 @@ export const EditExpense = (): JSX.Element => {
           onSubmit={handleSubmit}
           errors={errors}
           submitLabel="Update"
-          amount={expense.amount}
-          description={expense.description}
-          date={new Date(expense.date)}
-          fromAccount={expense.fromAccount}
-          transactionCategoryMapping={expense.categories}
+          initialValues={expense}
         />
       )}
     </>

@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 
-import { AddShortcutTransfer } from './AddShortcutITransfer';
+import { AddShortcutTransfer } from './AddShortcutTransfer';
 import { AddTransfer } from './AddTransfer';
 import { EditTransfer } from './EditTransfer';
 import { Transfer } from './Transfer';

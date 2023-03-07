@@ -5,56 +5,41 @@ import { Input } from '../../elements/input/input';
 import { Option } from '../../elements/select/select';
 import { Select } from '../../elements/select/select';
 
-import { TransactionCategoryMappingDto } from '$api/generated/financerApi';
-
-type PartialMappingType = Pick<TransactionCategoryMappingDto, 'category_id'> &
-  Partial<TransactionCategoryMappingDto>;
-
 interface TransactionCategoriesFormItemProps {
   className?: string;
-  categoryAmountIndex: number;
-  amountMaxValue: number;
-  arrayIndex: number;
+  index: number;
   categories: Option[];
-  categoryMapping: PartialMappingType | undefined;
   deleteTransactionCategoryItem(): void;
   setUnallocatedAmount(): void;
-  setTransactionCategoryItemAmount(newValue: number): void;
-  amountValue: number;
   testId?: string;
   categorySelectOnly?: boolean;
+  namePrefix: string;
+  maxAmount: number;
 }
 
 export const TransactionCategoriesFormItem = ({
   className = '',
-  categoryAmountIndex,
-  amountMaxValue,
-  arrayIndex,
+  index,
   categories,
-  categoryMapping,
   deleteTransactionCategoryItem,
-  setTransactionCategoryItemAmount,
-  amountValue,
   setUnallocatedAmount,
   testId = '',
   categorySelectOnly,
+  namePrefix,
+  maxAmount,
 }: TransactionCategoriesFormItemProps): JSX.Element => {
   return (
     <div
       className={className}
       data-testid={`${testId}_transaction-category_row`}
     >
-      <Divider>{`Category Item #${arrayIndex + 1}`}</Divider>
-      <div
-        className="grid sm:grid-cols-[1fr,auto] gap-6 sm:gap-4 items-start mt-4"
-        key={categoryAmountIndex}
-      >
+      <Divider>{`Category Item #${index + 1}`}</Divider>
+      <div className="grid sm:grid-cols-[1fr,auto] gap-6 sm:gap-4 items-start mt-4">
         <div className="space-y-4">
           <div className="grid gap-4">
             <Select
-              id={`transactionCategory[${categoryAmountIndex}]category`}
+              id={`${namePrefix}.category_id`}
               options={categories}
-              defaultValue={categoryMapping?.category_id || ''}
               isRequired
               testId={`${testId}_transaction-category_category`}
             >
@@ -64,19 +49,13 @@ export const TransactionCategoriesFormItem = ({
               <>
                 <div className="grid grid-cols-[1fr,auto] gap-2 items-end">
                   <Input
-                    id={`transactionCategory[${categoryAmountIndex}]amount`}
+                    id={`${namePrefix}.amount`}
                     type="number"
                     min={0.01}
                     step={0.01}
-                    max={amountMaxValue}
+                    max={maxAmount}
                     isCurrency
                     isRequired
-                    value={amountValue || categoryMapping?.amount || ''}
-                    onChange={(event) =>
-                      setTransactionCategoryItemAmount(
-                        parseFloat(event.target.value)
-                      )
-                    }
                     testId={`${testId}_transaction-category_amount`}
                   >
                     Amount
@@ -87,8 +66,7 @@ export const TransactionCategoriesFormItem = ({
                   </Button>
                 </div>
                 <Input
-                  id={`transactionCategory[${categoryAmountIndex}]description`}
-                  value={categoryMapping?.description || ''}
+                  id={`${namePrefix}.description`}
                   testId={`${testId}_transaction-category_description`}
                 >
                   Description
