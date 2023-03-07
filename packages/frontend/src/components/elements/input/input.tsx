@@ -1,7 +1,6 @@
 import clsx from 'clsx';
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
-
-import { inputDateFormat } from '../../../utils/formatDate';
+import React, { ChangeEvent } from 'react';
+import { useFormContext } from 'react-hook-form';
 
 interface InputProps {
   children: React.ReactNode;
@@ -31,29 +30,15 @@ export const Input = ({
   min,
   max,
   step,
-  value = '',
-  ref,
-  onChange,
   testId,
 }: InputProps): JSX.Element => {
-  const formatValue = useCallback(
-    (newValue: string | number) =>
-      isDate && !newValue ? inputDateFormat(new Date()) : newValue,
-    [isDate]
-  );
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext();
 
-  const [inputValue, setInputValue] = useState(formatValue(value));
+  const hasError = Object.keys(errors).includes(id);
 
-  useEffect(() => {
-    setInputValue(formatValue(value));
-  }, [value, formatValue]);
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (onChange) {
-      onChange(event);
-    }
-    setInputValue(event.target.value);
-  };
   return (
     <div>
       <label
@@ -80,11 +65,14 @@ export const Input = ({
             { ['pl-7']: isCurrency }
           )}
           aria-describedby={help && `${id}-description`}
-          value={inputValue}
           required={isRequired}
-          ref={ref}
-          onChange={handleChange}
           data-testid={testId}
+          {...register(id, {
+            min,
+            max,
+            required: isRequired,
+            valueAsNumber: type === 'number',
+          })}
         />
       </div>
       {help && (
