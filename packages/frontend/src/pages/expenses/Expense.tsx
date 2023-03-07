@@ -124,7 +124,7 @@ export const Expense = (): JSX.Element => {
                 {(
                   expense.categories as unknown as TransactionCategoryMappingDto[]
                 )?.map(({ amount, category_id }) => (
-                  <li className="grid grid-cols-2 gap-2">
+                  <li className="grid grid-cols-2 gap-2" key={category_id}>
                     <InfoCard
                       iconName={IconName.tag}
                       label="Category"

@@ -60,7 +60,7 @@ export const AddIncome = (): JSX.Element => {
           onSubmit={handleSubmit}
           errors={errors}
           submitLabel="Submit"
-          toAccount={defaultIncomeAccount}
+          initialValues={{ toAccount: defaultIncomeAccount }}
         />
       )}
     </>

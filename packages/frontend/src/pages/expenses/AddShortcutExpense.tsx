@@ -27,6 +27,7 @@ export const AddShortcutExpense = (): JSX.Element => {
   const parsedCategories = transactionTemplate?.categories?.map(
     (categoryId) => ({
       category_id: categoryId,
+      amount: NaN,
     })
   );
 
@@ -68,10 +69,10 @@ export const AddShortcutExpense = (): JSX.Element => {
             onSubmit={handleSubmit}
             errors={errors}
             submitLabel="Add"
-            amount={transactionTemplate.amount ?? undefined}
-            description={transactionTemplate.description ?? undefined}
-            fromAccount={transactionTemplate.fromAccount ?? undefined}
-            transactionCategoryMapping={parsedCategories ?? undefined}
+            initialValues={{
+              ...transactionTemplate,
+              categories: parsedCategories,
+            }}
           />
         </>
       )}

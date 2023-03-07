@@ -61,7 +61,7 @@ export const AddExpense = (): JSX.Element => {
           onSubmit={handleSubmit}
           errors={errors}
           submitLabel="Submit"
-          fromAccount={defaultExpenseAccount}
+          initialValues={{ fromAccount: defaultExpenseAccount }}
         />
       )}
     </>

@@ -226,7 +226,7 @@ export const TransactionTemplateForm = ({
     type,
   }: {
     type: VisibilityTypeEnum;
-  }): JSX.Element => {
+  }): JSX.Element | null => {
     const { data: transactionCategoriesRaw } =
       useAllTransactionCategoriesWithCategoryTree({
         visibilityType: type as unknown as VisibilityType2Enum,
@@ -249,18 +249,20 @@ export const TransactionTemplateForm = ({
 
     if (!transactionCategories.length) return <Loader />;
 
-    return (
-      <TransactionCategoriesForm
-        className="my-8 space-y-8"
-        categoryAmount={categoryAmount}
-        transactionCategories={transactionCategories}
-        transactionCategoryMapping={transactionCategoryMapping}
-        amountMaxValue={inputAmountValue || 0}
-        deleteTransactionCategoryItem={deleteTransactionCategoryItem}
-        setTransactionCategoryItemAmount={setTransactionCategoryItemAmount}
-        categorySelectOnly
-      />
-    );
+    return null;
+
+    // return (
+    //   <TransactionCategoriesForm
+    //     className="my-8 space-y-8"
+    //     categoryAmount={categoryAmount}
+    //     transactionCategories={transactionCategories}
+    //     transactionCategoryMapping={transactionCategoryMapping}
+    //     amountMaxValue={inputAmountValue || 0}
+    //     deleteTransactionCategoryItem={deleteTransactionCategoryItem}
+    //     setTransactionCategoryItemAmount={setTransactionCategoryItemAmount}
+    //     categorySelectOnly
+    //   />
+    // );
   };
 
   return null;
