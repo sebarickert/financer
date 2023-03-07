@@ -263,119 +263,121 @@ export const TransactionTemplateForm = ({
     );
   };
 
-  return (
-    <Loader isLoading={isLoading}>
-      {errors.length > 0 && (
-        <Alert additionalInformation={errors} testId="form-errors">
-          There were {errors.length} errors with your submission
-        </Alert>
-      )}
-      <Form
-        submitLabel={submitLabel}
-        handleSubmit={handleSubmit}
-        formFooterBackLink="/"
-        optionalFooterComponent={optionalFooterComponent}
-      >
-        <section>
-          <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
-            <Input id="templateName" isRequired value={templateName}>
-              Template name
-            </Input>
-            <Select
-              id="templateType"
-              options={templateTypes}
-              defaultValue={selectedTransactionTemplateType}
-              isRequired
-              handleOnChange={handleTransactionTemplateTypeChange}
-            >
-              Template type
-            </Select>
-            <Select
-              id="transactionType"
-              options={transactionTypes}
-              defaultValue={selectedTransactionType}
-              isRequired
-              handleOnChange={handleTransactionTypeChange}
-            >
-              Transaction type
-            </Select>
-            <Input id="description" value={description}>
-              Description
-            </Input>
-            <Input
-              id="amount"
-              type="number"
-              min={0.01}
-              step={0.01}
-              isCurrency
-              value={Number.isNaN(amount) ? '' : amount}
-            >
-              Amount
-            </Input>
-            {(selectedTransactionType === TransactionType.EXPENSE ||
-              selectedTransactionType === TransactionType.TRANSFER) && (
-              <Select
-                id="fromAccount"
-                options={accountOptions}
-                defaultValue={fromAccount}
-                isRequired
-              >
-                From Account
-              </Select>
-            )}
-            {(selectedTransactionType === TransactionType.INCOME ||
-              selectedTransactionType === TransactionType.TRANSFER) && (
-              <Select
-                id="toAccount"
-                options={accountOptions}
-                defaultValue={toAccount}
-                isRequired
-              >
-                To Account
-              </Select>
-            )}
-            {selectedTransactionTemplateType ===
-              TransactionTemplateType.AUTO && (
-              <>
-                {' '}
-                <Input
-                  id="dayOfMonth"
-                  type="number"
-                  min={1}
-                  max={31}
-                  isDate
-                  value={Number.isNaN(dayOfMonth) ? '' : dayOfMonth}
-                >
-                  Day of month for transaction
-                </Input>
-                <Input
-                  id="dayOfMonthToCreate"
-                  type="number"
-                  min={1}
-                  max={31}
-                  isDate
-                  value={
-                    Number.isNaN(dayOfMonthToCreate) ? '' : dayOfMonthToCreate
-                  }
-                >
-                  Day of month to create
-                </Input>
-              </>
-            )}
-          </div>
-        </section>
-        <section className="mt-8">
-          <h2 className="sr-only">Categories</h2>
-          <TransactionCategoriesFormWrapper type={getDataType()} />
-          <Button
-            onClick={addNewCategory}
-            accentColor="plain"
-            testId="add-category-button"
-          >
-            Add category item
-          </Button>
-        </section>
-      </Form>
-    </Loader>
-  );
+  return null;
+
+  // return (
+  //   <Loader isLoading={isLoading}>
+  //     {errors.length > 0 && (
+  //       <Alert additionalInformation={errors} testId="form-errors">
+  //         There were {errors.length} errors with your submission
+  //       </Alert>
+  //     )}
+  //     <Form
+  //       submitLabel={submitLabel}
+  //       handleSubmit={handleSubmit}
+  //       formFooterBackLink="/"
+  //       optionalFooterComponent={optionalFooterComponent}
+  //     >
+  //       <section>
+  //         <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
+  //           <Input id="templateName" isRequired value={templateName}>
+  //             Template name
+  //           </Input>
+  //           <Select
+  //             id="templateType"
+  //             options={templateTypes}
+  //             defaultValue={selectedTransactionTemplateType}
+  //             isRequired
+  //             handleOnChange={handleTransactionTemplateTypeChange}
+  //           >
+  //             Template type
+  //           </Select>
+  //           <Select
+  //             id="transactionType"
+  //             options={transactionTypes}
+  //             defaultValue={selectedTransactionType}
+  //             isRequired
+  //             handleOnChange={handleTransactionTypeChange}
+  //           >
+  //             Transaction type
+  //           </Select>
+  //           <Input id="description" value={description}>
+  //             Description
+  //           </Input>
+  //           <Input
+  //             id="amount"
+  //             type="number"
+  //             min={0.01}
+  //             step={0.01}
+  //             isCurrency
+  //             value={Number.isNaN(amount) ? '' : amount}
+  //           >
+  //             Amount
+  //           </Input>
+  //           {(selectedTransactionType === TransactionType.EXPENSE ||
+  //             selectedTransactionType === TransactionType.TRANSFER) && (
+  //             <Select
+  //               id="fromAccount"
+  //               options={accountOptions}
+  //               defaultValue={fromAccount}
+  //               isRequired
+  //             >
+  //               From Account
+  //             </Select>
+  //           )}
+  //           {(selectedTransactionType === TransactionType.INCOME ||
+  //             selectedTransactionType === TransactionType.TRANSFER) && (
+  //             <Select
+  //               id="toAccount"
+  //               options={accountOptions}
+  //               defaultValue={toAccount}
+  //               isRequired
+  //             >
+  //               To Account
+  //             </Select>
+  //           )}
+  //           {selectedTransactionTemplateType ===
+  //             TransactionTemplateType.AUTO && (
+  //             <>
+  //               {' '}
+  //               <Input
+  //                 id="dayOfMonth"
+  //                 type="number"
+  //                 min={1}
+  //                 max={31}
+  //                 isDate
+  //                 value={Number.isNaN(dayOfMonth) ? '' : dayOfMonth}
+  //               >
+  //                 Day of month for transaction
+  //               </Input>
+  //               <Input
+  //                 id="dayOfMonthToCreate"
+  //                 type="number"
+  //                 min={1}
+  //                 max={31}
+  //                 isDate
+  //                 value={
+  //                   Number.isNaN(dayOfMonthToCreate) ? '' : dayOfMonthToCreate
+  //                 }
+  //               >
+  //                 Day of month to create
+  //               </Input>
+  //             </>
+  //           )}
+  //         </div>
+  //       </section>
+  //       <section className="mt-8">
+  //         <h2 className="sr-only">Categories</h2>
+  //         <TransactionCategoriesFormWrapper type={getDataType()} />
+  //         <Button
+  //           onClick={addNewCategory}
+  //           accentColor="plain"
+  //           testId="add-category-button"
+  //         >
+  //           Add category item
+  //         </Button>
+  //       </section>
+  //     </Form>
+  //   </Loader>
+  // );
 };

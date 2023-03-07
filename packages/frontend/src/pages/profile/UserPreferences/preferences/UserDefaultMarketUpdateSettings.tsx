@@ -13,7 +13,7 @@ import {
 import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
-export const UserDefaultMarketUpdateSettings = (): JSX.Element => {
+export const UserDefaultMarketUpdateSettings = (): JSX.Element | null => {
   const navigate = useNavigate();
   const { data: defaultMarketSettings, isLoading: isLoadingDefault } =
     useUserDefaultMarketUpdateSettings();
@@ -64,45 +64,47 @@ export const UserDefaultMarketUpdateSettings = (): JSX.Element => {
 
   const isLoading = isLoadingDefault;
 
-  return (
-    <>
-      {isUpdating && <LoaderFullScreen />}
-      <UpdatePageInfo
-        title="Market update settings"
-        backLink={'/profile/user-preferences'}
-      />
-      {isLoading && <Loader />}
-      {!isLoading && (
-        <Form
-          handleSubmit={handleSave}
-          submitLabel="Save"
-          formFooterBackLink="/profile/user-preferences"
-        >
-          <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
-            <Input
-              id="transactionDescription"
-              type="text"
-              isRequired
-              value={defaultMarketSettings?.transactionDescription}
-            >
-              Transaction description
-            </Input>
-            <Select
-              id="category"
-              options={[{ name: 'None', _id: '' }, ...categories].map(
-                ({ name, _id }) => ({
-                  label: name,
-                  value: _id,
-                })
-              )}
-              defaultValue={defaultMarketSettings?.category}
-              isRequired
-            >
-              Category
-            </Select>
-          </div>
-        </Form>
-      )}
-    </>
-  );
+  return null;
+
+  // return (
+  //   <>
+  //     {isUpdating && <LoaderFullScreen />}
+  //     <UpdatePageInfo
+  //       title="Market update settings"
+  //       backLink={'/profile/user-preferences'}
+  //     />
+  //     {isLoading && <Loader />}
+  //     {!isLoading && (
+  //       <Form
+  //         handleSubmit={handleSave}
+  //         submitLabel="Save"
+  //         formFooterBackLink="/profile/user-preferences"
+  //       >
+  //         <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
+  //           <Input
+  //             id="transactionDescription"
+  //             type="text"
+  //             isRequired
+  //             value={defaultMarketSettings?.transactionDescription}
+  //           >
+  //             Transaction description
+  //           </Input>
+  //           <Select
+  //             id="category"
+  //             options={[{ name: 'None', _id: '' }, ...categories].map(
+  //               ({ name, _id }) => ({
+  //                 label: name,
+  //                 value: _id,
+  //               })
+  //             )}
+  //             defaultValue={defaultMarketSettings?.category}
+  //             isRequired
+  //           >
+  //             Category
+  //           </Select>
+  //         </div>
+  //       </Form>
+  //     )}
+  //   </>
+  // );
 };

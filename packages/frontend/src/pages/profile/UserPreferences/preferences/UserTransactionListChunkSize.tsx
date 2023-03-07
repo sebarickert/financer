@@ -10,7 +10,7 @@ import {
 } from '$hooks/profile/user-preference/useUserTransactionListChunkSize';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
-export const UserTransactionListChunkSize = (): JSX.Element => {
+export const UserTransactionListChunkSize = (): JSX.Element | null => {
   const navigate = useNavigate();
   const { data: defaultChunkSize, isLoading: isLoadingDefault } =
     useUserTransactionListChunkSize();
@@ -34,35 +34,37 @@ export const UserTransactionListChunkSize = (): JSX.Element => {
 
   const isLoading = isLoadingDefault;
 
-  return (
-    <>
-      {isUpdating && <LoaderFullScreen />}
-      <UpdatePageInfo
-        title="Max amount of items per page"
-        backLink={'/profile/user-preferences'}
-      />
-      {isLoading && <Loader />}
-      {!isLoading && (
-        <Form
-          handleSubmit={handleSave}
-          submitLabel="Save"
-          formFooterBackLink="/profile/user-preferences"
-        >
-          <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
-            <Input
-              id="chunkSize"
-              type="number"
-              min={3}
-              step={1}
-              max={100}
-              isRequired
-              value={defaultChunkSize}
-            >
-              Items per page, e.g. transactions
-            </Input>
-          </div>
-        </Form>
-      )}
-    </>
-  );
+  return null;
+
+  // return (
+  //   <>
+  //     {isUpdating && <LoaderFullScreen />}
+  //     <UpdatePageInfo
+  //       title="Max amount of items per page"
+  //       backLink={'/profile/user-preferences'}
+  //     />
+  //     {isLoading && <Loader />}
+  //     {!isLoading && (
+  //       <Form
+  //         handleSubmit={handleSave}
+  //         submitLabel="Save"
+  //         formFooterBackLink="/profile/user-preferences"
+  //       >
+  //         <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
+  //           <Input
+  //             id="chunkSize"
+  //             type="number"
+  //             min={3}
+  //             step={1}
+  //             max={100}
+  //             isRequired
+  //             value={defaultChunkSize}
+  //           >
+  //             Items per page, e.g. transactions
+  //           </Input>
+  //         </div>
+  //       </Form>
+  //     )}
+  //   </>
+  // );
 };

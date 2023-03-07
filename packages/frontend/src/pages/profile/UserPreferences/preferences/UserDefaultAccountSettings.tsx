@@ -23,7 +23,7 @@ import {
 } from '$hooks/profile/user-preference/useUserDefaultTransferTargetAccount';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
-export const UserDefaultAccountSettings = (): JSX.Element => {
+export const UserDefaultAccountSettings = (): JSX.Element | null => {
   const navigate = useNavigate();
   const { data: accounts, isLoading: isLoadingAccount } =
     useAccountsFindAllByUserQuery({});
@@ -100,76 +100,78 @@ export const UserDefaultAccountSettings = (): JSX.Element => {
     isUpdatingDefaultTransferSourceAccount ||
     isUpdatingDefaultTransferTargetAccount;
 
-  return (
-    <>
-      {isUpdating && <LoaderFullScreen />}
-      <UpdatePageInfo
-        title="Default account settings"
-        backLink={'/profile/user-preferences'}
-      />
-      {isLoading && <Loader />}
-      {!isLoading && (
-        <Form
-          handleSubmit={handleSave}
-          submitLabel="Save"
-          formFooterBackLink="/profile/user-preferences"
-        >
-          <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
-            <Select
-              id="toAccountIncome"
-              options={
-                accounts?.data.map(({ name, _id }) => ({
-                  label: name,
-                  value: _id,
-                })) ?? []
-              }
-              defaultValue={defaultIncomeAccount}
-              isRequired
-            >
-              Default income account
-            </Select>
-            <Select
-              id="fromAccountExpense"
-              options={
-                accounts?.data.map(({ name, _id }) => ({
-                  label: name,
-                  value: _id,
-                })) ?? []
-              }
-              defaultValue={defaultExpenseAccount}
-              isRequired
-            >
-              Default expense account
-            </Select>
-            <Select
-              id="fromAccountTransfer"
-              options={
-                accounts?.data.map(({ name, _id }) => ({
-                  label: name,
-                  value: _id,
-                })) ?? []
-              }
-              defaultValue={defaultTransferSourceAccount}
-              isRequired
-            >
-              Default transfer source account
-            </Select>
-            <Select
-              id="toAccountTransfer"
-              options={
-                accounts?.data.map(({ name, _id }) => ({
-                  label: name,
-                  value: _id,
-                })) ?? []
-              }
-              defaultValue={defaultTransferTargetAccount}
-              isRequired
-            >
-              Default transfer target account
-            </Select>
-          </div>
-        </Form>
-      )}
-    </>
-  );
+  return null;
+
+  // return (
+  //   <>
+  //     {isUpdating && <LoaderFullScreen />}
+  //     <UpdatePageInfo
+  //       title="Default account settings"
+  //       backLink={'/profile/user-preferences'}
+  //     />
+  //     {isLoading && <Loader />}
+  //     {!isLoading && (
+  //       <Form
+  //         handleSubmit={handleSave}
+  //         submitLabel="Save"
+  //         formFooterBackLink="/profile/user-preferences"
+  //       >
+  //         <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
+  //           <Select
+  //             id="toAccountIncome"
+  //             options={
+  //               accounts?.data.map(({ name, _id }) => ({
+  //                 label: name,
+  //                 value: _id,
+  //               })) ?? []
+  //             }
+  //             defaultValue={defaultIncomeAccount}
+  //             isRequired
+  //           >
+  //             Default income account
+  //           </Select>
+  //           <Select
+  //             id="fromAccountExpense"
+  //             options={
+  //               accounts?.data.map(({ name, _id }) => ({
+  //                 label: name,
+  //                 value: _id,
+  //               })) ?? []
+  //             }
+  //             defaultValue={defaultExpenseAccount}
+  //             isRequired
+  //           >
+  //             Default expense account
+  //           </Select>
+  //           <Select
+  //             id="fromAccountTransfer"
+  //             options={
+  //               accounts?.data.map(({ name, _id }) => ({
+  //                 label: name,
+  //                 value: _id,
+  //               })) ?? []
+  //             }
+  //             defaultValue={defaultTransferSourceAccount}
+  //             isRequired
+  //           >
+  //             Default transfer source account
+  //           </Select>
+  //           <Select
+  //             id="toAccountTransfer"
+  //             options={
+  //               accounts?.data.map(({ name, _id }) => ({
+  //                 label: name,
+  //                 value: _id,
+  //               })) ?? []
+  //             }
+  //             defaultValue={defaultTransferTargetAccount}
+  //             isRequired
+  //           >
+  //             Default transfer target account
+  //           </Select>
+  //         </div>
+  //       </Form>
+  //     )}
+  //   </>
+  // );
 };

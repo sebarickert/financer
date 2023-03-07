@@ -16,7 +16,7 @@ import { capitalize } from '$utils/capitalize';
 
 const allAccountTypes = Object.values(AccountTypeEnum);
 
-export const UserStatisticsSettings = (): JSX.Element => {
+export const UserStatisticsSettings = (): JSX.Element | null => {
   const navigate = useNavigate();
   const { data: statisticsSettings, isLoading: isLoadingDefault } =
     useUserStatisticsSettings();
@@ -46,33 +46,36 @@ export const UserStatisticsSettings = (): JSX.Element => {
   };
 
   const isLoading = isLoadingDefault;
-  return (
-    <>
-      {isUpdating && <LoaderFullScreen />}
-      <UpdatePageInfo
-        title="Statistics settings"
-        backLink={'/profile/user-preferences'}
-      />
-      {isLoading && <Loader />}
-      {!isLoading && (
-        <Form
-          handleSubmit={handleSave}
-          submitLabel="Save"
-          formFooterBackLink="/profile/user-preferences"
-        >
-          <Heading className="mb-4">Account types for stats and graph</Heading>
-          <CheckboxGroup testId="statistics-account-checkboxes">
-            {allAccountTypes.map((type) => (
-              <Checkbox
-                key={type}
-                id={type}
-                label={capitalize(type)}
-                checked={accountTypes?.some((item) => item === type)}
-              />
-            ))}
-          </CheckboxGroup>
-        </Form>
-      )}
-    </>
-  );
+
+  return null;
+
+  // return (
+  //   <>
+  //     {isUpdating && <LoaderFullScreen />}
+  //     <UpdatePageInfo
+  //       title="Statistics settings"
+  //       backLink={'/profile/user-preferences'}
+  //     />
+  //     {isLoading && <Loader />}
+  //     {!isLoading && (
+  //       <Form
+  //         handleSubmit={handleSave}
+  //         submitLabel="Save"
+  //         formFooterBackLink="/profile/user-preferences"
+  //       >
+  //         <Heading className="mb-4">Account types for stats and graph</Heading>
+  //         <CheckboxGroup testId="statistics-account-checkboxes">
+  //           {allAccountTypes.map((type) => (
+  //             <Checkbox
+  //               key={type}
+  //               id={type}
+  //               label={capitalize(type)}
+  //               checked={accountTypes?.some((item) => item === type)}
+  //             />
+  //           ))}
+  //         </CheckboxGroup>
+  //       </Form>
+  //     )}
+  //   </>
+  // );
 };

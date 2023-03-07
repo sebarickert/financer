@@ -92,54 +92,56 @@ export const TransactionCategoryForm = ({
 
   if (!transactionCategories) return null;
 
-  return (
-    <>
-      {errors.length > 0 && (
-        <Alert additionalInformation={errors} testId="form-errors">
-          There were {errors.length} errors with your submission
-        </Alert>
-      )}
-      <Form
-        submitLabel={submitLabel}
-        handleSubmit={handleSubmit}
-        formFooterBackLink="/profile/transaction-categories"
-        optionalFooterComponent={optionalFooterComponent}
-      >
-        <div className="grid gap-y-6 gap-x-4">
-          <Input
-            id="name"
-            help="Name of the transaction category, e.g. food, hobby, car, etc."
-            isRequired
-            value={name}
-          >
-            Name
-          </Input>
-          <CheckboxGroup testId="visibility-checkboxes">
-            <Checkbox
-              id="incomeVisible"
-              label="Income"
-              checked={visibility?.some((item) => item === 'income')}
-            />
-            <Checkbox
-              id="expenseVisible"
-              label="Expense"
-              checked={visibility?.some((item) => item === 'expense')}
-            />
-            <Checkbox
-              id="transferVisible"
-              label="Transfer"
-              checked={visibility?.some((item) => item === 'transfer')}
-            />
-          </CheckboxGroup>
-          <Select
-            id="parentTransactionCategory"
-            options={transactionCategories}
-            defaultValue={parentTransactioCategoryId || undefined}
-          >
-            Parent transaction category
-          </Select>
-        </div>
-      </Form>
-    </>
-  );
+  return null;
+
+  // return (
+  //   <>
+  //     {errors.length > 0 && (
+  //       <Alert additionalInformation={errors} testId="form-errors">
+  //         There were {errors.length} errors with your submission
+  //       </Alert>
+  //     )}
+  //     <Form
+  //       submitLabel={submitLabel}
+  //       handleSubmit={handleSubmit}
+  //       formFooterBackLink="/profile/transaction-categories"
+  //       optionalFooterComponent={optionalFooterComponent}
+  //     >
+  //       <div className="grid gap-y-6 gap-x-4">
+  //         <Input
+  //           id="name"
+  //           help="Name of the transaction category, e.g. food, hobby, car, etc."
+  //           isRequired
+  //           value={name}
+  //         >
+  //           Name
+  //         </Input>
+  //         <CheckboxGroup testId="visibility-checkboxes">
+  //           <Checkbox
+  //             id="incomeVisible"
+  //             label="Income"
+  //             checked={visibility?.some((item) => item === 'income')}
+  //           />
+  //           <Checkbox
+  //             id="expenseVisible"
+  //             label="Expense"
+  //             checked={visibility?.some((item) => item === 'expense')}
+  //           />
+  //           <Checkbox
+  //             id="transferVisible"
+  //             label="Transfer"
+  //             checked={visibility?.some((item) => item === 'transfer')}
+  //           />
+  //         </CheckboxGroup>
+  //         <Select
+  //           id="parentTransactionCategory"
+  //           options={transactionCategories}
+  //           defaultValue={parentTransactioCategoryId || undefined}
+  //         >
+  //           Parent transaction category
+  //         </Select>
+  //       </div>
+  //     </Form>
+  //   </>
+  // );
 };
