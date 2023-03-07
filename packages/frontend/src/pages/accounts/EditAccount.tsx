@@ -1,10 +1,9 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { AccountForm } from './AccountForm';
+import { AccountForm, AccountFormFields } from './AccountForm';
 
 import {
-  CreateAccountDto,
   useAccountsFindOneByIdQuery,
   useAccountsUpdateMutation,
 } from '$api/generated/financerApi';
@@ -26,30 +25,34 @@ export const EditAccount = (): JSX.Element => {
   const data = useAccountsFindOneByIdQuery({ id });
   const account = data.data;
 
-  const handleSubmit = async (newAccountData: CreateAccountDto) => {
-    if (!account?._id) {
-      setErrors(['Account not found']);
-      return;
-    }
-    try {
-      const newAccount = await editAccount({
-        id: account._id,
-        updateAccountDto: newAccountData,
-      });
-
-      if ('message' in newAccount) {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        setErrors(parseErrorMessagesToArray(newAccount.message));
+  const handleSubmit = useCallback(
+    async (newAccountData: AccountFormFields) => {
+      if (!account?._id) {
+        setErrors(['Account not found']);
         return;
       }
 
-      navigate(`/accounts/${id}`);
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error);
-    }
-  };
+      try {
+        const newAccount = await editAccount({
+          id: account._id,
+          updateAccountDto: newAccountData,
+        });
+
+        if ('message' in newAccount) {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          setErrors(parseErrorMessagesToArray(newAccount.message));
+          return;
+        }
+
+        navigate(`/accounts/${id}`);
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error);
+      }
+    },
+    [account?._id, editAccount, id, navigate]
+  );
 
   return (
     <>
@@ -65,9 +68,7 @@ export const EditAccount = (): JSX.Element => {
             onSubmit={handleSubmit}
             errors={errors}
             submitLabel="Update"
-            name={account.name}
-            balance={account.balance}
-            type={account.type}
+            initialValues={account}
           />
         </>
       )}

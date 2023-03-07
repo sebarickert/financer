@@ -1,3 +1,6 @@
+import { ChangeEvent } from 'react';
+import { useFormContext } from 'react-hook-form';
+
 interface SelectProps {
   children: React.ReactNode;
   help?: string;
@@ -22,17 +25,23 @@ export const Select = ({
   id,
   isRequired = false,
   options,
-  defaultValue,
   className = '',
   testId,
   isDisabled = false,
   handleOnChange = () => {},
 }: SelectProps): JSX.Element => {
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext();
+
+  const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
     if (!handleOnChange) return null;
 
     handleOnChange(event);
   };
+
+  const hasError = Object.keys(errors).includes(id);
 
   return (
     <div className={className}>
@@ -44,13 +53,15 @@ export const Select = ({
         <select
           data-testid={testId}
           id={id}
-          name={id}
           className="block w-full py-3 pl-3 pr-10 mt-1 text-base font-normal tracking-tight rounded-md bg-gray border-gray-dark hover:bg-gray-dark text-charcoal focus:outline-none focus:ring-black focus:border-black hover:cursor-pointer"
           required={isRequired}
           aria-describedby={help && `${id}-description`}
-          onChange={handleChange}
-          defaultValue={defaultValue}
           disabled={isDisabled}
+          {...register(id, {
+            disabled: isDisabled,
+            onChange: handleChange,
+            required: isRequired,
+          })}
         >
           {options.map(({ value, label }) => (
             <option value={value} key={value}>

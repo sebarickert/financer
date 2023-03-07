@@ -1,33 +1,47 @@
+import { FieldValues, FormProvider, UseFormReturn } from 'react-hook-form';
+
 import { ButtonAccentColor } from '../../elements/button/button';
 
 import { FormFooter } from './form.footer';
 
-interface FormProps {
+interface FormProps<FormValues extends FieldValues> {
   children: React.ReactNode;
   submitLabel: string;
   accentColor?: ButtonAccentColor;
   formFooterBackLink?: string;
-  handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  methods: UseFormReturn<FormValues>;
+  onSubmit: (values: FormValues) => void;
+  id?: string;
   optionalFooterComponent?: React.ReactNode;
 }
 
-export const Form = ({
+export const Form = <T extends FieldValues>({
   children,
   submitLabel,
-  handleSubmit,
+  onSubmit,
   accentColor = 'black',
   formFooterBackLink,
   optionalFooterComponent,
-}: FormProps): JSX.Element => {
+  id,
+  methods,
+}: FormProps<T>): JSX.Element => {
+  const { handleSubmit } = methods;
+
   return (
-    <form onSubmit={handleSubmit} method="post" className="pb-[83px] lg:pb-0">
-      {children}
-      <FormFooter
-        submitLabel={submitLabel}
-        accentColor={accentColor}
-        formFooterBackLink={formFooterBackLink}
-        optionalComponent={optionalFooterComponent}
-      />
-    </form>
+    <FormProvider {...methods}>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="pb-[83px] lg:pb-0"
+        id={id}
+      >
+        {children}
+        <FormFooter
+          submitLabel={submitLabel}
+          accentColor={accentColor}
+          formFooterBackLink={formFooterBackLink}
+          optionalComponent={optionalFooterComponent}
+        />
+      </form>
+    </FormProvider>
   );
 };

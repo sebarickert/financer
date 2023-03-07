@@ -1,47 +1,42 @@
+import { SubmitHandler, useForm } from 'react-hook-form';
+
 import { Form } from '../../components/blocks/form/form';
 import { Alert } from '../../components/elements/alert/alert';
 import { Input } from '../../components/elements/input/input';
 import { Select, Option } from '../../components/elements/select/select';
 import { capitalize } from '../../utils/capitalize';
 
-import { AccountTypeEnum, CreateAccountDto } from '$api/generated/financerApi';
+import { AccountType, AccountTypeEnum } from '$api/generated/financerApi';
 
-interface IAccountFormProps {
+interface AccountFormProps {
   errors: string[];
-  name?: string;
-  balance?: number;
-  type?: string;
-  onSubmit(account: CreateAccountDto): void;
+  onSubmit: SubmitHandler<AccountFormFields>;
   submitLabel: string;
+  initialValues?: Partial<AccountFormFields>;
+}
+
+export interface AccountFormFields {
+  name: string;
+  balance: number;
+  type: AccountType;
 }
 
 export const AccountForm = ({
   errors,
-  name = '',
-  balance = NaN,
-  type = 'savings',
   onSubmit,
   submitLabel,
-}: IAccountFormProps): JSX.Element => {
+  initialValues,
+}: AccountFormProps): JSX.Element => {
+  const methods = useForm<AccountFormFields>({
+    defaultValues: { type: AccountTypeEnum.Savings, ...initialValues },
+  });
+
   const accountTypes: Option[] = Object.values(AccountTypeEnum).map(
     (value) => ({
       value,
       label: capitalize(value),
     })
   );
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleSubmit = async (event: any) => {
-    event.preventDefault();
-    const { account, amount, type: newType } = event.target;
-    const newAccountData: CreateAccountDto = {
-      balance: parseFloat((amount.value as string).replace(',', '.')),
-      name: account.value,
-      type: newType.value,
-    };
-
-    onSubmit(newAccountData);
-  };
 
   return (
     <>
@@ -51,31 +46,20 @@ export const AccountForm = ({
         </Alert>
       )}
       <Form
+        methods={methods as any}
         submitLabel={submitLabel}
-        handleSubmit={handleSubmit}
+        onSubmit={onSubmit}
         formFooterBackLink="/accounts"
       >
         <section>
           <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
-            <Input id="account" isRequired value={name}>
+            <Input id="name" isRequired>
               Account
             </Input>
-            <Input
-              id="amount"
-              type="number"
-              step={0.01}
-              isCurrency
-              isRequired
-              value={Number.isNaN(balance) ? '' : balance}
-            >
+            <Input id="balance" type="number" step={0.01} isCurrency isRequired>
               Balance
             </Input>
-            <Select
-              id="type"
-              options={accountTypes}
-              defaultValue={type}
-              isRequired
-            >
+            <Select id="type" options={accountTypes} isRequired>
               Type
             </Select>
           </div>
