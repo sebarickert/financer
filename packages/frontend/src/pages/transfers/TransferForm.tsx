@@ -168,86 +168,88 @@ export const TransferForm = ({
 
   if (!accounts) return null;
 
-  return (
-    <Loader isLoading={isLoading}>
-      {errors.length > 0 && (
-        <Alert additionalInformation={errors} testId="form-errors">
-          There were {errors.length} errors with your submission
-        </Alert>
-      )}
-      <Form
-        submitLabel={submitLabel}
-        handleSubmit={handleSubmit}
-        formFooterBackLink="/"
-      >
-        <section>
-          <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
-            <Input id="description" isRequired value={description}>
-              Description
-            </Input>
-            <Input
-              id="amount"
-              type="number"
-              min={0.01}
-              step={0.01}
-              isCurrency
-              isRequired
-              value={Number.isNaN(amount) ? '' : amount}
-              onChange={handleAmountInputValueChange}
-            >
-              Amount
-            </Input>
-            <Select
-              id="fromAccount"
-              options={accountOptions}
-              defaultValue={fromAccount}
-              isRequired
-            >
-              From Account
-            </Select>
-            <Select
-              id="toAccount"
-              options={accountOptions}
-              defaultValue={toAccount}
-              isRequired
-            >
-              To Account
-            </Select>
-            <Input
-              id="date"
-              type="datetime-local"
-              value={typeof date !== 'undefined' ? inputDateFormat(date) : ''}
-              isDate
-            >
-              Date
-            </Input>
-          </div>
-        </section>
-        {transactionCategories.length > 0 && (
-          <section className="mt-8">
-            <h2 className="sr-only">Categories</h2>
-            <TransactionCategoriesForm
-              className="my-8 space-y-8"
-              categoryAmount={categoryAmount}
-              transactionCategories={transactionCategories}
-              transactionCategoryMapping={transactionCategoryMapping}
-              amountMaxValue={inputAmountValue || 0}
-              deleteTransactionCategoryItem={deleteTransactionCategoryItem}
-              setTransactionCategoryItemAmount={
-                setTransactionCategoryItemAmount
-              }
-            />
-            <Button
-              onClick={addNewCategory}
-              accentColor="plain"
-              isDisabled={!inputAmountValue || inputAmountValue < 0}
-              testId="add-category-button"
-            >
-              Add category item
-            </Button>
-          </section>
-        )}
-      </Form>
-    </Loader>
-  );
+  return null;
+
+  // return (
+  //   <Loader isLoading={isLoading}>
+  //     {errors.length > 0 && (
+  //       <Alert additionalInformation={errors} testId="form-errors">
+  //         There were {errors.length} errors with your submission
+  //       </Alert>
+  //     )}
+  //     <Form
+  //       submitLabel={submitLabel}
+  //       handleSubmit={handleSubmit}
+  //       formFooterBackLink="/"
+  //     >
+  //       <section>
+  //         <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
+  //           <Input id="description" isRequired value={description}>
+  //             Description
+  //           </Input>
+  //           <Input
+  //             id="amount"
+  //             type="number"
+  //             min={0.01}
+  //             step={0.01}
+  //             isCurrency
+  //             isRequired
+  //             value={Number.isNaN(amount) ? '' : amount}
+  //             onChange={handleAmountInputValueChange}
+  //           >
+  //             Amount
+  //           </Input>
+  //           <Select
+  //             id="fromAccount"
+  //             options={accountOptions}
+  //             defaultValue={fromAccount}
+  //             isRequired
+  //           >
+  //             From Account
+  //           </Select>
+  //           <Select
+  //             id="toAccount"
+  //             options={accountOptions}
+  //             defaultValue={toAccount}
+  //             isRequired
+  //           >
+  //             To Account
+  //           </Select>
+  //           <Input
+  //             id="date"
+  //             type="datetime-local"
+  //             value={typeof date !== 'undefined' ? inputDateFormat(date) : ''}
+  //             isDate
+  //           >
+  //             Date
+  //           </Input>
+  //         </div>
+  //       </section>
+  //       {transactionCategories.length > 0 && (
+  //         <section className="mt-8">
+  //           <h2 className="sr-only">Categories</h2>
+  //           <TransactionCategoriesForm
+  //             className="my-8 space-y-8"
+  //             categoryAmount={categoryAmount}
+  //             transactionCategories={transactionCategories}
+  //             transactionCategoryMapping={transactionCategoryMapping}
+  //             amountMaxValue={inputAmountValue || 0}
+  //             deleteTransactionCategoryItem={deleteTransactionCategoryItem}
+  //             setTransactionCategoryItemAmount={
+  //               setTransactionCategoryItemAmount
+  //             }
+  //           />
+  //           <Button
+  //             onClick={addNewCategory}
+  //             accentColor="plain"
+  //             isDisabled={!inputAmountValue || inputAmountValue < 0}
+  //             testId="add-category-button"
+  //           >
+  //             Add category item
+  //           </Button>
+  //         </section>
+  //       )}
+  //     </Form>
+  //   </Loader>
+  // );
 };
