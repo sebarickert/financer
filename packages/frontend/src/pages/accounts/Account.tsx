@@ -4,7 +4,10 @@ import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { AccountDeleteModal } from './account-modals/AccountDeleteModal';
-import { AccountUpdateMarketValueModal } from './account-modals/AccountUpdateMarketValueModal';
+import {
+  AccountUpdateMarketValueModal,
+  AccountUpdateMarketValueModalFormFields,
+} from './account-modals/AccountUpdateMarketValueModal';
 import { AccountBalanceHistoryChart } from './AccountBalanceHistoryChart';
 
 import {
@@ -67,88 +70,98 @@ export const Account = (): JSX.Element | null => {
     navigate('/accounts');
   };
 
-  const handleMarketValueUpdate = async (
-    newMarketValue: number,
-    date: Date
-  ) => {
-    if (!id) {
-      console.error('Failure to update market value: no id');
-      return;
-    }
-
-    if (!account) {
-      console.error(
-        'Failure to update market value: no account data available'
-      );
-      return;
-    }
-
-    const transactionDescription =
-      marketSettings?.transactionDescription ?? 'Market value change';
-    const marketValueChangeAmount = newMarketValue - account.balance;
-
-    const mappedCategory: CreateTransactionCategoryMappingDtoWithoutTransaction =
-      {
-        amount: Math.abs(marketValueChangeAmount),
-        description: transactionDescription,
-        category_id:
-          marketSettings?.category !== undefined ? marketSettings.category : '',
-      };
-
-    if (marketValueChangeAmount > 0) {
-      try {
-        const newIncomeJson = await addIncome({
-          createIncomeDto: {
-            toAccount: id,
-            amount: marketValueChangeAmount,
-            description: transactionDescription,
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            date: (date ?? new Date()) as any,
-            categories: (marketSettings?.category
-              ? [mappedCategory]
-              : // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                undefined) as any,
-          },
-        }).unwrap();
-
-        if ('message' in newIncomeJson) {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          setErrors(parseErrorMessagesToArray((newIncomeJson as any).message));
-          return;
-        }
-      } catch (transactionError) {
-        // eslint-disable-next-line no-console
-        console.error(transactionError);
+  const handleMarketValueUpdate =
+    (closeDialog: () => void) =>
+    async (
+      newAccountUpdateMarketValueData: AccountUpdateMarketValueModalFormFields
+    ) => {
+      if (!id) {
+        console.error('Failure to update market value: no id');
+        return;
       }
-    } else if (marketValueChangeAmount < 0) {
-      try {
-        const newExpenseJson = await addExpense({
-          createExpenseDto: {
-            fromAccount: id,
-            amount: Math.abs(marketValueChangeAmount),
-            description: transactionDescription,
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            date: (date ?? new Date()) as any,
-            categories: (marketSettings?.category
-              ? [mappedCategory]
-              : // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                undefined) as any,
-          },
-        }).unwrap();
 
-        if ('message' in newExpenseJson) {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          setErrors(parseErrorMessagesToArray((newExpenseJson as any).message));
-          return;
-        }
-      } catch (transactionError) {
-        // eslint-disable-next-line no-console
-        console.error(transactionError);
+      if (!account) {
+        console.error(
+          'Failure to update market value: no account data available'
+        );
+        return;
       }
-    } else {
-      console.log('Current value is same as previous no update needed.');
-    }
-  };
+
+      const { currentMarketValue, date } = newAccountUpdateMarketValueData;
+
+      const transactionDescription =
+        marketSettings?.transactionDescription ?? 'Market value change';
+      const marketValueChangeAmount = currentMarketValue - account.balance;
+
+      const mappedCategory: CreateTransactionCategoryMappingDtoWithoutTransaction =
+        {
+          amount: Math.abs(marketValueChangeAmount),
+          description: transactionDescription,
+          category_id:
+            marketSettings?.category !== undefined
+              ? marketSettings.category
+              : '',
+        };
+
+      if (marketValueChangeAmount > 0) {
+        try {
+          const newIncomeJson = await addIncome({
+            createIncomeDto: {
+              toAccount: id,
+              amount: marketValueChangeAmount,
+              description: transactionDescription,
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              date: (date ?? new Date()) as any,
+              categories: (marketSettings?.category
+                ? [mappedCategory]
+                : // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  undefined) as any,
+            },
+          }).unwrap();
+
+          if ('message' in newIncomeJson) {
+            setErrors(
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              parseErrorMessagesToArray((newIncomeJson as any).message)
+            );
+            return;
+          }
+        } catch (transactionError) {
+          // eslint-disable-next-line no-console
+          console.error(transactionError);
+        }
+      } else if (marketValueChangeAmount < 0) {
+        try {
+          const newExpenseJson = await addExpense({
+            createExpenseDto: {
+              fromAccount: id,
+              amount: Math.abs(marketValueChangeAmount),
+              description: transactionDescription,
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              date: (date ?? new Date()) as any,
+              categories: (marketSettings?.category
+                ? [mappedCategory]
+                : // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  undefined) as any,
+            },
+          }).unwrap();
+
+          if ('message' in newExpenseJson) {
+            setErrors(
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              parseErrorMessagesToArray((newExpenseJson as any).message)
+            );
+            return;
+          }
+        } catch (transactionError) {
+          // eslint-disable-next-line no-console
+          console.error(transactionError);
+        }
+      } else {
+        console.log('Current value is same as previous no update needed.');
+        closeDialog();
+      }
+    };
 
   const firstTransactionEverDate = new Date(transaction?.date || new Date());
 
@@ -200,9 +213,7 @@ export const Account = (): JSX.Element | null => {
               {account.type === 'investment' && (
                 <AccountUpdateMarketValueModal
                   currentValue={account.balance}
-                  handleUpdate={(newMarketValue, newDate) =>
-                    handleMarketValueUpdate(newMarketValue, newDate)
-                  }
+                  onUpdate={handleMarketValueUpdate}
                 />
               )}
               <LinkListLink
