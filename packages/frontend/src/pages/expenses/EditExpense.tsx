@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { ExpenseForm } from './ExpenseForm';
 
 import {
-  CreateExpenseDto,
+  UpdateExpenseDto,
   useExpensesFindOneQuery,
   useExpensesUpdateMutation,
 } from '$api/generated/financerApi';
@@ -22,14 +22,14 @@ export const EditExpense = (): JSX.Element => {
   const expenseData = useExpensesFindOneQuery({ id });
   const { data: expense } = expenseData;
 
-  const handleSubmit = async (targetExpenseData: CreateExpenseDto) => {
+  const handleSubmit = async (newExpenseData: UpdateExpenseDto) => {
     if (!id) {
       console.error('Failed to edit expense: no id');
       return;
     }
     try {
       await editExpense({
-        updateExpenseDto: targetExpenseData,
+        updateExpenseDto: newExpenseData,
         id,
       }).unwrap();
 

@@ -22,14 +22,14 @@ export const EditIncome = (): JSX.Element => {
   const { data: income } = incomeData;
   const [editIncome, { isLoading: isSaving }] = useIncomesUpdateMutation();
 
-  const handleSubmit = async (targetIncomeData: UpdateIncomeDto) => {
+  const handleSubmit = async (newIncomeData: UpdateIncomeDto) => {
     if (!id) {
       console.error('Failed to edit income: no id');
       return;
     }
     try {
       await editIncome({
-        updateIncomeDto: targetIncomeData,
+        updateIncomeDto: newIncomeData,
         id,
       }).unwrap();
 

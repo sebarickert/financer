@@ -105,7 +105,7 @@ export const TransferForm = ({
             >
               Amount
             </Input>
-            <Input id="date" type="datetime-local" isDate>
+            <Input id="date" type="datetime-local">
               Date
             </Input>
             <Select id="fromAccount" options={accountOptions} isRequired>

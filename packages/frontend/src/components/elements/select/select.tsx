@@ -30,18 +30,13 @@ export const Select = ({
   isDisabled = false,
   handleOnChange = () => {},
 }: SelectProps): JSX.Element => {
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext();
+  const { register } = useFormContext();
 
   const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
     if (!handleOnChange) return null;
 
     handleOnChange(event);
   };
-
-  const hasError = Object.keys(errors).includes(id);
 
   return (
     <div className={className}>

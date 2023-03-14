@@ -60,7 +60,6 @@ export const AccountUpdateMarketValueModal = ({
               type="datetime-local"
               value={inputDateFormat(new Date())}
               onChange={handleDateInputUpdate}
-              isDate
             >
               Date
             </Input>

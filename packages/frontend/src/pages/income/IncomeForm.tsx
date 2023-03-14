@@ -101,7 +101,7 @@ export const IncomeForm = ({
             >
               Amount
             </Input>
-            <Input id="date" type="datetime-local" isDate>
+            <Input id="date" type="datetime-local">
               Date
             </Input>
             <Select id="toAccount" options={accountOptions} isRequired>
