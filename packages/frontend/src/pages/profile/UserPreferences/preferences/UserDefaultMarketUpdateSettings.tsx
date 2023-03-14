@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 import { Form } from '$blocks/form/form';
@@ -13,98 +14,76 @@ import {
 import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
+export interface UserDefaultMarketUpdateSettingsFormFields {
+  transactionDescription: string;
+  category: string;
+}
+
 export const UserDefaultMarketUpdateSettings = (): JSX.Element | null => {
+  const methods = useForm<UserDefaultMarketUpdateSettingsFormFields>();
+
   const navigate = useNavigate();
-  const { data: defaultMarketSettings, isLoading: isLoadingDefault } =
+  const { data, isLoading: isLoadingDefault } =
     useUserDefaultMarketUpdateSettings();
   const [setDefaultMarketUpdateSettings, { isLoading: isUpdating }] =
     useUpdateUserDefaultMarketUpdateSettings();
 
-  const [transactionDescription, setTransactionDescription] = useState<
-    string | undefined
-  >(defaultMarketSettings?.transactionDescription);
-  const [category, setCategory] = useState<string | undefined>(
-    defaultMarketSettings?.category
-  );
   const { data: categories = [] } =
     useAllTransactionCategoriesWithCategoryTree();
 
-  useEffect(() => {
-    if (typeof transactionDescription !== 'undefined') return;
+  const handleSave = async (
+    newUserDefaultMarketUpdateData: UserDefaultMarketUpdateSettingsFormFields
+  ) => {
+    const { transactionDescription, category } = newUserDefaultMarketUpdateData;
 
-    setTransactionDescription(defaultMarketSettings?.transactionDescription);
-  }, [defaultMarketSettings?.transactionDescription, transactionDescription]);
-
-  useEffect(() => {
-    if (typeof category !== 'undefined') return;
-
-    setCategory(defaultMarketSettings?.category);
-  }, [defaultMarketSettings?.category, category]);
-
-  const handleSave = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const {
-      transactionDescription: { value: transactionDescriptionValue },
-      category: { value: categoryValue },
-    } = event.target as unknown as {
-      transactionDescription: HTMLInputElement;
-      category: HTMLSelectElement;
-    };
-
-    await Promise.all([
-      setDefaultMarketUpdateSettings({
-        transactionDescription: transactionDescriptionValue ?? '',
-        category: categoryValue,
-      }),
-    ]);
+    await setDefaultMarketUpdateSettings({
+      transactionDescription,
+      category,
+    });
 
     navigate('/profile/user-preferences');
   };
 
+  useEffect(() => {
+    methods.reset(data);
+  }, [data, methods]);
+
   const isLoading = isLoadingDefault;
 
-  return null;
-
-  // return (
-  //   <>
-  //     {isUpdating && <LoaderFullScreen />}
-  //     <UpdatePageInfo
-  //       title="Market update settings"
-  //       backLink={'/profile/user-preferences'}
-  //     />
-  //     {isLoading && <Loader />}
-  //     {!isLoading && (
-  //       <Form
-  //         handleSubmit={handleSave}
-  //         submitLabel="Save"
-  //         formFooterBackLink="/profile/user-preferences"
-  //       >
-  //         <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
-  //           <Input
-  //             id="transactionDescription"
-  //             type="text"
-  //             isRequired
-  //             value={defaultMarketSettings?.transactionDescription}
-  //           >
-  //             Transaction description
-  //           </Input>
-  //           <Select
-  //             id="category"
-  //             options={[{ name: 'None', _id: '' }, ...categories].map(
-  //               ({ name, _id }) => ({
-  //                 label: name,
-  //                 value: _id,
-  //               })
-  //             )}
-  //             defaultValue={defaultMarketSettings?.category}
-  //             isRequired
-  //           >
-  //             Category
-  //           </Select>
-  //         </div>
-  //       </Form>
-  //     )}
-  //   </>
-  // );
+  return (
+    <>
+      {isUpdating && <LoaderFullScreen />}
+      <UpdatePageInfo
+        title="Market update settings"
+        backLink={'/profile/user-preferences'}
+      />
+      {isLoading && <Loader />}
+      {!isLoading && (
+        <Form
+          methods={methods}
+          onSubmit={handleSave}
+          submitLabel="Save"
+          formFooterBackLink="/profile/user-preferences"
+        >
+          <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
+            <Input id="transactionDescription" isRequired>
+              Transaction description
+            </Input>
+            <Select
+              id="category"
+              options={[{ name: 'None', _id: '' }, ...categories].map(
+                ({ name, _id }) => ({
+                  label: name,
+                  value: _id,
+                })
+              )}
+              isRequired
+            >
+              Category
+            </Select>
+          </div>
+        </Form>
+      )}
+    </>
+  );
 };

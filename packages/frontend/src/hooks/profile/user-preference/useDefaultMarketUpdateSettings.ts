@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import {
   UserPreferencePropertyEnum,
@@ -19,26 +19,34 @@ export const useUserDefaultMarketUpdateSettings = () => {
     userPreferenceProperty,
   });
 
+  const parsedData = useMemo(
+    () =>
+      data.data?.value
+        ? (JSON.parse(data.data.value) as UserDefaultMarketUpdateSettings)
+        : undefined,
+    [data?.data?.value]
+  );
+
   return {
     ...data,
-    data: data.data?.value ? JSON.parse(data.data.value) : undefined,
+    data: parsedData,
   };
 };
 
 export const useUpdateUserDefaultMarketUpdateSettings = (): [
-  (newValue: UserDefaultMarketUpdateSettings) => void,
+  (newValue: UserDefaultMarketUpdateSettings) => Promise<void>,
   ReturnType<typeof useUserPreferencesUpdateMutation>[1]
 ] => {
   const [updateMutation, data] = useUserPreferencesUpdateMutation();
 
   const updateUserPreference = useCallback(
-    (newValue: UserDefaultMarketUpdateSettings) => {
-      updateMutation({
+    async (newValue: UserDefaultMarketUpdateSettings) => {
+      await updateMutation({
         updateUserPreferenceDto: {
           key: userPreferenceProperty,
           value: JSON.stringify(newValue),
         },
-      });
+      }).unwrap();
     },
     [updateMutation]
   );

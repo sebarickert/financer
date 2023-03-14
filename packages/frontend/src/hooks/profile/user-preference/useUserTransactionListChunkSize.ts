@@ -21,19 +21,19 @@ export const useUserTransactionListChunkSize = () => {
 };
 
 export const useUpdateUserTransactionListChunkSize = (): [
-  (newValue: number) => void,
+  (newValue: number) => Promise<void>,
   ReturnType<typeof useUserPreferencesUpdateMutation>[1]
 ] => {
   const [updateMutation, data] = useUserPreferencesUpdateMutation();
 
   const updateUserPreference = useCallback(
-    (newValue: number) => {
-      updateMutation({
+    async (newValue: number) => {
+      await updateMutation({
         updateUserPreferenceDto: {
           key: userPreferenceProperty,
           value: newValue.toString(),
         },
-      });
+      }).unwrap();
     },
     [updateMutation]
   );

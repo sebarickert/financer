@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 import { useAccountsFindAllByUserQuery } from '$api/generated/financerApi';
@@ -23,7 +25,16 @@ import {
 } from '$hooks/profile/user-preference/useUserDefaultTransferTargetAccount';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
+export interface UserDefaultAccountSettingsFormFields {
+  toAccountIncome: string;
+  fromAccountExpense: string;
+  fromAccountTransfer: string;
+  toAccountTransfer: string;
+}
+
 export const UserDefaultAccountSettings = (): JSX.Element | null => {
+  const methods = useForm<UserDefaultAccountSettingsFormFields>();
+
   const navigate = useNavigate();
   const { data: accounts, isLoading: isLoadingAccount } =
     useAccountsFindAllByUserQuery({});
@@ -62,30 +73,43 @@ export const UserDefaultAccountSettings = (): JSX.Element | null => {
     { isLoading: isUpdatingDefaultTransferTargetAccount },
   ] = useUpdateUserDefaultTransferTargetAccount();
 
-  const handleSave = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
+  const handleSave = async (
+    newUserDefaultAccountData: UserDefaultAccountSettingsFormFields
+  ) => {
     const {
-      toAccountIncome: { value: toAccountIncomeValue },
-      fromAccountExpense: { value: fromAccountExpenseValue },
-      toAccountTransfer: { value: toAccountTransferValue },
-      fromAccountTransfer: { value: fromAccountTransferValue },
-    } = event.target as unknown as {
-      toAccountIncome: HTMLSelectElement;
-      fromAccountExpense: HTMLSelectElement;
-      toAccountTransfer: HTMLSelectElement;
-      fromAccountTransfer: HTMLSelectElement;
-    };
+      toAccountIncome,
+      toAccountTransfer,
+      fromAccountExpense,
+      fromAccountTransfer,
+    } = newUserDefaultAccountData;
 
     await Promise.all([
-      setDefaultIncomeAccount(toAccountIncomeValue),
-      setDefaultExpenseAccount(fromAccountExpenseValue),
-      setDefaultTransferSourceAccount(fromAccountTransferValue),
-      setDefaultTransferTargetAccount(toAccountTransferValue),
+      setDefaultIncomeAccount(toAccountIncome),
+      setDefaultExpenseAccount(fromAccountExpense),
+      setDefaultTransferSourceAccount(fromAccountTransfer),
+      setDefaultTransferTargetAccount(toAccountTransfer),
     ]);
 
     navigate('/profile/user-preferences');
   };
+
+  useEffect(() => {
+    const firstAccountId = accounts?.data.at(0)?._id;
+
+    methods.reset({
+      fromAccountExpense: defaultExpenseAccount || firstAccountId,
+      fromAccountTransfer: defaultTransferSourceAccount || firstAccountId,
+      toAccountIncome: defaultIncomeAccount || firstAccountId,
+      toAccountTransfer: defaultTransferTargetAccount || firstAccountId,
+    });
+  }, [
+    accounts?.data,
+    defaultExpenseAccount,
+    defaultIncomeAccount,
+    defaultTransferSourceAccount,
+    defaultTransferTargetAccount,
+    methods,
+  ]);
 
   const isLoading =
     isLoadingAccount ||
@@ -100,78 +124,73 @@ export const UserDefaultAccountSettings = (): JSX.Element | null => {
     isUpdatingDefaultTransferSourceAccount ||
     isUpdatingDefaultTransferTargetAccount;
 
-  return null;
-
-  // return (
-  //   <>
-  //     {isUpdating && <LoaderFullScreen />}
-  //     <UpdatePageInfo
-  //       title="Default account settings"
-  //       backLink={'/profile/user-preferences'}
-  //     />
-  //     {isLoading && <Loader />}
-  //     {!isLoading && (
-  //       <Form
-  //         handleSubmit={handleSave}
-  //         submitLabel="Save"
-  //         formFooterBackLink="/profile/user-preferences"
-  //       >
-  //         <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
-  //           <Select
-  //             id="toAccountIncome"
-  //             options={
-  //               accounts?.data.map(({ name, _id }) => ({
-  //                 label: name,
-  //                 value: _id,
-  //               })) ?? []
-  //             }
-  //             defaultValue={defaultIncomeAccount}
-  //             isRequired
-  //           >
-  //             Default income account
-  //           </Select>
-  //           <Select
-  //             id="fromAccountExpense"
-  //             options={
-  //               accounts?.data.map(({ name, _id }) => ({
-  //                 label: name,
-  //                 value: _id,
-  //               })) ?? []
-  //             }
-  //             defaultValue={defaultExpenseAccount}
-  //             isRequired
-  //           >
-  //             Default expense account
-  //           </Select>
-  //           <Select
-  //             id="fromAccountTransfer"
-  //             options={
-  //               accounts?.data.map(({ name, _id }) => ({
-  //                 label: name,
-  //                 value: _id,
-  //               })) ?? []
-  //             }
-  //             defaultValue={defaultTransferSourceAccount}
-  //             isRequired
-  //           >
-  //             Default transfer source account
-  //           </Select>
-  //           <Select
-  //             id="toAccountTransfer"
-  //             options={
-  //               accounts?.data.map(({ name, _id }) => ({
-  //                 label: name,
-  //                 value: _id,
-  //               })) ?? []
-  //             }
-  //             defaultValue={defaultTransferTargetAccount}
-  //             isRequired
-  //           >
-  //             Default transfer target account
-  //           </Select>
-  //         </div>
-  //       </Form>
-  //     )}
-  //   </>
-  // );
+  return (
+    <>
+      {isUpdating && <LoaderFullScreen />}
+      <UpdatePageInfo
+        title="Default account settings"
+        backLink={'/profile/user-preferences'}
+      />
+      {isLoading && <Loader />}
+      {!isLoading && (
+        <Form
+          onSubmit={handleSave}
+          methods={methods}
+          submitLabel="Save"
+          formFooterBackLink="/profile/user-preferences"
+        >
+          <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
+            <Select
+              id="toAccountIncome"
+              options={
+                accounts?.data.map(({ name, _id }) => ({
+                  label: name,
+                  value: _id,
+                })) ?? []
+              }
+              isRequired
+            >
+              Default income account
+            </Select>
+            <Select
+              id="fromAccountExpense"
+              options={
+                accounts?.data.map(({ name, _id }) => ({
+                  label: name,
+                  value: _id,
+                })) ?? []
+              }
+              isRequired
+            >
+              Default expense account
+            </Select>
+            <Select
+              id="fromAccountTransfer"
+              options={
+                accounts?.data.map(({ name, _id }) => ({
+                  label: name,
+                  value: _id,
+                })) ?? []
+              }
+              isRequired
+            >
+              Default transfer source account
+            </Select>
+            <Select
+              id="toAccountTransfer"
+              options={
+                accounts?.data.map(({ name, _id }) => ({
+                  label: name,
+                  value: _id,
+                })) ?? []
+              }
+              isRequired
+            >
+              Default transfer target account
+            </Select>
+          </div>
+        </Form>
+      )}
+    </>
+  );
 };

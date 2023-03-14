@@ -20,19 +20,19 @@ export const useUserDefaultIncomeAccount = () => {
 };
 
 export const useUpdateUserDefaultIncomeAccount = (): [
-  (newValue: string) => void,
+  (newValue: string) => Promise<void>,
   ReturnType<typeof useUserPreferencesUpdateMutation>[1]
 ] => {
   const [updateMutation, data] = useUserPreferencesUpdateMutation();
 
   const updateUserPreference = useCallback(
-    (userPreferenceValue: string) => {
-      updateMutation({
+    async (userPreferenceValue: string) => {
+      await updateMutation({
         updateUserPreferenceDto: {
           key: userPreferenceProperty,
           value: userPreferenceValue,
         },
-      });
+      }).unwrap();
     },
     [updateMutation]
   );
