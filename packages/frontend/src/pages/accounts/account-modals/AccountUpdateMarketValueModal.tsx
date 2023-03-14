@@ -1,36 +1,37 @@
 import { useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { DialogConfirmCustom } from '../../../components/elements/dialog/confirm/dialog.confirm.custom';
 import { Dialog } from '../../../components/elements/dialog/dialog';
 import { IconName } from '../../../components/elements/icon/icon';
 import { Input } from '../../../components/elements/input/input';
 import { LinkListButton } from '../../../components/elements/link-list/link-list.button';
-import { inputDateFormat } from '../../../utils/formatDate';
 
-interface IAccountUpdateMarketValueModalProps {
-  handleUpdate(newMarketValue: number, newDate: Date): void;
+import { Form } from '$blocks/form/form';
+import { inputDateFormat } from '$utils/formatDate';
+
+interface AccountUpdateMarketValueModalProps {
+  onUpdate: (
+    closeDialog: () => void
+  ) => SubmitHandler<AccountUpdateMarketValueModalFormFields>;
   currentValue: number;
 }
 
+export interface AccountUpdateMarketValueModalFormFields {
+  currentMarketValue: number;
+  date: string;
+}
+
 export const AccountUpdateMarketValueModal = ({
+  onUpdate,
   currentValue,
-  handleUpdate,
-}: IAccountUpdateMarketValueModalProps) => {
+}: AccountUpdateMarketValueModalProps) => {
+  const methods = useForm<AccountUpdateMarketValueModalFormFields>({
+    defaultValues: {
+      currentMarketValue: currentValue,
+      date: inputDateFormat(new Date()),
+    },
+  });
   const [isOpen, setIsOpen] = useState(false);
-  const [newMarketValue, setNewMarketValue] = useState(currentValue);
-  const [newDate, setNewDate] = useState(new Date());
-
-  const handleMarketValueInputUpdate = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setNewMarketValue(Number(event.target.value));
-  };
-
-  const handleDateInputUpdate = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setNewDate(new Date(event.target.value));
-  };
 
   const handleToggleOpen = () => setIsOpen(!isOpen);
 
@@ -40,31 +41,20 @@ export const AccountUpdateMarketValueModal = ({
         Update current market value
       </LinkListButton>
       <Dialog isDialogOpen={isOpen} setIsDialogOpen={setIsOpen}>
-        <DialogConfirmCustom
-          onCancel={handleToggleOpen}
-          onConfirm={() => handleUpdate(newMarketValue, newDate)}
-          submitButtonLabel="Update"
+        <Form
+          methods={methods}
+          onSubmit={onUpdate(() => setIsOpen(false))}
+          submitLabel="Update"
         >
           <div className="space-y-4">
-            <Input
-              id="currentMarketValue"
-              type="number"
-              isRequired
-              value={currentValue}
-              onChange={handleMarketValueInputUpdate}
-            >
+            <Input id="currentMarketValue" type="number" isRequired>
               Current market value
             </Input>
-            <Input
-              id="date"
-              type="datetime-local"
-              value={inputDateFormat(new Date())}
-              onChange={handleDateInputUpdate}
-            >
+            <Input id="date" type="datetime-local">
               Date
             </Input>
           </div>
-        </DialogConfirmCustom>
+        </Form>
       </Dialog>
     </>
   );

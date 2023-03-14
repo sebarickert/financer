@@ -18,6 +18,13 @@ interface InputProps {
   testId?: string;
 }
 
+const getValueParsingOptions = (type: InputProps['type']) => {
+  if (type === 'number') return { valueAsNumber: true };
+  if (type === 'datetime-local') return { valueAsDate: true };
+
+  return {};
+};
+
 export const Input = ({
   children,
   help = '',
@@ -64,7 +71,7 @@ export const Input = ({
             min,
             max,
             required: isRequired,
-            valueAsNumber: type === 'number',
+            ...getValueParsingOptions(type),
           })}
         />
       </div>
