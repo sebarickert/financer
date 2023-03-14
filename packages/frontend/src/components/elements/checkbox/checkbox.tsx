@@ -1,16 +1,21 @@
 import clsx from 'clsx';
+import { useFormContext } from 'react-hook-form';
 
 interface CheckboxProps {
   id: string;
   label: string;
-  checked?: boolean;
+  name: string;
+  value: string;
 }
 
 export const Checkbox = ({
   id,
   label,
-  checked = false,
+  name,
+  value,
 }: CheckboxProps): JSX.Element => {
+  const { register } = useFormContext();
+
   return (
     <label
       className={clsx(
@@ -21,10 +26,10 @@ export const Checkbox = ({
       <div className="flex items-center h-5">
         <input
           id={id}
-          name={id}
           type="checkbox"
+          value={value}
           className="w-4 h-4 text-blue bg-gray border-gray-dark focus:ring-blue focus:ring-2"
-          defaultChecked={checked}
+          {...register(name)}
         />
       </div>
       <span className="text-base font-medium text-charcoal">{label}</span>

@@ -30,10 +30,10 @@ export const AddTransfer = (): JSX.Element => {
     isLoading: isLoadingDefaultTransferTargetAccount,
   } = useUserDefaultTransferTargetAccount();
 
-  const handleSubmit = async (newTransfer: CreateTransferDto) => {
+  const handleSubmit = async (newTransferData: CreateTransferDto) => {
     try {
       await addTransaction({
-        createTransferDto: newTransfer,
+        createTransferDto: newTransferData,
       }).unwrap();
 
       navigate('/statistics/transfers');

@@ -23,14 +23,14 @@ export const EditTransfer = (): JSX.Element => {
   const [editTransaction, { isLoading: isSaving }] =
     useTransfersUpdateMutation();
 
-  const handleSubmit = async (targetTransferData: UpdateTransferDto) => {
+  const handleSubmit = async (newTransferData: UpdateTransferDto) => {
     if (!id) {
       console.error('Failed to edit transfer: no id');
       return;
     }
     try {
       await editTransaction({
-        updateTransferDto: targetTransferData,
+        updateTransferDto: newTransferData,
         id,
       }).unwrap();
 

@@ -64,10 +64,8 @@ export const EditTransactionCategory = (): JSX.Element => {
           onSubmit={handleSubmit}
           errors={errors}
           submitLabel="Update"
-          name={transactionCategory.name}
-          visibility={transactionCategory.visibility}
-          parentTransactioCategoryId={transactionCategory.parent_category_id}
           currentCategoryId={id}
+          initialValues={transactionCategory}
         />
       )}
     </Container>

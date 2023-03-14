@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { getAllChildCategoryIds } from '../../../services/TransactionCategoriesService';
 
-import {
-  CreateTransactionCategoryDto,
-  VisibilityTypeEnum,
-} from '$api/generated/financerApi';
+import { VisibilityType, VisibilityTypeEnum } from '$api/generated/financerApi';
 import { Form } from '$blocks/form/form';
 import { Alert } from '$elements/alert/alert';
 import { Checkbox } from '$elements/checkbox/checkbox';
@@ -16,25 +14,34 @@ import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionC
 
 interface TransactionCategoryFormProps {
   errors: string[];
-  onSubmit(transactionCategory: CreateTransactionCategoryDto): void;
+  onSubmit: SubmitHandler<TransactionCategoryFormFields>;
   submitLabel: string;
-  name?: string;
-  visibility?: VisibilityTypeEnum[];
-  parentTransactioCategoryId?: string | null;
   optionalFooterComponent?: React.ReactNode;
   currentCategoryId?: string;
+  initialValues?: Partial<TransactionCategoryFormFields>;
+}
+
+export interface TransactionCategoryFormFields {
+  name: string;
+  visibility: VisibilityType[];
+  parent_category_id: string;
 }
 
 export const TransactionCategoryForm = ({
   errors,
   onSubmit,
-  parentTransactioCategoryId,
   submitLabel,
-  name,
-  visibility,
   optionalFooterComponent,
   currentCategoryId,
+  initialValues,
 }: TransactionCategoryFormProps): JSX.Element | null => {
+  const methods = useForm<TransactionCategoryFormFields>({
+    defaultValues: {
+      ...initialValues,
+      parent_category_id: initialValues?.parent_category_id ?? 'none',
+    },
+  });
+
   const { data: transactionCategoriesRaw } =
     useAllTransactionCategoriesWithCategoryTree();
   const [transactionCategories, setTransactionCategories] =
@@ -61,87 +68,55 @@ export const TransactionCategoryForm = ({
     ]);
   }, [currentCategoryId, transactionCategoriesRaw]);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleSubmit = async (event: any) => {
-    event.preventDefault();
-    const {
-      name: newCategoryName,
-      parentTransactionCategory: newParentTransactionCategory,
-      incomeVisible: newIncomeVisible,
-      expenseVisible: newExpenseVisible,
-      transferVisible: newTransferVisible,
-    } = event.target;
-
-    const newVisibility = [
-      newIncomeVisible.checked ? 'income' : '',
-      newExpenseVisible.checked ? 'expense' : '',
-      newTransferVisible.checked ? 'transfer' : '',
-    ].filter((i) => i !== '') as VisibilityTypeEnum[];
-
-    const newTransactionCategoryData: CreateTransactionCategoryDto = {
-      name: newCategoryName.value,
-      parent_category_id:
-        newParentTransactionCategory.value === 'none'
-          ? null
-          : newParentTransactionCategory.value,
-      visibility: newVisibility,
-    };
-
-    onSubmit(newTransactionCategoryData);
-  };
-
   if (!transactionCategories) return null;
 
-  return null;
-
-  // return (
-  //   <>
-  //     {errors.length > 0 && (
-  //       <Alert additionalInformation={errors} testId="form-errors">
-  //         There were {errors.length} errors with your submission
-  //       </Alert>
-  //     )}
-  //     <Form
-  //       submitLabel={submitLabel}
-  //       handleSubmit={handleSubmit}
-  //       formFooterBackLink="/profile/transaction-categories"
-  //       optionalFooterComponent={optionalFooterComponent}
-  //     >
-  //       <div className="grid gap-y-6 gap-x-4">
-  //         <Input
-  //           id="name"
-  //           help="Name of the transaction category, e.g. food, hobby, car, etc."
-  //           isRequired
-  //           value={name}
-  //         >
-  //           Name
-  //         </Input>
-  //         <CheckboxGroup testId="visibility-checkboxes">
-  //           <Checkbox
-  //             id="incomeVisible"
-  //             label="Income"
-  //             checked={visibility?.some((item) => item === 'income')}
-  //           />
-  //           <Checkbox
-  //             id="expenseVisible"
-  //             label="Expense"
-  //             checked={visibility?.some((item) => item === 'expense')}
-  //           />
-  //           <Checkbox
-  //             id="transferVisible"
-  //             label="Transfer"
-  //             checked={visibility?.some((item) => item === 'transfer')}
-  //           />
-  //         </CheckboxGroup>
-  //         <Select
-  //           id="parentTransactionCategory"
-  //           options={transactionCategories}
-  //           defaultValue={parentTransactioCategoryId || undefined}
-  //         >
-  //           Parent transaction category
-  //         </Select>
-  //       </div>
-  //     </Form>
-  //   </>
-  // );
+  return (
+    <>
+      {errors.length > 0 && (
+        <Alert additionalInformation={errors} testId="form-errors">
+          There were {errors.length} errors with your submission
+        </Alert>
+      )}
+      <Form
+        methods={methods}
+        submitLabel={submitLabel}
+        onSubmit={onSubmit}
+        formFooterBackLink="/profile/transaction-categories"
+        optionalFooterComponent={optionalFooterComponent}
+      >
+        <div className="grid gap-y-6 gap-x-4">
+          <Input
+            id="name"
+            help="Name of the transaction category, e.g. food, hobby, car, etc."
+            isRequired
+          >
+            Name
+          </Input>
+          <CheckboxGroup testId="visibility-checkboxes">
+            <Checkbox
+              id="incomeVisible"
+              name="visibility"
+              label="Income"
+              value={VisibilityTypeEnum.Income}
+            />
+            <Checkbox
+              id="expenseVisible"
+              name="visibility"
+              label="Expense"
+              value={VisibilityTypeEnum.Expense}
+            />
+            <Checkbox
+              id="transferVisible"
+              name="visibility"
+              label="Transfer"
+              value={VisibilityTypeEnum.Transfer}
+            />
+          </CheckboxGroup>
+          <Select id="parent_category_id" options={transactionCategories}>
+            Parent transaction category
+          </Select>
+        </div>
+      </Form>
+    </>
+  );
 };

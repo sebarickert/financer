@@ -7,7 +7,6 @@ interface InputProps {
   help?: string;
   id: string;
   isCurrency?: boolean;
-  isDate?: boolean;
   isRequired?: boolean;
   type?: 'text' | 'number' | 'datetime-local';
   value?: string | number;
@@ -24,7 +23,6 @@ export const Input = ({
   help = '',
   id,
   isCurrency = false,
-  isDate = false,
   isRequired = false,
   type = 'text',
   min,
@@ -32,12 +30,7 @@ export const Input = ({
   step,
   testId,
 }: InputProps): JSX.Element => {
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext();
-
-  const hasError = Object.keys(errors).includes(id);
+  const { register } = useFormContext();
 
   return (
     <div>
