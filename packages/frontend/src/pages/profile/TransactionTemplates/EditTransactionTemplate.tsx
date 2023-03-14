@@ -10,6 +10,7 @@ import {
   useTransactionTemplatesUpdateMutation,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
+import { TransactionCategoriesFormFields } from '$blocks/transaction-categories-form/transaction-categories-form';
 import { Button } from '$elements/button/button';
 import { DialogConfirm } from '$elements/dialog/confirm/dialog.confirm';
 import { Dialog } from '$elements/dialog/dialog';
@@ -46,6 +47,13 @@ const TransactionTemplateDeleteModal = ({
   );
 };
 
+type UpdateTransactionTemplateDtoWithCategory = Omit<
+  UpdateTransactionTemplateDto,
+  'categories'
+> & {
+  categories?: TransactionCategoriesFormFields[];
+};
+
 export const EditTransactionTemplate = (): JSX.Element => {
   const navigate = useNavigate();
   const { id = 'id-not-found' } = useParams<{ id: string }>();
@@ -58,17 +66,24 @@ export const EditTransactionTemplate = (): JSX.Element => {
   const { data: transactionTemplate } = templateData;
 
   const handleSubmit = async (
-    newTransactionTemplateData: UpdateTransactionTemplateDto
+    newTransactionTemplateData: UpdateTransactionTemplateDtoWithCategory
   ) => {
     if (!transactionTemplate?._id) {
       console.error('transactionTemplate is not defined');
       return;
     }
 
+    const data = {
+      ...newTransactionTemplateData,
+      categories: newTransactionTemplateData.categories?.map(
+        ({ category_id }) => category_id
+      ),
+    };
+
     try {
       await editTransactionTemplate({
         id: transactionTemplate._id,
-        updateTransactionTemplateDto: newTransactionTemplateData,
+        updateTransactionTemplateDto: data,
       }).unwrap();
 
       navigate('/profile/transaction-templates');
@@ -93,6 +108,14 @@ export const EditTransactionTemplate = (): JSX.Element => {
     navigate('/profile/templates');
   };
 
+  const initialValues = {
+    ...transactionTemplate,
+    categories: transactionTemplate?.categories?.map((categoryId) => ({
+      category_id: categoryId,
+      amount: NaN,
+    })),
+  };
+
   return (
     <>
       {(isSaving || isDeleting) && <LoaderFullScreen />}
@@ -106,22 +129,7 @@ export const EditTransactionTemplate = (): JSX.Element => {
           onSubmit={handleSubmit}
           errors={errors}
           submitLabel="Update"
-          amount={transactionTemplate.amount ?? undefined}
-          dayOfMonth={transactionTemplate.dayOfMonth ?? undefined}
-          dayOfMonthToCreate={
-            transactionTemplate.dayOfMonthToCreate ?? undefined
-          }
-          description={transactionTemplate.description ?? undefined}
-          fromAccount={transactionTemplate.fromAccount ?? undefined}
-          toAccount={transactionTemplate.toAccount ?? undefined}
-          templateName={transactionTemplate.templateName ?? undefined}
-          templateType={transactionTemplate.templateType[0] as string}
-          transactionType={transactionTemplate.templateVisibility}
-          transactionCategoryMapping={transactionTemplate.categories?.map(
-            (category) => ({
-              category_id: category,
-            })
-          )}
+          initialValues={initialValues}
           optionalFooterComponent={
             <TransactionTemplateDeleteModal handleDelete={handleDelete} />
           }
