@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 import { AccountTypeEnum } from '$api/generated/financerApi';
@@ -16,67 +18,63 @@ import { capitalize } from '$utils/capitalize';
 
 const allAccountTypes = Object.values(AccountTypeEnum);
 
+export interface UserDashboardSettingsFormFields {
+  accountTypes: AccountTypeEnum[];
+}
+
 export const UserDashboardSettings = (): JSX.Element | null => {
+  const methods = useForm<UserDashboardSettingsFormFields>();
   const navigate = useNavigate();
-  const { data: dashboardSettings, isLoading: isLoadingDefault } =
-    useUserDashboardSettings();
+  const { data, isLoading: isLoadingDefault } = useUserDashboardSettings();
   const [setDashboardSettings, { isLoading: isUpdating }] =
     useUpdateUserDashboardSettings();
 
-  const { accountTypes } = dashboardSettings ?? {};
-
-  const handleSave = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
+  const handleSave = async (
+    newUserDashboardData: UserDashboardSettingsFormFields
+  ) => {
     await setDashboardSettings({
-      accountTypes: allAccountTypes
-        .map((type) => ({
-          type,
-          value: (
-            event.target as unknown as {
-              [key in AccountTypeEnum]: HTMLInputElement;
-            }
-          )[type].checked,
-        }))
-        .filter(({ value }) => value)
-        .map(({ type }) => type),
+      accountTypes: newUserDashboardData.accountTypes,
     });
 
     navigate('/profile/user-preferences');
   };
 
+  useEffect(() => {
+    methods.reset(data);
+  }, [data, methods]);
+
   const isLoading = isLoadingDefault;
 
-  return null;
-
-  // return (
-  //   <>
-  //     {isUpdating && <LoaderFullScreen />}
-  //     <UpdatePageInfo
-  //       title="Dashboard settings"
-  //       backLink={'/profile/user-preferences'}
-  //     />
-  //     {isLoading ? (
-  //       <Loader />
-  //     ) : (
-  //       <Form
-  //         handleSubmit={handleSave}
-  //         submitLabel="Save"
-  //         formFooterBackLink="/profile/user-preferences"
-  //       >
-  //         <Heading className="mb-4">Account types for stats and graph</Heading>
-  //         <CheckboxGroup testId="dashboard-account-checkboxes">
-  //           {allAccountTypes.map((type) => (
-  //             <Checkbox
-  //               key={type}
-  //               id={type}
-  //               label={capitalize(type)}
-  //               checked={accountTypes?.some((item) => item === type)}
-  //             />
-  //           ))}
-  //         </CheckboxGroup>
-  //       </Form>
-  //     )}
-  //   </>
-  // );
+  return (
+    <>
+      {isUpdating && <LoaderFullScreen />}
+      <UpdatePageInfo
+        title="Dashboard settings"
+        backLink={'/profile/user-preferences'}
+      />
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <Form
+          methods={methods}
+          onSubmit={handleSave}
+          submitLabel="Save"
+          formFooterBackLink="/profile/user-preferences"
+        >
+          <Heading className="mb-4">Account types for stats and graph</Heading>
+          <CheckboxGroup testId="dashboard-account-checkboxes">
+            {allAccountTypes.map((type) => (
+              <Checkbox
+                key={type}
+                id={type}
+                value={type}
+                label={capitalize(type)}
+                name={'accountTypes'}
+              />
+            ))}
+          </CheckboxGroup>
+        </Form>
+      )}
+    </>
+  );
 };

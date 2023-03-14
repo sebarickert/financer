@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 import { Form } from '$blocks/form/form';
@@ -10,7 +12,12 @@ import {
 } from '$hooks/profile/user-preference/useUserTransactionListChunkSize';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
+export interface UserTransactionListChunkSizeFormFields {
+  chunkSize: number;
+}
+
 export const UserTransactionListChunkSize = (): JSX.Element | null => {
+  const methods = useForm<UserTransactionListChunkSizeFormFields>();
   const navigate = useNavigate();
   const { data: defaultChunkSize, isLoading: isLoadingDefault } =
     useUserTransactionListChunkSize();
@@ -18,53 +25,52 @@ export const UserTransactionListChunkSize = (): JSX.Element | null => {
   const [setDefaultChunkSize, { isLoading: isUpdating }] =
     useUpdateUserTransactionListChunkSize();
 
-  const handleSave = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleSave = async (
+    newUserTransactionListChunkSizeData: UserTransactionListChunkSizeFormFields
+  ) => {
+    const { chunkSize } = newUserTransactionListChunkSizeData;
 
-    const {
-      chunkSize: { value },
-    } = event.target as unknown as {
-      chunkSize: HTMLInputElement;
-    };
-
-    await Promise.all([setDefaultChunkSize(Number(value))]);
+    await setDefaultChunkSize(chunkSize);
 
     navigate('/profile/user-preferences');
   };
 
+  useEffect(() => {
+    methods.reset({ chunkSize: defaultChunkSize });
+  }, [defaultChunkSize, methods]);
+
   const isLoading = isLoadingDefault;
 
-  return null;
-
-  // return (
-  //   <>
-  //     {isUpdating && <LoaderFullScreen />}
-  //     <UpdatePageInfo
-  //       title="Max amount of items per page"
-  //       backLink={'/profile/user-preferences'}
-  //     />
-  //     {isLoading && <Loader />}
-  //     {!isLoading && (
-  //       <Form
-  //         handleSubmit={handleSave}
-  //         submitLabel="Save"
-  //         formFooterBackLink="/profile/user-preferences"
-  //       >
-  //         <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
-  //           <Input
-  //             id="chunkSize"
-  //             type="number"
-  //             min={3}
-  //             step={1}
-  //             max={100}
-  //             isRequired
-  //             value={defaultChunkSize}
-  //           >
-  //             Items per page, e.g. transactions
-  //           </Input>
-  //         </div>
-  //       </Form>
-  //     )}
-  //   </>
-  // );
+  return (
+    <>
+      {isUpdating && <LoaderFullScreen />}
+      <UpdatePageInfo
+        title="Max amount of items per page"
+        backLink={'/profile/user-preferences'}
+      />
+      {isLoading && <Loader />}
+      {!isLoading && (
+        <Form
+          methods={methods}
+          onSubmit={handleSave}
+          submitLabel="Save"
+          formFooterBackLink="/profile/user-preferences"
+        >
+          <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
+            <Input
+              id="chunkSize"
+              type="number"
+              min={3}
+              step={1}
+              max={100}
+              isRequired
+              value={defaultChunkSize}
+            >
+              Items per page, e.g. transactions
+            </Input>
+          </div>
+        </Form>
+      )}
+    </>
+  );
 };

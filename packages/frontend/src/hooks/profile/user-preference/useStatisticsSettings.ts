@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import {
   AccountTypeEnum,
@@ -18,28 +18,34 @@ export const useUserStatisticsSettings = () => {
     userPreferenceProperty,
   });
 
+  const parsedData = useMemo(
+    () =>
+      data.data?.value
+        ? (JSON.parse(data.data.value) as UserStatisticsSettings)
+        : undefined,
+    [data?.data?.value]
+  );
+
   return {
     ...data,
-    data: data.data?.value
-      ? (JSON.parse(data.data.value) as UserStatisticsSettings)
-      : undefined,
+    data: parsedData,
   };
 };
 
 export const useUpdateUserStatisticsSettings = (): [
-  (newValue: UserStatisticsSettings) => void,
+  (newValue: UserStatisticsSettings) => Promise<void>,
   ReturnType<typeof useUserPreferencesUpdateMutation>[1]
 ] => {
   const [updateMutation, data] = useUserPreferencesUpdateMutation();
 
   const updateUserPreference = useCallback(
-    (newValue: UserStatisticsSettings) => {
-      updateMutation({
+    async (newValue: UserStatisticsSettings) => {
+      await updateMutation({
         updateUserPreferenceDto: {
           key: userPreferenceProperty,
           value: JSON.stringify(newValue),
         },
-      });
+      }).unwrap();
     },
     [updateMutation]
   );

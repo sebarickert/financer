@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 import { AccountTypeEnum } from '$api/generated/financerApi';
@@ -16,66 +18,63 @@ import { capitalize } from '$utils/capitalize';
 
 const allAccountTypes = Object.values(AccountTypeEnum);
 
+export interface UserStatisticsSettingsFormFields {
+  accountTypes: AccountTypeEnum[];
+}
+
 export const UserStatisticsSettings = (): JSX.Element | null => {
+  const methods = useForm<UserStatisticsSettingsFormFields>();
+
   const navigate = useNavigate();
-  const { data: statisticsSettings, isLoading: isLoadingDefault } =
-    useUserStatisticsSettings();
+  const { data, isLoading: isLoadingDefault } = useUserStatisticsSettings();
   const [setStatisticsSettings, { isLoading: isUpdating }] =
     useUpdateUserStatisticsSettings();
 
-  const { accountTypes } = statisticsSettings ?? {};
-
-  const handleSave = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
+  const handleSave = async (
+    newUserStatisticsData: UserStatisticsSettingsFormFields
+  ) => {
     await setStatisticsSettings({
-      accountTypes: allAccountTypes
-        .map((type) => ({
-          type,
-          value: (
-            event.target as unknown as {
-              [key in AccountTypeEnum]: HTMLInputElement;
-            }
-          )[type].checked,
-        }))
-        .filter(({ value }) => value)
-        .map(({ type }) => type),
+      accountTypes: newUserStatisticsData.accountTypes,
     });
 
     navigate('/profile/user-preferences');
   };
 
+  useEffect(() => {
+    methods.reset(data);
+  }, [data, methods]);
+
   const isLoading = isLoadingDefault;
 
-  return null;
-
-  // return (
-  //   <>
-  //     {isUpdating && <LoaderFullScreen />}
-  //     <UpdatePageInfo
-  //       title="Statistics settings"
-  //       backLink={'/profile/user-preferences'}
-  //     />
-  //     {isLoading && <Loader />}
-  //     {!isLoading && (
-  //       <Form
-  //         handleSubmit={handleSave}
-  //         submitLabel="Save"
-  //         formFooterBackLink="/profile/user-preferences"
-  //       >
-  //         <Heading className="mb-4">Account types for stats and graph</Heading>
-  //         <CheckboxGroup testId="statistics-account-checkboxes">
-  //           {allAccountTypes.map((type) => (
-  //             <Checkbox
-  //               key={type}
-  //               id={type}
-  //               label={capitalize(type)}
-  //               checked={accountTypes?.some((item) => item === type)}
-  //             />
-  //           ))}
-  //         </CheckboxGroup>
-  //       </Form>
-  //     )}
-  //   </>
-  // );
+  return (
+    <>
+      {isUpdating && <LoaderFullScreen />}
+      <UpdatePageInfo
+        title="Statistics settings"
+        backLink={'/profile/user-preferences'}
+      />
+      {isLoading && <Loader />}
+      {!isLoading && (
+        <Form
+          methods={methods}
+          onSubmit={handleSave}
+          submitLabel="Save"
+          formFooterBackLink="/profile/user-preferences"
+        >
+          <Heading className="mb-4">Account types for stats and graph</Heading>
+          <CheckboxGroup testId="statistics-account-checkboxes">
+            {allAccountTypes.map((type) => (
+              <Checkbox
+                key={type}
+                id={type}
+                label={capitalize(type)}
+                value={type}
+                name="accountTypes"
+              />
+            ))}
+          </CheckboxGroup>
+        </Form>
+      )}
+    </>
+  );
 };
