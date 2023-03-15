@@ -46,7 +46,7 @@ export const AccountForm = ({
         </Alert>
       )}
       <Form
-        methods={methods as any}
+        methods={methods}
         submitLabel={submitLabel}
         onSubmit={onSubmit}
         formFooterBackLink="/accounts"
