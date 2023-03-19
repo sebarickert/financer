@@ -19,10 +19,10 @@ describe('Account creation', () => {
     cy.getById('add-account').click();
 
     // Add account form
-    cy.get('#account').clear();
-    cy.get('#account').type(newAccountName);
-    cy.get('#amount').clear();
-    cy.get('#amount').type(accountBalance);
+    cy.get('#name').clear();
+    cy.get('#name').type(newAccountName);
+    cy.get('#balance').clear();
+    cy.get('#balance').type(accountBalance);
     cy.get('#type').select(accountType);
     cy.getById('submit').click();
 

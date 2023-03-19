@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { ExpenseForm } from './ExpenseForm';
@@ -12,6 +12,7 @@ import { DataHandler } from '$blocks/data-handler/data-handler';
 import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
+import { inputDateFormat } from '$utils/formatDate';
 
 export const EditExpense = (): JSX.Element => {
   const navigate = useNavigate();
@@ -46,6 +47,15 @@ export const EditExpense = (): JSX.Element => {
     }
   };
 
+  const initialValues = useMemo(() => {
+    if (!expense) return undefined;
+
+    return {
+      ...expense,
+      date: inputDateFormat(new Date(expense.date)),
+    };
+  }, [expense]);
+
   return (
     <>
       {isSaving && <LoaderFullScreen />}
@@ -56,7 +66,7 @@ export const EditExpense = (): JSX.Element => {
           onSubmit={handleSubmit}
           errors={errors}
           submitLabel="Update"
-          initialValues={expense}
+          initialValues={initialValues}
         />
       )}
     </>

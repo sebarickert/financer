@@ -50,10 +50,10 @@ describe('Edit transaction category', () => {
     }
 
     if (parent) {
-      cy.get('#parentTransactionCategory').select(parent);
+      cy.get('#parent_category_id').select(parent);
       cy.saveData('targetParent', parent);
     } else {
-      cy.get('#parentTransactionCategory option:selected').then(($option) =>
+      cy.get('#parent_category_id option:selected').then(($option) =>
         cy.saveData('targetParent', $option.text())
       );
     }
@@ -98,7 +98,7 @@ describe('Edit transaction category', () => {
     });
 
     cy.get<string[]>('@targetParent').then((targetParent) => {
-      cy.get('#parentTransactionCategory option:selected').should(
+      cy.get('#parent_category_id option:selected').should(
         'have.text',
         targetParent
       );

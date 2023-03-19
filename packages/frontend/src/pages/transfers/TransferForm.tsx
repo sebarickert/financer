@@ -44,6 +44,8 @@ export const TransferForm = ({
     defaultValues: {
       date: inputDateFormat(new Date()),
       ...initialValues,
+      fromAccount: initialValues?.fromAccount || undefined,
+      toAccount: initialValues?.toAccount || undefined,
     },
   });
 
