@@ -15,17 +15,17 @@ describe('Transaction category form', () => {
     // Verify that we have correct category
     cy.get('#name').should('have.value', categoryName);
 
-    cy.get('#parentTransactionCategory option').should(
+    cy.get('#parent_category_id option').should(
       'not.contain.text',
       categoryName
     );
 
-    cy.get('#parentTransactionCategory').then(($select) => {
+    cy.get('#parent_category_id').then(($select) => {
       $select.append(
         `<option value="${childCategoryId}">child-category</option>`
       );
     });
-    cy.get('#parentTransactionCategory').select('child-category');
+    cy.get('#parent_category_id').select('child-category');
 
     cy.getById('submit').click();
     cy.getById('form-errors').should(

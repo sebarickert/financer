@@ -40,7 +40,11 @@ export const IncomeForm = ({
   initialValues,
 }: IncomeFormProps): JSX.Element | null => {
   const methods = useForm<IncomeFormFields>({
-    defaultValues: { date: inputDateFormat(new Date()), ...initialValues },
+    defaultValues: {
+      date: inputDateFormat(new Date()),
+      ...initialValues,
+      toAccount: initialValues?.toAccount || undefined,
+    },
   });
 
   const { data: accounts, isLoading } = useAccountsFindAllByUserQuery({});

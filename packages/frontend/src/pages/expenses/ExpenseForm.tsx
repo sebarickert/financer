@@ -40,7 +40,11 @@ export const ExpenseForm = ({
   initialValues,
 }: ExpenseFormProps): JSX.Element | null => {
   const methods = useForm<ExpenseFormFields>({
-    defaultValues: { date: inputDateFormat(new Date()), ...initialValues },
+    defaultValues: {
+      date: inputDateFormat(new Date()),
+      ...initialValues,
+      fromAccount: initialValues?.fromAccount || undefined,
+    },
   });
 
   const { data: accounts, isLoading } = useAccountsFindAllByUserQuery({});

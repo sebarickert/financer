@@ -65,8 +65,8 @@ describe('Account editing', () => {
     cy.getById('edit-account').click();
 
     // Edit account form
-    cy.get('#account').clear();
-    cy.get('#account').type(newAccountName);
+    cy.get('#name').clear();
+    cy.get('#name').type(newAccountName);
     cy.getById('submit').click();
 
     cy.location('pathname').should('not.contain', '/edit');
@@ -143,8 +143,8 @@ describe('Account editing', () => {
     cy.getById('edit-account').click();
 
     // Edit account form
-    cy.get('#amount').clear();
-    cy.get('#amount').type(
+    cy.get('#balance').clear();
+    cy.get('#balance').type(
       newAccountBalance
         .replace(',', '.')
         .replace(/ /g, '')
@@ -189,11 +189,11 @@ describe('Account editing', () => {
     cy.getById('edit-account').click();
 
     // Edit account form
-    cy.get('#account').clear();
-    cy.get('#account').type(newAccountName);
+    cy.get('#name').clear();
+    cy.get('#name').type(newAccountName);
     cy.get('#type').select(newAccountType);
-    cy.get('#amount').clear();
-    cy.get('#amount').type(
+    cy.get('#balance').clear();
+    cy.get('#balance').type(
       newAccountBalance
         .replace(',', '.')
         .replace(/ /g, '')

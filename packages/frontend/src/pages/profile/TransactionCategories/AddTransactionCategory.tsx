@@ -23,7 +23,10 @@ export const AddTransactionCategory = (): JSX.Element => {
   ) => {
     try {
       await addTransactionCategory({
-        createTransactionCategoryDto: newTransactionCategoryData,
+        createTransactionCategoryDto: {
+          ...newTransactionCategoryData,
+          visibility: newTransactionCategoryData.visibility || [],
+        },
       }).unwrap();
 
       navigate('/profile/transaction-categories');

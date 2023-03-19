@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { TransferForm } from './TransferForm';
@@ -12,6 +12,7 @@ import { DataHandler } from '$blocks/data-handler/data-handler';
 import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
+import { inputDateFormat } from '$utils/formatDate';
 
 export const EditTransfer = (): JSX.Element => {
   const navigate = useNavigate();
@@ -47,6 +48,15 @@ export const EditTransfer = (): JSX.Element => {
     }
   };
 
+  const initialValues = useMemo(() => {
+    if (!transfer) return undefined;
+
+    return {
+      ...transfer,
+      date: inputDateFormat(new Date(transfer.date)),
+    };
+  }, [transfer]);
+
   return (
     <>
       {isSaving && <LoaderFullScreen />}
@@ -57,7 +67,7 @@ export const EditTransfer = (): JSX.Element => {
           onSubmit={handleSubmit}
           errors={errors}
           submitLabel="Update"
-          initialValues={transfer}
+          initialValues={initialValues}
         />
       )}
     </>

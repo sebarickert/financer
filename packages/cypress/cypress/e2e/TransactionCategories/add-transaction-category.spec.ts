@@ -24,7 +24,7 @@ describe('Transaction category creation', () => {
         .click()
     );
 
-    cy.get('#parentTransactionCategory').select(parent);
+    cy.get('#parent_category_id').select(parent);
 
     cy.getById('submit').click();
     cy.location('pathname').should('not.contain', '/add');
@@ -50,12 +50,9 @@ describe('Transaction category creation', () => {
         visibility.includes('transfer') ? 'be.checked' : 'not.be.checked'
       );
 
-    cy.get('#parentTransactionCategory option').should(
-      'not.contain.text',
-      newName
-    );
+    cy.get('#parent_category_id option').should('not.contain.text', newName);
 
-    cy.get('#parentTransactionCategory').then(($select) => {
+    cy.get('#parent_category_id').then(($select) => {
       const selectedValue = $select.val();
       cy.wrap($select)
         .get(`option[value="${selectedValue}"]`)
