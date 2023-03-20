@@ -37,6 +37,8 @@ export const EditTransactionCategory = (): JSX.Element => {
         updateTransactionCategoryDto: {
           ...newTransactionCategoryData,
           visibility: newTransactionCategoryData.visibility || [],
+          parent_category_id:
+            newTransactionCategoryData.parent_category_id || null,
         },
       }).unwrap();
 

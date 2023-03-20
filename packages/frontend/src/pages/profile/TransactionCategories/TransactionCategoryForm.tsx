@@ -24,7 +24,7 @@ interface TransactionCategoryFormProps {
 export interface TransactionCategoryFormFields {
   name: string;
   visibility: VisibilityType[];
-  parent_category_id: string;
+  parent_category_id: string | null;
 }
 
 export const TransactionCategoryForm = ({
@@ -38,7 +38,7 @@ export const TransactionCategoryForm = ({
   const methods = useForm<TransactionCategoryFormFields>({
     defaultValues: {
       ...initialValues,
-      parent_category_id: initialValues?.parent_category_id ?? 'none',
+      parent_category_id: initialValues?.parent_category_id ?? '',
     },
   });
 
@@ -58,7 +58,7 @@ export const TransactionCategoryForm = ({
       : [];
 
     setTransactionCategories([
-      { label: 'None', value: 'none' },
+      { label: 'None', value: '' },
       ...transactionCategoriesRaw
         .filter(({ _id }) => !forbiddenIds.includes(_id))
         .map(({ _id, categoryTree: transactionCategoryName }) => ({

@@ -26,6 +26,8 @@ export const AddTransactionCategory = (): JSX.Element => {
         createTransactionCategoryDto: {
           ...newTransactionCategoryData,
           visibility: newTransactionCategoryData.visibility || [],
+          parent_category_id:
+            newTransactionCategoryData.parent_category_id || null,
         },
       }).unwrap();
 

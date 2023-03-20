@@ -45,7 +45,7 @@ export class TransactionCategoryDto {
   @IsBoolean()
   deleted: boolean;
 
-  @ApiProperty({ type: String })
+  @ApiProperty({ type: String, nullable: true })
   @IsOptional()
   @IsInstanceOfObjectId({ message: 'parent_category_id must not be empty.' })
   @Transform(objectIdTransformer)
