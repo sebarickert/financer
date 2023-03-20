@@ -1856,7 +1856,7 @@
             "items": { "$ref": "#/components/schemas/VisibilityType" }
           },
           "deleted": { "type": "boolean" },
-          "parent_category_id": { "type": "string" }
+          "parent_category_id": { "type": "string", "nullable": true }
         },
         "required": [
           "_id",
@@ -2109,7 +2109,7 @@
             "type": "array",
             "items": { "$ref": "#/components/schemas/VisibilityType" }
           },
-          "parent_category_id": { "type": "string" }
+          "parent_category_id": { "type": "string", "nullable": true }
         },
         "required": ["name", "visibility", "parent_category_id"]
       },
@@ -2125,7 +2125,7 @@
             "type": "array",
             "items": { "$ref": "#/components/schemas/VisibilityType" }
           },
-          "parent_category_id": { "type": "string" }
+          "parent_category_id": { "type": "string", "nullable": true }
         }
       },
       "UpdateUserPreferenceDto": {
