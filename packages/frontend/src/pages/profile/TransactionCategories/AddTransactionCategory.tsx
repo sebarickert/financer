@@ -1,5 +1,5 @@
+import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { TransactionCategoryForm } from './TransactionCategoryForm';
 
@@ -13,7 +13,7 @@ import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 export const AddTransactionCategory = (): JSX.Element => {
-  const navigate = useNavigate();
+  const { push } = useRouter();
   const [errors, setErrors] = useState<string[]>([]);
   const [addTransactionCategory, { isLoading: isCreating }] =
     useTransactionCategoriesCreateMutation();
@@ -31,7 +31,7 @@ export const AddTransactionCategory = (): JSX.Element => {
         },
       }).unwrap();
 
-      navigate('/profile/transaction-categories');
+      push('/profile/transaction-categories');
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (error.status === 400 || error.status === 404) {

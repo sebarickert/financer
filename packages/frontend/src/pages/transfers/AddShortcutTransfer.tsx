@@ -1,5 +1,6 @@
+import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { TransferForm } from './TransferForm';
 
@@ -16,7 +17,7 @@ import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 export const AddShortcutTransfer = (): JSX.Element => {
-  const navigate = useNavigate();
+  const { push } = useRouter();
   const { id = 'id-not-found' } = useParams<{ id: string }>();
   const [errors, setErrors] = useState<string[]>([]);
   const [addTransfer, { isLoading: isCreating }] = useTransfersCreateMutation();
@@ -36,7 +37,7 @@ export const AddShortcutTransfer = (): JSX.Element => {
         createTransferDto: newTransferData,
       }).unwrap();
 
-      navigate('/statistics/transfers');
+      push('/statistics/transfers');
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (error.status === 400 || error.status === 404) {

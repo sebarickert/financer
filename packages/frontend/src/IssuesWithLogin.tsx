@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 import { UpdatePageInfo } from './components/renderers/seo/updatePageInfo';
 
@@ -44,7 +44,7 @@ export const IssuesWithLogin = (): JSX.Element => {
       <UpdatePageInfo title="Issues with login" />
       <div className="py-16 mx-auto prose max-w-prose ">
         <Link
-          to="/"
+          href="/"
           className="inline-block mb-12 text-base font-semibold tracking-wide text-blue-600 uppercase rounded-sm focus:outline-none focus:ring-2 focus:ring-offset-4"
         >
           Go back

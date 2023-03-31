@@ -1,6 +1,6 @@
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 
 import { Form } from '$blocks/form/form';
 import { Input } from '$elements/input/input';
@@ -18,7 +18,7 @@ export interface UserTransactionListChunkSizeFormFields {
 
 export const UserTransactionListChunkSize = (): JSX.Element | null => {
   const methods = useForm<UserTransactionListChunkSizeFormFields>();
-  const navigate = useNavigate();
+  const { push } = useRouter();
   const { data: defaultChunkSize, isLoading: isLoadingDefault } =
     useUserTransactionListChunkSize();
 
@@ -32,7 +32,7 @@ export const UserTransactionListChunkSize = (): JSX.Element | null => {
 
     await setDefaultChunkSize(chunkSize);
 
-    navigate('/profile/user-preferences');
+    push('/profile/user-preferences');
   };
 
   useEffect(() => {

@@ -1,5 +1,6 @@
+import { useRouter } from 'next/router';
 import { useCallback, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { AccountForm, AccountFormFields } from './AccountForm';
 
@@ -17,7 +18,7 @@ export const EditAccount = (): JSX.Element => {
 
   if (!id) throw new Error('Account id is not defined');
 
-  const navigate = useNavigate();
+  const { push } = useRouter();
   const [editAccount, { isLoading }] = useAccountsUpdateMutation();
 
   const [errors, setErrors] = useState<string[]>([]);
@@ -45,13 +46,13 @@ export const EditAccount = (): JSX.Element => {
           return;
         }
 
-        navigate(`/accounts/${id}`);
+        push(`/accounts/${id}`);
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error(error);
       }
     },
-    [account?._id, editAccount, id, navigate]
+    [account?._id, editAccount, id, push]
   );
 
   return (

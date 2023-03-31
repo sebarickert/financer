@@ -1,8 +1,9 @@
 import { ChartOptions } from 'chart.js';
 import clsx from 'clsx';
+import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import { Chart } from 'react-chartjs-2';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { TransactionCategoryDeleteModal } from './TransactionCategoryDeleteModal';
 
@@ -45,7 +46,7 @@ interface ChartData {
 }
 
 export const ViewTransactionCategory = (): JSX.Element => {
-  const navigate = useNavigate();
+  const { push } = useRouter();
   const { id = 'id not found' } = useParams<{ id: string }>();
 
   const [monthFilterOptions, setMonthFilterOptions] =
@@ -95,7 +96,7 @@ export const ViewTransactionCategory = (): JSX.Element => {
       return;
     }
     await deleteTransactionCategory({ id });
-    navigate('/profile/transaction-categories');
+    push('/profile/transaction-categories');
   };
 
   const { data: transactionsMonthlySummaries } =

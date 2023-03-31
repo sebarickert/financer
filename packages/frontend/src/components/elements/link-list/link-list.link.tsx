@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { NavLink } from 'react-router-dom';
+import Link from 'next/link';
 
 import { isExternalLink } from '../button/button';
 import { IconName, Icon } from '../icon/icon';
@@ -60,14 +60,14 @@ export const LinkListLink = ({
           {linkContent}
         </a>
       ) : (
-        <NavLink
-          to={link}
+        <Link
+          href={link}
           className={linkClasses}
           data-testid={testId}
           data-entity-title={entityTitle ?? undefined}
         >
           {linkContent}
-        </NavLink>
+        </Link>
       )}
     </>
   );

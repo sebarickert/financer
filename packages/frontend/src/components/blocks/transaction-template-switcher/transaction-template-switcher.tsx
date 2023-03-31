@@ -1,6 +1,6 @@
 import { TransactionTypeMapping } from '@local/types';
+import { useRouter } from 'next/router';
 import { useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import {
   TransactionTypeEnum,
@@ -36,15 +36,14 @@ export const TransactionTemplateSwitcher = ({
       ),
     [templateType, transactionTemplates]
   );
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const navigate = useNavigate();
+  const { push } = useRouter();
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     const { templateSwitcher } = event.target;
     const selectedTemplateId = templateSwitcher.value;
-    navigate(
+    push(
       `/statistics/${TransactionTypeMapping[templateType]}/add/${selectedTemplateId}`
     );
     setIsOpen(false);

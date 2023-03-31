@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { NavLink } from 'react-router-dom';
+import Link from 'next/link';
 
 import { useIsActiveLink } from '../../../hooks/useIsActiveLink';
 import { isExternalLink } from '../../elements/button/button';
@@ -52,14 +52,14 @@ export const DesktopNavigationItem = ({
 
   return (
     <li>
-      <NavLink
-        to={link}
+      <Link
+        href={link}
         className={linkClasses}
         onClick={onClick}
         aria-label={ariaLabel}
       >
         {linkContent}
-      </NavLink>
+      </Link>
     </li>
   );
 };

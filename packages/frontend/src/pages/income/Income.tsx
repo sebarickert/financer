@@ -1,5 +1,6 @@
+import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import {
   TransactionCategoryMappingDto,
@@ -54,7 +55,7 @@ const IncomeDeleteModal = ({ handleDelete }: IIncomeDeleteModalProps) => {
 };
 
 export const Income = (): JSX.Element => {
-  const navigate = useNavigate();
+  const { push } = useRouter();
   const { id = 'missing-id' } = useParams<{ id: string }>();
   const incomeData = useIncomesFindOneQuery({ id });
   const { data: income } = incomeData;
@@ -79,7 +80,7 @@ export const Income = (): JSX.Element => {
       return;
     }
     await deleteIncome({ id }).unwrap();
-    navigate('/statistics/incomes');
+    push('/statistics/incomes');
   };
 
   return (
@@ -122,8 +123,8 @@ export const Income = (): JSX.Element => {
               <ul>
                 {(
                   income.categories as unknown as TransactionCategoryMappingDto[]
-                )?.map(({ amount, category_id }) => (
-                  <li className="grid grid-cols-2 gap-2">
+                )?.map(({ amount, category_id, _id }) => (
+                  <li key={_id} className="grid grid-cols-2 gap-2">
                     <InfoCard
                       iconName={IconName.tag}
                       label="Category"

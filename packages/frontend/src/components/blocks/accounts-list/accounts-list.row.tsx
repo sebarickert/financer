@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import Link from 'next/link';
 
 import { AccountTypeEnum } from '$api/generated/financerApi';
 
@@ -31,10 +31,10 @@ export const AccountsListRow = ({
           <dt className="sr-only">Account name</dt>
           <dd className="text-lg font-bold tracking-tight">
             {link ? (
-              <NavLink to={link} className="focus:outline-none">
+              <Link href={link} className="focus:outline-none">
                 <span className="absolute inset-0" aria-hidden="true" />
                 {label}
-              </NavLink>
+              </Link>
             ) : (
               label
             )}

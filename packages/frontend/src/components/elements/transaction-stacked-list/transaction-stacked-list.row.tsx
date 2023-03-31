@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { NavLink } from 'react-router-dom';
+import Link from 'next/link';
 
 import { IconName, Icon } from '../icon/icon';
 
@@ -38,8 +38,8 @@ export const TransactionStackedListRow = ({
 
   return (
     <li data-testid={id} className="group">
-      <NavLink
-        to={link}
+      <Link
+        href={link}
         className={`relative flex gap-4 items-center focus-within:bg-gray-dark hover:bg-gray-dark overflow-hidden pl-4 lg:rounded-md`}
       >
         <span className="inline-flex items-center justify-center border rounded-full bg-gray h-11 w-11 border-gray-dark">
@@ -85,7 +85,7 @@ export const TransactionStackedListRow = ({
             className="flex-shrink-0 pointer-events-none stroke-gray-darkest"
           />
         </span>
-      </NavLink>
+      </Link>
     </li>
   );
 };

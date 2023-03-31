@@ -11,7 +11,7 @@
     "start:test": "run-p start:types start:backend:test start:frontend",
     "start:backend": "npm -w backend run start:dev",
     "start:backend:test": "npm -w backend run start:test",
-    "start:frontend": "npm -w frontend run start",
+    "start:frontend": "npm -w frontend run dev",
     "start:types": "npm -w @local/types run compile:watch",
     "lint": "npm -ws run lint",
     "format": "npm -ws run format",

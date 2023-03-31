@@ -1,16 +1,29 @@
+import ChartJS from 'chart.js/auto';
+import zoomPlugin from 'chartjs-plugin-zoom';
+import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-
-import { Notification } from './components/elements/notification/notification';
-import { Financer } from './Financer';
+import { useState, useEffect } from 'react';
+import { Provider } from 'react-redux';
 
 import { useAuthGetAuthenticationStatusQuery } from '$api/generated/financerApi';
+import { ErrorBoundaryHandler } from '$blocks/error-boundary/error-boundary';
 import { Loader } from '$elements/loader/loader';
+import { LoaderSuspense } from '$elements/loader/loader-suspense';
+import { Notification } from '$elements/notification/notification';
+import { ScrollToTop } from '$renderers/scroll-to-top/scroll-to-top';
+import { SEO } from '$renderers/seo/seo';
+import { PageInfoProvider } from 'context/pageInfoContext';
+import { store } from 'redux/store';
 
-export const App = (): JSX.Element => {
+import '../src/assets/tailwind.css';
+
+// ChartJS.register(zoomPlugin);
+
+const App = ({ Component, pageProps }: AppProps) => {
   const { data: authenticationStatus, isLoading } =
     useAuthGetAuthenticationStatusQuery();
   const { push } = useRouter();
+
   const [isOnboardingVisible, setOnboardingVisible] = useState(false);
 
   useEffect(() => {
@@ -31,6 +44,7 @@ export const App = (): JSX.Element => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const errors = authenticationStatus?.errors;
+
   return (
     <>
       {errors && (
@@ -44,7 +58,25 @@ export const App = (): JSX.Element => {
           Financer.
         </Notification>
       )}
-      <Financer isLoggedIn={!!authenticationStatus?.authenticated} />
+      <Component {...pageProps} />
     </>
   );
 };
+
+const AppWrapper = (props: AppProps) => {
+  return (
+    <Provider store={store}>
+      <ErrorBoundaryHandler errorPage="full-app">
+        <LoaderSuspense>
+          <PageInfoProvider>
+            <SEO />
+            <ScrollToTop />
+            <App {...props} />
+          </PageInfoProvider>
+        </LoaderSuspense>
+      </ErrorBoundaryHandler>
+    </Provider>
+  );
+};
+
+export default AppWrapper;

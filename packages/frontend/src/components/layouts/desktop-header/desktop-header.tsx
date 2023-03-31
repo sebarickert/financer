@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import Link from 'next/link';
 
 import { usePageInfoContext } from '../../../context/pageInfoContext';
 import { Heading } from '../../elements/heading/heading';
@@ -11,14 +11,14 @@ export const DesktopHeader = (): JSX.Element => {
     <>
       <div className="flex items-center gap-4 mb-6">
         {backLink && (
-          <NavLink
-            to={backLink}
+          <Link
+            href={backLink}
             className="inline-flex items-center justify-center border rounded-full h-11 w-11 bg-gray hover:bg-gray-dark border-gray-dark text-gray-darkest"
             data-testid="header-back-link"
           >
             <span className="sr-only">Go back</span>
             <Icon type={IconName.chevronLeft} />
-          </NavLink>
+          </Link>
         )}
         <Heading variant="h1" testId="page-main-heading">
           {title ?? '-'}

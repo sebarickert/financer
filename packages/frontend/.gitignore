@@ -30,3 +30,5 @@ yarn-error.log*
 # redux
 redux/api/generated/*
 !redux/api/generated/.keepMe
+
+.next

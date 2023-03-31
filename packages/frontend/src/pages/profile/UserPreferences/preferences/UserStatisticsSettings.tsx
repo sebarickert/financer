@@ -1,6 +1,6 @@
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 
 import { AccountTypeEnum } from '$api/generated/financerApi';
 import { Form } from '$blocks/form/form';
@@ -25,7 +25,7 @@ export interface UserStatisticsSettingsFormFields {
 export const UserStatisticsSettings = (): JSX.Element | null => {
   const methods = useForm<UserStatisticsSettingsFormFields>();
 
-  const navigate = useNavigate();
+  const { push } = useRouter();
   const { data, isLoading: isLoadingDefault } = useUserStatisticsSettings();
   const [setStatisticsSettings, { isLoading: isUpdating }] =
     useUpdateUserStatisticsSettings();
@@ -37,7 +37,7 @@ export const UserStatisticsSettings = (): JSX.Element | null => {
       accountTypes: newUserStatisticsData.accountTypes,
     });
 
-    navigate('/profile/user-preferences');
+    push('/profile/user-preferences');
   };
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 import { UpdatePageInfo } from './components/renderers/seo/updatePageInfo';
 
@@ -8,7 +8,7 @@ export const PrivacyPolicy = (): JSX.Element => {
       <UpdatePageInfo title="Privacy policy" />
       <div className="py-16 mx-auto prose max-w-prose ">
         <Link
-          to="/"
+          href="/"
           className="inline-block mb-12 text-base font-semibold tracking-tight uppercase"
         >
           Go back

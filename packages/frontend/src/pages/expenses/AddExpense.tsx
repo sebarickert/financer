@@ -1,5 +1,5 @@
+import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { ExpenseForm } from './ExpenseForm';
 
@@ -16,7 +16,7 @@ import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 export const AddExpense = (): JSX.Element => {
-  const navigate = useNavigate();
+  const { push } = useRouter();
   const [errors, setErrors] = useState<string[]>([]);
   const [addExpense, { isLoading: isCreating }] = useExpensesCreateMutation();
   const { data: defaultExpenseAccount, isLoading: isLoadingDefaultAccount } =
@@ -28,7 +28,7 @@ export const AddExpense = (): JSX.Element => {
         createExpenseDto: newExpenseData,
       }).unwrap();
 
-      navigate('/statistics/expenses');
+      push('/statistics/expenses');
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (error.status === 400 || error.status === 404) {

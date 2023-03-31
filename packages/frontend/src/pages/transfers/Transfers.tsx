@@ -1,5 +1,6 @@
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { useTransfersFindAllByUserQuery } from '$api/generated/financerApi';
 import { LatestTransactions } from '$blocks/latest-transactions/latest-transactions';
@@ -35,10 +36,10 @@ export const Transfers = (): JSX.Element => {
 
   const [initialPageToLoad, setInitialPage] = useState(selectedPage);
 
-  const navigate = useNavigate();
+  const { push } = useRouter();
 
   useEffect(() => {
-    navigate({
+    push({
       pathname: `/statistics/transfers/${
         monthFilterOptions.year
       }-${monthFilterOptions.month
@@ -47,12 +48,7 @@ export const Transfers = (): JSX.Element => {
     });
 
     setInitialPage(1);
-  }, [
-    monthFilterOptions.year,
-    monthFilterOptions.month,
-    navigate,
-    selectedPage,
-  ]);
+  }, [monthFilterOptions.year, monthFilterOptions.month, push, selectedPage]);
 
   const firstTransactionEverDate = new Date(transaction?.date || new Date());
 

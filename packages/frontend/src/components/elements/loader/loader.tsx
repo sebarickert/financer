@@ -1,4 +1,8 @@
-import { ReactComponent as Logo } from '$assets/logo.svg';
+import Image from 'next/image';
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import logo from '$assets/logo.svg';
 
 type LoaderProps = {
   isLoading?: boolean;
@@ -12,8 +16,16 @@ export const Loader = ({
   if (isLoading) {
     return (
       <div className="flex items-center justify-center p-16">
-        <Logo className="absolute block w-12 h-12 opacity-75 animate-ping" />
-        <Logo className="relative block rounded h-14 w-14" />
+        <Image
+          src={logo}
+          className="absolute block w-12 h-12 opacity-75 animate-ping"
+          alt="logo"
+        />
+        <Image
+          src={logo}
+          className="relative block rounded h-14 w-14"
+          alt="logo"
+        />
       </div>
     );
   }

@@ -1,5 +1,6 @@
+import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import {
   TransactionCategoryMappingDto,
@@ -54,7 +55,7 @@ const TransferDeleteModal = ({ handleDelete }: ITransferDeleteModalProps) => {
 };
 
 export const Transfer = (): JSX.Element => {
-  const navigate = useNavigate();
+  const { push } = useRouter();
   const { id = 'id-missing' } = useParams<{ id: string }>();
   const { data: transactionCategories } =
     useAllTransactionCategoriesWithCategoryTree();
@@ -88,7 +89,7 @@ export const Transfer = (): JSX.Element => {
       return;
     }
     await deleteTransfer({ id }).unwrap();
-    navigate('/statistics/transfers');
+    push('/statistics/transfers');
   };
 
   return (
@@ -141,8 +142,8 @@ export const Transfer = (): JSX.Element => {
               <ul className="grid gap-2 lg:gap-4">
                 {(
                   transfer.categories as unknown as TransactionCategoryMappingDto[]
-                )?.map(({ amount, category_id }) => (
-                  <li className="grid grid-cols-2 gap-2 lg:gap-4">
+                )?.map(({ amount, category_id, _id }) => (
+                  <li key={_id} className="grid grid-cols-2 gap-2 lg:gap-4">
                     <InfoCard
                       iconName={IconName.tag}
                       label="Category"
