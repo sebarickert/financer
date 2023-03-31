@@ -1,5 +1,6 @@
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import { ReactComponent as Logo } from '../../../assets/logo.svg';
 import { Button } from '../../elements/button/button';
@@ -87,9 +88,9 @@ export const ErrorPage = ({
       <div className="flex items-center gap-2">
         <Button onClick={() => resetErrorBoundary()}>Fix error</Button>
         <span> or </span>
-        <NavLink to={'/'} className="font-medium underline ">
+        <Link href={'/'} className="font-medium underline ">
           return to homepage
-        </NavLink>
+        </Link>
       </div>
     </>
   );

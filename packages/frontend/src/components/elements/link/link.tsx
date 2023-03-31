@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { NavLink } from 'react-router-dom';
+import Link from 'next/link';
 
 import { isExternalLink } from '../button/button';
 
@@ -37,8 +37,8 @@ export const Link = ({
   }
 
   return (
-    <NavLink to={url} className={linkClasses} data-testid={testId}>
+    <Link href={url} className={linkClasses} data-testid={testId}>
       {linkContent}
-    </NavLink>
+    </Link>
   );
 };

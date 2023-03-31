@@ -1,5 +1,6 @@
+import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { TransactionTemplateForm } from './TransactionTemplateForm';
 
@@ -55,7 +56,7 @@ type UpdateTransactionTemplateDtoWithCategory = Omit<
 };
 
 export const EditTransactionTemplate = (): JSX.Element => {
-  const navigate = useNavigate();
+  const { push } = useRouter();
   const { id = 'id-not-found' } = useParams<{ id: string }>();
   const [errors, setErrors] = useState<string[]>([]);
   const [editTransactionTemplate, { isLoading: isSaving }] =
@@ -86,7 +87,7 @@ export const EditTransactionTemplate = (): JSX.Element => {
         updateTransactionTemplateDto: data,
       }).unwrap();
 
-      navigate('/profile/transaction-templates');
+      push('/profile/transaction-templates');
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (error.status === 400 || error.status === 404) {
@@ -105,7 +106,7 @@ export const EditTransactionTemplate = (): JSX.Element => {
       return;
     }
     deleteTransactionTemplate({ id });
-    navigate('/profile/templates');
+    push('/profile/templates');
   };
 
   const initialValues = {

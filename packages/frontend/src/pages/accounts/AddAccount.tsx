@@ -1,5 +1,5 @@
+import { useRouter } from 'next/router';
 import { useCallback, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { AccountForm, AccountFormFields } from './AccountForm';
 
@@ -9,7 +9,7 @@ import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 export const AddAccount = (): JSX.Element => {
-  const navigate = useNavigate();
+  const { push } = useRouter();
   const [addAccount, { isLoading }] = useAccountsCreateMutation();
   const [errors, setErrors] = useState<string[]>([]);
 
@@ -22,7 +22,7 @@ export const AddAccount = (): JSX.Element => {
           createAccountDto: newAccountData,
         }).unwrap();
 
-        navigate('/accounts');
+        push('/accounts');
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
         // eslint-disable-next-line no-console
@@ -34,7 +34,7 @@ export const AddAccount = (): JSX.Element => {
         }
       }
     },
-    [addAccount, navigate]
+    [addAccount, push]
   );
 
   return (

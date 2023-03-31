@@ -1,5 +1,5 @@
+import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { TransactionTemplateForm } from './TransactionTemplateForm';
 
@@ -20,7 +20,7 @@ type CreateTransactionTemplateDtoWithCategory = Omit<
 };
 
 export const AddTransactionTemplate = (): JSX.Element | null => {
-  const navigate = useNavigate();
+  const { push } = useRouter();
   const [errors, setErrors] = useState<string[]>([]);
   const [addTransactionTemplate, { isLoading: isCreating }] =
     useTransactionTemplatesCreateMutation();
@@ -40,7 +40,7 @@ export const AddTransactionTemplate = (): JSX.Element | null => {
         createTransactionTemplateDto: data,
       }).unwrap();
 
-      navigate('/profile/transaction-templates');
+      push('/profile/transaction-templates');
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (error.status === 400 || error.status === 404) {

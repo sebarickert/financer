@@ -1,5 +1,6 @@
+import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
 import { ReactComponent as Logo } from '../../../assets/logo.svg';
 import { DesktopNavigation } from '../../blocks/desktop-navigation/desktop-navigation';
@@ -51,12 +52,12 @@ export const Layout = (): JSX.Element => {
           <aside className="after:bg-gray after:ml-[-100vw] after:pr-[100vw] after:absolute after:top-0 after:bottom-0 after:right-0 relative border-r border-gray-dark">
             <div className="sticky top-0 z-10 min-h-screen pt-12 pb-12 pl-8 pr-4 bottom-12">
               <header>
-                <NavLink to="/" className="inline-flex items-center gap-3 mb-8">
+                <Link href="/" className="inline-flex items-center gap-3 mb-8">
                   <Logo className="block w-12 h-12" />
                   <h2 className="text-xl font-extrabold tracking-tighter text-black uppercase">
                     Financer
                   </h2>
-                </NavLink>
+                </Link>
                 <DesktopNavigation />
               </header>
             </div>

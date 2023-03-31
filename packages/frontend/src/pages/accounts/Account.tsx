@@ -1,7 +1,8 @@
 import { CreateTransactionCategoryMappingDtoWithoutTransaction } from '@local/types';
 import clsx from 'clsx';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { AccountDeleteModal } from './account-modals/AccountDeleteModal';
 import {
@@ -44,7 +45,7 @@ export const Account = (): JSX.Element | null => {
   const data = useAccountsFindOneByIdQuery({ id });
   const account = data.data;
 
-  const navigate = useNavigate();
+  const { push } = useRouter();
   const [deleteAccount, { isLoading: isLoadingAccount }] =
     useAccountsRemoveMutation();
   const { data: marketSettings, isLoading: isLoadingMarketSettings } =
@@ -67,7 +68,7 @@ export const Account = (): JSX.Element | null => {
       return;
     }
     await deleteAccount({ id }).unwrap();
-    navigate('/accounts');
+    push('/accounts');
   };
 
   const handleMarketValueUpdate =

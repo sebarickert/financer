@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 interface ButtonInternalProps {
   children: React.ReactNode;
@@ -17,7 +17,7 @@ export const ButtonInternal = ({
 }: ButtonInternalProps): JSX.Element => {
   return (
     <Link
-      to={link}
+      href={link}
       className={className}
       onClick={onClick}
       data-testid={testId}

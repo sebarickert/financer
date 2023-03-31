@@ -1,6 +1,6 @@
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 
 import { Form } from '$blocks/form/form';
 import { Input } from '$elements/input/input';
@@ -22,7 +22,7 @@ export interface UserDefaultMarketUpdateSettingsFormFields {
 export const UserDefaultMarketUpdateSettings = (): JSX.Element | null => {
   const methods = useForm<UserDefaultMarketUpdateSettingsFormFields>();
 
-  const navigate = useNavigate();
+  const { push } = useRouter();
   const { data, isLoading: isLoadingDefault } =
     useUserDefaultMarketUpdateSettings();
   const [setDefaultMarketUpdateSettings, { isLoading: isUpdating }] =
@@ -41,7 +41,7 @@ export const UserDefaultMarketUpdateSettings = (): JSX.Element | null => {
       category,
     });
 
-    navigate('/profile/user-preferences');
+    push('/profile/user-preferences');
   };
 
   useEffect(() => {

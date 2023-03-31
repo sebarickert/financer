@@ -1,5 +1,5 @@
+import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { IncomeForm } from './IncomeForm';
 
@@ -16,7 +16,7 @@ import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 export const AddIncome = (): JSX.Element => {
-  const navigate = useNavigate();
+  const { push } = useRouter();
   const [errors, setErrors] = useState<string[]>([]);
   const [addIncome, { isLoading: isCreating }] = useIncomesCreateMutation();
   const { data: defaultIncomeAccount, isLoading: isLoadingDefaultAccount } =
@@ -28,7 +28,7 @@ export const AddIncome = (): JSX.Element => {
         createIncomeDto: newIncomeData,
       }).unwrap();
 
-      navigate('/statistics/incomes');
+      push('/statistics/incomes');
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (error.status === 400 || error.status === 404) {

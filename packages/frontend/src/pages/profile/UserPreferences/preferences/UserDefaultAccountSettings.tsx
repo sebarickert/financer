@@ -1,6 +1,6 @@
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 
 import { useAccountsFindAllByUserQuery } from '$api/generated/financerApi';
 import { Form } from '$blocks/form/form';
@@ -35,7 +35,7 @@ export interface UserDefaultAccountSettingsFormFields {
 export const UserDefaultAccountSettings = (): JSX.Element | null => {
   const methods = useForm<UserDefaultAccountSettingsFormFields>();
 
-  const navigate = useNavigate();
+  const { push } = useRouter();
   const { data: accounts, isLoading: isLoadingAccount } =
     useAccountsFindAllByUserQuery({});
 
@@ -90,7 +90,7 @@ export const UserDefaultAccountSettings = (): JSX.Element | null => {
       setDefaultTransferTargetAccount(toAccountTransfer),
     ]);
 
-    navigate('/profile/user-preferences');
+    push('/profile/user-preferences');
   };
 
   useEffect(() => {

@@ -1,5 +1,6 @@
+import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import {
   TransactionCategoryMappingDto,
@@ -54,7 +55,7 @@ const ExpenseDeleteModal = ({ handleDelete }: IExpenseDeleteModalProps) => {
 };
 
 export const Expense = (): JSX.Element => {
-  const navigate = useNavigate();
+  const { push } = useRouter();
   const { id = 'id not found' } = useParams<{ id: string }>();
   const expenseData = useExpensesFindOneQuery({ id });
   const { data: expense } = expenseData;
@@ -80,7 +81,7 @@ export const Expense = (): JSX.Element => {
       return;
     }
     await deleteExpense({ id }).unwrap();
-    navigate('/statistics/expenses');
+    push('/statistics/expenses');
   };
 
   return (

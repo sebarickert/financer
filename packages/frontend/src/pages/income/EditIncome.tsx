@@ -1,5 +1,6 @@
+import { useRouter } from 'next/router';
 import { useMemo, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { IncomeForm } from './IncomeForm';
 
@@ -15,7 +16,7 @@ import { parseErrorMessagesToArray } from '$utils/apiHelper';
 import { inputDateFormat } from '$utils/formatDate';
 
 export const EditIncome = (): JSX.Element => {
-  const navigate = useNavigate();
+  const { push } = useRouter();
   const [errors, setErrors] = useState<string[]>([]);
   const { id = 'missing-id' } = useParams<{ id: string }>();
 
@@ -34,7 +35,7 @@ export const EditIncome = (): JSX.Element => {
         id,
       }).unwrap();
 
-      navigate('/statistics/incomes');
+      push('/statistics/incomes');
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (error.status === 400 || error.status === 404) {

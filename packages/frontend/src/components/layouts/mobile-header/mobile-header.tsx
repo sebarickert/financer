@@ -1,5 +1,5 @@
 import { clsx } from 'clsx';
-import { NavLink } from 'react-router-dom';
+import Link from 'next/link';
 
 import { usePageInfoContext } from '../../../context/pageInfoContext';
 import { Heading } from '../../elements/heading/heading';
@@ -27,14 +27,14 @@ export const MobileHeader = (): JSX.Element => {
       )}
     >
       {backLink && (
-        <NavLink
-          to={backLink}
+        <Link
+          href={backLink}
           className="inline-flex items-center justify-center border rounded-full h-11 w-11 bg-gray border-gray-dark"
           data-testid="header-back-link"
         >
           <span className="sr-only">Go back</span>
           <Icon type={IconName.chevronLeft} />
-        </NavLink>
+        </Link>
       )}
       <Heading
         variant="h1"
