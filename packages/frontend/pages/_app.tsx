@@ -13,16 +13,19 @@ import { Notification } from '$elements/notification/notification';
 import { ScrollToTop } from '$renderers/scroll-to-top/scroll-to-top';
 import { SEO } from '$renderers/seo/seo';
 import { PageInfoProvider } from 'context/pageInfoContext';
+import { Login } from 'pages/login/login';
 import { store } from 'redux/store';
 
 import '../src/assets/tailwind.css';
 
 // ChartJS.register(zoomPlugin);
 
+const PUBLIC_ROUTES = ['/privacy-policy', '/issues-with-login'];
+
 const App = ({ Component, pageProps }: AppProps) => {
   const { data: authenticationStatus, isLoading } =
     useAuthGetAuthenticationStatusQuery();
-  const { push } = useRouter();
+  const { push, pathname } = useRouter();
 
   const [isOnboardingVisible, setOnboardingVisible] = useState(false);
 
@@ -44,6 +47,8 @@ const App = ({ Component, pageProps }: AppProps) => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const errors = authenticationStatus?.errors;
+  const isAuthenticated = authenticationStatus?.authenticated;
+  const isPublicRoute = PUBLIC_ROUTES.includes(pathname);
 
   return (
     <>
@@ -58,7 +63,11 @@ const App = ({ Component, pageProps }: AppProps) => {
           Financer.
         </Notification>
       )}
-      <Component {...pageProps} />
+      {isAuthenticated || isPublicRoute ? (
+        <Component {...pageProps} />
+      ) : (
+        <Login />
+      )}
     </>
   );
 };

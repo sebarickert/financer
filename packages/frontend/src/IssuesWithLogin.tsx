@@ -2,8 +2,10 @@ import Link from 'next/link';
 
 import { UpdatePageInfo } from './components/renderers/seo/updatePageInfo';
 
-const { REACT_APP_IS_GITHUB_OAUTH_ENABLED, REACT_APP_IS_AUTH0_OAUTH_ENABLED } =
-  process.env;
+const {
+  NEXT_PUBLIC_IS_GITHUB_OAUTH_ENABLED,
+  NEXT_PUBLIC_IS_AUTH0_OAUTH_ENABLED,
+} = process.env;
 
 const checkIsEnabled = (stringBoolean: string | undefined) =>
   stringBoolean && stringBoolean.toLocaleLowerCase() !== 'false';
@@ -54,10 +56,10 @@ export const IssuesWithLogin = (): JSX.Element => {
             Login issues to Financer
           </span>
         </h1>
-        {checkIsEnabled(REACT_APP_IS_GITHUB_OAUTH_ENABLED) && (
+        {checkIsEnabled(NEXT_PUBLIC_IS_GITHUB_OAUTH_ENABLED) && (
           <ResolveGithubIssues />
         )}
-        {checkIsEnabled(REACT_APP_IS_AUTH0_OAUTH_ENABLED) && (
+        {checkIsEnabled(NEXT_PUBLIC_IS_AUTH0_OAUTH_ENABLED) && (
           <ResolveAuth0Issues />
         )}
       </div>

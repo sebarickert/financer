@@ -1,21 +1,31 @@
+import Image from 'next/image';
 import { useState } from 'react';
-
-import { ReactComponent as Logo } from '../../assets/logo.svg';
-import { ButtonGroup } from '../../components/elements/button/button.group';
-import { DialogText } from '../../components/elements/dialog/dialog.text';
-import { LoaderFullScreen } from '../../components/elements/loader/loader.fullscreen';
-import { UpdatePageInfo } from '../../components/renderers/seo/updatePageInfo';
 
 import { LoginActions } from './login.actions';
 import { LoginFooter } from './login.footer';
 
-const { REACT_APP_IS_GITHUB_OAUTH_ENABLED, REACT_APP_IS_AUTH0_OAUTH_ENABLED } =
-  process.env;
+import { ButtonGroup } from '$elements/button/button.group';
+import { DialogText } from '$elements/dialog/dialog.text';
+import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
+import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+
+const {
+  NEXT_PUBLIC_IS_GITHUB_OAUTH_ENABLED,
+  NEXT_PUBLIC_IS_AUTH0_OAUTH_ENABLED,
+} = process.env;
 
 const checkIsEnabled = (stringBoolean: string | undefined) =>
   stringBoolean && stringBoolean.toLocaleLowerCase() !== 'false';
 
 export const Login = (): JSX.Element => {
+  console.log(
+    'NEXT_PUBLIC_IS_GITHUB_OAUTH_ENABLED',
+    NEXT_PUBLIC_IS_GITHUB_OAUTH_ENABLED
+  );
+  console.log(
+    'NEXT_PUBLIC_IS_AUTH0_OAUTH_ENABLED',
+    NEXT_PUBLIC_IS_AUTH0_OAUTH_ENABLED
+  );
   const [isLoadingOAuthPage, setIsLoadingOAuthPage] = useState(false);
 
   const startAuthLoading = () => setTimeout(setIsLoadingOAuthPage, 500, true);
@@ -27,7 +37,13 @@ export const Login = (): JSX.Element => {
       <section className="flex flex-col items-center justify-end h-screen bg-charcoal sm:justify-center max-sm:pb-[calc(78px+env(safe-area-inset-bottom))]">
         <section className="p-6 border rounded-md sm:w-full backdrop:bg-charcoal backdrop:opacity-30 max-sm:mx-6 sm:max-w-screen-sm bg-gray border-gray-dark">
           <span className="inline-flex items-center gap-3 mb-6">
-            <Logo className="w-12 h-12" />
+            <Image
+              src="/logo.svg"
+              alt="Financer logo"
+              className="w-12 h-12"
+              width={48}
+              height={48}
+            />
             <h2 className="text-xl font-extrabold tracking-tighter text-black uppercase">
               Financer
             </h2>
@@ -36,14 +52,14 @@ export const Login = (): JSX.Element => {
             Please login to manage your accounts, expenses and incomes.
           </DialogText>
           <ButtonGroup isReverse>
-            {checkIsEnabled(REACT_APP_IS_GITHUB_OAUTH_ENABLED) && (
+            {checkIsEnabled(NEXT_PUBLIC_IS_GITHUB_OAUTH_ENABLED) && (
               <LoginActions
                 submitButtonLabel="Login with Github"
                 loginUrl="/auth/github"
                 onClick={startAuthLoading}
               />
             )}
-            {checkIsEnabled(REACT_APP_IS_AUTH0_OAUTH_ENABLED) && (
+            {checkIsEnabled(NEXT_PUBLIC_IS_AUTH0_OAUTH_ENABLED) && (
               <LoginActions
                 submitButtonLabel="Login with Auth0"
                 loginUrl="/auth/auth0"
