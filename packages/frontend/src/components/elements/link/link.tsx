@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import Link from 'next/link';
+import NextLink from 'next/link';
 
 import { isExternalLink } from '../button/button';
 
@@ -37,8 +37,8 @@ export const Link = ({
   }
 
   return (
-    <Link href={url} className={linkClasses} data-testid={testId}>
+    <NextLink href={url} className={linkClasses} data-testid={testId}>
       {linkContent}
-    </Link>
+    </NextLink>
   );
 };

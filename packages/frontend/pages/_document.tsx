@@ -1,14 +1,9 @@
 import { Html, Head, Main, NextScript } from 'next/document';
 
-// eslint-disable-next-line import/no-default-export
 export default function Document() {
   return (
     <Html>
       <Head>
-        <meta
-          name="viewport"
-          content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover"
-        />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-touch-fullscreen" content="yes" />
         <meta name="apple-mobile-web-app-title" content="Financer" />
