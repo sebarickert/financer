@@ -2,10 +2,10 @@ import Link from 'next/link';
 
 import { UpdatePageInfo } from './components/renderers/seo/updatePageInfo';
 
-const {
-  NEXT_PUBLIC_IS_GITHUB_OAUTH_ENABLED,
-  NEXT_PUBLIC_IS_AUTH0_OAUTH_ENABLED,
-} = process.env;
+const NEXT_PUBLIC_IS_GITHUB_OAUTH_ENABLED =
+  process.env.NEXT_PUBLIC_IS_GITHUB_OAUTH_ENABLED;
+const NEXT_PUBLIC_IS_AUTH0_OAUTH_ENABLED =
+  process.env.NEXT_PUBLIC_IS_AUTH0_OAUTH_ENABLED;
 
 const checkIsEnabled = (stringBoolean: string | undefined) =>
   stringBoolean && stringBoolean.toLocaleLowerCase() !== 'false';
