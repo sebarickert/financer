@@ -6,12 +6,10 @@ import { IconName } from '../../../components/elements/icon/icon';
 import { LinkListButton } from '../../../components/elements/link-list/link-list.button';
 
 interface IAccountDeleteModalProps {
-  handleDelete(): void;
+  onDelete: () => void;
 }
 
-export const AccountDeleteModal = ({
-  handleDelete,
-}: IAccountDeleteModalProps) => {
+export const AccountDeleteModal = ({ onDelete }: IAccountDeleteModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleToggleOpen = () => setIsOpen(!isOpen);
@@ -27,7 +25,7 @@ export const AccountDeleteModal = ({
       </LinkListButton>
       <Dialog isDialogOpen={isOpen} setIsDialogOpen={setIsOpen}>
         <DialogConfirm
-          onConfirm={handleDelete}
+          onConfirm={onDelete}
           onCancel={handleToggleOpen}
           label="Delete account"
           submitButtonLabel="Delete"

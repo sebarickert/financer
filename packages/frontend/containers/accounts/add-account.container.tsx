@@ -1,14 +1,12 @@
 import { useRouter } from 'next/router';
-import { useCallback, useState } from 'react';
-
-import { AccountForm, AccountFormFields } from './AccountForm';
+import { useState, useCallback } from 'react';
 
 import { useAccountsCreateMutation } from '$api/generated/financerApi';
-import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
-import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { AccountFormFields } from '$pages/accounts/AccountForm';
+import { AddAccount } from '$pages/accounts/add-account';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
-export const AddAccount = (): JSX.Element => {
+export const AddAccountContainer = () => {
   const { push } = useRouter();
   const [addAccount, { isLoading }] = useAccountsCreateMutation();
   const [errors, setErrors] = useState<string[]>([]);
@@ -38,14 +36,10 @@ export const AddAccount = (): JSX.Element => {
   );
 
   return (
-    <>
-      {isLoading && <LoaderFullScreen />}
-      <UpdatePageInfo title="Add account" backLink="/accounts" />
-      <AccountForm
-        onSubmit={handleSubmit}
-        errors={errors}
-        submitLabel="Submit"
-      />
-    </>
+    <AddAccount
+      isLoading={isLoading}
+      errors={errors}
+      onAddAccount={handleSubmit}
+    />
   );
 };

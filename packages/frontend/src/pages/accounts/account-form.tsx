@@ -1,12 +1,11 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { Form } from '../../components/blocks/form/form';
-import { Alert } from '../../components/elements/alert/alert';
-import { Input } from '../../components/elements/input/input';
-import { Select, Option } from '../../components/elements/select/select';
-import { capitalize } from '../../utils/capitalize';
-
 import { AccountType, AccountTypeEnum } from '$api/generated/financerApi';
+import { Form } from '$blocks/form/form';
+import { Alert } from '$elements/alert/alert';
+import { Input } from '$elements/input/input';
+import { Select, Option } from '$elements/select/select';
+import { capitalize } from '$utils/capitalize';
 
 interface AccountFormProps {
   errors: string[];

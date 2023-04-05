@@ -1,4 +1,4 @@
-import { useResolvedPath, useMatch, useLocation } from 'react-router-dom';
+import { useRouter } from 'next/router';
 
 type UseIsActiveLinkProps = {
   link: string;
@@ -11,12 +11,10 @@ export const useIsActiveLink = ({
   isExact = false,
   disallowedPathEndings = [],
 }: UseIsActiveLinkProps) => {
-  const resolved = useResolvedPath(link);
-  const match = useMatch({ path: resolved.pathname, end: isExact });
-  const location = useLocation();
+  const { pathname } = useRouter();
+  const match = isExact ? pathname === link : pathname.startsWith(link);
 
   return (
-    Boolean(match) &&
-    !disallowedPathEndings.some((part) => location.pathname.endsWith(part))
+    match && !disallowedPathEndings.some((part) => pathname.endsWith(part))
   );
 };
