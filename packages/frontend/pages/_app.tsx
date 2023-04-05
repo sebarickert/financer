@@ -10,6 +10,7 @@ import { ErrorBoundaryHandler } from '$blocks/error-boundary/error-boundary';
 import { Loader } from '$elements/loader/loader';
 import { LoaderSuspense } from '$elements/loader/loader-suspense';
 import { Notification } from '$elements/notification/notification';
+import { Layout } from '$layouts/layout/layout';
 import { ScrollToTop } from '$renderers/scroll-to-top/scroll-to-top';
 import { SEO } from '$renderers/seo/seo';
 import { PageInfoProvider } from 'context/pageInfoContext';
@@ -64,7 +65,9 @@ const App = ({ Component, pageProps }: AppProps) => {
         </Notification>
       )}
       {isAuthenticated || isPublicRoute ? (
-        <Component {...pageProps} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       ) : (
         <Login />
       )}

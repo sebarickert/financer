@@ -1,17 +1,18 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src/",
+    "baseUrl": "./",
     "paths": {
-      "$api/*": ["redux/api/*"],
-      "$blocks/*": ["components/blocks/*"],
-      "$elements/*": ["components/elements/*"],
-      "$layouts/*": ["components/layouts/*"],
-      "$pages/*": ["components/pages/*"],
-      "$renderers/*": ["components/renderers/*"],
-      "$hooks/*": ["hooks/*"],
-      "$assets/*": ["assets/*"],
-      "$utils/*": ["utils/*"],
-      "$constants/*": ["constants/*"]
+      "$api/*": ["./src/redux/api/*"],
+      "$blocks/*": ["./src/components/blocks/*"],
+      "$elements/*": ["./src/components/elements/*"],
+      "$layouts/*": ["./src/components/layouts/*"],
+      "$pages/*": ["./src/pages/*"],
+      "$renderers/*": ["./src/components/renderers/*"],
+      "$hooks/*": ["./src/hooks/*"],
+      "$assets/*": ["./src/assets/*"],
+      "$utils/*": ["./src/utils/*"],
+      "$constants/*": ["./src/constants/*"],
+      "$container/*": ["./containers/*"]
     }
   }
 }

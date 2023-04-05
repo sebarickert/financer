@@ -1,8 +1,7 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
 
-import { ReactComponent as Logo } from '../../../assets/logo.svg';
 import { DesktopNavigation } from '../../blocks/desktop-navigation/desktop-navigation';
 import { ErrorBoundaryHandler } from '../../blocks/error-boundary/error-boundary';
 import { MobileNavigation } from '../../blocks/mobile-navigation/mobile-navigation';
@@ -11,15 +10,23 @@ import { Container } from '../container/container';
 import { DesktopHeader } from '../desktop-header/desktop-header';
 import { MobileHeader } from '../mobile-header/mobile-header';
 
-const OutletWithErrorBoundary = (): JSX.Element => (
+type ChildrenWithErrorBoundaryProps = {
+  children: React.ReactNode;
+};
+
+const ChildrenWithErrorBoundary = ({
+  children,
+}: ChildrenWithErrorBoundaryProps): JSX.Element => (
   <ErrorBoundaryHandler errorPage="in-app">
-    <LoaderSuspense>
-      <Outlet />
-    </LoaderSuspense>
+    <LoaderSuspense>{children}</LoaderSuspense>
   </ErrorBoundaryHandler>
 );
 
-export const Layout = (): JSX.Element => {
+type LayoutProps = {
+  children: React.ReactNode;
+};
+
+export const Layout = ({ children }: LayoutProps): JSX.Element => {
   const [currentWindowWidth, setCurrentWindowWidth] = useState(
     window.outerWidth
   );
@@ -41,9 +48,21 @@ export const Layout = (): JSX.Element => {
     return () => clearTimeout(timeout);
   }, []);
 
-  window.addEventListener('resize', () =>
-    setCurrentWindowWidth(window.outerWidth)
-  );
+  useEffect(() => {
+    const action = () => setCurrentWindowWidth(window.outerWidth);
+    let timeout: NodeJS.Timeout;
+
+    window.addEventListener('resize', () => {
+      if (timeout) {
+        clearTimeout(timeout);
+      }
+      timeout = setTimeout(action, 50);
+    });
+
+    return () => window.removeEventListener('resize', () => action);
+  }, []);
+
+  console.log(currentWindowWidth);
 
   if (currentWindowWidth >= 1024) {
     return (
@@ -53,7 +72,14 @@ export const Layout = (): JSX.Element => {
             <div className="sticky top-0 z-10 min-h-screen pt-12 pb-12 pl-8 pr-4 bottom-12">
               <header>
                 <Link href="/" className="inline-flex items-center gap-3 mb-8">
-                  <Logo className="block w-12 h-12" />
+                  <Image
+                    src="/logo.svg"
+                    alt="Financer logo"
+                    className="w-12 h-12"
+                    width={48}
+                    height={48}
+                  />
+
                   <h2 className="text-xl font-extrabold tracking-tighter text-black uppercase">
                     Financer
                   </h2>
@@ -65,7 +91,7 @@ export const Layout = (): JSX.Element => {
           <main>
             <div className="px-8 py-12" data-testid="layout-root">
               <DesktopHeader />
-              <OutletWithErrorBoundary />
+              <ChildrenWithErrorBoundary>{children}</ChildrenWithErrorBoundary>
             </div>
           </main>
         </Container>
@@ -77,7 +103,7 @@ export const Layout = (): JSX.Element => {
     <div className="flex flex-col h-full min-h-screen overflow-y-scroll lg:hidden">
       <main className="flex-grow bg-white lg:pb-24 min-h-screen-safe pb-safe">
         <div className={`px-4 mt-[64px] pt-4 pb-24`} data-testid="layout-root">
-          <OutletWithErrorBoundary />
+          <ChildrenWithErrorBoundary>{children}</ChildrenWithErrorBoundary>
         </div>
       </main>
       <header>

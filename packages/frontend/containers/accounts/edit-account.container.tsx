@@ -1,23 +1,19 @@
 import { useRouter } from 'next/router';
-import { useCallback, useState } from 'react';
-import { useParams } from 'react-router-dom';
-
-import { AccountForm, AccountFormFields } from './AccountForm';
+import { useState, useCallback } from 'react';
 
 import {
-  useAccountsFindOneByIdQuery,
   useAccountsUpdateMutation,
+  useAccountsFindOneByIdQuery,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
-import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
-import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
-import { parseErrorMessagesToArray } from '$utils/apiHelper';
+import { AccountFormFields } from '$pages/accounts/account-form';
+import { EditAccount } from '$pages/accounts/edit-account';
 
-export const EditAccount = (): JSX.Element => {
-  const { id } = useParams<{ id: string }>();
+interface EditAccountContainerProps {
+  id: string;
+}
 
-  if (!id) throw new Error('Account id is not defined');
-
+export const EditAccountContainer = ({ id }: EditAccountContainerProps) => {
   const { push } = useRouter();
   const [editAccount, { isLoading }] = useAccountsUpdateMutation();
 
@@ -57,21 +53,14 @@ export const EditAccount = (): JSX.Element => {
 
   return (
     <>
-      {isLoading && <LoaderFullScreen />}
       <DataHandler {...data} />
-      {!!account && (
-        <>
-          <UpdatePageInfo
-            title={`Edit ${account.name}`}
-            backLink={`/accounts/${account._id}`}
-          />
-          <AccountForm
-            onSubmit={handleSubmit}
-            errors={errors}
-            submitLabel="Update"
-            initialValues={account}
-          />
-        </>
+      {account && (
+        <EditAccount
+          account={account}
+          isLoading={isLoading}
+          errors={errors}
+          onSave={handleSubmit}
+        />
       )}
     </>
   );

@@ -18,14 +18,6 @@ const checkIsEnabled = (stringBoolean: string | undefined) =>
   stringBoolean && stringBoolean.toLocaleLowerCase() !== 'false';
 
 export const Login = (): JSX.Element => {
-  console.log(
-    'NEXT_PUBLIC_IS_GITHUB_OAUTH_ENABLED',
-    NEXT_PUBLIC_IS_GITHUB_OAUTH_ENABLED
-  );
-  console.log(
-    'NEXT_PUBLIC_IS_AUTH0_OAUTH_ENABLED',
-    NEXT_PUBLIC_IS_AUTH0_OAUTH_ENABLED
-  );
   const [isLoadingOAuthPage, setIsLoadingOAuthPage] = useState(false);
 
   const startAuthLoading = () => setTimeout(setIsLoadingOAuthPage, 500, true);
