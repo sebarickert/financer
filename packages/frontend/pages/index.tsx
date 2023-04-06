@@ -1,11 +1,7 @@
-import clsx from 'clsx';
+import { Dashboard } from '$pages/dashboard/dashboard';
 
-interface HomePageProps {
-  className?: string;
-}
-
-const HomePage = ({ className = '' }: HomePageProps) => {
-  return <div className={clsx('', { [className]: true })}>HomePage</div>;
+const HomePage = () => {
+  return <Dashboard />;
 };
 
 export default HomePage;

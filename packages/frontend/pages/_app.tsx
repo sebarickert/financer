@@ -1,5 +1,3 @@
-import ChartJS from 'chart.js/auto';
-import zoomPlugin from 'chartjs-plugin-zoom';
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
@@ -7,19 +5,18 @@ import { Provider } from 'react-redux';
 
 import { useAuthGetAuthenticationStatusQuery } from '$api/generated/financerApi';
 import { ErrorBoundaryHandler } from '$blocks/error-boundary/error-boundary';
+import { ChartDynamic } from '$elements/chart/chart.dynamic';
 import { Loader } from '$elements/loader/loader';
 import { LoaderSuspense } from '$elements/loader/loader-suspense';
 import { Notification } from '$elements/notification/notification';
 import { Layout } from '$layouts/layout/layout';
+import { Login } from '$pages/login/login';
 import { ScrollToTop } from '$renderers/scroll-to-top/scroll-to-top';
 import { SEO } from '$renderers/seo/seo';
-import { PageInfoProvider } from 'context/pageInfoContext';
-import { Login } from 'pages/login/login';
-import { store } from 'redux/store';
+import { PageInfoProvider } from 'src/context/pageInfoContext';
+import { store } from 'src/redux/store';
 
 import '../src/assets/tailwind.css';
-
-// ChartJS.register(zoomPlugin);
 
 const PUBLIC_ROUTES = ['/privacy-policy', '/issues-with-login'];
 
@@ -53,6 +50,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 
   return (
     <>
+      <ChartDynamic />
       {errors && (
         <Notification type="error" label="Something went wrong!">
           {errors.join(' ') || ''}
