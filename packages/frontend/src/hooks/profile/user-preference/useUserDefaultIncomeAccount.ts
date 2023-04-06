@@ -8,10 +8,13 @@ import {
 
 const userPreferenceProperty = UserPreferencePropertyEnum.DefaultIncomeAccount;
 
-export const useUserDefaultIncomeAccount = () => {
-  const data = useUserPreferencesFindOneQuery({
-    userPreferenceProperty,
-  });
+export const useUserDefaultIncomeAccount = ({ skip = false } = {}) => {
+  const data = useUserPreferencesFindOneQuery(
+    {
+      userPreferenceProperty,
+    },
+    { skip }
+  );
 
   return {
     ...data,

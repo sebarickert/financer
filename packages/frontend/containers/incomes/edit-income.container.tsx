@@ -1,8 +1,5 @@
 import { useRouter } from 'next/router';
-import { useMemo, useState } from 'react';
-import { useParams } from 'react-router-dom';
-
-import { IncomeForm } from './IncomeForm';
+import { useState } from 'react';
 
 import {
   UpdateIncomeDto,
@@ -10,15 +7,16 @@ import {
   useIncomesUpdateMutation,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
-import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
-import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { EditIncome } from '$pages/income/edit-income';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
-import { inputDateFormat } from '$utils/formatDate';
 
-export const EditIncome = (): JSX.Element => {
+interface EditIncomeContainerProps {
+  id: string;
+}
+
+export const EditIncomeContainer = ({ id }: EditIncomeContainerProps) => {
   const { push } = useRouter();
   const [errors, setErrors] = useState<string[]>([]);
-  const { id = 'missing-id' } = useParams<{ id: string }>();
 
   const incomeData = useIncomesFindOneQuery({ id });
   const { data: income } = incomeData;
@@ -47,26 +45,15 @@ export const EditIncome = (): JSX.Element => {
       console.error(error);
     }
   };
-
-  const initialValues = useMemo(() => {
-    if (!income) return undefined;
-    return {
-      ...income,
-      date: inputDateFormat(new Date(income.date)),
-    };
-  }, [income]);
-
   return (
     <>
-      {isSaving && <LoaderFullScreen />}
       <DataHandler {...incomeData} />
-      <UpdatePageInfo title={`Edit ${income?.description}`} />
       {income && (
-        <IncomeForm
-          onSubmit={handleSubmit}
+        <EditIncome
+          isLoading={isSaving}
+          income={income}
           errors={errors}
-          submitLabel="Update"
-          initialValues={initialValues}
+          onSave={handleSubmit}
         />
       )}
     </>
