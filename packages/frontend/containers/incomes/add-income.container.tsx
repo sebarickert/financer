@@ -1,26 +1,33 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
-import { IncomeForm } from './IncomeForm';
-
 import {
   CreateIncomeDto,
-  TransactionTypeEnum,
   useIncomesCreateMutation,
+  useTransactionTemplatesFindOneQuery,
 } from '$api/generated/financerApi';
-import { TransactionTemplateSwitcher } from '$blocks/transaction-template-switcher/transaction-template-switcher';
-import { Loader } from '$elements/loader/loader';
-import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
+import { DataHandler } from '$blocks/data-handler/data-handler';
 import { useUserDefaultIncomeAccount } from '$hooks/profile/user-preference/useUserDefaultIncomeAccount';
-import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { AddIncome } from '$pages/income/add-income';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
-export const AddIncome = (): JSX.Element => {
+interface AddIncomeContainerProps {
+  templateId?: string;
+}
+
+export const AddIncomeContainer = ({ templateId }: AddIncomeContainerProps) => {
   const { push } = useRouter();
   const [errors, setErrors] = useState<string[]>([]);
   const [addIncome, { isLoading: isCreating }] = useIncomesCreateMutation();
   const { data: defaultIncomeAccount, isLoading: isLoadingDefaultAccount } =
-    useUserDefaultIncomeAccount();
+    useUserDefaultIncomeAccount({ skip: !!templateId });
+
+  const templateData = useTransactionTemplatesFindOneQuery(
+    { id: templateId as string },
+    { skip: !templateId }
+  );
+
+  const { data: transactionTemplate } = templateData;
 
   const handleSubmit = async (newIncomeData: CreateIncomeDto) => {
     try {
@@ -42,25 +49,18 @@ export const AddIncome = (): JSX.Element => {
   };
 
   const isLoading = isLoadingDefaultAccount;
+
   return (
     <>
-      {isCreating && <LoaderFullScreen />}
-      <UpdatePageInfo
-        title="Add income"
-        headerAction={
-          <TransactionTemplateSwitcher
-            templateType={TransactionTypeEnum.Income}
-          />
-        }
-      />
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <IncomeForm
-          onSubmit={handleSubmit}
+      <DataHandler skipNotFound {...templateData} />
+      {(!templateId || transactionTemplate) && (
+        <AddIncome
+          defaultIncomeAccount={defaultIncomeAccount}
+          incomeTemplate={transactionTemplate}
+          isLoading={isLoading}
+          isCreating={isCreating}
           errors={errors}
-          submitLabel="Submit"
-          initialValues={{ toAccount: defaultIncomeAccount }}
+          onSubmit={handleSubmit}
         />
       )}
     </>

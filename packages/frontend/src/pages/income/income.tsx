@@ -1,14 +1,9 @@
-import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
 
 import {
+  IncomeDto,
   TransactionCategoryMappingDto,
-  useAccountsFindOneByIdQuery,
-  useIncomesFindOneQuery,
-  useIncomesRemoveMutation,
 } from '$api/generated/financerApi';
-import { DataHandler } from '$blocks/data-handler/data-handler';
 import { Button } from '$elements/button/button';
 import { ButtonGroup } from '$elements/button/button.group';
 import { DialogConfirm } from '$elements/dialog/confirm/dialog.confirm';
@@ -17,16 +12,15 @@ import { Divider } from '$elements/divider/divider';
 import { IconName } from '$elements/icon/icon';
 import { InfoCard } from '$elements/info-card/info-card';
 import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
-import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { formatCurrency } from '$utils/formatCurrency';
 import { formatDate } from '$utils/formatDate';
 
-interface IIncomeDeleteModalProps {
-  handleDelete(): void;
+interface IncomeDeleteModalProps {
+  onDelete: () => void;
 }
 
-const IncomeDeleteModal = ({ handleDelete }: IIncomeDeleteModalProps) => {
+const IncomeDeleteModal = ({ onDelete }: IncomeDeleteModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -40,7 +34,7 @@ const IncomeDeleteModal = ({ handleDelete }: IIncomeDeleteModalProps) => {
       <Dialog isDialogOpen={isOpen} setIsDialogOpen={setIsOpen}>
         <DialogConfirm
           label="Delete income"
-          onConfirm={handleDelete}
+          onConfirm={onDelete}
           onCancel={() => setIsOpen(!isOpen)}
           submitButtonLabel="Delete"
           iconName={IconName.exclamation}
@@ -54,39 +48,24 @@ const IncomeDeleteModal = ({ handleDelete }: IIncomeDeleteModalProps) => {
   );
 };
 
-export const Income = (): JSX.Element => {
-  const { push } = useRouter();
-  const { id = 'missing-id' } = useParams<{ id: string }>();
-  const incomeData = useIncomesFindOneQuery({ id });
-  const { data: income } = incomeData;
+interface IncomeProps {
+  isLoading: boolean;
+  income: IncomeDto;
+  accountName?: string;
+  onDelete: () => void;
+  getCategoryNameById: (categoryId: string) => string;
+}
 
-  const accountData = useAccountsFindOneByIdQuery(
-    { id: income?.toAccount as string },
-    { skip: !income?.toAccount }
-  );
-  const account = accountData.data;
-
-  const { data: transactionCategories } =
-    useAllTransactionCategoriesWithCategoryTree();
-  const [deleteIncome, { isLoading: isDeleting }] = useIncomesRemoveMutation();
-
-  const getCategoryNameById = (categoryId: string) =>
-    transactionCategories?.find((category) => category._id === categoryId)
-      ?.categoryTree || categoryId;
-
-  const handleDelete = async () => {
-    if (!id) {
-      console.error('Failed to delete income: no id');
-      return;
-    }
-    await deleteIncome({ id }).unwrap();
-    push('/statistics/incomes');
-  };
-
+export const Income = ({
+  isLoading,
+  income,
+  accountName,
+  onDelete,
+  getCategoryNameById,
+}: IncomeProps): JSX.Element => {
   return (
     <>
-      {isDeleting && <LoaderFullScreen />}
-      <DataHandler {...incomeData} />
+      {isLoading && <LoaderFullScreen />}
       <UpdatePageInfo
         title={`${income?.description}`}
         backLink="/statistics/incomes"
@@ -114,7 +93,7 @@ export const Income = (): JSX.Element => {
               className="col-span-full"
               isLarge
             >
-              {account?.name ?? '-'}
+              {accountName ?? '-'}
             </InfoCard>
           </section>
           {income.categories.length > 0 && (
@@ -146,12 +125,12 @@ export const Income = (): JSX.Element => {
           )}
           <ButtonGroup className="mt-4">
             <Button
-              link={`/statistics/incomes/${id}/edit`}
+              link={`/statistics/incomes/${income._id}/edit`}
               testId="edit-income-button"
             >
               Edit
             </Button>
-            <IncomeDeleteModal handleDelete={handleDelete} />
+            <IncomeDeleteModal onDelete={onDelete} />
           </ButtonGroup>
         </section>
       )}

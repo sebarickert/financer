@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import { MonthlySummaryGraph } from '$blocks/monthly-summary-graph/monthly-summary-graph';
 import {
   initialMonthFilterOptions,
@@ -12,34 +10,21 @@ import { IconName } from '$elements/icon/icon';
 import { LoaderSuspense } from '$elements/loader/loader-suspense';
 import { QuickLinks } from '$elements/quick-links/quick-links';
 import { QuickLinksItem } from '$elements/quick-links/quick-links.item';
-import { useFirstTransaction } from '$hooks/transaction/useFirstTransaction';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
-export const Statistics = (): JSX.Element => {
-  const [monthFilterOptions, setMonthFilterOptions] = useState(
-    initialMonthFilterOptions
-  );
-  const { data: transaction } = useFirstTransaction();
+interface StatisticsProps {
+  filterOptions: typeof initialMonthFilterOptions;
+  firstAvailableTransaction: Date;
+  onMonthOptionChange: (direction: 'next' | 'previous') => void;
+}
 
-  const firstTransactionEverDate = new Date(transaction?.date || new Date());
-
-  const pageVisibleYear = monthFilterOptions.year;
-  const pageVisibleMonth = monthNames[monthFilterOptions.month - 1];
-
-  const handleMonthOptionChange = (direction: 'next' | 'previous') => {
-    const { month, year } = monthFilterOptions;
-    const monthWithTwoDigits = month.toString().padStart(2, '0');
-    const selectedMonth = new Date(`${year}-${monthWithTwoDigits}-01`);
-
-    selectedMonth.setMonth(
-      selectedMonth.getMonth() + (direction === 'next' ? 1 : -1)
-    );
-
-    setMonthFilterOptions({
-      month: selectedMonth.getMonth() + 1,
-      year: selectedMonth.getFullYear(),
-    });
-  };
+export const Statistics = ({
+  filterOptions,
+  firstAvailableTransaction,
+  onMonthOptionChange,
+}: StatisticsProps): JSX.Element => {
+  const pageVisibleYear = filterOptions.year;
+  const pageVisibleMonth = monthNames[filterOptions.month - 1];
 
   return (
     <>
@@ -51,26 +36,25 @@ export const Statistics = (): JSX.Element => {
           pagerOptions={{
             nextPage: {
               isAvailable: !(
-                monthFilterOptions.month === initialMonthFilterOptions.month &&
-                monthFilterOptions.year === initialMonthFilterOptions.year
+                filterOptions.month === initialMonthFilterOptions.month &&
+                filterOptions.year === initialMonthFilterOptions.year
               ),
-              load: () => handleMonthOptionChange('next'),
+              load: () => onMonthOptionChange('next'),
             },
             previousPage: {
               isAvailable: !(
-                monthFilterOptions.month ===
-                  firstTransactionEverDate.getMonth() + 1 &&
-                monthFilterOptions.year ===
-                  firstTransactionEverDate.getFullYear()
+                filterOptions.month ===
+                  firstAvailableTransaction.getMonth() + 1 &&
+                filterOptions.year === firstAvailableTransaction.getFullYear()
               ),
-              load: () => handleMonthOptionChange('previous'),
+              load: () => onMonthOptionChange('previous'),
             },
           }}
         />
       </section>
       <LoaderSuspense>
         <MonthlyTransactionList
-          monthFilterOptions={monthFilterOptions}
+          monthFilterOptions={filterOptions}
           isSummaryVisible
         />
       </LoaderSuspense>
