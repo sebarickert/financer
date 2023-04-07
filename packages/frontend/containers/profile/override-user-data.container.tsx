@@ -1,21 +1,13 @@
-import { ChangeEvent, useState } from 'react';
-import { useMemo } from 'react';
+import { useState, useMemo, ChangeEvent } from 'react';
 
 import {
   UserDataImportDto,
   useUsersOverrideAllOwnUserDataMutation,
 } from '$api/generated/financerApi';
-import { Button } from '$elements/button/button';
-import { Heading } from '$elements/heading/heading';
-import { InfoCard } from '$elements/info-card/info-card';
-import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
-import {
-  Notification,
-  NotificationProps,
-} from '$elements/notification/notification';
-import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { NotificationProps } from '$elements/notification/notification';
+import { OverrideUserData } from '$pages/profile/override-user-data';
 
-export const ProfileOverrideData = (): JSX.Element => {
+export const OverrideUserDataContainer = () => {
   const [uploadedUserData, setUploadedUserData] =
     useState<UserDataImportDto | null>(null);
   const [overrideFilename, setOverrideFilename] = useState<string | null>(null);
@@ -109,48 +101,15 @@ export const ProfileOverrideData = (): JSX.Element => {
   };
 
   return (
-    <>
-      {isLoading && <LoaderFullScreen />}
-      <UpdatePageInfo title="Override data (DANGER ZONE)" backLink="/profile" />
-      {notification && (
-        <Notification
-          type={notification.type}
-          label={notification.label}
-          resetNotification={handleResetNotification}
-        >
-          {notification.children}
-        </Notification>
-      )}
-      <section className="grid gap-6">
-        <div>
-          <label
-            htmlFor="selectFiles"
-            className="inline-flex items-center justify-center w-full px-6 py-3 text-base font-medium tracking-tight text-white transition duration-150 ease-in-out rounded-md cursor-pointer sm:w-auto focus:ring-2 focus:ring-offset-2 focus:outline-none hover:opacity-75 focus:opacity-75 bg-charcoal focus:ring-charcoal"
-          >
-            Choose file
-            <input
-              className="hidden"
-              type="file"
-              id="selectFiles"
-              onChange={handleFileChange}
-              accept="application/json"
-            />
-          </label>
-          <span className="ml-2">{overrideFilename || 'No file selected'}</span>
-        </div>
-        <section className="grid grid-cols-2 gap-4">
-          <Heading className="col-span-full">Override data details</Heading>
-          <InfoCard label="Account count">
-            {overrideAccountCount ? `${overrideAccountCount}` : '-'}
-          </InfoCard>
-          <InfoCard label="Transaction count">
-            {overrideTranactionCount ? `${overrideTranactionCount}` : '-'}
-          </InfoCard>
-        </section>
-        <div>
-          <Button onClick={handleOverrideData}>Override my data</Button>
-        </div>
-      </section>
-    </>
+    <OverrideUserData
+      isLoading={isLoading}
+      overrideFilename={overrideFilename}
+      overrideAccountCount={overrideAccountCount}
+      overrideTranactionCount={overrideTranactionCount}
+      notification={notification}
+      onFileChange={handleFileChange}
+      onResetNotification={handleResetNotification}
+      onOverrideData={handleOverrideData}
+    />
   );
 };
