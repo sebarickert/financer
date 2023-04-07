@@ -62,8 +62,6 @@ export const Layout = ({ children }: LayoutProps): JSX.Element => {
     return () => window.removeEventListener('resize', () => action);
   }, []);
 
-  console.log(currentWindowWidth);
-
   if (currentWindowWidth >= 1024) {
     return (
       <div className="bg-white">

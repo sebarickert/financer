@@ -1,12 +1,14 @@
-import { RoleEnum, useUsersFindOwnUserQuery } from '$api/generated/financerApi';
+import { RoleEnum } from '$api/generated/financerApi';
 import { IconName } from '$elements/icon/icon';
 import { LinkList } from '$elements/link-list/link-list';
 import { LinkListLink } from '$elements/link-list/link-list.link';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
-export const Profile = (): JSX.Element => {
-  const { data: profileInfo } = useUsersFindOwnUserQuery();
+interface ProfileProps {
+  roles?: RoleEnum[];
+}
 
+export const Profile = ({ roles }: ProfileProps): JSX.Element => {
   return (
     <>
       <UpdatePageInfo title="Profile" />
@@ -32,7 +34,7 @@ export const Profile = (): JSX.Element => {
         >
           Download your data
         </LinkListLink>
-        {profileInfo?.roles.includes(RoleEnum.TestUser) && (
+        {roles?.includes(RoleEnum.TestUser) && (
           <LinkListLink
             link="/profile/override-data"
             icon={IconName.exclamation}
