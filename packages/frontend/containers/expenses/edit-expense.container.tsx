@@ -1,8 +1,5 @@
 import { useRouter } from 'next/router';
-import { useMemo, useState } from 'react';
-import { useParams } from 'react-router-dom';
-
-import { ExpenseForm } from './ExpenseForm';
+import { useState } from 'react';
 
 import {
   UpdateExpenseDto,
@@ -10,19 +7,20 @@ import {
   useExpensesUpdateMutation,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
-import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
-import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { EditExpense } from '$pages/expenses/edit-expense';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
-import { inputDateFormat } from '$utils/formatDate';
 
-export const EditExpense = (): JSX.Element => {
+interface EditExpenseContainerProps {
+  id: string;
+}
+
+export const EditExpenseContainer = ({ id }: EditExpenseContainerProps) => {
   const { push } = useRouter();
-  const { id = 'id not found' } = useParams<{ id: string }>();
   const [errors, setErrors] = useState<string[]>([]);
-  const [editExpense, { isLoading: isSaving }] = useExpensesUpdateMutation();
 
   const expenseData = useExpensesFindOneQuery({ id });
   const { data: expense } = expenseData;
+  const [editExpense, { isLoading: isSaving }] = useExpensesUpdateMutation();
 
   const handleSubmit = async (newExpenseData: UpdateExpenseDto) => {
     if (!id) {
@@ -47,27 +45,15 @@ export const EditExpense = (): JSX.Element => {
       console.error(error);
     }
   };
-
-  const initialValues = useMemo(() => {
-    if (!expense) return undefined;
-
-    return {
-      ...expense,
-      date: inputDateFormat(new Date(expense.date)),
-    };
-  }, [expense]);
-
   return (
     <>
-      {isSaving && <LoaderFullScreen />}
       <DataHandler {...expenseData} />
-      <UpdatePageInfo title={`Edit ${expense?.description}`} />
       {expense && (
-        <ExpenseForm
-          onSubmit={handleSubmit}
+        <EditExpense
+          isLoading={isSaving}
+          expense={expense}
           errors={errors}
-          submitLabel="Update"
-          initialValues={initialValues}
+          onSave={handleSubmit}
         />
       )}
     </>

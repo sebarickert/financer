@@ -8,7 +8,7 @@ import {
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
 import { useUserDefaultIncomeAccount } from '$hooks/profile/user-preference/useUserDefaultIncomeAccount';
-import { AddIncome } from '$pages/income/add-income';
+import { AddIncome } from '$pages/incomes/add-income';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 interface AddIncomeContainerProps {

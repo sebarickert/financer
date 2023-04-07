@@ -7,7 +7,7 @@ import {
   useIncomesUpdateMutation,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
-import { EditIncome } from '$pages/income/edit-income';
+import { EditIncome } from '$pages/incomes/edit-income';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 interface EditIncomeContainerProps {
