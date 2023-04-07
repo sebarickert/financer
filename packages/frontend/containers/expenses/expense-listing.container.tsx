@@ -3,18 +3,18 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { initialMonthFilterOptions } from '$blocks/monthly-transaction-list/monthly-transaction-list';
 import { useFirstTransaction } from '$hooks/transaction/useFirstTransaction';
-import { IncomeListing } from '$pages/incomes/income-listing';
+import { ExpenseListing } from '$pages/expenses/expense-listing';
 import { parseYearMonthFromString } from '$utils/formatDate';
 
-interface IncomeListingContainerProps {
+interface ExpenseListingContainerProps {
   date?: string;
   page?: number;
 }
 
-export const IncomeListingContainer = ({
+export const ExpenseListingContainer = ({
   date: initialDate,
   page: initialPage = 1,
-}: IncomeListingContainerProps) => {
+}: ExpenseListingContainerProps) => {
   const { push } = useRouter();
 
   const [selectedPage, setSelectedPage] = useState(initialPage);
@@ -70,7 +70,7 @@ export const IncomeListingContainer = ({
   );
 
   return (
-    <IncomeListing
+    <ExpenseListing
       firstAvailableTransaction={firstAvailableTransaction}
       initialPageToLoad={initialPageToLoad}
       filterOptions={monthFilterOptions}

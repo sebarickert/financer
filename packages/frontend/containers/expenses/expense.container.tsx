@@ -2,32 +2,33 @@ import { useRouter } from 'next/router';
 import { useCallback } from 'react';
 
 import {
-  useIncomesFindOneQuery,
+  useExpensesFindOneQuery,
   useAccountsFindOneByIdQuery,
-  useIncomesRemoveMutation,
+  useExpensesRemoveMutation,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
 import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
-import { Income } from '$pages/incomes/income';
+import { Expense } from '$pages/expenses/expense';
 
-interface IncomeContainerProps {
+interface ExpenseContainerProps {
   id: string;
 }
 
-export const IncomeContainer = ({ id }: IncomeContainerProps) => {
+export const ExpenseContainer = ({ id }: ExpenseContainerProps) => {
   const { push } = useRouter();
-  const incomeData = useIncomesFindOneQuery({ id });
-  const { data: income } = incomeData;
+  const expenseData = useExpensesFindOneQuery({ id });
+  const { data: expense } = expenseData;
 
   const accountData = useAccountsFindOneByIdQuery(
-    { id: income?.toAccount as string },
-    { skip: !income?.toAccount }
+    { id: expense?.fromAccount as string },
+    { skip: !expense?.fromAccount }
   );
   const account = accountData.data;
 
   const { data: transactionCategories } =
     useAllTransactionCategoriesWithCategoryTree();
-  const [deleteIncome, { isLoading: isDeleting }] = useIncomesRemoveMutation();
+  const [deleteExpense, { isLoading: isDeleting }] =
+    useExpensesRemoveMutation();
 
   const getCategoryNameById = useCallback(
     (categoryId: string) =>
@@ -38,20 +39,20 @@ export const IncomeContainer = ({ id }: IncomeContainerProps) => {
 
   const handleDelete = useCallback(async () => {
     if (!id) {
-      console.error('Failed to delete income: no id');
+      console.error('Failed to delete expense: no id');
       return;
     }
-    await deleteIncome({ id }).unwrap();
-    push('/statistics/incomes');
-  }, [deleteIncome, id, push]);
+    await deleteExpense({ id }).unwrap();
+    push('/statistics/expenses');
+  }, [deleteExpense, id, push]);
 
   return (
     <>
-      <DataHandler {...incomeData} />
-      {income && (
-        <Income
+      <DataHandler {...expenseData} />
+      {expense && (
+        <Expense
           isLoading={isDeleting}
-          income={income}
+          expense={expense}
           accountName={account?.name}
           onDelete={handleDelete}
           getCategoryNameById={getCategoryNameById}

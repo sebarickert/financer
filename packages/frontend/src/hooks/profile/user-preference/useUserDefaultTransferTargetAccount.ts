@@ -9,10 +9,13 @@ import {
 const userPreferenceProperty =
   UserPreferencePropertyEnum.DefaultTransferTargetAccount;
 
-export const useUserDefaultTransferTargetAccount = () => {
-  const data = useUserPreferencesFindOneQuery({
-    userPreferenceProperty,
-  });
+export const useUserDefaultTransferTargetAccount = ({ skip = false } = {}) => {
+  const data = useUserPreferencesFindOneQuery(
+    {
+      userPreferenceProperty,
+    },
+    { skip }
+  );
 
   return {
     ...data,
