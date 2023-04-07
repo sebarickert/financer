@@ -1,7 +1,7 @@
 import {
   groupExpensesByMonth,
   ExpenseDtoWithCategories,
-} from '../ExpenseFuctions';
+} from '../expense.fuctions';
 
 const testData: ExpenseDtoWithCategories[] = [
   {

@@ -1,14 +1,9 @@
-import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
 
 import {
   TransactionCategoryMappingDto,
-  useAccountsFindOneByIdQuery,
-  useTransfersFindOneQuery,
-  useTransfersRemoveMutation,
+  TransferDto,
 } from '$api/generated/financerApi';
-import { DataHandler } from '$blocks/data-handler/data-handler';
 import { Button } from '$elements/button/button';
 import { ButtonGroup } from '$elements/button/button.group';
 import { DialogConfirm } from '$elements/dialog/confirm/dialog.confirm';
@@ -17,16 +12,15 @@ import { Divider } from '$elements/divider/divider';
 import { IconName } from '$elements/icon/icon';
 import { InfoCard } from '$elements/info-card/info-card';
 import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
-import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { formatCurrency } from '$utils/formatCurrency';
 import { formatDate } from '$utils/formatDate';
 
-interface ITransferDeleteModalProps {
-  handleDelete(): void;
+interface TransferDeleteModalProps {
+  onDelete: () => void;
 }
 
-const TransferDeleteModal = ({ handleDelete }: ITransferDeleteModalProps) => {
+const TransferDeleteModal = ({ onDelete }: TransferDeleteModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -40,7 +34,7 @@ const TransferDeleteModal = ({ handleDelete }: ITransferDeleteModalProps) => {
       <Dialog isDialogOpen={isOpen} setIsDialogOpen={setIsOpen}>
         <DialogConfirm
           label="Delete transfer"
-          onConfirm={handleDelete}
+          onConfirm={onDelete}
           onCancel={() => setIsOpen(!isOpen)}
           submitButtonLabel="Delete"
           iconName={IconName.exclamation}
@@ -54,48 +48,26 @@ const TransferDeleteModal = ({ handleDelete }: ITransferDeleteModalProps) => {
   );
 };
 
-export const Transfer = (): JSX.Element => {
-  const { push } = useRouter();
-  const { id = 'id-missing' } = useParams<{ id: string }>();
-  const { data: transactionCategories } =
-    useAllTransactionCategoriesWithCategoryTree();
-  const transferData = useTransfersFindOneQuery({ id });
-  const { data: transfer } = transferData;
+interface TransferProps {
+  isLoading: boolean;
+  transfer: TransferDto;
+  fromAccountName?: string;
+  toAccountName?: string;
+  onDelete: () => void;
+  getCategoryNameById: (categoryId: string) => string;
+}
 
-  const [deleteTransfer, { isLoading: isDeleting }] =
-    useTransfersRemoveMutation();
-
-  const fromAccountData = useAccountsFindOneByIdQuery(
-    {
-      id: transfer?.fromAccount as string,
-    },
-    { skip: !transfer }
-  );
-
-  const fromAccount = fromAccountData.data;
-  const toAccountData = useAccountsFindOneByIdQuery(
-    { id: transfer?.toAccount as string },
-    { skip: !transfer }
-  );
-  const toAccount = toAccountData.data;
-
-  const getCategoryNameById = (categoryId: string) =>
-    transactionCategories?.find((category) => category._id === categoryId)
-      ?.categoryTree || categoryId;
-
-  const handleDelete = async () => {
-    if (!id) {
-      console.error('Failed to delete transfer: no id');
-      return;
-    }
-    await deleteTransfer({ id }).unwrap();
-    push('/statistics/transfers');
-  };
-
+export const Transfer = ({
+  isLoading,
+  transfer,
+  fromAccountName,
+  toAccountName,
+  onDelete,
+  getCategoryNameById,
+}: TransferProps): JSX.Element => {
   return (
     <>
-      {isDeleting && <LoaderFullScreen />}
-      <DataHandler {...transferData} />
+      {isLoading && <LoaderFullScreen />}
       <UpdatePageInfo
         title={`${transfer?.description}`}
         backLink="/statistics/transfers"
@@ -125,7 +97,7 @@ export const Transfer = (): JSX.Element => {
               className="max-lg:col-span-full"
               isLarge
             >
-              {fromAccount?.name ?? '-'}
+              {fromAccountName ?? '-'}
             </InfoCard>
             <InfoCard
               iconName={IconName.download}
@@ -133,7 +105,7 @@ export const Transfer = (): JSX.Element => {
               className="max-lg:col-span-full"
               isLarge
             >
-              {toAccount?.name ?? '-'}
+              {toAccountName ?? '-'}
             </InfoCard>
           </section>
           {transfer.categories.length > 0 && (
@@ -165,12 +137,12 @@ export const Transfer = (): JSX.Element => {
           )}
           <ButtonGroup className="mt-4">
             <Button
-              link={`/statistics/transfers/${id}/edit`}
+              link={`/statistics/transfers/${transfer._id}/edit`}
               testId="edit-transfer-button"
             >
               Edit
             </Button>
-            <TransferDeleteModal handleDelete={handleDelete} />
+            <TransferDeleteModal onDelete={onDelete} />
           </ButtonGroup>
         </section>
       )}

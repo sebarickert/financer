@@ -1,8 +1,5 @@
 import { useRouter } from 'next/router';
-import { useMemo, useState } from 'react';
-import { useParams } from 'react-router-dom';
-
-import { TransferForm } from './TransferForm';
+import { useState } from 'react';
 
 import {
   UpdateTransferDto,
@@ -10,20 +7,20 @@ import {
   useTransfersUpdateMutation,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
-import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
-import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { EditTransfer } from '$pages/transfers/edit-transfer';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
-import { inputDateFormat } from '$utils/formatDate';
 
-export const EditTransfer = (): JSX.Element => {
+interface EditTransferContainerProps {
+  id: string;
+}
+
+export const EditTransferContainer = ({ id }: EditTransferContainerProps) => {
   const { push } = useRouter();
-  const { id = 'missing-id' } = useParams<{ id: string }>();
   const [errors, setErrors] = useState<string[]>([]);
 
   const transferData = useTransfersFindOneQuery({ id });
   const { data: transfer } = transferData;
-  const [editTransaction, { isLoading: isSaving }] =
-    useTransfersUpdateMutation();
+  const [editTransfer, { isLoading: isSaving }] = useTransfersUpdateMutation();
 
   const handleSubmit = async (newTransferData: UpdateTransferDto) => {
     if (!id) {
@@ -31,7 +28,7 @@ export const EditTransfer = (): JSX.Element => {
       return;
     }
     try {
-      await editTransaction({
+      await editTransfer({
         updateTransferDto: newTransferData,
         id,
       }).unwrap();
@@ -48,27 +45,15 @@ export const EditTransfer = (): JSX.Element => {
       console.error(error);
     }
   };
-
-  const initialValues = useMemo(() => {
-    if (!transfer) return undefined;
-
-    return {
-      ...transfer,
-      date: inputDateFormat(new Date(transfer.date)),
-    };
-  }, [transfer]);
-
   return (
     <>
-      {isSaving && <LoaderFullScreen />}
       <DataHandler {...transferData} />
-      <UpdatePageInfo title="Edit transfer" />
       {transfer && (
-        <TransferForm
-          onSubmit={handleSubmit}
+        <EditTransfer
+          isLoading={isSaving}
+          transfer={transfer}
           errors={errors}
-          submitLabel="Update"
-          initialValues={initialValues}
+          onSave={handleSubmit}
         />
       )}
     </>
