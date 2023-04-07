@@ -1,7 +1,7 @@
 import {
   groupIncomesByMonth,
   IncomeDtoWithCategories,
-} from '../IncomeFuctions';
+} from '../income.fuctions';
 
 const testData: IncomeDtoWithCategories[] = [
   {
