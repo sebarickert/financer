@@ -1,18 +1,14 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
-import { TransactionCategoryForm } from './TransactionCategoryForm';
-
 import {
   CreateTransactionCategoryDto,
   useTransactionCategoriesCreateMutation,
 } from '$api/generated/financerApi';
-import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
-import { Container } from '$layouts/container/container';
-import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { AddCategory } from '$pages/profile/categories/add-category';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
-export const AddTransactionCategory = (): JSX.Element => {
+export const AddCategoryContainer = () => {
   const { push } = useRouter();
   const [errors, setErrors] = useState<string[]>([]);
   const [addTransactionCategory, { isLoading: isCreating }] =
@@ -43,19 +39,11 @@ export const AddTransactionCategory = (): JSX.Element => {
       console.error(error);
     }
   };
-
   return (
-    <Container>
-      {isCreating && <LoaderFullScreen />}
-      <UpdatePageInfo
-        title="Add transaction category"
-        backLink="/profile/transaction-categories"
-      />
-      <TransactionCategoryForm
-        onSubmit={handleSubmit}
-        errors={errors}
-        submitLabel="Add"
-      />
-    </Container>
+    <AddCategory
+      onSubmit={handleSubmit}
+      errors={errors}
+      isLoading={isCreating}
+    />
   );
 };

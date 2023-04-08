@@ -1,17 +1,17 @@
 import { useState } from 'react';
 
-import { DialogConfirm } from '../../../components/elements/dialog/confirm/dialog.confirm';
-import { Dialog } from '../../../components/elements/dialog/dialog';
-import { IconName } from '../../../components/elements/icon/icon';
-import { LinkListButton } from '../../../components/elements/link-list/link-list.button';
+import { DialogConfirm } from '$elements/dialog/confirm/dialog.confirm';
+import { Dialog } from '$elements/dialog/dialog';
+import { IconName } from '$elements/icon/icon';
+import { LinkListButton } from '$elements/link-list/link-list.button';
 
-interface TransactionCategoryDeleteModalProps {
-  handleDelete(): void;
+interface CategoryDeleteModalProps {
+  handleDelete: () => void;
 }
 
-export const TransactionCategoryDeleteModal = ({
+export const CategoryDeleteModal = ({
   handleDelete,
-}: TransactionCategoryDeleteModalProps) => {
+}: CategoryDeleteModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleToggleOpen = () => setIsOpen(!isOpen);
