@@ -1,25 +1,14 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
-import { TransactionTemplateForm } from './TransactionTemplateForm';
-
+import { useTransactionTemplatesCreateMutation } from '$api/generated/financerApi';
 import {
-  CreateTransactionTemplateDto,
-  useTransactionTemplatesCreateMutation,
-} from '$api/generated/financerApi';
-import { TransactionCategoriesFormFields } from '$blocks/transaction-categories-form/transaction-categories-form';
-import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
-import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+  AddTemplate,
+  CreateTransactionTemplateDtoWithCategory,
+} from '$pages/profile/templates/add-template';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
-type CreateTransactionTemplateDtoWithCategory = Omit<
-  CreateTransactionTemplateDto,
-  'categories'
-> & {
-  categories: TransactionCategoriesFormFields[];
-};
-
-export const AddTransactionTemplate = (): JSX.Element | null => {
+export const AddTemplateContainer = () => {
   const { push } = useRouter();
   const [errors, setErrors] = useState<string[]>([]);
   const [addTransactionTemplate, { isLoading: isCreating }] =
@@ -54,17 +43,10 @@ export const AddTransactionTemplate = (): JSX.Element | null => {
   };
 
   return (
-    <>
-      {isCreating && <LoaderFullScreen />}
-      <UpdatePageInfo
-        title="Add template"
-        backLink="/profile/transaction-templates"
-      />
-      <TransactionTemplateForm
-        onSubmit={handleSubmit}
-        errors={errors}
-        submitLabel="Add"
-      />
-    </>
+    <AddTemplate
+      onSubmit={handleSubmit}
+      errors={errors}
+      isLoading={isCreating}
+    />
   );
 };
