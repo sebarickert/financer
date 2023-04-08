@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -6,40 +5,30 @@ import { Form } from '$blocks/form/form';
 import { Input } from '$elements/input/input';
 import { Loader } from '$elements/loader/loader';
 import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
-import {
-  useUpdateUserTransactionListChunkSize,
-  useUserTransactionListChunkSize,
-} from '$hooks/profile/user-preference/useUserTransactionListChunkSize';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
 export interface UserTransactionListChunkSizeFormFields {
   chunkSize: number;
 }
 
-export const UserTransactionListChunkSize = (): JSX.Element | null => {
+interface UserTransactionListChunkSizeProps {
+  defaultChunkSize: number;
+  isLoading: boolean;
+  isUpdating: boolean;
+  onSave: (data: UserTransactionListChunkSizeFormFields) => void;
+}
+
+export const UserTransactionListChunkSize = ({
+  defaultChunkSize,
+  isLoading,
+  isUpdating,
+  onSave,
+}: UserTransactionListChunkSizeProps): JSX.Element | null => {
   const methods = useForm<UserTransactionListChunkSizeFormFields>();
-  const { push } = useRouter();
-  const { data: defaultChunkSize, isLoading: isLoadingDefault } =
-    useUserTransactionListChunkSize();
-
-  const [setDefaultChunkSize, { isLoading: isUpdating }] =
-    useUpdateUserTransactionListChunkSize();
-
-  const handleSave = async (
-    newUserTransactionListChunkSizeData: UserTransactionListChunkSizeFormFields
-  ) => {
-    const { chunkSize } = newUserTransactionListChunkSizeData;
-
-    await setDefaultChunkSize(chunkSize);
-
-    push('/profile/user-preferences');
-  };
 
   useEffect(() => {
     methods.reset({ chunkSize: defaultChunkSize });
   }, [defaultChunkSize, methods]);
-
-  const isLoading = isLoadingDefault;
 
   return (
     <>
@@ -52,7 +41,7 @@ export const UserTransactionListChunkSize = (): JSX.Element | null => {
       {!isLoading && (
         <Form
           methods={methods}
-          onSubmit={handleSave}
+          onSubmit={onSave}
           submitLabel="Save"
           formFooterBackLink="/profile/user-preferences"
         >
