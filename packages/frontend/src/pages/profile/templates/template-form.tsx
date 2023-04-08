@@ -21,15 +21,15 @@ import { Select, Option } from '$elements/select/select';
 import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
 import { capitalize } from '$utils/capitalize';
 
-interface TransactionTemplateFormProps {
+interface TemplateFormProps {
   errors: string[];
-  onSubmit: SubmitHandler<TransactionTemplateFormFields>;
+  onSubmit: SubmitHandler<TemplateFormFields>;
   submitLabel: string;
   optionalFooterComponent?: React.ReactNode;
-  initialValues?: Partial<TransactionTemplateFormFields>;
+  initialValues?: Partial<TemplateFormFields>;
 }
 
-export interface TransactionTemplateFormFields {
+export interface TemplateFormFields {
   templateName: string;
   templateType: TransactionTemplateTypeEnum;
   templateVisibility: TransactionType;
@@ -42,14 +42,14 @@ export interface TransactionTemplateFormFields {
   categories: TransactionCategoriesFormFields[];
 }
 
-export const TransactionTemplateForm = ({
+export const TemplateForm = ({
   errors,
   onSubmit,
   submitLabel,
   optionalFooterComponent,
   initialValues,
-}: TransactionTemplateFormProps): JSX.Element | null => {
-  const methods = useForm<TransactionTemplateFormFields>({
+}: TemplateFormProps): JSX.Element | null => {
+  const methods = useForm<TemplateFormFields>({
     defaultValues: initialValues,
   });
 
@@ -67,7 +67,7 @@ export const TransactionTemplateForm = ({
     }));
   }, [accounts]);
 
-  const handleSubmit = async (data: TransactionTemplateFormFields) => {
+  const handleSubmit = async (data: TemplateFormFields) => {
     onSubmit(data);
   };
 
