@@ -1,8 +1,5 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
-
-import { TransactionCategoryForm } from './TransactionCategoryForm';
 
 import {
   UpdateTransactionCategoryDto,
@@ -10,31 +7,32 @@ import {
   useTransactionCategoriesUpdateMutation,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
-import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
-import { Container } from '$layouts/container/container';
-import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { EditCategory } from '$pages/profile/categories/edit-category';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
-export const EditTransactionCategory = (): JSX.Element => {
+interface EditCategoryContainerProps {
+  id: string;
+}
+
+export const EditCategoryContainer = ({ id }: EditCategoryContainerProps) => {
   const { push } = useRouter();
-  const { id = 'id not found' } = useParams<{ id: string }>();
   const [errors, setErrors] = useState<string[]>([]);
 
-  const transactionCategoryData = useTransactionCategoriesFindOneQuery({ id });
-  const { data: transactionCategory } = transactionCategoryData;
+  const categoryData = useTransactionCategoriesFindOneQuery({ id });
+  const { data: category } = categoryData;
   const [editTransactionCategory, { isLoading: isSaving }] =
     useTransactionCategoriesUpdateMutation();
 
   const handleSubmit = async (
     newTransactionCategoryData: UpdateTransactionCategoryDto
   ) => {
-    if (!transactionCategory?._id) {
+    if (!category?._id) {
       console.error('transactionCategory is not defined');
       return;
     }
     try {
       await editTransactionCategory({
-        id: transactionCategory._id,
+        id: category._id,
         updateTransactionCategoryDto: {
           ...newTransactionCategoryData,
           visibility: newTransactionCategoryData.visibility || [],
@@ -58,22 +56,17 @@ export const EditTransactionCategory = (): JSX.Element => {
   };
 
   return (
-    <Container>
-      {isSaving && <LoaderFullScreen />}
-      <DataHandler {...transactionCategoryData} />
-      <UpdatePageInfo
-        title="Edit transaction category"
-        backLink={`/profile/transaction-categories/${id}`}
-      />
-      {transactionCategory && (
-        <TransactionCategoryForm
+    <>
+      <DataHandler {...categoryData} />
+      {category && (
+        <EditCategory
           onSubmit={handleSubmit}
+          category={category}
           errors={errors}
-          submitLabel="Update"
-          currentCategoryId={id}
-          initialValues={transactionCategory}
+          isLoading={isSaving}
         />
       )}
-    </Container>
+      ;
+    </>
   );
 };

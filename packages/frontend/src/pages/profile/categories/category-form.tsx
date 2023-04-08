@@ -12,7 +12,7 @@ import { Input } from '$elements/input/input';
 import { Select, Option } from '$elements/select/select';
 import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
 
-interface TransactionCategoryFormProps {
+interface CategoryFormProps {
   errors: string[];
   onSubmit: SubmitHandler<TransactionCategoryFormFields>;
   submitLabel: string;
@@ -27,14 +27,14 @@ export interface TransactionCategoryFormFields {
   parent_category_id: string | null;
 }
 
-export const TransactionCategoryForm = ({
+export const CategoryForm = ({
   errors,
   onSubmit,
   submitLabel,
   optionalFooterComponent,
   currentCategoryId,
   initialValues,
-}: TransactionCategoryFormProps): JSX.Element | null => {
+}: CategoryFormProps): JSX.Element | null => {
   const methods = useForm<TransactionCategoryFormFields>({
     defaultValues: {
       ...initialValues,
