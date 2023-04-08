@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -9,67 +8,58 @@ import { CheckboxGroup } from '$elements/checkbox/checkbox.group';
 import { Heading } from '$elements/heading/heading';
 import { Loader } from '$elements/loader/loader';
 import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
-import {
-  useUpdateUserDashboardSettings,
-  useUserDashboardSettings,
-} from '$hooks/profile/user-preference/useDashboardSettings';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { capitalize } from '$utils/capitalize';
 
 const allAccountTypes = Object.values(AccountTypeEnum);
 
-export interface UserDashboardSettingsFormFields {
+export interface UserStatisticsSettingsFormFields {
   accountTypes: AccountTypeEnum[];
 }
 
-export const UserDashboardSettings = (): JSX.Element | null => {
-  const methods = useForm<UserDashboardSettingsFormFields>();
-  const { push } = useRouter();
-  const { data, isLoading: isLoadingDefault } = useUserDashboardSettings();
-  const [setDashboardSettings, { isLoading: isUpdating }] =
-    useUpdateUserDashboardSettings();
+interface UserStatisticsSettingsProps {
+  isLoading: boolean;
+  isUpdating: boolean;
+  data?: UserStatisticsSettingsFormFields;
+  onSave: (data: UserStatisticsSettingsFormFields) => void;
+}
 
-  const handleSave = async (
-    newUserDashboardData: UserDashboardSettingsFormFields
-  ) => {
-    await setDashboardSettings({
-      accountTypes: newUserDashboardData.accountTypes,
-    });
-
-    push('/profile/user-preferences');
-  };
+export const UserStatisticsSettings = ({
+  isLoading,
+  isUpdating,
+  data,
+  onSave,
+}: UserStatisticsSettingsProps): JSX.Element | null => {
+  const methods = useForm<UserStatisticsSettingsFormFields>();
 
   useEffect(() => {
     methods.reset(data);
   }, [data, methods]);
 
-  const isLoading = isLoadingDefault;
-
   return (
     <>
       {isUpdating && <LoaderFullScreen />}
       <UpdatePageInfo
-        title="Dashboard settings"
+        title="Statistics settings"
         backLink={'/profile/user-preferences'}
       />
-      {isLoading ? (
-        <Loader />
-      ) : (
+      {isLoading && <Loader />}
+      {!isLoading && (
         <Form
           methods={methods}
-          onSubmit={handleSave}
+          onSubmit={onSave}
           submitLabel="Save"
           formFooterBackLink="/profile/user-preferences"
         >
           <Heading className="mb-4">Account types for stats and graph</Heading>
-          <CheckboxGroup testId="dashboard-account-checkboxes">
+          <CheckboxGroup testId="statistics-account-checkboxes">
             {allAccountTypes.map((type) => (
               <Checkbox
                 key={type}
                 id={type}
-                value={type}
                 label={capitalize(type)}
-                name={'accountTypes'}
+                value={type}
+                name="accountTypes"
               />
             ))}
           </CheckboxGroup>

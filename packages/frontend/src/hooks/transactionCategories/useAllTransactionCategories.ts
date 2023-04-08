@@ -4,8 +4,13 @@ import { parseParentCategoryPath } from '../../services/TransactionCategoriesSer
 
 import {
   TransactionCategoriesFindAllByUserApiArg,
+  TransactionCategoryDto,
   useTransactionCategoriesFindAllByUserQuery,
 } from '$api/generated/financerApi';
+
+export type TransactionCategoryDtoWithCategoryTree = TransactionCategoryDto & {
+  categoryTree: string;
+};
 
 export const useAllTransactionCategoriesWithCategoryTree = (
   args: TransactionCategoriesFindAllByUserApiArg = {}
@@ -17,7 +22,9 @@ export const useAllTransactionCategoriesWithCategoryTree = (
     const { currentData: categories } = categoryData;
     const allCategories = categoryAllData.data ?? [];
 
-    const categoriesWithTree = categories
+    const categoriesWithTree:
+      | TransactionCategoryDtoWithCategoryTree[]
+      | undefined = categories
       ?.map((category) => ({
         ...category,
         categoryTree: parseParentCategoryPath(allCategories, category._id),

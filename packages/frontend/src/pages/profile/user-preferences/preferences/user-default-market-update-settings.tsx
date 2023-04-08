@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -7,11 +6,8 @@ import { Input } from '$elements/input/input';
 import { Loader } from '$elements/loader/loader';
 import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { Select } from '$elements/select/select';
-import {
-  useUpdateUserDefaultMarketUpdateSettings,
-  useUserDefaultMarketUpdateSettings,
-} from '$hooks/profile/user-preference/useDefaultMarketUpdateSettings';
-import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
+import { UserDefaultMarketUpdateSettings as UserDefaultMarketUpdateSettingsType } from '$hooks/profile/user-preference/useDefaultMarketUpdateSettings';
+import { TransactionCategoryDtoWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
 export interface UserDefaultMarketUpdateSettingsFormFields {
@@ -19,36 +15,26 @@ export interface UserDefaultMarketUpdateSettingsFormFields {
   category: string;
 }
 
-export const UserDefaultMarketUpdateSettings = (): JSX.Element | null => {
+interface UserDefaultMarketUpdateSettingsProps {
+  isLoading: boolean;
+  isUpdating: boolean;
+  categories: TransactionCategoryDtoWithCategoryTree[];
+  data?: UserDefaultMarketUpdateSettingsType;
+  onSave: (data: UserDefaultMarketUpdateSettingsFormFields) => void;
+}
+
+export const UserDefaultMarketUpdateSettings = ({
+  isLoading,
+  isUpdating,
+  categories,
+  data,
+  onSave,
+}: UserDefaultMarketUpdateSettingsProps): JSX.Element | null => {
   const methods = useForm<UserDefaultMarketUpdateSettingsFormFields>();
-
-  const { push } = useRouter();
-  const { data, isLoading: isLoadingDefault } =
-    useUserDefaultMarketUpdateSettings();
-  const [setDefaultMarketUpdateSettings, { isLoading: isUpdating }] =
-    useUpdateUserDefaultMarketUpdateSettings();
-
-  const { data: categories = [] } =
-    useAllTransactionCategoriesWithCategoryTree();
-
-  const handleSave = async (
-    newUserDefaultMarketUpdateData: UserDefaultMarketUpdateSettingsFormFields
-  ) => {
-    const { transactionDescription, category } = newUserDefaultMarketUpdateData;
-
-    await setDefaultMarketUpdateSettings({
-      transactionDescription,
-      category,
-    });
-
-    push('/profile/user-preferences');
-  };
 
   useEffect(() => {
     methods.reset(data);
   }, [data, methods]);
-
-  const isLoading = isLoadingDefault;
 
   return (
     <>
@@ -61,7 +47,7 @@ export const UserDefaultMarketUpdateSettings = (): JSX.Element | null => {
       {!isLoading && (
         <Form
           methods={methods}
-          onSubmit={handleSave}
+          onSubmit={onSave}
           submitLabel="Save"
           formFooterBackLink="/profile/user-preferences"
         >
