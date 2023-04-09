@@ -5,7 +5,6 @@ import { Provider } from 'react-redux';
 
 import { useAuthGetAuthenticationStatusQuery } from '$api/generated/financerApi';
 import { ErrorBoundaryHandler } from '$blocks/error-boundary/error-boundary';
-import { ChartDynamic } from '$elements/chart/chart.dynamic';
 import { Loader } from '$elements/loader/loader';
 import { LoaderSuspense } from '$elements/loader/loader-suspense';
 import { Notification } from '$elements/notification/notification';
@@ -50,7 +49,6 @@ const App = ({ Component, pageProps }: AppProps) => {
 
   return (
     <>
-      <ChartDynamic />
       {errors && (
         <Notification type="error" label="Something went wrong!">
           {errors.join(' ') || ''}

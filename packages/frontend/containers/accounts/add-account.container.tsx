@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { useState, useCallback } from 'react';
 
 import { useAccountsCreateMutation } from '$api/generated/financerApi';
-import { AccountFormFields } from '$pages/accounts/AccountForm';
+import { AccountFormFields } from '$pages/accounts/account-form';
 import { AddAccount } from '$pages/accounts/add-account';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 

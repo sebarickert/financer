@@ -6,6 +6,7 @@ import { Chart } from 'react-chartjs-2';
 import { useAccountsGetAccountBalanceHistoryQuery } from '$api/generated/financerApi';
 import { colorPalette } from '$constants/colorPalette';
 import { MONTH_IN_MS } from '$constants/months';
+import { ChartWrapperDynamic } from '$elements/chart/chart-wrapper.dynamic';
 import { Loader } from '$elements/loader/loader';
 import {
   formatCurrency,
@@ -209,7 +210,9 @@ export const AccountBalanceHistoryChart = ({
 
   return (
     <div className="min-h-[300px] h-[20vh] md:h-auto md:min-h-0 md:aspect-video -mx-4 md:-mx-0">
-      <Chart type="line" data={data} options={options} />
+      <ChartWrapperDynamic>
+        <Chart type="line" data={data} options={options} />
+      </ChartWrapperDynamic>
     </div>
   );
 };

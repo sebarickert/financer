@@ -8,6 +8,7 @@ import {
   useIncomesFindMonthlySummariesByuserQuery,
 } from '$api/generated/financerApi';
 import { colorPalette } from '$constants/colorPalette';
+import { ChartWrapperDynamic } from '$elements/chart/chart-wrapper.dynamic';
 import { Loader } from '$elements/loader/loader';
 import { useUserDashboardSettings } from '$hooks/profile/user-preference/useDashboardSettings';
 import { useLatestTransaction } from '$hooks/transaction/useLatestTransaction';
@@ -270,7 +271,9 @@ export const BalanceGraph = ({
       )}
     >
       <Loader isLoading={isLoading}>
-        <Chart type="line" data={data} options={options} />
+        <ChartWrapperDynamic>
+          <Chart type="line" data={data} options={options} />
+        </ChartWrapperDynamic>
       </Loader>
     </section>
   );
