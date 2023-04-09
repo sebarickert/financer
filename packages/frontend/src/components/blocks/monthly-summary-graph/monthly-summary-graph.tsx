@@ -8,6 +8,7 @@ import {
   useIncomesFindMonthlySummariesByuserQuery,
 } from '$api/generated/financerApi';
 import { colorPalette } from '$constants/colorPalette';
+import { ChartWrapperDynamic } from '$elements/chart/chart-wrapper.dynamic';
 import { Loader } from '$elements/loader/loader';
 import { useUserStatisticsSettings } from '$hooks/profile/user-preference/useStatisticsSettings';
 import { formatCurrency } from '$utils/formatCurrency';
@@ -249,7 +250,9 @@ export const MonthlySummaryGraph = ({
       className={`min-h-[300px] h-[20vh] md:h-auto md:min-h-0 md:aspect-video max-md:-mx-4 ${className}`}
     >
       <Loader isLoading={isLoading}>
-        <Chart type="bar" data={data} options={options} />
+        <ChartWrapperDynamic>
+          <Chart type="bar" data={data} options={options} />
+        </ChartWrapperDynamic>
       </Loader>
     </section>
   );

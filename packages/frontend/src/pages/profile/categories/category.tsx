@@ -16,6 +16,7 @@ import {
 import { Pager } from '$blocks/pager/pager';
 import { colorPalette } from '$constants/colorPalette';
 import { monthNames, MONTH_IN_MS } from '$constants/months';
+import { ChartWrapperDynamic } from '$elements/chart/chart-wrapper.dynamic';
 import { Heading } from '$elements/heading/heading';
 import { IconName } from '$elements/icon/icon';
 import { InfoCard } from '$elements/info-card/info-card';
@@ -266,7 +267,9 @@ export const Category = ({
       </section>
       {!chartData?.length ? null : (
         <div className="min-h-[300px] h-[20vh] md:h-auto md:min-h-0 md:aspect-video -mx-4 md:-mx-0">
-          <Chart type="line" data={data} options={options} />
+          <ChartWrapperDynamic>
+            <Chart type="line" data={data} options={options} />
+          </ChartWrapperDynamic>
         </div>
       )}
       <section className="flex items-center justify-between mt-6 mb-2">

@@ -1,12 +1,15 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { ReactComponent as Logo } from '../../../assets/logo.svg';
-import { Button } from '../../elements/button/button';
-import { Heading } from '../../elements/heading/heading';
-import { Container } from '../../layouts/container/container';
-import { UpdatePageInfo } from '../../renderers/seo/updatePageInfo';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import logo from '$assets/logo.svg';
+import { Button } from '$elements/button/button';
+import { Heading } from '$elements/heading/heading';
+import { Container } from '$layouts/container/container';
+import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
 interface ErrorPageProps {
   resetErrorBoundary(...args: unknown[]): void;
@@ -31,7 +34,11 @@ export const ErrorPage = ({
       <Container>
         <div className="px-8 py-12">
           <span className="inline-flex items-center gap-3 mb-8">
-            <Logo className="block w-auto h-10"></Logo>
+            <Image
+              src={logo}
+              className="relative block w-auto h-10 rounded"
+              alt="logo"
+            />
             <h2 className="text-2xl font-bold tracking-tight text-black">
               Financer
             </h2>

@@ -40,7 +40,7 @@
   "scripts": {
     "postinstall": "npm run types:generate",
     "dev": "next dev",
-    "build": "next build",
+    "build": "rm -rf build && mkdir build && next build",
     "start": "next start",
     "format": "eslint src/**/*.ts{,x} --fix",
     "lint": "eslint src/**/*.ts{,x}",
