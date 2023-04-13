@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { UpdatePageInfo } from './components/renderers/seo/updatePageInfo';
+import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
 const NEXT_PUBLIC_IS_GITHUB_OAUTH_ENABLED =
   process.env.NEXT_PUBLIC_IS_GITHUB_OAUTH_ENABLED;
@@ -40,7 +40,7 @@ const ResolveAuth0Issues = (): JSX.Element => {
   );
 };
 
-export const IssuesWithLogin = (): JSX.Element => {
+const IssuesWithLogin = (): JSX.Element => {
   return (
     <>
       <UpdatePageInfo title="Issues with login" />
@@ -66,3 +66,5 @@ export const IssuesWithLogin = (): JSX.Element => {
     </>
   );
 };
+
+export default IssuesWithLogin;
