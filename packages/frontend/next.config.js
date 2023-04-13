@@ -15,6 +15,9 @@ const nextConfig = {
     reactStrictMode: true,
     output: isDevelopment ? undefined : "export",
     distDir: "build",
+    images: {
+        unoptimized: true
+    },
     ...(isDevelopment ? rewrite : {})
 };
 
