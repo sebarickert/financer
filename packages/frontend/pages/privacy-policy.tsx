@@ -1,8 +1,8 @@
 import Link from 'next/link';
 
-import { UpdatePageInfo } from './components/renderers/seo/updatePageInfo';
+import { UpdatePageInfo } from '../src/components/renderers/seo/updatePageInfo';
 
-export const PrivacyPolicy = (): JSX.Element => {
+const PrivacyPolicy = (): JSX.Element => {
   return (
     <>
       <UpdatePageInfo title="Privacy policy" />
@@ -176,3 +176,5 @@ export const PrivacyPolicy = (): JSX.Element => {
     </>
   );
 };
+
+export default PrivacyPolicy;

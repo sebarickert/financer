@@ -60,13 +60,13 @@ const App = ({ Component, pageProps }: AppProps) => {
           Financer.
         </Notification>
       )}
-      {isAuthenticated || isPublicRoute ? (
+      {isPublicRoute && <Component {...pageProps} />}
+      {isAuthenticated && !isPublicRoute && (
         <Layout>
           <Component {...pageProps} />
         </Layout>
-      ) : (
-        <Login />
       )}
+      {!isPublicRoute && !isAuthenticated && <Login />}
     </>
   );
 };
