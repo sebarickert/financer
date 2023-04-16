@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -20,7 +20,7 @@ export const ErrorPage = ({
   resetErrorBoundary,
   errorPageType,
 }: ErrorPageProps) => {
-  const { pathname } = useLocation();
+  const { pathname } = useRouter();
   const [errorPathname] = useState(pathname);
 
   useEffect(() => {

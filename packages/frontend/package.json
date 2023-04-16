@@ -20,7 +20,6 @@
     "react-helmet": "^6.1.0",
     "react-hook-form": "^7.43.5",
     "react-redux": "^8.0.5",
-    "react-router-dom": "^6.10.0",
     "tailwindcss-safe-area": "^0.2.2",
     "typescript": "^4.6.3",
     "web-vitals": "^2.1.4",
