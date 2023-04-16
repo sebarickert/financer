@@ -10,3 +10,10 @@ export default createProxyMiddleware({
     '^/auth': '/auth',
   },
 });
+
+// eslint-disable-next-line import/no-named-export
+export const config = {
+  api: {
+    bodyParser: false, // I added this
+  },
+};
