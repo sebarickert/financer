@@ -78,7 +78,9 @@ describe('Delete expense', () => {
         cy.saveData('targetTransactionBefore', targetTransactionBefore);
         cy.saveAsyncData('accountBefore', () => getAccount(targetAccountId));
 
-        cy.visit('http://localhost:3000/statistics/expenses/2022-01/1');
+        cy.visit(
+          'http://localhost:3000/statistics/expenses?date=2022-01&page=1'
+        );
         cy.getById(targetTransactionId).click();
 
         cy.getById('expense-delete-modal_open-button').click();
@@ -124,7 +126,9 @@ describe('Delete expense', () => {
         cy.saveData('targetTransactionBefore', targetTransactionBefore);
         cy.saveAsyncData('accountBefore', () => getAccount(targetAccountId));
 
-        cy.visit('http://localhost:3000/statistics/expenses/2021-02/1');
+        cy.visit(
+          'http://localhost:3000/statistics/expenses?date=2021-02&page=1'
+        );
         cy.getById(targetTransactionId).click();
 
         cy.getById('expense-delete-modal_open-button').click();
