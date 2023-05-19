@@ -106,7 +106,9 @@ describe('Delete transfer', () => {
           getAccount(targetFromAccountId)
         );
 
-        cy.visit('http://localhost:3000/statistics/transfers/2022-01/1');
+        cy.visit(
+          'http://localhost:3000/statistics/transfers?date=2022-01&page=1'
+        );
         cy.getById(targetTransactionId).click();
 
         cy.getById('transfer-delete-modal_open-button').click();
@@ -166,7 +168,9 @@ describe('Delete transfer', () => {
           getAccount(targetFromAccountId)
         );
 
-        cy.visit('http://localhost:3000/statistics/transfers/2021-02/1');
+        cy.visit(
+          'http://localhost:3000/statistics/transfers?date=2021-02&page=1'
+        );
         cy.getById(targetTransactionBefore._id).click();
 
         cy.getById('transfer-delete-modal_open-button').click();

@@ -5,7 +5,7 @@ describe('Edit transfer with category', () => {
   });
 
   it('Edit with single category', () => {
-    cy.visit('http://localhost:3000/statistics/transfers/2022-03/1');
+    cy.visit('http://localhost:3000/statistics/transfers?date=2022-03&page=1');
     cy.getById('623de2a0c839cf72d59b0df2').click();
     cy.getById('edit-transfer-button').click();
 
@@ -26,7 +26,7 @@ describe('Edit transfer with category', () => {
 
     cy.getById('submit').click();
 
-    cy.visit('http://localhost:3000/statistics/transfers/2022-03/1');
+    cy.visit('http://localhost:3000/statistics/transfers?date=2022-03&page=1');
     cy.getById('623de2a0c839cf72d59b0df2').click();
     cy.getById('edit-transfer-button').click();
 
@@ -45,7 +45,7 @@ describe('Edit transfer with category', () => {
   });
 
   it('Delete one categories with multiple categories', () => {
-    cy.visit('http://localhost:3000/statistics/transfers/2022-03/1');
+    cy.visit('http://localhost:3000/statistics/transfers?date=2022-03&page=1');
     cy.getById('623de2c0c839cf72d59b0e10').click();
     cy.getById('edit-transfer-button').click();
 
@@ -90,7 +90,7 @@ describe('Edit transfer with category', () => {
 
     cy.getById('submit').click();
 
-    cy.visit('http://localhost:3000/statistics/transfers/2022-03/1');
+    cy.visit('http://localhost:3000/statistics/transfers?date=2022-03&page=1');
     cy.getById('623de2c0c839cf72d59b0e10').click();
     cy.getById('edit-transfer-button').click();
 
@@ -112,7 +112,7 @@ describe('Edit transfer with category', () => {
     ).should('contain.value', 'Changed description');
   });
   it('Delete all categories with multiple categories', () => {
-    cy.visit('http://localhost:3000/statistics/transfers/2022-03/1');
+    cy.visit('http://localhost:3000/statistics/transfers?date=2022-03&page=1');
     cy.getById('623de2c0c839cf72d59b0e10').click();
     cy.getById('edit-transfer-button').click();
 
@@ -132,7 +132,7 @@ describe('Edit transfer with category', () => {
 
     cy.getById('submit').click();
 
-    cy.visit('http://localhost:3000/statistics/transfers/2022-03/1');
+    cy.visit('http://localhost:3000/statistics/transfers?date=2022-03&page=1');
     cy.getById('623de2c0c839cf72d59b0e10').click();
     cy.getById('edit-transfer-button').click();
 
