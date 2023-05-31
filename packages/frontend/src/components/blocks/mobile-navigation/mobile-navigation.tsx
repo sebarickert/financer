@@ -1,40 +1,21 @@
-import { IconName } from '../../elements/icon/icon';
-
 import { MobileNavigationActions } from './mobile-navigation.actions';
 import { MobileNavigationItem } from './mobile-navigation.item';
 
+import { navigationItems } from '$constants/navigation-items';
+
 export const MobileNavigation = (): JSX.Element => {
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-10 w-full bg-white border-t border-gray-dark pb-safe vt-name-[mobile-navigation]">
+    <div className="fixed bottom-0 left-0 right-0 z-10 w-full border-t bg-gray border-gray-dark pb-safe vt-name-[mobile-navigation]">
       <nav aria-label="Main navigation in mobile viewmode">
         <ul className={`grid grid-cols-5 relative`}>
+          <MobileNavigationItem {...navigationItems.home} isExact />
           <MobileNavigationItem
-            label="Home"
-            iconName={IconName.home}
-            link="/"
-            isExact
-            type="standalone"
-          />
-          <MobileNavigationItem
-            label="Statistics"
-            iconName={IconName.chartBar}
-            link="/statistics"
+            {...navigationItems.statistics}
             disallowedPathEndings={['add']}
-            type="standalone"
           />
           <MobileNavigationActions />
-          <MobileNavigationItem
-            label="Accounts"
-            iconName={IconName.viewGrid}
-            link="/accounts"
-            type="standalone"
-          />
-          <MobileNavigationItem
-            label="Profile"
-            iconName={IconName.userCircle}
-            link="/profile"
-            type="standalone"
-          />
+          <MobileNavigationItem {...navigationItems.accounts} />
+          <MobileNavigationItem {...navigationItems.settings} />
         </ul>
       </nav>
     </div>

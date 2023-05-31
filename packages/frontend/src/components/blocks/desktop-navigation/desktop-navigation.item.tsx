@@ -25,7 +25,11 @@ export const DesktopNavigationItem = ({
   isExact = false,
   disallowedPathEndings = [],
 }: IDesktopNavigationItemProps): JSX.Element => {
-  const isActive = useIsActiveLink({ link, isExact, disallowedPathEndings });
+  const isActive = useIsActiveLink({
+    url: link,
+    isExact,
+    disallowedPathEndings,
+  });
 
   const linkClasses = clsx(
     'flex items-center p-4 hover:bg-gray-dark rounded-md tracking-tight font-medium',

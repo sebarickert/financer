@@ -6,10 +6,14 @@ import { Icon, IconName } from '../../elements/icon/icon';
 
 import { MobileNavigationActionsBody } from './mobile-navigation.actions.body';
 
+import { Drawer } from '$blocks/drawer/drawer';
+
 export const MobileNavigationActions = (): JSX.Element => {
   const mobileNavigationActionsBodyRef = useRef();
   const mobileNavigationToggleButtonRef = useRef(null);
   const [isActionsModalOpen, setIsActionsModalOpen] = useState(false);
+
+  const [plaa, setPlaa] = useState(false);
 
   useOnClickOutside(
     mobileNavigationActionsBodyRef,
@@ -24,23 +28,28 @@ export const MobileNavigationActions = (): JSX.Element => {
         className={`flex w-full h-full justify-center items-center`}
         aria-expanded={isActionsModalOpen}
         aria-label="Add new transaction"
-        onClick={() => setIsActionsModalOpen(!isActionsModalOpen)}
+        onClick={() => setPlaa(!isActionsModalOpen)}
         ref={mobileNavigationToggleButtonRef}
       >
-        <span className={`block bg-charcoal p-2 rounded-full text-white`}>
-          <Icon
-            type={IconName.plus}
-            className={clsx('transition duration-250 ease-in-out', {
-              ['rotate-45']: isActionsModalOpen,
-            })}
-          />
-        </span>
+        <Icon
+          type={IconName.plus}
+          className={clsx('transition duration-250 ease-in-out', {
+            ['rotate-45']: isActionsModalOpen,
+          })}
+        />
       </button>
       <MobileNavigationActionsBody
         isModalOpen={isActionsModalOpen}
         outsideClickRef={mobileNavigationActionsBodyRef}
         onClick={setIsActionsModalOpen}
       />
+      <Drawer
+        isOpen={plaa}
+        onClose={() => setPlaa(false)}
+        heading="Update market value"
+      >
+        plaa
+      </Drawer>
     </li>
   );
 };

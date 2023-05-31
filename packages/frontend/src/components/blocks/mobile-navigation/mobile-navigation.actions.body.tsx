@@ -33,21 +33,21 @@ export const MobileNavigationActionsBody = ({
           <MobileNavigationItem
             label="Income"
             iconName={IconName.download}
-            link="/statistics/incomes/add"
+            url="/statistics/incomes/add"
             ariaLabel="Add new income transaction"
             onClick={() => onClick(false)}
           />
           <MobileNavigationItem
             label="Expense"
             iconName={IconName.upload}
-            link="/statistics/expenses/add"
+            url="/statistics/expenses/add"
             ariaLabel="Add new expense transaction"
             onClick={() => onClick(false)}
           />
           <MobileNavigationItem
             label="Transfer"
             iconName={IconName.switchHorizontal}
-            link="/statistics/transfers/add"
+            url="/statistics/transfers/add"
             ariaLabel="Add new transfer transaction"
             onClick={() => onClick(false)}
           />

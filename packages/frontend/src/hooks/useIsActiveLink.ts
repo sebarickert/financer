@@ -1,18 +1,18 @@
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 
 type UseIsActiveLinkProps = {
-  link: string;
+  url: string;
   isExact?: boolean;
   disallowedPathEndings?: string[];
 };
 
 export const useIsActiveLink = ({
-  link,
+  url,
   isExact = false,
   disallowedPathEndings = [],
 }: UseIsActiveLinkProps) => {
   const { pathname } = useViewTransitionRouter();
-  const match = isExact ? pathname === link : pathname.startsWith(link);
+  const match = isExact ? pathname === url : pathname.startsWith(url);
 
   return (
     match && !disallowedPathEndings.some((part) => pathname.endsWith(part))
