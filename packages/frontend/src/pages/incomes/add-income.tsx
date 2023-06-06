@@ -48,7 +48,7 @@ export const AddIncome = ({
     <>
       {isCreating && <LoaderFullScreen />}
       <UpdatePageInfo
-        title="Add income"
+        title="Add Income"
         headerAction={
           <TransactionTemplateSwitcher
             templateType={TransactionTypeEnum.Income}

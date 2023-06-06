@@ -56,7 +56,7 @@ export const AddTransfer = ({
     <>
       {isCreating && <LoaderFullScreen />}
       <UpdatePageInfo
-        title="Add transfer"
+        title="Add Transfer"
         headerAction={
           <TransactionTemplateSwitcher
             templateType={TransactionTypeEnum.Transfer}

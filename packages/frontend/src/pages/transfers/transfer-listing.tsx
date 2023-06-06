@@ -30,7 +30,7 @@ export const TransferListing = ({
 
   return (
     <>
-      <UpdatePageInfo title="Transfers" />
+      <UpdatePageInfo title="Transfers" backLink="/statistics" />
       <section className="mb-8">
         <LinkList>
           <LinkListLink

@@ -58,7 +58,7 @@ export const TransactionTemplateSwitcher = ({
       {isLoadingTemplates && <LoaderFullScreen />}
       <ButtonPlain
         onClick={handleToggleOpen}
-        className="inline-flex items-center justify-center border rounded-full h-11 w-11 bg-gray hover:bg-gray-dark text-gray-darkest focus:ring-2 focus:ring-offset-2 focus:outline-none focus:ring-charcoal border-gray-dark"
+        className="inline-flex items-center justify-center h-11 w-11"
       >
         <span className="sr-only">Switch template</span>
         <Icon type={IconName.lightningBolt} />

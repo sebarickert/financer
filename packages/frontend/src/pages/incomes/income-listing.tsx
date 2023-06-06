@@ -30,7 +30,7 @@ export const IncomeListing = ({
 
   return (
     <>
-      <UpdatePageInfo title="Incomes" />
+      <UpdatePageInfo title="Incomes" backLink="/statistics" />
       <section className="mb-8">
         <LinkList>
           <LinkListLink

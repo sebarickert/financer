@@ -30,7 +30,7 @@ export const ExpenseListing = ({
 
   return (
     <>
-      <UpdatePageInfo title="Expenses" />
+      <UpdatePageInfo title="Expenses" backLink="/statistics" />
       <section className="mb-8">
         <LinkList>
           <LinkListLink
