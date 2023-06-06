@@ -31,7 +31,7 @@ export const Heading = ({
   const HeadingType = variant;
   const styleToApply = style || variant;
 
-  const headingSize = clsx('text-xl font-medium tracking-tight');
+  const headingSize = clsx('text-lg font-medium tracking-tight');
 
   return (
     <section
