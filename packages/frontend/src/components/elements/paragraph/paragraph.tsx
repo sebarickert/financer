@@ -13,7 +13,7 @@ export const Paragraph = ({
 }: ParagraphProps) => {
   return (
     <p
-      className={clsx('text-charcoal', {
+      className={clsx('text-black/75', {
         [className]: true,
       })}
       data-testid={testId}

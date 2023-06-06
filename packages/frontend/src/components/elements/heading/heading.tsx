@@ -31,6 +31,8 @@ export const Heading = ({
   const HeadingType = variant;
   const styleToApply = style || variant;
 
+  const headingSize = clsx('text-xl font-medium tracking-tight');
+
   return (
     <section
       className={clsx('flex', {
@@ -39,16 +41,14 @@ export const Heading = ({
       })}
     >
       <HeadingType
-        className={clsx(
-          'font-bold !leading-tight tracking-tighter text-black truncate',
-          {
-            [titleClassName]: true,
-            ['text-2xl lg:text-3xl']: styleToApply === 'h1',
-            ['text-xl lg:text-2xl']: styleToApply === 'h2',
-            ['text-lg lg:text-xl']: styleToApply === 'h3',
-            ['text-md lg:text-lg']: styleToApply === 'h4',
-          }
-        )}
+        className={clsx('text-black', {
+          [titleClassName]: true,
+          [headingSize]: true,
+          // [headingSize]: styleToApply === 'h1',
+          // [headingSize]: styleToApply === 'h2',
+          // [headingSize]: styleToApply === 'h3',
+          // [headingSize]: styleToApply === 'h4',
+        })}
         data-testid={testId}
       >
         {children}
