@@ -1,25 +1,13 @@
 import clsx from 'clsx';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
-import { useOnClickOutside } from '../../../hooks/useOnClickOutside';
 import { Icon, IconName } from '../../elements/icon/icon';
 
-import { MobileNavigationActionsBody } from './mobile-navigation.actions.body';
-
 import { Drawer } from '$blocks/drawer/drawer';
+import { TransactionActions } from '$blocks/transaction-actions/transaction-actions';
 
 export const MobileNavigationActions = (): JSX.Element => {
-  const mobileNavigationActionsBodyRef = useRef();
-  const mobileNavigationToggleButtonRef = useRef(null);
   const [isActionsModalOpen, setIsActionsModalOpen] = useState(false);
-
-  const [plaa, setPlaa] = useState(false);
-
-  useOnClickOutside(
-    mobileNavigationActionsBodyRef,
-    () => setIsActionsModalOpen(false),
-    mobileNavigationToggleButtonRef
-  );
 
   return (
     <li>
@@ -28,8 +16,7 @@ export const MobileNavigationActions = (): JSX.Element => {
         className={`flex w-full h-full justify-center items-center`}
         aria-expanded={isActionsModalOpen}
         aria-label="Add new transaction"
-        onClick={() => setPlaa(!isActionsModalOpen)}
-        ref={mobileNavigationToggleButtonRef}
+        onClick={() => setIsActionsModalOpen(!isActionsModalOpen)}
       >
         <Icon
           type={IconName.plus}
@@ -38,17 +25,12 @@ export const MobileNavigationActions = (): JSX.Element => {
           })}
         />
       </button>
-      <MobileNavigationActionsBody
-        isModalOpen={isActionsModalOpen}
-        outsideClickRef={mobileNavigationActionsBodyRef}
-        onClick={setIsActionsModalOpen}
-      />
       <Drawer
-        isOpen={plaa}
-        onClose={() => setPlaa(false)}
+        isOpen={isActionsModalOpen}
+        onClose={() => setIsActionsModalOpen(false)}
         heading="Add transaction"
       >
-        plaa
+        <TransactionActions onClick={setIsActionsModalOpen} />
       </Drawer>
     </li>
   );
