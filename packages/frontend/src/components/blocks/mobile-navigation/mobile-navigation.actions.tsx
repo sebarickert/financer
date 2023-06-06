@@ -46,7 +46,7 @@ export const MobileNavigationActions = (): JSX.Element => {
       <Drawer
         isOpen={plaa}
         onClose={() => setPlaa(false)}
-        heading="Update market value"
+        heading="Add transaction"
       >
         plaa
       </Drawer>

@@ -3,7 +3,6 @@ import { MutableRefObject, useEffect, useMemo, useRef, useState } from 'react';
 
 import { DrawerHeader } from './drawer.header';
 
-import { Icon, IconName } from '$elements/icon/icon';
 import { useOnClickOutside } from '$hooks/useOnClickOutside';
 import { useWindowDimensions } from '$hooks/useWindowDimensions';
 
@@ -119,7 +118,7 @@ export const Drawer = ({
         id={id}
         data-testid={testId ?? 'drawer'}
       >
-        <DrawerHeader onClose={onClose} heading={heading}>
+        <DrawerHeader onClose={onClose} heading={heading} className="mb-8">
           {description}
         </DrawerHeader>
         {isClosedDelay ? null : children}
