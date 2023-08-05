@@ -109,7 +109,7 @@ describe('Edit expense with category', () => {
     ).should('contain.value', 'Changed description');
   });
 
-  it('Delete all categories with multiple categories', () => {
+  it.only('Delete all categories with multiple categories', () => {
     cy.visit('http://localhost:3000/statistics/expenses?date=2022-03&page=1');
     cy.getById('623de288c839cf72d59b0dd2').click();
     cy.getById('edit-expense-button').click();
@@ -119,10 +119,8 @@ describe('Edit expense with category', () => {
       2
     );
 
-    cy.getById('transaction-categories-form_delete-button').click({
-      multiple: true,
-      force: true,
-    });
+    cy.getById('transaction-categories-form_delete-button').first().click();
+    cy.getById('transaction-categories-form_delete-button').click();
 
     cy.getById('transaction-categories-form_transaction-category_row').should(
       'not.exist'

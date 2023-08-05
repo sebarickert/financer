@@ -29,10 +29,10 @@ describe('Transaction category creation', () => {
     cy.getById('submit').click();
     cy.location('pathname').should('not.contain', '/add');
 
-    cy.contains(newName).click();
-
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(500);
+
+    cy.contains(newName).click();
 
     cy.getById('edit-transaction-category').click();
 
