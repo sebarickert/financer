@@ -13,6 +13,7 @@ const rewrite = {
  */
 const nextConfig = {
     reactStrictMode: true,
+    trailingSlash: true,
     output: isDevelopment ? undefined : "export",
     distDir: "build",
     images: {
