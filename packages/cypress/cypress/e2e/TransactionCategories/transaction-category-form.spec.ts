@@ -5,12 +5,9 @@ describe('Transaction category form', () => {
   });
 
   it('Should not allow set child category as parent', () => {
-    // cy.visit(
-    //   'http://localhost:3000/profile/transaction-categories/623b58ada3deba9879422fbf/edit'
-    // );
-    cy.visit('http://localhost:3000/profile/transaction-categories/');
-    cy.contains("'Category for all types'").click();
-    cy.getById('edit-transaction-category').click();
+    cy.visit(
+      'http://localhost:3000/profile/transaction-categories/623b58ada3deba9879422fbf/edit'
+    );
 
     const categoryName = 'Category for all types';
     const childCategoryId = '623b6b84a3deba9879422fdd';

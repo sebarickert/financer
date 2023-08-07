@@ -1,9 +1,6 @@
-import { join } from 'path';
-
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { InjectConnection, MongooseModule } from '@nestjs/mongoose';
-import { ServeStaticModule } from '@nestjs/serve-static';
 import MongoStore from 'connect-mongo';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
@@ -26,6 +23,7 @@ import { TransfersModule } from './modules/transfers/transfers.module';
 import { UserDataModule } from './modules/user-data/user-data.module';
 import { UserPreferencesModule } from './modules/user-preferences/user-preferences.module';
 import { UsersModule } from './modules/users/users.module';
+import { ServeStaticPagesModule } from './serve-static-pages.module';
 
 @Module({
   imports: [
@@ -34,10 +32,7 @@ import { UsersModule } from './modules/users/users.module';
       load: [configuration],
       isGlobal: true,
     }),
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'client'),
-      exclude: ['/health-check/*', '/api/*', '/auth/*'],
-    }),
+    ServeStaticPagesModule,
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
