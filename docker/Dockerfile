@@ -1,6 +1,6 @@
 FROM node:16.14.0-alpine as builder
 
-ENV NODE_ENV development
+ENV NODE_ENV production
 RUN apk add --update --no-cache python3 make g++ && ln -sf python3 /usr/bin/python
 
 COPY . /app
