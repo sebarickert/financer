@@ -5,11 +5,10 @@ import {
   TransactionTypeEnum,
   useTransactionTemplatesFindAllManualTypeByUserQuery,
 } from '$api/generated/financerApi';
+import { Drawer } from '$blocks/drawer/drawer';
 import { Button } from '$elements/button/button';
 import { ButtonGroup } from '$elements/button/button.group';
 import { ButtonPlain } from '$elements/button/button.plain';
-import { Dialog } from '$elements/dialog/dialog';
-import { DialogText } from '$elements/dialog/dialog.text';
 import { Icon, IconName } from '$elements/icon/icon';
 import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { Radio } from '$elements/radio/radio';
@@ -58,16 +57,19 @@ export const TransactionTemplateSwitcher = ({
       {isLoadingTemplates && <LoaderFullScreen />}
       <ButtonPlain
         onClick={handleToggleOpen}
-        className="inline-flex items-center justify-center h-11 w-11"
+        className="inline-flex items-center justify-center -mr-3 h-11 w-11"
       >
         <span className="sr-only">Switch template</span>
         <Icon type={IconName.lightningBolt} />
       </ButtonPlain>
-      <Dialog isDialogOpen={isOpen} setIsDialogOpen={setIsOpen}>
-        <DialogText label="Switch template" className="mb-4" />
+      <Drawer
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        heading="Switch template"
+      >
         <form onSubmit={handleSubmit}>
-          <section className="mb-6">
-            <RadioGroup className="-mx-2">
+          <section className="-mx-4">
+            <RadioGroup>
               <Radio
                 name="templateSwitcher"
                 value={''}
@@ -87,14 +89,14 @@ export const TransactionTemplateSwitcher = ({
               ))}
             </RadioGroup>
           </section>
-          <ButtonGroup className="" isReverse>
-            <Button type="submit">Update</Button>
+          <ButtonGroup className="mt-12" isReverse isHorizontal>
+            <Button type="submit">Switch</Button>
             <Button onClick={() => setIsOpen(false)} accentColor="plain">
               Cancel
             </Button>
           </ButtonGroup>
         </form>
-      </Dialog>
+      </Drawer>
     </>
   );
 };

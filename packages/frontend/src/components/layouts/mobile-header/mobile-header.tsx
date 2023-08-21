@@ -27,7 +27,7 @@ export const MobileHeader = (): JSX.Element => {
       {backLink && (
         <LinkViewTransition
           href={backLink}
-          className="inline-flex items-center justify-center h-11 w-11 -translate-x-1/4"
+          className="inline-flex items-center justify-center -ml-3 h-11 w-11"
           data-testid="header-back-link"
           transition="close-to-right"
         >
@@ -46,7 +46,7 @@ export const MobileHeader = (): JSX.Element => {
         {title ?? '-'}
       </Heading>
       {headerAction && (
-        <div className="inline-flex items-center justify-center h-11 w-11 translate-x-1/4 col-[3]">
+        <div className="inline-flex items-center justify-end h-11 w-11 col-[3]">
           {headerAction}
         </div>
       )}

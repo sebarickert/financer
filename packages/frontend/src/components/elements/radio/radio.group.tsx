@@ -10,7 +10,7 @@ export const RadioGroup = ({
   className = '',
 }: RadioProps): JSX.Element => {
   return (
-    <ul className={`text-charcoal space-y-1 ${className}`}>
+    <ul className={`${className}`}>
       {Children.map(children, (child) => {
         return child && <li key={`Radio-${Math.random()}`}>{child}</li>;
       })}
