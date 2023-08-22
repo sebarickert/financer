@@ -43,7 +43,7 @@ export const Input = ({
     <div>
       <label
         htmlFor={id}
-        className="block text-xs font-medium leading-5 tracking-tight uppercase text-gray-darkest"
+        className="block text-sm tracking-tight text-black/75"
       >
         {children}
       </label>
@@ -61,8 +61,8 @@ export const Input = ({
           max={max}
           step={step}
           className={clsx(
-            'appearance-none block w-full px-3 py-3 border border-gray-dark bg-gray rounded-md focus:outline-none focus:ring-black focus:border-black text-charcoal tracking-tight',
-            { ['pl-7']: isCurrency }
+            'appearance-none block w-full px-3 py-3 border border-transparent text-black bg-gray rounded-md focus:ring-black focus:border-black tracking-normal',
+            { ['pl-8']: isCurrency }
           )}
           aria-describedby={help && `${id}-description`}
           required={isRequired}

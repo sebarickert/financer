@@ -1,14 +1,19 @@
 import clsx from 'clsx';
-import { useState } from 'react';
 
 import { Icon, IconName } from '../../elements/icon/icon';
 
 import { Drawer } from '$blocks/drawer/drawer';
 import { TransactionActions } from '$blocks/transaction-actions/transaction-actions';
 
-export const MobileNavigationActions = (): JSX.Element => {
-  const [isActionsModalOpen, setIsActionsModalOpen] = useState(false);
+interface MobileNavigationActionsProps {
+  isActionsModalOpen: boolean;
+  setIsActionsModalOpen: (isOpen: boolean) => void;
+}
 
+export const MobileNavigationActions = ({
+  isActionsModalOpen,
+  setIsActionsModalOpen = () => {},
+}: MobileNavigationActionsProps): JSX.Element => {
   return (
     <li>
       <button

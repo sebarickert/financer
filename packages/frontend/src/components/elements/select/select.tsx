@@ -42,13 +42,13 @@ export const Select = ({
     <div className={className}>
       <label
         htmlFor={id}
-        className="block text-xs font-medium leading-5 tracking-tight uppercase text-gray-darkest"
+        className="block text-sm tracking-tight text-black/75"
       >
         {children}
         <select
           data-testid={testId}
           id={id}
-          className="block w-full py-3 pl-3 pr-10 mt-1 text-base font-normal tracking-tight rounded-md bg-gray border-gray-dark hover:bg-gray-dark text-charcoal focus:outline-none focus:ring-black focus:border-black hover:cursor-pointer"
+          className="block w-full py-3 pl-3 pr-10 mt-1 text-base font-normal tracking-normal border border-transparent rounded-md bg-gray text-charcoal focus:outline-none focus:ring-black focus:border-black hover:cursor-pointer"
           required={isRequired}
           aria-describedby={help && `${id}-description`}
           disabled={isDisabled}
