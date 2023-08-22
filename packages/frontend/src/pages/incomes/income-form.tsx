@@ -6,6 +6,7 @@ import {
   VisibilityType2Enum,
   VisibilityTypeEnum,
 } from '$api/generated/financerApi';
+import { AccountsSelect } from '$blocks/accounts-select/accounts-select';
 import { Form } from '$blocks/form/form';
 import {
   TransactionCategoriesForm,
@@ -14,7 +15,7 @@ import {
 import { Alert } from '$elements/alert/alert';
 import { Input } from '$elements/input/input';
 import { Loader } from '$elements/loader/loader';
-import { Select, Option } from '$elements/select/select';
+import { Option } from '$elements/select/select';
 import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
 import { inputDateFormat } from '$utils/formatDate';
 
@@ -92,9 +93,9 @@ export const IncomeForm = ({
       >
         <section>
           <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
-            <Input id="description" isRequired>
-              Description
-            </Input>
+            <AccountsSelect id="toAccount" options={accountOptions} isRequired>
+              Account
+            </AccountsSelect>
             <Input
               id="amount"
               type="number"
@@ -105,12 +106,12 @@ export const IncomeForm = ({
             >
               Amount
             </Input>
+            <Input id="description" isRequired>
+              Description
+            </Input>
             <Input id="date" type="datetime-local">
               Date
             </Input>
-            <Select id="toAccount" options={accountOptions} isRequired>
-              Account
-            </Select>
           </div>
         </section>
         {transactionCategories.length > 0 && (
