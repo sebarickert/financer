@@ -56,6 +56,7 @@ export const Select = ({
             disabled: isDisabled,
             onChange: handleChange,
             required: isRequired,
+            shouldUnregister: false,
           })}
         >
           {options.map(({ value, label }) => (
