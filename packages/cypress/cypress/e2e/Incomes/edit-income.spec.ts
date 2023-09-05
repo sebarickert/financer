@@ -90,15 +90,15 @@ describe('Edit income', () => {
           'http://localhost:3000/statistics/incomes?date=2022-01&page=1'
         );
 
-        cy.getById(targetTransactionBefore._id).click();
+        cy.getByTestId(targetTransactionBefore._id).click();
 
-        cy.getById(`edit-income-button`).click();
+        cy.getByTestId(`edit-income-button`).click();
         cy.get('#description').clear();
         cy.get('#description').type(editedTransactionName);
         cy.get('#amount').clear();
         cy.get('#amount').type(newAmount.toString());
         cy.get('#toAccount').select(targetAccountId);
-        cy.getById('submit').click();
+        cy.getByTestId('submit').click();
 
         cy.location('pathname')
           .should('not.contain', '/edit')
@@ -153,15 +153,15 @@ describe('Edit income', () => {
           'http://localhost:3000/statistics/incomes?date=2021-02&page=1'
         );
 
-        cy.getById(targetTransactionBefore._id).click();
+        cy.getByTestId(targetTransactionBefore._id).click();
 
-        cy.getById(`edit-income-button`).click();
+        cy.getByTestId(`edit-income-button`).click();
         cy.get('#description').clear();
         cy.get('#description').type(editedTransactionName);
         cy.get('#amount').clear();
         cy.get('#amount').type(newAmount.toString());
         cy.get('#toAccount').select(targetAccountId);
-        cy.getById('submit').click();
+        cy.getByTestId('submit').click();
 
         cy.location('pathname')
           .should('not.contain', '/edit')

@@ -110,16 +110,16 @@ describe('Edit transfer', () => {
           'http://localhost:3000/statistics/transfers?date=2022-01&page=1'
         );
 
-        cy.getById(targetTransactionBefore._id).click();
+        cy.getByTestId(targetTransactionBefore._id).click();
 
-        cy.getById(`edit-transfer-button`).click();
+        cy.getByTestId(`edit-transfer-button`).click();
         cy.get('#description').clear();
         cy.get('#description').type(editedTransactionName);
         cy.get('#amount').clear();
         cy.get('#amount').type(newAmount.toString());
         cy.get('#toAccount').select(targetToAccountId);
         cy.get('#fromAccount').select(targetFromAccountId);
-        cy.getById('submit').click();
+        cy.getByTestId('submit').click();
 
         cy.location('pathname')
           .should('not.contain', '/edit')
@@ -189,16 +189,16 @@ describe('Edit transfer', () => {
           'http://localhost:3000/statistics/transfers?date=2021-02&page=1'
         );
 
-        cy.getById(targetTransactionBefore._id).click();
+        cy.getByTestId(targetTransactionBefore._id).click();
 
-        cy.getById(`edit-transfer-button`).click();
+        cy.getByTestId(`edit-transfer-button`).click();
         cy.get('#description').clear();
         cy.get('#description').type(editedTransactionName);
         cy.get('#amount').clear();
         cy.get('#amount').type(newAmount.toString());
         cy.get('#toAccount').select(targetToAccountId);
         cy.get('#fromAccount').select(targetFromAccountId);
-        cy.getById('submit').click();
+        cy.getByTestId('submit').click();
 
         cy.location('pathname')
           .should('not.contain', '/edit')

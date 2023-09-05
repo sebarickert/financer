@@ -86,7 +86,7 @@ describe('Add transfer', () => {
         // eslint-disable-next-line cypress/no-unnecessary-waiting
         cy.wait(100);
 
-        cy.getById('add-transfer').click();
+        cy.getByTestId('add-transfer').click();
         cy.get('#description').clear();
         cy.get('#description').type(newTransactionName);
         cy.get('#date').clear();
@@ -95,7 +95,7 @@ describe('Add transfer', () => {
         cy.get('#amount').type(newTransactionAmountStr);
         cy.get('#toAccount').select(targetToAccountId);
         cy.get('#fromAccount').select(targetFromAccountId);
-        cy.getById('submit').click();
+        cy.getByTestId('submit').click();
 
         cy.location('pathname')
           .should('not.contain', '/add')
@@ -154,7 +154,7 @@ describe('Add transfer', () => {
         // eslint-disable-next-line cypress/no-unnecessary-waiting
         cy.wait(100);
 
-        cy.getById('add-transfer').click();
+        cy.getByTestId('add-transfer').click();
         cy.get('#description').clear();
         cy.get('#description').type(newTransactionName);
         cy.get('#date').clear();
@@ -163,7 +163,7 @@ describe('Add transfer', () => {
         cy.get('#amount').type(newTransactionAmountStr);
         cy.get('#toAccount').select(targetToAccountId);
         cy.get('#fromAccount').select(targetFromAccountId);
-        cy.getById('submit').click();
+        cy.getByTestId('submit').click();
 
         cy.location('pathname')
           .should('not.contain', '/add')
@@ -217,7 +217,7 @@ describe('Add transfer', () => {
         // eslint-disable-next-line cypress/no-unnecessary-waiting
         cy.wait(100);
 
-        cy.getById('add-transfer').click();
+        cy.getByTestId('add-transfer').click();
         cy.get('#description').clear();
         cy.get('#description').type(newTransactionName);
         cy.get('#date').clear();
@@ -226,7 +226,7 @@ describe('Add transfer', () => {
         cy.get('#amount').type(newTransactionAmountStr);
         cy.get('#toAccount').select(targetToAccountId);
         cy.get('#fromAccount').select(targetFromAccountId);
-        cy.getById('submit').click();
+        cy.getByTestId('submit').click();
 
         cy.location('pathname')
           .should('not.contain', '/add')
@@ -254,7 +254,7 @@ describe('Add transfer', () => {
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(500);
 
-    cy.getById('add-transfer').click();
+    cy.getByTestId('add-transfer').click();
     cy.get('#description').clear();
     cy.get('#description').type(newTransactionName);
     cy.get('#date').clear();
@@ -263,10 +263,10 @@ describe('Add transfer', () => {
     cy.get('#amount').type(newTransactionAmountStr);
     cy.get('#toAccount').select('Saving account 1');
     cy.get('#fromAccount').select('Saving account 2');
-    cy.getById('submit').click();
+    cy.getByTestId('submit').click();
 
-    cy.getById('layout-root').contains(newTransactionName).click();
-    cy.getById('edit-transfer-button').click();
+    cy.getByTestId('layout-root').contains(newTransactionName).click();
+    cy.getByTestId('edit-transfer-button').click();
     cy.get('#date').then(($input) => {
       const inputValue = $input.val() as string;
       expect(date.toISOString()).equals(new Date(inputValue).toISOString());

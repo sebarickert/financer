@@ -109,10 +109,10 @@ describe('Delete transfer', () => {
         cy.visit(
           'http://localhost:3000/statistics/transfers?date=2022-01&page=1'
         );
-        cy.getById(targetTransactionId).click();
+        cy.getByTestId(targetTransactionId).click();
 
-        cy.getById('transfer-delete-modal_open-button').click();
-        cy.getById('transfer-delete-modal_confirm-button').click();
+        cy.getByTestId('transfer-delete-modal_open-button').click();
+        cy.getByTestId('transfer-delete-modal_confirm-button').click();
 
         cy.location('pathname')
           .should('not.contain', `/${targetTransactionId}`)
@@ -171,10 +171,10 @@ describe('Delete transfer', () => {
         cy.visit(
           'http://localhost:3000/statistics/transfers?date=2021-02&page=1'
         );
-        cy.getById(targetTransactionBefore._id).click();
+        cy.getByTestId(targetTransactionBefore._id).click();
 
-        cy.getById('transfer-delete-modal_open-button').click();
-        cy.getById('transfer-delete-modal_confirm-button').click();
+        cy.getByTestId('transfer-delete-modal_open-button').click();
+        cy.getByTestId('transfer-delete-modal_confirm-button').click();
 
         cy.location('pathname')
           .should('not.contain', `/${targetTransactionId}`)

@@ -7,34 +7,34 @@ describe('Add transfer with category', () => {
     cy.get('#description').clear().type(TRANSFER_NAME);
     cy.get('#amount').clear().type('10000.50');
     cy.get('#toAccount').select('Cash account');
-    cy.getById('add-category-button').click();
+    cy.getByTestId('add-category-button').click();
   });
 
   it('Add transfer with category', () => {
-    cy.getById('transaction-categories-form_transaction-category_amount')
+    cy.getByTestId('transaction-categories-form_transaction-category_amount')
       .clear()
       .type('50');
-    cy.getById(
+    cy.getByTestId(
       'transaction-categories-form_transaction-category_category'
     ).select('Category for all types');
 
-    cy.getById('submit').click();
+    cy.getByTestId('submit').click();
 
     cy.location('pathname').should('not.contain', '/add');
     cy.contains(TRANSFER_NAME).click();
 
-    cy.getById('category_label').should(
+    cy.getByTestId('category_label').should(
       'contain.text',
       'Category for all types'
     );
-    cy.getById('category_amount').should('contain.text', '50,00');
+    cy.getByTestId('category_amount').should('contain.text', '50,00');
   });
 
   it('Verify selected category must exists', () => {
-    cy.getById('transaction-categories-form_transaction-category_amount')
+    cy.getByTestId('transaction-categories-form_transaction-category_amount')
       .clear()
       .type('50');
-    cy.getById('transaction-categories-form_transaction-category_category')
+    cy.getByTestId('transaction-categories-form_transaction-category_category')
       .then(($select) => {
         $select.append(
           '<option value="123456789012345678901234">non-existing-category</option>'
@@ -42,13 +42,13 @@ describe('Add transfer with category', () => {
       })
       .select('non-existing-category');
 
-    cy.getById('submit').click();
+    cy.getByTestId('submit').click();
 
-    cy.getById('form-errors').should(
+    cy.getByTestId('form-errors').should(
       'contain.text',
       'There were 1 errors with your submission'
     );
-    cy.getById('form-errors').should(
+    cy.getByTestId('form-errors').should(
       'contain.text',
       'One or more categories does not exist.'
     );

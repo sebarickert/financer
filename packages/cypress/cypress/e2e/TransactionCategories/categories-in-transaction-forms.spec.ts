@@ -5,7 +5,7 @@ describe('Transaction categories visibility in transaction forms', () => {
 
   const verifyIncomeCategories = () =>
     cy
-      .getById('transaction-categories-form_transaction-category_category')
+      .getByTestId('transaction-categories-form_transaction-category_category')
       .find('option')
       .should('have.length', 4)
       .should('contain', 'Category for all types')
@@ -15,7 +15,7 @@ describe('Transaction categories visibility in transaction forms', () => {
 
   const verifyExpenseCategories = () =>
     cy
-      .getById('transaction-categories-form_transaction-category_category')
+      .getByTestId('transaction-categories-form_transaction-category_category')
       .find('option')
       .should('have.length', 4)
       .should('contain', 'Category for all types')
@@ -25,7 +25,7 @@ describe('Transaction categories visibility in transaction forms', () => {
 
   const verifyTransferCategories = () =>
     cy
-      .getById('transaction-categories-form_transaction-category_category')
+      .getByTestId('transaction-categories-form_transaction-category_category')
       .find('option')
       .should('have.length', 4)
       .should('contain', 'Category for all types')
@@ -37,7 +37,7 @@ describe('Transaction categories visibility in transaction forms', () => {
     cy.visit('http://localhost:3000/statistics/incomes/add');
     cy.get('#amount').clear().type('100');
 
-    cy.getById('add-category-button').click();
+    cy.getByTestId('add-category-button').click();
     verifyIncomeCategories();
   });
 
@@ -45,7 +45,7 @@ describe('Transaction categories visibility in transaction forms', () => {
     cy.visit('http://localhost:3000/statistics/expenses/add');
     cy.get('#amount').clear().type('100');
 
-    cy.getById('add-category-button').click();
+    cy.getByTestId('add-category-button').click();
     verifyExpenseCategories();
   });
 
@@ -53,7 +53,7 @@ describe('Transaction categories visibility in transaction forms', () => {
     cy.visit('http://localhost:3000/statistics/transfers/add');
     cy.get('#amount').clear().type('100');
 
-    cy.getById('add-category-button').click();
+    cy.getByTestId('add-category-button').click();
     verifyTransferCategories();
   });
 });

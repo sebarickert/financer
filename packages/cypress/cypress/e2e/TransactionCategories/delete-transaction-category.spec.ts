@@ -6,11 +6,11 @@ describe('Delete transaction category', () => {
 
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(500);
-    cy.getById('delete-transaction-category').click();
+    cy.getByTestId('delete-transaction-category').click();
 
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(500);
-    cy.getById('delete-transaction-category_confirm-button').click();
+    cy.getByTestId('delete-transaction-category_confirm-button').click();
 
     cy.get(`[data-entity-title="${targetCategoryName}"]`).should('not.exist');
   };

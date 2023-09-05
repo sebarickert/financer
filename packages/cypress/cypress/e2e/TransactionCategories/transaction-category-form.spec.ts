@@ -27,12 +27,12 @@ describe('Transaction category form', () => {
     });
     cy.get('#parent_category_id').select('child-category');
 
-    cy.getById('submit').click();
-    cy.getById('form-errors').should(
+    cy.getByTestId('submit').click();
+    cy.getByTestId('form-errors').should(
       'contain.text',
       'There were 1 errors with your submission'
     );
-    cy.getById('form-errors').should(
+    cy.getByTestId('form-errors').should(
       'contain.text',
       'Parent category cannot be child category of current item.'
     );

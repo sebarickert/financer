@@ -11,7 +11,7 @@
 // eslint-disable-next-line @typescript-eslint/no-namespace
 declare namespace Cypress {
   interface Chainable {
-    getById(
+    getByTestId(
       selector: string,
       options?: Partial<Loggable & Timeoutable & Withinable & Shadow>
     ): Chainable<JQuery<Element>>;
@@ -25,7 +25,7 @@ declare namespace Cypress {
   }
 }
 
-Cypress.Commands.add('getById', (selector, ...args) => {
+Cypress.Commands.add('getByTestId', (selector, ...args) => {
   return cy.get(`[data-testid=${selector}]`, ...args);
 });
 
