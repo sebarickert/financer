@@ -20,7 +20,7 @@ export const AccountsList = ({
   if (!rows?.length) return null;
 
   return (
-    <LinkList label={label} className={`${className}`}>
+    <LinkList label={label} className={`${className}`} testId="account-list">
       {rows.map(({ id, balanceAmount, label: rowLabel, link, type }) => {
         const accountTypeIconMapping: { [key in AccountType]: IconName } = {
           cash: IconName.cash,

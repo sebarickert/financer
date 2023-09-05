@@ -14,24 +14,24 @@ describe('Edit transaction category', () => {
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(500);
 
-    cy.getById('edit-transaction-category').click();
+    cy.getByTestId('edit-transaction-category').click();
 
     cy.get('#name').clear();
     cy.get('#name').type(newName);
 
     if (newVisibility) {
-      cy.getById('visibility-checkboxes').find('input').uncheck();
+      cy.getByTestId('visibility-checkboxes').find('input').uncheck();
 
       newVisibility.forEach((visibilityItem) =>
         cy
-          .getById('visibility-checkboxes')
+          .getByTestId('visibility-checkboxes')
           .find('label')
           .contains(visibilityItem, { matchCase: false })
           .click()
       );
       cy.saveData('targetVisibility', newVisibility);
     } else {
-      cy.getById('visibility-checkboxes')
+      cy.getByTestId('visibility-checkboxes')
         .find('input')
         .then(($inputs) => {
           const targetVisibility: string[] = [];
@@ -58,7 +58,7 @@ describe('Edit transaction category', () => {
       );
     }
 
-    cy.getById('submit').click();
+    cy.getByTestId('submit').click();
     cy.location('pathname').should('not.contain', '/edit');
 
     // TODO: This is a workaround to give react time refetch content instead of showing cached list
@@ -69,26 +69,26 @@ describe('Edit transaction category', () => {
 
     cy.get(`[data-entity-title="${newName}"]`).click();
 
-    cy.getById('edit-transaction-category').click();
+    cy.getByTestId('edit-transaction-category').click();
 
     cy.location('pathname').should('contain', '/edit');
 
     cy.get('#name').should('have.value', newName);
 
     cy.get<string[]>('@targetVisibility').then((targetVisibility) => {
-      cy.getById('visibility-checkboxes')
+      cy.getByTestId('visibility-checkboxes')
         .find('#incomeVisible')
         .should(
           targetVisibility?.includes('income') ? 'be.checked' : 'not.be.checked'
         );
-      cy.getById('visibility-checkboxes')
+      cy.getByTestId('visibility-checkboxes')
         .find('#expenseVisible')
         .should(
           targetVisibility?.includes('expense')
             ? 'be.checked'
             : 'not.be.checked'
         );
-      cy.getById('visibility-checkboxes')
+      cy.getByTestId('visibility-checkboxes')
         .find('#transferVisible')
         .should(
           targetVisibility?.includes('transfer')

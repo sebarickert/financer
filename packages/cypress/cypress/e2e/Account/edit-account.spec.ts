@@ -27,11 +27,11 @@ describe('Account editing', () => {
     accountBalance: string,
     accountType: string
   ) => {
-    cy.getById('page-main-heading').should('contain.text', accountName);
+    cy.getByTestId('page-main-heading').should('contain.text', accountName);
 
-    cy.getById('account-type').should('have.text', accountType);
+    cy.getByTestId('account-type').should('have.text', accountType);
 
-    cy.getById('account-balance')
+    cy.getByTestId('account-balance')
       .invoke('text')
       .then((currentBalance) => {
         expect(parseFloatFromText(currentBalance)).to.equal(
@@ -45,11 +45,11 @@ describe('Account editing', () => {
     newAccountName: string,
     accountType: string
   ) => {
-    cy.getById('account-row').should('not.contain.text', newAccountName);
+    cy.getByTestId('account-row').should('not.contain.text', newAccountName);
 
-    cy.getById('account-row').contains(oldAccountName).click();
+    cy.getByTestId('account-row').contains(oldAccountName).click();
 
-    cy.getById('account-balance').then(($balanceElement) => {
+    cy.getByTestId('account-balance').then(($balanceElement) => {
       cy.wrap($balanceElement.text()).as('accountBalance');
     });
 
@@ -62,19 +62,19 @@ describe('Account editing', () => {
 
     // Account page
 
-    cy.getById('edit-account').click();
+    cy.getByTestId('edit-account').click();
 
     // Edit account form
     cy.get('#name').clear();
     cy.get('#name').type(newAccountName);
-    cy.getById('submit').click();
+    cy.getByTestId('submit').click();
 
     cy.location('pathname').should('not.contain', '/edit');
     cy.visit('http://localhost:3000/accounts');
 
     // All accounts list
-    cy.getById('account-row').should('contain.text', newAccountName);
-    cy.getById('account-row').contains(newAccountName).click();
+    cy.getByTestId('account-row').should('contain.text', newAccountName);
+    cy.getByTestId('account-row').contains(newAccountName).click();
 
     // Account page
     cy.get<string>('@accountBalance').then((accountBalance) => {
@@ -87,10 +87,10 @@ describe('Account editing', () => {
     oldAccountType: string,
     newAccountType: string
   ) => {
-    cy.getById('account-row').contains(accountName).click();
+    cy.getByTestId('account-row').contains(accountName).click();
     // Account page
 
-    cy.getById('account-balance').then(($balanceElement) => {
+    cy.getByTestId('account-balance').then(($balanceElement) => {
       cy.wrap($balanceElement.text()).as('accountBalance');
     });
 
@@ -101,17 +101,17 @@ describe('Account editing', () => {
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(100);
 
-    cy.getById('edit-account').click();
+    cy.getByTestId('edit-account').click();
 
     // Edit account form
     cy.get('#type').select(newAccountType);
-    cy.getById('submit').click();
+    cy.getByTestId('submit').click();
 
     cy.location('pathname').should('not.contain', '/edit');
     cy.visit('http://localhost:3000/accounts');
 
     // All accounts list
-    cy.getById('account-row').contains(accountName).click();
+    cy.getByTestId('account-row').contains(accountName).click();
 
     // Account page
     cy.get<string>('@accountBalance').then((accountBalance) => {
@@ -124,9 +124,9 @@ describe('Account editing', () => {
     newAccountBalance: string,
     accountType: string
   ) => {
-    cy.getById('account-row').contains(accountName).click();
+    cy.getByTestId('account-row').contains(accountName).click();
 
-    cy.getById('account-balance').then(($balanceElement) => {
+    cy.getByTestId('account-balance').then(($balanceElement) => {
       cy.wrap($balanceElement.text()).as('oldAccountBalance');
     });
 
@@ -140,7 +140,7 @@ describe('Account editing', () => {
 
     // Account page
 
-    cy.getById('edit-account').click();
+    cy.getByTestId('edit-account').click();
 
     // Edit account form
     cy.get('#balance').clear();
@@ -152,13 +152,13 @@ describe('Account editing', () => {
         .replace(String.fromCharCode(8722), String.fromCharCode(45)) // charcodes for different kind of `-`
     );
 
-    cy.getById('submit').click();
+    cy.getByTestId('submit').click();
 
     cy.location('pathname').should('not.contain', '/edit');
     cy.visit('http://localhost:3000/accounts');
 
     // All accounts list
-    cy.getById('account-row').contains(accountName).click();
+    cy.getByTestId('account-row').contains(accountName).click();
 
     // Account page
     verifyAccountPage(accountName, newAccountBalance, accountType);
@@ -171,10 +171,10 @@ describe('Account editing', () => {
     oldAccountType: string,
     newAccountType: string
   ) => {
-    cy.getById('account-row').contains(oldAccountName).click();
+    cy.getByTestId('account-row').contains(oldAccountName).click();
     // Account page
 
-    cy.getById('account-balance').then(($balanceElement) => {
+    cy.getByTestId('account-balance').then(($balanceElement) => {
       cy.wrap($balanceElement.text()).as('oldAccountBalance');
     });
 
@@ -186,7 +186,7 @@ describe('Account editing', () => {
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(100);
 
-    cy.getById('edit-account').click();
+    cy.getByTestId('edit-account').click();
 
     // Edit account form
     cy.get('#name').clear();
@@ -201,14 +201,14 @@ describe('Account editing', () => {
         .replace(String.fromCharCode(8722), String.fromCharCode(45)) // charcodes for different kind of `-`
     );
 
-    cy.getById('submit').click();
+    cy.getByTestId('submit').click();
 
     cy.location('pathname').should('not.contain', '/edit');
     cy.visit('http://localhost:3000/accounts');
 
     // All accounts list
-    cy.getById('account-row').should('contain.text', newAccountName);
-    cy.getById('account-row').contains(newAccountName).click();
+    cy.getByTestId('account-row').should('contain.text', newAccountName);
+    cy.getByTestId('account-row').contains(newAccountName).click();
 
     // Account page
     verifyAccountPage(newAccountName, newAccountBalance, newAccountType);

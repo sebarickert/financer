@@ -81,10 +81,10 @@ describe('Delete expense', () => {
         cy.visit(
           'http://localhost:3000/statistics/expenses?date=2022-01&page=1'
         );
-        cy.getById(targetTransactionId).click();
+        cy.getByTestId(targetTransactionId).click();
 
-        cy.getById('expense-delete-modal_open-button').click();
-        cy.getById('expense-delete-modal_confirm-button').click();
+        cy.getByTestId('expense-delete-modal_open-button').click();
+        cy.getByTestId('expense-delete-modal_confirm-button').click();
 
         cy.location('pathname')
           .should('not.contain', `/${targetAccountId}`)
@@ -129,10 +129,10 @@ describe('Delete expense', () => {
         cy.visit(
           'http://localhost:3000/statistics/expenses?date=2021-02&page=1'
         );
-        cy.getById(targetTransactionId).click();
+        cy.getByTestId(targetTransactionId).click();
 
-        cy.getById('expense-delete-modal_open-button').click();
-        cy.getById('expense-delete-modal_confirm-button').click();
+        cy.getByTestId('expense-delete-modal_open-button').click();
+        cy.getByTestId('expense-delete-modal_confirm-button').click();
 
         cy.location('pathname')
           .should('not.contain', `/${targetAccountId}`)

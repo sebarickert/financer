@@ -80,10 +80,10 @@ describe('Delete income', () => {
         cy.visit(
           'http://localhost:3000/statistics/incomes?date=2022-01&page=1'
         );
-        cy.getById(targetTransactionId).click();
+        cy.getByTestId(targetTransactionId).click();
 
-        cy.getById('income-delete-modal_open-button').click();
-        cy.getById('income-delete-modal_confirm-button').click();
+        cy.getByTestId('income-delete-modal_open-button').click();
+        cy.getByTestId('income-delete-modal_confirm-button').click();
 
         cy.location('pathname')
           .should('not.contain', `/${targetAccountId}`)
@@ -128,10 +128,10 @@ describe('Delete income', () => {
         cy.visit(
           'http://localhost:3000/statistics/incomes?date=2021-02&page=1'
         );
-        cy.getById(targetTransactionId).click();
+        cy.getByTestId(targetTransactionId).click();
 
-        cy.getById('income-delete-modal_open-button').click();
-        cy.getById('income-delete-modal_confirm-button').click();
+        cy.getByTestId('income-delete-modal_open-button').click();
+        cy.getByTestId('income-delete-modal_confirm-button').click();
 
         cy.location('pathname')
           .should('not.contain', `/${targetAccountId}`)

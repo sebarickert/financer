@@ -14,9 +14,9 @@ describe('Account creation', () => {
     expextedBalance
   ) => {
     const newAccountName = `New Test ${expectedType} Account ${Math.random()}`;
-    cy.getById('account-row').should('not.have.text', newAccountName);
+    cy.getByTestId('account-row').should('not.have.text', newAccountName);
 
-    cy.getById('add-account').click();
+    cy.getByTestId('add-account').click();
 
     // Add account form
     cy.get('#name').clear();
@@ -24,7 +24,7 @@ describe('Account creation', () => {
     cy.get('#balance').clear();
     cy.get('#balance').type(accountBalance);
     cy.get('#type').select(accountType);
-    cy.getById('submit').click();
+    cy.getByTestId('submit').click();
 
     cy.location('pathname').should('match', /\/accounts\/?$/);
 
@@ -32,8 +32,8 @@ describe('Account creation', () => {
 
     cy.location('pathname').should('not.match', /\/accounts\/?$/);
 
-    cy.getById('account-type').should('have.text', expectedType);
-    cy.getById('account-balance')
+    cy.getByTestId('account-type').should('have.text', expectedType);
+    cy.getByTestId('account-balance')
       .invoke('text')
       .invoke('replace', /\u00a0/g, ' ')
       .should('equal', expextedBalance);
