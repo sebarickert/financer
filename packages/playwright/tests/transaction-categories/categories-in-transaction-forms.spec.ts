@@ -1,7 +1,7 @@
 import { applyFixture } from '$utils/load-fixtures';
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '$utils/financer-page';
 
-test.describe.serial('Transaction categories visibility in transaction forms', () => {
+test.describe('Transaction categories visibility in transaction forms', () => {
   test.beforeEach(async ({ page }) => {
     applyFixture('accounts-only')
   });
@@ -34,7 +34,7 @@ test.describe.serial('Transaction categories visibility in transaction forms', (
   };
 
   test('Verify add income categories', async ({ page }) => {
-    await page.goto('http://localhost:3000/statistics/incomes/add');
+    await page.goto('/statistics/incomes/add');
     await page.fill('#amount', '100');
 
     await page.click('[data-testid="add-category-button"]');
@@ -42,7 +42,7 @@ test.describe.serial('Transaction categories visibility in transaction forms', (
   });
 
   test('Verify add expense categories', async ({ page }) => {
-    await page.goto('http://localhost:3000/statistics/expenses/add');
+    await page.goto('/statistics/expenses/add');
     await page.fill('#amount', '100');
 
     await page.click('[data-testid="add-category-button"]');
@@ -50,7 +50,7 @@ test.describe.serial('Transaction categories visibility in transaction forms', (
   });
 
   test('Verify add transfer categories', async ({ page }) => {
-    await page.goto('http://localhost:3000/statistics/transfers/add');
+    await page.goto('/statistics/transfers/add');
     await page.fill('#amount', '100');
 
     await page.click('[data-testid="add-category-button"]');

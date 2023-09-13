@@ -1,10 +1,10 @@
 import { applyFixture } from '$utils/load-fixtures';
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '$utils/financer-page';
 
-test.describe.serial('Account editing', () => {
+test.describe('Account editing', () => {
     test.beforeEach(async ({ page }) => {
         await applyFixture('accounts-only');    
-        await page.goto('http://localhost:3000/accounts');
+        await page.goto('/accounts');
     });
 
   const parseFloatFromText = (text) => {
@@ -62,7 +62,7 @@ test.describe.serial('Account editing', () => {
     await page.click('[data-testid="submit"]');
 
     await expect(page).not.toHaveURL('/edit');
-    await page.goto('http://localhost:3000/accounts');
+    await page.goto('/accounts');
 
     await page.waitForSelector('[data-testid="account-row"]');
 
@@ -94,7 +94,7 @@ test.describe.serial('Account editing', () => {
     await page.click('[data-testid="submit"]');
 
     await expect(page).not.toHaveURL('/edit');
-    await page.goto('http://localhost:3000/accounts');
+    await page.goto('/accounts');
 
     await page.$(`[data-testid="account-row"]:has-text("${accountName}")`);
     await page.click(`[data-testid="account-row"]:has-text("${accountName}")`);
@@ -123,7 +123,7 @@ test.describe.serial('Account editing', () => {
     await page.click('[data-testid="submit"]');
 
     await expect(page).not.toHaveURL('/edit');
-    await page.goto('http://localhost:3000/accounts');
+    await page.goto('/accounts');
 
     await page.$(`[data-testid="account-row"]:has-text("${accountName}")`);
     await page.click(`[data-testid="account-row"]:has-text("${accountName}")`);
@@ -156,7 +156,7 @@ test.describe.serial('Account editing', () => {
     await page.click('[data-testid="submit"]');
 
     await expect(page).not.toHaveURL('/edit');
-    await page.goto('http://localhost:3000/accounts');
+    await page.goto('/accounts');
 
     await page.waitForSelector('[data-testid="account-row"]');
 

@@ -10,17 +10,17 @@ import {
   getAllExpenses,
 } from '$utils/api-helper';
 
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
 
 
-test.describe.serial('Add expense', () => {
+test.describe('Add expense', () => {
     test.beforeAll(async () => {
         await applyFixture('large');
     })
     
     test.beforeEach(async ({ page }) => {
-        await page.goto('http://localhost:3000/statistics/expenses');
+        await page.goto('/statistics/expenses');
     });
     
   const newTransactionAmountStr = '15.50';

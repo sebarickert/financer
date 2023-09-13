@@ -1,14 +1,14 @@
 import { applyFixture } from '$utils/load-fixtures';
-import { test, expect } from '@playwright/test';
+import { test, expect } from '$utils/financer-page';
 
 test.describe('Edit income with category', () => {
   test.beforeEach(async ({ page }) => {
       await applyFixture('small');
-      await page.goto('http://localhost:3000/statistics/incomes');
+      await page.goto('/statistics/incomes');
   });
 
   test('Edit with single category', async ({ page }) => {
-    await page.goto('http://localhost:3000/statistics/incomes?date=2022-03&page=1');
+    await page.goto('/statistics/incomes?date=2022-03&page=1');
     await page.getByTestId('623de1f2c839cf72d59b0d91').click();
     await page.getByTestId('edit-income-button').click();
 
@@ -29,7 +29,7 @@ test.describe('Edit income with category', () => {
 
     await page.getByTestId('submit').click();
 
-    await page.goto('http://localhost:3000/statistics/incomes?date=2022-03&page=1');
+    await page.goto('/statistics/incomes?date=2022-03&page=1');
     await page.getByTestId('623de1f2c839cf72d59b0d91').click();
     await page.getByTestId('edit-income-button').click();
 
@@ -46,7 +46,7 @@ test.describe('Edit income with category', () => {
   });
 
   test('Delete one categories with multiple categories', async ({ page }) => {
-    await page.goto('http://localhost:3000/statistics/incomes?date=2022-03&page=1');
+    await page.goto('/statistics/incomes?date=2022-03&page=1');
     await page.getByTestId('623de213c839cf72d59b0da6').click();
     await page.getByTestId('edit-income-button').click();
 
@@ -77,7 +77,7 @@ test.describe('Edit income with category', () => {
 
     await page.getByTestId('submit').click();
 
-    await page.goto('http://localhost:3000/statistics/incomes?date=2022-03&page=1');
+    await page.goto('/statistics/incomes?date=2022-03&page=1');
     await page.getByTestId('623de213c839cf72d59b0da6').click();
     await page.getByTestId('edit-income-button').click();
 
@@ -101,7 +101,7 @@ test.describe('Edit income with category', () => {
   });
 
   test('Delete all categories with multiple categories', async ({ page }) => {
-    await page.goto('http://localhost:3000/statistics/incomes?date=2022-03&page=1');
+    await page.goto('/statistics/incomes?date=2022-03&page=1');
     await page.getByTestId('623de213c839cf72d59b0da6').click();
     await page.getByTestId('edit-income-button').click();
 
@@ -117,7 +117,7 @@ test.describe('Edit income with category', () => {
 
     await page.getByTestId('submit').click();
 
-    await page.goto('http://localhost:3000/statistics/incomes?date=2022-03&page=1');
+    await page.goto('/statistics/incomes?date=2022-03&page=1');
     await page.getByTestId('623de213c839cf72d59b0da6').click();
     await page.getByTestId('edit-income-button').click();
 

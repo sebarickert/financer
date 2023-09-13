@@ -10,17 +10,17 @@ import {
   getAllTransfers,
 } from '$utils/api-helper';
 
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
 
 
-test.describe.serial('Add transfer', () => {
+test.describe('Add transfer', () => {
     test.beforeAll(async () => {
         await applyFixture('large');
     })
     
     test.beforeEach(async ({ page }) => {
-        await page.goto('http://localhost:3000/statistics/transfers');
+        await page.goto('/statistics/transfers');
     });
     
   const newTransactionAmountStr = '15.50';

@@ -1,7 +1,7 @@
 import { applyFixture } from '$utils/load-fixtures';
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '$utils/financer-page';
 
-test.describe.serial('Delete transaction category', () => {
+test.describe('Delete transaction category', () => {
   const deleteAndVerifyTransactionCategory = async (targetCategoryName: string, page: Page) => {
     expect(await page.$(`[data-entity-title="${targetCategoryName}"]`)).not.toBeNull();
 
@@ -18,7 +18,7 @@ test.describe.serial('Delete transaction category', () => {
 
   test.beforeEach(async ({ page }) => {
     applyFixture('accounts-only');
-    await page.goto('http://localhost:3000/profile/transaction-categories');
+    await page.goto('/profile/transaction-categories');
     await page.waitForSelector('[data-testid=add-category]');
   });
 

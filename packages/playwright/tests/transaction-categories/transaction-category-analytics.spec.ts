@@ -1,7 +1,7 @@
 import { applyFixture } from '$utils/load-fixtures';
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '$utils/financer-page';
 
-test.describe.serial('Transaction category analytics', () => {
+test.describe('Transaction category analytics', () => {
     test.beforeEach(async ({ page }) => {
         await applyFixture('large')
     });
@@ -10,7 +10,7 @@ test.describe.serial('Transaction category analytics', () => {
 
   test('Should return correct amounts when category has incomes and expenses', async ({page}) => {
     // 623b58ada3deba9879422fbf = Category for all types
-    const response = await page.goto('http://localhost:3000/api/transactions/monthly-summaries?year=2022&month=01&page=1&limit=500&parentTransactionCategory=623b58ada3deba9879422fbf');
+    const response = await page.goto('/api/transactions/monthly-summaries?year=2022&month=01&page=1&limit=500&parentTransactionCategory=623b58ada3deba9879422fbf');
     expect(response.status()).toBe(200);
     const [body] = await response.json();
 
@@ -24,7 +24,7 @@ test.describe.serial('Transaction category analytics', () => {
     expect(roundToTwoDecimals(body.expenseAmount)).toBe(2494.16);
     expect(roundToTwoDecimals(body.transferAmount)).toBe(0);
 
-    const response2 = await page.goto('http://localhost:3000/api/incomes/monthly-summaries?year=2022&month=01&page=1&limit=500&parentTransactionCategory=623b58ada3deba9879422fbf');
+    const response2 = await page.goto('/api/incomes/monthly-summaries?year=2022&month=01&page=1&limit=500&parentTransactionCategory=623b58ada3deba9879422fbf');
     expect(response2.status()).toBe(200);
     const [body2] = await response2.json();
 
@@ -38,7 +38,7 @@ test.describe.serial('Transaction category analytics', () => {
     expect(roundToTwoDecimals(body2.expenseAmount)).toBe(2494.16);
     expect(roundToTwoDecimals(body2.transferAmount)).toBe(0);
 
-    const response3 = await page.goto('http://localhost:3000/api/expenses/monthly-summaries?year=2022&month=01&page=1&limit=500&parentTransactionCategory=623b58ada3deba9879422fbf');
+    const response3 = await page.goto('/api/expenses/monthly-summaries?year=2022&month=01&page=1&limit=500&parentTransactionCategory=623b58ada3deba9879422fbf');
     expect(response3.status()).toBe(200);
     const [body3] = await response3.json();
 
@@ -52,7 +52,7 @@ test.describe.serial('Transaction category analytics', () => {
     expect(roundToTwoDecimals(body3.expenseAmount)).toBe(2494.16);
     expect(roundToTwoDecimals(body3.transferAmount)).toBe(0);
 
-    const response4 = await page.goto('http://localhost:3000/api/transfers/monthly-summaries?year=2022&month=01&page=1&limit=500&parentTransactionCategory=623b58ada3deba9879422fbf');
+    const response4 = await page.goto('/api/transfers/monthly-summaries?year=2022&month=01&page=1&limit=500&parentTransactionCategory=623b58ada3deba9879422fbf');
     expect(response4.status()).toBe(200);
     const [body4] = await response4.json();
 
@@ -69,7 +69,7 @@ test.describe.serial('Transaction category analytics', () => {
 
   test('Should return correct amounts', async ({page}) => {
     // 623b58ada3deba9879422fbf = Category for all types
-    const response = await page.goto('http://localhost:3000/api/transaction-categories/623b58ada3deba9879422fbf/summary?year=2022&month=01&page=1&limit=500');
+    const response = await page.goto('/api/transaction-categories/623b58ada3deba9879422fbf/summary?year=2022&month=01&page=1&limit=500');
     expect(response.status()).toBe(200);
     const [body] = await response.json();
 

@@ -7,15 +7,15 @@ import {
   roundToTwoDecimal,
 } from '$utils/api-helper';
 import { applyFixture } from '$utils/load-fixtures';
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '$utils/financer-page';
 
-test.describe.serial('Edit transfer', () => {
+test.describe('Edit transfer', () => {
     test.beforeAll(async () => {
         await applyFixture('large');
     });
 
   test.beforeEach(async ({page}) => {
-    await page.goto('http://localhost:3000/statistics/transfers');
+    await page.goto('/statistics/transfers');
   });
 
   const amountToChangeTransactionStr = '15.50';
@@ -76,7 +76,7 @@ test.describe.serial('Edit transfer', () => {
     const newAmount =
       targetTransactionBefore.amount + amountToChangeTransaction;
 
-    await page.goto(`http://localhost:3000/statistics/transfers?date=2022-01&page=1`);
+    await page.goto(`/statistics/transfers?date=2022-01&page=1`);
 
     await page.click(`[data-testid="${targetTransactionId}"]`);
 
@@ -123,7 +123,7 @@ test.describe.serial('Edit transfer', () => {
     const newAmount =
       targetTransactionBefore.amount + amountToChangeTransaction;
 
-    await page.goto(`http://localhost:3000/statistics/transfers?date=2021-02&page=1`);
+    await page.goto(`/statistics/transfers?date=2021-02&page=1`);
 
     await page.click(`[data-testid="${targetTransactionId}"]`);
 

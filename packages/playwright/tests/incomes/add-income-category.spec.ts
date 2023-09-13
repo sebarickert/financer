@@ -1,14 +1,14 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
 
 
 const INCOME_NAME = 'Test income';
 
-test.describe.serial('Add income with category', () => {
+test.describe('Add income with category', () => {
     test.beforeEach(async ({ page }) => {
         await applyFixture('large');
 
-        await page.goto('http://localhost:3000/statistics/incomes/add');
+        await page.goto('/statistics/incomes/add');
 
         await page.fill('#description', INCOME_NAME);
         await page.fill('#amount', '10000.50');
