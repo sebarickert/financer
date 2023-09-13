@@ -1,5 +1,5 @@
 import { applyFixture } from '$utils/load-fixtures';
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '$utils/financer-page';
 
 test.describe('Edit transaction category', () => {
   const editCategoryAndVerifyDetails = async (
@@ -77,7 +77,7 @@ test.describe('Edit transaction category', () => {
 
   test.beforeEach(async ({ page }) => {
     await applyFixture('accounts-only')
-    await page.goto('http://localhost:3000/profile/transaction-categories');
+    await page.goto('/profile/transaction-categories');
     await page.waitForSelector('[data-testid=add-category]');
   });
 

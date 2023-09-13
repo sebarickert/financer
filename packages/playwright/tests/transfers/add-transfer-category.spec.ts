@@ -1,14 +1,14 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
 
 
 const TRANSFER_NAME = 'Test transfer';
 
-test.describe.serial('Add transfer with category', () => {
+test.describe('Add transfer with category', () => {
     test.beforeEach(async ({ page }) => {
         await applyFixture('large');
 
-        await page.goto('http://localhost:3000/statistics/transfers/add');
+        await page.goto('/statistics/transfers/add');
 
         await page.fill('#description', TRANSFER_NAME);
         await page.fill('#amount', '10000.50');

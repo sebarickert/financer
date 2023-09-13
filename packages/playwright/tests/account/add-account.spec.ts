@@ -1,5 +1,5 @@
 import { applyFixture } from '$utils/load-fixtures';
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '$utils/financer-page';
 
 
 
@@ -9,7 +9,7 @@ test.describe.parallel('Account creation', () => {
   })
 
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:3000/accounts');
+    await page.goto('/accounts');
   });
 
   const addAccountAndVerifyDetails = async (

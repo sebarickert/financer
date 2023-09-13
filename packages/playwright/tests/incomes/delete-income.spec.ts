@@ -8,15 +8,15 @@ import {
   getTransactionByIdRaw,
 } from '$utils/api-helper';
 import { applyFixture } from '$utils/load-fixtures';
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '$utils/financer-page';
 
-test.describe.serial('Delete income', () => {
+test.describe('Delete income', () => {
     test.beforeAll(async () => {
         await applyFixture('large');
     });
 
   test.beforeEach(async ({page}) => {
-    await page.goto('http://localhost:3000/statistics/incomes');
+    await page.goto('/statistics/incomes');
   });
 
   const verifyAccountBalanceChangeByTargetTransactionAmount = async (accountBefore: AccountDto, accountAfter: AccountDto, targetTransactionBefore: IncomeDto) => {
@@ -50,7 +50,7 @@ test.describe.serial('Delete income', () => {
     const accountBefore = await getAccount(targetAccountId);
 
     await page.goto(
-      'http://localhost:3000/statistics/incomes?date=2022-01&page=1'
+      '/statistics/incomes?date=2022-01&page=1'
     );
 
 
@@ -83,7 +83,7 @@ test.describe.serial('Delete income', () => {
     const accountBefore = await getAccount(targetAccountId);
 
     await page.goto(
-      'http://localhost:3000/statistics/incomes?date=2021-02&page=1'
+      '/statistics/incomes?date=2021-02&page=1'
     );
     await page.getByTestId(targetTransactionId).click();
 

@@ -1,10 +1,10 @@
 import { applyFixture } from '$utils/load-fixtures';
-import { test, expect } from '@playwright/test';
+import { test, expect } from '$utils/financer-page';
 
-test.describe.serial('Account deleting', () => {
+test.describe('Account deleting', () => {
       test.beforeEach(async ({ page }) => {
         await applyFixture('accounts-only');    
-        await page.goto('http://localhost:3000/accounts');
+        await page.goto('/accounts');
       });
     
     test('Account deleting', async ({ page }) => {

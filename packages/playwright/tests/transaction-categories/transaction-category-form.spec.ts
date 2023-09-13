@@ -1,16 +1,16 @@
 import { applyFixture } from '$utils/load-fixtures';
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '$utils/financer-page';
 
-test.describe.serial('Transaction category form', () => {
+test.describe('Transaction category form', () => {
     test.beforeEach(async ({ page }) => {
         await applyFixture('accounts-only')
-        await page.goto('http://localhost:3000/profile/transaction-categories/add');
+        await page.goto('/profile/transaction-categories/add');
         await page.waitForSelector('#name');
     });
     
     test('Should not allow set child category as parent', async ({page}) => {
         await page.goto(
-            'http://localhost:3000/profile/transaction-categories/623b58ada3deba9879422fbf/edit'
+            '/profile/transaction-categories/623b58ada3deba9879422fbf/edit'
         );
 
         const categoryName = 'Category for all types';
