@@ -6,7 +6,7 @@ runs:
   steps:
     - name: Install Playwright Browsers
       shell: bash
-      run: npx playwright install --with-deps
+      run: npx playwright install --with-deps chromium
     - name: Run Playwright tests
       shell: bash
       run: cd packages/playwright && npx playwright test
