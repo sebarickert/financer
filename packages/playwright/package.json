@@ -9,7 +9,8 @@
     "test:firefox": "npx playwright test --project=firefox",
     "test:safari": "npx playwright test --project=webkit",
     "test:chrome-mobile": "npx playwright test --project=Mobile_Chrome",
-    "test:safari-mobile": "npx playwright test --project=Mobile_Safari"
+    "test:safari-mobile": "npx playwright test --project=Mobile_Safari",
+    "intall-deps": "npx playwright install"
   },
   "keywords": [],
   "author": "",
