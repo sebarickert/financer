@@ -21,7 +21,7 @@ runs:
         fi
     - name: Run Playwright tests
       shell: bash
-      run: cd packages/playwright && npx playwright test --project=${{ inputs.target-project }}
+      run: npm run e2e:test -- --project=${{ inputs.target-project }}
     - uses: actions/upload-artifact@v3
       if: always()
       with:
