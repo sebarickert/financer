@@ -2,8 +2,15 @@
   "name": "playwright",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "ui": "npx playwright test --ui",
+    "test": "npx playwright test",
+    "test:chromium": "npx playwright test --project=chromium",
+    "test:firefox": "npx playwright test --project=firefox",
+    "test:safari": "npx playwright test --project=webkit",
+    "test:chrome-mobile": "npx playwright test --project=Mobile_Chrome",
+    "test:safari-mobile": "npx playwright test --project=Mobile_Safari"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

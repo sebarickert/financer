@@ -1,5 +1,5 @@
 name: "Install dependencies"
-description: "Install dependencies for the project and cache cypress binaries"
+description: "Install dependencies for the project"
 
 runs:
   using: "composite"
