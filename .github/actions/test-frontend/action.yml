@@ -4,8 +4,6 @@ description: "Install dependencies for the project and cache node_modules"
 runs:
   using: "composite"
   steps:
-    - uses: ./.github/actions/setup-node
-    - uses: ./.github/actions/cache-modules
     - name: Run frontend tests
       shell: bash
       run: npm -w frontend run test
