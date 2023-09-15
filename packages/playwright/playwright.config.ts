@@ -41,22 +41,23 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
 
-    // @TODO enable more browsers when we can run tests parallel
-    // {
-    //   name: 'firefox',
-    //   use: { ...devices['Desktop Firefox'] },
-    // },
+    {
+      name: 'firefox',
+      use: { ...devices['Desktop Firefox'] },
+    },
 
+    // @TODO There are some tests that fails on webkit
     // {
     //   name: 'webkit',
     //   use: { ...devices['Desktop Safari'] },
     // },
 
-    /* Test against mobile viewports. */
-    // {
-    //   name: 'Mobile Chrome',
-    //   use: { ...devices['Pixel 5'] },
-    // },
+    {
+      name: 'Mobile Chrome',
+      use: { ...devices['Pixel 5'] },
+    },
+
+    // @TODO There are some tests that fails on webkit
     // {
     //   name: 'Mobile Safari',
     //   use: { ...devices['iPhone 12'] },
