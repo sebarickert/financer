@@ -4,9 +4,9 @@ description: Run Playwright tests
 runs:
   using: "composite"
   steps:
-    # - name: Install Playwright Browsers
-    #   shell: bash
-    #   run: npx playwright install --with-deps chromium
+    - name: Install Playwright Browsers
+      shell: bash
+      run: npx playwright install --with-deps chromium
     - name: Run Playwright tests
       shell: bash
       run: cd packages/playwright && npx playwright test
