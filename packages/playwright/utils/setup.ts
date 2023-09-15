@@ -9,7 +9,7 @@ const getWorkerCountByCpu = () => {
   return Math.ceil(cpuCount / 2);
 }
 
-export const getWorkerCount = () => process.env.CI ? 1 : getWorkerCountByCpu()
+export const getWorkerCount = () => getWorkerCountByCpu()
 
 export const parsePort = (testIndex: number) => BASE_PORT + testIndex;
 
