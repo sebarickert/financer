@@ -9,19 +9,16 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Set Browser Parameter
-      shell: bash
-      run: |
-        if [ "${{ inputs.target-project }}" = "chromium" ] || [ "${{ inputs.target-project }}" = "Mobile Chrome" ]; then
-          export BROWSER=chromium
-        elif [ "${{ inputs.target-project }}" = "firefox" ]; then
-          export BROWSER=firefox
-        elif [ "${{ inputs.target-project }}" = "webkit" ] || [ "${{ inputs.target-project }}" = "Mobile Safari" ]; then
-          export BROWSER=webkit
-        fi
     - name: Install Playwright Browsers
       shell: bash
-      run: npx playwright install --with-deps $BROWSER
+      run: |
+        if [ "${{ inputs.target-project }}" = "chromium" ] || [ "${{ inputs.target-project }}" = "Mobile_Chrome" ]; then
+          npx playwright install --with-deps chromium
+        elif [ "${{ inputs.target-project }}" = "firefox" ]; then
+          npx playwright install --with-deps firefox
+        elif [ "${{ inputs.target-project }}" = "webkit" ] || [ "${{ inputs.target-project }}" = "Mobile_Safari" ]; then
+          npx playwright install --with-deps webkit
+        fi
     - name: Run Playwright tests
       shell: bash
       run: cd packages/playwright && npx playwright test --project=${{ inputs.target-project }}
