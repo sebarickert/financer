@@ -58,22 +58,21 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        spec:
-          [
-            "Account",
-            "Expenses",
-            "Incomes",
-            "TransactionCategories",
-            "Transfer",
+        spec: [
+            "chromium",
+            "firefox",
+            # "webkit",
+            "Mobile Chrome",
+            # "Mobile Safari",
           ]
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-node
       - uses: ./.github/actions/cache-modules
       - uses: ./.github/actions/cache-build
-      - uses: ./.github/actions/test-cypress
+      - uses: ./.github/actions/test-playwright
         with:
-          cypress-spec-folder: ${{ matrix.spec }}
+          target-project: ${{ matrix.spec }}
 
   run-playwright-test:
     runs-on: ubuntu-latest

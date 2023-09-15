@@ -1,15 +1,30 @@
 name: Playwright Tests
 description: Run Playwright tests
 
+inputs:
+  target-project:
+    description: "The project to run the tests on"
+    required: true
+
 runs:
   using: "composite"
   steps:
+    - name: Set Browser Parameter
+      shell: bash
+      run: |
+        if [ "${{ inputs.target-project }}" = "chromium" ] || [ "${{ inputs.target-project }}" = "Mobile Chrome" ]; then
+          export BROWSER=chromium
+        elif [ "${{ inputs.target-project }}" = "firefox" ]; then
+          export BROWSER=firefox
+        elif [ "${{ inputs.target-project }}" = "webkit" ] || [ "${{ inputs.target-project }}" = "Mobile Safari" ]; then
+          export BROWSER=webkit
+        fi
     - name: Install Playwright Browsers
       shell: bash
-      run: npx playwright install --with-deps chromium
+      run: npx playwright install --with-deps $BROWSER
     - name: Run Playwright tests
       shell: bash
-      run: cd packages/playwright && npx playwright test
+      run: cd packages/playwright && npx playwright test --project=${{ inputs.target-project }}
     - uses: actions/upload-artifact@v3
       if: always()
       with:
