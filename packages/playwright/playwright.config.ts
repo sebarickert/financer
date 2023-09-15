@@ -53,13 +53,13 @@ export default defineConfig({
     // },
 
     {
-      name: 'Mobile Chrome',
+      name: 'Mobile_Chrome',
       use: { ...devices['Pixel 5'] },
     },
 
     // @TODO There are some tests that fails on webkit
     // {
-    //   name: 'Mobile Safari',
+    //   name: 'Mobile_Safari',
     //   use: { ...devices['iPhone 12'] },
     // },
 

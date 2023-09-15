@@ -52,7 +52,7 @@ jobs:
       - uses: ./.github/actions/build-app
         if: steps.cache-build.outputs.cache-hit != 'true'
 
-  run-cypress-test:
+  run-playwright-test:
     runs-on: ubuntu-latest
     needs: build
     strategy:
@@ -62,8 +62,8 @@ jobs:
             "chromium",
             "firefox",
             # "webkit",
-            "Mobile Chrome",
-            # "Mobile Safari",
+            "Mobile_Chrome",
+            # "Mobile_Safari",
           ]
     steps:
       - uses: actions/checkout@v3
@@ -73,13 +73,3 @@ jobs:
       - uses: ./.github/actions/test-playwright
         with:
           target-project: ${{ matrix.spec }}
-
-  run-playwright-test:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/setup-node
-      - uses: ./.github/actions/cache-modules
-      - uses: ./.github/actions/cache-build
-      - uses: ./.github/actions/test-playwright
