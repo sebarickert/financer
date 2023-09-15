@@ -1,5 +1,5 @@
-name: "Install dependencies"
-description: "Install dependencies for the project and cache node_modules"
+name: "Lint app"
+description: "Run eslint on the frontend and backend"
 
 runs:
   using: "composite"
