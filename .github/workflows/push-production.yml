@@ -1,0 +1,78 @@
+name: Lint and test production branch
+
+on:
+  push:
+    branches:
+      - production
+
+concurrency:
+  group: ci-build_${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-node
+      - uses: ./.github/actions/install-dependencies
+
+  lint:
+    runs-on: ubuntu-latest
+    needs: install
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-node
+      - uses: ./.github/actions/install-dependencies
+      - uses: ./.github/actions/lint-app
+
+  unit-test:
+    runs-on: ubuntu-latest
+    needs: install
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-node
+      - uses: ./.github/actions/install-dependencies
+      - uses: ./.github/actions/test-frontend
+      - uses: ./.github/actions/test-backend
+
+  build:
+    runs-on: ubuntu-latest
+    needs: install
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-node
+      - uses: ./.github/actions/install-dependencies
+      - uses: ./.github/actions/build-app
+
+  run-e2e-test:
+    runs-on: ubuntu-latest
+    needs: build
+    strategy:
+      fail-fast: false
+      matrix:
+        spec: [
+            "chromium",
+            "firefox",
+            # "webkit",
+            "Mobile_Chrome",
+            # "Mobile_Safari",
+          ]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-node
+      - uses: ./.github/actions/install-dependencies
+      - uses: ./.github/actions/build-app
+      - uses: ./.github/actions/test-playwright
+        with:
+          target-project: ${{ matrix.spec }}
+
+  build-docker:
+    needs:
+      - lint
+      - unit-test
+      - run-e2e-test
+    uses: ./.github/workflows/build-docker.yml
+    secrets:
+      REGISTERY_TOKEN: ${{ secrets.REGISTERY_TOKEN }}
+      DOCKER_TARGET_PLATFORMS: ${{ secrets.DOCKER_TARGET_PLATFORMS }}
