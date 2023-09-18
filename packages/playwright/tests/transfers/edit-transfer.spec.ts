@@ -10,11 +10,8 @@ import { applyFixture } from '$utils/load-fixtures';
 import { test, expect, Page } from '$utils/financer-page';
 
 test.describe('Edit transfer', () => {
-    test.beforeAll(async () => {
-        await applyFixture('large');
-    });
-
   test.beforeEach(async ({page}) => {
+    await applyFixture('large');
     await page.goto('/statistics/transfers');
   });
 
@@ -78,9 +75,9 @@ test.describe('Edit transfer', () => {
 
     await page.goto(`/statistics/transfers?date=2022-01&page=1`);
 
-    await page.click(`[data-testid="${targetTransactionId}"]`);
+    await page.getByTestId(targetTransactionId).click();
 
-    await page.click(`[data-testid="edit-transfer-button"]`);
+    await page.getByTestId("edit-transfer-button").click();
     await page.fill('#description', editedTransactionName);
     await page.fill('#amount', newAmount.toString());
     await page.selectOption('#toAccount', targetToAccountId);
@@ -125,9 +122,9 @@ test.describe('Edit transfer', () => {
 
     await page.goto(`/statistics/transfers?date=2021-02&page=1`);
 
-    await page.click(`[data-testid="${targetTransactionId}"]`);
+    await page.getByTestId(targetTransactionId).click();
 
-    await page.click(`[data-testid="edit-transfer-button"]`);
+    await page.getByTestId("edit-transfer-button").click();
     await page.fill('#description', editedTransactionName);
     await page.fill('#amount', newAmount.toString());
     await page.selectOption('#toAccount', targetToAccountId);

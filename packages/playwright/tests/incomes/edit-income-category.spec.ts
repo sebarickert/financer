@@ -9,6 +9,7 @@ test.describe('Edit income with category', () => {
 
   test('Edit with single category', async ({ page }) => {
     await page.goto('/statistics/incomes?date=2022-03&page=1');
+    await page.getByTestId('623de1f2c839cf72d59b0d91').waitFor();
     await page.getByTestId('623de1f2c839cf72d59b0d91').click();
     await page.getByTestId('edit-income-button').click();
 
@@ -30,6 +31,7 @@ test.describe('Edit income with category', () => {
     await page.getByTestId('submit').click();
 
     await page.goto('/statistics/incomes?date=2022-03&page=1');
+    await page.getByTestId('623de1f2c839cf72d59b0d91').waitFor();
     await page.getByTestId('623de1f2c839cf72d59b0d91').click();
     await page.getByTestId('edit-income-button').click();
 
@@ -47,6 +49,7 @@ test.describe('Edit income with category', () => {
 
   test('Delete one categories with multiple categories', async ({ page }) => {
     await page.goto('/statistics/incomes?date=2022-03&page=1');
+    await page.getByTestId('623de213c839cf72d59b0da6').waitFor();
     await page.getByTestId('623de213c839cf72d59b0da6').click();
     await page.getByTestId('edit-income-button').click();
 
@@ -78,6 +81,7 @@ test.describe('Edit income with category', () => {
     await page.getByTestId('submit').click();
 
     await page.goto('/statistics/incomes?date=2022-03&page=1');
+    await page.getByTestId('623de213c839cf72d59b0da6').waitFor();
     await page.getByTestId('623de213c839cf72d59b0da6').click();
     await page.getByTestId('edit-income-button').click();
 
@@ -102,6 +106,7 @@ test.describe('Edit income with category', () => {
 
   test('Delete all categories with multiple categories', async ({ page }) => {
     await page.goto('/statistics/incomes?date=2022-03&page=1');
+    await page.getByTestId('623de213c839cf72d59b0da6').waitFor();
     await page.getByTestId('623de213c839cf72d59b0da6').click();
     await page.getByTestId('edit-income-button').click();
 
@@ -118,6 +123,7 @@ test.describe('Edit income with category', () => {
     await page.getByTestId('submit').click();
 
     await page.goto('/statistics/incomes?date=2022-03&page=1');
+    await page.getByTestId('623de213c839cf72d59b0da6').waitFor();
     await page.getByTestId('623de213c839cf72d59b0da6').click();
     await page.getByTestId('edit-income-button').click();
 

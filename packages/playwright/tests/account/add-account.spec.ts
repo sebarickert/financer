@@ -4,11 +4,8 @@ import { test, expect, Page } from '$utils/financer-page';
 
 
 test.describe.parallel('Account creation', () => {
-  test.beforeAll(async () => {
-    await applyFixture('accounts-only');    
-  })
-
   test.beforeEach(async ({ page }) => {
+    await applyFixture('accounts-only');
     await page.goto('/accounts');
   });
 
@@ -38,7 +35,7 @@ test.describe.parallel('Account creation', () => {
 
     await expect(page).toHaveURL(/\/accounts\/?$/);
 
-    await page.click(`text=${newAccountName}`);
+    await page.getByText(newAccountName).click();
 
     await expect(page).not.toHaveURL(/\/accounts\/?$/);
 

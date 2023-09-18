@@ -10,11 +10,8 @@ import { applyFixture } from '$utils/load-fixtures';
 import { test, expect, Page } from '$utils/financer-page';
 
 test.describe('Edit expense', () => {
-    test.beforeAll(async () => {
-        await applyFixture('large');
-    });
-
   test.beforeEach(async ({page}) => {
+    await applyFixture('large');
     await page.goto('/statistics/expenses');
   });
 
@@ -67,13 +64,13 @@ test.describe('Edit expense', () => {
 
     await page.goto(`/statistics/expenses?date=2022-01&page=1`);
 
-    await page.click(`[data-testid="${targetTransactionBefore._id}"]`);
+    await page.getByTestId(targetTransactionBefore._id).click();
 
-    await page.click(`[data-testid="edit-expense-button"]`);
+    await page.getByTestId("edit-expense-button").click();
     await page.fill('#description', editedTransactionName);
     await page.fill('#amount', newAmount.toString());
     await page.selectOption('#fromAccount', targetAccountId);
-    await page.click(`[data-testid="submit"]`);
+    await page.getByTestId("submit").click();
 
     await page.waitForNavigation({ waitUntil: 'networkidle' });
 
@@ -108,13 +105,13 @@ test.describe('Edit expense', () => {
 
     await page.goto(`/statistics/expenses?date=2021-02&page=1`);
 
-    await page.click(`[data-testid="${targetTransactionBefore._id}"]`);
+    await page.getByTestId(targetTransactionBefore._id).click();
 
-    await page.click(`[data-testid="edit-expense-button"]`);
+    await page.getByTestId("edit-expense-button").click();
     await page.fill('#description', editedTransactionName);
     await page.fill('#amount', newAmount.toString());
     await page.selectOption('#fromAccount', targetAccountId);
-    await page.click(`[data-testid="submit"]`);
+    await page.getByTestId("submit").click();
 
     await page.waitForNavigation({ waitUntil: 'networkidle' });
 

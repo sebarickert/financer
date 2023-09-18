@@ -6,10 +6,8 @@ test.describe('Delete transaction category', () => {
     expect(await page.$(`[data-entity-title="${targetCategoryName}"]`)).not.toBeNull();
 
     await page.click(`[data-entity-title="${targetCategoryName}"]`);
-    await page.waitForTimeout(500);
-    await page.click('[data-testid="delete-transaction-category"]');
-    await page.waitForTimeout(500);
-    await page.click('[data-testid="delete-transaction-category_confirm-button"]');
+    await page.getByTestId("delete-transaction-category").click();
+    await page.getByTestId("delete-transaction-category_confirm-button").click();
 
     await page.waitForSelector('[data-testid=add-category]');
 

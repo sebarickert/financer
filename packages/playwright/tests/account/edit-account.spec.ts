@@ -49,17 +49,16 @@ test.describe('Account editing', () => {
     const deletedAccountRow = await page.$(`[data-testid="account-row"]:has-text("${newAccountName}")`);
     expect(deletedAccountRow).toBeNull();
 
-    await page.$(`[data-testid="account-row"]:has-text("${oldAccountName}")`);
-    await page.click(`[data-testid="account-row"]:has-text("${oldAccountName}")`);
+    await page.getByTestId("account-row").getByText(oldAccountName).click();
 
     await page.waitForSelector('[data-testid="account-balance"]');
     const accountBalance = await page.$eval('[data-testid="account-balance"]', el => el.textContent);
     await verifyAccountPage(page, oldAccountName, accountBalance, accountType);
 
-    await page.click('[data-testid="edit-account"]');
+    await page.getByTestId("edit-account").click();
 
     await page.fill('#name', newAccountName);
-    await page.click('[data-testid="submit"]');
+    await page.getByTestId("submit").click();
 
     await expect(page).not.toHaveURL('/edit');
     await page.goto('/accounts');
@@ -69,8 +68,7 @@ test.describe('Account editing', () => {
     await page.waitForSelector('[data-testid="account-row"]');
     const newAccount = await page.$(`[data-testid="account-row"]:has-text("${newAccountName}")`);
     expect(newAccount).not.toBeNull();
-    await page.$(`[data-testid="account-row"]:has-text("${newAccountName}")`);
-    await page.click(`[data-testid="account-row"]:has-text("${newAccountName}")`);
+    await page.getByTestId("account-row").getByText(newAccountName).click();
 
     await verifyAccountPage(page, newAccountName, accountBalance, accountType);
   };
@@ -88,16 +86,15 @@ test.describe('Account editing', () => {
     const accountBalance = await page.$eval('[data-testid="account-balance"]', el => el.textContent);
     await verifyAccountPage(page, accountName, accountBalance, oldAccountType);
 
-    await page.click('[data-testid="edit-account"]');
+    await page.getByTestId("edit-account").click();
 
     await page.selectOption('#type', newAccountType);
-    await page.click('[data-testid="submit"]');
+    await page.getByTestId("submit").click();
 
     await expect(page).not.toHaveURL('/edit');
     await page.goto('/accounts');
 
-    await page.$(`[data-testid="account-row"]:has-text("${accountName}")`);
-    await page.click(`[data-testid="account-row"]:has-text("${accountName}")`);
+    await page.getByTestId("account-row").getByText(accountName).click();
 
     await verifyAccountPage(page, accountName, accountBalance, newAccountType);
   };
@@ -108,25 +105,23 @@ test.describe('Account editing', () => {
     newAccountBalance: string,
     accountType: string,
   ) => {
-    await page.$(`[data-testid="account-row"]:has-text("${accountName}")`);
-    await page.click(`[data-testid="account-row"]:has-text("${accountName}")`);
+    await page.getByTestId("account-row").getByText(accountName).click();
 
     await page.waitForSelector('[data-testid="account-balance"]');
     const oldAccountBalance = await page.$eval('[data-testid="account-balance"]', el => el.textContent);
     await verifyAccountPage(page, accountName, oldAccountBalance, accountType);
     verifyDifferentBalances(oldAccountBalance, newAccountBalance);
 
-    await page.click('[data-testid="edit-account"]');
+    await page.getByTestId("edit-account").click();
 
     await page.fill('#balance', newAccountBalance.replace(',', '.').replace(/ /g, '').replace('€', '').replace(String.fromCharCode(8722), String.fromCharCode(45)));
 
-    await page.click('[data-testid="submit"]');
+    await page.getByTestId("submit").click();
 
     await expect(page).not.toHaveURL('/edit');
     await page.goto('/accounts');
 
-    await page.$(`[data-testid="account-row"]:has-text("${accountName}")`);
-    await page.click(`[data-testid="account-row"]:has-text("${accountName}")`);
+    await page.getByTestId("account-row").getByText(accountName).click();
 
     await verifyAccountPage(page, accountName, newAccountBalance, accountType);
   };
@@ -139,21 +134,20 @@ test.describe('Account editing', () => {
     oldAccountType: string,
     newAccountType: string,
   ) => {
-    await page.$(`[data-testid="account-row"]:has-text("${oldAccountName}")`);
-    await page.click(`[data-testid="account-row"]:has-text("${oldAccountName}")`);
+    await page.getByTestId("account-row").getByText(oldAccountName).click();
 
     await page.waitForSelector('[data-testid="account-balance"]');
     const oldAccountBalance = await page.$eval('[data-testid="account-balance"]', el => el.textContent);
     await verifyAccountPage(page, oldAccountName, oldAccountBalance, oldAccountType);
     verifyDifferentBalances(oldAccountBalance, newAccountBalance);
 
-    await page.click('[data-testid="edit-account"]');
+    await page.getByTestId("edit-account").click();
 
     await page.fill('#name', newAccountName);
     await page.selectOption('#type', newAccountType);
     await page.fill('#balance', newAccountBalance.replace(',', '.').replace(/ /g, '').replace('€', '').replace(String.fromCharCode(8722), String.fromCharCode(45)));
 
-    await page.click('[data-testid="submit"]');
+    await page.getByTestId("submit").click();
 
     await expect(page).not.toHaveURL('/edit');
     await page.goto('/accounts');
@@ -162,9 +156,7 @@ test.describe('Account editing', () => {
 
     const newAccount = await page.$(`[data-testid="account-row"]:has-text("${newAccountName}")`);
     expect(newAccount).not.toBeNull();
-    await page.$(`[data-testid="account-row"]:has-text("${newAccountName}")`);
-    await page.$(`[data-testid="account-row"]:has-text("${newAccountName}")`);
-    await page.click(`[data-testid="account-row"]:has-text("${newAccountName}")`);
+    await page.getByTestId("account-row").getByText(newAccountName).click();
 
     await verifyAccountPage(page, newAccountName, newAccountBalance, newAccountType);
   };

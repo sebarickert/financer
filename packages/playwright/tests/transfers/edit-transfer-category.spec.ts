@@ -9,6 +9,7 @@ test.describe('Edit transfer with category', () => {
 
   test('Edit with single category', async ({ page }) => {
     await page.goto('/statistics/transfers?date=2022-03&page=1');
+    await page.getByTestId('623de2a0c839cf72d59b0df2').waitFor();
     await page.getByTestId('623de2a0c839cf72d59b0df2').click();
     await page.getByTestId('edit-transfer-button').click();
 
@@ -30,6 +31,7 @@ test.describe('Edit transfer with category', () => {
     await page.getByTestId('submit').click();
 
     await page.goto('/statistics/transfers?date=2022-03&page=1');
+    await page.getByTestId('623de2a0c839cf72d59b0df2').waitFor();
     await page.getByTestId('623de2a0c839cf72d59b0df2').click();
     await page.getByTestId('edit-transfer-button').click();
 
@@ -47,6 +49,7 @@ test.describe('Edit transfer with category', () => {
 
   test('Delete one categories with multiple categories', async ({ page }) => {
     await page.goto('/statistics/transfers?date=2022-03&page=1');
+    await page.getByTestId('623de2c0c839cf72d59b0e10').waitFor();
     await page.getByTestId('623de2c0c839cf72d59b0e10').click();
     await page.getByTestId('edit-transfer-button').click();
 
@@ -78,6 +81,7 @@ test.describe('Edit transfer with category', () => {
     await page.getByTestId('submit').click();
 
     await page.goto('/statistics/transfers?date=2022-03&page=1');
+    await page.getByTestId('623de2c0c839cf72d59b0e10').waitFor();
     await page.getByTestId('623de2c0c839cf72d59b0e10').click();
     await page.getByTestId('edit-transfer-button').click();
 
@@ -102,6 +106,7 @@ test.describe('Edit transfer with category', () => {
 
   test('Delete all categories with multiple categories', async ({ page }) => {
     await page.goto('/statistics/transfers?date=2022-03&page=1');
+    await page.getByTestId('623de2c0c839cf72d59b0e10').waitFor();
     await page.getByTestId('623de2c0c839cf72d59b0e10').click();
     await page.getByTestId('edit-transfer-button').click();
 
@@ -118,6 +123,7 @@ test.describe('Edit transfer with category', () => {
     await page.getByTestId('submit').click();
 
     await page.goto('/statistics/transfers?date=2022-03&page=1');
+    await page.getByTestId('623de2c0c839cf72d59b0e10').waitFor();
     await page.getByTestId('623de2c0c839cf72d59b0e10').click();
     await page.getByTestId('edit-transfer-button').click();
 

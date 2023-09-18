@@ -14,10 +14,7 @@ test.describe('Edit transaction category', () => {
       : targetCategoryName;
 
     await page.click(`[data-entity-title="${targetCategoryName}"]`);
-
-    await page.waitForTimeout(500);
-
-    await page.click('[data-testid="edit-transaction-category"]');
+    await page.getByTestId("edit-transaction-category").click();
 
     await page.fill('#name', newName);
 
@@ -27,11 +24,11 @@ test.describe('Edit transaction category', () => {
         const checkedChecboxes = await page.$$eval('[data-testid="visibility-checkboxes"] input:checked', (inputs: HTMLInputElement[]) => inputs.map((input) => input.value));
 
         for(const visibilityItem of checkedChecboxes) {
-            await page.click(`[data-testid="visibility-checkboxes"] label:has-text("${visibilityItem}")`);
+            await page.getByTestId("visibility-checkboxes").getByText(visibilityItem).click();
         }
 
         for(const visibilityItem of newVisibility) {
-            await page.click(`[data-testid="visibility-checkboxes"] label:has-text("${visibilityItem}")`);
+          await page.getByTestId("visibility-checkboxes").getByText(visibilityItem).click();
         }
     } else {
         targetVisibility = await page.$$eval('[data-testid="visibility-checkboxes"] input:checked', (inputs: HTMLInputElement[]) => inputs.map((input) => input.id.replace('Visible', '')));
@@ -48,13 +45,11 @@ test.describe('Edit transaction category', () => {
       ));
     }
 
-    await page.click('[data-testid="submit"]');
-
-    await page.waitForTimeout(500);
+    await page.getByTestId("submit").click();
 
     await page.click(`[data-entity-title="${newName}"]`);
 
-    await page.click('[data-testid="edit-transaction-category"]');
+    await page.getByTestId("edit-transaction-category").click();
 
     await expect(page.locator('#name')).toHaveValue(newName);
 

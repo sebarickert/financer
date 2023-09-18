@@ -11,11 +11,8 @@ import { applyFixture } from '$utils/load-fixtures';
 import { test, expect, Page } from '$utils/financer-page';
 
 test.describe('Delete income', () => {
-    test.beforeAll(async () => {
-        await applyFixture('large');
-    });
-
   test.beforeEach(async ({page}) => {
+    await applyFixture('large');
     await page.goto('/statistics/incomes');
   });
 
@@ -54,6 +51,7 @@ test.describe('Delete income', () => {
     );
 
 
+    await page.getByTestId(targetTransactionId).waitFor();
     await page.getByTestId(targetTransactionId).click();
 
     await page.waitForSelector("[data-testid=income-delete-modal_open-button]");
@@ -85,6 +83,7 @@ test.describe('Delete income', () => {
     await page.goto(
       '/statistics/incomes?date=2021-02&page=1'
     );
+    await page.getByTestId(targetTransactionId).waitFor();
     await page.getByTestId(targetTransactionId).click();
 
     await page.getByTestId("income-delete-modal_open-button").click();
