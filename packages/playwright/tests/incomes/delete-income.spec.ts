@@ -1,22 +1,25 @@
-import { AccountDto, IncomeDto, TransactionDto } from '@local/types';
+import { AccountDto, IncomeDto } from '@local/types';
+
 import {
   getAllTransaction,
   getAccount,
-  getTransactionById,
-  ITransactionWithDateObject,
   roundToTwoDecimal,
   getTransactionByIdRaw,
 } from '$utils/api-helper';
+import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
-import { test, expect, Page } from '$utils/financer-page';
 
 test.describe('Delete income', () => {
-  test.beforeEach(async ({page}) => {
+  test.beforeEach(async ({ page }) => {
     await applyFixture('large');
     await page.goto('/statistics/incomes');
   });
 
-  const verifyAccountBalanceChangeByTargetTransactionAmount = async (accountBefore: AccountDto, accountAfter: AccountDto, targetTransactionBefore: IncomeDto) => {
+  const verifyAccountBalanceChangeByTargetTransactionAmount = async (
+    accountBefore: AccountDto,
+    accountAfter: AccountDto,
+    targetTransactionBefore: IncomeDto
+  ) => {
     const changedAmount = roundToTwoDecimal(targetTransactionBefore.amount);
     const balanceBefore = roundToTwoDecimal(accountBefore.balance);
     const balanceAfter = roundToTwoDecimal(accountAfter.balance);
@@ -27,9 +30,14 @@ test.describe('Delete income', () => {
     expect(balanceBeforeWithChangedAmount).toBe(balanceAfter);
   };
 
-  const verifyTargetTransactionDoesNotExistsAfter = async (targetTransactionBefore: IncomeDto) => {
-    const targetTransactionAfter = await getTransactionByIdRaw(targetTransactionBefore._id);
+  const verifyTargetTransactionDoesNotExistsAfter = async (
+    targetTransactionBefore: IncomeDto
+  ) => {
+    const targetTransactionAfter = await getTransactionByIdRaw(
+      targetTransactionBefore._id
+    );
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     expect((targetTransactionAfter as any).statusCode).toBe(404);
   };
 
@@ -46,24 +54,22 @@ test.describe('Delete income', () => {
 
     const accountBefore = await getAccount(targetAccountId);
 
-    await page.goto(
-      '/statistics/incomes?date=2022-01&page=1'
-    );
+    await page.goto('/statistics/incomes?date=2022-01&page=1');
 
-
-    await page.getByTestId(targetTransactionId).waitFor();
     await page.getByTestId(targetTransactionId).click();
 
-    await page.waitForSelector("[data-testid=income-delete-modal_open-button]");
-
-    await page.getByTestId("income-delete-modal_open-button").click();
-    await page.getByTestId("income-delete-modal_confirm-button").click();
+    await page.getByTestId('income-delete-modal_open-button').click();
+    await page.getByTestId('income-delete-modal_confirm-button').click();
 
     await expect(page).not.toHaveURL(`/${targetAccountId}`);
 
     const accountAfter = await getAccount(targetAccountId);
 
-    verifyAccountBalanceChangeByTargetTransactionAmount(accountBefore, accountAfter, targetTransactionBefore);
+    verifyAccountBalanceChangeByTargetTransactionAmount(
+      accountBefore,
+      accountAfter,
+      targetTransactionBefore
+    );
     verifyTargetTransactionDoesNotExistsAfter(targetTransactionBefore);
   });
 
@@ -80,20 +86,21 @@ test.describe('Delete income', () => {
 
     const accountBefore = await getAccount(targetAccountId);
 
-    await page.goto(
-      '/statistics/incomes?date=2021-02&page=1'
-    );
-    await page.getByTestId(targetTransactionId).waitFor();
+    await page.goto('/statistics/incomes?date=2021-02&page=1');
     await page.getByTestId(targetTransactionId).click();
 
-    await page.getByTestId("income-delete-modal_open-button").click();
-    await page.getByTestId("income-delete-modal_confirm-button").click();
+    await page.getByTestId('income-delete-modal_open-button').click();
+    await page.getByTestId('income-delete-modal_confirm-button').click();
 
     await expect(page).not.toHaveURL(`/${targetAccountId}`);
 
     const accountAfter = await getAccount(targetAccountId);
 
-    verifyAccountBalanceChangeByTargetTransactionAmount(accountBefore, accountAfter, targetTransactionBefore);
+    verifyAccountBalanceChangeByTargetTransactionAmount(
+      accountBefore,
+      accountAfter,
+      targetTransactionBefore
+    );
     verifyTargetTransactionDoesNotExistsAfter(targetTransactionBefore);
   });
 });

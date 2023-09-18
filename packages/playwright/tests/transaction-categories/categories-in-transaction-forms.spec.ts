@@ -1,59 +1,80 @@
-import { applyFixture } from '$utils/load-fixtures';
 import { test, expect, Page } from '$utils/financer-page';
+import { applyFixture } from '$utils/load-fixtures';
 
 test.describe('Transaction categories visibility in transaction forms', () => {
-  test.beforeEach(async ({ page }) => {
-    applyFixture('accounts-only')
+  test.beforeEach(async () => {
+    applyFixture('accounts-only');
   });
 
   const verifyIncomeCategories = async (page: Page) => {
-    const options = await page.locator('[data-testid="transaction-categories-form_transaction-category_category"] option').all();
-    expect(options.length).toBe(4);
-    expect(await options[0].innerText()).toBe('Category for all types');
-    expect(await options[1].innerText()).toBe('Income category');
-    expect(await options[2].innerText()).toBe('Invisible category > Income sub category');
-    expect(await options[3].innerText()).toBe('Invisible category > Sub category for all types');
+    const options = page
+      .getByTestId('transaction-categories-form_transaction-category_category')
+      .locator('option');
+    await expect(options).toHaveCount(4);
+    await expect(options.first()).toHaveText('Category for all types');
+    await expect(options.nth(1)).toHaveText('Income category');
+    await expect(options.nth(2)).toHaveText(
+      'Invisible category > Income sub category'
+    );
+    await expect(options.nth(3)).toHaveText(
+      'Invisible category > Sub category for all types'
+    );
   };
 
   const verifyExpenseCategories = async (page: Page) => {
-    const options = await page.locator('[data-testid="transaction-categories-form_transaction-category_category"] option').all();
-    expect(options.length).toBe(4);
-    expect(await options[0].innerText()).toBe('Category for all types');
-    expect(await options[1].innerText()).toBe('Expense category');
-    expect(await options[2].innerText()).toBe('Invisible category > Expense sub category');
-    expect(await options[3].innerText()).toBe('Invisible category > Sub category for all types');
+    const options = page
+      .getByTestId('transaction-categories-form_transaction-category_category')
+      .locator('option');
+    await expect(options).toHaveCount(4);
+    await expect(options.first()).toHaveText('Category for all types');
+    await expect(options.nth(1)).toHaveText('Expense category');
+    await expect(options.nth(2)).toHaveText(
+      'Invisible category > Expense sub category'
+    );
+    await expect(options.nth(3)).toHaveText(
+      'Invisible category > Sub category for all types'
+    );
   };
 
   const verifyTransferCategories = async (page: Page) => {
-    const options = await page.locator('[data-testid="transaction-categories-form_transaction-category_category"] option').all();
-    expect(options.length).toBe(4);
-    expect(await options[0].innerText()).toBe('Category for all types');
-    expect(await options[1].innerText()).toBe('Invisible category > Sub category for all types');
-    expect(await options[2].innerText()).toBe('Invisible category > Transfer sub category');
-    expect(await options[3].innerText()).toBe('Transfer category');
+    const options = page
+      .getByTestId('transaction-categories-form_transaction-category_category')
+      .locator('option');
+    await expect(options).toHaveCount(4);
+    await expect(options.first()).toHaveText('Category for all types');
+    await expect(options.nth(1)).toHaveText(
+      'Invisible category > Sub category for all types'
+    );
+    await expect(options.nth(2)).toHaveText(
+      'Invisible category > Transfer sub category'
+    );
+    await expect(options.nth(3)).toHaveText('Transfer category');
   };
 
+  // eslint-disable-next-line playwright/expect-expect
   test('Verify add income categories', async ({ page }) => {
     await page.goto('/statistics/incomes/add');
     await page.fill('#amount', '100');
 
-    await page.getByTestId("add-category-button").click();
+    await page.getByTestId('add-category-button').click();
     await verifyIncomeCategories(page);
   });
 
+  // eslint-disable-next-line playwright/expect-expect
   test('Verify add expense categories', async ({ page }) => {
     await page.goto('/statistics/expenses/add');
     await page.fill('#amount', '100');
 
-    await page.getByTestId("add-category-button").click();
+    await page.getByTestId('add-category-button').click();
     await verifyExpenseCategories(page);
   });
 
+  // eslint-disable-next-line playwright/expect-expect
   test('Verify add transfer categories', async ({ page }) => {
     await page.goto('/statistics/transfers/add');
     await page.fill('#amount', '100');
 
-    await page.getByTestId("add-category-button").click();
+    await page.getByTestId('add-category-button').click();
     await verifyTransferCategories(page);
   });
 });

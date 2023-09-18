@@ -1,7 +1,5 @@
-import { applyFixture } from '$utils/load-fixtures';
 import { test, expect, Page } from '$utils/financer-page';
-
-
+import { applyFixture } from '$utils/load-fixtures';
 
 test.describe.parallel('Account creation', () => {
   test.beforeEach(async ({ page }) => {
@@ -16,22 +14,18 @@ test.describe.parallel('Account creation', () => {
     expectedType,
     expectedBalance
   ) => {
-
-
-    
     const newAccountName = `New Test ${expectedType} Account ${Math.random()}`;
     const accountRow = page.getByTestId('account-row');
     const accountRowText = await accountRow.first().textContent();
     expect(accountRowText).not.toContain(newAccountName);
 
-    await page.getByTestId("add-account").click();
+    await page.getByTestId('add-account').click();
 
     // Add account form
     await page.fill('#name', newAccountName);
     await page.fill('#balance', accountBalance);
     await page.selectOption('#type', accountType);
-    await page.getByTestId("submit").click();
-
+    await page.getByTestId('submit').click();
 
     await expect(page).toHaveURL(/\/accounts\/?$/);
 
@@ -40,9 +34,12 @@ test.describe.parallel('Account creation', () => {
     await expect(page).not.toHaveURL(/\/accounts\/?$/);
 
     await expect(page.getByTestId('account-type')).toHaveText(expectedType);
-    await expect(page.getByTestId('account-balance')).toHaveText(expectedBalance);
+    await expect(page.getByTestId('account-balance')).toHaveText(
+      expectedBalance
+    );
   };
 
+  // eslint-disable-next-line playwright/expect-expect
   test('Add Cash account', async ({ page }) => {
     await addAccountAndVerifyDetails(
       page,
@@ -53,10 +50,12 @@ test.describe.parallel('Account creation', () => {
     );
   });
 
+  // eslint-disable-next-line playwright/expect-expect
   test('Add Saving account', async ({ page }) => {
     await addAccountAndVerifyDetails(page, 'savings', '0', 'Savings', '0,00 €');
   });
 
+  // eslint-disable-next-line playwright/expect-expect
   test('Add Investment account', async ({ page }) => {
     await addAccountAndVerifyDetails(
       page,
@@ -67,6 +66,7 @@ test.describe.parallel('Account creation', () => {
     );
   });
 
+  // eslint-disable-next-line playwright/expect-expect
   test('Add Credit account', async ({ page }) => {
     await addAccountAndVerifyDetails(
       page,
@@ -77,6 +77,7 @@ test.describe.parallel('Account creation', () => {
     );
   });
 
+  // eslint-disable-next-line playwright/expect-expect
   test('Add Loan account', async ({ page }) => {
     await addAccountAndVerifyDetails(page, 'loan', '1', 'Loan', '1,00 €');
   });

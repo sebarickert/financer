@@ -1,20 +1,25 @@
 import { AccountDto, TransferDto } from '@local/types';
+
 import {
   getAllTransaction,
   getAccount,
   roundToTwoDecimal,
   getTransactionByIdRaw,
 } from '$utils/api-helper';
+import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
-import { test, expect, Page } from '$utils/financer-page';
 
 test.describe('Delete transfer', () => {
-  test.beforeEach(async ({page}) => {
+  test.beforeEach(async ({ page }) => {
     await applyFixture('large');
     await page.goto('/statistics/transfers');
   });
 
-  const verifyToAccountBalanceChangeByTargetTransactionAmount = async (accountBefore: AccountDto, accountAfter: AccountDto, targetTransactionBefore: TransferDto) => {
+  const verifyToAccountBalanceChangeByTargetTransactionAmount = async (
+    accountBefore: AccountDto,
+    accountAfter: AccountDto,
+    targetTransactionBefore: TransferDto
+  ) => {
     const changedAmount = roundToTwoDecimal(targetTransactionBefore.amount);
     const balanceBefore = roundToTwoDecimal(accountBefore.balance);
     const balanceAfter = roundToTwoDecimal(accountAfter.balance);
@@ -25,7 +30,11 @@ test.describe('Delete transfer', () => {
     expect(balanceBeforeWithChangedAmount).toBe(balanceAfter);
   };
 
-  const verifyFromAccountBalanceChangeByTargetTransactionAmount = async (accountBefore: AccountDto, accountAfter: AccountDto, targetTransactionBefore: TransferDto) => {
+  const verifyFromAccountBalanceChangeByTargetTransactionAmount = async (
+    accountBefore: AccountDto,
+    accountAfter: AccountDto,
+    targetTransactionBefore: TransferDto
+  ) => {
     const changedAmount = roundToTwoDecimal(targetTransactionBefore.amount);
     const balanceBefore = roundToTwoDecimal(accountBefore.balance);
     const balanceAfter = roundToTwoDecimal(accountAfter.balance);
@@ -36,9 +45,14 @@ test.describe('Delete transfer', () => {
     expect(balanceBeforeWithChangedAmount).toBe(balanceAfter);
   };
 
-  const verifyTargetTransactionDoesNotExistsAfter = async (targetTransactionBefore: TransferDto) => {
-    const targetTransactionAfter = await getTransactionByIdRaw(targetTransactionBefore._id);
+  const verifyTargetTransactionDoesNotExistsAfter = async (
+    targetTransactionBefore: TransferDto
+  ) => {
+    const targetTransactionAfter = await getTransactionByIdRaw(
+      targetTransactionBefore._id
+    );
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     expect((targetTransactionAfter as any).statusCode).toBe(404);
   };
 
@@ -57,26 +71,28 @@ test.describe('Delete transfer', () => {
     const toAccountBefore = await getAccount(targetToAccountId);
     const fromAccountBefore = await getAccount(targetFromAccountId);
 
-    await page.goto(
-      '/statistics/transfers?date=2022-01&page=1'
-    );
+    await page.goto('/statistics/transfers?date=2022-01&page=1');
 
-
-    await page.getByTestId(targetTransactionId).waitFor();
     await page.getByTestId(targetTransactionId).click();
 
-    await page.waitForSelector("[data-testid=transfer-delete-modal_open-button]");
-
-    await page.getByTestId("transfer-delete-modal_open-button").click();
-    await page.getByTestId("transfer-delete-modal_confirm-button").click();
+    await page.getByTestId('transfer-delete-modal_open-button').click();
+    await page.getByTestId('transfer-delete-modal_confirm-button').click();
 
     await expect(page).not.toHaveURL(`/${targetTransactionId}`);
 
     const toAccountAfter = await getAccount(targetToAccountId);
     const fromAccountAfter = await getAccount(targetFromAccountId);
 
-    verifyToAccountBalanceChangeByTargetTransactionAmount(toAccountBefore, toAccountAfter, targetTransactionBefore);
-    verifyFromAccountBalanceChangeByTargetTransactionAmount(fromAccountBefore, fromAccountAfter, targetTransactionBefore);
+    verifyToAccountBalanceChangeByTargetTransactionAmount(
+      toAccountBefore,
+      toAccountAfter,
+      targetTransactionBefore
+    );
+    verifyFromAccountBalanceChangeByTargetTransactionAmount(
+      fromAccountBefore,
+      fromAccountAfter,
+      targetTransactionBefore
+    );
     verifyTargetTransactionDoesNotExistsAfter(targetTransactionBefore);
   });
 
@@ -95,22 +111,27 @@ test.describe('Delete transfer', () => {
     const toAccountBefore = await getAccount(targetToAccountId);
     const fromAccountBefore = await getAccount(targetFromAccountId);
 
-    await page.goto(
-      '/statistics/transfers?date=2021-02&page=1'
-    );
-    await page.getByTestId(targetTransactionId).waitFor();
+    await page.goto('/statistics/transfers?date=2021-02&page=1');
     await page.getByTestId(targetTransactionId).click();
 
-    await page.getByTestId("transfer-delete-modal_open-button").click();
-    await page.getByTestId("transfer-delete-modal_confirm-button").click();
+    await page.getByTestId('transfer-delete-modal_open-button').click();
+    await page.getByTestId('transfer-delete-modal_confirm-button').click();
 
     await expect(page).not.toHaveURL(`/${targetTransactionId}`);
 
     const toAccountAfter = await getAccount(targetToAccountId);
     const fromAccountAfter = await getAccount(targetFromAccountId);
 
-    verifyToAccountBalanceChangeByTargetTransactionAmount(toAccountBefore, toAccountAfter, targetTransactionBefore);
-    verifyFromAccountBalanceChangeByTargetTransactionAmount(fromAccountBefore, fromAccountAfter, targetTransactionBefore);
+    verifyToAccountBalanceChangeByTargetTransactionAmount(
+      toAccountBefore,
+      toAccountAfter,
+      targetTransactionBefore
+    );
+    verifyFromAccountBalanceChangeByTargetTransactionAmount(
+      fromAccountBefore,
+      fromAccountAfter,
+      targetTransactionBefore
+    );
     verifyTargetTransactionDoesNotExistsAfter(targetTransactionBefore);
   });
 });

@@ -1,5 +1,5 @@
-import { applyFixture } from '$utils/load-fixtures';
 import { test, expect, Page } from '$utils/financer-page';
+import { applyFixture } from '$utils/load-fixtures';
 
 test.describe('Edit transaction category', () => {
   const editCategoryAndVerifyDetails = async (
@@ -14,38 +14,54 @@ test.describe('Edit transaction category', () => {
       : targetCategoryName;
 
     await page.click(`[data-entity-title="${targetCategoryName}"]`);
-    await page.getByTestId("edit-transaction-category").click();
+    await page.getByTestId('edit-transaction-category').click();
 
     await page.fill('#name', newName);
 
-    let targetVisibility: string[]
+    let targetVisibility: string[];
     if (newVisibility) {
-        targetVisibility = newVisibility;
-        const checkedChecboxes = await page.$$eval('[data-testid="visibility-checkboxes"] input:checked', (inputs: HTMLInputElement[]) => inputs.map((input) => input.value));
+      targetVisibility = newVisibility;
+      const checkedChecboxes = await page
+        .getByTestId('visibility-checkboxes')
+        .locator('input:checked')
+        .evaluateAll((inputs: HTMLInputElement[]) =>
+          inputs.map((input) => input.value)
+        );
 
-        for(const visibilityItem of checkedChecboxes) {
-            await page.getByTestId("visibility-checkboxes").getByText(visibilityItem).click();
-        }
+      for (const visibilityItem of checkedChecboxes) {
+        await page
+          .getByTestId('visibility-checkboxes')
+          .getByText(visibilityItem)
+          .click();
+      }
 
-        for(const visibilityItem of newVisibility) {
-          await page.getByTestId("visibility-checkboxes").getByText(visibilityItem).click();
-        }
+      for (const visibilityItem of newVisibility) {
+        await page
+          .getByTestId('visibility-checkboxes')
+          .getByText(visibilityItem)
+          .click();
+      }
     } else {
-        targetVisibility = await page.$$eval('[data-testid="visibility-checkboxes"] input:checked', (inputs: HTMLInputElement[]) => inputs.map((input) => input.id.replace('Visible', '')));
+      targetVisibility = await page
+        .getByTestId('visibility-checkboxes')
+        .locator('input:checked')
+        .evaluateAll((inputs: HTMLInputElement[]) =>
+          inputs.map((input) => input.id.replace('Visible', ''))
+        );
     }
 
-    let targetParent: string
+    let targetParent: string;
     if (parent) {
-        targetParent = parent;
+      targetParent = parent;
       await page.selectOption('#parent_category_id', parent);
     } else {
-        targetParent = (await page.$eval(
-        '#parent_category_id option:checked',
-        (el) => el.textContent
-      ));
+      targetParent = await page
+        .locator('#parent_category_id')
+        .locator('option:checked')
+        .evaluate((el) => el.textContent);
     }
 
-    await page.getByTestId("submit").click();
+    await page.getByTestId('submit').click();
 
     await page.click(`[data-entity-title="${newName}"]`);
 
@@ -53,53 +69,98 @@ test.describe('Edit transaction category', () => {
 
     await expect(page.locator('#name')).toHaveValue(newName);
 
-    const incomeCheckbox = await page.$("#incomeVisible");
-    const expenseCheckbox = await page.$("#expenseVisible");
-    const transferCheckbox = await page.$("#transferVisible");
+    const incomeCheckbox = page.locator('#incomeVisible');
+    const expenseCheckbox = page.locator('#expenseVisible');
+    const transferCheckbox = page.locator('#transferVisible');
 
-    expect(await incomeCheckbox?.isChecked()).toEqual(targetVisibility.includes('income'));
-    expect(await expenseCheckbox?.isChecked()).toEqual(targetVisibility.includes('expense'));
-    expect(await transferCheckbox?.isChecked()).toEqual(targetVisibility.includes('transfer'));
-
-
-    const selectedOption = await page.$eval(
-    '#parent_category_id option:checked',
-    (el) => el.textContent
+    expect(await incomeCheckbox?.isChecked()).toEqual(
+      targetVisibility.includes('income')
     );
+    expect(await expenseCheckbox?.isChecked()).toEqual(
+      targetVisibility.includes('expense')
+    );
+    expect(await transferCheckbox?.isChecked()).toEqual(
+      targetVisibility.includes('transfer')
+    );
+
+    const selectedOption = await page
+      .locator('#parent_category_id')
+      .locator('option:checked')
+      .evaluate((el) => el.textContent);
     expect(selectedOption).toContain(targetParent);
   };
 
   test.beforeEach(async ({ page }) => {
-    await applyFixture('accounts-only')
+    await applyFixture('accounts-only');
     await page.goto('/profile/transaction-categories');
-    await page.waitForSelector('[data-testid=add-category]');
   });
 
+  // eslint-disable-next-line playwright/expect-expect
   test('Change category name', async ({ page }) => {
     await editCategoryAndVerifyDetails(page, 'Income sub category', null, true);
   });
 
+  // eslint-disable-next-line playwright/expect-expect
   test('Remove category visibility', async ({ page }) => {
-    await editCategoryAndVerifyDetails(page, 'Category for all types', [], false);
+    await editCategoryAndVerifyDetails(
+      page,
+      'Category for all types',
+      [],
+      false
+    );
   });
 
+  // eslint-disable-next-line playwright/expect-expect
   test('Add category all visibility types', async ({ page }) => {
-    await editCategoryAndVerifyDetails(page, 'Invisible category', ['income', 'expense', 'transfer'], false);
+    await editCategoryAndVerifyDetails(
+      page,
+      'Invisible category',
+      ['income', 'expense', 'transfer'],
+      false
+    );
   });
 
+  // eslint-disable-next-line playwright/expect-expect
   test('Unlink from parent category', async ({ page }) => {
-    await editCategoryAndVerifyDetails(page, 'Expense sub category', null, false, 'None');
+    await editCategoryAndVerifyDetails(
+      page,
+      'Expense sub category',
+      null,
+      false,
+      'None'
+    );
   });
 
+  // eslint-disable-next-line playwright/expect-expect
   test('Add parent for category', async ({ page }) => {
-    await editCategoryAndVerifyDetails(page, 'Invisible category', null, false, 'Category for all types');
+    await editCategoryAndVerifyDetails(
+      page,
+      'Invisible category',
+      null,
+      false,
+      'Category for all types'
+    );
   });
 
+  // eslint-disable-next-line playwright/expect-expect
   test('Change category parent', async ({ page }) => {
-    await editCategoryAndVerifyDetails(page, 'Income sub category', null, false, 'Income category');
+    await editCategoryAndVerifyDetails(
+      page,
+      'Income sub category',
+      null,
+      false,
+      'Income category'
+    );
   });
 
+  // eslint-disable-next-line playwright/expect-expect
   test('Change all field', async ({ page }) => {
-    await editCategoryAndVerifyDetails(page, 'Expense sub category', ['income'], true, 'Transfer category');
+    await editCategoryAndVerifyDetails(
+      page,
+      'Expense sub category',
+      ['income'],
+      true,
+      'Transfer category'
+    );
   });
 });

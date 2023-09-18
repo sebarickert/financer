@@ -10,12 +10,25 @@
     "test:safari": "npx playwright test --project=webkit",
     "test:chrome-mobile": "npx playwright test --project=Mobile_Chrome",
     "test:safari-mobile": "npx playwright test --project=Mobile_Safari",
-    "intall-deps": "npx playwright install"
+    "intall-deps": "npx playwright install",
+    "format": "eslint {tests,utils,assets}/**/*.ts --fix",
+    "lint": "eslint \"{tests,utils,assets}/**/*.ts\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "@local/types": "*"
+  },
   "devDependencies": {
-    "@playwright/test": "^1.37.1"
+    "@playwright/test": "^1.37.1",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-import-resolver-typescript": "^2.7.1",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-playwright": "^0.16.0",
+    "eslint-plugin-prettier": "^4.0.0"
   }
 }

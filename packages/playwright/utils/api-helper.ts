@@ -1,5 +1,6 @@
 import { AccountDto, TransactionDto, PaginationDto } from '@local/types';
-import { getBaseUrl } from "./financer-page"
+
+import { getBaseUrl } from './financer-page';
 
 export interface ITransactionWithDateObject extends TransactionDto {
   dateObj: Date;
@@ -23,10 +24,8 @@ export const formatDate = (date: Date): string => {
 };
 
 export const getAccount = async (accountId: string): Promise<AccountDto> => {
-  const baseUrl = getBaseUrl()
-  const rawAccount = await fetch(
-    `${baseUrl}/api/accounts/${accountId}`
-  );
+  const baseUrl = getBaseUrl();
+  const rawAccount = await fetch(`${baseUrl}/api/accounts/${accountId}`);
   return rawAccount.json();
 };
 
@@ -44,7 +43,7 @@ const parseTransactionDate = (
 export const getAllTransaction = async (): Promise<
   ITransactionWithDateObject[]
 > => {
-  const baseUrl = getBaseUrl()
+  const baseUrl = getBaseUrl();
   const transactions = (await (
     await fetch(`${baseUrl}/api/transactions`)
   ).json()) as PaginationDto<TransactionDto[]>;
@@ -55,7 +54,7 @@ export const getAllTransaction = async (): Promise<
 export const getAllIncomes = async (): Promise<
   ITransactionWithDateObject[]
 > => {
-  const baseUrl = getBaseUrl()
+  const baseUrl = getBaseUrl();
   const transactions = (await (
     await fetch(`${baseUrl}/api/incomes`)
   ).json()) as PaginationDto<TransactionDto[]>;
@@ -66,7 +65,7 @@ export const getAllIncomes = async (): Promise<
 export const getAllExpenses = async (): Promise<
   ITransactionWithDateObject[]
 > => {
-  const baseUrl = getBaseUrl()
+  const baseUrl = getBaseUrl();
   const transactions = (await (
     await fetch(`${baseUrl}/api/expenses`)
   ).json()) as PaginationDto<TransactionDto[]>;
@@ -77,7 +76,7 @@ export const getAllExpenses = async (): Promise<
 export const getAllTransfers = async (): Promise<
   ITransactionWithDateObject[]
 > => {
-  const baseUrl = getBaseUrl()
+  const baseUrl = getBaseUrl();
   const transactions = (await (
     await fetch(`${baseUrl}/api/transfers`)
   ).json()) as PaginationDto<TransactionDto[]>;
@@ -88,7 +87,7 @@ export const getAllTransfers = async (): Promise<
 export const getTransactionByIdRaw = async (
   transactionId: string
 ): Promise<TransactionDto> => {
-  const baseUrl = getBaseUrl()
+  const baseUrl = getBaseUrl();
   return (await (
     await fetch(`${baseUrl}/api/transactions/${transactionId}`)
   ).json()) as TransactionDto;
@@ -105,7 +104,7 @@ export const getTransactionById = async (
 export const getAllTransactionsByAccountId = async (
   accountId: string
 ): Promise<ITransactionWithDateObject[]> => {
-  const baseUrl = getBaseUrl()
+  const baseUrl = getBaseUrl();
   const transactions = (await (
     await fetch(`${baseUrl}/api/transactions/account/${accountId}`)
   ).json()) as PaginationDto<TransactionDto[]>;

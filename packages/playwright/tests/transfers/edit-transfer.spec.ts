@@ -1,4 +1,5 @@
 import { AccountDto } from '@local/types';
+
 import {
   getAllTransaction,
   getAccount,
@@ -6,11 +7,11 @@ import {
   ITransactionWithDateObject,
   roundToTwoDecimal,
 } from '$utils/api-helper';
+import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
-import { test, expect, Page } from '$utils/financer-page';
 
 test.describe('Edit transfer', () => {
-  test.beforeEach(async ({page}) => {
+  test.beforeEach(async ({ page }) => {
     await applyFixture('large');
     await page.goto('/statistics/transfers');
   });
@@ -20,16 +21,22 @@ test.describe('Edit transfer', () => {
   const getEditedTransactionName = () =>
     `edited dummy transaction created by test code ${Math.random()}`;
 
-  const verifyToAccountBalanceChanges = async (amount: number, accountBefore: AccountDto, accountAfter: AccountDto) => {
-
+  const verifyToAccountBalanceChanges = async (
+    amount: number,
+    accountBefore: AccountDto,
+    accountAfter: AccountDto
+  ) => {
     const balanceBefore = roundToTwoDecimal(accountBefore.balance);
     const balanceAfter = roundToTwoDecimal(accountAfter.balance);
 
     expect(balanceBefore + amount).toEqual(balanceAfter);
   };
 
-  const verifyFromAccountBalanceChanges = async (amount: number, accountBefore: AccountDto, accountAfter: AccountDto) => {
-
+  const verifyFromAccountBalanceChanges = async (
+    amount: number,
+    accountBefore: AccountDto,
+    accountAfter: AccountDto
+  ) => {
     const balanceBefore = roundToTwoDecimal(accountBefore.balance);
     const balanceAfter = roundToTwoDecimal(accountAfter.balance);
 
@@ -42,7 +49,6 @@ test.describe('Edit transfer', () => {
     transactionBefore: ITransactionWithDateObject,
     transactionAfter: ITransactionWithDateObject
   ) => {
-
     const nameAfter = transactionAfter.description;
     const amountAfter = roundToTwoDecimal(transactionAfter.amount);
 
@@ -54,7 +60,8 @@ test.describe('Edit transfer', () => {
     expect(amountBefore + changedAmount).toEqual(amountAfter);
   };
 
-  test('Edit newest transfer', async ({page}) => {
+  // eslint-disable-next-line playwright/expect-expect
+  test('Edit newest transfer', async ({ page }) => {
     const editedTransactionName = getEditedTransactionName();
     const transactionsBefore = await getAllTransaction();
 
@@ -67,8 +74,8 @@ test.describe('Edit transfer', () => {
     const targetToAccountId = targetTransactionBefore.toAccount;
     const targetFromAccountId = targetTransactionBefore.fromAccount;
 
-    const toAccountBefore = await getAccount(targetToAccountId)
-    const fromAccountBefore = await getAccount(targetFromAccountId)
+    const toAccountBefore = await getAccount(targetToAccountId);
+    const fromAccountBefore = await getAccount(targetFromAccountId);
 
     const newAmount =
       targetTransactionBefore.amount + amountToChangeTransaction;
@@ -77,21 +84,31 @@ test.describe('Edit transfer', () => {
 
     await page.getByTestId(targetTransactionId).click();
 
-    await page.getByTestId("edit-transfer-button").click();
+    await page.getByTestId('edit-transfer-button').click();
     await page.fill('#description', editedTransactionName);
     await page.fill('#amount', newAmount.toString());
     await page.selectOption('#toAccount', targetToAccountId);
     await page.selectOption('#fromAccount', targetFromAccountId);
-    await page.getByTestId("submit").click();
+    await page.getByTestId('submit').click();
 
-    await page.waitForSelector("[data-testid=add-transfer]");
+    await page.getByTestId('add-transfer').waitFor();
 
-    const toAccountAfter = await getAccount(targetToAccountId)
-    const fromAccountAfter = await getAccount(targetFromAccountId)
-    const targetTransactionAfter = await getTransactionById(targetTransactionId);
+    const toAccountAfter = await getAccount(targetToAccountId);
+    const fromAccountAfter = await getAccount(targetFromAccountId);
+    const targetTransactionAfter = await getTransactionById(
+      targetTransactionId
+    );
 
-    await verifyToAccountBalanceChanges(amountToChangeTransaction, toAccountBefore, toAccountAfter);
-    await verifyFromAccountBalanceChanges(amountToChangeTransaction, fromAccountBefore, fromAccountAfter);
+    await verifyToAccountBalanceChanges(
+      amountToChangeTransaction,
+      toAccountBefore,
+      toAccountAfter
+    );
+    await verifyFromAccountBalanceChanges(
+      amountToChangeTransaction,
+      fromAccountBefore,
+      fromAccountAfter
+    );
     await verifyTargetTransactionChanged(
       editedTransactionName,
       amountToChangeTransaction,
@@ -100,7 +117,8 @@ test.describe('Edit transfer', () => {
     );
   });
 
-  test('Edit oldest transfer', async ({page}) => {
+  // eslint-disable-next-line playwright/expect-expect
+  test('Edit oldest transfer', async ({ page }) => {
     const editedTransactionName = getEditedTransactionName();
     const transactionsBefore = await getAllTransaction();
 
@@ -113,9 +131,8 @@ test.describe('Edit transfer', () => {
     const targetToAccountId = targetTransactionBefore.toAccount;
     const targetFromAccountId = targetTransactionBefore.fromAccount;
 
-
-    const toAccountBefore = await getAccount(targetToAccountId)
-    const fromAccountBefore = await getAccount(targetFromAccountId)
+    const toAccountBefore = await getAccount(targetToAccountId);
+    const fromAccountBefore = await getAccount(targetFromAccountId);
 
     const newAmount =
       targetTransactionBefore.amount + amountToChangeTransaction;
@@ -124,21 +141,31 @@ test.describe('Edit transfer', () => {
 
     await page.getByTestId(targetTransactionId).click();
 
-    await page.getByTestId("edit-transfer-button").click();
+    await page.getByTestId('edit-transfer-button').click();
     await page.fill('#description', editedTransactionName);
     await page.fill('#amount', newAmount.toString());
     await page.selectOption('#toAccount', targetToAccountId);
     await page.selectOption('#fromAccount', targetFromAccountId);
-    await page.getByTestId("submit").click();
+    await page.getByTestId('submit').click();
 
-    await page.waitForNavigation({ waitUntil: 'networkidle' });
+    await page.getByTestId('add-transfer').waitFor();
 
-    const toAccountAfter = await getAccount(targetToAccountId)
-    const fromAccountAfter = await getAccount(targetFromAccountId)
-    const targetTransactionAfter = await getTransactionById(targetTransactionId);
+    const toAccountAfter = await getAccount(targetToAccountId);
+    const fromAccountAfter = await getAccount(targetFromAccountId);
+    const targetTransactionAfter = await getTransactionById(
+      targetTransactionId
+    );
 
-    await verifyToAccountBalanceChanges(amountToChangeTransaction, toAccountBefore, toAccountAfter);
-    await verifyFromAccountBalanceChanges(amountToChangeTransaction, fromAccountBefore, fromAccountAfter);
+    await verifyToAccountBalanceChanges(
+      amountToChangeTransaction,
+      toAccountBefore,
+      toAccountAfter
+    );
+    await verifyFromAccountBalanceChanges(
+      amountToChangeTransaction,
+      fromAccountBefore,
+      fromAccountAfter
+    );
     await verifyTargetTransactionChanged(
       editedTransactionName,
       amountToChangeTransaction,
