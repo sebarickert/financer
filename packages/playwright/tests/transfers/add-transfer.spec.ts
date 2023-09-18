@@ -114,15 +114,13 @@ test.describe('Add transfer', () => {
     const toAccountBefore = await getAccount(targetToAccountId);
     const fromAccountBefore = await getAccount(targetFromAccountId);
 
-    await page.waitForTimeout(100);
-
-    await page.click('[data-testid="add-transfer"]');
+    await page.getByTestId("add-transfer").click();
     await page.fill('#description', newTransactionName);
     await page.fill('#date', formatDate(newTransactionDate));
     await page.fill('#amount', newTransactionAmountStr);
     await page.selectOption('#toAccount', targetToAccountId);
     await page.selectOption('#fromAccount', targetFromAccountId);
-    await page.click('[data-testid="submit"]');
+    await page.getByTestId("submit").click();
 
     await page.waitForNavigation({ waitUntil: 'networkidle' });
 
@@ -162,15 +160,13 @@ test.describe('Add transfer', () => {
     const toAccountBefore = await getAccount(targetToAccountId);
     const fromAccountBefore = await getAccount(targetFromAccountId);
 
-    await page.waitForTimeout(100);
-
-    await page.click('[data-testid="add-transfer"]');
+    await page.getByTestId("add-transfer").click();
     await page.fill('#description', newTransactionName);
     await page.fill('#date', formatDate(newTransactionDate));
     await page.fill('#amount', newTransactionAmountStr);
     await page.selectOption('#toAccount', targetToAccountId);
     await page.selectOption('#fromAccount', targetFromAccountId);
-    await page.click('[data-testid="submit"]');
+    await page.getByTestId("submit").click();
 
     await page.waitForNavigation({ waitUntil: 'networkidle' });
 
@@ -189,20 +185,18 @@ test.describe('Add transfer', () => {
     date.setSeconds(0);
     date.setMilliseconds(0);
 
-    await page.waitForTimeout(500);
-
-    await page.click('[data-testid="add-transfer"]');
+    await page.getByTestId("add-transfer").click();
     await page.fill('#description', newTransactionName);
     await page.fill('#date', formatDate(date));
     await page.fill('#amount', newTransactionAmountStr);
     await page.selectOption('#toAccount', "Saving account 1");
     await page.selectOption('#fromAccount', "Saving account 2");
-    await page.click('[data-testid="submit"]');
+    await page.getByTestId("submit").click();
 
     await page.waitForNavigation({ waitUntil: 'networkidle' });
 
-    await page.click(`[data-testid="layout-root"] >> text=${newTransactionName}`);
-    await page.click('[data-testid="edit-transfer-button"]');
+    await page.getByText(newTransactionName).click();
+    await page.getByTestId("edit-transfer-button").click();
 
     await page.waitForSelector('#date');
 

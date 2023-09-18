@@ -4,11 +4,12 @@ import { test, expect } from '$utils/financer-page';
 test.describe('Edit expense with category', () => {
   test.beforeEach(async ({ page }) => {
       await applyFixture('small');
-      await page.goto('/statistics/expenses');
+      // await page.goto('/statistics/expenses');
   });
 
   test('Edit with single category', async ({ page }) => {
     await page.goto('/statistics/expenses?date=2022-03&page=1');
+    await page.getByTestId('623de25fc839cf72d59b0dbd').waitFor();
     await page.getByTestId('623de25fc839cf72d59b0dbd').click();
     await page.getByTestId('edit-expense-button').click();
 
@@ -30,6 +31,7 @@ test.describe('Edit expense with category', () => {
     await page.getByTestId('submit').click();
 
     await page.goto('/statistics/expenses?date=2022-03&page=1');
+    await page.getByTestId('623de25fc839cf72d59b0dbd').waitFor();
     await page.getByTestId('623de25fc839cf72d59b0dbd').click();
     await page.getByTestId('edit-expense-button').click();
 
@@ -47,6 +49,7 @@ test.describe('Edit expense with category', () => {
 
   test('Delete one categories with multiple categories', async ({ page }) => {
     await page.goto('/statistics/expenses?date=2022-03&page=1');
+    await page.getByTestId('623de288c839cf72d59b0dd2').waitFor();
     await page.getByTestId('623de288c839cf72d59b0dd2').click();
     await page.getByTestId('edit-expense-button').click();
 
@@ -78,6 +81,7 @@ test.describe('Edit expense with category', () => {
     await page.getByTestId('submit').click();
 
     await page.goto('/statistics/expenses?date=2022-03&page=1');
+    await page.getByTestId('623de288c839cf72d59b0dd2').waitFor();
     await page.getByTestId('623de288c839cf72d59b0dd2').click();
     await page.getByTestId('edit-expense-button').click();
 
@@ -102,6 +106,7 @@ test.describe('Edit expense with category', () => {
 
   test('Delete all categories with multiple categories', async ({ page }) => {
     await page.goto('/statistics/expenses?date=2022-03&page=1');
+    await page.getByTestId('623de288c839cf72d59b0dd2').waitFor();
     await page.getByTestId('623de288c839cf72d59b0dd2').click();
     await page.getByTestId('edit-expense-button').click();
 
@@ -118,6 +123,7 @@ test.describe('Edit expense with category', () => {
     await page.getByTestId('submit').click();
 
     await page.goto('/statistics/expenses?date=2022-03&page=1');
+    await page.getByTestId('623de288c839cf72d59b0dd2').waitFor();
     await page.getByTestId('623de288c839cf72d59b0dd2').click();
     await page.getByTestId('edit-expense-button').click();
 

@@ -15,8 +15,6 @@ test.describe('Transaction category creation', () => {
     const childRowAfter = await page.$(`[data-testid="category-child-row"]:has-text("${newName}")`);
     expect(childRowAfter).toBeNull();
 
-    await page.waitForTimeout(100);
-
     await page.getByTestId("add-category").click();
 
     await page.fill('#name', newName);
@@ -32,8 +30,6 @@ test.describe('Transaction category creation', () => {
 
     await page.getByTestId("submit").click();
     await expect(page).not.toHaveURL('/add');
-
-    await page.waitForTimeout(500);
 
     await page.getByText(newName).first().click();
 

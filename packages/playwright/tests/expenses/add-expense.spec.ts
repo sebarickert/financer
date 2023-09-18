@@ -15,12 +15,9 @@ import { applyFixture } from '$utils/load-fixtures';
 
 
 test.describe('Add expense', () => {
-    test.beforeAll(async () => {
-        await applyFixture('large');
-    })
-    
     test.beforeEach(async ({ page }) => {
-        await page.goto('/statistics/expenses');
+      await applyFixture('large');
+      await page.goto('/statistics/expenses');
     });
     
   const newTransactionAmountStr = '15.50';
@@ -60,7 +57,7 @@ test.describe('Add expense', () => {
     await page.selectOption('#fromAccount', targetAccountId);
     await page.getByTestId("submit").click();
 
-    await page.waitForNavigation({ waitUntil: 'networkidle' });
+    await page.getByTestId("add-expense").waitFor();
 
     //   cy.location('pathname').should('not.contain', '/add').then(() => {
     const accountAfter = await getAccount(targetAccountId);
@@ -83,16 +80,14 @@ test.describe('Add expense', () => {
 
     const accountBefore = await getAccount(targetAccountId);
 
-    await page.waitForTimeout(100);
-
-    await page.click('[data-testid="add-expense"]');
+    await page.getByTestId("add-expense").click();
     await page.fill('#description', newTransactionName);
     await page.fill('#date', formatDate(newTransactionDate));
     await page.fill('#amount', newTransactionAmountStr);
     await page.selectOption('#fromAccount', targetAccountId);
-    await page.click('[data-testid="submit"]');
+    await page.getByTestId("submit").click();
 
-    await page.waitForNavigation({ waitUntil: 'networkidle' });
+    await page.getByTestId("add-expense").waitFor();
 
     //   cy.location('pathname').should('not.contain', '/add').then(() => {
     const accountAfter = await getAccount(targetAccountId);
@@ -116,16 +111,14 @@ test.describe('Add expense', () => {
 
     const accountBefore = await getAccount(targetAccountId);
 
-    await page.waitForTimeout(100);
-
-    await page.click('[data-testid="add-expense"]');
+    await page.getByTestId("add-expense").click();
     await page.fill('#description', newTransactionName);
     await page.fill('#date', formatDate(newTransactionDate));
     await page.fill('#amount', newTransactionAmountStr);
     await page.selectOption('#fromAccount', targetAccountId);
-    await page.click('[data-testid="submit"]');
+    await page.getByTestId("submit").click();
 
-    await page.waitForNavigation({ waitUntil: 'networkidle' });
+    await page.getByTestId("add-expense").waitFor();
 
     //   cy.location('pathname').should('not.contain', '/add').then(() => {
     const accountAfter = await getAccount(targetAccountId);
@@ -141,18 +134,16 @@ test.describe('Add expense', () => {
     date.setSeconds(0);
     date.setMilliseconds(0);
 
-    await page.waitForTimeout(500);
-
-    await page.click('[data-testid="add-expense"]');
+    await page.getByTestId("add-expense").click();
     await page.fill('#description', newTransactionName);
     await page.fill('#date', formatDate(date));
     await page.fill('#amount', newTransactionAmountStr);
-    await page.click('[data-testid="submit"]');
+    await page.getByTestId("submit").click();
 
-    await page.waitForNavigation({ waitUntil: 'networkidle' });
+    await page.getByTestId("add-expense").waitFor();
 
-    await page.click(`[data-testid="layout-root"] >> text=${newTransactionName}`);
-    await page.click('[data-testid="edit-expense-button"]');
+    await page.getByText(newTransactionName).click();
+    await page.getByTestId("edit-expense-button").click();
 
     await page.waitForSelector('#date');
 

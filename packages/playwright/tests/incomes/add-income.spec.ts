@@ -15,12 +15,9 @@ import { applyFixture } from '$utils/load-fixtures';
 
 
 test.describe('Add income', () => {
-    test.beforeAll(async () => {
-        await applyFixture('large');
-    })
-    
     test.beforeEach(async ({ page }) => {
-        await page.goto('/statistics/incomes');
+      await applyFixture('large');
+      await page.goto('/statistics/incomes');
     });
     
   const newTransactionAmountStr = '15.50';
@@ -83,14 +80,12 @@ test.describe('Add income', () => {
 
     const accountBefore = await getAccount(targetAccountId);
 
-    await page.waitForTimeout(100);
-
-    await page.click('[data-testid="add-income"]');
+    await page.getByTestId("add-income").click();
     await page.fill('#description', newTransactionName);
     await page.fill('#date', formatDate(newTransactionDate));
     await page.fill('#amount', newTransactionAmountStr);
     await page.selectOption('#toAccount', targetAccountId);
-    await page.click('[data-testid="submit"]');
+    await page.getByTestId("submit").click();
 
     await page.waitForNavigation({ waitUntil: 'networkidle' });
 
@@ -116,14 +111,12 @@ test.describe('Add income', () => {
 
     const accountBefore = await getAccount(targetAccountId);
 
-    await page.waitForTimeout(100);
-
-    await page.click('[data-testid="add-income"]');
+    await page.getByTestId("add-income").click();
     await page.fill('#description', newTransactionName);
     await page.fill('#date', formatDate(newTransactionDate));
     await page.fill('#amount', newTransactionAmountStr);
     await page.selectOption('#toAccount', targetAccountId);
-    await page.click('[data-testid="submit"]');
+    await page.getByTestId("submit").click();
 
     await page.waitForNavigation({ waitUntil: 'networkidle' });
 
@@ -141,18 +134,16 @@ test.describe('Add income', () => {
     date.setSeconds(0);
     date.setMilliseconds(0);
 
-    await page.waitForTimeout(500);
-
-    await page.click('[data-testid="add-income"]');
+    await page.getByTestId("add-income").click();
     await page.fill('#description', newTransactionName);
     await page.fill('#date', formatDate(date));
     await page.fill('#amount', newTransactionAmountStr);
-    await page.click('[data-testid="submit"]');
+    await page.getByTestId("submit").click();
 
     await page.waitForNavigation({ waitUntil: 'networkidle' });
 
-    await page.click(`[data-testid="layout-root"] >> text=${newTransactionName}`);
-    await page.click('[data-testid="edit-income-button"]');
+    await page.getByText(newTransactionName).click();
+    await page.getByTestId("edit-income-button").click();
 
     await page.waitForSelector('#date');
 

@@ -37,7 +37,7 @@ test.describe('Transaction categories visibility in transaction forms', () => {
     await page.goto('/statistics/incomes/add');
     await page.fill('#amount', '100');
 
-    await page.click('[data-testid="add-category-button"]');
+    await page.getByTestId("add-category-button").click();
     await verifyIncomeCategories(page);
   });
 
@@ -45,7 +45,7 @@ test.describe('Transaction categories visibility in transaction forms', () => {
     await page.goto('/statistics/expenses/add');
     await page.fill('#amount', '100');
 
-    await page.click('[data-testid="add-category-button"]');
+    await page.getByTestId("add-category-button").click();
     await verifyExpenseCategories(page);
   });
 
@@ -53,7 +53,7 @@ test.describe('Transaction categories visibility in transaction forms', () => {
     await page.goto('/statistics/transfers/add');
     await page.fill('#amount', '100');
 
-    await page.click('[data-testid="add-category-button"]');
+    await page.getByTestId("add-category-button").click();
     await verifyTransferCategories(page);
   });
 });
