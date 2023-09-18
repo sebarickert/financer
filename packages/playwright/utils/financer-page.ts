@@ -1,21 +1,22 @@
-import { test as setup } from "@playwright/test";
-import { parsePort } from "./setup";
+/* eslint-disable import/no-extraneous-dependencies */
+import { test as setup } from '@playwright/test';
 
+import { parsePort } from './setup';
 
-const parseBaseUrl = (testIndex: number) => `http://localhost:${parsePort(testIndex)}`;
+const parseBaseUrl = (testIndex: number) =>
+  `http://localhost:${parsePort(testIndex)}`;
 
 export const getBaseUrl = () => {
   const workerIndex = parseInt(process.env.TEST_PARALLEL_INDEX);
   // const workerIndex = parseInt(process.env.TEST_PARALLEL_INDEX);
   return parseBaseUrl(workerIndex);
-}
+};
 
 export const test = setup.extend({
-    baseURL: async ({}, use) => {
-        const workerIndex = parseInt(process.env.TEST_PARALLEL_INDEX);
-        await use(parseBaseUrl(workerIndex));
-    },
+  baseURL: async ({}, use) => {
+    const workerIndex = parseInt(process.env.TEST_PARALLEL_INDEX);
+    await use(parseBaseUrl(workerIndex));
+  },
 });
 
-export {expect, Page} from "@playwright/test"
-
+export { expect, Page } from '@playwright/test';

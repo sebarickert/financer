@@ -86,7 +86,7 @@ describe('TasksService', () => {
       TransactionType.ANY,
     );
 
-    expect(transactionsBefore.data.length).toBe(0);
+    expect(transactionsBefore.data).toHaveLength(0);
 
     await service.generateTransactions();
 
@@ -95,7 +95,7 @@ describe('TasksService', () => {
       TransactionType.ANY,
     );
 
-    expect(transactionsAfter.data.length).toBe(1);
+    expect(transactionsAfter.data).toHaveLength(1);
   });
 
   it('should not create duplicated transaction from template with multiple executions', async () => {
@@ -109,7 +109,7 @@ describe('TasksService', () => {
       TransactionType.ANY,
     );
 
-    expect(transactionsBefore.data.length).toBe(0);
+    expect(transactionsBefore.data).toHaveLength(0);
 
     await service.generateTransactions();
     await service.generateTransactions();
@@ -119,7 +119,7 @@ describe('TasksService', () => {
       TransactionType.ANY,
     );
 
-    expect(transactionsAfter.data.length).toBe(1);
+    expect(transactionsAfter.data).toHaveLength(1);
   });
 
   it('should use last day of month id dayOfMonth is higher than amount of days', async () => {
@@ -135,7 +135,7 @@ describe('TasksService', () => {
       TransactionType.ANY,
     );
 
-    expect(transactionsBefore.data.length).toBe(0);
+    expect(transactionsBefore.data).toHaveLength(0);
 
     await service.generateTransactions();
 
@@ -144,7 +144,7 @@ describe('TasksService', () => {
       TransactionType.ANY,
     );
 
-    expect(transactionsAfter.data.length).toBe(1);
+    expect(transactionsAfter.data).toHaveLength(1);
 
     const expectedDate = new Date(2022, 1, 28, 12);
     const transactionDate = transactionsAfter.data[0].date;
@@ -167,7 +167,7 @@ describe('TasksService', () => {
       TransactionType.ANY,
     );
 
-    expect(transactionsBefore.data.length).toBe(0);
+    expect(transactionsBefore.data).toHaveLength(0);
 
     await service.generateTransactions();
 
@@ -176,7 +176,7 @@ describe('TasksService', () => {
       TransactionType.ANY,
     );
 
-    expect(transactionsAfter.data.length).toBe(1);
+    expect(transactionsAfter.data).toHaveLength(1);
 
     const expectedDate = new Date(2022, 1, 15, 12);
     const transactionDate = transactionsAfter.data[0].date;
@@ -199,7 +199,7 @@ describe('TasksService', () => {
       TransactionType.ANY,
     );
 
-    expect(transactionsBefore.data.length).toBe(0);
+    expect(transactionsBefore.data).toHaveLength(0);
 
     await service.generateTransactions();
 
@@ -208,7 +208,7 @@ describe('TasksService', () => {
       TransactionType.ANY,
     );
 
-    expect(transactionsAfter.data.length).toBe(1);
+    expect(transactionsAfter.data).toHaveLength(1);
 
     const expectedDate = new Date(2022, 2, 15, 12);
     const transactionDate = transactionsAfter.data[0].date;

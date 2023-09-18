@@ -1,5 +1,5 @@
-import { applyFixture } from '$utils/load-fixtures';
 import { test, expect, Page } from '$utils/financer-page';
+import { applyFixture } from '$utils/load-fixtures';
 
 test.describe('Transaction category creation', () => {
   const addCategoryAndVerifyDetails = async (
@@ -7,96 +7,122 @@ test.describe('Transaction category creation', () => {
     visibility: string[] = [],
     parent = 'None'
   ) => {
-    const newName = `New Test ${visibility.join(', ') || 'invisible'} category - ${crypto.randomUUID()}`;
+    const newName = `New Test ${
+      visibility.join(', ') || 'invisible'
+    } category - ${crypto.randomUUID()}`;
 
+    const parentRowBefore = page
+      .getByTestId('category-parent-row')
+      .getByText(newName);
 
-    const parentRowBefore = await page.$(`[data-testid="category-parent-row"]:has-text("${newName}")`);
-    expect(parentRowBefore).toBeNull();
-    const childRowAfter = await page.$(`[data-testid="category-child-row"]:has-text("${newName}")`);
-    expect(childRowAfter).toBeNull();
+    await expect(parentRowBefore).toHaveCount(0);
+    const childRowAfter = page
+      .getByTestId('category-child-row')
+      .getByText(newName);
+    await expect(childRowAfter).toHaveCount(0);
 
-    await page.getByTestId("add-category").click();
+    await page.getByTestId('add-category').click();
 
     await page.fill('#name', newName);
 
     for (const visibilityItem of visibility) {
       await page
-        .getByTestId("visibility-checkboxes")
+        .getByTestId('visibility-checkboxes')
         .getByText(visibilityItem, { exact: false })
         .check();
     }
 
     await page.selectOption('#parent_category_id', parent);
 
-    await page.getByTestId("submit").click();
+    await page.getByTestId('submit').click();
     await expect(page).not.toHaveURL('/add');
 
     await page.getByText(newName).first().click();
 
-    await page.getByTestId("edit-transaction-category").click();
+    await page.getByTestId('edit-transaction-category').click();
 
-    await page.waitForSelector('#name');
-    const name = await page.$eval('#name', (el:HTMLInputElement) => el.value);
-    expect(name).toEqual(newName);
+    await expect(page.locator('#name')).toHaveValue(newName);
 
-    const incomeCheckbox = await page.$("#incomeVisible");
-    const expenseCheckbox = await page.$("#expenseVisible");
-    const transferCheckbox = await page.$("#transferVisible");
+    const incomeCheckbox = page.locator('#incomeVisible');
+    const expenseCheckbox = page.locator('#expenseVisible');
+    const transferCheckbox = page.locator('#transferVisible');
 
-    expect(await incomeCheckbox?.isChecked()).toEqual(visibility.includes('income'));
-    expect(await expenseCheckbox?.isChecked()).toEqual(visibility.includes('expense'));
-    expect(await transferCheckbox?.isChecked()).toEqual(visibility.includes('transfer'));
+    expect(await incomeCheckbox?.isChecked()).toEqual(
+      visibility.includes('income')
+    );
+    expect(await expenseCheckbox?.isChecked()).toEqual(
+      visibility.includes('expense')
+    );
+    expect(await transferCheckbox?.isChecked()).toEqual(
+      visibility.includes('transfer')
+    );
 
-    expect(page.$("#parent_category_id option")).not.toContain(newName);
+    await expect(
+      page.locator('#parent_category_id').locator('option').getByText(newName)
+    ).toHaveCount(0);
 
-
-    const selectedOptions = await page.$$eval(
-        '#parent_category_id option:checked',
-        (options) => options.map((option) => option.textContent)
-      );
+    const selectedOptions = await page
+      .locator('#parent_category_id')
+      .locator('option:checked')
+      .evaluateAll((options) => options.map((option) => option.textContent));
     expect(selectedOptions.at(0)).toEqual(parent);
   };
 
-  test.beforeEach(async ({page}) => {
-    applyFixture('accounts-only')
+  test.beforeEach(async ({ page }) => {
+    applyFixture('accounts-only');
     await page.goto('/profile/transaction-categories');
-    await page.waitForSelector('[data-testid=add-category]');
   });
 
-  test('Verify category in fixture', async ({page}) => {
-    expect(await page.getByTestId("category-parent-row").all()).toHaveLength(3);
-    expect(await page.getByTestId("category-child-row").all()).toHaveLength(8);
+  test('Verify category in fixture', async ({ page }) => {
+    await expect(page.getByTestId('category-parent-row')).toHaveCount(3);
+    await expect(page.getByTestId('category-child-row')).toHaveCount(8);
   });
 
-  test('Add category without visibility options and without parent', async ({page}) => {
+  // eslint-disable-next-line playwright/expect-expect
+  test('Add category without visibility options and without parent', async ({
+    page,
+  }) => {
     await addCategoryAndVerifyDetails(page, []);
   });
 
-  test('Add category with expense visibility', async ({page}) => {
+  // eslint-disable-next-line playwright/expect-expect
+  test('Add category with expense visibility', async ({ page }) => {
     await addCategoryAndVerifyDetails(page, ['expense']);
   });
 
-  test('Add category with income visibility', async ({page}) => {
+  // eslint-disable-next-line playwright/expect-expect
+  test('Add category with income visibility', async ({ page }) => {
     await addCategoryAndVerifyDetails(page, ['income']);
   });
 
-  test('Add category with transfer visibility', async ({page}) => {
+  // eslint-disable-next-line playwright/expect-expect
+  test('Add category with transfer visibility', async ({ page }) => {
     await addCategoryAndVerifyDetails(page, ['transfer']);
   });
 
-  test('Add category with two visibilities', async ({page}) => {
+  // eslint-disable-next-line playwright/expect-expect
+  test('Add category with two visibilities', async ({ page }) => {
     await addCategoryAndVerifyDetails(page, ['income', 'transfer']);
   });
 
-  test('Add category with all visibilities', async ({page}) => {
+  // eslint-disable-next-line playwright/expect-expect
+  test('Add category with all visibilities', async ({ page }) => {
     await addCategoryAndVerifyDetails(page, ['income', 'expense', 'transfer']);
   });
 
-  test('Add category with all visibilities and parent', async ({page}) => {
-    await addCategoryAndVerifyDetails(page, ['income', 'expense', 'transfer'], 'Invisible category');
+  // eslint-disable-next-line playwright/expect-expect
+  test('Add category with all visibilities and parent', async ({ page }) => {
+    await addCategoryAndVerifyDetails(
+      page,
+      ['income', 'expense', 'transfer'],
+      'Invisible category'
+    );
   });
 
-  test('Add category without visibility options and with parent', async ({page}) => {
+  // eslint-disable-next-line playwright/expect-expect
+  test('Add category without visibility options and with parent', async ({
+    page,
+  }) => {
     await addCategoryAndVerifyDetails(page, [], 'Category for all types');
   });
 });

@@ -1,11 +1,11 @@
-import { applyFixture } from '$utils/load-fixtures';
 import { test, expect, Page } from '$utils/financer-page';
+import { applyFixture } from '$utils/load-fixtures';
 
 test.describe('Account editing', () => {
-    test.beforeEach(async ({ page }) => {
-        await applyFixture('accounts-only');    
-        await page.goto('/accounts');
-    });
+  test.beforeEach(async ({ page }) => {
+    await applyFixture('accounts-only');
+    await page.goto('/accounts');
+  });
 
   const parseFloatFromText = (text) => {
     return parseFloat(
@@ -29,14 +29,18 @@ test.describe('Account editing', () => {
     page: Page,
     accountName: string,
     accountBalance: string,
-    accountType: string,
+    accountType: string
   ) => {
-    await expect(page.getByTestId("page-main-heading")).toHaveText(accountName );
+    await expect(page.getByTestId('page-main-heading')).toHaveText(accountName);
 
-    await expect(page.getByTestId("account-type")).toHaveText(accountType);
+    await expect(page.getByTestId('account-type')).toHaveText(accountType);
 
-    const currentBalance = await page.$eval('[data-testid="account-balance"]', el => el.textContent);
-    expect(parseFloatFromText(currentBalance)).toEqual(parseFloatFromText(accountBalance));
+    const currentBalance = await page
+      .getByTestId('account-balance')
+      .evaluate((el) => el.textContent);
+    expect(parseFloatFromText(currentBalance)).toEqual(
+      parseFloatFromText(accountBalance)
+    );
   };
 
   const editAccountNameAndVerify = async (
@@ -45,30 +49,31 @@ test.describe('Account editing', () => {
     newAccountName,
     accountType
   ) => {
-    await page.waitForSelector('[data-testid="account-row"]');
-    const deletedAccountRow = await page.$(`[data-testid="account-row"]:has-text("${newAccountName}")`);
-    expect(deletedAccountRow).toBeNull();
+    const deletedAccountRow = page
+      .getByTestId('account-row')
+      .getByText(newAccountName);
+    await expect(deletedAccountRow).toHaveCount(0);
 
-    await page.getByTestId("account-row").getByText(oldAccountName).click();
+    await page.getByTestId('account-row').getByText(oldAccountName).click();
 
-    await page.waitForSelector('[data-testid="account-balance"]');
-    const accountBalance = await page.$eval('[data-testid="account-balance"]', el => el.textContent);
+    const accountBalance = await page
+      .getByTestId('account-balance')
+      .evaluate((el) => el.textContent);
     await verifyAccountPage(page, oldAccountName, accountBalance, accountType);
 
-    await page.getByTestId("edit-account").click();
+    await page.getByTestId('edit-account').click();
 
     await page.fill('#name', newAccountName);
-    await page.getByTestId("submit").click();
+    await page.getByTestId('submit').click();
 
     await expect(page).not.toHaveURL('/edit');
     await page.goto('/accounts');
 
-    await page.waitForSelector('[data-testid="account-row"]');
-
-    await page.waitForSelector('[data-testid="account-row"]');
-    const newAccount = await page.$(`[data-testid="account-row"]:has-text("${newAccountName}")`);
-    expect(newAccount).not.toBeNull();
-    await page.getByTestId("account-row").getByText(newAccountName).click();
+    const newAccount = page
+      .getByTestId('account-row')
+      .getByText(newAccountName);
+    await expect(newAccount).toHaveCount(1);
+    await page.getByTestId('account-row').getByText(newAccountName).click();
 
     await verifyAccountPage(page, newAccountName, accountBalance, accountType);
   };
@@ -77,24 +82,24 @@ test.describe('Account editing', () => {
     page: Page,
     accountName: string,
     oldAccountType: string,
-    newAccountType: string,
+    newAccountType: string
   ) => {
-    await page.$(`[data-testid="account-row"]:has-text("${accountName}")`);
-    await page.getByTestId("account-row").getByText(accountName).click();
+    await page.getByTestId('account-row').getByText(accountName).click();
 
-    await page.waitForSelector('[data-testid="account-balance"]');
-    const accountBalance = await page.$eval('[data-testid="account-balance"]', el => el.textContent);
+    const accountBalance = await page
+      .getByTestId('account-balance')
+      .evaluate((el) => el.textContent);
     await verifyAccountPage(page, accountName, accountBalance, oldAccountType);
 
-    await page.getByTestId("edit-account").click();
+    await page.getByTestId('edit-account').click();
 
     await page.selectOption('#type', newAccountType);
-    await page.getByTestId("submit").click();
+    await page.getByTestId('submit').click();
 
     await expect(page).not.toHaveURL('/edit');
     await page.goto('/accounts');
 
-    await page.getByTestId("account-row").getByText(accountName).click();
+    await page.getByTestId('account-row').getByText(accountName).click();
 
     await verifyAccountPage(page, accountName, accountBalance, newAccountType);
   };
@@ -103,25 +108,33 @@ test.describe('Account editing', () => {
     page: Page,
     accountName: string,
     newAccountBalance: string,
-    accountType: string,
+    accountType: string
   ) => {
-    await page.getByTestId("account-row").getByText(accountName).click();
+    await page.getByTestId('account-row').getByText(accountName).click();
 
-    await page.waitForSelector('[data-testid="account-balance"]');
-    const oldAccountBalance = await page.$eval('[data-testid="account-balance"]', el => el.textContent);
+    const oldAccountBalance = await page
+      .getByTestId('account-balance')
+      .evaluate((el) => el.textContent);
     await verifyAccountPage(page, accountName, oldAccountBalance, accountType);
     verifyDifferentBalances(oldAccountBalance, newAccountBalance);
 
-    await page.getByTestId("edit-account").click();
+    await page.getByTestId('edit-account').click();
 
-    await page.fill('#balance', newAccountBalance.replace(',', '.').replace(/ /g, '').replace('€', '').replace(String.fromCharCode(8722), String.fromCharCode(45)));
+    await page.fill(
+      '#balance',
+      newAccountBalance
+        .replace(',', '.')
+        .replace(/ /g, '')
+        .replace('€', '')
+        .replace(String.fromCharCode(8722), String.fromCharCode(45))
+    );
 
-    await page.getByTestId("submit").click();
+    await page.getByTestId('submit').click();
 
     await expect(page).not.toHaveURL('/edit');
     await page.goto('/accounts');
 
-    await page.getByTestId("account-row").getByText(accountName).click();
+    await page.getByTestId('account-row').getByText(accountName).click();
 
     await verifyAccountPage(page, accountName, newAccountBalance, accountType);
   };
@@ -132,118 +145,189 @@ test.describe('Account editing', () => {
     newAccountName: string,
     newAccountBalance: string,
     oldAccountType: string,
-    newAccountType: string,
+    newAccountType: string
   ) => {
-    await page.getByTestId("account-row").getByText(oldAccountName).click();
+    await page.getByTestId('account-row').getByText(oldAccountName).click();
 
-    await page.waitForSelector('[data-testid="account-balance"]');
-    const oldAccountBalance = await page.$eval('[data-testid="account-balance"]', el => el.textContent);
-    await verifyAccountPage(page, oldAccountName, oldAccountBalance, oldAccountType);
+    const oldAccountBalance = await page
+      .getByTestId('account-balance')
+      .evaluate((el) => el.textContent);
+    await verifyAccountPage(
+      page,
+      oldAccountName,
+      oldAccountBalance,
+      oldAccountType
+    );
     verifyDifferentBalances(oldAccountBalance, newAccountBalance);
 
-    await page.getByTestId("edit-account").click();
+    await page.getByTestId('edit-account').click();
 
-    await page.fill('#name', newAccountName);
-    await page.selectOption('#type', newAccountType);
-    await page.fill('#balance', newAccountBalance.replace(',', '.').replace(/ /g, '').replace('€', '').replace(String.fromCharCode(8722), String.fromCharCode(45)));
+    await page.locator('#name').fill(newAccountName);
+    await page.locator('#type').selectOption(newAccountType);
+    await page
+      .locator('#balance')
+      .fill(
+        newAccountBalance
+          .replace(',', '.')
+          .replace(/ /g, '')
+          .replace('€', '')
+          .replace(String.fromCharCode(8722), String.fromCharCode(45))
+      );
 
-    await page.getByTestId("submit").click();
+    await page.getByTestId('submit').click();
 
     await expect(page).not.toHaveURL('/edit');
     await page.goto('/accounts');
 
-    await page.waitForSelector('[data-testid="account-row"]');
+    const newAccount = page
+      .getByTestId('account-row')
+      .getByText(newAccountName);
 
-    const newAccount = await page.$(`[data-testid="account-row"]:has-text("${newAccountName}")`);
-    expect(newAccount).not.toBeNull();
-    await page.getByTestId("account-row").getByText(newAccountName).click();
+    await expect(newAccount).toHaveCount(1);
+    await page.getByTestId('account-row').getByText(newAccountName).click();
 
-    await verifyAccountPage(page, newAccountName, newAccountBalance, newAccountType);
+    await verifyAccountPage(
+      page,
+      newAccountName,
+      newAccountBalance,
+      newAccountType
+    );
   };
 
-  test('Change Cash account name', async ({page}) => {
-    await editAccountNameAndVerify(page, 'Cash account', 'Cash Renamed account', 'Cash');
+  // eslint-disable-next-line playwright/expect-expect
+  test('Change Cash account name', async ({ page }) => {
+    await editAccountNameAndVerify(
+      page,
+      'Cash account',
+      'Cash Renamed account',
+      'Cash'
+    );
   });
 
-  test('Change Saving account name', async ({page}) => {
+  // eslint-disable-next-line playwright/expect-expect
+  test('Change Saving account name', async ({ page }) => {
     await editAccountNameAndVerify(
-        page,
+      page,
       'Saving account 2',
       'Saving Renamed account 2',
       'Savings'
     );
   });
 
-  test('Change Investment account name', async ({page}) => {
+  // eslint-disable-next-line playwright/expect-expect
+  test('Change Investment account name', async ({ page }) => {
     await editAccountNameAndVerify(
-        page,
+      page,
       'Investment account',
       'Investment Renamed account',
       'Investment'
     );
   });
 
-  test('Change Credit account name', async ({page}) => {
+  // eslint-disable-next-line playwright/expect-expect
+  test('Change Credit account name', async ({ page }) => {
     await editAccountNameAndVerify(
-        page,
+      page,
       'Credit account',
       'Credit Renamed account',
       'Credit'
     );
   });
 
-  test('Change Loan account name', async ({page}) => {
-    await editAccountNameAndVerify(page, 'Loan account', 'Loan Renamed account', 'Loan');
+  // eslint-disable-next-line playwright/expect-expect
+  test('Change Loan account name', async ({ page }) => {
+    await editAccountNameAndVerify(
+      page,
+      'Loan account',
+      'Loan Renamed account',
+      'Loan'
+    );
   });
 
-  test('Change Cash account type', async ({page}) => {
+  // eslint-disable-next-line playwright/expect-expect
+  test('Change Cash account type', async ({ page }) => {
     await editAccountTypeAndVerify(page, 'Cash account', 'Cash', 'Loan');
   });
 
-  test('Change Saving account type', async ({page}) => {
+  // eslint-disable-next-line playwright/expect-expect
+  test('Change Saving account type', async ({ page }) => {
     await editAccountTypeAndVerify(page, 'Saving account 2', 'Savings', 'Cash');
   });
 
-  test('Change Investment account type', async ({page}) => {
-    await editAccountTypeAndVerify(page, 'Investment account', 'Investment', 'Savings');
+  // eslint-disable-next-line playwright/expect-expect
+  test('Change Investment account type', async ({ page }) => {
+    await editAccountTypeAndVerify(
+      page,
+      'Investment account',
+      'Investment',
+      'Savings'
+    );
   });
 
-  test('Change Credit account type', async ({page}) => {
-    await editAccountTypeAndVerify(page, 'Credit account', 'Credit', 'Investment');
+  // eslint-disable-next-line playwright/expect-expect
+  test('Change Credit account type', async ({ page }) => {
+    await editAccountTypeAndVerify(
+      page,
+      'Credit account',
+      'Credit',
+      'Investment'
+    );
   });
 
-  test('Change Loan account type', async ({page}) => {
+  // eslint-disable-next-line playwright/expect-expect
+  test('Change Loan account type', async ({ page }) => {
     await editAccountTypeAndVerify(page, 'Loan account', 'Loan', 'Credit');
   });
 
-  test('Change Cash account balance', async ({page}) => {
-    await editAccountBalanceAndVerify(page, 'Cash account', '−1 040 350,00 €', 'Cash');
-  });
-
-  test('Change Saving account balance', async ({page}) => {
-    await editAccountBalanceAndVerify(page, 'Saving account 2', '0,10 €', 'Savings');
-  });
-
-  test('Change Investment account balance', async ({page}) => {
+  // eslint-disable-next-line playwright/expect-expect
+  test('Change Cash account balance', async ({ page }) => {
     await editAccountBalanceAndVerify(
-        page, 
+      page,
+      'Cash account',
+      '−1 040 350,00 €',
+      'Cash'
+    );
+  });
+
+  // eslint-disable-next-line playwright/expect-expect
+  test('Change Saving account balance', async ({ page }) => {
+    await editAccountBalanceAndVerify(
+      page,
+      'Saving account 2',
+      '0,10 €',
+      'Savings'
+    );
+  });
+
+  // eslint-disable-next-line playwright/expect-expect
+  test('Change Investment account balance', async ({ page }) => {
+    await editAccountBalanceAndVerify(
+      page,
       'Investment account',
       '1 000 000,00 €',
       'Investment'
     );
   });
 
-  test('Change Credit account balance', async ({page}) => {
-    await editAccountBalanceAndVerify(page, 'Credit account', '−251 950,00 €', 'Credit');
+  // eslint-disable-next-line playwright/expect-expect
+  test('Change Credit account balance', async ({ page }) => {
+    await editAccountBalanceAndVerify(
+      page,
+      'Credit account',
+      '−251 950,00 €',
+      'Credit'
+    );
   });
 
-  test('Change Loan account balance', async ({page}) => {
+  // eslint-disable-next-line playwright/expect-expect
+  test('Change Loan account balance', async ({ page }) => {
     await editAccountBalanceAndVerify(page, 'Loan account', '0,00 €', 'Loan');
   });
 
-  test('Change Cash account all fields', async ({page}) => {
+  // eslint-disable-next-line playwright/expect-expect
+  test('Change Cash account all fields', async ({ page }) => {
     await editAccountAllDetailsAndVerify(
-        page,
+      page,
       'Cash account',
       'Changed to Savings',
       '100 000 000 000 000,00 €',
@@ -252,9 +336,10 @@ test.describe('Account editing', () => {
     );
   });
 
-  test('Change Saving account all fields', async ({page}) => {
+  // eslint-disable-next-line playwright/expect-expect
+  test('Change Saving account all fields', async ({ page }) => {
     await editAccountAllDetailsAndVerify(
-        page,
+      page,
       'Saving account 2',
       'Changed to Investment',
       '-99 000,10 €',
@@ -263,9 +348,10 @@ test.describe('Account editing', () => {
     );
   });
 
-  test('Change Investment account all fields', async ({page}) => {
+  // eslint-disable-next-line playwright/expect-expect
+  test('Change Investment account all fields', async ({ page }) => {
     await editAccountAllDetailsAndVerify(
-        page,
+      page,
       'Investment account',
       'Changed to Credit',
       '-10,01 €',
@@ -274,9 +360,10 @@ test.describe('Account editing', () => {
     );
   });
 
-  test('Change Credit account all fields', async ({page}) => {
+  // eslint-disable-next-line playwright/expect-expect
+  test('Change Credit account all fields', async ({ page }) => {
     await editAccountAllDetailsAndVerify(
-        page,
+      page,
       'Credit account',
       'Changed to Loan',
       '999 999,99 €',
@@ -285,9 +372,10 @@ test.describe('Account editing', () => {
     );
   });
 
-  test('Change Loan account all fields', async ({page}) => {
+  // eslint-disable-next-line playwright/expect-expect
+  test('Change Loan account all fields', async ({ page }) => {
     await editAccountAllDetailsAndVerify(
-        page,
+      page,
       'Loan account',
       'Changed to Credit',
       '-55,55 €',
