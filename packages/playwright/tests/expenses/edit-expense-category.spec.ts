@@ -2,13 +2,12 @@ import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
 
 test.describe('Edit expense with category', () => {
-  test.beforeEach(async () => {
+  test.beforeEach(async ({ page }) => {
     await applyFixture('small');
-    // await page.goto('/statistics/expenses');
+    await page.goto('/statistics/expenses?date=2022-03&page=1');
   });
 
   test('Edit with single category', async ({ page }) => {
-    await page.goto('/statistics/expenses?date=2022-03&page=1');
     await page.getByTestId('623de25fc839cf72d59b0dbd').click();
     await page.getByTestId('edit-expense-button').click();
 
@@ -59,7 +58,6 @@ test.describe('Edit expense with category', () => {
   });
 
   test('Delete one categories with multiple categories', async ({ page }) => {
-    await page.goto('/statistics/expenses?date=2022-03&page=1');
     await page.getByTestId('623de288c839cf72d59b0dd2').click();
     await page.getByTestId('edit-expense-button').click();
 
@@ -72,20 +70,20 @@ test.describe('Edit expense with category', () => {
       'Invisible category > Expense sub category'
     );
 
-    const amountInputs = await page
-      .getByTestId('transaction-categories-form_transaction-category_amount')
-      .all();
-    await expect(amountInputs[0]).toHaveValue('3333');
-    await amountInputs[0].fill('100');
+    const amountInputs = page.getByTestId(
+      'transaction-categories-form_transaction-category_amount'
+    );
+    await expect(amountInputs.first()).toHaveValue('3333');
+    await amountInputs.first().fill('100');
 
-    const descriptionInputs = await page
-      .getByTestId(
-        'transaction-categories-form_transaction-category_description'
-      )
-      .all();
-    await expect(descriptionInputs[0]).toHaveValue('dummy description');
-    await expect(descriptionInputs[1]).toHaveValue('not so dummy description');
-    await descriptionInputs[0].fill('Changed description');
+    const descriptionInputs = page.getByTestId(
+      'transaction-categories-form_transaction-category_description'
+    );
+    await expect(descriptionInputs.first()).toHaveValue('dummy description');
+    await expect(descriptionInputs.nth(1)).toHaveValue(
+      'not so dummy description'
+    );
+    await descriptionInputs.first().fill('Changed description');
 
     const categoryRows = page.getByTestId(
       'transaction-categories-form_transaction-category_row'
@@ -112,12 +110,11 @@ test.describe('Edit expense with category', () => {
     );
     await expect(categoryRowsAfterEdit).toHaveCount(1);
 
-    const selectedOptionsAFter = await page
+    const selectedOptionsAFter = page
       .getByTestId('transaction-categories-form_transaction-category_category')
-      .locator('option:checked')
-      .evaluateAll((options) => options.map((option) => option.textContent));
+      .locator('option:checked');
 
-    expect(selectedOptionsAFter.at(0)).toContain('Expense category');
+    await expect(selectedOptionsAFter.first()).toHaveText('Expense category');
 
     const amountInputAfterEdit = page.getByTestId(
       'transaction-categories-form_transaction-category_amount'
@@ -131,7 +128,6 @@ test.describe('Edit expense with category', () => {
   });
 
   test('Delete all categories with multiple categories', async ({ page }) => {
-    await page.goto('/statistics/expenses?date=2022-03&page=1');
     await page.getByTestId('623de288c839cf72d59b0dd2').click();
     await page.getByTestId('edit-expense-button').click();
 

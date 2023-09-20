@@ -13,10 +13,10 @@ test.describe('Edit transaction category', () => {
       ? `Changed Test ${newVisibility?.join(', ') || 'invisible'} category`
       : targetCategoryName;
 
-    await page.click(`[data-entity-title="${targetCategoryName}"]`);
+    await page.locator(`[data-entity-title="${targetCategoryName}"]`).click();
     await page.getByTestId('edit-transaction-category').click();
 
-    await page.fill('#name', newName);
+    await page.locator('#name').fill(newName);
 
     let targetVisibility: string[];
     if (newVisibility) {
@@ -53,17 +53,17 @@ test.describe('Edit transaction category', () => {
     let targetParent: string;
     if (parent) {
       targetParent = parent;
-      await page.selectOption('#parent_category_id', parent);
+      await page.locator('#parent_category_id').selectOption(parent);
     } else {
       targetParent = await page
         .locator('#parent_category_id')
         .locator('option:checked')
-        .evaluate((el) => el.textContent);
+        .textContent();
     }
 
     await page.getByTestId('submit').click();
 
-    await page.click(`[data-entity-title="${newName}"]`);
+    await page.locator(`[data-entity-title="${newName}"]`).click();
 
     await page.getByTestId("edit-transaction-category").click();
 
@@ -86,7 +86,7 @@ test.describe('Edit transaction category', () => {
     const selectedOption = await page
       .locator('#parent_category_id')
       .locator('option:checked')
-      .evaluate((el) => el.textContent);
+      .textContent();
     expect(selectedOption).toContain(targetParent);
   };
 

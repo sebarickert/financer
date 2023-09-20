@@ -15,16 +15,17 @@ test.describe.parallel('Account creation', () => {
     expectedBalance
   ) => {
     const newAccountName = `New Test ${expectedType} Account ${Math.random()}`;
-    const accountRow = page.getByTestId('account-row');
-    const accountRowText = await accountRow.first().textContent();
-    expect(accountRowText).not.toContain(newAccountName);
+    const accountRow = page
+      .getByTestId('account-row')
+      .getByText(newAccountName);
+    await expect(accountRow).toHaveCount(0);
 
     await page.getByTestId('add-account').click();
 
     // Add account form
-    await page.fill('#name', newAccountName);
-    await page.fill('#balance', accountBalance);
-    await page.selectOption('#type', accountType);
+    await page.locator('#name').fill(newAccountName);
+    await page.locator('#balance').fill(accountBalance);
+    await page.locator('#type').selectOption(accountType);
     await page.getByTestId('submit').click();
 
     await expect(page).toHaveURL(/\/accounts\/?$/);

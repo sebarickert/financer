@@ -23,7 +23,7 @@ test.describe('Transaction category creation', () => {
 
     await page.getByTestId('add-category').click();
 
-    await page.fill('#name', newName);
+    await page.locator('#name').fill(newName);
 
     for (const visibilityItem of visibility) {
       await page
@@ -32,7 +32,7 @@ test.describe('Transaction category creation', () => {
         .check();
     }
 
-    await page.selectOption('#parent_category_id', parent);
+    await page.locator('#parent_category_id').selectOption(parent);
 
     await page.getByTestId('submit').click();
     await expect(page).not.toHaveURL('/add');
@@ -64,12 +64,12 @@ test.describe('Transaction category creation', () => {
     const selectedOptions = await page
       .locator('#parent_category_id')
       .locator('option:checked')
-      .evaluateAll((options) => options.map((option) => option.textContent));
+      .allTextContents();
     expect(selectedOptions.at(0)).toEqual(parent);
   };
 
   test.beforeEach(async ({ page }) => {
-    applyFixture('accounts-only');
+    await applyFixture('accounts-only');
     await page.goto('/profile/transaction-categories');
   });
 

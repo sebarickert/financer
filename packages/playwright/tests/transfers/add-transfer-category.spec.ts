@@ -9,9 +9,9 @@ test.describe('Add transfer with category', () => {
 
     await page.goto('/statistics/transfers/add');
 
-    await page.fill('#description', TRANSFER_NAME);
-    await page.fill('#amount', '10000.50');
-    await page.selectOption('#toAccount', 'Cash account');
+    await page.locator('#description').fill(TRANSFER_NAME);
+    await page.locator('#amount').fill('10000.50');
+    await page.locator('#toAccount').selectOption('Cash account');
     await page.getByTestId('add-category-button').click();
   });
 
@@ -47,7 +47,7 @@ test.describe('Add transfer with category', () => {
 
     await page
       .getByTestId('transaction-categories-form_transaction-category_category')
-      .selectOption({ label: 'non-existing-category' });
+      .selectOption('non-existing-category');
     await page.getByTestId('submit').click();
 
     await expect(page.getByTestId('form-errors')).toContainText(

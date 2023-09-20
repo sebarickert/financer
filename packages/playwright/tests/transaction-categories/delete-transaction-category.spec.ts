@@ -22,7 +22,7 @@ test.describe('Delete transaction category', () => {
   };
 
   test.beforeEach(async ({ page }) => {
-    applyFixture('accounts-only');
+    await applyFixture('accounts-only');
     await page.goto('/profile/transaction-categories');
   });
 

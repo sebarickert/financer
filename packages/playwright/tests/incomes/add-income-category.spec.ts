@@ -9,8 +9,8 @@ test.describe('Add income with category', () => {
 
     await page.goto('/statistics/incomes/add');
 
-    await page.fill('#description', INCOME_NAME);
-    await page.fill('#amount', '10000.50');
+    await page.locator('#description').fill(INCOME_NAME);
+    await page.locator('#amount').fill('10000.50');
     await page.getByTestId('add-category-button').click();
   });
 
@@ -46,7 +46,7 @@ test.describe('Add income with category', () => {
 
     await page
       .getByTestId('transaction-categories-form_transaction-category_category')
-      .selectOption({ label: 'non-existing-category' });
+      .selectOption('non-existing-category');
     await page.getByTestId('submit').click();
 
     await expect(page.getByTestId('form-errors')).toContainText(
