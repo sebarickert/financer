@@ -3,7 +3,7 @@ import { applyFixture } from '$utils/load-fixtures';
 
 test.describe('Transaction categories visibility in transaction forms', () => {
   test.beforeEach(async () => {
-    applyFixture('accounts-only');
+    await applyFixture('accounts-only');
   });
 
   const verifyIncomeCategories = async (page: Page) => {
@@ -54,7 +54,7 @@ test.describe('Transaction categories visibility in transaction forms', () => {
   // eslint-disable-next-line playwright/expect-expect
   test('Verify add income categories', async ({ page }) => {
     await page.goto('/statistics/incomes/add');
-    await page.fill('#amount', '100');
+    await page.locator('#amount').fill('100');
 
     await page.getByTestId('add-category-button').click();
     await verifyIncomeCategories(page);
@@ -63,7 +63,7 @@ test.describe('Transaction categories visibility in transaction forms', () => {
   // eslint-disable-next-line playwright/expect-expect
   test('Verify add expense categories', async ({ page }) => {
     await page.goto('/statistics/expenses/add');
-    await page.fill('#amount', '100');
+    await page.locator('#amount').fill('100');
 
     await page.getByTestId('add-category-button').click();
     await verifyExpenseCategories(page);
@@ -72,7 +72,7 @@ test.describe('Transaction categories visibility in transaction forms', () => {
   // eslint-disable-next-line playwright/expect-expect
   test('Verify add transfer categories', async ({ page }) => {
     await page.goto('/statistics/transfers/add');
-    await page.fill('#amount', '100');
+    await page.locator('#amount').fill('100');
 
     await page.getByTestId('add-category-button').click();
     await verifyTransferCategories(page);

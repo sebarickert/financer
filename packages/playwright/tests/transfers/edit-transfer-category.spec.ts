@@ -4,20 +4,18 @@ import { applyFixture } from '$utils/load-fixtures';
 test.describe('Edit transfer with category', () => {
   test.beforeEach(async ({ page }) => {
     await applyFixture('small');
-    await page.goto('/statistics/transfers');
+    await page.goto('/statistics/transfers?date=2022-03&page=1');
   });
 
   test('Edit with single category', async ({ page }) => {
-    await page.goto('/statistics/transfers?date=2022-03&page=1');
     await page.getByTestId('623de2a0c839cf72d59b0df2').click();
     await page.getByTestId('edit-transfer-button').click();
 
-    const selectedOption = await page
+    const selectedOption = page
       .getByTestId('transaction-categories-form_transaction-category_category')
-      .locator('option:checked')
-      .evaluate((option) => option.textContent);
+      .locator('option:checked');
 
-    expect(selectedOption).toContain(
+    await expect(selectedOption).toHaveText(
       'Invisible category > Transfer sub category'
     );
 
@@ -63,7 +61,6 @@ test.describe('Edit transfer with category', () => {
   });
 
   test('Delete one categories with multiple categories', async ({ page }) => {
-    await page.goto('/statistics/transfers?date=2022-03&page=1');
     await page.getByTestId('623de2c0c839cf72d59b0e10').click();
     await page.getByTestId('edit-transfer-button').click();
 
@@ -76,20 +73,20 @@ test.describe('Edit transfer with category', () => {
     );
     await expect(selectedOptions.nth(1)).toContainText('Transfer category');
 
-    const amountInputs = await page
-      .getByTestId('transaction-categories-form_transaction-category_amount')
-      .all();
-    await expect(amountInputs[0]).toHaveValue('333333');
-    await amountInputs[0].fill('100');
+    const amountInputs = page.getByTestId(
+      'transaction-categories-form_transaction-category_amount'
+    );
+    await expect(amountInputs.first()).toHaveValue('333333');
+    await amountInputs.first().fill('100');
 
-    const descriptionInputs = await page
-      .getByTestId(
-        'transaction-categories-form_transaction-category_description'
-      )
-      .all();
-    await expect(descriptionInputs[0]).toHaveValue('dummy description');
-    await expect(descriptionInputs[1]).toHaveValue('not so dummy description');
-    await descriptionInputs[0].fill('Changed description');
+    const descriptionInputs = page.getByTestId(
+      'transaction-categories-form_transaction-category_description'
+    );
+    await expect(descriptionInputs.first()).toHaveValue('dummy description');
+    await expect(descriptionInputs.nth(1)).toHaveValue(
+      'not so dummy description'
+    );
+    await descriptionInputs.first().fill('Changed description');
 
     const categoryRows = page.getByTestId(
       'transaction-categories-form_transaction-category_row'
@@ -116,12 +113,11 @@ test.describe('Edit transfer with category', () => {
     );
     await expect(categoryRowsAfterEdit).toHaveCount(1);
 
-    const selectedOptionsAfter = await page
+    const selectedOptionsAfter = page
       .getByTestId('transaction-categories-form_transaction-category_category')
-      .locator('option:checked')
-      .evaluateAll((options) => options.map((option) => option.textContent));
+      .locator('option:checked');
 
-    expect(selectedOptionsAfter.at(0)).toContain(
+    await expect(selectedOptionsAfter.first()).toHaveText(
       'Invisible category > Sub category for all types'
     );
 
@@ -137,7 +133,6 @@ test.describe('Edit transfer with category', () => {
   });
 
   test('Delete all categories with multiple categories', async ({ page }) => {
-    await page.goto('/statistics/transfers?date=2022-03&page=1');
     await page.getByTestId('623de2c0c839cf72d59b0e10').click();
     await page.getByTestId('edit-transfer-button').click();
 

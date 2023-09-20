@@ -7,7 +7,7 @@ test.describe('Account editing', () => {
     await page.goto('/accounts');
   });
 
-  const parseFloatFromText = (text) => {
+  const parseFloatFromText = (text: string) => {
     return parseFloat(
       text
         .replace(',', '.')
@@ -17,7 +17,7 @@ test.describe('Account editing', () => {
     );
   };
 
-  const verifyDifferentBalances = (balanceA, balanceB) => {
+  const verifyDifferentBalances = (balanceA: string, balanceB: string) => {
     const a = parseFloatFromText(balanceA);
     const b = parseFloatFromText(balanceB);
     expect(a).not.toBeNaN();
@@ -37,7 +37,7 @@ test.describe('Account editing', () => {
 
     const currentBalance = await page
       .getByTestId('account-balance')
-      .evaluate((el) => el.textContent);
+      .textContent();
     expect(parseFloatFromText(currentBalance)).toEqual(
       parseFloatFromText(accountBalance)
     );
@@ -45,9 +45,9 @@ test.describe('Account editing', () => {
 
   const editAccountNameAndVerify = async (
     page: Page,
-    oldAccountName,
-    newAccountName,
-    accountType
+    oldAccountName: string,
+    newAccountName: string,
+    accountType: string
   ) => {
     const deletedAccountRow = page
       .getByTestId('account-row')
@@ -58,15 +58,15 @@ test.describe('Account editing', () => {
 
     const accountBalance = await page
       .getByTestId('account-balance')
-      .evaluate((el) => el.textContent);
+      .textContent();
     await verifyAccountPage(page, oldAccountName, accountBalance, accountType);
 
     await page.getByTestId('edit-account').click();
 
-    await page.fill('#name', newAccountName);
+    await page.locator('#name').fill(newAccountName);
     await page.getByTestId('submit').click();
 
-    await expect(page).not.toHaveURL('/edit');
+    await page.waitForURL(/\/accounts\/[a-zA-Z0-9-]+\/?$/);
     await page.goto('/accounts');
 
     const newAccount = page
@@ -88,15 +88,16 @@ test.describe('Account editing', () => {
 
     const accountBalance = await page
       .getByTestId('account-balance')
-      .evaluate((el) => el.textContent);
+      .textContent();
     await verifyAccountPage(page, accountName, accountBalance, oldAccountType);
 
     await page.getByTestId('edit-account').click();
 
-    await page.selectOption('#type', newAccountType);
+    await page.locator('#type').selectOption(newAccountType);
     await page.getByTestId('submit').click();
 
-    await expect(page).not.toHaveURL('/edit');
+    await page.waitForURL(/\/accounts\/[a-zA-Z0-9-]+\/?$/);
+
     await page.goto('/accounts');
 
     await page.getByTestId('account-row').getByText(accountName).click();
@@ -114,24 +115,25 @@ test.describe('Account editing', () => {
 
     const oldAccountBalance = await page
       .getByTestId('account-balance')
-      .evaluate((el) => el.textContent);
+      .textContent();
     await verifyAccountPage(page, accountName, oldAccountBalance, accountType);
     verifyDifferentBalances(oldAccountBalance, newAccountBalance);
 
     await page.getByTestId('edit-account').click();
 
-    await page.fill(
-      '#balance',
-      newAccountBalance
-        .replace(',', '.')
-        .replace(/ /g, '')
-        .replace('€', '')
-        .replace(String.fromCharCode(8722), String.fromCharCode(45))
-    );
+    await page
+      .locator('#balance')
+      .fill(
+        newAccountBalance
+          .replace(',', '.')
+          .replace(/ /g, '')
+          .replace('€', '')
+          .replace(String.fromCharCode(8722), String.fromCharCode(45))
+      );
 
     await page.getByTestId('submit').click();
 
-    await expect(page).not.toHaveURL('/edit');
+    await page.waitForURL(/\/accounts\/[a-zA-Z0-9-]+\/?$/);
     await page.goto('/accounts');
 
     await page.getByTestId('account-row').getByText(accountName).click();
@@ -151,7 +153,7 @@ test.describe('Account editing', () => {
 
     const oldAccountBalance = await page
       .getByTestId('account-balance')
-      .evaluate((el) => el.textContent);
+      .textContent();
     await verifyAccountPage(
       page,
       oldAccountName,
@@ -176,7 +178,7 @@ test.describe('Account editing', () => {
 
     await page.getByTestId('submit').click();
 
-    await expect(page).not.toHaveURL('/edit');
+    await page.waitForURL(/\/accounts\/[a-zA-Z0-9-]+\/?$/);
     await page.goto('/accounts');
 
     const newAccount = page

@@ -9,7 +9,7 @@ import {
   roundToTwoDecimal,
   getAllTransfers,
 } from '$utils/api-helper';
-import { test, expect, Page } from '$utils/financer-page';
+import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
 
 test.describe('Add transfer', () => {
@@ -24,7 +24,6 @@ test.describe('Add transfer', () => {
     `new dummy transaction created by test code ${Math.random()}`;
 
   const verifyAccountBalanceChange = async (
-    page: Page,
     amount: number,
     toAccountBefore: AccountDto,
     toAccountAfter: AccountDto,
@@ -40,7 +39,6 @@ test.describe('Add transfer', () => {
   };
 
   const verifyNewTransferCreated = async (
-    page: Page,
     transfersBefore: TransactionDto[],
     transfersAfter: TransactionDto[]
   ) => {
@@ -78,11 +76,11 @@ test.describe('Add transfer', () => {
     );
 
     await page.getByTestId('add-transfer').click();
-    await page.fill('#description', newTransactionName);
-    await page.fill('#date', formatDate(newTransactionDate));
-    await page.fill('#amount', newTransactionAmountStr);
-    await page.selectOption('#toAccount', targetToAccountId);
-    await page.selectOption('#fromAccount', targetFromAccountId);
+    await page.locator('#description').fill(newTransactionName);
+    await page.locator('#date').fill(formatDate(newTransactionDate));
+    await page.locator('#amount').fill(newTransactionAmountStr);
+    await page.locator('#toAccount').selectOption(targetToAccountId);
+    await page.locator('#fromAccount').selectOption(targetFromAccountId);
     await page.getByTestId('submit').click();
 
     await page.getByTestId('add-transfer').waitFor();
@@ -93,14 +91,13 @@ test.describe('Add transfer', () => {
     const transfersAfter = await getAllTransfers();
 
     await verifyAccountBalanceChange(
-      page,
       newTransactionAmount,
       toAccountBefore,
       toAccountAfter,
       fromAccountBefore,
       fromAccountAfter
     );
-    await verifyNewTransferCreated(page, transfersBefore, transfersAfter);
+    await verifyNewTransferCreated(transfersBefore, transfersAfter);
   });
 
   // eslint-disable-next-line playwright/expect-expect
@@ -134,11 +131,11 @@ test.describe('Add transfer', () => {
     const fromAccountBefore = await getAccount(targetFromAccountId);
 
     await page.getByTestId('add-transfer').click();
-    await page.fill('#description', newTransactionName);
-    await page.fill('#date', formatDate(newTransactionDate));
-    await page.fill('#amount', newTransactionAmountStr);
-    await page.selectOption('#toAccount', targetToAccountId);
-    await page.selectOption('#fromAccount', targetFromAccountId);
+    await page.locator('#description').fill(newTransactionName);
+    await page.locator('#date').fill(formatDate(newTransactionDate));
+    await page.locator('#amount').fill(newTransactionAmountStr);
+    await page.locator('#toAccount').selectOption(targetToAccountId);
+    await page.locator('#fromAccount').selectOption(targetFromAccountId);
     await page.getByTestId('submit').click();
 
     await page.getByTestId('add-transfer').waitFor();
@@ -149,14 +146,13 @@ test.describe('Add transfer', () => {
     const transfersAfter = await getAllTransfers();
 
     await verifyAccountBalanceChange(
-      page,
       newTransactionAmount,
       toAccountBefore,
       toAccountAfter,
       fromAccountBefore,
       fromAccountAfter
     );
-    await verifyNewTransferCreated(page, transfersBefore, transfersAfter);
+    await verifyNewTransferCreated(transfersBefore, transfersAfter);
   });
 
   // eslint-disable-next-line playwright/expect-expect
@@ -188,11 +184,11 @@ test.describe('Add transfer', () => {
     const fromAccountBefore = await getAccount(targetFromAccountId);
 
     await page.getByTestId('add-transfer').click();
-    await page.fill('#description', newTransactionName);
-    await page.fill('#date', formatDate(newTransactionDate));
-    await page.fill('#amount', newTransactionAmountStr);
-    await page.selectOption('#toAccount', targetToAccountId);
-    await page.selectOption('#fromAccount', targetFromAccountId);
+    await page.locator('#description').fill(newTransactionName);
+    await page.locator('#date').fill(formatDate(newTransactionDate));
+    await page.locator('#amount').fill(newTransactionAmountStr);
+    await page.locator('#toAccount').selectOption(targetToAccountId);
+    await page.locator('#fromAccount').selectOption(targetFromAccountId);
     await page.getByTestId('submit').click();
 
     await page.getByTestId('add-transfer').waitFor();
@@ -203,14 +199,13 @@ test.describe('Add transfer', () => {
     const transfersAfter = await getAllTransfers();
 
     await verifyAccountBalanceChange(
-      page,
       newTransactionAmount,
       toAccountBefore,
       toAccountAfter,
       fromAccountBefore,
       fromAccountAfter
     );
-    await verifyNewTransferCreated(page, transfersBefore, transfersAfter);
+    await verifyNewTransferCreated(transfersBefore, transfersAfter);
   });
 
   test('Check that date is correct', async ({ page }) => {
@@ -220,19 +215,17 @@ test.describe('Add transfer', () => {
     date.setMilliseconds(0);
 
     await page.getByTestId('add-transfer').click();
-    await page.fill('#description', newTransactionName);
-    await page.fill('#date', formatDate(date));
-    await page.fill('#amount', newTransactionAmountStr);
-    await page.selectOption('#toAccount', 'Saving account 1');
-    await page.selectOption('#fromAccount', 'Saving account 2');
+    await page.locator('#description').fill(newTransactionName);
+    await page.locator('#date').fill(formatDate(date));
+    await page.locator('#amount').fill(newTransactionAmountStr);
+    await page.locator('#toAccount').selectOption('Saving account 1');
+    await page.locator('#fromAccount').selectOption('Saving account 2');
     await page.getByTestId('submit').click();
 
     await page.getByText(newTransactionName).click();
     await page.getByTestId('edit-transfer-button').click();
 
-    const inputValue = await page
-      .locator('#date')
-      .evaluate((el: HTMLInputElement) => el.value);
+    const inputValue = await page.locator('#date').inputValue();
     expect(date.toISOString()).toEqual(new Date(inputValue).toISOString());
   });
 });

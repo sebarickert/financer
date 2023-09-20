@@ -71,9 +71,9 @@ test.describe('Edit expense', () => {
     await page.getByTestId(targetTransactionBefore._id).click();
 
     await page.getByTestId('edit-expense-button').click();
-    await page.fill('#description', editedTransactionName);
-    await page.fill('#amount', newAmount.toString());
-    await page.selectOption('#fromAccount', targetAccountId);
+    await page.locator('#description').fill(editedTransactionName);
+    await page.locator('#amount').fill(newAmount.toString());
+    await page.locator('#fromAccount').selectOption(targetAccountId);
     await page.getByTestId('submit').click();
 
     await page.getByTestId('add-expense').waitFor();
@@ -118,9 +118,9 @@ test.describe('Edit expense', () => {
     await page.getByTestId(targetTransactionBefore._id).click();
 
     await page.getByTestId('edit-expense-button').click();
-    await page.fill('#description', editedTransactionName);
-    await page.fill('#amount', newAmount.toString());
-    await page.selectOption('#fromAccount', targetAccountId);
+    await page.locator('#description').fill(editedTransactionName);
+    await page.locator('#amount').fill(newAmount.toString());
+    await page.locator('#fromAccount').selectOption(targetAccountId);
     await page.getByTestId('submit').click();
 
     await page.getByTestId('add-expense').waitFor();

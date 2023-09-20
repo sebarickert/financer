@@ -2,9 +2,8 @@ import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
 
 test.describe('Transaction category form', () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async () => {
     await applyFixture('accounts-only');
-    await page.goto('/profile/transaction-categories/add');
   });
 
   test('Should not allow set child category as parent', async ({ page }) => {
@@ -18,13 +17,12 @@ test.describe('Transaction category form', () => {
     // await expect(page).toHaveSelectorValue('#name', categoryName);
     await expect(page.locator('#name')).toHaveValue(categoryName);
 
-    const parentCategoryOptions = await page
+    const parentCategoryOptions = page
       .locator('#parent_category_id option')
-      .all();
-    const parentCategoryOptionTexts = await Promise.all(
-      parentCategoryOptions.map((option) => option.textContent())
-    );
-    expect(parentCategoryOptionTexts).not.toContain(categoryName);
+      .getByText(categoryName)
+      .allTextContents();
+
+    expect(parentCategoryOptions).not.toContain(categoryName);
 
     await page.evaluate(() => {
       const scopedCategoryName = 'Category for all types';
@@ -34,7 +32,7 @@ test.describe('Transaction category form', () => {
       targetElement.innerHTML = `${targetElement.innerHTML}<option value="${childCategoryId}">${scopedCategoryName}</option>`;
     });
 
-    await page.selectOption('#parent_category_id', categoryName);
+    await page.locator('#parent_category_id').selectOption(categoryName);
 
     await page.getByTestId('submit').click();
 

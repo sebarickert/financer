@@ -4,19 +4,17 @@ import { applyFixture } from '$utils/load-fixtures';
 test.describe('Edit income with category', () => {
   test.beforeEach(async ({ page }) => {
     await applyFixture('small');
-    await page.goto('/statistics/incomes');
+    await page.goto('/statistics/incomes?date=2022-03&page=1');
   });
 
   test('Edit with single category', async ({ page }) => {
-    await page.goto('/statistics/incomes?date=2022-03&page=1');
     await page.getByTestId('623de1f2c839cf72d59b0d91').click();
     await page.getByTestId('edit-income-button').click();
 
-    const selectedOption = await page
+    const selectedOption = page
       .getByTestId('transaction-categories-form_transaction-category_category')
-      .locator('option:checked')
-      .evaluate((option) => option.textContent);
-    expect(selectedOption).toContain('Category for all types');
+      .locator('option:checked');
+    await expect(selectedOption).toHaveText('Category for all types');
 
     await page
       .getByTestId('transaction-categories-form_transaction-category_category')
@@ -59,7 +57,6 @@ test.describe('Edit income with category', () => {
   });
 
   test('Delete one categories with multiple categories', async ({ page }) => {
-    await page.goto('/statistics/incomes?date=2022-03&page=1');
     await page.getByTestId('623de213c839cf72d59b0da6').click();
     await page.getByTestId('edit-income-button').click();
 
@@ -72,11 +69,11 @@ test.describe('Edit income with category', () => {
       'Category for all types'
     );
 
-    const amountInputs = await page
-      .getByTestId('transaction-categories-form_transaction-category_amount')
-      .all();
-    await expect(amountInputs[0]).toHaveValue('222');
-    await amountInputs[0].fill('100');
+    const amountInputs = page.getByTestId(
+      'transaction-categories-form_transaction-category_amount'
+    );
+    await expect(amountInputs.first()).toHaveValue('222');
+    await amountInputs.first().fill('100');
 
     const descriptionInputs = page.getByTestId(
       'transaction-categories-form_transaction-category_description'
@@ -112,12 +109,11 @@ test.describe('Edit income with category', () => {
     );
     await expect(categoryRowsAfterEdit).toHaveCount(1);
 
-    const selectedOptionsAFter = await page
+    const selectedOptionsAFter = page
       .getByTestId('transaction-categories-form_transaction-category_category')
-      .locator('option:checked')
-      .evaluateAll((options) => options.map((option) => option.textContent));
+      .locator('option:checked');
 
-    expect(selectedOptionsAFter.at(0)).toContain('Income category');
+    await expect(selectedOptionsAFter.first()).toHaveText('Income category');
 
     const amountInputAfterEdit = page.getByTestId(
       'transaction-categories-form_transaction-category_amount'
@@ -131,7 +127,6 @@ test.describe('Edit income with category', () => {
   });
 
   test('Delete all categories with multiple categories', async ({ page }) => {
-    await page.goto('/statistics/incomes?date=2022-03&page=1');
     await page.getByTestId('623de213c839cf72d59b0da6').click();
     await page.getByTestId('edit-income-button').click();
 

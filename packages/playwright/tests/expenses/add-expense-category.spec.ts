@@ -46,7 +46,7 @@ test.describe('Add expense with category', () => {
 
     await page
       .getByTestId('transaction-categories-form_transaction-category_category')
-      .selectOption({ label: 'non-existing-category' });
+      .selectOption('non-existing-category');
     await page.getByTestId('submit').click();
 
     await expect(page.getByTestId('form-errors')).toContainText(

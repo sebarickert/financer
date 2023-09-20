@@ -85,10 +85,10 @@ test.describe('Edit transfer', () => {
     await page.getByTestId(targetTransactionId).click();
 
     await page.getByTestId('edit-transfer-button').click();
-    await page.fill('#description', editedTransactionName);
-    await page.fill('#amount', newAmount.toString());
-    await page.selectOption('#toAccount', targetToAccountId);
-    await page.selectOption('#fromAccount', targetFromAccountId);
+    await page.locator('#description').fill(editedTransactionName);
+    await page.locator('#amount').fill(newAmount.toString());
+    await page.locator('#toAccount').selectOption(targetToAccountId);
+    await page.locator('#fromAccount').selectOption(targetFromAccountId);
     await page.getByTestId('submit').click();
 
     await page.getByTestId('add-transfer').waitFor();
@@ -142,10 +142,10 @@ test.describe('Edit transfer', () => {
     await page.getByTestId(targetTransactionId).click();
 
     await page.getByTestId('edit-transfer-button').click();
-    await page.fill('#description', editedTransactionName);
-    await page.fill('#amount', newAmount.toString());
-    await page.selectOption('#toAccount', targetToAccountId);
-    await page.selectOption('#fromAccount', targetFromAccountId);
+    await page.locator('#description').fill(editedTransactionName);
+    await page.locator('#amount').fill(newAmount.toString());
+    await page.locator('#toAccount').selectOption(targetToAccountId);
+    await page.locator('#fromAccount').selectOption(targetFromAccountId);
     await page.getByTestId('submit').click();
 
     await page.getByTestId('add-transfer').waitFor();

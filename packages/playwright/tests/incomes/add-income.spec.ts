@@ -9,7 +9,7 @@ import {
   roundToTwoDecimal,
   getAllIncomes,
 } from '$utils/api-helper';
-import { test, expect, Page } from '$utils/financer-page';
+import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
 
 test.describe('Add income', () => {
@@ -24,7 +24,6 @@ test.describe('Add income', () => {
     `new dummy transaction created by test code ${Math.random()}`;
 
   const verifyAccountBalanceChange = async (
-    page: Page,
     amount: number,
     accountBefore: AccountDto,
     accountAfter: AccountDto
@@ -35,7 +34,6 @@ test.describe('Add income', () => {
   };
 
   const verifyNewIncomeCreated = async (
-    page: Page,
     incomesBefore: TransactionDto[],
     incomesAfter: TransactionDto[]
   ) => {
@@ -62,10 +60,10 @@ test.describe('Add income', () => {
     );
 
     await page.getByTestId('add-income').click();
-    await page.fill('#description', newTransactionName);
-    await page.fill('#date', formatDate(newTransactionDate));
-    await page.fill('#amount', newTransactionAmountStr);
-    await page.selectOption('#toAccount', targetAccountId);
+    await page.locator('#description').fill(newTransactionName);
+    await page.locator('#date').fill(formatDate(newTransactionDate));
+    await page.locator('#amount').fill(newTransactionAmountStr);
+    await page.locator('#toAccount').selectOption(targetAccountId);
     await page.getByTestId('submit').click();
 
     await page.getByTestId('add-income').waitFor();
@@ -75,12 +73,11 @@ test.describe('Add income', () => {
     const incomesAfter = await getAllIncomes();
 
     await verifyAccountBalanceChange(
-      page,
       newTransactionAmount,
       accountBefore,
       accountAfter
     );
-    await verifyNewIncomeCreated(page, incomesBefore, incomesAfter);
+    await verifyNewIncomeCreated(incomesBefore, incomesAfter);
   });
 
   // eslint-disable-next-line playwright/expect-expect
@@ -100,10 +97,10 @@ test.describe('Add income', () => {
     const accountBefore = await getAccount(targetAccountId);
 
     await page.getByTestId('add-income').click();
-    await page.fill('#description', newTransactionName);
-    await page.fill('#date', formatDate(newTransactionDate));
-    await page.fill('#amount', newTransactionAmountStr);
-    await page.selectOption('#toAccount', targetAccountId);
+    await page.locator('#description').fill(newTransactionName);
+    await page.locator('#date').fill(formatDate(newTransactionDate));
+    await page.locator('#amount').fill(newTransactionAmountStr);
+    await page.locator('#toAccount').selectOption(targetAccountId);
     await page.getByTestId('submit').click();
 
     await page.getByTestId('add-income').waitFor();
@@ -113,12 +110,11 @@ test.describe('Add income', () => {
     const incomesAfter = await getAllIncomes();
 
     await verifyAccountBalanceChange(
-      page,
       newTransactionAmount,
       accountBefore,
       accountAfter
     );
-    await verifyNewIncomeCreated(page, incomesBefore, incomesAfter);
+    await verifyNewIncomeCreated(incomesBefore, incomesAfter);
   });
 
   // eslint-disable-next-line playwright/expect-expect
@@ -139,10 +135,10 @@ test.describe('Add income', () => {
     const accountBefore = await getAccount(targetAccountId);
 
     await page.getByTestId('add-income').click();
-    await page.fill('#description', newTransactionName);
-    await page.fill('#date', formatDate(newTransactionDate));
-    await page.fill('#amount', newTransactionAmountStr);
-    await page.selectOption('#toAccount', targetAccountId);
+    await page.locator('#description').fill(newTransactionName);
+    await page.locator('#date').fill(formatDate(newTransactionDate));
+    await page.locator('#amount').fill(newTransactionAmountStr);
+    await page.locator('#toAccount').selectOption(targetAccountId);
     await page.getByTestId('submit').click();
 
     await page.getByTestId('add-income').waitFor();
@@ -152,12 +148,11 @@ test.describe('Add income', () => {
     const incomesAfter = await getAllIncomes();
 
     await verifyAccountBalanceChange(
-      page,
       newTransactionAmount,
       accountBefore,
       accountAfter
     );
-    await verifyNewIncomeCreated(page, incomesBefore, incomesAfter);
+    await verifyNewIncomeCreated(incomesBefore, incomesAfter);
   });
 
   test('Check that date is correct', async ({ page }) => {
@@ -167,17 +162,15 @@ test.describe('Add income', () => {
     date.setMilliseconds(0);
 
     await page.getByTestId('add-income').click();
-    await page.fill('#description', newTransactionName);
-    await page.fill('#date', formatDate(date));
-    await page.fill('#amount', newTransactionAmountStr);
+    await page.locator('#description').fill(newTransactionName);
+    await page.locator('#date').fill(formatDate(date));
+    await page.locator('#amount').fill(newTransactionAmountStr);
     await page.getByTestId('submit').click();
 
     await page.getByText(newTransactionName).click();
     await page.getByTestId('edit-income-button').click();
 
-    const inputValue = await page
-      .locator('#date')
-      .evaluate((el: HTMLInputElement) => el.value);
+    const inputValue = await page.locator('#date').inputValue();
     expect(date.toISOString()).toEqual(new Date(inputValue).toISOString());
   });
 });
