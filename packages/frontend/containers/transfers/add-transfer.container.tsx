@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 import {
@@ -9,6 +8,7 @@ import {
 import { DataHandler } from '$blocks/data-handler/data-handler';
 import { useUserDefaultTransferSourceAccount } from '$hooks/profile/user-preference/useUserDefaultTransferSourceAccount';
 import { useUserDefaultTransferTargetAccount } from '$hooks/profile/user-preference/useUserDefaultTransferTargetAccount';
+import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { AddTransfer } from '$pages/transfers/add-transfer';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
@@ -19,7 +19,7 @@ interface AddTransferContainerProps {
 export const AddTransferContainer = ({
   templateId,
 }: AddTransferContainerProps) => {
-  const { push } = useRouter();
+  const { push } = useViewTransitionRouter();
   const [errors, setErrors] = useState<string[]>([]);
   const [addTransfer, { isLoading: isCreating }] = useTransfersCreateMutation();
   const {

@@ -1,6 +1,4 @@
 import Image from 'next/image';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -8,6 +6,8 @@ import { useEffect, useState } from 'react';
 import logo from '$assets/logo.svg';
 import { Button } from '$elements/button/button';
 import { Heading } from '$elements/heading/heading';
+import { LinkViewTransition } from '$elements/link/link-view-transition';
+import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { Container } from '$layouts/container/container';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
@@ -20,7 +20,7 @@ export const ErrorPage = ({
   resetErrorBoundary,
   errorPageType,
 }: ErrorPageProps) => {
-  const { pathname } = useRouter();
+  const { pathname } = useViewTransitionRouter();
   const [errorPathname] = useState(pathname);
 
   useEffect(() => {
@@ -95,9 +95,9 @@ export const ErrorPage = ({
       <div className="flex items-center gap-2">
         <Button onClick={() => resetErrorBoundary()}>Fix error</Button>
         <span> or </span>
-        <Link href={'/'} className="font-medium underline ">
+        <LinkViewTransition href={'/'} className="font-medium underline ">
           return to homepage
-        </Link>
+        </LinkViewTransition>
       </div>
     </>
   );

@@ -126,6 +126,7 @@ export const Income = ({
           <Button
             link={`/statistics/incomes/${income._id}/edit`}
             testId="edit-income-button"
+            transition="open-from-right"
           >
             Edit
           </Button>

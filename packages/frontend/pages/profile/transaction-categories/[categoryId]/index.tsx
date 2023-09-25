@@ -1,11 +1,10 @@
-import { useRouter } from 'next/router';
-
 import { CategoryContainer } from '$container/categories/category.container';
+import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 
 const CategoryPage = () => {
   const {
     query: { categoryId },
-  } = useRouter();
+  } = useViewTransitionRouter();
 
   return <CategoryContainer id={categoryId as string} />;
 };

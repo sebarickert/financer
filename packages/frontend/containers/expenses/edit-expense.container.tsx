@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 import {
@@ -7,6 +6,7 @@ import {
   useExpensesUpdateMutation,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
+import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { EditExpense } from '$pages/expenses/edit-expense';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
@@ -15,7 +15,7 @@ interface EditExpenseContainerProps {
 }
 
 export const EditExpenseContainer = ({ id }: EditExpenseContainerProps) => {
-  const { push } = useRouter();
+  const { push } = useViewTransitionRouter();
   const [errors, setErrors] = useState<string[]>([]);
 
   const expenseData = useExpensesFindOneQuery({ id });

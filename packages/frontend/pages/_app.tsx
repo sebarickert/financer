@@ -1,5 +1,4 @@
 import type { AppProps } from 'next/app';
-import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { Provider } from 'react-redux';
 
@@ -8,6 +7,7 @@ import { ErrorBoundaryHandler } from '$blocks/error-boundary/error-boundary';
 import { Loader } from '$elements/loader/loader';
 import { LoaderSuspense } from '$elements/loader/loader-suspense';
 import { Notification } from '$elements/notification/notification';
+import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { Layout } from '$layouts/layout/layout';
 import { Login } from '$pages/login/login';
 import { ScrollToTop } from '$renderers/scroll-to-top/scroll-to-top';
@@ -22,7 +22,7 @@ const PUBLIC_ROUTES = ['/privacy-policy', '/issues-with-login'];
 const App = ({ Component, pageProps }: AppProps) => {
   const { data: authenticationStatus, isLoading } =
     useAuthGetAuthenticationStatusQuery();
-  const { push, pathname } = useRouter();
+  const { push, pathname } = useViewTransitionRouter();
 
   const [isOnboardingVisible, setOnboardingVisible] = useState(false);
 

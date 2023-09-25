@@ -19,5 +19,10 @@ module.exports = {
       },
     },
   },
-  plugins: [require('@tailwindcss/forms'), require('tailwindcss-safe-area'), require('@tailwindcss/typography')],
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('tailwindcss-safe-area'),
+    require('@tailwindcss/typography'),
+    require("tailwindcss-view-transitions")
+  ],
 };

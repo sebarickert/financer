@@ -1,11 +1,10 @@
-import { useRouter } from 'next/router';
-
 import { IncomeListingContainer } from '$container/incomes/income-listing.container';
+import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 
 const IncomesPage = () => {
   const {
     query: { date, page },
-  } = useRouter();
+  } = useViewTransitionRouter();
 
   return (
     <IncomeListingContainer

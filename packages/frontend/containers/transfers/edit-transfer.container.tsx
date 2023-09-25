@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 import {
@@ -7,6 +6,7 @@ import {
   useTransfersUpdateMutation,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
+import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { EditTransfer } from '$pages/transfers/edit-transfer';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
@@ -15,7 +15,7 @@ interface EditTransferContainerProps {
 }
 
 export const EditTransferContainer = ({ id }: EditTransferContainerProps) => {
-  const { push } = useRouter();
+  const { push } = useViewTransitionRouter();
   const [errors, setErrors] = useState<string[]>([]);
 
   const transferData = useTransfersFindOneQuery({ id });

@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import { useCallback } from 'react';
 
 import {
@@ -8,6 +7,7 @@ import {
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
 import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
+import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { Expense } from '$pages/expenses/expense';
 
 interface ExpenseContainerProps {
@@ -15,7 +15,7 @@ interface ExpenseContainerProps {
 }
 
 export const ExpenseContainer = ({ id }: ExpenseContainerProps) => {
-  const { push } = useRouter();
+  const { push } = useViewTransitionRouter();
   const expenseData = useExpensesFindOneQuery({ id });
   const { data: expense } = expenseData;
 

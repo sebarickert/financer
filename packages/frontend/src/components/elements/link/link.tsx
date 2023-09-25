@@ -1,7 +1,8 @@
 import clsx from 'clsx';
-import NextLink from 'next/link';
 
 import { isExternalLink } from '../button/button';
+
+import { LinkViewTransition } from '$elements/link/link-view-transition';
 
 interface LinkProps {
   className?: string;
@@ -37,8 +38,8 @@ export const Link = ({
   }
 
   return (
-    <NextLink href={url} className={linkClasses} data-testid={testId}>
+    <LinkViewTransition href={url} className={linkClasses} data-testid={testId}>
       {linkContent}
-    </NextLink>
+    </LinkViewTransition>
   );
 };

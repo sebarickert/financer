@@ -1,11 +1,10 @@
-import { useRouter } from 'next/router';
-
 import { EditTransferContainer } from '$container/transfers/edit-transfer.container';
+import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 
 const EditTransferPage = () => {
   const {
     query: { transferId },
-  } = useRouter();
+  } = useViewTransitionRouter();
 
   return <EditTransferContainer id={transferId as string} />;
 };

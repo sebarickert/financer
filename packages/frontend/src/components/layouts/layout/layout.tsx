@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
 import { DesktopNavigation } from '../../blocks/desktop-navigation/desktop-navigation';
@@ -9,6 +8,8 @@ import { LoaderSuspense } from '../../elements/loader/loader-suspense';
 import { Container } from '../container/container';
 import { DesktopHeader } from '../desktop-header/desktop-header';
 import { MobileHeader } from '../mobile-header/mobile-header';
+
+import { LinkViewTransition } from '$elements/link/link-view-transition';
 
 type ChildrenWithErrorBoundaryProps = {
   children: React.ReactNode;
@@ -66,10 +67,13 @@ export const Layout = ({ children }: LayoutProps): JSX.Element => {
     return (
       <div className="bg-white">
         <Container className="grid grid-cols-[300px,1fr] min-h-screen px-0">
-          <aside className="after:bg-gray after:ml-[-100vw] after:pr-[100vw] after:absolute after:top-0 after:bottom-0 after:right-0 relative border-r border-gray-dark">
+          <aside className="after:bg-gray after:ml-[-100vw] after:pr-[100vw] after:absolute after:top-0 after:bottom-0 after:right-0 relative border-r border-gray-dark vt-name-[desktop-navigation]">
             <div className="sticky top-0 z-10 min-h-screen pt-12 pb-12 pl-8 pr-4 bottom-12">
               <header>
-                <Link href="/" className="inline-flex items-center gap-3 mb-8">
+                <LinkViewTransition
+                  href="/"
+                  className="inline-flex items-center gap-3 mb-8"
+                >
                   <Image
                     src="/logo.svg"
                     alt="Financer logo"
@@ -81,7 +85,7 @@ export const Layout = ({ children }: LayoutProps): JSX.Element => {
                   <h2 className="text-xl font-extrabold tracking-tighter text-black uppercase">
                     Financer
                   </h2>
-                </Link>
+                </LinkViewTransition>
                 <DesktopNavigation />
               </header>
             </div>

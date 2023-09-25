@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 import {
@@ -8,6 +7,7 @@ import {
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
 import { useUserDefaultExpenseAccount } from '$hooks/profile/user-preference/useUserDefaultExpenseAccount';
+import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { AddExpense } from '$pages/expenses/add-expense';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
@@ -18,7 +18,7 @@ interface AddExpenseContainerProps {
 export const AddExpenseContainer = ({
   templateId,
 }: AddExpenseContainerProps) => {
-  const { push } = useRouter();
+  const { push } = useViewTransitionRouter();
   const [errors, setErrors] = useState<string[]>([]);
   const [addExpense, { isLoading: isCreating }] = useExpensesCreateMutation();
   const { data: defaultExpenseAccount, isLoading: isLoadingDefaultAccount } =

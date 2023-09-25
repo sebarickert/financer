@@ -1,11 +1,10 @@
-import { useRouter } from 'next/router';
-
 import { EditExpenseContainer } from '$container/expenses/edit-expense.container';
+import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 
 const EditExpensePage = () => {
   const {
     query: { expenseId },
-  } = useRouter();
+  } = useViewTransitionRouter();
 
   return <EditExpenseContainer id={expenseId as string} />;
 };

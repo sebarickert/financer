@@ -1,13 +1,13 @@
-import { useRouter } from 'next/router';
 import { useState, useCallback } from 'react';
 
 import { useAccountsCreateMutation } from '$api/generated/financerApi';
+import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { AccountFormFields } from '$pages/accounts/account-form';
 import { AddAccount } from '$pages/accounts/add-account';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 export const AddAccountContainer = () => {
-  const { push } = useRouter();
+  const { push } = useViewTransitionRouter();
   const [addAccount, { isLoading }] = useAccountsCreateMutation();
   const [errors, setErrors] = useState<string[]>([]);
 

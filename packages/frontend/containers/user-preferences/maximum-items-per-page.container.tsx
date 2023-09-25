@@ -1,16 +1,15 @@
-import { useRouter } from 'next/router';
-
 import {
   useUserTransactionListChunkSize,
   useUpdateUserTransactionListChunkSize,
 } from '$hooks/profile/user-preference/useUserTransactionListChunkSize';
+import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import {
   UserTransactionListChunkSize,
   UserTransactionListChunkSizeFormFields,
 } from '$pages/profile/user-preferences/preferences/user-transaction-list-chunk-size';
 
 export const MaximumItemsPerPageContainer = () => {
-  const { push } = useRouter();
+  const { push } = useViewTransitionRouter();
   const { data: defaultChunkSize, isLoading: isLoadingDefault } =
     useUserTransactionListChunkSize();
 

@@ -1,4 +1,4 @@
-import { useRouter } from 'next/router';
+import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 
 type UseIsActiveLinkProps = {
   link: string;
@@ -11,7 +11,7 @@ export const useIsActiveLink = ({
   isExact = false,
   disallowedPathEndings = [],
 }: UseIsActiveLinkProps) => {
-  const { pathname } = useRouter();
+  const { pathname } = useViewTransitionRouter();
   const match = isExact ? pathname === link : pathname.startsWith(link);
 
   return (

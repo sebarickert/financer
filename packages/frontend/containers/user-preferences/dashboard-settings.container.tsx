@@ -1,16 +1,15 @@
-import { useRouter } from 'next/router';
-
 import {
   useUserDashboardSettings,
   useUpdateUserDashboardSettings,
 } from '$hooks/profile/user-preference/useDashboardSettings';
+import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import {
   UserDashboardSettings,
   UserDashboardSettingsFormFields,
 } from '$pages/profile/user-preferences/preferences/user-dashboard-settings';
 
 export const DashboardSettingsContainer = () => {
-  const { push } = useRouter();
+  const { push } = useViewTransitionRouter();
   const { data, isLoading: isLoadingDefault } = useUserDashboardSettings();
   const [setDashboardSettings, { isLoading: isUpdating }] =
     useUpdateUserDashboardSettings();

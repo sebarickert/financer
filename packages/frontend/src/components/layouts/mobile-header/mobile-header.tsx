@@ -1,9 +1,10 @@
 import { clsx } from 'clsx';
-import Link from 'next/link';
 
 import { usePageInfoContext } from '../../../context/pageInfoContext';
-import { Heading } from '../../elements/heading/heading';
-import { Icon, IconName } from '../../elements/icon/icon';
+
+import { Heading } from '$elements/heading/heading';
+import { Icon, IconName } from '$elements/icon/icon';
+import { LinkViewTransition } from '$elements/link/link-view-transition';
 
 export const MobileHeader = (): JSX.Element => {
   const [{ title, backLink, headerAction, toolbarColor }] =
@@ -16,7 +17,7 @@ export const MobileHeader = (): JSX.Element => {
   return (
     <div
       className={clsx(
-        'text-center fixed top-0 left-0 right-0 z-50 px-4 grid items-center h-16',
+        'text-center fixed top-0 left-0 right-0 z-50 px-4 grid items-center h-16 vt-name-[mobile-header]',
         {
           ['grid-cols-1']: !hasBackLinkAndOrAction || !hasActionOnly,
           ['grid-cols-[44px,1fr,44px]']: hasBackLinkAndOrAction,
@@ -27,14 +28,15 @@ export const MobileHeader = (): JSX.Element => {
       )}
     >
       {backLink && (
-        <Link
+        <LinkViewTransition
           href={backLink}
           className="inline-flex items-center justify-center border rounded-full h-11 w-11 bg-gray border-gray-dark"
           data-testid="header-back-link"
+          transition="close-to-right"
         >
           <span className="sr-only">Go back</span>
           <Icon type={IconName.chevronLeft} />
-        </Link>
+        </LinkViewTransition>
       )}
       <Heading
         variant="h1"

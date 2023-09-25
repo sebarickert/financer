@@ -1,6 +1,5 @@
-import Link from 'next/link';
-
 import { AccountTypeEnum } from '$api/generated/financerApi';
+import { LinkViewTransition } from '$elements/link/link-view-transition';
 
 export interface AccountsListRowProps {
   accountType: string;
@@ -31,10 +30,10 @@ export const AccountsListRow = ({
           <dt className="sr-only">Account name</dt>
           <dd className="text-lg font-bold tracking-tight">
             {link ? (
-              <Link href={link} className="focus:outline-none">
+              <LinkViewTransition href={link} className="focus:outline-none">
                 <span className="absolute inset-0" aria-hidden="true" />
                 {label}
-              </Link>
+              </LinkViewTransition>
             ) : (
               label
             )}

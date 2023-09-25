@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 import {
@@ -7,6 +6,7 @@ import {
   useIncomesUpdateMutation,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
+import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { EditIncome } from '$pages/incomes/edit-income';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
@@ -15,7 +15,7 @@ interface EditIncomeContainerProps {
 }
 
 export const EditIncomeContainer = ({ id }: EditIncomeContainerProps) => {
-  const { push } = useRouter();
+  const { push } = useViewTransitionRouter();
   const [errors, setErrors] = useState<string[]>([]);
 
   const incomeData = useIncomesFindOneQuery({ id });
