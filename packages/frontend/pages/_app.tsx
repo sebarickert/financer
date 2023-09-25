@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 
 import { useAuthGetAuthenticationStatusQuery } from '$api/generated/financerApi';
 import { ErrorBoundaryHandler } from '$blocks/error-boundary/error-boundary';
+import { TransitionProvider } from '$container/transition.provider';
 import { Loader } from '$elements/loader/loader';
 import { LoaderSuspense } from '$elements/loader/loader-suspense';
 import { Notification } from '$elements/notification/notification';
@@ -75,13 +76,15 @@ const AppWrapper = (props: AppProps) => {
   return (
     <Provider store={store}>
       <ErrorBoundaryHandler errorPage="full-app">
-        <LoaderSuspense>
-          <PageInfoProvider>
-            <SEO />
-            <ScrollToTop />
-            <App {...props} />
-          </PageInfoProvider>
-        </LoaderSuspense>
+        <TransitionProvider>
+          <LoaderSuspense>
+            <PageInfoProvider>
+              <SEO />
+              <ScrollToTop />
+              <App {...props} />
+            </PageInfoProvider>
+          </LoaderSuspense>
+        </TransitionProvider>
       </ErrorBoundaryHandler>
     </Provider>
   );
