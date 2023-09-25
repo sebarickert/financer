@@ -1,5 +1,4 @@
 import { TransactionTypeMapping } from '@local/types';
-import { useRouter } from 'next/router';
 import { useMemo, useState } from 'react';
 
 import {
@@ -15,6 +14,7 @@ import { Icon, IconName } from '$elements/icon/icon';
 import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { Radio } from '$elements/radio/radio';
 import { RadioGroup } from '$elements/radio/radio.group';
+import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 
 interface TransactionTemplateSwitcherProps {
   selectedTemplate?: string;
@@ -36,7 +36,7 @@ export const TransactionTemplateSwitcher = ({
       ),
     [templateType, transactionTemplates]
   );
-  const { push } = useRouter();
+  const { push } = useViewTransitionRouter();
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = async (event: any) => {

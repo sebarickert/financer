@@ -1,7 +1,7 @@
-import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 import { useTransactionTemplatesCreateMutation } from '$api/generated/financerApi';
+import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import {
   AddTemplate,
   CreateTransactionTemplateDtoWithCategory,
@@ -9,7 +9,7 @@ import {
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 export const AddTemplateContainer = () => {
-  const { push } = useRouter();
+  const { push } = useViewTransitionRouter();
   const [errors, setErrors] = useState<string[]>([]);
   const [addTransactionTemplate, { isLoading: isCreating }] =
     useTransactionTemplatesCreateMutation();

@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 import {
@@ -7,6 +6,7 @@ import {
   useTransactionTemplatesFindOneQuery,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
+import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import {
   EditTemplate,
   UpdateTransactionTemplateDtoWithCategory,
@@ -18,7 +18,7 @@ interface EditTemplateContainerProps {
 }
 
 export const EditTemplateContainer = ({ id }: EditTemplateContainerProps) => {
-  const { push } = useRouter();
+  const { push } = useViewTransitionRouter();
 
   const [errors, setErrors] = useState<string[]>([]);
   const [editTransactionTemplate, { isLoading: isSaving }] =

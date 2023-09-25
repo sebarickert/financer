@@ -4,12 +4,15 @@ import { ButtonExternal } from './button.external';
 import { ButtonInternal } from './button.internal';
 import { ButtonPlain } from './button.plain';
 
+import { ViewTransition } from '$hooks/useViewTransitionRouter';
+
 export type ButtonAccentColor = 'blue' | 'plain' | 'black';
 interface ButtonProps {
   accentColor?: ButtonAccentColor;
   children: React.ReactNode;
   className?: string;
   link?: string;
+  transition?: ViewTransition;
   onClick?(): void;
   type?: 'button' | 'submit' | 'reset' | undefined;
   testId?: string;
@@ -29,6 +32,7 @@ export const Button = ({
   children,
   className = '',
   link,
+  transition,
   onClick = () => {},
   type = 'button',
   testId,
@@ -65,6 +69,7 @@ export const Button = ({
         className={buttonClasses}
         onClick={onClick}
         testId={testId}
+        transition={transition}
       >
         {children}
       </ButtonInternal>

@@ -1,9 +1,10 @@
 import clsx from 'clsx';
-import Link from 'next/link';
 
 import { useIsActiveLink } from '../../../hooks/useIsActiveLink';
 import { isExternalLink } from '../../elements/button/button';
 import { IconName, Icon } from '../../elements/icon/icon';
+
+import { LinkViewTransition } from '$elements/link/link-view-transition';
 
 interface IDesktopNavigationItemProps {
   link: string;
@@ -52,14 +53,14 @@ export const DesktopNavigationItem = ({
 
   return (
     <li>
-      <Link
+      <LinkViewTransition
         href={link}
         className={linkClasses}
         onClick={onClick}
         aria-label={ariaLabel}
       >
         {linkContent}
-      </Link>
+      </LinkViewTransition>
     </li>
   );
 };

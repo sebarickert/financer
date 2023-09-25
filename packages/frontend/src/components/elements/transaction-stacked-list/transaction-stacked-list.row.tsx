@@ -1,7 +1,8 @@
 import clsx from 'clsx';
-import Link from 'next/link';
 
 import { IconName, Icon } from '../icon/icon';
+
+import { LinkViewTransition } from '$elements/link/link-view-transition';
 
 export enum TransactionType {
   INCOME = 'income',
@@ -38,9 +39,10 @@ export const TransactionStackedListRow = ({
 
   return (
     <li data-testid={id} className="group">
-      <Link
+      <LinkViewTransition
         href={link}
         className={`relative flex gap-4 items-center focus-within:bg-gray-dark hover:bg-gray-dark overflow-hidden pl-4 lg:rounded-md`}
+        transition="open-from-right"
       >
         <span className="inline-flex items-center justify-center border rounded-full bg-gray h-11 w-11 border-gray-dark">
           <Icon
@@ -85,7 +87,7 @@ export const TransactionStackedListRow = ({
             className="flex-shrink-0 pointer-events-none stroke-gray-darkest"
           />
         </span>
-      </Link>
+      </LinkViewTransition>
     </li>
   );
 };

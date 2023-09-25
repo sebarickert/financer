@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 import {
@@ -8,6 +7,7 @@ import {
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
 import { useUserDefaultIncomeAccount } from '$hooks/profile/user-preference/useUserDefaultIncomeAccount';
+import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { AddIncome } from '$pages/incomes/add-income';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
@@ -16,7 +16,7 @@ interface AddIncomeContainerProps {
 }
 
 export const AddIncomeContainer = ({ templateId }: AddIncomeContainerProps) => {
-  const { push } = useRouter();
+  const { push } = useViewTransitionRouter();
   const [errors, setErrors] = useState<string[]>([]);
   const [addIncome, { isLoading: isCreating }] = useIncomesCreateMutation();
   const { data: defaultIncomeAccount, isLoading: isLoadingDefaultAccount } =

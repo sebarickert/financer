@@ -1,11 +1,10 @@
-import { useRouter } from 'next/router';
-
 import { TransferListingContainer } from '$container/transfers/transfer-listing.container';
+import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 
 const TransfersPage = () => {
   const {
     query: { date, page },
-  } = useRouter();
+  } = useViewTransitionRouter();
 
   return (
     <TransferListingContainer

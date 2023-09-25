@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 import {
@@ -7,6 +6,7 @@ import {
   useTransactionCategoriesUpdateMutation,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
+import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { EditCategory } from '$pages/profile/categories/edit-category';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
@@ -15,7 +15,7 @@ interface EditCategoryContainerProps {
 }
 
 export const EditCategoryContainer = ({ id }: EditCategoryContainerProps) => {
-  const { push } = useRouter();
+  const { push } = useViewTransitionRouter();
   const [errors, setErrors] = useState<string[]>([]);
 
   const categoryData = useTransactionCategoriesFindOneQuery({ id });

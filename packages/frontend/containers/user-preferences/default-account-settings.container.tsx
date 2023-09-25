@@ -1,5 +1,3 @@
-import { useRouter } from 'next/router';
-
 import { useAccountsFindAllByUserQuery } from '$api/generated/financerApi';
 import {
   useUserDefaultExpenseAccount,
@@ -17,13 +15,14 @@ import {
   useUserDefaultTransferTargetAccount,
   useUpdateUserDefaultTransferTargetAccount,
 } from '$hooks/profile/user-preference/useUserDefaultTransferTargetAccount';
+import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import {
   UserDefaultAccountSettings,
   UserDefaultAccountSettingsFormFields,
 } from '$pages/profile/user-preferences/preferences/user-default-account-settings';
 
 export const DefaultAccountSettingsContainer = () => {
-  const { push } = useRouter();
+  const { push } = useViewTransitionRouter();
   const { data: accounts, isLoading: isLoadingAccount } =
     useAccountsFindAllByUserQuery({});
 

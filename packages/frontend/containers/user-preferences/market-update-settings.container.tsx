@@ -1,17 +1,16 @@
-import { useRouter } from 'next/router';
-
 import {
   useUserDefaultMarketUpdateSettings,
   useUpdateUserDefaultMarketUpdateSettings,
 } from '$hooks/profile/user-preference/useDefaultMarketUpdateSettings';
 import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
+import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import {
   UserDefaultMarketUpdateSettings,
   UserDefaultMarketUpdateSettingsFormFields,
 } from '$pages/profile/user-preferences/preferences/user-default-market-update-settings';
 
 export const MarketUpdateSettingsContainer = () => {
-  const { push } = useRouter();
+  const { push } = useViewTransitionRouter();
   const { data, isLoading: isLoadingDefault } =
     useUserDefaultMarketUpdateSettings();
   const [setDefaultMarketUpdateSettings, { isLoading: isUpdating }] =

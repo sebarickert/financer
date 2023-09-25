@@ -1,8 +1,9 @@
 import clsx from 'clsx';
-import Link from 'next/link';
 
 import { isExternalLink } from '../button/button';
 import { IconName, Icon } from '../icon/icon';
+
+import { LinkViewTransition } from '$elements/link/link-view-transition';
 
 interface LinkListLinkProps {
   icon?: IconName;
@@ -60,14 +61,15 @@ export const LinkListLink = ({
           {linkContent}
         </a>
       ) : (
-        <Link
+        <LinkViewTransition
           href={link}
           className={linkClasses}
           data-testid={testId}
           data-entity-title={entityTitle ?? undefined}
+          transition="open-from-right"
         >
           {linkContent}
-        </Link>
+        </LinkViewTransition>
       )}
     </>
   );

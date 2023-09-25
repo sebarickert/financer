@@ -1,15 +1,15 @@
-import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 import {
   CreateTransactionCategoryDto,
   useTransactionCategoriesCreateMutation,
 } from '$api/generated/financerApi';
+import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { AddCategory } from '$pages/profile/categories/add-category';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 export const AddCategoryContainer = () => {
-  const { push } = useRouter();
+  const { push } = useViewTransitionRouter();
   const [errors, setErrors] = useState<string[]>([]);
   const [addTransactionCategory, { isLoading: isCreating }] =
     useTransactionCategoriesCreateMutation();

@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import { useState, useCallback } from 'react';
 
 import {
@@ -6,6 +5,7 @@ import {
   useAccountsFindOneByIdQuery,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
+import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { AccountFormFields } from '$pages/accounts/account-form';
 import { EditAccount } from '$pages/accounts/edit-account';
 
@@ -14,7 +14,7 @@ interface EditAccountContainerProps {
 }
 
 export const EditAccountContainer = ({ id }: EditAccountContainerProps) => {
-  const { push } = useRouter();
+  const { push } = useViewTransitionRouter();
   const [editAccount, { isLoading }] = useAccountsUpdateMutation();
 
   const [errors, setErrors] = useState<string[]>([]);

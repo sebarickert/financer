@@ -126,6 +126,7 @@ export const Expense = ({
           <Button
             link={`/statistics/expenses/${expense._id}/edit`}
             testId="edit-expense-button"
+            transition="open-from-right"
           >
             Edit
           </Button>

@@ -1,11 +1,10 @@
-import { useRouter } from 'next/router';
-
 import { EditTemplateContainer } from '$container/templates/edit-template.container';
+import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 
 const EditTemplatePage = () => {
   const {
     query: { templateId },
-  } = useRouter();
+  } = useViewTransitionRouter();
 
   return <EditTemplateContainer id={templateId as string} />;
 };

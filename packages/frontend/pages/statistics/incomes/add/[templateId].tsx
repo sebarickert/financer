@@ -1,11 +1,10 @@
-import { useRouter } from 'next/router';
-
 import { AddIncomeContainer } from '$container/incomes/add-income.container';
+import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 
 const AddIncomeWithTemplateIdPage = () => {
   const {
     query: { templateId },
-  } = useRouter();
+  } = useViewTransitionRouter();
 
   return <AddIncomeContainer templateId={templateId as string} />;
 };

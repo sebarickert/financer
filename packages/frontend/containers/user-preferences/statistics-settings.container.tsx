@@ -1,16 +1,15 @@
-import { useRouter } from 'next/router';
-
 import {
   useUserStatisticsSettings,
   useUpdateUserStatisticsSettings,
 } from '$hooks/profile/user-preference/useStatisticsSettings';
+import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import {
   UserStatisticsSettings,
   UserStatisticsSettingsFormFields,
 } from '$pages/profile/user-preferences/preferences/user-statistics-settings';
 
 export const StatisticsSettingsContainer = () => {
-  const { push } = useRouter();
+  const { push } = useViewTransitionRouter();
   const { data, isLoading: isLoadingDefault } = useUserStatisticsSettings();
   const [setStatisticsSettings, { isLoading: isUpdating }] =
     useUpdateUserStatisticsSettings();

@@ -1,8 +1,9 @@
 import clsx from 'clsx';
-import Link from 'next/link';
 
 import { useIsActiveLink } from '../../../hooks/useIsActiveLink';
 import { IconName, Icon } from '../../elements/icon/icon';
+
+import { LinkViewTransition } from '$elements/link/link-view-transition';
 
 interface MobileNavigationItemProps {
   link: string;
@@ -30,7 +31,7 @@ export const MobileNavigationItem = ({
   if (type === 'standalone') {
     return (
       <li>
-        <Link
+        <LinkViewTransition
           href={link}
           className={`flex flex-col items-center justify-center focus:text-charcoal hover:text-charcoal h-14`}
           onClick={onClick}
@@ -38,14 +39,14 @@ export const MobileNavigationItem = ({
         >
           <Icon type={iconName} isSolid={isActive} />
           <span className={clsx('sr-only')}>{label}</span>
-        </Link>
+        </LinkViewTransition>
       </li>
     );
   }
 
   return (
     <li>
-      <Link
+      <LinkViewTransition
         href={link}
         className={clsx(
           'flex flex-col gap-1 items-center justify-center pt-4 pb-3'
@@ -61,7 +62,7 @@ export const MobileNavigationItem = ({
           <Icon type={iconName} />
         </span>
         <span className={clsx('text-xs mt-1')}>{label}</span>
-      </Link>
+      </LinkViewTransition>
     </li>
   );
 };

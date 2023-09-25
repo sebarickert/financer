@@ -1,5 +1,4 @@
 import { CreateTransactionCategoryMappingDtoWithoutTransaction } from '@local/types';
-import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 import {
@@ -12,6 +11,7 @@ import { DataHandler } from '$blocks/data-handler/data-handler';
 import { initialMonthFilterOptions } from '$blocks/monthly-transaction-list/monthly-transaction-list';
 import { useUserDefaultMarketUpdateSettings } from '$hooks/profile/user-preference/useDefaultMarketUpdateSettings';
 import { useFirstTransaction } from '$hooks/transaction/useFirstTransaction';
+import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { Account } from '$pages/accounts/account';
 import { AccountUpdateMarketValueModalFormFields } from '$pages/accounts/account-modals/account-update-market-value.modal';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
@@ -24,7 +24,7 @@ export const AccountContainer = ({ id }: AccountContainerProps) => {
   const data = useAccountsFindOneByIdQuery({ id });
   const account = data.data;
 
-  const { push } = useRouter();
+  const { push } = useViewTransitionRouter();
   const [deleteAccount, { isLoading: isLoadingAccount }] =
     useAccountsRemoveMutation();
   const { data: marketSettings, isLoading: isLoadingMarketSettings } =

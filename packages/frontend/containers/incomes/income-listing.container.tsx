@@ -1,8 +1,8 @@
-import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 
 import { initialMonthFilterOptions } from '$blocks/monthly-transaction-list/monthly-transaction-list';
 import { useFirstTransaction } from '$hooks/transaction/useFirstTransaction';
+import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { IncomeListing } from '$pages/incomes/income-listing';
 import { parseYearMonthFromString } from '$utils/formatDate';
 
@@ -15,7 +15,7 @@ export const IncomeListingContainer = ({
   date: initialDate,
   page: initialPage = 1,
 }: IncomeListingContainerProps) => {
-  const { push } = useRouter();
+  const { push } = useViewTransitionRouter();
 
   const [selectedPage, setSelectedPage] = useState(initialPage);
 

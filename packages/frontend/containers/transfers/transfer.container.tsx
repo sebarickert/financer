@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import { useCallback } from 'react';
 
 import {
@@ -8,6 +7,7 @@ import {
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
 import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
+import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { Transfer } from '$pages/transfers/transfer';
 
 interface TransferContainerProps {
@@ -15,7 +15,7 @@ interface TransferContainerProps {
 }
 
 export const TransferContainer = ({ id }: TransferContainerProps) => {
-  const { push } = useRouter();
+  const { push } = useViewTransitionRouter();
   const transferData = useTransfersFindOneQuery({ id });
   const { data: transfer } = transferData;
 

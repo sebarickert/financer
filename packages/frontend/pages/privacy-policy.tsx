@@ -1,18 +1,18 @@
-import Link from 'next/link';
-
 import { UpdatePageInfo } from '../src/components/renderers/seo/updatePageInfo';
+
+import { LinkViewTransition } from '$elements/link/link-view-transition';
 
 const PrivacyPolicy = (): JSX.Element => {
   return (
     <>
       <UpdatePageInfo title="Privacy policy" />
       <div className="py-16 mx-auto prose max-w-prose ">
-        <Link
+        <LinkViewTransition
           href="/"
           className="inline-block mb-12 text-base font-semibold tracking-tight uppercase"
         >
           Go back
-        </Link>
+        </LinkViewTransition>
         <h1>
           <span className="block text-base font-semibold tracking-wide text-blue-600 uppercase">
             Privacy policy

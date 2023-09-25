@@ -1,11 +1,10 @@
-import { useRouter } from 'next/router';
-
 import { AddExpenseContainer } from '$container/expenses/add-expense.container';
+import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 
 const AddExpenseWithTemplateIdPage = () => {
   const {
     query: { templateId },
-  } = useRouter();
+  } = useViewTransitionRouter();
 
   return <AddExpenseContainer templateId={templateId as string} />;
 };
