@@ -15,12 +15,9 @@ import { applyFixture } from '$utils/load-fixtures';
 
 
 test.describe('Add transfer', () => {
-    test.beforeAll(async () => {
-        await applyFixture('large');
-    })
-    
     test.beforeEach(async ({ page }) => {
-        await page.goto('/statistics/transfers');
+      await applyFixture('large');
+      await page.goto('/statistics/transfers');
     });
     
   const newTransactionAmountStr = '15.50';

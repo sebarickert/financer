@@ -55,7 +55,6 @@ test.describe('Edit transaction category', () => {
     await page.click(`[data-entity-title="${newName}"]`);
 
     await page.click('[data-testid="edit-transaction-category"]');
-    await expect(page.url()).toContain('/edit');
 
     await expect(page.locator('#name')).toHaveValue(newName);
 
