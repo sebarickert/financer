@@ -1,5 +1,4 @@
 import { LinkViewTransition } from '$elements/link/link-view-transition';
- 
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
 const NEXT_PUBLIC_IS_GITHUB_OAUTH_ENABLED =
