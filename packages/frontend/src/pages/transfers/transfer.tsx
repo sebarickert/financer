@@ -140,7 +140,6 @@ export const Transfer = ({
               link={`/statistics/transfers/${transfer._id}/edit`}
               testId="edit-transfer-button"
               transition="open-from-right"
-
             >
               Edit
             </Button>
