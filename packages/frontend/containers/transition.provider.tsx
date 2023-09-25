@@ -26,5 +26,5 @@ export const TransitionProvider = ({ children }: { children: ReactNode }) => {
     };
   }, [pathname]);
 
-  return children;
+  return <>{children}</>;
 };
