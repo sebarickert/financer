@@ -15,7 +15,7 @@ export const MobileHeader = (): JSX.Element => {
   return (
     <div
       className={clsx(
-        'text-center fixed top-0 left-0 right-0 px-4 grid items-center h-16 border-b grid-cols-[44px,1fr,44px] z-[101] vt-name-[mobile-header]',
+        'text-center fixed top-0 left-0 right-0 px-4 grid items-center h-16 border-b grid-cols-[44px,1fr,44px] vt-name-[mobile-header]',
         {
           ['border-b-transparent']: !hasBackLinkAndOrAction,
           ['border-b-gray-dark']: hasBackLinkAndOrAction,

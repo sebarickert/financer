@@ -1,5 +1,3 @@
-import { UseFieldArrayRemove, useFormContext } from 'react-hook-form';
-
 import { Button } from '../../elements/button/button';
 import { Divider } from '../../elements/divider/divider';
 import { Icon, IconName } from '../../elements/icon/icon';
@@ -7,11 +5,9 @@ import { Input } from '../../elements/input/input';
 import { Option } from '../../elements/select/select';
 import { Select } from '../../elements/select/select';
 
-import { FieldArrayFields } from './transaction-categories-form';
-
 import { ButtonGroup } from '$elements/button/button.group';
 
-interface TransactionCategoriesFormItemProps {
+interface TransactionCategoriesFormProps {
   className?: string;
   index: number;
   categories: Option[];
@@ -19,12 +15,11 @@ interface TransactionCategoriesFormItemProps {
   setUnallocatedAmount(): void;
   testId?: string;
   categorySelectOnly?: boolean;
-  // maxAmount: number;
-  remove: UseFieldArrayRemove;
+  maxAmount: number;
   onClose: () => void;
 }
 
-export const TransactionCategoriesFormItem = ({
+export const TransactionCategoriesForm = ({
   className = '',
   index,
   categories,
@@ -32,13 +27,10 @@ export const TransactionCategoriesFormItem = ({
   setUnallocatedAmount,
   testId = '',
   categorySelectOnly,
-  // maxAmount,
-  remove,
+  maxAmount,
   onClose,
-}: TransactionCategoriesFormItemProps): JSX.Element => {
+}: TransactionCategoriesFormProps): JSX.Element => {
   const namePrefix = `categories.${index}` as const;
-
-  const { getValues } = useFormContext<FieldArrayFields>();
 
   const handleSubmit = () => {
     onClose();
@@ -68,7 +60,7 @@ export const TransactionCategoriesFormItem = ({
                   type="number"
                   min={0.01}
                   step={0.01}
-                  // max={maxAmount}
+                  max={maxAmount}
                   isCurrency
                   isRequired
                   testId={`${testId}_transaction-category_amount`}
@@ -82,8 +74,6 @@ export const TransactionCategoriesFormItem = ({
                   <span className="sr-only">Add unallocated amount</span>
                   <Icon type={IconName.plus} />
                 </button>
-                {/* <Button onClick={setUnallocatedAmount} accentColor="plain"> */}
-                {/* </Button> */}
               </div>
               <Input
                 id={`${namePrefix}.description`}
@@ -104,20 +94,20 @@ export const TransactionCategoriesFormItem = ({
           </Button>
           <Button
             className="sm:mt-6"
-            // onClick={deleteTransactionCategoryItem}
+            onClick={onClose}
             testId={`${testId}_delete-button`}
             accentColor="plain"
           >
             Cancel
           </Button>
         </ButtonGroup>
-        {/* <Button
+        <Button
           className="sm:mt-6"
           onClick={deleteTransactionCategoryItem}
           testId={`${testId}_delete-button`}
         >
           Delete
-        </Button> */}
+        </Button>
       </div>
     </div>
   );

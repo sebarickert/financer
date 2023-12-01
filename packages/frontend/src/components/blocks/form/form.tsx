@@ -29,11 +29,7 @@ export const Form = <T extends FieldValues>({
 
   return (
     <FormProvider {...methods}>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="pb-[83px] lg:pb-0"
-        id={id}
-      >
+      <form onSubmit={handleSubmit(onSubmit)} id={id}>
         {children}
         <FormFooter
           submitLabel={submitLabel}

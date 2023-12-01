@@ -8,10 +8,8 @@ import {
 } from '$api/generated/financerApi';
 import { AccountsSelect } from '$blocks/accounts-select/accounts-select';
 import { Form } from '$blocks/form/form';
-import {
-  TransactionCategoriesForm,
-  TransactionCategoriesFormFields,
-} from '$blocks/transaction-categories-form/transaction-categories-form';
+import { TransactionCategoriesFormFields } from '$blocks/transaction-categories/transaction-categories';
+import { TransactionCategories } from '$blocks/transaction-categories/TransactionCategories';
 import { Alert } from '$elements/alert/alert';
 import { Input } from '$elements/input/input';
 import { Loader } from '$elements/loader/loader';
@@ -117,7 +115,7 @@ export const IncomeForm = ({
         {transactionCategories.length > 0 && (
           <section className="mt-8">
             <h2 className="sr-only">Categories</h2>
-            <TransactionCategoriesForm
+            <TransactionCategories
               className="my-8 space-y-8"
               transactionCategories={transactionCategories}
             />

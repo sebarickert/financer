@@ -71,7 +71,7 @@ export const AccountsSelect = ({ id, options }: AccountsSelectProps) => {
   }, [accountId, isOpen]);
 
   return (
-    <section className="relative z-10">
+    <section className="relative">
       <button
         ref={buttonRef}
         aria-expanded={isOpen}
@@ -109,7 +109,7 @@ export const AccountsSelect = ({ id, options }: AccountsSelectProps) => {
         ref={optionListRef}
         aria-hidden={!isOpen}
         className={clsx(
-          'absolute w-full mt-1 border divide-y-[1px] divide-gray-dark rounded-md top-full bg-gray border-gray-dark max-h-[17rem] overflow-auto aria-hidden:hidden aria-hidden:invisible'
+          'absolute w-full mt-1 border divide-y-[1px] divide-gray-dark rounded-md top-full bg-gray border-gray-dark max-h-[17rem] overflow-auto aria-hidden:hidden aria-hidden:invisible z-10'
         )}
         tabIndex={-1}
       >

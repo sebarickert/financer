@@ -102,7 +102,7 @@ export const Drawer = ({
 
   const drawerBaseClasses = clsx('', {
     [className]: true,
-    ['bg-white fixed transition-all z-20 duration-200']: true,
+    ['bg-white fixed transition-all z-[200] duration-200']: true,
     [defaultDrawerClasses]: true,
     ['hidden']: isClosedDelay,
   });

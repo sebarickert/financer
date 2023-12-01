@@ -6,7 +6,7 @@ import {
   TransactionTemplateDto,
   UpdateTransactionTemplateDto,
 } from '$api/generated/financerApi';
-import { TransactionCategoriesFormFields } from '$blocks/transaction-categories-form/transaction-categories-form';
+import { TransactionCategoriesFormFields } from '$blocks/transaction-categories/transaction-categories';
 import { Button } from '$elements/button/button';
 import { DialogConfirm } from '$elements/dialog/confirm/dialog.confirm';
 import { Dialog } from '$elements/dialog/dialog';
