@@ -10,7 +10,7 @@ import { Form } from '$blocks/form/form';
 import {
   TransactionCategoriesForm,
   TransactionCategoriesFormFields,
-} from '$blocks/transaction-categories-form/transaction-categories-form';
+} from '$blocks/transaction-categories/transaction-categories';
 import { Alert } from '$elements/alert/alert';
 import { Input } from '$elements/input/input';
 import { Loader } from '$elements/loader/loader';

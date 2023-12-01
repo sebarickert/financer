@@ -23,6 +23,7 @@ import { IconLightningBolt } from './svgs/icon.lightningBolt';
 import { IconLogout } from './svgs/icon.logout';
 import { IconMinusCircle } from './svgs/icon.minusCircle';
 import { IconPaperAirplane } from './svgs/icon.paperAirplane';
+import { IconPencilSquare } from './svgs/icon.pencilSquare';
 import { IconPlus } from './svgs/icon.plus';
 import { IconPlusCircle } from './svgs/icon.plusCircle';
 import { IconSparkles } from './svgs/icon.sparkles';
@@ -78,6 +79,7 @@ export enum IconName {
   documentReport = 'document-report',
   calendar = 'calendar',
   informationCircle = 'information-circle',
+  pencilSquare = 'pencil-square',
 }
 interface IconProps {
   type: IconName;
@@ -228,6 +230,9 @@ export const Icon = ({
 
     case 'information-circle':
       return <IconInformationCircle className={defaultIconClasses} />;
+
+    case 'pencil-square':
+      return <IconPencilSquare className={defaultIconClasses} />;
 
     default:
       break;

@@ -1,7 +1,7 @@
 import { TemplateForm } from './template-form';
 
 import { CreateTransactionTemplateDto } from '$api/generated/financerApi';
-import { TransactionCategoriesFormFields } from '$blocks/transaction-categories-form/transaction-categories-form';
+import { TransactionCategoriesFormFields } from '$blocks/transaction-categories/transaction-categories';
 import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
