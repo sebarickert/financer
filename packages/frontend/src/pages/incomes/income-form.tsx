@@ -8,8 +8,10 @@ import {
 } from '$api/generated/financerApi';
 import { AccountsSelect } from '$blocks/accounts-select/accounts-select';
 import { Form } from '$blocks/form/form';
-import { TransactionCategoriesFormFields } from '$blocks/transaction-categories/transaction-categories';
-import { TransactionCategories } from '$blocks/transaction-categories/TransactionCategories';
+import {
+  TransactionCategories,
+  TransactionCategoriesFormFields,
+} from '$blocks/transaction-categories/transaction-categories';
 import { Alert } from '$elements/alert/alert';
 import { Input } from '$elements/input/input';
 import { Loader } from '$elements/loader/loader';
