@@ -174,7 +174,11 @@ export class TransactionCategoriesService {
       _id: { $in: ids },
     });
 
-    if (categories.length !== ids.length) {
+    const hasMatchingCategoryIds = ids.every((id) =>
+      categories.some((category) => category._id.equals(id)),
+    );
+
+    if (!hasMatchingCategoryIds) {
       throw new BadRequestException('One or more categories does not exist.');
     }
   }
