@@ -6,12 +6,14 @@ import {
   VisibilityType2Enum,
   VisibilityTypeEnum,
 } from '$api/generated/financerApi';
+import { AccountsSelect } from '$blocks/accounts-select/accounts-select';
 import { Form } from '$blocks/form/form';
 import {
-  TransactionCategoriesForm,
+  TransactionCategories,
   TransactionCategoriesFormFields,
 } from '$blocks/transaction-categories/transaction-categories';
 import { Alert } from '$elements/alert/alert';
+import { IconName } from '$elements/icon/icon';
 import { Input } from '$elements/input/input';
 import { Loader } from '$elements/loader/loader';
 import { Select, Option } from '$elements/select/select';
@@ -94,9 +96,22 @@ export const TransferForm = ({
       >
         <section>
           <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
-            <Input id="description" isRequired>
-              Description
-            </Input>
+            <AccountsSelect
+              id="fromAccount"
+              options={accountOptions}
+              isRequired
+              icon={IconName.upload}
+            >
+              From Account
+            </AccountsSelect>
+            <AccountsSelect
+              id="toAccount"
+              options={accountOptions}
+              isRequired
+              icon={IconName.download}
+            >
+              To Account
+            </AccountsSelect>
             <Input
               id="amount"
               type="number"
@@ -107,21 +122,18 @@ export const TransferForm = ({
             >
               Amount
             </Input>
+            <Input id="description" isRequired>
+              Description
+            </Input>
             <Input id="date" type="datetime-local">
               Date
             </Input>
-            <Select id="fromAccount" options={accountOptions} isRequired>
-              From Account
-            </Select>
-            <Select id="toAccount" options={accountOptions} isRequired>
-              To Account
-            </Select>
           </div>
         </section>
         {transactionCategories.length > 0 && (
           <section className="mt-8">
             <h2 className="sr-only">Categories</h2>
-            <TransactionCategoriesForm
+            <TransactionCategories
               className="my-8 space-y-8"
               transactionCategories={transactionCategories}
             />

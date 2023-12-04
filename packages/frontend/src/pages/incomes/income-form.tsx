@@ -13,6 +13,7 @@ import {
   TransactionCategoriesFormFields,
 } from '$blocks/transaction-categories/transaction-categories';
 import { Alert } from '$elements/alert/alert';
+import { IconName } from '$elements/icon/icon';
 import { Input } from '$elements/input/input';
 import { Loader } from '$elements/loader/loader';
 import { Option } from '$elements/select/select';
@@ -93,7 +94,12 @@ export const IncomeForm = ({
       >
         <section>
           <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
-            <AccountsSelect id="toAccount" options={accountOptions} isRequired>
+            <AccountsSelect
+              id="toAccount"
+              options={accountOptions}
+              isRequired
+              icon={IconName.download}
+            >
               Account
             </AccountsSelect>
             <Input
