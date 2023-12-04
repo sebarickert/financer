@@ -30,33 +30,63 @@ export const TransactionCategories = ({
   testId = 'transaction-categories',
   categorySelectOnly,
 }: TransactionCategoriesProps): JSX.Element => {
-  const { fields, append, remove } = useFieldArray<FieldArrayFields>({
-    name: 'categories',
-  });
-  const { getValues } = useFormContext<FieldArrayFields>();
   const [selectedIndex, setSelectedIndex] = useState(NaN);
 
-  const { setValue } = useFormContext();
+  const { getValues, watch, setValue } = useFormContext<FieldArrayFields>();
+  const {
+    fields: rawFields,
+    remove,
+    update,
+  } = useFieldArray<FieldArrayFields>({
+    name: 'categories',
+  });
 
   const transactionAmount = useWatch({ name: 'amount' });
-  const isNewCategory = !fields[selectedIndex]?.category_id;
+  const watchFieldArray = watch('categories');
+
+  const fields = rawFields.map((field, index) => {
+    return {
+      ...field,
+      ...watchFieldArray[index],
+    };
+  });
+
+  const isNewCategory = !fields[selectedIndex];
 
   const totalAllocatedAmount = fields
     .map(({ amount }) => amount || 0)
     .reduce((current, previous) => current + previous, 0);
 
   const addNewCategory = () => {
-    append({} as TransactionCategoriesFormFields);
     setSelectedIndex(fields.length);
   };
 
   const isEmptyCategory = (index: number) =>
     isNaN(parseInt(`${getValues(`categories.${index}`).amount}`));
 
+  const setUnallocatedAmount = () => {
+    const unallocatedAmount =
+      transactionAmount - totalAllocatedAmount + (0 || 0);
+    setValue(`categories.${selectedIndex}.amount`, unallocatedAmount);
+  };
+
   const onClose = () => {
+    setSelectedIndex(NaN);
+  };
+
+  const handleDelete = () => {
+    remove(selectedIndex);
+    setSelectedIndex(NaN);
+  };
+
+  const handleSubmit = () => {
+    // @todo: some kind of input error needed.
     if (isEmptyCategory(selectedIndex)) {
-      remove(selectedIndex);
+      return;
     }
+
+    const values = getValues(`categories.${selectedIndex}`);
+    update(selectedIndex, values);
     setSelectedIndex(NaN);
   };
 
@@ -76,23 +106,17 @@ export const TransactionCategories = ({
         heading={!isNewCategory ? 'Edit category item' : 'Add category item'}
       >
         <TransactionCategoriesForm
+          testId={testId}
           key={selectedIndex}
           index={selectedIndex}
           categories={transactionCategories}
-          deleteTransactionCategoryItem={() => {
-            remove(selectedIndex);
-            setSelectedIndex(NaN);
-            return;
-          }}
-          setUnallocatedAmount={() => {
-            const unallocatedAmount =
-              transactionAmount - totalAllocatedAmount + (0 || 0);
-            setValue(`categories.${selectedIndex}.amount`, unallocatedAmount);
-          }}
-          testId={testId}
           categorySelectOnly={categorySelectOnly}
           maxAmount={transactionAmount}
-          onClose={onClose}
+          isNewCategory={isNewCategory}
+          setUnallocatedAmount={setUnallocatedAmount}
+          handleCancel={onClose}
+          handleSubmit={handleSubmit}
+          handleDelete={handleDelete}
         />
       </Drawer>
       <ul className="mt-4 divide-y divide-gray-dark">

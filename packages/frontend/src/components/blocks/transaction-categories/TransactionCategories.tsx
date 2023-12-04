@@ -76,7 +76,7 @@ export const TransactionCategories = ({
           categorySelectOnly={categorySelectOnly}
           maxAmount={transactionAmount}
           remove={remove}
-          onClose={onClose}
+          handleCancel={onClose}
         />
       </Drawer>
       <ul className="mt-4 divide-y divide-gray-dark">

@@ -14,16 +14,16 @@ export const TransactionCategoriesItem = ({
   index,
   onClick,
 }: TransactionCategoriesItemProps) => {
-  const { watch, getValues } = useFormContext<FieldArrayFields>();
-
   const getTransactionCategoryName = useTransactionCategoryName();
 
+  const { watch, getValues } = useFormContext<FieldArrayFields>();
   const values = watch(`categories.${index}`);
+
   const transactionCategory = getTransactionCategoryName(
     getValues(`categories.${index}.category_id`)
   );
-  const description = getValues(`categories.${index}.description`);
-  const amount = getValues(`categories.${index}.amount`);
+
+  const { description, amount } = getValues(`categories.${index}`);
 
   const isEmptyCategory = isNaN(parseInt(`${values.amount}`));
 

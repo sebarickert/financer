@@ -11,30 +11,30 @@ interface TransactionCategoriesFormProps {
   className?: string;
   index: number;
   categories: Option[];
-  deleteTransactionCategoryItem(): void;
-  setUnallocatedAmount(): void;
   testId?: string;
   categorySelectOnly?: boolean;
   maxAmount: number;
-  onClose: () => void;
+  isNewCategory?: boolean;
+  setUnallocatedAmount(): void;
+  handleCancel: () => void;
+  handleDelete(): void;
+  handleSubmit: () => void;
 }
 
 export const TransactionCategoriesForm = ({
   className = '',
   index,
   categories,
-  deleteTransactionCategoryItem,
-  setUnallocatedAmount,
   testId = '',
   categorySelectOnly,
   maxAmount,
-  onClose,
+  isNewCategory,
+  setUnallocatedAmount,
+  handleCancel,
+  handleDelete,
+  handleSubmit,
 }: TransactionCategoriesFormProps): JSX.Element => {
   const namePrefix = `categories.${index}` as const;
-
-  const handleSubmit = () => {
-    onClose();
-  };
 
   return (
     <div
@@ -90,24 +90,28 @@ export const TransactionCategoriesForm = ({
             onClick={handleSubmit}
             testId={`${testId}_delete-button`}
           >
-            Add category
+            {!isNewCategory ? 'Update' : 'Add'}
           </Button>
-          <Button
-            className="sm:mt-6"
-            onClick={onClose}
-            testId={`${testId}_delete-button`}
-            accentColor="plain"
-          >
-            Cancel
-          </Button>
+          {!isNewCategory ? (
+            <Button
+              className="sm:mt-6"
+              onClick={handleDelete}
+              testId={`${testId}_delete-button`}
+              accentColor="plain"
+            >
+              Delete
+            </Button>
+          ) : (
+            <Button
+              className="sm:mt-6"
+              onClick={handleCancel}
+              testId={`${testId}_cancel-button`}
+              accentColor="plain"
+            >
+              Cancel
+            </Button>
+          )}
         </ButtonGroup>
-        <Button
-          className="sm:mt-6"
-          onClick={deleteTransactionCategoryItem}
-          testId={`${testId}_delete-button`}
-        >
-          Delete
-        </Button>
       </div>
     </div>
   );
