@@ -21,9 +21,10 @@ interface AccountsSelectProps {
   className?: string;
   handleOnChange?(event: React.ChangeEvent<HTMLSelectElement>): void;
   testId?: string;
+  icon: IconName.download | IconName.upload;
 }
 
-export const AccountsSelect = ({ id, options }: AccountsSelectProps) => {
+export const AccountsSelect = ({ id, options, icon }: AccountsSelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const { watch } = useFormContext();
   const optionListRef = useRef<HTMLUListElement>(null);
@@ -89,7 +90,7 @@ export const AccountsSelect = ({ id, options }: AccountsSelectProps) => {
         type="button"
       >
         <span className="inline-flex items-center justify-center h-11 w-11">
-          <Icon type={IconName.download} className="text-black/75 h-11 w-11" />
+          <Icon type={icon} className="text-black/75 h-11 w-11" />
         </span>
         <div className="truncate">{buttonContent}</div>
         <Icon type={IconName.chevronDown} className="text-black/75" />

@@ -6,15 +6,17 @@ import {
   VisibilityType2Enum,
   VisibilityTypeEnum,
 } from '$api/generated/financerApi';
+import { AccountsSelect } from '$blocks/accounts-select/accounts-select';
 import { Form } from '$blocks/form/form';
 import {
-  TransactionCategoriesForm,
+  TransactionCategories,
   TransactionCategoriesFormFields,
 } from '$blocks/transaction-categories/transaction-categories';
 import { Alert } from '$elements/alert/alert';
+import { IconName } from '$elements/icon/icon';
 import { Input } from '$elements/input/input';
 import { Loader } from '$elements/loader/loader';
-import { Select, Option } from '$elements/select/select';
+import { Option } from '$elements/select/select';
 import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
 import { inputDateFormat } from '$utils/formatDate';
 
@@ -92,9 +94,14 @@ export const ExpenseForm = ({
       >
         <section>
           <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
-            <Input id="description" isRequired>
-              Description
-            </Input>
+            <AccountsSelect
+              id="fromAccount"
+              options={accountOptions}
+              isRequired
+              icon={IconName.upload}
+            >
+              Account
+            </AccountsSelect>
             <Input
               id="amount"
               type="number"
@@ -105,18 +112,18 @@ export const ExpenseForm = ({
             >
               Amount
             </Input>
+            <Input id="description" isRequired>
+              Description
+            </Input>
             <Input id="date" type="datetime-local">
               Date
             </Input>
-            <Select id="fromAccount" options={accountOptions} isRequired>
-              Account
-            </Select>
           </div>
         </section>
         {transactionCategories.length > 0 && (
           <section className="mt-8">
             <h2 className="sr-only">Categories</h2>
-            <TransactionCategoriesForm
+            <TransactionCategories
               className="my-8 space-y-8"
               transactionCategories={transactionCategories}
             />
