@@ -25,12 +25,15 @@ export interface FieldArrayFields {
   categories: TransactionCategoriesFormFields[];
 }
 
+const defaultSelectedIndex = -1;
+
 export const TransactionCategories = ({
   transactionCategories,
   testId = 'transaction-categories',
   categorySelectOnly,
 }: TransactionCategoriesProps): JSX.Element => {
-  const [selectedIndex, setSelectedIndex] = useState(NaN);
+  const [selectedIndex, setSelectedIndex] = useState(defaultSelectedIndex);
+  const [isFormOpen, setIsFormOpen] = useState(false);
 
   const { getValues, watch, setValue } = useFormContext<FieldArrayFields>();
   const {
@@ -59,6 +62,7 @@ export const TransactionCategories = ({
 
   const addNewCategory = () => {
     setSelectedIndex(fields.length);
+    setIsFormOpen(true);
   };
 
   const isEmptyCategory = (index: number) =>
@@ -71,12 +75,17 @@ export const TransactionCategories = ({
   };
 
   const onClose = () => {
-    setSelectedIndex(NaN);
+    if (isNewCategory) {
+      remove(selectedIndex);
+    }
+
+    setIsFormOpen(false);
+    setSelectedIndex(defaultSelectedIndex);
   };
 
   const handleDelete = () => {
     remove(selectedIndex);
-    setSelectedIndex(NaN);
+    setIsFormOpen(false);
   };
 
   const handleSubmit = () => {
@@ -87,7 +96,12 @@ export const TransactionCategories = ({
 
     const values = getValues(`categories.${selectedIndex}`);
     update(selectedIndex, values);
-    setSelectedIndex(NaN);
+    setIsFormOpen(false);
+  };
+
+  const handleCategoryItemClick = (index: number) => {
+    setSelectedIndex(index);
+    setIsFormOpen(true);
   };
 
   return (
@@ -101,7 +115,7 @@ export const TransactionCategories = ({
         Add category
       </Button>
       <Drawer
-        isOpen={!isNaN(selectedIndex)}
+        isOpen={isFormOpen}
         onClose={onClose}
         heading={!isNewCategory ? 'Edit category item' : 'Add category item'}
       >
@@ -124,7 +138,7 @@ export const TransactionCategories = ({
           <TransactionCategoriesItem
             key={id}
             index={index}
-            onClick={() => setSelectedIndex(index)}
+            onClick={() => handleCategoryItemClick(index)}
           />
         ))}
       </ul>

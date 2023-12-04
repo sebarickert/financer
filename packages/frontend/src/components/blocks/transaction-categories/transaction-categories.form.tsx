@@ -70,6 +70,7 @@ export const TransactionCategoriesForm = ({
                 <button
                   onClick={setUnallocatedAmount}
                   className="inline-flex items-center justify-center h-[50px] w-11 focus:ring-black focus:border-black focus:outline-black rounded-md"
+                  type="button"
                 >
                   <span className="sr-only">Add unallocated amount</span>
                   <Icon type={IconName.plus} />
