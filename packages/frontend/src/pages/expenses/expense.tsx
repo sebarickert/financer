@@ -1,52 +1,16 @@
-import { useState } from 'react';
+import { useMemo } from 'react';
 
-import {
-  ExpenseDto,
-  TransactionCategoryMappingDto,
-} from '$api/generated/financerApi';
-import { Button } from '$elements/button/button';
-import { ButtonGroup } from '$elements/button/button.group';
-import { DialogConfirm } from '$elements/dialog/confirm/dialog.confirm';
-import { Dialog } from '$elements/dialog/dialog';
-import { Divider } from '$elements/divider/divider';
-import { IconName } from '$elements/icon/icon';
-import { InfoCard } from '$elements/info-card/info-card';
+import { ExpenseDto, TransactionTypeEnum } from '$api/generated/financerApi';
+import { BalanceDisplay } from '$blocks/balance-display/balance-display';
+import { DetailsList } from '$blocks/details-list/details-list';
+import { TransactionDelete } from '$blocks/transaction-delete/transaction-delete';
+import { ButtonInternal } from '$elements/button/button.internal';
+import { Heading } from '$elements/heading/heading';
+import { Icon, IconName } from '$elements/icon/icon';
 import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { formatCurrency } from '$utils/formatCurrency';
-import { formatDate } from '$utils/formatDate';
-
-interface IExpenseDeleteModalProps {
-  onDelete: () => void;
-}
-
-const ExpenseDeleteModal = ({ onDelete }: IExpenseDeleteModalProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <>
-      <Button
-        testId="expense-delete-modal_open-button"
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        Delete
-      </Button>
-      <Dialog isDialogOpen={isOpen} setIsDialogOpen={setIsOpen}>
-        <DialogConfirm
-          label="Delete expense"
-          onConfirm={onDelete}
-          onCancel={() => setIsOpen(!isOpen)}
-          submitButtonLabel="Delete"
-          iconName={IconName.exclamation}
-          testId="expense-delete-modal"
-        >
-          Are you sure you want to delete your expense? All of your data will be
-          permanently removed. This action cannot be undone.
-        </DialogConfirm>
-      </Dialog>
-    </>
-  );
-};
+import { formatDateLong } from '$utils/formatDate';
 
 interface ExpenseProps {
   isLoading: boolean;
@@ -63,75 +27,96 @@ export const Expense = ({
   onDelete,
   getCategoryNameById,
 }: ExpenseProps): JSX.Element => {
+  const transactionDetails = useMemo(
+    () => [
+      {
+        icon: IconName.viewGrid,
+        label: 'From Account',
+        description: accountName ?? '-',
+      },
+      {
+        icon: IconName.calendar,
+        label: 'Date',
+        description: formatDateLong(new Date(expense?.date)),
+      },
+      {
+        icon: IconName.informationCircle,
+        label: 'Type',
+        description: 'Expense',
+      },
+    ],
+    [accountName, expense?.date]
+  );
+
+  const categoryDetails = useMemo(() => {
+    return expense.categories.map(({ amount, category_id, description }) => {
+      return [
+        {
+          icon: IconName.tag,
+          label: 'Category',
+          description: getCategoryNameById(category_id as unknown as string),
+        },
+        {
+          icon: IconName.informationCircle,
+          label: 'Amount',
+          description: formatCurrency(amount),
+        },
+        ...(description
+          ? [
+              {
+                icon: IconName.annotation,
+                label: 'Description',
+                description,
+              },
+            ]
+          : []),
+      ];
+    });
+  }, [expense.categories, getCategoryNameById]);
+
   return (
     <>
       {isLoading && <LoaderFullScreen />}
       <UpdatePageInfo
-        title={`${expense?.description}`}
+        title={'Transaction Details'}
         backLink="/statistics/expenses"
-      />
-      <section className="grid gap-2 lg:gap-4">
-        <section className="grid grid-cols-2 gap-2 lg:grid-cols-3 md:gap-4">
-          <InfoCard iconName={IconName.cash} label="Amount">
-            {formatCurrency(expense?.amount)}
-          </InfoCard>
-          <InfoCard iconName={IconName.calendar} label="Date">
-            {formatDate(new Date(expense?.date))}
-          </InfoCard>
-          <InfoCard
-            iconName={IconName.informationCircle}
-            label="Type"
-            className="max-lg:col-span-full"
-            isLarge
-          >
-            Expense
-          </InfoCard>
-          <InfoCard
-            iconName={IconName.upload}
-            label="From account"
-            className="col-span-full"
-            isLarge
-          >
-            {accountName ?? '-'}
-          </InfoCard>
-        </section>
-        {expense.categories.length > 0 && (
-          <>
-            <Divider>Categories</Divider>
-            <ul>
-              {(
-                expense.categories as unknown as TransactionCategoryMappingDto[]
-              )?.map(({ amount, category_id }) => (
-                <li className="grid grid-cols-2 gap-2" key={category_id}>
-                  <InfoCard
-                    iconName={IconName.tag}
-                    label="Category"
-                    testId="category_label"
-                  >
-                    {getCategoryNameById(category_id as unknown as string)}
-                  </InfoCard>
-                  <InfoCard
-                    iconName={IconName.cash}
-                    label="Amount"
-                    testId="category_amount"
-                  >
-                    {formatCurrency(amount)}
-                  </InfoCard>
-                </li>
-              ))}
-            </ul>
-          </>
-        )}
-        <ButtonGroup className="mt-4">
-          <Button
+        headerAction={
+          <ButtonInternal
             link={`/statistics/expenses/${expense._id}/edit`}
             testId="edit-expense-button"
             transition="open-from-right"
+            className="inline-flex items-center justify-center -mr-3 h-11 w-11"
           >
-            Edit
-          </Button>
-          <ExpenseDeleteModal onDelete={onDelete} />
-        </ButtonGroup>
+            <span className="sr-only">Edit</span>
+            <Icon type={IconName.pencilSquare} />
+          </ButtonInternal>
+        }
+      />
+      <section>
+        <BalanceDisplay
+          className="mb-12"
+          type={TransactionTypeEnum.Expense}
+          amount={expense?.amount}
+        >
+          {`${expense?.description}`}
+        </BalanceDisplay>
+        <DetailsList items={transactionDetails} />
+        {categoryDetails.length > 0 && (
+          <section className="mt-8">
+            <Heading className="mb-4">Categories</Heading>
+            <div className="grid divide-y divide-gray-dark">
+              {categoryDetails.map((category) => (
+                <span
+                  key={category[0].label}
+                  className="py-4 first:pt-0 last:pb-0"
+                >
+                  <DetailsList items={category} />
+                </span>
+              ))}
+            </div>
+          </section>
+        )}
+        <TransactionDelete onDelete={onDelete} />
       </section>
     </>
   );

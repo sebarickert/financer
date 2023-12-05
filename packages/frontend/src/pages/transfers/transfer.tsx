@@ -1,52 +1,16 @@
-import { useState } from 'react';
+import { useMemo } from 'react';
 
-import {
-  TransactionCategoryMappingDto,
-  TransferDto,
-} from '$api/generated/financerApi';
-import { Button } from '$elements/button/button';
-import { ButtonGroup } from '$elements/button/button.group';
-import { DialogConfirm } from '$elements/dialog/confirm/dialog.confirm';
-import { Dialog } from '$elements/dialog/dialog';
-import { Divider } from '$elements/divider/divider';
-import { IconName } from '$elements/icon/icon';
-import { InfoCard } from '$elements/info-card/info-card';
+import { TransactionTypeEnum, TransferDto } from '$api/generated/financerApi';
+import { BalanceDisplay } from '$blocks/balance-display/balance-display';
+import { DetailsList } from '$blocks/details-list/details-list';
+import { TransactionDelete } from '$blocks/transaction-delete/transaction-delete';
+import { ButtonInternal } from '$elements/button/button.internal';
+import { Heading } from '$elements/heading/heading';
+import { Icon, IconName } from '$elements/icon/icon';
 import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { formatCurrency } from '$utils/formatCurrency';
-import { formatDate } from '$utils/formatDate';
-
-interface TransferDeleteModalProps {
-  onDelete: () => void;
-}
-
-const TransferDeleteModal = ({ onDelete }: TransferDeleteModalProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <>
-      <Button
-        testId="transfer-delete-modal_open-button"
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        Delete
-      </Button>
-      <Dialog isDialogOpen={isOpen} setIsDialogOpen={setIsOpen}>
-        <DialogConfirm
-          label="Delete transfer"
-          onConfirm={onDelete}
-          onCancel={() => setIsOpen(!isOpen)}
-          submitButtonLabel="Delete"
-          iconName={IconName.exclamation}
-          testId="transfer-delete-modal"
-        >
-          Are you sure you want to delete your transfer? All of your data will
-          be permanently removed. This action cannot be undone.
-        </DialogConfirm>
-      </Dialog>
-    </>
-  );
-};
+import { formatDateLong } from '$utils/formatDate';
 
 interface TransferProps {
   isLoading: boolean;
@@ -65,88 +29,100 @@ export const Transfer = ({
   onDelete,
   getCategoryNameById,
 }: TransferProps): JSX.Element => {
+  const transactionDetails = useMemo(
+    () => [
+      {
+        icon: IconName.viewGrid,
+        label: 'From Account',
+        description: fromAccountName ?? '-',
+      },
+      {
+        icon: IconName.viewGrid,
+        label: 'To Account',
+        description: toAccountName ?? '-',
+      },
+      {
+        icon: IconName.calendar,
+        label: 'Date',
+        description: formatDateLong(new Date(transfer?.date)),
+      },
+      {
+        icon: IconName.informationCircle,
+        label: 'Type',
+        description: 'Transfer',
+      },
+    ],
+    [fromAccountName, toAccountName, transfer?.date]
+  );
+
+  const categoryDetails = useMemo(() => {
+    return transfer.categories.map(({ amount, category_id, description }) => {
+      return [
+        {
+          icon: IconName.tag,
+          label: 'Category',
+          description: getCategoryNameById(category_id as unknown as string),
+        },
+        {
+          icon: IconName.informationCircle,
+          label: 'Amount',
+          description: formatCurrency(amount),
+        },
+        ...(description
+          ? [
+              {
+                icon: IconName.annotation,
+                label: 'Description',
+                description,
+              },
+            ]
+          : []),
+      ];
+    });
+  }, [transfer.categories, getCategoryNameById]);
+
   return (
     <>
       {isLoading && <LoaderFullScreen />}
       <UpdatePageInfo
-        title={`${transfer?.description}`}
+        title={'Transaction Details'}
         backLink="/statistics/transfers"
+        headerAction={
+          <ButtonInternal
+            link={`/statistics/transfers/${transfer._id}/edit`}
+            className="inline-flex items-center justify-center -mr-3 h-11 w-11"
+          >
+            <span className="sr-only">Edit</span>
+            <Icon type={IconName.pencilSquare} />
+          </ButtonInternal>
+        }
       />
-      {transfer && (
-        <section className="grid gap-2 lg:gap-4">
-          <section className="grid grid-cols-2 gap-2 lg:grid-cols-3 md:gap-4">
-            <InfoCard iconName={IconName.cash} label="Amount">
-              {formatCurrency(transfer.amount)}
-            </InfoCard>
-            <InfoCard iconName={IconName.calendar} label="Date">
-              {formatDate(new Date(transfer.date))}
-            </InfoCard>
-            <InfoCard
-              iconName={IconName.informationCircle}
-              label="Type"
-              className="max-lg:col-span-full"
-              isLarge
-            >
-              Transfer
-            </InfoCard>
+      <section>
+        <BalanceDisplay
+          className="mb-12"
+          type={TransactionTypeEnum.Transfer}
+          amount={transfer?.amount}
+        >
+          {`${transfer?.description}`}
+        </BalanceDisplay>
+        <DetailsList items={transactionDetails} />
+        {categoryDetails.length > 0 && (
+          <section className="mt-8">
+            <Heading className="mb-4">Categories</Heading>
+            <div className="grid divide-y divide-gray-dark">
+              {categoryDetails.map((category) => (
+                <span
+                  key={category[0].label}
+                  className="py-4 first:pt-0 last:pb-0"
+                >
+                  <DetailsList items={category} />
+                </span>
+              ))}
+            </div>
           </section>
-          <section className="grid grid-cols-2 gap-2 lg:gap-4">
-            <InfoCard
-              iconName={IconName.upload}
-              label="From account"
-              className="max-lg:col-span-full"
-              isLarge
-            >
-              {fromAccountName ?? '-'}
-            </InfoCard>
-            <InfoCard
-              iconName={IconName.download}
-              label="To account"
-              className="max-lg:col-span-full"
-              isLarge
-            >
-              {toAccountName ?? '-'}
-            </InfoCard>
-          </section>
-          {transfer.categories.length > 0 && (
-            <>
-              <Divider>Categories</Divider>
-              <ul className="grid gap-2 lg:gap-4">
-                {(
-                  transfer.categories as unknown as TransactionCategoryMappingDto[]
-                )?.map(({ amount, category_id, _id }) => (
-                  <li key={_id} className="grid grid-cols-2 gap-2 lg:gap-4">
-                    <InfoCard
-                      iconName={IconName.tag}
-                      label="Category"
-                      testId="category_label"
-                    >
-                      {getCategoryNameById(category_id as unknown as string)}
-                    </InfoCard>
-                    <InfoCard
-                      iconName={IconName.cash}
-                      label="Amount"
-                      testId="category_amount"
-                    >
-                      {formatCurrency(amount)}
-                    </InfoCard>
-                  </li>
-                ))}
-              </ul>
-            </>
-          )}
-          <ButtonGroup className="mt-4">
-            <Button
-              link={`/statistics/transfers/${transfer._id}/edit`}
-              testId="edit-transfer-button"
-              transition="open-from-right"
-            >
-              Edit
-            </Button>
-            <TransferDeleteModal onDelete={onDelete} />
-          </ButtonGroup>
-        </section>
-      )}
+        )}
+        <TransactionDelete onDelete={onDelete} />
+      </section>
     </>
   );
 };
