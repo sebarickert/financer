@@ -32,7 +32,10 @@ export const EditExpense = ({
   return (
     <>
       {isLoading && <LoaderFullScreen />}
-      <UpdatePageInfo title={`Edit ${expense?.description}`} />
+      <UpdatePageInfo
+        title={`Edit ${expense?.description}`}
+        backLink={`/statistics/expenses/${expense._id}`}
+      />
       <ExpenseForm
         onSubmit={onSave}
         errors={errors}

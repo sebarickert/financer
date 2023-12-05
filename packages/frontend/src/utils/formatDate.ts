@@ -1,3 +1,5 @@
+import { format } from 'date-fns';
+
 import { monthNamesAbbreviation } from '../constants/months';
 
 import { addLeadingZero } from './addLeadingZero';
@@ -14,6 +16,9 @@ export const formatDate = (date: Date): string => formatter.format(date);
 
 export const formatDateShort = (date: Date): string =>
   `${getShortMonthAbbreviation(date)} '${getShortYear(date)}`;
+
+export const formatDateLong = (date: Date): string =>
+  format(date, 'dd.MM.yyyy, HH:mm');
 
 export const inputDateFormat = (date: Date): string => {
   const year = date.getFullYear();

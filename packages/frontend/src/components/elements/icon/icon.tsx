@@ -1,3 +1,4 @@
+import { IconAnnotation } from './svgs/icon.annotation';
 import { IconArrowLeft } from './svgs/icon.arrowLeft';
 import { IconArrowRight } from './svgs/icon.arrowRight';
 import { IconCalendar } from './svgs/icon.calendar';
@@ -80,6 +81,7 @@ export enum IconName {
   calendar = 'calendar',
   informationCircle = 'information-circle',
   pencilSquare = 'pencil-square',
+  annotation = 'annotation',
 }
 interface IconProps {
   type: IconName;
@@ -233,6 +235,9 @@ export const Icon = ({
 
     case 'pencil-square':
       return <IconPencilSquare className={defaultIconClasses} />;
+
+    case 'annotation':
+      return <IconAnnotation className={defaultIconClasses} />;
 
     default:
       break;
