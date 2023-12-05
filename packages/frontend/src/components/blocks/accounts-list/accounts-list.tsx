@@ -12,6 +12,16 @@ interface AccountsListProps {
   className?: string;
 }
 
+export const accountTypeIconMapping: { [key in AccountType]: IconName } = {
+  cash: IconName.cash,
+  savings: IconName.star,
+  investment: IconName.trendingUp,
+  credit: IconName.creditCard,
+  loan: IconName.library,
+  'long-term savings': IconName.star,
+  'pre-assigned cash': IconName.paperAirplane,
+};
+
 export const AccountsList = ({
   label,
   rows,
@@ -22,16 +32,6 @@ export const AccountsList = ({
   return (
     <LinkList label={label} className={`${className}`} testId="account-list">
       {rows.map(({ id, balanceAmount, label: rowLabel, link, type }) => {
-        const accountTypeIconMapping: { [key in AccountType]: IconName } = {
-          cash: IconName.cash,
-          savings: IconName.star,
-          investment: IconName.trendingUp,
-          credit: IconName.creditCard,
-          loan: IconName.library,
-          'long-term savings': IconName.star,
-          'pre-assigned cash': IconName.paperAirplane,
-        };
-
         return (
           <LinkListLink
             link={link ?? ''}

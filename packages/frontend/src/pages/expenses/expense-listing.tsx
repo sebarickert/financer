@@ -3,8 +3,9 @@ import { LatestTransactions } from '$blocks/latest-transactions/latest-transacti
 import { initialMonthFilterOptions } from '$blocks/monthly-transaction-list/monthly-transaction-list';
 import { Pager } from '$blocks/pager/pager';
 import { monthNames } from '$constants/months';
+import { ButtonInternal } from '$elements/button/button.internal';
 import { Heading } from '$elements/heading/heading';
-import { IconName } from '$elements/icon/icon';
+import { Icon, IconName } from '$elements/icon/icon';
 import { LinkList } from '$elements/link-list/link-list';
 import { LinkListLink } from '$elements/link-list/link-list.link';
 import { LoaderSuspense } from '$elements/loader/loader-suspense';
@@ -30,40 +31,39 @@ export const ExpenseListing = ({
 
   return (
     <>
-      <UpdatePageInfo title="Expenses" backLink="/statistics" />
-      <section className="mb-8">
-        <LinkList>
-          <LinkListLink
-            testId="add-expense"
+      <UpdatePageInfo
+        title="Expenses"
+        backLink="/statistics"
+        headerAction={
+          <ButtonInternal
             link="/statistics/expenses/add"
-            icon={IconName.download}
+            className="inline-flex items-center justify-center -mr-3 h-11 w-11"
           >
-            Add expense
-          </LinkListLink>
-        </LinkList>
-      </section>
-      <section className="flex items-center justify-between mb-4">
-        <Heading>{`${pageVisibleMonth}, ${pageVisibleYear}`}</Heading>
-        <Pager
-          pagerOptions={{
-            nextPage: {
-              isAvailable: !(
-                filterOptions.month === initialMonthFilterOptions.month &&
-                filterOptions.year === initialMonthFilterOptions.year
-              ),
-              load: () => onMonthOptionChange('next'),
-            },
-            previousPage: {
-              isAvailable: !(
-                filterOptions.month ===
-                  firstAvailableTransaction.getMonth() + 1 &&
-                filterOptions.year === firstAvailableTransaction.getFullYear()
-              ),
-              load: () => onMonthOptionChange('previous'),
-            },
-          }}
-        />
-      </section>
+            <span className="sr-only">Add expense</span>
+            <Icon type={IconName.plus} />
+          </ButtonInternal>
+        }
+      />
+      <Pager
+        className="mb-4"
+        pagerOptions={{
+          nextPage: {
+            isAvailable: !(
+              filterOptions.month === initialMonthFilterOptions.month &&
+              filterOptions.year === initialMonthFilterOptions.year
+            ),
+            load: () => onMonthOptionChange('next'),
+          },
+          previousPage: {
+            isAvailable: !(
+              filterOptions.month ===
+                firstAvailableTransaction.getMonth() + 1 &&
+              filterOptions.year === firstAvailableTransaction.getFullYear()
+            ),
+            load: () => onMonthOptionChange('previous'),
+          },
+        }}
+      >{`${pageVisibleMonth} ${pageVisibleYear}`}</Pager>
       <LoaderSuspense>
         <LatestTransactions
           filterOptions={filterOptions}

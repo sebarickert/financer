@@ -13,7 +13,7 @@ import { useUserDefaultMarketUpdateSettings } from '$hooks/profile/user-preferen
 import { useFirstTransaction } from '$hooks/transaction/useFirstTransaction';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { Account } from '$pages/accounts/account';
-import { AccountUpdateMarketValueModalFormFields } from '$pages/accounts/account-modals/account-update-market-value.modal';
+import { AccountUpdateMarketValueFormFields } from '$pages/accounts/account-modals/account-update-market-value';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 interface AccountContainerProps {
@@ -51,9 +51,9 @@ export const AccountContainer = ({ id }: AccountContainerProps) => {
   };
 
   const handleMarketValueUpdate =
-    (closeDialog: () => void) =>
+    (closeDrawer: () => void) =>
     async (
-      newAccountUpdateMarketValueData: AccountUpdateMarketValueModalFormFields
+      newAccountUpdateMarketValueData: AccountUpdateMarketValueFormFields
     ) => {
       if (!id) {
         console.error('Failure to update market value: no id');
@@ -138,9 +138,10 @@ export const AccountContainer = ({ id }: AccountContainerProps) => {
           console.error(transactionError);
         }
       } else {
-        console.log('Current value is same as previous no update needed.');
-        closeDialog();
+        console.log('Current value is same as previous, no update needed.');
       }
+
+      closeDrawer();
     };
 
   const handleMonthOptionChange = (direction: 'next' | 'previous') => {

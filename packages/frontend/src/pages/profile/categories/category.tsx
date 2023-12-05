@@ -272,28 +272,26 @@ export const Category = ({
           </ChartWrapperDynamic>
         </div>
       )}
-      <section className="flex items-center justify-between mt-6 mb-2">
-        <Heading>{`${pageVisibleMonth}, ${pageVisibleYear}`}</Heading>
-        <Pager
-          pagerOptions={{
-            nextPage: {
-              isAvailable: !(
-                filterOptions.month === initialMonthFilterOptions.month &&
-                filterOptions.year === initialMonthFilterOptions.year
-              ),
-              load: () => onMonthOptionChange('next'),
-            },
-            previousPage: {
-              isAvailable: !(
-                filterOptions.month ===
-                  firstAvailableTransaction.getMonth() + 1 &&
-                filterOptions.year === firstAvailableTransaction.getFullYear()
-              ),
-              load: () => onMonthOptionChange('previous'),
-            },
-          }}
-        ></Pager>
-      </section>
+      <Pager
+        className="mt-6 mb-2"
+        pagerOptions={{
+          nextPage: {
+            isAvailable: !(
+              filterOptions.month === initialMonthFilterOptions.month &&
+              filterOptions.year === initialMonthFilterOptions.year
+            ),
+            load: () => onMonthOptionChange('next'),
+          },
+          previousPage: {
+            isAvailable: !(
+              filterOptions.month ===
+                firstAvailableTransaction.getMonth() + 1 &&
+              filterOptions.year === firstAvailableTransaction.getFullYear()
+            ),
+            load: () => onMonthOptionChange('previous'),
+          },
+        }}
+      >{`${pageVisibleMonth} ${pageVisibleYear}`}</Pager>
       <LoaderSuspense>
         <MonthlyTransactionList monthFilterOptions={filterOptions} />
       </LoaderSuspense>

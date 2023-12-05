@@ -1,31 +1,30 @@
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { Dialog } from '../../../components/elements/dialog/dialog';
-import { IconName } from '../../../components/elements/icon/icon';
 import { Input } from '../../../components/elements/input/input';
-import { LinkListButton } from '../../../components/elements/link-list/link-list.button';
 
+import { Drawer } from '$blocks/drawer/drawer';
 import { Form } from '$blocks/form/form';
+import { Button } from '$elements/button/button';
 import { inputDateFormat } from '$utils/formatDate';
 
-interface AccountUpdateMarketValueModalProps {
+interface AccountUpdateMarketValueProps {
   onUpdate: (
-    closeDialog: () => void
-  ) => SubmitHandler<AccountUpdateMarketValueModalFormFields>;
+    closeDrawer: () => void
+  ) => SubmitHandler<AccountUpdateMarketValueFormFields>;
   currentValue: number;
 }
 
-export interface AccountUpdateMarketValueModalFormFields {
+export interface AccountUpdateMarketValueFormFields {
   currentMarketValue: number;
   date: string;
 }
 
-export const AccountUpdateMarketValueModal = ({
+export const AccountUpdateMarketValue = ({
   onUpdate,
   currentValue,
-}: AccountUpdateMarketValueModalProps) => {
-  const methods = useForm<AccountUpdateMarketValueModalFormFields>({
+}: AccountUpdateMarketValueProps) => {
+  const methods = useForm<AccountUpdateMarketValueFormFields>({
     defaultValues: {
       currentMarketValue: currentValue,
       date: inputDateFormat(new Date()),
@@ -37,25 +36,29 @@ export const AccountUpdateMarketValueModal = ({
 
   return (
     <>
-      <LinkListButton icon={IconName.trendingUp} handleClick={handleToggleOpen}>
-        Update current market value
-      </LinkListButton>
-      <Dialog isDialogOpen={isOpen} setIsDialogOpen={setIsOpen}>
+      <Button testId="update-market-value" onClick={handleToggleOpen}>
+        Update market value
+      </Button>
+      <Drawer
+        isOpen={isOpen}
+        onClose={handleToggleOpen}
+        heading="Update Market Value"
+      >
         <Form
           methods={methods}
           onSubmit={onUpdate(() => setIsOpen(false))}
           submitLabel="Update"
         >
           <div className="space-y-4">
-            <Input id="currentMarketValue" type="number" isRequired>
-              Current market value
+            <Input id="currentMarketValue" type="number" isCurrency isRequired>
+              Current Market Value
             </Input>
             <Input id="date" type="datetime-local">
               Date
             </Input>
           </div>
         </Form>
-      </Dialog>
+      </Drawer>
     </>
   );
 };
