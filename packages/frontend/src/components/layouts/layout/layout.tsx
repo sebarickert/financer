@@ -104,7 +104,7 @@ export const Layout = ({ children }: LayoutProps): JSX.Element => {
   return (
     <div className="flex flex-col h-full min-h-screen overflow-y-scroll lg:hidden">
       <main className="flex-grow bg-white lg:pb-24 min-h-screen-safe pb-safe">
-        <div className={`px-4 mt-[64px] pt-4 pb-24`} data-testid="layout-root">
+        <div className={`px-4 mt-[64px] pt-8 pb-24`} data-testid="layout-root">
           <ChildrenWithErrorBoundary>{children}</ChildrenWithErrorBoundary>
         </div>
       </main>
