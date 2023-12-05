@@ -41,13 +41,24 @@ export const ExpenseForm = ({
   submitLabel,
   initialValues,
 }: ExpenseFormProps): JSX.Element | null => {
-  const methods = useForm<ExpenseFormFields>({
-    defaultValues: {
+  const defaultValues = useMemo(
+    () => ({
       date: inputDateFormat(new Date()),
       ...initialValues,
       fromAccount: initialValues?.fromAccount || undefined,
-    },
+    }),
+    [initialValues]
+  );
+
+  const methods = useForm<ExpenseFormFields>({
+    defaultValues,
   });
+
+  const { reset } = methods;
+
+  useEffect(() => {
+    reset(defaultValues);
+  }, [defaultValues, reset]);
 
   const { data: accounts, isLoading } = useAccountsFindAllByUserQuery({});
   const accountOptions = useMemo(() => {

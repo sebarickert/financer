@@ -29,7 +29,7 @@ export const AddExpenseContainer = ({
     { skip: !templateId }
   );
 
-  const { data: transactionTemplate } = templateData;
+  const { currentData: transactionTemplate } = templateData;
 
   const handleSubmit = async (newExpenseData: CreateExpenseDto) => {
     try {

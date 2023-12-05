@@ -28,8 +28,10 @@ export const TransactionTemplateSwitcher = ({
 }: TransactionTemplateSwitcherProps): JSX.Element | null => {
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
-  const { data: transactionTemplates = [], isLoading: isLoadingTemplates } =
-    useTransactionTemplatesFindAllManualTypeByUserQuery();
+  const {
+    currentData: transactionTemplates = [],
+    isLoading: isLoadingTemplates,
+  } = useTransactionTemplatesFindAllManualTypeByUserQuery();
 
   const targetTemplates = useMemo(
     () =>

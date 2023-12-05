@@ -41,13 +41,24 @@ export const IncomeForm = ({
   submitLabel,
   initialValues,
 }: IncomeFormProps): JSX.Element | null => {
-  const methods = useForm<IncomeFormFields>({
-    defaultValues: {
+  const defaultValues = useMemo(
+    () => ({
       date: inputDateFormat(new Date()),
       ...initialValues,
       toAccount: initialValues?.toAccount || undefined,
-    },
+    }),
+    [initialValues]
+  );
+
+  const methods = useForm<IncomeFormFields>({
+    defaultValues,
   });
+
+  const { reset } = methods;
+
+  useEffect(() => {
+    reset(defaultValues);
+  }, [defaultValues, reset]);
 
   const { data: accounts, isLoading } = useAccountsFindAllByUserQuery({});
 
