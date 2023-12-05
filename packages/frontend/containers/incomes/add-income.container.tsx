@@ -56,7 +56,7 @@ export const AddIncomeContainer = ({ templateId }: AddIncomeContainerProps) => {
       {(!templateId || transactionTemplate) && (
         <AddIncome
           defaultIncomeAccount={defaultIncomeAccount}
-          incomeTemplate={transactionTemplate}
+          template={transactionTemplate}
           isLoading={isLoading}
           isCreating={isCreating}
           errors={errors}

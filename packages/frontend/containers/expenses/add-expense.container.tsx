@@ -58,7 +58,7 @@ export const AddExpenseContainer = ({
       {(!templateId || transactionTemplate) && (
         <AddExpense
           defaultExpenseAccount={defaultExpenseAccount}
-          expenseTemplate={transactionTemplate}
+          template={transactionTemplate}
           isLoading={isLoading}
           isCreating={isCreating}
           errors={errors}

@@ -50,6 +50,7 @@ export const IncomeForm = ({
   });
 
   const { data: accounts, isLoading } = useAccountsFindAllByUserQuery({});
+
   const accountOptions = useMemo(() => {
     if (!accounts) return [];
     return accounts.data.map(({ _id, name }) => ({
@@ -57,11 +58,13 @@ export const IncomeForm = ({
       label: name,
     }));
   }, [accounts]);
+
   const { data: transactionCategoriesRaw } =
     useAllTransactionCategoriesWithCategoryTree({
       visibilityType:
         VisibilityTypeEnum.Income as unknown as VisibilityType2Enum,
     });
+
   const [transactionCategories, setTransactionCategories] = useState<Option[]>(
     []
   );

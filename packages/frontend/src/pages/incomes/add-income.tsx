@@ -14,7 +14,7 @@ import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
 interface AddIncomeProps {
   defaultIncomeAccount?: string;
-  incomeTemplate?: TransactionTemplateDto;
+  template?: TransactionTemplateDto;
   isLoading: boolean;
   isCreating: boolean;
   errors: string[];
@@ -23,26 +23,26 @@ interface AddIncomeProps {
 
 export const AddIncome = ({
   defaultIncomeAccount,
-  incomeTemplate,
+  template,
   isLoading,
   isCreating,
   errors,
   onSubmit,
 }: AddIncomeProps): JSX.Element => {
   const initialValues = useMemo(() => {
-    if (!incomeTemplate) {
+    if (!template) {
       return { toAccount: defaultIncomeAccount };
     }
-    const categories = incomeTemplate?.categories?.map((categoryId) => ({
+    const categories = template?.categories?.map((categoryId) => ({
       category_id: categoryId,
       amount: NaN,
     }));
 
     return {
-      ...incomeTemplate,
+      ...template,
       categories,
     };
-  }, [defaultIncomeAccount, incomeTemplate]);
+  }, [defaultIncomeAccount, template]);
 
   return (
     <>
@@ -51,6 +51,7 @@ export const AddIncome = ({
         title="Add Income"
         headerAction={
           <TransactionTemplateSwitcher
+            selectedTemplate={template?._id}
             templateType={TransactionTypeEnum.Income}
           />
         }
