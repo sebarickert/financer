@@ -15,7 +15,7 @@ import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 interface AddTransferProps {
   defaultTransferSourceAccount?: string;
   defaultTransferTargetAccount?: string;
-  transferTemplate?: TransactionTemplateDto;
+  template?: TransactionTemplateDto;
   isLoading: boolean;
   isCreating: boolean;
   errors: string[];
@@ -25,33 +25,29 @@ interface AddTransferProps {
 export const AddTransfer = ({
   defaultTransferSourceAccount,
   defaultTransferTargetAccount,
-  transferTemplate,
+  template,
   isLoading,
   isCreating,
   errors,
   onSubmit,
 }: AddTransferProps): JSX.Element => {
   const initialValues = useMemo(() => {
-    if (!transferTemplate) {
+    if (!template) {
       return {
         fromAccount: defaultTransferSourceAccount,
         toAccount: defaultTransferTargetAccount,
       };
     }
-    const categories = transferTemplate?.categories?.map((categoryId) => ({
+    const categories = template?.categories?.map((categoryId) => ({
       category_id: categoryId,
       amount: NaN,
     }));
 
     return {
-      ...transferTemplate,
+      ...template,
       categories,
     };
-  }, [
-    defaultTransferSourceAccount,
-    defaultTransferTargetAccount,
-    transferTemplate,
-  ]);
+  }, [defaultTransferSourceAccount, defaultTransferTargetAccount, template]);
   return (
     <>
       {isCreating && <LoaderFullScreen />}
@@ -59,6 +55,7 @@ export const AddTransfer = ({
         title="Add Transfer"
         headerAction={
           <TransactionTemplateSwitcher
+            selectedTemplate={template?._id}
             templateType={TransactionTypeEnum.Transfer}
           />
         }

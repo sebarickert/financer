@@ -56,6 +56,11 @@ export const TransactionTemplateSwitcher = ({
     setIsOpen(!isOpen);
   };
 
+  const onClose = () => {
+    setIsOpen(false);
+    dispatch(setHeaderActionState(false));
+  };
+
   if (!targetTemplates.length) return null;
 
   return (
@@ -68,11 +73,7 @@ export const TransactionTemplateSwitcher = ({
         <span className="sr-only">Switch template</span>
         <Icon type={IconName.lightningBolt} />
       </ButtonPlain>
-      <Drawer
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-        heading="Switch template"
-      >
+      <Drawer isOpen={isOpen} onClose={onClose} heading="Switch template">
         <form onSubmit={handleSubmit}>
           <section className="-mx-4">
             <RadioGroup>

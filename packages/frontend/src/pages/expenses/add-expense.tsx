@@ -14,7 +14,7 @@ import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
 interface AddExpenseProps {
   defaultExpenseAccount?: string;
-  expenseTemplate?: TransactionTemplateDto;
+  template?: TransactionTemplateDto;
   isLoading: boolean;
   isCreating: boolean;
   errors: string[];
@@ -23,26 +23,26 @@ interface AddExpenseProps {
 
 export const AddExpense = ({
   defaultExpenseAccount,
-  expenseTemplate,
+  template,
   isLoading,
   isCreating,
   errors,
   onSubmit,
 }: AddExpenseProps): JSX.Element => {
   const initialValues = useMemo(() => {
-    if (!expenseTemplate) {
+    if (!template) {
       return { fromAccount: defaultExpenseAccount };
     }
-    const categories = expenseTemplate?.categories?.map((categoryId) => ({
+    const categories = template?.categories?.map((categoryId) => ({
       category_id: categoryId,
       amount: NaN,
     }));
 
     return {
-      ...expenseTemplate,
+      ...template,
       categories,
     };
-  }, [defaultExpenseAccount, expenseTemplate]);
+  }, [defaultExpenseAccount, template]);
 
   return (
     <>
@@ -51,6 +51,7 @@ export const AddExpense = ({
         title="Add Expense"
         headerAction={
           <TransactionTemplateSwitcher
+            selectedTemplate={template?._id}
             templateType={TransactionTypeEnum.Expense}
           />
         }

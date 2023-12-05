@@ -67,7 +67,7 @@ export const AddTransferContainer = ({
         <AddTransfer
           defaultTransferSourceAccount={defaultTransferSourceAccount}
           defaultTransferTargetAccount={defaultTransferTargetAccount}
-          transferTemplate={transactionTemplate}
+          template={transactionTemplate}
           isLoading={isLoading}
           isCreating={isCreating}
           errors={errors}

@@ -27,7 +27,7 @@ export const TransactionCategoriesItem = ({
 
   const isEmptyCategory = isNaN(parseInt(`${values.amount}`));
 
-  if (isEmptyCategory) return null;
+  const categoryAmount = isEmptyCategory ? '-' : amount;
 
   return (
     <li className="grid grid-cols-[1fr,auto] items-center relative py-2">
@@ -36,7 +36,7 @@ export const TransactionCategoriesItem = ({
         <span className="truncate">
           <span>
             <span className="sr-only">Amount: </span>
-            {amount} €
+            {categoryAmount} €
           </span>
           {description && (
             <>
