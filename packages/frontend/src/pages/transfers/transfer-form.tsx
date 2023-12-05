@@ -16,7 +16,7 @@ import { Alert } from '$elements/alert/alert';
 import { IconName } from '$elements/icon/icon';
 import { Input } from '$elements/input/input';
 import { Loader } from '$elements/loader/loader';
-import { Select, Option } from '$elements/select/select';
+import { Option } from '$elements/select/select';
 import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
 import { inputDateFormat } from '$utils/formatDate';
 
@@ -42,14 +42,25 @@ export const TransferForm = ({
   submitLabel,
   initialValues,
 }: TransferFormProps): JSX.Element | null => {
-  const methods = useForm<TransferFormFields>({
-    defaultValues: {
+  const defaultValues = useMemo(
+    () => ({
       date: inputDateFormat(new Date()),
       ...initialValues,
       fromAccount: initialValues?.fromAccount || undefined,
       toAccount: initialValues?.toAccount || undefined,
-    },
+    }),
+    [initialValues]
+  );
+
+  const methods = useForm<TransferFormFields>({
+    defaultValues,
   });
+
+  const { reset } = methods;
+
+  useEffect(() => {
+    reset(defaultValues);
+  }, [defaultValues, reset]);
 
   const { data: accounts, isLoading } = useAccountsFindAllByUserQuery({});
   const accountOptions = useMemo(() => {
