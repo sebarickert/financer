@@ -1,20 +1,24 @@
 import clsx from 'clsx';
 
 import { AccountBalanceHistoryChart } from './account-balance-history-chart';
-import { AccountDeleteModal } from './account-modals/account-delete.modal';
+import { AccountDelete } from './account-modals/account-delete';
 import {
-  AccountUpdateMarketValueModal,
-  AccountUpdateMarketValueModalFormFields,
-} from './account-modals/account-update-market-value.modal';
+  AccountUpdateMarketValue,
+  AccountUpdateMarketValueFormFields,
+} from './account-modals/account-update-market-value';
 
 import { AccountDto } from '$api/generated/financerApi';
+import { accountTypeIconMapping } from '$blocks/accounts-list/accounts-list';
+import { BalanceDisplay } from '$blocks/balance-display/balance-display';
 import { LatestAccountTransactions } from '$blocks/latest-account-transactions/latest-account-transactions';
 import { initialMonthFilterOptions } from '$blocks/monthly-transaction-list/monthly-transaction-list';
 import { Pager } from '$blocks/pager/pager';
 import { monthNames } from '$constants/months';
 import { Alert } from '$elements/alert/alert';
+import { ButtonGroup } from '$elements/button/button.group';
+import { ButtonInternal } from '$elements/button/button.internal';
 import { Heading } from '$elements/heading/heading';
-import { IconName } from '$elements/icon/icon';
+import { Icon, IconName } from '$elements/icon/icon';
 import { InfoCard } from '$elements/info-card/info-card';
 import { LinkList } from '$elements/link-list/link-list';
 import { LinkListLink } from '$elements/link-list/link-list.link';
@@ -33,7 +37,7 @@ interface AccountProps {
   onMonthOptionChange: (direction: 'next' | 'previous') => void;
   onMarketValueUpdate: (
     closeDialog: () => void
-  ) => (value: AccountUpdateMarketValueModalFormFields) => void;
+  ) => (value: AccountUpdateMarketValueFormFields) => void;
   onDelete: () => void;
 }
 
@@ -53,44 +57,45 @@ export const Account = ({
   return (
     <>
       {isLoading && <LoaderFullScreen />}
-      <UpdatePageInfo title={`${account.name}`} backLink="/accounts" />
+      <UpdatePageInfo
+        title={`Account Details`}
+        backLink="/accounts"
+        headerAction={
+          <ButtonInternal
+            link={`/accounts/${account._id}/edit`}
+            className="inline-flex items-center justify-center -mr-3 h-11 w-11"
+          >
+            <span className="sr-only">Edit</span>
+            <Icon type={IconName.pencilSquare} />
+          </ButtonInternal>
+        }
+      />
       {errors.length > 0 && (
         <Alert additionalInformation={errors} testId="account-page-errors">
           There were {errors.length} errors with your submission
         </Alert>
       )}
-      <section className={'mb-6 grid md:grid-cols-2 gap-4 md:gap-6'}>
-        <section className={clsx('grid gap-2')}>
-          <InfoCard label="Balance" testId="account-balance" isLarge>
-            {formatCurrency(account.balance)}
-          </InfoCard>
-          <InfoCard label="Type" testId="account-type" isSmall>
-            {capitalize(account.type)}
-          </InfoCard>
-        </section>
-        <LinkList isVertical>
+      <section>
+        <BalanceDisplay
+          amount={account.balance}
+          iconName={accountTypeIconMapping[account.type]}
+        >
+          {account.name}
+        </BalanceDisplay>
+        <LoaderSuspense>
+          <AccountBalanceHistoryChart accountId={account._id} />
+        </LoaderSuspense>
+        <div className="grid gap-2 mt-6">
           {account.type === 'investment' && (
-            <AccountUpdateMarketValueModal
+            <AccountUpdateMarketValue
               currentValue={account.balance}
               onUpdate={onMarketValueUpdate}
             />
           )}
-          <LinkListLink
-            link={`/accounts/${account._id}/edit`}
-            testId="edit-account"
-            icon={IconName.cog}
-          >
-            Edit account
-          </LinkListLink>
-          <AccountDeleteModal onDelete={onDelete} />
-        </LinkList>
-      </section>
-      <LoaderSuspense>
-        <AccountBalanceHistoryChart accountId={account._id} />
-      </LoaderSuspense>
-      <section className="flex items-center justify-between mt-8 mb-2">
-        <Heading>{`${pageVisibleMonth}, ${pageVisibleYear}`}</Heading>
+          <AccountDelete onDelete={onDelete} />
+        </div>
         <Pager
+          className="mt-8 mb-2"
           pagerOptions={{
             nextPage: {
               isAvailable: !(
@@ -108,14 +113,14 @@ export const Account = ({
               load: () => onMonthOptionChange('previous'),
             },
           }}
-        />
+        >{`${pageVisibleMonth} ${pageVisibleYear}`}</Pager>
+        <LoaderSuspense>
+          <LatestAccountTransactions
+            accountId={account._id}
+            filterOptions={filterOptions}
+          />
+        </LoaderSuspense>
       </section>
-      <LoaderSuspense>
-        <LatestAccountTransactions
-          accountId={account._id}
-          filterOptions={filterOptions}
-        />
-      </LoaderSuspense>
     </>
   );
 };

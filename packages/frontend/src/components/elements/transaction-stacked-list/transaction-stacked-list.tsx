@@ -60,7 +60,7 @@ export const TransactionStackedList = ({
       {pagerOptions.pageCount &&
         pagerOptions.pageCount > 1 &&
         !isPagerHidden && (
-          <Pager isCentered className="mt-4" pagerOptions={pagerOptions} />
+          <Pager className="mt-4" pagerOptions={pagerOptions} />
         )}
     </section>
   );

@@ -84,7 +84,7 @@ export const TransactionStackedListRow = ({
           </span>
           <Icon
             type={IconName.chevronRight}
-            className="flex-shrink-0 pointer-events-none stroke-gray-darkest"
+            className="flex-shrink-0 pointer-events-none stroke-gray-darkest -mr-1.5"
           />
         </span>
       </LinkViewTransition>

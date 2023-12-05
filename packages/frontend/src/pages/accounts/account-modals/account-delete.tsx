@@ -4,32 +4,29 @@ import { Drawer } from '$blocks/drawer/drawer';
 import { Button } from '$elements/button/button';
 import { ButtonGroup } from '$elements/button/button.group';
 
-interface TransactionDeleteProps {
+interface AccountDeleteProps {
   onDelete: () => void;
 }
 
-export const TransactionDelete = ({ onDelete }: TransactionDeleteProps) => {
+export const AccountDelete = ({ onDelete }: AccountDeleteProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleCancel = () => {
-    setIsOpen(!isOpen);
-  };
+  const handleToggleOpen = () => setIsOpen(!isOpen);
 
   return (
     <>
       <Button
-        className="mt-12"
         accentColor="red"
-        testId="transaction-delete-button"
-        onClick={() => setIsOpen(!isOpen)}
+        testId="delete-account"
+        onClick={handleToggleOpen}
       >
         Delete
       </Button>
       <Drawer
         isOpen={isOpen}
-        onClose={handleCancel}
-        heading="Delete Transaction"
-        description="Are you sure you want to permanently delete this transaction?"
+        onClose={handleToggleOpen}
+        heading="Delete Account"
+        description="Are you sure you want to permanently delete this account?"
       >
         <ButtonGroup isReverse isHorizontal>
           <Button className="sm:mt-6" accentColor="red" onClick={onDelete}>
@@ -37,7 +34,7 @@ export const TransactionDelete = ({ onDelete }: TransactionDeleteProps) => {
           </Button>
           <Button
             className="sm:mt-6"
-            onClick={handleCancel}
+            onClick={handleToggleOpen}
             accentColor="plain"
           >
             Cancel

@@ -39,7 +39,7 @@ export const LinkListLink = ({
           />
         </span>
       )}
-      <span className="text-base items-center flex justify-between font-medium tracking-tight py-5 pr-4 after:h-[1px] after:w-full after:absolute after:bg-gray-dark after:bottom-0 flex-1 overflow-hidden">
+      <span className="text-base items-center flex -mr-1.5 justify-between font-medium tracking-tight py-5 pr-4 after:h-[1px] after:w-full after:absolute after:bg-gray-dark after:bottom-0 flex-1 overflow-hidden">
         <span className="truncate">{children}</span>
         <Icon
           type={IconName.chevronRight}

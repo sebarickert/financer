@@ -30,28 +30,26 @@ export const Statistics = ({
     <>
       <UpdatePageInfo title="Statistics" />
       <MonthlySummaryGraph className="mb-6" />
-      <section className="flex items-end justify-between mb-4">
-        <Heading>{`${pageVisibleMonth}, ${pageVisibleYear}`}</Heading>
-        <Pager
-          pagerOptions={{
-            nextPage: {
-              isAvailable: !(
-                filterOptions.month === initialMonthFilterOptions.month &&
-                filterOptions.year === initialMonthFilterOptions.year
-              ),
-              load: () => onMonthOptionChange('next'),
-            },
-            previousPage: {
-              isAvailable: !(
-                filterOptions.month ===
-                  firstAvailableTransaction.getMonth() + 1 &&
-                filterOptions.year === firstAvailableTransaction.getFullYear()
-              ),
-              load: () => onMonthOptionChange('previous'),
-            },
-          }}
-        />
-      </section>
+      <Pager
+        className="mb-4"
+        pagerOptions={{
+          nextPage: {
+            isAvailable: !(
+              filterOptions.month === initialMonthFilterOptions.month &&
+              filterOptions.year === initialMonthFilterOptions.year
+            ),
+            load: () => onMonthOptionChange('next'),
+          },
+          previousPage: {
+            isAvailable: !(
+              filterOptions.month ===
+                firstAvailableTransaction.getMonth() + 1 &&
+              filterOptions.year === firstAvailableTransaction.getFullYear()
+            ),
+            load: () => onMonthOptionChange('previous'),
+          },
+        }}
+      >{`${pageVisibleMonth} ${pageVisibleYear}`}</Pager>
       <LoaderSuspense>
         <MonthlyTransactionList
           monthFilterOptions={filterOptions}
