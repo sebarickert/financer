@@ -30,6 +30,8 @@ services:
       - ME_CONFIG_MONGODB_AUTH_USERNAME=admin
       - ME_CONFIG_MONGODB_AUTH_PASSWORD=change-me
       - ME_CONFIG_MONGODB_ENABLE_ADMIN=false
+      - ME_CONFIG_BASICAUTH_USERNAME=admin
+      - ME_CONFIG_BASICAUTH_PASSWORD=admin
     depends_on:
       - mongodb
     ports:
