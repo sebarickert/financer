@@ -3,6 +3,8 @@
     "baseUrl": "./",
     "paths": {
       "$api/*": ["./src/redux/api/*"],
+      "$reducer/*": ["./src/redux/reducer/*"],
+      "$store/*": ["./src/redux/store"],
       "$blocks/*": ["./src/components/blocks/*"],
       "$elements/*": ["./src/components/elements/*"],
       "$layouts/*": ["./src/components/layouts/*"],
@@ -12,6 +14,7 @@
       "$assets/*": ["./src/assets/*"],
       "$utils/*": ["./src/utils/*"],
       "$constants/*": ["./src/constants/*"],
+      "$context/*": ["./src/context/*"],
       "$container/*": ["./containers/*"]
     }
   }

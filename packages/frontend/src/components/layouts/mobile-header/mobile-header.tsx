@@ -1,14 +1,16 @@
 import { clsx } from 'clsx';
 
-import { usePageInfoContext } from '../../../context/pageInfoContext';
-
+import { usePageInfoContext } from '$context/pageInfoContext';
 import { Heading } from '$elements/heading/heading';
 import { Icon, IconName } from '$elements/icon/icon';
 import { LinkViewTransition } from '$elements/link/link-view-transition';
+import { useAppSelector } from '$store/*';
 
 export const MobileHeader = (): JSX.Element => {
   const [{ title, backLink, headerAction, toolbarColor }] =
     usePageInfoContext();
+
+  const { isHeaderActionActive } = useAppSelector((state) => state.app);
 
   const hasBackLinkAndOrAction = !!backLink || !!headerAction;
 
@@ -21,6 +23,7 @@ export const MobileHeader = (): JSX.Element => {
           ['border-b-gray-dark']: hasBackLinkAndOrAction,
           ['bg-white']: !toolbarColor || toolbarColor === 'white',
           ['bg-neutral-900']: toolbarColor === 'black',
+          ['z-[101]']: isHeaderActionActive,
         }
       )}
     >
