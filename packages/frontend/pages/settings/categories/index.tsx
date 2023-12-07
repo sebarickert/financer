@@ -1,4 +1,4 @@
-import { CategoryListingContainer } from '$container/categories/category-listing.container';
+import { CategoryListingContainer } from '$container/categories/category.listing.container';
 
 const CategoryListingPage = () => {
   return <CategoryListingContainer />;

@@ -4,11 +4,12 @@ import {
   CreateTransactionCategoryDto,
   useTransactionCategoriesCreateMutation,
 } from '$api/generated/financerApi';
+import { settingsPaths } from '$constants/settings-paths';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { AddCategory } from '$pages/settings/categories/add-category';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
-export const AddCategoryContainer = () => {
+export const CategoryAddContainer = () => {
   const { push } = useViewTransitionRouter();
   const [errors, setErrors] = useState<string[]>([]);
   const [addTransactionCategory, { isLoading: isCreating }] =
@@ -27,7 +28,7 @@ export const AddCategoryContainer = () => {
         },
       }).unwrap();
 
-      push('/profile/transaction-categories');
+      push(settingsPaths.categories);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (error.status === 400 || error.status === 404) {

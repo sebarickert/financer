@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import {
@@ -42,6 +42,36 @@ export interface TemplateFormFields {
   categories: TransactionCategoriesFormFields[];
 }
 
+const TransactionCategoriesFormWrapper = ({
+  type,
+}: {
+  type: VisibilityTypeEnum;
+}): JSX.Element | null => {
+  const { data: transactionCategoriesRaw } =
+    useAllTransactionCategoriesWithCategoryTree({
+      visibilityType: type as unknown as VisibilityType2Enum,
+    });
+
+  const transactionCategories: Option[] = useMemo(() => {
+    if (!transactionCategoriesRaw) return [];
+
+    return transactionCategoriesRaw.map(({ _id, categoryTree }) => ({
+      value: _id,
+      label: categoryTree,
+    }));
+  }, [transactionCategoriesRaw]);
+
+  if (!transactionCategories.length) return <Loader />;
+
+  return (
+    <TransactionCategories
+      className="my-8 space-y-8"
+      categorySelectOnly
+      transactionCategories={transactionCategories}
+    />
+  );
+};
+
 export const TemplateForm = ({
   errors,
   onSubmit,
@@ -80,42 +110,6 @@ export const TemplateForm = ({
 
     return VisibilityTypeEnum.Transfer;
   }, [templateVisibility]);
-
-  const TransactionCategoriesFormWrapper = ({
-    type,
-  }: {
-    type: VisibilityTypeEnum;
-  }): JSX.Element | null => {
-    const { data: transactionCategoriesRaw } =
-      useAllTransactionCategoriesWithCategoryTree({
-        visibilityType: type as unknown as VisibilityType2Enum,
-      });
-
-    const [transactionCategories, setTransactionCategories] = useState<
-      Option[]
-    >([]);
-
-    useEffect(() => {
-      if (!transactionCategoriesRaw) return;
-
-      setTransactionCategories(
-        transactionCategoriesRaw.map(({ _id, categoryTree }) => ({
-          value: _id,
-          label: categoryTree,
-        }))
-      );
-    }, [transactionCategoriesRaw]);
-
-    if (!transactionCategories.length) return <Loader />;
-
-    return (
-      <TransactionCategories
-        className="my-8 space-y-8"
-        categorySelectOnly
-        transactionCategories={transactionCategories}
-      />
-    );
-  };
 
   const templateTypes = (
     Object.keys(

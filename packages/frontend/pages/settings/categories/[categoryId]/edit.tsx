@@ -1,12 +1,12 @@
-import { EditCategoryContainer } from '$container/categories/edit-category.container';
+import { CategoryEditContainer } from '$container/categories/category.edit.container';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 
-const EditCategoryPage = () => {
+const CategoryEditPage = () => {
   const {
     query: { categoryId },
   } = useViewTransitionRouter();
 
-  return <EditCategoryContainer id={categoryId as string} />;
+  return <CategoryEditContainer id={categoryId as string} />;
 };
 
-export default EditCategoryPage;
+export default CategoryEditPage;

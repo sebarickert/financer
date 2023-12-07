@@ -92,13 +92,14 @@ export const TransactionCategories = ({
     setIsFormOpen(true);
   };
 
-  // @todo: get this to work.... remove categories when changing type
-  // useEffect(() => {
-  //   if (!categorySelectOnly) return;
+  useEffect(() => {
+    if (!categorySelectOnly) return;
 
-  //   setSelectedIndex(defaultSelectedIndex);
-  //   reset({ categories: [] });
-  // }, [categorySelectOnly, reset, transactionCategories]);
+    setSelectedIndex(defaultSelectedIndex);
+    reset((oldValues) => ({ ...oldValues, categories: [] }));
+  }, [categorySelectOnly, reset, transactionCategories]);
+
+  console.log(transactionAmount);
 
   return (
     <>
