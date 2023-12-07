@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 
 import { TransactionCategoriesForm } from './transaction-categories.form';
@@ -35,24 +35,12 @@ export const TransactionCategories = ({
   const [selectedIndex, setSelectedIndex] = useState(defaultSelectedIndex);
   const [isFormOpen, setIsFormOpen] = useState(false);
 
-  const { getValues, watch, setValue } = useFormContext<FieldArrayFields>();
-  const {
-    fields: rawFields,
-    remove,
-    update,
-  } = useFieldArray<FieldArrayFields>({
+  const { getValues, setValue, reset } = useFormContext<FieldArrayFields>();
+  const { fields, remove, update } = useFieldArray<FieldArrayFields>({
     name: 'categories',
   });
 
   const transactionAmount = useWatch({ name: 'amount' });
-  const watchFieldArray = watch('categories');
-
-  const fields = rawFields.map((field, index) => {
-    return {
-      ...field,
-      ...watchFieldArray[index],
-    };
-  });
 
   const isNewCategory = !fields[selectedIndex];
 
@@ -90,7 +78,7 @@ export const TransactionCategories = ({
 
   const handleSubmit = () => {
     // @todo: some kind of input error needed.
-    if (isEmptyCategory(selectedIndex)) {
+    if (isEmptyCategory(selectedIndex) && !categorySelectOnly) {
       return;
     }
 
@@ -103,6 +91,14 @@ export const TransactionCategories = ({
     setSelectedIndex(index);
     setIsFormOpen(true);
   };
+
+  // @todo: get this to work.... remove categories when changing type
+  // useEffect(() => {
+  //   if (!categorySelectOnly) return;
+
+  //   setSelectedIndex(defaultSelectedIndex);
+  //   reset({ categories: [] });
+  // }, [categorySelectOnly, reset, transactionCategories]);
 
   return (
     <>

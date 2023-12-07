@@ -6,7 +6,7 @@ import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import {
   UserTransactionListChunkSize,
   UserTransactionListChunkSizeFormFields,
-} from '$pages/profile/user-preferences/preferences/user-transaction-list-chunk-size';
+} from '$pages/settings/user-preferences/preferences/user-transaction-list-chunk-size';
 
 export const MaximumItemsPerPageContainer = () => {
   const { push } = useViewTransitionRouter();

@@ -5,7 +5,7 @@ import {
   CategoriesListRowItemProps,
   CategoriesListRowProps,
   CategoryListing,
-} from '$pages/profile/categories/category-listing';
+} from '$pages/settings/categories/category-listing';
 
 const generateCategoryGroupChild = (
   childName: CategoriesListRowItemProps['label'],

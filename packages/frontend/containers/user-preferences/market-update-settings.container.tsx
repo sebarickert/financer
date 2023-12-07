@@ -7,7 +7,7 @@ import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import {
   UserDefaultMarketUpdateSettings,
   UserDefaultMarketUpdateSettingsFormFields,
-} from '$pages/profile/user-preferences/preferences/user-default-market-update-settings';
+} from '$pages/settings/user-preferences/preferences/user-default-market-update-settings';
 
 export const MarketUpdateSettingsContainer = () => {
   const { push } = useViewTransitionRouter();

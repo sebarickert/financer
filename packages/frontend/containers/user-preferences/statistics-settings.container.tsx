@@ -6,7 +6,7 @@ import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import {
   UserStatisticsSettings,
   UserStatisticsSettingsFormFields,
-} from '$pages/profile/user-preferences/preferences/user-statistics-settings';
+} from '$pages/settings/user-preferences/preferences/user-statistics-settings';
 
 export const StatisticsSettingsContainer = () => {
   const { push } = useViewTransitionRouter();

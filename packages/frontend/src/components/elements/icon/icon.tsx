@@ -11,6 +11,7 @@ import { IconChevronLeft } from './svgs/icon.chevronLeft';
 import { IconChevronRight } from './svgs/icon.chevronRight';
 import { IconCloudDownload } from './svgs/icon.cloudDownload';
 import { IconCog } from './svgs/icon.cog';
+import { IconCogSolid } from './svgs/icon.cog.solid';
 import { IconCollection } from './svgs/icon.collection';
 import { IconCreditCard } from './svgs/icon.creditCard';
 import { IconDocumentReport } from './svgs/icon.documentReport';
@@ -201,6 +202,9 @@ export const Icon = ({
 
     case 'cog':
       return <IconCog className={defaultIconClasses} />;
+
+    case 'cog-solid':
+      return <IconCogSolid className={defaultIconClasses} />;
 
     case 'trending-up':
       return <IconTrendingUp className={defaultIconClasses} />;

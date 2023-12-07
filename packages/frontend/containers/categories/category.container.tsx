@@ -10,7 +10,7 @@ import { DataHandler } from '$blocks/data-handler/data-handler';
 import { initialMonthFilterOptions } from '$blocks/monthly-transaction-list/monthly-transaction-list';
 import { useFirstTransaction } from '$hooks/transaction/useFirstTransaction';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { Category } from '$pages/profile/categories/category';
+import { Category } from '$pages/settings/categories/category';
 
 interface CategoryContainerProps {
   id: string;

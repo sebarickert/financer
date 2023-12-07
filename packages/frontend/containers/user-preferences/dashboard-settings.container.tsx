@@ -6,7 +6,7 @@ import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import {
   UserDashboardSettings,
   UserDashboardSettingsFormFields,
-} from '$pages/profile/user-preferences/preferences/user-dashboard-settings';
+} from '$pages/settings/user-preferences/preferences/user-dashboard-settings';
 
 export const DashboardSettingsContainer = () => {
   const { push } = useViewTransitionRouter();

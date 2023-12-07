@@ -7,7 +7,7 @@ import {
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { EditCategory } from '$pages/profile/categories/edit-category';
+import { EditCategory } from '$pages/settings/categories/edit-category';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 interface EditCategoryContainerProps {
