@@ -5,6 +5,7 @@ import { getAllChildCategoryIds } from '../../../services/TransactionCategoriesS
 
 import { VisibilityType, VisibilityTypeEnum } from '$api/generated/financerApi';
 import { Form } from '$blocks/form/form';
+import { settingsPaths } from '$constants/settings-paths';
 import { Alert } from '$elements/alert/alert';
 import { Checkbox } from '$elements/checkbox/checkbox';
 import { CheckboxGroup } from '$elements/checkbox/checkbox.group';
@@ -81,15 +82,11 @@ export const CategoryForm = ({
         methods={methods}
         submitLabel={submitLabel}
         onSubmit={onSubmit}
-        formFooterBackLink="/profile/transaction-categories"
+        formFooterBackLink={settingsPaths.categories}
         optionalFooterComponent={optionalFooterComponent}
       >
         <div className="grid gap-y-6 gap-x-4">
-          <Input
-            id="name"
-            help="Name of the transaction category, e.g. food, hobby, car, etc."
-            isRequired
-          >
+          <Input id="name" isRequired>
             Name
           </Input>
           <CheckboxGroup testId="visibility-checkboxes">

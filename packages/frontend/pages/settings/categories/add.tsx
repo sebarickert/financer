@@ -1,7 +1,7 @@
-import { AddCategoryContainer } from '$container/categories/add-category.container';
+import { CategoryAddContainer } from '$container/categories/category.add.container';
 
-const AddCategoryPage = () => {
-  return <AddCategoryContainer />;
+const CategoryAddPage = () => {
+  return <CategoryAddContainer />;
 };
 
-export default AddCategoryPage;
+export default CategoryAddPage;

@@ -10,11 +10,11 @@ import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { EditCategory } from '$pages/settings/categories/edit-category';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
-interface EditCategoryContainerProps {
+interface CategoryEditContainerProps {
   id: string;
 }
 
-export const EditCategoryContainer = ({ id }: EditCategoryContainerProps) => {
+export const CategoryEditContainer = ({ id }: CategoryEditContainerProps) => {
   const { push } = useViewTransitionRouter();
   const [errors, setErrors] = useState<string[]>([]);
 
