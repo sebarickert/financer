@@ -3,11 +3,9 @@ import { useCallback } from 'react';
 import {
   useTransfersFindOneQuery,
   useAccountsFindOneByIdQuery,
-  useTransfersRemoveMutation,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
 import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
-import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { Transfer } from '$pages/transfers/transfer';
 
 interface TransferContainerProps {
@@ -15,7 +13,6 @@ interface TransferContainerProps {
 }
 
 export const TransferContainer = ({ id }: TransferContainerProps) => {
-  const { push } = useViewTransitionRouter();
   const transferData = useTransfersFindOneQuery({ id });
   const { data: transfer } = transferData;
 
@@ -32,8 +29,6 @@ export const TransferContainer = ({ id }: TransferContainerProps) => {
 
   const { data: transactionCategories } =
     useAllTransactionCategoriesWithCategoryTree();
-  const [deleteTransfer, { isLoading: isDeleting }] =
-    useTransfersRemoveMutation();
 
   const getCategoryNameById = useCallback(
     (categoryId: string) =>
@@ -42,25 +37,14 @@ export const TransferContainer = ({ id }: TransferContainerProps) => {
     [transactionCategories]
   );
 
-  const handleDelete = useCallback(async () => {
-    if (!id) {
-      console.error('Failed to delete transfer: no id');
-      return;
-    }
-    await deleteTransfer({ id }).unwrap();
-    push('/statistics/transfers');
-  }, [deleteTransfer, id, push]);
-
   return (
     <>
       <DataHandler {...transferData} />
       {transfer && (
         <Transfer
-          isLoading={isDeleting}
           transfer={transfer}
           fromAccountName={fromAccount?.name}
           toAccountName={toAccount?.name}
-          onDelete={handleDelete}
           getCategoryNameById={getCategoryNameById}
         />
       )}

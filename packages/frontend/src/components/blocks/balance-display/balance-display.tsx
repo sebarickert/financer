@@ -80,7 +80,7 @@ export const BalanceDisplay = ({
           <span className="sr-only">Amount:</span>
           {balance}
         </p>
-        <p className="text-base">
+        <p className="text-lg">
           <span className="sr-only">Description:</span>
           {children}
         </p>

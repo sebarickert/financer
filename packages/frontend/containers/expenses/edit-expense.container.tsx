@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import {
   UpdateExpenseDto,
   useExpensesFindOneQuery,
+  useExpensesRemoveMutation,
   useExpensesUpdateMutation,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
@@ -21,6 +22,7 @@ export const EditExpenseContainer = ({ id }: EditExpenseContainerProps) => {
   const expenseData = useExpensesFindOneQuery({ id });
   const { data: expense } = expenseData;
   const [editExpense, { isLoading: isSaving }] = useExpensesUpdateMutation();
+  const [deleteExpense] = useExpensesRemoveMutation();
 
   const handleSubmit = async (newExpenseData: UpdateExpenseDto) => {
     if (!id) {
@@ -45,6 +47,16 @@ export const EditExpenseContainer = ({ id }: EditExpenseContainerProps) => {
       console.error(error);
     }
   };
+
+  const handleDelete = useCallback(async () => {
+    if (!id) {
+      console.error('Failed to delete expense: no id');
+      return;
+    }
+    await deleteExpense({ id }).unwrap();
+    push('/statistics/expenses');
+  }, [deleteExpense, id, push]);
+
   return (
     <>
       <DataHandler {...expenseData} />
@@ -54,6 +66,7 @@ export const EditExpenseContainer = ({ id }: EditExpenseContainerProps) => {
           expense={expense}
           errors={errors}
           onSave={handleSubmit}
+          onDelete={handleDelete}
         />
       )}
     </>

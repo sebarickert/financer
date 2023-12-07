@@ -3,28 +3,22 @@ import { useMemo } from 'react';
 import { ExpenseDto, TransactionTypeEnum } from '$api/generated/financerApi';
 import { BalanceDisplay } from '$blocks/balance-display/balance-display';
 import { DetailsList } from '$blocks/details-list/details-list';
-import { TransactionDelete } from '$blocks/transaction-delete/transaction-delete';
 import { ButtonInternal } from '$elements/button/button.internal';
 import { Heading } from '$elements/heading/heading';
 import { Icon, IconName } from '$elements/icon/icon';
-import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { formatCurrency } from '$utils/formatCurrency';
 import { formatDateLong } from '$utils/formatDate';
 
 interface ExpenseProps {
-  isLoading: boolean;
   expense: ExpenseDto;
   accountName?: string;
-  onDelete: () => void;
   getCategoryNameById: (categoryId: string) => string;
 }
 
 export const Expense = ({
-  isLoading,
   expense,
   accountName,
-  onDelete,
   getCategoryNameById,
 }: ExpenseProps): JSX.Element => {
   const transactionDetails = useMemo(
@@ -76,7 +70,6 @@ export const Expense = ({
 
   return (
     <>
-      {isLoading && <LoaderFullScreen />}
       <UpdatePageInfo
         title={'Transaction Details'}
         backLink="/statistics/expenses"
@@ -116,7 +109,6 @@ export const Expense = ({
             </div>
           </section>
         )}
-        <TransactionDelete onDelete={onDelete} />
       </section>
     </>
   );

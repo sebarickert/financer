@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import {
   UpdateIncomeDto,
   useIncomesFindOneQuery,
+  useIncomesRemoveMutation,
   useIncomesUpdateMutation,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
@@ -16,6 +17,8 @@ interface EditIncomeContainerProps {
 
 export const EditIncomeContainer = ({ id }: EditIncomeContainerProps) => {
   const { push } = useViewTransitionRouter();
+  const [deleteIncome] = useIncomesRemoveMutation();
+
   const [errors, setErrors] = useState<string[]>([]);
 
   const incomeData = useIncomesFindOneQuery({ id });
@@ -45,6 +48,16 @@ export const EditIncomeContainer = ({ id }: EditIncomeContainerProps) => {
       console.error(error);
     }
   };
+
+  const handleDelete = useCallback(async () => {
+    if (!id) {
+      console.error('Failed to delete income: no id');
+      return;
+    }
+    await deleteIncome({ id }).unwrap();
+    push('/statistics/incomes');
+  }, [deleteIncome, id, push]);
+
   return (
     <>
       <DataHandler {...incomeData} />
@@ -54,6 +67,7 @@ export const EditIncomeContainer = ({ id }: EditIncomeContainerProps) => {
           income={income}
           errors={errors}
           onSave={handleSubmit}
+          onDelete={handleDelete}
         />
       )}
     </>

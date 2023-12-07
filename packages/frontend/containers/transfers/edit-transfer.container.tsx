@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import {
   UpdateTransferDto,
   useTransfersFindOneQuery,
+  useTransfersRemoveMutation,
   useTransfersUpdateMutation,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
@@ -21,6 +22,7 @@ export const EditTransferContainer = ({ id }: EditTransferContainerProps) => {
   const transferData = useTransfersFindOneQuery({ id });
   const { data: transfer } = transferData;
   const [editTransfer, { isLoading: isSaving }] = useTransfersUpdateMutation();
+  const [deleteTransfer] = useTransfersRemoveMutation();
 
   const handleSubmit = async (newTransferData: UpdateTransferDto) => {
     if (!id) {
@@ -45,6 +47,16 @@ export const EditTransferContainer = ({ id }: EditTransferContainerProps) => {
       console.error(error);
     }
   };
+
+  const handleDelete = useCallback(async () => {
+    if (!id) {
+      console.error('Failed to delete transfer: no id');
+      return;
+    }
+    await deleteTransfer({ id }).unwrap();
+    push('/statistics/transfers');
+  }, [deleteTransfer, id, push]);
+
   return (
     <>
       <DataHandler {...transferData} />
@@ -54,6 +66,7 @@ export const EditTransferContainer = ({ id }: EditTransferContainerProps) => {
           transfer={transfer}
           errors={errors}
           onSave={handleSubmit}
+          onDelete={handleDelete}
         />
       )}
     </>
