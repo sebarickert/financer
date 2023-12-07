@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { Drawer } from '$blocks/drawer/drawer';
 import { Button } from '$elements/button/button';
 import { ButtonGroup } from '$elements/button/button.group';
+import { ButtonPlain } from '$elements/button/button.plain';
+import { Icon, IconName } from '$elements/icon/icon';
 
 interface AccountDeleteProps {
   onDelete: () => void;
@@ -15,13 +17,14 @@ export const AccountDelete = ({ onDelete }: AccountDeleteProps) => {
 
   return (
     <>
-      <Button
-        accentColor="red"
-        testId="delete-account"
+      <ButtonPlain
         onClick={handleToggleOpen}
+        testId="delete-account"
+        className="inline-flex items-center justify-center -mr-3 h-11 w-11"
       >
-        Delete
-      </Button>
+        <span className="sr-only">Delete account</span>
+        <Icon type={IconName.trash} />
+      </ButtonPlain>
       <Drawer
         isOpen={isOpen}
         onClose={handleToggleOpen}

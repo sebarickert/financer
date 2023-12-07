@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { Input } from '../../../components/elements/input/input';
+import { Input } from '../../components/elements/input/input';
 
 import { Drawer } from '$blocks/drawer/drawer';
 import { Form } from '$blocks/form/form';

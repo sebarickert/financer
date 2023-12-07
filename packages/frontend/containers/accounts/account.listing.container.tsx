@@ -5,7 +5,7 @@ import {
   AccountTypeEnum,
 } from '$api/generated/financerApi';
 import { AccountsListRowProps } from '$blocks/accounts-list/accounts-list.row';
-import { AccountListing } from '$pages/accounts/account-listing';
+import { AccountListing } from '$pages/accounts/account.listing';
 import { formatCurrency } from '$utils/formatCurrency';
 
 export const AccountListingContainer = () => {

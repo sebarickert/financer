@@ -3,6 +3,10 @@ import { TypedUseSelectorHook, useSelector } from 'react-redux';
 
 import { emptyFinancerApi } from '$api/emptyFinancerApi';
 import { appSlicePath, appReducer } from '$reducer/app.reducer';
+import {
+  notificationSlicePath,
+  notificationReducer,
+} from '$reducer/notifications.reducer';
 
 import '$api/config/apiConfig';
 
@@ -13,6 +17,7 @@ export const createStore = (initialValues?: any) =>
     reducer: {
       [emptyFinancerApi.reducerPath]: emptyFinancerApi.reducer,
       [appSlicePath]: appReducer,
+      [notificationSlicePath]: notificationReducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({

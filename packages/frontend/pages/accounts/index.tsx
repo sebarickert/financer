@@ -1,4 +1,4 @@
-import { AccountListingContainer } from '$container/accounts/account-listing.container';
+import { AccountListingContainer } from '$container/accounts/account.listing.container';
 
 const AccountPage = () => {
   return <AccountListingContainer />;

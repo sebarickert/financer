@@ -72,7 +72,11 @@ export const BalanceDisplay = ({
         </span>
       )}
       <div>
-        <p className={clsx('text-4xl font-semibold', { [color]: color })}>
+        <p
+          className={clsx('text-4xl font-semibold break-all', {
+            [color]: color,
+          })}
+        >
           <span className="sr-only">Amount:</span>
           {balance}
         </p>

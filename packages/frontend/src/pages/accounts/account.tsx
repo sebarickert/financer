@@ -1,11 +1,4 @@
-import clsx from 'clsx';
-
-import { AccountBalanceHistoryChart } from './account-balance-history-chart';
-import { AccountDelete } from './account-modals/account-delete';
-import {
-  AccountUpdateMarketValue,
-  AccountUpdateMarketValueFormFields,
-} from './account-modals/account-update-market-value';
+import { AccountBalanceHistoryChart } from './account.balance-history-chart';
 
 import { AccountDto } from '$api/generated/financerApi';
 import { accountTypeIconMapping } from '$blocks/accounts-list/accounts-list';
@@ -14,31 +7,19 @@ import { LatestAccountTransactions } from '$blocks/latest-account-transactions/l
 import { initialMonthFilterOptions } from '$blocks/monthly-transaction-list/monthly-transaction-list';
 import { Pager } from '$blocks/pager/pager';
 import { monthNames } from '$constants/months';
-import { Alert } from '$elements/alert/alert';
-import { ButtonGroup } from '$elements/button/button.group';
+import { AccountUpdateMarketValueContainer } from '$container/accounts/account.update-market-value.container';
 import { ButtonInternal } from '$elements/button/button.internal';
-import { Heading } from '$elements/heading/heading';
 import { Icon, IconName } from '$elements/icon/icon';
-import { InfoCard } from '$elements/info-card/info-card';
-import { LinkList } from '$elements/link-list/link-list';
-import { LinkListLink } from '$elements/link-list/link-list.link';
 import { LoaderSuspense } from '$elements/loader/loader-suspense';
 import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
-import { capitalize } from '$utils/capitalize';
-import { formatCurrency } from '$utils/formatCurrency';
 
 interface AccountProps {
   isLoading: boolean;
   account: AccountDto;
   filterOptions: typeof initialMonthFilterOptions;
   firstAvailableTransaction: Date;
-  errors: string[];
   onMonthOptionChange: (direction: 'next' | 'previous') => void;
-  onMarketValueUpdate: (
-    closeDialog: () => void
-  ) => (value: AccountUpdateMarketValueFormFields) => void;
-  onDelete: () => void;
 }
 
 export const Account = ({
@@ -46,10 +27,7 @@ export const Account = ({
   account,
   filterOptions,
   firstAvailableTransaction,
-  errors,
   onMonthOptionChange,
-  onMarketValueUpdate,
-  onDelete,
 }: AccountProps): JSX.Element | null => {
   const pageVisibleYear = filterOptions.year;
   const pageVisibleMonth = monthNames[filterOptions.month - 1];
@@ -70,11 +48,6 @@ export const Account = ({
           </ButtonInternal>
         }
       />
-      {errors.length > 0 && (
-        <Alert additionalInformation={errors} testId="account-page-errors">
-          There were {errors.length} errors with your submission
-        </Alert>
-      )}
       <section>
         <BalanceDisplay
           amount={account.balance}
@@ -87,12 +60,8 @@ export const Account = ({
         </LoaderSuspense>
         <div className="grid gap-2 mt-6">
           {account.type === 'investment' && (
-            <AccountUpdateMarketValue
-              currentValue={account.balance}
-              onUpdate={onMarketValueUpdate}
-            />
+            <AccountUpdateMarketValueContainer account={account} />
           )}
-          <AccountDelete onDelete={onDelete} />
         </div>
         <Pager
           className="mt-8 mb-2"

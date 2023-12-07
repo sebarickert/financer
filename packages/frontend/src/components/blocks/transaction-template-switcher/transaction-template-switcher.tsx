@@ -1,6 +1,5 @@
 import { TransactionTypeMapping } from '@local/types';
 import { useMemo, useState } from 'react';
-import { useDispatch } from 'react-redux';
 
 import {
   TransactionTypeEnum,
@@ -15,7 +14,6 @@ import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { Radio } from '$elements/radio/radio';
 import { RadioGroup } from '$elements/radio/radio.group';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { setHeaderActionState } from '$reducer/app.reducer';
 
 interface TransactionTemplateSwitcherProps {
   selectedTemplate?: string;
@@ -27,7 +25,6 @@ export const TransactionTemplateSwitcher = ({
   templateType,
 }: TransactionTemplateSwitcherProps): JSX.Element | null => {
   const [isOpen, setIsOpen] = useState(false);
-  const dispatch = useDispatch();
   const {
     currentData: transactionTemplates = [],
     isLoading: isLoadingTemplates,
@@ -54,13 +51,11 @@ export const TransactionTemplateSwitcher = ({
   };
 
   const handleToggleOpen = () => {
-    dispatch(setHeaderActionState(!isOpen));
     setIsOpen(!isOpen);
   };
 
   const onClose = () => {
     setIsOpen(false);
-    dispatch(setHeaderActionState(false));
   };
 
   if (!targetTemplates.length) return null;

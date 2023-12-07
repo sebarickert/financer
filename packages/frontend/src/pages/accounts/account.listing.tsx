@@ -1,6 +1,7 @@
 import { AccountsList } from '$blocks/accounts-list/accounts-list';
 import { AccountsListRowProps } from '$blocks/accounts-list/accounts-list.row';
-import { IconName } from '$elements/icon/icon';
+import { ButtonInternal } from '$elements/button/button.internal';
+import { Icon, IconName } from '$elements/icon/icon';
 import { LinkList } from '$elements/link-list/link-list';
 import { LinkListLink } from '$elements/link-list/link-list.link';
 import { Loader } from '$elements/loader/loader';
@@ -23,19 +24,19 @@ export const AccountListing = ({
 }: AccountListingProps): JSX.Element => {
   return (
     <>
-      <UpdatePageInfo title="Accounts" />
+      <UpdatePageInfo
+        title="Accounts"
+        headerAction={
+          <ButtonInternal
+            link="/accounts/add"
+            className="inline-flex items-center justify-center -mr-3 h-11 w-11"
+          >
+            <span className="sr-only">Add account</span>
+            <Icon type={IconName.viewGridAdd} />
+          </ButtonInternal>
+        }
+      />
       <section className="grid gap-8">
-        <section>
-          <LinkList>
-            <LinkListLink
-              testId="add-account"
-              link="/accounts/add"
-              icon={IconName.viewGridAdd}
-            >
-              Add account
-            </LinkListLink>
-          </LinkList>
-        </section>
         <Loader isLoading={isFetching}>
           <AccountsList label="Savings" rows={accounts.savings} />
           <AccountsList label="Investments" rows={accounts.investments} />
