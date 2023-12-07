@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 import { ExpenseForm } from './expense-form';
 
 import { ExpenseDto, UpdateExpenseDto } from '$api/generated/financerApi';
+import { TransactionDelete } from '$blocks/transaction-delete/transaction-delete';
 import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { inputDateFormat } from '$utils/formatDate';
@@ -12,6 +13,7 @@ interface EditExpenseProps {
   expense: ExpenseDto;
   errors: string[];
   onSave: (expense: UpdateExpenseDto) => void;
+  onDelete: () => void;
 }
 
 export const EditExpense = ({
@@ -19,6 +21,7 @@ export const EditExpense = ({
   expense,
   errors,
   onSave,
+  onDelete,
 }: EditExpenseProps): JSX.Element => {
   const initialValues = useMemo(() => {
     if (!expense) return undefined;
@@ -35,6 +38,7 @@ export const EditExpense = ({
       <UpdatePageInfo
         title={`Edit ${expense?.description}`}
         backLink={`/statistics/expenses/${expense._id}`}
+        headerAction={<TransactionDelete onDelete={onDelete} />}
       />
       <ExpenseForm
         onSubmit={onSave}

@@ -27,7 +27,6 @@ export const IncomeContainer = ({ id }: IncomeContainerProps) => {
 
   const { data: transactionCategories } =
     useAllTransactionCategoriesWithCategoryTree();
-  const [deleteIncome, { isLoading: isDeleting }] = useIncomesRemoveMutation();
 
   const getCategoryNameById = useCallback(
     (categoryId: string) =>
@@ -36,24 +35,13 @@ export const IncomeContainer = ({ id }: IncomeContainerProps) => {
     [transactionCategories]
   );
 
-  const handleDelete = useCallback(async () => {
-    if (!id) {
-      console.error('Failed to delete income: no id');
-      return;
-    }
-    await deleteIncome({ id }).unwrap();
-    push('/statistics/incomes');
-  }, [deleteIncome, id, push]);
-
   return (
     <>
       <DataHandler {...incomeData} />
       {income && (
         <Income
-          isLoading={isDeleting}
           income={income}
           accountName={account?.name}
-          onDelete={handleDelete}
           getCategoryNameById={getCategoryNameById}
         />
       )}

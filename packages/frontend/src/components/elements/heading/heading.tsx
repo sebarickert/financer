@@ -56,7 +56,7 @@ export const Heading = ({
       {ctaUrl && ctaLabel && (
         <LinkViewTransition
           href={ctaUrl}
-          className="flex-shrink-0 font-medium tracking-tight text-charcoal hover:underline"
+          className="flex-shrink-0 tracking-tight text-charcoal hover:underline"
           data-entity-title={ctaEntityTitle ?? undefined}
           transition="open-from-right"
         >
