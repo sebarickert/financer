@@ -19,7 +19,7 @@ import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import {
   UserDefaultAccountSettings,
   UserDefaultAccountSettingsFormFields,
-} from '$pages/profile/user-preferences/preferences/user-default-account-settings';
+} from '$pages/settings/user-preferences/preferences/user-default-account-settings';
 
 export const DefaultAccountSettingsContainer = () => {
   const { push } = useViewTransitionRouter();

@@ -5,7 +5,7 @@ import {
   useTransactionCategoriesCreateMutation,
 } from '$api/generated/financerApi';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { AddCategory } from '$pages/profile/categories/add-category';
+import { AddCategory } from '$pages/settings/categories/add-category';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 export const AddCategoryContainer = () => {
