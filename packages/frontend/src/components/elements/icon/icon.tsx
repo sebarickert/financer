@@ -5,6 +5,7 @@ import { IconCalendar } from './svgs/icon.calendar';
 import { IconCash } from './svgs/icon.cash';
 import { IconChartBar } from './svgs/icon.chartBar';
 import { IconChartBarSolid } from './svgs/icon.chartBar.solid';
+import { IconCheck } from './svgs/icon.check';
 import { IconChevronDown } from './svgs/icon.chevronDown';
 import { IconChevronLeft } from './svgs/icon.chevronLeft';
 import { IconChevronRight } from './svgs/icon.chevronRight';
@@ -82,6 +83,7 @@ export enum IconName {
   informationCircle = 'information-circle',
   pencilSquare = 'pencil-square',
   annotation = 'annotation',
+  check = 'check',
 }
 interface IconProps {
   type: IconName;
@@ -238,6 +240,9 @@ export const Icon = ({
 
     case 'annotation':
       return <IconAnnotation className={defaultIconClasses} />;
+
+    case 'check':
+      return <IconCheck className={defaultIconClasses} />;
 
     default:
       break;

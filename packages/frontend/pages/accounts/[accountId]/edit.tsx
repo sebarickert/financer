@@ -1,4 +1,4 @@
-import { EditAccountContainer } from '$container/accounts/edit-account.container';
+import { EditAccountContainer } from '$container/accounts/account.edit.container';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 
 const EditAccountPage = () => {

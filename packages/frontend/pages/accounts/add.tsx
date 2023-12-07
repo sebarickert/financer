@@ -1,4 +1,4 @@
-import { AddAccountContainer } from '$container/accounts/add-account.container';
+import { AddAccountContainer } from '$container/accounts/account.add.container';
 
 const AddAccountPage = () => {
   return <AddAccountContainer />;

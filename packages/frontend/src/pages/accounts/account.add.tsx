@@ -1,4 +1,4 @@
-import { AccountForm, AccountFormFields } from './account-form';
+import { AccountForm, AccountFormFields } from './account.form';
 
 import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
@@ -9,7 +9,7 @@ export interface AddAccountProps {
   onAddAccount: (newAccountData: AccountFormFields) => Promise<void>;
 }
 
-export const AddAccount = ({
+export const AccountAdd = ({
   isLoading,
   errors,
   onAddAccount,

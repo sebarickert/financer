@@ -2,8 +2,8 @@ import { useState, useCallback } from 'react';
 
 import { useAccountsCreateMutation } from '$api/generated/financerApi';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { AccountFormFields } from '$pages/accounts/account-form';
-import { AddAccount } from '$pages/accounts/add-account';
+import { AccountAdd } from '$pages/accounts/account.add';
+import { AccountFormFields } from '$pages/accounts/account.form';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 export const AddAccountContainer = () => {
@@ -36,7 +36,7 @@ export const AddAccountContainer = () => {
   );
 
   return (
-    <AddAccount
+    <AccountAdd
       isLoading={isLoading}
       errors={errors}
       onAddAccount={handleSubmit}

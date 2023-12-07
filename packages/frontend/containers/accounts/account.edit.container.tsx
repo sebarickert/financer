@@ -6,8 +6,8 @@ import {
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { AccountFormFields } from '$pages/accounts/account-form';
-import { EditAccount } from '$pages/accounts/edit-account';
+import { AccountEdit } from '$pages/accounts/account.edit';
+import { AccountFormFields } from '$pages/accounts/account.form';
 
 interface EditAccountContainerProps {
   id: string;
@@ -55,7 +55,7 @@ export const EditAccountContainer = ({ id }: EditAccountContainerProps) => {
     <>
       <DataHandler {...data} />
       {account && (
-        <EditAccount
+        <AccountEdit
           account={account}
           isLoading={isLoading}
           errors={errors}

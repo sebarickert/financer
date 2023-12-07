@@ -9,6 +9,7 @@ import { Container } from '../container/container';
 import { DesktopHeader } from '../desktop-header/desktop-header';
 import { MobileHeader } from '../mobile-header/mobile-header';
 
+import { ToastContainer } from '$blocks/toast/toast.container';
 import { LinkViewTransition } from '$elements/link/link-view-transition';
 
 type ChildrenWithErrorBoundaryProps = {
@@ -93,6 +94,7 @@ export const Layout = ({ children }: LayoutProps): JSX.Element => {
           <main>
             <div className="px-8 py-12" data-testid="layout-root">
               <DesktopHeader />
+              <ToastContainer className="mb-8 -mt-2" />
               <ChildrenWithErrorBoundary>{children}</ChildrenWithErrorBoundary>
             </div>
           </main>
@@ -105,6 +107,7 @@ export const Layout = ({ children }: LayoutProps): JSX.Element => {
     <div className="flex flex-col h-full min-h-screen overflow-y-scroll lg:hidden">
       <main className="flex-grow bg-white lg:pb-24 min-h-screen-safe pb-safe">
         <div className={`px-4 mt-[64px] pt-8 pb-24`} data-testid="layout-root">
+          <ToastContainer className="mb-8 -mt-2" />
           <ChildrenWithErrorBoundary>{children}</ChildrenWithErrorBoundary>
         </div>
       </main>

@@ -1,6 +1,7 @@
-import { AccountForm, AccountFormFields } from './account-form';
+import { AccountForm, AccountFormFields } from './account.form';
 
 import { AccountDto } from '$api/generated/financerApi';
+import { DeleteAccountContainer } from '$container/accounts/account.delete.container';
 import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
@@ -11,7 +12,7 @@ interface EditAccountParams {
   onSave: (newAccountData: AccountFormFields) => Promise<void>;
 }
 
-export const EditAccount = ({
+export const AccountEdit = ({
   account,
   isLoading,
   errors,
@@ -23,6 +24,7 @@ export const EditAccount = ({
       <UpdatePageInfo
         title={`Edit ${account.name}`}
         backLink={`/accounts/${account._id}`}
+        headerAction={<DeleteAccountContainer id={account._id} />}
       />
       <AccountForm
         onSubmit={onSave}
