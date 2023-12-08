@@ -13,7 +13,6 @@
     to { transform: translateX(100vw); }
 }
   
-  
   .slide-from-right::view-transition-new(root) {
       animation: 300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
   }
@@ -40,6 +39,10 @@
   }
   
 @layer base {
+   html {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
   @font-face {
     font-family: "Euclid Circular A";
     font-weight: 300;

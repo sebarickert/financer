@@ -4,10 +4,7 @@ import { initialMonthFilterOptions } from '$blocks/monthly-transaction-list/mont
 import { Pager } from '$blocks/pager/pager';
 import { monthNames } from '$constants/months';
 import { ButtonInternal } from '$elements/button/button.internal';
-import { Heading } from '$elements/heading/heading';
 import { Icon, IconName } from '$elements/icon/icon';
-import { LinkList } from '$elements/link-list/link-list';
-import { LinkListLink } from '$elements/link-list/link-list.link';
 import { LoaderSuspense } from '$elements/loader/loader-suspense';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 

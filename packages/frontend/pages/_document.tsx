@@ -8,6 +8,10 @@ export default function Document() {
         <meta name="apple-touch-fullscreen" content="yes" />
         <meta name="apple-mobile-web-app-title" content="Financer" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta
+          name="viewport"
+          content="viewport-fit=cover, width=device-width, initial-scale=1.0"
+        />
         <link rel="manifest" href="/manifest.json" />
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
