@@ -3,11 +3,12 @@ import { useState } from 'react';
 import {
   UpdateTransactionCategoryDto,
   useTransactionCategoriesFindOneQuery,
+  useTransactionCategoriesRemoveMutation,
   useTransactionCategoriesUpdateMutation,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { EditCategory } from '$pages/settings/categories/edit-category';
+import { CategoryEdit } from '$pages/settings/categories/category.edit';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 interface CategoryEditContainerProps {
@@ -20,6 +21,7 @@ export const CategoryEditContainer = ({ id }: CategoryEditContainerProps) => {
 
   const categoryData = useTransactionCategoriesFindOneQuery({ id });
   const { data: category } = categoryData;
+  const [deleteTransactionCategory] = useTransactionCategoriesRemoveMutation();
   const [editTransactionCategory, { isLoading: isSaving }] =
     useTransactionCategoriesUpdateMutation();
 
@@ -55,18 +57,23 @@ export const CategoryEditContainer = ({ id }: CategoryEditContainerProps) => {
     }
   };
 
+  const handleDelete = async () => {
+    await deleteTransactionCategory({ id });
+    push('/profile/transaction-categories');
+  };
+
   return (
     <>
       <DataHandler {...categoryData} />
       {category && (
-        <EditCategory
+        <CategoryEdit
           onSubmit={handleSubmit}
+          onDelete={handleDelete}
           category={category}
           errors={errors}
           isLoading={isSaving}
         />
       )}
-      ;
     </>
   );
 };
