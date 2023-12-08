@@ -7,7 +7,7 @@ import {
   useExpensesCreateMutation,
 } from '$api/generated/financerApi';
 import { ToastMessageTypes } from '$blocks/toast/toast';
-import { useUserDefaultMarketUpdateSettings } from '$hooks/profile/user-preference/useDefaultMarketUpdateSettings';
+import { useUserDefaultMarketUpdateSettings } from '$hooks/settings/user-preference/useDefaultMarketUpdateSettings';
 import {
   AccountUpdateMarketValue,
   AccountUpdateMarketValueFormFields,

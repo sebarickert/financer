@@ -50,7 +50,7 @@ export const UserStatisticsSettings = ({
           methods={methods}
           onSubmit={onSave}
           submitLabel="Save"
-          formFooterBackLink="/profile/user-preferences"
+          formFooterBackLink={settingsPaths.userPreferences}
         >
           <Heading className="mb-4">Account types for stats and graph</Heading>
           <CheckboxGroup testId="statistics-account-checkboxes">

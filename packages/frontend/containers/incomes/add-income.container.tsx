@@ -6,7 +6,7 @@ import {
   useTransactionTemplatesFindOneQuery,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
-import { useUserDefaultIncomeAccount } from '$hooks/profile/user-preference/useUserDefaultIncomeAccount';
+import { useUserDefaultIncomeAccount } from '$hooks/settings/user-preference/useUserDefaultIncomeAccount';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { AddIncome } from '$pages/incomes/add-income';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';

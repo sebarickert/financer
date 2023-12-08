@@ -17,38 +17,26 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 
     // Transaction categories dynamic paths
     ServeStaticModule.forRoot({
-      rootPath: join(
-        __dirname,
-        '..',
-        'client/profile/transaction-categories/add',
-      ),
-      serveRoot: '/profile/transaction-categories/add',
+      rootPath: join(__dirname, '..', 'client/settings/categories/add'),
+      serveRoot: '/settings/categories/add',
     }),
     ServeStaticModule.forRoot({
       rootPath: join(
         __dirname,
         '..',
-        'client/profile/transaction-categories/[categoryId]',
+        'client/settings/categories/[categoryId]',
       ),
-      serveRoot: '/profile/transaction-categories/:id',
+      serveRoot: '/settings/categories/:id',
     }),
 
     // Transaction templates dynamic paths
     ServeStaticModule.forRoot({
-      rootPath: join(
-        __dirname,
-        '..',
-        'client/profile/transaction-templates/add',
-      ),
-      serveRoot: '/profile/transaction-templates/add',
+      rootPath: join(__dirname, '..', 'client/settings/templates/add'),
+      serveRoot: '/settings/templates/add',
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(
-        __dirname,
-        '..',
-        'client/profile/transaction-templates/[templateId]',
-      ),
-      serveRoot: '/profile/transaction-templates/:id',
+      rootPath: join(__dirname, '..', 'client/settings/templates/[templateId]'),
+      serveRoot: '/settings/templates/:id',
     }),
 
     // Expense dynamic paths

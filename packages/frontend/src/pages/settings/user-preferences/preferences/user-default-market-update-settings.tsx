@@ -7,7 +7,7 @@ import { Input } from '$elements/input/input';
 import { Loader } from '$elements/loader/loader';
 import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { Select } from '$elements/select/select';
-import { UserDefaultMarketUpdateSettings as UserDefaultMarketUpdateSettingsType } from '$hooks/profile/user-preference/useDefaultMarketUpdateSettings';
+import { UserDefaultMarketUpdateSettings as UserDefaultMarketUpdateSettingsType } from '$hooks/settings/user-preference/useDefaultMarketUpdateSettings';
 import { TransactionCategoryDtoWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
@@ -50,7 +50,7 @@ export const UserDefaultMarketUpdateSettings = ({
           methods={methods}
           onSubmit={onSave}
           submitLabel="Save"
-          formFooterBackLink="/profile/user-preferences"
+          formFooterBackLink={settingsPaths.userPreferences}
         >
           <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
             <Input id="transactionDescription" isRequired>

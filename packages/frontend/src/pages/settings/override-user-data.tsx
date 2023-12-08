@@ -1,5 +1,6 @@
 import { ChangeEvent } from 'react';
 
+import { settingsPaths } from '$constants/settings-paths';
 import { Button } from '$elements/button/button';
 import { Heading } from '$elements/heading/heading';
 import { InfoCard } from '$elements/info-card/info-card';
@@ -34,7 +35,10 @@ export const OverrideUserData = ({
   return (
     <>
       {isLoading && <LoaderFullScreen />}
-      <UpdatePageInfo title="Override data (DANGER ZONE)" backLink="/profile" />
+      <UpdatePageInfo
+        title="Override data (DANGER ZONE)"
+        backLink={settingsPaths.default}
+      />
       {notification && (
         <Notification
           type={notification.type}

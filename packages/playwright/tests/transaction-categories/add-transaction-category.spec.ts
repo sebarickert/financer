@@ -70,7 +70,7 @@ test.describe('Transaction category creation', () => {
 
   test.beforeEach(async ({ page }) => {
     await applyFixture('accounts-only');
-    await page.goto('/profile/transaction-categories');
+    await page.goto('/settings/transaction-categories');
   });
 
   test('Verify category in fixture', async ({ page }) => {

@@ -1,7 +1,7 @@
 import {
   useUserDefaultMarketUpdateSettings,
   useUpdateUserDefaultMarketUpdateSettings,
-} from '$hooks/profile/user-preference/useDefaultMarketUpdateSettings';
+} from '$hooks/settings/user-preference/useDefaultMarketUpdateSettings';
 import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import {
@@ -29,7 +29,7 @@ export const MarketUpdateSettingsContainer = () => {
       category,
     });
 
-    push('/profile/user-preferences');
+    push(settingsPaths.userPreferences);
   };
 
   return (

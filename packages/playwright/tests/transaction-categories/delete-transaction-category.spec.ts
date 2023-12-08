@@ -23,7 +23,7 @@ test.describe('Delete transaction category', () => {
 
   test.beforeEach(async ({ page }) => {
     await applyFixture('accounts-only');
-    await page.goto('/profile/transaction-categories');
+    await page.goto('/settings/transaction-categories');
   });
 
   // eslint-disable-next-line playwright/expect-expect

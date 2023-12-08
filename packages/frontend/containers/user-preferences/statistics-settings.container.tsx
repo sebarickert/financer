@@ -1,7 +1,7 @@
 import {
   useUserStatisticsSettings,
   useUpdateUserStatisticsSettings,
-} from '$hooks/profile/user-preference/useStatisticsSettings';
+} from '$hooks/settings/user-preference/useStatisticsSettings';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import {
   UserStatisticsSettings,
@@ -21,7 +21,7 @@ export const StatisticsSettingsContainer = () => {
       accountTypes: newUserStatisticsData.accountTypes,
     });
 
-    push('/profile/user-preferences');
+    push(settingsPaths.userPreferences);
   };
 
   return (

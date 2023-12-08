@@ -2,19 +2,19 @@ import { useAccountsFindAllByUserQuery } from '$api/generated/financerApi';
 import {
   useUserDefaultExpenseAccount,
   useUpdateUserDefaultExpenseAccount,
-} from '$hooks/profile/user-preference/useUserDefaultExpenseAccount';
+} from '$hooks/settings/user-preference/useUserDefaultExpenseAccount';
 import {
   useUserDefaultIncomeAccount,
   useUpdateUserDefaultIncomeAccount,
-} from '$hooks/profile/user-preference/useUserDefaultIncomeAccount';
+} from '$hooks/settings/user-preference/useUserDefaultIncomeAccount';
 import {
   useUserDefaultTransferSourceAccount,
   useUpdateUserDefaultTransferSourceAccount,
-} from '$hooks/profile/user-preference/useUserDefaultTransferSourceAccount';
+} from '$hooks/settings/user-preference/useUserDefaultTransferSourceAccount';
 import {
   useUserDefaultTransferTargetAccount,
   useUpdateUserDefaultTransferTargetAccount,
-} from '$hooks/profile/user-preference/useUserDefaultTransferTargetAccount';
+} from '$hooks/settings/user-preference/useUserDefaultTransferTargetAccount';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import {
   UserDefaultAccountSettings,
@@ -77,7 +77,7 @@ export const DefaultAccountSettingsContainer = () => {
       setDefaultTransferTargetAccount(toAccountTransfer),
     ]);
 
-    push('/profile/user-preferences');
+    push(settingsPaths.userPreferences);
   };
 
   const isLoading =
