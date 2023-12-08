@@ -160,7 +160,7 @@ export const TemplateForm = ({
         optionalFooterComponent={optionalFooterComponent}
       >
         <section>
-          <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
+          <div className="grid gap-4 sm:grid-cols-2">
             <Select id="templateType" options={templateTypes} isRequired>
               Template type
             </Select>

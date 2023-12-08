@@ -85,11 +85,11 @@ export const CategoryForm = ({
         formFooterBackLink={settingsPaths.categories}
         optionalFooterComponent={optionalFooterComponent}
       >
-        <div className="grid gap-y-6 gap-x-4">
+        <div className="grid gap-4">
           <Input id="name" isRequired>
             Name
           </Input>
-          <CheckboxGroup testId="visibility-checkboxes">
+          <CheckboxGroup testId="visibility-checkboxes" className="-mx-4">
             <Checkbox
               id="incomeVisible"
               name="visibility"
