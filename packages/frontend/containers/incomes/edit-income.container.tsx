@@ -8,7 +8,7 @@ import {
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { EditIncome } from '$pages/incomes/edit-income';
+import { IncomeEdit } from '$pages/incomes/income.edit';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 interface EditIncomeContainerProps {
@@ -62,7 +62,7 @@ export const EditIncomeContainer = ({ id }: EditIncomeContainerProps) => {
     <>
       <DataHandler {...incomeData} />
       {income && (
-        <EditIncome
+        <IncomeEdit
           isLoading={isSaving}
           income={income}
           errors={errors}

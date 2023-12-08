@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { IncomeForm } from './income-form';
+import { IncomeForm } from './income.form';
 
 import { IncomeDto, UpdateIncomeDto } from '$api/generated/financerApi';
 import { TransactionDelete } from '$blocks/transaction-delete/transaction-delete';
@@ -8,7 +8,7 @@ import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { inputDateFormat } from '$utils/formatDate';
 
-interface EditIncomeProps {
+interface IncomeEditProps {
   isLoading: boolean;
   income: IncomeDto;
   errors: string[];
@@ -16,13 +16,13 @@ interface EditIncomeProps {
   onDelete: () => void;
 }
 
-export const EditIncome = ({
+export const IncomeEdit = ({
   isLoading,
   income,
   errors,
   onSave,
   onDelete,
-}: EditIncomeProps): JSX.Element => {
+}: IncomeEditProps): JSX.Element => {
   const initialValues = useMemo(() => {
     if (!income) return undefined;
     return {

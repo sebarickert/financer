@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { IncomeForm } from './income-form';
+import { IncomeForm } from './income.form';
 
 import {
   CreateIncomeDto,
@@ -12,7 +12,7 @@ import { Loader } from '$elements/loader/loader';
 import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
-interface AddIncomeProps {
+interface IncomeAddProps {
   defaultIncomeAccount?: string;
   template?: TransactionTemplateDto;
   isLoading: boolean;
@@ -21,14 +21,14 @@ interface AddIncomeProps {
   onSubmit: (newIncomeData: CreateIncomeDto) => void;
 }
 
-export const AddIncome = ({
+export const IncomeAdd = ({
   defaultIncomeAccount,
   template,
   isLoading,
   isCreating,
   errors,
   onSubmit,
-}: AddIncomeProps): JSX.Element => {
+}: IncomeAddProps): JSX.Element => {
   const initialValues = useMemo(() => {
     if (!template) {
       return { toAccount: defaultIncomeAccount };

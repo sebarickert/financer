@@ -8,7 +8,7 @@ import {
 import { DataHandler } from '$blocks/data-handler/data-handler';
 import { useUserDefaultIncomeAccount } from '$hooks/settings/user-preference/useUserDefaultIncomeAccount';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { AddIncome } from '$pages/incomes/add-income';
+import { IncomeAdd } from '$pages/incomes/income.add';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 interface AddIncomeContainerProps {
@@ -54,7 +54,7 @@ export const AddIncomeContainer = ({ templateId }: AddIncomeContainerProps) => {
     <>
       <DataHandler skipNotFound {...templateData} />
       {(!templateId || transactionTemplate) && (
-        <AddIncome
+        <IncomeAdd
           defaultIncomeAccount={defaultIncomeAccount}
           template={transactionTemplate}
           isLoading={isLoading}

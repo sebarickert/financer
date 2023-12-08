@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { ExpenseForm } from './expense-form';
+import { ExpenseForm } from './expense.form';
 
 import {
   CreateExpenseDto,
@@ -12,7 +12,7 @@ import { Loader } from '$elements/loader/loader';
 import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
-interface AddExpenseProps {
+interface ExpenseAddProps {
   defaultExpenseAccount?: string;
   template?: TransactionTemplateDto;
   isLoading: boolean;
@@ -21,14 +21,14 @@ interface AddExpenseProps {
   onSubmit: (newExpenseData: CreateExpenseDto) => void;
 }
 
-export const AddExpense = ({
+export const ExpenseAdd = ({
   defaultExpenseAccount,
   template,
   isLoading,
   isCreating,
   errors,
   onSubmit,
-}: AddExpenseProps): JSX.Element => {
+}: ExpenseAddProps): JSX.Element => {
   const initialValues = useMemo(() => {
     if (!template) {
       return { fromAccount: defaultExpenseAccount };
