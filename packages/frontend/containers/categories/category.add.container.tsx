@@ -6,7 +6,7 @@ import {
 } from '$api/generated/financerApi';
 import { settingsPaths } from '$constants/settings-paths';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { AddCategory } from '$pages/settings/categories/add-category';
+import { CategoryAdd } from '$pages/settings/categories/category.add';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 export const CategoryAddContainer = () => {
@@ -41,7 +41,7 @@ export const CategoryAddContainer = () => {
     }
   };
   return (
-    <AddCategory
+    <CategoryAdd
       onSubmit={handleSubmit}
       errors={errors}
       isLoading={isCreating}

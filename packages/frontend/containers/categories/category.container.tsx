@@ -1,15 +1,14 @@
 import { useState, useEffect } from 'react';
 
 import {
-  useTransactionCategoriesRemoveMutation,
   useTransactionCategoriesFindOneQuery,
   useTransactionsFindMonthlySummariesByUserQuery,
   TransactionsFindMonthlySummariesByUserApiArg,
+  useTransactionCategoriesFindAllByUserQuery,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
 import { initialMonthFilterOptions } from '$blocks/monthly-transaction-list/monthly-transaction-list';
 import { useFirstTransaction } from '$hooks/transaction/useFirstTransaction';
-import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { Category } from '$pages/settings/categories/category';
 
 interface CategoryContainerProps {
@@ -20,13 +19,11 @@ type FilterType = TransactionsFindMonthlySummariesByUserApiArg &
   typeof initialMonthFilterOptions;
 
 export const CategoryContainer = ({ id }: CategoryContainerProps) => {
-  const { push } = useViewTransitionRouter();
-
   const [monthFilterOptions, setMonthFilterOptions] = useState<FilterType>(
     initialMonthFilterOptions
   );
 
-  const [deleteTransactionCategory] = useTransactionCategoriesRemoveMutation();
+  const categoryAllData = useTransactionCategoriesFindAllByUserQuery({});
   const transactionCategoryData = useTransactionCategoriesFindOneQuery({ id });
   const { data: category } = transactionCategoryData;
 
@@ -61,11 +58,6 @@ export const CategoryContainer = ({ id }: CategoryContainerProps) => {
     });
   }, [id]);
 
-  const handleDelete = async () => {
-    await deleteTransactionCategory({ id });
-    push('/profile/transaction-categories');
-  };
-
   const { data: transactionsMonthlySummaries } =
     useTransactionsFindMonthlySummariesByUserQuery({
       parentTransactionCategory: id,
@@ -78,10 +70,10 @@ export const CategoryContainer = ({ id }: CategoryContainerProps) => {
         <Category
           filterOptions={monthFilterOptions}
           firstAvailableTransaction={firstAvailableTransaction}
-          onDelete={handleDelete}
           onMonthOptionChange={handleMonthOptionChange}
           transactionsMonthlySummaries={transactionsMonthlySummaries}
           category={category}
+          categories={categoryAllData.data ?? []}
         />
       )}
     </>

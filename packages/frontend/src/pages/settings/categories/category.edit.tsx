@@ -1,9 +1,11 @@
-import { CategoryForm } from './category-form';
+import { CategoryDelete } from './category.delete';
+import { CategoryForm } from './category.form';
 
 import {
   TransactionCategoryDto,
   UpdateTransactionCategoryDto,
 } from '$api/generated/financerApi';
+import { settingsPaths } from '$constants/settings-paths';
 import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { Container } from '$layouts/container/container';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
@@ -13,22 +15,24 @@ interface EditCategoryProps {
   isLoading: boolean;
   category: TransactionCategoryDto;
   onSubmit: (newTransactionCategoryData: UpdateTransactionCategoryDto) => void;
+  onDelete: () => void;
 }
 
-export const EditCategory = ({
+export const CategoryEdit = ({
   errors,
   category,
   isLoading,
   onSubmit,
+  onDelete,
 }: EditCategoryProps): JSX.Element => {
   return (
     <Container>
       {isLoading && <LoaderFullScreen />}
       <UpdatePageInfo
-        title="Edit transaction category"
-        backLink={`/profile/transaction-categories/${category._id}`}
+        title={`Edit ${category.name}`}
+        backLink={`${settingsPaths.categories}/${category._id}`}
+        headerAction={<CategoryDelete onDelete={onDelete} />}
       />
-
       <CategoryForm
         onSubmit={onSubmit}
         errors={errors}
