@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import {
@@ -83,10 +83,17 @@ export const TemplateForm = ({
     defaultValues: initialValues,
   });
 
-  const { watch } = methods;
+  const { watch, reset } = methods;
 
   const templateType = watch('templateType');
   const templateVisibility = watch('templateVisibility');
+
+  const initialTemplateType =
+    TransactionTemplateTypeEnum[
+      capitalize(
+        initialValues?.templateType?.[0] ?? 'manual'
+      ) as keyof typeof TransactionTemplateTypeEnum
+    ];
 
   const { data: accounts, isLoading } = useAccountsFindAllByUserQuery({});
 
@@ -128,6 +135,15 @@ export const TemplateForm = ({
       value: TransactionTypeEnum[type],
       label: capitalize(TransactionTypeEnum[type]),
     }));
+
+  useEffect(() => {
+    if (!initialValues) return;
+
+    reset((previousValues) => ({
+      ...previousValues,
+      templateType: initialTemplateType,
+    }));
+  }, [initialTemplateType, initialValues, reset]);
 
   return (
     <Loader isLoading={isLoading}>
