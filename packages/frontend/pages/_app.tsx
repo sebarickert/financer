@@ -1,16 +1,20 @@
 import type { AppProps } from 'next/app';
-import { useState, useEffect } from 'react';
-import { Provider } from 'react-redux';
+import { useEffect } from 'react';
+import { Provider, useDispatch } from 'react-redux';
 
 import { useAuthGetAuthenticationStatusQuery } from '$api/generated/financerApi';
 import { ErrorBoundaryHandler } from '$blocks/error-boundary/error-boundary';
+import { ToastMessageTypes } from '$blocks/toast/toast';
 import { TransitionProvider } from '$container/transition.provider';
 import { Loader } from '$elements/loader/loader';
 import { LoaderSuspense } from '$elements/loader/loader-suspense';
-import { Notification } from '$elements/notification/notification';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { Layout } from '$layouts/layout/layout';
 import { Login } from '$pages/login/login';
+import {
+  addToastMessage,
+  removeToastMessage,
+} from '$reducer/notifications.reducer';
 import { ScrollToTop } from '$renderers/scroll-to-top/scroll-to-top';
 import { SEO } from '$renderers/seo/seo';
 import { PageInfoProvider } from 'src/context/pageInfoContext';
@@ -24,43 +28,56 @@ const App = ({ Component, pageProps }: AppProps) => {
   const { data: authenticationStatus, isLoading } =
     useAuthGetAuthenticationStatusQuery();
   const { push, pathname } = useViewTransitionRouter();
-
-  const [isOnboardingVisible, setOnboardingVisible] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (
       !authenticationStatus?.authenticated ||
-      authenticationStatus?.hasAccounts ||
-      isOnboardingVisible
+      authenticationStatus?.hasAccounts
     ) {
+      dispatch(removeToastMessage('welcomeToFinancer'));
       return;
     }
 
-    setOnboardingVisible(true);
     push('/accounts/add');
-  }, [push, isOnboardingVisible, authenticationStatus]);
+    dispatch(
+      addToastMessage({
+        id: 'welcomeToFinancer',
+        type: ToastMessageTypes.GENERAL,
+        message: 'Welcome to Financer!',
+        additionalInformation:
+          'You must add your first account before you start tracking finances with Financer',
+      })
+    );
+  }, [push, authenticationStatus, dispatch]);
+
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const errors = authenticationStatus?.errors;
+
+    if (!errors) return;
+
+    dispatch(
+      addToastMessage({
+        id: 'authenticationStatusErrors',
+        type: ToastMessageTypes.ERROR,
+        message: 'Something went wrong!',
+        additionalInformation: errors,
+      })
+    );
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+  }, [authenticationStatus?.errors, dispatch]);
 
   if (isLoading) return <Loader />;
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const errors = authenticationStatus?.errors;
   const isAuthenticated = authenticationStatus?.authenticated;
   const isPublicRoute = PUBLIC_ROUTES.includes(pathname);
 
   return (
     <>
-      {errors && (
-        <Notification type="error" label="Something went wrong!">
-          {errors.join(' ') || ''}
-        </Notification>
-      )}
-      {isOnboardingVisible && (
-        <Notification type={'success'} label={'Welcome to Financer!'}>
-          Please add your first account before you start tracking finances with
-          Financer.
-        </Notification>
-      )}
       {isPublicRoute && <Component {...pageProps} />}
       {isAuthenticated && !isPublicRoute && (
         <Layout>

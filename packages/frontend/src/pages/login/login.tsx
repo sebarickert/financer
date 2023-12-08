@@ -2,7 +2,6 @@ import Image from 'next/image';
 import { useState } from 'react';
 
 import { LoginActions } from './login.actions';
-import { LoginFooter } from './login.footer';
 
 import { ButtonGroup } from '$elements/button/button.group';
 import { DialogText } from '$elements/dialog/dialog.text';
@@ -60,7 +59,6 @@ export const Login = (): JSX.Element => {
             )}
           </ButtonGroup>
         </section>
-        <LoginFooter className="mt-4 sm:w-full sm:max-w-screen-sm max-sm:mx-6" />
       </section>
     </>
   );

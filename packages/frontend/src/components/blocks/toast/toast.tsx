@@ -14,7 +14,7 @@ export enum ToastMessageTypes {
 export interface ToastMessage {
   type: ToastMessageTypes;
   message: string;
-  additionalInformation?: string[];
+  additionalInformation?: string | string[];
   id?: string;
 }
 
@@ -52,6 +52,16 @@ export const Toast = ({
     dispatch(removeToastMessage(id));
   }, [dispatch, id]);
 
+  const additionalInformationContent = Array.isArray(additionalInformation) ? (
+    <ul className="col-[2] mt-2 list-disc pb-2 pl-5 text-[0.875rem]">
+      {additionalInformation.map((information) => (
+        <li key={information}>{information}</li>
+      ))}
+    </ul>
+  ) : (
+    <p className="col-[2] mt-2 pb-2 text-[0.875rem]">{additionalInformation}</p>
+  );
+
   return (
     <div
       className={clsx(
@@ -67,13 +77,7 @@ export const Toast = ({
     >
       <Icon type={toastIcon(type)} className="h-6 w-6" />
       <p>{message}</p>
-      {additionalInformation && (
-        <ul className="col-[2] mt-2 list-disc pb-2 pl-5 text-[0.875rem] break-all">
-          {additionalInformation.map((information) => (
-            <li key={information}>{information}</li>
-          ))}
-        </ul>
-      )}
+      {additionalInformation && additionalInformationContent}
       {id && (
         <button
           className="col-[3] row-span-full inline-flex items-center justify-center"
