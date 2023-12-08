@@ -5,10 +5,6 @@ import { Button } from '$elements/button/button';
 import { Heading } from '$elements/heading/heading';
 import { InfoCard } from '$elements/info-card/info-card';
 import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
-import {
-  Notification,
-  NotificationProps,
-} from '$elements/notification/notification';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
 interface OverrideUserDataProps {
@@ -16,9 +12,7 @@ interface OverrideUserDataProps {
   overrideFilename: string | null;
   overrideAccountCount: number | null;
   overrideTranactionCount: number | null;
-  notification: NotificationProps | null;
   onFileChange: (changeEvent: ChangeEvent<HTMLInputElement>) => void;
-  onResetNotification: () => void;
   onOverrideData: () => void;
 }
 
@@ -27,9 +21,7 @@ export const OverrideUserData = ({
   overrideFilename,
   overrideAccountCount,
   overrideTranactionCount,
-  notification,
   onFileChange,
-  onResetNotification,
   onOverrideData,
 }: OverrideUserDataProps): JSX.Element => {
   return (
@@ -39,15 +31,6 @@ export const OverrideUserData = ({
         title="Override data (DANGER ZONE)"
         backLink={settingsPaths.default}
       />
-      {notification && (
-        <Notification
-          type={notification.type}
-          label={notification.label}
-          resetNotification={onResetNotification}
-        >
-          {notification.children}
-        </Notification>
-      )}
       <section className="grid gap-6">
         <div>
           <label

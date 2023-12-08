@@ -1,21 +1,23 @@
 import { useState, useMemo, ChangeEvent } from 'react';
+import { useDispatch } from 'react-redux';
 
 import {
   UserDataImportDto,
   useUsersOverrideAllOwnUserDataMutation,
 } from '$api/generated/financerApi';
-import { NotificationProps } from '$elements/notification/notification';
+import { ToastMessageTypes } from '$blocks/toast/toast';
 import { OverrideUserData } from '$pages/settings/override-user-data';
+import { addToastMessage } from '$reducer/notifications.reducer';
 
 export const OverrideUserDataContainer = () => {
   const [uploadedUserData, setUploadedUserData] =
     useState<UserDataImportDto | null>(null);
   const [overrideFilename, setOverrideFilename] = useState<string | null>(null);
-  const [notification, setNotification] = useState<NotificationProps | null>(
-    null
-  );
+
   const [overrideProfileData, { isLoading }] =
     useUsersOverrideAllOwnUserDataMutation();
+
+  const dispatch = useDispatch();
 
   const overrideTranactionCount = useMemo(() => {
     if (!uploadedUserData) return null;
@@ -27,21 +29,15 @@ export const OverrideUserDataContainer = () => {
     return uploadedUserData.accounts.length;
   }, [uploadedUserData]);
 
-  const handleResetNotification = () => {
-    setNotification({
-      type: 'success',
-      label: '',
-      children: '',
-    });
-  };
-
   const handleOverrideData = async () => {
     if (!uploadedUserData) {
-      setNotification({
-        type: 'error',
-        label: 'Upload failed',
-        children: 'Cannot update uploaded user data.',
-      });
+      dispatch(
+        addToastMessage({
+          type: ToastMessageTypes.ERROR,
+          message: 'Upload failed',
+          additionalInformation: 'Cannot update uploaded user data',
+        })
+      );
       return;
     }
 
@@ -50,18 +46,22 @@ export const OverrideUserDataContainer = () => {
         userDataImportDto: uploadedUserData,
       }).unwrap();
 
-      setNotification({
-        type: 'success',
-        label: 'Successfully overridden',
-        children: overrideMessage,
-      });
+      dispatch(
+        addToastMessage({
+          type: ToastMessageTypes.SUCCESS,
+          message: overrideMessage,
+        })
+      );
+
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      setNotification({
-        type: 'error',
-        label: 'Overridde failed',
-        children: error.payload,
-      });
+      dispatch(
+        addToastMessage({
+          type: ToastMessageTypes.ERROR,
+          message: 'Overridde failed',
+          additionalInformation: error.payload,
+        })
+      );
     }
   };
 
@@ -72,11 +72,15 @@ export const OverrideUserDataContainer = () => {
     if (!targetFile) {
       setOverrideFilename(null);
       setUploadedUserData(null);
-      setNotification({
-        type: 'error',
-        label: 'Upload failed',
-        children: 'File not found',
-      });
+
+      dispatch(
+        addToastMessage({
+          type: ToastMessageTypes.ERROR,
+          message: 'Upload failed',
+          additionalInformation: 'File not found',
+        })
+      );
+
       return;
     }
 
@@ -90,11 +94,13 @@ export const OverrideUserDataContainer = () => {
         setUploadedUserData(result);
         setOverrideFilename(targetFile.name);
       } else {
-        setNotification({
-          type: 'error',
-          label: 'Upload failed',
-          children: 'Failed to parse JSON file',
-        });
+        dispatch(
+          addToastMessage({
+            type: ToastMessageTypes.ERROR,
+            message: 'Upload failed',
+            additionalInformation: 'Failed to parse JSON file',
+          })
+        );
       }
     };
     fr.readAsText(targetFile);
@@ -106,9 +112,7 @@ export const OverrideUserDataContainer = () => {
       overrideFilename={overrideFilename}
       overrideAccountCount={overrideAccountCount}
       overrideTranactionCount={overrideTranactionCount}
-      notification={notification}
       onFileChange={handleFileChange}
-      onResetNotification={handleResetNotification}
       onOverrideData={handleOverrideData}
     />
   );
