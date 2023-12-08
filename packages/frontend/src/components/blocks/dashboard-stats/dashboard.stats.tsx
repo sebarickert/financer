@@ -69,14 +69,12 @@ export const DashboardStats = ({
   ];
 
   return (
-    <>
-      <BalanceDisplay className={className} amount={balance}>
-        Balance
-      </BalanceDisplay>
+    <section className={className}>
+      <BalanceDisplay amount={balance}>Balance</BalanceDisplay>
       <DetailsList
         items={monthlyDetails}
-        className="py-4 border-t border-b border-gray-dark"
+        className="py-4 border-t border-b border-gray-dark mt-6"
       />
-    </>
+    </section>
   );
 };
