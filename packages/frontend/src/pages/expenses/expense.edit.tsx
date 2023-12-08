@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { ExpenseForm } from './expense-form';
+import { ExpenseForm } from './expense.form';
 
 import { ExpenseDto, UpdateExpenseDto } from '$api/generated/financerApi';
 import { TransactionDelete } from '$blocks/transaction-delete/transaction-delete';
@@ -8,7 +8,7 @@ import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { inputDateFormat } from '$utils/formatDate';
 
-interface EditExpenseProps {
+interface ExpenseEditProps {
   isLoading: boolean;
   expense: ExpenseDto;
   errors: string[];
@@ -16,13 +16,13 @@ interface EditExpenseProps {
   onDelete: () => void;
 }
 
-export const EditExpense = ({
+export const ExpenseEdit = ({
   isLoading,
   expense,
   errors,
   onSave,
   onDelete,
-}: EditExpenseProps): JSX.Element => {
+}: ExpenseEditProps): JSX.Element => {
   const initialValues = useMemo(() => {
     if (!expense) return undefined;
 

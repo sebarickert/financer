@@ -8,7 +8,7 @@ import {
 import { DataHandler } from '$blocks/data-handler/data-handler';
 import { useUserDefaultExpenseAccount } from '$hooks/settings/user-preference/useUserDefaultExpenseAccount';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { AddExpense } from '$pages/expenses/add-expense';
+import { ExpenseAdd } from '$pages/expenses/expense.add';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 interface AddExpenseContainerProps {
@@ -56,7 +56,7 @@ export const AddExpenseContainer = ({
     <>
       <DataHandler skipNotFound {...templateData} />
       {(!templateId || transactionTemplate) && (
-        <AddExpense
+        <ExpenseAdd
           defaultExpenseAccount={defaultExpenseAccount}
           template={transactionTemplate}
           isLoading={isLoading}

@@ -8,7 +8,7 @@ import {
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { EditExpense } from '$pages/expenses/edit-expense';
+import { ExpenseEdit } from '$pages/expenses/expense.edit';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 interface EditExpenseContainerProps {
@@ -61,7 +61,7 @@ export const EditExpenseContainer = ({ id }: EditExpenseContainerProps) => {
     <>
       <DataHandler {...expenseData} />
       {expense && (
-        <EditExpense
+        <ExpenseEdit
           isLoading={isSaving}
           expense={expense}
           errors={errors}

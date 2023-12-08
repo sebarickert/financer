@@ -2,8 +2,6 @@ import { AccountsList } from '$blocks/accounts-list/accounts-list';
 import { AccountsListRowProps } from '$blocks/accounts-list/accounts-list.row';
 import { ButtonInternal } from '$elements/button/button.internal';
 import { Icon, IconName } from '$elements/icon/icon';
-import { LinkList } from '$elements/link-list/link-list';
-import { LinkListLink } from '$elements/link-list/link-list.link';
 import { Loader } from '$elements/loader/loader';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
