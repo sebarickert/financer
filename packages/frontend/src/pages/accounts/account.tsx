@@ -52,6 +52,7 @@ export const Account = ({
         <BalanceDisplay
           amount={account.balance}
           iconName={accountTypeIconMapping[account.type]}
+          className="mb-8"
         >
           {account.name}
         </BalanceDisplay>
