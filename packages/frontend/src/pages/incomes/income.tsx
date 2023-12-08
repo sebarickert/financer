@@ -87,24 +87,26 @@ export const Income = ({
       />
       <section>
         <BalanceDisplay
-          className="mb-12"
+          className="mb-6"
           type={TransactionTypeEnum.Income}
           amount={income?.amount}
         >
           {`${income?.description}`}
         </BalanceDisplay>
-        <DetailsList items={transactionDetails} />
+        <DetailsList
+          items={transactionDetails}
+          className="py-4 border-t border-b border-gray-dark"
+        />
         {categoryDetails.length > 0 && (
           <section className="mt-8">
             <Heading className="mb-4">Categories</Heading>
-            <div className="grid divide-y divide-gray-dark">
+            <div className="grid divide-y divide-gray-dark border-t border-b border-gray-dark">
               {categoryDetails.map((category) => (
-                <span
+                <DetailsList
                   key={category[0].label}
-                  className="py-4 first:pt-0 last:pb-0"
-                >
-                  <DetailsList items={category} />
-                </span>
+                  items={category}
+                  className="py-4"
+                />
               ))}
             </div>
           </section>

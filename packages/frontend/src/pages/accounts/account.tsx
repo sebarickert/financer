@@ -1,8 +1,11 @@
+import { useMemo } from 'react';
+
 import { AccountBalanceHistoryChart } from './account.balance-history-chart';
 
 import { AccountDto } from '$api/generated/financerApi';
 import { accountTypeIconMapping } from '$blocks/accounts-list/accounts-list';
 import { BalanceDisplay } from '$blocks/balance-display/balance-display';
+import { DetailsList } from '$blocks/details-list/details-list';
 import { LatestAccountTransactions } from '$blocks/latest-account-transactions/latest-account-transactions';
 import { initialMonthFilterOptions } from '$blocks/monthly-transaction-list/monthly-transaction-list';
 import { Pager } from '$blocks/pager/pager';
@@ -13,6 +16,7 @@ import { Icon, IconName } from '$elements/icon/icon';
 import { LoaderSuspense } from '$elements/loader/loader-suspense';
 import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { capitalize } from '$utils/capitalize';
 
 interface AccountProps {
   isLoading: boolean;
@@ -32,6 +36,19 @@ export const Account = ({
   const pageVisibleYear = filterOptions.year;
   const pageVisibleMonth = monthNames[filterOptions.month - 1];
 
+  console.log(account);
+
+  const accountDetails = useMemo(
+    () => [
+      {
+        icon: IconName.informationCircle,
+        label: 'Type',
+        description: capitalize(account.type),
+      },
+    ],
+    [account.type]
+  );
+
   return (
     <>
       {isLoading && <LoaderFullScreen />}
@@ -49,13 +66,18 @@ export const Account = ({
         }
       />
       <section>
-        <BalanceDisplay
-          amount={account.balance}
-          iconName={accountTypeIconMapping[account.type]}
-          className="mb-8"
-        >
-          {account.name}
-        </BalanceDisplay>
+        <section className="mb-8">
+          <BalanceDisplay
+            amount={account.balance}
+            iconName={accountTypeIconMapping[account.type]}
+          >
+            {account.name}
+          </BalanceDisplay>
+          <DetailsList
+            items={accountDetails}
+            className="py-4 border-t border-b border-gray-dark mt-6"
+          />
+        </section>
         <LoaderSuspense>
           <AccountBalanceHistoryChart accountId={account._id} />
         </LoaderSuspense>

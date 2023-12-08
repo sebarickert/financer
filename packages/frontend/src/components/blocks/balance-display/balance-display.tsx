@@ -80,10 +80,12 @@ export const BalanceDisplay = ({
           <span className="sr-only">Amount:</span>
           {balance}
         </p>
-        <p className="text-lg">
-          <span className="sr-only">Description:</span>
-          {children}
-        </p>
+        {children && (
+          <p className="text-lg">
+            <span className="sr-only">Description:</span>
+            {children}
+          </p>
+        )}
       </div>
     </div>
   );
