@@ -10,7 +10,7 @@ import {
 import { colorPalette } from '$constants/colorPalette';
 import { ChartWrapperDynamic } from '$elements/chart/chart-wrapper.dynamic';
 import { Loader } from '$elements/loader/loader';
-import { useUserStatisticsSettings } from '$hooks/profile/user-preference/useStatisticsSettings';
+import { useUserStatisticsSettings } from '$hooks/settings/user-preference/useStatisticsSettings';
 import { formatCurrency } from '$utils/formatCurrency';
 import { formatDateShort } from '$utils/formatDate';
 

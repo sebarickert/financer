@@ -8,7 +8,7 @@ test.describe('Transaction category form', () => {
 
   test('Should not allow set child category as parent', async ({ page }) => {
     await page.goto(
-      '/profile/transaction-categories/623b58ada3deba9879422fbf/edit'
+      '/settings/transaction-categories/623b58ada3deba9879422fbf/edit'
     );
 
     const categoryName = 'Category for all types';

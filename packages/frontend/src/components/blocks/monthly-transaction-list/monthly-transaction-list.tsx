@@ -12,7 +12,7 @@ import {
 import { LatestTransactions } from '$blocks/latest-transactions/latest-transactions';
 import { InfoCard } from '$elements/info-card/info-card';
 import { Loader } from '$elements/loader/loader';
-import { useUserStatisticsSettings } from '$hooks/profile/user-preference/useStatisticsSettings';
+import { useUserStatisticsSettings } from '$hooks/settings/user-preference/useStatisticsSettings';
 import { formatCurrency } from '$utils/formatCurrency';
 
 const emptyTotalAmount = { totalAmount: 0 };

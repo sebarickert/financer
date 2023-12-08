@@ -1,7 +1,8 @@
+import { settingsPaths } from '$constants/settings-paths';
 import {
   useUserDashboardSettings,
   useUpdateUserDashboardSettings,
-} from '$hooks/profile/user-preference/useDashboardSettings';
+} from '$hooks/settings/user-preference/useDashboardSettings';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import {
   UserDashboardSettings,
@@ -21,7 +22,7 @@ export const DashboardSettingsContainer = () => {
       accountTypes: newUserDashboardData.accountTypes,
     });
 
-    push('/profile/user-preferences');
+    push(settingsPaths.userPreferences);
   };
 
   return (

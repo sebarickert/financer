@@ -1,7 +1,7 @@
 import {
   useUserTransactionListChunkSize,
   useUpdateUserTransactionListChunkSize,
-} from '$hooks/profile/user-preference/useUserTransactionListChunkSize';
+} from '$hooks/settings/user-preference/useUserTransactionListChunkSize';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import {
   UserTransactionListChunkSize,
@@ -23,7 +23,7 @@ export const MaximumItemsPerPageContainer = () => {
 
     await setDefaultChunkSize(chunkSize);
 
-    push('/profile/user-preferences');
+    push(settingsPaths.userPreferences);
   };
 
   return (

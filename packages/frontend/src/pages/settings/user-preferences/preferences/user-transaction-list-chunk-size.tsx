@@ -44,7 +44,7 @@ export const UserTransactionListChunkSize = ({
           methods={methods}
           onSubmit={onSave}
           submitLabel="Save"
-          formFooterBackLink="/profile/user-preferences"
+          formFooterBackLink={settingsPaths.userPreferences}
         >
           <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
             <Input

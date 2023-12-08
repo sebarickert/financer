@@ -6,8 +6,8 @@ import {
   useTransactionTemplatesFindOneQuery,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
-import { useUserDefaultTransferSourceAccount } from '$hooks/profile/user-preference/useUserDefaultTransferSourceAccount';
-import { useUserDefaultTransferTargetAccount } from '$hooks/profile/user-preference/useUserDefaultTransferTargetAccount';
+import { useUserDefaultTransferSourceAccount } from '$hooks/settings/user-preference/useUserDefaultTransferSourceAccount';
+import { useUserDefaultTransferTargetAccount } from '$hooks/settings/user-preference/useUserDefaultTransferTargetAccount';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { AddTransfer } from '$pages/transfers/add-transfer';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';

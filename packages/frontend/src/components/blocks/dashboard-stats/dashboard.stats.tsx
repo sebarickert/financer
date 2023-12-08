@@ -1,5 +1,5 @@
 import { BalanceDisplay } from '$blocks/balance-display/balance-display';
-import { useUserDashboardSettings } from '$hooks/profile/user-preference/useDashboardSettings';
+import { useUserDashboardSettings } from '$hooks/settings/user-preference/useDashboardSettings';
 import { useTotalBalance } from '$hooks/useTotalBalance';
 
 interface DashboardStatsProps {

@@ -6,7 +6,7 @@ import {
   useTransactionTemplatesFindOneQuery,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
-import { useUserDefaultExpenseAccount } from '$hooks/profile/user-preference/useUserDefaultExpenseAccount';
+import { useUserDefaultExpenseAccount } from '$hooks/settings/user-preference/useUserDefaultExpenseAccount';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { AddExpense } from '$pages/expenses/add-expense';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';

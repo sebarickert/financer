@@ -10,7 +10,7 @@ import {
 import { colorPalette } from '$constants/colorPalette';
 import { ChartWrapperDynamic } from '$elements/chart/chart-wrapper.dynamic';
 import { Loader } from '$elements/loader/loader';
-import { useUserDashboardSettings } from '$hooks/profile/user-preference/useDashboardSettings';
+import { useUserDashboardSettings } from '$hooks/settings/user-preference/useDashboardSettings';
 import { useLatestTransaction } from '$hooks/transaction/useLatestTransaction';
 import { useTotalBalance } from '$hooks/useTotalBalance';
 import {
