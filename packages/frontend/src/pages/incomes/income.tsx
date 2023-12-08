@@ -72,7 +72,7 @@ export const Income = ({
     <>
       <UpdatePageInfo
         title={'Transaction Details'}
-        backLink="/statistics/incomes"
+        backLink="/statistics"
         headerAction={
           <ButtonInternal
             link={`/statistics/incomes/${income._id}/edit`}

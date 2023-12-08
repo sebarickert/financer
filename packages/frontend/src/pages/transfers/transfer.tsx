@@ -79,7 +79,7 @@ export const Transfer = ({
     <>
       <UpdatePageInfo
         title={'Transaction Details'}
-        backLink="/statistics/transfers"
+        backLink="/statistics"
         headerAction={
           <ButtonInternal
             link={`/statistics/transfers/${transfer._id}/edit`}
