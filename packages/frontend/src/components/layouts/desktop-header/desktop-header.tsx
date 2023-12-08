@@ -13,12 +13,12 @@ export const DesktopHeader = (): JSX.Element => {
         {backLink && (
           <LinkViewTransition
             href={backLink}
-            className="inline-flex items-center justify-center border rounded-full h-11 w-11 bg-gray hover:bg-gray-dark border-gray-dark text-gray-darkest"
+            className="inline-flex items-center justify-center -ml-3 h-11 w-11"
             data-testid="header-back-link"
             transition="close-to-right"
           >
             <span className="sr-only">Go back</span>
-            <Icon type={IconName.chevronLeft} />
+            <Icon type={IconName.arrowLeft} />
           </LinkViewTransition>
         )}
         <Heading variant="h1" testId="page-main-heading">

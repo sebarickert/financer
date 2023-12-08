@@ -25,9 +25,9 @@ export const DesktopNavigation = (): JSX.Element => {
             link="/accounts"
           />
           <DesktopNavigationItem
-            label="Profile"
-            iconName={IconName.userCircle}
-            link="/profile"
+            label="Settings"
+            iconName={IconName.cog}
+            link="/settings"
           />
         </ul>
       </nav>
