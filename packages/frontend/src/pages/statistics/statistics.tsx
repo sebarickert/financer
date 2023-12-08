@@ -5,11 +5,10 @@ import {
 } from '$blocks/monthly-transaction-list/monthly-transaction-list';
 import { Pager } from '$blocks/pager/pager';
 import { monthNames } from '$constants/months';
-import { Heading } from '$elements/heading/heading';
 import { IconName } from '$elements/icon/icon';
+import { LinkList } from '$elements/link-list/link-list';
+import { LinkListLink } from '$elements/link-list/link-list.link';
 import { LoaderSuspense } from '$elements/loader/loader-suspense';
-import { QuickLinks } from '$elements/quick-links/quick-links';
-import { QuickLinksItem } from '$elements/quick-links/quick-links.item';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
 interface StatisticsProps {
@@ -56,23 +55,20 @@ export const Statistics = ({
           isSummaryVisible
         />
       </LoaderSuspense>
-      <QuickLinks className="mt-8">
-        <QuickLinksItem
-          title="Incomes"
-          link="/statistics/incomes"
-          iconName={IconName.download}
-        />
-        <QuickLinksItem
-          title="Expenses"
-          link="/statistics/expenses"
-          iconName={IconName.upload}
-        />
-        <QuickLinksItem
-          title="Transfers"
+      <LinkList className="mt-8" isVertical>
+        <LinkListLink link="/statistics/incomes" icon={IconName.download}>
+          Incomes
+        </LinkListLink>
+        <LinkListLink link="/statistics/expenses" icon={IconName.upload}>
+          Expenses
+        </LinkListLink>
+        <LinkListLink
           link="/statistics/transfers"
-          iconName={IconName.switchHorizontal}
-        />
-      </QuickLinks>
+          icon={IconName.switchHorizontal}
+        >
+          Transfers
+        </LinkListLink>
+      </LinkList>
     </>
   );
 };

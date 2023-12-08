@@ -1,5 +1,3 @@
-import clsx from 'clsx';
-
 import {
   TransactionsFindAllByUserApiArg,
   useExpensesFindAllByUserQuery,
@@ -9,8 +7,9 @@ import {
   useTransactionsFindAllByUserQuery,
   useTransfersFindAllByUserQuery,
 } from '$api/generated/financerApi';
+import { DetailsList } from '$blocks/details-list/details-list';
 import { LatestTransactions } from '$blocks/latest-transactions/latest-transactions';
-import { InfoCard } from '$elements/info-card/info-card';
+import { IconName } from '$elements/icon/icon';
 import { Loader } from '$elements/loader/loader';
 import { useUserStatisticsSettings } from '$hooks/settings/user-preference/useStatisticsSettings';
 import { formatCurrency } from '$utils/formatCurrency';
@@ -61,28 +60,39 @@ export const MonthlyTransactionList = ({
 
   const isLoading = isLoadingSettings;
 
+  const monthlyDetails = [
+    {
+      icon: IconName.download,
+      label: 'Incomes',
+      description: (
+        <span className="text-green">
+          {formatCurrency(totalIncomes) ?? '-'}
+        </span>
+      ),
+    },
+    {
+      icon: IconName.upload,
+      label: 'Expenses',
+      description: (
+        <span className="text-red">{formatCurrency(totalExpenses) ?? '-'}</span>
+      ),
+    },
+    {
+      icon: IconName.plus,
+      label: 'Net Total',
+      description: formatCurrency(totalIncomes - totalExpenses) ?? '-',
+    },
+  ];
+
   if (isLoading) return <Loader />;
 
   return (
     <>
       {isSummaryVisible && (
-        <section
-          className={clsx(
-            'grid gap-2 md:gap-4 grid-cols-2 md:grid-cols-3 mb-4'
-          )}
-        >
-          <InfoCard label="Incomes" isSmall>
-            {Number.isNaN(totalIncomes) ? '-' : formatCurrency(totalIncomes)}
-          </InfoCard>
-          <InfoCard label="Expenses" isSmall>
-            {Number.isNaN(totalExpenses) ? '-' : formatCurrency(totalExpenses)}
-          </InfoCard>
-          <InfoCard label="Net total" isSmall className="max-md:col-span-full">
-            {Number.isNaN(totalExpenses) && Number.isNaN(totalIncomes)
-              ? '-'
-              : formatCurrency(totalIncomes - totalExpenses)}
-          </InfoCard>
-        </section>
+        <DetailsList
+          items={monthlyDetails}
+          className="mb-4 py-4 border-t border-b border-gray-dark"
+        />
       )}
       <LatestTransactions
         filterOptions={monthFilterOptions}

@@ -3,7 +3,7 @@ import { Icon, IconName } from '$elements/icon/icon';
 export type DetailsItem = {
   icon: IconName;
   label: string;
-  description: string;
+  description: string | React.ReactNode;
 };
 
 export const DetailsListItem = ({ icon, label, description }: DetailsItem) => {
