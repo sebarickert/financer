@@ -99,8 +99,6 @@ export const TransactionCategories = ({
     reset((oldValues) => ({ ...oldValues, categories: [] }));
   }, [categorySelectOnly, reset, transactionCategories]);
 
-  console.log(transactionAmount);
-
   return (
     <>
       <Button
