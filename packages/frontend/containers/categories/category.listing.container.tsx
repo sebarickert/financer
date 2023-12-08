@@ -94,8 +94,13 @@ export const CategoryListingContainer = () => {
         }
       />
       <section className="grid gap-8">
-        {categoryRows.map(({ label: parentLabel, items }) => (
+        {categoryRows.map(({ label: parentLabel, items, link: parentLink }) => (
           <LinkList key={parentLabel} label={parentLabel}>
+            {parentLink && (
+              <LinkListLink link={parentLink} icon={IconName.tag}>
+                {parentLabel}
+              </LinkListLink>
+            )}
             {items.map(({ id, link, label }) => (
               <LinkListLink key={id} link={link} icon={IconName.tag}>
                 {label}
