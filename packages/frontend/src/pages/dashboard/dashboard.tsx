@@ -9,10 +9,8 @@ export const Dashboard = (): JSX.Element => {
     <>
       <UpdatePageInfo title="Dashboard" />
       <section className="grid gap-6 md:gap-8">
-        {/* <section> */}
         <DashboardStats />
         <BalanceGraph />
-        {/* </section> */}
         <section>
           <Heading className="mb-4" ctaLabel="See all" ctaUrl="/statistics">
             Recent activity
