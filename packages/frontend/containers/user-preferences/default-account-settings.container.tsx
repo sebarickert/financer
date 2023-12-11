@@ -1,4 +1,5 @@
 import { useAccountsFindAllByUserQuery } from '$api/generated/financerApi';
+import { settingsPaths } from '$constants/settings-paths';
 import {
   useUserDefaultExpenseAccount,
   useUpdateUserDefaultExpenseAccount,
