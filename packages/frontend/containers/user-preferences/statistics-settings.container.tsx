@@ -1,3 +1,4 @@
+import { settingsPaths } from '$constants/settings-paths';
 import {
   useUserStatisticsSettings,
   useUpdateUserStatisticsSettings,
