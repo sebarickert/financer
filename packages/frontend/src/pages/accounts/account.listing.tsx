@@ -28,6 +28,7 @@ export const AccountListing = ({
           <ButtonInternal
             link="/accounts/add"
             className="inline-flex items-center justify-center -mr-3 h-11 w-11"
+            testId="add-account"
           >
             <span className="sr-only">Add account</span>
             <Icon type={IconName.viewGridAdd} />

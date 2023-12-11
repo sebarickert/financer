@@ -10,7 +10,7 @@
     "test:safari": "npx playwright test --project=webkit",
     "test:chrome-mobile": "npx playwright test --project=Mobile_Chrome",
     "test:safari-mobile": "npx playwright test --project=Mobile_Safari",
-    "intall-deps": "npx playwright install",
+    "install-deps": "npx playwright install",
     "format": "eslint {tests,utils,assets}/**/*.ts --fix",
     "lint": "eslint \"{tests,utils,assets}/**/*.ts\""
   },

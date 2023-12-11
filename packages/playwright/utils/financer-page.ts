@@ -8,7 +8,6 @@ const parseBaseUrl = (testIndex: number) =>
 
 export const getBaseUrl = () => {
   const workerIndex = parseInt(process.env.TEST_PARALLEL_INDEX);
-  // const workerIndex = parseInt(process.env.TEST_PARALLEL_INDEX);
   return parseBaseUrl(workerIndex);
 };
 
