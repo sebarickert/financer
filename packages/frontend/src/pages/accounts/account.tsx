@@ -44,6 +44,7 @@ export const Account = ({
         icon: IconName.informationCircle,
         label: 'Type',
         description: capitalize(account.type),
+        testId: 'account-type',
       },
     ],
     [account.type]
@@ -70,6 +71,7 @@ export const Account = ({
           <BalanceDisplay
             amount={account.balance}
             iconName={accountTypeIconMapping[account.type]}
+            testId={'account-balance'}
           >
             {account.name}
           </BalanceDisplay>
