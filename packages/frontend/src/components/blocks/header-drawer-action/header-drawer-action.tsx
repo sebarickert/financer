@@ -48,16 +48,16 @@ export const HeaderDrawerAction = ({
       >
         <ButtonGroup isReverse isHorizontal>
           <Button
-            className="sm:mt-6"
             accentColor={drawerButtonAccentColor}
             onClick={onSubmit}
+            testId={`${buttonTestId}-confirm`}
           >
             {drawerButtonLabel}
           </Button>
           <Button
-            className="sm:mt-6"
             onClick={handleToggle}
             accentColor="plain"
+            testId={`${buttonTestId}-cancel`}
           >
             Cancel
           </Button>

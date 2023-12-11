@@ -55,7 +55,7 @@ export const AccountForm = ({
             <Input id="name" isRequired>
               Account
             </Input>
-            <Input id="balance" type="number" step={0.01} isCurrency isRequired>
+            <Input id="balance" type="number" step={0.01} isRequired>
               Balance
             </Input>
             <Select id="type" options={accountTypes} isRequired>

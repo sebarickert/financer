@@ -11,6 +11,7 @@ interface BalanceDisplayProps {
   amount: number;
   iconName?: IconName;
   testId?: string;
+  childTestId?: string;
 }
 
 export const BalanceDisplay = ({
@@ -20,6 +21,7 @@ export const BalanceDisplay = ({
   amount,
   iconName,
   testId,
+  childTestId,
 }: BalanceDisplayProps) => {
   const formattedAmount = formatCurrency(amount);
 
@@ -85,7 +87,7 @@ export const BalanceDisplay = ({
         {children && (
           <p className="text-lg">
             <span className="sr-only">Description:</span>
-            {children}
+            <span data-testid={childTestId}>{children}</span>
           </p>
         )}
       </div>

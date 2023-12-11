@@ -24,7 +24,7 @@ export const ButtonGroup = ({
       )}
       <div
         className={clsx('flex gap-2', {
-          ['flex-col sm:flex-row']: isHorizontal,
+          ['flex-col lg:flex-row']: isHorizontal,
           ['flex-row-reverse']: isHorizontal && isReverse,
           ['sm:flex-row-reverse']: isReverse && !isHorizontal,
         })}

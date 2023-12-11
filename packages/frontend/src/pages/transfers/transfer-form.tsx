@@ -123,14 +123,7 @@ export const TransferForm = ({
             >
               To Account
             </AccountsSelect>
-            <Input
-              id="amount"
-              type="number"
-              min={0.01}
-              step={0.01}
-              isCurrency
-              isRequired
-            >
+            <Input id="amount" type="number" min={0.01} step={0.01} isRequired>
               Amount
             </Input>
             <Input id="description" isRequired>

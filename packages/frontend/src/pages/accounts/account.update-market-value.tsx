@@ -50,7 +50,7 @@ export const AccountUpdateMarketValue = ({
           submitLabel="Update"
         >
           <div className="space-y-4">
-            <Input id="currentMarketValue" type="number" isCurrency isRequired>
+            <Input id="currentMarketValue" type="number" isRequired>
               Current Market Value
             </Input>
             <Input id="date" type="datetime-local">

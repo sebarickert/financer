@@ -6,7 +6,6 @@ interface InputProps {
   children: React.ReactNode;
   help?: string;
   id: string;
-  isCurrency?: boolean;
   isRequired?: boolean;
   type?: 'text' | 'number' | 'datetime-local';
   value?: string | number;
@@ -29,7 +28,6 @@ export const Input = ({
   children,
   help = '',
   id,
-  isCurrency = false,
   isRequired = false,
   type = 'text',
   min,
@@ -43,16 +41,11 @@ export const Input = ({
     <div>
       <label
         htmlFor={id}
-        className="block text-sm tracking-tight text-black/75"
+        className="block text-xs tracking-tight text-black/75 uppercase font-medium"
       >
         {children}
       </label>
-      <div className="relative mt-1 rounded-md">
-        {isCurrency && (
-          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-            <span className="text-charcoal">€</span>
-          </div>
-        )}
+      <div className="mt-1 rounded-md">
         <input
           id={id}
           type={type}
@@ -61,8 +54,7 @@ export const Input = ({
           max={max}
           step={step}
           className={clsx(
-            'appearance-none block w-full px-3 py-3 border border-transparent text-black bg-gray rounded-md focus:ring-black focus:border-black tracking-normal',
-            { ['pl-8']: isCurrency }
+            'appearance-none block w-full px-3 py-3 border border-transparent text-black bg-gray rounded-md focus:ring-black focus:border-black tracking-normal'
           )}
           aria-describedby={help && `${id}-description`}
           required={isRequired}
