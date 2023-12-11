@@ -97,14 +97,15 @@ export const Drawer = ({
     left: clsx('', {
       ['top-0 bottom-0 overflow-y-auto']: true,
       ['max-w-[600px] w-[75%]']: true,
-      ['max-[1440px]:right-0 min-[1440px]:max-w-[552px]']: true,
+      ['max-[1440px]:right-0 min-[1440px]:max-w-[552px] min-[1440px]:box-content']:
+        true,
       ['min-[1440px]:pr-[100vw] min-[1440px]:mr-[-100vw] min-[1440px]:right-[calc(calc(100vw-1440px)/2+1.5rem)]']:
         true,
       ['max-[1440px]:aria-hidden:-right-[100vw] min-[1440px]:aria-hidden:-right-[calc(100vw)]']:
         true,
     }),
     bottom: clsx('', {
-      ['bottom-0 left-0 right-0 px-8 pb-12 pt-8']: true,
+      ['bottom-0 left-0 right-0']: true,
       ['rounded-t-2xl box-content']: true,
       ['aria-hidden:-bottom-[100vh]']: true,
     }),
@@ -118,6 +119,7 @@ export const Drawer = ({
   const drawerBaseClasses = clsx('', {
     [className]: true,
     ['bg-white fixed transition-all z-[200] duration-200 text-left']: true,
+    ['px-8 pb-12 pt-8']: true,
     [defaultDrawerClasses]: true,
     ['hidden']: isClosedDelay,
   });

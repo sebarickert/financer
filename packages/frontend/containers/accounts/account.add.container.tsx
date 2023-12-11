@@ -14,8 +14,6 @@ export const AddAccountContainer = () => {
   const handleSubmit = useCallback(
     async (newAccountData: AccountFormFields) => {
       try {
-        console.log(newAccountData);
-
         await addAccount({
           createAccountDto: newAccountData,
         }).unwrap();

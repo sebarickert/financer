@@ -15,9 +15,10 @@ test.describe('Account deleting', () => {
 
     await accountRow.click();
 
-    await page.getByTestId('delete-account').click();
+    await page.getByTestId('edit-account').click();
 
-    await page.getByTestId('delete-account_confirm-button').click();
+    await page.getByTestId('delete-account').click();
+    await page.getByTestId('delete-account-confirm').click();
 
     const deletedAccountRow = page
       .getByTestId('account-row')
@@ -33,10 +34,14 @@ test.describe('Account deleting', () => {
 
     await accountRow.click();
 
+    await page.getByTestId('edit-account').click();
+
     await page.getByTestId('delete-account').click();
+    await page.getByTestId('delete-account-cancel').click({});
 
-    await page.getByTestId('delete-account_cancel-button').click();
+    await page.waitForTimeout(100)
 
+    await page.getByTestId('header-back-link').click();
     await page.getByTestId('header-back-link').click();
 
     const deletedAccountRow = page

@@ -31,8 +31,7 @@ test.describe('Account editing', () => {
     accountBalance: string,
     accountType: string
   ) => {
-    await expect(page.getByTestId('page-main-heading')).toHaveText(accountName);
-
+    await expect(page.getByTestId('account-name')).toHaveText(accountName);
     await expect(page.getByTestId('account-type')).toHaveText(accountType);
 
     const currentBalance = await page

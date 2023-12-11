@@ -175,7 +175,7 @@ export const TemplateForm = ({
               Template name
             </Input>
             <Input id="description">Description</Input>
-            <Input id="amount" type="number" min={0.01} step={0.01} isCurrency>
+            <Input id="amount" type="number" min={0.01} step={0.01}>
               Amount
             </Input>
             {(templateVisibility === TransactionTypeEnum.Expense ||

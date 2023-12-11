@@ -61,7 +61,6 @@ export const TransactionCategoriesForm = ({
                   min={0.01}
                   step={0.01}
                   max={maxAmount}
-                  isCurrency
                   isRequired
                   testId={`${testId}_transaction-category_amount`}
                 >
@@ -86,16 +85,11 @@ export const TransactionCategoriesForm = ({
           )}
         </div>
         <ButtonGroup className="mt-12" isReverse isHorizontal>
-          <Button
-            className="sm:mt-6"
-            onClick={handleSubmit}
-            testId={`${testId}_delete-button`}
-          >
+          <Button onClick={handleSubmit} testId={`${testId}_delete-button`}>
             {!isNewCategory ? 'Update' : 'Add'}
           </Button>
           {!isNewCategory ? (
             <Button
-              className="sm:mt-6"
               onClick={handleDelete}
               testId={`${testId}_delete-button`}
               accentColor="plain"
@@ -104,7 +98,6 @@ export const TransactionCategoriesForm = ({
             </Button>
           ) : (
             <Button
-              className="sm:mt-6"
               onClick={handleCancel}
               testId={`${testId}_cancel-button`}
               accentColor="plain"

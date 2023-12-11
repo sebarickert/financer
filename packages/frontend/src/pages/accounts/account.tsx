@@ -36,8 +36,6 @@ export const Account = ({
   const pageVisibleYear = filterOptions.year;
   const pageVisibleMonth = monthNames[filterOptions.month - 1];
 
-  console.log(account);
-
   const accountDetails = useMemo(
     () => [
       {
@@ -60,6 +58,7 @@ export const Account = ({
           <ButtonInternal
             link={`/accounts/${account._id}/edit`}
             className="inline-flex items-center justify-center -mr-3 h-11 w-11"
+            testId="edit-account"
           >
             <span className="sr-only">Edit</span>
             <Icon type={IconName.pencilSquare} />
@@ -72,6 +71,7 @@ export const Account = ({
             amount={account.balance}
             iconName={accountTypeIconMapping[account.type]}
             testId={'account-balance'}
+            childTestId={'account-name'}
           >
             {account.name}
           </BalanceDisplay>
