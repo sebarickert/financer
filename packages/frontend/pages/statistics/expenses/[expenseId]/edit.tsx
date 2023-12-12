@@ -1,4 +1,4 @@
-import { EditExpenseContainer } from '$container/expenses/edit-expense.container';
+import { EditExpenseContainer } from '$container/expenses/expense.edit.container';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 
 const EditExpensePage = () => {

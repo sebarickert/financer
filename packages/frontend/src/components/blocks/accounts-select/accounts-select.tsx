@@ -24,12 +24,19 @@ interface AccountsSelectProps {
   icon: IconName.download | IconName.upload;
 }
 
-export const AccountsSelect = ({ id, options, icon }: AccountsSelectProps) => {
+export const AccountsSelect = ({
+  id,
+  options,
+  icon,
+  testId: rawTestId,
+}: AccountsSelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const { watch } = useFormContext();
   const optionListRef = useRef<HTMLUListElement>(null);
   const selectedItemRef = useRef<HTMLLabelElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
+
+  const testId = rawTestId ?? 'accounts-select';
 
   const targetRefs = useMemo(
     () => [optionListRef, buttonRef],
@@ -72,10 +79,11 @@ export const AccountsSelect = ({ id, options, icon }: AccountsSelectProps) => {
   }, [accountId, isOpen]);
 
   return (
-    <section className="relative">
+    <section className="relative" data-testid={testId}>
       <button
         ref={buttonRef}
         aria-expanded={isOpen}
+        data-testid={`${testId}-button`}
         onClick={() => {
           if (isOpen) return;
 
@@ -113,6 +121,7 @@ export const AccountsSelect = ({ id, options, icon }: AccountsSelectProps) => {
           'absolute w-full mt-1 border divide-y-[1px] divide-gray-dark rounded-md top-full bg-gray border-gray-dark max-h-[17rem] overflow-auto aria-hidden:hidden aria-hidden:invisible z-10'
         )}
         tabIndex={-1}
+        data-testid={`${testId}-list`}
       >
         {options.map((option) => (
           <AccountsSelectOption
@@ -123,6 +132,7 @@ export const AccountsSelect = ({ id, options, icon }: AccountsSelectProps) => {
               setIsOpen(false);
               buttonRef.current?.focus();
             }}
+            testId={testId}
             activeItemRef={
               accountId === option.value ? selectedItemRef : undefined
             }

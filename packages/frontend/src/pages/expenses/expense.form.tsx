@@ -61,6 +61,7 @@ export const ExpenseForm = ({
   }, [defaultValues, reset]);
 
   const { data: accounts, isLoading } = useAccountsFindAllByUserQuery({});
+
   const accountOptions = useMemo(() => {
     if (!accounts) return [];
     return accounts.data.map(({ _id, name }) => ({
@@ -68,11 +69,13 @@ export const ExpenseForm = ({
       label: name,
     }));
   }, [accounts]);
+
   const { data: transactionCategoriesRaw } =
     useAllTransactionCategoriesWithCategoryTree({
       visibilityType:
         VisibilityTypeEnum.Expense as unknown as VisibilityType2Enum,
     });
+
   const [transactionCategories, setTransactionCategories] = useState<Option[]>(
     []
   );

@@ -25,7 +25,7 @@ export const TransactionCategoriesForm = ({
   className = '',
   index,
   categories,
-  testId = '',
+  testId: testIdRaw = '',
   categorySelectOnly,
   maxAmount,
   isNewCategory,
@@ -36,19 +36,18 @@ export const TransactionCategoriesForm = ({
 }: TransactionCategoriesFormProps): JSX.Element => {
   const namePrefix = `categories.${index}` as const;
 
+  const testId = `${testIdRaw}-form`;
+
   return (
-    <div
-      className={className}
-      data-testid={`${testId}_transaction-category_row`}
-    >
+    <div className={className} data-testid={testId}>
       <Divider>{`Category Item #${index + 1}`}</Divider>
-      <div className="grid sm:grid-cols-[1fr,auto] items-start mt-4">
+      <div className="grid items-start mt-4">
         <div className="grid gap-4">
           <Select
             id={`${namePrefix}.category_id`}
             options={categories}
             isRequired
-            testId={`${testId}_transaction-category_category`}
+            testId={`${testId}-select`}
           >
             Category
           </Select>
@@ -62,7 +61,7 @@ export const TransactionCategoriesForm = ({
                   step={0.01}
                   max={maxAmount}
                   isRequired
-                  testId={`${testId}_transaction-category_amount`}
+                  testId={`${testId}-amount`}
                 >
                   Amount
                 </Input>
@@ -77,7 +76,7 @@ export const TransactionCategoriesForm = ({
               </div>
               <Input
                 id={`${namePrefix}.description`}
-                testId={`${testId}_transaction-category_description`}
+                testId={`${testId}-description`}
               >
                 Description
               </Input>
@@ -85,13 +84,13 @@ export const TransactionCategoriesForm = ({
           )}
         </div>
         <ButtonGroup className="mt-12" isReverse isHorizontal>
-          <Button onClick={handleSubmit} testId={`${testId}_delete-button`}>
+          <Button onClick={handleSubmit} testId={`${testId}-submit`}>
             {!isNewCategory ? 'Update' : 'Add'}
           </Button>
           {!isNewCategory ? (
             <Button
               onClick={handleDelete}
-              testId={`${testId}_delete-button`}
+              testId={`${testId}-delete`}
               accentColor="plain"
             >
               Delete
@@ -99,7 +98,7 @@ export const TransactionCategoriesForm = ({
           ) : (
             <Button
               onClick={handleCancel}
-              testId={`${testId}_cancel-button`}
+              testId={`${testId}-cancel`}
               accentColor="plain"
             >
               Cancel

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 
 import { TransactionCategoriesForm } from './transaction-categories.form';
@@ -7,6 +7,7 @@ import { TransactionCategoriesItem } from './transaction-categories.item';
 import { Drawer } from '$blocks/drawer/drawer';
 import { Button } from '$elements/button/button';
 import { Option } from '$elements/select/select';
+import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
 
 interface TransactionCategoriesProps {
   className?: string;
@@ -35,7 +36,18 @@ export const TransactionCategories = ({
   const [selectedIndex, setSelectedIndex] = useState(defaultSelectedIndex);
   const [isFormOpen, setIsFormOpen] = useState(false);
 
+  const { data: transactionCategoriesRaw } =
+    useAllTransactionCategoriesWithCategoryTree();
+
+  const getCategoryNameById = useCallback(
+    (categoryId: string) =>
+      transactionCategoriesRaw?.find((category) => category._id === categoryId)
+        ?.categoryTree || categoryId,
+    [transactionCategoriesRaw]
+  );
+
   const { getValues, setValue, reset } = useFormContext<FieldArrayFields>();
+
   const { fields, remove, update } = useFieldArray<FieldArrayFields>({
     name: 'categories',
   });
@@ -71,9 +83,12 @@ export const TransactionCategories = ({
     setSelectedIndex(defaultSelectedIndex);
   };
 
-  const handleDelete = () => {
-    remove(selectedIndex);
+  const handleDelete = async () => {
     setIsFormOpen(false);
+
+    setTimeout(() => {
+      remove(selectedIndex);
+    }, 100);
   };
 
   const handleSubmit = () => {
@@ -116,7 +131,6 @@ export const TransactionCategories = ({
       >
         <TransactionCategoriesForm
           testId={testId}
-          key={selectedIndex}
           index={selectedIndex}
           categories={transactionCategories}
           categorySelectOnly={categorySelectOnly}
@@ -134,6 +148,7 @@ export const TransactionCategories = ({
             key={id}
             index={index}
             onClick={() => handleCategoryItemClick(index)}
+            getCategoryNameById={getCategoryNameById}
           />
         ))}
       </ul>

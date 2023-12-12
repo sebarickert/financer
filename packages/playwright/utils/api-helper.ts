@@ -1,6 +1,6 @@
 import { AccountDto, TransactionDto, PaginationDto } from '@local/types';
 
-import { getBaseUrl } from './financer-page';
+import { Page, getBaseUrl } from './financer-page';
 
 export interface ITransactionWithDateObject extends TransactionDto {
   dateObj: Date;
@@ -123,3 +123,22 @@ export const getAccountFromTransactions = (transaction: TransactionDto) =>
 
 export const roundToTwoDecimal = (number: number): number =>
   Math.round(number * 100) / 100;
+
+export const selectAccount = async (targetAccountId: string, page: Page, testId?: string) => {
+  const id = testId ?? 'accounts-select';
+
+  await page.getByTestId(`${id}-button`).click();
+  await page.getByTestId(id).locator(`input[value="${targetAccountId}"] + label`).check();
+}
+
+export const submitTransactionCategoryForm = async (testId: string, page: Page, {select, amount, description}: {select?: string, amount?: string, description?: string}) => {
+  const categoriesSelectElement = page.getByTestId(`${testId}-select`);
+  const amountInput = page.getByTestId(`${testId}-amount`);
+  const descriptionInput = page.getByTestId(`${testId}-description`);
+
+  select && await categoriesSelectElement.selectOption(select);
+  amount && await amountInput.fill(amount);
+  await descriptionInput.fill(description ?? '');
+
+  await page.getByTestId(`${testId}-submit`).click();
+}

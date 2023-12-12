@@ -35,6 +35,7 @@ export const ExpenseListing = ({
           <ButtonInternal
             link="/statistics/expenses/add"
             className="inline-flex items-center justify-center -mr-3 h-11 w-11"
+            testId="add-expense"
           >
             <span className="sr-only">Add expense</span>
             <Icon type={IconName.plus} />
