@@ -79,7 +79,7 @@ export const AccountsSelect = ({
   }, [accountId, isOpen]);
 
   return (
-    <section className="relative" data-testid={testId}>
+    <section className={clsx({ relative: isOpen })} data-testid={testId}>
       <button
         ref={buttonRef}
         aria-expanded={isOpen}
