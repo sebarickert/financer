@@ -11,13 +11,13 @@ const getWorkerCountByCpu = () => {
 
 export const getWorkerCount = () =>
   process.env.CI ? 1 : getWorkerCountByCpu();
-  // process.env.CI || process.env.DEBUG ? 1 : getWorkerCountByCpu();
+// process.env.CI || process.env.DEBUG ? 1 : getWorkerCountByCpu();
 
 // export const parsePort = (testIndex: number) => process.env.DEBUG ? 3000 : BASE_PORT + testIndex;
 export const parsePort = (testIndex: number) => BASE_PORT + testIndex;
 
 export const startServer = async (
-  workerIndex: number
+  workerIndex: number,
 ): Promise<ChildProcessWithoutNullStreams> => {
   const serverProcess = spawn('node', ['../../build/server/main.js'], {
     env: {

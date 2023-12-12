@@ -1,5 +1,5 @@
 import { submitTransactionCategoryForm } from '$utils/api-helper';
-import { test, expect, Page } from '$utils/financer-page';
+import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
 
 test.describe('Edit expense with category', () => {
@@ -9,8 +9,8 @@ test.describe('Edit expense with category', () => {
     editExpenseButton: 'edit-expense-button',
     transactionCategoriesForm: 'transaction-categories-form',
     transactionCategoriesItem: 'transaction-categories-item',
-  }
-  
+  };
+
   test.beforeEach(async ({ page }) => {
     await applyFixture('small');
     await page.goto('/statistics/expenses?date=2022-03&page=1');
@@ -22,16 +22,23 @@ test.describe('Edit expense with category', () => {
 
     await page.getByRole('button', { name: 'Edit category' }).click();
     await page.waitForTimeout(100);
-  
-    const select = page.getByTestId(ids.transactionCategoriesForm + '-select');
-    const amount = page.getByTestId(ids.transactionCategoriesForm + '-amount');
-    const description = page.getByTestId(ids.transactionCategoriesForm + '-description');
 
-    await expect(select.locator('option:checked')).toContainText('Invisible category > Sub category for all types');
+    const select = page.getByTestId(`${ids.transactionCategoriesForm}-select`);
+    const amount = page.getByTestId(`${ids.transactionCategoriesForm}-amount`);
+    const description = page.getByTestId(
+      `${ids.transactionCategoriesForm}-description`,
+    );
+
+    await expect(select.locator('option:checked')).toContainText(
+      'Invisible category > Sub category for all types',
+    );
     await expect(amount).toHaveValue('22222');
     await expect(description).toHaveValue('dummy description');
 
-    await submitTransactionCategoryForm(ids.transactionCategoriesForm, page, {select: 'Category for all types', amount: '50.50'});
+    await submitTransactionCategoryForm(ids.transactionCategoriesForm, page, {
+      select: 'Category for all types',
+      amount: '50.50',
+    });
 
     await page.waitForTimeout(100);
 
@@ -44,7 +51,9 @@ test.describe('Edit expense with category', () => {
     await page.getByRole('button', { name: 'Edit category' }).click();
     await page.waitForTimeout(100);
 
-    await expect(select.locator('option:checked')).toContainText('Category for all types');
+    await expect(select.locator('option:checked')).toContainText(
+      'Category for all types',
+    );
     await expect(amount).toHaveValue('50.5');
     await expect(description).toHaveValue('');
   });
@@ -54,12 +63,16 @@ test.describe('Edit expense with category', () => {
     await page.getByTestId(ids.editExpenseButton).click();
 
     const item = page.getByTestId(ids.transactionCategoriesItem);
-    const name = page.getByTestId(ids.transactionCategoriesItem + '-name');
-    const amount = page.getByTestId(ids.transactionCategoriesItem + '-amount');
-    const description = page.getByTestId(ids.transactionCategoriesItem + '-description');
+    const name = page.getByTestId(`${ids.transactionCategoriesItem}-name`);
+    const amount = page.getByTestId(`${ids.transactionCategoriesItem}-amount`);
+    const description = page.getByTestId(
+      `${ids.transactionCategoriesItem}-description`,
+    );
 
     await expect(name.first()).toContainText('Expense category');
-    await expect(name.nth(1)).toContainText('Invisible category > Expense sub category');
+    await expect(name.nth(1)).toContainText(
+      'Invisible category > Expense sub category',
+    );
 
     await expect(amount.first()).toContainText('3333');
     await expect(amount.nth(1)).toContainText('34564532');
@@ -69,15 +82,18 @@ test.describe('Edit expense with category', () => {
 
     await page.getByRole('button', { name: 'Edit category' }).first().click();
     await page.waitForTimeout(100);
-    
-    await submitTransactionCategoryForm(ids.transactionCategoriesForm, page, {amount: '100', description: 'Changed description'});
+
+    await submitTransactionCategoryForm(ids.transactionCategoriesForm, page, {
+      amount: '100',
+      description: 'Changed description',
+    });
 
     await expect(item).toHaveCount(2);
 
     await page.getByRole('button', { name: 'Edit category' }).last().click();
     await page.waitForTimeout(100);
 
-    await page.getByTestId(ids.transactionCategoriesForm + '-delete').click();
+    await page.getByTestId(`${ids.transactionCategoriesForm}-delete`).click();
 
     await expect(item).toHaveCount(1);
 
@@ -86,7 +102,7 @@ test.describe('Edit expense with category', () => {
     await page.goto('/statistics/expenses?date=2022-03&page=1');
     await page.getByTestId(ids.expenseWithMultipleCategories).click();
     await page.getByTestId(ids.editExpenseButton).click();
-    
+
     await expect(item).toHaveCount(1);
     await expect(name).toHaveText('Expense category');
     await expect(amount).toHaveText('100');
@@ -102,13 +118,13 @@ test.describe('Edit expense with category', () => {
 
     await page.getByRole('button', { name: 'Edit category' }).first().click();
     await page.waitForTimeout(100);
-    await page.getByTestId(ids.transactionCategoriesForm + '-delete').click();
+    await page.getByTestId(`${ids.transactionCategoriesForm}-delete`).click();
 
     await page.waitForTimeout(100);
 
     await page.getByRole('button', { name: 'Edit category' }).first().click();
     await page.waitForTimeout(100);
-    await page.getByTestId(ids.transactionCategoriesForm + '-delete').click();
+    await page.getByTestId(`${ids.transactionCategoriesForm}-delete`).click();
 
     await expect(item).toHaveCount(0);
 

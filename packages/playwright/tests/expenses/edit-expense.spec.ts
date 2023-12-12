@@ -25,7 +25,7 @@ test.describe('Edit expense', () => {
   const verifyAccountBalanceChanges = async (
     amount: number,
     accountBefore: AccountDto,
-    accountAfter: AccountDto
+    accountAfter: AccountDto,
   ) => {
     const balanceBefore = roundToTwoDecimal(accountBefore.balance);
     const balanceAfter = roundToTwoDecimal(accountAfter.balance);
@@ -37,7 +37,7 @@ test.describe('Edit expense', () => {
     newName: string,
     changedAmount: number,
     transactionBefore: ITransactionWithDateObject,
-    transactionAfter: ITransactionWithDateObject
+    transactionAfter: ITransactionWithDateObject,
   ) => {
     const nameAfter = transactionAfter.description;
     const amountAfter = roundToTwoDecimal(transactionAfter.amount);
@@ -56,7 +56,7 @@ test.describe('Edit expense', () => {
     const transactionsBefore = await getAllTransaction();
 
     const expensesBefore = transactionsBefore.filter(
-      ({ fromAccount, toAccount }) => fromAccount && !toAccount
+      ({ fromAccount, toAccount }) => fromAccount && !toAccount,
     );
     const targetTransactionBefore = expensesBefore[expensesBefore.length - 1];
 
@@ -76,26 +76,26 @@ test.describe('Edit expense', () => {
     await page.locator('#amount').fill(newAmount.toString());
 
     await selectAccount(targetAccountId, page);
-    
+
     await page.getByTestId('submit').click();
 
     await page.getByTestId('add-expense').waitFor();
 
     const accountAfter = await getAccount(targetAccountId);
     const targetTransactionAfter = await getTransactionById(
-      targetTransactionBefore._id
+      targetTransactionBefore._id,
     );
 
     await verifyAccountBalanceChanges(
       amountToChangeTransaction,
       accountBefore,
-      accountAfter
+      accountAfter,
     );
     await verifyTargetTransactionChanged(
       editedTransactionName,
       amountToChangeTransaction,
       targetTransactionBefore,
-      targetTransactionAfter
+      targetTransactionAfter,
     );
   });
 
@@ -105,7 +105,7 @@ test.describe('Edit expense', () => {
     const transactionsBefore = await getAllTransaction();
 
     const expensesBefore = transactionsBefore.filter(
-      ({ fromAccount, toAccount }) => fromAccount && !toAccount
+      ({ fromAccount, toAccount }) => fromAccount && !toAccount,
     );
     const targetTransactionBefore = expensesBefore[0];
 
@@ -123,26 +123,26 @@ test.describe('Edit expense', () => {
     await page.getByTestId('edit-expense-button').click();
     await page.locator('#description').fill(editedTransactionName);
     await page.locator('#amount').fill(newAmount.toString());
-    
+
     await page.getByTestId('submit').click();
 
     await page.getByTestId('add-expense').waitFor();
 
     const accountAfter = await getAccount(targetAccountId);
     const targetTransactionAfter = await getTransactionById(
-      targetTransactionBefore._id
+      targetTransactionBefore._id,
     );
 
     await verifyAccountBalanceChanges(
       amountToChangeTransaction,
       accountBefore,
-      accountAfter
+      accountAfter,
     );
     await verifyTargetTransactionChanged(
       editedTransactionName,
       amountToChangeTransaction,
       targetTransactionBefore,
-      targetTransactionAfter
+      targetTransactionAfter,
     );
   });
 });

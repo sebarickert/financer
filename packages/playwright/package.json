@@ -11,7 +11,7 @@
     "test:chrome-mobile": "npx playwright test --project=Mobile_Chrome",
     "test:safari-mobile": "npx playwright test --project=Mobile_Safari",
     "install-deps": "npx playwright install",
-    "format": "eslint {tests,utils,assets}/**/*.ts --fix",
+    "format": "eslint {tests,utils}/**/*.ts --fix",
     "lint": "eslint \"{tests,utils,assets}/**/*.ts\""
   },
   "keywords": [],

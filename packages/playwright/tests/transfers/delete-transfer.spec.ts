@@ -18,13 +18,13 @@ test.describe('Delete transfer', () => {
   const verifyToAccountBalanceChangeByTargetTransactionAmount = async (
     accountBefore: AccountDto,
     accountAfter: AccountDto,
-    targetTransactionBefore: TransferDto
+    targetTransactionBefore: TransferDto,
   ) => {
     const changedAmount = roundToTwoDecimal(targetTransactionBefore.amount);
     const balanceBefore = roundToTwoDecimal(accountBefore.balance);
     const balanceAfter = roundToTwoDecimal(accountAfter.balance);
     const balanceBeforeWithChangedAmount = roundToTwoDecimal(
-      balanceBefore - changedAmount
+      balanceBefore - changedAmount,
     );
 
     expect(balanceBeforeWithChangedAmount).toBe(balanceAfter);
@@ -33,23 +33,23 @@ test.describe('Delete transfer', () => {
   const verifyFromAccountBalanceChangeByTargetTransactionAmount = async (
     accountBefore: AccountDto,
     accountAfter: AccountDto,
-    targetTransactionBefore: TransferDto
+    targetTransactionBefore: TransferDto,
   ) => {
     const changedAmount = roundToTwoDecimal(targetTransactionBefore.amount);
     const balanceBefore = roundToTwoDecimal(accountBefore.balance);
     const balanceAfter = roundToTwoDecimal(accountAfter.balance);
     const balanceBeforeWithChangedAmount = roundToTwoDecimal(
-      balanceBefore + changedAmount
+      balanceBefore + changedAmount,
     );
 
     expect(balanceBeforeWithChangedAmount).toBe(balanceAfter);
   };
 
   const verifyTargetTransactionDoesNotExistsAfter = async (
-    targetTransactionBefore: TransferDto
+    targetTransactionBefore: TransferDto,
   ) => {
     const targetTransactionAfter = await getTransactionByIdRaw(
-      targetTransactionBefore._id
+      targetTransactionBefore._id,
     );
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -60,7 +60,7 @@ test.describe('Delete transfer', () => {
     const transactionsBefore = await getAllTransaction();
 
     const transfersBefore = transactionsBefore.filter(
-      ({ fromAccount, toAccount }) => fromAccount && toAccount
+      ({ fromAccount, toAccount }) => fromAccount && toAccount,
     );
     const targetTransactionBefore = transfersBefore.at(-1);
 
@@ -87,12 +87,12 @@ test.describe('Delete transfer', () => {
     verifyToAccountBalanceChangeByTargetTransactionAmount(
       toAccountBefore,
       toAccountAfter,
-      targetTransactionBefore
+      targetTransactionBefore,
     );
     verifyFromAccountBalanceChangeByTargetTransactionAmount(
       fromAccountBefore,
       fromAccountAfter,
-      targetTransactionBefore
+      targetTransactionBefore,
     );
     verifyTargetTransactionDoesNotExistsAfter(targetTransactionBefore);
   });
@@ -101,7 +101,7 @@ test.describe('Delete transfer', () => {
     const transactionsBefore = await getAllTransaction();
 
     const transfersBefore = transactionsBefore.filter(
-      ({ fromAccount, toAccount }) => fromAccount && toAccount
+      ({ fromAccount, toAccount }) => fromAccount && toAccount,
     );
     const targetTransactionBefore = transfersBefore[0];
 
@@ -128,12 +128,12 @@ test.describe('Delete transfer', () => {
     verifyToAccountBalanceChangeByTargetTransactionAmount(
       toAccountBefore,
       toAccountAfter,
-      targetTransactionBefore
+      targetTransactionBefore,
     );
     verifyFromAccountBalanceChangeByTargetTransactionAmount(
       fromAccountBefore,
       fromAccountAfter,
-      targetTransactionBefore
+      targetTransactionBefore,
     );
     verifyTargetTransactionDoesNotExistsAfter(targetTransactionBefore);
   });

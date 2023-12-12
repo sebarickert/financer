@@ -7,9 +7,7 @@ test.describe('Transaction category form', () => {
   });
 
   test('Should not allow set child category as parent', async ({ page }) => {
-    await page.goto(
-      '/settings/categories/623b58ada3deba9879422fbf/edit'
-    );
+    await page.goto('/settings/categories/623b58ada3deba9879422fbf/edit');
 
     const categoryName = 'Category for all types';
 
@@ -37,10 +35,10 @@ test.describe('Transaction category form', () => {
     await page.getByTestId('submit').click();
 
     await expect(page.getByTestId('form-errors')).toContainText(
-      'There were 1 errors with your submission'
+      'There were 1 errors with your submission',
     );
     await expect(page.getByTestId('form-errors')).toContainText(
-      'Parent category cannot be child category of current item.'
+      'Parent category cannot be child category of current item.',
     );
   });
 });

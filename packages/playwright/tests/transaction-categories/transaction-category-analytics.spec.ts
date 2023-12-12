@@ -13,7 +13,7 @@ test.describe('Transaction category analytics', () => {
   }) => {
     // 623b58ada3deba9879422fbf = Category for all types
     const response = await page.goto(
-      '/api/transactions/monthly-summaries?year=2022&month=01&page=1&limit=500&parentTransactionCategory=623b58ada3deba9879422fbf'
+      '/api/transactions/monthly-summaries?year=2022&month=01&page=1&limit=500&parentTransactionCategory=623b58ada3deba9879422fbf',
     );
     expect(response.status()).toBe(200);
     const [body] = await response.json();
@@ -29,7 +29,7 @@ test.describe('Transaction category analytics', () => {
     expect(roundToTwoDecimals(body.transferAmount)).toBe(0);
 
     const response2 = await page.goto(
-      '/api/incomes/monthly-summaries?year=2022&month=01&page=1&limit=500&parentTransactionCategory=623b58ada3deba9879422fbf'
+      '/api/incomes/monthly-summaries?year=2022&month=01&page=1&limit=500&parentTransactionCategory=623b58ada3deba9879422fbf',
     );
     expect(response2.status()).toBe(200);
     const [body2] = await response2.json();
@@ -45,7 +45,7 @@ test.describe('Transaction category analytics', () => {
     expect(roundToTwoDecimals(body2.transferAmount)).toBe(0);
 
     const response3 = await page.goto(
-      '/api/expenses/monthly-summaries?year=2022&month=01&page=1&limit=500&parentTransactionCategory=623b58ada3deba9879422fbf'
+      '/api/expenses/monthly-summaries?year=2022&month=01&page=1&limit=500&parentTransactionCategory=623b58ada3deba9879422fbf',
     );
     expect(response3.status()).toBe(200);
     const [body3] = await response3.json();
@@ -61,7 +61,7 @@ test.describe('Transaction category analytics', () => {
     expect(roundToTwoDecimals(body3.transferAmount)).toBe(0);
 
     const response4 = await page.goto(
-      '/api/transfers/monthly-summaries?year=2022&month=01&page=1&limit=500&parentTransactionCategory=623b58ada3deba9879422fbf'
+      '/api/transfers/monthly-summaries?year=2022&month=01&page=1&limit=500&parentTransactionCategory=623b58ada3deba9879422fbf',
     );
     expect(response4.status()).toBe(200);
     const [body4] = await response4.json();
@@ -80,7 +80,7 @@ test.describe('Transaction category analytics', () => {
   test('Should return correct amounts', async ({ page }) => {
     // 623b58ada3deba9879422fbf = Category for all types
     const response = await page.goto(
-      '/api/transaction-categories/623b58ada3deba9879422fbf/summary?year=2022&month=01&page=1&limit=500'
+      '/api/transaction-categories/623b58ada3deba9879422fbf/summary?year=2022&month=01&page=1&limit=500',
     );
     expect(response.status()).toBe(200);
     const [body] = await response.json();

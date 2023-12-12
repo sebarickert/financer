@@ -14,10 +14,10 @@ test.describe('Transaction categories visibility in transaction forms', () => {
     await expect(options.first()).toHaveText('Category for all types');
     await expect(options.nth(1)).toHaveText('Income category');
     await expect(options.nth(2)).toHaveText(
-      'Invisible category > Income sub category'
+      'Invisible category > Income sub category',
     );
     await expect(options.nth(3)).toHaveText(
-      'Invisible category > Sub category for all types'
+      'Invisible category > Sub category for all types',
     );
   };
 
@@ -29,10 +29,10 @@ test.describe('Transaction categories visibility in transaction forms', () => {
     await expect(options.first()).toHaveText('Category for all types');
     await expect(options.nth(1)).toHaveText('Expense category');
     await expect(options.nth(2)).toHaveText(
-      'Invisible category > Expense sub category'
+      'Invisible category > Expense sub category',
     );
     await expect(options.nth(3)).toHaveText(
-      'Invisible category > Sub category for all types'
+      'Invisible category > Sub category for all types',
     );
   };
 
@@ -43,10 +43,10 @@ test.describe('Transaction categories visibility in transaction forms', () => {
     await expect(options).toHaveCount(4);
     await expect(options.first()).toHaveText('Category for all types');
     await expect(options.nth(1)).toHaveText(
-      'Invisible category > Sub category for all types'
+      'Invisible category > Sub category for all types',
     );
     await expect(options.nth(2)).toHaveText(
-      'Invisible category > Transfer sub category'
+      'Invisible category > Transfer sub category',
     );
     await expect(options.nth(3)).toHaveText('Transfer category');
   };

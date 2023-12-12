@@ -39,7 +39,7 @@ test.describe('Account deleting', () => {
     await page.getByTestId('delete-account').click();
     await page.getByTestId('delete-account-cancel').click({});
 
-    await page.waitForTimeout(100)
+    await page.waitForTimeout(100);
 
     await page.getByTestId('header-back-link').click();
     await page.getByTestId('header-back-link').click();

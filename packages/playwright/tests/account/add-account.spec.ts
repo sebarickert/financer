@@ -9,10 +9,10 @@ test.describe.parallel('Account creation', () => {
 
   const addAccountAndVerifyDetails = async (
     page: Page,
-    accountType,
-    accountBalance,
-    expectedType,
-    expectedBalance
+    accountType: string,
+    accountBalance: string,
+    expectedType: string,
+    expectedBalance: string,
   ) => {
     const newAccountName = `New Test ${expectedType} Account ${Math.random()}`;
     const accountRow = page
@@ -34,9 +34,13 @@ test.describe.parallel('Account creation', () => {
 
     await expect(page).not.toHaveURL(/\/accounts\/?$/);
 
-    await expect(page.getByTestId('account-details').getByTestId('account-details-item-description')).toHaveText(expectedType);
+    await expect(
+      page
+        .getByTestId('account-details')
+        .getByTestId('account-details-item-description'),
+    ).toHaveText(expectedType);
     await expect(page.getByTestId('account-balance')).toHaveText(
-      expectedBalance
+      expectedBalance,
     );
   };
 
@@ -47,7 +51,7 @@ test.describe.parallel('Account creation', () => {
       'credit',
       '1000',
       'Credit',
-      '1 000,00 €'
+      '1 000,00 €',
     );
   });
 
@@ -63,7 +67,7 @@ test.describe.parallel('Account creation', () => {
       'investment',
       '0.16',
       'Investment',
-      '0,16 €'
+      '0,16 €',
     );
   });
 
@@ -74,7 +78,7 @@ test.describe.parallel('Account creation', () => {
       'credit',
       '100000000000000000000',
       'Credit',
-      '100 000 000 000 000 000 000,00 €'
+      '100 000 000 000 000 000 000,00 €',
     );
   });
 
