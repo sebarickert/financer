@@ -49,11 +49,13 @@ export const Expense = ({
           icon: IconName.tag,
           label: 'Category',
           description: getCategoryNameById(category_id as unknown as string),
+          testId: 'category-name',
         },
         {
           icon: IconName.informationCircle,
           label: 'Amount',
           description: formatCurrency(amount),
+          testId: 'category-amount',
         },
         ...(description
           ? [
@@ -61,6 +63,7 @@ export const Expense = ({
                 icon: IconName.annotation,
                 label: 'Description',
                 description,
+                testId: 'category-description',
               },
             ]
           : []),
@@ -103,6 +106,7 @@ export const Expense = ({
             <div className="grid divide-y divide-gray-dark border-t border-b border-gray-dark">
               {categoryDetails.map((category) => (
                 <DetailsList
+                  testId="category-details"
                   key={category[0].label}
                   items={category}
                   className="py-4"

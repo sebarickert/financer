@@ -3,11 +3,9 @@ import { useCallback } from 'react';
 import {
   useIncomesFindOneQuery,
   useAccountsFindOneByIdQuery,
-  useIncomesRemoveMutation,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
 import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
-import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { Income } from '$pages/incomes/income';
 
 interface IncomeContainerProps {
@@ -15,7 +13,6 @@ interface IncomeContainerProps {
 }
 
 export const IncomeContainer = ({ id }: IncomeContainerProps) => {
-  const { push } = useViewTransitionRouter();
   const incomeData = useIncomesFindOneQuery({ id });
   const { data: income } = incomeData;
 

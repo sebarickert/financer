@@ -7,6 +7,7 @@ interface AccountSelectOptionsProps extends Option {
   parentId: string;
   activeItemRef?: RefObject<HTMLLabelElement>;
   onClose: () => void;
+  testId?: string;
 }
 
 export const AccountsSelectOption = ({
@@ -15,6 +16,7 @@ export const AccountsSelectOption = ({
   parentId,
   activeItemRef,
   onClose,
+  testId,
 }: AccountSelectOptionsProps) => {
   const { register } = useFormContext();
   const id = useMemo(() => crypto.randomUUID(), []);
@@ -38,12 +40,14 @@ export const AccountsSelectOption = ({
         value={value}
         {...register(parentId)}
         onKeyDown={handleKeyDown}
+        data-testid={`${testId}-input`}
       />
       <label
         ref={activeItemRef}
         onClick={onClose}
         htmlFor={id}
         className="block w-full p-3 text-sm text-left hover:bg-gray-dark hover:cursor-pointer peer-checked:bg-gray-dark"
+        data-testid={`${testId}-label`}
       >
         {label}
       </label>

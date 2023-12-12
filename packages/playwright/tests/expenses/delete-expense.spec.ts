@@ -57,8 +57,10 @@ test.describe('Delete expense', () => {
     await page.goto('/statistics/expenses?date=2022-01&page=1');
     await page.getByTestId(targetTransactionId).click();
 
-    await page.getByTestId('expense-delete-modal_open-button').click();
-    await page.getByTestId('expense-delete-modal_confirm-button').click();
+    await page.getByTestId('edit-expense-button').click();
+
+    await page.getByTestId('delete-transaction').click();
+    await page.getByTestId('delete-transaction-confirm').click();
 
     await expect(page).not.toHaveURL(`/${targetAccountId}`);
 
@@ -88,8 +90,10 @@ test.describe('Delete expense', () => {
     await page.goto('/statistics/expenses?date=2021-02&page=1');
     await page.getByTestId(targetTransactionId).click();
 
-    await page.getByTestId('expense-delete-modal_open-button').click();
-    await page.getByTestId('expense-delete-modal_confirm-button').click();
+    await page.getByTestId('edit-expense-button').click();
+
+    await page.getByTestId('delete-transaction').click();
+    await page.getByTestId('delete-transaction-confirm').click();
 
     await expect(page).not.toHaveURL(`/${targetAccountId}`);
 
