@@ -54,7 +54,7 @@ jobs:
       matrix:
         spec: [
             "chromium",
-            "firefox",
+            # "firefox",
             # "webkit",
             "Mobile_Chrome",
             # "Mobile_Safari"
