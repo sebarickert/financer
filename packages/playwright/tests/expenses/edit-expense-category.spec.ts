@@ -42,7 +42,6 @@ test.describe('Edit expense with category', () => {
     await page.getByTestId(ids.editExpenseButton).click();
 
     await page.getByRole('button', { name: 'Edit category' }).click();
-
     await page.waitForTimeout(100);
 
     await expect(select.locator('option:checked')).toContainText('Category for all types');

@@ -103,6 +103,7 @@ export const Income = ({
             <div className="grid divide-y divide-gray-dark border-t border-b border-gray-dark">
               {categoryDetails.map((category) => (
                 <DetailsList
+                  testId="category-details"
                   key={category[0].label}
                   items={category}
                   className="py-4"

@@ -1,4 +1,4 @@
-import { EditIncomeContainer } from '$container/incomes/edit-income.container';
+import { IncomeEditContainer } from '$container/incomes/income.edit.container';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 
 const EditIncomePage = () => {
@@ -6,7 +6,7 @@ const EditIncomePage = () => {
     query: { incomeId },
   } = useViewTransitionRouter();
 
-  return <EditIncomeContainer id={incomeId as string} />;
+  return <IncomeEditContainer id={incomeId as string} />;
 };
 
 export default EditIncomePage;
