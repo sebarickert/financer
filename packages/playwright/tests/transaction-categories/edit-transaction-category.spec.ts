@@ -7,13 +7,15 @@ test.describe('Edit transaction category', () => {
     targetCategoryName: string,
     newVisibility: string[] | null = null,
     shouldNameChange = false,
-    parent: string | null = null
+    parent: string | null = null,
   ) => {
     const newName = shouldNameChange
       ? `Changed Test ${newVisibility?.join(', ') || 'invisible'} category`
       : targetCategoryName;
 
-    await page.getByRole('link', {name: targetCategoryName, exact: true}).click();
+    await page
+      .getByRole('link', { name: targetCategoryName, exact: true })
+      .click();
     await page.getByTestId('edit-category').click();
 
     await page.locator('#name').fill(newName);
@@ -25,7 +27,7 @@ test.describe('Edit transaction category', () => {
         .getByTestId('visibility-checkboxes')
         .locator('input:checked')
         .evaluateAll((inputs: HTMLInputElement[]) =>
-          inputs.map((input) => input.value)
+          inputs.map((input) => input.value),
         );
 
       for (const visibilityItem of checkedChecboxes) {
@@ -46,7 +48,7 @@ test.describe('Edit transaction category', () => {
         .getByTestId('visibility-checkboxes')
         .locator('input:checked')
         .evaluateAll((inputs: HTMLInputElement[]) =>
-          inputs.map((input) => input.id.replace('Visible', ''))
+          inputs.map((input) => input.id.replace('Visible', '')),
         );
     }
 
@@ -63,7 +65,7 @@ test.describe('Edit transaction category', () => {
 
     await page.getByTestId('submit').click();
 
-    await page.getByRole('link', {name: newName, exact: true}).click();
+    await page.getByRole('link', { name: newName, exact: true }).click();
     await page.getByTestId('edit-category').click();
 
     await expect(page.locator('#name')).toHaveValue(newName);
@@ -73,13 +75,13 @@ test.describe('Edit transaction category', () => {
     const transferCheckbox = page.locator('#transferVisible');
 
     expect(await incomeCheckbox?.isChecked()).toEqual(
-      targetVisibility.includes('income')
+      targetVisibility.includes('income'),
     );
     expect(await expenseCheckbox?.isChecked()).toEqual(
-      targetVisibility.includes('expense')
+      targetVisibility.includes('expense'),
     );
     expect(await transferCheckbox?.isChecked()).toEqual(
-      targetVisibility.includes('transfer')
+      targetVisibility.includes('transfer'),
     );
 
     const selectedOption = await page
@@ -105,7 +107,7 @@ test.describe('Edit transaction category', () => {
       page,
       'Category for all types',
       [],
-      false
+      false,
     );
   });
 
@@ -115,7 +117,7 @@ test.describe('Edit transaction category', () => {
       page,
       'Invisible category',
       ['income', 'expense', 'transfer'],
-      false
+      false,
     );
   });
 
@@ -126,7 +128,7 @@ test.describe('Edit transaction category', () => {
       'Expense sub category',
       null,
       false,
-      'None'
+      'None',
     );
   });
 
@@ -137,7 +139,7 @@ test.describe('Edit transaction category', () => {
       'Invisible category',
       null,
       false,
-      'Category for all types'
+      'Category for all types',
     );
   });
 
@@ -148,7 +150,7 @@ test.describe('Edit transaction category', () => {
       'Income sub category',
       null,
       false,
-      'Income category'
+      'Income category',
     );
   });
 
@@ -159,7 +161,7 @@ test.describe('Edit transaction category', () => {
       'Expense sub category',
       ['income'],
       true,
-      'Transfer category'
+      'Transfer category',
     );
   });
 });

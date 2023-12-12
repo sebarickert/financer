@@ -25,7 +25,7 @@ test.describe('Edit transfer', () => {
   const verifyToAccountBalanceChanges = async (
     amount: number,
     accountBefore: AccountDto,
-    accountAfter: AccountDto
+    accountAfter: AccountDto,
   ) => {
     const balanceBefore = roundToTwoDecimal(accountBefore.balance);
     const balanceAfter = roundToTwoDecimal(accountAfter.balance);
@@ -36,7 +36,7 @@ test.describe('Edit transfer', () => {
   const verifyFromAccountBalanceChanges = async (
     amount: number,
     accountBefore: AccountDto,
-    accountAfter: AccountDto
+    accountAfter: AccountDto,
   ) => {
     const balanceBefore = roundToTwoDecimal(accountBefore.balance);
     const balanceAfter = roundToTwoDecimal(accountAfter.balance);
@@ -48,7 +48,7 @@ test.describe('Edit transfer', () => {
     newName: string,
     changedAmount: number,
     transactionBefore: ITransactionWithDateObject,
-    transactionAfter: ITransactionWithDateObject
+    transactionAfter: ITransactionWithDateObject,
   ) => {
     const nameAfter = transactionAfter.description;
     const amountAfter = roundToTwoDecimal(transactionAfter.amount);
@@ -67,7 +67,7 @@ test.describe('Edit transfer', () => {
     const transactionsBefore = await getAllTransaction();
 
     const transfersBefore = transactionsBefore.filter(
-      ({ fromAccount, toAccount }) => fromAccount && toAccount
+      ({ fromAccount, toAccount }) => fromAccount && toAccount,
     );
     const targetTransactionBefore = transfersBefore[transfersBefore.length - 1];
 
@@ -91,32 +91,31 @@ test.describe('Edit transfer', () => {
 
     await selectAccount(targetFromAccountId, page, 'transfer-form-fromAccount');
     await selectAccount(targetToAccountId, page, 'transfer-form-toAccount');
-    
+
     await page.getByTestId('submit').click();
 
     await page.getByTestId('add-transfer').waitFor();
 
     const toAccountAfter = await getAccount(targetToAccountId);
     const fromAccountAfter = await getAccount(targetFromAccountId);
-    const targetTransactionAfter = await getTransactionById(
-      targetTransactionId
-    );
+    const targetTransactionAfter =
+      await getTransactionById(targetTransactionId);
 
     await verifyToAccountBalanceChanges(
       amountToChangeTransaction,
       toAccountBefore,
-      toAccountAfter
+      toAccountAfter,
     );
     await verifyFromAccountBalanceChanges(
       amountToChangeTransaction,
       fromAccountBefore,
-      fromAccountAfter
+      fromAccountAfter,
     );
     await verifyTargetTransactionChanged(
       editedTransactionName,
       amountToChangeTransaction,
       targetTransactionBefore,
-      targetTransactionAfter
+      targetTransactionAfter,
     );
   });
 
@@ -126,7 +125,7 @@ test.describe('Edit transfer', () => {
     const transactionsBefore = await getAllTransaction();
 
     const transfersBefore = transactionsBefore.filter(
-      ({ fromAccount, toAccount }) => fromAccount && toAccount
+      ({ fromAccount, toAccount }) => fromAccount && toAccount,
     );
     const targetTransactionBefore = transfersBefore[0];
 
@@ -154,25 +153,24 @@ test.describe('Edit transfer', () => {
 
     const toAccountAfter = await getAccount(targetToAccountId);
     const fromAccountAfter = await getAccount(targetFromAccountId);
-    const targetTransactionAfter = await getTransactionById(
-      targetTransactionId
-    );
+    const targetTransactionAfter =
+      await getTransactionById(targetTransactionId);
 
     await verifyToAccountBalanceChanges(
       amountToChangeTransaction,
       toAccountBefore,
-      toAccountAfter
+      toAccountAfter,
     );
     await verifyFromAccountBalanceChanges(
       amountToChangeTransaction,
       fromAccountBefore,
-      fromAccountAfter
+      fromAccountAfter,
     );
     await verifyTargetTransactionChanged(
       editedTransactionName,
       amountToChangeTransaction,
       targetTransactionBefore,
-      targetTransactionAfter
+      targetTransactionAfter,
     );
   });
 });

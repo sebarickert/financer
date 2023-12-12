@@ -4,10 +4,13 @@ import { applyFixture } from '$utils/load-fixtures';
 test.describe('Delete transaction category', () => {
   const deleteAndVerifyTransactionCategory = async (
     targetCategoryName: string,
-    page: Page
+    page: Page,
   ) => {
-    const category = page.getByRole('link', { name: targetCategoryName, exact: true })
-    
+    const category = page.getByRole('link', {
+      name: targetCategoryName,
+      exact: true,
+    });
+
     await expect(category).toHaveCount(1);
 
     await category.click();

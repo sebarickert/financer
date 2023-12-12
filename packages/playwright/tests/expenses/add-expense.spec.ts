@@ -27,19 +27,19 @@ test.describe('Add expense', () => {
   const verifyAccountBalanceChange = async (
     amount: number,
     accountBefore: AccountDto,
-    accountAfter: AccountDto
+    accountAfter: AccountDto,
   ) => {
     expect(roundToTwoDecimal(accountBefore.balance - amount)).toEqual(
-      roundToTwoDecimal(accountAfter.balance)
+      roundToTwoDecimal(accountAfter.balance),
     );
   };
 
   const verifyNewExpenseCreated = async (
     expensesBefore: TransactionDto[],
-    expensesAfter: TransactionDto[]
+    expensesAfter: TransactionDto[],
   ) => {
     expect(expensesBefore.length + 1).toEqual(
-      roundToTwoDecimal(expensesAfter.length)
+      roundToTwoDecimal(expensesAfter.length),
     );
   };
 
@@ -57,14 +57,14 @@ test.describe('Add expense', () => {
     const accountBefore = await getAccount(targetAccountId);
 
     const newTransactionDate = new Date(
-      targetTransactionBefore.dateObj.getTime() + MINUTE_IN_MS
+      targetTransactionBefore.dateObj.getTime() + MINUTE_IN_MS,
     );
 
     await page.getByTestId('add-expense').click();
     await page.locator('#description').fill(newTransactionName);
     await page.locator('#date').fill(formatDate(newTransactionDate));
     await page.locator('#amount').fill(newTransactionAmountStr);
-    
+
     await selectAccount(targetAccountId, page);
 
     await page.getByTestId('submit').click();
@@ -77,7 +77,7 @@ test.describe('Add expense', () => {
     await verifyAccountBalanceChange(
       newTransactionAmount,
       accountBefore,
-      accountAfter
+      accountAfter,
     );
     await verifyNewExpenseCreated(expensesBefore, expensesAfter);
   });
@@ -93,7 +93,7 @@ test.describe('Add expense', () => {
     const targetAccountId = getAccountFromTransactions(targetTransactionBefore);
 
     const newTransactionDate = new Date(
-      targetTransactionBefore.dateObj.getTime() - MINUTE_IN_MS
+      targetTransactionBefore.dateObj.getTime() - MINUTE_IN_MS,
     );
 
     const accountBefore = await getAccount(targetAccountId);
@@ -104,7 +104,7 @@ test.describe('Add expense', () => {
     await page.locator('#amount').fill(newTransactionAmountStr);
 
     await selectAccount(targetAccountId, page);
-    
+
     await page.getByTestId('submit').click();
 
     await page.getByTestId('add-expense').waitFor();
@@ -115,7 +115,7 @@ test.describe('Add expense', () => {
     await verifyAccountBalanceChange(
       newTransactionAmount,
       accountBefore,
-      accountAfter
+      accountAfter,
     );
     await verifyNewExpenseCreated(expensesBefore, expensesAfter);
   });
@@ -132,7 +132,7 @@ test.describe('Add expense', () => {
     const targetAccountId = getAccountFromTransactions(targetTransactionBefore);
 
     const newTransactionDate = new Date(
-      targetTransactionBefore.dateObj.getTime() - MINUTE_IN_MS
+      targetTransactionBefore.dateObj.getTime() - MINUTE_IN_MS,
     );
 
     const accountBefore = await getAccount(targetAccountId);
@@ -143,7 +143,7 @@ test.describe('Add expense', () => {
     await page.locator('#amount').fill(newTransactionAmountStr);
 
     await selectAccount(targetAccountId, page);
-    
+
     await page.getByTestId('submit').click();
 
     await page.getByTestId('add-expense').waitFor();
@@ -155,7 +155,7 @@ test.describe('Add expense', () => {
     await verifyAccountBalanceChange(
       newTransactionAmount,
       accountBefore,
-      accountAfter
+      accountAfter,
     );
     await verifyNewExpenseCreated(expensesBefore, expensesAfter);
   });
@@ -166,7 +166,7 @@ test.describe('Add expense', () => {
     const transactionsBefore = await getAllTransaction();
     const targetTransactionBefore = transactionsBefore.at(-1);
     const targetAccountId = getAccountFromTransactions(targetTransactionBefore);
-    
+
     const date = new Date();
     date.setSeconds(0);
     date.setMilliseconds(0);
@@ -177,7 +177,7 @@ test.describe('Add expense', () => {
     await page.locator('#amount').fill(newTransactionAmountStr);
 
     await selectAccount(targetAccountId, page);
-     
+
     await page.getByTestId('submit').click();
 
     await page.getByText(newTransactionName).click();

@@ -9,8 +9,8 @@ test.describe('Edit income with category', () => {
     editIncomeButton: 'edit-income-button',
     transactionCategoriesForm: 'transaction-categories-form',
     transactionCategoriesItem: 'transaction-categories-item',
-  }
-  
+  };
+
   test.beforeEach(async ({ page }) => {
     await applyFixture('small');
     await page.goto('/statistics/incomes?date=2022-03&page=1');
@@ -22,16 +22,23 @@ test.describe('Edit income with category', () => {
 
     await page.getByRole('button', { name: 'Edit category' }).click();
     await page.waitForTimeout(100);
-  
-    const select = page.getByTestId(ids.transactionCategoriesForm + '-select');
-    const amount = page.getByTestId(ids.transactionCategoriesForm + '-amount');
-    const description = page.getByTestId(ids.transactionCategoriesForm + '-description');
 
-    await expect(select.locator('option:checked')).toContainText('Category for all types');
+    const select = page.getByTestId(`${ids.transactionCategoriesForm}-select`);
+    const amount = page.getByTestId(`${ids.transactionCategoriesForm}-amount`);
+    const description = page.getByTestId(
+      `${ids.transactionCategoriesForm}-description`,
+    );
+
+    await expect(select.locator('option:checked')).toContainText(
+      'Category for all types',
+    );
     await expect(amount).toHaveValue('2222');
     await expect(description).toHaveValue('dummy description');
 
-    await submitTransactionCategoryForm(ids.transactionCategoriesForm, page, {select: 'Invisible category > Sub category for all types', amount: '50.50'});
+    await submitTransactionCategoryForm(ids.transactionCategoriesForm, page, {
+      select: 'Invisible category > Sub category for all types',
+      amount: '50.50',
+    });
 
     await page.waitForTimeout(100);
 
@@ -44,7 +51,9 @@ test.describe('Edit income with category', () => {
     await page.getByRole('button', { name: 'Edit category' }).click();
     await page.waitForTimeout(100);
 
-    await expect(select.locator('option:checked')).toContainText('Invisible category > Sub category for all types');
+    await expect(select.locator('option:checked')).toContainText(
+      'Invisible category > Sub category for all types',
+    );
     await expect(amount).toHaveValue('50.5');
     await expect(description).toHaveValue('');
   });
@@ -54,9 +63,11 @@ test.describe('Edit income with category', () => {
     await page.getByTestId(ids.editIncomeButton).click();
 
     const item = page.getByTestId(ids.transactionCategoriesItem);
-    const name = page.getByTestId(ids.transactionCategoriesItem + '-name');
-    const amount = page.getByTestId(ids.transactionCategoriesItem + '-amount');
-    const description = page.getByTestId(ids.transactionCategoriesItem + '-description');
+    const name = page.getByTestId(`${ids.transactionCategoriesItem}-name`);
+    const amount = page.getByTestId(`${ids.transactionCategoriesItem}-amount`);
+    const description = page.getByTestId(
+      `${ids.transactionCategoriesItem}-description`,
+    );
 
     await expect(name.first()).toContainText('Income category');
     await expect(name.nth(1)).toContainText('Category for all types');
@@ -69,15 +80,18 @@ test.describe('Edit income with category', () => {
 
     await page.getByRole('button', { name: 'Edit category' }).first().click();
     await page.waitForTimeout(100);
-    
-    await submitTransactionCategoryForm(ids.transactionCategoriesForm, page, {amount: '100', description: 'Changed description'});
+
+    await submitTransactionCategoryForm(ids.transactionCategoriesForm, page, {
+      amount: '100',
+      description: 'Changed description',
+    });
 
     await expect(item).toHaveCount(2);
 
     await page.getByRole('button', { name: 'Edit category' }).last().click();
     await page.waitForTimeout(100);
 
-    await page.getByTestId(ids.transactionCategoriesForm + '-delete').click();
+    await page.getByTestId(`${ids.transactionCategoriesForm}-delete`).click();
 
     await expect(item).toHaveCount(1);
 
@@ -86,7 +100,7 @@ test.describe('Edit income with category', () => {
     await page.goto('/statistics/incomes?date=2022-03&page=1');
     await page.getByTestId(ids.incomeWithMultipleCategories).click();
     await page.getByTestId(ids.editIncomeButton).click();
-    
+
     await expect(item).toHaveCount(1);
     await expect(name).toHaveText('Income category');
     await expect(amount).toHaveText('100');
@@ -102,13 +116,13 @@ test.describe('Edit income with category', () => {
 
     await page.getByRole('button', { name: 'Edit category' }).first().click();
     await page.waitForTimeout(100);
-    await page.getByTestId(ids.transactionCategoriesForm + '-delete').click();
+    await page.getByTestId(`${ids.transactionCategoriesForm}-delete`).click();
 
     await page.waitForTimeout(100);
 
     await page.getByRole('button', { name: 'Edit category' }).first().click();
     await page.waitForTimeout(100);
-    await page.getByTestId(ids.transactionCategoriesForm + '-delete').click();
+    await page.getByTestId(`${ids.transactionCategoriesForm}-delete`).click();
 
     await expect(item).toHaveCount(0);
 

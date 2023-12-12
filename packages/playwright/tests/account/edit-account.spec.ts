@@ -13,7 +13,7 @@ test.describe('Account editing', () => {
         .replace(',', '.')
         .replace(/\u00a0/g, ' ')
         .replace(/ /g, '')
-        .replace(String.fromCharCode(8722), String.fromCharCode(45))
+        .replace(String.fromCharCode(8722), String.fromCharCode(45)),
     );
   };
 
@@ -29,16 +29,20 @@ test.describe('Account editing', () => {
     page: Page,
     accountName: string,
     accountBalance: string,
-    accountType: string
+    accountType: string,
   ) => {
     await expect(page.getByTestId('account-name')).toHaveText(accountName);
-    await expect(page.getByTestId('account-details').getByTestId('account-details-item-description')).toHaveText(accountType);
+    await expect(
+      page
+        .getByTestId('account-details')
+        .getByTestId('account-details-item-description'),
+    ).toHaveText(accountType);
 
     const currentBalance = await page
       .getByTestId('account-balance')
       .textContent();
     expect(parseFloatFromText(currentBalance)).toEqual(
-      parseFloatFromText(accountBalance)
+      parseFloatFromText(accountBalance),
     );
   };
 
@@ -46,7 +50,7 @@ test.describe('Account editing', () => {
     page: Page,
     oldAccountName: string,
     newAccountName: string,
-    accountType: string
+    accountType: string,
   ) => {
     const deletedAccountRow = page
       .getByTestId('account-row')
@@ -81,7 +85,7 @@ test.describe('Account editing', () => {
     page: Page,
     accountName: string,
     oldAccountType: string,
-    newAccountType: string
+    newAccountType: string,
   ) => {
     await page.getByTestId('account-row').getByText(accountName).click();
 
@@ -108,7 +112,7 @@ test.describe('Account editing', () => {
     page: Page,
     accountName: string,
     newAccountBalance: string,
-    accountType: string
+    accountType: string,
   ) => {
     await page.getByTestId('account-row').getByText(accountName).click();
 
@@ -127,7 +131,7 @@ test.describe('Account editing', () => {
           .replace(',', '.')
           .replace(/ /g, '')
           .replace('€', '')
-          .replace(String.fromCharCode(8722), String.fromCharCode(45))
+          .replace(String.fromCharCode(8722), String.fromCharCode(45)),
       );
 
     await page.getByTestId('submit').click();
@@ -146,7 +150,7 @@ test.describe('Account editing', () => {
     newAccountName: string,
     newAccountBalance: string,
     oldAccountType: string,
-    newAccountType: string
+    newAccountType: string,
   ) => {
     await page.getByTestId('account-row').getByText(oldAccountName).click();
 
@@ -157,7 +161,7 @@ test.describe('Account editing', () => {
       page,
       oldAccountName,
       oldAccountBalance,
-      oldAccountType
+      oldAccountType,
     );
     verifyDifferentBalances(oldAccountBalance, newAccountBalance);
 
@@ -172,7 +176,7 @@ test.describe('Account editing', () => {
           .replace(',', '.')
           .replace(/ /g, '')
           .replace('€', '')
-          .replace(String.fromCharCode(8722), String.fromCharCode(45))
+          .replace(String.fromCharCode(8722), String.fromCharCode(45)),
       );
 
     await page.getByTestId('submit').click();
@@ -191,7 +195,7 @@ test.describe('Account editing', () => {
       page,
       newAccountName,
       newAccountBalance,
-      newAccountType
+      newAccountType,
     );
   };
 
@@ -201,7 +205,7 @@ test.describe('Account editing', () => {
       page,
       'Cash account',
       'Cash Renamed account',
-      'Cash'
+      'Cash',
     );
   });
 
@@ -211,7 +215,7 @@ test.describe('Account editing', () => {
       page,
       'Saving account 2',
       'Saving Renamed account 2',
-      'Savings'
+      'Savings',
     );
   });
 
@@ -221,7 +225,7 @@ test.describe('Account editing', () => {
       page,
       'Investment account',
       'Investment Renamed account',
-      'Investment'
+      'Investment',
     );
   });
 
@@ -231,7 +235,7 @@ test.describe('Account editing', () => {
       page,
       'Credit account',
       'Credit Renamed account',
-      'Credit'
+      'Credit',
     );
   });
 
@@ -241,7 +245,7 @@ test.describe('Account editing', () => {
       page,
       'Loan account',
       'Loan Renamed account',
-      'Loan'
+      'Loan',
     );
   });
 
@@ -261,7 +265,7 @@ test.describe('Account editing', () => {
       page,
       'Investment account',
       'Investment',
-      'Savings'
+      'Savings',
     );
   });
 
@@ -271,7 +275,7 @@ test.describe('Account editing', () => {
       page,
       'Credit account',
       'Credit',
-      'Investment'
+      'Investment',
     );
   });
 
@@ -286,7 +290,7 @@ test.describe('Account editing', () => {
       page,
       'Cash account',
       '−1 040 350,00 €',
-      'Cash'
+      'Cash',
     );
   });
 
@@ -296,7 +300,7 @@ test.describe('Account editing', () => {
       page,
       'Saving account 2',
       '0,10 €',
-      'Savings'
+      'Savings',
     );
   });
 
@@ -306,7 +310,7 @@ test.describe('Account editing', () => {
       page,
       'Investment account',
       '1 000 000,00 €',
-      'Investment'
+      'Investment',
     );
   });
 
@@ -316,7 +320,7 @@ test.describe('Account editing', () => {
       page,
       'Credit account',
       '−251 950,00 €',
-      'Credit'
+      'Credit',
     );
   });
 
@@ -333,7 +337,7 @@ test.describe('Account editing', () => {
       'Changed to Savings',
       '100 000 000 000 000,00 €',
       'Cash',
-      'Savings'
+      'Savings',
     );
   });
 
@@ -345,7 +349,7 @@ test.describe('Account editing', () => {
       'Changed to Investment',
       '-99 000,10 €',
       'Savings',
-      'Investment'
+      'Investment',
     );
   });
 
@@ -357,7 +361,7 @@ test.describe('Account editing', () => {
       'Changed to Credit',
       '-10,01 €',
       'Investment',
-      'Credit'
+      'Credit',
     );
   });
 
@@ -369,7 +373,7 @@ test.describe('Account editing', () => {
       'Changed to Loan',
       '999 999,99 €',
       'Credit',
-      'Loan'
+      'Loan',
     );
   });
 
@@ -381,7 +385,7 @@ test.describe('Account editing', () => {
       'Changed to Credit',
       '-55,55 €',
       'Loan',
-      'Credit'
+      'Credit',
     );
   });
 });

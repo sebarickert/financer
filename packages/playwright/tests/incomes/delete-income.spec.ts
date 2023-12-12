@@ -18,23 +18,23 @@ test.describe('Delete income', () => {
   const verifyAccountBalanceChangeByTargetTransactionAmount = async (
     accountBefore: AccountDto,
     accountAfter: AccountDto,
-    targetTransactionBefore: IncomeDto
+    targetTransactionBefore: IncomeDto,
   ) => {
     const changedAmount = roundToTwoDecimal(targetTransactionBefore.amount);
     const balanceBefore = roundToTwoDecimal(accountBefore.balance);
     const balanceAfter = roundToTwoDecimal(accountAfter.balance);
     const balanceBeforeWithChangedAmount = roundToTwoDecimal(
-      balanceBefore + changedAmount
+      balanceBefore + changedAmount,
     );
 
     expect(balanceBeforeWithChangedAmount).toBe(balanceAfter);
   };
 
   const verifyTargetTransactionDoesNotExistsAfter = async (
-    targetTransactionBefore: IncomeDto
+    targetTransactionBefore: IncomeDto,
   ) => {
     const targetTransactionAfter = await getTransactionByIdRaw(
-      targetTransactionBefore._id
+      targetTransactionBefore._id,
     );
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -45,7 +45,7 @@ test.describe('Delete income', () => {
     const transactionsBefore = await getAllTransaction();
 
     const incomesBefore = transactionsBefore.filter(
-      ({ fromAccount, toAccount }) => !fromAccount && toAccount
+      ({ fromAccount, toAccount }) => !fromAccount && toAccount,
     );
     const targetTransactionBefore = incomesBefore.at(-1);
 
@@ -69,7 +69,7 @@ test.describe('Delete income', () => {
     verifyAccountBalanceChangeByTargetTransactionAmount(
       accountBefore,
       accountAfter,
-      targetTransactionBefore
+      targetTransactionBefore,
     );
     verifyTargetTransactionDoesNotExistsAfter(targetTransactionBefore);
   });
@@ -78,7 +78,7 @@ test.describe('Delete income', () => {
     const transactionsBefore = await getAllTransaction();
 
     const incomesBefore = transactionsBefore.filter(
-      ({ fromAccount, toAccount }) => !fromAccount && toAccount
+      ({ fromAccount, toAccount }) => !fromAccount && toAccount,
     );
     const targetTransactionBefore = incomesBefore[0];
 
@@ -102,7 +102,7 @@ test.describe('Delete income', () => {
     verifyAccountBalanceChangeByTargetTransactionAmount(
       accountBefore,
       accountAfter,
-      targetTransactionBefore
+      targetTransactionBefore,
     );
     verifyTargetTransactionDoesNotExistsAfter(targetTransactionBefore);
   });

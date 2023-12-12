@@ -19,7 +19,7 @@ export const formatDate = (date: Date): string => {
   const minutes = date.getMinutes();
 
   return `${year}-${addLeadingZero(month)}-${addLeadingZero(
-    day
+    day,
   )}T${addLeadingZero(hours)}:${addLeadingZero(minutes)}`;
 };
 
@@ -30,7 +30,7 @@ export const getAccount = async (accountId: string): Promise<AccountDto> => {
 };
 
 const parseTransactionDate = (
-  transactions: PaginationDto<TransactionDto[]>
+  transactions: PaginationDto<TransactionDto[]>,
 ): ITransactionWithDateObject[] =>
   transactions.data
     .map(({ date, ...rest }) => ({
@@ -85,7 +85,7 @@ export const getAllTransfers = async (): Promise<
 };
 
 export const getTransactionByIdRaw = async (
-  transactionId: string
+  transactionId: string,
 ): Promise<TransactionDto> => {
   const baseUrl = getBaseUrl();
   return (await (
@@ -94,7 +94,7 @@ export const getTransactionByIdRaw = async (
 };
 
 export const getTransactionById = async (
-  transactionId: string
+  transactionId: string,
 ): Promise<ITransactionWithDateObject> => {
   const transaction = await getTransactionByIdRaw(transactionId);
 
@@ -102,7 +102,7 @@ export const getTransactionById = async (
 };
 
 export const getAllTransactionsByAccountId = async (
-  accountId: string
+  accountId: string,
 ): Promise<ITransactionWithDateObject[]> => {
   const baseUrl = getBaseUrl();
   const transactions = (await (
@@ -124,22 +124,37 @@ export const getAccountFromTransactions = (transaction: TransactionDto) =>
 export const roundToTwoDecimal = (number: number): number =>
   Math.round(number * 100) / 100;
 
-export const selectAccount = async (targetAccountId: string, page: Page, testId?: string) => {
+export const selectAccount = async (
+  targetAccountId: string,
+  page: Page,
+  testId?: string,
+) => {
   const id = testId ?? 'accounts-select';
 
   await page.getByTestId(`${id}-button`).click();
-  await page.getByTestId(id).locator(`input[value="${targetAccountId}"] + label`).check();
+  await page
+    .getByTestId(id)
+    .locator(`input[value="${targetAccountId}"] + label`)
+    .check();
   await page.getByTestId(`${id}-button`).click();
-}
+};
 
-export const submitTransactionCategoryForm = async (testId: string, page: Page, {select, amount, description}: {select?: string, amount?: string, description?: string}) => {
+export const submitTransactionCategoryForm = async (
+  testId: string,
+  page: Page,
+  {
+    select,
+    amount,
+    description,
+  }: { select?: string; amount?: string; description?: string },
+) => {
   const categoriesSelectElement = page.getByTestId(`${testId}-select`);
   const amountInput = page.getByTestId(`${testId}-amount`);
   const descriptionInput = page.getByTestId(`${testId}-description`);
 
-  select && await categoriesSelectElement.selectOption(select);
-  amount && await amountInput.fill(amount);
+  select && (await categoriesSelectElement.selectOption(select));
+  amount && (await amountInput.fill(amount));
   await descriptionInput.fill(description ?? '');
 
   await page.getByTestId(`${testId}-submit`).click();
-}
+};

@@ -1,19 +1,22 @@
-import { selectAccount, submitTransactionCategoryForm } from '$utils/api-helper';
+import {
+  selectAccount,
+  submitTransactionCategoryForm,
+} from '$utils/api-helper';
 import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
 
 const TRANSFER_NAME = 'Test transfer';
 
 test.describe('Add transfer with category', () => {
-    const ids = {
+  const ids = {
     accountId1: '61460d8554ea082ad0256759',
     accountId2: '61460da354ea082ad025676b',
     editExpenseButton: 'edit-transfer-button',
     addCategoryButton: 'add-category-button',
     transactionCategoriesForm: 'transaction-categories-form',
     transactionCategoriesItem: 'transaction-categories-item',
-  }
-  
+  };
+
   test.beforeEach(async ({ page }) => {
     await applyFixture('large');
 
@@ -24,12 +27,15 @@ test.describe('Add transfer with category', () => {
 
     await selectAccount(ids.accountId1, page, 'transfer-form-fromAccount');
     await selectAccount(ids.accountId2, page, 'transfer-form-toAccount');
-    
+
     await page.getByTestId(ids.addCategoryButton).click();
   });
 
   test('Add transfer with category', async ({ page }) => {
-    await submitTransactionCategoryForm(ids.transactionCategoriesForm, page, {select: 'Category for all types', amount: '50'});
+    await submitTransactionCategoryForm(ids.transactionCategoriesForm, page, {
+      select: 'Category for all types',
+      amount: '50',
+    });
 
     await page.getByTestId('submit').click();
 
@@ -37,34 +43,48 @@ test.describe('Add transfer with category', () => {
     await page.getByText(TRANSFER_NAME).click();
 
     const categoryDetails = page.getByTestId('category-details');
-    
-    const name = categoryDetails.first().getByTestId('category-details-item-description').first();
-    const amount = categoryDetails.first().getByTestId('category-details-item-description').last();
+
+    const name = categoryDetails
+      .first()
+      .getByTestId('category-details-item-description')
+      .first();
+    const amount = categoryDetails
+      .first()
+      .getByTestId('category-details-item-description')
+      .last();
 
     await expect(name).toHaveText('Category for all types');
     await expect(amount).toContainText('50,00');
   });
 
   test('Verify selected category must exists', async ({ page }) => {
-    await submitTransactionCategoryForm(ids.transactionCategoriesForm, page, {amount: '50'});
+    await submitTransactionCategoryForm(ids.transactionCategoriesForm, page, {
+      amount: '50',
+    });
 
     await page.getByRole('button', { name: 'Edit category' }).click();
     await page.waitForTimeout(100);
 
     await page.evaluate(() => {
       const targetElement = document.querySelector(
-        `[data-testid=transaction-categories-form-select]`
+        `[data-testid=transaction-categories-form-select]`,
       );
       targetElement.innerHTML = `${targetElement.innerHTML}<option value="123456789012345678901234">non-existing-category</option>`;
     });
 
-    await page.getByTestId(ids.transactionCategoriesForm + '-select').selectOption('non-existing-category');
+    await page
+      .getByTestId(`${ids.transactionCategoriesForm}-select`)
+      .selectOption('non-existing-category');
     await page.getByTestId(`${ids.transactionCategoriesForm}-submit`).click();
 
     await page.getByTestId('submit').click();
 
     const formErrors = page.getByTestId('form-errors');
-    await expect(formErrors).toContainText('There were 1 errors with your submission');
-    await expect(formErrors).toContainText('One or more categories does not exist.');
+    await expect(formErrors).toContainText(
+      'There were 1 errors with your submission',
+    );
+    await expect(formErrors).toContainText(
+      'One or more categories does not exist.',
+    );
   });
 });

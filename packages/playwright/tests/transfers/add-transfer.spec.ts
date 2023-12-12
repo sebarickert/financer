@@ -29,22 +29,22 @@ test.describe('Add transfer', () => {
     toAccountBefore: AccountDto,
     toAccountAfter: AccountDto,
     fromAccountBefore: AccountDto,
-    fromAccountAfter: AccountDto
+    fromAccountAfter: AccountDto,
   ) => {
     expect(roundToTwoDecimal(toAccountBefore.balance + amount)).toEqual(
-      roundToTwoDecimal(toAccountAfter.balance)
+      roundToTwoDecimal(toAccountAfter.balance),
     );
     expect(roundToTwoDecimal(fromAccountBefore.balance - amount)).toEqual(
-      roundToTwoDecimal(fromAccountAfter.balance)
+      roundToTwoDecimal(fromAccountAfter.balance),
     );
   };
 
   const verifyNewTransferCreated = async (
     transfersBefore: TransactionDto[],
-    transfersAfter: TransactionDto[]
+    transfersAfter: TransactionDto[],
   ) => {
     expect(transfersBefore.length + 1).toEqual(
-      roundToTwoDecimal(transfersAfter.length)
+      roundToTwoDecimal(transfersAfter.length),
     );
   };
 
@@ -57,23 +57,23 @@ test.describe('Add transfer', () => {
 
     const targetToAccountTransactionBefore = transactionsBefore.at(-1);
     const targetToAccountId = getAccountFromTransactions(
-      targetToAccountTransactionBefore
+      targetToAccountTransactionBefore,
     );
 
     const targetFromAccountTransactionBefore = transactionsBefore.filter(
       ({ toAccount, fromAccount }) =>
-        toAccount !== targetToAccountId && fromAccount !== targetToAccountId
+        toAccount !== targetToAccountId && fromAccount !== targetToAccountId,
     )[0];
 
     const targetFromAccountId = getAccountFromTransactions(
-      targetFromAccountTransactionBefore
+      targetFromAccountTransactionBefore,
     );
 
     const toAccountBefore = await getAccount(targetToAccountId);
     const fromAccountBefore = await getAccount(targetFromAccountId);
 
     const newTransactionDate = new Date(
-      targetToAccountTransactionBefore.dateObj.getTime() + MINUTE_IN_MS
+      targetToAccountTransactionBefore.dateObj.getTime() + MINUTE_IN_MS,
     );
 
     await page.getByTestId('add-transfer').click();
@@ -83,7 +83,7 @@ test.describe('Add transfer', () => {
 
     await selectAccount(targetFromAccountId, page, 'transfer-form-fromAccount');
     await selectAccount(targetToAccountId, page, 'transfer-form-toAccount');
-    
+
     await page.getByTestId('submit').click();
 
     await page.getByTestId('add-transfer').waitFor();
@@ -98,7 +98,7 @@ test.describe('Add transfer', () => {
       toAccountBefore,
       toAccountAfter,
       fromAccountBefore,
-      fromAccountAfter
+      fromAccountAfter,
     );
     await verifyNewTransferCreated(transfersBefore, transfersAfter);
   });
@@ -112,7 +112,7 @@ test.describe('Add transfer', () => {
 
     const targetToAccountTransactionBefore = transactionsBefore.at(-1);
     const targetToAccountId = getAccountFromTransactions(
-      targetToAccountTransactionBefore
+      targetToAccountTransactionBefore,
     );
 
     const targetFromAccountTransactionBefore = transactionsBefore
@@ -120,14 +120,14 @@ test.describe('Add transfer', () => {
       .reverse()
       .filter(
         ({ toAccount, fromAccount }) =>
-          toAccount !== targetToAccountId && fromAccount !== targetToAccountId
+          toAccount !== targetToAccountId && fromAccount !== targetToAccountId,
       )[0];
 
     const targetFromAccountId = getAccountFromTransactions(
-      targetFromAccountTransactionBefore
+      targetFromAccountTransactionBefore,
     );
     const newTransactionDate = new Date(
-      targetToAccountTransactionBefore.dateObj.getTime() - MINUTE_IN_MS
+      targetToAccountTransactionBefore.dateObj.getTime() - MINUTE_IN_MS,
     );
 
     const toAccountBefore = await getAccount(targetToAccountId);
@@ -140,7 +140,7 @@ test.describe('Add transfer', () => {
 
     await selectAccount(targetFromAccountId, page, 'transfer-form-fromAccount');
     await selectAccount(targetToAccountId, page, 'transfer-form-toAccount');
-    
+
     await page.getByTestId('submit').click();
 
     await page.getByTestId('add-transfer').waitFor();
@@ -155,7 +155,7 @@ test.describe('Add transfer', () => {
       toAccountBefore,
       toAccountAfter,
       fromAccountBefore,
-      fromAccountAfter
+      fromAccountAfter,
     );
     await verifyNewTransferCreated(transfersBefore, transfersAfter);
   });
@@ -169,20 +169,20 @@ test.describe('Add transfer', () => {
 
     const targetToAccountTransactionBefore = transactionsBefore.at(0);
     const targetToAccountId = getAccountFromTransactions(
-      targetToAccountTransactionBefore
+      targetToAccountTransactionBefore,
     );
 
     const targetFromAccountTransactionBefore = transactionsBefore.filter(
       ({ toAccount, fromAccount }) =>
-        toAccount !== targetToAccountId && fromAccount !== targetToAccountId
+        toAccount !== targetToAccountId && fromAccount !== targetToAccountId,
     )[0];
 
     const targetFromAccountId = getAccountFromTransactions(
-      targetFromAccountTransactionBefore
+      targetFromAccountTransactionBefore,
     );
 
     const newTransactionDate = new Date(
-      targetToAccountTransactionBefore.dateObj.getTime() - MINUTE_IN_MS
+      targetToAccountTransactionBefore.dateObj.getTime() - MINUTE_IN_MS,
     );
 
     const toAccountBefore = await getAccount(targetToAccountId);
@@ -192,10 +192,10 @@ test.describe('Add transfer', () => {
     await page.locator('#description').fill(newTransactionName);
     await page.locator('#date').fill(formatDate(newTransactionDate));
     await page.locator('#amount').fill(newTransactionAmountStr);
-    
+
     await selectAccount(targetFromAccountId, page, 'transfer-form-fromAccount');
     await selectAccount(targetToAccountId, page, 'transfer-form-toAccount');
-    
+
     await page.getByTestId('submit').click();
 
     await page.getByTestId('add-transfer').waitFor();
@@ -210,7 +210,7 @@ test.describe('Add transfer', () => {
       toAccountBefore,
       toAccountAfter,
       fromAccountBefore,
-      fromAccountAfter
+      fromAccountAfter,
     );
     await verifyNewTransferCreated(transfersBefore, transfersAfter);
   });
@@ -226,8 +226,16 @@ test.describe('Add transfer', () => {
     await page.locator('#date').fill(formatDate(date));
     await page.locator('#amount').fill(newTransactionAmountStr);
 
-    await selectAccount('61460d8554ea082ad0256759', page, 'transfer-form-fromAccount');
-    await selectAccount('61460d9454ea082ad0256762', page, 'transfer-form-toAccount');
+    await selectAccount(
+      '61460d8554ea082ad0256759',
+      page,
+      'transfer-form-fromAccount',
+    );
+    await selectAccount(
+      '61460d9454ea082ad0256762',
+      page,
+      'transfer-form-toAccount',
+    );
 
     await page.getByTestId('submit').click();
 

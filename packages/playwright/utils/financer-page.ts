@@ -7,15 +7,15 @@ const parseBaseUrl = (testIndex: number) =>
   `http://localhost:${parsePort(testIndex)}`;
 
 export const getBaseUrl = () => {
-  const workerIndex = parseInt(process.env.TEST_PARALLEL_INDEX);
+  const workerIndex = parseInt(process.env.TEST_PARALLEL_INDEX ?? '');
   return parseBaseUrl(workerIndex);
 };
 
 export const test = setup.extend({
   baseURL: async ({}, use) => {
-    const workerIndex = parseInt(process.env.TEST_PARALLEL_INDEX);
+    const workerIndex = parseInt(process.env.TEST_PARALLEL_INDEX ?? '');
     await use(parseBaseUrl(workerIndex));
   },
 });
 
-export { expect, Page } from '@playwright/test';
+export { expect, type Page } from '@playwright/test';

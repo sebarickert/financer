@@ -27,19 +27,19 @@ test.describe('Add income', () => {
   const verifyAccountBalanceChange = async (
     amount: number,
     accountBefore: AccountDto,
-    accountAfter: AccountDto
+    accountAfter: AccountDto,
   ) => {
     expect(roundToTwoDecimal(accountBefore.balance + amount)).toEqual(
-      roundToTwoDecimal(accountAfter.balance)
+      roundToTwoDecimal(accountAfter.balance),
     );
   };
 
   const verifyNewIncomeCreated = async (
     incomesBefore: TransactionDto[],
-    incomesAfter: TransactionDto[]
+    incomesAfter: TransactionDto[],
   ) => {
     expect(incomesBefore.length + 1).toEqual(
-      roundToTwoDecimal(incomesAfter.length)
+      roundToTwoDecimal(incomesAfter.length),
     );
   };
 
@@ -57,16 +57,16 @@ test.describe('Add income', () => {
     const accountBefore = await getAccount(targetAccountId);
 
     const newTransactionDate = new Date(
-      targetTransactionBefore.dateObj.getTime() + MINUTE_IN_MS
+      targetTransactionBefore.dateObj.getTime() + MINUTE_IN_MS,
     );
 
     await page.getByTestId('add-income').click();
     await page.locator('#description').fill(newTransactionName);
     await page.locator('#date').fill(formatDate(newTransactionDate));
     await page.locator('#amount').fill(newTransactionAmountStr);
-    
+
     await selectAccount(targetAccountId, page);
-    
+
     await page.getByTestId('submit').click();
 
     await page.getByTestId('add-income').waitFor();
@@ -77,7 +77,7 @@ test.describe('Add income', () => {
     await verifyAccountBalanceChange(
       newTransactionAmount,
       accountBefore,
-      accountAfter
+      accountAfter,
     );
     await verifyNewIncomeCreated(incomesBefore, incomesAfter);
   });
@@ -93,7 +93,7 @@ test.describe('Add income', () => {
     const targetAccountId = getAccountFromTransactions(targetTransactionBefore);
 
     const newTransactionDate = new Date(
-      targetTransactionBefore.dateObj.getTime() - MINUTE_IN_MS
+      targetTransactionBefore.dateObj.getTime() - MINUTE_IN_MS,
     );
 
     const accountBefore = await getAccount(targetAccountId);
@@ -104,7 +104,7 @@ test.describe('Add income', () => {
     await page.locator('#amount').fill(newTransactionAmountStr);
 
     await selectAccount(targetAccountId, page);
-    
+
     await page.getByTestId('submit').click();
 
     await page.getByTestId('add-income').waitFor();
@@ -115,7 +115,7 @@ test.describe('Add income', () => {
     await verifyAccountBalanceChange(
       newTransactionAmount,
       accountBefore,
-      accountAfter
+      accountAfter,
     );
     await verifyNewIncomeCreated(incomesBefore, incomesAfter);
   });
@@ -132,7 +132,7 @@ test.describe('Add income', () => {
     const targetAccountId = getAccountFromTransactions(targetTransactionBefore);
 
     const newTransactionDate = new Date(
-      targetTransactionBefore.dateObj.getTime() - MINUTE_IN_MS
+      targetTransactionBefore.dateObj.getTime() - MINUTE_IN_MS,
     );
 
     const accountBefore = await getAccount(targetAccountId);
@@ -143,7 +143,7 @@ test.describe('Add income', () => {
     await page.locator('#amount').fill(newTransactionAmountStr);
 
     await selectAccount(targetAccountId, page);
-    
+
     await page.getByTestId('submit').click();
 
     await page.getByTestId('add-income').waitFor();
@@ -155,7 +155,7 @@ test.describe('Add income', () => {
     await verifyAccountBalanceChange(
       newTransactionAmount,
       accountBefore,
-      accountAfter
+      accountAfter,
     );
     await verifyNewIncomeCreated(incomesBefore, incomesAfter);
   });
@@ -166,7 +166,7 @@ test.describe('Add income', () => {
     const transactionsBefore = await getAllTransaction();
     const targetTransactionBefore = transactionsBefore.at(-1);
     const targetAccountId = getAccountFromTransactions(targetTransactionBefore);
-    
+
     const date = new Date();
     date.setSeconds(0);
     date.setMilliseconds(0);
@@ -175,9 +175,9 @@ test.describe('Add income', () => {
     await page.locator('#description').fill(newTransactionName);
     await page.locator('#date').fill(formatDate(date));
     await page.locator('#amount').fill(newTransactionAmountStr);
-    
+
     await selectAccount(targetAccountId, page);
-    
+
     await page.getByTestId('submit').click();
 
     await page.getByText(newTransactionName).click();

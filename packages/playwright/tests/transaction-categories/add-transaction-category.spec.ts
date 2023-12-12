@@ -5,7 +5,7 @@ test.describe('Transaction category creation', () => {
   const addCategoryAndVerifyDetails = async (
     page: Page,
     visibility: string[] = [],
-    parent = 'None'
+    parent = 'None',
   ) => {
     const newName = `New Test ${
       visibility.join(', ') || 'invisible'
@@ -48,17 +48,17 @@ test.describe('Transaction category creation', () => {
     const transferCheckbox = page.locator('#transferVisible');
 
     expect(await incomeCheckbox?.isChecked()).toEqual(
-      visibility.includes('income')
+      visibility.includes('income'),
     );
     expect(await expenseCheckbox?.isChecked()).toEqual(
-      visibility.includes('expense')
+      visibility.includes('expense'),
     );
     expect(await transferCheckbox?.isChecked()).toEqual(
-      visibility.includes('transfer')
+      visibility.includes('transfer'),
     );
 
     await expect(
-      page.locator('#parent_category_id').locator('option').getByText(newName)
+      page.locator('#parent_category_id').locator('option').getByText(newName),
     ).toHaveCount(0);
 
     const selectedOptions = await page
@@ -115,7 +115,7 @@ test.describe('Transaction category creation', () => {
     await addCategoryAndVerifyDetails(
       page,
       ['income', 'expense', 'transfer'],
-      'Invisible category'
+      'Invisible category',
     );
   });
 
