@@ -34,7 +34,7 @@ test.describe.parallel('Account creation', () => {
 
     await expect(page).not.toHaveURL(/\/accounts\/?$/);
 
-    await expect(page.getByTestId('account-type')).toHaveText(expectedType);
+    await expect(page.getByTestId('account-details').getByTestId('account-details-item-description')).toHaveText(expectedType);
     await expect(page.getByTestId('account-balance')).toHaveText(
       expectedBalance
     );
