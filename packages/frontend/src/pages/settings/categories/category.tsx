@@ -283,6 +283,7 @@ export const Category = ({
           <ButtonInternal
             link={`${settingsPaths.categories}/${category._id}/edit`}
             className="inline-flex items-center justify-center -mr-3 h-11 w-11"
+            testId="edit-category"
           >
             <span className="sr-only">Edit</span>
             <Icon type={IconName.pencilSquare} />

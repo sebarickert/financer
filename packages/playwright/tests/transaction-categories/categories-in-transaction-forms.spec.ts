@@ -8,7 +8,7 @@ test.describe('Transaction categories visibility in transaction forms', () => {
 
   const verifyIncomeCategories = async (page: Page) => {
     const options = page
-      .getByTestId('transaction-categories-form_transaction-category_category')
+      .getByTestId('transaction-categories-form-select')
       .locator('option');
     await expect(options).toHaveCount(4);
     await expect(options.first()).toHaveText('Category for all types');
@@ -23,7 +23,7 @@ test.describe('Transaction categories visibility in transaction forms', () => {
 
   const verifyExpenseCategories = async (page: Page) => {
     const options = page
-      .getByTestId('transaction-categories-form_transaction-category_category')
+      .getByTestId('transaction-categories-form-select')
       .locator('option');
     await expect(options).toHaveCount(4);
     await expect(options.first()).toHaveText('Category for all types');
@@ -38,7 +38,7 @@ test.describe('Transaction categories visibility in transaction forms', () => {
 
   const verifyTransferCategories = async (page: Page) => {
     const options = page
-      .getByTestId('transaction-categories-form_transaction-category_category')
+      .getByTestId('transaction-categories-form-select')
       .locator('option');
     await expect(options).toHaveCount(4);
     await expect(options.first()).toHaveText('Category for all types');

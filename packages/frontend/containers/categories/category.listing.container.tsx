@@ -87,6 +87,7 @@ export const CategoryListingContainer = () => {
           <ButtonInternal
             link={`${settingsPaths.categories}/add`}
             className="inline-flex items-center justify-center -mr-3 h-11 w-11"
+            testId="add-category-button"
           >
             <span className="sr-only">Add category</span>
             <Icon type={IconName.plus} />
@@ -95,7 +96,11 @@ export const CategoryListingContainer = () => {
       />
       <section className="grid gap-8">
         {categoryRows.map(({ label: parentLabel, items, link: parentLink }) => (
-          <LinkList key={parentLabel} label={parentLabel}>
+          <LinkList
+            key={parentLabel}
+            label={parentLabel}
+            testId="category-list"
+          >
             {parentLink && (
               <LinkListLink link={parentLink} icon={IconName.tag}>
                 {parentLabel}
