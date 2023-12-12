@@ -1,4 +1,4 @@
-import { EditTransferContainer } from '$container/transfers/edit-transfer.container';
+import { EditTransferContainer } from '$container/transfers/transfer.edit.container';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 
 const EditTransferPage = () => {

@@ -16,7 +16,7 @@ interface EditTransferProps {
   onDelete: () => void;
 }
 
-export const EditTransfer = ({
+export const TransferEdit = ({
   isLoading,
   transfer,
   errors,

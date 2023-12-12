@@ -8,7 +8,7 @@ import {
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { EditTransfer } from '$pages/transfers/edit-transfer';
+import { TransferEdit } from '$pages/transfers/transfer.edit';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 interface EditTransferContainerProps {
@@ -61,7 +61,7 @@ export const EditTransferContainer = ({ id }: EditTransferContainerProps) => {
     <>
       <DataHandler {...transferData} />
       {transfer && (
-        <EditTransfer
+        <TransferEdit
           isLoading={isSaving}
           transfer={transfer}
           errors={errors}

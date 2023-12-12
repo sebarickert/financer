@@ -84,6 +84,7 @@ export const Transfer = ({
           <ButtonInternal
             link={`/statistics/transfers/${transfer._id}/edit`}
             className="inline-flex items-center justify-center -mr-3 h-11 w-11"
+            testId="edit-transfer-button"
           >
             <span className="sr-only">Edit</span>
             <Icon type={IconName.pencilSquare} />
@@ -111,6 +112,7 @@ export const Transfer = ({
                   key={category[0].label}
                   items={category}
                   className="py-4"
+                  testId="category-details"
                 />
               ))}
             </div>
