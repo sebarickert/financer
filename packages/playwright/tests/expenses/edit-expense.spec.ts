@@ -123,8 +123,6 @@ test.describe('Edit expense', () => {
     await page.getByTestId('edit-expense-button').click();
     await page.locator('#description').fill(editedTransactionName);
     await page.locator('#amount').fill(newAmount.toString());
-  
-    await page.waitForTimeout(1000);
     
     await page.getByTestId('submit').click();
 

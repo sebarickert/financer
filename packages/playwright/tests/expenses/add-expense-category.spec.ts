@@ -5,10 +5,10 @@ import { applyFixture } from '$utils/load-fixtures';
 const EXPENSE_NAME = 'Test expense';
 
 test.describe('Add expense with category', () => {
-    const ids = {
+  const ids = {
     accountId: '61460d8554ea082ad0256759',
     editExpenseButton: 'edit-expense-button',
-    addCategoryBytton: 'add-category-button',
+    addCategoryButton: 'add-category-button',
     transactionCategoriesForm: 'transaction-categories-form',
     transactionCategoriesItem: 'transaction-categories-item',
   }
@@ -20,10 +20,9 @@ test.describe('Add expense with category', () => {
 
     await page.fill('#description', EXPENSE_NAME);
     await page.fill('#amount', '10000.50');
-
     await selectAccount(ids.accountId, page)
-    
-    await page.getByTestId(ids.addCategoryBytton).click();
+
+    await page.getByTestId(ids.addCategoryButton).click();
   });
 
   test('Add expense with category', async ({ page }) => {    
@@ -36,8 +35,8 @@ test.describe('Add expense with category', () => {
 
     const categoryDetails = page.getByTestId('category-details');
     
-    const name = categoryDetails.first().getByTestId('category-name');
-    const amount = categoryDetails.first().getByTestId('category-amount');
+    const name = categoryDetails.first().getByTestId('category-details-item-description').first();
+    const amount = categoryDetails.first().getByTestId('category-details-item-description').last();
 
     await expect(name).toHaveText('Category for all types');
     await expect(amount).toContainText('50,00');

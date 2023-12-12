@@ -49,13 +49,11 @@ export const Expense = ({
           icon: IconName.tag,
           label: 'Category',
           description: getCategoryNameById(category_id as unknown as string),
-          testId: 'category-name',
         },
         {
           icon: IconName.informationCircle,
           label: 'Amount',
           description: formatCurrency(amount),
-          testId: 'category-amount',
         },
         ...(description
           ? [
@@ -63,7 +61,6 @@ export const Expense = ({
                 icon: IconName.annotation,
                 label: 'Description',
                 description,
-                testId: 'category-description',
               },
             ]
           : []),

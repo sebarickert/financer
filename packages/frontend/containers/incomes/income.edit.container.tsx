@@ -11,11 +11,11 @@ import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { IncomeEdit } from '$pages/incomes/income.edit';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
-interface EditIncomeContainerProps {
+interface IncomeEditContainerProps {
   id: string;
 }
 
-export const EditIncomeContainer = ({ id }: EditIncomeContainerProps) => {
+export const IncomeEditContainer = ({ id }: IncomeEditContainerProps) => {
   const { push } = useViewTransitionRouter();
   const [deleteIncome] = useIncomesRemoveMutation();
 

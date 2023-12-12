@@ -55,11 +55,12 @@ test.describe('Delete income', () => {
     const accountBefore = await getAccount(targetAccountId);
 
     await page.goto('/statistics/incomes?date=2022-01&page=1');
-
     await page.getByTestId(targetTransactionId).click();
 
-    await page.getByTestId('income-delete-modal_open-button').click();
-    await page.getByTestId('income-delete-modal_confirm-button').click();
+    await page.getByTestId('edit-income-button').click();
+
+    await page.getByTestId('delete-transaction').click();
+    await page.getByTestId('delete-transaction-confirm').click();
 
     await expect(page).not.toHaveURL(`/${targetAccountId}`);
 
@@ -89,8 +90,10 @@ test.describe('Delete income', () => {
     await page.goto('/statistics/incomes?date=2021-02&page=1');
     await page.getByTestId(targetTransactionId).click();
 
-    await page.getByTestId('income-delete-modal_open-button').click();
-    await page.getByTestId('income-delete-modal_confirm-button').click();
+    await page.getByTestId('edit-income-button').click();
+
+    await page.getByTestId('delete-transaction').click();
+    await page.getByTestId('delete-transaction-confirm').click();
 
     await expect(page).not.toHaveURL(`/${targetAccountId}`);
 

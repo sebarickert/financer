@@ -35,6 +35,7 @@ export const IncomeListing = ({
           <ButtonInternal
             link="/statistics/incomes/add"
             className="inline-flex items-center justify-center -mr-3 h-11 w-11"
+            testId="add-income"
           >
             <span className="sr-only">Add income</span>
             <Icon type={IconName.plus} />
