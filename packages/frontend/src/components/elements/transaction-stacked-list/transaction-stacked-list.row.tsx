@@ -50,11 +50,11 @@ export const TransactionStackedListRow = ({
             className={`stroke-charcoal flex-shrink-0 pointer-events-none`}
           />
         </span>
-        <span className="text-base items-center gap-4 flex justify-between font-medium tracking-tight py-5 pr-4 after:h-[1px] after:w-full after:absolute after:bg-gray-dark after:bottom-0 flex-1 overflow-hidden group-last:after:hidden">
+        <span className="text-base items-center gap-4 flex justify-between tracking-tight py-5 pr-4 after:h-[1px] after:w-full after:absolute after:bg-gray-dark after:bottom-0 flex-1 overflow-hidden group-last:after:hidden">
           <span>
             <span className="grid">
               <span className="text-black truncate">{label}</span>
-              <span className="text-sm font-normal tracking-tight truncate text-gray-darkest">
+              <span className="text-sm tracking-tight truncate text-gray-darkest">
                 <span className="sr-only">Balance: </span>
                 <span>
                   <span className="sr-only">Date: </span>
@@ -73,7 +73,7 @@ export const TransactionStackedListRow = ({
             </span>
           </span>
           <span
-            className={clsx('flex-shrink-0 ml-auto', {
+            className={clsx('flex-shrink-0 ml-auto font-medium', {
               ['text-green']: transactionType === 'income',
               ['text-red']: transactionType === 'expense',
             })}

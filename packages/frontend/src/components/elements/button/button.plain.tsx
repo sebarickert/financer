@@ -19,7 +19,7 @@ export const ButtonPlain = ({
     <button
       type={type}
       onClick={onClick}
-      className={`${className} disabled:opacity-50 disabled:cursor-not-allowed`}
+      className={`${className} disabled:cursor-not-allowed disabled:text-opacity-25`}
       data-testid={testId}
       disabled={isDisabled}
     >

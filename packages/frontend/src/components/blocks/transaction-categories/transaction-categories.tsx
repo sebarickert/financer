@@ -142,16 +142,18 @@ export const TransactionCategories = ({
           handleDelete={handleDelete}
         />
       </Drawer>
-      <ul className="mt-4 divide-y divide-gray-dark">
-        {fields.map(({ id }, index) => (
-          <TransactionCategoriesItem
-            key={id}
-            index={index}
-            onClick={() => handleCategoryItemClick(index)}
-            getCategoryNameById={getCategoryNameById}
-          />
-        ))}
-      </ul>
+      {!!fields.length && (
+        <ul className="mt-4 divide-y divide-gray-dark">
+          {fields.map(({ id }, index) => (
+            <TransactionCategoriesItem
+              key={id}
+              index={index}
+              onClick={() => handleCategoryItemClick(index)}
+              getCategoryNameById={getCategoryNameById}
+            />
+          ))}
+        </ul>
+      )}
     </>
   );
 };
