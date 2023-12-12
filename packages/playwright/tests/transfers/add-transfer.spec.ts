@@ -8,6 +8,7 @@ import {
   getAccountFromTransactions,
   roundToTwoDecimal,
   getAllTransfers,
+  selectAccount,
 } from '$utils/api-helper';
 import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
@@ -79,8 +80,10 @@ test.describe('Add transfer', () => {
     await page.locator('#description').fill(newTransactionName);
     await page.locator('#date').fill(formatDate(newTransactionDate));
     await page.locator('#amount').fill(newTransactionAmountStr);
-    await page.locator('#toAccount').selectOption(targetToAccountId);
-    await page.locator('#fromAccount').selectOption(targetFromAccountId);
+
+    await selectAccount(targetFromAccountId, page, 'transfer-form-fromAccount');
+    await selectAccount(targetToAccountId, page, 'transfer-form-toAccount');
+    
     await page.getByTestId('submit').click();
 
     await page.getByTestId('add-transfer').waitFor();
@@ -134,8 +137,10 @@ test.describe('Add transfer', () => {
     await page.locator('#description').fill(newTransactionName);
     await page.locator('#date').fill(formatDate(newTransactionDate));
     await page.locator('#amount').fill(newTransactionAmountStr);
-    await page.locator('#toAccount').selectOption(targetToAccountId);
-    await page.locator('#fromAccount').selectOption(targetFromAccountId);
+
+    await selectAccount(targetFromAccountId, page, 'transfer-form-fromAccount');
+    await selectAccount(targetToAccountId, page, 'transfer-form-toAccount');
+    
     await page.getByTestId('submit').click();
 
     await page.getByTestId('add-transfer').waitFor();
@@ -187,8 +192,10 @@ test.describe('Add transfer', () => {
     await page.locator('#description').fill(newTransactionName);
     await page.locator('#date').fill(formatDate(newTransactionDate));
     await page.locator('#amount').fill(newTransactionAmountStr);
-    await page.locator('#toAccount').selectOption(targetToAccountId);
-    await page.locator('#fromAccount').selectOption(targetFromAccountId);
+    
+    await selectAccount(targetFromAccountId, page, 'transfer-form-fromAccount');
+    await selectAccount(targetToAccountId, page, 'transfer-form-toAccount');
+    
     await page.getByTestId('submit').click();
 
     await page.getByTestId('add-transfer').waitFor();
@@ -218,8 +225,10 @@ test.describe('Add transfer', () => {
     await page.locator('#description').fill(newTransactionName);
     await page.locator('#date').fill(formatDate(date));
     await page.locator('#amount').fill(newTransactionAmountStr);
-    await page.locator('#toAccount').selectOption('Saving account 1');
-    await page.locator('#fromAccount').selectOption('Saving account 2');
+
+    await selectAccount('61460d8554ea082ad0256759', page, 'transfer-form-fromAccount');
+    await selectAccount('61460d9454ea082ad0256762', page, 'transfer-form-toAccount');
+
     await page.getByTestId('submit').click();
 
     await page.getByText(newTransactionName).click();

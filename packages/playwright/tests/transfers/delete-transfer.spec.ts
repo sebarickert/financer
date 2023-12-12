@@ -72,11 +72,12 @@ test.describe('Delete transfer', () => {
     const fromAccountBefore = await getAccount(targetFromAccountId);
 
     await page.goto('/statistics/transfers?date=2022-01&page=1');
-
     await page.getByTestId(targetTransactionId).click();
 
-    await page.getByTestId('transfer-delete-modal_open-button').click();
-    await page.getByTestId('transfer-delete-modal_confirm-button').click();
+    await page.getByTestId('edit-transfer-button').click();
+
+    await page.getByTestId('delete-transaction').click();
+    await page.getByTestId('delete-transaction-confirm').click();
 
     await expect(page).not.toHaveURL(`/${targetTransactionId}`);
 
@@ -114,8 +115,10 @@ test.describe('Delete transfer', () => {
     await page.goto('/statistics/transfers?date=2021-02&page=1');
     await page.getByTestId(targetTransactionId).click();
 
-    await page.getByTestId('transfer-delete-modal_open-button').click();
-    await page.getByTestId('transfer-delete-modal_confirm-button').click();
+    await page.getByTestId('edit-transfer-button').click();
+
+    await page.getByTestId('delete-transaction').click();
+    await page.getByTestId('delete-transaction-confirm').click();
 
     await expect(page).not.toHaveURL(`/${targetTransactionId}`);
 

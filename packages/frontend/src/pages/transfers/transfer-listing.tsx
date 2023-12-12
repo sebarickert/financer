@@ -35,7 +35,7 @@ export const TransferListing = ({
           <ButtonInternal
             link="/statistics/transfers/add"
             className="inline-flex items-center justify-center -mr-3 h-11 w-11"
-            testId="add-tranfer"
+            testId="add-transfer"
           >
             <span className="sr-only">Add transfer</span>
             <Icon type={IconName.plus} />

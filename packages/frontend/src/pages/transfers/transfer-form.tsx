@@ -112,6 +112,7 @@ export const TransferForm = ({
               options={accountOptions}
               isRequired
               icon={IconName.upload}
+              testId="transfer-form-fromAccount"
             >
               From Account
             </AccountsSelect>
@@ -120,6 +121,7 @@ export const TransferForm = ({
               options={accountOptions}
               isRequired
               icon={IconName.download}
+              testId="transfer-form-toAccount"
             >
               To Account
             </AccountsSelect>
