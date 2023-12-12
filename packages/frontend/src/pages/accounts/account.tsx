@@ -42,7 +42,6 @@ export const Account = ({
         icon: IconName.informationCircle,
         label: 'Type',
         description: capitalize(account.type),
-        testId: 'account-type',
       },
     ],
     [account.type]
@@ -76,6 +75,7 @@ export const Account = ({
             {account.name}
           </BalanceDisplay>
           <DetailsList
+            testId="account-details"
             items={accountDetails}
             className="py-4 border-t border-b border-gray-dark mt-6"
           />
