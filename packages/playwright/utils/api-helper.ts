@@ -129,6 +129,7 @@ export const selectAccount = async (targetAccountId: string, page: Page, testId?
 
   await page.getByTestId(`${id}-button`).click();
   await page.getByTestId(id).locator(`input[value="${targetAccountId}"] + label`).check();
+  await page.getByTestId(`${id}-button`).click();
 }
 
 export const submitTransactionCategoryForm = async (testId: string, page: Page, {select, amount, description}: {select?: string, amount?: string, description?: string}) => {
