@@ -13,8 +13,8 @@ test.describe('Edit transaction category', () => {
       ? `Changed Test ${newVisibility?.join(', ') || 'invisible'} category`
       : targetCategoryName;
 
-    await page.locator(`[data-entity-title="${targetCategoryName}"]`).click();
-    await page.getByTestId('edit-transaction-category').click();
+    await page.getByRole('link', {name: targetCategoryName, exact: true}).click();
+    await page.getByTestId('edit-category').click();
 
     await page.locator('#name').fill(newName);
 
@@ -63,9 +63,8 @@ test.describe('Edit transaction category', () => {
 
     await page.getByTestId('submit').click();
 
-    await page.locator(`[data-entity-title="${newName}"]`).click();
-
-    await page.getByTestId('edit-transaction-category').click();
+    await page.getByRole('link', {name: newName, exact: true}).click();
+    await page.getByTestId('edit-category').click();
 
     await expect(page.locator('#name')).toHaveValue(newName);
 
@@ -92,7 +91,7 @@ test.describe('Edit transaction category', () => {
 
   test.beforeEach(async ({ page }) => {
     await applyFixture('accounts-only');
-    await page.goto('/settings/transaction-categories');
+    await page.goto('/settings/categories');
   });
 
   // eslint-disable-next-line playwright/expect-expect

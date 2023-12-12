@@ -6,24 +6,23 @@ test.describe('Delete transaction category', () => {
     targetCategoryName: string,
     page: Page
   ) => {
-    await expect(
-      page.locator(`[data-entity-title="${targetCategoryName}"]`)
-    ).toHaveCount(1);
+    const category = page.getByRole('link', { name: targetCategoryName, exact: true })
+    
+    await expect(category).toHaveCount(1);
 
-    await page.click(`[data-entity-title="${targetCategoryName}"]`);
-    await page.getByTestId('delete-transaction-category').click();
-    await page
-      .getByTestId('delete-transaction-category_confirm-button')
-      .click();
+    await category.click();
 
-    await expect(
-      page.locator(`[data-entity-title="${targetCategoryName}"]`)
-    ).toHaveCount(0);
+    await page.getByTestId('edit-category').click();
+
+    await page.getByTestId('delete-category').click();
+    await page.getByTestId('delete-category-confirm').click();
+
+    await expect(category).toHaveCount(0);
   };
 
   test.beforeEach(async ({ page }) => {
     await applyFixture('accounts-only');
-    await page.goto('/settings/transaction-categories');
+    await page.goto('/settings/categories');
   });
 
   // eslint-disable-next-line playwright/expect-expect

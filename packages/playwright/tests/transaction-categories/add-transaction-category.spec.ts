@@ -12,16 +12,16 @@ test.describe('Transaction category creation', () => {
     } category - ${crypto.randomUUID()}`;
 
     const parentRowBefore = page
-      .getByTestId('category-parent-row')
+      .getByTestId('category-list')
       .getByText(newName);
 
     await expect(parentRowBefore).toHaveCount(0);
     const childRowAfter = page
-      .getByTestId('category-child-row')
+      .getByTestId('category-list-item')
       .getByText(newName);
     await expect(childRowAfter).toHaveCount(0);
 
-    await page.getByTestId('add-category').click();
+    await page.getByTestId('add-category-button').click();
 
     await page.locator('#name').fill(newName);
 
@@ -39,7 +39,7 @@ test.describe('Transaction category creation', () => {
 
     await page.getByText(newName).first().click();
 
-    await page.getByTestId('edit-transaction-category').click();
+    await page.getByTestId('edit-category').click();
 
     await expect(page.locator('#name')).toHaveValue(newName);
 
@@ -70,12 +70,12 @@ test.describe('Transaction category creation', () => {
 
   test.beforeEach(async ({ page }) => {
     await applyFixture('accounts-only');
-    await page.goto('/settings/transaction-categories');
+    await page.goto('/settings/categories');
   });
 
   test('Verify category in fixture', async ({ page }) => {
-    await expect(page.getByTestId('category-parent-row')).toHaveCount(3);
-    await expect(page.getByTestId('category-child-row')).toHaveCount(8);
+    await expect(page.getByTestId('category-list')).toHaveCount(3);
+    await expect(page.getByTestId('category-list-item')).toHaveCount(10);
   });
 
   // eslint-disable-next-line playwright/expect-expect

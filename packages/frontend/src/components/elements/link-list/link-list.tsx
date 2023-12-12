@@ -19,8 +19,10 @@ export const LinkList = ({
   children,
   className = '',
   isVertical,
-  testId,
+  testId: rawTestId,
 }: LinkListProps): JSX.Element => {
+  const testId = rawTestId ?? 'link-list';
+
   return (
     <section className={`${className}`} data-testid={testId}>
       {label && (
@@ -29,6 +31,7 @@ export const LinkList = ({
           ctaLabel={`View '${label}'`}
           ctaUrl={link}
           ctaEntityTitle={label}
+          testId={`${testId}-heading`}
         >
           {label}
         </Heading>
@@ -41,7 +44,10 @@ export const LinkList = ({
         {Children.map(children, (child) => {
           return (
             child && (
-              <LinkListRow key={`LinkListRow-${Math.random()}`}>
+              <LinkListRow
+                key={`LinkListRow-${Math.random()}`}
+                testId={`${testId}-item`}
+              >
                 {child}
               </LinkListRow>
             )
