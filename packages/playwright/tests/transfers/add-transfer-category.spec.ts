@@ -1,5 +1,4 @@
 import {
-  selectAccount,
   submitTransactionCategoryForm,
 } from '$utils/api-helper';
 import { test, expect } from '$utils/financer-page';
@@ -25,8 +24,8 @@ test.describe('Add transfer with category', () => {
     await page.locator('#description').fill(TRANSFER_NAME);
     await page.locator('#amount').fill('10000.50');
 
-    await selectAccount(ids.accountId1, page, 'transfer-form-fromAccount');
-    await selectAccount(ids.accountId2, page, 'transfer-form-toAccount');
+    await page.locator('#fromAccount').selectOption(ids.accountId1);
+    await page.locator('#toAccount').selectOption(ids.accountId2);
 
     await page.getByTestId(ids.addCategoryButton).click();
   });

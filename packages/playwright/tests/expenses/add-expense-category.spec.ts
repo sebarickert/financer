@@ -1,5 +1,4 @@
 import {
-  selectAccount,
   submitTransactionCategoryForm,
 } from '$utils/api-helper';
 import { test, expect } from '$utils/financer-page';
@@ -23,8 +22,6 @@ test.describe('Add expense with category', () => {
 
     await page.fill('#description', EXPENSE_NAME);
     await page.fill('#amount', '10000.50');
-
-    await selectAccount(ids.accountId, page);
 
     await page.getByTestId(ids.addCategoryButton).click();
   });

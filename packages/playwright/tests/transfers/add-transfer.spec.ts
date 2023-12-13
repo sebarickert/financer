@@ -7,8 +7,7 @@ import {
   formatDate,
   getAccountFromTransactions,
   roundToTwoDecimal,
-  getAllTransfers,
-  selectAccount,
+  getAllTransfers
 } from '$utils/api-helper';
 import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
@@ -81,12 +80,12 @@ test.describe('Add transfer', () => {
     await page.locator('#date').fill(formatDate(newTransactionDate));
     await page.locator('#amount').fill(newTransactionAmountStr);
 
-    await selectAccount(targetFromAccountId, page, 'transfer-form-fromAccount');
-    await selectAccount(targetToAccountId, page, 'transfer-form-toAccount');
+    await page.locator('#fromAccount').selectOption(targetFromAccountId);
+    await page.locator('#toAccount').selectOption(targetToAccountId);
 
     await page.getByTestId('submit').click();
 
-    await page.getByTestId('add-transfer').waitFor();
+    await page.getByTestId('edit-transfer-button').waitFor();
 
     //   cy.location('pathname').should('not.contain', '/add').then(() => {
     const toAccountAfter = await getAccount(targetToAccountId);
@@ -138,12 +137,12 @@ test.describe('Add transfer', () => {
     await page.locator('#date').fill(formatDate(newTransactionDate));
     await page.locator('#amount').fill(newTransactionAmountStr);
 
-    await selectAccount(targetFromAccountId, page, 'transfer-form-fromAccount');
-    await selectAccount(targetToAccountId, page, 'transfer-form-toAccount');
+    await page.locator('#fromAccount').selectOption(targetFromAccountId);
+    await page.locator('#toAccount').selectOption(targetToAccountId);
 
     await page.getByTestId('submit').click();
 
-    await page.getByTestId('add-transfer').waitFor();
+    await page.getByTestId('edit-transfer-button').waitFor();
 
     //   cy.location('pathname').should('not.contain', '/add').then(() => {
     const toAccountAfter = await getAccount(targetToAccountId);
@@ -193,12 +192,12 @@ test.describe('Add transfer', () => {
     await page.locator('#date').fill(formatDate(newTransactionDate));
     await page.locator('#amount').fill(newTransactionAmountStr);
 
-    await selectAccount(targetFromAccountId, page, 'transfer-form-fromAccount');
-    await selectAccount(targetToAccountId, page, 'transfer-form-toAccount');
+    await page.locator('#fromAccount').selectOption(targetFromAccountId);
+    await page.locator('#toAccount').selectOption(targetToAccountId);
 
     await page.getByTestId('submit').click();
 
-    await page.getByTestId('add-transfer').waitFor();
+    await page.getByTestId('edit-transfer-button').waitFor();
 
     //   cy.location('pathname').should('not.contain', '/add').then(() => {
     const toAccountAfter = await getAccount(targetToAccountId);
@@ -226,16 +225,8 @@ test.describe('Add transfer', () => {
     await page.locator('#date').fill(formatDate(date));
     await page.locator('#amount').fill(newTransactionAmountStr);
 
-    await selectAccount(
-      '61460d8554ea082ad0256759',
-      page,
-      'transfer-form-fromAccount',
-    );
-    await selectAccount(
-      '61460d9454ea082ad0256762',
-      page,
-      'transfer-form-toAccount',
-    );
+    await page.locator('#fromAccount').selectOption('61460d8554ea082ad0256759');
+    await page.locator('#toAccount').selectOption('61460d9454ea082ad0256762');
 
     await page.getByTestId('submit').click();
 

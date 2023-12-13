@@ -124,21 +124,6 @@ export const getAccountFromTransactions = (transaction: TransactionDto) =>
 export const roundToTwoDecimal = (number: number): number =>
   Math.round(number * 100) / 100;
 
-export const selectAccount = async (
-  targetAccountId: string,
-  page: Page,
-  testId?: string,
-) => {
-  const id = testId ?? 'accounts-select';
-
-  await page.getByTestId(`${id}-button`).click();
-  await page
-    .getByTestId(id)
-    .locator(`input[value="${targetAccountId}"] + label`)
-    .check();
-  await page.getByTestId(`${id}-button`).click();
-};
-
 export const submitTransactionCategoryForm = async (
   testId: string,
   page: Page,

@@ -5,8 +5,7 @@ import {
   getAccount,
   getTransactionById,
   ITransactionWithDateObject,
-  roundToTwoDecimal,
-  selectAccount,
+  roundToTwoDecimal
 } from '$utils/api-helper';
 import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
@@ -89,8 +88,8 @@ test.describe('Edit transfer', () => {
     await page.locator('#description').fill(editedTransactionName);
     await page.locator('#amount').fill(newAmount.toString());
 
-    await selectAccount(targetFromAccountId, page, 'transfer-form-fromAccount');
-    await selectAccount(targetToAccountId, page, 'transfer-form-toAccount');
+    await page.locator('#fromAccount').selectOption(targetFromAccountId);
+    await page.locator('#toAccount').selectOption(targetToAccountId);
 
     await page.getByTestId('submit').click();
 

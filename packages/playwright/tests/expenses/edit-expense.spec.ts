@@ -6,7 +6,6 @@ import {
   getTransactionById,
   ITransactionWithDateObject,
   roundToTwoDecimal,
-  selectAccount,
 } from '$utils/api-helper';
 import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
@@ -74,8 +73,7 @@ test.describe('Edit expense', () => {
     await page.getByTestId('edit-expense-button').click();
     await page.locator('#description').fill(editedTransactionName);
     await page.locator('#amount').fill(newAmount.toString());
-
-    await selectAccount(targetAccountId, page);
+    await page.locator('#fromAccount').selectOption(targetAccountId);
 
     await page.getByTestId('submit').click();
 
