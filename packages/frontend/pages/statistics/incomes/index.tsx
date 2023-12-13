@@ -1,4 +1,4 @@
-import { IncomeListingContainer } from '$container/incomes/income-listing.container';
+import { IncomeListingContainer } from '$container/incomes/income.listing.container';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 
 const IncomesPage = () => {

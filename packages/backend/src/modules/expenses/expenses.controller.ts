@@ -160,7 +160,7 @@ export class ExpensesController {
 
   @Post()
   @ApiBody({ type: CreateExpenseDto })
-  @ApiOkResponse({ schema: { properties: { payload: { type: 'string' } } } })
+  @ApiOkResponse({ type: ExpenseDto })
   async create(
     @UserId() userId: ObjectId,
     @Body() createExpense: CreateExpenseDto,

@@ -1,41 +1,43 @@
 import { useState } from 'react';
 
 import {
-  CreateIncomeDto,
-  useIncomesCreateMutation,
+  CreateExpenseDto,
+  useExpensesCreateMutation,
   useTransactionTemplatesFindOneQuery,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
-import { useUserDefaultIncomeAccount } from '$hooks/settings/user-preference/useUserDefaultIncomeAccount';
+import { useUserDefaultExpenseAccount } from '$hooks/settings/user-preference/useUserDefaultExpenseAccount';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { IncomeAdd } from '$pages/incomes/income.add';
+import { ExpenseAdd } from '$pages/expenses/expense.add';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
-interface AddIncomeContainerProps {
+interface ExpenseAddContainerProps {
   templateId?: string;
 }
 
-export const AddIncomeContainer = ({ templateId }: AddIncomeContainerProps) => {
+export const ExpenseAddContainer = ({
+  templateId,
+}: ExpenseAddContainerProps) => {
   const { push } = useViewTransitionRouter();
   const [errors, setErrors] = useState<string[]>([]);
-  const [addIncome, { isLoading: isCreating }] = useIncomesCreateMutation();
-  const { data: defaultIncomeAccount, isLoading: isLoadingDefaultAccount } =
-    useUserDefaultIncomeAccount({ skip: !!templateId });
+  const [addExpense, { isLoading: isCreating }] = useExpensesCreateMutation();
+  const { data: defaultExpenseAccount, isLoading: isLoadingDefaultAccount } =
+    useUserDefaultExpenseAccount({ skip: !!templateId });
 
   const templateData = useTransactionTemplatesFindOneQuery(
     { id: templateId as string },
     { skip: !templateId }
   );
 
-  const { data: transactionTemplate } = templateData;
+  const { currentData: transactionTemplate } = templateData;
 
-  const handleSubmit = async (newIncomeData: CreateIncomeDto) => {
+  const handleSubmit = async (newExpenseData: CreateExpenseDto) => {
     try {
-      await addIncome({
-        createIncomeDto: newIncomeData,
+      const { _id: id } = await addExpense({
+        createExpenseDto: newExpenseData,
       }).unwrap();
 
-      push('/statistics/incomes');
+      push(`/statistics/expenses/${id}`);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (error.status === 400 || error.status === 404) {
@@ -54,8 +56,8 @@ export const AddIncomeContainer = ({ templateId }: AddIncomeContainerProps) => {
     <>
       <DataHandler skipNotFound {...templateData} />
       {(!templateId || transactionTemplate) && (
-        <IncomeAdd
-          defaultIncomeAccount={defaultIncomeAccount}
+        <ExpenseAdd
+          defaultExpenseAccount={defaultExpenseAccount}
           template={transactionTemplate}
           isLoading={isLoading}
           isCreating={isCreating}
