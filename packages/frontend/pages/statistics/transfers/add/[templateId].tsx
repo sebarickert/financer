@@ -1,4 +1,4 @@
-import { AddTransferContainer } from '$container/transfers/add-transfer.container';
+import { TransferAddContainer } from '$container/transfers/transfer.add.container';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 
 const AddTransferWithTemplateIdPage = () => {
@@ -6,7 +6,7 @@ const AddTransferWithTemplateIdPage = () => {
     query: { templateId },
   } = useViewTransitionRouter();
 
-  return <AddTransferContainer templateId={templateId as string} />;
+  return <TransferAddContainer templateId={templateId as string} />;
 };
 
 export default AddTransferWithTemplateIdPage;

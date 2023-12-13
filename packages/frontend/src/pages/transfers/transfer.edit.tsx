@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { TransferForm } from './transfer-form';
+import { TransferForm } from './transfer.form';
 
 import { TransferDto, UpdateTransferDto } from '$api/generated/financerApi';
 import { TransactionDelete } from '$blocks/transaction-delete/transaction-delete';

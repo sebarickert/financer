@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { TransferForm } from './transfer-form';
+import { TransferForm } from './transfer.form';
 
 import {
   CreateTransferDto,
@@ -12,7 +12,7 @@ import { Loader } from '$elements/loader/loader';
 import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
-interface AddTransferProps {
+interface TransferAddProps {
   defaultTransferSourceAccount?: string;
   defaultTransferTargetAccount?: string;
   template?: TransactionTemplateDto;
@@ -22,7 +22,7 @@ interface AddTransferProps {
   onSubmit: (newIncomeData: CreateTransferDto) => void;
 }
 
-export const AddTransfer = ({
+export const TransferAdd = ({
   defaultTransferSourceAccount,
   defaultTransferTargetAccount,
   template,
@@ -30,7 +30,7 @@ export const AddTransfer = ({
   isCreating,
   errors,
   onSubmit,
-}: AddTransferProps): JSX.Element => {
+}: TransferAddProps): JSX.Element => {
   const initialValues = useMemo(() => {
     if (!template) {
       return {

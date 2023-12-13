@@ -1,4 +1,4 @@
-import { TransferListingContainer } from '$container/transfers/transfer-listing.container';
+import { TransferListingContainer } from '$container/transfers/transfer.listing.container';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 
 const TransfersPage = () => {
