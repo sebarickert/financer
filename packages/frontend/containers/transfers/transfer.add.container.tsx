@@ -9,16 +9,16 @@ import { DataHandler } from '$blocks/data-handler/data-handler';
 import { useUserDefaultTransferSourceAccount } from '$hooks/settings/user-preference/useUserDefaultTransferSourceAccount';
 import { useUserDefaultTransferTargetAccount } from '$hooks/settings/user-preference/useUserDefaultTransferTargetAccount';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { AddTransfer } from '$pages/transfers/add-transfer';
+import { TransferAdd } from '$pages/transfers/transfer.add';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
-interface AddTransferContainerProps {
+interface TransferAddContainerProps {
   templateId?: string;
 }
 
-export const AddTransferContainer = ({
+export const TransferAddContainer = ({
   templateId,
-}: AddTransferContainerProps) => {
+}: TransferAddContainerProps) => {
   const { push } = useViewTransitionRouter();
   const [errors, setErrors] = useState<string[]>([]);
   const [addTransfer, { isLoading: isCreating }] = useTransfersCreateMutation();
@@ -64,7 +64,7 @@ export const AddTransferContainer = ({
     <>
       <DataHandler skipNotFound {...templateData} />
       {(!templateId || transactionTemplate) && (
-        <AddTransfer
+        <TransferAdd
           defaultTransferSourceAccount={defaultTransferSourceAccount}
           defaultTransferTargetAccount={defaultTransferTargetAccount}
           template={transactionTemplate}

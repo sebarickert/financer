@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { initialMonthFilterOptions } from '$blocks/monthly-transaction-list/monthly-transaction-list';
 import { useFirstTransaction } from '$hooks/transaction/useFirstTransaction';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { TransferListing } from '$pages/transfers/transfer-listing';
+import { TransferListing } from '$pages/transfers/transfer.listing';
 import { parseYearMonthFromString } from '$utils/formatDate';
 
 interface TransferListingContainerProps {

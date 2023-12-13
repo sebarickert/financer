@@ -6,17 +6,15 @@ import {
   VisibilityType2Enum,
   VisibilityTypeEnum,
 } from '$api/generated/financerApi';
-import { AccountsSelect } from '$blocks/accounts-select/accounts-select';
 import { Form } from '$blocks/form/form';
 import {
   TransactionCategories,
   TransactionCategoriesFormFields,
 } from '$blocks/transaction-categories/transaction-categories';
 import { Alert } from '$elements/alert/alert';
-import { IconName } from '$elements/icon/icon';
 import { Input } from '$elements/input/input';
 import { Loader } from '$elements/loader/loader';
-import { Option } from '$elements/select/select';
+import { Option, Select } from '$elements/select/select';
 import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
 import { inputDateFormat } from '$utils/formatDate';
 
@@ -107,24 +105,12 @@ export const TransferForm = ({
       >
         <section>
           <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
-            <AccountsSelect
-              id="fromAccount"
-              options={accountOptions}
-              isRequired
-              icon={IconName.upload}
-              testId="transfer-form-fromAccount"
-            >
-              From Account
-            </AccountsSelect>
-            <AccountsSelect
-              id="toAccount"
-              options={accountOptions}
-              isRequired
-              icon={IconName.download}
-              testId="transfer-form-toAccount"
-            >
-              To Account
-            </AccountsSelect>
+            <Select id="fromAccount" options={accountOptions} isRequired>
+              From account
+            </Select>
+            <Select id="toAccount" options={accountOptions} isRequired>
+              To account
+            </Select>
             <Input id="amount" type="number" min={0.01} step={0.01} isRequired>
               Amount
             </Input>

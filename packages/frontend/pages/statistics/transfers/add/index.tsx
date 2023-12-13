@@ -1,7 +1,7 @@
-import { AddTransferContainer } from '$container/transfers/add-transfer.container';
+import { TransferAddContainer } from '$container/transfers/transfer.add.container';
 
 const AddTransferPage = () => {
-  return <AddTransferContainer />;
+  return <TransferAddContainer />;
 };
 
 export default AddTransferPage;

@@ -42,7 +42,7 @@ export const Select = ({
     <div className={className}>
       <label
         htmlFor={id}
-        className="block text-sm tracking-tight text-black/75"
+        className="block text-xs tracking-tight text-black/75 uppercase font-medium"
       >
         {children}
         <select
