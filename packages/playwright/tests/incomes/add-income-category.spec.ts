@@ -1,5 +1,4 @@
 import {
-  selectAccount,
   submitTransactionCategoryForm,
 } from '$utils/api-helper';
 import { test, expect } from '$utils/financer-page';
@@ -23,8 +22,6 @@ test.describe('Add income with category', () => {
 
     await page.locator('#description').fill(INCOME_NAME);
     await page.locator('#amount').fill('10000.50');
-
-    await selectAccount(ids.accountId, page);
 
     await page.getByTestId(ids.addCategoryButton).click();
   });

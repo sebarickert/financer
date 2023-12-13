@@ -7,8 +7,7 @@ import {
   formatDate,
   getAccountFromTransactions,
   roundToTwoDecimal,
-  getAllIncomes,
-  selectAccount,
+  getAllIncomes
 } from '$utils/api-helper';
 import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
@@ -64,12 +63,11 @@ test.describe('Add income', () => {
     await page.locator('#description').fill(newTransactionName);
     await page.locator('#date').fill(formatDate(newTransactionDate));
     await page.locator('#amount').fill(newTransactionAmountStr);
-
-    await selectAccount(targetAccountId, page);
+    await page.locator('#toAccount').selectOption(targetAccountId);
 
     await page.getByTestId('submit').click();
 
-    await page.getByTestId('add-income').waitFor();
+    await page.getByTestId('edit-income-button').waitFor();
 
     const accountAfter = await getAccount(targetAccountId);
     const incomesAfter = await getAllIncomes();
@@ -102,12 +100,11 @@ test.describe('Add income', () => {
     await page.locator('#description').fill(newTransactionName);
     await page.locator('#date').fill(formatDate(newTransactionDate));
     await page.locator('#amount').fill(newTransactionAmountStr);
-
-    await selectAccount(targetAccountId, page);
+    await page.locator('#toAccount').selectOption(targetAccountId);
 
     await page.getByTestId('submit').click();
 
-    await page.getByTestId('add-income').waitFor();
+    await page.getByTestId('edit-income-button').waitFor();
 
     const accountAfter = await getAccount(targetAccountId);
     const incomesAfter = await getAllIncomes();
@@ -141,14 +138,12 @@ test.describe('Add income', () => {
     await page.locator('#description').fill(newTransactionName);
     await page.locator('#date').fill(formatDate(newTransactionDate));
     await page.locator('#amount').fill(newTransactionAmountStr);
-
-    await selectAccount(targetAccountId, page);
+    await page.locator('#toAccount').selectOption(targetAccountId);
 
     await page.getByTestId('submit').click();
 
-    await page.getByTestId('add-income').waitFor();
+    await page.getByTestId('edit-income-button').waitFor();
 
-    //   cy.location('pathname').should('not.contain', '/add').then(() => {
     const accountAfter = await getAccount(targetAccountId);
     const incomesAfter = await getAllIncomes();
 
@@ -175,8 +170,7 @@ test.describe('Add income', () => {
     await page.locator('#description').fill(newTransactionName);
     await page.locator('#date').fill(formatDate(date));
     await page.locator('#amount').fill(newTransactionAmountStr);
-
-    await selectAccount(targetAccountId, page);
+    await page.locator('#toAccount').selectOption(targetAccountId);
 
     await page.getByTestId('submit').click();
 
