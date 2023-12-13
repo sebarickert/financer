@@ -1,9 +1,9 @@
-name: Lint and test production branch
+name: Validate and Deploy
 
 on:
   push:
     branches:
-      - production
+      - main
 
 concurrency:
   group: ci-build_${{ github.ref }}

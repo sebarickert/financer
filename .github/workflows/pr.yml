@@ -1,9 +1,9 @@
-name: Lint and test PR
+name: Validate Pull Request
 
 on:
   pull_request:
     branches:
-      - production
+      - main
   workflow_dispatch:
 
 concurrency:

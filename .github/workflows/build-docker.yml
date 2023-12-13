@@ -41,7 +41,7 @@ jobs:
           IMAGE_NAME=ghcr.io/shamalainen/financer
           echo "##[set-output name=BUILD_NUMBER;]$(echo $IMAGE_NAME:${{ github.run_number }})"
           echo "##[set-output name=COMMIT_REF;]$(echo $IMAGE_NAME:$(git rev-parse --short HEAD))"
-          echo "##[set-output name=LATEST;]$(echo $IMAGE_NAME:$([[ ${GITHUB_REF#refs/heads/} = "production" ]] && echo "latest" || echo "latest-dev"))"
+          echo "##[set-output name=LATEST;]$(echo $IMAGE_NAME:$([[ ${GITHUB_REF#refs/heads/} = "main" ]] && echo "latest" || echo "latest-dev"))"
 
       - name: Build and publish
         uses: docker/build-push-action@v2
