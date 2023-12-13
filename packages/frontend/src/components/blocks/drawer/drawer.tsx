@@ -119,7 +119,7 @@ export const Drawer = ({
   const drawerBaseClasses = clsx('', {
     [className]: true,
     ['bg-white fixed transition-all z-[200] duration-200 text-left']: true,
-    ['px-8 pb-12 pt-8']: true,
+    ['px-8 pt-8 pb-[calc(env(safe-area-inset-bottom)+48px)]']: true,
     [defaultDrawerClasses]: true,
     ['hidden']: isClosedDelay,
   });
