@@ -1,7 +1,7 @@
-import { AddIncomeContainer } from '$container/incomes/add-income.container';
+import { IncomeAddContainer } from '$container/incomes/income.add.container';
 
-const AddIncomePage = () => {
-  return <AddIncomeContainer />;
+const IncomeAddPage = () => {
+  return <IncomeAddContainer />;
 };
 
-export default AddIncomePage;
+export default IncomeAddPage;

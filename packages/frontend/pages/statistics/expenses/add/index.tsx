@@ -1,7 +1,7 @@
-import { AddExpenseContainer } from '$container/expenses/add-expense.container';
+import { ExpenseAddContainer } from '$container/expenses/expense.add.container';
 
 const AddExpensePage = () => {
-  return <AddExpenseContainer />;
+  return <ExpenseAddContainer />;
 };
 
 export default AddExpensePage;

@@ -40,11 +40,11 @@ export const TransferAddContainer = ({
 
   const handleSubmit = async (newTransferData: CreateTransferDto) => {
     try {
-      await addTransfer({
+      const { _id: id } = await addTransfer({
         createTransferDto: newTransferData,
       }).unwrap();
 
-      push('/statistics/transfers');
+      push(`/statistics/transfers/${id}`);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (error.status === 400 || error.status === 404) {

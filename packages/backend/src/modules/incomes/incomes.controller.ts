@@ -160,7 +160,7 @@ export class IncomesController {
 
   @Post()
   @ApiBody({ type: CreateIncomeDto })
-  @ApiOkResponse({ schema: { properties: { payload: { type: 'string' } } } })
+  @ApiOkResponse({ type: IncomeDto })
   async create(
     @UserId() userId: ObjectId,
     @Body() createIncome: CreateIncomeDto,

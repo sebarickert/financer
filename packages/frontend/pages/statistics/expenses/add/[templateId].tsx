@@ -1,12 +1,12 @@
-import { AddExpenseContainer } from '$container/expenses/add-expense.container';
+import { ExpenseAddContainer } from '$container/expenses/expense.add.container';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 
-const AddExpenseWithTemplateIdPage = () => {
+const ExpenseAddWithTemplateIdPage = () => {
   const {
     query: { templateId },
   } = useViewTransitionRouter();
 
-  return <AddExpenseContainer templateId={templateId as string} />;
+  return <ExpenseAddContainer templateId={templateId as string} />;
 };
 
-export default AddExpenseWithTemplateIdPage;
+export default ExpenseAddWithTemplateIdPage;

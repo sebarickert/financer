@@ -1101,7 +1101,7 @@
             "description": "",
             "content": {
               "application/json": {
-                "schema": { "properties": { "payload": { "type": "string" } } }
+                "schema": { "$ref": "#/components/schemas/ExpenseDto" }
               }
             }
           }
@@ -1311,7 +1311,7 @@
             "description": "",
             "content": {
               "application/json": {
-                "schema": { "properties": { "payload": { "type": "string" } } }
+                "schema": { "$ref": "#/components/schemas/IncomeDto" }
               }
             }
           }
@@ -1523,7 +1523,7 @@
             "description": "",
             "content": {
               "application/json": {
-                "schema": { "properties": { "payload": { "type": "string" } } }
+                "schema": { "$ref": "#/components/schemas/TransferDto" }
               }
             }
           }

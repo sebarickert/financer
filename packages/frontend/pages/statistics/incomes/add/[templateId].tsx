@@ -1,4 +1,4 @@
-import { AddIncomeContainer } from '$container/incomes/add-income.container';
+import { IncomeAddContainer } from '$container/incomes/income.add.container';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 
 const AddIncomeWithTemplateIdPage = () => {
@@ -6,7 +6,7 @@ const AddIncomeWithTemplateIdPage = () => {
     query: { templateId },
   } = useViewTransitionRouter();
 
-  return <AddIncomeContainer templateId={templateId as string} />;
+  return <IncomeAddContainer templateId={templateId as string} />;
 };
 
 export default AddIncomeWithTemplateIdPage;

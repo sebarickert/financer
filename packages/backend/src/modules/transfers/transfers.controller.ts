@@ -162,7 +162,7 @@ export class TransfersController {
 
   @Post()
   @ApiBody({ type: CreateTransferDto })
-  @ApiOkResponse({ schema: { properties: { payload: { type: 'string' } } } })
+  @ApiOkResponse({ type: TransferDto })
   async create(
     @UserId() userId: ObjectId,
     @Body() createTransfer: CreateTransferDto,
