@@ -1,4 +1,5 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
 
 import {
   UpdateIncomeDto,
@@ -7,9 +8,14 @@ import {
   useIncomesUpdateMutation,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
+import { ToastMessageTypes } from '$blocks/toast/toast';
+import { TransactionDelete } from '$blocks/transaction-delete/transaction-delete';
+import { TransactionForm } from '$blocks/transaction-form/transaction-form';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { IncomeEdit } from '$pages/incomes/income.edit';
+import { addToastMessage } from '$reducer/notifications.reducer';
+import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
+import { inputDateFormat } from '$utils/formatDate';
 
 interface IncomeEditContainerProps {
   id: string;
@@ -18,29 +24,35 @@ interface IncomeEditContainerProps {
 export const IncomeEditContainer = ({ id }: IncomeEditContainerProps) => {
   const { push } = useViewTransitionRouter();
   const [deleteIncome] = useIncomesRemoveMutation();
-
-  const [errors, setErrors] = useState<string[]>([]);
-
   const incomeData = useIncomesFindOneQuery({ id });
   const { data: income } = incomeData;
-  const [editIncome, { isLoading: isSaving }] = useIncomesUpdateMutation();
+  const [editIncome] = useIncomesUpdateMutation();
+  const dispatch = useDispatch();
 
-  const handleSubmit = async (newIncomeData: UpdateIncomeDto) => {
+  const handleSubmit = async (updateIncomeDto: UpdateIncomeDto) => {
     if (!id) {
       console.error('Failed to edit income: no id');
       return;
     }
     try {
       await editIncome({
-        updateIncomeDto: newIncomeData,
+        updateIncomeDto,
         id,
       }).unwrap();
 
-      push('/statistics/incomes');
+      push(`/statistics/incomes/${income?._id}`);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (error.status === 400 || error.status === 404) {
-        setErrors(parseErrorMessagesToArray(error?.data?.message));
+        dispatch(
+          addToastMessage({
+            type: ToastMessageTypes.ERROR,
+            message: 'Submission failed',
+            additionalInformation: parseErrorMessagesToArray(
+              error?.data?.message
+            ),
+          })
+        );
         return;
       }
 
@@ -55,19 +67,30 @@ export const IncomeEditContainer = ({ id }: IncomeEditContainerProps) => {
       return;
     }
     await deleteIncome({ id }).unwrap();
-    push('/statistics/incomes');
+    push('/statistics');
   }, [deleteIncome, id, push]);
+
+  const initialValues = useMemo(() => {
+    if (!income) return undefined;
+    return {
+      ...income,
+      date: inputDateFormat(new Date(income.date)),
+    };
+  }, [income]);
 
   return (
     <>
       <DataHandler {...incomeData} />
+      <UpdatePageInfo
+        title={`Edit ${income?.description}`}
+        backLink={`/statistics/incomes/${income?._id}`}
+        headerAction={<TransactionDelete onDelete={handleDelete} />}
+      />
       {income && (
-        <IncomeEdit
-          isLoading={isSaving}
-          income={income}
-          errors={errors}
-          onSave={handleSubmit}
-          onDelete={handleDelete}
+        <TransactionForm
+          initialValues={initialValues}
+          onSubmit={handleSubmit}
+          hasToAccountField
         />
       )}
     </>
