@@ -24,9 +24,7 @@ export const ExpenseContainer = ({ id }: ExpenseContainerProps) => {
     <>
       <DataHandler {...expenseData} />
       {expense && (
-        <>
-          <Transaction transaction={expense} fromAccount={account?.name} />
-        </>
+        <Transaction transaction={expense} fromAccount={account?.name} />
       )}
     </>
   );

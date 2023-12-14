@@ -1,4 +1,4 @@
-import { EditTransferContainer } from '$container/transfers/transfer.edit.container';
+import { TransferEditContainer } from '$container/transfers/transfer.edit.container';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 
 const EditTransferPage = () => {
@@ -6,7 +6,7 @@ const EditTransferPage = () => {
     query: { transferId },
   } = useViewTransitionRouter();
 
-  return <EditTransferContainer id={transferId as string} />;
+  return <TransferEditContainer id={transferId as string} />;
 };
 
 export default EditTransferPage;

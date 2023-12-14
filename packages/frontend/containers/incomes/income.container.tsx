@@ -23,11 +23,7 @@ export const IncomeContainer = ({ id }: IncomeContainerProps) => {
   return (
     <>
       <DataHandler {...incomeData} />
-      {income && (
-        <>
-          <Transaction transaction={income} toAccount={account?.name} />
-        </>
-      )}
+      {income && <Transaction transaction={income} toAccount={account?.name} />}
     </>
   );
 };
