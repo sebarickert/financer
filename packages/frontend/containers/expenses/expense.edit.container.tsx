@@ -1,4 +1,5 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
 
 import {
   UpdateExpenseDto,
@@ -7,9 +8,14 @@ import {
   useExpensesUpdateMutation,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
+import { ToastMessageTypes } from '$blocks/toast/toast';
+import { TransactionDelete } from '$blocks/transaction-delete/transaction-delete';
+import { TransactionForm } from '$blocks/transaction-form/transaction-form';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { ExpenseEdit } from '$pages/expenses/expense.edit';
+import { addToastMessage } from '$reducer/notifications.reducer';
+import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
+import { inputDateFormat } from '$utils/formatDate';
 
 interface EditExpenseContainerProps {
   id: string;
@@ -17,29 +23,36 @@ interface EditExpenseContainerProps {
 
 export const EditExpenseContainer = ({ id }: EditExpenseContainerProps) => {
   const { push } = useViewTransitionRouter();
-  const [errors, setErrors] = useState<string[]>([]);
-
   const expenseData = useExpensesFindOneQuery({ id });
   const { data: expense } = expenseData;
-  const [editExpense, { isLoading: isSaving }] = useExpensesUpdateMutation();
+  const [editExpense] = useExpensesUpdateMutation();
   const [deleteExpense] = useExpensesRemoveMutation();
+  const dispatch = useDispatch();
 
-  const handleSubmit = async (newExpenseData: UpdateExpenseDto) => {
+  const handleSubmit = async (updateExpenseDto: UpdateExpenseDto) => {
     if (!id) {
       console.error('Failed to edit expense: no id');
       return;
     }
     try {
       await editExpense({
-        updateExpenseDto: newExpenseData,
+        updateExpenseDto,
         id,
       }).unwrap();
 
-      push('/statistics/expenses');
+      push(`/statistics/expenses/${expense?._id}`);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (error.status === 400 || error.status === 404) {
-        setErrors(parseErrorMessagesToArray(error?.data?.message));
+        dispatch(
+          addToastMessage({
+            type: ToastMessageTypes.ERROR,
+            message: 'Submission failed',
+            additionalInformation: parseErrorMessagesToArray(
+              error?.data?.message
+            ),
+          })
+        );
         return;
       }
 
@@ -54,19 +67,31 @@ export const EditExpenseContainer = ({ id }: EditExpenseContainerProps) => {
       return;
     }
     await deleteExpense({ id }).unwrap();
-    push('/statistics/expenses');
+    push('/statistics');
   }, [deleteExpense, id, push]);
+
+  const initialValues = useMemo(() => {
+    if (!expense) return undefined;
+
+    return {
+      ...expense,
+      date: inputDateFormat(new Date(expense.date)),
+    };
+  }, [expense]);
 
   return (
     <>
       <DataHandler {...expenseData} />
+      <UpdatePageInfo
+        title={`Edit ${expense?.description}`}
+        backLink={`/statistics/expenses/${expense?._id}`}
+        headerAction={<TransactionDelete onDelete={handleDelete} />}
+      />
       {expense && (
-        <ExpenseEdit
-          isLoading={isSaving}
-          expense={expense}
-          errors={errors}
-          onSave={handleSubmit}
-          onDelete={handleDelete}
+        <TransactionForm
+          initialValues={initialValues}
+          onSubmit={handleSubmit}
+          hasFromAccountField
         />
       )}
     </>

@@ -1,14 +1,20 @@
-import { useState } from 'react';
+import { useMemo } from 'react';
+import { useDispatch } from 'react-redux';
 
 import {
   CreateExpenseDto,
+  TransactionTypeEnum,
   useExpensesCreateMutation,
   useTransactionTemplatesFindOneQuery,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
+import { ToastMessageTypes } from '$blocks/toast/toast';
+import { TransactionForm } from '$blocks/transaction-form/transaction-form';
+import { TransactionTemplateSwitcher } from '$blocks/transaction-template-switcher/transaction-template-switcher';
 import { useUserDefaultExpenseAccount } from '$hooks/settings/user-preference/useUserDefaultExpenseAccount';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { ExpenseAdd } from '$pages/expenses/expense.add';
+import { addToastMessage } from '$reducer/notifications.reducer';
+import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 interface ExpenseAddContainerProps {
@@ -19,10 +25,11 @@ export const ExpenseAddContainer = ({
   templateId,
 }: ExpenseAddContainerProps) => {
   const { push } = useViewTransitionRouter();
-  const [errors, setErrors] = useState<string[]>([]);
-  const [addExpense, { isLoading: isCreating }] = useExpensesCreateMutation();
-  const { data: defaultExpenseAccount, isLoading: isLoadingDefaultAccount } =
-    useUserDefaultExpenseAccount({ skip: !!templateId });
+  const [addExpense] = useExpensesCreateMutation();
+  const { data: defaultExpenseAccount } = useUserDefaultExpenseAccount({
+    skip: !!templateId,
+  });
+  const dispatch = useDispatch();
 
   const templateData = useTransactionTemplatesFindOneQuery(
     { id: templateId as string },
@@ -31,17 +38,25 @@ export const ExpenseAddContainer = ({
 
   const { currentData: transactionTemplate } = templateData;
 
-  const handleSubmit = async (newExpenseData: CreateExpenseDto) => {
+  const handleSubmit = async (createExpenseDto: CreateExpenseDto) => {
     try {
       const { _id: id } = await addExpense({
-        createExpenseDto: newExpenseData,
+        createExpenseDto,
       }).unwrap();
 
       push(`/statistics/expenses/${id}`);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (error.status === 400 || error.status === 404) {
-        setErrors(parseErrorMessagesToArray(error?.data?.message));
+        dispatch(
+          addToastMessage({
+            type: ToastMessageTypes.ERROR,
+            message: 'Submission failed',
+            additionalInformation: parseErrorMessagesToArray(
+              error?.data?.message
+            ),
+          })
+        );
         return;
       }
 
@@ -50,19 +65,38 @@ export const ExpenseAddContainer = ({
     }
   };
 
-  const isLoading = isLoadingDefaultAccount;
+  const initialValues = useMemo(() => {
+    if (!transactionTemplate) {
+      return { fromAccount: defaultExpenseAccount };
+    }
+    const categories = transactionTemplate?.categories?.map((categoryId) => ({
+      category_id: categoryId,
+      amount: NaN,
+    }));
+
+    return {
+      ...transactionTemplate,
+      categories,
+    };
+  }, [defaultExpenseAccount, transactionTemplate]);
 
   return (
     <>
       <DataHandler skipNotFound {...templateData} />
+      <UpdatePageInfo
+        title="Add Expense"
+        headerAction={
+          <TransactionTemplateSwitcher
+            selectedTemplate={templateId}
+            templateType={TransactionTypeEnum.Income}
+          />
+        }
+      />
       {(!templateId || transactionTemplate) && (
-        <ExpenseAdd
-          defaultExpenseAccount={defaultExpenseAccount}
-          template={transactionTemplate}
-          isLoading={isLoading}
-          isCreating={isCreating}
-          errors={errors}
+        <TransactionForm
+          initialValues={initialValues}
           onSubmit={handleSubmit}
+          hasFromAccountField
         />
       )}
     </>
