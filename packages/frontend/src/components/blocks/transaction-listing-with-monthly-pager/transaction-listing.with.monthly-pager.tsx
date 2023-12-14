@@ -1,45 +1,59 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 
 import { Pager } from '../pager/pager';
 
+import { TransactionListingWithMonthlyPagerSummary } from './transaction-listing.with.monthly-pager.summary';
+
 import {
-  useExpensesFindAllByUserQuery,
-  useIncomesFindAllByUserQuery,
+  TransactionsFindAllByUserApiArg,
   useTransactionsFindAllByUserQuery,
-  useTransfersFindAllByUserQuery,
 } from '$api/generated/financerApi';
-import { LatestTransactions } from '$blocks/latest-transactions/latest-transactions';
-import { initialMonthFilterOptions } from '$blocks/monthly-transaction-list/monthly-transaction-list';
+import {
+  LatestTransactions,
+  LatestTransactionsProps,
+} from '$blocks/latest-transactions/latest-transactions';
 import { monthNames } from '$constants/months';
 import { LoaderSuspense } from '$elements/loader/loader-suspense';
 import { useFirstTransaction } from '$hooks/transaction/useFirstTransaction';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { parseYearMonthFromString } from '$utils/formatDate';
 
+export const initialMonthFilterOptions = {
+  year: new Date().getFullYear(),
+  month: new Date().getMonth() + 1,
+} satisfies TransactionsFindAllByUserApiArg;
+
 interface TransactionListingWithMonthlyPagerProps {
+  className?: string;
   initialDate?: string;
   initialPage?: number;
-  useDataHook?:
-    | typeof useTransactionsFindAllByUserQuery
-    | typeof useIncomesFindAllByUserQuery
-    | typeof useExpensesFindAllByUserQuery
-    | typeof useTransfersFindAllByUserQuery;
+  isSummaryVisible?: boolean;
+  additionalFilterOptions?: any;
+  useDataHook?: LatestTransactionsProps['useDataHook'];
 }
 
 export const TransactionListingWithMonthlyPager = ({
+  className = '',
   initialDate,
   initialPage = 1,
+  isSummaryVisible,
+  additionalFilterOptions,
   useDataHook = useTransactionsFindAllByUserQuery,
 }: TransactionListingWithMonthlyPagerProps): JSX.Element | null => {
   const { push } = useViewTransitionRouter();
 
   const [selectedPage, setSelectedPage] = useState(initialPage);
 
+  const baseFilterOptions = {
+    ...initialMonthFilterOptions,
+    ...additionalFilterOptions,
+  };
+
   const [filterOptions, setFilterOptions] = useState(
     !parseYearMonthFromString(initialDate)
-      ? initialMonthFilterOptions
+      ? baseFilterOptions
       : {
-          ...initialMonthFilterOptions,
+          ...baseFilterOptions,
           ...parseYearMonthFromString(initialDate),
           page: selectedPage,
         }
@@ -65,8 +79,6 @@ export const TransactionListingWithMonthlyPager = ({
     setInitialPage(1);
   }, [filterOptions.year, filterOptions.month, push, selectedPage]);
 
-  const firstAvailableTransaction = new Date(transaction?.date || new Date());
-
   const handleMonthOptionChange = useCallback(
     (direction: 'next' | 'previous') => {
       const { month, year } = filterOptions;
@@ -77,40 +89,56 @@ export const TransactionListingWithMonthlyPager = ({
         selectedMonth.getMonth() + (direction === 'next' ? 1 : -1)
       );
 
-      setFilterOptions({
+      setFilterOptions((prev: any) => ({
+        ...prev,
         month: selectedMonth.getMonth() + 1,
         year: selectedMonth.getFullYear(),
-      });
+      }));
     },
     [filterOptions]
   );
 
+  const pagerOptions = useMemo(() => {
+    const firstAvailableTransaction = new Date(transaction?.date || new Date());
+
+    return {
+      nextPage: {
+        isAvailable: !(
+          filterOptions.month === initialMonthFilterOptions.month &&
+          filterOptions.year === initialMonthFilterOptions.year
+        ),
+        load: () => handleMonthOptionChange('next'),
+      },
+      previousPage: {
+        isAvailable: !(
+          filterOptions.month === firstAvailableTransaction.getMonth() + 1 &&
+          filterOptions.year === firstAvailableTransaction.getFullYear()
+        ),
+        load: () => handleMonthOptionChange('previous'),
+      },
+    };
+  }, [
+    filterOptions.month,
+    filterOptions.year,
+    handleMonthOptionChange,
+    transaction?.date,
+  ]);
+
   const pageVisibleYear = filterOptions.year;
   const pageVisibleMonth = monthNames[filterOptions.month - 1];
+  const pagerLabel = `${pageVisibleMonth} ${pageVisibleYear}`;
 
   return (
-    <>
-      <Pager
-        className="mb-4"
-        pagerOptions={{
-          nextPage: {
-            isAvailable: !(
-              filterOptions.month === initialMonthFilterOptions.month &&
-              filterOptions.year === initialMonthFilterOptions.year
-            ),
-            load: () => handleMonthOptionChange('next'),
-          },
-          previousPage: {
-            isAvailable: !(
-              filterOptions.month ===
-                firstAvailableTransaction.getMonth() + 1 &&
-              filterOptions.year === firstAvailableTransaction.getFullYear()
-            ),
-            load: () => handleMonthOptionChange('previous'),
-          },
-        }}
-      >{`${pageVisibleMonth} ${pageVisibleYear}`}</Pager>
+    <section className={className}>
+      <Pager className="mb-4" pagerOptions={pagerOptions}>
+        {pagerLabel}
+      </Pager>
       <LoaderSuspense>
+        {isSummaryVisible && (
+          <TransactionListingWithMonthlyPagerSummary
+            filterOptions={filterOptions}
+          />
+        )}
         <LatestTransactions
           filterOptions={filterOptions}
           className="mt-4"
@@ -119,6 +147,6 @@ export const TransactionListingWithMonthlyPager = ({
           initialPage={initialPageToLoad}
         />
       </LoaderSuspense>
-    </>
+    </section>
   );
 };

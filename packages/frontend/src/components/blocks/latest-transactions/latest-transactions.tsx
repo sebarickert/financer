@@ -3,9 +3,9 @@ import { useEffect, useMemo } from 'react';
 import {
   TransactionCategoryMappingDto,
   TransactionDto,
-  TransactionsFindAllByUserApiArg,
   useExpensesFindAllByUserQuery,
   useIncomesFindAllByUserQuery,
+  useTransactionsFindAllByAccountQuery,
   useTransactionsFindAllByUserQuery,
   useTransfersFindAllByUserQuery,
 } from '$api/generated/financerApi';
@@ -20,15 +20,21 @@ import { usePager } from '$hooks/usePager';
 import { formatCurrency } from '$utils/formatCurrency';
 import { formatDate } from '$utils/formatDate';
 
-type LatestTransactionsProps = {
+export type LatestTransactionsProps = {
   isPagerHidden?: boolean;
-  filterOptions?: TransactionsFindAllByUserApiArg;
+  // filterOptions?:
+  //   | TransactionsFindAllByUserApiArg
+  //   | TransactionsFindAllByAccountApiArg;
+  // @todo: fix above typing for filterOptions...
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  filterOptions?: any;
   className?: string;
   useDataHook?:
     | typeof useTransactionsFindAllByUserQuery
     | typeof useIncomesFindAllByUserQuery
     | typeof useExpensesFindAllByUserQuery
-    | typeof useTransfersFindAllByUserQuery;
+    | typeof useTransfersFindAllByUserQuery
+    | typeof useTransactionsFindAllByAccountQuery;
   onPageChange?: (page: number) => void;
   initialPage?: number;
 };

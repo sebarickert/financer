@@ -7,18 +7,13 @@ import {
   TransactionsFindMonthlySummariesByUserApiResponse,
 } from '$api/generated/financerApi';
 import { DetailsList } from '$blocks/details-list/details-list';
-import {
-  initialMonthFilterOptions,
-  MonthlyTransactionList,
-} from '$blocks/monthly-transaction-list/monthly-transaction-list';
-import { Pager } from '$blocks/pager/pager';
+import { TransactionListingWithMonthlyPager } from '$blocks/transaction-listing-with-monthly-pager/transaction-listing.with.monthly-pager';
 import { colorPalette } from '$constants/colorPalette';
-import { monthNames, MONTH_IN_MS } from '$constants/months';
+import { MONTH_IN_MS } from '$constants/months';
 import { settingsPaths } from '$constants/settings-paths';
 import { ButtonInternal } from '$elements/button/button.internal';
 import { ChartWrapperDynamic } from '$elements/chart/chart-wrapper.dynamic';
 import { Icon, IconName } from '$elements/icon/icon';
-import { LoaderSuspense } from '$elements/loader/loader-suspense';
 import { Container } from '$layouts/container/container';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { capitalize } from '$utils/capitalize';
@@ -36,21 +31,17 @@ interface ChartData {
 }
 
 interface CategoryProps {
-  filterOptions: typeof initialMonthFilterOptions;
-  firstAvailableTransaction: Date;
   transactionsMonthlySummaries?: TransactionsFindMonthlySummariesByUserApiResponse;
   category: TransactionCategoryDto;
   categories: TransactionCategoryDto[];
-  onMonthOptionChange: (direction: 'next' | 'previous') => void;
+  parentTransactionCategoryId: string;
 }
 
 export const Category = ({
-  filterOptions,
-  firstAvailableTransaction,
   transactionsMonthlySummaries,
   category,
   categories,
-  onMonthOptionChange,
+  parentTransactionCategoryId,
 }: CategoryProps): JSX.Element => {
   const monthAgoDate = new Date().getTime() - MONTH_IN_MS;
 
@@ -236,43 +227,47 @@ export const Category = ({
     ],
   };
 
-  const pageVisibleYear = filterOptions.year;
-  const pageVisibleMonth = monthNames[(filterOptions?.month ?? 1) - 1];
+  const categoryDetails = useMemo(() => {
+    const categoryVisibilityCapitalized = category.visibility.map((item) =>
+      capitalize(item)
+    );
 
-  const formatter = new Intl.ListFormat('en', {
-    style: 'long',
-    type: 'conjunction',
-  });
+    const formatter = new Intl.ListFormat('en', {
+      style: 'long',
+      type: 'conjunction',
+    });
 
-  const categoryVisibilityCapitalized = category.visibility.map((item) =>
-    capitalize(item)
-  );
-
-  const categoryDetails = [
-    {
-      icon: IconName.tag,
-      label: 'Name',
-      description: category.name,
-    },
-    ...(category.parent_category_id
-      ? [
-          {
-            icon: IconName.viewGrid,
-            label: 'Parent Category',
-            description:
-              parseParentCategoryPath(
-                categories,
-                category.parent_category_id
-              ) ?? '-',
-          },
-        ]
-      : []),
-    {
-      icon: IconName.informationCircle,
-      label: 'Type',
-      description: formatter.format(categoryVisibilityCapitalized),
-    },
-  ];
+    return [
+      {
+        icon: IconName.tag,
+        label: 'Name',
+        description: category.name,
+      },
+      ...(category.parent_category_id
+        ? [
+            {
+              icon: IconName.viewGrid,
+              label: 'Parent Category',
+              description:
+                parseParentCategoryPath(
+                  categories,
+                  category.parent_category_id
+                ) ?? '-',
+            },
+          ]
+        : []),
+      {
+        icon: IconName.informationCircle,
+        label: 'Type',
+        description: formatter.format(categoryVisibilityCapitalized),
+      },
+    ];
+  }, [
+    categories,
+    category.name,
+    category.parent_category_id,
+    category.visibility,
+  ]);
 
   return (
     <Container>
@@ -299,29 +294,12 @@ export const Category = ({
             </ChartWrapperDynamic>
           </div>
         )}
-        <Pager
-          className="mt-6 mb-2"
-          pagerOptions={{
-            nextPage: {
-              isAvailable: !(
-                filterOptions.month === initialMonthFilterOptions.month &&
-                filterOptions.year === initialMonthFilterOptions.year
-              ),
-              load: () => onMonthOptionChange('next'),
-            },
-            previousPage: {
-              isAvailable: !(
-                filterOptions.month ===
-                  firstAvailableTransaction.getMonth() + 1 &&
-                filterOptions.year === firstAvailableTransaction.getFullYear()
-              ),
-              load: () => onMonthOptionChange('previous'),
-            },
+        <TransactionListingWithMonthlyPager
+          className="mt-6"
+          additionalFilterOptions={{
+            parentTransactionCategory: parentTransactionCategoryId,
           }}
-        >{`${pageVisibleMonth} ${pageVisibleYear}`}</Pager>
-        <LoaderSuspense>
-          <MonthlyTransactionList monthFilterOptions={filterOptions} />
-        </LoaderSuspense>
+        />
       </section>
     </Container>
   );
