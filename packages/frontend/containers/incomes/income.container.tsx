@@ -1,12 +1,9 @@
-import { useCallback } from 'react';
-
 import {
   useIncomesFindOneQuery,
   useAccountsFindOneByIdQuery,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
-import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
-import { Income } from '$pages/incomes/income';
+import { Transaction } from '$renderers/transaction/transaction';
 
 interface IncomeContainerProps {
   id: string;
@@ -20,27 +17,16 @@ export const IncomeContainer = ({ id }: IncomeContainerProps) => {
     { id: income?.toAccount as string },
     { skip: !income?.toAccount }
   );
+
   const account = accountData.data;
-
-  const { data: transactionCategories } =
-    useAllTransactionCategoriesWithCategoryTree();
-
-  const getCategoryNameById = useCallback(
-    (categoryId: string) =>
-      transactionCategories?.find((category) => category._id === categoryId)
-        ?.categoryTree || categoryId,
-    [transactionCategories]
-  );
 
   return (
     <>
       <DataHandler {...incomeData} />
       {income && (
-        <Income
-          income={income}
-          accountName={account?.name}
-          getCategoryNameById={getCategoryNameById}
-        />
+        <>
+          <Transaction transaction={income} toAccount={account?.name} />
+        </>
       )}
     </>
   );
