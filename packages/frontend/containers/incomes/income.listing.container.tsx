@@ -1,10 +1,8 @@
-import { useCallback, useEffect, useState } from 'react';
-
-import { initialMonthFilterOptions } from '$blocks/monthly-transaction-list/monthly-transaction-list';
-import { useFirstTransaction } from '$hooks/transaction/useFirstTransaction';
-import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { IncomeListing } from '$pages/incomes/income.listing';
-import { parseYearMonthFromString } from '$utils/formatDate';
+import { useIncomesFindAllByUserQuery } from '$api/generated/financerApi';
+import { TransactionListingWithMonthlyPager } from '$blocks/transaction-listing-with-monthly-pager/transaction-listing.with.monthly-pager';
+import { ButtonInternal } from '$elements/button/button.internal';
+import { Icon, IconName } from '$elements/icon/icon';
+import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
 interface IncomeListingContainerProps {
   date?: string;
@@ -12,70 +10,30 @@ interface IncomeListingContainerProps {
 }
 
 export const IncomeListingContainer = ({
-  date: initialDate,
-  page: initialPage = 1,
+  date,
+  page,
 }: IncomeListingContainerProps) => {
-  const { push } = useViewTransitionRouter();
-
-  const [selectedPage, setSelectedPage] = useState(initialPage);
-
-  const [monthFilterOptions, setMonthFilterOptions] = useState(
-    !parseYearMonthFromString(initialDate)
-      ? initialMonthFilterOptions
-      : {
-          ...initialMonthFilterOptions,
-          ...parseYearMonthFromString(initialDate),
-          page: selectedPage,
-        }
-  );
-  const { data: transaction } = useFirstTransaction();
-
-  const [initialPageToLoad, setInitialPage] = useState(selectedPage);
-
-  useEffect(() => {
-    const year = monthFilterOptions.year;
-    const month = monthFilterOptions.month.toString().padStart(2, '0');
-
-    const params = new URLSearchParams(window.location.search);
-    params.set('date', `${year}-${month}`);
-    params.set('page', selectedPage.toString());
-
-    window.history.replaceState(
-      {},
-      '',
-      `${window.location.pathname}?${params}`
-    );
-
-    setInitialPage(1);
-  }, [monthFilterOptions.year, monthFilterOptions.month, push, selectedPage]);
-
-  const firstAvailableTransaction = new Date(transaction?.date || new Date());
-
-  const handleMonthOptionChange = useCallback(
-    (direction: 'next' | 'previous') => {
-      const { month, year } = monthFilterOptions;
-      const monthWithTwoDigits = month.toString().padStart(2, '0');
-      const selectedMonth = new Date(`${year}-${monthWithTwoDigits}-01`);
-
-      selectedMonth.setMonth(
-        selectedMonth.getMonth() + (direction === 'next' ? 1 : -1)
-      );
-
-      setMonthFilterOptions({
-        month: selectedMonth.getMonth() + 1,
-        year: selectedMonth.getFullYear(),
-      });
-    },
-    [monthFilterOptions]
-  );
-
   return (
-    <IncomeListing
-      firstAvailableTransaction={firstAvailableTransaction}
-      initialPageToLoad={initialPageToLoad}
-      filterOptions={monthFilterOptions}
-      onMonthOptionChange={handleMonthOptionChange}
-      onPageChange={setSelectedPage}
-    />
+    <>
+      <UpdatePageInfo
+        title="Incomes"
+        backLink="/statistics"
+        headerAction={
+          <ButtonInternal
+            link="/statistics/incomes/add"
+            className="inline-flex items-center justify-center -mr-3 h-11 w-11"
+            testId="add-income"
+          >
+            <span className="sr-only">Add income</span>
+            <Icon type={IconName.plus} />
+          </ButtonInternal>
+        }
+      />
+      <TransactionListingWithMonthlyPager
+        initialDate={date}
+        initialPage={page}
+        useDataHook={useIncomesFindAllByUserQuery}
+      />
+    </>
   );
 };
