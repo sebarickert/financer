@@ -1,12 +1,9 @@
-import { useCallback } from 'react';
-
 import {
   useTransfersFindOneQuery,
   useAccountsFindOneByIdQuery,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
-import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
-import { Transfer } from '$pages/transfers/transfer';
+import { Transaction } from '$renderers/transaction/transaction';
 
 interface TransferContainerProps {
   id: string;
@@ -27,25 +24,14 @@ export const TransferContainer = ({ id }: TransferContainerProps) => {
   const fromAccount = toAccountData.data;
   const toAccount = fromAccountData.data;
 
-  const { data: transactionCategories } =
-    useAllTransactionCategoriesWithCategoryTree();
-
-  const getCategoryNameById = useCallback(
-    (categoryId: string) =>
-      transactionCategories?.find((category) => category._id === categoryId)
-        ?.categoryTree || categoryId,
-    [transactionCategories]
-  );
-
   return (
     <>
       <DataHandler {...transferData} />
       {transfer && (
-        <Transfer
-          transfer={transfer}
-          fromAccountName={fromAccount?.name}
-          toAccountName={toAccount?.name}
-          getCategoryNameById={getCategoryNameById}
+        <Transaction
+          transaction={transfer}
+          fromAccount={fromAccount?.name}
+          toAccount={toAccount?.name}
         />
       )}
     </>

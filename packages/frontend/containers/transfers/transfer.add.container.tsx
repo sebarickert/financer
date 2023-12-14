@@ -1,15 +1,21 @@
-import { useState } from 'react';
+import { useMemo } from 'react';
+import { useDispatch } from 'react-redux';
 
 import {
   CreateTransferDto,
   useTransfersCreateMutation,
   useTransactionTemplatesFindOneQuery,
+  TransactionTypeEnum,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
+import { ToastMessageTypes } from '$blocks/toast/toast';
+import { TransactionForm } from '$blocks/transaction-form/transaction-form';
+import { TransactionTemplateSwitcher } from '$blocks/transaction-template-switcher/transaction-template-switcher';
 import { useUserDefaultTransferSourceAccount } from '$hooks/settings/user-preference/useUserDefaultTransferSourceAccount';
 import { useUserDefaultTransferTargetAccount } from '$hooks/settings/user-preference/useUserDefaultTransferTargetAccount';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { TransferAdd } from '$pages/transfers/transfer.add';
+import { addToastMessage } from '$reducer/notifications.reducer';
+import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 interface TransferAddContainerProps {
@@ -20,16 +26,13 @@ export const TransferAddContainer = ({
   templateId,
 }: TransferAddContainerProps) => {
   const { push } = useViewTransitionRouter();
-  const [errors, setErrors] = useState<string[]>([]);
-  const [addTransfer, { isLoading: isCreating }] = useTransfersCreateMutation();
-  const {
-    data: defaultTransferSourceAccount,
-    isLoading: isLoadingDefaultSourceAccount,
-  } = useUserDefaultTransferSourceAccount({ skip: !!templateId });
-  const {
-    data: defaultTransferTargetAccount,
-    isLoading: isLoadingDefaultTargetAccount,
-  } = useUserDefaultTransferTargetAccount({ skip: !!templateId });
+  const [addTransfer] = useTransfersCreateMutation();
+  const { data: defaultTransferSourceAccount } =
+    useUserDefaultTransferSourceAccount({ skip: !!templateId });
+  const { data: defaultTransferTargetAccount } =
+    useUserDefaultTransferTargetAccount({ skip: !!templateId });
+
+  const dispatch = useDispatch();
 
   const templateData = useTransactionTemplatesFindOneQuery(
     { id: templateId as string },
@@ -38,17 +41,25 @@ export const TransferAddContainer = ({
 
   const { data: transactionTemplate } = templateData;
 
-  const handleSubmit = async (newTransferData: CreateTransferDto) => {
+  const handleSubmit = async (createTransferDto: CreateTransferDto) => {
     try {
       const { _id: id } = await addTransfer({
-        createTransferDto: newTransferData,
+        createTransferDto,
       }).unwrap();
 
       push(`/statistics/transfers/${id}`);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (error.status === 400 || error.status === 404) {
-        setErrors(parseErrorMessagesToArray(error?.data?.message));
+        dispatch(
+          addToastMessage({
+            type: ToastMessageTypes.ERROR,
+            message: 'Submission failed',
+            additionalInformation: parseErrorMessagesToArray(
+              error?.data?.message
+            ),
+          })
+        );
         return;
       }
 
@@ -57,21 +68,46 @@ export const TransferAddContainer = ({
     }
   };
 
-  const isLoading =
-    isLoadingDefaultSourceAccount || isLoadingDefaultTargetAccount;
+  const initialValues = useMemo(() => {
+    if (!transactionTemplate) {
+      return {
+        fromAccount: defaultTransferSourceAccount,
+        toAccount: defaultTransferTargetAccount,
+      };
+    }
+    const categories = transactionTemplate?.categories?.map((categoryId) => ({
+      category_id: categoryId,
+      amount: NaN,
+    }));
+
+    return {
+      ...transactionTemplate,
+      categories,
+    };
+  }, [
+    defaultTransferSourceAccount,
+    defaultTransferTargetAccount,
+    transactionTemplate,
+  ]);
 
   return (
     <>
       <DataHandler skipNotFound {...templateData} />
+      <UpdatePageInfo
+        title="Add Transfer"
+        headerAction={
+          <TransactionTemplateSwitcher
+            selectedTemplate={templateId}
+            templateType={TransactionTypeEnum.Transfer}
+          />
+        }
+      />
       {(!templateId || transactionTemplate) && (
-        <TransferAdd
-          defaultTransferSourceAccount={defaultTransferSourceAccount}
-          defaultTransferTargetAccount={defaultTransferTargetAccount}
-          template={transactionTemplate}
-          isLoading={isLoading}
-          isCreating={isCreating}
-          errors={errors}
+        <TransactionForm
+          initialValues={initialValues}
           onSubmit={handleSubmit}
+          hasToAccountField
+          hasFromAccountField
         />
       )}
     </>

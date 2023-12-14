@@ -1,4 +1,5 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
 
 import {
   UpdateTransferDto,
@@ -7,39 +8,52 @@ import {
   useTransfersUpdateMutation,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
+import { ToastMessageTypes } from '$blocks/toast/toast';
+import { TransactionDelete } from '$blocks/transaction-delete/transaction-delete';
+import { TransactionForm } from '$blocks/transaction-form/transaction-form';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { TransferEdit } from '$pages/transfers/transfer.edit';
+import { addToastMessage } from '$reducer/notifications.reducer';
+import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
+import { inputDateFormat } from '$utils/formatDate';
 
-interface EditTransferContainerProps {
+interface TransferEditContainerProps {
   id: string;
 }
 
-export const EditTransferContainer = ({ id }: EditTransferContainerProps) => {
+export const TransferEditContainer = ({ id }: TransferEditContainerProps) => {
   const { push } = useViewTransitionRouter();
-  const [errors, setErrors] = useState<string[]>([]);
 
   const transferData = useTransfersFindOneQuery({ id });
   const { data: transfer } = transferData;
-  const [editTransfer, { isLoading: isSaving }] = useTransfersUpdateMutation();
+  const [editTransfer] = useTransfersUpdateMutation();
   const [deleteTransfer] = useTransfersRemoveMutation();
+  const dispatch = useDispatch();
 
-  const handleSubmit = async (newTransferData: UpdateTransferDto) => {
+  const handleSubmit = async (updateTransferDto: UpdateTransferDto) => {
     if (!id) {
       console.error('Failed to edit transfer: no id');
       return;
     }
     try {
       await editTransfer({
-        updateTransferDto: newTransferData,
+        updateTransferDto,
         id,
       }).unwrap();
 
-      push('/statistics/transfers');
+      push(`/statistics/transfers/${transfer?._id}`);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (error.status === 400 || error.status === 404) {
-        setErrors(parseErrorMessagesToArray(error?.data?.message));
+        dispatch(
+          addToastMessage({
+            type: ToastMessageTypes.ERROR,
+            message: 'Submission failed',
+            additionalInformation: parseErrorMessagesToArray(
+              error?.data?.message
+            ),
+          })
+        );
         return;
       }
 
@@ -57,16 +71,28 @@ export const EditTransferContainer = ({ id }: EditTransferContainerProps) => {
     push('/statistics/transfers');
   }, [deleteTransfer, id, push]);
 
+  const initialValues = useMemo(() => {
+    if (!transfer) return undefined;
+    return {
+      ...transfer,
+      date: inputDateFormat(new Date(transfer.date)),
+    };
+  }, [transfer]);
+
   return (
     <>
       <DataHandler {...transferData} />
+      <UpdatePageInfo
+        title={`Edit ${transfer?.description}`}
+        backLink={`/statistics/transfer/${transfer?._id}`}
+        headerAction={<TransactionDelete onDelete={handleDelete} />}
+      />
       {transfer && (
-        <TransferEdit
-          isLoading={isSaving}
-          transfer={transfer}
-          errors={errors}
-          onSave={handleSubmit}
-          onDelete={handleDelete}
+        <TransactionForm
+          initialValues={initialValues}
+          onSubmit={handleSubmit}
+          hasToAccountField
+          hasFromAccountField
         />
       )}
     </>
