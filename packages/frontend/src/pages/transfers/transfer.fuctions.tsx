@@ -1,9 +1,9 @@
 import { TransferDto } from '@local/types';
 
 import {
-  TransactionStackedListRowProps,
+  TransactionListingItemProps,
   TransactionType,
-} from '../../components/elements/transaction-stacked-list/transaction-stacked-list.row';
+} from '../../components/blocks/transaction-listing/transaction-listing.item';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDate } from '../../utils/formatDate';
 
@@ -15,13 +15,13 @@ export interface TransfersPerMonth {
   month: number;
   total: number;
   year: number;
-  rows: TransactionStackedListRowProps[];
+  rows: TransactionListingItemProps[];
 }
 
 export const convertTransferToTransactionStackedListRow = (
   transfer: TransferDto,
   getCategoryName: (id: string) => string | undefined
-): TransactionStackedListRowProps => ({
+): TransactionListingItemProps => ({
   transactionCategories: transfer.categories
     .map(({ category_id }) => getCategoryName(category_id))
     .join(', '),
@@ -49,7 +49,7 @@ export const groupTransfersByMonth = (
 
   const { categoryMappings } = rest;
 
-  const transfer: TransactionStackedListRowProps = {
+  const transfer: TransactionListingItemProps = {
     transactionCategories: categoryMappings?.join(', '),
     transactionAmount: formatCurrency(amount),
     date: formatDate(date),

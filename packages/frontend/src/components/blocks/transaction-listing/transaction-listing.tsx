@@ -1,27 +1,26 @@
 import { PagerOptions } from '../../../hooks/usePager';
-import { Pager } from '../../blocks/pager/pager';
+import { Pager } from '../pager/pager';
 
 import {
-  TransactionStackedListRow,
-  TransactionStackedListRowProps,
-} from './transaction-stacked-list.row';
-import { TransactionStackedListRows } from './transaction-stacked-list.rows';
+  TransactionListingItem,
+  TransactionListingItemProps,
+} from './transaction-listing.item';
 
-interface TransactionStackedListProps {
+interface TransactionListingProps {
   title?: string;
-  rows: TransactionStackedListRowProps[];
+  rows: TransactionListingItemProps[];
   pagerOptions: PagerOptions;
   className?: string;
   isPagerHidden?: boolean;
 }
 
-export const TransactionStackedList = ({
+export const TransactionListing = ({
   title,
   rows,
   className = '',
   pagerOptions,
   isPagerHidden,
-}: TransactionStackedListProps): JSX.Element | null => {
+}: TransactionListingProps): JSX.Element | null => {
   if (!rows.length) {
     return (
       <section className={`${className}`}>
@@ -33,7 +32,7 @@ export const TransactionStackedList = ({
   return (
     <section className={`${className}`}>
       {title && <h2 className="sr-only">{title}</h2>}
-      <TransactionStackedListRows>
+      <ul className="-mx-4" data-testid="transaction-stacked-list-container">
         {rows.map(
           ({
             transactionCategories,
@@ -44,7 +43,7 @@ export const TransactionStackedList = ({
             transactionType,
             id,
           }) => (
-            <TransactionStackedListRow
+            <TransactionListingItem
               key={id}
               transactionAmount={transactionAmount}
               transactionCategories={transactionCategories}
@@ -56,7 +55,7 @@ export const TransactionStackedList = ({
             />
           )
         )}
-      </TransactionStackedListRows>
+      </ul>
       {pagerOptions.pageCount &&
         pagerOptions.pageCount > 1 &&
         !isPagerHidden && (

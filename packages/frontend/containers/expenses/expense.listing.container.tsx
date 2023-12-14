@@ -1,30 +1,30 @@
-import { useTransfersFindAllByUserQuery } from '$api/generated/financerApi';
+import { useExpensesFindAllByUserQuery } from '$api/generated/financerApi';
 import { TransactionListingWithMonthlyPager } from '$blocks/transaction-listing-with-monthly-pager/transaction-listing.with.monthly-pager';
 import { ButtonInternal } from '$elements/button/button.internal';
 import { Icon, IconName } from '$elements/icon/icon';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
-interface TransferListingContainerProps {
+interface ExpenseListingContainerProps {
   date?: string;
   page?: number;
 }
 
-export const TransferListingContainer = ({
+export const ExpenseListingContainer = ({
   date,
   page,
-}: TransferListingContainerProps) => {
+}: ExpenseListingContainerProps) => {
   return (
     <>
       <UpdatePageInfo
-        title="Transfers"
+        title="Expenses"
         backLink="/statistics"
         headerAction={
           <ButtonInternal
-            link="/statistics/tranfers/add"
+            link="/statistics/expenses/add"
             className="inline-flex items-center justify-center -mr-3 h-11 w-11"
-            testId="add-transfer"
+            testId="add-expense"
           >
-            <span className="sr-only">Add transfer</span>
+            <span className="sr-only">Add expense</span>
             <Icon type={IconName.plus} />
           </ButtonInternal>
         }
@@ -32,7 +32,7 @@ export const TransferListingContainer = ({
       <TransactionListingWithMonthlyPager
         initialDate={date}
         initialPage={page}
-        useDataHook={useTransfersFindAllByUserQuery}
+        useDataHook={useExpensesFindAllByUserQuery}
       />
     </>
   );

@@ -1,4 +1,4 @@
-import { ExpenseListingContainer } from '$container/expenses/expense-listing.container';
+import { ExpenseListingContainer } from '$container/expenses/expense.listing.container';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 
 const ExpensesPage = () => {

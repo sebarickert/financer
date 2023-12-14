@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import {
   TransactionCategoryMappingDto,
@@ -10,11 +10,11 @@ import {
   useTransfersFindAllByUserQuery,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
-import { TransactionStackedList } from '$elements/transaction-stacked-list/transaction-stacked-list';
+import { TransactionListing } from '$blocks/transaction-listing/transaction-listing';
 import {
-  TransactionStackedListRowProps,
+  TransactionListingItemProps,
   TransactionType,
-} from '$elements/transaction-stacked-list/transaction-stacked-list.row';
+} from '$blocks/transaction-listing/transaction-listing.item';
 import { useTransactionCategoryName } from '$hooks/transactionCategories/useTransactionCategoryName';
 import { usePager } from '$hooks/usePager';
 import { formatCurrency } from '$utils/formatCurrency';
@@ -67,7 +67,7 @@ type TransactionDtoForConvert = Omit<
 export const convertTransactionToTransactionStackedListRow = (
   transaction: TransactionDtoForConvert,
   getCategoryName: (id: string) => string | undefined
-): TransactionStackedListRowProps => {
+): TransactionListingItemProps => {
   const transactionType = getTransactionType(
     transaction.toAccount,
     transaction.fromAccount
@@ -112,17 +112,23 @@ export const LatestTransactions = ({
     }
   }, [onPageChange, data?.currentPage]);
 
+  const rows = useMemo(() => {
+    return (
+      data?.data.map((transaction) =>
+        convertTransactionToTransactionStackedListRow(
+          transaction,
+          getCategoryName
+        )
+      ) || []
+    );
+  }, [data?.data, getCategoryName]);
+
   return (
     <>
       <DataHandler {...transactionData} />
       {data && (
-        <TransactionStackedList
-          rows={data?.data.map((transaction) =>
-            convertTransactionToTransactionStackedListRow(
-              transaction,
-              getCategoryName
-            )
-          )}
+        <TransactionListing
+          rows={rows}
           pagerOptions={{ ...getPagerOptions(data) }}
           className={className}
           isPagerHidden={isPagerHidden}

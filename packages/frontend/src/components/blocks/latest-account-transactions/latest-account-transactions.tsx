@@ -4,7 +4,7 @@ import {
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
 import { convertTransactionToTransactionStackedListRow } from '$blocks/latest-transactions/latest-transactions';
-import { TransactionStackedList } from '$elements/transaction-stacked-list/transaction-stacked-list';
+import { TransactionListing } from '$blocks/transaction-listing/transaction-listing';
 import { useTransactionCategoryName } from '$hooks/transactionCategories/useTransactionCategoryName';
 import { usePager } from '$hooks/usePager';
 
@@ -37,7 +37,7 @@ export const LatestAccountTransactions = ({
     <>
       <DataHandler {...transactionData} />
       {data && (
-        <TransactionStackedList
+        <TransactionListing
           rows={data.data.map((transaction) =>
             convertTransactionToTransactionStackedListRow(
               transaction,

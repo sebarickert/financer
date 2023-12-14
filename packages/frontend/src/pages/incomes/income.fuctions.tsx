@@ -1,9 +1,9 @@
 import { IncomeDto } from '@local/types';
 
 import {
-  TransactionStackedListRowProps,
+  TransactionListingItem,
   TransactionType,
-} from '../../components/elements/transaction-stacked-list/transaction-stacked-list.row';
+} from '../../components/blocks/transaction-listing/transaction-listing.item';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDate } from '../../utils/formatDate';
 
@@ -14,13 +14,13 @@ export interface IncomesPerMonth {
   month: number;
   total: number;
   year: number;
-  rows: TransactionStackedListRowProps[];
+  rows: TransactionListingItem[];
 }
 
 export const convertIncomeToTransactionStackedListRow = (
   income: IncomeDto,
   getCategoryName: (id: string) => string | undefined
-): TransactionStackedListRowProps => ({
+): TransactionListingItem => ({
   transactionCategories: income.categories
     .map(({ category_id }) => getCategoryName(category_id))
     .join(', '),
@@ -42,7 +42,7 @@ export const groupIncomesByMonth = (
 
   const { categoryMappings } = rest;
 
-  const income: TransactionStackedListRowProps = {
+  const income: TransactionListingItem = {
     transactionCategories: categoryMappings?.join(', '),
     transactionAmount: formatCurrency(amount),
     date: formatDate(date),

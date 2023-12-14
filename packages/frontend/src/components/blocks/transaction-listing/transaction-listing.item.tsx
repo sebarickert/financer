@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 
-import { IconName, Icon } from '../icon/icon';
+import { IconName, Icon } from '../../elements/icon/icon';
 
 import { LinkViewTransition } from '$elements/link/link-view-transition';
 
@@ -10,7 +10,7 @@ export enum TransactionType {
   TRANSFER = 'transfer',
 }
 
-export interface TransactionStackedListRowProps {
+export interface TransactionListingItemProps {
   transactionCategories?: string;
   transactionAmount: string;
   date: string;
@@ -20,7 +20,7 @@ export interface TransactionStackedListRowProps {
   id: string;
 }
 
-export const TransactionStackedListRow = ({
+export const TransactionListingItem = ({
   transactionCategories,
   transactionAmount,
   date,
@@ -28,7 +28,7 @@ export const TransactionStackedListRow = ({
   link,
   transactionType,
   id,
-}: TransactionStackedListRowProps): JSX.Element => {
+}: TransactionListingItemProps): JSX.Element => {
   const iconTypeMapping: {
     [key in 'expense' | 'income' | 'transfer']: IconName;
   } = {
