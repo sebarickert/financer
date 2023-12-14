@@ -93,7 +93,7 @@ test.describe('Edit transfer', () => {
 
     await page.getByTestId('submit').click();
 
-    await page.getByTestId('add-transfer').waitFor();
+    await page.getByTestId('edit-transfer-button').waitFor();
 
     const toAccountAfter = await getAccount(targetToAccountId);
     const fromAccountAfter = await getAccount(targetFromAccountId);
@@ -148,7 +148,7 @@ test.describe('Edit transfer', () => {
 
     await page.getByTestId('submit').click();
 
-    await page.getByTestId('add-transfer').waitFor();
+    await page.getByTestId('edit-transfer-button').waitFor();
 
     const toAccountAfter = await getAccount(targetToAccountId);
     const fromAccountAfter = await getAccount(targetFromAccountId);

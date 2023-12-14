@@ -77,7 +77,7 @@ test.describe('Edit income', () => {
 
     await page.getByTestId('submit').click();
 
-    await page.getByTestId('add-income').waitFor();
+    await page.getByTestId('edit-income-button').waitFor();
 
     const accountAfter = await getAccount(targetAccountId);
     const targetTransactionAfter = await getTransactionById(
@@ -124,7 +124,7 @@ test.describe('Edit income', () => {
 
     await page.getByTestId('submit').click();
 
-    await page.getByTestId('add-income').waitFor();
+    await page.getByTestId('edit-income-button').waitFor();
 
     const accountAfter = await getAccount(targetAccountId);
     const targetTransactionAfter = await getTransactionById(
