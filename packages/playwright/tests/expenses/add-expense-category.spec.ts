@@ -77,9 +77,9 @@ test.describe('Add expense with category', () => {
 
     await page.getByTestId('submit').click();
 
-    const formErrors = page.getByTestId('form-errors');
+    const formErrors = page.getByTestId('toast-item');
     await expect(formErrors).toContainText(
-      'There were 1 errors with your submission',
+      'Submission failed',
     );
     await expect(formErrors).toContainText(
       'One or more categories does not exist.',
