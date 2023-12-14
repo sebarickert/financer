@@ -109,14 +109,14 @@ export const TransactionForm = ({
     >
       <section>
         <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
-          {hasToAccountField && (
-            <Select id="toAccount" options={accountOptions} isRequired>
-              Account
-            </Select>
-          )}
           {hasFromAccountField && (
             <Select id="fromAccount" options={accountOptions} isRequired>
-              Account
+              From Account
+            </Select>
+          )}
+          {hasToAccountField && (
+            <Select id="toAccount" options={accountOptions} isRequired>
+              To Account
             </Select>
           )}
           <Input id="amount" type="number" min={0.01} step={0.01} isRequired>
