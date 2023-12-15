@@ -1,14 +1,13 @@
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 
-import { DesktopNavigation } from '../../blocks/desktop-navigation/desktop-navigation';
 import { ErrorBoundaryHandler } from '../../blocks/error-boundary/error-boundary';
-import { MobileNavigation } from '../../blocks/mobile-navigation/mobile-navigation';
 import { LoaderSuspense } from '../../elements/loader/loader-suspense';
 import { Container } from '../container/container';
 import { DesktopHeader } from '../desktop-header/desktop-header';
 import { MobileHeader } from '../mobile-header/mobile-header';
 
+import { Navigation } from '$blocks/navigation/navigation';
 import { ToastContainer } from '$blocks/toast/toast.container';
 import { LinkViewTransition } from '$elements/link/link-view-transition';
 
@@ -87,7 +86,7 @@ export const Layout = ({ children }: LayoutProps): JSX.Element => {
                     Financer
                   </h2>
                 </LinkViewTransition>
-                <DesktopNavigation />
+                <Navigation variant="desktop" />
               </header>
             </div>
           </aside>
@@ -113,7 +112,7 @@ export const Layout = ({ children }: LayoutProps): JSX.Element => {
       </main>
       <header>
         <MobileHeader />
-        <MobileNavigation />
+        <Navigation variant="mobile" />
       </header>
     </div>
   );

@@ -5,15 +5,15 @@ import { Icon, IconName } from '../../elements/icon/icon';
 import { Drawer } from '$blocks/drawer/drawer';
 import { TransactionActions } from '$blocks/transaction-actions/transaction-actions';
 
-interface MobileNavigationActionsProps {
+interface NavigationMobileActionsProps {
   isActionsModalOpen: boolean;
   setIsActionsModalOpen: (isOpen: boolean) => void;
 }
 
-export const MobileNavigationActions = ({
+export const NavigationMobileActions = ({
   isActionsModalOpen,
   setIsActionsModalOpen = () => {},
-}: MobileNavigationActionsProps): JSX.Element => {
+}: NavigationMobileActionsProps): JSX.Element => {
   return (
     <li>
       <button

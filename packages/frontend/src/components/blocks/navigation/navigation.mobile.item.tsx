@@ -1,21 +1,13 @@
 import clsx from 'clsx';
 
 import { useIsActiveLink } from '../../../hooks/useIsActiveLink';
-import { IconName, Icon } from '../../elements/icon/icon';
+import { Icon } from '../../elements/icon/icon';
+
+import { NavigationItem } from './navigation';
 
 import { LinkViewTransition } from '$elements/link/link-view-transition';
 
-interface MobileNavigationItemProps {
-  url: string;
-  iconName: IconName;
-  label: string;
-  onClick?(): void;
-  ariaLabel?: string;
-  isExact?: boolean;
-  disallowedPathEndings?: string[];
-}
-
-export const MobileNavigationItem = ({
+export const NavigationMobileItem = ({
   url,
   iconName,
   label,
@@ -23,7 +15,7 @@ export const MobileNavigationItem = ({
   ariaLabel,
   isExact,
   disallowedPathEndings,
-}: MobileNavigationItemProps): JSX.Element => {
+}: NavigationItem): JSX.Element => {
   const isActive = useIsActiveLink({ url, isExact, disallowedPathEndings });
 
   return (
