@@ -1,34 +1,23 @@
-import { IconName } from '../../elements/icon/icon';
+import { NavigationItem } from './navigation';
+import { NavigationDesktopItem } from './navigation.desktop.item';
 
-import { DesktopNavigationItem } from './desktop-navigation.item';
+import { IconName } from '$elements/icon/icon';
 
-export const DesktopNavigation = (): JSX.Element => {
+interface NavigationDesktopProps {
+  navigationItems: Record<string, NavigationItem>;
+}
+
+export const NavigationDesktop = ({
+  navigationItems,
+}: NavigationDesktopProps) => {
   return (
     <div className="grid grid-cols-1">
       <nav aria-label="Main navigation in desktop viewmode.">
         <ul className="-ml-4 space-y-2">
-          <DesktopNavigationItem
-            label="Home"
-            iconName={IconName.home}
-            link="/"
-            isExact
-          />
-          <DesktopNavigationItem
-            label="Statistics"
-            iconName={IconName.chartBar}
-            link="/statistics"
-            disallowedPathEndings={['add']}
-          />
-          <DesktopNavigationItem
-            label="Accounts"
-            iconName={IconName.viewGrid}
-            link="/accounts"
-          />
-          <DesktopNavigationItem
-            label="Settings"
-            iconName={IconName.cog}
-            link="/settings"
-          />
+          <NavigationDesktopItem {...navigationItems.home} />
+          <NavigationDesktopItem {...navigationItems.statistics} />
+          <NavigationDesktopItem {...navigationItems.accounts} />
+          <NavigationDesktopItem {...navigationItems.settings} />
         </ul>
       </nav>
       <nav
@@ -36,22 +25,22 @@ export const DesktopNavigation = (): JSX.Element => {
         aria-label="Quick transaction actions navigation in desktop viewmode."
       >
         <ul className="-ml-4 space-y-2">
-          <DesktopNavigationItem
+          <NavigationDesktopItem
             label="Income"
             iconName={IconName.download}
-            link="/statistics/incomes/add"
+            url="/statistics/incomes/add"
             ariaLabel="Add new income transaction"
           />
-          <DesktopNavigationItem
+          <NavigationDesktopItem
             label="Expense"
             iconName={IconName.upload}
-            link="/statistics/expenses/add"
+            url="/statistics/expenses/add"
             ariaLabel="Add new expense transaction"
           />
-          <DesktopNavigationItem
+          <NavigationDesktopItem
             label="Transfer"
             iconName={IconName.switchHorizontal}
-            link="/statistics/transfers/add"
+            url="/statistics/transfers/add"
             ariaLabel="Add new transfer transaction"
           />
         </ul>
@@ -61,10 +50,10 @@ export const DesktopNavigation = (): JSX.Element => {
         aria-label="User action links navigation in desktop viewmode."
       >
         <ul className="-ml-4">
-          <DesktopNavigationItem
+          <NavigationDesktopItem
             label="Sign out"
             iconName={IconName.logout}
-            link="/auth/logout"
+            url="/auth/logout"
           />
         </ul>
       </nav>

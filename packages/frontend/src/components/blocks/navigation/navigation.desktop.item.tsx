@@ -2,31 +2,23 @@ import clsx from 'clsx';
 
 import { useIsActiveLink } from '../../../hooks/useIsActiveLink';
 import { isExternalLink } from '../../elements/button/button';
-import { IconName, Icon } from '../../elements/icon/icon';
+import { Icon } from '../../elements/icon/icon';
+
+import { NavigationItem } from './navigation';
 
 import { LinkViewTransition } from '$elements/link/link-view-transition';
 
-interface IDesktopNavigationItemProps {
-  link: string;
-  iconName: IconName;
-  label: string;
-  onClick?(): void;
-  ariaLabel?: string;
-  isExact?: boolean;
-  disallowedPathEndings?: string[];
-}
-
-export const DesktopNavigationItem = ({
-  link,
+export const NavigationDesktopItem = ({
+  url,
   iconName,
   label,
   onClick = () => {},
   ariaLabel,
   isExact = false,
   disallowedPathEndings = [],
-}: IDesktopNavigationItemProps): JSX.Element => {
+}: NavigationItem): JSX.Element => {
   const isActive = useIsActiveLink({
-    url: link,
+    url,
     isExact,
     disallowedPathEndings,
   });
@@ -45,10 +37,10 @@ export const DesktopNavigationItem = ({
     </>
   );
 
-  if (isExternalLink(link)) {
+  if (isExternalLink(url)) {
     return (
       <li>
-        <a href={link} className={linkClasses} aria-label={ariaLabel}>
+        <a href={url} className={linkClasses} aria-label={ariaLabel}>
           {linkContent}
         </a>
       </li>
@@ -58,7 +50,7 @@ export const DesktopNavigationItem = ({
   return (
     <li>
       <LinkViewTransition
-        href={link}
+        href={url}
         className={linkClasses}
         onClick={onClick}
         aria-label={ariaLabel}
