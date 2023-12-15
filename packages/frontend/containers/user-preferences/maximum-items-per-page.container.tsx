@@ -11,11 +11,9 @@ import {
 
 export const MaximumItemsPerPageContainer = () => {
   const { push } = useViewTransitionRouter();
-  const { data: defaultChunkSize, isLoading: isLoadingDefault } =
-    useUserTransactionListChunkSize();
+  const { data: defaultChunkSize } = useUserTransactionListChunkSize();
 
-  const [setDefaultChunkSize, { isLoading: isUpdating }] =
-    useUpdateUserTransactionListChunkSize();
+  const [setDefaultChunkSize] = useUpdateUserTransactionListChunkSize();
 
   const handleSave = async (
     newUserTransactionListChunkSizeData: UserTransactionListChunkSizeFormFields
@@ -30,8 +28,6 @@ export const MaximumItemsPerPageContainer = () => {
   return (
     <UserTransactionListChunkSize
       defaultChunkSize={defaultChunkSize}
-      isLoading={isLoadingDefault}
-      isUpdating={isUpdating}
       onSave={handleSave}
     />
   );

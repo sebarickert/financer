@@ -4,8 +4,6 @@ import { useForm } from 'react-hook-form';
 import { AccountDto } from '$api/generated/financerApi';
 import { Form } from '$blocks/form/form';
 import { settingsPaths } from '$constants/settings-paths';
-import { Loader } from '$elements/loader/loader';
-import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { Select } from '$elements/select/select';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
@@ -17,8 +15,6 @@ export interface UserDefaultAccountSettingsFormFields {
 }
 
 interface UserDefaultAccountSettingsProps {
-  isLoading: boolean;
-  isUpdating: boolean;
   accounts?: AccountDto[];
   defaultExpenseAccount?: string;
   defaultTransferSourceAccount?: string;
@@ -28,8 +24,6 @@ interface UserDefaultAccountSettingsProps {
 }
 
 export const UserDefaultAccountSettings = ({
-  isLoading,
-  isUpdating,
   accounts,
   defaultExpenseAccount,
   defaultTransferSourceAccount,
@@ -59,71 +53,67 @@ export const UserDefaultAccountSettings = ({
 
   return (
     <>
-      {isUpdating && <LoaderFullScreen />}
       <UpdatePageInfo
         title="Default account settings"
         backLink={settingsPaths.userPreferences}
       />
-      {isLoading && <Loader />}
-      {!isLoading && (
-        <Form
-          onSubmit={onSave}
-          methods={methods}
-          submitLabel="Save"
-          formFooterBackLink={settingsPaths.userPreferences}
-        >
-          <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
-            <Select
-              id="toAccountIncome"
-              options={
-                accounts?.map(({ name, _id }) => ({
-                  label: name,
-                  value: _id,
-                })) ?? []
-              }
-              isRequired
-            >
-              Default income account
-            </Select>
-            <Select
-              id="fromAccountExpense"
-              options={
-                accounts?.map(({ name, _id }) => ({
-                  label: name,
-                  value: _id,
-                })) ?? []
-              }
-              isRequired
-            >
-              Default expense account
-            </Select>
-            <Select
-              id="fromAccountTransfer"
-              options={
-                accounts?.map(({ name, _id }) => ({
-                  label: name,
-                  value: _id,
-                })) ?? []
-              }
-              isRequired
-            >
-              Default transfer source account
-            </Select>
-            <Select
-              id="toAccountTransfer"
-              options={
-                accounts?.map(({ name, _id }) => ({
-                  label: name,
-                  value: _id,
-                })) ?? []
-              }
-              isRequired
-            >
-              Default transfer target account
-            </Select>
-          </div>
-        </Form>
-      )}
+      <Form
+        onSubmit={onSave}
+        methods={methods}
+        submitLabel="Save"
+        formFooterBackLink={settingsPaths.userPreferences}
+      >
+        <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
+          <Select
+            id="toAccountIncome"
+            options={
+              accounts?.map(({ name, _id }) => ({
+                label: name,
+                value: _id,
+              })) ?? []
+            }
+            isRequired
+          >
+            Default income account
+          </Select>
+          <Select
+            id="fromAccountExpense"
+            options={
+              accounts?.map(({ name, _id }) => ({
+                label: name,
+                value: _id,
+              })) ?? []
+            }
+            isRequired
+          >
+            Default expense account
+          </Select>
+          <Select
+            id="fromAccountTransfer"
+            options={
+              accounts?.map(({ name, _id }) => ({
+                label: name,
+                value: _id,
+              })) ?? []
+            }
+            isRequired
+          >
+            Default transfer source account
+          </Select>
+          <Select
+            id="toAccountTransfer"
+            options={
+              accounts?.map(({ name, _id }) => ({
+                label: name,
+                value: _id,
+              })) ?? []
+            }
+            isRequired
+          >
+            Default transfer target account
+          </Select>
+        </div>
+      </Form>
     </>
   );
 };

@@ -9,7 +9,6 @@ import {
 } from '$api/generated/financerApi';
 import { colorPalette } from '$constants/colorPalette';
 import { ChartWrapperDynamic } from '$elements/chart/chart-wrapper.dynamic';
-import { Loader } from '$elements/loader/loader';
 import { useUserDashboardSettings } from '$hooks/settings/user-preference/useDashboardSettings';
 import { useLatestTransaction } from '$hooks/transaction/useLatestTransaction';
 import { useTotalBalance } from '$hooks/useTotalBalance';
@@ -36,12 +35,10 @@ const yearAgoFilterOptions = {
 export const BalanceGraph = ({
   className = '',
 }: BalanceGraphProps): JSX.Element => {
-  const { data: dashboardSettings, isLoading: isLoadingSettings } =
-    useUserDashboardSettings();
+  const { data: dashboardSettings } = useUserDashboardSettings();
   const accountTypeFilter = { accountTypes: dashboardSettings?.accountTypes };
 
-  const { data: totalBalance, isFetching: isLoadingTotalBalance } =
-    useTotalBalance(accountTypeFilter);
+  const { data: totalBalance } = useTotalBalance(accountTypeFilter);
   const { data: latestTransaction } = useLatestTransaction();
 
   const incomeMonthSummaryData = useIncomesFindMonthlySummariesByuserQuery({
@@ -258,9 +255,6 @@ export const BalanceGraph = ({
       },
     ],
   };
-
-  const isLoading = isLoadingTotalBalance || isLoadingSettings;
-
   return (
     <section
       className={clsx(
@@ -270,11 +264,9 @@ export const BalanceGraph = ({
         }
       )}
     >
-      <Loader isLoading={isLoading}>
-        <ChartWrapperDynamic>
-          <Chart type="line" data={data} options={options} />
-        </ChartWrapperDynamic>
-      </Loader>
+      <ChartWrapperDynamic>
+        <Chart type="line" data={data} options={options} />
+      </ChartWrapperDynamic>
     </section>
   );
 };

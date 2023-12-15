@@ -8,6 +8,8 @@ import { Container } from '../container/container';
 import { Navigation } from '$blocks/navigation/navigation';
 import { ToastContainer } from '$blocks/toast/toast.container';
 import { LinkViewTransition } from '$elements/link/link-view-transition';
+import { Loader } from '$elements/loader/loader';
+import { useIsQueryLoading } from '$hooks/useIsQueryLoading';
 import { Header } from '$layouts/header/header';
 
 type ChildrenWithErrorBoundaryProps = {
@@ -30,6 +32,7 @@ export const Layout = ({ children }: LayoutProps): JSX.Element => {
   const [currentWindowWidth, setCurrentWindowWidth] = useState(
     window.outerWidth
   );
+  const isLoading = useIsQueryLoading();
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
@@ -62,6 +65,12 @@ export const Layout = ({ children }: LayoutProps): JSX.Element => {
     return () => window.removeEventListener('resize', () => action);
   }, []);
 
+  const childrenContent = (
+    <Loader isLoading={isLoading}>
+      <ChildrenWithErrorBoundary>{children}</ChildrenWithErrorBoundary>
+    </Loader>
+  );
+
   if (currentWindowWidth >= 1024) {
     return (
       <div className="bg-white">
@@ -93,7 +102,7 @@ export const Layout = ({ children }: LayoutProps): JSX.Element => {
             <div className="px-8 py-12" data-testid="layout-root">
               <Header variant="desktop" />
               <ToastContainer className="mb-8 -mt-2" />
-              <ChildrenWithErrorBoundary>{children}</ChildrenWithErrorBoundary>
+              {childrenContent}
             </div>
           </main>
         </Container>
@@ -106,7 +115,7 @@ export const Layout = ({ children }: LayoutProps): JSX.Element => {
       <main className="flex-grow bg-white lg:pb-24 min-h-screen-safe pb-safe">
         <div className={`px-4 mt-[64px] pt-8 pb-24`} data-testid="layout-root">
           <ToastContainer className="mb-8 -mt-2" />
-          <ChildrenWithErrorBoundary>{children}</ChildrenWithErrorBoundary>
+          {childrenContent}
         </div>
       </main>
       <header>

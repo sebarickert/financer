@@ -24,42 +24,21 @@ import {
 
 export const DefaultAccountSettingsContainer = () => {
   const { push } = useViewTransitionRouter();
-  const { data: accounts, isLoading: isLoadingAccount } =
-    useAccountsFindAllByUserQuery({});
+  const { data: accounts } = useAccountsFindAllByUserQuery({});
 
-  const {
-    data: defaultIncomeAccount,
-    isLoading: isLoadingDefaultIncomeAccount,
-  } = useUserDefaultIncomeAccount();
-  const {
-    data: defaultExpenseAccount,
-    isLoading: isLoadingDefaultExpenseAccount,
-  } = useUserDefaultExpenseAccount();
-  const {
-    data: defaultTransferSourceAccount,
-    isLoading: isLoadingDefaultTransferSourceAccount,
-  } = useUserDefaultTransferSourceAccount();
-  const {
-    data: defaultTransferTargetAccount,
-    isLoading: isLoadingDefaultTransferTargetAccount,
-  } = useUserDefaultTransferTargetAccount();
+  const { data: defaultIncomeAccount } = useUserDefaultIncomeAccount();
+  const { data: defaultExpenseAccount } = useUserDefaultExpenseAccount();
+  const { data: defaultTransferSourceAccount } =
+    useUserDefaultTransferSourceAccount();
+  const { data: defaultTransferTargetAccount } =
+    useUserDefaultTransferTargetAccount();
 
-  const [
-    setDefaultIncomeAccount,
-    { isLoading: isUpdatingDefaultIncomeAccount },
-  ] = useUpdateUserDefaultIncomeAccount();
-  const [
-    setDefaultExpenseAccount,
-    { isLoading: isUpdatingDefaultExpenseAccount },
-  ] = useUpdateUserDefaultExpenseAccount();
-  const [
-    setDefaultTransferSourceAccount,
-    { isLoading: isUpdatingDefaultTransferSourceAccount },
-  ] = useUpdateUserDefaultTransferSourceAccount();
-  const [
-    setDefaultTransferTargetAccount,
-    { isLoading: isUpdatingDefaultTransferTargetAccount },
-  ] = useUpdateUserDefaultTransferTargetAccount();
+  const [setDefaultIncomeAccount] = useUpdateUserDefaultIncomeAccount();
+  const [setDefaultExpenseAccount] = useUpdateUserDefaultExpenseAccount();
+  const [setDefaultTransferSourceAccount] =
+    useUpdateUserDefaultTransferSourceAccount();
+  const [setDefaultTransferTargetAccount] =
+    useUpdateUserDefaultTransferTargetAccount();
 
   const handleSave = async (
     newUserDefaultAccountData: UserDefaultAccountSettingsFormFields
@@ -81,19 +60,6 @@ export const DefaultAccountSettingsContainer = () => {
     push(settingsPaths.userPreferences);
   };
 
-  const isLoading =
-    isLoadingAccount ||
-    isLoadingDefaultIncomeAccount ||
-    isLoadingDefaultExpenseAccount ||
-    isLoadingDefaultTransferSourceAccount ||
-    isLoadingDefaultTransferTargetAccount;
-
-  const isUpdating =
-    isUpdatingDefaultIncomeAccount ||
-    isUpdatingDefaultExpenseAccount ||
-    isUpdatingDefaultTransferSourceAccount ||
-    isUpdatingDefaultTransferTargetAccount;
-
   return (
     <UserDefaultAccountSettings
       accounts={accounts?.data}
@@ -101,8 +67,6 @@ export const DefaultAccountSettingsContainer = () => {
       defaultExpenseAccount={defaultExpenseAccount}
       defaultTransferSourceAccount={defaultTransferSourceAccount}
       defaultTransferTargetAccount={defaultTransferTargetAccount}
-      isLoading={isLoading}
-      isUpdating={isUpdating}
       onSave={handleSave}
     />
   );

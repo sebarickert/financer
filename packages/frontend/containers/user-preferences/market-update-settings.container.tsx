@@ -12,9 +12,8 @@ import {
 
 export const MarketUpdateSettingsContainer = () => {
   const { push } = useViewTransitionRouter();
-  const { data, isLoading: isLoadingDefault } =
-    useUserDefaultMarketUpdateSettings();
-  const [setDefaultMarketUpdateSettings, { isLoading: isUpdating }] =
+  const { data } = useUserDefaultMarketUpdateSettings();
+  const [setDefaultMarketUpdateSettings] =
     useUpdateUserDefaultMarketUpdateSettings();
 
   const { data: categories = [] } =
@@ -36,8 +35,6 @@ export const MarketUpdateSettingsContainer = () => {
   return (
     <UserDefaultMarketUpdateSettings
       data={data}
-      isLoading={isLoadingDefault}
-      isUpdating={isUpdating}
       categories={categories}
       onSave={handleSave}
     />

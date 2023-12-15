@@ -5,11 +5,9 @@ import { settingsPaths } from '$constants/settings-paths';
 import { Button } from '$elements/button/button';
 import { Heading } from '$elements/heading/heading';
 import { IconName } from '$elements/icon/icon';
-import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
 interface OverrideUserDataProps {
-  isLoading: boolean;
   overrideFilename: string | null;
   overrideAccountCount: number | null;
   overrideTranactionCount: number | null;
@@ -18,7 +16,6 @@ interface OverrideUserDataProps {
 }
 
 export const OverrideUserData = ({
-  isLoading,
   overrideFilename,
   overrideAccountCount,
   overrideTranactionCount,
@@ -40,7 +37,6 @@ export const OverrideUserData = ({
 
   return (
     <>
-      {isLoading && <LoaderFullScreen />}
       <UpdatePageInfo
         title="Override data (DANGER ZONE)"
         backLink={settingsPaths.default}

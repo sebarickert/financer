@@ -11,9 +11,8 @@ import {
 
 export const DashboardSettingsContainer = () => {
   const { push } = useViewTransitionRouter();
-  const { data, isLoading: isLoadingDefault } = useUserDashboardSettings();
-  const [setDashboardSettings, { isLoading: isUpdating }] =
-    useUpdateUserDashboardSettings();
+  const { data } = useUserDashboardSettings();
+  const [setDashboardSettings] = useUpdateUserDashboardSettings();
 
   const handleSave = async (
     newUserDashboardData: UserDashboardSettingsFormFields
@@ -25,12 +24,5 @@ export const DashboardSettingsContainer = () => {
     push(settingsPaths.userPreferences);
   };
 
-  return (
-    <UserDashboardSettings
-      data={data}
-      isLoading={isLoadingDefault}
-      isUpdating={isUpdating}
-      onSave={handleSave}
-    />
-  );
+  return <UserDashboardSettings data={data} onSave={handleSave} />;
 };

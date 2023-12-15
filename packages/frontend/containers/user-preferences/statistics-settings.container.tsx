@@ -11,9 +11,8 @@ import {
 
 export const StatisticsSettingsContainer = () => {
   const { push } = useViewTransitionRouter();
-  const { data, isLoading: isLoadingDefault } = useUserStatisticsSettings();
-  const [setStatisticsSettings, { isLoading: isUpdating }] =
-    useUpdateUserStatisticsSettings();
+  const { data } = useUserStatisticsSettings();
+  const [setStatisticsSettings] = useUpdateUserStatisticsSettings();
 
   const handleSave = async (
     newUserStatisticsData: UserStatisticsSettingsFormFields
@@ -25,12 +24,5 @@ export const StatisticsSettingsContainer = () => {
     push(settingsPaths.userPreferences);
   };
 
-  return (
-    <UserStatisticsSettings
-      data={data}
-      isLoading={isLoadingDefault}
-      isUpdating={isUpdating}
-      onSave={handleSave}
-    />
-  );
+  return <UserStatisticsSettings data={data} onSave={handleSave} />;
 };
