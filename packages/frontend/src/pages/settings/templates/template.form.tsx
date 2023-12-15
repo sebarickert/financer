@@ -14,7 +14,6 @@ import {
   TransactionCategories,
   TransactionCategoriesFormFields,
 } from '$blocks/transaction-categories/transaction-categories';
-import { Alert } from '$elements/alert/alert';
 import { Input } from '$elements/input/input';
 import { Loader } from '$elements/loader/loader';
 import { Select, Option } from '$elements/select/select';
@@ -22,7 +21,6 @@ import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionC
 import { capitalize } from '$utils/capitalize';
 
 interface TemplateFormProps {
-  errors: string[];
   onSubmit: SubmitHandler<TemplateFormFields>;
   submitLabel: string;
   optionalFooterComponent?: React.ReactNode;
@@ -73,7 +71,6 @@ const TransactionCategoriesFormWrapper = ({
 };
 
 export const TemplateForm = ({
-  errors,
   onSubmit,
   submitLabel,
   optionalFooterComponent,
@@ -95,7 +92,7 @@ export const TemplateForm = ({
       ) as keyof typeof TransactionTemplateTypeEnum
     ];
 
-  const { data: accounts, isLoading } = useAccountsFindAllByUserQuery({});
+  const { data: accounts } = useAccountsFindAllByUserQuery({});
 
   const accountOptions = useMemo(() => {
     if (!accounts) return [];
@@ -146,67 +143,56 @@ export const TemplateForm = ({
   }, [initialTemplateType, initialValues, reset]);
 
   return (
-    <Loader isLoading={isLoading}>
-      {errors.length > 0 && (
-        <Alert additionalInformation={errors} testId="form-errors">
-          There were {errors.length} errors with your submission
-        </Alert>
-      )}
-      <Form
-        methods={methods}
-        submitLabel={submitLabel}
-        onSubmit={handleSubmit}
-        formFooterBackLink="/"
-        optionalFooterComponent={optionalFooterComponent}
-      >
-        <section>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <Select id="templateType" options={templateTypes} isRequired>
-              Template type
+    <Form
+      methods={methods}
+      submitLabel={submitLabel}
+      onSubmit={handleSubmit}
+      formFooterBackLink="/"
+      optionalFooterComponent={optionalFooterComponent}
+    >
+      <section>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Select id="templateType" options={templateTypes} isRequired>
+            Template type
+          </Select>
+          <Select id="templateVisibility" options={transactionTypes} isRequired>
+            Transaction type
+          </Select>
+          <Input id="templateName" isRequired>
+            Template name
+          </Input>
+          <Input id="description">Description</Input>
+          <Input id="amount" type="number" min={0.01} step={0.01}>
+            Amount
+          </Input>
+          {(templateVisibility === TransactionTypeEnum.Expense ||
+            templateVisibility === TransactionTypeEnum.Transfer) && (
+            <Select id="fromAccount" options={accountOptions} isRequired>
+              From Account
             </Select>
-            <Select
-              id="templateVisibility"
-              options={transactionTypes}
-              isRequired
-            >
-              Transaction type
+          )}
+          {(templateVisibility === TransactionTypeEnum.Income ||
+            templateVisibility === TransactionTypeEnum.Transfer) && (
+            <Select id="toAccount" options={accountOptions} isRequired>
+              To Account
             </Select>
-            <Input id="templateName" isRequired>
-              Template name
-            </Input>
-            <Input id="description">Description</Input>
-            <Input id="amount" type="number" min={0.01} step={0.01}>
-              Amount
-            </Input>
-            {(templateVisibility === TransactionTypeEnum.Expense ||
-              templateVisibility === TransactionTypeEnum.Transfer) && (
-              <Select id="fromAccount" options={accountOptions} isRequired>
-                From Account
-              </Select>
-            )}
-            {(templateVisibility === TransactionTypeEnum.Income ||
-              templateVisibility === TransactionTypeEnum.Transfer) && (
-              <Select id="toAccount" options={accountOptions} isRequired>
-                To Account
-              </Select>
-            )}
-            {templateType === TransactionTemplateTypeEnum.Auto && (
-              <>
-                <Input id="dayOfMonth" type="number" min={1} max={31}>
-                  Day of month for transaction
-                </Input>
-                <Input id="dayOfMonthToCreate" type="number" min={1} max={31}>
-                  Day of month to create
-                </Input>
-              </>
-            )}
-          </div>
-        </section>
-        <section className="mt-8">
-          <h2 className="sr-only">Categories</h2>
-          <TransactionCategoriesFormWrapper type={selectedTransactionType} />
-        </section>
-      </Form>
-    </Loader>
+          )}
+          {templateType === TransactionTemplateTypeEnum.Auto && (
+            <>
+              <Input id="dayOfMonth" type="number" min={1} max={31}>
+                Day of month for transaction
+              </Input>
+              <Input id="dayOfMonthToCreate" type="number" min={1} max={31}>
+                Day of month to create
+              </Input>
+            </>
+          )}
+        </div>
+      </section>
+      <section className="mt-8">
+        <h2 className="sr-only">Categories</h2>
+        <TransactionCategoriesFormWrapper type={selectedTransactionType} />
+      </section>
+    </Form>
   );
 };

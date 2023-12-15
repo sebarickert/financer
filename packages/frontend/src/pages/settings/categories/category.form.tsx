@@ -6,7 +6,6 @@ import { getAllChildCategoryIds } from '../../../services/TransactionCategoriesS
 import { VisibilityType, VisibilityTypeEnum } from '$api/generated/financerApi';
 import { Form } from '$blocks/form/form';
 import { settingsPaths } from '$constants/settings-paths';
-import { Alert } from '$elements/alert/alert';
 import { Checkbox } from '$elements/checkbox/checkbox';
 import { CheckboxGroup } from '$elements/checkbox/checkbox.group';
 import { Input } from '$elements/input/input';
@@ -14,7 +13,6 @@ import { Select, Option } from '$elements/select/select';
 import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
 
 interface CategoryFormProps {
-  errors: string[];
   onSubmit: SubmitHandler<TransactionCategoryFormFields>;
   submitLabel: string;
   optionalFooterComponent?: React.ReactNode;
@@ -29,7 +27,6 @@ export interface TransactionCategoryFormFields {
 }
 
 export const CategoryForm = ({
-  errors,
   onSubmit,
   submitLabel,
   optionalFooterComponent,
@@ -72,48 +69,41 @@ export const CategoryForm = ({
   if (!transactionCategories) return null;
 
   return (
-    <>
-      {errors.length > 0 && (
-        <Alert additionalInformation={errors} testId="form-errors">
-          There were {errors.length} errors with your submission
-        </Alert>
-      )}
-      <Form
-        methods={methods}
-        submitLabel={submitLabel}
-        onSubmit={onSubmit}
-        formFooterBackLink={settingsPaths.categories}
-        optionalFooterComponent={optionalFooterComponent}
-      >
-        <div className="grid gap-4">
-          <Input id="name" isRequired>
-            Name
-          </Input>
-          <CheckboxGroup testId="visibility-checkboxes" className="-mx-4">
-            <Checkbox
-              id="incomeVisible"
-              name="visibility"
-              label="Income"
-              value={VisibilityTypeEnum.Income}
-            />
-            <Checkbox
-              id="expenseVisible"
-              name="visibility"
-              label="Expense"
-              value={VisibilityTypeEnum.Expense}
-            />
-            <Checkbox
-              id="transferVisible"
-              name="visibility"
-              label="Transfer"
-              value={VisibilityTypeEnum.Transfer}
-            />
-          </CheckboxGroup>
-          <Select id="parent_category_id" options={transactionCategories}>
-            Parent transaction category
-          </Select>
-        </div>
-      </Form>
-    </>
+    <Form
+      methods={methods}
+      submitLabel={submitLabel}
+      onSubmit={onSubmit}
+      formFooterBackLink={settingsPaths.categories}
+      optionalFooterComponent={optionalFooterComponent}
+    >
+      <div className="grid gap-4">
+        <Input id="name" isRequired>
+          Name
+        </Input>
+        <CheckboxGroup testId="visibility-checkboxes" className="-mx-4">
+          <Checkbox
+            id="incomeVisible"
+            name="visibility"
+            label="Income"
+            value={VisibilityTypeEnum.Income}
+          />
+          <Checkbox
+            id="expenseVisible"
+            name="visibility"
+            label="Expense"
+            value={VisibilityTypeEnum.Expense}
+          />
+          <Checkbox
+            id="transferVisible"
+            name="visibility"
+            label="Transfer"
+            value={VisibilityTypeEnum.Transfer}
+          />
+        </CheckboxGroup>
+        <Select id="parent_category_id" options={transactionCategories}>
+          Parent transaction category
+        </Select>
+      </div>
+    </Form>
   );
 };

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import {
   useTransactionTemplatesUpdateMutation,
@@ -6,12 +6,14 @@ import {
   useTransactionTemplatesFindOneQuery,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
+import { ToastMessageTypes } from '$blocks/toast/toast';
 import { settingsPaths } from '$constants/settings-paths';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import {
   TemplateEdit,
   UpdateTransactionTemplateDtoWithCategory,
 } from '$pages/settings/templates/template.edit';
+import { addToastMessage } from '$reducer/notifications.reducer';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 interface TemplateEditContainerProps {
@@ -21,13 +23,11 @@ interface TemplateEditContainerProps {
 export const TemplateEditContainer = ({ id }: TemplateEditContainerProps) => {
   const { push } = useViewTransitionRouter();
 
-  const [errors, setErrors] = useState<string[]>([]);
-  const [editTransactionTemplate, { isLoading: isSaving }] =
-    useTransactionTemplatesUpdateMutation();
-  const [deleteTransactionTemplate, { isLoading: isDeleting }] =
-    useTransactionTemplatesRemoveMutation();
+  const [editTransactionTemplate] = useTransactionTemplatesUpdateMutation();
+  const [deleteTransactionTemplate] = useTransactionTemplatesRemoveMutation();
   const templateData = useTransactionTemplatesFindOneQuery({ id });
   const { data: template } = templateData;
+  const dispatch = useDispatch();
 
   const handleSubmit = async (
     newTransactionTemplateData: UpdateTransactionTemplateDtoWithCategory
@@ -54,7 +54,15 @@ export const TemplateEditContainer = ({ id }: TemplateEditContainerProps) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (error.status === 400 || error.status === 404) {
-        setErrors(parseErrorMessagesToArray(error?.data?.message));
+        dispatch(
+          addToastMessage({
+            type: ToastMessageTypes.ERROR,
+            message: 'Submission failed',
+            additionalInformation: parseErrorMessagesToArray(
+              error?.data?.message
+            ),
+          })
+        );
         return;
       }
 
@@ -76,8 +84,6 @@ export const TemplateEditContainer = ({ id }: TemplateEditContainerProps) => {
       <DataHandler {...templateData} />
       {template && (
         <TemplateEdit
-          isLoading={isSaving || isDeleting}
-          errors={errors}
           template={template}
           onSubmit={handleSubmit}
           onDelete={handleDelete}

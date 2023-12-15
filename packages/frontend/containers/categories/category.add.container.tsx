@@ -1,19 +1,20 @@
-import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import {
   CreateTransactionCategoryDto,
   useTransactionCategoriesCreateMutation,
 } from '$api/generated/financerApi';
+import { ToastMessageTypes } from '$blocks/toast/toast';
 import { settingsPaths } from '$constants/settings-paths';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { CategoryAdd } from '$pages/settings/categories/category.add';
+import { addToastMessage } from '$reducer/notifications.reducer';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 export const CategoryAddContainer = () => {
   const { push } = useViewTransitionRouter();
-  const [errors, setErrors] = useState<string[]>([]);
-  const [addTransactionCategory, { isLoading: isCreating }] =
-    useTransactionCategoriesCreateMutation();
+  const [addTransactionCategory] = useTransactionCategoriesCreateMutation();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (
     newTransactionCategoryData: CreateTransactionCategoryDto
@@ -32,7 +33,15 @@ export const CategoryAddContainer = () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (error.status === 400 || error.status === 404) {
-        setErrors(parseErrorMessagesToArray(error?.data?.message));
+        dispatch(
+          addToastMessage({
+            type: ToastMessageTypes.ERROR,
+            message: 'Submission failed',
+            additionalInformation: parseErrorMessagesToArray(
+              error?.data?.message
+            ),
+          })
+        );
         return;
       }
 
@@ -40,11 +49,5 @@ export const CategoryAddContainer = () => {
       console.error(error);
     }
   };
-  return (
-    <CategoryAdd
-      onSubmit={handleSubmit}
-      errors={errors}
-      isLoading={isCreating}
-    />
-  );
+  return <CategoryAdd onSubmit={handleSubmit} />;
 };
