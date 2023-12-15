@@ -4,7 +4,7 @@ import { Icon, IconName } from '../../elements/icon/icon';
 
 import { LinkViewTransition } from '$elements/link/link-view-transition';
 
-export const DesktopHeader = (): JSX.Element => {
+export const HeaderDesktop = (): JSX.Element => {
   const [{ title, backLink, headerAction }] = usePageInfoContext();
 
   return (
