@@ -6,27 +6,22 @@ import {
   AccountDto,
   useTransactionsFindAllByAccountQuery,
 } from '$api/generated/financerApi';
-import { accountTypeIconMapping } from '$blocks/accounts-list/accounts-list';
 import { BalanceDisplay } from '$blocks/balance-display/balance-display';
 import { DetailsList } from '$blocks/details-list/details-list';
 import { TransactionListingWithMonthlyPager } from '$blocks/transaction-listing-with-monthly-pager/transaction-listing.with.monthly-pager';
+import { accountTypeIconMapping } from '$constants/account/accountTypeIconMapping';
 import { AccountUpdateMarketValueContainer } from '$container/accounts/account.update-market-value.container';
 import { ButtonInternal } from '$elements/button/button.internal';
 import { Icon, IconName } from '$elements/icon/icon';
 import { LoaderSuspense } from '$elements/loader/loader-suspense';
-import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { capitalize } from '$utils/capitalize';
 
 interface AccountProps {
-  isLoading: boolean;
   account: AccountDto;
 }
 
-export const Account = ({
-  isLoading,
-  account,
-}: AccountProps): JSX.Element | null => {
+export const Account = ({ account }: AccountProps): JSX.Element | null => {
   const accountDetails = useMemo(
     () => [
       {
@@ -40,7 +35,6 @@ export const Account = ({
 
   return (
     <>
-      {isLoading && <LoaderFullScreen />}
       <UpdatePageInfo
         title={`Account Details`}
         backLink="/accounts"

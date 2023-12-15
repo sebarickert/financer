@@ -1,15 +1,18 @@
-import { useState, useCallback } from 'react';
+import { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { useAccountsCreateMutation } from '$api/generated/financerApi';
+import { ToastMessageTypes } from '$blocks/toast/toast';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { AccountAdd } from '$pages/accounts/account.add';
 import { AccountFormFields } from '$pages/accounts/account.form';
+import { addToastMessage } from '$reducer/notifications.reducer';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
-export const AddAccountContainer = () => {
+export const AccountAddContainer = () => {
   const { push } = useViewTransitionRouter();
-  const [addAccount, { isLoading }] = useAccountsCreateMutation();
-  const [errors, setErrors] = useState<string[]>([]);
+  const [addAccount] = useAccountsCreateMutation();
+  const dispatch = useDispatch();
 
   const handleSubmit = useCallback(
     async (newAccountData: AccountFormFields) => {
@@ -25,19 +28,21 @@ export const AddAccountContainer = () => {
         if (error?.status !== 400) console.error(error);
 
         if ('message' in error?.data) {
-          setErrors(parseErrorMessagesToArray(error.data.message));
+          dispatch(
+            addToastMessage({
+              type: ToastMessageTypes.ERROR,
+              message: 'Submission failed',
+              additionalInformation: parseErrorMessagesToArray(
+                error.data.message
+              ),
+            })
+          );
           return;
         }
       }
     },
-    [addAccount, push]
+    [addAccount, dispatch, push]
   );
 
-  return (
-    <AccountAdd
-      isLoading={isLoading}
-      errors={errors}
-      onAddAccount={handleSubmit}
-    />
-  );
+  return <AccountAdd onAddAccount={handleSubmit} />;
 };

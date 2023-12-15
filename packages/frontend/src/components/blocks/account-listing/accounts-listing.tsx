@@ -1,37 +1,33 @@
-import { AccountType } from '@local/types';
-
-import { AccountsListRowProps } from './accounts-list.row';
-
-import { IconName } from '$elements/icon/icon';
+import { AccountTypeEnum } from '$api/generated/financerApi';
+import { accountTypeIconMapping } from '$constants/account/accountTypeIconMapping';
 import { LinkList } from '$elements/link-list/link-list';
 import { LinkListLink } from '$elements/link-list/link-list.link';
 
+export interface AccountListingItem {
+  accountType: string;
+  type: AccountTypeEnum;
+  balanceAmount: string;
+  label: string;
+  link?: string;
+  id: string;
+}
+
 interface AccountsListProps {
   label?: string;
-  rows: AccountsListRowProps[];
+  items: AccountListingItem[];
   className?: string;
 }
 
-export const accountTypeIconMapping: { [key in AccountType]: IconName } = {
-  cash: IconName.cash,
-  savings: IconName.star,
-  investment: IconName.trendingUp,
-  credit: IconName.creditCard,
-  loan: IconName.library,
-  'long-term savings': IconName.star,
-  'pre-assigned cash': IconName.paperAirplane,
-};
-
-export const AccountsList = ({
+export const AccountListing = ({
   label,
-  rows,
+  items,
   className,
 }: AccountsListProps): JSX.Element | null => {
-  if (!rows?.length) return null;
+  if (!items?.length) return null;
 
   return (
     <LinkList label={label} className={`${className}`} testId="account-list">
-      {rows.map(({ id, balanceAmount, label: rowLabel, link, type }) => {
+      {items.map(({ id, balanceAmount, label: rowLabel, link, type }) => {
         return (
           <LinkListLink
             link={link ?? ''}

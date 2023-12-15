@@ -1,7 +1,7 @@
-import { AddAccountContainer } from '$container/accounts/account.add.container';
+import { AccountAddContainer } from '$container/accounts/account.add.container';
 
 const AddAccountPage = () => {
-  return <AddAccountContainer />;
+  return <AccountAddContainer />;
 };
 
 export default AddAccountPage;

@@ -1,31 +1,39 @@
-import { useState, useCallback } from 'react';
+import { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 
 import {
   useAccountsUpdateMutation,
   useAccountsFindOneByIdQuery,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
+import { ToastMessageTypes } from '$blocks/toast/toast';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { AccountEdit } from '$pages/accounts/account.edit';
 import { AccountFormFields } from '$pages/accounts/account.form';
+import { addToastMessage } from '$reducer/notifications.reducer';
 
-interface EditAccountContainerProps {
+interface AccountEditContainerProps {
   id: string;
 }
 
-export const EditAccountContainer = ({ id }: EditAccountContainerProps) => {
+export const AccountEditContainer = ({ id }: AccountEditContainerProps) => {
   const { push } = useViewTransitionRouter();
-  const [editAccount, { isLoading }] = useAccountsUpdateMutation();
-
-  const [errors, setErrors] = useState<string[]>([]);
+  const [editAccount] = useAccountsUpdateMutation();
 
   const data = useAccountsFindOneByIdQuery({ id });
   const account = data.data;
+  const dispatch = useDispatch();
 
   const handleSubmit = useCallback(
     async (newAccountData: AccountFormFields) => {
       if (!account?._id) {
-        setErrors(['Account not found']);
+        dispatch(
+          addToastMessage({
+            type: ToastMessageTypes.ERROR,
+            message: 'Submission failed',
+            additionalInformation: 'Account not found',
+          })
+        );
         return;
       }
 
@@ -36,9 +44,13 @@ export const EditAccountContainer = ({ id }: EditAccountContainerProps) => {
         });
 
         if ('message' in newAccount) {
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          setErrors(parseErrorMessagesToArray(newAccount.message));
+          dispatch(
+            addToastMessage({
+              type: ToastMessageTypes.ERROR,
+              message: 'Submission failed',
+              additionalInformation: newAccount?.message as string,
+            })
+          );
           return;
         }
 
@@ -48,20 +60,13 @@ export const EditAccountContainer = ({ id }: EditAccountContainerProps) => {
         console.error(error);
       }
     },
-    [account?._id, editAccount, id, push]
+    [account?._id, dispatch, editAccount, id, push]
   );
 
   return (
     <>
       <DataHandler {...data} />
-      {account && (
-        <AccountEdit
-          account={account}
-          isLoading={isLoading}
-          errors={errors}
-          onSave={handleSubmit}
-        />
-      )}
+      {account && <AccountEdit account={account} onSave={handleSubmit} />}
     </>
   );
 };
