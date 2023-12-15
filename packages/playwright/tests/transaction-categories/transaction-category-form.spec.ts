@@ -34,10 +34,9 @@ test.describe('Transaction category form', () => {
 
     await page.getByTestId('submit').click();
 
-    await expect(page.getByTestId('form-errors')).toContainText(
-      'There were 1 errors with your submission',
-    );
-    await expect(page.getByTestId('form-errors')).toContainText(
+    const formErrors = page.getByTestId('toast-item');
+    await expect(formErrors).toContainText('Submission failed');
+    await expect(formErrors).toContainText(
       'Parent category cannot be child category of current item.',
     );
   });
