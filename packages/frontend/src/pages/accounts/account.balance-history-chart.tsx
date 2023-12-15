@@ -7,7 +7,6 @@ import { useAccountsGetAccountBalanceHistoryQuery } from '$api/generated/finance
 import { colorPalette } from '$constants/colorPalette';
 import { MONTH_IN_MS } from '$constants/months';
 import { ChartWrapperDynamic } from '$elements/chart/chart-wrapper.dynamic';
-import { Loader } from '$elements/loader/loader';
 import {
   formatCurrency,
   formatCurrencyAbbreviation,
@@ -27,7 +26,7 @@ interface IAccountBalanceHistoryChartProps {
 export const AccountBalanceHistoryChart = ({
   accountId,
 }: IAccountBalanceHistoryChartProps): JSX.Element | null => {
-  const { data: accountBalanceHistory, isLoading } =
+  const { data: accountBalanceHistory } =
     useAccountsGetAccountBalanceHistoryQuery({ id: accountId });
 
   const monthAgoDate = new Date().getTime() - MONTH_IN_MS;
@@ -205,8 +204,6 @@ export const AccountBalanceHistoryChart = ({
   if (!chartData?.length) {
     return null;
   }
-
-  if (isLoading) return <Loader />;
 
   return (
     <div className="min-h-[300px] h-[20vh] md:h-auto md:min-h-0 md:aspect-video -mx-4 md:-mx-0">

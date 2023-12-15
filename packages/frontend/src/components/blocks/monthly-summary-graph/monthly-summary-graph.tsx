@@ -9,7 +9,6 @@ import {
 } from '$api/generated/financerApi';
 import { colorPalette } from '$constants/colorPalette';
 import { ChartWrapperDynamic } from '$elements/chart/chart-wrapper.dynamic';
-import { Loader } from '$elements/loader/loader';
 import { useUserStatisticsSettings } from '$hooks/settings/user-preference/useStatisticsSettings';
 import { formatCurrency } from '$utils/formatCurrency';
 import { formatDateShort } from '$utils/formatDate';
@@ -41,8 +40,7 @@ type MonthlySummaryHistory = {
 export const MonthlySummaryGraph = ({
   className = '',
 }: BalanceGraphProps): JSX.Element | null => {
-  const { data: statisticsSettings, isLoading: isLoadingSettings } =
-    useUserStatisticsSettings();
+  const { data: statisticsSettings } = useUserStatisticsSettings();
 
   const accountTypeFilter = { accountTypes: statisticsSettings?.accountTypes };
 
@@ -243,17 +241,13 @@ export const MonthlySummaryGraph = ({
 
   if (!monthlySummaryHistory?.length) return null;
 
-  const isLoading = isLoadingSettings;
-
   return (
     <section
       className={`min-h-[300px] h-[20vh] md:h-auto md:min-h-0 md:aspect-video max-md:-mx-4 ${className}`}
     >
-      <Loader isLoading={isLoading}>
-        <ChartWrapperDynamic>
-          <Chart type="bar" data={data} options={options} />
-        </ChartWrapperDynamic>
-      </Loader>
+      <ChartWrapperDynamic>
+        <Chart type="bar" data={data} options={options} />
+      </ChartWrapperDynamic>
     </section>
   );
 };

@@ -4,8 +4,6 @@ import { useForm } from 'react-hook-form';
 import { Form } from '$blocks/form/form';
 import { settingsPaths } from '$constants/settings-paths';
 import { Input } from '$elements/input/input';
-import { Loader } from '$elements/loader/loader';
-import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { Select } from '$elements/select/select';
 import { UserDefaultMarketUpdateSettings as UserDefaultMarketUpdateSettingsType } from '$hooks/settings/user-preference/useDefaultMarketUpdateSettings';
 import { TransactionCategoryDtoWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
@@ -17,16 +15,12 @@ export interface UserDefaultMarketUpdateSettingsFormFields {
 }
 
 interface UserDefaultMarketUpdateSettingsProps {
-  isLoading: boolean;
-  isUpdating: boolean;
   categories: TransactionCategoryDtoWithCategoryTree[];
   data?: UserDefaultMarketUpdateSettingsType;
   onSave: (data: UserDefaultMarketUpdateSettingsFormFields) => void;
 }
 
 export const UserDefaultMarketUpdateSettings = ({
-  isLoading,
-  isUpdating,
   categories,
   data,
   onSave,
@@ -39,38 +33,34 @@ export const UserDefaultMarketUpdateSettings = ({
 
   return (
     <>
-      {isUpdating && <LoaderFullScreen />}
       <UpdatePageInfo
         title="Market update settings"
         backLink={settingsPaths.userPreferences}
       />
-      {isLoading && <Loader />}
-      {!isLoading && (
-        <Form
-          methods={methods}
-          onSubmit={onSave}
-          submitLabel="Save"
-          formFooterBackLink={settingsPaths.userPreferences}
-        >
-          <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
-            <Input id="transactionDescription" isRequired>
-              Transaction description
-            </Input>
-            <Select
-              id="category"
-              options={[{ name: 'None', _id: '' }, ...categories].map(
-                ({ name, _id }) => ({
-                  label: name,
-                  value: _id,
-                })
-              )}
-              isRequired
-            >
-              Category
-            </Select>
-          </div>
-        </Form>
-      )}
+      <Form
+        methods={methods}
+        onSubmit={onSave}
+        submitLabel="Save"
+        formFooterBackLink={settingsPaths.userPreferences}
+      >
+        <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
+          <Input id="transactionDescription" isRequired>
+            Transaction description
+          </Input>
+          <Select
+            id="category"
+            options={[{ name: 'None', _id: '' }, ...categories].map(
+              ({ name, _id }) => ({
+                label: name,
+                value: _id,
+              })
+            )}
+            isRequired
+          >
+            Category
+          </Select>
+        </div>
+      </Form>
     </>
   );
 };

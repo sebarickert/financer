@@ -10,7 +10,6 @@ import { Button } from '$elements/button/button';
 import { ButtonGroup } from '$elements/button/button.group';
 import { ButtonPlain } from '$elements/button/button.plain';
 import { Icon, IconName } from '$elements/icon/icon';
-import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { Radio } from '$elements/radio/radio';
 import { RadioGroup } from '$elements/radio/radio.group';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
@@ -25,10 +24,8 @@ export const TransactionTemplateSwitcher = ({
   templateType,
 }: TransactionTemplateSwitcherProps): JSX.Element | null => {
   const [isOpen, setIsOpen] = useState(false);
-  const {
-    currentData: transactionTemplates = [],
-    isLoading: isLoadingTemplates,
-  } = useTransactionTemplatesFindAllManualTypeByUserQuery();
+  const { currentData: transactionTemplates = [] } =
+    useTransactionTemplatesFindAllManualTypeByUserQuery();
 
   const targetTemplates = useMemo(
     () =>
@@ -62,7 +59,6 @@ export const TransactionTemplateSwitcher = ({
 
   return (
     <>
-      {isLoadingTemplates && <LoaderFullScreen />}
       <ButtonPlain
         onClick={handleToggleOpen}
         className="inline-flex items-center justify-center -mr-3 h-11 w-11"

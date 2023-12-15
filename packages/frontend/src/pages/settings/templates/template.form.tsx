@@ -15,7 +15,6 @@ import {
   TransactionCategoriesFormFields,
 } from '$blocks/transaction-categories/transaction-categories';
 import { Input } from '$elements/input/input';
-import { Loader } from '$elements/loader/loader';
 import { Select, Option } from '$elements/select/select';
 import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
 import { capitalize } from '$utils/capitalize';
@@ -58,8 +57,6 @@ const TransactionCategoriesFormWrapper = ({
       label: categoryTree,
     }));
   }, [transactionCategoriesRaw]);
-
-  if (!transactionCategories.length) return <Loader />;
 
   return (
     <TransactionCategories

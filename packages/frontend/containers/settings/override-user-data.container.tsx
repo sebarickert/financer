@@ -14,8 +14,7 @@ export const OverrideUserDataContainer = () => {
     useState<UserDataImportDto | null>(null);
   const [overrideFilename, setOverrideFilename] = useState<string | null>(null);
 
-  const [overrideProfileData, { isLoading }] =
-    useUsersOverrideAllOwnUserDataMutation();
+  const [overrideProfileData] = useUsersOverrideAllOwnUserDataMutation();
 
   const dispatch = useDispatch();
 
@@ -108,7 +107,6 @@ export const OverrideUserDataContainer = () => {
 
   return (
     <OverrideUserData
-      isLoading={isLoading}
       overrideFilename={overrideFilename}
       overrideAccountCount={overrideAccountCount}
       overrideTranactionCount={overrideTranactionCount}
