@@ -4,12 +4,11 @@ import { useState, useEffect } from 'react';
 import { ErrorBoundaryHandler } from '../../blocks/error-boundary/error-boundary';
 import { LoaderSuspense } from '../../elements/loader/loader-suspense';
 import { Container } from '../container/container';
-import { DesktopHeader } from '../desktop-header/desktop-header';
-import { MobileHeader } from '../mobile-header/mobile-header';
 
 import { Navigation } from '$blocks/navigation/navigation';
 import { ToastContainer } from '$blocks/toast/toast.container';
 import { LinkViewTransition } from '$elements/link/link-view-transition';
+import { Header } from '$layouts/header/header';
 
 type ChildrenWithErrorBoundaryProps = {
   children: React.ReactNode;
@@ -92,7 +91,7 @@ export const Layout = ({ children }: LayoutProps): JSX.Element => {
           </aside>
           <main>
             <div className="px-8 py-12" data-testid="layout-root">
-              <DesktopHeader />
+              <Header variant="desktop" />
               <ToastContainer className="mb-8 -mt-2" />
               <ChildrenWithErrorBoundary>{children}</ChildrenWithErrorBoundary>
             </div>
@@ -111,7 +110,7 @@ export const Layout = ({ children }: LayoutProps): JSX.Element => {
         </div>
       </main>
       <header>
-        <MobileHeader />
+        <Header variant="mobile" />
         <Navigation variant="mobile" />
       </header>
     </div>
