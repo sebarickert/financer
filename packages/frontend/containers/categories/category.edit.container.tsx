@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import {
   UpdateTransactionCategoryDto,
@@ -7,9 +7,11 @@ import {
   useTransactionCategoriesUpdateMutation,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
+import { ToastMessageTypes } from '$blocks/toast/toast';
 import { settingsPaths } from '$constants/settings-paths';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { CategoryEdit } from '$pages/settings/categories/category.edit';
+import { addToastMessage } from '$reducer/notifications.reducer';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 interface CategoryEditContainerProps {
@@ -18,13 +20,12 @@ interface CategoryEditContainerProps {
 
 export const CategoryEditContainer = ({ id }: CategoryEditContainerProps) => {
   const { push } = useViewTransitionRouter();
-  const [errors, setErrors] = useState<string[]>([]);
 
   const categoryData = useTransactionCategoriesFindOneQuery({ id });
   const { data: category } = categoryData;
   const [deleteTransactionCategory] = useTransactionCategoriesRemoveMutation();
-  const [editTransactionCategory, { isLoading: isSaving }] =
-    useTransactionCategoriesUpdateMutation();
+  const [editTransactionCategory] = useTransactionCategoriesUpdateMutation();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (
     newTransactionCategoryData: UpdateTransactionCategoryDto
@@ -49,7 +50,15 @@ export const CategoryEditContainer = ({ id }: CategoryEditContainerProps) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (error.status === 400 || error.status === 404) {
-        setErrors(parseErrorMessagesToArray(error?.data?.message));
+        dispatch(
+          addToastMessage({
+            type: ToastMessageTypes.ERROR,
+            message: 'Submission failed',
+            additionalInformation: parseErrorMessagesToArray(
+              error?.data?.message
+            ),
+          })
+        );
         return;
       }
 
@@ -71,8 +80,6 @@ export const CategoryEditContainer = ({ id }: CategoryEditContainerProps) => {
           onSubmit={handleSubmit}
           onDelete={handleDelete}
           category={category}
-          errors={errors}
-          isLoading={isSaving}
         />
       )}
     </>

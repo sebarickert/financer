@@ -1,19 +1,21 @@
-import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { useTransactionTemplatesCreateMutation } from '$api/generated/financerApi';
+import { ToastMessageTypes } from '$blocks/toast/toast';
 import { settingsPaths } from '$constants/settings-paths';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import {
   TemplateAdd,
   CreateTransactionTemplateDtoWithCategory,
 } from '$pages/settings/templates/template.add';
+import { addToastMessage } from '$reducer/notifications.reducer';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 export const TemplateAddContainer = () => {
   const { push } = useViewTransitionRouter();
-  const [errors, setErrors] = useState<string[]>([]);
-  const [addTransactionTemplate, { isLoading: isCreating }] =
-    useTransactionTemplatesCreateMutation();
+
+  const [addTransactionTemplate] = useTransactionTemplatesCreateMutation();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (
     newTransactionTemplateData: CreateTransactionTemplateDtoWithCategory
@@ -34,7 +36,15 @@ export const TemplateAddContainer = () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (error.status === 400 || error.status === 404) {
-        setErrors(parseErrorMessagesToArray(error?.data?.message));
+        dispatch(
+          addToastMessage({
+            type: ToastMessageTypes.ERROR,
+            message: 'Submission failed',
+            additionalInformation: parseErrorMessagesToArray(
+              error?.data?.message
+            ),
+          })
+        );
         return;
       }
 
@@ -43,11 +53,5 @@ export const TemplateAddContainer = () => {
     }
   };
 
-  return (
-    <TemplateAdd
-      onSubmit={handleSubmit}
-      errors={errors}
-      isLoading={isCreating}
-    />
-  );
+  return <TemplateAdd onSubmit={handleSubmit} />;
 };
