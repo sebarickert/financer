@@ -20,7 +20,7 @@ export const TransferListingContainer = ({
         backLink="/statistics"
         headerAction={
           <ButtonInternal
-            link="/statistics/tranfers/add"
+            link="/statistics/transfers/add"
             className="inline-flex items-center justify-center -mr-3 h-11 w-11"
             testId="add-transfer"
           >
