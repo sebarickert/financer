@@ -13,13 +13,7 @@ export const AccountContainer = ({ id }: AccountContainerProps) => {
   return (
     <>
       <DataHandler {...data} />
-      {account && (
-        <Account
-          // @todo: fetch endpoiint loading states here
-          isLoading={false}
-          account={account}
-        />
-      )}
+      {account && <Account account={account} />}
     </>
   );
 };

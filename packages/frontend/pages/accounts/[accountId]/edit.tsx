@@ -1,12 +1,12 @@
-import { EditAccountContainer } from '$container/accounts/account.edit.container';
+import { AccountEditContainer } from '$container/accounts/account.edit.container';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 
-const EditAccountPage = () => {
+const AccountEditPage = () => {
   const {
     query: { accountId },
   } = useViewTransitionRouter();
 
-  return <EditAccountContainer id={accountId as string} />;
+  return <AccountEditContainer id={accountId as string} />;
 };
 
-export default EditAccountPage;
+export default AccountEditPage;
