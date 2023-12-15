@@ -1,6 +1,4 @@
-import {
-  submitTransactionCategoryForm,
-} from '$utils/api-helper';
+import { submitTransactionCategoryForm } from '$utils/api-helper';
 import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
 
@@ -66,7 +64,7 @@ test.describe('Add expense with category', () => {
       );
 
       if (!targetElement) return;
-      
+
       targetElement.innerHTML = `${targetElement.innerHTML}<option value="123456789012345678901234">non-existing-category</option>`;
     });
 
@@ -78,9 +76,7 @@ test.describe('Add expense with category', () => {
     await page.getByTestId('submit').click();
 
     const formErrors = page.getByTestId('toast-item');
-    await expect(formErrors).toContainText(
-      'Submission failed',
-    );
+    await expect(formErrors).toContainText('Submission failed');
     await expect(formErrors).toContainText(
       'One or more categories does not exist.',
     );
