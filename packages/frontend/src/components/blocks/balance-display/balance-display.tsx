@@ -1,12 +1,12 @@
 import clsx from 'clsx';
 
-import { TransactionTypeEnum } from '$api/generated/financerApi';
+import { TransactionType } from '$blocks/transaction-listing/transaction-listing.item';
 import { Icon, IconName } from '$elements/icon/icon';
 import { formatCurrency } from '$utils/formatCurrency';
 
 interface BalanceDisplayProps {
   className?: string;
-  type?: Exclude<TransactionTypeEnum, TransactionTypeEnum.Any>;
+  type?: TransactionType;
   children?: string;
   amount: number;
   iconName?: IconName;
@@ -32,17 +32,17 @@ export const BalanceDisplay = ({
   };
 
   const typeMapping = {
-    [TransactionTypeEnum.Income]: {
+    [TransactionType.INCOME]: {
       balance: `+ ${formattedAmount}`,
       icon: IconName.download,
       color: 'text-green',
     },
-    [TransactionTypeEnum.Expense]: {
+    [TransactionType.EXPENSE]: {
       balance: `- ${formattedAmount}`,
       icon: IconName.upload,
       color: 'text-red',
     },
-    [TransactionTypeEnum.Transfer]: {
+    [TransactionType.TRANSFER]: {
       icon: IconName.switchHorizontal,
     },
   };

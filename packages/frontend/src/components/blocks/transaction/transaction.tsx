@@ -1,13 +1,9 @@
 import { useCallback, useMemo } from 'react';
 
-import {
-  ExpenseDto,
-  IncomeDto,
-  TransactionTypeEnum,
-  TransferDto,
-} from '$api/generated/financerApi';
+import { ExpenseDto, IncomeDto, TransferDto } from '$api/generated/financerApi';
 import { BalanceDisplay } from '$blocks/balance-display/balance-display';
 import { DetailsList } from '$blocks/details-list/details-list';
+import { TransactionType } from '$blocks/transaction-listing/transaction-listing.item';
 import { ButtonInternal } from '$elements/button/button.internal';
 import { Heading } from '$elements/heading/heading';
 import { Icon, IconName } from '$elements/icon/icon';
@@ -16,6 +12,7 @@ import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { capitalize } from '$utils/capitalize';
 import { formatCurrency } from '$utils/formatCurrency';
 import { formatDateLong } from '$utils/formatDate';
+import { getTransactionType } from '$utils/transaction/getTransactionType';
 
 interface TransactionProps {
   transaction: IncomeDto | ExpenseDto | TransferDto;
@@ -38,40 +35,26 @@ export const Transaction = ({
     [transactionCategories]
   );
 
-  const transactionType = useMemo(() => {
-    if (toAccount && fromAccount) {
-      return TransactionTypeEnum.Transfer;
-    }
-    if (toAccount && !fromAccount) {
-      return TransactionTypeEnum.Income;
-    }
-    if (!toAccount && fromAccount) {
-      return TransactionTypeEnum.Expense;
-    }
-
-    return undefined;
-  }, [fromAccount, toAccount]);
+  const transactionType = getTransactionType(toAccount, fromAccount);
 
   const transactionDetailsMapping = useMemo(() => {
     switch (transactionType) {
-      case TransactionTypeEnum.Transfer:
+      case TransactionType.TRANSFER:
         return {
           type: 'transfer',
           url: 'transfers',
         };
-      case TransactionTypeEnum.Income:
+      case TransactionType.INCOME:
         return {
           type: 'income',
           url: 'incomes',
         };
-      case TransactionTypeEnum.Expense:
+      case TransactionType.EXPENSE:
         return {
           type: 'expense',
           url: 'expenses',
         };
     }
-
-    return {};
   }, [transactionType]);
 
   const transactionDetails = useMemo(

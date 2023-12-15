@@ -9,9 +9,9 @@ import {
   useTransactionsFindAllByUserQuery,
 } from '$api/generated/financerApi';
 import {
-  LatestTransactions,
-  LatestTransactionsProps,
-} from '$blocks/latest-transactions/latest-transactions';
+  TransactionListingContainer,
+  TransactionListingContainerProps,
+} from '$blocks/transaction-listing/transaction-listing.container';
 import { monthNames } from '$constants/months';
 import { LoaderSuspense } from '$elements/loader/loader-suspense';
 import { useFirstTransaction } from '$hooks/transaction/useFirstTransaction';
@@ -28,8 +28,10 @@ interface TransactionListingWithMonthlyPagerProps {
   initialDate?: string;
   initialPage?: number;
   isSummaryVisible?: boolean;
+  // @todo: create filter type
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   additionalFilterOptions?: any;
-  useDataHook?: LatestTransactionsProps['useDataHook'];
+  useDataHook?: TransactionListingContainerProps['useDataHook'];
 }
 
 export const TransactionListingWithMonthlyPager = ({
@@ -89,6 +91,7 @@ export const TransactionListingWithMonthlyPager = ({
         selectedMonth.getMonth() + (direction === 'next' ? 1 : -1)
       );
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       setFilterOptions((prev: any) => ({
         ...prev,
         month: selectedMonth.getMonth() + 1,
@@ -139,7 +142,7 @@ export const TransactionListingWithMonthlyPager = ({
             filterOptions={filterOptions}
           />
         )}
-        <LatestTransactions
+        <TransactionListingContainer
           filterOptions={filterOptions}
           className="mt-4"
           useDataHook={useDataHook}

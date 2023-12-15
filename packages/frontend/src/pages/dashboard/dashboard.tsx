@@ -1,8 +1,9 @@
 import { BalanceGraph } from '../../components/blocks/balance-graph/balance-graph';
 import { DashboardStats } from '../../components/blocks/dashboard-stats/dashboard.stats';
-import { LatestTransactions } from '../../components/blocks/latest-transactions/latest-transactions';
 import { Heading } from '../../components/elements/heading/heading';
 import { UpdatePageInfo } from '../../components/renderers/seo/updatePageInfo';
+
+import { TransactionListingContainer } from '$blocks/transaction-listing/transaction-listing.container';
 
 export const Dashboard = (): JSX.Element => {
   return (
@@ -15,7 +16,10 @@ export const Dashboard = (): JSX.Element => {
           <Heading className="mb-4" ctaLabel="See all" ctaUrl="/statistics">
             Recent activity
           </Heading>
-          <LatestTransactions isPagerHidden filterOptions={{ limit: 8 }} />
+          <TransactionListingContainer
+            isPagerHidden
+            filterOptions={{ limit: 8 }}
+          />
         </section>
       </section>
     </>

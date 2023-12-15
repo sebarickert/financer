@@ -3,7 +3,7 @@ import {
   useAccountsFindOneByIdQuery,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
-import { Transaction } from '$renderers/transaction/transaction';
+import { Transaction } from '$blocks/transaction/transaction';
 
 interface IncomeContainerProps {
   id: string;
