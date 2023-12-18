@@ -2,6 +2,7 @@ import {
   CategoryScale,
   Chart,
   Filler,
+  LineController,
   LineElement,
   LinearScale,
   PointElement,
@@ -22,6 +23,7 @@ const ChartWrapper = ({ children }: ChartWrapperProps) => {
     const register = async () => {
       if (typeof window !== 'undefined') {
         Chart.register(
+          LineController,
           PointElement,
           LineElement,
           Filler,
