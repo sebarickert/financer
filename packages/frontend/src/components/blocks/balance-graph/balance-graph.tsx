@@ -1,4 +1,4 @@
-import { ChartOptions } from 'chart.js';
+import { ChartData, ChartOptions } from 'chart.js';
 import clsx from 'clsx';
 import { useMemo } from 'react';
 import { Chart } from 'react-chartjs-2';
@@ -17,6 +17,7 @@ import {
   formatCurrency,
 } from '$utils/formatCurrency';
 import { formatDateShort } from '$utils/formatDate';
+import { setGradientLineGraphBackground } from '$utils/graph/setGradientLineGraphBackground';
 
 export type BalanceHistory = {
   date: Date;
@@ -31,6 +32,8 @@ const yearAgoFilterOptions = {
   year: new Date().getFullYear() - 1,
   month: new Date().getMonth(),
 };
+
+const fontFamily = 'Euclid Circular A';
 
 export const BalanceGraph = ({
   className = '',
@@ -120,152 +123,166 @@ export const BalanceGraph = ({
 
   const labels = balanceHistory.map(({ date }, index) => {
     if (balanceHistory.length - 1 === index) {
-      return 'Current';
+      return 'Current'.toUpperCase();
     }
 
-    return formatDateShort(date);
+    return formatDateShort(date).toUpperCase();
   });
 
-  const options: ChartOptions = {
-    maintainAspectRatio: false,
-    layout: {
-      autoPadding: false,
-      padding: {
-        right: -10,
-      },
-    },
-    scales: {
-      x: {
-        grid: {
-          display: false,
-          drawBorder: false,
-        },
-        ticks: {
-          padding: 0,
-          autoSkip: false,
-          maxRotation: 0,
-          callback: function (val, index, ticks) {
-            if (ticks.length === 1) return null;
-
-            if (ticks.length <= 3) return this.getLabelForValue(Number(val));
-
-            if (index === 0 || ticks.length - 1 === index) return null;
-
-            if (ticks.length === 4) {
-              return this.getLabelForValue(Number(val));
-            }
-
-            if (ticks.length % 3 === 0) {
-              return index % 3 === 1
-                ? this.getLabelForValue(Number(val))
-                : null;
-            }
-
-            return index % 2 === 1 ? this.getLabelForValue(Number(val)) : null;
-          },
-          color: colorPalette.charcoal,
-          font: {
-            size: 13,
-            family: 'Inter',
-            lineHeight: 1.5,
+  const chartOptions = useMemo(
+    () =>
+      ({
+        maintainAspectRatio: false,
+        layout: {
+          autoPadding: false,
+          padding: {
+            right: -10,
           },
         },
-      },
-      y: {
-        position: 'right',
-        grid: {
-          color: colorPalette['gray-dark'],
-          drawBorder: false,
-        },
-        ticks: {
-          mirror: true,
-          padding: 0,
-          callback: function (val, index, ticks) {
-            if (index % 2 === 0 || ticks.length - 1 === index) return null;
+        scales: {
+          x: {
+            border: {
+              display: false,
+            },
+            grid: {
+              display: false,
+            },
+            ticks: {
+              padding: 0,
+              maxRotation: 0,
+              callback: function (val, index, ticks) {
+                if (ticks.length === 1) return null;
 
-            return `${formatCurrencyAbbreviation(Number(val))} `;
+                if (ticks.length <= 3)
+                  return this.getLabelForValue(Number(val));
+
+                if (index === 0 || ticks.length - 1 === index) return null;
+
+                if (ticks.length === 4) {
+                  return this.getLabelForValue(Number(val));
+                }
+
+                if (ticks.length % 3 === 0) {
+                  return index % 3 === 1
+                    ? this.getLabelForValue(Number(val))
+                    : null;
+                }
+
+                return index % 2 === 1
+                  ? this.getLabelForValue(Number(val))
+                  : null;
+              },
+              color: `${colorPalette.charcoal}99`,
+              font: {
+                size: 12,
+                family: fontFamily,
+                weight: 'normal',
+              },
+            },
+          },
+          y: {
+            position: 'right',
+            border: {
+              display: false,
+            },
+            grid: {
+              color: `${colorPalette.charcoal}0D`,
+            },
+            ticks: {
+              mirror: true,
+              padding: 0,
+              callback: function (val, index, ticks) {
+                if (index % 2 === 0 || ticks.length - 1 === index) return null;
+
+                return `${formatCurrencyAbbreviation(Number(val))} `;
+              },
+              color: `${colorPalette.charcoal}66`,
+            },
           },
         },
-      },
-    },
-    elements: {
-      point: {
-        hitRadius: 32,
-        radius: 0,
-        hoverBorderWidth: 3,
-        hoverRadius: 3,
-        hoverBorderColor: colorPalette.blue,
-        hoverBackgroundColor: colorPalette.blue,
-      },
-      line: {
-        borderWidth: 2,
-      },
-    },
-    plugins: {
-      legend: {
-        display: false,
-      },
-      filler: {
-        propagate: true,
-      },
-      tooltip: {
-        backgroundColor: colorPalette.charcoal,
-        padding: 16,
-        mode: 'index',
-        intersect: true,
-        position: 'nearest',
-        bodySpacing: 6,
-        displayColors: false,
-        titleFont: {
-          size: 16,
-          family: 'Inter',
-          weight: '600',
-        },
-        bodyFont: {
-          size: 16,
-          family: 'Inter',
-        },
-        callbacks: {
-          label: (context) => {
-            const label = context.dataset.label || '';
-
-            if (!context.parsed.y) {
-              return label;
-            }
-
-            return `${label} ${formatCurrency(context.parsed.y as number)}`;
+        elements: {
+          point: {
+            hitRadius: 32,
+            radius: 0,
+            hoverBorderWidth: 3,
+            hoverRadius: 3,
+            hoverBorderColor: colorPalette.blue,
+            hoverBackgroundColor: colorPalette.blue,
+          },
+          line: {
+            borderWidth: 2,
           },
         },
-      },
-    },
-  };
+        plugins: {
+          legend: {
+            display: false,
+          },
+          filler: {
+            propagate: true,
+          },
+          tooltip: {
+            backgroundColor: colorPalette.charcoal,
+            padding: 16,
+            mode: 'index',
+            intersect: true,
+            position: 'nearest',
+            bodySpacing: 6,
+            displayColors: false,
+            titleFont: {
+              size: 15,
+              family: fontFamily,
+            },
+            bodyFont: {
+              size: 15,
+              family: fontFamily,
+            },
+            callbacks: {
+              label: (context) => {
+                const label = context.dataset.label || '';
 
-  const data = {
-    labels,
-    datasets: [
-      {
-        label: 'Balance',
-        borderColor: colorPalette.blue,
-        fill: {
-          target: 'origin',
-          above: `${colorPalette.blue}1A`,
-          below: `${colorPalette.blue}1A`,
+                if (!context.parsed.y) {
+                  return label;
+                }
+
+                return `${label} ${formatCurrency(
+                  context.parsed.y as number
+                )}`.toUpperCase();
+              },
+            },
+          },
         },
-        data: balanceHistory.map(({ balance }) => balance),
-      },
-    ],
-  };
+      } as ChartOptions),
+    []
+  );
+
+  const chartData = useMemo(
+    () =>
+      ({
+        labels,
+        datasets: [
+          {
+            label: 'Balance',
+            fill: true,
+            borderColor: colorPalette.blue,
+            backgroundColor: setGradientLineGraphBackground,
+            data: balanceHistory.map(({ balance }) => balance),
+          },
+        ],
+      } as ChartData),
+    [balanceHistory, labels]
+  );
+
   return (
     <section
       className={clsx(
-        'min-h-[300px] h-[20vh] md:min-h-[500px] md:aspect-auto relative max-lg:-mx-4 pb-1',
+        'min-h-[200px] md:min-h-[400px] md:aspect-auto relative max-lg:-mx-4',
         {
           [className]: true,
         }
       )}
     >
       <ChartWrapperDynamic>
-        <Chart type="line" data={data} options={options} />
+        <Chart type="line" data={chartData} options={chartOptions} />
       </ChartWrapperDynamic>
     </section>
   );

@@ -6,16 +6,12 @@ import { addLeadingZero } from './addLeadingZero';
 
 const formatter = new Intl.DateTimeFormat('fi-FI');
 
-export const getShortYear = (date: Date) =>
-  date.getFullYear().toString().slice(-2);
-
 export const getShortMonthAbbreviation = (date: Date) =>
   monthNamesAbbreviation[date.getMonth()];
 
 export const formatDate = (date: Date): string => formatter.format(date);
 
-export const formatDateShort = (date: Date): string =>
-  `${getShortMonthAbbreviation(date)} '${getShortYear(date)}`;
+export const formatDateShort = (date: Date): string => format(date, 'LLL yy');
 
 export const formatDateLong = (date: Date): string =>
   format(date, 'dd.MM.yyyy, HH:mm');

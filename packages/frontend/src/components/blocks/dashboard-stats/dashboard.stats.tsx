@@ -73,14 +73,14 @@ export const DashboardStats = ({
   return (
     <section
       className={clsx(
-        'lg:grid grid-cols-[1.5fr,2fr] lg:border-b lg:border-gray-dark lg:pb-6 lg:divide-x lg:divide-gray-dark',
+        'lg:grid grid-cols-[1.5fr,2fr] lg:pb-6 lg:divide-x lg:divide-gray-dark',
         className
       )}
     >
       <BalanceDisplay amount={balance}>Balance</BalanceDisplay>
       <DetailsList
         items={monthlyDetails}
-        className="max-lg:py-4 max-lg:border-t max-lg:border-b max-lg:border-gray-dark max-lg:mt-6 lg:pl-6"
+        className="max-lg:py-4 max-lg:border-t max-lg:border-gray-dark max-lg:mt-6 lg:pl-6"
       />
     </section>
   );
