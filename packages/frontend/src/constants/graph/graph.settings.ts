@@ -53,7 +53,6 @@ export const baseChartOptions = {
         padding: 0,
         callback: function (val, index, ticks) {
           if (index % 2 === 0 || ticks.length - 1 === index) return null;
-
           return `${formatCurrencyAbbreviation(Number(val))} `;
         },
         color: `${colorPalette.charcoal}66`,
@@ -100,11 +99,9 @@ export const baseChartOptions = {
       callbacks: {
         label: (context) => {
           const label = context.dataset.label || '';
-
           if (!context.parsed.y) {
             return `${label} ${formatCurrency(0)}`.toUpperCase();
           }
-
           return `${label} ${formatCurrency(
             context.parsed.y as number
           )}`.toUpperCase();

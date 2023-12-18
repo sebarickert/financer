@@ -1,4 +1,12 @@
-import ChartJS from 'chart.js/auto';
+import {
+  CategoryScale,
+  Chart,
+  Filler,
+  LineElement,
+  LinearScale,
+  PointElement,
+  Tooltip,
+} from 'chart.js';
 import { useEffect, useState } from 'react';
 
 import { Loader } from '$elements/loader/loader';
@@ -13,7 +21,14 @@ const ChartWrapper = ({ children }: ChartWrapperProps) => {
   useEffect(() => {
     const register = async () => {
       if (typeof window !== 'undefined') {
-        ChartJS.register();
+        Chart.register(
+          PointElement,
+          LineElement,
+          Filler,
+          Tooltip,
+          CategoryScale,
+          LinearScale
+        );
         setIsInitialized(true);
       }
     };
