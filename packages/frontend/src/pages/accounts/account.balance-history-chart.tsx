@@ -100,7 +100,7 @@ export const AccountBalanceHistoryChart = ({
     [accountBalanceHistory, labels]
   );
 
-  if (!accountBalanceHistory?.length) {
+  if (!accountBalanceHistory?.length || accountBalanceHistory.length === 1) {
     return null;
   }
 

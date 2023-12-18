@@ -172,7 +172,7 @@ export const Category = ({
       />
       <section>
         <DetailsList items={categoryDetails} className="mb-8" />
-        {!categoryHistory?.length ? null : (
+        {!categoryHistory?.length || categoryHistory.length === 1 ? null : (
           <div className="min-h-[300px] h-[20vh] md:h-auto md:min-h-0 md:aspect-video -mx-4 md:-mx-0">
             <ChartWrapperDynamic>
               <Chart type="line" data={chartData} options={chartOptions} />
