@@ -7,7 +7,6 @@
     "@reduxjs/toolkit": "^1.9.1",
     "@testing-library/jest-dom": "^6.1.5",
     "chart.js": "^4.4.1",
-    "chartjs-plugin-zoom": "^2.0.1",
     "clsx": "^1.2.1",
     "date-fns": "^2.30.0",
     "http-proxy-middleware": "^2.0.6",
