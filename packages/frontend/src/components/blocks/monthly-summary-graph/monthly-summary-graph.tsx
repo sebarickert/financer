@@ -194,7 +194,9 @@ export const MonthlySummaryGraph = ({
     [labels, monthlySummaryHistory]
   );
 
-  if (!monthlySummaryHistory?.length) return null;
+  if (!monthlySummaryHistory?.length || monthlySummaryHistory.length === 1) {
+    return null;
+  }
 
   return (
     <section className={`${className}`}>

@@ -29,7 +29,7 @@ const yearAgoFilterOptions = {
   month: new Date().getMonth(),
 };
 
-export const BalanceGraph = ({}: BalanceGraphProps): JSX.Element => {
+export const BalanceGraph = ({}: BalanceGraphProps): JSX.Element | null => {
   const { data: dashboardSettings } = useUserDashboardSettings();
   const accountTypeFilter = { accountTypes: dashboardSettings?.accountTypes };
 
@@ -175,6 +175,10 @@ export const BalanceGraph = ({}: BalanceGraphProps): JSX.Element => {
       } as ChartData),
     [balanceHistory, labels]
   );
+
+  if (!balanceHistory?.length || balanceHistory.length === 1) {
+    return null;
+  }
 
   return (
     <ChartWrapperDynamic>
