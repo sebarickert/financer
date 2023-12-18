@@ -1,4 +1,4 @@
-import { ChartOptions } from 'chart.js';
+import { ChartData } from 'chart.js';
 import { useMemo } from 'react';
 import { Chart } from 'react-chartjs-2';
 
@@ -9,6 +9,7 @@ import {
 import { DetailsList } from '$blocks/details-list/details-list';
 import { TransactionListingWithMonthlyPager } from '$blocks/transaction-listing-with-monthly-pager/transaction-listing.with.monthly-pager';
 import { colorPalette } from '$constants/colorPalette';
+import { baseChartOptions } from '$constants/graph/graph.settings';
 import { MONTH_IN_MS } from '$constants/months';
 import { settingsPaths } from '$constants/settings-paths';
 import { ButtonInternal } from '$elements/button/button.internal';
@@ -17,14 +18,11 @@ import { Icon, IconName } from '$elements/icon/icon';
 import { Container } from '$layouts/container/container';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { capitalize } from '$utils/capitalize';
-import {
-  formatCurrencyAbbreviation,
-  formatCurrency,
-} from '$utils/formatCurrency';
 import { formatDate } from '$utils/formatDate';
+import { setGradientLineGraphBackground } from '$utils/graph/setGradientLineGraphBackground';
 import { parseParentCategoryPath } from 'src/services/TransactionCategoriesService';
 
-interface ChartData {
+interface CategoryHistory {
   dateStr: string;
   date: Date;
   balance: number;
@@ -45,7 +43,7 @@ export const Category = ({
 }: CategoryProps): JSX.Element => {
   const monthAgoDate = new Date().getTime() - MONTH_IN_MS;
 
-  const chartData: ChartData[] = useMemo(() => {
+  const categoryHistory: CategoryHistory[] = useMemo(() => {
     if (!category || !transactionsMonthlySummaries) return [];
 
     const getDateFromYearAndMonth = (year: number, month: number): Date =>
@@ -67,165 +65,47 @@ export const Category = ({
     return transactionCategoryTransactionHistoryStack;
   }, [category, transactionsMonthlySummaries]);
 
-  const labels = chartData.map(({ dateStr }) => {
+  const labels = categoryHistory.map(({ dateStr }) => {
     return dateStr;
   });
 
-  const monthAgoIndex = chartData.indexOf(
-    chartData.find((tick) => tick.date.getTime() > monthAgoDate) || chartData[0]
+  const monthAgoIndex = categoryHistory.indexOf(
+    categoryHistory.find((tick) => tick.date.getTime() > monthAgoDate) ||
+      categoryHistory[0]
   );
 
   const startIndex =
-    chartData.length - monthAgoIndex > 12
+    categoryHistory.length - monthAgoIndex > 12
       ? monthAgoIndex
-      : chartData.length - 12;
+      : categoryHistory.length - 12;
 
-  const options: ChartOptions = useMemo(() => {
-    return {
-      animation: false,
-      maintainAspectRatio: false,
-      layout: {
-        autoPadding: false,
-        padding: {
-          right: -10,
-        },
-      },
-      scales: {
-        x: {
-          min: startIndex,
-          grid: {
-            display: false,
-            drawBorder: false,
-          },
-          ticks: {
-            padding: 0,
-            maxRotation: 0,
-            callback: function (val, index, ticks) {
-              if (ticks.length === 1) return null;
+  const chartOptions = useMemo(() => {
+    const customChartOptions = baseChartOptions;
 
-              if (ticks.length <= 3) return this.getLabelForValue(Number(val));
+    if (customChartOptions?.scales?.x) {
+      customChartOptions.scales.x.min = startIndex;
+    }
 
-              if (index === 0 || ticks.length - 1 === index) return null;
-
-              return this.getLabelForValue(Number(val));
-            },
-            color: colorPalette.charcoal,
-            font: {
-              size: 13,
-              family: 'Inter',
-              lineHeight: 1.5,
-            },
-          },
-        },
-        y: {
-          position: 'right',
-          grid: {
-            color: colorPalette['gray-dark'],
-            drawBorder: false,
-          },
-          ticks: {
-            mirror: true,
-            padding: 0,
-            callback: function (val, index, ticks) {
-              if (index % 2 === 0 || ticks.length - 1 === index) return null;
-
-              return `${formatCurrencyAbbreviation(Number(val))} `;
-            },
-          },
-        },
-      },
-      elements: {
-        point: {
-          hitRadius: 32,
-          radius: 0,
-          hoverBorderWidth: 3,
-          hoverRadius: 3,
-          hoverBorderColor: colorPalette.blue,
-          hoverBackgroundColor: colorPalette.blue,
-        },
-        line: {
-          borderWidth: 2,
-        },
-      },
-      plugins: {
-        legend: {
-          display: false,
-        },
-        filler: {
-          propagate: true,
-        },
-        tooltip: {
-          backgroundColor: colorPalette.charcoal,
-          padding: 16,
-          mode: 'index',
-          intersect: true,
-          position: 'nearest',
-          bodySpacing: 6,
-          displayColors: false,
-          titleFont: {
-            size: 16,
-            family: 'Inter',
-            weight: '600',
-          },
-          bodyFont: {
-            size: 16,
-            family: 'Inter',
-          },
-          callbacks: {
-            label: (context) => {
-              const label = context.dataset.label || '';
-
-              if (!context.parsed.y) {
-                return label;
-              }
-
-              return `${label} ${formatCurrency(context.parsed.y as number)}`;
-            },
-          },
-        },
-        zoom: {
-          limits: {
-            x: { minRange: 5 },
-          },
-          pan: {
-            enabled: true,
-            mode: 'x',
-          },
-          zoom: {
-            wheel: {
-              enabled: true,
-              speed: 0.5,
-            },
-            drag: {
-              enabled: true,
-              modifierKey: 'ctrl',
-              backgroundColor: `${colorPalette.blue}1A`,
-            },
-            pinch: {
-              enabled: true,
-            },
-            mode: 'x',
-          },
-        },
-      },
-    };
+    return customChartOptions;
   }, [startIndex]);
 
-  const data = {
-    labels,
-    datasets: [
-      {
-        label: 'Balance',
-        borderColor: colorPalette.blue,
-        fill: {
-          target: 'origin',
-          above: `${colorPalette.blue}1A`,
-          below: `${colorPalette.blue}1A`,
-        },
-        data: chartData.map(({ balance }) => balance),
-      },
-    ],
-  };
+  const chartData = useMemo(
+    () =>
+      ({
+        labels,
+        datasets: [
+          {
+            label: 'Balance',
+            fill: true,
+            borderColor: colorPalette.blue,
+            backgroundColor: setGradientLineGraphBackground,
+            data: categoryHistory.map(({ balance }) => balance),
+            tension: 0.25,
+          },
+        ],
+      } as ChartData),
+    [categoryHistory, labels]
+  );
 
   const categoryDetails = useMemo(() => {
     const categoryVisibilityCapitalized = category.visibility.map((item) =>
@@ -287,10 +167,10 @@ export const Category = ({
       />
       <section>
         <DetailsList items={categoryDetails} className="mb-8" />
-        {!chartData?.length ? null : (
+        {!categoryHistory?.length ? null : (
           <div className="min-h-[300px] h-[20vh] md:h-auto md:min-h-0 md:aspect-video -mx-4 md:-mx-0">
             <ChartWrapperDynamic>
-              <Chart type="line" data={data} options={options} />
+              <Chart type="line" data={chartData} options={chartOptions} />
             </ChartWrapperDynamic>
           </div>
         )}

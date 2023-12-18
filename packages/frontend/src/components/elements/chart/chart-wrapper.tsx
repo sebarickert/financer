@@ -13,9 +13,7 @@ const ChartWrapper = ({ children }: ChartWrapperProps) => {
   useEffect(() => {
     const register = async () => {
       if (typeof window !== 'undefined') {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const zoomPlugin = (await import('chartjs-plugin-zoom')) as any;
-        ChartJS.register(zoomPlugin);
+        ChartJS.register();
         setIsInitialized(true);
       }
     };
@@ -26,7 +24,13 @@ const ChartWrapper = ({ children }: ChartWrapperProps) => {
     return <Loader />;
   }
 
-  return children;
+  return (
+    <section
+      className={'min-h-[200px] md:min-h-[400px] md:aspect-auto max-lg:-mx-4'}
+    >
+      {children}
+    </section>
+  );
 };
 
 // eslint-disable-next-line import/no-default-export

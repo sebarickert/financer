@@ -1,4 +1,4 @@
-import { ChartOptions } from 'chart.js';
+import { ChartData } from 'chart.js';
 import { useMemo } from 'react';
 import { Chart } from 'react-chartjs-2';
 
@@ -8,10 +8,12 @@ import {
   useIncomesFindMonthlySummariesByuserQuery,
 } from '$api/generated/financerApi';
 import { colorPalette } from '$constants/colorPalette';
+import { baseChartOptions } from '$constants/graph/graph.settings';
 import { ChartWrapperDynamic } from '$elements/chart/chart-wrapper.dynamic';
 import { useUserStatisticsSettings } from '$hooks/settings/user-preference/useStatisticsSettings';
 import { formatCurrency } from '$utils/formatCurrency';
 import { formatDateShort } from '$utils/formatDate';
+import { setGradientLineGraphBackground } from '$utils/graph/setGradientLineGraphBackground';
 
 interface BalanceGraphProps {
   className?: string;
@@ -96,157 +98,93 @@ export const MonthlySummaryGraph = ({
       : monthlySummaryHistoryStack;
   }, [expenseMonthSummaries, incomeMonthSummaries]);
 
-  const labels = monthlySummaryHistory.map(({ date }) => formatDateShort(date));
+  const labels = monthlySummaryHistory.map(({ date }) =>
+    formatDateShort(date).toUpperCase()
+  );
 
-  const options: ChartOptions = useMemo(() => {
-    return {
-      responsive: true,
-      maintainAspectRatio: false,
-      layout: {
-        padding: {
-          left: -20,
-        },
-      },
-      scales: {
-        x: {
-          grid: {
-            display: false,
-            drawBorder: false,
-          },
-          ticks: {
-            minRotation: 0,
-            maxRotation: 0,
-            callback: function (val, index, ticks) {
-              if (ticks.length === 12) {
-                return index % 3 === 1
-                  ? this.getLabelForValue(Number(val))
-                  : '';
-              }
+  const chartOptions = useMemo(() => {
+    const customChartOptions = baseChartOptions;
 
-              return this.getLabelForValue(Number(val));
-            },
-            color: colorPalette.charcoal,
-            font: {
-              size: 13,
-              family: 'Inter',
-            },
-          },
-        },
-        y: {
-          max: 7500,
-          grid: {
-            drawBorder: false,
-            color: colorPalette['gray-dark'],
-          },
-          ticks: {
-            display: false,
-            maxTicksLimit: 4,
-          },
-        },
-        trendLine: {
-          axis: 'y',
-          grid: {
-            display: false,
-            drawBorder: false,
-          },
-          ticks: {
-            display: false,
-          },
-        },
-      },
-      elements: {
-        point: {
-          hitRadius: 32,
-          radius: 0,
-          hoverBorderWidth: 3,
-          hoverRadius: 3,
-          hoverBorderColor: colorPalette.blue,
-          hoverBackgroundColor: colorPalette.blue,
-        },
-        line: {
-          borderWidth: 2,
-        },
-      },
-      plugins: {
-        legend: {
-          display: false,
-        },
-        filler: {
-          propagate: true,
-        },
-        tooltip: {
-          backgroundColor: colorPalette.charcoal,
-          padding: 16,
-          mode: 'index',
-          intersect: true,
-          position: 'nearest',
-          bodySpacing: 6,
-          displayColors: false,
-          titleFont: {
-            size: 16,
-            family: 'Inter',
-            weight: '600',
-          },
-          bodyFont: {
-            size: 16,
-            family: 'Inter',
-          },
-          callbacks: {
-            label: (context) => {
-              const label = context.dataset.label || '';
+    if (customChartOptions?.scales?.x?.ticks) {
+      customChartOptions.scales.x.ticks.callback = function (
+        val,
+        index,
+        ticks
+      ) {
+        if (ticks.length === 1) return null;
 
-              if (!context.parsed.y) {
-                return `${label} ${formatCurrency(0)}`;
-              }
+        if (ticks.length <= 3) return this.getLabelForValue(Number(val));
 
-              return `${label} ${formatCurrency(context.parsed.y as number)}`;
-            },
-          },
-        },
-      },
-    };
+        if (index === 0 || ticks.length - 1 === index) return null;
+
+        if (ticks.length === 4) {
+          return this.getLabelForValue(Number(val));
+        }
+
+        if (ticks.length % 3 === 0) {
+          return index % 3 === 1 ? this.getLabelForValue(Number(val)) : null;
+        }
+
+        return index % 2 === 1 ? this.getLabelForValue(Number(val)) : null;
+      };
+    }
+
+    if (customChartOptions?.scales?.y) {
+      customChartOptions.scales.y.max = 15000;
+    }
+
+    if (customChartOptions?.plugins?.tooltip?.callbacks) {
+      customChartOptions.plugins.tooltip.callbacks.footer = (items) => {
+        const income =
+          items.find(
+            ({ dataset: { label } }) => label?.toLowerCase() === 'incomes'
+          )?.parsed.y ?? 0;
+        const expense =
+          items.find(
+            ({ dataset: { label } }) => label?.toLowerCase() === 'expenses'
+          )?.parsed.y ?? 0;
+
+        const netTotal = income - expense;
+
+        return `Net total ${formatCurrency(netTotal)}`.toUpperCase();
+      };
+    }
+
+    return customChartOptions;
   }, []);
 
-  const data = {
-    labels,
-    datasets: [
-      {
-        type: 'bar' as const,
-        label: 'Incomes',
-        backgroundColor: colorPalette.green,
-        data: monthlySummaryHistory.map(({ incomes }) => incomes),
-        yAxisID: 'y',
-      },
-      {
-        type: 'bar' as const,
-        label: 'Expenses',
-        backgroundColor: colorPalette.red,
-        data: monthlySummaryHistory.map(({ expenses }) => expenses),
-        yAxisID: 'y',
-      },
-      {
-        type: 'line' as const,
-        label: 'Net total',
-        borderColor: colorPalette.blue,
-        fill: {
-          target: 'origin',
-          above: `${colorPalette.blue}1A`,
-          below: `${colorPalette.blue}1A`,
-        },
-        data: monthlySummaryHistory.map(({ netStatus }) => netStatus),
-        yAxisID: 'trendLine',
-      },
-    ],
-  };
+  const chartData = useMemo(
+    () =>
+      ({
+        labels,
+        datasets: [
+          {
+            label: 'Incomes',
+            fill: true,
+            borderColor: colorPalette.green,
+            backgroundColor: setGradientLineGraphBackground,
+            data: monthlySummaryHistory.map(({ incomes }) => incomes),
+            tension: 0.25,
+          },
+          {
+            label: 'Expenses',
+            fill: true,
+            borderColor: colorPalette.red,
+            backgroundColor: setGradientLineGraphBackground,
+            data: monthlySummaryHistory.map(({ expenses }) => expenses),
+            tension: 0.25,
+          },
+        ],
+      } as ChartData),
+    [labels, monthlySummaryHistory]
+  );
 
   if (!monthlySummaryHistory?.length) return null;
 
   return (
-    <section
-      className={`min-h-[300px] h-[20vh] md:h-auto md:min-h-0 md:aspect-video max-md:-mx-4 ${className}`}
-    >
+    <section className={`${className}`}>
       <ChartWrapperDynamic>
-        <Chart type="bar" data={data} options={options} />
+        <Chart type="line" data={chartData} options={chartOptions} />
       </ChartWrapperDynamic>
     </section>
   );
