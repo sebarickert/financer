@@ -1,4 +1,4 @@
-import { ChartData } from 'chart.js';
+import { ChartData, ChartOptions } from 'chart.js';
 import { useMemo } from 'react';
 import { Chart } from 'react-chartjs-2';
 
@@ -80,11 +80,16 @@ export const Category = ({
       : categoryHistory.length - 12;
 
   const chartOptions = useMemo(() => {
-    const customChartOptions = baseChartOptions;
-
-    if (customChartOptions?.scales?.x) {
-      customChartOptions.scales.x.min = startIndex;
-    }
+    const customChartOptions = {
+      ...baseChartOptions,
+      scales: {
+        ...baseChartOptions?.scales,
+        x: {
+          ...baseChartOptions?.scales?.x,
+          min: startIndex,
+        },
+      },
+    } as ChartOptions;
 
     return customChartOptions;
   }, [startIndex]);

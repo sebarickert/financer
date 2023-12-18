@@ -1,5 +1,5 @@
 import { AccountDto } from '@local/types';
-import { ChartData } from 'chart.js';
+import { ChartData, ChartOptions } from 'chart.js';
 import { useMemo } from 'react';
 import { Chart } from 'react-chartjs-2';
 
@@ -56,27 +56,28 @@ export const AccountBalanceHistoryChart = ({
   });
 
   const chartOptions = useMemo(() => {
-    const customChartOptions = baseChartOptions;
+    const customChartOptions = {
+      ...baseChartOptions,
+      scales: {
+        ...baseChartOptions?.scales,
+        x: {
+          ...baseChartOptions?.scales?.x,
+          min: startIndex,
+          ticks: {
+            ...baseChartOptions?.scales?.x?.ticks,
+            callback: function (val, index, ticks) {
+              if (ticks.length === 1) return null;
 
-    if (customChartOptions?.scales?.x) {
-      customChartOptions.scales.x.min = startIndex;
-    }
+              if (ticks.length <= 3) return this.getLabelForValue(Number(val));
 
-    if (customChartOptions?.scales?.x?.ticks) {
-      customChartOptions.scales.x.ticks.callback = function (
-        val,
-        index,
-        ticks
-      ) {
-        if (ticks.length === 1) return null;
+              if (index === 0 || ticks.length - 1 === index) return null;
 
-        if (ticks.length <= 3) return this.getLabelForValue(Number(val));
-
-        if (index === 0 || ticks.length - 1 === index) return null;
-
-        return this.getLabelForValue(Number(val));
-      };
-    }
+              return this.getLabelForValue(Number(val));
+            },
+          },
+        },
+      },
+    } as ChartOptions;
 
     return customChartOptions;
   }, [startIndex]);

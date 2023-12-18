@@ -1,4 +1,4 @@
-import { ChartData } from 'chart.js';
+import { ChartData, ChartOptions } from 'chart.js';
 import { useMemo } from 'react';
 import { Chart } from 'react-chartjs-2';
 
@@ -121,31 +121,39 @@ export const BalanceGraph = ({}: BalanceGraphProps): JSX.Element => {
   });
 
   const chartOptions = useMemo(() => {
-    const customChartOptions = baseChartOptions;
+    const customChartOptions = {
+      ...baseChartOptions,
+      scales: {
+        ...baseChartOptions?.scales,
+        x: {
+          ...baseChartOptions?.scales?.x,
+          ticks: {
+            ...baseChartOptions?.scales?.x?.ticks,
+            callback: function (val, index, ticks) {
+              if (ticks.length === 1) return null;
 
-    if (customChartOptions?.scales?.x?.ticks) {
-      customChartOptions.scales.x.ticks.callback = function (
-        val,
-        index,
-        ticks
-      ) {
-        if (ticks.length === 1) return null;
+              if (ticks.length <= 3) return this.getLabelForValue(Number(val));
 
-        if (ticks.length <= 3) return this.getLabelForValue(Number(val));
+              if (index === 0 || ticks.length - 1 === index) return null;
 
-        if (index === 0 || ticks.length - 1 === index) return null;
+              if (ticks.length === 4) {
+                return this.getLabelForValue(Number(val));
+              }
 
-        if (ticks.length === 4) {
-          return this.getLabelForValue(Number(val));
-        }
+              if (ticks.length % 3 === 0) {
+                return index % 3 === 1
+                  ? this.getLabelForValue(Number(val))
+                  : null;
+              }
 
-        if (ticks.length % 3 === 0) {
-          return index % 3 === 1 ? this.getLabelForValue(Number(val)) : null;
-        }
-
-        return index % 2 === 1 ? this.getLabelForValue(Number(val)) : null;
-      };
-    }
+              return index % 2 === 1
+                ? this.getLabelForValue(Number(val))
+                : null;
+            },
+          },
+        },
+      },
+    } as ChartOptions;
 
     return customChartOptions;
   }, []);
