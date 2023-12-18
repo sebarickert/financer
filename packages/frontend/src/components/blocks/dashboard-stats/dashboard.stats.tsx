@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import {
   useIncomesFindMonthlySummariesByuserQuery,
   useExpensesFindMonthlySummariesByuserQuery,
+  TransactionMonthSummaryDto,
 } from '$api/generated/financerApi';
 import { BalanceDisplay } from '$blocks/balance-display/balance-display';
 import { DetailsList } from '$blocks/details-list/details-list';
@@ -19,7 +20,7 @@ const currentMonthFilterOptions = {
   year: new Date().getFullYear(),
   month: new Date().getMonth() + 1,
 };
-const emptyTotalAmount = [{ totalAmount: 0 }];
+const emptyTotalAmount = 0;
 
 export const DashboardStats = ({
   className = '',
@@ -29,20 +30,25 @@ export const DashboardStats = ({
 
   const { data: totalBalance } = useTotalBalance(accountTypeFilter);
 
-  const incomeMonthSummaryData = useIncomesFindMonthlySummariesByuserQuery({
-    ...currentMonthFilterOptions,
-    ...accountTypeFilter,
-  });
+  const { data: incomeMonthSummary } =
+    useIncomesFindMonthlySummariesByuserQuery({
+      ...currentMonthFilterOptions,
+      ...accountTypeFilter,
+    });
 
-  const expenseMonthSummary = useExpensesFindMonthlySummariesByuserQuery({
-    ...currentMonthFilterOptions,
-    ...accountTypeFilter,
-  });
+  const { data: expenseMonthSummary } =
+    useExpensesFindMonthlySummariesByuserQuery({
+      ...currentMonthFilterOptions,
+      ...accountTypeFilter,
+    });
 
-  const { data: [{ totalAmount: totalIncomes }] = emptyTotalAmount } =
-    incomeMonthSummaryData;
-  const { data: [{ totalAmount: totalExpenses }] = emptyTotalAmount } =
-    expenseMonthSummary;
+  const totalIncomes =
+    (incomeMonthSummary as TransactionMonthSummaryDto[])?.[0]?.totalAmount ??
+    emptyTotalAmount;
+
+  const totalExpenses =
+    (expenseMonthSummary as TransactionMonthSummaryDto[])?.[0]?.totalAmount ??
+    emptyTotalAmount;
 
   const balance = Number.isNaN(totalBalance) ? 0 : totalBalance;
 
