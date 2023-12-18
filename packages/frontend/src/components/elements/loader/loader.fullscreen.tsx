@@ -6,7 +6,7 @@ export const LoaderFullScreen = (): JSX.Element => (
       <div className="absolute inset-0 opacity-50 bg-gray" />
     </div>
     <div className="w-full">
-      <Loader />
+      <Loader.Icon />
     </div>
   </div>
 );

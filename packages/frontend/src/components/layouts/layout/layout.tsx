@@ -32,6 +32,7 @@ export const Layout = ({ children }: LayoutProps): JSX.Element => {
   const [currentWindowWidth, setCurrentWindowWidth] = useState(
     window.outerWidth
   );
+
   const isLoading = useIsQueryLoading();
 
   useEffect(() => {
