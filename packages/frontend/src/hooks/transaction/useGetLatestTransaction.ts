@@ -3,7 +3,7 @@ import {
   useTransfersFindAllByUserQuery,
 } from '$api/generated/financerApi';
 
-export const useLatestTransaction = (
+export const useGetLatestTransaction = (
   args: Omit<TransfersFindAllByUserApiArg, 'limit' | 'page' | 'sortOrder'> = {}
 ) => {
   const transactionData = useTransfersFindAllByUserQuery({

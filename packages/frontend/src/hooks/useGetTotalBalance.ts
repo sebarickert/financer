@@ -5,7 +5,7 @@ import {
   useAccountsFindAllByUserQuery,
 } from '$api/generated/financerApi';
 
-export const useTotalBalance = (
+export const useGetTotalBalance = (
   filterOptions: Pick<AccountsFindAllByUserApiArg, 'accountTypes'> = {
     accountTypes: [],
   }

@@ -6,7 +6,7 @@ import {
   formatCurrency,
 } from '$utils/formatCurrency';
 
-export const baseChartFontFamily = 'Euclid Circular A';
+const baseChartFontFamily = 'Euclid Circular A';
 
 export const baseChartOptions = {
   animation: false,

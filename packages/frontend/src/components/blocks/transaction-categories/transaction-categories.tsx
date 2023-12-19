@@ -7,7 +7,7 @@ import { TransactionCategoriesItem } from './transaction-categories.item';
 import { Drawer } from '$blocks/drawer/drawer';
 import { Button } from '$elements/button/button';
 import { Option } from '$elements/select/select';
-import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
+import { useGetAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useGetAllTransactionCategoriesWithCategoryTree';
 
 interface TransactionCategoriesProps {
   className?: string;
@@ -37,7 +37,7 @@ export const TransactionCategories = ({
   const [isFormOpen, setIsFormOpen] = useState(false);
 
   const { data: transactionCategoriesRaw } =
-    useAllTransactionCategoriesWithCategoryTree();
+    useGetAllTransactionCategoriesWithCategoryTree();
 
   const getCategoryNameById = useCallback(
     (categoryId: string) =>

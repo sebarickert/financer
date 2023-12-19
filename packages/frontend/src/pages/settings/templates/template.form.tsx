@@ -16,7 +16,7 @@ import {
 } from '$blocks/transaction-categories/transaction-categories';
 import { Input } from '$elements/input/input';
 import { Select, Option } from '$elements/select/select';
-import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
+import { useGetAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useGetAllTransactionCategoriesWithCategoryTree';
 import { capitalize } from '$utils/capitalize';
 
 interface TemplateFormProps {
@@ -45,7 +45,7 @@ const TransactionCategoriesFormWrapper = ({
   type: VisibilityTypeEnum;
 }): JSX.Element | null => {
   const { data: transactionCategoriesRaw } =
-    useAllTransactionCategoriesWithCategoryTree({
+    useGetAllTransactionCategoriesWithCategoryTree({
       visibilityType: type as unknown as VisibilityType2Enum,
     });
 

@@ -7,7 +7,7 @@ import { TransactionType } from '$blocks/transaction-listing/transaction-listing
 import { ButtonInternal } from '$elements/button/button.internal';
 import { Heading } from '$elements/heading/heading';
 import { Icon, IconName } from '$elements/icon/icon';
-import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
+import { useGetAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useGetAllTransactionCategoriesWithCategoryTree';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { capitalize } from '$utils/capitalize';
 import { formatCurrency } from '$utils/formatCurrency';
@@ -26,7 +26,7 @@ export const Transaction = ({
   fromAccount,
 }: TransactionProps): JSX.Element => {
   const { data: transactionCategories } =
-    useAllTransactionCategoriesWithCategoryTree();
+    useGetAllTransactionCategoriesWithCategoryTree();
 
   const getCategoryNameById = useCallback(
     (categoryId: string) =>

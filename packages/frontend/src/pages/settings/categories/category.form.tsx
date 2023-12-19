@@ -10,7 +10,7 @@ import { Checkbox } from '$elements/checkbox/checkbox';
 import { CheckboxGroup } from '$elements/checkbox/checkbox.group';
 import { Input } from '$elements/input/input';
 import { Select, Option } from '$elements/select/select';
-import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
+import { useGetAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useGetAllTransactionCategoriesWithCategoryTree';
 
 interface CategoryFormProps {
   onSubmit: SubmitHandler<TransactionCategoryFormFields>;
@@ -41,7 +41,7 @@ export const CategoryForm = ({
   });
 
   const { data: transactionCategoriesRaw } =
-    useAllTransactionCategoriesWithCategoryTree();
+    useGetAllTransactionCategoriesWithCategoryTree();
   const [transactionCategories, setTransactionCategories] =
     useState<Option[]>();
 

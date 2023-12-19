@@ -10,8 +10,8 @@ import { colorPalette } from '$constants/colorPalette';
 import { baseChartOptions } from '$constants/graph/graph.settings';
 import { ChartWrapperDynamic } from '$elements/chart/chart-wrapper.dynamic';
 import { useUserDashboardSettings } from '$hooks/settings/user-preference/useDashboardSettings';
-import { useLatestTransaction } from '$hooks/transaction/useLatestTransaction';
-import { useTotalBalance } from '$hooks/useTotalBalance';
+import { useGetLatestTransaction } from '$hooks/transaction/useGetLatestTransaction';
+import { useGetTotalBalance } from '$hooks/useGetTotalBalance';
 import { DateFormat, formatDate } from '$utils/formatDate';
 import { generateDateFromYearAndMonth } from '$utils/generateDateFromYearAndMonth';
 import { setGradientLineGraphBackground } from '$utils/graph/setGradientLineGraphBackground';
@@ -34,8 +34,8 @@ export const BalanceGraph = ({}: BalanceGraphProps): JSX.Element | null => {
   const { data: dashboardSettings } = useUserDashboardSettings();
   const accountTypeFilter = { accountTypes: dashboardSettings?.accountTypes };
 
-  const { data: totalBalance } = useTotalBalance(accountTypeFilter);
-  const { data: latestTransaction } = useLatestTransaction();
+  const { data: totalBalance } = useGetTotalBalance(accountTypeFilter);
+  const { data: latestTransaction } = useGetLatestTransaction();
 
   const incomeMonthSummaryData = useIncomesFindMonthlySummariesByuserQuery({
     ...yearAgoFilterOptions,

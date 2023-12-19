@@ -14,7 +14,7 @@ import {
 } from '$blocks/transaction-listing/transaction-listing.container';
 import { monthNames } from '$constants/months';
 import { LoaderSuspense } from '$elements/loader/loader-suspense';
-import { useFirstTransaction } from '$hooks/transaction/useFirstTransaction';
+import { useGetFirstTransaction } from '$hooks/transaction/useGetFirstTransaction';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 
 export const initialMonthFilterOptions = {
@@ -76,7 +76,7 @@ export const TransactionListingWithMonthlyPager = ({
           page: selectedPage,
         }
   );
-  const { data: transaction } = useFirstTransaction();
+  const { data: transaction } = useGetFirstTransaction();
 
   const [initialPageToLoad, setInitialPage] = useState(selectedPage);
 

@@ -13,7 +13,7 @@ import {
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
 import { useConvertTransactionToTransactionListingItem } from '$hooks/transaction/useConvertTransactionToTransactionListingItem';
-import { useTransactionCategoryName } from '$hooks/transactionCategories/useTransactionCategoryName';
+import { useGetTransactionCategoryNameById } from '$hooks/transactionCategories/useGetTransactionCategoryNameById';
 
 export interface TransactionListingContainerProps {
   isPagerHidden?: boolean;
@@ -45,7 +45,7 @@ export const TransactionListingContainer = ({
   onPageChange,
   initialPage = 1,
 }: TransactionListingContainerProps): JSX.Element | null => {
-  const getCategoryName = useTransactionCategoryName();
+  const getCategoryName = useGetTransactionCategoryNameById();
   const convertTransactionToTransactionListingItem =
     useConvertTransactionToTransactionListingItem();
 

@@ -13,7 +13,7 @@ import {
 } from '$blocks/transaction-categories/transaction-categories';
 import { Input } from '$elements/input/input';
 import { Option, Select } from '$elements/select/select';
-import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
+import { useGetAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useGetAllTransactionCategoriesWithCategoryTree';
 import { DateFormat, formatDate } from '$utils/formatDate';
 
 interface TransactionFormProps {
@@ -79,7 +79,7 @@ export const TransactionForm = ({
   ]) as unknown as VisibilityType2Enum;
 
   const { data: transactionCategoriesRaw } =
-    useAllTransactionCategoriesWithCategoryTree({
+    useGetAllTransactionCategoriesWithCategoryTree({
       visibilityType,
     });
 

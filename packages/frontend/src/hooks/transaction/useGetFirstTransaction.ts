@@ -4,7 +4,7 @@ import {
   useTransactionsFindAllByUserQuery,
 } from '$api/generated/financerApi';
 
-export const useFirstTransaction = (
+export const useGetFirstTransaction = (
   args: Omit<
     TransactionsFindAllByUserApiArg,
     'limit' | 'page' | 'sortOrder'
