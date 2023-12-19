@@ -71,7 +71,15 @@ financerApi.enhanceEndpoints({
       ],
     },
     usersOverrideAllOwnUserData: {
-      invalidatesTags: [ApiTag.USER],
+      invalidatesTags: [
+        ApiTag.ACCOUNT,
+        ApiTag.ACCOUNT_BALANCE,
+        ApiTag.CATEGORY,
+        ApiTag.TRANSACTION,
+        ApiTag.TRANSACTION_TEMPLATE,
+        ApiTag.USER,
+        ApiTag.USER_PREFERENCE,
+      ],
     },
 
     //
