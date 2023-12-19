@@ -6,7 +6,7 @@ import { settingsPaths } from '$constants/settings-paths';
 import { Input } from '$elements/input/input';
 import { Select } from '$elements/select/select';
 import { UserDefaultMarketUpdateSettings as UserDefaultMarketUpdateSettingsType } from '$hooks/settings/user-preference/useDefaultMarketUpdateSettings';
-import { TransactionCategoryDtoWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
+import { TransactionCategoryDtoWithCategoryTree } from '$hooks/transactionCategories/useGetAllTransactionCategoriesWithCategoryTree';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
 export interface UserDefaultMarketUpdateSettingsFormFields {

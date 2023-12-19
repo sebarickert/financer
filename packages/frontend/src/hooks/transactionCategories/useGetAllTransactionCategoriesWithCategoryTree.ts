@@ -12,7 +12,7 @@ export type TransactionCategoryDtoWithCategoryTree = TransactionCategoryDto & {
   categoryTree: string;
 };
 
-export const useAllTransactionCategoriesWithCategoryTree = (
+export const useGetAllTransactionCategoriesWithCategoryTree = (
   args: TransactionCategoriesFindAllByUserApiArg = {}
 ) => {
   const categoryData = useTransactionCategoriesFindAllByUserQuery(args);

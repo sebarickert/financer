@@ -5,7 +5,7 @@ import { ButtonInternal } from '$elements/button/button.internal';
 import { Icon, IconName } from '$elements/icon/icon';
 import { LinkList } from '$elements/link-list/link-list';
 import { LinkListLink } from '$elements/link-list/link-list.link';
-import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
+import { useGetAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useGetAllTransactionCategoriesWithCategoryTree';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
 const generateCategoryGroupChild = (
@@ -34,7 +34,7 @@ interface CategoryItem {
 }
 
 export const CategoryListingContainer = () => {
-  const { data: categories } = useAllTransactionCategoriesWithCategoryTree();
+  const { data: categories } = useGetAllTransactionCategoriesWithCategoryTree();
 
   const categoryRows = useMemo<CategoryParentItem[]>(() => {
     if (!categories) return [];

@@ -3,7 +3,7 @@ import {
   useUserDefaultMarketUpdateSettings,
   useUpdateUserDefaultMarketUpdateSettings,
 } from '$hooks/settings/user-preference/useDefaultMarketUpdateSettings';
-import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
+import { useGetAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useGetAllTransactionCategoriesWithCategoryTree';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import {
   UserDefaultMarketUpdateSettings,
@@ -17,7 +17,7 @@ export const MarketUpdateSettingsContainer = () => {
     useUpdateUserDefaultMarketUpdateSettings();
 
   const { data: categories = [] } =
-    useAllTransactionCategoriesWithCategoryTree();
+    useGetAllTransactionCategoriesWithCategoryTree();
 
   const handleSave = async (
     newUserDefaultMarketUpdateData: UserDefaultMarketUpdateSettingsFormFields

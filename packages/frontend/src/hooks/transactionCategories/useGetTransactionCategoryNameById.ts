@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 
 import { useTransactionCategoriesFindAllByUserQuery } from '$api/generated/financerApi';
 
-export const useTransactionCategoryName = (): ((
+export const useGetTransactionCategoryNameById = (): ((
   categoryId: string
 ) => string | undefined) => {
   const { data: categories } = useTransactionCategoriesFindAllByUserQuery({});

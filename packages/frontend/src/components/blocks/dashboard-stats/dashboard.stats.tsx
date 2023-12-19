@@ -9,7 +9,7 @@ import { BalanceDisplay } from '$blocks/balance-display/balance-display';
 import { DetailsList } from '$blocks/details-list/details-list';
 import { IconName } from '$elements/icon/icon';
 import { useUserDashboardSettings } from '$hooks/settings/user-preference/useDashboardSettings';
-import { useTotalBalance } from '$hooks/useTotalBalance';
+import { useGetTotalBalance } from '$hooks/useGetTotalBalance';
 import { formatCurrency } from '$utils/formatCurrency';
 
 interface DashboardStatsProps {
@@ -28,7 +28,7 @@ export const DashboardStats = ({
   const { data: dashboardSettings } = useUserDashboardSettings();
   const accountTypeFilter = { accountTypes: dashboardSettings?.accountTypes };
 
-  const { data: totalBalance } = useTotalBalance(accountTypeFilter);
+  const { data: totalBalance } = useGetTotalBalance(accountTypeFilter);
 
   const { data: incomeMonthSummary } =
     useIncomesFindMonthlySummariesByuserQuery({
