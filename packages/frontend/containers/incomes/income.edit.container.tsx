@@ -15,7 +15,7 @@ import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { addToastMessage } from '$reducer/notifications.reducer';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
-import { inputDateFormat } from '$utils/formatDate';
+import { DateFormat, formatDate } from '$utils/formatDate';
 
 interface IncomeEditContainerProps {
   id: string;
@@ -74,7 +74,7 @@ export const IncomeEditContainer = ({ id }: IncomeEditContainerProps) => {
     if (!income) return undefined;
     return {
       ...income,
-      date: inputDateFormat(new Date(income.date)),
+      date: formatDate(new Date(income.date), DateFormat.input),
     };
   }, [income]);
 

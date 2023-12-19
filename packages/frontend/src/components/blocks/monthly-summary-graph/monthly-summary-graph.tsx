@@ -12,7 +12,8 @@ import { baseChartOptions } from '$constants/graph/graph.settings';
 import { ChartWrapperDynamic } from '$elements/chart/chart-wrapper.dynamic';
 import { useUserStatisticsSettings } from '$hooks/settings/user-preference/useStatisticsSettings';
 import { formatCurrency } from '$utils/formatCurrency';
-import { formatDateShort } from '$utils/formatDate';
+import { DateFormat, formatDate } from '$utils/formatDate';
+import { generateDateFromYearAndMonth } from '$utils/generateDateFromYearAndMonth';
 import { setGradientLineGraphBackground } from '$utils/graph/setGradientLineGraphBackground';
 
 interface BalanceGraphProps {
@@ -23,9 +24,6 @@ const yearAgoFilterOptions = {
   year: new Date().getFullYear() - 1,
   month: new Date().getMonth(),
 };
-
-const getDateFromYearAndMonth = (year: number, month: number): Date =>
-  new Date(`${year}-${month.toString().padStart(2, '0')}-01`);
 
 const removeDuplicatesFromArray = <T,>(array: T[]) =>
   Array.from(new Set(array));
@@ -85,7 +83,7 @@ export const MonthlySummaryGraph = ({
         return {
           year: targetYear,
           month: targetMonth,
-          date: getDateFromYearAndMonth(targetYear, targetMonth),
+          date: generateDateFromYearAndMonth(targetYear, targetMonth),
           incomes,
           expenses,
           netStatus: incomes - expenses,
@@ -99,7 +97,7 @@ export const MonthlySummaryGraph = ({
   }, [expenseMonthSummaries, incomeMonthSummaries]);
 
   const labels = monthlySummaryHistory.map(({ date }) =>
-    formatDateShort(date).toUpperCase()
+    formatDate(date, DateFormat.monthShort).toUpperCase()
   );
 
   const chartOptions = useMemo(() => {

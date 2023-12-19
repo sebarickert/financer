@@ -16,7 +16,6 @@ import { monthNames } from '$constants/months';
 import { LoaderSuspense } from '$elements/loader/loader-suspense';
 import { useFirstTransaction } from '$hooks/transaction/useFirstTransaction';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { parseYearMonthFromString } from '$utils/formatDate';
 
 export const initialMonthFilterOptions = {
   year: new Date().getFullYear(),
@@ -33,6 +32,23 @@ interface TransactionListingWithMonthlyPagerProps {
   additionalFilterOptions?: any;
   useDataHook?: TransactionListingContainerProps['useDataHook'];
 }
+
+const parseYearMonthFromString = (initialDate?: string) => {
+  const [year, month] = initialDate?.split('-') || [];
+
+  if (!year || !month) {
+    return undefined;
+  }
+
+  if (year.length !== 4 || (month.length !== 2 && month.length !== 1)) {
+    return undefined;
+  }
+
+  return {
+    year: parseInt(year),
+    month: parseInt(month),
+  };
+};
 
 export const TransactionListingWithMonthlyPager = ({
   className = '',

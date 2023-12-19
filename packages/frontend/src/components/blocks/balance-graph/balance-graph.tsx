@@ -12,7 +12,8 @@ import { ChartWrapperDynamic } from '$elements/chart/chart-wrapper.dynamic';
 import { useUserDashboardSettings } from '$hooks/settings/user-preference/useDashboardSettings';
 import { useLatestTransaction } from '$hooks/transaction/useLatestTransaction';
 import { useTotalBalance } from '$hooks/useTotalBalance';
-import { formatDateShort } from '$utils/formatDate';
+import { DateFormat, formatDate } from '$utils/formatDate';
+import { generateDateFromYearAndMonth } from '$utils/generateDateFromYearAndMonth';
 import { setGradientLineGraphBackground } from '$utils/graph/setGradientLineGraphBackground';
 
 export type BalanceHistory = {
@@ -53,19 +54,16 @@ export const BalanceGraph = ({}: BalanceGraphProps): JSX.Element | null => {
     if (!incomeMonthSummaries || !expenseMonthSummaries || !latestTransaction)
       return [];
 
-    const getDateFromYearAndMonth = (year: number, month: number): Date =>
-      new Date(`${year}-${month.toString().padStart(2, '0')}-01`);
-
     const groupedIncomesFormatted = incomeMonthSummaries.map(
       ({ _id: { month, year }, totalAmount }) => ({
-        date: getDateFromYearAndMonth(year, month),
+        date: generateDateFromYearAndMonth(year, month),
         amount: totalAmount,
       })
     );
 
     const groupedExpensesFormatted = expenseMonthSummaries.map(
       ({ _id: { month, year }, totalAmount }) => ({
-        date: getDateFromYearAndMonth(year, month),
+        date: generateDateFromYearAndMonth(year, month),
         amount: totalAmount * -1,
       })
     );
@@ -117,7 +115,7 @@ export const BalanceGraph = ({}: BalanceGraphProps): JSX.Element | null => {
       return 'Current'.toUpperCase();
     }
 
-    return formatDateShort(date).toUpperCase();
+    return formatDate(date, DateFormat.monthShort).toUpperCase();
   });
 
   const chartOptions = useMemo(() => {

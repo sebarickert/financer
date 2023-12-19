@@ -1,46 +1,12 @@
 import { format } from 'date-fns';
 
-import { monthNamesAbbreviation } from '../constants/months';
+export enum DateFormat {
+  default = 'dd.MM.yyyy', // 19.12.2023
+  long = 'dd.MM.yyyy, HH:mm', // 19.12.2023, 10:54
+  input = "yyyy-MM-dd'T'HH:mm", // 2023-12-19T10:54
+  monthShort = 'LLL yy', // DEC 23
+}
 
-import { addLeadingZero } from './addLeadingZero';
-
-const formatter = new Intl.DateTimeFormat('fi-FI');
-
-export const getShortMonthAbbreviation = (date: Date) =>
-  monthNamesAbbreviation[date.getMonth()];
-
-export const formatDate = (date: Date): string => formatter.format(date);
-
-export const formatDateShort = (date: Date): string => format(date, 'LLL yy');
-
-export const formatDateLong = (date: Date): string =>
-  format(date, 'dd.MM.yyyy, HH:mm');
-
-export const inputDateFormat = (date: Date): string => {
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  const hour = date.getHours();
-  const minute = date.getMinutes();
-
-  return `${year}-${addLeadingZero(month)}-${addLeadingZero(
-    day
-  )}T${addLeadingZero(hour)}:${addLeadingZero(minute)}`;
-};
-
-export const parseYearMonthFromString = (initialDate?: string) => {
-  const [year, month] = initialDate?.split('-') || [];
-
-  if (!year || !month) {
-    return undefined;
-  }
-
-  if (year.length !== 4 || (month.length !== 2 && month.length !== 1)) {
-    return undefined;
-  }
-
-  return {
-    year: parseInt(year),
-    month: parseInt(month),
-  };
+export const formatDate = (date: Date, dateFormat?: DateFormat) => {
+  return format(date, dateFormat ?? DateFormat.default);
 };

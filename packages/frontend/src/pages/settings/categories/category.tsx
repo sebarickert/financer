@@ -1,4 +1,5 @@
 import { ChartData, ChartOptions } from 'chart.js';
+import { isAfter } from 'date-fns';
 import { useMemo } from 'react';
 import { Chart } from 'react-chartjs-2';
 
@@ -10,7 +11,7 @@ import { DetailsList } from '$blocks/details-list/details-list';
 import { TransactionListingWithMonthlyPager } from '$blocks/transaction-listing-with-monthly-pager/transaction-listing.with.monthly-pager';
 import { colorPalette } from '$constants/colorPalette';
 import { baseChartOptions } from '$constants/graph/graph.settings';
-import { MONTH_IN_MS } from '$constants/months';
+import { monthAgoDate } from '$constants/months';
 import { settingsPaths } from '$constants/settings-paths';
 import { ButtonInternal } from '$elements/button/button.internal';
 import { ChartWrapperDynamic } from '$elements/chart/chart-wrapper.dynamic';
@@ -19,6 +20,7 @@ import { Container } from '$layouts/container/container';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { capitalize } from '$utils/capitalize';
 import { formatDate } from '$utils/formatDate';
+import { generateDateFromYearAndMonth } from '$utils/generateDateFromYearAndMonth';
 import { setGradientLineGraphBackground } from '$utils/graph/setGradientLineGraphBackground';
 import { parseParentCategoryPath } from 'src/services/TransactionCategoriesService';
 
@@ -41,18 +43,13 @@ export const Category = ({
   categories,
   parentTransactionCategoryId,
 }: CategoryProps): JSX.Element => {
-  const monthAgoDate = new Date().getTime() - MONTH_IN_MS;
-
   const categoryHistory: CategoryHistory[] = useMemo(() => {
     if (!category || !transactionsMonthlySummaries) return [];
-
-    const getDateFromYearAndMonth = (year: number, month: number): Date =>
-      new Date(`${year}-${month.toString().padStart(2, '0')}-01`);
 
     const transactionCategoryTransactionHistoryStack =
       transactionsMonthlySummaries
         .map(({ totalAmount, _id: { year, month } }) => ({
-          date: getDateFromYearAndMonth(year, month),
+          date: generateDateFromYearAndMonth(year, month),
           amount: totalAmount,
         }))
         .map(({ date, amount }) => ({
@@ -70,7 +67,7 @@ export const Category = ({
   });
 
   const monthAgoIndex = categoryHistory.indexOf(
-    categoryHistory.find((tick) => tick.date.getTime() > monthAgoDate) ||
+    categoryHistory.find((tick) => isAfter(tick.date, monthAgoDate)) ||
       categoryHistory[0]
   );
 
