@@ -15,7 +15,7 @@ import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { addToastMessage } from '$reducer/notifications.reducer';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
-import { inputDateFormat } from '$utils/formatDate';
+import { DateFormat, formatDate } from '$utils/formatDate';
 
 interface EditExpenseContainerProps {
   id: string;
@@ -75,7 +75,7 @@ export const EditExpenseContainer = ({ id }: EditExpenseContainerProps) => {
 
     return {
       ...expense,
-      date: inputDateFormat(new Date(expense.date)),
+      date: formatDate(new Date(expense.date), DateFormat.input),
     };
   }, [expense]);
 

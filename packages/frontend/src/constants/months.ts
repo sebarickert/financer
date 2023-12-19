@@ -1,3 +1,5 @@
+import { subMonths } from 'date-fns';
+
 export const monthNames = [
   'January',
   'February',
@@ -28,4 +30,4 @@ export const monthNamesAbbreviation = [
   'Dec',
 ];
 
-export const MONTH_IN_MS = 2592000000;
+export const monthAgoDate = subMonths(new Date(), 1);

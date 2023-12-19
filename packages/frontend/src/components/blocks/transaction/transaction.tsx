@@ -11,7 +11,7 @@ import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionC
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { capitalize } from '$utils/capitalize';
 import { formatCurrency } from '$utils/formatCurrency';
-import { formatDateLong } from '$utils/formatDate';
+import { DateFormat, formatDate } from '$utils/formatDate';
 import { getTransactionType } from '$utils/transaction/getTransactionType';
 
 interface TransactionProps {
@@ -80,7 +80,7 @@ export const Transaction = ({
       {
         icon: IconName.calendar,
         label: 'Date',
-        description: formatDateLong(new Date(transaction?.date)),
+        description: formatDate(new Date(transaction?.date), DateFormat.long),
       },
       {
         icon: IconName.informationCircle,

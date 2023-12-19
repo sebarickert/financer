@@ -15,7 +15,7 @@ import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { addToastMessage } from '$reducer/notifications.reducer';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
-import { inputDateFormat } from '$utils/formatDate';
+import { DateFormat, formatDate } from '$utils/formatDate';
 
 interface TransferEditContainerProps {
   id: string;
@@ -75,7 +75,7 @@ export const TransferEditContainer = ({ id }: TransferEditContainerProps) => {
     if (!transfer) return undefined;
     return {
       ...transfer,
-      date: inputDateFormat(new Date(transfer.date)),
+      date: formatDate(new Date(transfer.date), DateFormat.input),
     };
   }, [transfer]);
 

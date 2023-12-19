@@ -1,12 +1,13 @@
 import { AccountDto } from '@local/types';
 import { ChartData, ChartOptions } from 'chart.js';
+import { isAfter } from 'date-fns';
 import { useMemo } from 'react';
 import { Chart } from 'react-chartjs-2';
 
 import { useAccountsGetAccountBalanceHistoryQuery } from '$api/generated/financerApi';
 import { colorPalette } from '$constants/colorPalette';
 import { baseChartOptions } from '$constants/graph/graph.settings';
-import { MONTH_IN_MS } from '$constants/months';
+import { monthAgoDate } from '$constants/months';
 import { ChartWrapperDynamic } from '$elements/chart/chart-wrapper.dynamic';
 import { formatDate } from '$utils/formatDate';
 import { setGradientLineGraphBackground } from '$utils/graph/setGradientLineGraphBackground';
@@ -20,8 +21,6 @@ interface AccountBalanceHistory {
 interface AccountBalanceHistoryChartProps {
   accountId: AccountDto['_id'];
 }
-
-const monthAgoDate = new Date().getTime() - MONTH_IN_MS;
 
 export const AccountBalanceHistoryChart = ({
   accountId,
@@ -42,7 +41,7 @@ export const AccountBalanceHistoryChart = ({
   }, [accountBalanceHistoryData]);
 
   const monthAgoIndex = accountBalanceHistory.indexOf(
-    accountBalanceHistory.find((tick) => tick.date.getTime() > monthAgoDate) ||
+    accountBalanceHistory.find((tick) => isAfter(tick.date, monthAgoDate)) ||
       accountBalanceHistory[0]
   );
 

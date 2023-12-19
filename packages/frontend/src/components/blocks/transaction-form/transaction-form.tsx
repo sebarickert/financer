@@ -14,7 +14,7 @@ import {
 import { Input } from '$elements/input/input';
 import { Option, Select } from '$elements/select/select';
 import { useAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useAllTransactionCategories';
-import { inputDateFormat } from '$utils/formatDate';
+import { DateFormat, formatDate } from '$utils/formatDate';
 
 interface TransactionFormProps {
   hasFromAccountField?: boolean;
@@ -39,7 +39,7 @@ export const TransactionForm = ({
 }: TransactionFormProps) => {
   const defaultValues = useMemo(
     () => ({
-      date: inputDateFormat(new Date()),
+      date: formatDate(new Date(), DateFormat.input),
       ...initialValues,
       toAccount: initialValues?.toAccount || undefined,
       fromAccount: initialValues?.fromAccount || undefined,

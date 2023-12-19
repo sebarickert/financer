@@ -6,7 +6,7 @@ import { Input } from '../../components/elements/input/input';
 import { Drawer } from '$blocks/drawer/drawer';
 import { Form } from '$blocks/form/form';
 import { Button } from '$elements/button/button';
-import { inputDateFormat } from '$utils/formatDate';
+import { DateFormat, formatDate } from '$utils/formatDate';
 
 interface AccountUpdateMarketValueProps {
   onUpdate: (
@@ -27,7 +27,7 @@ export const AccountUpdateMarketValue = ({
   const methods = useForm<AccountUpdateMarketValueFormFields>({
     defaultValues: {
       currentMarketValue: currentValue,
-      date: inputDateFormat(new Date()),
+      date: formatDate(new Date(), DateFormat.input),
     },
   });
   const [isOpen, setIsOpen] = useState(false);
