@@ -34,6 +34,7 @@ export const TransactionTemplateSwitcher = ({
       ),
     [templateType, transactionTemplates]
   );
+
   const { push } = useViewTransitionRouter();
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

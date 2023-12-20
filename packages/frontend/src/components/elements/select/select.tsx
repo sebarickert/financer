@@ -12,6 +12,7 @@ interface SelectProps {
   className?: string;
   handleOnChange?(event: React.ChangeEvent<HTMLSelectElement>): void;
   testId?: string;
+  placeholder?: string;
 }
 
 export interface Option {
@@ -28,6 +29,7 @@ export const Select = ({
   className = '',
   testId,
   isDisabled = false,
+  placeholder = 'Select option',
   handleOnChange = () => {},
 }: SelectProps): JSX.Element => {
   const { register } = useFormContext();
@@ -59,6 +61,9 @@ export const Select = ({
             shouldUnregister: false,
           })}
         >
+          <option value="" disabled>
+            {placeholder}
+          </option>
           {options.map(({ value, label }) => (
             <option value={value} key={value}>
               {label}
