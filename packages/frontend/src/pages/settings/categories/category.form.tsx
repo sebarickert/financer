@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { getAllChildCategoryIds } from '../../../services/TransactionCategoriesService';
@@ -33,12 +33,18 @@ export const CategoryForm = ({
   currentCategoryId,
   initialValues,
 }: CategoryFormProps): JSX.Element | null => {
-  const methods = useForm<TransactionCategoryFormFields>({
-    defaultValues: {
+  const defaultValues = useMemo(() => {
+    return {
       ...initialValues,
       parent_category_id: initialValues?.parent_category_id ?? '',
-    },
+    };
+  }, [initialValues]);
+
+  const methods = useForm<TransactionCategoryFormFields>({
+    defaultValues,
   });
+
+  const { reset } = methods;
 
   const { data: transactionCategoriesRaw } =
     useGetAllTransactionCategoriesWithCategoryTree();
@@ -65,6 +71,15 @@ export const CategoryForm = ({
         })),
     ]);
   }, [currentCategoryId, transactionCategoriesRaw]);
+
+  useEffect(() => {
+    if (!initialValues) return;
+
+    reset((previousValues) => ({
+      ...previousValues,
+      ...defaultValues,
+    }));
+  }, [defaultValues, initialValues, reset]);
 
   if (!transactionCategories) return null;
 
