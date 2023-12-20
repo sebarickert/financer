@@ -68,7 +68,7 @@ export const Account = ({ account }: AccountProps): JSX.Element | null => {
         <LoaderSuspense>
           <AccountBalanceHistoryChart accountId={account._id} />
         </LoaderSuspense>
-        <div className="grid gap-2 mt-6">
+        <div className="grid gap-2 my-6">
           {account.type === 'investment' && (
             <AccountUpdateMarketValueContainer account={account} />
           )}
