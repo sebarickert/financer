@@ -135,6 +135,7 @@ export const TemplateForm = ({
 
     reset((previousValues) => ({
       ...previousValues,
+      ...initialValues,
       templateType: initialTemplateType,
     }));
   }, [initialTemplateType, initialValues, reset]);

@@ -1,3 +1,4 @@
+import { useEffect, useMemo } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { AccountType, AccountTypeEnum } from '$api/generated/financerApi';
@@ -23,9 +24,15 @@ export const AccountForm = ({
   submitLabel,
   initialValues,
 }: AccountFormProps): JSX.Element => {
+  const defaultValues = useMemo(() => {
+    return { type: AccountTypeEnum.Savings, ...initialValues };
+  }, [initialValues]);
+
   const methods = useForm<AccountFormFields>({
-    defaultValues: { type: AccountTypeEnum.Savings, ...initialValues },
+    defaultValues,
   });
+
+  const { reset } = methods;
 
   const accountTypes: Option[] = Object.values(AccountTypeEnum).map(
     (value) => ({
@@ -33,6 +40,15 @@ export const AccountForm = ({
       label: capitalize(value),
     })
   );
+
+  useEffect(() => {
+    if (!initialValues) return;
+
+    reset((previousValues) => ({
+      ...previousValues,
+      ...defaultValues,
+    }));
+  }, [defaultValues, initialValues, reset]);
 
   return (
     <Form
