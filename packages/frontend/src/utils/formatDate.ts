@@ -5,6 +5,7 @@ export enum DateFormat {
   long = 'dd.MM.yyyy, HH:mm', // 19.12.2023, 10:54
   input = "yyyy-MM-dd'T'HH:mm", // 2023-12-19T10:54
   monthShort = 'LLL yy', // DEC 23
+  monthLong = 'LLLL yyyy', // DECEMBER 2023
 }
 
 export const formatDate = (date: Date, dateFormat?: DateFormat) => {

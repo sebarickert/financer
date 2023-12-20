@@ -1,5 +1,7 @@
 import { subMonths } from 'date-fns';
 
+import { DateFormat, formatDate } from '$utils/formatDate';
+
 export const monthNames = [
   'January',
   'February',
@@ -31,3 +33,7 @@ export const monthNamesAbbreviation = [
 ];
 
 export const monthAgoDate = subMonths(new Date(), 1);
+export const currentMonthAndYearInLongFormat = formatDate(
+  new Date(),
+  DateFormat.monthLong
+);

@@ -7,6 +7,7 @@ import {
 } from '$api/generated/financerApi';
 import { BalanceDisplay } from '$blocks/balance-display/balance-display';
 import { DetailsList } from '$blocks/details-list/details-list';
+import { currentMonthAndYearInLongFormat } from '$constants/months';
 import { IconName } from '$elements/icon/icon';
 import { useUserDashboardSettings } from '$hooks/settings/user-preference/useDashboardSettings';
 import { useGetTotalBalance } from '$hooks/useGetTotalBalance';
@@ -85,6 +86,7 @@ export const DashboardStats = ({
     >
       <BalanceDisplay amount={balance}>Balance</BalanceDisplay>
       <DetailsList
+        heading={currentMonthAndYearInLongFormat}
         items={monthlyDetails}
         className="max-lg:py-4 max-lg:border-t max-lg:border-gray-dark max-lg:mt-6 lg:pl-6"
       />
