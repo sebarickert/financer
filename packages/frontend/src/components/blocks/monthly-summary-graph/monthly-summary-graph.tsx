@@ -143,20 +143,14 @@ export const MonthlySummaryGraph = ({
           ...baseChartOptions?.plugins?.tooltip,
           callbacks: {
             ...baseChartOptions?.plugins?.tooltip?.callbacks,
-            footer: (items) => {
-              const income =
-                items.find(
-                  ({ dataset: { label } }) => label?.toLowerCase() === 'incomes'
-                )?.parsed.y ?? 0;
-              const expense =
-                items.find(
-                  ({ dataset: { label } }) =>
-                    label?.toLowerCase() === 'expenses'
-                )?.parsed.y ?? 0;
+            title(tooltipItem) {
+              const label = tooltipItem[0].label;
+              const incomeValue = tooltipItem[0].parsed.y;
+              const expenseValue = tooltipItem[1].parsed.y;
 
-              const netTotal = income - expense;
+              const value = formatCurrency(incomeValue - expenseValue, true);
 
-              return `Net total ${formatCurrency(netTotal)}`.toUpperCase();
+              return `${label} (${value})`;
             },
           },
         },

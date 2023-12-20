@@ -12,6 +12,7 @@ import { ChartWrapperDynamic } from '$elements/chart/chart-wrapper.dynamic';
 import { useUserDashboardSettings } from '$hooks/settings/user-preference/useDashboardSettings';
 import { useGetLatestTransaction } from '$hooks/transaction/useGetLatestTransaction';
 import { useGetTotalBalance } from '$hooks/useGetTotalBalance';
+import { formatCurrency } from '$utils/formatCurrency';
 import { DateFormat, formatDate } from '$utils/formatDate';
 import { generateDateFromYearAndMonth } from '$utils/generateDateFromYearAndMonth';
 import { setGradientLineGraphBackground } from '$utils/graph/setGradientLineGraphBackground';
@@ -147,6 +148,32 @@ export const BalanceGraph = ({}: BalanceGraphProps): JSX.Element | null => {
               return index % 2 === 1
                 ? this.getLabelForValue(Number(val))
                 : null;
+            },
+          },
+        },
+      },
+      plugins: {
+        ...baseChartOptions?.plugins,
+        tooltip: {
+          ...baseChartOptions?.plugins?.tooltip,
+          callbacks: {
+            ...baseChartOptions?.plugins?.tooltip?.callbacks,
+            title([{ ...item }]) {
+              const { label, dataIndex: index } = item;
+
+              const currentBalance = item.parsed.y;
+              const previousMonthBalance = item.dataset.data[index - 1] as
+                | number
+                | undefined;
+
+              if (!previousMonthBalance) return label;
+
+              const value = formatCurrency(
+                currentBalance - previousMonthBalance,
+                true
+              );
+
+              return `${label} (${value})`;
             },
           },
         },

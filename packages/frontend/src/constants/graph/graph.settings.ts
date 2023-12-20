@@ -99,16 +99,26 @@ export const baseChartOptions = {
       cornerRadius: 2,
       padding: 16,
       displayColors: false,
+      usePointStyle: true,
+      boxHeight: 8,
+      boxWidth: 8,
+      boxPadding: 4,
       bodySpacing: 4,
       titleColor: '#000000',
       bodyColor: '#000000',
       footerColor: colorPalette.charcoal,
       titleMarginBottom: 4,
-      footerMarginTop: 4,
       titleFont: baseTextConfiguration,
       bodyFont: baseTextConfiguration,
       footerFont: baseTextConfiguration,
       callbacks: {
+        // Try to get these circles centered with text...
+        // labelColor(tooltipItem) {
+        //   return {
+        //     backgroundColor: tooltipItem.dataset.borderColor,
+        //     borderColor: tooltipItem.dataset.borderColor,
+        //   };
+        // },
         label: (context) => {
           const label = context.dataset.label || '';
           const value = formatCurrency(context.parsed.y || 0);
