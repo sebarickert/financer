@@ -1,6 +1,4 @@
-import {
-  submitTransactionCategoryForm,
-} from '$utils/api-helper';
+import { submitTransactionCategoryForm } from '$utils/api-helper';
 import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
 
@@ -20,6 +18,7 @@ test.describe('Add income with category', () => {
 
     await page.goto('/statistics/incomes/add');
 
+    await page.locator('#toAccount').selectOption(ids.accountId);
     await page.locator('#description').fill(INCOME_NAME);
     await page.locator('#amount').fill('10000.50');
 
@@ -75,9 +74,7 @@ test.describe('Add income with category', () => {
     await page.getByTestId('submit').click();
 
     const formErrors = page.getByTestId('toast-item');
-    await expect(formErrors).toContainText(
-      'Submission failed',
-    );
+    await expect(formErrors).toContainText('Submission failed');
     await expect(formErrors).toContainText(
       'One or more categories does not exist.',
     );

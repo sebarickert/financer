@@ -18,6 +18,7 @@ test.describe('Add expense with category', () => {
 
     await page.goto('/statistics/expenses/add');
 
+    await page.locator('#fromAccount').selectOption(ids.accountId);
     await page.fill('#description', EXPENSE_NAME);
     await page.fill('#amount', '10000.50');
 
