@@ -112,7 +112,7 @@ export const BalanceGraph = ({}: BalanceGraphProps): JSX.Element | null => {
 
   const labels = balanceHistory.map(({ date }, index) => {
     if (balanceHistory.length - 1 === index) {
-      return 'Current'.toUpperCase();
+      return 'CURRENT';
     }
 
     return formatDate(date, DateFormat.monthShort).toUpperCase();
