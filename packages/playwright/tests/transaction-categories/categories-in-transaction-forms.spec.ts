@@ -9,7 +9,9 @@ test.describe('Transaction categories visibility in transaction forms', () => {
   const verifyIncomeCategories = async (page: Page) => {
     const options = page
       .getByTestId('transaction-categories-form-select')
-      .locator('option');
+      .locator('option')
+      .filter({ hasNotText: 'Select category' });
+
     await expect(options).toHaveCount(4);
     await expect(options.first()).toHaveText('Category for all types');
     await expect(options.nth(1)).toHaveText('Income category');
@@ -24,7 +26,9 @@ test.describe('Transaction categories visibility in transaction forms', () => {
   const verifyExpenseCategories = async (page: Page) => {
     const options = page
       .getByTestId('transaction-categories-form-select')
-      .locator('option');
+      .locator('option')
+      .filter({ hasNotText: 'Select category' });
+
     await expect(options).toHaveCount(4);
     await expect(options.first()).toHaveText('Category for all types');
     await expect(options.nth(1)).toHaveText('Expense category');
@@ -39,7 +43,8 @@ test.describe('Transaction categories visibility in transaction forms', () => {
   const verifyTransferCategories = async (page: Page) => {
     const options = page
       .getByTestId('transaction-categories-form-select')
-      .locator('option');
+      .locator('option')
+      .filter({ hasNotText: 'Select category' });
     await expect(options).toHaveCount(4);
     await expect(options.first()).toHaveText('Category for all types');
     await expect(options.nth(1)).toHaveText(

@@ -62,7 +62,6 @@ export const CategoryForm = ({
       : [];
 
     setTransactionCategories([
-      { label: 'None', value: '' },
       ...transactionCategoriesRaw
         .filter(({ _id }) => !forbiddenIds.includes(_id))
         .map(({ _id, categoryTree: transactionCategoryName }) => ({
@@ -115,7 +114,11 @@ export const CategoryForm = ({
             value={VisibilityTypeEnum.Transfer}
           />
         </CheckboxGroup>
-        <Select id="parent_category_id" options={transactionCategories}>
+        <Select
+          id="parent_category_id"
+          options={transactionCategories}
+          placeholder="None"
+        >
           Parent transaction category
         </Select>
       </div>
