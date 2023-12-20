@@ -1,4 +1,4 @@
-import { ChartOptions } from 'chart.js';
+import { ChartOptions, FontSpec, Tooltip } from 'chart.js';
 
 import { colorPalette } from '$constants/colorPalette';
 import {
@@ -7,6 +7,19 @@ import {
 } from '$utils/formatCurrency';
 
 const baseChartFontFamily = 'Euclid Circular A';
+
+const baseTextConfiguration = {
+  size: 15,
+  family: baseChartFontFamily,
+  weight: 'normal',
+} as Partial<FontSpec>;
+
+Tooltip.positioners.topLeft = function () {
+  return {
+    x: 16,
+    y: 12,
+  };
+};
 
 export const baseChartOptions = {
   animation: false,
@@ -78,33 +91,29 @@ export const baseChartOptions = {
       propagate: true,
     },
     tooltip: {
-      backgroundColor: colorPalette.charcoal,
+      position: 'topLeft',
+      caretSize: 0,
+      backgroundColor: `${colorPalette.gray}`,
+      borderColor: colorPalette['gray-dark'],
+      borderWidth: 1,
+      cornerRadius: 2,
       padding: 16,
-      bodySpacing: 6,
       displayColors: false,
-      titleFont: {
-        size: 15,
-        family: baseChartFontFamily,
-      },
-      bodyFont: {
-        size: 15,
-        family: baseChartFontFamily,
-        weight: 'normal',
-      },
-      footerFont: {
-        size: 15,
-        family: baseChartFontFamily,
-        weight: 'normal',
-      },
+      bodySpacing: 4,
+      titleColor: '#000000',
+      bodyColor: '#000000',
+      footerColor: colorPalette.charcoal,
+      titleMarginBottom: 4,
+      footerMarginTop: 4,
+      titleFont: baseTextConfiguration,
+      bodyFont: baseTextConfiguration,
+      footerFont: baseTextConfiguration,
       callbacks: {
         label: (context) => {
           const label = context.dataset.label || '';
-          if (!context.parsed.y) {
-            return `${label} ${formatCurrency(0)}`.toUpperCase();
-          }
-          return `${label} ${formatCurrency(
-            context.parsed.y as number
-          )}`.toUpperCase();
+          const value = formatCurrency(context.parsed.y || 0);
+
+          return `${label} ${value}`.toUpperCase();
         },
       },
     },
