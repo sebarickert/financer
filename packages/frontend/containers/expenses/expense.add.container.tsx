@@ -88,7 +88,7 @@ export const ExpenseAddContainer = ({
         headerAction={
           <TransactionTemplateSwitcher
             selectedTemplate={templateId}
-            templateType={TransactionTypeEnum.Income}
+            templateType={TransactionTypeEnum.Expense}
           />
         }
       />

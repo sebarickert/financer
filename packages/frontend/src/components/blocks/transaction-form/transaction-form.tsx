@@ -41,8 +41,8 @@ export const TransactionForm = ({
     () => ({
       date: formatDate(new Date(), DateFormat.input),
       ...initialValues,
-      toAccount: initialValues?.toAccount || undefined,
-      fromAccount: initialValues?.fromAccount || undefined,
+      toAccount: initialValues?.toAccount || '',
+      fromAccount: initialValues?.fromAccount || '',
     }),
     [initialValues]
   );
@@ -50,6 +50,8 @@ export const TransactionForm = ({
   const methods = useForm<TransactionFormFields>({
     defaultValues,
   });
+
+  const { reset } = methods;
 
   const { data: accounts } = useAccountsFindAllByUserQuery({});
 
@@ -98,6 +100,15 @@ export const TransactionForm = ({
     );
   }, [transactionCategoriesRaw]);
 
+  useEffect(() => {
+    if (!initialValues) return;
+
+    reset((previousValues) => ({
+      ...previousValues,
+      ...defaultValues,
+    }));
+  }, [defaultValues, initialValues, reset]);
+
   if (!accounts) return null;
 
   return (
@@ -110,12 +121,22 @@ export const TransactionForm = ({
       <section>
         <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
           {hasFromAccountField && (
-            <Select id="fromAccount" options={accountOptions} isRequired>
+            <Select
+              id="fromAccount"
+              options={accountOptions}
+              isRequired
+              placeholder="Select account"
+            >
               From Account
             </Select>
           )}
           {hasToAccountField && (
-            <Select id="toAccount" options={accountOptions} isRequired>
+            <Select
+              id="toAccount"
+              options={accountOptions}
+              isRequired
+              placeholder="Select account"
+            >
               To Account
             </Select>
           )}

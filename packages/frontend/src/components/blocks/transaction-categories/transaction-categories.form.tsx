@@ -48,6 +48,7 @@ export const TransactionCategoriesForm = ({
             options={categories}
             isRequired
             testId={`${testId}-select`}
+            placeholder="Select category"
           >
             Category
           </Select>
