@@ -63,7 +63,8 @@ export class TransactionsService {
   async createMany(
     createTransactionDto: CreateTransactionDto[],
   ): Promise<TransactionDocument[]> {
-    return this.transactionModel.insertMany(createTransactionDto);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return this.transactionModel.insertMany(createTransactionDto) as any;
   }
 
   async findOne(userId: ObjectId, id: ObjectId): Promise<TransactionDto> {
