@@ -35,7 +35,7 @@ describe('UsersService', () => {
     const userDataService = module.get<UserDataService>(UserDataService);
 
     await userDataService.overrideUserData(
-      DUMMY_TEST_USER._id,
+      DUMMY_TEST_USER.id,
       fixtureData as unknown as ImportUserDataDto,
     );
   });
@@ -45,7 +45,7 @@ describe('UsersService', () => {
   });
 
   it('should return a user by id', async () => {
-    const user = await service.findOne(DUMMY_TEST_USER._id);
+    const user = await service.findOne(DUMMY_TEST_USER.id);
     expect(user).toMatchSnapshot();
   });
 

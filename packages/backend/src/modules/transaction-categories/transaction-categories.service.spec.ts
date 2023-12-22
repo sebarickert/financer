@@ -1,10 +1,8 @@
-import { MongooseModule } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { rootMongooseTestModule } from '../../../test/rootMongooseTest.module';
 import { DUMMY_TEST_USER } from '../../config/mockAuthenticationMiddleware';
 import fixtureData from '../../fixtures/large_fixture-data.json';
-import { parseObjectId } from '../../types/objectId';
 import { TransactionCategoryMappingsModule } from '../transaction-category-mappings/transaction-category-mappings.module';
 import { UserDataModule } from '../user-data/user-data.module';
 import {
@@ -12,10 +10,6 @@ import {
   UserDataService,
 } from '../user-data/user-data.service';
 
-import {
-  TransactionCategory,
-  TransactionCategorySchema,
-} from './schemas/transaction-category.schema';
 import { TransactionCategoriesService } from './transaction-categories.service';
 
 describe('TransactionCategoriesService', () => {
@@ -31,12 +25,6 @@ describe('TransactionCategoriesService', () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         rootMongooseTestModule(),
-        MongooseModule.forFeature([
-          {
-            name: TransactionCategory.name,
-            schema: TransactionCategorySchema,
-          },
-        ]),
         TransactionCategoryMappingsModule,
 
         // Modules required to bootstrap with UserDataModule
@@ -51,7 +39,7 @@ describe('TransactionCategoriesService', () => {
     const userDataService = module.get<UserDataService>(UserDataService);
 
     await userDataService.overrideUserData(
-      DUMMY_TEST_USER._id,
+      DUMMY_TEST_USER.id,
       fixtureData as unknown as ImportUserDataDto,
     );
   });
@@ -63,23 +51,23 @@ describe('TransactionCategoriesService', () => {
   // findOne
   it('should return a transaction category by id', async () => {
     const transactionCategory = await service.findOne(
-      DUMMY_TEST_USER._id,
-      parseObjectId('623b58ada3deba9879422fbf'),
+      DUMMY_TEST_USER.id,
+      '623b58ada3deba9879422fbf',
     );
     expect(transactionCategory).toMatchSnapshot();
   });
 
   it('should return an array of transaction categories from findAllByUser', async () => {
     const transactionCategories = await service.findAllByUser(
-      DUMMY_TEST_USER._id,
+      DUMMY_TEST_USER.id,
     );
     expect(transactionCategories).toMatchSnapshot();
   });
 
   it('should return an array of transaction categories from findMonthlySummariesByUserAndId', async () => {
     const transactionCategories = await service.findMonthlySummariesByUserAndId(
-      DUMMY_TEST_USER._id,
-      parseObjectId('623b58ada3deba9879422fbf'),
+      DUMMY_TEST_USER.id,
+      ('623b58ada3deba9879422fbf'),
     );
     expect(transactionCategories).toMatchSnapshot();
   });

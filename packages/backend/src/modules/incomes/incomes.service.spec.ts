@@ -4,7 +4,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { rootMongooseTestModule } from '../../../test/rootMongooseTest.module';
 import { DUMMY_TEST_USER } from '../../config/mockAuthenticationMiddleware';
 import fixtureData from '../../fixtures/large_fixture-data.json';
-import { parseObjectId } from '../../types/objectId';
 import { AccountsModule } from '../accounts/accounts.module';
 import { TransactionsModule } from '../transactions/transactions.module';
 import { UserDataModule } from '../user-data/user-data.module';
@@ -41,7 +40,7 @@ describe('IncomesService', () => {
     const userDataService = module.get<UserDataService>(UserDataService);
 
     await userDataService.overrideUserData(
-      DUMMY_TEST_USER._id,
+      DUMMY_TEST_USER.id,
       fixtureData as unknown as ImportUserDataDto,
     );
   });
@@ -52,7 +51,7 @@ describe('IncomesService', () => {
 
   it('should return all incomes for user', async () => {
     const incomes = await service.findAllByUser(
-      DUMMY_TEST_USER._id,
+      DUMMY_TEST_USER.id,
       NaN,
       10000,
       NaN,
@@ -64,7 +63,7 @@ describe('IncomesService', () => {
 
   it('should return all incomes for user for specified account types', async () => {
     const incomes = await service.findAllByUser(
-      DUMMY_TEST_USER._id,
+      DUMMY_TEST_USER.id,
       NaN,
       10000,
       NaN,
@@ -81,7 +80,7 @@ describe('IncomesService', () => {
 
   it('should return monthly summaries for user', async () => {
     const summaries = await service.findMonthlySummariesByUser(
-      DUMMY_TEST_USER._id,
+      DUMMY_TEST_USER.id,
       10000,
       NaN,
       NaN,
@@ -92,7 +91,7 @@ describe('IncomesService', () => {
 
   it('should return monthly summaries for user for specified account types', async () => {
     const summaries = await service.findMonthlySummariesByUser(
-      DUMMY_TEST_USER._id,
+      DUMMY_TEST_USER.id,
       10000,
       NaN,
       NaN,
@@ -108,8 +107,8 @@ describe('IncomesService', () => {
 
   it('should return one expense for user', async () => {
     const expense = await service.findOne(
-      DUMMY_TEST_USER._id,
-      parseObjectId('663df5ccd8ef53dcb2bc93a0'),
+      DUMMY_TEST_USER.id,
+      '663df5ccd8ef53dcb2bc93a0',
     );
     expect(expense).toMatchSnapshot();
   });
