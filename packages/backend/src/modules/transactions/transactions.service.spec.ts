@@ -5,7 +5,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { rootMongooseTestModule } from '../../../test/rootMongooseTest.module';
 import { DUMMY_TEST_USER } from '../../config/mockAuthenticationMiddleware';
 import fixtureData from '../../fixtures/large_fixture-data.json';
-import { parseObjectId } from '../../types/objectId';
 import { AccountsModule } from '../accounts/accounts.module';
 import { TransactionCategoriesModule } from '../transaction-categories/transaction-categories.module';
 import { TransactionCategoryMappingsModule } from '../transaction-category-mappings/transaction-category-mappings.module';
@@ -42,7 +41,7 @@ describe('TransactionsService', () => {
     const userDataService = module.get<UserDataService>(UserDataService);
 
     await userDataService.overrideUserData(
-      DUMMY_TEST_USER._id,
+      DUMMY_TEST_USER.id,
       fixtureData as unknown as ImportUserDataDto,
     );
   });
@@ -53,7 +52,7 @@ describe('TransactionsService', () => {
 
   it('should return all expenses for user', async () => {
     const expenses = await service.findAllByUser(
-      DUMMY_TEST_USER._id,
+      DUMMY_TEST_USER.id,
       TransactionType.ANY,
       NaN,
       10000,
@@ -65,7 +64,7 @@ describe('TransactionsService', () => {
 
   it('should return all expenses for user for specified account types', async () => {
     const expenses = await service.findAllByUser(
-      DUMMY_TEST_USER._id,
+      DUMMY_TEST_USER.id,
       TransactionType.ANY,
       NaN,
       10000,
@@ -84,7 +83,7 @@ describe('TransactionsService', () => {
 
   it('should return monthly summaries for user', async () => {
     const summaries = await service.findMonthlySummariesByUser(
-      DUMMY_TEST_USER._id,
+      DUMMY_TEST_USER.id,
       TransactionType.ANY,
       10000,
       NaN,
@@ -96,7 +95,7 @@ describe('TransactionsService', () => {
 
   it('should return monthly summaries for user for specified account types', async () => {
     const summaries = await service.findMonthlySummariesByUser(
-      DUMMY_TEST_USER._id,
+      DUMMY_TEST_USER.id,
       TransactionType.TRANSFER,
       10000,
       NaN,
@@ -113,8 +112,8 @@ describe('TransactionsService', () => {
 
   it('should return one expense for user', async () => {
     const expense = await service.findOne(
-      DUMMY_TEST_USER._id,
-      parseObjectId('624befb66ba655edad8f824e'),
+      DUMMY_TEST_USER.id,
+      '624befb66ba655edad8f824e',
     );
     expect(expense).toMatchSnapshot();
   });

@@ -4,7 +4,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { rootMongooseTestModule } from '../../../test/rootMongooseTest.module';
 import { DUMMY_TEST_USER } from '../../config/mockAuthenticationMiddleware';
 import fixtureData from '../../fixtures/large_fixture-data.json';
-import { parseObjectId } from '../../types/objectId';
 import { TransactionsModule } from '../transactions/transactions.module';
 import { UserDataModule } from '../user-data/user-data.module';
 import {
@@ -39,7 +38,7 @@ describe('ExpensesService', () => {
     const userDataService = module.get<UserDataService>(UserDataService);
 
     await userDataService.overrideUserData(
-      DUMMY_TEST_USER._id,
+      DUMMY_TEST_USER.id,
       fixtureData as unknown as ImportUserDataDto,
     );
   });
@@ -50,7 +49,7 @@ describe('ExpensesService', () => {
 
   it('should return all expenses for user', async () => {
     const expenses = await service.findAllByUser(
-      DUMMY_TEST_USER._id,
+      DUMMY_TEST_USER.id,
       NaN,
       10000,
       NaN,
@@ -62,7 +61,7 @@ describe('ExpensesService', () => {
 
   it('should return all expenses for user for specified account types', async () => {
     const expenses = await service.findAllByUser(
-      DUMMY_TEST_USER._id,
+      DUMMY_TEST_USER.id,
       NaN,
       10000,
       NaN,
@@ -79,7 +78,7 @@ describe('ExpensesService', () => {
 
   it('should return monthly summaries for user', async () => {
     const summaries = await service.findMonthlySummariesByUser(
-      DUMMY_TEST_USER._id,
+      DUMMY_TEST_USER.id,
       10000,
       NaN,
       NaN,
@@ -90,7 +89,7 @@ describe('ExpensesService', () => {
 
   it('should return monthly summaries for user for specified account types', async () => {
     const summaries = await service.findMonthlySummariesByUser(
-      DUMMY_TEST_USER._id,
+      DUMMY_TEST_USER.id,
       10000,
       NaN,
       NaN,
@@ -106,8 +105,8 @@ describe('ExpensesService', () => {
 
   it('should return one expense for user', async () => {
     const expense = await service.findOne(
-      DUMMY_TEST_USER._id,
-      parseObjectId('624befb66ba655edad8f824e'),
+      DUMMY_TEST_USER.id,
+      '624befb66ba655edad8f824e',
     );
     expect(expense).toMatchSnapshot();
   });

@@ -3,7 +3,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 
 import { rootMongooseTestModule } from '../../../test/rootMongooseTest.module';
 import { getMongoConnection } from '../../config/memoryDatabaseServer';
-import { parseObjectId } from '../../types/objectId';
 import { SystemModule } from '../system/system.module';
 import { TransactionTemplateModule } from '../transaction-templates/transaction-templates.module';
 import { TransactionsModule } from '../transactions/transactions.module';
@@ -14,11 +13,11 @@ import { UserDataService } from '../user-data/user-data.service';
 import { TasksService } from './tasks.service';
 import { templateFixture } from './template-fixture';
 
-const dummyUserId = parseObjectId('61460d7354ea082ad0256749');
+const dummyUserId = '61460d7354ea082ad0256749';
 
 describe('TasksService', () => {
   let service: TasksService;
-  let userDataservice: UserDataService;
+  let userDataService: UserDataService;
   let transactionsService: TransactionsService;
 
   let RealDate: DateConstructor;
@@ -54,7 +53,7 @@ describe('TasksService', () => {
     }).compile();
 
     service = module.get<TasksService>(TasksService);
-    userDataservice = module.get<UserDataService>(UserDataService);
+    userDataService = module.get<UserDataService>(UserDataService);
     transactionsService = module.get<TransactionsService>(TransactionsService);
 
     mockDate();
@@ -76,7 +75,7 @@ describe('TasksService', () => {
   });
 
   it('should create transaction from template', async () => {
-    await userDataservice.overrideUserData(dummyUserId, {
+    await userDataService.overrideUserData(dummyUserId, {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ...(templateFixture as any),
     });
@@ -99,7 +98,7 @@ describe('TasksService', () => {
   });
 
   it('should not create duplicated transaction from template with multiple executions', async () => {
-    await userDataservice.overrideUserData(dummyUserId, {
+    await userDataService.overrideUserData(dummyUserId, {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ...(templateFixture as any),
     });
@@ -125,7 +124,7 @@ describe('TasksService', () => {
   it('should use last day of month id dayOfMonth is higher than amount of days', async () => {
     dateMock = new Date(2022, 1, 2, 12);
 
-    await userDataservice.overrideUserData(dummyUserId, {
+    await userDataService.overrideUserData(dummyUserId, {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ...(templateFixture as any),
     });
@@ -157,7 +156,7 @@ describe('TasksService', () => {
   it('should create transaction to next month if dayOfMonthToCreate is greater than dayOfMonth', async () => {
     dateMock = new Date(2022, 0, 30, 12);
 
-    await userDataservice.overrideUserData(dummyUserId, {
+    await userDataService.overrideUserData(dummyUserId, {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ...(templateFixture as any),
     });
@@ -189,7 +188,7 @@ describe('TasksService', () => {
   it('should run templates on last day of month even with higher dayOfMonthToCreate values', async () => {
     dateMock = new Date(2022, 1, 28, 12);
 
-    await userDataservice.overrideUserData(dummyUserId, {
+    await userDataService.overrideUserData(dummyUserId, {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ...(templateFixture as any),
     });
