@@ -1,4 +1,3 @@
-import { TransactionType } from '@local/types';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { rootMongooseTestModule } from '../../../test/rootMongooseTest.module';
@@ -82,7 +81,7 @@ describe('TasksService', () => {
 
     const transactionsBefore = await transactionsService.findAllByUser(
       dummyUserId,
-      TransactionType.ANY,
+      null,
     );
 
     expect(transactionsBefore.data).toHaveLength(0);
@@ -91,7 +90,7 @@ describe('TasksService', () => {
 
     const transactionsAfter = await transactionsService.findAllByUser(
       dummyUserId,
-      TransactionType.ANY,
+      null,
     );
 
     expect(transactionsAfter.data).toHaveLength(1);
@@ -105,7 +104,7 @@ describe('TasksService', () => {
 
     const transactionsBefore = await transactionsService.findAllByUser(
       dummyUserId,
-      TransactionType.ANY,
+      null,
     );
 
     expect(transactionsBefore.data).toHaveLength(0);
@@ -115,7 +114,7 @@ describe('TasksService', () => {
 
     const transactionsAfter = await transactionsService.findAllByUser(
       dummyUserId,
-      TransactionType.ANY,
+      null,
     );
 
     expect(transactionsAfter.data).toHaveLength(1);
@@ -131,7 +130,7 @@ describe('TasksService', () => {
 
     const transactionsBefore = await transactionsService.findAllByUser(
       dummyUserId,
-      TransactionType.ANY,
+      null,
     );
 
     expect(transactionsBefore.data).toHaveLength(0);
@@ -140,7 +139,7 @@ describe('TasksService', () => {
 
     const transactionsAfter = await transactionsService.findAllByUser(
       dummyUserId,
-      TransactionType.ANY,
+      null,
     );
 
     expect(transactionsAfter.data).toHaveLength(1);
@@ -163,7 +162,7 @@ describe('TasksService', () => {
 
     const transactionsBefore = await transactionsService.findAllByUser(
       dummyUserId,
-      TransactionType.ANY,
+      null,
     );
 
     expect(transactionsBefore.data).toHaveLength(0);
@@ -172,7 +171,7 @@ describe('TasksService', () => {
 
     const transactionsAfter = await transactionsService.findAllByUser(
       dummyUserId,
-      TransactionType.ANY,
+      null,
     );
 
     expect(transactionsAfter.data).toHaveLength(1);
@@ -195,7 +194,7 @@ describe('TasksService', () => {
 
     const transactionsBefore = await transactionsService.findAllByUser(
       dummyUserId,
-      TransactionType.ANY,
+      null,
     );
 
     expect(transactionsBefore.data).toHaveLength(0);
@@ -204,7 +203,7 @@ describe('TasksService', () => {
 
     const transactionsAfter = await transactionsService.findAllByUser(
       dummyUserId,
-      TransactionType.ANY,
+      null,
     );
 
     expect(transactionsAfter.data).toHaveLength(1);
