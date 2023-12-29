@@ -1,4 +1,3 @@
-import { MongooseModule } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { rootMongooseTestModule } from '../../../test/rootMongooseTest.module';
@@ -10,10 +9,6 @@ import {
   UserDataService,
 } from '../user-data/user-data.service';
 
-import {
-  TransactionCategoryMapping,
-  TransactionCategoryMappingSchema,
-} from './schemas/transaction-category-mapping.schema';
 import { TransactionCategoryMappingsService } from './transaction-category-mappings.service';
 
 describe('TransactionCategoryMappingsService', () => {
@@ -29,12 +24,6 @@ describe('TransactionCategoryMappingsService', () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         rootMongooseTestModule(),
-        MongooseModule.forFeature([
-          {
-            name: TransactionCategoryMapping.name,
-            schema: TransactionCategoryMappingSchema,
-          },
-        ]),
 
         // Modules required to bootstrap with UserDataModule
         UserDataModule,

@@ -1,5 +1,4 @@
 import { AccountType, TransactionType } from '@local/types';
-import { MongooseModule } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { rootMongooseTestModule } from '../../../test/rootMongooseTest.module';
@@ -14,7 +13,6 @@ import {
   UserDataService,
 } from '../user-data/user-data.service';
 
-import { Transaction, TransactionSchema } from './schemas/transaction.schema';
 import { TransactionsService } from './transactions.service';
 
 describe('TransactionsService', () => {
@@ -24,9 +22,6 @@ describe('TransactionsService', () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         rootMongooseTestModule(),
-        MongooseModule.forFeature([
-          { name: Transaction.name, schema: TransactionSchema },
-        ]),
         AccountsModule,
         TransactionCategoriesModule,
         TransactionCategoryMappingsModule,
@@ -87,7 +82,6 @@ describe('TransactionsService', () => {
       TransactionType.ANY,
       10000,
       NaN,
-      NaN,
       [],
     );
     expect(summaries).toMatchSnapshot();
@@ -98,7 +92,6 @@ describe('TransactionsService', () => {
       DUMMY_TEST_USER.id,
       TransactionType.TRANSFER,
       10000,
-      NaN,
       NaN,
       [
         AccountType.CASH,
