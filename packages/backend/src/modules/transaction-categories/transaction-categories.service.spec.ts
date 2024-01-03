@@ -67,7 +67,7 @@ describe('TransactionCategoriesService', () => {
   it('should return an array of transaction categories from findMonthlySummariesByUserAndId', async () => {
     const transactionCategories = await service.findMonthlySummariesByUserAndId(
       DUMMY_TEST_USER.id,
-      ('623b58ada3deba9879422fbf'),
+      '623b58ada3deba9879422fbf',
     );
     expect(transactionCategories).toMatchSnapshot();
   });
