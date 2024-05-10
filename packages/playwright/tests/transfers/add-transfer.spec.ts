@@ -8,6 +8,7 @@ import {
   getAccountFromTransactions,
   roundToTwoDecimal,
   getAllTransfers,
+  ITransactionWithDateObject,
 } from '$utils/api-helper';
 import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
@@ -54,7 +55,9 @@ test.describe('Add transfer', () => {
     const transactionsBefore = await getAllTransaction();
     const transfersBefore = await getAllTransfers();
 
-    const targetToAccountTransactionBefore = transactionsBefore.at(-1);
+    const targetToAccountTransactionBefore = transactionsBefore.at(
+      -1,
+    ) as ITransactionWithDateObject;
     const targetToAccountId = getAccountFromTransactions(
       targetToAccountTransactionBefore,
     );
@@ -109,7 +112,9 @@ test.describe('Add transfer', () => {
     const transactionsBefore = await getAllTransaction();
     const transfersBefore = await getAllTransfers();
 
-    const targetToAccountTransactionBefore = transactionsBefore.at(-1);
+    const targetToAccountTransactionBefore = transactionsBefore.at(
+      -1,
+    ) as ITransactionWithDateObject;
     const targetToAccountId = getAccountFromTransactions(
       targetToAccountTransactionBefore,
     );
@@ -166,7 +171,9 @@ test.describe('Add transfer', () => {
     const transactionsBefore = await getAllTransaction();
     const transfersBefore = await getAllTransfers();
 
-    const targetToAccountTransactionBefore = transactionsBefore.at(0);
+    const targetToAccountTransactionBefore = transactionsBefore.at(
+      0,
+    ) as ITransactionWithDateObject;
     const targetToAccountId = getAccountFromTransactions(
       targetToAccountTransactionBefore,
     );

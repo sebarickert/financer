@@ -8,6 +8,7 @@ import {
   getAccountFromTransactions,
   roundToTwoDecimal,
   getAllIncomes,
+  ITransactionWithDateObject,
 } from '$utils/api-helper';
 import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
@@ -49,7 +50,9 @@ test.describe('Add income', () => {
     const transactionsBefore = await getAllTransaction();
     const incomesBefore = await getAllIncomes();
 
-    const targetTransactionBefore = transactionsBefore.at(-1);
+    const targetTransactionBefore = transactionsBefore.at(
+      -1,
+    ) as ITransactionWithDateObject;
 
     const targetAccountId = getAccountFromTransactions(targetTransactionBefore);
 
@@ -87,7 +90,9 @@ test.describe('Add income', () => {
     const transactionsBefore = await getAllTransaction();
     const incomesBefore = await getAllIncomes();
 
-    const targetTransactionBefore = transactionsBefore.at(-1);
+    const targetTransactionBefore = transactionsBefore.at(
+      -1,
+    ) as ITransactionWithDateObject;
     const targetAccountId = getAccountFromTransactions(targetTransactionBefore);
 
     const newTransactionDate = new Date(
@@ -124,7 +129,9 @@ test.describe('Add income', () => {
     const transactionsBefore = await getAllTransaction();
     const incomesBefore = await getAllIncomes();
 
-    const targetTransactionBefore = transactionsBefore.at(0);
+    const targetTransactionBefore = transactionsBefore.at(
+      0,
+    ) as ITransactionWithDateObject;
 
     const targetAccountId = getAccountFromTransactions(targetTransactionBefore);
 
@@ -159,7 +166,9 @@ test.describe('Add income', () => {
     const newTransactionName = getNewTransactionName();
 
     const transactionsBefore = await getAllTransaction();
-    const targetTransactionBefore = transactionsBefore.at(-1);
+    const targetTransactionBefore = transactionsBefore.at(
+      -1,
+    ) as ITransactionWithDateObject;
     const targetAccountId = getAccountFromTransactions(targetTransactionBefore);
 
     const date = new Date();

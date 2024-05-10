@@ -38,9 +38,9 @@ test.describe('Account editing', () => {
         .getByTestId('account-details-item-description'),
     ).toHaveText(accountType);
 
-    const currentBalance = await page
+    const currentBalance = (await page
       .getByTestId('account-balance')
-      .textContent();
+      .textContent()) as string;
     expect(parseFloatFromText(currentBalance)).toEqual(
       parseFloatFromText(accountBalance),
     );
@@ -59,9 +59,9 @@ test.describe('Account editing', () => {
 
     await page.getByTestId('account-row').getByText(oldAccountName).click();
 
-    const accountBalance = await page
+    const accountBalance = (await page
       .getByTestId('account-balance')
-      .textContent();
+      .textContent()) as string;
     await verifyAccountPage(page, oldAccountName, accountBalance, accountType);
 
     await page.getByTestId('edit-account').click();
@@ -89,9 +89,9 @@ test.describe('Account editing', () => {
   ) => {
     await page.getByTestId('account-row').getByText(accountName).click();
 
-    const accountBalance = await page
+    const accountBalance = (await page
       .getByTestId('account-balance')
-      .textContent();
+      .textContent()) as string;
     await verifyAccountPage(page, accountName, accountBalance, oldAccountType);
 
     await page.getByTestId('edit-account').click();
@@ -116,9 +116,9 @@ test.describe('Account editing', () => {
   ) => {
     await page.getByTestId('account-row').getByText(accountName).click();
 
-    const oldAccountBalance = await page
+    const oldAccountBalance = (await page
       .getByTestId('account-balance')
-      .textContent();
+      .textContent()) as string;
     await verifyAccountPage(page, accountName, oldAccountBalance, accountType);
     verifyDifferentBalances(oldAccountBalance, newAccountBalance);
 
@@ -154,9 +154,9 @@ test.describe('Account editing', () => {
   ) => {
     await page.getByTestId('account-row').getByText(oldAccountName).click();
 
-    const oldAccountBalance = await page
+    const oldAccountBalance = (await page
       .getByTestId('account-balance')
-      .textContent();
+      .textContent()) as string;
     await verifyAccountPage(
       page,
       oldAccountName,

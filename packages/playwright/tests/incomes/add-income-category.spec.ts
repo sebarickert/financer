@@ -63,7 +63,8 @@ test.describe('Add income with category', () => {
     await page.evaluate(() => {
       const targetElement = document.querySelector(
         `[data-testid=transaction-categories-form-select]`,
-      );
+      ) as Element;
+
       targetElement.innerHTML = `${targetElement.innerHTML}<option value="123456789012345678901234">non-existing-category</option>`;
     });
 
