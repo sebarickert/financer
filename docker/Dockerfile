@@ -20,7 +20,6 @@ ENV NODE_ENV production
 WORKDIR /app
 COPY --from=builder /app/build /app
 COPY --from=builder /app/node_modules /app/node_modules
-COPY --from=builder /app/packages/types /app/node_modules/@local/types
 
 CMD [ "node", "/app/server/main.js" ]
 

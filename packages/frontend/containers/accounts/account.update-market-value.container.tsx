@@ -1,7 +1,9 @@
-import { CreateTransactionCategoryMappingDtoWithoutTransaction } from '@local/types';
 import { useDispatch } from 'react-redux';
 
-import { AccountDto } from '$api/generated/financerApi';
+import {
+  AccountDto,
+  CreateTransactionCategoryMappingWithoutTransactionDto,
+} from '$api/generated/financerApi';
 import {
   useIncomesCreateMutation,
   useExpensesCreateMutation,
@@ -53,11 +55,11 @@ export const AccountUpdateMarketValueContainer = ({
         marketSettings?.transactionDescription ?? 'Market value change';
       const marketValueChangeAmount = currentMarketValue - account.balance;
 
-      const mappedCategory: CreateTransactionCategoryMappingDtoWithoutTransaction =
+      const mappedCategory: CreateTransactionCategoryMappingWithoutTransactionDto =
         {
           amount: Math.abs(marketValueChangeAmount),
           description: transactionDescription,
-          category_id:
+          categoryId:
             marketSettings?.category !== undefined
               ? marketSettings.category
               : '',

@@ -14,8 +14,8 @@ export const useIsQueryLoading = (...targetEndpoints: EndpointName[]) => {
         .filter(
           ({ endpointName }) =>
             targetEndpoints.length === 0 ||
-            targetEndpoints.includes(endpointName)
+            targetEndpoints.includes(endpointName),
         )
-        .some(({ status }) => status === 'pending')
+        .some(({ status }) => status === 'pending'),
   );
 };

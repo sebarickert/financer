@@ -8,7 +8,7 @@ runs:
       id: restore-cache
       with:
         path: "./build"
-        key: ${{ runner.os }}-build-${{ hashFiles('./package-lock.json') }}-${{ hashFiles('./packages/backend/**') }}-${{ hashFiles('./packages/frontend/**') }}-${{ hashFiles('./packages/types/**') }}
+        key: ${{ runner.os }}-build-${{ hashFiles('./package-lock.json') }}-${{ hashFiles('./packages/backend/**') }}-${{ hashFiles('./packages/frontend/**') }} }}
 
     - name: Build app
       if: steps.restore-cache.outputs.cache-hit != 'true'

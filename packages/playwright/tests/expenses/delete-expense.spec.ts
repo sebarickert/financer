@@ -1,5 +1,4 @@
-import { AccountDto, ExpenseDto } from '@local/types';
-
+import { AccountDto, ExpenseDto } from '$types/generated/financer';
 import {
   getAllTransaction,
   getAccount,
@@ -35,7 +34,7 @@ test.describe('Delete expense', () => {
     targetTransactionBefore: ExpenseDto,
   ) => {
     const targetTransactionAfter = await getTransactionByIdRaw(
-      targetTransactionBefore._id,
+      targetTransactionBefore.id,
     );
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -52,7 +51,7 @@ test.describe('Delete expense', () => {
       -1,
     ) as ITransactionWithDateObject;
 
-    const targetTransactionId = targetTransactionBefore._id;
+    const targetTransactionId = targetTransactionBefore.id;
     const targetAccountId = targetTransactionBefore.fromAccount;
 
     const accountBefore = await getAccount(targetAccountId);
@@ -90,7 +89,7 @@ test.describe('Delete expense', () => {
     );
     const targetTransactionBefore = expensesBefore[0];
 
-    const targetTransactionId = targetTransactionBefore._id;
+    const targetTransactionId = targetTransactionBefore.id;
     const targetAccountId = targetTransactionBefore.fromAccount;
 
     const accountBefore = await getAccount(targetAccountId);

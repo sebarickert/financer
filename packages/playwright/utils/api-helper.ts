@@ -1,6 +1,14 @@
-import { AccountDto, TransactionDto, PaginationDto } from '@local/types';
-
 import { Page, getBaseUrl } from './financer-page';
+
+import {
+  AccountDto,
+  PaginationDto as PaginationDtoBase,
+  TransactionDto,
+} from '$types/generated/financer';
+
+type PaginationDto<Data extends object> = PaginationDtoBase & {
+  data: Data;
+};
 
 export interface ITransactionWithDateObject extends TransactionDto {
   dateObj: Date;
