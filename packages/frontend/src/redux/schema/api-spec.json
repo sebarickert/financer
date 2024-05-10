@@ -1903,8 +1903,8 @@
           "dayOfMonth": { "type": "number" },
           "dayOfMonthToCreate": { "type": "number" },
           "userId": { "type": "string" },
-          "fromAccount": { "type": "string" },
-          "toAccount": { "type": "string" },
+          "fromAccount": { "type": "string", "nullable": true },
+          "toAccount": { "type": "string", "nullable": true },
           "categories": { "type": "array", "items": { "type": "string" } }
         },
         "required": [
@@ -2150,8 +2150,8 @@
           "description": { "type": "string" },
           "dayOfMonth": { "type": "number" },
           "dayOfMonthToCreate": { "type": "number" },
-          "fromAccount": { "type": "string" },
-          "toAccount": { "type": "string" },
+          "fromAccount": { "type": "string", "nullable": true },
+          "toAccount": { "type": "string", "nullable": true },
           "categories": { "type": "array", "items": { "type": "string" } }
         },
         "required": ["templateName", "templateType", "templateVisibility"]
@@ -2170,8 +2170,8 @@
           "description": { "type": "string" },
           "dayOfMonth": { "type": "number" },
           "dayOfMonthToCreate": { "type": "number" },
-          "fromAccount": { "type": "string" },
-          "toAccount": { "type": "string" },
+          "fromAccount": { "type": "string", "nullable": true },
+          "toAccount": { "type": "string", "nullable": true },
           "categories": { "type": "array", "items": { "type": "string" } }
         }
       },

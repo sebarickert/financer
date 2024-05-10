@@ -32,8 +32,8 @@ export interface TemplateFormFields {
   templateVisibility: TransactionType;
   description: string;
   amount: number;
-  fromAccount?: string;
-  toAccount?: string;
+  fromAccount?: string | null;
+  toAccount?: string | null;
   dayOfMonth?: number;
   dayOfMonthToCreate?: number;
   categories: TransactionCategoriesFormFields[];
@@ -100,7 +100,17 @@ export const TemplateForm = ({
   }, [accounts]);
 
   const handleSubmit = async (data: TemplateFormFields) => {
-    onSubmit(data);
+    const { templateVisibility: submittedTemplateVisibility } = data;
+
+    const isExpense =
+      submittedTemplateVisibility === TransactionTypeEnum.Expense;
+    const isIncome = submittedTemplateVisibility === TransactionTypeEnum.Income;
+
+    onSubmit({
+      ...data,
+      fromAccount: isIncome ? null : data.fromAccount,
+      toAccount: isExpense ? null : data.toAccount,
+    });
   };
 
   const selectedTransactionType = useMemo(() => {
