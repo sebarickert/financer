@@ -171,13 +171,23 @@ export const TemplateForm = ({
           </Input>
           {(templateVisibility === TransactionType.Expense ||
             templateVisibility === TransactionType.Transfer) && (
-            <Select id="fromAccount" options={accountOptions} isRequired shouldUnregister>
+            <Select
+              id="fromAccount"
+              options={accountOptions}
+              isRequired
+              shouldUnregister
+            >
               From Account
             </Select>
           )}
           {(templateVisibility === TransactionType.Income ||
             templateVisibility === TransactionType.Transfer) && (
-            <Select id="toAccount" options={accountOptions} isRequired shouldUnregister>
+            <Select
+              id="toAccount"
+              options={accountOptions}
+              isRequired
+              shouldUnregister
+            >
               To Account
             </Select>
           )}

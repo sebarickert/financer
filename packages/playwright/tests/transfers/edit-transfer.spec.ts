@@ -1,5 +1,4 @@
-import { AccountDto } from '@local/types';
-
+import { AccountDto } from '$types/generated/financer';
 import {
   getAllTransaction,
   getAccount,
@@ -70,7 +69,7 @@ test.describe('Edit transfer', () => {
     );
     const targetTransactionBefore = transfersBefore[transfersBefore.length - 1];
 
-    const targetTransactionId = targetTransactionBefore._id;
+    const targetTransactionId = targetTransactionBefore.id;
     const targetToAccountId = targetTransactionBefore.toAccount;
     const targetFromAccountId = targetTransactionBefore.fromAccount;
 
@@ -133,7 +132,7 @@ test.describe('Edit transfer', () => {
     );
     const targetTransactionBefore = transfersBefore[0];
 
-    const targetTransactionId = targetTransactionBefore._id;
+    const targetTransactionId = targetTransactionBefore.id;
     const targetToAccountId = targetTransactionBefore.toAccount;
     const targetFromAccountId = targetTransactionBefore.fromAccount;
 

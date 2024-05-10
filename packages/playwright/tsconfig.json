@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "es2022"
-    ],
+    "lib": ["dom", "dom.iterable", "es2022"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -25,15 +21,10 @@
     "baseUrl": "./",
     "paths": {
       "$utils/*": ["./utils/*"],
-      "$assets/*": ["./assets/*"]
+      "$assets/*": ["./assets/*"],
+      "$types/*": ["./types/*"]
     }
   },
-  "include": [
-    "tests",
-    "utils",
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["tests", "utils", "types"],
+  "exclude": ["node_modules"]
 }
-  

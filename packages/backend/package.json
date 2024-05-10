@@ -27,7 +27,6 @@
     "prisma:format": "prisma format"
   },
   "dependencies": {
-    "@local/types": "*",
     "@nestjs/common": "^9.4.3",
     "@nestjs/config": "^3.1.1",
     "@nestjs/core": "^9.4.3",

@@ -1,5 +1,4 @@
-import { AccountDto } from '@local/types';
-
+import { AccountDto } from '$types/generated/financer';
 import {
   getAllTransaction,
   getAccount,
@@ -73,7 +72,7 @@ test.describe('Edit expense', () => {
     const dateQuery = `${transactionYear}-${transactionMonth}`;
     await page.goto(`/statistics/expenses?date=${dateQuery}&page=1`);
 
-    await page.getByTestId(targetTransactionBefore._id).click();
+    await page.getByTestId(targetTransactionBefore.id).click();
 
     await page.getByTestId('edit-expense-button').click();
     await page.locator('#description').fill(editedTransactionName);
@@ -86,7 +85,7 @@ test.describe('Edit expense', () => {
 
     const accountAfter = await getAccount(targetAccountId);
     const targetTransactionAfter = await getTransactionById(
-      targetTransactionBefore._id,
+      targetTransactionBefore.id,
     );
 
     await verifyAccountBalanceChanges(
@@ -126,7 +125,7 @@ test.describe('Edit expense', () => {
     const dateQuery = `${transactionYear}-${transactionMonth}`;
     await page.goto(`/statistics/expenses?date=${dateQuery}&page=1`);
 
-    await page.getByTestId(targetTransactionBefore._id).click();
+    await page.getByTestId(targetTransactionBefore.id).click();
 
     await page.getByTestId('edit-expense-button').click();
     await page.locator('#description').fill(editedTransactionName);
@@ -138,7 +137,7 @@ test.describe('Edit expense', () => {
 
     const accountAfter = await getAccount(targetAccountId);
     const targetTransactionAfter = await getTransactionById(
-      targetTransactionBefore._id,
+      targetTransactionBefore.id,
     );
 
     await verifyAccountBalanceChanges(

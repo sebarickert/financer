@@ -1,5 +1,4 @@
-import { AccountDto, TransactionDto } from '@local/types';
-
+import { AccountDto, TransactionDto } from '$types/generated/financer';
 import {
   getAllTransaction,
   getAccount,
