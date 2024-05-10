@@ -7,6 +7,7 @@ runs:
     - name: Run frontend lint
       shell: bash
       run: npm -w frontend run lint
+
     - name: Run backend lint
       shell: bash
       run: npm -w backend run lint
