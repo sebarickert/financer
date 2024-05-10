@@ -39,6 +39,7 @@ test.describe('Account deleting', () => {
     await page.getByTestId('delete-account').click();
     await page.getByTestId('delete-account-cancel').click({});
 
+    // eslint-disable-next-line playwright/no-wait-for-timeout
     await page.waitForTimeout(100);
 
     await page.getByTestId('header-back-link').click();

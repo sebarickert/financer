@@ -8,6 +8,7 @@ import {
   getAccountFromTransactions,
   roundToTwoDecimal,
   getAllExpenses,
+  ITransactionWithDateObject,
 } from '$utils/api-helper';
 import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
@@ -49,7 +50,9 @@ test.describe('Add expense', () => {
     const transactionsBefore = await getAllTransaction();
     const expensesBefore = await getAllExpenses();
 
-    const targetTransactionBefore = transactionsBefore.at(-1);
+    const targetTransactionBefore = transactionsBefore.at(
+      -1,
+    ) as ITransactionWithDateObject;
 
     const targetAccountId = getAccountFromTransactions(targetTransactionBefore);
 
@@ -70,7 +73,7 @@ test.describe('Add expense', () => {
     await page.getByTestId('edit-expense-button').waitFor();
 
     const accountAfter = await getAccount(targetAccountId);
-    
+
     const expensesAfter = await getAllExpenses();
 
     await verifyAccountBalanceChange(
@@ -88,7 +91,9 @@ test.describe('Add expense', () => {
     const transactionsBefore = await getAllTransaction();
     const expensesBefore = await getAllExpenses();
 
-    const targetTransactionBefore = transactionsBefore.at(-1);
+    const targetTransactionBefore = transactionsBefore.at(
+      -1,
+    ) as ITransactionWithDateObject;
     const targetAccountId = getAccountFromTransactions(targetTransactionBefore);
 
     const newTransactionDate = new Date(
@@ -125,7 +130,9 @@ test.describe('Add expense', () => {
     const transactionsBefore = await getAllTransaction();
     const expensesBefore = await getAllExpenses();
 
-    const targetTransactionBefore = transactionsBefore.at(0);
+    const targetTransactionBefore = transactionsBefore.at(
+      0,
+    ) as ITransactionWithDateObject;
 
     const targetAccountId = getAccountFromTransactions(targetTransactionBefore);
 
@@ -161,7 +168,9 @@ test.describe('Add expense', () => {
     const newTransactionName = getNewTransactionName();
 
     const transactionsBefore = await getAllTransaction();
-    const targetTransactionBefore = transactionsBefore.at(-1);
+    const targetTransactionBefore = transactionsBefore.at(
+      -1,
+    ) as ITransactionWithDateObject;
     const targetAccountId = getAccountFromTransactions(targetTransactionBefore);
 
     const date = new Date();
