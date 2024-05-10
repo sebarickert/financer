@@ -1,8 +1,10 @@
 import { forwardRef } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { rootMongooseTestModule } from '../../../test/rootMongooseTest.module';
 import { DUMMY_TEST_USER } from '../../config/mockAuthenticationMiddleware';
+import { testConfiguration } from '../../config/test-configuration';
+import { DatabaseModule } from '../../database/database.module';
 import fixtureData from '../../fixtures/large_fixture-data.json';
 import { AccountBalanceChangesModule } from '../account-balance-changes/account-balance-changes.module';
 import { TransactionsModule } from '../transactions/transactions.module';
@@ -26,7 +28,8 @@ describe('AccountsService', () => {
 
     const module: TestingModule = await Test.createTestingModule({
       imports: [
-        rootMongooseTestModule(),
+        ConfigModule.forRoot({ isGlobal: true, load: [testConfiguration] }),
+        DatabaseModule,
         AccountBalanceChangesModule,
         forwardRef(() => TransactionsModule),
 
@@ -43,7 +46,7 @@ describe('AccountsService', () => {
       DUMMY_TEST_USER.id,
       fixtureData as unknown as ImportUserDataDto,
     );
-  });
+  }, 10000);
 
   afterEach(() => {
     jest.clearAllTimers();

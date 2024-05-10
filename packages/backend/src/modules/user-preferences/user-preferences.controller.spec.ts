@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { rootMongooseTestModule } from '../../../test/rootMongooseTest.module';
+import { createMockServiceProvider } from '../../../test/create-mock-service-provider';
 
 import { UserPreferencesController } from './user-preferences.controller';
 import { UserPreferencesService } from './user-preferences.service';
@@ -10,9 +10,8 @@ describe('UserPreferencesController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [rootMongooseTestModule()],
       controllers: [UserPreferencesController],
-      providers: [UserPreferencesService],
+      providers: [createMockServiceProvider(UserPreferencesService)],
     }).compile();
 
     controller = module.get<UserPreferencesController>(

@@ -85,7 +85,7 @@ export class TransactionTemplatesService {
 
   async findAutomatedTemplatesWithCreationDateBefore(
     dayOfMonth: number,
-    dateOperator: 'eq' | 'gte' = 'eq',
+    dateOperator: 'equals' | 'gte' = 'equals',
   ) {
     return this.transactionTemplateRepo.findMany({
       where: {
@@ -101,6 +101,7 @@ export class TransactionTemplatesService {
   }
 
   async removeAllByUser(userId: string) {
+    await this.transactionTemplateLogRepo.deleteMany({ userId });
     await this.transactionTemplateRepo.deleteMany({ userId });
   }
 

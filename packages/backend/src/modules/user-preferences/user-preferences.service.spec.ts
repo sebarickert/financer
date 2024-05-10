@@ -1,6 +1,8 @@
+import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { rootMongooseTestModule } from '../../../test/rootMongooseTest.module';
+import { testConfiguration } from '../../config/test-configuration';
+import { DatabaseModule } from '../../database/database.module';
 
 import { UserPreferencesService } from './user-preferences.service';
 
@@ -9,7 +11,10 @@ describe('UserPreferencesService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [rootMongooseTestModule()],
+      imports: [
+        ConfigModule.forRoot({ isGlobal: true, load: [testConfiguration] }),
+        DatabaseModule,
+      ],
       providers: [UserPreferencesService],
     }).compile();
 

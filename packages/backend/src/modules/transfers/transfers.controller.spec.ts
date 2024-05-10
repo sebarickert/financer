@@ -2,9 +2,9 @@ import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import supertest from 'supertest';
 
-import { rootMongooseTestModule } from '../../../test/rootMongooseTest.module';
+import { createMockServiceProvider } from '../../../test/create-mock-service-provider';
 import { setupTestNestApp } from '../../setup-test-nest-app';
-import { TransactionsModule } from '../transactions/transactions.module';
+import { TransactionsService } from '../transactions/transactions.service';
 
 import { TransfersController } from './transfers.controller';
 import { TransfersService } from './transfers.service';
@@ -16,8 +16,10 @@ describe('TransfersController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [rootMongooseTestModule(), TransactionsModule],
-      providers: [TransfersService],
+      providers: [
+        TransfersService,
+        createMockServiceProvider(TransactionsService),
+      ],
       controllers: [TransfersController],
     }).compile();
 

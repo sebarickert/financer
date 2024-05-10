@@ -1,8 +1,10 @@
+import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AccountType, TransactionType } from '@prisma/client';
 
-import { rootMongooseTestModule } from '../../../test/rootMongooseTest.module';
 import { DUMMY_TEST_USER } from '../../config/mockAuthenticationMiddleware';
+import { testConfiguration } from '../../config/test-configuration';
+import { DatabaseModule } from '../../database/database.module';
 import fixtureData from '../../fixtures/large_fixture-data.json';
 import { AccountsModule } from '../accounts/accounts.module';
 import { TransactionCategoriesModule } from '../transaction-categories/transaction-categories.module';
@@ -21,7 +23,8 @@ describe('TransactionsService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
-        rootMongooseTestModule(),
+        ConfigModule.forRoot({ isGlobal: true, load: [testConfiguration] }),
+        DatabaseModule,
         AccountsModule,
         TransactionCategoriesModule,
         TransactionCategoryMappingsModule,
@@ -39,14 +42,14 @@ describe('TransactionsService', () => {
       DUMMY_TEST_USER.id,
       fixtureData as unknown as ImportUserDataDto,
     );
-  });
+  }, 10000);
 
   afterEach(() => {
     jest.clearAllTimers();
   });
 
-  it('should return all expenses for user', async () => {
-    const expenses = await service.findAllByUser(
+  it('should return all transactions for user', async () => {
+    const transactions = await service.findAllByUser(
       DUMMY_TEST_USER.id,
       null,
       NaN,
@@ -54,11 +57,11 @@ describe('TransactionsService', () => {
       NaN,
       NaN,
     );
-    expect(expenses).toMatchSnapshot();
+    expect(transactions).toMatchSnapshot();
   });
 
-  it('should return all expenses for user for specified account types', async () => {
-    const expenses = await service.findAllByUser(
+  it('should return all transactions for user for specified account types', async () => {
+    const transactions = await service.findAllByUser(
       DUMMY_TEST_USER.id,
       null,
       NaN,
@@ -73,14 +76,14 @@ describe('TransactionsService', () => {
         AccountType.SAVINGS,
       ],
     );
-    expect(expenses).toMatchSnapshot();
+    expect(transactions).toMatchSnapshot();
   });
 
   it('should return monthly summaries for user', async () => {
     const summaries = await service.findMonthlySummariesByUser(
       DUMMY_TEST_USER.id,
       null,
-      10000,
+      NaN,
       NaN,
       [],
     );
@@ -91,7 +94,7 @@ describe('TransactionsService', () => {
     const summaries = await service.findMonthlySummariesByUser(
       DUMMY_TEST_USER.id,
       TransactionType.TRANSFER,
-      10000,
+      NaN,
       NaN,
       [
         AccountType.CASH,
@@ -103,11 +106,11 @@ describe('TransactionsService', () => {
     expect(summaries).toMatchSnapshot();
   });
 
-  it('should return one expense for user', async () => {
-    const expense = await service.findOne(
+  it('should return one transaction for user', async () => {
+    const transaction = await service.findOne(
       DUMMY_TEST_USER.id,
       '624befb66ba655edad8f824e',
     );
-    expect(expense).toMatchSnapshot();
+    expect(transaction).toMatchSnapshot();
   });
 });

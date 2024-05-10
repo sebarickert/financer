@@ -24,7 +24,7 @@ export class TransactionCategoriesService {
     categoryId: string,
     newParentId: string,
   ): Promise<boolean> {
-    const categories = await this.findAllChildrensById([categoryId]);
+    const categories = await this.findAllChildrenById([categoryId]);
     const ids = categories.map(({ id }) => id);
 
     return ids.includes(newParentId);
@@ -69,10 +69,10 @@ export class TransactionCategoriesService {
     return category;
   }
 
-  async findAllChildrensById(parentIds: string[], depth = 0) {
+  async findAllChildrenById(parentIds: string[], depth = 0) {
     if (depth > 10) {
       throw new InternalServerErrorException(
-        'Too many levels of nesting, probably infite loop on hierarchy?',
+        'Too many levels of nesting, probably infinite loop on hierarchy?',
       );
     }
 
@@ -82,15 +82,18 @@ export class TransactionCategoriesService {
       },
     });
 
-    const ids = categories.map((category) => category.id);
+    const categoryIds = categories.map((category) => category.id);
 
-    if (ids.length === 0) {
-      return categories;
+    if (categoryIds.length === 0) {
+      return categoryIds;
     }
 
-    const childCategories = await this.findAllChildrensById(ids, depth + 1);
+    const childCategories = await this.findAllChildrenById(
+      categoryIds,
+      depth + 1,
+    );
 
-    return [...categories, ...childCategories];
+    return [...categoryIds, ...childCategories];
   }
 
   async findAllByUser(
@@ -101,9 +104,11 @@ export class TransactionCategoriesService {
       where: {
         userId,
         deleted: { not: true },
-        visibility: {
-          has: visibilityType,
-        },
+        visibility: visibilityType
+          ? {
+              has: visibilityType,
+            }
+          : undefined,
       },
     });
   }
@@ -114,7 +119,7 @@ export class TransactionCategoriesService {
     year?: number,
     month?: number,
   ): Promise<CategoryMonthlySummaryDto[]> {
-    const childrenIds = await this.findAllChildrensById([parentCategoryId]);
+    const childrenIds = await this.findAllChildrenById([parentCategoryId]);
     const targetIds = [parentCategoryId, ...childrenIds];
 
     return this.transactionCategoryMappingsService.findMonthlySummariesByUserAndId(

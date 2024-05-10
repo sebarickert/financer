@@ -43,6 +43,10 @@ export class AccountBalanceChangeRepo {
   async createMany(
     data: Prisma.AccountBalanceChangeCreateManyInput[],
   ): Promise<void> {
+    if (data.length === 0) {
+      return Promise.resolve();
+    }
+
     await this.prisma.accountBalanceChange.createMany({
       data,
     });

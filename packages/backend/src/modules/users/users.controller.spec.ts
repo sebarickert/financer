@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { rootMongooseTestModule } from '../../../test/rootMongooseTest.module';
-import { UserDataModule } from '../user-data/user-data.module';
+import { createMockServiceProvider } from '../../../test/create-mock-service-provider';
+import { UserDataService } from '../user-data/user-data.service';
 
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
@@ -12,8 +12,10 @@ describe('UsersController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [UsersController],
-      providers: [UsersService],
-      imports: [rootMongooseTestModule(), UserDataModule],
+      providers: [
+        createMockServiceProvider(UsersService),
+        createMockServiceProvider(UserDataService),
+      ],
     }).compile();
 
     controller = module.get<UsersController>(UsersController);

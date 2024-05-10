@@ -1,8 +1,9 @@
+import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { rootMongooseTestModule } from '../../../test/rootMongooseTest.module';
+import { testConfiguration } from '../../config/test-configuration';
+import { DatabaseModule } from '../../database/database.module';
 
-import { AccountBalanceChangesModule } from './account-balance-changes.module';
 import { AccountBalanceChangesService } from './account-balance-changes.service';
 
 describe('AccountBalanceChangesService', () => {
@@ -10,7 +11,10 @@ describe('AccountBalanceChangesService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [rootMongooseTestModule(), AccountBalanceChangesModule],
+      imports: [
+        ConfigModule.forRoot({ isGlobal: true, load: [testConfiguration] }),
+        DatabaseModule,
+      ],
 
       providers: [AccountBalanceChangesService],
     }).compile();

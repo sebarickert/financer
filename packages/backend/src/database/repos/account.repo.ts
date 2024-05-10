@@ -56,6 +56,10 @@ export class AccountRepo {
   }
 
   async createMany(data: Prisma.AccountUncheckedCreateInput[]): Promise<void> {
+    if (data.length === 0) {
+      return Promise.resolve();
+    }
+
     await this.prisma.account.createMany({
       data,
     });

@@ -1,6 +1,7 @@
+import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { rootMongooseTestModule } from '../../../test/rootMongooseTest.module';
+import { testConfiguration } from '../../config/test-configuration';
 import { SystemModule } from '../system/system.module';
 import { TransactionTemplateModule } from '../transaction-templates/transaction-templates.module';
 import { TransactionsModule } from '../transactions/transactions.module';
@@ -41,7 +42,7 @@ describe('TasksService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
-        rootMongooseTestModule(),
+        ConfigModule.forRoot({ isGlobal: true, load: [testConfiguration] }),
         UserDataModule,
         TransactionTemplateModule,
         TransactionsModule,

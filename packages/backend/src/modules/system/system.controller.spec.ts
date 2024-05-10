@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { rootMongooseTestModule } from '../../../test/rootMongooseTest.module';
+import { createMockServiceProvider } from '../../../test/create-mock-service-provider';
 
 import { SystemController } from './system.controller';
 import { SystemService } from './system.service';
@@ -10,9 +10,8 @@ describe('SystemController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [rootMongooseTestModule()],
       controllers: [SystemController],
-      providers: [SystemService],
+      providers: [createMockServiceProvider(SystemService)],
     }).compile();
 
     controller = module.get<SystemController>(SystemController);

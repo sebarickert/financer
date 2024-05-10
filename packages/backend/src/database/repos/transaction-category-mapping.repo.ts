@@ -64,6 +64,10 @@ export class TransactionCategoryMappingRepo {
   async createMany(
     data: Prisma.TransactionCategoryMappingUncheckedCreateInput[],
   ): Promise<void> {
+    if (data.length === 0) {
+      return Promise.resolve();
+    }
+
     await this.prisma.transactionCategoryMapping.createMany({
       data,
     });
