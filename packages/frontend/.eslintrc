@@ -5,26 +5,31 @@
     "plugin:@typescript-eslint/recommended",
     "prettier",
     "plugin:prettier/recommended",
-    "next"
+    "next",
   ],
-  "plugins": ["react", "@typescript-eslint", "prettier", "import", "unused-imports"],
+  "plugins": [
+    "react",
+    "@typescript-eslint",
+    "prettier",
+    "import",
+    "unused-imports",
+  ],
   "env": {
     "browser": true,
     "es6": true,
-    "jest": false
+    "jest": false,
   },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": 2018,
     "sourceType": "module",
-    "project": "./tsconfig.json"
+    "project": "./tsconfig.json",
   },
   "rules": {
     "unused-imports/no-unused-imports": "error",
     "unused-imports/no-unused-vars": "off",
     "react/require-default-props": "off",
     "linebreak-style": "off",
-    "no-underscore-dangle":  ["error", { "allow": ["_id"] }],
     "prefer-template": "error",
     "import/prefer-default-export": "off",
     "import/no-default-export": "error",
@@ -36,10 +41,10 @@
         "pathGroups": [
           {
             "pattern": "$**",
-            "group": "internal"
-          }
-        ]
-      }
+            "group": "internal",
+          },
+        ],
+      },
     ],
     "import/extensions": "off",
     "prettier/prettier": [
@@ -47,8 +52,8 @@
       {
         "endOfLine": "auto",
         "singleQuote": true,
-        "semi": true
-      }
-    ]
-  }
+        "semi": true,
+      },
+    ],
+  },
 }

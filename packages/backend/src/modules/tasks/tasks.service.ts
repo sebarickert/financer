@@ -21,7 +21,7 @@ export class TasksService {
     const templates =
       await this.templateService.findAutomatedTemplatesWithCreationDateBefore(
         dayOfMonth,
-        dayOfMonth < getLastDayOfMonth() ? 'eq' : 'gte',
+        dayOfMonth < getLastDayOfMonth() ? 'equals' : 'gte',
       );
 
     const templateLogEntries =

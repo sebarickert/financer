@@ -1,8 +1,9 @@
+import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AccountType } from '@prisma/client';
 
-import { rootMongooseTestModule } from '../../../test/rootMongooseTest.module';
 import { DUMMY_TEST_USER } from '../../config/mockAuthenticationMiddleware';
+import { testConfiguration } from '../../config/test-configuration';
 import fixtureData from '../../fixtures/large_fixture-data.json';
 import { AccountsModule } from '../accounts/accounts.module';
 import { TransactionsModule } from '../transactions/transactions.module';
@@ -26,7 +27,7 @@ describe('IncomesService', () => {
 
     const module: TestingModule = await Test.createTestingModule({
       imports: [
-        rootMongooseTestModule(),
+        ConfigModule.forRoot({ isGlobal: true, load: [testConfiguration] }),
         TransactionsModule,
         AccountsModule,
 
@@ -43,7 +44,7 @@ describe('IncomesService', () => {
       DUMMY_TEST_USER.id,
       fixtureData as unknown as ImportUserDataDto,
     );
-  });
+  }, 10000);
 
   afterEach(() => {
     jest.clearAllTimers();
@@ -81,7 +82,7 @@ describe('IncomesService', () => {
   it('should return monthly summaries for user', async () => {
     const summaries = await service.findMonthlySummariesByUser(
       DUMMY_TEST_USER.id,
-      10000,
+      NaN,
       NaN,
       [],
     );
@@ -91,7 +92,7 @@ describe('IncomesService', () => {
   it('should return monthly summaries for user for specified account types', async () => {
     const summaries = await service.findMonthlySummariesByUser(
       DUMMY_TEST_USER.id,
-      10000,
+      NaN,
       NaN,
       [
         AccountType.CASH,
@@ -103,11 +104,11 @@ describe('IncomesService', () => {
     expect(summaries).toMatchSnapshot();
   });
 
-  it('should return one expense for user', async () => {
-    const expense = await service.findOne(
+  it('should return one income for user', async () => {
+    const income = await service.findOne(
       DUMMY_TEST_USER.id,
       '663df5ccd8ef53dcb2bc93a0',
     );
-    expect(expense).toMatchSnapshot();
+    expect(income).toMatchSnapshot();
   });
 });

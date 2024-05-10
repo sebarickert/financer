@@ -15,7 +15,7 @@ import {
   isNodeEnvInTest,
   shouldOnlyExportApiSpec,
 } from './config/configuration';
-import { startMemoryDb } from './config/memoryDatabaseServer';
+import { getMemoryDbUri } from './config/memoryDatabaseServer';
 import { mockAuthenticationMiddleware } from './config/mockAuthenticationMiddleware';
 
 const PORT = process.env.PORT || 4000;
@@ -26,7 +26,7 @@ const options: SwaggerDocumentOptions = {
 };
 
 async function bootstrap() {
-  if (isNodeEnvInTest() || shouldOnlyExportApiSpec()) await startMemoryDb();
+  if (isNodeEnvInTest() || shouldOnlyExportApiSpec()) await getMemoryDbUri();
 
   const app = await NestFactory.create(AppModule);
   app.use(json({ limit: '50mb' }));

@@ -43,6 +43,10 @@ export class UserPreferencesRepo {
   async createMany(
     data: Prisma.UserPreferencesUncheckedCreateInput[],
   ): Promise<void> {
+    if (data.length === 0) {
+      return Promise.resolve();
+    }
+
     await this.prisma.userPreferences.createMany({
       data,
     });

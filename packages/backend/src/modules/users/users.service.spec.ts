@@ -1,7 +1,9 @@
+import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { rootMongooseTestModule } from '../../../test/rootMongooseTest.module';
 import { DUMMY_TEST_USER } from '../../config/mockAuthenticationMiddleware';
+import { testConfiguration } from '../../config/test-configuration';
+import { DatabaseModule } from '../../database/database.module';
 import fixtureData from '../../fixtures/large_fixture-data.json';
 import { UserDataModule } from '../user-data/user-data.module';
 import {
@@ -23,7 +25,8 @@ describe('UsersService', () => {
 
     const module: TestingModule = await Test.createTestingModule({
       imports: [
-        rootMongooseTestModule(),
+        ConfigModule.forRoot({ isGlobal: true, load: [testConfiguration] }),
+        DatabaseModule,
 
         // Modules required to bootstrap with UserDataModule
         UserDataModule,
@@ -38,7 +41,7 @@ describe('UsersService', () => {
       DUMMY_TEST_USER.id,
       fixtureData as unknown as ImportUserDataDto,
     );
-  });
+  }, 10000);
 
   afterEach(() => {
     jest.clearAllTimers();

@@ -107,13 +107,13 @@ export class UserDataService {
     await Promise.all([
       this.accountBalanceChangesService.removeAllByUser(userId),
       this.transactionCategoryMappingService.removeAllByUser(userId),
+      this.transactionTemplateService.removeAllByUser(userId),
     ]);
     await Promise.all([
       this.accountsService.removeAllByUser(userId),
       this.transactionService.removeAllByUser(userId),
       this.transactionCategoriesService.removeAllByUser(userId),
       this.userPreferencesService.removeAllByUser(userId),
-      this.transactionTemplateService.removeAllByUser(userId),
     ]);
 
     const parsedAccountBalanceChanges = accountBalanceChanges.map(

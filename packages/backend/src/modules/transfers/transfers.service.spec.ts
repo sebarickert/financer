@@ -1,8 +1,9 @@
+import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AccountType } from '@prisma/client';
 
-import { rootMongooseTestModule } from '../../../test/rootMongooseTest.module';
 import { DUMMY_TEST_USER } from '../../config/mockAuthenticationMiddleware';
+import { testConfiguration } from '../../config/test-configuration';
 import fixtureData from '../../fixtures/large_fixture-data.json';
 import { TransactionsModule } from '../transactions/transactions.module';
 import { UserDataModule } from '../user-data/user-data.module';
@@ -25,7 +26,7 @@ describe('TransfersService', () => {
 
     const module: TestingModule = await Test.createTestingModule({
       imports: [
-        rootMongooseTestModule(),
+        ConfigModule.forRoot({ isGlobal: true, load: [testConfiguration] }),
         TransactionsModule,
 
         // Modules required to bootstrap with UserDataModule
@@ -41,7 +42,7 @@ describe('TransfersService', () => {
       DUMMY_TEST_USER.id,
       fixtureData as unknown as ImportUserDataDto,
     );
-  });
+  }, 10000);
 
   afterEach(() => {
     jest.clearAllTimers();
@@ -79,7 +80,7 @@ describe('TransfersService', () => {
   it('should return monthly summaries for user', async () => {
     const summaries = await service.findMonthlySummariesByUser(
       DUMMY_TEST_USER.id,
-      10000,
+      NaN,
       NaN,
       [],
     );
@@ -89,7 +90,7 @@ describe('TransfersService', () => {
   it('should return monthly summaries for user for specified account types', async () => {
     const summaries = await service.findMonthlySummariesByUser(
       DUMMY_TEST_USER.id,
-      10000,
+      NaN,
       NaN,
       [
         AccountType.CASH,
@@ -101,11 +102,11 @@ describe('TransfersService', () => {
     expect(summaries).toMatchSnapshot();
   });
 
-  it('should return one expense for user', async () => {
-    const expense = await service.findOne(
+  it('should return one transfer for user', async () => {
+    const transfer = await service.findOne(
       DUMMY_TEST_USER.id,
       '663df679d8ef53dcb2bc9411',
     );
-    expect(expense).toMatchSnapshot();
+    expect(transfer).toMatchSnapshot();
   });
 });

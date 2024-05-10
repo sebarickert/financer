@@ -60,6 +60,10 @@ export class TransactionTemplateLogRepo {
   async createMany(
     data: Prisma.TransactionTemplateLogUncheckedCreateInput[],
   ): Promise<void> {
+    if (data.length === 0) {
+      return Promise.resolve();
+    }
+
     await this.prisma.transactionTemplateLog.createMany({
       data,
     });

@@ -53,6 +53,10 @@ export class TransactionRepo {
   async createMany(
     data: Prisma.TransactionUncheckedCreateInput[],
   ): Promise<void> {
+    if (data.length === 0) {
+      return Promise.resolve();
+    }
+
     await this.prisma.transaction.createMany({
       data,
     });

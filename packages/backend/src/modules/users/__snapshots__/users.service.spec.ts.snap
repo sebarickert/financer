@@ -2,10 +2,10 @@
 
 exports[`UsersService should return a user by id 1`] = `
 {
-  "_id": "61460d7354ea082ad0256749",
+  "id": "61460d7354ea082ad0256749",
   "name": "Dummy Test User",
   "roles": [
-    "test-user",
+    "TEST_USER",
   ],
 }
 `;
@@ -13,10 +13,10 @@ exports[`UsersService should return a user by id 1`] = `
 exports[`UsersService should return an array of users from findAll 1`] = `
 [
   {
-    "_id": "61460d7354ea082ad0256749",
+    "id": "61460d7354ea082ad0256749",
     "name": "Dummy Test User",
     "roles": [
-      "test-user",
+      "TEST_USER",
     ],
   },
 ]

@@ -72,8 +72,10 @@ export class TransactionCategoryMappingsService {
     return this.transactionCategoryMappingRepo.aggregateRaw([
       {
         $match: {
-          owner: userId,
-          category_id: { $in: categoryIds },
+          owner: { $oid: userId },
+          category_id: {
+            $in: categoryIds.map((categoryId) => ({ $oid: categoryId })),
+          },
           ...this.filterRawMongoYearAndMonthFilter(year, month, 'laterThan'),
         },
       },
@@ -197,6 +199,8 @@ export class TransactionCategoryMappingsService {
       },
       {
         $project: {
+          id: '$_id',
+          _id: 0,
           'total.count': '$totalCount',
           'total.amount': '$totalAmount',
           'total.transactionAmount': '$totalTransactionAmount',
@@ -274,8 +278,8 @@ export class TransactionCategoryMappingsService {
   private filterRawMongoAggregationTransactionTypeFilter(
     transactionType: TransactionType,
   ): Prisma.InputJsonObject[] {
-    const isEmpty = (fieldName: string) => ({ $eq: [fieldName, undefined] });
-    const isNotEmpty = (fieldName: string) => ({ $ne: [fieldName, undefined] });
+    const isEmpty = (fieldName: string) => ({ $eq: [fieldName, null] });
+    const isNotEmpty = (fieldName: string) => ({ $ne: [fieldName, null] });
 
     switch (transactionType) {
       case TransactionType.INCOME:

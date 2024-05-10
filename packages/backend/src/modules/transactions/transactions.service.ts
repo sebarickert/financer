@@ -223,7 +223,7 @@ export class TransactionsService {
                 accountTypes,
               ),
             },
-            transferCount: {
+            transfersCount: {
               $sum: await this.filterRawMongoMonthlySummaryCondition(
                 userId,
                 1,
@@ -278,7 +278,7 @@ export class TransactionsService {
             totalCount: 1,
             incomesCount: 1,
             expensesCount: 1,
-            transferCount: 1,
+            transfersCount: 1,
             totalAmount: 1,
             incomeAmount: 1,
             expenseAmount: 1,
@@ -470,7 +470,7 @@ export class TransactionsService {
     if (!accountTypes?.length) return [];
 
     const accounts = await this.accountService.findAllByUser(
-      userId.toString(),
+      userId,
       accountTypes,
     );
 
@@ -489,22 +489,16 @@ export class TransactionsService {
   }
 
   private async getRawAggregateAccountTypesFilter(
-    userId: string,
-    accountTypes?: AccountType[],
+    accountObjectIds?: { $oid: string }[],
     operator: '$in' | '$nin' = '$in',
   ): Promise<Prisma.InputJsonObject> {
-    if (!accountTypes?.length) return {};
-
-    const accountIds = await this.getAccountIdsByType(userId, accountTypes);
-    const objectIds = accountIds.map((id) => ({ $oid: id }));
-
     return {
       $or: [
         {
-          [operator]: ['$toAccount', objectIds],
+          [operator]: ['$toAccount', accountObjectIds],
         },
         {
-          [operator]: ['$fromAccount', objectIds],
+          [operator]: ['$fromAccount', accountObjectIds],
         },
       ],
     };
@@ -516,7 +510,7 @@ export class TransactionsService {
     }
 
     const a = (
-      await this.transactionCategoriesService.findAllChildrensById([
+      await this.transactionCategoriesService.findAllChildrenById([
         parentId.toString(),
       ])
     ).map(({ _id }) => _id);
@@ -542,15 +536,15 @@ export class TransactionsService {
     if (filterMode === 'laterThan') {
       return {
         date: {
-          $gte: { $date: new Date(Date.UTC(year, monthIndex || 0, 1)) },
+          $gte: new Date(Date.UTC(year, monthIndex || 0, 1)),
         },
       };
     }
 
     return {
       date: {
-        $gte: { $date: new Date(Date.UTC(year, monthIndex || 0, 1)) },
-        $lt: { $date: new Date(Date.UTC(year, monthIndex + 1 || 12, 1)) },
+        $gte: new Date(Date.UTC(year, monthIndex || 0, 1)),
+        $lt: new Date(Date.UTC(year, monthIndex + 1 || 12, 1)),
       },
     };
   }
@@ -584,10 +578,12 @@ export class TransactionsService {
     transactionType: TransactionType | null,
     accountTypes?: AccountType[],
   ): Promise<Prisma.InputJsonValue> {
-    const accountIds = await this.getAccountIdsByType(userId, accountTypes);
+    const accountIds = (
+      await this.getAccountIdsByType(userId, accountTypes)
+    ).map((id) => ({ $oid: id }));
 
     const accountTypeFilter = accountIds.length
-      ? await this.getRawAggregateAccountTypesFilter(userId, accountTypes)
+      ? await this.getRawAggregateAccountTypesFilter(accountIds)
       : {};
 
     const selectedQuery = [
