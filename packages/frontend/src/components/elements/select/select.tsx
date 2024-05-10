@@ -13,6 +13,7 @@ interface SelectProps {
   handleOnChange?(event: React.ChangeEvent<HTMLSelectElement>): void;
   testId?: string;
   placeholder?: string;
+  shouldUnregister?: boolean;
 }
 
 export interface Option {
@@ -31,6 +32,7 @@ export const Select = ({
   isDisabled = false,
   placeholder = 'Select option',
   handleOnChange = () => {},
+  shouldUnregister,
 }: SelectProps): JSX.Element => {
   const { register } = useFormContext();
 
@@ -44,7 +46,7 @@ export const Select = ({
     <div className={className}>
       <label
         htmlFor={id}
-        className="block text-xs tracking-tight text-black/75 uppercase font-medium"
+        className="block text-xs font-medium tracking-tight uppercase text-black/75"
       >
         {children}
         <select
@@ -58,7 +60,7 @@ export const Select = ({
             disabled: isDisabled,
             onChange: handleChange,
             required: isRequired,
-            shouldUnregister: false,
+            shouldUnregister,
           })}
         >
           <option value="" disabled>
