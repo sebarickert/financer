@@ -33,6 +33,7 @@ test.describe('Edit expense with category', () => {
     await page.getByTestId(ids.editExpenseButton).click();
 
     await page.getByRole('button', { name: 'Edit category' }).click();
+    // eslint-disable-next-line playwright/no-wait-for-timeout
     await page.waitForTimeout(100);
 
     const select = page.getByTestId(`${ids.transactionCategoriesForm}-select`);
@@ -52,6 +53,7 @@ test.describe('Edit expense with category', () => {
       amount: '50.50',
     });
 
+    // eslint-disable-next-line playwright/no-wait-for-timeout
     await page.waitForTimeout(100);
 
     await page.getByTestId('submit').click();
@@ -61,6 +63,7 @@ test.describe('Edit expense with category', () => {
     await page.getByTestId(ids.editExpenseButton).click();
 
     await page.getByRole('button', { name: 'Edit category' }).click();
+    // eslint-disable-next-line playwright/no-wait-for-timeout
     await page.waitForTimeout(100);
 
     await expect(select.locator('option:checked')).toContainText(
@@ -103,6 +106,7 @@ test.describe('Edit expense with category', () => {
     await expect(description.nth(1)).toContainText('not so dummy description');
 
     await page.getByRole('button', { name: 'Edit category' }).first().click();
+    // eslint-disable-next-line playwright/no-wait-for-timeout
     await page.waitForTimeout(100);
 
     await submitTransactionCategoryForm(ids.transactionCategoriesForm, page, {
@@ -113,6 +117,7 @@ test.describe('Edit expense with category', () => {
     await expect(item).toHaveCount(2);
 
     await page.getByRole('button', { name: 'Edit category' }).last().click();
+    // eslint-disable-next-line playwright/no-wait-for-timeout
     await page.waitForTimeout(100);
 
     await page.getByTestId(`${ids.transactionCategoriesForm}-delete`).click();
@@ -149,12 +154,15 @@ test.describe('Edit expense with category', () => {
     await expect(item).toHaveCount(2);
 
     await page.getByRole('button', { name: 'Edit category' }).first().click();
+    // eslint-disable-next-line playwright/no-wait-for-timeout
     await page.waitForTimeout(100);
     await page.getByTestId(`${ids.transactionCategoriesForm}-delete`).click();
 
+    // eslint-disable-next-line playwright/no-wait-for-timeout
     await page.waitForTimeout(100);
 
     await page.getByRole('button', { name: 'Edit category' }).first().click();
+    // eslint-disable-next-line playwright/no-wait-for-timeout
     await page.waitForTimeout(100);
     await page.getByTestId(`${ids.transactionCategoriesForm}-delete`).click();
 

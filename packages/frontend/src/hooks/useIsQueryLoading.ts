@@ -11,7 +11,11 @@ export const useIsQueryLoading = (...targetEndpoints: EndpointName[]) => {
         ...(Object.values((state.api as any).queries) as any[]),
         ...(Object.values((state.api as any).mutations) as any[]),
       ]
-        // .filter(({ endpointName }) => targetEndpoints.includes(endpointName))
+        .filter(
+          ({ endpointName }) =>
+            targetEndpoints.length === 0 ||
+            targetEndpoints.includes(endpointName)
+        )
         .some(({ status }) => status === 'pending')
   );
 };

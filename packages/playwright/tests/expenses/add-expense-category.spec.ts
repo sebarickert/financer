@@ -57,6 +57,7 @@ test.describe('Add expense with category', () => {
     });
 
     await page.getByRole('button', { name: 'Edit category' }).click();
+    // eslint-disable-next-line playwright/no-wait-for-timeout
     await page.waitForTimeout(100);
 
     await page.evaluate(() => {

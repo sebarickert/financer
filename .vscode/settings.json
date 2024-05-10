@@ -42,5 +42,8 @@
     { "name": "backend", "rootPath": "./packages/backend" },
     { "name": "frontend", "rootPath": "./packages/frontend" },
   ],
+  "cSpell.words": [
+    "financer"
+  ],
 
 }
