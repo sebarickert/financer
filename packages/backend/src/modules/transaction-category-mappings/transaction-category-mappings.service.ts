@@ -7,7 +7,6 @@ import { ObjectId } from '../../types/objectId';
 import { CategoryMonthlySummaryDto } from '../transaction-categories/dto/transaction-month-summary.dto';
 
 import { CreateTransactionCategoryMappingDto } from './dto/create-transaction-category-mapping.dto';
-import { UpdateTransactionCategoryMappingDto } from './dto/update-transaction-category-mapping.dto';
 import {
   TransactionCategoryMapping,
   TransactionCategoryMappingDocument,

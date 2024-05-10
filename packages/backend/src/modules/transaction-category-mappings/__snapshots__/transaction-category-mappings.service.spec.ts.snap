@@ -1,0 +1,179 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TransactionCategoryMappingsService should return all transactionCategoryMappings by user 1`] = `
+[
+  {
+    "__v": 0,
+    "_id": "637e234fbda8050a85b1b6b7",
+    "amount": 500,
+    "category_id": "623b58ada3deba9879422fbf",
+    "createdAt": 2024-05-10T10:21:18.365Z,
+    "description": "",
+    "owner": "61460d7354ea082ad0256749",
+    "transaction_id": "624befb66ba655edad8f824e",
+    "updatedAt": 2024-05-10T10:21:18.365Z,
+  },
+  {
+    "__v": 0,
+    "_id": "637e234fbda8050a85b1b6b8",
+    "amount": 1358.18,
+    "category_id": "623b6b91a3deba9879422fe1",
+    "createdAt": 2024-05-10T10:21:18.365Z,
+    "description": "",
+    "owner": "61460d7354ea082ad0256749",
+    "transaction_id": "624befb66ba655edad8f824e",
+    "updatedAt": 2024-05-10T10:21:18.365Z,
+  },
+  {
+    "__v": 0,
+    "_id": "637e2371bda8050a85b1b70b",
+    "amount": 635.98,
+    "category_id": "623b58ada3deba9879422fbf",
+    "createdAt": 2024-05-10T10:21:18.365Z,
+    "description": "",
+    "owner": "61460d7354ea082ad0256749",
+    "transaction_id": "624befb96ba655edad8f82ad",
+    "updatedAt": 2024-05-10T10:21:18.365Z,
+  },
+  {
+    "__v": 0,
+    "_id": "637e2389bda8050a85b1b760",
+    "amount": 700,
+    "category_id": "623b58ada3deba9879422fbf",
+    "createdAt": 2024-05-10T10:21:18.365Z,
+    "description": "",
+    "owner": "61460d7354ea082ad0256749",
+    "transaction_id": "624bef946ba655edad8f7f3d",
+    "updatedAt": 2024-05-10T10:21:18.365Z,
+  },
+  {
+    "__v": 0,
+    "_id": "637e2389bda8050a85b1b761",
+    "amount": 1095.58,
+    "category_id": "623b6b91a3deba9879422fe1",
+    "createdAt": 2024-05-10T10:21:18.365Z,
+    "description": "",
+    "owner": "61460d7354ea082ad0256749",
+    "transaction_id": "624bef946ba655edad8f7f3d",
+    "updatedAt": 2024-05-10T10:21:18.365Z,
+  },
+  {
+    "__v": 0,
+    "_id": "637e239cbda8050a85b1b7b8",
+    "amount": 1571.53,
+    "category_id": "623b58ada3deba9879422fbf",
+    "createdAt": 2024-05-10T10:21:18.365Z,
+    "description": "",
+    "owner": "61460d7354ea082ad0256749",
+    "transaction_id": "624bef936ba655edad8f7f33",
+    "updatedAt": 2024-05-10T10:21:18.365Z,
+  },
+]
+`;
+
+exports[`TransactionCategoryMappingsService should return all transactionCategoryMappings by user and category ids 1`] = `
+[
+  {
+    "__v": 0,
+    "_id": "637e234fbda8050a85b1b6b7",
+    "amount": 500,
+    "category_id": "623b58ada3deba9879422fbf",
+    "createdAt": 2024-05-10T10:21:18.365Z,
+    "description": "",
+    "owner": "61460d7354ea082ad0256749",
+    "transaction_id": "624befb66ba655edad8f824e",
+    "updatedAt": 2024-05-10T10:21:18.365Z,
+  },
+  {
+    "__v": 0,
+    "_id": "637e2371bda8050a85b1b70b",
+    "amount": 635.98,
+    "category_id": "623b58ada3deba9879422fbf",
+    "createdAt": 2024-05-10T10:21:18.365Z,
+    "description": "",
+    "owner": "61460d7354ea082ad0256749",
+    "transaction_id": "624befb96ba655edad8f82ad",
+    "updatedAt": 2024-05-10T10:21:18.365Z,
+  },
+  {
+    "__v": 0,
+    "_id": "637e2389bda8050a85b1b760",
+    "amount": 700,
+    "category_id": "623b58ada3deba9879422fbf",
+    "createdAt": 2024-05-10T10:21:18.365Z,
+    "description": "",
+    "owner": "61460d7354ea082ad0256749",
+    "transaction_id": "624bef946ba655edad8f7f3d",
+    "updatedAt": 2024-05-10T10:21:18.365Z,
+  },
+  {
+    "__v": 0,
+    "_id": "637e239cbda8050a85b1b7b8",
+    "amount": 1571.53,
+    "category_id": "623b58ada3deba9879422fbf",
+    "createdAt": 2024-05-10T10:21:18.365Z,
+    "description": "",
+    "owner": "61460d7354ea082ad0256749",
+    "transaction_id": "624bef936ba655edad8f7f33",
+    "updatedAt": 2024-05-10T10:21:18.365Z,
+  },
+]
+`;
+
+exports[`TransactionCategoryMappingsService should return all transactionCategoryMappings by user and category ids 2`] = `
+[
+  {
+    "_id": {
+      "month": 1,
+      "year": 2022,
+    },
+    "expense": {
+      "amount": 1135.98,
+      "count": 2,
+      "transactionAmount": 2494.16,
+    },
+    "income": {
+      "amount": 2271.5299999999997,
+      "count": 2,
+      "transactionAmount": 3367.1099999999997,
+    },
+    "total": {
+      "amount": 1135.55,
+      "count": 4,
+      "transactionAmount": 872.9499999999998,
+    },
+    "transfer": {
+      "amount": 0,
+      "count": 0,
+      "transactionAmount": 0,
+    },
+  },
+]
+`;
+
+exports[`TransactionCategoryMappingsService should return all transactionCategoryMappings by user and transaction id 1`] = `
+[
+  {
+    "__v": 0,
+    "_id": "637e234fbda8050a85b1b6b7",
+    "amount": 500,
+    "category_id": "623b58ada3deba9879422fbf",
+    "createdAt": 2024-05-10T10:21:18.365Z,
+    "description": "",
+    "owner": "61460d7354ea082ad0256749",
+    "transaction_id": "624befb66ba655edad8f824e",
+    "updatedAt": 2024-05-10T10:21:18.365Z,
+  },
+  {
+    "__v": 0,
+    "_id": "637e234fbda8050a85b1b6b8",
+    "amount": 1358.18,
+    "category_id": "623b6b91a3deba9879422fe1",
+    "createdAt": 2024-05-10T10:21:18.365Z,
+    "description": "",
+    "owner": "61460d7354ea082ad0256749",
+    "transaction_id": "624befb66ba655edad8f824e",
+    "updatedAt": 2024-05-10T10:21:18.365Z,
+  },
+]
+`;

@@ -14,7 +14,9 @@ export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
   async findAll(): Promise<UserDocument[]> {
-    return this.userModel.find().exec();
+    return !isNodeEnvInTest()
+      ? this.userModel.find().exec()
+      : ([DUMMY_TEST_USER] as UserDocument[]);
   }
 
   async findOne(id: ObjectId): Promise<UserDocument> {

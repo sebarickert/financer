@@ -1,0 +1,185 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TransactionCategoriesService should return a transaction category by id 1`] = `
+{
+  "__v": 0,
+  "_id": "623b58ada3deba9879422fbf",
+  "createdAt": 2024-05-10T10:21:18.363Z,
+  "deleted": false,
+  "name": "Category for all types",
+  "owner": "61460d7354ea082ad0256749",
+  "parent_category_id": null,
+  "updatedAt": 2024-05-10T10:21:18.363Z,
+  "visibility": [
+    "income",
+    "expense",
+    "transfer",
+  ],
+}
+`;
+
+exports[`TransactionCategoriesService should return an array of transaction categories from findAllByUser 1`] = `
+[
+  {
+    "__v": 0,
+    "_id": "623b58ada3deba9879422fbf",
+    "createdAt": 2024-05-10T10:21:18.363Z,
+    "deleted": false,
+    "name": "Category for all types",
+    "owner": "61460d7354ea082ad0256749",
+    "parent_category_id": null,
+    "updatedAt": 2024-05-10T10:21:18.363Z,
+    "visibility": [
+      "income",
+      "expense",
+      "transfer",
+    ],
+  },
+  {
+    "__v": 0,
+    "_id": "623b58b8a3deba9879422fc2",
+    "createdAt": 2024-05-10T10:21:18.364Z,
+    "deleted": false,
+    "name": "Invisible category",
+    "owner": "61460d7354ea082ad0256749",
+    "parent_category_id": null,
+    "updatedAt": 2024-05-10T10:21:18.364Z,
+    "visibility": [],
+  },
+  {
+    "__v": 0,
+    "_id": "623b58bfa3deba9879422fc5",
+    "createdAt": 2024-05-10T10:21:18.364Z,
+    "deleted": false,
+    "name": "Expense category",
+    "owner": "61460d7354ea082ad0256749",
+    "parent_category_id": null,
+    "updatedAt": 2024-05-10T10:21:18.364Z,
+    "visibility": [
+      "expense",
+    ],
+  },
+  {
+    "__v": 0,
+    "_id": "623b58c5a3deba9879422fc8",
+    "createdAt": 2024-05-10T10:21:18.364Z,
+    "deleted": false,
+    "name": "Income category",
+    "owner": "61460d7354ea082ad0256749",
+    "parent_category_id": null,
+    "updatedAt": 2024-05-10T10:21:18.364Z,
+    "visibility": [
+      "income",
+    ],
+  },
+  {
+    "__v": 0,
+    "_id": "623b6b17a3deba9879422fcd",
+    "createdAt": 2024-05-10T10:21:18.364Z,
+    "deleted": false,
+    "name": "Transfer category",
+    "owner": "61460d7354ea082ad0256749",
+    "parent_category_id": null,
+    "updatedAt": 2024-05-10T10:21:18.364Z,
+    "visibility": [
+      "transfer",
+    ],
+  },
+  {
+    "__v": 0,
+    "_id": "623b6b36a3deba9879422fd1",
+    "createdAt": 2024-05-10T10:21:18.364Z,
+    "deleted": false,
+    "name": "Transfer sub category",
+    "owner": "61460d7354ea082ad0256749",
+    "parent_category_id": "623b58b8a3deba9879422fc2",
+    "updatedAt": 2024-05-10T10:21:18.364Z,
+    "visibility": [
+      "transfer",
+    ],
+  },
+  {
+    "__v": 0,
+    "_id": "623b6b51a3deba9879422fd5",
+    "createdAt": 2024-05-10T10:21:18.364Z,
+    "deleted": false,
+    "name": "Income sub category",
+    "owner": "61460d7354ea082ad0256749",
+    "parent_category_id": "623b58b8a3deba9879422fc2",
+    "updatedAt": 2024-05-10T10:21:18.364Z,
+    "visibility": [
+      "income",
+    ],
+  },
+  {
+    "__v": 0,
+    "_id": "623b6b64a3deba9879422fd9",
+    "createdAt": 2024-05-10T10:21:18.364Z,
+    "deleted": false,
+    "name": "Expense sub category",
+    "owner": "61460d7354ea082ad0256749",
+    "parent_category_id": "623b58b8a3deba9879422fc2",
+    "updatedAt": 2024-05-10T10:21:18.364Z,
+    "visibility": [
+      "expense",
+    ],
+  },
+  {
+    "__v": 0,
+    "_id": "623b6b84a3deba9879422fdd",
+    "createdAt": 2024-05-10T10:21:18.364Z,
+    "deleted": false,
+    "name": "Invisble sub category",
+    "owner": "61460d7354ea082ad0256749",
+    "parent_category_id": "623b58ada3deba9879422fbf",
+    "updatedAt": 2024-05-10T10:21:18.364Z,
+    "visibility": [],
+  },
+  {
+    "__v": 0,
+    "_id": "623b6b91a3deba9879422fe1",
+    "createdAt": 2024-05-10T10:21:18.364Z,
+    "deleted": false,
+    "name": "Sub category for all types",
+    "owner": "61460d7354ea082ad0256749",
+    "parent_category_id": "623b58b8a3deba9879422fc2",
+    "updatedAt": 2024-05-10T10:21:18.364Z,
+    "visibility": [
+      "income",
+      "expense",
+      "transfer",
+    ],
+  },
+]
+`;
+
+exports[`TransactionCategoriesService should return an array of transaction categories from findMonthlySummariesByUserAndId 1`] = `
+[
+  {
+    "_id": {
+      "month": 1,
+      "year": 2022,
+    },
+    "expense": {
+      "amount": 1135.98,
+      "count": 2,
+      "transactionAmount": 2494.16,
+    },
+    "income": {
+      "amount": 2271.5299999999997,
+      "count": 2,
+      "transactionAmount": 3367.1099999999997,
+    },
+    "total": {
+      "amount": 1135.55,
+      "count": 4,
+      "transactionAmount": 872.9499999999998,
+    },
+    "transfer": {
+      "amount": 0,
+      "count": 0,
+      "transactionAmount": 0,
+    },
+  },
+]
+`;

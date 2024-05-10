@@ -8,6 +8,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
     "esModuleInterop": true,
     "sourceMap": true,
     "incremental": true,
@@ -19,6 +20,8 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "outDir": "./dist"
-  }
+  },
+  "exclude": ["node_modules", "dist",  "jest.config.ts"],
+  "extends": "./tsconfig.path.json"
 }
  

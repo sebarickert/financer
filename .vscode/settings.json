@@ -38,4 +38,9 @@
   },
   "javascript.preferences.importModuleSpecifier": "shortest",
   "typescript.preferences.importModuleSpecifier": "shortest",
+  "jest.virtualFolders": [
+    { "name": "backend", "rootPath": "./packages/backend" },
+    { "name": "frontend", "rootPath": "./packages/frontend" },
+  ],
+
 }
