@@ -1,5 +1,5 @@
-import { AccountType, TransactionType } from '@local/types';
 import { Test, TestingModule } from '@nestjs/testing';
+import { AccountType, TransactionType } from '@prisma/client';
 
 import { rootMongooseTestModule } from '../../../test/rootMongooseTest.module';
 import { DUMMY_TEST_USER } from '../../config/mockAuthenticationMiddleware';
@@ -48,7 +48,7 @@ describe('TransactionsService', () => {
   it('should return all expenses for user', async () => {
     const expenses = await service.findAllByUser(
       DUMMY_TEST_USER.id,
-      TransactionType.ANY,
+      null,
       NaN,
       10000,
       NaN,
@@ -60,7 +60,7 @@ describe('TransactionsService', () => {
   it('should return all expenses for user for specified account types', async () => {
     const expenses = await service.findAllByUser(
       DUMMY_TEST_USER.id,
-      TransactionType.ANY,
+      null,
       NaN,
       10000,
       NaN,
@@ -79,7 +79,7 @@ describe('TransactionsService', () => {
   it('should return monthly summaries for user', async () => {
     const summaries = await service.findMonthlySummariesByUser(
       DUMMY_TEST_USER.id,
-      TransactionType.ANY,
+      null,
       10000,
       NaN,
       [],
