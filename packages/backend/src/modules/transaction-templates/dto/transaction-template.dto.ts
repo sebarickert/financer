@@ -79,7 +79,7 @@ export class TransactionTemplateDto {
   @IsMongoId()
   readonly userId: ObjectId;
 
-  @ApiPropertyOptional({ type: String })
+  @ApiPropertyOptional({ type: String, nullable: true })
   @IsOptional()
   @IsInstanceOfObjectId({
     message: 'fromAccount must be formatted as objectId.',
@@ -87,7 +87,7 @@ export class TransactionTemplateDto {
   @Transform(objectIdTransformer)
   readonly fromAccount?: ObjectId | null;
 
-  @ApiPropertyOptional({ type: String })
+  @ApiPropertyOptional({ type: String, nullable: true })
   @IsOptional()
   @IsInstanceOfObjectId({ message: 'toAccount must be formatted as objectId.' })
   @Transform(objectIdTransformer)
