@@ -48,7 +48,6 @@ describe('TransactionCategoriesService', () => {
     jest.clearAllTimers();
   });
 
-  // findOne
   it('should return a transaction category by id', async () => {
     const transactionCategory = await service.findOne(
       DUMMY_TEST_USER.id,

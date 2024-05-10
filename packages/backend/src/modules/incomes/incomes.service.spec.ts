@@ -1,5 +1,5 @@
-import { AccountType } from '@local/types';
 import { Test, TestingModule } from '@nestjs/testing';
+import { AccountType } from '@prisma/client';
 
 import { rootMongooseTestModule } from '../../../test/rootMongooseTest.module';
 import { DUMMY_TEST_USER } from '../../config/mockAuthenticationMiddleware';
@@ -83,7 +83,6 @@ describe('IncomesService', () => {
       DUMMY_TEST_USER.id,
       10000,
       NaN,
-      NaN,
       [],
     );
     expect(summaries).toMatchSnapshot();
@@ -93,7 +92,6 @@ describe('IncomesService', () => {
     const summaries = await service.findMonthlySummariesByUser(
       DUMMY_TEST_USER.id,
       10000,
-      NaN,
       NaN,
       [
         AccountType.CASH,
