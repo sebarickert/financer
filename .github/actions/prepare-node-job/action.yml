@@ -1,0 +1,28 @@
+name: "Prepare node job"
+description: "Checkout the repository, install NodeJS and install NPM dependencies."
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v4
+
+    - uses: actions/setup-node@v4
+      with:
+        node-version-file: ".nvmrc"
+
+    - uses: actions/cache@v4
+      if: always()
+      id: restore-cache
+      with:
+        path: |
+          **/node_modules
+          packages/types/dist
+          packages/frontend/src/redux/api/generated/*.ts
+        key: ${{ runner.os }}-modules-${{ hashFiles('./package-lock.json', './packages/types/src/*', ''./packages/frontend/src/redux/schema/api-spec.json') }}
+
+    - name: Install dependencies
+      if: steps.restore-cache.outputs.cache-hit != 'true'
+      shell: bash
+      run: npm ci
+      env:
+        NODE_AUTH_TOKEN: ${{ inputs.NODE_AUTH_TOKEN }}
