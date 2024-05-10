@@ -165,13 +165,23 @@ export const TemplateForm = ({
           </Input>
           {(templateVisibility === TransactionTypeEnum.Expense ||
             templateVisibility === TransactionTypeEnum.Transfer) && (
-            <Select id="fromAccount" options={accountOptions} isRequired>
+            <Select
+              id="fromAccount"
+              options={accountOptions}
+              isRequired
+              shouldUnregister
+            >
               From Account
             </Select>
           )}
           {(templateVisibility === TransactionTypeEnum.Income ||
             templateVisibility === TransactionTypeEnum.Transfer) && (
-            <Select id="toAccount" options={accountOptions} isRequired>
+            <Select
+              id="toAccount"
+              options={accountOptions}
+              isRequired
+              shouldUnregister
+            >
               To Account
             </Select>
           )}
