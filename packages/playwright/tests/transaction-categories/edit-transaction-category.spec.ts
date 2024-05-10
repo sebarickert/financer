@@ -57,10 +57,10 @@ test.describe('Edit transaction category', () => {
       targetParent = parent;
       await page.locator('#parent_category_id').selectOption(parent);
     } else {
-      targetParent = await page
+      targetParent = (await page
         .locator('#parent_category_id')
         .locator('option:checked')
-        .textContent();
+        .textContent()) as string;
     }
 
     await page.getByTestId('submit').click();

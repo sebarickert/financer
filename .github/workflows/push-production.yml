@@ -23,6 +23,15 @@ jobs:
 
       - uses: serkfi/financer/.github/actions/lint-app@main
 
+  lint-type:
+    runs-on: ubuntu-latest
+    needs: install
+    steps:
+      - uses: serkfi/financer/.github/actions/prepare-node-job@main
+
+      - name: Lint TS types
+        run: npm run check-types
+
   unit-test-frontend:
     runs-on: ubuntu-latest
     needs: install
@@ -72,6 +81,7 @@ jobs:
   build-docker:
     needs:
       - lint
+      - lint-type
       - unit-test-frontend
       - unit-test-backend
       - run-e2e-test

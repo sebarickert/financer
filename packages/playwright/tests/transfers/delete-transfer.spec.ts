@@ -5,6 +5,7 @@ import {
   getAccount,
   roundToTwoDecimal,
   getTransactionByIdRaw,
+  ITransactionWithDateObject,
 } from '$utils/api-helper';
 import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
@@ -62,7 +63,9 @@ test.describe('Delete transfer', () => {
     const transfersBefore = transactionsBefore.filter(
       ({ fromAccount, toAccount }) => fromAccount && toAccount,
     );
-    const targetTransactionBefore = transfersBefore.at(-1);
+    const targetTransactionBefore = transfersBefore.at(
+      -1,
+    ) as ITransactionWithDateObject;
 
     const targetTransactionId = targetTransactionBefore._id;
     const targetToAccountId = targetTransactionBefore.toAccount;

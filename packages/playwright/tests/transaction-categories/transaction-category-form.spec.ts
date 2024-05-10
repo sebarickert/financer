@@ -26,7 +26,9 @@ test.describe('Transaction category form', () => {
       const scopedCategoryName = 'Category for all types';
 
       const childCategoryId = '623b6b84a3deba9879422fdd';
-      const targetElement = document.querySelector('#parent_category_id');
+      const targetElement = document.querySelector(
+        '#parent_category_id',
+      ) as Element;
       targetElement.innerHTML = `${targetElement.innerHTML}<option value="${childCategoryId}">${scopedCategoryName}</option>`;
     });
 
