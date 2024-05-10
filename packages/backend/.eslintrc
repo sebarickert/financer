@@ -37,6 +37,16 @@
         "singleQuote": true,
         "semi": true
       }
+    ],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": [
+          "jest.config.ts",
+          "**/*.spec.ts"
+        ]
+      }
     ]
+
   }
 }

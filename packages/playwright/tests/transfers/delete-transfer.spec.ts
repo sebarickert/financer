@@ -71,7 +71,12 @@ test.describe('Delete transfer', () => {
     const toAccountBefore = await getAccount(targetToAccountId);
     const fromAccountBefore = await getAccount(targetFromAccountId);
 
-    await page.goto('/statistics/transfers?date=2022-01&page=1');
+    const transactionYear = targetTransactionBefore.dateObj.getFullYear();
+    const transactionMonth = (targetTransactionBefore.dateObj.getMonth() + 1)
+      .toString()
+      .padStart(2, '0');
+    const dateQuery = `${transactionYear}-${transactionMonth}`;
+    await page.goto(`/statistics/transfers?date=${dateQuery}&page=1`);
     await page.getByTestId(targetTransactionId).click();
 
     await page.getByTestId('edit-transfer-button').click();
@@ -112,7 +117,12 @@ test.describe('Delete transfer', () => {
     const toAccountBefore = await getAccount(targetToAccountId);
     const fromAccountBefore = await getAccount(targetFromAccountId);
 
-    await page.goto('/statistics/transfers?date=2021-02&page=1');
+    const transactionYear = targetTransactionBefore.dateObj.getFullYear();
+    const transactionMonth = (targetTransactionBefore.dateObj.getMonth() + 1)
+      .toString()
+      .padStart(2, '0');
+    const dateQuery = `${transactionYear}-${transactionMonth}`;
+    await page.goto(`/statistics/transfers?date=${dateQuery}&page=1`);
     await page.getByTestId(targetTransactionId).click();
 
     await page.getByTestId('edit-transfer-button').click();

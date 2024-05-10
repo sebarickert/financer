@@ -66,7 +66,12 @@ test.describe('Edit expense', () => {
     const newAmount =
       targetTransactionBefore.amount + amountToChangeTransaction;
 
-    await page.goto(`/statistics/expenses?date=2022-01&page=1`);
+    const transactionYear = targetTransactionBefore.dateObj.getFullYear();
+    const transactionMonth = (targetTransactionBefore.dateObj.getMonth() + 1)
+      .toString()
+      .padStart(2, '0');
+    const dateQuery = `${transactionYear}-${transactionMonth}`;
+    await page.goto(`/statistics/expenses?date=${dateQuery}&page=1`);
 
     await page.getByTestId(targetTransactionBefore._id).click();
 
@@ -114,7 +119,12 @@ test.describe('Edit expense', () => {
     const newAmount =
       targetTransactionBefore.amount + amountToChangeTransaction;
 
-    await page.goto(`/statistics/expenses?date=2021-02&page=1`);
+    const transactionYear = targetTransactionBefore.dateObj.getFullYear();
+    const transactionMonth = (targetTransactionBefore.dateObj.getMonth() + 1)
+      .toString()
+      .padStart(2, '0');
+    const dateQuery = `${transactionYear}-${transactionMonth}`;
+    await page.goto(`/statistics/expenses?date=${dateQuery}&page=1`);
 
     await page.getByTestId(targetTransactionBefore._id).click();
 

@@ -54,7 +54,12 @@ test.describe('Delete income', () => {
 
     const accountBefore = await getAccount(targetAccountId);
 
-    await page.goto('/statistics/incomes?date=2022-01&page=1');
+    const transactionYear = targetTransactionBefore.dateObj.getFullYear();
+    const transactionMonth = (targetTransactionBefore.dateObj.getMonth() + 1)
+      .toString()
+      .padStart(2, '0');
+    const dateQuery = `${transactionYear}-${transactionMonth}`;
+    await page.goto(`/statistics/incomes?date=${dateQuery}&page=1`);
     await page.getByTestId(targetTransactionId).click();
 
     await page.getByTestId('edit-income-button').click();
@@ -87,7 +92,12 @@ test.describe('Delete income', () => {
 
     const accountBefore = await getAccount(targetAccountId);
 
-    await page.goto('/statistics/incomes?date=2021-02&page=1');
+    const transactionYear = targetTransactionBefore.dateObj.getFullYear();
+    const transactionMonth = (targetTransactionBefore.dateObj.getMonth() + 1)
+      .toString()
+      .padStart(2, '0');
+    const dateQuery = `${transactionYear}-${transactionMonth}`;
+    await page.goto(`/statistics/incomes?date=${dateQuery}&page=1`);
     await page.getByTestId(targetTransactionId).click();
 
     await page.getByTestId('edit-income-button').click();

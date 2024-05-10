@@ -1,4 +1,7 @@
-import { submitTransactionCategoryForm } from '$utils/api-helper';
+import {
+  getTransactionById,
+  submitTransactionCategoryForm,
+} from '$utils/api-helper';
 import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
 
@@ -11,12 +14,21 @@ test.describe('Edit transfer with category', () => {
     transactionCategoriesItem: 'transaction-categories-item',
   };
 
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async () => {
     await applyFixture('small');
-    await page.goto('/statistics/transfers?date=2022-03&page=1');
   });
 
   test('Edit with single category', async ({ page }) => {
+    const targetTransaction = await getTransactionById(
+      ids.transferWithSingleCategory,
+    );
+    const transactionYear = targetTransaction.dateObj.getFullYear();
+    const transactionMonth = (targetTransaction.dateObj.getMonth() + 1)
+      .toString()
+      .padStart(2, '0');
+    const dateQuery = `${transactionYear}-${transactionMonth}`;
+    await page.goto(`/statistics/transfers?date=${dateQuery}&page=1`);
+
     await page.getByTestId(ids.transferWithSingleCategory).click();
     await page.getByTestId(ids.editTransferButton).click();
 
@@ -44,7 +56,7 @@ test.describe('Edit transfer with category', () => {
 
     await page.getByTestId('submit').click();
 
-    await page.goto('/statistics/transfers?date=2022-03&page=1');
+    await page.goto(`/statistics/transfers?date=${dateQuery}&page=1`);
     await page.getByTestId(ids.transferWithSingleCategory).click();
     await page.getByTestId(ids.editTransferButton).click();
 
@@ -59,6 +71,16 @@ test.describe('Edit transfer with category', () => {
   });
 
   test('Delete one categories with multiple categories', async ({ page }) => {
+    const targetTransaction = await getTransactionById(
+      ids.transferWithSingleCategory,
+    );
+    const transactionYear = targetTransaction.dateObj.getFullYear();
+    const transactionMonth = (targetTransaction.dateObj.getMonth() + 1)
+      .toString()
+      .padStart(2, '0');
+    const dateQuery = `${transactionYear}-${transactionMonth}`;
+    await page.goto(`/statistics/transfers?date=${dateQuery}&page=1`);
+
     await page.getByTestId(ids.transferWithMultipleCategories).click();
     await page.getByTestId(ids.editTransferButton).click();
 
@@ -99,7 +121,7 @@ test.describe('Edit transfer with category', () => {
 
     await page.getByTestId('submit').click();
 
-    await page.goto('/statistics/transfers?date=2022-03&page=1');
+    await page.goto(`/statistics/transfers?date=${dateQuery}&page=1`);
     await page.getByTestId(ids.transferWithMultipleCategories).click();
     await page.getByTestId(ids.editTransferButton).click();
 
@@ -112,6 +134,16 @@ test.describe('Edit transfer with category', () => {
   });
 
   test('Delete all categories with multiple categories', async ({ page }) => {
+    const targetTransaction = await getTransactionById(
+      ids.transferWithSingleCategory,
+    );
+    const transactionYear = targetTransaction.dateObj.getFullYear();
+    const transactionMonth = (targetTransaction.dateObj.getMonth() + 1)
+      .toString()
+      .padStart(2, '0');
+    const dateQuery = `${transactionYear}-${transactionMonth}`;
+    await page.goto(`/statistics/transfers?date=${dateQuery}&page=1`);
+
     await page.getByTestId(ids.transferWithMultipleCategories).click();
     await page.getByTestId(ids.editTransferButton).click();
 
@@ -132,7 +164,7 @@ test.describe('Edit transfer with category', () => {
 
     await page.getByTestId('submit').click();
 
-    await page.goto('/statistics/transfers?date=2022-03&page=1');
+    await page.goto(`/statistics/transfers?date=${dateQuery}&page=1`);
     await page.getByTestId(ids.transferWithMultipleCategories).click();
     await page.getByTestId(ids.editTransferButton).click();
 

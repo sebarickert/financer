@@ -80,7 +80,12 @@ test.describe('Edit transfer', () => {
     const newAmount =
       targetTransactionBefore.amount + amountToChangeTransaction;
 
-    await page.goto(`/statistics/transfers?date=2022-01&page=1`);
+    const transactionYear = targetTransactionBefore.dateObj.getFullYear();
+    const transactionMonth = (targetTransactionBefore.dateObj.getMonth() + 1)
+      .toString()
+      .padStart(2, '0');
+    const dateQuery = `${transactionYear}-${transactionMonth}`;
+    await page.goto(`/statistics/transfers?date=${dateQuery}&page=1`);
 
     await page.getByTestId(targetTransactionId).click();
 
@@ -138,7 +143,12 @@ test.describe('Edit transfer', () => {
     const newAmount =
       targetTransactionBefore.amount + amountToChangeTransaction;
 
-    await page.goto(`/statistics/transfers?date=2021-02&page=1`);
+    const transactionYear = targetTransactionBefore.dateObj.getFullYear();
+    const transactionMonth = (targetTransactionBefore.dateObj.getMonth() + 1)
+      .toString()
+      .padStart(2, '0');
+    const dateQuery = `${transactionYear}-${transactionMonth}`;
+    await page.goto(`/statistics/transfers?date=${dateQuery}&page=1`);
 
     await page.getByTestId(targetTransactionId).click();
 
