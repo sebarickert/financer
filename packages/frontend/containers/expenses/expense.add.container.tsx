@@ -76,6 +76,8 @@ export const ExpenseAddContainer = ({
 
     return {
       ...transactionTemplate,
+      fromAccount: transactionTemplate.fromAccount ?? undefined,
+      toAccount: transactionTemplate.toAccount ?? undefined,
       categories,
     };
   }, [defaultExpenseAccount, transactionTemplate]);
