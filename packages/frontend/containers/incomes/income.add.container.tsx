@@ -72,6 +72,8 @@ export const IncomeAddContainer = ({ templateId }: IncomeAddContainerProps) => {
 
     return {
       ...transactionTemplate,
+      fromAccount: transactionTemplate.fromAccount ?? undefined,
+      toAccount: transactionTemplate.toAccount ?? undefined,
       categories,
     };
   }, [defaultIncomeAccount, transactionTemplate]);
