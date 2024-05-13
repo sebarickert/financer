@@ -18,6 +18,7 @@ runs:
           **/node_modules
           packages/types/dist
           packages/frontend/src/redux/api/generated/*.ts
+          packages/playwright/types/generated/*.ts
         key: ${{ runner.os }}-modules-${{ hashFiles('./package-lock.json', './packages/types/src/*', './packages/frontend/src/redux/schema/api-spec.json') }}
 
     - name: Install dependencies
