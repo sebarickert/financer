@@ -47,7 +47,7 @@ export class Auth0Strategy extends PassportStrategy(Strategy, 'auth0') {
 
       return await this.userService.create({
         name: profile.displayName,
-        nickname: profile.username,
+        nickname: profile.username ?? profile.displayName,
         profileImageUrl: profile.photos?.slice().shift()?.value,
         githubId: null,
         auth0Id: profile.id,
