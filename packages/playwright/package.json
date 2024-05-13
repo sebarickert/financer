@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "postinstall": "npm run types:generate",
     "ui": "npx playwright test --ui",
     "test": "npx playwright test",
     "test:chromium": "npx playwright test --project=chromium",
