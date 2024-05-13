@@ -1,23 +1,27 @@
+# Build stage
 FROM node:20-alpine as builder
 
 ENV NODE_ENV production
+
 RUN apk add --update --no-cache python3 make g++ && ln -sf python3 /usr/bin/python
 
-COPY . /app
 WORKDIR /app
 
+COPY . .
 
-RUN npm ci --quiet --include=dev
-RUN npm run build
-RUN npm ci --omit=dev -w backend --ignore-scripts
+# Second `npm ci` nukes node_modules so we have regenerate prisma client after that
+RUN npm ci --quiet --include=dev && \
+    npm run build && \
+    npm ci --omit=dev -w backend --ignore-scripts && \
+    npm run prisma:generate -w backend
 
-RUN ls -al /app/build
-
+# Production stage
 FROM node:20-alpine
 
 ENV NODE_ENV production
 
 WORKDIR /app
+
 COPY --from=builder /app/build /app
 COPY --from=builder /app/node_modules /app/node_modules
 
