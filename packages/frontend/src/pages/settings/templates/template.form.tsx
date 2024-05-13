@@ -100,9 +100,8 @@ export const TemplateForm = ({
   const handleSubmit = async (data: TemplateFormFields) => {
     const { templateVisibility: submittedTemplateVisibility } = data;
 
-    const isExpense =
-      submittedTemplateVisibility === TransactionTypeEnum.Expense;
-    const isIncome = submittedTemplateVisibility === TransactionTypeEnum.Income;
+    const isExpense = submittedTemplateVisibility === TransactionType.Expense;
+    const isIncome = submittedTemplateVisibility === TransactionType.Income;
 
     onSubmit({
       ...data,
