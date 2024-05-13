@@ -7,7 +7,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "postinstall": "npm run prisma:generate",
-    "prebuild": "rimraf dist",
+    "prebuild": "rimraf dist && npm run prisma:generate",
     "build": "nest build",
     "format": "eslint {src,test}/**/*.ts --fix",
     "lint": "eslint \"{src,test}/**/*.ts\"",

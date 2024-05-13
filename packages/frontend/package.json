@@ -35,6 +35,7 @@
   },
   "scripts": {
     "postinstall": "npm run types:generate",
+    "prebuild": "npm run types:generate",
     "dev": "next dev",
     "build": "rm -rf build && mkdir build && next build",
     "start": "next start",
