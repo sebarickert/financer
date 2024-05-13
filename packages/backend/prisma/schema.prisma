@@ -248,7 +248,7 @@ model User {
   githubId        String?  @unique
   name            String
   nickname        String
-  profileImageUrl String
+  profileImageUrl String?
   roles           Role[]   @default([])
   updatedAt       DateTime @updatedAt @db.Date
 
