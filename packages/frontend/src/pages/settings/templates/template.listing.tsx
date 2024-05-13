@@ -1,6 +1,9 @@
 import { useMemo } from 'react';
 
-import { TransactionTemplateDto } from '$api/generated/financerApi';
+import {
+  TransactionTemplateDto,
+  TransactionTemplateType,
+} from '$api/generated/financerApi';
 import { settingsPaths } from '$constants/settings-paths';
 import { ButtonInternal } from '$elements/button/button.internal';
 import { Icon, IconName } from '$elements/icon/icon';
@@ -20,13 +23,15 @@ export const TemplateListing = ({
       {
         label: 'Manual',
         items: templates.filter(
-          ({ templateType }) => templateType[0] === 'manual',
+          ({ templateType }) =>
+            templateType[0] === TransactionTemplateType.Manual,
         ),
       },
       {
         label: 'Automatic',
         items: templates.filter(
-          ({ templateType }) => templateType[0] === 'auto',
+          ({ templateType }) =>
+            templateType[0] === TransactionTemplateType.Auto,
         ),
       },
     ],
