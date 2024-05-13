@@ -2,32 +2,23 @@
   "name": "financer",
   "version": "1.0.0",
   "description": "",
-  "workspaces": [
-    "packages/*"
-  ],
   "scripts": {
-    "start": "run-p start:backend start:frontend",
+    "start": "pnpm run --parallel --stream start:dev",
     "start:ci": "NODE_ENV=test SCHEMA=packages/backend/prisma/schema.prisma PORT=3000 node build/server/main.js",
+    "start:test": "pnpm run --parallel --stream start:test",
     "start:test-internal": "NODE_ENV=test SCHEMA=packages/backend/prisma/schema.prisma node build/server/main.js",
-    "start:test": "run-p start:backend:test start:frontend",
-    "start:backend": "npm -w backend run start:dev",
-    "start:backend:test": "npm -w backend run start:test",
-    "start:frontend": "npm -w frontend run dev",
-    "lint": "npm -ws run lint",
-    "format": "npm -ws run format",
-    "test": "CI=true npm -w backend run test && CI=true npm -w frontend run test",
+    "lint": "pnpm --parallel --stream  lint",
+    "format": "pnpm --parallel --stream format",
+    "test": "CI=true pnpm --parallel --stream test",
     "build": "./bin/buildApp",
-    "e2e:test": "npm -w @local/playwright run test --",
-    "e2e:open": "npm -w @local/playwright run ui --",
-    "types:update": "npm -w backend run types:export && npm run types:copy && npm run types:generate",
+    "e2e:test": "pnpm --filter @local/playwright run test --",
+    "e2e:open": "pnpm --filter @local/playwright run ui --",
+    "types:update": "pnpm --filter backend run types:export && pnpm run types:copy && pnpm run types:generate",
     "types:copy": "cp packages/backend/api-spec.json packages/frontend/src/redux/schema/api-spec.json && cp packages/backend/api-spec.json packages/playwright/types/api-spec.json",
-    "types:generate": "npm -w frontend run types:generate && npm -w @local/playwright run types:generate",
-    "check-types": "npm run -ws check-types"
+    "types:generate": "pnpm  --parallel --stream types:generate",
+    "check-types": "pnpm --parallel --stream check-types"
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "npm-run-all": "^4.1.5",
-    "tailwindcss-view-transitions": "^0.1.1"
-  }
+  "packageManager": "pnpm@9.1.1+sha512.14e915759c11f77eac07faba4d019c193ec8637229e62ec99eefb7cf3c3b75c64447882b7c485142451ee3a6b408059cdfb7b7fa0341b975f12d0f7629c71195"
 }
