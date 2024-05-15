@@ -21,7 +21,7 @@ export const isAuth0AuthEnabled = () =>
 const parseMongoDbUri = async (): Promise<string> => {
   if (!isNodeEnvInTest() && !shouldOnlyExportApiSpec()) {
     return Promise.resolve(
-      `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/${process.env.DB_NAME}?readConcernLevel=local`,
+      `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/${process.env.DB_NAME}`,
     );
   }
 
