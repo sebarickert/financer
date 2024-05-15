@@ -36,9 +36,9 @@
   "scripts": {
     "postinstall": "npm run types:generate",
     "prebuild": "npm run types:generate",
-    "start:dev": "next dev",
-    "start:test": "next dev",
+    "dev": "next dev",
     "build": "rm -rf build && mkdir build && next build",
+    "start": "next start",
     "format": "next lint -- --fix",
     "lint": "next lint",
     "test": "echo 'no frontend unit tests at the moment' && exit 0",

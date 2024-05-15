@@ -1,5 +1,5 @@
 # Build stage
-FROM node:22-alpine as builder
+FROM node:20-alpine as builder
 
 ENV NODE_ENV production
 
@@ -16,7 +16,7 @@ RUN npm ci --quiet --include=dev && \
     npm run prisma:generate -w backend
 
 # Production stage
-FROM node:22-alpine
+FROM node:20-alpine
 
 ENV NODE_ENV production
 
