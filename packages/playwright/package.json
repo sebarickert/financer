@@ -5,24 +5,23 @@
   "scripts": {
     "postinstall": "npm run types:generate",
     "ui": "npx playwright test --ui",
-    "e2e-test": "npx playwright test",
-    "e2e-test:chromium": "npx playwright test --project=chromium",
-    "e2e-test:firefox": "npx playwright test --project=firefox",
-    "e2e-test:safari": "npx playwright test --project=webkit",
-    "e2e-test:chrome-mobile": "npx playwright test --project=Mobile_Chrome",
-    "e2e-test:safari-mobile": "npx playwright test --project=Mobile_Safari",
+    "test": "npx playwright test",
+    "test:chromium": "npx playwright test --project=chromium",
+    "test:firefox": "npx playwright test --project=firefox",
+    "test:safari": "npx playwright test --project=webkit",
+    "test:chrome-mobile": "npx playwright test --project=Mobile_Chrome",
+    "test:safari-mobile": "npx playwright test --project=Mobile_Safari",
     "install-deps": "npx playwright install",
     "format": "eslint {tests,utils}/**/*.ts --fix",
     "lint": "eslint \"{tests,utils,assets}/**/*.ts\"",
     "check-types": "tsc --noEmit",
-    "types:generate": "oazapfts ../frontend/src/redux/schema/api-spec.json types/generated/financer.ts --useEnumType && eslint types/generated/*.ts --fix"
+    "types:generate": "oazapfts ../frontend/src/redux/schema/api-spec.json types/generated/financer.ts --useEnumType"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@playwright/test": "^1.40.1",
-    "@types/node": "^20",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^17.1.0",
     "eslint-config-prettier": "^9.1.0",
@@ -33,8 +32,5 @@
     "eslint-plugin-prettier": "^5.1.0",
     "oazapfts": "^6.1.0",
     "typescript": "^5.3.3"
-  },
-  "dependencies": {
-    "@oazapfts/runtime": "^1.0.3"
   }
 }
