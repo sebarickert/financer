@@ -8,7 +8,7 @@ version: "3.6"
 
 services:
   mongodb:
-    image: mongo:4.2.10-bionic
+    image: mongo:7.0.9
     hostname: mongodb
     restart: always
     container_name: financer_dev-mongodb
