@@ -10,153 +10,234 @@ import { AccountsService } from './accounts.service';
 
 describe('AccountsController', () => {
   let app: INestApplication;
-  let controller: AccountsController;
   let service: AccountsService;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AccountsController],
       providers: [createMockServiceProvider(AccountsService)],
     }).compile();
 
     service = module.get<AccountsService>(AccountsService);
-    controller = module.get<AccountsController>(AccountsController);
     app = module.createNestApplication();
     setupTestNestApp(app);
     await app.init();
   });
 
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
+  afterAll(async () => {
+    await app.close();
   });
 
-  it.skip('Check create account validations', async () => {
-    const createMock = jest
-      .spyOn(service, 'create')
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .mockImplementation(() => Promise.resolve({} as any));
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
 
-    await supertest(app.getHttpServer())
-      .post('/api/accounts')
-      .send({
+  describe('/POST create account', () => {
+    it('/POST create account with empty name', async () => {
+      const accountPayload = {
         name: '',
-        type: 'cash',
+        type: 'CASH',
         balance: 0,
-      })
-      .expect(400)
-      .expect({
-        statusCode: 400,
-        message: ['Name must not be empty.'],
-        error: 'Bad Request',
-      });
-    expect(createMock).not.toHaveBeenCalled();
+      };
+      jest
+        .spyOn(service, 'create')
+        .mockImplementation(() => Promise.resolve({} as any));
 
-    await supertest(app.getHttpServer())
-      .post('/api/accounts')
-      .send({
-        name: 'test',
-        type: 'cash',
-      })
-      .expect(400)
-      .expect({
-        statusCode: 400,
-        message: ['Balance must be a number.'],
-        error: 'Bad Request',
-      });
-    expect(createMock).not.toHaveBeenCalled();
+      return supertest(app.getHttpServer())
+        .post('/api/accounts')
+        .send(accountPayload)
+        .expect(400)
+        .expect({
+          statusCode: 400,
+          message: ['Name must not be empty.'],
+          error: 'Bad Request',
+        })
+        .then(() => {
+          expect(service.create).not.toHaveBeenCalled();
+        });
+    });
 
-    await supertest(app.getHttpServer())
-      .post('/api/accounts')
-      .send({
+    it('/POST create account with missing balance', async () => {
+      const accountPayload = {
         name: 'test',
-        type: 'cash',
+        type: 'CASH',
+      };
+      jest
+        .spyOn(service, 'create')
+        .mockImplementation(() => Promise.resolve({} as any));
+
+      return supertest(app.getHttpServer())
+        .post('/api/accounts')
+        .send(accountPayload)
+        .expect(400)
+        .expect({
+          statusCode: 400,
+          message: ['Balance must be a number.'],
+          error: 'Bad Request',
+        })
+        .then(() => {
+          expect(service.create).not.toHaveBeenCalled();
+        });
+    });
+
+    it('/POST create account with empty balance', async () => {
+      const accountPayload = {
+        name: 'test',
+        type: 'CASH',
         balance: '',
-      })
-      .expect(400)
-      .expect({
-        statusCode: 400,
-        message: ['Balance must be a number.'],
-        error: 'Bad Request',
-      });
-    expect(createMock).not.toHaveBeenCalled();
+      };
+      jest
+        .spyOn(service, 'create')
+        .mockImplementation(() => Promise.resolve({} as any));
 
-    await supertest(app.getHttpServer())
-      .post('/api/accounts')
-      .send({
+      return supertest(app.getHttpServer())
+        .post('/api/accounts')
+        .send(accountPayload)
+        .expect(400)
+        .expect({
+          statusCode: 400,
+          message: ['Balance must be a number.'],
+          error: 'Bad Request',
+        })
+        .then(() => {
+          expect(service.create).not.toHaveBeenCalled();
+        });
+    });
+
+    it('/POST create account with positive balance', async () => {
+      const accountPayload = {
         name: 'test',
-        type: 'cash',
+        type: 'CASH',
         balance: 10,
-      })
-      .expect(201);
-    // expect(createMock).toHaveBeenCalled();
+      };
+      jest
+        .spyOn(service, 'create')
+        .mockImplementation(() => Promise.resolve({} as any));
 
-    await supertest(app.getHttpServer())
-      .post('/api/accounts')
-      .send({
+      return supertest(app.getHttpServer())
+        .post('/api/accounts')
+        .send(accountPayload)
+        .expect(201)
+        .expect({})
+        .then(() => {
+          expect(service.create).toHaveBeenCalled();
+        });
+    });
+
+    it('/POST create account with negative balance', async () => {
+      const accountPayload = {
         name: 'test',
-        type: 'cash',
+        type: 'CASH',
         balance: -10,
-      })
-      .expect(201);
-    // expect(createMock).toHaveBeenCalled();
+      };
+      jest
+        .spyOn(service, 'create')
+        .mockImplementation(() => Promise.resolve({} as any));
 
-    await supertest(app.getHttpServer())
-      .post('/api/accounts')
-      .send({
+      return supertest(app.getHttpServer())
+        .post('/api/accounts')
+        .send(accountPayload)
+        .expect(201)
+        .expect({})
+        .then(() => {
+          expect(service.create).toHaveBeenCalled();
+        });
+    });
+
+    it('/POST create account with zero balance', async () => {
+      const accountPayload = {
         name: 'test',
-        type: 'cash',
+        type: 'CASH',
         balance: 0,
-      })
-      .expect(201);
-    // expect(createMock).toHaveBeenCalled();
+      };
+      jest
+        .spyOn(service, 'create')
+        .mockImplementation(() => Promise.resolve({} as any));
 
-    await supertest(app.getHttpServer())
-      .post('/api/accounts')
-      .send({
+      return supertest(app.getHttpServer())
+        .post('/api/accounts')
+        .send(accountPayload)
+        .expect(201)
+        .expect({})
+        .then(() => {
+          expect(service.create).toHaveBeenCalled();
+        });
+    });
+
+    it('/POST create account with missing type', async () => {
+      const accountPayload = {
         name: 'test',
         balance: 0,
-      })
-      .expect(400)
-      .expect({
-        statusCode: 400,
-        message: [
-          'Type must be one of the following: cash, savings, investment, credit, loan.',
-        ],
-        error: 'Bad Request',
-      });
-    expect(createMock).not.toHaveBeenCalled();
+      };
+      jest
+        .spyOn(service, 'create')
+        .mockImplementation(() => Promise.resolve({} as any));
 
-    await supertest(app.getHttpServer())
-      .post('/api/accounts')
-      .send({
+      return supertest(app.getHttpServer())
+        .post('/api/accounts')
+        .send(accountPayload)
+        .expect(400)
+        .expect({
+          statusCode: 400,
+          message: [
+            'Type must be one of the following: CASH, SAVINGS, INVESTMENT, CREDIT, LOAN, LONG_TERM_SAVINGS, PRE_ASSIGNED_CASH.',
+          ],
+          error: 'Bad Request',
+        })
+        .then(() => {
+          expect(service.create).not.toHaveBeenCalled();
+        });
+    });
+
+    it('/POST create account with invalid type', async () => {
+      const accountPayload = {
         name: 'test',
-        type: 'fake-account-type',
+        type: 'FAKE-account-type',
         balance: 0,
-      })
-      .expect(400)
-      .expect({
-        statusCode: 400,
-        message: [
-          'Type must be one of the following: cash, savings, investment, credit, loan.',
-        ],
-        error: 'Bad Request',
-      });
-    expect(createMock).not.toHaveBeenCalled();
+      };
+      jest
+        .spyOn(service, 'create')
+        .mockImplementation(() => Promise.resolve({} as any));
 
-    await supertest(app.getHttpServer())
-      .post('/api/accounts')
-      .send({})
-      .expect(400)
-      .expect({
-        statusCode: 400,
-        message: [
-          'name must be a string',
-          'Name must not be empty.',
-          'Type must be one of the following: cash, savings, investment, credit, loan.',
-          'Balance must be a number.',
-        ],
-        error: 'Bad Request',
-      });
-    expect(createMock).not.toHaveBeenCalled();
+      return supertest(app.getHttpServer())
+        .post('/api/accounts')
+        .send(accountPayload)
+        .expect(400)
+        .expect({
+          statusCode: 400,
+          message: [
+            'Type must be one of the following: CASH, SAVINGS, INVESTMENT, CREDIT, LOAN, LONG_TERM_SAVINGS, PRE_ASSIGNED_CASH.',
+          ],
+          error: 'Bad Request',
+        })
+        .then(() => {
+          expect(service.create).not.toHaveBeenCalled();
+        });
+    });
+
+    it('/POST create account with empty payload', async () => {
+      const accountPayload = {};
+      jest
+        .spyOn(service, 'create')
+        .mockImplementation(() => Promise.resolve({} as any));
+
+      return supertest(app.getHttpServer())
+        .post('/api/accounts')
+        .send(accountPayload)
+        .expect(400)
+        .expect({
+          statusCode: 400,
+          message: [
+            'name must be a string',
+            'Name must not be empty.',
+            'Type must be one of the following: CASH, SAVINGS, INVESTMENT, CREDIT, LOAN, LONG_TERM_SAVINGS, PRE_ASSIGNED_CASH.',
+            'Balance must be a number.',
+          ],
+          error: 'Bad Request',
+        })
+        .then(() => {
+          expect(service.create).not.toHaveBeenCalled();
+        });
+    });
   });
 });
