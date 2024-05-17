@@ -12,10 +12,6 @@
     {
       "directory": "./packages/playwright",
       "changeProcessCWD": true
-    },
-    {
-      "directory": "./packages/types",
-      "changeProcessCWD": true
     }
   ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",

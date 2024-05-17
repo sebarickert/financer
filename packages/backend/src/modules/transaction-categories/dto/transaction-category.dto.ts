@@ -38,8 +38,7 @@ export class TransactionCategoryDto implements TransactionCategory {
   @IsOptional()
   @IsEnum(TransactionType, {
     each: true,
-    message:
-      'Visibility must be one of the following: income, expense, transfer.',
+    message: `Visibility must be one of the following: ${Object.values(TransactionType).join(', ')}.`,
   })
   visibility: TransactionType[];
 

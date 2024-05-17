@@ -10,10 +10,9 @@ import { TransactionCategoriesService } from './transaction-categories.service';
 
 describe('TransactionCategoriesController', () => {
   let app: INestApplication;
-  let controller: TransactionCategoriesController;
   let service: TransactionCategoriesService;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [TransactionCategoriesController],
       providers: [createMockServiceProvider(TransactionCategoriesService)],
@@ -22,76 +21,108 @@ describe('TransactionCategoriesController', () => {
     service = module.get<TransactionCategoriesService>(
       TransactionCategoriesService,
     );
-    controller = module.get<TransactionCategoriesController>(
-      TransactionCategoriesController,
-    );
     app = module.createNestApplication();
     setupTestNestApp(app);
     await app.init();
   });
 
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
+  afterAll(async () => {
+    await app.close();
   });
 
-  it.skip('Check create income validations', async () => {
-    const createMock = jest
-      .spyOn(service, 'create')
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .mockImplementation(() => Promise.resolve({} as any));
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
 
-    await supertest(app.getHttpServer())
-      .post('/api/transaction-categories')
-      .send({
+  describe('/POST create transaction category', () => {
+    it('/POST create transaction category with empty name', async () => {
+      const categoryPayload = {
         name: '',
-        visibility: 'income',
+        visibility: 'INCOME',
         parent_category_id: '',
-      })
-      .expect(400)
-      .expect({
-        statusCode: 400,
-        message: ['Name must not be empty.'],
-        error: 'Bad Request',
-      });
-    expect(createMock).not.toHaveBeenCalled();
+      };
+      jest
+        .spyOn(service, 'create')
+        .mockImplementation(() => Promise.resolve({} as any));
 
-    await supertest(app.getHttpServer())
-      .post('/api/transaction-categories')
-      .send({
+      return supertest(app.getHttpServer())
+        .post('/api/transaction-categories')
+        .send(categoryPayload)
+        .expect(400)
+        .expect({
+          statusCode: 400,
+          message: ['Name must not be empty.'],
+          error: 'Bad Request',
+        })
+        .then(() => {
+          expect(service.create).not.toBeCalled();
+        });
+    });
+
+    it('/POST create transaction category with invalid visibility', async () => {
+      const categoryPayload = {
         name: 'test',
-        visibility: 'not-a-valid-visibility',
+        visibility: 'NOT-A-VALID-VISIBILITY',
         parent_category_id: '',
-      })
-      .expect(400)
-      .expect({
-        statusCode: 400,
-        message: [
-          'Visibility must be one of the following: income, expense, transfer.',
-        ],
-        error: 'Bad Request',
-      });
-    expect(createMock).not.toHaveBeenCalled();
+      };
+      jest
+        .spyOn(service, 'create')
+        .mockImplementation(() => Promise.resolve({} as any));
 
-    await supertest(app.getHttpServer())
-      .post('/api/transaction-categories')
-      .send({
+      return supertest(app.getHttpServer())
+        .post('/api/transaction-categories')
+        .send(categoryPayload)
+        .expect(400)
+        .expect({
+          statusCode: 400,
+          message: [
+            'Visibility must be one of the following: INCOME, EXPENSE, TRANSFER.',
+          ],
+          error: 'Bad Request',
+        })
+        .then(() => {
+          expect(service.create).not.toBeCalled();
+        });
+    });
+
+    it('/POST create transaction category with valid visibility', async () => {
+      const categoryPayload = {
         name: 'test',
-        visibility: ['income', 'expense', 'transfer'],
+        visibility: ['INCOME', 'EXPENSE', 'TRANSFER'],
         parent_category_id: '',
-      })
-      .expect(201);
-    expect(createMock).toHaveBeenCalledTimes(1);
-    createMock.mockReset();
+      };
+      jest
+        .spyOn(service, 'create')
+        .mockImplementation(() => Promise.resolve({} as any));
 
-    await supertest(app.getHttpServer())
-      .post('/api/transaction-categories')
-      .send({})
-      .expect(400)
-      .expect({
-        statusCode: 400,
-        message: ['Name must not be empty.'],
-        error: 'Bad Request',
-      });
-    expect(createMock).not.toHaveBeenCalled();
+      return supertest(app.getHttpServer())
+        .post('/api/transaction-categories')
+        .send(categoryPayload)
+        .expect(201)
+        .expect({})
+        .then(() => {
+          expect(service.create).toBeCalled();
+        });
+    });
+
+    it('/POST create transaction category with empty payload', async () => {
+      const categoryPayload = {};
+      jest
+        .spyOn(service, 'create')
+        .mockImplementation(() => Promise.resolve({} as any));
+
+      return supertest(app.getHttpServer())
+        .post('/api/transaction-categories')
+        .send(categoryPayload)
+        .expect(400)
+        .expect({
+          statusCode: 400,
+          message: ['Name must not be empty.'],
+          error: 'Bad Request',
+        })
+        .then(() => {
+          expect(service.create).not.toBeCalled();
+        });
+    });
   });
 });

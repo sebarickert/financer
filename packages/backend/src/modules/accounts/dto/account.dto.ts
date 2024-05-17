@@ -33,8 +33,7 @@ export class AccountDto implements Account {
     type: AccountType,
   })
   @IsEnum(AccountType, {
-    message:
-      'Type must be one of the following: cash, savings, investment, credit, loan.',
+    message: `Type must be one of the following: ${Object.values(AccountType).join(', ')}.`,
   })
   readonly type: AccountType;
 
