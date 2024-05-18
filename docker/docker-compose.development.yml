@@ -18,16 +18,15 @@ services:
       - MONGO_INITDB_DATABASE=financer_dev
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=change-me
-      - MONGO_REPLICA_SET_NAME=rs0
     volumes:
       - ./mongo-entrypoint:/docker-entrypoint-initdb.d
       - mongo_data:/data/db
       - mongo_config:/data/configdb
     healthcheck:
-      test: test $$(echo "rs.initiate().ok || rs.status().ok" | mongo -u admin -p change-me --quiet) -eq 1
+      test: test $$(mongosh -u admin -p change-me --quiet --eval "try {rs.initiate().ok } catch { rs.status().ok }") -eq 1
       interval: 10s
       start_period: 30s
-    command: ["--replSet", "rs0", "--bind_ip_all"]
+    command: /bin/sh -c "mkdir /data/secrets && openssl rand -base64 756 > /data/secrets/keyfile && chmod 400 /data/secrets/keyfile && chown 999:999 /data/secrets/keyfile && docker-entrypoint.sh --keyFile /data/secrets/keyfile --replSet rs0 --bind_ip_all"
 
   mongodbclient:
     image: mongo-express:latest
