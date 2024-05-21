@@ -2132,11 +2132,11 @@
       "CategoryMonthlySummaryDto": {
         "type": "object",
         "properties": {
-          "_id": { "type": "object" },
+          "id": { "type": "object" },
           "count": { "type": "number" },
           "totalAmount": { "type": "number" }
         },
-        "required": ["_id", "count", "totalAmount"]
+        "required": ["id", "count", "totalAmount"]
       },
       "CreateTransactionCategoryDto": {
         "type": "object",

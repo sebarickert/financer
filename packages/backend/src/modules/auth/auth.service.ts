@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { User } from '@prisma/client';
 
 import { AccountsService } from '../accounts/accounts.service';
+import { AccountDto } from '../accounts/dto/account.dto';
 import { UsersService } from '../users/users.service';
 
 @Injectable()
@@ -14,7 +15,7 @@ export class AuthService {
   async getAuthenticationStatus(user?: User) {
     const accounts = user
       ? await this.accountsService.findAllByUser(user.id)
-      : { data: [] };
+      : { data: [] as AccountDto[] };
     return {
       authenticated: Boolean(user),
       payload: user,

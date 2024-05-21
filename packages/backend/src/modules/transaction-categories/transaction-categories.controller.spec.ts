@@ -39,10 +39,11 @@ describe('TransactionCategoriesController', () => {
       const categoryPayload = {
         name: '',
         visibility: 'INCOME',
-        parent_category_id: '',
+        parentCategoryId: null as null | string,
       };
       jest
         .spyOn(service, 'create')
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .mockImplementation(() => Promise.resolve({} as any));
 
       return supertest(app.getHttpServer())
@@ -63,10 +64,11 @@ describe('TransactionCategoriesController', () => {
       const categoryPayload = {
         name: 'test',
         visibility: 'NOT-A-VALID-VISIBILITY',
-        parent_category_id: '',
+        parentCategoryId: null as null | string,
       };
       jest
         .spyOn(service, 'create')
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .mockImplementation(() => Promise.resolve({} as any));
 
       return supertest(app.getHttpServer())
@@ -89,10 +91,11 @@ describe('TransactionCategoriesController', () => {
       const categoryPayload = {
         name: 'test',
         visibility: ['INCOME', 'EXPENSE', 'TRANSFER'],
-        parent_category_id: '',
+        parentCategoryId: null as null | string,
       };
       jest
         .spyOn(service, 'create')
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .mockImplementation(() => Promise.resolve({} as any));
 
       return supertest(app.getHttpServer())
@@ -109,6 +112,7 @@ describe('TransactionCategoriesController', () => {
       const categoryPayload = {};
       jest
         .spyOn(service, 'create')
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .mockImplementation(() => Promise.resolve({} as any));
 
       return supertest(app.getHttpServer())

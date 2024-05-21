@@ -15,13 +15,12 @@
     "strict": true,
     "skipLibCheck": true,
     "strictNullChecks": false,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "outDir": "./dist"
   },
-  "exclude": ["node_modules", "dist",  "jest.config.ts"],
+  "exclude": ["node_modules", "dist", "jest.config.ts"],
   "extends": "./tsconfig.path.json"
 }
- 

@@ -398,26 +398,25 @@ export class TransactionsService {
     }
 
     await this.transactionCategoriesService.ensureCategoriesExist(
-      categories.map((category) => category.category_id),
+      categories.map((category) => category.categoryId),
     );
   }
 
   private async createCategories(
     userId: string,
     transactionId: string,
-    categories?:
-      | CreateTransactionCategoryMappingDto[]
-      | UpdateTransactionCategoryMappingDto[],
+    categories?: Omit<CreateTransactionCategoryMappingDto, 'transactionId'>[],
   ) {
     if (!categories) {
       return;
     }
 
-    const categoriesWithAllFields = categories.map((category) => ({
-      ...category,
-      transaction_id: transactionId,
-      owner: userId,
-    }));
+    const categoriesWithAllFields =
+      categories.map<CreateTransactionCategoryMappingDto>((category) => ({
+        ...category,
+        transactionId,
+        userId,
+      }));
 
     await this.transactionCategoryMappingsService.createMany(
       userId.toString(),
@@ -509,13 +508,13 @@ export class TransactionsService {
       return null;
     }
 
-    const a = (
+    const childCategoryIds = (
       await this.transactionCategoriesService.findAllChildrenById([
         parentId.toString(),
       ])
-    ).map(({ _id }) => _id);
+    ).map(({ id }) => id);
 
-    return [parentId, ...a];
+    return [parentId, ...childCategoryIds];
   }
 
   private filterRawMongoByYearAndMonth(

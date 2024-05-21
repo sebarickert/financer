@@ -7,6 +7,7 @@ export const createMockServiceProvider = <T extends Abstract<unknown>>(
   const mocked: any = {};
 
   Object.getOwnPropertyNames(object.prototype).forEach((method) => {
+    // @ts-expect-error - We are mocking the object
     if (typeof object.prototype[method] === 'function') {
       mocked[method] = jest.fn();
     }

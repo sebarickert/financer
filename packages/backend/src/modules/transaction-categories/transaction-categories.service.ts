@@ -69,7 +69,10 @@ export class TransactionCategoriesService {
     return category;
   }
 
-  async findAllChildrenById(parentIds: string[], depth = 0) {
+  async findAllChildrenById(
+    parentIds: string[],
+    depth = 0,
+  ): Promise<TransactionCategory[]> {
     if (depth > 10) {
       throw new InternalServerErrorException(
         'Too many levels of nesting, probably infinite loop on hierarchy?',
@@ -85,7 +88,7 @@ export class TransactionCategoriesService {
     const categoryIds = categories.map((category) => category.id);
 
     if (categoryIds.length === 0) {
-      return categoryIds;
+      return categories;
     }
 
     const childCategories = await this.findAllChildrenById(
@@ -93,7 +96,7 @@ export class TransactionCategoriesService {
       depth + 1,
     );
 
-    return [...categoryIds, ...childCategories];
+    return [...categories, ...childCategories];
   }
 
   async findAllByUser(
@@ -119,7 +122,10 @@ export class TransactionCategoriesService {
     year?: number,
     month?: number,
   ): Promise<CategoryMonthlySummaryDto[]> {
-    const childrenIds = await this.findAllChildrenById([parentCategoryId]);
+    const childrenCategories = await this.findAllChildrenById([
+      parentCategoryId,
+    ]);
+    const childrenIds = childrenCategories.map(({ id }) => id);
     const targetIds = [parentCategoryId, ...childrenIds];
 
     return this.transactionCategoryMappingsService.findMonthlySummariesByUserAndId(
