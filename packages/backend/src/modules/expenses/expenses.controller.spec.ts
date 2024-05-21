@@ -39,10 +39,11 @@ describe('ExpensesController', () => {
         amount: 19,
         description: '',
         date: '2023-03-03T19:54:00.000Z',
-        categories: [],
+        categories: [] as string[],
       };
       jest
         .spyOn(service, 'create')
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .mockImplementation(() => Promise.resolve({} as any));
 
       await supertest(app.getHttpServer())
@@ -64,10 +65,11 @@ describe('ExpensesController', () => {
         fromAccount: '5fb42f145712ea336a98ef20',
         description: 'test',
         date: '2023-03-03T19:54:00.000Z',
-        categories: [],
+        categories: [] as string[],
       };
       jest
         .spyOn(service, 'create')
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .mockImplementation(() => Promise.resolve({} as any));
 
       await supertest(app.getHttpServer())
@@ -90,10 +92,11 @@ describe('ExpensesController', () => {
         amount: 'not-a-number',
         description: 'test',
         date: '2023-03-03T19:54:00.000Z',
-        categories: [],
+        categories: [] as string[],
       };
       jest
         .spyOn(service, 'create')
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .mockImplementation(() => Promise.resolve({} as any));
 
       await supertest(app.getHttpServer())
@@ -116,10 +119,11 @@ describe('ExpensesController', () => {
         amount: 10,
         description: 'test',
         date: '2023-03-03T19:54:00.000Z',
-        categories: [],
+        categories: [] as string[],
       };
       jest
         .spyOn(service, 'create')
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .mockImplementation(() => Promise.resolve({} as any));
 
       await supertest(app.getHttpServer())
@@ -137,10 +141,11 @@ describe('ExpensesController', () => {
         amount: 0,
         description: 'test',
         date: '2023-03-03T19:54:00.000Z',
-        categories: [],
+        categories: [] as string[],
       };
       jest
         .spyOn(service, 'create')
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .mockImplementation(() => Promise.resolve({} as any));
 
       await supertest(app.getHttpServer())
@@ -163,10 +168,11 @@ describe('ExpensesController', () => {
         amount: -10,
         description: 'test',
         date: '2023-03-03T19:54:00.000Z',
-        categories: [],
+        categories: [] as string[],
       };
       jest
         .spyOn(service, 'create')
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .mockImplementation(() => Promise.resolve({} as any));
 
       await supertest(app.getHttpServer())
@@ -189,10 +195,11 @@ describe('ExpensesController', () => {
         amount: 10,
         description: 'test',
         date: '2023-03-03T19:54:00.000Z',
-        categories: [],
+        categories: [] as string[],
       };
       jest
         .spyOn(service, 'create')
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .mockImplementation(() => Promise.resolve({} as any));
 
       await supertest(app.getHttpServer())
@@ -213,6 +220,7 @@ describe('ExpensesController', () => {
       const expensePayload = {};
       jest
         .spyOn(service, 'create')
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .mockImplementation(() => Promise.resolve({} as any));
 
       await supertest(app.getHttpServer())

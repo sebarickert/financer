@@ -33,7 +33,8 @@ describe('TasksService', () => {
       return new RealDate(dateMock) as any;
     });
 
-    ['prototype', 'now'].forEach(
+    (['prototype', 'now'] as const).forEach(
+      // @ts-expect-error - We are mocking Date
       (methodName) => (Date[methodName] = RealDate[methodName]),
     );
     Date.now = () => dateMock.getTime();

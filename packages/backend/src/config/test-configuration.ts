@@ -5,6 +5,4 @@ export const testConfiguration = async () => ({
   publicUrl: process.env.PUBLIC_URL,
   cookieKey: 'test-cookie-key',
   mongodbConnectionString: setupMemoryDbSchema(process.env.MEMORY_DB_URI),
-  githubKeys: undefined,
-  auth0Keys: undefined,
 });

@@ -41,6 +41,7 @@ describe('AccountsController', () => {
       };
       jest
         .spyOn(service, 'create')
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .mockImplementation(() => Promise.resolve({} as any));
 
       return supertest(app.getHttpServer())
@@ -64,6 +65,7 @@ describe('AccountsController', () => {
       };
       jest
         .spyOn(service, 'create')
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .mockImplementation(() => Promise.resolve({} as any));
 
       return supertest(app.getHttpServer())
@@ -88,6 +90,7 @@ describe('AccountsController', () => {
       };
       jest
         .spyOn(service, 'create')
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .mockImplementation(() => Promise.resolve({} as any));
 
       return supertest(app.getHttpServer())
@@ -112,6 +115,7 @@ describe('AccountsController', () => {
       };
       jest
         .spyOn(service, 'create')
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .mockImplementation(() => Promise.resolve({} as any));
 
       return supertest(app.getHttpServer())
@@ -132,6 +136,7 @@ describe('AccountsController', () => {
       };
       jest
         .spyOn(service, 'create')
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .mockImplementation(() => Promise.resolve({} as any));
 
       return supertest(app.getHttpServer())
@@ -152,6 +157,7 @@ describe('AccountsController', () => {
       };
       jest
         .spyOn(service, 'create')
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .mockImplementation(() => Promise.resolve({} as any));
 
       return supertest(app.getHttpServer())
@@ -171,6 +177,7 @@ describe('AccountsController', () => {
       };
       jest
         .spyOn(service, 'create')
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .mockImplementation(() => Promise.resolve({} as any));
 
       return supertest(app.getHttpServer())
@@ -197,6 +204,7 @@ describe('AccountsController', () => {
       };
       jest
         .spyOn(service, 'create')
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .mockImplementation(() => Promise.resolve({} as any));
 
       return supertest(app.getHttpServer())
@@ -219,6 +227,7 @@ describe('AccountsController', () => {
       const accountPayload = {};
       jest
         .spyOn(service, 'create')
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .mockImplementation(() => Promise.resolve({} as any));
 
       return supertest(app.getHttpServer())
