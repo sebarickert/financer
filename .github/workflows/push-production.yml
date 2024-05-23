@@ -83,7 +83,7 @@ jobs:
     steps:
       - uses: serkfi/financer/.github/actions/build-docker-image@main
         with:
-          REGISTRY_TOKEN: ${{ secrets.REGISTRY_TOKEN }}
+          REGISTRY_TOKEN: ${{ secrets.REGISTERY_TOKEN }}
 
   docker-publish:
     needs:
@@ -97,4 +97,4 @@ jobs:
     steps:
       - uses: serkfi/financer/.github/actions/publish-docker-image@main
         with:
-          REGISTRY_TOKEN: ${{ secrets.REGISTRY_TOKEN }}
+          REGISTRY_TOKEN: ${{ secrets.REGISTERY_TOKEN }}
