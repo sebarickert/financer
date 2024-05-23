@@ -178,7 +178,10 @@ export class TransactionsService {
         {
           $match: {
             user: { $oid: userId },
-            ...this.filterRawMongoByYearAndMonth(year, month, 'laterThan'),
+            // TODO this should not be commented, but it's causing issues in the production environment
+            // and with our data amounts it does not cause performance issues
+            //
+            // ...this.filterRawMongoByYearAndMonth(year, month, 'laterThan'),
             ...(await this.filterRawMongoTransactionsByCategory(
               userId,
               targetCategoryIds,
@@ -639,8 +642,8 @@ export class TransactionsService {
           {
             $and: [
               ...selectedQuery,
+              { $in: ['$toAccount', accountIds] },
               {
-                $in: ['$toAccount', accountIds],
                 $and: [
                   { $not: { $in: ['$fromAccount', accountIds] } },
                   { $ne: ['$fromAccount', ''] },
@@ -654,8 +657,8 @@ export class TransactionsService {
               {
                 $and: [
                   ...selectedQuery,
+                  { $in: ['$fromAccount', accountIds] },
                   {
-                    $in: ['$fromAccount', accountIds],
                     $and: [
                       { $not: { $in: ['$toAccount', accountIds] } },
                       { $ne: ['$toAccount', ''] },
@@ -663,7 +666,8 @@ export class TransactionsService {
                   },
                 ],
               },
-              { $multiply: [operator, -1] },
+              // If operator is `$amount` then we want to calculate difference between expenses and incomes
+              operator === '$amount' ? { $multiply: [operator, -1] } : operator,
               0,
             ],
           },
