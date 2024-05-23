@@ -81,9 +81,16 @@ jobs:
   docker-build:
     runs-on: ubuntu-latest
     steps:
+      - name: Expose GitHub Runtime
+        id: runtime
+        uses: crazy-max/ghaction-github-runtime@v3
+
       - uses: serkfi/financer/.github/actions/build-docker-image@main
         with:
           REGISTRY_TOKEN: ${{ secrets.REGISTERY_TOKEN }}
+        env:
+          ACTIONS_CACHE_URL: ${{ steps.runtime.outputs.ACTIONS_CACHE_URL }}
+          ACTIONS_RUNTIME_TOKEN: ${{ steps.runtime.outputs.ACTIONS_RUNTIME_TOKEN }}
 
   docker-publish:
     needs:
@@ -95,6 +102,13 @@ jobs:
       - run-e2e-test
     runs-on: ubuntu-latest
     steps:
+      - name: Expose GitHub Runtime
+        id: runtime
+        uses: crazy-max/ghaction-github-runtime@v3
+
       - uses: serkfi/financer/.github/actions/publish-docker-image@main
         with:
           REGISTRY_TOKEN: ${{ secrets.REGISTERY_TOKEN }}
+        env:
+          ACTIONS_CACHE_URL: ${{ steps.runtime.outputs.ACTIONS_CACHE_URL }}
+          ACTIONS_RUNTIME_TOKEN: ${{ steps.runtime.outputs.ACTIONS_RUNTIME_TOKEN }}
