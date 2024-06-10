@@ -60,8 +60,8 @@ model AccountBalanceChange {
   updatedAt DateTime @updatedAt @db.Date
   userId    String   @db.ObjectId
 
-  Account Account? @relation(fields: [accountId], references: [id])
-  User    User?    @relation(fields: [userId], references: [id])
+  Account Account? @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  User    User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("account-balance-changes")
 }
@@ -77,7 +77,7 @@ model Account {
   type      AccountType
   updatedAt DateTime    @updatedAt @db.Date
 
-  User                 User                   @relation(fields: [userId], references: [id])
+  User                 User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
   AccountBalanceChange AccountBalanceChange[]
   FromTransactions     Transaction[]          @relation("FromAccountTransaction")
   ToTransactions       Transaction[]          @relation("ToAccountTransaction")
@@ -120,8 +120,8 @@ model TransactionCategory {
   updatedAt        DateTime          @updatedAt @db.Date
   visibility       TransactionType[]
 
-  User                       User                         @relation(fields: [userId], references: [id])
-  // category TransactionCategory @relation((fields: [parentCategoryId], references: [id]))
+  User                       User                         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // category TransactionCategory @relation((fields: [parentCategoryId], references: [id]), onDelete: Cascade)
   TransactionCategoryMapping TransactionCategoryMapping[]
 
   @@index([userId], map: "owner_1")
@@ -141,9 +141,9 @@ model TransactionCategoryMapping {
   transactionId String   @map("transaction_id") @db.ObjectId
   updatedAt     DateTime @updatedAt @db.Date
 
-  User        User                @relation(fields: [userId], references: [id])
-  Category    TransactionCategory @relation(fields: [categoryId], references: [id])
-  Transaction Transaction         @relation(fields: [transactionId], references: [id])
+  User        User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Category    TransactionCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  Transaction Transaction         @relation(fields: [transactionId], references: [id], onDelete: Cascade)
 
   @@index([userId], map: "owner_1")
   @@index([transactionId], map: "transaction_id_1")
@@ -158,9 +158,9 @@ model TransactionTemplateLog {
   transactionId String                  @db.ObjectId
   userId        String                  @db.ObjectId
 
-  User        User                @relation(fields: [userId], references: [id])
-  Transaction Transaction         @relation(fields: [transactionId], references: [id])
-  Template    TransactionTemplate @relation(fields: [templateId], references: [id])
+  User        User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Transaction Transaction         @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+  Template    TransactionTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
 
   @@index([userId], map: "userId_1")
   @@index([eventType], map: "eventType_1")
@@ -187,9 +187,9 @@ model TransactionTemplate {
   updatedAt          DateTime                  @updatedAt @db.Date
   userId             String                    @db.ObjectId
 
-  User                   User                     @relation(fields: [userId], references: [id])
-  From                   Account?                 @relation("FromAccountTemplate", fields: [fromAccount], references: [id])
-  To                     Account?                 @relation("ToAccountTemplate", fields: [toAccount], references: [id])
+  User                   User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  From                   Account?                 @relation("FromAccountTemplate", fields: [fromAccount], references: [id], onDelete: Cascade)
+  To                     Account?                 @relation("ToAccountTemplate", fields: [toAccount], references: [id], onDelete: Cascade)
   TransactionTemplateLog TransactionTemplateLog[]
 
   @@index([userId], map: "userId_1")
@@ -211,9 +211,9 @@ model Transaction {
   updatedAt   DateTime @updatedAt @db.Date
   userId      String   @map("user") @db.ObjectId
 
-  User                   User                         @relation(fields: [userId], references: [id])
-  From                   Account?                     @relation("FromAccountTransaction", fields: [fromAccount], references: [id])
-  To                     Account?                     @relation("ToAccountTransaction", fields: [toAccount], references: [id])
+  User                   User                         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  From                   Account?                     @relation("FromAccountTransaction", fields: [fromAccount], references: [id], onDelete: Cascade)
+  To                     Account?                     @relation("ToAccountTransaction", fields: [toAccount], references: [id], onDelete: Cascade)
   categories             TransactionCategoryMapping[]
   TransactionTemplateLog TransactionTemplateLog[]
 
@@ -233,7 +233,7 @@ model UserPreferences {
   userId    String                 @db.ObjectId
   value     String
 
-  User User @relation(fields: [userId], references: [id])
+  User User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, key], name: "userId_key")
   @@index([userId], map: "userId_1")
