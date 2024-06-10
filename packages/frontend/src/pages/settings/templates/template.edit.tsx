@@ -5,6 +5,7 @@ import { TemplateForm } from './template.form';
 
 import {
   TransactionTemplateDto,
+  TransactionTemplateType,
   UpdateTransactionTemplateDto,
 } from '$api/generated/financerApi';
 import { TransactionCategoriesFormFields } from '$blocks/transaction-categories/transaction-categories';
@@ -13,8 +14,10 @@ import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
 export type UpdateTransactionTemplateDtoWithCategory = Omit<
   UpdateTransactionTemplateDto,
-  'categories'
+  'categories' | 'templateType'
 > & {
+  // TODO change this to match the backend, so make both of them to be array or non-array
+  templateType: TransactionTemplateType;
   categories?: TransactionCategoriesFormFields[];
 };
 
@@ -32,6 +35,7 @@ export const TemplateEdit = ({
   const initialValues = useMemo(
     () => ({
       ...template,
+      templateType: template.templateType.at(0),
       categories: template?.categories?.map((categoryId) => ({
         categoryId: categoryId,
         amount: NaN,

@@ -22,7 +22,7 @@ import { UserId } from '../users/users.decorators';
 import { CreateTransactionTemplateDto } from './dto/create-transaction-template.dto';
 import { TransactionTemplateDto } from './dto/transaction-template.dto';
 import { UpdateTransactionTemplateDto } from './dto/update-transaction-template.dto';
-import { TransactionTemplatesService as TransactionTemplatesService } from './transaction-templates.service';
+import { TransactionTemplatesService } from './transaction-templates.service';
 
 @Controller('api/transaction-templates')
 @ApiTags('Transaction templates')

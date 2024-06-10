@@ -22,6 +22,7 @@ export const TemplateAddContainer = () => {
   ) => {
     const data = {
       ...newTransactionTemplateData,
+      templateType: [newTransactionTemplateData.templateType],
       categories: newTransactionTemplateData.categories?.map(
         ({ categoryId }) => categoryId,
       ),
