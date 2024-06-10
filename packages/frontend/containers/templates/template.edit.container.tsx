@@ -39,6 +39,7 @@ export const TemplateEditContainer = ({ id }: TemplateEditContainerProps) => {
 
     const data = {
       ...newTransactionTemplateData,
+      templateType: [newTransactionTemplateData.templateType],
       categories: newTransactionTemplateData.categories?.map(
         ({ categoryId }) => categoryId,
       ),

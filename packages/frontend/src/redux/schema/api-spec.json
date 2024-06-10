@@ -1912,7 +1912,8 @@
           "id": { "type": "string" },
           "templateName": { "type": "string" },
           "templateType": {
-            "$ref": "#/components/schemas/TransactionTemplateType"
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/TransactionTemplateType" }
           },
           "templateVisibility": {
             "$ref": "#/components/schemas/TransactionType"
@@ -2178,7 +2179,8 @@
         "properties": {
           "templateName": { "type": "string" },
           "templateType": {
-            "$ref": "#/components/schemas/TransactionTemplateType"
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/TransactionTemplateType" }
           },
           "templateVisibility": {
             "$ref": "#/components/schemas/TransactionType"
@@ -2198,7 +2200,8 @@
         "properties": {
           "templateName": { "type": "string" },
           "templateType": {
-            "$ref": "#/components/schemas/TransactionTemplateType"
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/TransactionTemplateType" }
           },
           "templateVisibility": {
             "$ref": "#/components/schemas/TransactionType"

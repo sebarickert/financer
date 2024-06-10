@@ -5,6 +5,7 @@ import {
 } from '@prisma/client';
 import { ApiProperty, ApiPropertyOptional } from '@silte/nestjs-swagger';
 import {
+  IsArray,
   IsEnum,
   IsMongoId,
   IsNotEmpty,
@@ -36,11 +37,13 @@ export class TransactionTemplateDto implements TransactionTemplate {
     enum: TransactionTemplateType,
     enumName: 'TransactionTemplateType',
     type: TransactionTemplateType,
+    isArray: true,
   })
   @IsEnum(TransactionTemplateType, {
     each: true,
     message: 'Type must defined.',
   })
+  @IsArray()
   readonly templateType: TransactionTemplateType[];
 
   @ApiProperty({
