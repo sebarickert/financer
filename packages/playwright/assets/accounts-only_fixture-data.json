@@ -1,147 +1,155 @@
 {
   "accounts": [
     {
-      "_id": "61460d8554ea082ad0256759",
+      "id": "61460d8554ea082ad0256759",
       "balance": -200,
       "name": "Saving account 1",
-      "type": "savings",
-      "owner": "61460d7354ea082ad0256749",
-      "__v": 0
+      "type": "SAVINGS",
+      "userId": "61460d7354ea082ad0256749",
+      "v": 0
     },
     {
-      "_id": "61460d9454ea082ad0256762",
+      "id": "61460d9454ea082ad0256762",
       "balance": 51000,
       "name": "Saving account 2",
-      "type": "savings",
-      "owner": "61460d7354ea082ad0256749",
-      "__v": 0
+      "type": "SAVINGS",
+      "userId": "61460d7354ea082ad0256749",
+      "v": 0
     },
     {
-      "_id": "61460da354ea082ad025676b",
+      "id": "61460da354ea082ad025676b",
       "balance": 4350,
       "name": "Cash account",
-      "type": "cash",
-      "owner": "61460d7354ea082ad0256749",
-      "__v": 0
+      "type": "CASH",
+      "userId": "61460d7354ea082ad0256749",
+      "v": 0
     },
     {
-      "_id": "61460db554ea082ad0256774",
+      "id": "61460db554ea082ad0256774",
       "balance": 0,
       "name": "Investment account",
-      "type": "investment",
-      "owner": "61460d7354ea082ad0256749",
-      "__v": 0
+      "type": "INVESTMENT",
+      "userId": "61460d7354ea082ad0256749",
+      "v": 0
     },
     {
-      "_id": "61460dd554ea082ad025677d",
+      "id": "61460dd554ea082ad025677d",
       "balance": -950,
       "name": "Credit account",
-      "type": "credit",
-      "owner": "61460d7354ea082ad0256749",
-      "__v": 0
+      "type": "CREDIT",
+      "userId": "61460d7354ea082ad0256749",
+      "v": 0
     },
     {
-      "_id": "61460de154ea082ad0256786",
+      "id": "61460de154ea082ad0256786",
       "balance": -5000,
       "name": "Loan account",
-      "type": "loan",
-      "owner": "61460d7354ea082ad0256749",
-      "__v": 0
+      "type": "LOAN",
+      "userId": "61460d7354ea082ad0256749",
+      "v": 0
     }
   ],
   "transactions": [],
   "transactionCategories": [
     {
-      "_id": "623b58ada3deba9879422fbf",
-      "owner": "61460d7354ea082ad0256749",
+      "id": "623b58ada3deba9879422fbf",
+      "userId": "61460d7354ea082ad0256749",
       "name": "Category for all types",
-      "visibility": ["income", "expense", "transfer"],
-      "parent_category_id": null,
+      "visibility": ["INCOME", "EXPENSE", "TRANSFER"],
+      "parentCategoryId": null,
       "deleted": false,
-      "__v": 0
+      "v": 0
     },
     {
-      "_id": "623b58b8a3deba9879422fc2",
-      "owner": "61460d7354ea082ad0256749",
+      "id": "623b58b8a3deba9879422fc2",
+      "userId": "61460d7354ea082ad0256749",
       "name": "Invisible category",
       "visibility": [],
-      "parent_category_id": null,
+      "parentCategoryId": null,
       "deleted": false,
-      "__v": 0
+      "v": 0
     },
     {
-      "_id": "623b58bfa3deba9879422fc5",
-      "owner": "61460d7354ea082ad0256749",
+      "id": "623b58bfa3deba9879422fc5",
+      "userId": "61460d7354ea082ad0256749",
       "name": "Expense category",
-      "visibility": ["expense"],
-      "parent_category_id": null,
+      "visibility": ["EXPENSE"],
+      "parentCategoryId": null,
       "deleted": false,
-      "__v": 0
+      "v": 0
     },
     {
-      "_id": "623b58c5a3deba9879422fc8",
-      "owner": "61460d7354ea082ad0256749",
+      "id": "623b58c5a3deba9879422fc8",
+      "userId": "61460d7354ea082ad0256749",
       "name": "Income category",
-      "visibility": ["income"],
-      "parent_category_id": null,
+      "visibility": ["INCOME"],
+      "parentCategoryId": null,
       "deleted": false,
-      "__v": 0
+      "v": 0
     },
     {
-      "_id": "623b6b17a3deba9879422fcd",
-      "owner": "61460d7354ea082ad0256749",
+      "id": "623b6b17a3deba9879422fcd",
+      "userId": "61460d7354ea082ad0256749",
       "name": "Transfer category",
-      "visibility": ["transfer"],
-      "parent_category_id": null,
+      "visibility": ["TRANSFER"],
+      "parentCategoryId": null,
       "deleted": false,
-      "__v": 0
+      "v": 0
     },
     {
-      "_id": "623b6b36a3deba9879422fd1",
-      "owner": "61460d7354ea082ad0256749",
+      "id": "623b6b36a3deba9879422fd1",
+      "userId": "61460d7354ea082ad0256749",
       "name": "Transfer sub category",
-      "visibility": ["transfer"],
-      "parent_category_id": "623b58b8a3deba9879422fc2",
+      "visibility": ["TRANSFER"],
+      "parentCategoryId": "623b58b8a3deba9879422fc2",
       "deleted": false,
-      "__v": 0
+      "v": 0
     },
     {
-      "_id": "623b6b51a3deba9879422fd5",
-      "owner": "61460d7354ea082ad0256749",
+      "id": "623b6b51a3deba9879422fd5",
+      "userId": "61460d7354ea082ad0256749",
       "name": "Income sub category",
-      "visibility": ["income"],
-      "parent_category_id": "623b58b8a3deba9879422fc2",
+      "visibility": ["INCOME"],
+      "parentCategoryId": "623b58b8a3deba9879422fc2",
       "deleted": false,
-      "__v": 0
+      "v": 0
     },
     {
-      "_id": "623b6b64a3deba9879422fd9",
-      "owner": "61460d7354ea082ad0256749",
+      "id": "623b6b64a3deba9879422fd9",
+      "userId": "61460d7354ea082ad0256749",
       "name": "Expense sub category",
-      "visibility": ["expense"],
-      "parent_category_id": "623b58b8a3deba9879422fc2",
+      "visibility": ["EXPENSE"],
+      "parentCategoryId": "623b58b8a3deba9879422fc2",
       "deleted": false,
-      "__v": 0
+      "v": 0
     },
     {
-      "_id": "623b6b84a3deba9879422fdd",
-      "owner": "61460d7354ea082ad0256749",
+      "id": "623b6b84a3deba9879422fdd",
+      "userId": "61460d7354ea082ad0256749",
       "name": "Invisble sub category",
       "visibility": [],
-      "parent_category_id": "623b58ada3deba9879422fbf",
+      "parentCategoryId": "623b58ada3deba9879422fbf",
       "deleted": false,
-      "__v": 0
+      "v": 0
     },
     {
-      "_id": "623b6b91a3deba9879422fe1",
-      "owner": "61460d7354ea082ad0256749",
+      "id": "623b6b91a3deba9879422fe1",
+      "userId": "61460d7354ea082ad0256749",
       "name": "Sub category for all types",
-      "visibility": ["income", "expense", "transfer"],
-      "parent_category_id": "623b58b8a3deba9879422fc2",
+      "visibility": ["INCOME", "EXPENSE", "TRANSFER"],
+      "parentCategoryId": "623b58b8a3deba9879422fc2",
       "deleted": false,
-      "__v": 0
+      "v": 0
     }
   ],
   "transactionCategoryMappings": [],
-  "userPreferences":[{"_id": "625f084041b9bbf9ccf4851d","key": "TRANSACTION_LIST_CHUNK_SIZE","value": "500","userId": "61460d7354ea082ad0256749","__v": 0}]
+  "userPreferences": [
+    {
+      "id": "625f084041b9bbf9ccf4851d",
+      "key": "TRANSACTION_LIST_CHUNK_SIZE",
+      "value": "500",
+      "userId": "61460d7354ea082ad0256749",
+      "v": 0
+    }
+  ]
 }

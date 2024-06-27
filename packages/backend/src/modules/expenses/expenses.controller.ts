@@ -9,19 +9,18 @@ import {
   Query,
   ParseArrayPipe,
 } from '@nestjs/common';
-import { AccountType } from '@prisma/client';
 import {
   ApiBody,
   ApiOkResponse,
   ApiParam,
   ApiQuery,
   ApiTags,
-} from '@silte/nestjs-swagger';
+} from '@nestjs/swagger';
+import { AccountType } from '@prisma/client';
 
 import { ApiPaginatedDto } from '../../utils/pagination.decorator';
 import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
 import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
-import { TransactionMonthSummaryDto } from '../transactions/dto/transaction-month-summary.dto';
 import { UserId } from '../users/users.decorators';
 
 import { CreateExpenseDto } from './dto/create-expense.dto';
@@ -76,62 +75,6 @@ export class ExpensesController {
       year,
       month,
       accountTypes,
-    );
-  }
-
-  @Get('monthly-summaries')
-  @ApiOkResponse({
-    type: TransactionMonthSummaryDto,
-    isArray: true,
-  })
-  @ApiQuery({
-    name: 'month',
-    required: false,
-  })
-  @ApiQuery({
-    name: 'year',
-    required: false,
-  })
-  @ApiQuery({
-    name: 'accountTypes',
-    required: false,
-  })
-  @ApiQuery({
-    name: 'transactionCategories',
-    required: false,
-  })
-  @ApiQuery({
-    name: 'parentTransactionCategory',
-    required: false,
-    type: String,
-  })
-  async findMonthlySummariesByuser(
-    @UserId() userId: string,
-    @Query('month') month?: number,
-    @Query('year') year?: number,
-    @Query(
-      'accountTypes',
-      new ParseArrayPipe({ separator: '|', optional: true }),
-    )
-    accountTypes?: AccountType[],
-    @Query(
-      'transactionCategories',
-      new ParseArrayPipe({
-        separator: '|',
-        optional: true,
-      }),
-    )
-    transactionCategories?: string[],
-    @Query('parentTransactionCategory', ValidateEntityId)
-    parentTransactionCategory?: string,
-  ) {
-    return this.expensesService.findMonthlySummariesByUser(
-      userId,
-      year,
-      month,
-      accountTypes,
-      transactionCategories,
-      parentTransactionCategory,
     );
   }
 

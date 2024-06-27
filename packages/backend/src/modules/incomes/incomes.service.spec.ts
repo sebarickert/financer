@@ -2,6 +2,7 @@ import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AccountType } from '@prisma/client';
 
+import { removeCreatedAndUpdated } from '../../../test/test-helper';
 import { DUMMY_TEST_USER } from '../../config/mockAuthenticationMiddleware';
 import { testConfiguration } from '../../config/test-configuration';
 import fixtureData from '../../fixtures/large_fixture-data.json';
@@ -19,12 +20,6 @@ describe('IncomesService', () => {
   let service: IncomesService;
 
   beforeEach(async () => {
-    jest.useFakeTimers({
-      // do not fake nextTick behavior for mongo in memory
-      doNotFake: ['nextTick'],
-      now: new Date('2022-01-30T11:00:00.00Z'),
-    });
-
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         ConfigModule.forRoot({ isGlobal: true, load: [testConfiguration] }),
@@ -46,10 +41,6 @@ describe('IncomesService', () => {
     );
   }, 10000);
 
-  afterEach(() => {
-    jest.clearAllTimers();
-  });
-
   it('should return all incomes for user', async () => {
     const incomes = await service.findAllByUser(
       DUMMY_TEST_USER.id,
@@ -59,7 +50,7 @@ describe('IncomesService', () => {
       NaN,
       [],
     );
-    expect(incomes).toMatchSnapshot();
+    expect(removeCreatedAndUpdated(incomes)).toMatchSnapshot();
   });
 
   it('should return all incomes for user for specified account types', async () => {
@@ -76,32 +67,7 @@ describe('IncomesService', () => {
         AccountType.SAVINGS,
       ],
     );
-    expect(incomes).toMatchSnapshot();
-  });
-
-  it('should return monthly summaries for user', async () => {
-    const summaries = await service.findMonthlySummariesByUser(
-      DUMMY_TEST_USER.id,
-      NaN,
-      NaN,
-      [],
-    );
-    expect(summaries).toMatchSnapshot();
-  });
-
-  it('should return monthly summaries for user for specified account types', async () => {
-    const summaries = await service.findMonthlySummariesByUser(
-      DUMMY_TEST_USER.id,
-      NaN,
-      NaN,
-      [
-        AccountType.CASH,
-        AccountType.CREDIT,
-        AccountType.INVESTMENT,
-        AccountType.SAVINGS,
-      ],
-    );
-    expect(summaries).toMatchSnapshot();
+    expect(removeCreatedAndUpdated(incomes)).toMatchSnapshot();
   });
 
   it('should return one income for user', async () => {
@@ -109,6 +75,6 @@ describe('IncomesService', () => {
       DUMMY_TEST_USER.id,
       '663df5ccd8ef53dcb2bc93a0',
     );
-    expect(income).toMatchSnapshot();
+    expect(removeCreatedAndUpdated(income)).toMatchSnapshot();
   });
 });

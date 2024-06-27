@@ -6,6 +6,7 @@ import {
 } from '@prisma/client';
 
 import { TransactionCategoryMappingRepo } from '../../database/repos/transaction-category-mapping.repo';
+import { DateService } from '../../utils/date.service';
 import { CategoryMonthlySummaryDto } from '../transaction-categories/dto/transaction-month-summary.dto';
 
 import { CreateTransactionCategoryMappingDto } from './dto/create-transaction-category-mapping.dto';
@@ -235,15 +236,15 @@ export class TransactionCategoryMappingsService {
     if (filterMode === 'laterThan') {
       return {
         date: {
-          $gte: new Date(year, month - 1 || 0, 1),
+          $gte: DateService.toZonedDate(year, month - 1 || 0, 1),
         },
       };
     }
 
     return {
       date: {
-        $gte: new Date(year, month - 1 || 0, 1),
-        $lt: new Date(year, month || 12, 1),
+        $gte: DateService.toZonedDate(year, month - 1 || 0, 1),
+        $lt: DateService.toZonedDate(year, month || 12, 1),
       },
     };
   }

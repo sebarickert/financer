@@ -1,5 +1,5 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { UserPreferenceProperty, UserPreferences } from '@prisma/client';
-import { ApiProperty } from '@silte/nestjs-swagger';
 import { IsMongoId, IsEnum, IsNotEmpty } from 'class-validator';
 
 export class UserPreferenceDto implements UserPreferences {

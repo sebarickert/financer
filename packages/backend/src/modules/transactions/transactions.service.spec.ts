@@ -1,6 +1,6 @@
 import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
-import { AccountType, TransactionType } from '@prisma/client';
+import { AccountType } from '@prisma/client';
 
 import { DUMMY_TEST_USER } from '../../config/mockAuthenticationMiddleware';
 import { testConfiguration } from '../../config/test-configuration';
@@ -82,7 +82,6 @@ describe('TransactionsService', () => {
   it('should return monthly summaries for user', async () => {
     const summaries = await service.findMonthlySummariesByUser(
       DUMMY_TEST_USER.id,
-      null,
       NaN,
       NaN,
       [],
@@ -93,7 +92,6 @@ describe('TransactionsService', () => {
   it('should return monthly summaries for user for specified account types', async () => {
     const summaries = await service.findMonthlySummariesByUser(
       DUMMY_TEST_USER.id,
-      TransactionType.TRANSFER,
       NaN,
       NaN,
       [

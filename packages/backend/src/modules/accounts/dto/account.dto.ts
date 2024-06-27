@@ -1,5 +1,5 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Account, AccountType } from '@prisma/client';
-import { ApiProperty } from '@silte/nestjs-swagger';
 import {
   IsBoolean,
   IsEnum,

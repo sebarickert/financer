@@ -6,7 +6,7 @@ import {
   DocumentBuilder,
   SwaggerDocumentOptions,
   SwaggerModule,
-} from '@silte/nestjs-swagger';
+} from '@nestjs/swagger';
 import { json } from 'express';
 
 import { AppModule } from './app.module';

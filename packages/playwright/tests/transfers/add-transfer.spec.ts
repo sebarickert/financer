@@ -42,9 +42,7 @@ test.describe('Add transfer', () => {
     transfersBefore: TransactionDto[],
     transfersAfter: TransactionDto[],
   ) => {
-    expect(transfersBefore.length + 1).toEqual(
-      roundToTwoDecimal(transfersAfter.length),
-    );
+    expect(transfersBefore.length + 1).toEqual(transfersAfter.length);
   };
 
   // eslint-disable-next-line playwright/expect-expect

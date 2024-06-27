@@ -2,10 +2,7 @@ import { ChartData, ChartOptions } from 'chart.js';
 import { useMemo } from 'react';
 import { Chart } from 'react-chartjs-2';
 
-import {
-  useExpensesFindMonthlySummariesByuserQuery,
-  useIncomesFindMonthlySummariesByuserQuery,
-} from '$api/generated/financerApi';
+import { useTransactionsFindMonthlySummariesByUserQuery } from '$api/generated/financerApi';
 import { colorPalette } from '$constants/colorPalette';
 import { baseChartOptions } from '$constants/graph/graph.settings';
 import { ChartWrapperDynamic } from '$elements/chart/chart-wrapper.dynamic';
@@ -22,75 +19,38 @@ export type BalanceHistory = {
   balance: number;
 };
 
-interface BalanceGraphProps {
-  className?: string;
-}
-
 const yearAgoFilterOptions = {
   year: new Date().getFullYear() - 1,
   month: new Date().getMonth(),
 };
 
-export const BalanceGraph = ({}: BalanceGraphProps): JSX.Element | null => {
+export const BalanceGraph = (): JSX.Element | null => {
   const { data: dashboardSettings } = useUserDashboardSettings();
   const accountTypeFilter = { accountTypes: dashboardSettings?.accountTypes };
 
   const { data: totalBalance } = useGetTotalBalance(accountTypeFilter);
   const { data: latestTransaction } = useGetLatestTransaction();
 
-  const incomeMonthSummaryData = useIncomesFindMonthlySummariesByuserQuery({
-    ...yearAgoFilterOptions,
-    ...accountTypeFilter,
-  });
-
-  const expenseMonthSummary = useExpensesFindMonthlySummariesByuserQuery({
-    ...yearAgoFilterOptions,
-    ...accountTypeFilter,
-  });
-
-  const { data: incomeMonthSummaries } = incomeMonthSummaryData;
-  const { data: expenseMonthSummaries } = expenseMonthSummary;
+  const { currentData: transactionMonthSummary } =
+    useTransactionsFindMonthlySummariesByUserQuery({
+      ...yearAgoFilterOptions,
+      ...accountTypeFilter,
+    });
 
   const balanceHistory: BalanceHistory[] = useMemo(() => {
-    if (!incomeMonthSummaries || !expenseMonthSummaries || !latestTransaction)
+    if (!transactionMonthSummary || !latestTransaction) {
       return [];
-
-    const groupedIncomesFormatted = incomeMonthSummaries.map(
-      ({ id: { month, year }, totalAmount }) => ({
-        date: generateDateFromYearAndMonth(year, month),
-        amount: totalAmount,
-      }),
-    );
-
-    const groupedExpensesFormatted = expenseMonthSummaries.map(
-      ({ id: { month, year }, totalAmount }) => ({
-        date: generateDateFromYearAndMonth(year, month),
-        amount: totalAmount * -1,
-      }),
-    );
-
-    const allIncomesAndExpenses = [
-      ...groupedIncomesFormatted.map(({ date, amount }) => ({
-        date,
-        amount:
-          amount +
-          (groupedExpensesFormatted.find(
-            ({ date: expenseDate }) => expenseDate.getTime() === date.getTime(),
-          )?.amount || 0),
-      })),
-      ...groupedExpensesFormatted.filter(
-        ({ date }) =>
-          !groupedIncomesFormatted.some(
-            ({ date: incomeDate }) => incomeDate.getTime() === date.getTime(),
-          ),
-      ),
-    ];
+    }
 
     const latestTransactionTimestamp = new Date(
       latestTransaction?.date ?? new Date(),
     );
 
-    const newBalanceHistory = allIncomesAndExpenses
+    const newBalanceHistory = transactionMonthSummary
+      .map(({ id: { month, year }, totalAmount }) => ({
+        date: generateDateFromYearAndMonth(year, month),
+        amount: totalAmount,
+      }))
       .sort((a, b) => b.date.getTime() - a.date.getTime())
       .reduce(
         (previousBalance, { date, amount }) => {
@@ -104,12 +64,7 @@ export const BalanceGraph = ({}: BalanceGraphProps): JSX.Element | null => {
     return newBalanceHistory.length > 12
       ? newBalanceHistory.slice(-12)
       : newBalanceHistory;
-  }, [
-    expenseMonthSummaries,
-    incomeMonthSummaries,
-    latestTransaction,
-    totalBalance,
-  ]);
+  }, [transactionMonthSummary, latestTransaction, totalBalance]);
 
   const labels = balanceHistory.map(({ date }, index) => {
     if (balanceHistory.length - 1 === index) {

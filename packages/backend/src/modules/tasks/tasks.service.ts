@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { SystemLogLevel, TransactionTemplateType } from '@prisma/client';
 
-import { getLastDayOfMonth } from '../../utils/date-utils';
+import { DateService } from '../../utils/date.service';
 import { SystemService } from '../system/system.service';
 import { TransactionTemplatesService } from '../transaction-templates/transaction-templates.service';
 import { TransactionsService } from '../transactions/transactions.service';
@@ -21,7 +21,7 @@ export class TasksService {
     const templates =
       await this.templateService.findAutomatedTemplatesWithCreationDateBefore(
         dayOfMonth,
-        dayOfMonth < getLastDayOfMonth() ? 'equals' : 'gte',
+        dayOfMonth < DateService.getLastDayOfMonth() ? 'equals' : 'gte',
       );
 
     const templateLogEntries =

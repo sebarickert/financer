@@ -13,6 +13,7 @@ export const mockAuthenticationMiddleware = (
   next: NextFunction,
 ): void => {
   req.user = DUMMY_TEST_USER;
-  req.isAuthenticated = () => true;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  req.isAuthenticated = (() => true) as any;
   next();
 };

@@ -1,5 +1,5 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { TransactionCategory, TransactionType } from '@prisma/client';
-import { ApiProperty } from '@silte/nestjs-swagger';
 import {
   IsBoolean,
   IsEnum,

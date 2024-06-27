@@ -2,6 +2,7 @@ import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AccountType } from '@prisma/client';
 
+import { removeCreatedAndUpdated } from '../../../test/test-helper';
 import { DUMMY_TEST_USER } from '../../config/mockAuthenticationMiddleware';
 import { testConfiguration } from '../../config/test-configuration';
 import fixtureData from '../../fixtures/large_fixture-data.json';
@@ -18,12 +19,6 @@ describe('ExpensesService', () => {
   let service: ExpensesService;
 
   beforeEach(async () => {
-    jest.useFakeTimers({
-      // do not fake nextTick behavior for mongo in memory
-      doNotFake: ['nextTick'],
-      now: new Date('2022-01-30T11:00:00.00Z'),
-    });
-
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         ConfigModule.forRoot({ isGlobal: true, load: [testConfiguration] }),
@@ -44,10 +39,6 @@ describe('ExpensesService', () => {
     );
   }, 10000);
 
-  afterEach(() => {
-    jest.clearAllTimers();
-  });
-
   it('should return all expenses for user', async () => {
     const expenses = await service.findAllByUser(
       DUMMY_TEST_USER.id,
@@ -57,7 +48,7 @@ describe('ExpensesService', () => {
       NaN,
       [],
     );
-    expect(expenses).toMatchSnapshot();
+    expect(removeCreatedAndUpdated(expenses)).toMatchSnapshot();
   });
 
   it('should return all expenses for user for specified account types', async () => {
@@ -74,32 +65,7 @@ describe('ExpensesService', () => {
         AccountType.SAVINGS,
       ],
     );
-    expect(expenses).toMatchSnapshot();
-  });
-
-  it('should return monthly summaries for user', async () => {
-    const summaries = await service.findMonthlySummariesByUser(
-      DUMMY_TEST_USER.id,
-      NaN,
-      NaN,
-      [],
-    );
-    expect(summaries).toMatchSnapshot();
-  });
-
-  it('should return monthly summaries for user for specified account types', async () => {
-    const summaries = await service.findMonthlySummariesByUser(
-      DUMMY_TEST_USER.id,
-      NaN,
-      NaN,
-      [
-        AccountType.CASH,
-        AccountType.CREDIT,
-        AccountType.INVESTMENT,
-        AccountType.SAVINGS,
-      ],
-    );
-    expect(summaries).toMatchSnapshot();
+    expect(removeCreatedAndUpdated(expenses)).toMatchSnapshot();
   });
 
   it('should return one expense for user', async () => {
@@ -107,6 +73,6 @@ describe('ExpensesService', () => {
       DUMMY_TEST_USER.id,
       '624befb66ba655edad8f824e',
     );
-    expect(expense).toMatchSnapshot();
+    expect(removeCreatedAndUpdated(expense)).toMatchSnapshot();
   });
 });

@@ -1,5 +1,5 @@
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { TransactionCategoryMapping } from '@prisma/client';
-import { ApiProperty, ApiPropertyOptional } from '@silte/nestjs-swagger';
 import { IsMongoId, IsOptional, IsString, Min } from 'class-validator';
 
 export class TransactionCategoryMappingDto

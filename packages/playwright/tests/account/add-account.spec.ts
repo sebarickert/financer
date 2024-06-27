@@ -11,10 +11,9 @@ test.describe.parallel('Account creation', () => {
     page: Page,
     accountType: string,
     accountBalance: string,
-    expectedType: string,
     expectedBalance: string,
   ) => {
-    const newAccountName = `New Test ${expectedType} Account ${Math.random()}`;
+    const newAccountName = `New Test ${accountType} Account ${Math.random()}`;
     const accountRow = page
       .getByTestId('account-row')
       .getByText(newAccountName);
@@ -25,7 +24,7 @@ test.describe.parallel('Account creation', () => {
     // Add account form
     await page.locator('#name').fill(newAccountName);
     await page.locator('#balance').fill(accountBalance);
-    await page.locator('#type').selectOption(accountType);
+    await page.locator('#type').selectOption({ label: accountType });
     await page.getByTestId('submit').click();
 
     await expect(page).toHaveURL(/\/accounts\/?$/);
@@ -38,7 +37,7 @@ test.describe.parallel('Account creation', () => {
       page
         .getByTestId('account-details')
         .getByTestId('account-details-item-description'),
-    ).toHaveText(expectedType);
+    ).toHaveText(accountType);
     await expect(page.getByTestId('account-balance')).toHaveText(
       expectedBalance,
     );
@@ -46,44 +45,31 @@ test.describe.parallel('Account creation', () => {
 
   // eslint-disable-next-line playwright/expect-expect
   test('Add Cash account', async ({ page }) => {
-    await addAccountAndVerifyDetails(
-      page,
-      'credit',
-      '1000',
-      'Credit',
-      '1 000,00 €',
-    );
+    await addAccountAndVerifyDetails(page, 'Credit', '1000', '1 000,00 €');
   });
 
   // eslint-disable-next-line playwright/expect-expect
   test('Add Saving account', async ({ page }) => {
-    await addAccountAndVerifyDetails(page, 'savings', '0', 'Savings', '0,00 €');
+    await addAccountAndVerifyDetails(page, 'Savings', '0', '0,00 €');
   });
 
   // eslint-disable-next-line playwright/expect-expect
   test('Add Investment account', async ({ page }) => {
-    await addAccountAndVerifyDetails(
-      page,
-      'investment',
-      '0.16',
-      'Investment',
-      '0,16 €',
-    );
+    await addAccountAndVerifyDetails(page, 'Investment', '0.16', '0,16 €');
   });
 
   // eslint-disable-next-line playwright/expect-expect
   test('Add Credit account', async ({ page }) => {
     await addAccountAndVerifyDetails(
       page,
-      'credit',
-      '100000000000000000000',
       'Credit',
+      '100000000000000000000',
       '100 000 000 000 000 000 000,00 €',
     );
   });
 
   // eslint-disable-next-line playwright/expect-expect
   test('Add Loan account', async ({ page }) => {
-    await addAccountAndVerifyDetails(page, 'loan', '1', 'Loan', '1,00 €');
+    await addAccountAndVerifyDetails(page, 'Loan', '1', '1,00 €');
   });
 });

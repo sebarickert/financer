@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { AccountType, TransactionType } from '@prisma/client';
 
 import { PaginationDto } from '../../types/pagination.dto';
-import { TransactionMonthSummaryDto } from '../transactions/dto/transaction-month-summary.dto';
 import { TransactionsService } from '../transactions/transactions.service';
 
 import { CreateIncomeDto } from './dto/create-income.dto';
@@ -30,25 +29,6 @@ export class IncomesService {
       month || undefined,
       undefined,
       accountTypes || undefined,
-    );
-  }
-
-  async findMonthlySummariesByUser(
-    userId: string,
-    year: number,
-    month: number,
-    accountTypes: AccountType[],
-    transactionCategories?: string[],
-    parentTransactionCategory?: string,
-  ): Promise<TransactionMonthSummaryDto[]> {
-    return this.transactionService.findMonthlySummariesByUser(
-      userId,
-      TransactionType.INCOME,
-      year || undefined,
-      month || undefined,
-      accountTypes || undefined,
-      transactionCategories || undefined,
-      parentTransactionCategory || undefined,
     );
   }
 

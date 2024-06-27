@@ -37,9 +37,7 @@ test.describe('Add expense', () => {
     expensesBefore: TransactionDto[],
     expensesAfter: TransactionDto[],
   ) => {
-    expect(expensesBefore.length + 1).toEqual(
-      roundToTwoDecimal(expensesAfter.length),
-    );
+    expect(expensesBefore.length + 1).toEqual(expensesAfter.length);
   };
 
   // eslint-disable-next-line playwright/expect-expect

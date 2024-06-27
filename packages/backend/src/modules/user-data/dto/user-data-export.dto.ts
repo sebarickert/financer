@@ -1,4 +1,4 @@
-import { ApiProperty } from '@silte/nestjs-swagger';
+import { ApiProperty } from '@nestjs/swagger';
 
 import { AccountBalanceChangeDto } from '../../account-balance-changes/dto/account-balance-change.dto';
 import { AccountDto } from '../../accounts/dto/account.dto';

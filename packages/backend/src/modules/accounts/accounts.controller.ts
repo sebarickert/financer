@@ -9,7 +9,6 @@ import {
   Query,
   ParseArrayPipe,
 } from '@nestjs/common';
-import { AccountType } from '@prisma/client';
 import {
   ApiBody,
   ApiExtraModels,
@@ -17,7 +16,8 @@ import {
   ApiParam,
   ApiQuery,
   ApiTags,
-} from '@silte/nestjs-swagger';
+} from '@nestjs/swagger';
+import { AccountType } from '@prisma/client';
 
 import { ApiPaginatedDto } from '../../utils/pagination.decorator';
 import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';

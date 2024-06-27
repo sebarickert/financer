@@ -2,11 +2,7 @@ import { ChartData, ChartOptions } from 'chart.js';
 import { useMemo } from 'react';
 import { Chart } from 'react-chartjs-2';
 
-import {
-  TransactionMonthSummaryIdDto,
-  useExpensesFindMonthlySummariesByuserQuery,
-  useIncomesFindMonthlySummariesByuserQuery,
-} from '$api/generated/financerApi';
+import { useTransactionsFindMonthlySummariesByUserQuery } from '$api/generated/financerApi';
 import { colorPalette } from '$constants/colorPalette';
 import { baseChartOptions } from '$constants/graph/graph.settings';
 import { ChartWrapperDynamic } from '$elements/chart/chart-wrapper.dynamic';
@@ -25,9 +21,6 @@ const yearAgoFilterOptions = {
   month: new Date().getMonth(),
 };
 
-const removeDuplicatesFromArray = <T,>(array: T[]) =>
-  Array.from(new Set(array));
-
 type MonthlySummaryHistory = {
   year: number;
   month: number;
@@ -44,57 +37,39 @@ export const MonthlySummaryGraph = ({
 
   const accountTypeFilter = { accountTypes: statisticsSettings?.accountTypes };
 
-  const incomeMonthSummaryData = useIncomesFindMonthlySummariesByuserQuery({
-    ...yearAgoFilterOptions,
-    ...accountTypeFilter,
-  });
-
-  const expenseMonthSummary = useExpensesFindMonthlySummariesByuserQuery({
-    ...yearAgoFilterOptions,
-    ...accountTypeFilter,
-  });
-
-  const { data: incomeMonthSummaries } = incomeMonthSummaryData;
-  const { data: expenseMonthSummaries } = expenseMonthSummary;
+  const { data: transactionMonthSummaries } =
+    useTransactionsFindMonthlySummariesByUserQuery({
+      ...yearAgoFilterOptions,
+      ...accountTypeFilter,
+    });
 
   const monthlySummaryHistory: MonthlySummaryHistory[] = useMemo(() => {
-    if (!incomeMonthSummaries || !expenseMonthSummaries) return [];
+    if (!transactionMonthSummaries) return [];
 
-    const allMonths = removeDuplicatesFromArray(
-      [...incomeMonthSummaries, ...expenseMonthSummaries].map(({ id }) =>
-        JSON.stringify(id),
-      ),
-    ).map<TransactionMonthSummaryIdDto>((item) => JSON.parse(item));
-
-    const monthlySummaryHistoryStack = allMonths
-      .map(({ year: targetYear, month: targetMonth }) => {
-        const incomeSummary = incomeMonthSummaries.find(
-          ({ id: { year, month } }) =>
-            year === targetYear && month === targetMonth,
-        );
-        const expenseSummary = expenseMonthSummaries.find(
-          ({ id: { year, month } }) =>
-            year === targetYear && month === targetMonth,
-        );
-
-        const incomes = incomeSummary?.totalAmount ?? 0;
-        const expenses = expenseSummary?.totalAmount ?? 0;
-
-        return {
-          year: targetYear,
-          month: targetMonth,
-          date: generateDateFromYearAndMonth(targetYear, targetMonth),
-          incomes,
-          expenses,
-          netStatus: incomes - expenses,
-        };
-      })
+    const monthlySummaryHistoryStack = transactionMonthSummaries
+      .map(
+        ({
+          id: { year: targetYear, month: targetMonth },
+          expenseAmount = 0,
+          incomeAmount = 0,
+          totalAmount = 0,
+        }) => {
+          return {
+            year: targetYear,
+            month: targetMonth,
+            date: generateDateFromYearAndMonth(targetYear, targetMonth),
+            incomes: incomeAmount,
+            expenses: expenseAmount,
+            netStatus: totalAmount,
+          };
+        },
+      )
       .sort((a, b) => a.date.getTime() - b.date.getTime());
 
     return monthlySummaryHistoryStack.length > 12
       ? monthlySummaryHistoryStack.slice(-12)
       : monthlySummaryHistoryStack;
-  }, [expenseMonthSummaries, incomeMonthSummaries]);
+  }, [transactionMonthSummaries]);
 
   const labels = monthlySummaryHistory.map(({ date }) =>
     formatDate(date, DateFormat.monthShort).toUpperCase(),

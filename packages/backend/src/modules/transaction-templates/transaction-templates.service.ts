@@ -6,7 +6,7 @@ import {
 
 import { TransactionTemplateLogRepo } from '../../database/repos/transaction-template-log.repo';
 import { TransactionTemplateRepo } from '../../database/repos/transaction-template.repo';
-import { getLastDayOfMonth } from '../../utils/date-utils';
+import { DateService } from '../../utils/date.service';
 import { CreateTransactionDto } from '../transactions/dto/create-transaction.dto';
 
 import { CreateTransactionTemplateLogDto } from './dto/create-transaction-template-log.dto';
@@ -117,8 +117,8 @@ export class TransactionTemplatesService {
       date.setMonth(date.getMonth() + 1);
     }
 
-    if (getLastDayOfMonth(date) < template.dayOfMonth) {
-      date.setDate(getLastDayOfMonth(date));
+    if (DateService.getLastDayOfMonth(date) < template.dayOfMonth) {
+      date.setDate(DateService.getLastDayOfMonth(date));
     } else {
       date.setDate(template.dayOfMonth);
     }
