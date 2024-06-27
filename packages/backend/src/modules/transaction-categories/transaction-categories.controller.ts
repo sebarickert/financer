@@ -8,7 +8,6 @@ import {
   Delete,
   Query,
 } from '@nestjs/common';
-import { TransactionType } from '@prisma/client';
 import {
   ApiBody,
   ApiExtraModels,
@@ -16,7 +15,8 @@ import {
   ApiParam,
   ApiQuery,
   ApiTags,
-} from '@silte/nestjs-swagger';
+} from '@nestjs/swagger';
+import { TransactionType } from '@prisma/client';
 
 import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
 import { LoggedIn } from '../auth/decorators/loggedIn.decorators';

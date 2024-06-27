@@ -1,6 +1,7 @@
 import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 
+import { removeCreatedAndUpdated } from '../../../test/test-helper';
 import { DUMMY_TEST_USER } from '../../config/mockAuthenticationMiddleware';
 import { testConfiguration } from '../../config/test-configuration';
 import { DatabaseModule } from '../../database/database.module';
@@ -18,12 +19,6 @@ describe('TransactionCategoriesService', () => {
   let service: TransactionCategoriesService;
 
   beforeEach(async () => {
-    jest.useFakeTimers({
-      // do not fake nextTick behavior for mongo in memory
-      doNotFake: ['nextTick'],
-      now: new Date('2022-01-30T11:00:00.00Z'),
-    });
-
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         ConfigModule.forRoot({ isGlobal: true, load: [testConfiguration] }),
@@ -47,23 +42,19 @@ describe('TransactionCategoriesService', () => {
     );
   }, 10000);
 
-  afterEach(() => {
-    jest.clearAllTimers();
-  });
-
   it('should return a transaction category by id', async () => {
     const transactionCategory = await service.findOne(
       DUMMY_TEST_USER.id,
       '623b58ada3deba9879422fbf',
     );
-    expect(transactionCategory).toMatchSnapshot();
+    expect(removeCreatedAndUpdated(transactionCategory)).toMatchSnapshot();
   });
 
   it('should return an array of transaction categories from findAllByUser', async () => {
     const transactionCategories = await service.findAllByUser(
       DUMMY_TEST_USER.id,
     );
-    expect(transactionCategories).toMatchSnapshot();
+    expect(removeCreatedAndUpdated(transactionCategories)).toMatchSnapshot();
   });
 
   it('should return an array of transaction categories from findMonthlySummariesByUserAndId', async () => {

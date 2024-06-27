@@ -1,4 +1,4 @@
-import { ApiProperty } from '@silte/nestjs-swagger';
+import { ApiProperty } from '@nestjs/swagger';
 
 class TransactionMonthSummaryIdDto {
   @ApiProperty()
@@ -25,7 +25,7 @@ export class TransactionMonthSummaryDto {
   readonly expensesCount: number;
 
   @ApiProperty()
-  readonly transferCount: number;
+  readonly transfersCount: number;
 
   @ApiProperty()
   readonly totalAmount: number;

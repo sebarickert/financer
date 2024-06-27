@@ -1,4 +1,4 @@
-import { OmitType } from '@silte/nestjs-swagger';
+import { OmitType } from '@nestjs/swagger';
 
 import { IncomeDto } from './income.dto';
 

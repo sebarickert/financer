@@ -1,5 +1,5 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Transaction } from '@prisma/client';
-import { ApiProperty } from '@silte/nestjs-swagger';
 import { Type } from 'class-transformer';
 import {
   IsDateString,

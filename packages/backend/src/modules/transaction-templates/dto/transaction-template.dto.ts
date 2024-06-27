@@ -1,9 +1,9 @@
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   TransactionTemplate,
   TransactionTemplateType,
   TransactionType,
 } from '@prisma/client';
-import { ApiProperty, ApiPropertyOptional } from '@silte/nestjs-swagger';
 import {
   IsArray,
   IsEnum,

@@ -1,11 +1,3 @@
-version: "3.6"
-# Deploys MongoDB with customization scripts and container with Mongo client
-# https://fabianlee.org/2018/05/20/docker-using-docker-compose-to-link-a-mongodb-server-and-client/
-#
-# usage:
-# sudo docker-compose build
-# sudo docker-compose up
-
 services:
   mongodb:
     image: mongo:7.0.9

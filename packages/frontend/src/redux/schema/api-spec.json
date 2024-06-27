@@ -1103,59 +1103,6 @@
         "tags": ["Expenses"]
       }
     },
-    "/api/expenses/monthly-summaries": {
-      "get": {
-        "operationId": "Expenses_findMonthlySummariesByuser",
-        "parameters": [
-          {
-            "name": "month",
-            "required": false,
-            "in": "query",
-            "schema": { "type": "number" }
-          },
-          {
-            "name": "year",
-            "required": false,
-            "in": "query",
-            "schema": { "type": "number" }
-          },
-          {
-            "name": "accountTypes",
-            "required": false,
-            "in": "query",
-            "schema": { "type": "array", "items": { "type": "string" } }
-          },
-          {
-            "name": "transactionCategories",
-            "required": false,
-            "in": "query",
-            "schema": { "type": "array", "items": { "type": "string" } }
-          },
-          {
-            "name": "parentTransactionCategory",
-            "required": false,
-            "in": "query",
-            "schema": { "type": "string" }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TransactionMonthSummaryDto"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "tags": ["Expenses"]
-      }
-    },
     "/api/expenses/{id}": {
       "get": {
         "operationId": "Expenses_findOne",
@@ -1300,59 +1247,6 @@
             "content": {
               "application/json": {
                 "schema": { "$ref": "#/components/schemas/IncomeDto" }
-              }
-            }
-          }
-        },
-        "tags": ["Incomes"]
-      }
-    },
-    "/api/incomes/monthly-summaries": {
-      "get": {
-        "operationId": "Incomes_findMonthlySummariesByuser",
-        "parameters": [
-          {
-            "name": "month",
-            "required": false,
-            "in": "query",
-            "schema": { "type": "number" }
-          },
-          {
-            "name": "year",
-            "required": false,
-            "in": "query",
-            "schema": { "type": "number" }
-          },
-          {
-            "name": "accountTypes",
-            "required": false,
-            "in": "query",
-            "schema": { "type": "array", "items": { "type": "string" } }
-          },
-          {
-            "name": "transactionCategories",
-            "required": false,
-            "in": "query",
-            "schema": { "type": "array", "items": { "type": "string" } }
-          },
-          {
-            "name": "parentTransactionCategory",
-            "required": false,
-            "in": "query",
-            "schema": { "type": "string" }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TransactionMonthSummaryDto"
-                  }
-                }
               }
             }
           }
@@ -1506,59 +1400,6 @@
             "content": {
               "application/json": {
                 "schema": { "$ref": "#/components/schemas/TransferDto" }
-              }
-            }
-          }
-        },
-        "tags": ["Transfers"]
-      }
-    },
-    "/api/transfers/monthly-summaries": {
-      "get": {
-        "operationId": "Transfers_findMonthlySummariesByuser",
-        "parameters": [
-          {
-            "name": "month",
-            "required": false,
-            "in": "query",
-            "schema": { "type": "number" }
-          },
-          {
-            "name": "year",
-            "required": false,
-            "in": "query",
-            "schema": { "type": "number" }
-          },
-          {
-            "name": "accountTypes",
-            "required": false,
-            "in": "query",
-            "schema": { "type": "array", "items": { "type": "string" } }
-          },
-          {
-            "name": "transactionCategories",
-            "required": false,
-            "in": "query",
-            "schema": { "type": "array", "items": { "type": "string" } }
-          },
-          {
-            "name": "parentTransactionCategory",
-            "required": false,
-            "in": "query",
-            "schema": { "type": "string" }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TransactionMonthSummaryDto"
-                  }
-                }
               }
             }
           }
@@ -2110,7 +1951,7 @@
           "totalCount": { "type": "number" },
           "incomesCount": { "type": "number" },
           "expensesCount": { "type": "number" },
-          "transferCount": { "type": "number" },
+          "transfersCount": { "type": "number" },
           "totalAmount": { "type": "number" },
           "incomeAmount": { "type": "number" },
           "expenseAmount": { "type": "number" },
@@ -2122,7 +1963,7 @@
           "totalCount",
           "incomesCount",
           "expensesCount",
-          "transferCount",
+          "transfersCount",
           "totalAmount",
           "incomeAmount",
           "expenseAmount",

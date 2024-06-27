@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Prisma, Transaction, TransactionType } from '@prisma/client';
 
+import { DateService } from '../../utils/date.service';
 import { PrismaService } from '../prisma.service';
 
 @Injectable()
@@ -129,15 +130,15 @@ export class TransactionRepo {
     if (filterMode === 'laterThan') {
       return {
         date: {
-          gte: new Date(year, month - 1 || 0, 1),
+          gte: DateService.toZonedDate(year, month - 1 || 0, 1),
         },
       };
     }
 
     return {
       date: {
-        gte: new Date(year, month - 1 || 0, 1),
-        lt: new Date(year, month || 12, 1),
+        gte: DateService.toZonedDate(year, month - 1 || 0, 1),
+        lt: DateService.toZonedDate(year, month || 12, 1),
       },
     };
   }
@@ -150,6 +151,10 @@ export class TransactionRepo {
     }
 
     if (Array.isArray(accountId)) {
+      if (accountId.length === 0) {
+        return {};
+      }
+
       return {
         OR: [
           {

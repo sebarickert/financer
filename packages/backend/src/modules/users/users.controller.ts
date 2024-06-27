@@ -9,13 +9,8 @@ import {
   forwardRef,
   Inject,
 } from '@nestjs/common';
+import { ApiBody, ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
 import { Role } from '@prisma/client';
-import {
-  ApiBody,
-  ApiOkResponse,
-  ApiParam,
-  ApiTags,
-} from '@silte/nestjs-swagger';
 import { Response } from 'express';
 
 import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';

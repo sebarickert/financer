@@ -9,7 +9,7 @@ let replSet: MongoMemoryReplSet;
 
 const getDbUri = () => replSet.getUri(`financer_test`);
 
-export const setupMemoryDbSchema = (rawUri: string): string => {
+export const setupMemoryDbSchema = async (rawUri: string): Promise<string> => {
   const uri = new URL(rawUri);
   uri.pathname = `${uri.pathname}_${process.pid}`;
 
@@ -18,6 +18,12 @@ export const setupMemoryDbSchema = (rawUri: string): string => {
   // Db schema has already been setup
   if (setupEnvValue === 'true') {
     return uri.toString();
+  }
+
+  // With some platforms, the memory db takes a while to start
+  // and we need some additional delay before running the prisma command
+  if (process.env.FINANCER_DELAY_MEMORY_DB_INIT === 'true') {
+    await new Promise((resolve) => setTimeout(resolve, 250));
   }
 
   process.env[`MEMORY_DB_SETUP_DONE_${process.pid}`] = 'true';
@@ -34,6 +40,9 @@ export const startMemoryDb = async (): Promise<MongoMemoryReplSet> => {
   console.log('Starting memory db');
   replSet = await MongoMemoryReplSet.create({
     replSet: { storageEngine: 'wiredTiger' },
+    binary: {
+      version: '7.0.9',
+    },
     // configSettings: {
     //   getLastErrorDefaults: { w: 'majority', wtimeout: 5000 },
     // },

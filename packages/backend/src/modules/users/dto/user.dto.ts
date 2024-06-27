@@ -1,5 +1,5 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Role, User } from '@prisma/client';
-import { ApiProperty } from '@silte/nestjs-swagger';
 import { IsMongoId, IsNotEmpty, IsOptional, IsEnum } from 'class-validator';
 
 export class UserDto implements User {

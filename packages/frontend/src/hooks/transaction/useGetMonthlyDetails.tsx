@@ -1,38 +1,24 @@
 import { useMemo } from 'react';
 
-import {
-  useIncomesFindMonthlySummariesByuserQuery,
-  useExpensesFindMonthlySummariesByuserQuery,
-} from '$api/generated/financerApi';
+import { useTransactionsFindMonthlySummariesByUserQuery } from '$api/generated/financerApi';
 import { IconName } from '$elements/icon/icon';
 import { useUserStatisticsSettings } from '$hooks/settings/user-preference/useStatisticsSettings';
 import { formatCurrency } from '$utils/formatCurrency';
 
-const emptyTotalAmount = { totalAmount: 0 };
-
-// @todo: create filterOptions type
+// @TODO: create filterOptions type
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const useGetMonthlyDetails = (filterOptions: any) => {
   const { data: statisticsSettings } = useUserStatisticsSettings();
   const accountTypeFilter = { accountTypes: statisticsSettings?.accountTypes };
 
-  const incomeMonthSummaryData = useIncomesFindMonthlySummariesByuserQuery({
-    ...filterOptions,
-    ...accountTypeFilter,
-  });
+  const { data: transactionMonthSummaryData } =
+    useTransactionsFindMonthlySummariesByUserQuery({
+      ...filterOptions,
+      ...accountTypeFilter,
+    });
 
-  const expenseMonthSummary = useExpensesFindMonthlySummariesByuserQuery({
-    ...filterOptions,
-    ...accountTypeFilter,
-  });
-
-  const { data: incomeSummaries } = incomeMonthSummaryData;
-  const { data: expenseSummaries } = expenseMonthSummary;
-
-  const { totalAmount: totalIncomes } =
-    incomeSummaries?.at(-1) ?? emptyTotalAmount;
-  const { totalAmount: totalExpenses } =
-    expenseSummaries?.at(-1) ?? emptyTotalAmount;
+  const { incomeAmount: totalIncomes = 0, expenseAmount: totalExpenses = 0 } =
+    transactionMonthSummaryData?.at(-1) ?? {};
 
   const monthlyDetails = useMemo(
     () => [

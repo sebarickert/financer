@@ -1,6 +1,7 @@
 import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 
+import { removeCreatedAndUpdated } from '../../../test/test-helper';
 import { DUMMY_TEST_USER } from '../../config/mockAuthenticationMiddleware';
 import { testConfiguration } from '../../config/test-configuration';
 import { DatabaseModule } from '../../database/database.module';
@@ -17,12 +18,6 @@ describe('TransactionCategoryMappingsService', () => {
   let service: TransactionCategoryMappingsService;
 
   beforeEach(async () => {
-    jest.useFakeTimers({
-      // do not fake nextTick behavior for mongo in memory
-      doNotFake: ['nextTick'],
-      now: new Date('2022-01-30T11:00:00.00Z'),
-    });
-
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         ConfigModule.forRoot({ isGlobal: true, load: [testConfiguration] }),
@@ -45,15 +40,13 @@ describe('TransactionCategoryMappingsService', () => {
     );
   }, 10000);
 
-  afterEach(() => {
-    jest.clearAllTimers();
-  });
-
   it('should return all transactionCategoryMappings by user', async () => {
     const transactionCategoryMappings = await service.findAllByUser(
       DUMMY_TEST_USER.id,
     );
-    expect(transactionCategoryMappings).toMatchSnapshot();
+    expect(
+      removeCreatedAndUpdated(transactionCategoryMappings),
+    ).toMatchSnapshot();
   });
 
   it('should return all transactionCategoryMappings by user and category ids', async () => {
@@ -61,7 +54,9 @@ describe('TransactionCategoryMappingsService', () => {
       await service.findAllByUserAndCategoryIds(DUMMY_TEST_USER.id, [
         '623b58ada3deba9879422fbf',
       ]);
-    expect(transactionCategoryMappings).toMatchSnapshot();
+    expect(
+      removeCreatedAndUpdated(transactionCategoryMappings),
+    ).toMatchSnapshot();
   });
 
   it('should return all transactionCategoryMappings by user and transaction id', async () => {
@@ -70,7 +65,9 @@ describe('TransactionCategoryMappingsService', () => {
         DUMMY_TEST_USER.id,
         '624befb66ba655edad8f824e',
       );
-    expect(transactionCategoryMappings).toMatchSnapshot();
+    expect(
+      removeCreatedAndUpdated(transactionCategoryMappings),
+    ).toMatchSnapshot();
   });
 
   it('should return all transactionCategoryMappings by user and category ids', async () => {

@@ -1,11 +1,6 @@
 import { Controller, Get, Body, Patch, Param } from '@nestjs/common';
+import { ApiBody, ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
 import { UserPreferenceProperty } from '@prisma/client';
-import {
-  ApiBody,
-  ApiOkResponse,
-  ApiParam,
-  ApiTags,
-} from '@silte/nestjs-swagger';
 
 import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
 import { UserId } from '../users/users.decorators';

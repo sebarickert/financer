@@ -36,7 +36,7 @@ export const AccountForm = ({
 
   const accountTypes: Option[] = Object.values(AccountType).map((value) => ({
     value,
-    label: capitalize(value),
+    label: capitalize(value.replaceAll('_', ' ').toLowerCase()),
   }));
 
   useEffect(() => {

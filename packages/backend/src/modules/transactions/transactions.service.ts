@@ -1,8 +1,8 @@
 import {
-  BadRequestException,
   forwardRef,
   Inject,
   Injectable,
+  Logger,
   NotFoundException,
 } from '@nestjs/common';
 import {
@@ -14,6 +14,7 @@ import {
 
 import { TransactionRepo } from '../../database/repos/transaction.repo';
 import { PaginationDto } from '../../types/pagination.dto';
+import { DateService } from '../../utils/date.service';
 import { AccountsService } from '../accounts/accounts.service';
 import { TransactionCategoriesService } from '../transaction-categories/transaction-categories.service';
 import { CreateTransactionCategoryMappingDto } from '../transaction-category-mappings/dto/create-transaction-category-mapping.dto';
@@ -26,8 +27,14 @@ import { TransactionMonthSummaryDto } from './dto/transaction-month-summary.dto'
 import { TransactionDto } from './dto/transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 
+type Mutable<T> = {
+  -readonly [P in keyof T]: T[P];
+};
+
 @Injectable()
 export class TransactionsService {
+  private readonly logger = new Logger(TransactionsService.name);
+
   constructor(
     private readonly transactionRepo: TransactionRepo,
     @Inject(forwardRef(() => AccountsService))
@@ -160,138 +167,130 @@ export class TransactionsService {
     });
   }
 
-  async findMonthlySummariesByUser(
+  findMonthlySummariesByUser = async (
     userId: string,
-    transactionType: TransactionType | null = null,
     year?: number,
     month?: number,
     accountTypes?: AccountType[],
     transactionCategories?: string[],
     parentTransactionCategory?: string,
-  ): Promise<TransactionMonthSummaryDto[]> {
+  ): Promise<TransactionMonthSummaryDto[]> => {
     const targetCategoryIds =
       transactionCategories ||
       (await this.findChildrenCategoryIds(parentTransactionCategory));
 
-    return this.transactionRepo.aggregateRaw(
-      [
-        {
-          $match: {
-            user: { $oid: userId },
-            // TODO this should not be commented, but it's causing issues in the production environment
-            // and with our data amounts it does not cause performance issues
-            //
-            // ...this.filterRawMongoByYearAndMonth(year, month, 'laterThan'),
-            ...(await this.filterRawMongoTransactionsByCategory(
-              userId,
-              targetCategoryIds,
-            )),
-          },
-        },
-        {
-          $group: {
-            _id: {
-              year: { $year: '$date' },
-              month: { $month: '$date' },
-            },
-            count: {
-              $sum: await this.filterRawMongoMonthlySummaryCondition(
-                userId,
-                1,
-                transactionType,
-                accountTypes,
-              ),
-            },
-            totalCount: {
-              $sum: await this.filterRawMongoMonthlySummaryCondition(
-                userId,
-                1,
-                transactionType,
-                accountTypes,
-              ),
-            },
-            incomesCount: {
-              $sum: await this.filterRawMongoMonthlySummaryCondition(
-                userId,
-                1,
-                TransactionType.INCOME,
-                accountTypes,
-              ),
-            },
-            expensesCount: {
-              $sum: await this.filterRawMongoMonthlySummaryCondition(
-                userId,
-                1,
-                TransactionType.EXPENSE,
-                accountTypes,
-              ),
-            },
-            transfersCount: {
-              $sum: await this.filterRawMongoMonthlySummaryCondition(
-                userId,
-                1,
-                TransactionType.TRANSFER,
-                accountTypes,
-              ),
-            },
-            totalAmount: {
-              $sum: await this.filterRawMongoMonthlySummaryCondition(
-                userId,
-                '$amount',
-                transactionType,
-                accountTypes,
-              ),
-            },
-            incomeAmount: {
-              $sum: await this.filterRawMongoMonthlySummaryCondition(
-                userId,
-                '$amount',
-                TransactionType.INCOME,
-                accountTypes,
-              ),
-            },
-            expenseAmount: {
-              $sum: await this.filterRawMongoMonthlySummaryCondition(
-                userId,
-                '$amount',
-                TransactionType.EXPENSE,
-                accountTypes,
-              ),
-            },
-            transferAmount: {
-              $sum: await this.filterRawMongoMonthlySummaryCondition(
-                userId,
-                '$amount',
-                TransactionType.TRANSFER,
-                accountTypes,
-              ),
-            },
-          },
-        },
-        {
-          $sort: {
-            _id: -1,
-          },
-        },
-        {
-          $project: {
-            id: '$_id',
-            _id: 0,
-            count: 1,
-            totalCount: 1,
-            incomesCount: 1,
-            expensesCount: 1,
-            transfersCount: 1,
-            totalAmount: 1,
-            incomeAmount: 1,
-            expenseAmount: 1,
-            transferAmount: 1,
-          },
-        },
-      ],
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ) as any;
-  }
+    const accountIds = new Set(
+      await this.getAccountIdsByType(userId, accountTypes),
+    );
+
+    const transactions = await this.transactionRepo.findMany({
+      where: {
+        userId,
+        ...TransactionRepo.filterByYearAndMonth(year, month, 'laterThan'),
+        ...TransactionRepo.filterByAccount(Array.from(accountIds)),
+        ...(await this.filterTransactionsByCategory(userId, targetCategoryIds)),
+      },
+    });
+
+    const summaries = new Map<string, Mutable<TransactionMonthSummaryDto>>();
+
+    Array.from(
+      Map.groupBy(transactions, (transaction) => {
+        const zonedDate = DateService.toZonedDate(transaction.date);
+
+        const transactionMonth = zonedDate.getMonth() + 1;
+        const transactionYear = zonedDate.getFullYear();
+
+        let type: TransactionType;
+
+        const hasFromAccountWithWithinFilter =
+          transaction.fromAccount &&
+          (accountIds.size === 0 || accountIds.has(transaction.fromAccount));
+
+        const hasToAccountWithWithinFilter =
+          transaction.toAccount &&
+          (accountIds.size === 0 || accountIds.has(transaction.toAccount));
+
+        if (hasFromAccountWithWithinFilter && hasToAccountWithWithinFilter) {
+          type = TransactionType.TRANSFER;
+        } else if (hasFromAccountWithWithinFilter) {
+          type = TransactionType.EXPENSE;
+        } else {
+          type = TransactionType.INCOME;
+        }
+
+        return {
+          type,
+          month: transactionMonth,
+          year: transactionYear,
+        };
+      }).entries(),
+    ).forEach(([key, value]) => {
+      const { type, month: transactionMonth, year: transactionYear } = key;
+
+      const count = value.length;
+      const amount = value.reduce(
+        (acc, transaction) => acc + transaction.amount,
+        0,
+      );
+
+      const summary = summaries.get(
+        `${transactionYear}-${transactionMonth}`,
+      ) || {
+        id: { month: transactionMonth, year: transactionYear },
+        count: 0,
+        totalCount: 0,
+        incomesCount: 0,
+        expensesCount: 0,
+        transfersCount: 0,
+        totalAmount: 0,
+        incomeAmount: 0,
+        expenseAmount: 0,
+        transferAmount: 0,
+      };
+
+      summary.totalCount += count;
+      summary.count += count;
+
+      if (type === TransactionType.TRANSFER) {
+        summary.transfersCount += count;
+        summary.transferAmount += amount;
+      } else if (type === TransactionType.EXPENSE) {
+        summary.expensesCount += count;
+        summary.expenseAmount += amount;
+
+        summary.totalAmount -= amount;
+      } else {
+        summary.incomesCount += count;
+        summary.incomeAmount += amount;
+
+        summary.totalAmount += amount;
+      }
+
+      summaries.set(`${transactionYear}-${transactionMonth}`, summary);
+    });
+
+    return Array.from(summaries.values())
+      .sort((a, b) => {
+        // Compare years first
+        if (a.id.year > b.id.year) return -1;
+        if (a.id.year < b.id.year) return 1;
+
+        // If years are equal, compare months
+        if (a.id.month > b.id.month) return -1;
+        if (a.id.month < b.id.month) return 1;
+
+        // If both year and month are equal, consider them equal in terms of sorting
+        return 0;
+      })
+      .map((summary) => ({
+        ...summary,
+        totalAmount: Number(summary.totalAmount.toFixed(2)),
+        incomeAmount: Number(summary.incomeAmount.toFixed(2)),
+        expenseAmount: Number(summary.expenseAmount.toFixed(2)),
+        transferAmount: Number(summary.transferAmount.toFixed(2)),
+      }));
+  };
 
   async update(
     userId: string,
@@ -427,26 +426,6 @@ export class TransactionsService {
     );
   }
 
-  private getRawAggregationTransactionTypeFilter(
-    transactionType: TransactionType | null,
-  ): Prisma.InputJsonObject[] {
-    const isEmpty = (fieldName: string) => ({ $eq: [fieldName, null] });
-    const isNotEmpty = (fieldName: string) => ({ $ne: [fieldName, null] });
-
-    switch (transactionType) {
-      case TransactionType.INCOME:
-        return [isNotEmpty('$toAccount'), isEmpty('$fromAccount')];
-      case TransactionType.EXPENSE:
-        return [isNotEmpty('$fromAccount'), isEmpty('$toAccount')];
-      case TransactionType.TRANSFER:
-        return [isNotEmpty('$fromAccount'), isNotEmpty('$toAccount')];
-      case null:
-        return [];
-      default:
-        throw new Error(`Invalid transaction type: ${transactionType}`);
-    }
-  }
-
   private async filterTransactionsByCategory(
     userId: string,
     categoryIds?: string[],
@@ -490,22 +469,6 @@ export class TransactionsService {
     return TransactionRepo.filterByAccount(accountIds);
   }
 
-  private async getRawAggregateAccountTypesFilter(
-    accountObjectIds?: { $oid: string }[],
-    operator: '$in' | '$nin' = '$in',
-  ): Promise<Prisma.InputJsonObject> {
-    return {
-      $or: [
-        {
-          [operator]: ['$toAccount', accountObjectIds],
-        },
-        {
-          [operator]: ['$fromAccount', accountObjectIds],
-        },
-      ],
-    };
-  }
-
   private async findChildrenCategoryIds(parentId: string) {
     if (!parentId) {
       return null;
@@ -518,193 +481,5 @@ export class TransactionsService {
     ).map(({ id }) => id);
 
     return [parentId, ...childCategoryIds];
-  }
-
-  private filterRawMongoByYearAndMonth(
-    year?: number,
-    month?: number,
-    filterMode: 'targetMonth' | 'laterThan' = 'targetMonth',
-  ): Prisma.InputJsonObject {
-    if (!year && month) {
-      throw new BadRequestException('Year is required when month is provided');
-    }
-
-    if (!year && !month) {
-      return {};
-    }
-
-    const monthIndex = month ? month - 1 : 0;
-
-    if (filterMode === 'laterThan') {
-      return {
-        date: {
-          $gte: new Date(Date.UTC(year, monthIndex || 0, 1)),
-        },
-      };
-    }
-
-    return {
-      date: {
-        $gte: new Date(Date.UTC(year, monthIndex || 0, 1)),
-        $lt: new Date(Date.UTC(year, monthIndex + 1 || 12, 1)),
-      },
-    };
-  }
-
-  private async filterRawMongoTransactionsByCategory(
-    userId: string,
-    categoryIds?: string[],
-  ): Promise<Prisma.InputJsonObject> {
-    if (!categoryIds) {
-      return {};
-    }
-
-    const transactionIds = (
-      await this.transactionCategoryMappingsService.findAllByUserAndCategoryIds(
-        userId.toString(),
-        categoryIds.map((id) => id.toString()),
-      )
-    ).map(({ transactionId }) => ({ $oid: transactionId }));
-    const objectIds = transactionIds.map((id) => ({ $oid: id }));
-
-    return {
-      _id: {
-        $in: objectIds,
-      },
-    };
-  }
-
-  private async filterRawMongoMonthlySummaryCondition(
-    userId: string,
-    operator: '$amount' | 1 | 0,
-    transactionType: TransactionType | null,
-    accountTypes?: AccountType[],
-  ): Promise<Prisma.InputJsonValue> {
-    const accountIds = (
-      await this.getAccountIdsByType(userId, accountTypes)
-    ).map((id) => ({ $oid: id }));
-
-    const accountTypeFilter = accountIds.length
-      ? await this.getRawAggregateAccountTypesFilter(accountIds)
-      : {};
-
-    const selectedQuery = [
-      ...this.getRawAggregationTransactionTypeFilter(transactionType),
-      accountTypeFilter,
-    ];
-
-    if (
-      !accountIds?.length &&
-      (transactionType !== null || typeof operator !== 'string')
-    ) {
-      return { $cond: [{ $and: selectedQuery }, operator, 0] };
-    }
-
-    if (!accountIds?.length) {
-      return {
-        $cond: [
-          { $and: [...selectedQuery, { $eq: ['$fromAccount', null] }] },
-          operator,
-          {
-            $cond: [
-              { $and: [...selectedQuery, { $eq: ['$toAccount', null] }] },
-              { $multiply: [operator, -1] },
-              0,
-            ],
-          },
-        ],
-      };
-    }
-
-    if (transactionType === TransactionType.TRANSFER) {
-      return {
-        $cond: [
-          {
-            $and: [
-              ...selectedQuery,
-              {
-                $in: ['$toAccount', accountIds],
-              },
-              {
-                $in: ['$fromAccount', accountIds],
-              },
-            ],
-          },
-          1,
-          0,
-        ],
-      };
-    }
-
-    if (transactionType === null) {
-      return {
-        $cond: [
-          {
-            $and: [
-              ...selectedQuery,
-              { $in: ['$toAccount', accountIds] },
-              {
-                $and: [
-                  { $not: { $in: ['$fromAccount', accountIds] } },
-                  { $ne: ['$fromAccount', ''] },
-                ],
-              },
-            ],
-          },
-          operator,
-          {
-            $cond: [
-              {
-                $and: [
-                  ...selectedQuery,
-                  { $in: ['$fromAccount', accountIds] },
-                  {
-                    $and: [
-                      { $not: { $in: ['$toAccount', accountIds] } },
-                      { $ne: ['$toAccount', ''] },
-                    ],
-                  },
-                ],
-              },
-              // If operator is `$amount` then we want to calculate difference between expenses and incomes
-              operator === '$amount' ? { $multiply: [operator, -1] } : operator,
-              0,
-            ],
-          },
-        ],
-      };
-    }
-
-    const inAccount =
-      transactionType === TransactionType.EXPENSE
-        ? '$fromAccount'
-        : '$toAccount';
-
-    const notInAccount =
-      transactionType === TransactionType.EXPENSE
-        ? '$toAccount'
-        : '$fromAccount';
-
-    return {
-      $cond: [
-        {
-          $or: [
-            { $and: selectedQuery },
-            {
-              $and: [
-                {
-                  $in: [inAccount, accountIds],
-                },
-                {
-                  $not: { $in: [notInAccount, accountIds] },
-                },
-              ],
-            },
-          ],
-        },
-        operator,
-        0,
-      ],
-    };
   }
 }

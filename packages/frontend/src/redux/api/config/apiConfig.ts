@@ -157,17 +157,6 @@ financerApi.enhanceEndpoints({
         })) ?? []),
       ],
     },
-    expensesFindMonthlySummariesByuser: {
-      providesTags: (res) => [
-        ApiTag.TRANSACTION,
-        { type: ApiTag.TRANSACTION, id: 'SUMMARY' },
-        { type: ApiTag.TRANSACTION, id: 'EXPENSE-SUMMARY' },
-        ...(res?.map(({ id }) => ({
-          type: ApiTag.TRANSACTION,
-          id: JSON.stringify(id),
-        })) ?? []),
-      ],
-    },
     expensesFindOne: {
       providesTags: (res) => [
         ApiTag.TRANSACTION,
@@ -214,17 +203,6 @@ financerApi.enhanceEndpoints({
         })) ?? []),
       ],
     },
-    incomesFindMonthlySummariesByuser: {
-      providesTags: (res) => [
-        ApiTag.TRANSACTION,
-        { type: ApiTag.TRANSACTION, id: 'SUMMARY' },
-        { type: ApiTag.TRANSACTION, id: 'INCOME-SUMMARY' },
-        ...(res?.map(({ id }) => ({
-          type: ApiTag.TRANSACTION,
-          id: JSON.stringify(id),
-        })) ?? []),
-      ],
-    },
     incomesFindOne: {
       providesTags: (res) => [
         ApiTag.TRANSACTION,
@@ -268,17 +246,6 @@ financerApi.enhanceEndpoints({
         ...(res?.data.map(({ id }) => ({
           type: ApiTag.TRANSACTION,
           id,
-        })) ?? []),
-      ],
-    },
-    transfersFindMonthlySummariesByuser: {
-      providesTags: (res) => [
-        ApiTag.TRANSACTION,
-        { type: ApiTag.TRANSACTION, id: 'SUMMARY' },
-        { type: ApiTag.TRANSACTION, id: 'TRANSFER-SUMMARY' },
-        ...(res?.map(({ id }) => ({
-          type: ApiTag.TRANSACTION,
-          id: JSON.stringify(id),
         })) ?? []),
       ],
     },

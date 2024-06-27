@@ -1,4 +1,4 @@
-import { PartialType } from '@silte/nestjs-swagger';
+import { PartialType } from '@nestjs/swagger';
 
 import { CreateTransactionCategoryMappingDto } from './create-transaction-category-mapping.dto';
 

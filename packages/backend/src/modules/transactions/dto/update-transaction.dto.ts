@@ -1,4 +1,4 @@
-import { PartialType } from '@silte/nestjs-swagger';
+import { PartialType } from '@nestjs/swagger';
 
 import { CreateTransactionDto } from './create-transaction.dto';
 

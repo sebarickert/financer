@@ -7,14 +7,14 @@ import {
   ParseEnumPipe,
   Query,
 } from '@nestjs/common';
-import { AccountType, Prisma } from '@prisma/client';
 import {
   ApiExtraModels,
   ApiOkResponse,
   ApiParam,
   ApiQuery,
   ApiTags,
-} from '@silte/nestjs-swagger';
+} from '@nestjs/swagger';
+import { AccountType, Prisma } from '@prisma/client';
 
 import { ApiPaginatedDto } from '../../utils/pagination.decorator';
 import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
@@ -148,7 +148,6 @@ export class TransactionsController {
   ) {
     return this.transactionsService.findMonthlySummariesByUser(
       userId,
-      null,
       year,
       month,
       accountTypes,

@@ -1,5 +1,5 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { AccountBalanceChange } from '@prisma/client';
-import { ApiProperty } from '@silte/nestjs-swagger';
 import { IsDateString, IsMongoId, IsNumber } from 'class-validator';
 
 export class AccountBalanceChangeDto implements AccountBalanceChange {

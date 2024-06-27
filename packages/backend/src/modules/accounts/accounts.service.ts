@@ -9,6 +9,7 @@ import { Account, AccountType } from '@prisma/client';
 import { AccountRepo } from '../../database/repos/account.repo';
 import { PaginationDto } from '../../types/pagination.dto';
 import { sumArrayItems } from '../../utils/arrays';
+import { DateService } from '../../utils/date.service';
 import { AccountBalanceChangesService } from '../account-balance-changes/account-balance-changes.service';
 import { TransactionsService } from '../transactions/transactions.service';
 
@@ -104,7 +105,7 @@ export class AccountsService {
         accountId: id.toString(),
         userId: userId.toString(),
         amount: balanceChangeAmount,
-        date: new Date(),
+        date: DateService.toZonedDate(),
       });
     }
 

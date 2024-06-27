@@ -2,6 +2,7 @@ import { forwardRef } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 
+import { removeCreatedAndUpdated } from '../../../test/test-helper';
 import { DUMMY_TEST_USER } from '../../config/mockAuthenticationMiddleware';
 import { testConfiguration } from '../../config/test-configuration';
 import { DatabaseModule } from '../../database/database.module';
@@ -20,12 +21,6 @@ describe('AccountsService', () => {
   let service: AccountsService;
 
   beforeEach(async () => {
-    jest.useFakeTimers({
-      // do not fake nextTick behavior for mongo in memory
-      doNotFake: ['nextTick'],
-      now: new Date('2022-01-30T11:00:00.00Z'),
-    });
-
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         ConfigModule.forRoot({ isGlobal: true, load: [testConfiguration] }),
@@ -48,13 +43,9 @@ describe('AccountsService', () => {
     );
   }, 10000);
 
-  afterEach(() => {
-    jest.clearAllTimers();
-  });
-
   it('should return an array of accounts from findAllByUser', async () => {
     const accounts = await service.findAllByUser(DUMMY_TEST_USER.id);
-    expect(accounts).toMatchSnapshot();
+    expect(removeCreatedAndUpdated(accounts)).toMatchSnapshot();
   });
 
   it('should return an account from findOne', async () => {
@@ -62,7 +53,7 @@ describe('AccountsService', () => {
       DUMMY_TEST_USER.id,
       '61460d8554ea082ad0256759',
     );
-    expect(account).toMatchSnapshot();
+    expect(removeCreatedAndUpdated(account)).toMatchSnapshot();
   });
 
   it('should return an array of account balance history from getAccountBalanceHistory', async () => {

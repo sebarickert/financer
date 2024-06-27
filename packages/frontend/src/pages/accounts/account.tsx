@@ -28,7 +28,9 @@ export const Account = ({ account }: AccountProps): JSX.Element | null => {
       {
         icon: IconName.informationCircle,
         label: 'Type',
-        description: capitalize(account.type),
+        description: capitalize(
+          account.type.replaceAll('_', ' ').toLowerCase(),
+        ),
       },
     ],
     [account.type],
