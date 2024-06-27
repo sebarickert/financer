@@ -1,12 +1,12 @@
 node_modules
 docker/.env.production
-.vscode
 build
 dist
 tsconfig.tsbuildinfo
 
 packages/backend/api-spec.json
 
+.vscode
 !.vscode/settings.json
 !.vscode/jsx.code-snippets
 
