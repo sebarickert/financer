@@ -78,16 +78,16 @@ jobs:
         with:
           target-project: ${{ matrix.spec }}
 
-  docker-build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: serkfi/financer/.github/actions/build-docker-image@main
-        with:
-          REGISTRY_TOKEN: ${{ secrets.REGISTERY_TOKEN }}
+  # docker-build:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: serkfi/financer/.github/actions/build-docker-image@main
+  #       with:
+  #         REGISTRY_TOKEN: ${{ secrets.REGISTERY_TOKEN }}
 
   docker-publish:
     needs:
-      - docker-build
+      # - docker-build
       - lint
       - lint-type
       - unit-test-frontend

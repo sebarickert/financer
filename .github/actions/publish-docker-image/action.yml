@@ -53,8 +53,8 @@ runs:
       with:
         platforms: ${{ inputs.DOCKER_TARGET_PLATFORMS }}
         push: true
-        cache-from: type=gha
-        cache-to: type=gha,mode=max
+        # cache-from: type=gha
+        # cache-to: type=gha,mode=max
         file: docker/Dockerfile
         tags: |
           ${{ steps.build-tags.outputs.BUILD_NUMBER }}
