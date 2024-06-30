@@ -130,15 +130,15 @@ export class TransactionRepo {
     if (filterMode === 'laterThan') {
       return {
         date: {
-          gte: DateService.toZonedDate(year, month - 1 || 0, 1),
+          gte: DateService.fromZonedTime(year, month - 1 || 0, 1),
         },
       };
     }
 
     return {
       date: {
-        gte: DateService.toZonedDate(year, month - 1 || 0, 1),
-        lt: DateService.toZonedDate(year, month || 12, 1),
+        gte: DateService.fromZonedTime(year, month - 1 || 0, 1),
+        lt: DateService.fromZonedTime(year, month || 12, 1),
       },
     };
   }

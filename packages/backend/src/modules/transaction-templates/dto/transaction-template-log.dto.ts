@@ -2,7 +2,8 @@ import {
   TransactionTemplateLog,
   TransactionTemplateType,
 } from '@prisma/client';
-import { IsMongoId, IsEnum, IsDateString } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsMongoId, IsEnum, IsDate } from 'class-validator';
 
 export class TransactionTemplateLogDto implements TransactionTemplateLog {
   @IsMongoId()
@@ -23,6 +24,7 @@ export class TransactionTemplateLogDto implements TransactionTemplateLog {
   @IsMongoId()
   readonly templateId: string = null;
 
-  @IsDateString({}, { message: 'Date must not be empty.' })
+  @IsDate({ message: 'Date must not be empty.' })
+  @Type(() => Date)
   readonly executed: Date;
 }

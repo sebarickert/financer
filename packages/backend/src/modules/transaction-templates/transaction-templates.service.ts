@@ -108,7 +108,7 @@ export class TransactionTemplatesService {
   getTransactionFromTemplate(
     template: TransactionTemplateDto,
   ): CreateTransactionDto {
-    const date = new Date();
+    const date = DateService.fromZonedTime();
 
     // Set the date to the first day of the month so when we add month it won't skip month e.g. 31.01 + 1 month = 03.03
     date.setDate(1);
@@ -155,7 +155,9 @@ export class TransactionTemplatesService {
       where: {
         templateId: { in: templateIds },
         eventType: templateType,
-        executed: { gt: new Date(Date.now() - 1000 * 60 * 60 * 60) }, // 2 months
+        executed: {
+          gt: new Date(DateService.zonedNow() - 1000 * 60 * 60 * 60),
+        }, // 2 months
       },
     });
   }

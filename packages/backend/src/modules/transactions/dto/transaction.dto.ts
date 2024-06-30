@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Transaction } from '@prisma/client';
 import { Type } from 'class-transformer';
 import {
-  IsDateString,
+  IsDate,
   IsMongoId,
   IsNotEmpty,
   IsString,
@@ -35,7 +35,8 @@ export class TransactionDto implements Transaction {
   readonly description: string;
 
   @ApiProperty()
-  @IsDateString({}, { message: 'Date must not be empty.' })
+  @IsDate({ message: 'Date must not be empty.' })
+  @Type(() => Date)
   readonly date: Date;
 
   @ApiProperty({ type: String })

@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { AccountBalanceChange } from '@prisma/client';
-import { IsDateString, IsMongoId, IsNumber } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsDate, IsMongoId, IsNumber } from 'class-validator';
 
 export class AccountBalanceChangeDto implements AccountBalanceChange {
   v: number;
@@ -16,7 +17,8 @@ export class AccountBalanceChangeDto implements AccountBalanceChange {
   readonly id: string;
 
   @ApiProperty()
-  @IsDateString()
+  @IsDate()
+  @Type(() => Date)
   readonly date: Date;
 
   @ApiProperty()
