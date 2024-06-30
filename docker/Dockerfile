@@ -5,7 +5,7 @@
 ################################################################################
 
 # Base image for installing dependencies.
-FROM node:22-alpine as development
+FROM node:22-alpine AS development
 
 # Run application with user 'node'.
 # It is not recommended to run applications with 'root' even within
@@ -26,8 +26,11 @@ COPY --chown=node:node packages/backend/package.json ./packages/backend/
 COPY --chown=node:node packages/frontend/package.json ./packages/frontend/
 
 
-# Install dependencies.
-RUN npm ci --quiet --include=dev --ignore-scripts
+# Install dependencies and ensure sub node_modules folders exists otherwise later
+# COPY commands could fail.
+RUN npm ci --quiet --include=dev --ignore-scripts &&   \
+     mkdir -p packages/backend/node_modules &&         \
+     mkdir -p packages/frontend/node_modules
 
 # Copy application sources.
 COPY --chown=node:node . .
@@ -39,7 +42,7 @@ COPY --chown=node:node . .
 ################################################################################
 
 # Base image for buiding the application.
-FROM node:22-alpine as build
+FROM node:22-alpine AS build
 
 # Run application with user 'node'.
 # It is not recommended to run applications with 'root' even within
@@ -100,7 +103,7 @@ RUN npm ci --omit=dev --ignore-scripts && \
 #
 ################################################################################
 
-FROM node:22-alpine as production
+FROM node:22-alpine AS production
 
 # Set NODE_ENV to production for running the application.
 ENV NODE_ENV production
