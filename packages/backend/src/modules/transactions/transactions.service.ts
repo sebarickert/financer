@@ -196,7 +196,7 @@ export class TransactionsService {
 
     Array.from(
       Map.groupBy(transactions, (transaction) => {
-        const zonedDate = DateService.toZonedDate(transaction.date);
+        const zonedDate = DateService.toZonedTime(transaction.date);
 
         const transactionMonth = zonedDate.getMonth() + 1;
         const transactionYear = zonedDate.getFullYear();

@@ -105,7 +105,7 @@ export class AccountsService {
         accountId: id.toString(),
         userId: userId.toString(),
         amount: balanceChangeAmount,
-        date: DateService.toZonedDate(),
+        date: DateService.fromZonedTime(),
       });
     }
 
