@@ -55,4 +55,11 @@ export class DateService {
     const lastDayOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0);
     return lastDayOfMonth.getDate();
   }
+
+  public static isSameYearMonth(date1: Date, date2: Date): boolean {
+    return (
+      date1.getFullYear() === date2.getFullYear() &&
+      date1.getMonth() === date2.getMonth()
+    );
+  }
 }
