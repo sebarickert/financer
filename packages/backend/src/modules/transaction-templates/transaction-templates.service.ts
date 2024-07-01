@@ -108,7 +108,7 @@ export class TransactionTemplatesService {
   getTransactionFromTemplate(
     template: TransactionTemplateDto,
   ): CreateTransactionDto {
-    const date = DateService.fromZonedTime();
+    const date = DateService.toZonedTime();
 
     // Set the date to the first day of the month so when we add month it won't skip month e.g. 31.01 + 1 month = 03.03
     date.setDate(1);
@@ -136,7 +136,7 @@ export class TransactionTemplatesService {
       toAccount: template.toAccount,
       amount: template.amount,
       description: template.description,
-      date,
+      date: DateService.fromZonedTime(date),
       categories,
     };
   }

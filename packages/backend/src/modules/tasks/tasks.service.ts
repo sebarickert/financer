@@ -39,10 +39,7 @@ export class TasksService {
             if (entry.templateId !== template.id) return false;
 
             const entryDate = new Date(entry.executed);
-            return (
-              entryDate.getMonth() === now.getMonth() &&
-              entryDate.getFullYear() === now.getFullYear()
-            );
+            return DateService.isSameYearMonth(entryDate, now);
           },
         );
 
