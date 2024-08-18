@@ -4,7 +4,7 @@ import { usePageInfoContext } from '$context/pageInfoContext';
 import { Heading } from '$elements/heading/heading';
 import { Icon, IconName } from '$elements/icon/icon';
 import { LinkViewTransition } from '$elements/link/link-view-transition';
-import { useAppSelector } from '$store/*';
+import { useAppSelector } from '$store';
 
 export const HeaderMobile = (): JSX.Element => {
   const [{ title, backLink, headerAction, toolbarColor }] =

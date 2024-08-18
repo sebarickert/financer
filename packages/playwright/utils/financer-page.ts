@@ -1,10 +1,10 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { test as setup } from '@playwright/test';
 
-import { parsePort } from './setup';
+import { getExternalTestServerUrl, parsePort } from './setup';
 
 const parseBaseUrl = (testIndex: number) =>
-  `http://localhost:${parsePort(testIndex)}`;
+  getExternalTestServerUrl() ?? `http://localhost:${parsePort(testIndex)}`;
 
 export const getBaseUrl = () => {
   const workerIndex = parseInt(process.env.TEST_PARALLEL_INDEX ?? '');

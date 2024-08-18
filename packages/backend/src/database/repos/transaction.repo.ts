@@ -47,7 +47,12 @@ export class TransactionRepo {
     data: Prisma.TransactionUncheckedCreateInput,
   ): Promise<Transaction> {
     return this.prisma.transaction.create({
-      data,
+      data: {
+        // e2e db does not set default values for these fields so we have to set them manually
+        toAccount: null,
+        fromAccount: null,
+        ...data,
+      },
     });
   }
 

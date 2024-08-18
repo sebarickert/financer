@@ -3,7 +3,7 @@ import { memo } from 'react';
 
 import { Toast } from './toast';
 
-import { useAppSelector } from '$store/*';
+import { useAppSelector } from '$store';
 
 interface ToastContainerProps {
   className?: string;

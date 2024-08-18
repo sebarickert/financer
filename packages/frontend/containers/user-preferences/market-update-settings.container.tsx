@@ -1,3 +1,5 @@
+'use client';
+
 import { settingsPaths } from '$constants/settings-paths';
 import {
   useUserDefaultMarketUpdateSettings,
@@ -8,7 +10,7 @@ import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import {
   UserDefaultMarketUpdateSettings,
   UserDefaultMarketUpdateSettingsFormFields,
-} from '$pages/settings/user-preferences/preferences/user-default-market-update-settings';
+} from '$views/settings/user-preferences/preferences/user-default-market-update-settings';
 
 export const MarketUpdateSettingsContainer = () => {
   const { push } = useViewTransitionRouter();
@@ -20,7 +22,7 @@ export const MarketUpdateSettingsContainer = () => {
     useGetAllTransactionCategoriesWithCategoryTree();
 
   const handleSave = async (
-    newUserDefaultMarketUpdateData: UserDefaultMarketUpdateSettingsFormFields
+    newUserDefaultMarketUpdateData: UserDefaultMarketUpdateSettingsFormFields,
   ) => {
     const { transactionDescription, category } = newUserDefaultMarketUpdateData;
 

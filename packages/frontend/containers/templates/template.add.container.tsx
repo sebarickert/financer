@@ -1,3 +1,5 @@
+'use client';
+
 import { useDispatch } from 'react-redux';
 
 import { useTransactionTemplatesCreateMutation } from '$api/generated/financerApi';
@@ -7,7 +9,7 @@ import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import {
   TemplateAdd,
   CreateTransactionTemplateDtoWithCategory,
-} from '$pages/settings/templates/template.add';
+} from '$views/settings/templates/template.add';
 import { addToastMessage } from '$reducer/notifications.reducer';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 

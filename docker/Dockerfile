@@ -135,4 +135,4 @@ COPY --chown=node:node --from=build /home/node/app/node_modules ./node_modules
 ENTRYPOINT ["/sbin/tini", "--"]
 
 # Start the server using the production build.
-CMD [ "node",  "server/main.js" ]
+CMD [ "node",  "backend/main.js" ]

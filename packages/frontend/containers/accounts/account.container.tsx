@@ -1,6 +1,8 @@
+'use client';
+
 import { useAccountsFindOneByIdQuery } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
-import { Account } from '$pages/accounts/account';
+import { Account } from '$views/accounts/account';
 
 interface AccountContainerProps {
   id: string;

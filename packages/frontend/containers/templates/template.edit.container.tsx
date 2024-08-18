@@ -1,3 +1,5 @@
+'use client';
+
 import { useDispatch } from 'react-redux';
 
 import {
@@ -12,7 +14,7 @@ import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import {
   TemplateEdit,
   UpdateTransactionTemplateDtoWithCategory,
-} from '$pages/settings/templates/template.edit';
+} from '$views/settings/templates/template.edit';
 import { addToastMessage } from '$reducer/notifications.reducer';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 

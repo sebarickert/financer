@@ -27,7 +27,7 @@
     { "name": "backend", "rootPath": "./packages/backend" },
     { "name": "frontend", "rootPath": "./packages/frontend" }
   ],
-  "cSpell.words": ["financer", "testid", "datasources"],
+  "cSpell.words": ["clsx", "datasources", "financer", "testid"],
   "sonarlint.connectedMode.project": {
     "connectionId": "financer",
     "projectKey": "financer_common"

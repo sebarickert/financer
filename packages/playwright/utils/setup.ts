@@ -1,7 +1,8 @@
 import { spawn, ChildProcessWithoutNullStreams } from 'child_process';
 import { cpus } from 'os';
 
-const BASE_PORT = 3100;
+const BASE_FRONTEND_PORT = 3100;
+const BASE_BACKEND_PORT = 3200;
 
 const getWorkerCountByCpu = () => {
   const cpuCount = cpus().length;
@@ -9,33 +10,83 @@ const getWorkerCountByCpu = () => {
   return Math.ceil(cpuCount / 2);
 };
 
-export const getWorkerCount = () =>
-  process.env.CI ? 1 : getWorkerCountByCpu();
-// process.env.CI || process.env.DEBUG ? 1 : getWorkerCountByCpu();
+export const getExternalTestServerUrl = () => process.env.TEST_SERVER_URL;
 
-// export const parsePort = (testIndex: number) => process.env.DEBUG ? 3000 : BASE_PORT + testIndex;
-export const parsePort = (testIndex: number) => BASE_PORT + testIndex;
+const hasExternalServer = () => !!getExternalTestServerUrl();
+
+export const getWorkerCount = () =>
+  process.env.CI || hasExternalServer() ? 1 : getWorkerCountByCpu();
+
+const parseBackendPort = (testIndex: number) => BASE_BACKEND_PORT + testIndex;
+
+export const parsePort = (testIndex: number) => BASE_FRONTEND_PORT + testIndex;
 
 export const startServer = async (
   workerIndex: number,
-): Promise<ChildProcessWithoutNullStreams> => {
-  const serverProcess = spawn('node', ['../../build/server/main.js'], {
+): Promise<
+  [ChildProcessWithoutNullStreams, ChildProcessWithoutNullStreams] | []
+> => {
+  if (hasExternalServer()) {
+    return Promise.resolve([]);
+  }
+
+  const backendPort = parseBackendPort(workerIndex);
+  const frontendPort = parsePort(workerIndex);
+
+  const backendProcess = spawn('node', ['build/backend/main.js'], {
+    cwd: '../../',
     env: {
-      PORT: parsePort(workerIndex).toString(),
+      PORT: backendPort.toString(),
       NODE_ENV: 'test',
+      PATH: process.env.PATH,
+      SCHEMA: 'packages/backend/prisma/schema.prisma',
+    },
+  });
+
+  const frontendProcess = spawn('node', ['build/frontend/server.js'], {
+    cwd: '../../',
+    env: {
+      PORT: frontendPort.toString(),
+      INTERNAL_API_ROOT_ADDRESS: `http://localhost:${backendPort}`,
+      NODE_ENV: 'production',
       PATH: process.env.PATH,
     },
   });
 
-  serverProcess.stderr.on('data', (data) => {
-    console.error(`Server stderr: ${data}`);
+  backendProcess.stderr.on('data', (data) => {
+    console.error(`Backend stderr: ${data}`);
   });
 
-  return new Promise((resolve) => {
-    serverProcess.stdout.on('data', (data) => {
-      if (data.toString().includes('Nest application successfully started')) {
-        resolve(serverProcess);
-      }
+  const showBackendOutput = process.env.SHOW_BACKEND_OUTPUT === 'true';
+  if (showBackendOutput) {
+    backendProcess.stdout.on('data', (data) => {
+      console.log(`Backend stdout: ${data}`);
     });
+  }
+
+  frontendProcess.stderr.on('data', (data) => {
+    console.error(`Frontend stderr: ${data}`);
   });
+
+  const backendProcessStartup = new Promise<ChildProcessWithoutNullStreams>(
+    (resolve) => {
+      backendProcess.stdout.on('data', (data) => {
+        if (data.toString().includes('Nest application successfully started')) {
+          resolve(backendProcess);
+        }
+      });
+    },
+  );
+
+  const frontendProcessStartup = new Promise<ChildProcessWithoutNullStreams>(
+    (resolve) => {
+      frontendProcess.stdout.on('data', (data) => {
+        if (/Ready in \d+ms/.test(data.toString())) {
+          resolve(frontendProcess);
+        }
+      });
+    },
+  );
+
+  return Promise.all([frontendProcessStartup, backendProcessStartup]);
 };

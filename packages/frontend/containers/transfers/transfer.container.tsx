@@ -1,3 +1,5 @@
+'use client';
+
 import {
   useTransfersFindOneQuery,
   useAccountsFindOneByIdQuery,
@@ -15,11 +17,11 @@ export const TransferContainer = ({ id }: TransferContainerProps) => {
 
   const fromAccountData = useAccountsFindOneByIdQuery(
     { id: transfer?.fromAccount as string },
-    { skip: !transfer?.fromAccount }
+    { skip: !transfer?.fromAccount },
   );
   const toAccountData = useAccountsFindOneByIdQuery(
     { id: transfer?.toAccount as string },
-    { skip: !transfer?.toAccount }
+    { skip: !transfer?.toAccount },
   );
   const fromAccount = toAccountData.data;
   const toAccount = fromAccountData.data;

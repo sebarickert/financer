@@ -1,4 +1,6 @@
-import { Statistics } from '$pages/statistics/statistics';
+'use client';
+
+import { Statistics } from '$views/statistics/statistics';
 
 export const StatisticsContainer = () => {
   return <Statistics />;

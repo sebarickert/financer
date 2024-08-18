@@ -1,3 +1,5 @@
+'use client';
+
 import { settingsPaths } from '$constants/settings-paths';
 import {
   useUserTransactionListChunkSize,
@@ -7,7 +9,7 @@ import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import {
   UserTransactionListChunkSize,
   UserTransactionListChunkSizeFormFields,
-} from '$pages/settings/user-preferences/preferences/user-transaction-list-chunk-size';
+} from '$views/settings/user-preferences/preferences/user-transaction-list-chunk-size';
 
 export const MaximumItemsPerPageContainer = () => {
   const { push } = useViewTransitionRouter();
@@ -16,7 +18,7 @@ export const MaximumItemsPerPageContainer = () => {
   const [setDefaultChunkSize] = useUpdateUserTransactionListChunkSize();
 
   const handleSave = async (
-    newUserTransactionListChunkSizeData: UserTransactionListChunkSizeFormFields
+    newUserTransactionListChunkSizeData: UserTransactionListChunkSizeFormFields,
   ) => {
     const { chunkSize } = newUserTransactionListChunkSizeData;
 

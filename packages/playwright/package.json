@@ -31,6 +31,6 @@
     "eslint-plugin-playwright": "^0.20.0",
     "eslint-plugin-prettier": "^5.1.0",
     "oazapfts": "^6.1.0",
-    "typescript": "~5.4.0"
+    "typescript": "5.4.2"
   }
 }

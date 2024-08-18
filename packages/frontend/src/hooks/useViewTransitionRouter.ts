@@ -1,16 +1,18 @@
+'use client';
+
 import clsx from 'clsx';
-import { useRouter as useNextRouter } from 'next/router';
+import { useRouter as useNextRouter, usePathname } from 'next/navigation';
 import { useRef, useMemo, useEffect } from 'react';
 
 import { transitionHelper } from '$utils/transitionHelper';
 
 export type ViewTransition = false | 'open-from-right' | 'close-to-right';
 
-export const useViewTransitionRouter = (transition?: ViewTransition) => {
-  // ): ReturnType<typeof useNextRouter> => {
+export const useViewTransitionRouter = (
+  transition?: ViewTransition,
+): ReturnType<typeof useNextRouter> => {
   const router = useNextRouter();
-  // const pathname = usePathname();
-  const pathname = router.pathname;
+  const pathname = usePathname();
 
   const promiseCallbacks = useRef<Record<
     'resolve' | 'reject',
@@ -68,13 +70,13 @@ export const useViewTransitionRouter = (transition?: ViewTransition) => {
           classNames,
         });
       },
-      // replace: (...args: Parameters<typeof router.replace>) => {
-      //   transitionHelper({
-      //     updateDOM: () => router.replace(...args),
-      //     skipTransition,
-      //     classNames,
-      //   });
-      // },
+      replace: (...args: Parameters<typeof router.replace>) => {
+        transitionHelper({
+          updateDOM: () => router.replace(...args),
+          skipTransition,
+          classNames,
+        });
+      },
     };
   }, [pathname, router, transition]);
 };

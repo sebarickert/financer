@@ -1,3 +1,5 @@
+'use client';
+
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -8,8 +10,8 @@ import {
 import { DataHandler } from '$blocks/data-handler/data-handler';
 import { ToastMessageTypes } from '$blocks/toast/toast';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { AccountEdit } from '$pages/accounts/account.edit';
-import { AccountFormFields } from '$pages/accounts/account.form';
+import { AccountEdit } from '$views/accounts/account.edit';
+import { AccountFormFields } from '$views/accounts/account.form';
 import { addToastMessage } from '$reducer/notifications.reducer';
 
 interface AccountEditContainerProps {

@@ -1,3 +1,5 @@
+'use client';
+
 import { useDispatch } from 'react-redux';
 
 import {
@@ -13,7 +15,7 @@ import { useUserDefaultMarketUpdateSettings } from '$hooks/settings/user-prefere
 import {
   AccountUpdateMarketValue,
   AccountUpdateMarketValueFormFields,
-} from '$pages/accounts/account.update-market-value';
+} from '$views/accounts/account.update-market-value';
 import { addToastMessage } from '$reducer/notifications.reducer';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 

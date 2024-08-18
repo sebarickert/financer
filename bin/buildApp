@@ -7,5 +7,13 @@ npm -w frontend run build
 
 rm -rf build
 mkdir build/
-cp -r packages/backend/dist/ build/server
-cp -r packages/frontend/build/ build/client
+cp -r packages/backend/dist/ build/backend
+
+cp -r packages/frontend/.next/standalone build/frontend
+mv build/frontend/packages/frontend/* build/frontend/
+mv build/frontend/packages/frontend/.next build/frontend/
+mv build/frontend/packages/frontend/.env* build/frontend/
+rm -rf build/frontend/packages
+
+cp -r packages/frontend/public build/frontend/public
+cp -r packages/frontend/.next/static/ build/frontend/.next/

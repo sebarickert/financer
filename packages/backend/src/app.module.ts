@@ -21,7 +21,6 @@ import { TransfersModule } from './modules/transfers/transfers.module';
 import { UserDataModule } from './modules/user-data/user-data.module';
 import { UserPreferencesModule } from './modules/user-preferences/user-preferences.module';
 import { UsersModule } from './modules/users/users.module';
-import { ServeStaticPagesModule } from './serve-static-pages.module';
 
 @Module({
   imports: [
@@ -30,7 +29,6 @@ import { ServeStaticPagesModule } from './serve-static-pages.module';
       load: [configuration],
       isGlobal: true,
     }),
-    ServeStaticPagesModule,
     AuthModule.register(),
     UsersModule,
     AccountsModule,

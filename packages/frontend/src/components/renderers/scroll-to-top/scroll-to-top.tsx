@@ -1,9 +1,8 @@
+import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 
-import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-
 export const ScrollToTop = () => {
-  const { pathname } = useViewTransitionRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     window.scrollTo(0, 0);

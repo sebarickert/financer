@@ -10,10 +10,8 @@ import {
 
 import '$api/config/apiConfig';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const createStore = (initialValues?: any) =>
+export const createStore = () =>
   configureStore({
-    preloadedState: initialValues,
     reducer: {
       [emptyFinancerApi.reducerPath]: emptyFinancerApi.reducer,
       [appSlicePath]: appReducer,
@@ -25,8 +23,6 @@ export const createStore = (initialValues?: any) =>
         immutableCheck: { warnAfter: 100 },
       }).concat(emptyFinancerApi.middleware),
   });
-
-export const store = createStore();
 
 export type AppStore = ReturnType<typeof createStore>;
 export type RootState = ReturnType<AppStore['getState']>;

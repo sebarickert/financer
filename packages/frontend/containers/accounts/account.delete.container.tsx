@@ -1,6 +1,8 @@
+'use client';
+
 import { useAccountsRemoveMutation } from '$api/generated/financerApi';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { AccountDelete } from '$pages/accounts/account.delete';
+import { AccountDelete } from '$views/accounts/account.delete';
 
 interface DeleteAccountContainerProps {
   id: string;
