@@ -1,3 +1,5 @@
+'use client';
+
 import { settingsPaths } from '$constants/settings-paths';
 import {
   useUserDashboardSettings,
@@ -7,7 +9,7 @@ import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import {
   UserDashboardSettings,
   UserDashboardSettingsFormFields,
-} from '$pages/settings/user-preferences/preferences/user-dashboard-settings';
+} from '$views/settings/user-preferences/preferences/user-dashboard-settings';
 
 export const DashboardSettingsContainer = () => {
   const { push } = useViewTransitionRouter();
@@ -15,7 +17,7 @@ export const DashboardSettingsContainer = () => {
   const [setDashboardSettings] = useUpdateUserDashboardSettings();
 
   const handleSave = async (
-    newUserDashboardData: UserDashboardSettingsFormFields
+    newUserDashboardData: UserDashboardSettingsFormFields,
   ) => {
     await setDashboardSettings({
       accountTypes: newUserDashboardData.accountTypes,

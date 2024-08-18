@@ -55,10 +55,10 @@ test.describe('Edit transaction category', () => {
     let targetParent: string;
     if (parent) {
       targetParent = parent;
-      await page.locator('#parent_category_id').selectOption(parent);
+      await page.locator('#parentCategoryId').selectOption(parent);
     } else {
       targetParent = (await page
-        .locator('#parent_category_id')
+        .locator('#parentCategoryId')
         .locator('option:checked')
         .textContent()) as string;
     }
@@ -85,7 +85,7 @@ test.describe('Edit transaction category', () => {
     );
 
     const selectedOption = await page
-      .locator('#parent_category_id')
+      .locator('#parentCategoryId')
       .locator('option:checked')
       .textContent();
     expect(selectedOption).toContain(targetParent);

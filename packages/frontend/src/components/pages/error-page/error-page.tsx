@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -7,7 +8,6 @@ import logo from '$assets/logo.svg';
 import { Button } from '$elements/button/button';
 import { Heading } from '$elements/heading/heading';
 import { LinkViewTransition } from '$elements/link/link-view-transition';
-import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { Container } from '$layouts/container/container';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
@@ -20,7 +20,7 @@ export const ErrorPage = ({
   resetErrorBoundary,
   errorPageType,
 }: ErrorPageProps) => {
-  const { pathname } = useViewTransitionRouter();
+  const pathname = usePathname();
   const [errorPathname] = useState(pathname);
 
   useEffect(() => {

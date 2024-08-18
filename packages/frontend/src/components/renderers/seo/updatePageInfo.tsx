@@ -1,3 +1,7 @@
+'use client';
+
+// TODO get rid of this file
+
 import { useEffect } from 'react';
 
 import {

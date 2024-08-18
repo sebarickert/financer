@@ -3,12 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@reduxjs/toolkit": "^1.9.7",
-    "@testing-library/jest-dom": "^6.1.5",
+    "@reduxjs/toolkit": "^2.2.7",
     "chart.js": "^4.4.1",
     "clsx": "^2.0.0",
     "date-fns": "^3.0.5",
-    "eslint-plugin-unused-imports": "^3.0.0",
     "http-proxy-middleware": "^2.0.6",
     "next": "^14.0.4",
     "next-pwa": "^5.6.0",
@@ -18,7 +16,7 @@
     "react-error-boundary": "^4.0.12",
     "react-helmet": "^6.1.0",
     "react-hook-form": "^7.49.2",
-    "react-redux": "^9.0.4",
+    "react-redux": "^9.1.2",
     "web-vitals": "^3.5.0",
     "workbox-background-sync": "^7.0.0",
     "workbox-broadcast-update": "^7.0.0",
@@ -37,7 +35,7 @@
     "postinstall": "npm run types:generate",
     "prebuild": "npm run types:generate",
     "dev": "next dev",
-    "build": "rm -rf build && mkdir build && next build",
+    "build": "rm -rf .next && next build",
     "start": "next start",
     "format": "next lint -- --fix",
     "lint": "next lint",
@@ -67,6 +65,7 @@
     "@silte/rtk-codegen-openapi": "1.0.3",
     "@tailwindcss/forms": "^0.5.7",
     "@tailwindcss/typography": "^0.5.10",
+    "@testing-library/jest-dom": "^6.5.0",
     "@testing-library/react": "^14.1.2",
     "@testing-library/user-event": "^14.5.1",
     "@types/jest": "^29.5.11",
@@ -86,6 +85,7 @@
     "eslint-plugin-jsx-a11y": "^6.8.0",
     "eslint-plugin-prettier": "^5.1.0",
     "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-unused-imports": "^3.2.0",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.4.32",
     "postcss-cli": "^11.0.0",
@@ -93,6 +93,6 @@
     "tailwindcss": "^3.4.0",
     "tailwindcss-safe-area": "^0.4.1",
     "tailwindcss-view-transitions": "^0.1.1",
-    "typescript": "~5.4.0"
+    "typescript": "5.4.2"
   }
 }

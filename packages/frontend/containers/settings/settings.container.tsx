@@ -1,5 +1,7 @@
+'use client';
+
 import { useUsersFindOwnUserQuery } from '$api/generated/financerApi';
-import { Settings } from '$pages/settings/settings';
+import { Settings } from '$views/settings/settings';
 
 export const SettingsContainer = () => {
   const { data: userInfo } = useUsersFindOwnUserQuery();

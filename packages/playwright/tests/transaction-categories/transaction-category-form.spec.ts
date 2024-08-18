@@ -16,7 +16,7 @@ test.describe('Transaction category form', () => {
     await expect(page.locator('#name')).toHaveValue(categoryName);
 
     const parentCategoryOptions = page
-      .locator('#parent_category_id option')
+      .locator('#parentCategoryId option')
       .getByText(categoryName)
       .allTextContents();
 
@@ -27,12 +27,12 @@ test.describe('Transaction category form', () => {
 
       const childCategoryId = '623b6b84a3deba9879422fdd';
       const targetElement = document.querySelector(
-        '#parent_category_id',
+        '#parentCategoryId',
       ) as Element;
       targetElement.innerHTML = `${targetElement.innerHTML}<option value="${childCategoryId}">${scopedCategoryName}</option>`;
     });
 
-    await page.locator('#parent_category_id').selectOption(categoryName);
+    await page.locator('#parentCategoryId').selectOption(categoryName);
 
     await page.getByTestId('submit').click();
 

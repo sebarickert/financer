@@ -1,3 +1,5 @@
+'use client';
+
 import {
   useExpensesFindOneQuery,
   useAccountsFindOneByIdQuery,
@@ -15,7 +17,7 @@ export const ExpenseContainer = ({ id }: ExpenseContainerProps) => {
 
   const accountData = useAccountsFindOneByIdQuery(
     { id: expense?.fromAccount as string },
-    { skip: !expense?.fromAccount }
+    { skip: !expense?.fromAccount },
   );
 
   const account = accountData.data;

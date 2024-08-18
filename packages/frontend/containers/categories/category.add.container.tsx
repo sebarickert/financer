@@ -1,3 +1,5 @@
+'use client';
+
 import { useDispatch } from 'react-redux';
 
 import {
@@ -7,7 +9,7 @@ import {
 import { ToastMessageTypes } from '$blocks/toast/toast';
 import { settingsPaths } from '$constants/settings-paths';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { CategoryAdd } from '$pages/settings/categories/category.add';
+import { CategoryAdd } from '$views/settings/categories/category.add';
 import { addToastMessage } from '$reducer/notifications.reducer';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 

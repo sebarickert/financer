@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useMemo, ChangeEvent } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -6,7 +8,7 @@ import {
   useUsersOverrideAllOwnUserDataMutation,
 } from '$api/generated/financerApi';
 import { ToastMessageTypes } from '$blocks/toast/toast';
-import { OverrideUserData } from '$pages/settings/override-user-data';
+import { OverrideUserData } from '$views/settings/override-user-data';
 import { addToastMessage } from '$reducer/notifications.reducer';
 
 export const OverrideUserDataContainer = () => {
@@ -35,7 +37,7 @@ export const OverrideUserDataContainer = () => {
           type: ToastMessageTypes.ERROR,
           message: 'Upload failed',
           additionalInformation: 'Cannot update uploaded user data',
-        })
+        }),
       );
       return;
     }
@@ -49,7 +51,7 @@ export const OverrideUserDataContainer = () => {
         addToastMessage({
           type: ToastMessageTypes.SUCCESS,
           message: overrideMessage,
-        })
+        }),
       );
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -59,7 +61,7 @@ export const OverrideUserDataContainer = () => {
           type: ToastMessageTypes.ERROR,
           message: 'Overridde failed',
           additionalInformation: error.payload,
-        })
+        }),
       );
     }
   };
@@ -77,7 +79,7 @@ export const OverrideUserDataContainer = () => {
           type: ToastMessageTypes.ERROR,
           message: 'Upload failed',
           additionalInformation: 'File not found',
-        })
+        }),
       );
 
       return;
@@ -98,7 +100,7 @@ export const OverrideUserDataContainer = () => {
             type: ToastMessageTypes.ERROR,
             message: 'Upload failed',
             additionalInformation: 'Failed to parse JSON file',
-          })
+          }),
         );
       }
     };

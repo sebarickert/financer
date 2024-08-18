@@ -32,7 +32,7 @@ test.describe('Transaction category creation', () => {
         .check();
     }
 
-    await page.locator('#parent_category_id').selectOption(parent);
+    await page.locator('#parentCategoryId').selectOption(parent);
 
     await page.getByTestId('submit').click();
     await expect(page).not.toHaveURL('/add');
@@ -58,11 +58,11 @@ test.describe('Transaction category creation', () => {
     );
 
     await expect(
-      page.locator('#parent_category_id').locator('option').getByText(newName),
+      page.locator('#parentCategoryId').locator('option').getByText(newName),
     ).toHaveCount(0);
 
     const selectedOptions = await page
-      .locator('#parent_category_id')
+      .locator('#parentCategoryId')
       .locator('option:checked')
       .allTextContents();
     expect(selectedOptions.at(0)).toEqual(parent);

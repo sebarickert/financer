@@ -1,11 +1,13 @@
+'use client';
+
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { useAccountsCreateMutation } from '$api/generated/financerApi';
 import { ToastMessageTypes } from '$blocks/toast/toast';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { AccountAdd } from '$pages/accounts/account.add';
-import { AccountFormFields } from '$pages/accounts/account.form';
+import { AccountAdd } from '$views/accounts/account.add';
+import { AccountFormFields } from '$views/accounts/account.form';
 import { addToastMessage } from '$reducer/notifications.reducer';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
@@ -33,15 +35,15 @@ export const AccountAddContainer = () => {
               type: ToastMessageTypes.ERROR,
               message: 'Submission failed',
               additionalInformation: parseErrorMessagesToArray(
-                error.data.message
+                error.data.message,
               ),
-            })
+            }),
           );
           return;
         }
       }
     },
-    [addAccount, dispatch, push]
+    [addAccount, dispatch, push],
   );
 
   return <AccountAdd onAddAccount={handleSubmit} />;

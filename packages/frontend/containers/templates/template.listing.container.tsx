@@ -1,6 +1,8 @@
+'use client';
+
 import { useTransactionTemplatesFindAllByUserQuery } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
-import { TemplateListing } from '$pages/settings/templates/template.listing';
+import { TemplateListing } from '$views/settings/templates/template.listing';
 
 export const TemplateListingContainer = () => {
   const data = useTransactionTemplatesFindAllByUserQuery();

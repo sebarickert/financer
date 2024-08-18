@@ -27,6 +27,9 @@ export const setupMemoryDbSchema = async (rawUri: string): Promise<string> => {
   }
 
   process.env[`MEMORY_DB_SETUP_DONE_${process.pid}`] = 'true';
+
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
   execSync(`npx prisma db push --schema=$SCHEMA --skip-generate`, {
     // Uncomment to see command output
     // stdio: 'inherit',

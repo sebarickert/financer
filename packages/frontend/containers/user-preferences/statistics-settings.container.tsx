@@ -1,3 +1,5 @@
+'use client';
+
 import { settingsPaths } from '$constants/settings-paths';
 import {
   useUserStatisticsSettings,
@@ -7,7 +9,7 @@ import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import {
   UserStatisticsSettings,
   UserStatisticsSettingsFormFields,
-} from '$pages/settings/user-preferences/preferences/user-statistics-settings';
+} from '$views/settings/user-preferences/preferences/user-statistics-settings';
 
 export const StatisticsSettingsContainer = () => {
   const { push } = useViewTransitionRouter();
@@ -15,7 +17,7 @@ export const StatisticsSettingsContainer = () => {
   const [setStatisticsSettings] = useUpdateUserStatisticsSettings();
 
   const handleSave = async (
-    newUserStatisticsData: UserStatisticsSettingsFormFields
+    newUserStatisticsData: UserStatisticsSettingsFormFields,
   ) => {
     await setStatisticsSettings({
       accountTypes: newUserStatisticsData.accountTypes,

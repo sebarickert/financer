@@ -18,9 +18,23 @@
     "noImplicitAny": true,
     "noEmit": true,
     "jsx": "preserve",
-    "incremental": true
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "extends": "./tsconfig.path.json",
-  "include": ["src", "app", "components", "pages", "containers"],
+  "include": [
+    "src",
+    "app",
+    "components",
+    "app_legacy",
+    "containers",
+    "build/types/**/*.ts",
+    ".next/types/**/*.ts",
+    "middleware.ts"
+  ],
   "exclude": ["node_modules"]
 }

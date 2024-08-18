@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { EndpointName } from '$api/emptyFinancerApi';
-import { useAppSelector } from '$store/*';
+import { useAppSelector } from '$store';
 
 export const useIsQueryLoading = (...targetEndpoints: EndpointName[]) => {
   return useAppSelector(

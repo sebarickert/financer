@@ -1,3 +1,5 @@
+'use client';
+
 import { useTransfersFindAllByUserQuery } from '$api/generated/financerApi';
 import { TransactionListingWithMonthlyPager } from '$blocks/transaction-listing-with-monthly-pager/transaction-listing.with.monthly-pager';
 import { ButtonInternal } from '$elements/button/button.internal';

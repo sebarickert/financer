@@ -1,3 +1,5 @@
+'use client';
+
 import { useAccountsFindAllByUserQuery } from '$api/generated/financerApi';
 import { settingsPaths } from '$constants/settings-paths';
 import {
@@ -20,7 +22,7 @@ import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import {
   UserDefaultAccountSettings,
   UserDefaultAccountSettingsFormFields,
-} from '$pages/settings/user-preferences/preferences/user-default-account-settings';
+} from '$views/settings/user-preferences/preferences/user-default-account-settings';
 
 export const DefaultAccountSettingsContainer = () => {
   const { push } = useViewTransitionRouter();
@@ -41,7 +43,7 @@ export const DefaultAccountSettingsContainer = () => {
     useUpdateUserDefaultTransferTargetAccount();
 
   const handleSave = async (
-    newUserDefaultAccountData: UserDefaultAccountSettingsFormFields
+    newUserDefaultAccountData: UserDefaultAccountSettingsFormFields,
   ) => {
     const {
       toAccountIncome,

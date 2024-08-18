@@ -37,7 +37,7 @@ test.describe('Add expense', () => {
     expensesBefore: TransactionDto[],
     expensesAfter: TransactionDto[],
   ) => {
-    expect(expensesBefore.length + 1).toEqual(expensesAfter.length);
+    expect(expensesAfter.length).toEqual(expensesBefore.length + 1);
   };
 
   // eslint-disable-next-line playwright/expect-expect

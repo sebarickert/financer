@@ -1,10 +1,12 @@
+'use client';
+
 import {
   useTransactionCategoriesFindOneQuery,
   useTransactionsFindMonthlySummariesByUserQuery,
   useTransactionCategoriesFindAllByUserQuery,
 } from '$api/generated/financerApi';
 import { DataHandler } from '$blocks/data-handler/data-handler';
-import { Category } from '$pages/settings/categories/category';
+import { Category } from '$views/settings/categories/category';
 
 interface CategoryContainerProps {
   id: string;
