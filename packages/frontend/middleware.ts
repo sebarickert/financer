@@ -18,7 +18,7 @@ const isApiRequest = (req: NextRequest) => {
 };
 
 export async function middleware(request: NextRequest) {
-  if (request.method === 'GET' && request.nextUrl.pathname === '/healthz') {
+  if (request.method === 'GET' && request.nextUrl.pathname === '/healthz/') {
     return NextResponse.json({ status: 'ok' });
   }
 

@@ -20,7 +20,7 @@ spec:
         app: webapp
     spec:
       containers:
-        - image: ghcr.io/shamalainen/financer:latest
+        - image: ghcr.io/sebarickert/financer:latest
           command: ["node", "backend/main.js"]
           name: backend
           imagePullPolicy: Always
@@ -52,7 +52,7 @@ spec:
             initialDelaySeconds: 5
             periodSeconds: 10
 
-        - image: ghcr.io/shamalainen/financer:latest
+        - image: ghcr.io/sebarickert/financer:latest
           command: ["node", "frontend/server.js"]
           name: frontend
           imagePullPolicy: Always
@@ -66,20 +66,20 @@ spec:
           ports:
             - containerPort: 3000
               name: frontend
-          envFrom:
-            - secretRef:
-                name: webapp-environment-secret
-            - configMapRef:
-                name: webapp-environment-config
+          env:
+            - name: PORT
+              value: "3000"
+            - name: HOSTNAME
+              value: "0.0.0.0"
           livenessProbe:
             httpGet:
-              path: /health-check/ping
+              path: /healthz/
               port: 3000
             initialDelaySeconds: 15
             periodSeconds: 60
           readinessProbe:
             httpGet:
-              path: /health-check/ping
+              path: /healthz/
               port: 3000
             initialDelaySeconds: 5
             periodSeconds: 10
@@ -130,6 +130,16 @@ spec:
       http:
         paths:
           - path: /api/
+            pathType: Prefix
+            backend:
+              service:
+                name: financer
+                port:
+                  number: 81
+    - host: financer.silte.fi
+      http:
+        paths:
+          - path: /auth/
             pathType: Prefix
             backend:
               service:
