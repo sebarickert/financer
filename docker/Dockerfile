@@ -5,7 +5,9 @@
 ################################################################################
 
 # Base image for installing dependencies.
-FROM node:22-alpine AS development
+# Do not use the latest tag for the base image due to build issues with Terser.
+# https://github.com/vercel/next.js/issues/69263
+FROM node:22.6-alpine AS development
 
 # Run application with user 'node'.
 # It is not recommended to run applications with 'root' even within
@@ -42,7 +44,9 @@ COPY --chown=node:node . .
 ################################################################################
 
 # Base image for buiding the application.
-FROM node:22-alpine AS build
+# Do not use the latest tag for the base image due to build issues with Terser.
+# https://github.com/vercel/next.js/issues/69263
+FROM node:22.6-alpine AS build
 
 # Run application with user 'node'.
 # It is not recommended to run applications with 'root' even within
@@ -102,8 +106,9 @@ RUN npm ci --omit=dev --ignore-scripts && \
 # Base image for running the production distibution.
 #
 ################################################################################
-
-FROM node:22-alpine AS production
+# Do not use the latest tag for the base image due to build issues with Terser.
+# https://github.com/vercel/next.js/issues/69263
+FROM node:22.6-alpine AS production
 
 # Set NODE_ENV to production for running the application.
 ENV NODE_ENV production
