@@ -16,7 +16,6 @@ export const AccountEdit = ({
   return (
     <>
       <UpdatePageInfo
-        title={`Edit ${account.name}`}
         backLink={`/accounts/${account.id}`}
         headerAction={<DeleteAccountContainer id={account.id} />}
       />

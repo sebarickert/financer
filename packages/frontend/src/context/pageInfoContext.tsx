@@ -5,8 +5,6 @@ interface PageInfoProps {
 }
 
 export type PageInfoData = {
-  title: string;
-  toolbarColor?: 'white' | 'brand' | 'black';
   backLink?: string;
   headerAction?: React.ReactNode;
 };
@@ -17,7 +15,7 @@ type PageInfoContextType = [
 ];
 
 export const PageInfoContext = createContext<PageInfoContextType>([
-  { title: '' },
+  {},
   () => {},
 ]);
 
@@ -25,7 +23,7 @@ export const usePageInfoContext = (): PageInfoContextType =>
   useContext(PageInfoContext);
 
 export const PageInfoProvider = ({ children }: PageInfoProps): JSX.Element => {
-  const [pageInfo, setPageInfo] = useState<PageInfoData>({ title: '' });
+  const [pageInfo, setPageInfo] = useState<PageInfoData>({});
 
   return (
     <PageInfoContext.Provider value={[pageInfo, setPageInfo]}>

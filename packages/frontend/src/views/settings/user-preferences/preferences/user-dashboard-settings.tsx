@@ -35,10 +35,7 @@ export const UserDashboardSettings = ({
 
   return (
     <>
-      <UpdatePageInfo
-        title="Dashboard settings"
-        backLink={settingsPaths.userPreferences}
-      />
+      <UpdatePageInfo backLink={settingsPaths.userPreferences} />
       <Form
         methods={methods}
         onSubmit={onSave}

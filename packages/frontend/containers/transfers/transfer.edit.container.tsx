@@ -85,7 +85,6 @@ export const TransferEditContainer = ({ id }: TransferEditContainerProps) => {
     <>
       <DataHandler {...transferData} />
       <UpdatePageInfo
-        title={`Edit ${transfer?.description}`}
         backLink={`/statistics/transfer/${transfer?.id}`}
         headerAction={<TransactionDelete onDelete={handleDelete} />}
       />

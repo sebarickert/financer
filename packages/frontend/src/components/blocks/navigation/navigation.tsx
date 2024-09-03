@@ -34,9 +34,17 @@ const navigationItems = {
   settings: { label: 'Settings', url: '/settings', iconName: IconName.cog },
 } as Record<string, NavigationItem>;
 
-export const Navigation = ({ variant = 'desktop' }: NavigationProps) => {
+export const Navigation = ({
+  variant = 'desktop',
+  className,
+}: NavigationProps) => {
   const NavigationVariant =
     variant === 'mobile' ? NavigationMobile : NavigationDesktop;
 
-  return <NavigationVariant navigationItems={navigationItems} />;
+  return (
+    <NavigationVariant
+      navigationItems={navigationItems}
+      className={className}
+    />
+  );
 };

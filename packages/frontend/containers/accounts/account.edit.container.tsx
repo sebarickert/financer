@@ -10,9 +10,9 @@ import {
 import { DataHandler } from '$blocks/data-handler/data-handler';
 import { ToastMessageTypes } from '$blocks/toast/toast';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
+import { addToastMessage } from '$reducer/notifications.reducer';
 import { AccountEdit } from '$views/accounts/account.edit';
 import { AccountFormFields } from '$views/accounts/account.form';
-import { addToastMessage } from '$reducer/notifications.reducer';
 
 interface AccountEditContainerProps {
   id: string;

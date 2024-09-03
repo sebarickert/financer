@@ -9,7 +9,7 @@ export interface AddAccountProps {
 export const AccountAdd = ({ onAddAccount }: AddAccountProps): JSX.Element => {
   return (
     <>
-      <UpdatePageInfo title="Add account" backLink="/accounts" />
+      <UpdatePageInfo backLink="/accounts" />
       <AccountForm onSubmit={onAddAccount} submitLabel="Submit" />
     </>
   );

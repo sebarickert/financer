@@ -12,10 +12,7 @@ interface CategoryAddProps {
 export const CategoryAdd = ({ onSubmit }: CategoryAddProps): JSX.Element => {
   return (
     <Container>
-      <UpdatePageInfo
-        title="Add Category"
-        backLink={settingsPaths.categories}
-      />
+      <UpdatePageInfo backLink={settingsPaths.categories} />
       <CategoryForm onSubmit={onSubmit} submitLabel="Add" />
     </Container>
   );

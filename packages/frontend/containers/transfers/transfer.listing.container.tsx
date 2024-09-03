@@ -18,7 +18,6 @@ export const TransferListingContainer = ({
   return (
     <>
       <UpdatePageInfo
-        title="Transfers"
         backLink="/statistics"
         headerAction={
           <ButtonInternal

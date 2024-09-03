@@ -11,12 +11,12 @@ import { DataHandler } from '$blocks/data-handler/data-handler';
 import { ToastMessageTypes } from '$blocks/toast/toast';
 import { settingsPaths } from '$constants/settings-paths';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
+import { addToastMessage } from '$reducer/notifications.reducer';
+import { parseErrorMessagesToArray } from '$utils/apiHelper';
 import {
   TemplateEdit,
   UpdateTransactionTemplateDtoWithCategory,
 } from '$views/settings/templates/template.edit';
-import { addToastMessage } from '$reducer/notifications.reducer';
-import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 interface TemplateEditContainerProps {
   id: string;

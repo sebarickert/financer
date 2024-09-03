@@ -6,10 +6,10 @@ import { useDispatch } from 'react-redux';
 import { useAccountsCreateMutation } from '$api/generated/financerApi';
 import { ToastMessageTypes } from '$blocks/toast/toast';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { AccountAdd } from '$views/accounts/account.add';
-import { AccountFormFields } from '$views/accounts/account.form';
 import { addToastMessage } from '$reducer/notifications.reducer';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
+import { AccountAdd } from '$views/accounts/account.add';
+import { AccountFormFields } from '$views/accounts/account.form';
 
 export const AccountAddContainer = () => {
   const { push } = useViewTransitionRouter();

@@ -98,7 +98,6 @@ export const TransferAddContainer = ({
     <>
       <DataHandler skipNotFound {...templateData} />
       <UpdatePageInfo
-        title="Add Transfer"
         headerAction={
           <TransactionTemplateSwitcher
             selectedTemplate={templateId}

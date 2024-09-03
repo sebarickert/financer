@@ -120,7 +120,6 @@ export const Transaction = ({
   return (
     <>
       <UpdatePageInfo
-        title={'Transaction Details'}
         backLink="/statistics"
         headerAction={
           <ButtonInternal

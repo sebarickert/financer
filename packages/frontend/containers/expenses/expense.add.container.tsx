@@ -88,7 +88,6 @@ export const ExpenseAddContainer = ({
     <>
       <DataHandler skipNotFound {...templateData} />
       <UpdatePageInfo
-        title="Add Expense"
         headerAction={
           <TransactionTemplateSwitcher
             selectedTemplate={templateId}

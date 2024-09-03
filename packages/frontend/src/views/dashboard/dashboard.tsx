@@ -9,7 +9,7 @@ import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 export const Dashboard = (): JSX.Element => {
   return (
     <>
-      <UpdatePageInfo title="Dashboard" />
+      <UpdatePageInfo />
       <section className="grid gap-6 md:gap-8">
         <section>
           <DashboardStats />

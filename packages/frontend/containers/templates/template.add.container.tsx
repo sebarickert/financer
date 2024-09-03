@@ -6,12 +6,12 @@ import { useTransactionTemplatesCreateMutation } from '$api/generated/financerAp
 import { ToastMessageTypes } from '$blocks/toast/toast';
 import { settingsPaths } from '$constants/settings-paths';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
+import { addToastMessage } from '$reducer/notifications.reducer';
+import { parseErrorMessagesToArray } from '$utils/apiHelper';
 import {
   TemplateAdd,
   CreateTransactionTemplateDtoWithCategory,
 } from '$views/settings/templates/template.add';
-import { addToastMessage } from '$reducer/notifications.reducer';
-import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 export const TemplateAddContainer = () => {
   const { push } = useViewTransitionRouter();

@@ -47,7 +47,6 @@ export const TemplateEdit = ({
   return (
     <>
       <UpdatePageInfo
-        title="Edit template"
         backLink={settingsPaths.templates}
         headerAction={<TemplateDelete onSubmit={onDelete} />}
       />

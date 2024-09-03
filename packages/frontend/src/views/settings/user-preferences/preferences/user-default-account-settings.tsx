@@ -53,10 +53,7 @@ export const UserDefaultAccountSettings = ({
 
   return (
     <>
-      <UpdatePageInfo
-        title="Default account settings"
-        backLink={settingsPaths.userPreferences}
-      />
+      <UpdatePageInfo backLink={settingsPaths.userPreferences} />
       <Form
         onSubmit={onSave}
         methods={methods}

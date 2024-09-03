@@ -35,10 +35,7 @@ export const UserStatisticsSettings = ({
 
   return (
     <>
-      <UpdatePageInfo
-        title="Statistics settings"
-        backLink={settingsPaths.userPreferences}
-      />
+      <UpdatePageInfo backLink={settingsPaths.userPreferences} />
       <Form
         methods={methods}
         onSubmit={onSave}

@@ -1,5 +1,3 @@
-'use server';
-
 import { Metadata, Viewport } from 'next';
 import { FC } from 'react';
 
@@ -11,27 +9,24 @@ import { ChildrenProp } from 'src/types/children-prop';
 
 const appName = 'Financer';
 
-export async function metadata(): Promise<Metadata> {
-  return {
-    title: { template: `%s | ${appName}`, default: appName },
-    icons: faviconList,
+export const metadata: Metadata = {
+  title: { template: `%s | ${appName}`, default: appName },
+  icons: faviconList,
 
-    appleWebApp: {
-      title: appName,
-      statusBarStyle: 'default',
-      capable: true,
-    },
-    manifest: '/manifest.json',
-  };
-}
+  appleWebApp: {
+    title: appName,
+    statusBarStyle: 'default',
+    capable: true,
+  },
+  manifest: '/manifest.json',
+};
 
-export async function viewport(): Promise<Viewport> {
-  return {
-    width: 'device-width',
-    initialScale: 1.0,
-    viewportFit: 'cover',
-  };
-}
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1.0,
+  viewportFit: 'cover',
+  themeColor: '#FFFFFF',
+};
 
 const RootLayout: FC<ChildrenProp> = ({ children }) => {
   // We don't have to polyfill every feature by our self, since next js already does by default for many features

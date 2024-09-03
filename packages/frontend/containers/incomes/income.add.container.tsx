@@ -84,7 +84,6 @@ export const IncomeAddContainer = ({ templateId }: IncomeAddContainerProps) => {
     <>
       <DataHandler skipNotFound {...templateData} />
       <UpdatePageInfo
-        title="Add Income"
         headerAction={
           <TransactionTemplateSwitcher
             selectedTemplate={templateId}

@@ -1,6 +1,13 @@
+import { Metadata } from 'next';
 import { FC } from 'react';
 
 import { AccountContainer } from '$container/accounts/account.container';
+import { Layout } from '$layouts/layout/layout';
+
+// TODO change to dynamic title
+export const metadata: Metadata = {
+  title: 'Account Details',
+};
 
 type AccountPageProps = {
   params: {
@@ -9,7 +16,11 @@ type AccountPageProps = {
 };
 
 const AccountPage: FC<AccountPageProps> = ({ params: { accountId } }) => {
-  return <AccountContainer id={accountId} />;
+  return (
+    <Layout title="Account Details">
+      <AccountContainer id={accountId} />
+    </Layout>
+  );
 };
 
 export default AccountPage;

@@ -8,7 +8,7 @@ import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 export const Statistics = (): JSX.Element => {
   return (
     <>
-      <UpdatePageInfo title="Statistics" />
+      <UpdatePageInfo />
       <MonthlySummaryGraph className="mb-6" />
       <TransactionListingWithMonthlyPager isSummaryVisible />
       <LinkList className="mt-8" isVertical>

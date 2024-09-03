@@ -41,7 +41,6 @@ export const TemplateListing = ({
   return (
     <>
       <UpdatePageInfo
-        title="Templates"
         backLink={settingsPaths.default}
         headerAction={
           <ButtonInternal

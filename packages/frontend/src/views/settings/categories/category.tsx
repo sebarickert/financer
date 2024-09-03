@@ -154,7 +154,6 @@ export const Category = ({
   return (
     <Container>
       <UpdatePageInfo
-        title={'Category Details'}
         backLink={settingsPaths.categories}
         headerAction={
           <ButtonInternal
