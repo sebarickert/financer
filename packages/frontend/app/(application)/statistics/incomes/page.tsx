@@ -1,6 +1,12 @@
+import { Metadata } from 'next';
 import { FC } from 'react';
 
 import { IncomeListingContainer } from '$container/incomes/income.listing.container';
+import { Layout } from '$layouts/layout/layout';
+
+export const metadata: Metadata = {
+  title: 'Incomes',
+};
 
 type IncomesPageProps = {
   searchParams: {
@@ -13,10 +19,12 @@ const IncomesPage: FC<IncomesPageProps> = ({
   searchParams: { date, page },
 }) => {
   return (
-    <IncomeListingContainer
-      date={date as string}
-      page={parseInt(page as string)}
-    />
+    <Layout title="Incomes">
+      <IncomeListingContainer
+        date={date as string}
+        page={parseInt(page as string)}
+      />
+    </Layout>
   );
 };
 

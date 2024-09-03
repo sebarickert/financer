@@ -23,7 +23,6 @@ export const CategoryEdit = ({
   return (
     <Container>
       <UpdatePageInfo
-        title={`Edit ${category.name}`}
         backLink={`${settingsPaths.categories}/${category.id}`}
         headerAction={<CategoryDelete onDelete={onDelete} />}
       />

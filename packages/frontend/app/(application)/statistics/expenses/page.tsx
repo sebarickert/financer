@@ -1,6 +1,12 @@
+import { Metadata } from 'next';
 import { FC } from 'react';
 
 import { ExpenseListingContainer } from '$container/expenses/expense.listing.container';
+import { Layout } from '$layouts/layout/layout';
+
+export const metadata: Metadata = {
+  title: 'Expenses',
+};
 
 type ExpensesPageProps = {
   searchParams: {
@@ -13,10 +19,12 @@ const ExpensesPage: FC<ExpensesPageProps> = ({
   searchParams: { date, page },
 }) => {
   return (
-    <ExpenseListingContainer
-      date={date as string}
-      page={parseInt(page as string)}
-    />
+    <Layout title="Expenses">
+      <ExpenseListingContainer
+        date={date as string}
+        page={parseInt(page as string)}
+      />
+    </Layout>
   );
 };
 

@@ -27,10 +27,7 @@ export const UserTransactionListChunkSize = ({
 
   return (
     <>
-      <UpdatePageInfo
-        title="Max amount of items per page"
-        backLink={settingsPaths.userPreferences}
-      />
+      <UpdatePageInfo backLink={settingsPaths.userPreferences} />
       <Form
         methods={methods}
         onSubmit={onSave}

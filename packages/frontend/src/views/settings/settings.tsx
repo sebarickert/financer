@@ -60,7 +60,7 @@ export const Settings = ({ roles }: SettingsProps): JSX.Element => {
 
   return (
     <>
-      <UpdatePageInfo title="Settings" />
+      <UpdatePageInfo />
       <section className="grid gap-8">
         {urls.map(({ label, items }) => (
           <LinkList key={label} label={label}>

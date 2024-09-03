@@ -7,10 +7,7 @@ import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 export const UserPreferences = (): JSX.Element => {
   return (
     <>
-      <UpdatePageInfo
-        title="User preferences"
-        backLink={settingsPaths.default}
-      />
+      <UpdatePageInfo backLink={settingsPaths.default} />
       <LinkList>
         <LinkListLink
           link={`${settingsPaths.userPreferences}/dashboard-settings`}

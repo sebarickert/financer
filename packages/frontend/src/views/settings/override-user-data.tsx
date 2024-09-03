@@ -10,7 +10,7 @@ import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 interface OverrideUserDataProps {
   overrideFilename: string | null;
   overrideAccountCount: number | null;
-  overrideTranactionCount: number | null;
+  overrideTransactionCount: number | null;
   onFileChange: (changeEvent: ChangeEvent<HTMLInputElement>) => void;
   onOverrideData: () => void;
 }
@@ -18,7 +18,7 @@ interface OverrideUserDataProps {
 export const OverrideUserData = ({
   overrideFilename,
   overrideAccountCount,
-  overrideTranactionCount,
+  overrideTransactionCount,
   onFileChange,
   onOverrideData,
 }: OverrideUserDataProps): JSX.Element => {
@@ -31,16 +31,13 @@ export const OverrideUserData = ({
     {
       icon: IconName.informationCircle,
       label: 'Transaction count',
-      description: overrideTranactionCount ?? '-',
+      description: overrideTransactionCount ?? '-',
     },
   ];
 
   return (
     <>
-      <UpdatePageInfo
-        title="Override data (DANGER ZONE)"
-        backLink={settingsPaths.default}
-      />
+      <UpdatePageInfo backLink={settingsPaths.default} />
       <div className="mb-8">
         <label
           htmlFor="selectFiles"

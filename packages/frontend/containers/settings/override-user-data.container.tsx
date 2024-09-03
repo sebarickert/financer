@@ -8,8 +8,8 @@ import {
   useUsersOverrideAllOwnUserDataMutation,
 } from '$api/generated/financerApi';
 import { ToastMessageTypes } from '$blocks/toast/toast';
-import { OverrideUserData } from '$views/settings/override-user-data';
 import { addToastMessage } from '$reducer/notifications.reducer';
+import { OverrideUserData } from '$views/settings/override-user-data';
 
 export const OverrideUserDataContainer = () => {
   const [uploadedUserData, setUploadedUserData] =
@@ -20,7 +20,7 @@ export const OverrideUserDataContainer = () => {
 
   const dispatch = useDispatch();
 
-  const overrideTranactionCount = useMemo(() => {
+  const overrideTransactionCount = useMemo(() => {
     if (!uploadedUserData) return null;
     return uploadedUserData.transactions.length;
   }, [uploadedUserData]);
@@ -59,7 +59,7 @@ export const OverrideUserDataContainer = () => {
       dispatch(
         addToastMessage({
           type: ToastMessageTypes.ERROR,
-          message: 'Overridde failed',
+          message: 'Override failed',
           additionalInformation: error.payload,
         }),
       );
@@ -111,7 +111,7 @@ export const OverrideUserDataContainer = () => {
     <OverrideUserData
       overrideFilename={overrideFilename}
       overrideAccountCount={overrideAccountCount}
-      overrideTranactionCount={overrideTranactionCount}
+      overrideTransactionCount={overrideTransactionCount}
       onFileChange={handleFileChange}
       onOverrideData={handleOverrideData}
     />

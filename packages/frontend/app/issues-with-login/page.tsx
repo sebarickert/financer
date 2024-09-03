@@ -1,5 +1,11 @@
+import { Metadata } from 'next';
+
 import { LinkViewTransition } from '$elements/link/link-view-transition';
-import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+
+export const metadata: Metadata = {
+  title: 'Issues with login',
+  description: 'Issues with logging in to Financer',
+};
 
 const NEXT_PUBLIC_IS_GITHUB_OAUTH_ENABLED =
   process.env.NEXT_PUBLIC_IS_GITHUB_OAUTH_ENABLED;
@@ -41,28 +47,25 @@ const ResolveAuth0Issues = (): JSX.Element => {
 
 const IssuesWithLogin = (): JSX.Element => {
   return (
-    <>
-      <UpdatePageInfo title="Issues with login" />
-      <div className="py-16 mx-auto prose max-w-prose ">
-        <LinkViewTransition
-          href="/"
-          className="inline-block mb-12 text-base font-semibold tracking-wide text-blue-600 uppercase rounded-sm focus:outline-none focus:ring-2 focus:ring-offset-4"
-        >
-          Go back
-        </LinkViewTransition>
-        <h1>
-          <span className="block mt-2 text-3xl font-extrabold leading-8 tracking-tight text-gray-900 sm:text-4xl">
-            Login issues to Financer
-          </span>
-        </h1>
-        {checkIsEnabled(NEXT_PUBLIC_IS_GITHUB_OAUTH_ENABLED) && (
-          <ResolveGithubIssues />
-        )}
-        {checkIsEnabled(NEXT_PUBLIC_IS_AUTH0_OAUTH_ENABLED) && (
-          <ResolveAuth0Issues />
-        )}
-      </div>
-    </>
+    <div className="py-16 mx-auto prose max-w-prose ">
+      <LinkViewTransition
+        href="/"
+        className="inline-block mb-12 text-base font-semibold tracking-wide text-blue-600 uppercase rounded-sm focus:outline-none focus:ring-2 focus:ring-offset-4"
+      >
+        Go back
+      </LinkViewTransition>
+      <h1>
+        <span className="block mt-2 text-3xl font-extrabold leading-8 tracking-tight text-gray-900 sm:text-4xl">
+          Login issues to Financer
+        </span>
+      </h1>
+      {checkIsEnabled(NEXT_PUBLIC_IS_GITHUB_OAUTH_ENABLED) && (
+        <ResolveGithubIssues />
+      )}
+      {checkIsEnabled(NEXT_PUBLIC_IS_AUTH0_OAUTH_ENABLED) && (
+        <ResolveAuth0Issues />
+      )}
+    </div>
   );
 };
 

@@ -9,9 +9,9 @@ import {
 import { ToastMessageTypes } from '$blocks/toast/toast';
 import { settingsPaths } from '$constants/settings-paths';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { CategoryAdd } from '$views/settings/categories/category.add';
 import { addToastMessage } from '$reducer/notifications.reducer';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
+import { CategoryAdd } from '$views/settings/categories/category.add';
 
 export const CategoryAddContainer = () => {
   const { push } = useViewTransitionRouter();

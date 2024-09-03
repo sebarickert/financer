@@ -18,7 +18,6 @@ export const ExpenseListingContainer = ({
   return (
     <>
       <UpdatePageInfo
-        title="Expenses"
         backLink="/statistics"
         headerAction={
           <ButtonInternal

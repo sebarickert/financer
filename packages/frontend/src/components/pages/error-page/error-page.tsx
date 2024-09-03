@@ -1,6 +1,6 @@
+'use client';
+
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -9,26 +9,12 @@ import { Button } from '$elements/button/button';
 import { Heading } from '$elements/heading/heading';
 import { LinkViewTransition } from '$elements/link/link-view-transition';
 import { Container } from '$layouts/container/container';
-import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
 interface ErrorPageProps {
-  resetErrorBoundary(...args: unknown[]): void;
   errorPageType: 'full-app' | 'in-app';
 }
 
-export const ErrorPage = ({
-  resetErrorBoundary,
-  errorPageType,
-}: ErrorPageProps) => {
-  const pathname = usePathname();
-  const [errorPathname] = useState(pathname);
-
-  useEffect(() => {
-    if (pathname !== errorPathname) {
-      resetErrorBoundary();
-    }
-  }, [pathname, errorPathname, resetErrorBoundary]);
-
+export const ErrorPage = ({ errorPageType }: ErrorPageProps) => {
   if (errorPageType === 'full-app') {
     return (
       <Container>
@@ -87,13 +73,12 @@ export const ErrorPage = ({
 
   return (
     <>
-      <UpdatePageInfo title={`Error`} />
       <p className="max-w-xl mb-4 text-lg">
         Oops... Something went wrong. We are not sure what happened. Click the
         button below to try to fix the error.
       </p>
       <div className="flex items-center gap-2">
-        <Button onClick={() => resetErrorBoundary()}>Fix error</Button>
+        <Button onClick={() => window.location.reload()}>Fix error</Button>
         <span> or </span>
         <LinkViewTransition href={'/'} className="font-medium underline ">
           return to homepage

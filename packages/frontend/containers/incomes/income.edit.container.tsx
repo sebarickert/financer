@@ -84,7 +84,6 @@ export const IncomeEditContainer = ({ id }: IncomeEditContainerProps) => {
     <>
       <DataHandler {...incomeData} />
       <UpdatePageInfo
-        title={`Edit ${income?.description}`}
         backLink={`/statistics/incomes/${income?.id}`}
         headerAction={<TransactionDelete onDelete={handleDelete} />}
       />

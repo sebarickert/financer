@@ -26,7 +26,7 @@ export const TemplateAdd = ({
 }: TemplateAddProps): JSX.Element | null => {
   return (
     <>
-      <UpdatePageInfo title="Add template" backLink={settingsPaths.templates} />
+      <UpdatePageInfo backLink={settingsPaths.templates} />
       <TemplateForm onSubmit={onSubmit} submitLabel="Add" />
     </>
   );

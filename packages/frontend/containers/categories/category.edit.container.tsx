@@ -12,9 +12,9 @@ import { DataHandler } from '$blocks/data-handler/data-handler';
 import { ToastMessageTypes } from '$blocks/toast/toast';
 import { settingsPaths } from '$constants/settings-paths';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { CategoryEdit } from '$views/settings/categories/category.edit';
 import { addToastMessage } from '$reducer/notifications.reducer';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
+import { CategoryEdit } from '$views/settings/categories/category.edit';
 
 interface CategoryEditContainerProps {
   id: string;

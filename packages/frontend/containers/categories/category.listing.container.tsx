@@ -83,7 +83,6 @@ export const CategoryListingContainer = () => {
   return (
     <>
       <UpdatePageInfo
-        title="Categories"
         backLink={settingsPaths.default}
         headerAction={
           <ButtonInternal

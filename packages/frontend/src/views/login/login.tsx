@@ -16,6 +16,11 @@ const NEXT_PUBLIC_IS_AUTH0_OAUTH_ENABLED =
 const checkIsEnabled = (stringBoolean: string | undefined) =>
   stringBoolean && stringBoolean.toLocaleLowerCase() !== 'false';
 
+// TODO add dedicated page for Login
+// export const metadata: Metadata = {
+//   title: 'Login',
+// };
+
 export const Login = (): JSX.Element => {
   const [isLoadingOAuthPage, setIsLoadingOAuthPage] = useState(false);
 
@@ -23,7 +28,7 @@ export const Login = (): JSX.Element => {
 
   return (
     <>
-      <UpdatePageInfo title="Login" />
+      <UpdatePageInfo />
       {isLoadingOAuthPage && <LoaderFullScreen />}
       <section className="flex flex-col items-center justify-end h-screen bg-charcoal sm:justify-center max-sm:pb-[calc(78px+env(safe-area-inset-bottom))]">
         <section className="p-6 border rounded-md sm:w-full backdrop:bg-charcoal backdrop:opacity-30 max-sm:mx-6 sm:max-w-screen-sm bg-gray border-gray-dark">

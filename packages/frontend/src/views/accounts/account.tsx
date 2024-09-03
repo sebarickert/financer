@@ -39,7 +39,6 @@ export const Account = ({ account }: AccountProps): JSX.Element | null => {
   return (
     <>
       <UpdatePageInfo
-        title={`Account Details`}
         backLink="/accounts"
         headerAction={
           <ButtonInternal

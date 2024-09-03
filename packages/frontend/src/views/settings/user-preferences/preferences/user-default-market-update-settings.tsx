@@ -33,10 +33,7 @@ export const UserDefaultMarketUpdateSettings = ({
 
   return (
     <>
-      <UpdatePageInfo
-        title="Market update settings"
-        backLink={settingsPaths.userPreferences}
-      />
+      <UpdatePageInfo backLink={settingsPaths.userPreferences} />
       <Form
         methods={methods}
         onSubmit={onSave}

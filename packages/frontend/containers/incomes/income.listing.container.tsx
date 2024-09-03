@@ -18,7 +18,6 @@ export const IncomeListingContainer = ({
   return (
     <>
       <UpdatePageInfo
-        title="Incomes"
         backLink="/statistics"
         headerAction={
           <ButtonInternal

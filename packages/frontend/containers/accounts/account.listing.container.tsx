@@ -63,7 +63,6 @@ export const AccountListingContainer = () => {
   return (
     <>
       <UpdatePageInfo
-        title="Accounts"
         headerAction={
           <ButtonInternal
             link="/accounts/add"

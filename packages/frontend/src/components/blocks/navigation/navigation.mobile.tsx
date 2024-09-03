@@ -1,3 +1,5 @@
+'use client';
+
 import clsx from 'clsx';
 import { useState } from 'react';
 
@@ -7,16 +9,19 @@ import { NavigationMobileItem } from './navigation.mobile.item';
 
 interface NavigationMobileProps {
   navigationItems: Record<string, NavigationItem>;
+  className?: string;
 }
 
 export const NavigationMobile = ({
   navigationItems,
+  className,
 }: NavigationMobileProps) => {
   const [isActionsModalOpen, setIsActionsModalOpen] = useState(false);
 
   return (
     <div
       className={clsx(
+        className,
         'fixed bottom-0 left-0 right-0  w-full border-t bg-gray border-gray-dark pb-safe vt-name-[mobile-navigation]',
         { ['z-[101]']: isActionsModalOpen, ['z-[100]']: !isActionsModalOpen },
       )}
