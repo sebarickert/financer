@@ -23,7 +23,7 @@ export const Header: FC<HeaderProps> = ({ title }) => {
       className={clsx(
         'vt-name-[header]',
         'max-lg:text-center max-lg:fixed max-lg:inset-x-0 max-lg:top-0 max-lg:px-4 max-lg:h-16 max-lg:border-b max-lg:bg-white',
-        'grid items-center grid-cols-[44px,1fr,44px]',
+        'grid items-center grid-cols-[44px,1fr,44px] z-10',
         'lg:flex lg:gap-4 lg:mb-6',
         {
           ['max-lg:border-b-transparent']: !hasBackLinkAndOrAction,
