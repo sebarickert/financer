@@ -2,8 +2,6 @@
 
 import { useEffect, useMemo } from 'react';
 
-import { usePager } from '../../../hooks/usePager';
-
 import { TransactionListing } from './transaction-listing';
 
 import {
@@ -16,13 +14,14 @@ import {
 import { DataHandler } from '$blocks/data-handler/data-handler';
 import { useConvertTransactionToTransactionListingItem } from '$hooks/transaction/useConvertTransactionToTransactionListingItem';
 import { useGetTransactionCategoryNameById } from '$hooks/transactionCategories/useGetTransactionCategoryNameById';
+import { usePager } from '$hooks/usePager';
 
 export interface TransactionListingContainerProps {
   isPagerHidden?: boolean;
   // filterOptions?:
   //   | TransactionsFindAllByUserApiArg
   //   | TransactionsFindAllByAccountApiArg;
-  // @todo: fix above typing for filterOptions...
+  // TODO: fix above typing for filterOptions...
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   filterOptions?: any;
   className?: string;
