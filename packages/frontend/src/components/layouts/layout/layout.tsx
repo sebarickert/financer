@@ -25,7 +25,7 @@ export const Layout = ({ children, title }: LayoutProps): JSX.Element => {
       <Container
         className={clsx(
           'lg:grid grid-cols-[300px,1fr] min-h-screen px-0',
-          'flex flex-col h-full overflow-y-scroll',
+          'flex flex-col h-full max-lg:overflow-y-scroll',
         )}
       >
         <aside
@@ -58,9 +58,9 @@ export const Layout = ({ children, title }: LayoutProps): JSX.Element => {
             </header>
           </div>
         </aside>
-        <main>
+        <main className="max-lg:flex-grow max-lg:bg-white max-lg:min-h-screen-safe pb-safe">
           <div
-            className="px-4 mt-[64px] pt-8 pb-24 lg:px-8 lg:py-12"
+            className="px-4 max-lg:mt-[64px] max-lg:pt-8 max-lg:pb-24 lg:px-8 lg:py-12"
             data-testid="layout-root"
           >
             <Header title={title} />
