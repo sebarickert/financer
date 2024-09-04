@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const getBackendAddress = () =>
-  process.env.INTERNAL_API_ROOT_ADDRESS ?? 'http://localhost:4000';
+import { getInternalApiRootAddress } from '$utils/address.helper';
 
 const isPrefetchRequest = (headers: Headers) => {
   const purpose = headers.get('purpose');
@@ -25,7 +24,7 @@ export async function middleware(request: NextRequest) {
   if (isApiRequest(request)) {
     return NextResponse.rewrite(
       new URL(
-        `${getBackendAddress()}${request.nextUrl.pathname}${request.nextUrl.search}`,
+        `${getInternalApiRootAddress()}${request.nextUrl.pathname}${request.nextUrl.search}`,
       ),
       { request },
     );

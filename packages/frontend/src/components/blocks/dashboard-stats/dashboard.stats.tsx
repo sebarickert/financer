@@ -1,17 +1,14 @@
 import clsx from 'clsx';
+import { FC } from 'react';
 
-import { useTransactionsFindMonthlySummariesByUserQuery } from '$api/generated/financerApi';
 import { BalanceDisplay } from '$blocks/balance-display/balance-display';
 import { DetailsList } from '$blocks/details-list/details-list';
 import { currentMonthAndYearInLongFormat } from '$constants/months';
 import { IconName } from '$elements/icon/icon';
-import { useUserDashboardSettings } from '$hooks/settings/user-preference/useDashboardSettings';
-import { useGetTotalBalance } from '$hooks/useGetTotalBalance';
+import { getTotalBalance } from '$ssr/accounts/get-total-balance';
+import { getServerData } from '$ssr/get-server-data';
+import { getDashboardSettings } from '$ssr/user-preferences/get-dashboard-settings';
 import { formatCurrency } from '$utils/formatCurrency';
-
-interface DashboardStatsProps {
-  className?: string;
-}
 
 const currentMonthFilterOptions = {
   year: new Date().getFullYear(),
@@ -19,19 +16,19 @@ const currentMonthFilterOptions = {
 };
 const emptyTotalAmount = 0;
 
-export const DashboardStats = ({
-  className = '',
-}: DashboardStatsProps): JSX.Element => {
-  const { data: dashboardSettings } = useUserDashboardSettings();
+export const DashboardStats: FC = async () => {
+  const dashboardSettings = await getDashboardSettings();
   const accountTypeFilter = { accountTypes: dashboardSettings?.accountTypes };
 
-  const { data: totalBalance } = useGetTotalBalance(accountTypeFilter);
+  const totalBalance = await getTotalBalance(dashboardSettings);
 
-  const { data: transactionMonthSummary } =
-    useTransactionsFindMonthlySummariesByUserQuery({
+  const { data: transactionMonthSummary } = await getServerData(
+    'transactionsFindMonthlySummariesByUser',
+    {
       ...currentMonthFilterOptions,
       ...accountTypeFilter,
-    });
+    },
+  );
 
   const {
     incomeAmount: totalIncomes = emptyTotalAmount,
@@ -73,7 +70,6 @@ export const DashboardStats = ({
     <section
       className={clsx(
         'lg:grid grid-cols-[1.5fr,2fr] lg:pb-6 lg:divide-x lg:divide-gray-dark',
-        className,
       )}
     >
       <BalanceDisplay amount={balance}>Balance</BalanceDisplay>

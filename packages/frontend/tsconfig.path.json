@@ -16,6 +16,7 @@
       "$utils/*": ["./src/utils/*"],
       "$constants/*": ["./src/constants/*"],
       "$context/*": ["./src/context/*"],
+      "$ssr/*": ["./src/ssr/*"],
       "$container/*": ["./containers/*"]
     }
   }

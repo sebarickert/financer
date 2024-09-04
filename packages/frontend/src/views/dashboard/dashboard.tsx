@@ -1,5 +1,3 @@
-'use client';
-
 import { BalanceGraph } from '$blocks/balance-graph/balance-graph';
 import { DashboardStats } from '$blocks/dashboard-stats/dashboard.stats';
 import { TransactionListingContainer } from '$blocks/transaction-listing/transaction-listing.container';

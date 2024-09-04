@@ -27,7 +27,14 @@
     { "name": "backend", "rootPath": "./packages/backend" },
     { "name": "frontend", "rootPath": "./packages/frontend" }
   ],
-  "cSpell.words": ["clsx", "datasources", "financer", "testid"],
+  "cSpell.words": [
+    "clsx",
+    "datasources",
+    "financer",
+    "NOSONAR",
+    "reduxjs",
+    "testid"
+  ],
   "sonarlint.connectedMode.project": {
     "connectionId": "financer",
     "projectKey": "financer_common"

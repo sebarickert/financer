@@ -1,3 +1,5 @@
+'use client';
+
 import { ChartData, ChartOptions } from 'chart.js';
 import { useMemo } from 'react';
 import { Chart } from 'react-chartjs-2';
