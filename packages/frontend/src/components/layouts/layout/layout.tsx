@@ -1,5 +1,3 @@
-'use client';
-
 import clsx from 'clsx';
 import Image from 'next/image';
 
@@ -8,8 +6,6 @@ import { Container } from '../container/container';
 import { Navigation } from '$blocks/navigation/navigation';
 import { ToastContainer } from '$blocks/toast/toast.container';
 import { LinkViewTransition } from '$elements/link/link-view-transition';
-import { Loader } from '$elements/loader/loader';
-import { useIsQueryLoading } from '$hooks/useIsQueryLoading';
 import { Header } from '$layouts/header/header';
 
 type LayoutProps = {
@@ -18,8 +14,6 @@ type LayoutProps = {
 };
 
 export const Layout = ({ children, title }: LayoutProps): JSX.Element => {
-  const isLoading = useIsQueryLoading();
-
   return (
     <div className="lg:bg-white">
       <Container
@@ -65,7 +59,7 @@ export const Layout = ({ children, title }: LayoutProps): JSX.Element => {
           >
             <Header title={title} />
             <ToastContainer className="mb-8 -mt-2" />
-            <Loader isLoading={isLoading}>{children}</Loader>
+            {children}
           </div>
         </main>
         <header className="lg:hidden">

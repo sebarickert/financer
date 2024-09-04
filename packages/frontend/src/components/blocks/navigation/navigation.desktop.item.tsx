@@ -1,12 +1,13 @@
-import clsx from 'clsx';
+'use client';
 
-import { useIsActiveLink } from '../../../hooks/useIsActiveLink';
-import { isExternalLink } from '../../elements/button/button';
-import { Icon } from '../../elements/icon/icon';
+import clsx from 'clsx';
 
 import { NavigationItem } from './navigation';
 
+import { isExternalLink } from '$elements/button/button';
+import { Icon } from '$elements/icon/icon';
 import { LinkViewTransition } from '$elements/link/link-view-transition';
+import { useIsActiveLink } from '$hooks/useIsActiveLink';
 
 export const NavigationDesktopItem = ({
   url,
