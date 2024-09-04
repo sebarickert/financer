@@ -22,12 +22,13 @@ export const Header: FC<HeaderProps> = ({ title }) => {
     <div
       className={clsx(
         'vt-name-[header]',
-        'max-lg:text-center max-lg:fixed max-lg:inset-x-0 max-lg:top-0 max-lg:px-4 grid items-center max-lg:h-16 max-lg:border-b grid-cols-[44px,1fr,44px] bg-white',
-        'lg:flex lg:items-center lg:gap-4 lg:mb-6',
+        'max-lg:text-center max-lg:fixed max-lg:inset-x-0 max-lg:top-0 max-lg:px-4 max-lg:h-16 max-lg:border-b max-lg:bg-white',
+        'grid items-center grid-cols-[44px,1fr,44px]',
+        'lg:flex lg:gap-4 lg:mb-6',
         {
           ['max-lg:border-b-transparent']: !hasBackLinkAndOrAction,
           ['max-lg:border-b-gray-dark']: hasBackLinkAndOrAction,
-          ['z-[101]']: isHeaderActionActive,
+          ['max-lg:z-[101]']: isHeaderActionActive,
         },
       )}
     >
