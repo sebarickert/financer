@@ -22,8 +22,6 @@ type EndpointReturnType<EndpointNameType extends EndpointName> =
       >
     : never;
 
-const store = createStore();
-
 export const getServerData = async <EndpointNameType extends EndpointName>(
   endpointName: EndpointNameType,
   args?: ArgType<EndpointNameType>,
@@ -40,6 +38,9 @@ export const getServerData = async <EndpointNameType extends EndpointName>(
   };
 
   const endpoint = getEndpoint();
+
+  // We have to create new store for each request to shared cache between requests
+  const store = createStore();
 
   const result = store.dispatch(
     endpoint.initiate(args, options),

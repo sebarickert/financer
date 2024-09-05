@@ -22,13 +22,18 @@ export const financerBaseQuery = async (
   extraOptions: unknown = {},
 ) => {
   const url = await getInternalApiRootAddressOnServer();
+  const sessionId = await getSessionId();
 
   return fetchBaseQuery({
     baseUrl: `${url}/`,
-    cache: isServerSide() ? 'no-store' : undefined,
+    next: isServerSide()
+      ? {
+          revalidate: 5,
+          tags: [sessionId ?? ''],
+        }
+      : undefined,
     prepareHeaders: async (headers) => {
       if (isServerSide()) {
-        const sessionId = await getSessionId();
         headers.set('Cookie', `connect.sid=${sessionId}`);
       }
     },
