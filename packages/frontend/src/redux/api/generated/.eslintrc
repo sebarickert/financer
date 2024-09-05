@@ -1,0 +1,10 @@
+{
+  "overrides": [
+    {
+      "files": ["./ssr-financer-api.d.ts"],
+      "rules": {
+        "@typescript-eslint/naming-convention": "off",
+      },
+    },
+  ],
+}

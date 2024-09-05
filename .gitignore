@@ -12,3 +12,4 @@ packages/backend/api-spec.json
 
 packages/frontend/src/redux/api/generated/*
 !packages/frontend/src/redux/api/generated/.keepme
+!packages/frontend/src/redux/api/generated/.eslintrc

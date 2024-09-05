@@ -21,9 +21,26 @@ export type BalanceHistory = {
   balance: number;
 };
 
+const yearAgo = new Date();
+yearAgo.setFullYear(yearAgo.getFullYear() - 1);
+
 const yearAgoFilterOptions = {
-  year: new Date().getFullYear() - 1,
+  year: yearAgo.getFullYear(),
   month: new Date().getMonth(),
+};
+
+const dummyGraphData = {
+  labels: [formatDate(yearAgo, DateFormat.monthShort).toUpperCase(), 'CURRENT'],
+  datasets: [
+    {
+      label: 'Balance',
+      fill: true,
+      borderColor: colorPalette.blue,
+      backgroundColor: setGradientLineGraphBackground,
+      data: [0, 10],
+      tension: 0.25,
+    },
+  ],
 };
 
 export const BalanceGraph = (): JSX.Element | null => {
@@ -158,13 +175,17 @@ export const BalanceGraph = (): JSX.Element | null => {
     [balanceHistory, labels],
   );
 
-  if (!balanceHistory?.length || balanceHistory.length === 1) {
+  if (balanceHistory.length === 1) {
     return null;
   }
 
   return (
-    <ChartWrapperDynamic>
-      <Chart type="line" data={chartData} options={chartOptions} />
+    <ChartWrapperDynamic isLoading={!balanceHistory?.length}>
+      <Chart
+        type="line"
+        data={!balanceHistory?.length ? dummyGraphData : chartData}
+        options={chartOptions}
+      />
     </ChartWrapperDynamic>
   );
 };

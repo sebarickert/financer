@@ -5,9 +5,9 @@ import { BalanceDisplay } from '$blocks/balance-display/balance-display';
 import { DetailsList } from '$blocks/details-list/details-list';
 import { currentMonthAndYearInLongFormat } from '$constants/months';
 import { IconName } from '$elements/icon/icon';
-import { getTotalBalance } from '$ssr/accounts/get-total-balance';
-import { getServerData } from '$ssr/get-server-data';
-import { getDashboardSettings } from '$ssr/user-preferences/get-dashboard-settings';
+import { AccountService } from '$ssr/api/account.service';
+import { TransactionService } from '$ssr/api/transaction.service';
+import { UserPreferenceService } from '$ssr/api/user-preference.service';
 import { formatCurrency } from '$utils/formatCurrency';
 
 const currentMonthFilterOptions = {
@@ -17,18 +17,15 @@ const currentMonthFilterOptions = {
 const emptyTotalAmount = 0;
 
 export const DashboardStats: FC = async () => {
-  const dashboardSettings = await getDashboardSettings();
+  const dashboardSettings = await UserPreferenceService.getDashboardSettings();
   const accountTypeFilter = { accountTypes: dashboardSettings?.accountTypes };
 
-  const totalBalance = await getTotalBalance(dashboardSettings);
+  const totalBalance = await AccountService.getTotalBalance(dashboardSettings);
 
-  const { data: transactionMonthSummary } = await getServerData(
-    'transactionsFindMonthlySummariesByUser',
-    {
-      ...currentMonthFilterOptions,
-      ...accountTypeFilter,
-    },
-  );
+  const transactionMonthSummary = await TransactionService.getMonthlySummary({
+    ...currentMonthFilterOptions,
+    ...accountTypeFilter,
+  });
 
   const {
     incomeAmount: totalIncomes = emptyTotalAmount,

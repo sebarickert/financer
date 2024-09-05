@@ -11,14 +11,13 @@ import { useAuthGetAuthenticationStatusQuery } from '$api/generated/financerApi'
 import { ToastMessageTypes } from '$blocks/toast/toast';
 import { PageInfoProvider } from '$context/pageInfoContext';
 import { Loader } from '$elements/loader/loader';
-import { LoaderSuspense } from '$elements/loader/loader-suspense';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { Login } from '$views/login/login';
 import {
   removeToastMessage,
   addToastMessage,
 } from '$reducer/notifications.reducer';
 import { ScrollToTop } from '$renderers/scroll-to-top/scroll-to-top';
+import { Login } from '$views/login/login';
 import { ChildrenProp } from 'src/types/children-prop';
 
 const PUBLIC_ROUTES = ['/privacy-policy', '/issues-with-login'];
@@ -88,14 +87,10 @@ export const RootProviderContainer: FC<ChildrenProp> = ({ children }) => {
   return (
     <StoreProvider>
       <TransitionProvider>
-        <LoaderSuspense>
-          <PageInfoProvider>
-            {/* TODO check this stuff */}
-            {/* <SEO /> */}
-            <ScrollToTop />
-            <App>{children}</App>
-          </PageInfoProvider>
-        </LoaderSuspense>
+        <PageInfoProvider>
+          <ScrollToTop />
+          <App>{children}</App>
+        </PageInfoProvider>
       </TransitionProvider>
     </StoreProvider>
   );

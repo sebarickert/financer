@@ -10,6 +10,7 @@
     "http-proxy-middleware": "^2.0.6",
     "next": "^14.0.4",
     "next-pwa": "^5.6.0",
+    "openapi-fetch": "^0.12.0",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
@@ -40,7 +41,9 @@
     "format": "next lint -- --fix",
     "lint": "next lint",
     "test": "echo 'no frontend unit tests at the moment' && exit 0",
-    "types:generate": "npx @silte/rtk-codegen-openapi openapi-config.js && eslint src/redux/api/generated/*.ts --fix",
+    "types:generate": "npm run types:generate:ssr && npm run types:generate:csr && eslint src/redux/api/generated/*.ts --fix",
+    "types:generate:ssr": "npx @silte/rtk-codegen-openapi openapi-config.js",
+    "types:generate:csr": "openapi-typescript src/redux/schema/api-spec.json -o src/redux/api/generated/ssr-financer-api.d.ts",
     "check-types": "tsc --noEmit"
   },
   "eslintConfig": {
@@ -87,6 +90,7 @@
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-unused-imports": "^3.2.0",
     "npm-run-all": "^4.1.5",
+    "openapi-typescript": "^7.4.0",
     "postcss": "^8.4.32",
     "postcss-cli": "^11.0.0",
     "prettier": "^3.1.1",

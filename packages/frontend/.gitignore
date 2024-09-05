@@ -23,13 +23,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# financer assets
-/src/assets/financer.css
-
-
-# redux
-redux/api/generated/*
-!redux/api/generated/.keepMe
 
 .next
 
