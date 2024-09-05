@@ -2,47 +2,64 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+
+  50% {
+    opacity: 0.1;
+  }
+}
 
 @keyframes slide-from-right {
-    from { transform: translateX(100vw); }
-    to { transform: translateX(0); }
+  from {
+    transform: translateX(100vw);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
-  
+
 @keyframes slide-to-right {
-    from { transform: translateX(0); }
-    to { transform: translateX(100vw); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100vw);
+  }
 }
-  
-  .slide-from-right::view-transition-new(root) {
-      animation: 300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
-  }
-  
-  .slide-from-right::view-transition-old(root) {
-      animation: 300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-left;
-  }
-  
-  
-  .slide-from-left::view-transition-new(root) {
-      animation: 300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-left;
-  }
-  
-  .slide-from-left::view-transition-old(root) {
-      animation: 300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-right;
-  }
-  
-  .open-from-right::view-transition-new(root) {
-      animation: 300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
-  }
-  
-  .close-to-right::view-transition-old(root) {
-      animation: 300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-right;
-  }
-  
+
+.slide-from-right::view-transition-new(root) {
+  animation: 300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
+}
+
+.slide-from-right::view-transition-old(root) {
+  animation: 300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-left;
+}
+
+.slide-from-left::view-transition-new(root) {
+  animation: 300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-left;
+}
+
+.slide-from-left::view-transition-old(root) {
+  animation: 300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-right;
+}
+
+.open-from-right::view-transition-new(root) {
+  animation: 300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
+}
+
+.close-to-right::view-transition-old(root) {
+  animation: 300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-right;
+}
+
 @layer base {
-   html {
+  html {
     -webkit-tap-highlight-color: transparent;
   }
-  
+
   @font-face {
     font-family: "Euclid Circular A";
     font-weight: 300;

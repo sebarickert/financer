@@ -13,7 +13,6 @@ import {
   TransactionListingContainerProps,
 } from '$blocks/transaction-listing/transaction-listing.container';
 import { monthNames } from '$constants/months';
-import { LoaderSuspense } from '$elements/loader/loader-suspense';
 import { useGetFirstTransaction } from '$hooks/transaction/useGetFirstTransaction';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 
@@ -152,20 +151,18 @@ export const TransactionListingWithMonthlyPager = ({
       <Pager className="mb-4" pagerOptions={pagerOptions}>
         {pagerLabel}
       </Pager>
-      <LoaderSuspense>
-        {isSummaryVisible && (
-          <TransactionListingWithMonthlyPagerSummary
-            filterOptions={filterOptions}
-          />
-        )}
-        <TransactionListingContainer
+      {isSummaryVisible && (
+        <TransactionListingWithMonthlyPagerSummary
           filterOptions={filterOptions}
-          className="mt-4"
-          useDataHook={useDataHook}
-          onPageChange={setSelectedPage}
-          initialPage={initialPageToLoad}
         />
-      </LoaderSuspense>
+      )}
+      <TransactionListingContainer
+        filterOptions={filterOptions}
+        className="mt-4"
+        useDataHook={useDataHook}
+        onPageChange={setSelectedPage}
+        initialPage={initialPageToLoad}
+      />
     </section>
   );
 };

@@ -4,39 +4,15 @@ import {
   fetchBaseQuery,
 } from '@reduxjs/toolkit/query/react';
 
-import { getSessionId } from '$ssr/get-session-id';
-import { isServerSide } from '$utils/is-server-side';
-
 const URL_PARAM_ARRAY_SEPARATOR = '|';
-
-const getInternalApiRootAddressOnServer = async (): Promise<string> => {
-  if (!isServerSide()) return '';
-
-  const { getInternalApiRootAddress } = await import('$utils/address.helper');
-  return getInternalApiRootAddress();
-};
 
 export const financerBaseQuery = async (
   args: string | FetchArgs,
   api: BaseQueryApi,
   extraOptions: unknown = {},
 ) => {
-  const url = await getInternalApiRootAddressOnServer();
-  const sessionId = await getSessionId();
-
   return fetchBaseQuery({
-    baseUrl: `${url}/`,
-    next: isServerSide()
-      ? {
-          revalidate: 5,
-          tags: [sessionId ?? ''],
-        }
-      : undefined,
-    prepareHeaders: async (headers) => {
-      if (isServerSide()) {
-        headers.set('Cookie', `connect.sid=${sessionId}`);
-      }
-    },
+    baseUrl: `/`,
     paramsSerializer: (params) => {
       const formattedParams = Object.fromEntries(
         Object.entries(params)

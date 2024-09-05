@@ -8,15 +8,17 @@ import {
   PointElement,
   Tooltip,
 } from 'chart.js';
+import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 
 import { Loader } from '$elements/loader/loader';
 
 interface ChartWrapperProps {
   children: React.ReactElement;
+  isLoading?: boolean;
 }
 
-const ChartWrapper = ({ children }: ChartWrapperProps) => {
+const ChartWrapper = ({ children, isLoading }: ChartWrapperProps) => {
   const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
@@ -43,7 +45,10 @@ const ChartWrapper = ({ children }: ChartWrapperProps) => {
 
   return (
     <section
-      className={'min-h-[200px] md:min-h-[400px] md:aspect-auto max-lg:-mx-4'}
+      className={clsx(
+        'min-h-[200px] md:min-h-[400px] md:aspect-auto max-lg:-mx-4',
+        { 'animate-pulse': isLoading },
+      )}
     >
       {children}
     </section>
