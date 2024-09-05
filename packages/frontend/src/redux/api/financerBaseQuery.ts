@@ -4,6 +4,7 @@ import {
   fetchBaseQuery,
 } from '@reduxjs/toolkit/query/react';
 
+import { getSessionId } from '$ssr/get-session-id';
 import { isServerSide } from '$utils/is-server-side';
 
 const URL_PARAM_ARRAY_SEPARATOR = '|';
@@ -27,7 +28,6 @@ export const financerBaseQuery = async (
     cache: isServerSide() ? 'no-store' : undefined,
     prepareHeaders: async (headers) => {
       if (isServerSide()) {
-        const { getSessionId } = await import('$ssr/get-session-id');
         const sessionId = await getSessionId();
         headers.set('Cookie', `connect.sid=${sessionId}`);
       }
