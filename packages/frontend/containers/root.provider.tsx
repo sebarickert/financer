@@ -1,49 +1,45 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
 import { FC, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { StoreProvider } from './store.provider';
 import { TransitionProvider } from './transition.provider';
 
-import { useAuthGetAuthenticationStatusQuery } from '$api/generated/financerApi';
 import { ToastMessageTypes } from '$blocks/toast/toast';
 import { PageInfoProvider } from '$context/pageInfoContext';
-import { Loader } from '$elements/loader/loader';
-import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import {
-  removeToastMessage,
   addToastMessage,
+  removeToastMessage,
 } from '$reducer/notifications.reducer';
 import { ScrollToTop } from '$renderers/scroll-to-top/scroll-to-top';
-import { Login } from '$views/login/login';
-import { ChildrenProp } from 'src/types/children-prop';
 
-const PUBLIC_ROUTES = ['/privacy-policy', '/issues-with-login'];
+type RootProviderContainerProps = {
+  children: React.ReactNode;
+  shouldShowOnboarding: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  authenticationErrors: any;
+};
 
-const App: FC<ChildrenProp> = ({ children }) => {
-  const { data: authenticationStatus, isLoading } =
-    useAuthGetAuthenticationStatusQuery();
-  const { push } = useViewTransitionRouter();
-  const pathname = usePathname();
+const App: FC<RootProviderContainerProps> = ({
+  children,
+  shouldShowOnboarding,
+  authenticationErrors,
+}) => {
   const dispatch = useDispatch();
-  const [hasBeenRedirected, setHasBeenRedirected] = useState(false);
+
+  const [hasShownOnboarding, setHasShownOnboarding] = useState(false);
 
   useEffect(() => {
-    if (hasBeenRedirected) return;
-
-    if (
-      !authenticationStatus?.authenticated ||
-      authenticationStatus?.hasAccounts
-    ) {
+    if (hasShownOnboarding && !shouldShowOnboarding) {
       dispatch(removeToastMessage('welcomeToFinancer'));
       return;
     }
 
-    setHasBeenRedirected(true);
+    if (hasShownOnboarding || !shouldShowOnboarding) return;
 
-    push('/accounts/add');
+    setHasShownOnboarding(true);
+
     dispatch(
       addToastMessage({
         id: 'welcomeToFinancer',
@@ -53,43 +49,33 @@ const App: FC<ChildrenProp> = ({ children }) => {
           'You must add your first account before you start tracking finances with Financer',
       }),
     );
-  }, [push, authenticationStatus, dispatch, hasBeenRedirected]);
+  }, [dispatch, hasShownOnboarding, shouldShowOnboarding]);
 
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const errors = authenticationStatus?.errors;
-
-    if (!errors) return;
+    if (!authenticationErrors) return;
 
     dispatch(
       addToastMessage({
         id: 'authenticationStatusErrors',
         type: ToastMessageTypes.ERROR,
         message: 'Something went wrong!',
-        additionalInformation: errors,
+        additionalInformation: authenticationErrors,
       }),
     );
+  }, [authenticationErrors, dispatch]);
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-  }, [authenticationStatus?.errors, dispatch]);
-
-  if (isLoading) return <Loader />;
-
-  const isAuthenticated = authenticationStatus?.authenticated;
-  const isPublicRoute = PUBLIC_ROUTES.includes(pathname);
-
-  return <>{!isPublicRoute && !isAuthenticated ? <Login /> : children}</>;
+  return children;
 };
 
-export const RootProviderContainer: FC<ChildrenProp> = ({ children }) => {
+export const RootProviderContainer: FC<RootProviderContainerProps> = (
+  props,
+) => {
   return (
     <StoreProvider>
       <TransitionProvider>
         <PageInfoProvider>
           <ScrollToTop />
-          <App>{children}</App>
+          <App {...props} />
         </PageInfoProvider>
       </TransitionProvider>
     </StoreProvider>

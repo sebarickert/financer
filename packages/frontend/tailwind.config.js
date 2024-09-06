@@ -1,28 +1,28 @@
-const defaultTheme = require('tailwindcss/defaultTheme');
-const colors = require('tailwindcss/colors');
-const colorPalette = require('./src/constants/colorPaletteRaw.json');
+const defaultTheme = require("tailwindcss/defaultTheme");
+const colors = require("tailwindcss/colors");
+const colorPalette = require("./src/constants/colorPaletteRaw.json");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./src/**/*.{js,ts,jsx,tsx}', './public/**/*.html'],
+  content: ["./(src|app|containers)/**/*.{js,ts,jsx,tsx}"],
   theme: {
     colors: {
-      transparent: 'transparent',
-      current: 'currentColor',
+      transparent: "transparent",
+      current: "currentColor",
       black: colors.black,
       white: colors.white,
-      ...colorPalette
+      ...colorPalette,
     },
     extend: {
       fontFamily: {
-        sans: ['Euclid Circular A', ...defaultTheme.fontFamily.sans],
+        sans: ["Euclid Circular A", ...defaultTheme.fontFamily.sans],
       },
     },
   },
   plugins: [
-    require('@tailwindcss/forms'),
-    require('tailwindcss-safe-area'),
-    require('@tailwindcss/typography'),
-    require("tailwindcss-view-transitions")
+    require("@tailwindcss/forms"),
+    require("tailwindcss-safe-area"),
+    require("@tailwindcss/typography"),
+    require("tailwindcss-view-transitions"),
   ],
 };
