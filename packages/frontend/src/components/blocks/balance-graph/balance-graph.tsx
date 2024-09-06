@@ -31,16 +31,7 @@ const yearAgoFilterOptions = {
 
 const dummyGraphData = {
   labels: [formatDate(yearAgo, DateFormat.monthShort).toUpperCase(), 'CURRENT'],
-  datasets: [
-    {
-      label: 'Balance',
-      fill: true,
-      borderColor: colorPalette.blue,
-      backgroundColor: setGradientLineGraphBackground,
-      data: [0, 10],
-      tension: 0.25,
-    },
-  ],
+  datasets: [],
 };
 
 export const BalanceGraph = (): JSX.Element | null => {

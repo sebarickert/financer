@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import { useState } from 'react';
 
@@ -15,11 +17,6 @@ const NEXT_PUBLIC_IS_AUTH0_OAUTH_ENABLED =
 
 const checkIsEnabled = (stringBoolean: string | undefined) =>
   stringBoolean && stringBoolean.toLocaleLowerCase() !== 'false';
-
-// TODO add dedicated page for Login
-// export const metadata: Metadata = {
-//   title: 'Login',
-// };
 
 export const Login = (): JSX.Element => {
   const [isLoadingOAuthPage, setIsLoadingOAuthPage] = useState(false);

@@ -1,11 +1,14 @@
 import { Metadata, Viewport } from 'next';
+import { cookies, headers } from 'next/headers';
+import { redirect, RedirectType } from 'next/navigation';
 import { FC } from 'react';
-
-import '$assets/tailwind.css';
 
 import { faviconList } from '$assets/favicon-list';
 import { RootProviderContainer } from '$container/root.provider';
+import { AuthenticationService } from '$ssr/api/authentication.service';
 import { ChildrenProp } from 'src/types/children-prop';
+
+import '$assets/tailwind.css';
 
 const appName = 'Financer';
 
@@ -28,7 +31,35 @@ export const viewport: Viewport = {
   themeColor: '#FFFFFF',
 };
 
-const RootLayout: FC<ChildrenProp> = ({ children }) => {
+const REDIRECT_COOKIE_NAME = 'onboardingRedirect';
+
+const PUBLIC_ROUTES = ['/privacy-policy/', '/issues-with-login/', '/login/'];
+
+const RootLayout: FC<ChildrenProp> = async ({ children }) => {
+  const headersList = headers();
+  const cookiesStore = cookies();
+
+  const authenticationStatus = await AuthenticationService.getStatus();
+  const pathname = headersList.get('x-pathname');
+
+  if (!pathname) {
+    throw new Error('Pathname is not provided');
+  }
+
+  if (
+    !authenticationStatus?.authenticated &&
+    !PUBLIC_ROUTES.includes(pathname)
+  ) {
+    redirect('/login', RedirectType.replace);
+  } else if (
+    authenticationStatus?.authenticated &&
+    !cookiesStore.get(REDIRECT_COOKIE_NAME) &&
+    !authenticationStatus.hasAccounts
+  ) {
+    cookiesStore.set(REDIRECT_COOKIE_NAME, 'true', { maxAge: 60 * 10 }); // 10 minutes
+    redirect('/accounts/add', RedirectType.replace);
+  }
+
   // We don't have to polyfill every feature by our self, since next js already does by default for many features
   // See the full list from here: https://nextjs.org/docs/architecture/supported-browsers
   return (
@@ -37,7 +68,13 @@ const RootLayout: FC<ChildrenProp> = ({ children }) => {
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
       </head>
       <body className="min-h-screen">
-        <RootProviderContainer>{children}</RootProviderContainer>
+        <RootProviderContainer
+          shouldShowOnboarding={!authenticationStatus?.hasAccounts}
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          authenticationErrors={(authenticationStatus as any)?.errors}
+        >
+          {children}
+        </RootProviderContainer>
       </body>
     </html>
   );
