@@ -19,6 +19,7 @@ export class ExpensesService {
     year: number,
     month: number,
     accountTypes: AccountType[],
+    accountId?: string,
   ): Promise<PaginationDto<ExpenseDto[]>> {
     return this.transactionService.findAllByUser(
       userId,
@@ -27,7 +28,7 @@ export class ExpensesService {
       limit || undefined,
       year || undefined,
       month || undefined,
-      undefined,
+      accountId,
       accountTypes || undefined,
     );
   }

@@ -10,6 +10,16 @@ const isPrefetchRequest = (headers: Headers) => {
 };
 
 const isApiRequest = (req: NextRequest) => {
+  const nextApiEndpointPrefixes = ['/api/revalidate-cache'];
+
+  if (
+    nextApiEndpointPrefixes.some((prefix) =>
+      req.nextUrl.pathname.startsWith(prefix),
+    )
+  ) {
+    return false;
+  }
+
   return (
     req.nextUrl.pathname.startsWith('/api') ||
     req.nextUrl.pathname.startsWith('/auth')
@@ -22,6 +32,15 @@ export async function middleware(request: NextRequest) {
   }
 
   if (isApiRequest(request)) {
+    if (
+      request.method === 'POST' &&
+      request.nextUrl.pathname === '/api/users/my-user/my-data/'
+    ) {
+      await fetch(new URL('/api/revalidate-cache', request.url).toString(), {
+        method: 'POST',
+      });
+    }
+
     return NextResponse.rewrite(
       new URL(
         `${getInternalApiRootAddress()}${request.nextUrl.pathname}${request.nextUrl.search}`,

@@ -8,22 +8,10 @@ export const metadata: Metadata = {
   title: 'Incomes',
 };
 
-type IncomesPageProps = {
-  searchParams: {
-    date?: string;
-    page?: string;
-  };
-};
-
-const IncomesPage: FC<IncomesPageProps> = ({
-  searchParams: { date, page },
-}) => {
+const IncomesPage: FC = () => {
   return (
     <Layout title="Incomes">
-      <IncomeListingContainer
-        date={date as string}
-        page={parseInt(page as string)}
-      />
+      <IncomeListingContainer />
     </Layout>
   );
 };

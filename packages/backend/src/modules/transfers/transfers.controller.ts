@@ -59,6 +59,10 @@ export class TransfersController {
     name: 'accountTypes',
     required: false,
   })
+  @ApiQuery({
+    name: 'accountId',
+    required: false,
+  })
   async findAllByUser(
     @UserId() userId: string,
     @Query('month') month: number,
@@ -70,6 +74,7 @@ export class TransfersController {
       new ParseArrayPipe({ separator: '|', optional: true }),
     )
     accountTypes?: AccountType[],
+    @Query('accountId', ValidateEntityId) accountId?: string,
   ) {
     return this.transfersService.findAllByUser(
       userId,
@@ -78,6 +83,7 @@ export class TransfersController {
       year,
       month,
       accountTypes,
+      accountId,
     );
   }
 

@@ -2,11 +2,7 @@ import { useMemo } from 'react';
 
 import { AccountBalanceHistoryChart } from './account.balance-history-chart';
 
-import {
-  AccountDto,
-  AccountType,
-  useTransactionsFindAllByAccountQuery,
-} from '$api/generated/financerApi';
+import { AccountDto, AccountType } from '$api/generated/financerApi';
 import { BalanceDisplay } from '$blocks/balance-display/balance-display';
 import { DetailsList } from '$blocks/details-list/details-list';
 import { TransactionListingWithMonthlyPager } from '$blocks/transaction-listing-with-monthly-pager/transaction-listing.with.monthly-pager';
@@ -76,8 +72,7 @@ export const Account = ({ account }: AccountProps): JSX.Element | null => {
           )}
         </div>
         <TransactionListingWithMonthlyPager
-          additionalFilterOptions={{ id: account.id }}
-          useDataHook={useTransactionsFindAllByAccountQuery}
+          filterOptions={{ accountId: account.id }}
         />
       </section>
     </>

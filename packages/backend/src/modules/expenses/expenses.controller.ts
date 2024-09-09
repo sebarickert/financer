@@ -56,6 +56,10 @@ export class ExpensesController {
     name: 'accountTypes',
     required: false,
   })
+  @ApiQuery({
+    name: 'accountId',
+    required: false,
+  })
   async findAllByUser(
     @UserId() userId: string,
     @Query('month') month: number,
@@ -67,6 +71,7 @@ export class ExpensesController {
       new ParseArrayPipe({ separator: '|', optional: true }),
     )
     accountTypes?: AccountType[],
+    @Query('accountId', ValidateEntityId) accountId?: string,
   ) {
     return this.expensesService.findAllByUser(
       userId,
@@ -75,6 +80,7 @@ export class ExpensesController {
       year,
       month,
       accountTypes,
+      accountId,
     );
   }
 

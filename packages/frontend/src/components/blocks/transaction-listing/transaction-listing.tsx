@@ -1,10 +1,10 @@
-import { PagerOptions } from '../../../hooks/usePager';
-import { Pager } from '../pager/pager';
-
 import {
   TransactionListingItem,
   TransactionListingItemProps,
 } from './transaction-listing.item';
+
+import { Pager } from '$blocks/pager/pager';
+import { PagerOptions } from '$blocks/pager/pager.service';
 
 interface TransactionListingProps {
   title?: string;

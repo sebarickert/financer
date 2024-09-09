@@ -1,8 +1,7 @@
 import clsx from 'clsx';
 
-import { isExternalLink } from '../button/button';
-import { IconName, Icon } from '../icon/icon';
-
+import { isExternalLink } from '$elements/button/is-external-link';
+import { Icon, IconName } from '$elements/icon/icon';
 import { LinkViewTransition } from '$elements/link/link-view-transition';
 
 interface LinkListLinkProps {

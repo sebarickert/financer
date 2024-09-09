@@ -55,6 +55,10 @@ export class TransactionsController {
     required: false,
   })
   @ApiQuery({
+    name: 'accountId',
+    required: false,
+  })
+  @ApiQuery({
     name: 'sortOrder',
     required: false,
     enum: Prisma.SortOrder,
@@ -76,6 +80,7 @@ export class TransactionsController {
       new ParseArrayPipe({ separator: '|', optional: true }),
     )
     accountTypes?: AccountType[],
+    @Query('accountId', ValidateEntityId) accountId?: string,
     @Query(
       'sortOrder',
       new DefaultValuePipe(Prisma.SortOrder.desc),
@@ -92,7 +97,7 @@ export class TransactionsController {
       limit || undefined,
       year || undefined,
       month || undefined,
-      undefined,
+      accountId,
       accountTypes || undefined,
       sortOrder || undefined,
       undefined,
@@ -153,43 +158,6 @@ export class TransactionsController {
       accountTypes,
       transactionCategories,
       parentTransactionCategory,
-    );
-  }
-
-  @Get('/account/:id')
-  @ApiPaginatedDto(TransactionDto)
-  @ApiParam({
-    name: 'id',
-    type: String,
-  })
-  @ApiQuery({
-    name: 'month',
-    required: false,
-  })
-  @ApiQuery({
-    name: 'year',
-    required: false,
-  })
-  @ApiQuery({
-    name: 'page',
-    required: false,
-  })
-  async findAllByAccount(
-    @UserId() userId: string,
-    @Param('id', ValidateEntityId) accountId: string,
-    @Query('month') month: number,
-    @Query('year') year: number,
-    @Query('page') page: number,
-    @Query('limit') limit: number,
-  ) {
-    return this.transactionsService.findAllByUser(
-      userId,
-      null,
-      page || undefined,
-      limit || undefined,
-      year || undefined,
-      month || undefined,
-      accountId,
     );
   }
 

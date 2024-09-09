@@ -472,6 +472,12 @@
             "schema": { "type": "array", "items": { "type": "string" } }
           },
           {
+            "name": "accountId",
+            "required": false,
+            "in": "query",
+            "schema": { "type": "string" }
+          },
+          {
             "name": "sortOrder",
             "required": false,
             "in": "query",
@@ -557,69 +563,6 @@
                   "items": {
                     "$ref": "#/components/schemas/TransactionMonthSummaryDto"
                   }
-                }
-              }
-            }
-          }
-        },
-        "tags": ["Transactions"]
-      }
-    },
-    "/api/transactions/account/{id}": {
-      "get": {
-        "operationId": "Transactions_findAllByAccount",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": { "type": "string" }
-          },
-          {
-            "name": "month",
-            "required": false,
-            "in": "query",
-            "schema": { "type": "number" }
-          },
-          {
-            "name": "year",
-            "required": false,
-            "in": "query",
-            "schema": { "type": "number" }
-          },
-          {
-            "name": "page",
-            "required": false,
-            "in": "query",
-            "schema": { "type": "number" }
-          },
-          {
-            "name": "limit",
-            "required": true,
-            "in": "query",
-            "schema": { "type": "number" }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    { "$ref": "#/components/schemas/PaginationDto" },
-                    {
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/TransactionDto"
-                          }
-                        }
-                      },
-                      "required": ["data"]
-                    }
-                  ]
                 }
               }
             }
@@ -1052,6 +995,12 @@
             "required": false,
             "in": "query",
             "schema": { "type": "array", "items": { "type": "string" } }
+          },
+          {
+            "name": "accountId",
+            "required": false,
+            "in": "query",
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
@@ -1203,6 +1152,12 @@
             "required": false,
             "in": "query",
             "schema": { "type": "array", "items": { "type": "string" } }
+          },
+          {
+            "name": "accountId",
+            "required": false,
+            "in": "query",
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
@@ -1354,6 +1309,12 @@
             "required": false,
             "in": "query",
             "schema": { "type": "array", "items": { "type": "string" } }
+          },
+          {
+            "name": "accountId",
+            "required": false,
+            "in": "query",
+            "schema": { "type": "string" }
           }
         ],
         "responses": {

@@ -1,6 +1,8 @@
+'use client';
+
 import { ChartData, ChartOptions } from 'chart.js';
 import { isAfter } from 'date-fns';
-import { useMemo } from 'react';
+import { FC, useMemo } from 'react';
 import { Chart } from 'react-chartjs-2';
 
 import {
@@ -24,9 +26,9 @@ interface AccountBalanceHistoryChartProps {
   accountId: AccountDto['id'];
 }
 
-export const AccountBalanceHistoryChart = ({
-  accountId,
-}: AccountBalanceHistoryChartProps): JSX.Element | null => {
+export const AccountBalanceHistoryChart: FC<
+  AccountBalanceHistoryChartProps
+> = ({ accountId }) => {
   const { data: accountBalanceHistoryData } =
     useAccountsGetAccountBalanceHistoryQuery({ id: accountId });
 
@@ -101,7 +103,7 @@ export const AccountBalanceHistoryChart = ({
     [accountBalanceHistory, labels],
   );
 
-  if (!accountBalanceHistory?.length || accountBalanceHistory.length === 1) {
+  if (accountBalanceHistory.length === 1) {
     return null;
   }
 

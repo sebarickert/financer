@@ -11,8 +11,6 @@ import {
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 
-import { Loader } from '$elements/loader/loader';
-
 interface ChartWrapperProps {
   children: React.ReactElement;
   isLoading?: boolean;
@@ -39,18 +37,14 @@ const ChartWrapper = ({ children, isLoading }: ChartWrapperProps) => {
     register();
   }, []);
 
-  if (!isInitialized) {
-    return <Loader />;
-  }
-
   return (
     <section
       className={clsx(
         'min-h-[200px] md:min-h-[400px] md:aspect-auto max-lg:-mx-4',
-        { 'animate-pulse': isLoading },
+        { 'animate-pulse': isLoading || !isInitialized },
       )}
     >
-      {children}
+      {isInitialized && children}
     </section>
   );
 };

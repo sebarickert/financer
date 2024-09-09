@@ -1,7 +1,10 @@
+'use client';
+
 import clsx from 'clsx';
 
-import { PagerOptions } from '../../../hooks/usePager';
-import { Icon, IconName } from '../../elements/icon/icon';
+import { PagerOptions } from './pager.service';
+
+import { Icon, IconName } from '$elements/icon/icon';
 
 interface PagerProps {
   className?: string;
@@ -32,7 +35,7 @@ const PagerButton = ({
           [className]: true,
         },
       )}
-      onClick={handleClick}
+      onClick={() => handleClick()}
       disabled={isDisabled}
       title={children}
     >

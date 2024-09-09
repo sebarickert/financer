@@ -1,20 +1,12 @@
-'use client';
+import { FC } from 'react';
 
-import { useIncomesFindAllByUserQuery } from '$api/generated/financerApi';
+import { TransactionType } from '$api/generated/financerApi';
 import { TransactionListingWithMonthlyPager } from '$blocks/transaction-listing-with-monthly-pager/transaction-listing.with.monthly-pager';
 import { ButtonInternal } from '$elements/button/button.internal';
 import { Icon, IconName } from '$elements/icon/icon';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
-interface IncomeListingContainerProps {
-  date?: string;
-  page?: number;
-}
-
-export const IncomeListingContainer = ({
-  date,
-  page,
-}: IncomeListingContainerProps) => {
+export const IncomeListingContainer: FC = () => {
   return (
     <>
       <UpdatePageInfo
@@ -30,11 +22,7 @@ export const IncomeListingContainer = ({
           </ButtonInternal>
         }
       />
-      <TransactionListingWithMonthlyPager
-        initialDate={date}
-        initialPage={page}
-        useDataHook={useIncomesFindAllByUserQuery}
-      />
+      <TransactionListingWithMonthlyPager type={TransactionType.Income} />
     </>
   );
 };

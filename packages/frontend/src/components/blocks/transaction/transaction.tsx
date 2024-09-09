@@ -1,9 +1,13 @@
 import { useCallback, useMemo } from 'react';
 
-import { ExpenseDto, IncomeDto, TransferDto } from '$api/generated/financerApi';
+import {
+  ExpenseDto,
+  IncomeDto,
+  TransactionType,
+  TransferDto,
+} from '$api/generated/financerApi';
 import { BalanceDisplay } from '$blocks/balance-display/balance-display';
 import { DetailsList } from '$blocks/details-list/details-list';
-import { TransactionType } from '$blocks/transaction-listing/transaction-listing.item';
 import { ButtonInternal } from '$elements/button/button.internal';
 import { Heading } from '$elements/heading/heading';
 import { Icon, IconName } from '$elements/icon/icon';
@@ -39,17 +43,17 @@ export const Transaction = ({
 
   const transactionDetailsMapping = useMemo(() => {
     switch (transactionType) {
-      case TransactionType.TRANSFER:
+      case TransactionType.Transfer:
         return {
           type: 'transfer',
           url: 'transfers',
         };
-      case TransactionType.INCOME:
+      case TransactionType.Income:
         return {
           type: 'income',
           url: 'incomes',
         };
-      case TransactionType.EXPENSE:
+      case TransactionType.Expense:
         return {
           type: 'expense',
           url: 'expenses',

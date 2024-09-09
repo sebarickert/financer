@@ -11,6 +11,7 @@ import { DataHandler } from '$blocks/data-handler/data-handler';
 import { ToastMessageTypes } from '$blocks/toast/toast';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { addToastMessage } from '$reducer/notifications.reducer';
+import { clearAccountCache } from '$ssr/api/clear-cache';
 import { AccountEdit } from '$views/accounts/account.edit';
 import { AccountFormFields } from '$views/accounts/account.form';
 
@@ -44,6 +45,8 @@ export const AccountEditContainer = ({ id }: AccountEditContainerProps) => {
           id: account.id,
           updateAccountDto: newAccountData,
         });
+
+        await clearAccountCache();
 
         if ('message' in newAccount) {
           dispatch(

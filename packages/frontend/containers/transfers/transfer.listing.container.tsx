@@ -1,20 +1,12 @@
-'use client';
+import { FC } from 'react';
 
-import { useTransfersFindAllByUserQuery } from '$api/generated/financerApi';
+import { TransactionType } from '$api/generated/financerApi';
 import { TransactionListingWithMonthlyPager } from '$blocks/transaction-listing-with-monthly-pager/transaction-listing.with.monthly-pager';
 import { ButtonInternal } from '$elements/button/button.internal';
 import { Icon, IconName } from '$elements/icon/icon';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
-interface TransferListingContainerProps {
-  date?: string;
-  page?: number;
-}
-
-export const TransferListingContainer = ({
-  date,
-  page,
-}: TransferListingContainerProps) => {
+export const TransferListingContainer: FC = () => {
   return (
     <>
       <UpdatePageInfo
@@ -30,11 +22,7 @@ export const TransferListingContainer = ({
           </ButtonInternal>
         }
       />
-      <TransactionListingWithMonthlyPager
-        initialDate={date}
-        initialPage={page}
-        useDataHook={useTransfersFindAllByUserQuery}
-      />
+      <TransactionListingWithMonthlyPager type={TransactionType.Transfer} />
     </>
   );
 };

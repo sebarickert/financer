@@ -1,7 +1,6 @@
 import clsx from 'clsx';
 
-import { isExternalLink } from '../button/button';
-
+import { isExternalLink } from '$elements/button/is-external-link';
 import { LinkViewTransition } from '$elements/link/link-view-transition';
 
 interface LinkProps {
