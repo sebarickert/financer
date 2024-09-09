@@ -1,3 +1,5 @@
+'use client';
+
 import { ChartData, ChartOptions } from 'chart.js';
 import { useMemo } from 'react';
 import { Chart } from 'react-chartjs-2';
@@ -161,13 +163,13 @@ export const MonthlySummaryGraph = ({
     [labels, monthlySummaryHistory],
   );
 
-  if (!monthlySummaryHistory?.length || monthlySummaryHistory.length === 1) {
+  if (monthlySummaryHistory.length === 1) {
     return null;
   }
 
   return (
     <section className={`${className}`}>
-      <ChartWrapperDynamic>
+      <ChartWrapperDynamic isLoading={!monthlySummaryHistory?.length}>
         <Chart type="line" data={chartData} options={chartOptions} />
       </ChartWrapperDynamic>
     </section>

@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 
-import { TransactionType } from '$blocks/transaction-listing/transaction-listing.item';
+import { TransactionType } from '$api/generated/financerApi';
 import { Icon, IconName } from '$elements/icon/icon';
 import { formatCurrency } from '$utils/formatCurrency';
 
@@ -32,17 +32,17 @@ export const BalanceDisplay = ({
   };
 
   const typeMapping = {
-    [TransactionType.INCOME]: {
+    [TransactionType.Income]: {
       balance: `+ ${formattedAmount}`,
       icon: IconName.download,
       color: 'text-green',
     },
-    [TransactionType.EXPENSE]: {
+    [TransactionType.Expense]: {
       balance: `- ${formattedAmount}`,
       icon: IconName.upload,
       color: 'text-red',
     },
-    [TransactionType.TRANSFER]: {
+    [TransactionType.Transfer]: {
       icon: IconName.switchHorizontal,
     },
   };

@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import { ButtonExternal } from './button.external';
 import { ButtonInternal } from './button.internal';
 import { ButtonPlain } from './button.plain';
+import { isExternalLink } from './is-external-link';
 
 import { ViewTransition } from '$hooks/useViewTransitionRouter';
 
@@ -18,14 +19,6 @@ interface ButtonProps {
   testId?: string;
   isDisabled?: boolean;
 }
-
-export const isExternalLink = (link: string): boolean =>
-  link.substring(0, 8) === 'https://' ||
-  link.substring(0, 7) === 'http://' ||
-  link.substring(0, 2) === '//' ||
-  link.substring(0, 5) === 'blob:' ||
-  link.substring(0, 5) === '/api/' ||
-  link.substring(0, 6) === '/auth/';
 
 export const Button = ({
   accentColor = 'black',

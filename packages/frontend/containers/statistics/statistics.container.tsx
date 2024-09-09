@@ -1,5 +1,3 @@
-'use client';
-
 import { Statistics } from '$views/statistics/statistics';
 
 export const StatisticsContainer = () => {

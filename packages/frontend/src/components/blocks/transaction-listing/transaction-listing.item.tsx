@@ -1,14 +1,8 @@
 import clsx from 'clsx';
 
-import { IconName, Icon } from '../../elements/icon/icon';
-
+import { TransactionType } from '$api/generated/financerApi';
+import { IconName, Icon } from '$elements/icon/icon';
 import { LinkViewTransition } from '$elements/link/link-view-transition';
-
-export enum TransactionType {
-  INCOME = 'income',
-  EXPENSE = 'expense',
-  TRANSFER = 'transfer',
-}
 
 export interface TransactionListingItemProps {
   transactionCategories?: string;
@@ -30,11 +24,11 @@ export const TransactionListingItem = ({
   id,
 }: TransactionListingItemProps): JSX.Element => {
   const iconTypeMapping: {
-    [key in 'expense' | 'income' | 'transfer']: IconName;
+    [key in TransactionType]: IconName;
   } = {
-    expense: IconName.upload,
-    income: IconName.download,
-    transfer: IconName.switchHorizontal,
+    EXPENSE: IconName.upload,
+    INCOME: IconName.download,
+    TRANSFER: IconName.switchHorizontal,
   };
 
   return (
@@ -74,12 +68,12 @@ export const TransactionListingItem = ({
           </span>
           <span
             className={clsx('flex-shrink-0 ml-auto font-medium', {
-              ['text-green']: transactionType === 'income',
-              ['text-red']: transactionType === 'expense',
+              ['text-green']: transactionType === 'INCOME',
+              ['text-red']: transactionType === 'EXPENSE',
             })}
           >
-            {transactionType === 'income' && '+ '}
-            {transactionType === 'expense' && '- '}
+            {transactionType === 'INCOME' && '+ '}
+            {transactionType === 'EXPENSE' && '- '}
             {transactionAmount}
           </span>
           <Icon

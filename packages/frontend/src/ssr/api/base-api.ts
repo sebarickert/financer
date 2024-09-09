@@ -5,11 +5,44 @@ import { getSessionId } from '$ssr/get-session-id';
 import { getInternalApiRootAddress } from '$utils/address.helper';
 
 export abstract class BaseApi {
+  public static readonly API_TAG = {
+    ACCOUNT: 'account',
+    ACCOUNT_BALANCE: 'account-balance',
+    AUTHENTICATION: 'authentication',
+    USER: 'user',
+    USER_PREFERENCE: 'user-preference',
+    TRANSACTION_TEMPLATE: 'transaction-template',
+    TRANSACTION: 'transaction',
+    INCOME: 'income',
+    EXPENSE: 'expense',
+    TRANSFER: 'transfer',
+    CATEGORY: 'category',
+  } as const;
+
+  protected static getListTag(
+    tag: (typeof BaseApi.API_TAG)[keyof typeof BaseApi.API_TAG],
+  ): string {
+    return `${tag}:list`;
+  }
+
+  protected static getEntityTag(
+    tag: (typeof BaseApi.API_TAG)[keyof typeof BaseApi.API_TAG],
+    id: string,
+  ): string {
+    return `${tag}:id:${id}`;
+  }
+
+  protected static getSummaryTag(
+    tag: (typeof BaseApi.API_TAG)[keyof typeof BaseApi.API_TAG],
+  ): string {
+    return `${tag}:summary`;
+  }
+
   private static async getNextOptions(
     requestOptions: NextFetchRequestConfig | undefined,
   ): Promise<NextFetchRequestConfig> {
     const baseOptions = {
-      revalidate: 5,
+      revalidate: 900, // 15 minutes
       tags: [(await getSessionId()) ?? ''],
     };
 

@@ -29,11 +29,6 @@ const yearAgoFilterOptions = {
   month: new Date().getMonth(),
 };
 
-const dummyGraphData = {
-  labels: [formatDate(yearAgo, DateFormat.monthShort).toUpperCase(), 'CURRENT'],
-  datasets: [],
-};
-
 export const BalanceGraph = (): JSX.Element | null => {
   const { data: dashboardSettings } = useUserDashboardSettings();
   const accountTypeFilter = { accountTypes: dashboardSettings?.accountTypes };
@@ -172,11 +167,7 @@ export const BalanceGraph = (): JSX.Element | null => {
 
   return (
     <ChartWrapperDynamic isLoading={!balanceHistory?.length}>
-      <Chart
-        type="line"
-        data={!balanceHistory?.length ? dummyGraphData : chartData}
-        options={chartOptions}
-      />
+      <Chart type="line" data={chartData} options={chartOptions} />
     </ChartWrapperDynamic>
   );
 };

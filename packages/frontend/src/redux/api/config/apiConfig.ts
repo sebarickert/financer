@@ -307,17 +307,6 @@ financerApi.enhanceEndpoints({
         })) ?? []),
       ],
     },
-    transactionsFindAllByAccount: {
-      providesTags: (res) => [
-        ApiTag.TRANSACTION,
-        { type: ApiTag.TRANSACTION, id: 'LIST' },
-        { type: ApiTag.TRANSACTION, id: `PAGE-${res?.currentPage}` },
-        ...(res?.data.map(({ id }) => ({
-          type: ApiTag.TRANSACTION,
-          id,
-        })) ?? []),
-      ],
-    },
 
     //
     // Category

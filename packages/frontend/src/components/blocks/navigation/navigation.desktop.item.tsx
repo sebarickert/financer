@@ -4,7 +4,7 @@ import clsx from 'clsx';
 
 import { NavigationItem } from './navigation';
 
-import { isExternalLink } from '$elements/button/button';
+import { isExternalLink } from '$elements/button/is-external-link';
 import { Icon } from '$elements/icon/icon';
 import { LinkViewTransition } from '$elements/link/link-view-transition';
 import { useIsActiveLink } from '$hooks/useIsActiveLink';
