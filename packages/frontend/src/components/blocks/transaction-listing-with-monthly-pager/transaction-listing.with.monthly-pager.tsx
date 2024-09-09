@@ -46,7 +46,7 @@ export const TransactionListingWithMonthlyPager: FC<
 
   return (
     <section className={className}>
-      <Pager className="mb-4" pagerOptions={pagerOptions}>
+      <Pager className="mb-4" pagerOptions={pagerOptions} isStatusHidden>
         {pagerLabel}
       </Pager>
       {isSummaryVisible && (

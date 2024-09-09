@@ -1,6 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
+import { FC } from 'react';
 
 import { PagerOptions } from './pager.service';
 
@@ -10,6 +11,7 @@ interface PagerProps {
   className?: string;
   pagerOptions: PagerOptions;
   children?: string;
+  isStatusHidden?: boolean;
 }
 
 interface PagerButtonProps {
@@ -20,13 +22,13 @@ interface PagerButtonProps {
   isDisabled?: boolean;
 }
 
-const PagerButton = ({
+const PagerButton: FC<PagerButtonProps> = ({
   handleClick,
   children,
   isNext,
   className = '',
   isDisabled,
-}: PagerButtonProps) => {
+}) => {
   return (
     <button
       className={clsx(
@@ -48,11 +50,12 @@ const PagerButton = ({
   );
 };
 
-export const Pager = ({
+export const Pager: FC<PagerProps> = ({
   className = '',
   pagerOptions,
   children,
-}: PagerProps): JSX.Element => {
+  isStatusHidden,
+}) => {
   const { nextPage, previousPage, pageCount, currentPage } = pagerOptions;
   return (
     <section
@@ -69,7 +72,7 @@ export const Pager = ({
           Previous page
         </PagerButton>
         {children && <p>{children}</p>}
-        {currentPage && pageCount && (
+        {!isStatusHidden && currentPage && pageCount && (
           <p className="mx-4 font-medium tracking-tight text-charcoal">
             <span className="sr-only">
               Current page: {currentPage} of {pageCount}
