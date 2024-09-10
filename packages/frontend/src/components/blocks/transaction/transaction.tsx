@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { FC } from 'react';
 
 import {
   ExpenseDto,
@@ -11,8 +11,8 @@ import { DetailsList } from '$blocks/details-list/details-list';
 import { ButtonInternal } from '$elements/button/button.internal';
 import { Heading } from '$elements/heading/heading';
 import { Icon, IconName } from '$elements/icon/icon';
-import { useGetAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useGetAllTransactionCategoriesWithCategoryTree';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { CategoryService } from '$ssr/api/category.service';
 import { capitalize } from '$utils/capitalize';
 import { formatCurrency } from '$utils/formatCurrency';
 import { DateFormat, formatDate } from '$utils/formatDate';
@@ -24,79 +24,74 @@ interface TransactionProps {
   fromAccount?: string;
 }
 
-export const Transaction = ({
+const getUrlMapping = (transactionType: TransactionType) => {
+  switch (transactionType) {
+    case TransactionType.Transfer:
+      return {
+        type: 'transfer',
+        url: 'transfers',
+      };
+    case TransactionType.Income:
+      return {
+        type: 'income',
+        url: 'incomes',
+      };
+    case TransactionType.Expense:
+      return {
+        type: 'expense',
+        url: 'expenses',
+      };
+  }
+};
+
+export const Transaction: FC<TransactionProps> = async ({
   transaction,
   toAccount,
   fromAccount,
-}: TransactionProps): JSX.Element => {
-  const { data: transactionCategories } =
-    useGetAllTransactionCategoriesWithCategoryTree();
+}) => {
+  const transactionCategories = await CategoryService.getAllWithTree();
 
-  const getCategoryNameById = useCallback(
-    (categoryId: string) =>
-      transactionCategories?.find((category) => category.id === categoryId)
-        ?.categoryTree || categoryId,
-    [transactionCategories],
-  );
+  const getCategoryNameById = (categoryId: string) =>
+    transactionCategories?.find((category) => category.id === categoryId)
+      ?.categoryTree || categoryId;
 
   const transactionType = getTransactionType(toAccount, fromAccount);
 
-  const transactionDetailsMapping = useMemo(() => {
-    switch (transactionType) {
-      case TransactionType.Transfer:
-        return {
-          type: 'transfer',
-          url: 'transfers',
-        };
-      case TransactionType.Income:
-        return {
-          type: 'income',
-          url: 'incomes',
-        };
-      case TransactionType.Expense:
-        return {
-          type: 'expense',
-          url: 'expenses',
-        };
-    }
-  }, [transactionType]);
+  const transactionDetailsMapping = getUrlMapping(transactionType);
 
-  const transactionDetails = useMemo(
-    () => [
-      ...(fromAccount
-        ? [
-            {
-              icon: IconName.viewGrid,
-              label: 'From Account',
-              description: fromAccount,
-            },
-          ]
-        : []),
-      ...(toAccount
-        ? [
-            {
-              icon: IconName.viewGrid,
-              label: 'To Account',
-              description: toAccount,
-            },
-          ]
-        : []),
-      {
-        icon: IconName.calendar,
-        label: 'Date',
-        description: formatDate(new Date(transaction?.date), DateFormat.long),
-      },
-      {
-        icon: IconName.informationCircle,
-        label: 'Type',
-        description: capitalize(transactionDetailsMapping.type ?? '-'),
-      },
-    ],
-    [fromAccount, toAccount, transaction?.date, transactionDetailsMapping.type],
-  );
+  const transactionDetails = [
+    ...(fromAccount
+      ? [
+          {
+            icon: IconName.viewGrid,
+            label: 'From Account',
+            description: fromAccount,
+          },
+        ]
+      : []),
+    ...(toAccount
+      ? [
+          {
+            icon: IconName.viewGrid,
+            label: 'To Account',
+            description: toAccount,
+          },
+        ]
+      : []),
+    {
+      icon: IconName.calendar,
+      label: 'Date',
+      description: formatDate(new Date(transaction?.date), DateFormat.long),
+    },
+    {
+      icon: IconName.informationCircle,
+      label: 'Type',
+      description: capitalize(transactionDetailsMapping.type ?? '-'),
+    },
+  ];
 
-  const categoryDetails = useMemo(() => {
-    return transaction.categories.map(({ amount, categoryId, description }) => {
+  const categoryDetails = transaction.categories.map(
+    ({ amount, categoryId, description }) => {
       return [
         {
           icon: IconName.tag,
@@ -118,8 +113,8 @@ export const Transaction = ({
             ]
           : []),
       ];
-    });
-  }, [transaction.categories, getCategoryNameById]);
+    },
+  );
 
   return (
     <>

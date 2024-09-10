@@ -1,3 +1,5 @@
+import { FC } from 'react';
+
 import { Icon, IconName } from '$elements/icon/icon';
 
 export type DetailsItem = {
@@ -7,12 +9,12 @@ export type DetailsItem = {
   testId?: string;
 };
 
-export const DetailsListItem = ({
+export const DetailsListItem: FC<DetailsItem> = ({
   icon,
   label,
   description,
   testId,
-}: DetailsItem) => {
+}) => {
   return (
     <div
       className="grid grid-cols-[auto,1fr] gap-2 items-center"

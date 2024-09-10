@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback } from 'react';
+import { FC, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
 import {
@@ -19,7 +19,7 @@ interface AccountEditContainerProps {
   id: string;
 }
 
-export const AccountEditContainer = ({ id }: AccountEditContainerProps) => {
+export const AccountEditContainer: FC<AccountEditContainerProps> = ({ id }) => {
   const { push } = useViewTransitionRouter();
   const [editAccount] = useAccountsUpdateMutation();
 

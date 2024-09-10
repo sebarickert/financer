@@ -1,17 +1,10 @@
-'use client';
+import { FC } from 'react';
 
-import { useTransactionTemplatesFindAllByUserQuery } from '$api/generated/financerApi';
-import { DataHandler } from '$blocks/data-handler/data-handler';
+import { TransactionTemplateService } from '$ssr/api/transaction-template.service';
 import { TemplateListing } from '$views/settings/templates/template.listing';
 
-export const TemplateListingContainer = () => {
-  const data = useTransactionTemplatesFindAllByUserQuery();
-  const { data: templates } = data;
+export const TemplateListingContainer: FC = async () => {
+  const templates = await TransactionTemplateService.getAll();
 
-  return (
-    <>
-      <DataHandler {...data} />
-      {templates && <TemplateListing templates={templates} />}
-    </>
-  );
+  return <TemplateListing templates={templates} />;
 };

@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { FC, useMemo } from 'react';
 
 import { AccountBalanceHistoryChart } from './account.balance-history-chart';
 
@@ -18,7 +18,7 @@ interface AccountProps {
   account: AccountDto;
 }
 
-export const Account = ({ account }: AccountProps): JSX.Element | null => {
+export const Account: FC<AccountProps> = ({ account }) => {
   const accountDetails = useMemo(
     () => [
       {

@@ -5,8 +5,9 @@ import { BaseApi } from './base-api';
 import {
   AccountDto,
   AccountsFindAllByUserApiArg,
-  PaginationDto,
+  CreateAccountDto,
 } from '$api/generated/financerApi';
+import { GenericPaginationDto } from 'src/types/pagination.dto';
 
 export class AccountService extends BaseApi {
   // TODO temporary solution to clear cache while migration
@@ -15,9 +16,9 @@ export class AccountService extends BaseApi {
   }
 
   public static async getAll(
-    params: AccountsFindAllByUserApiArg,
-  ): Promise<(PaginationDto & { data: AccountDto[] }) | null> {
-    const { data } = await this.client.GET('/api/accounts', {
+    params: AccountsFindAllByUserApiArg = {},
+  ): Promise<GenericPaginationDto<AccountDto>> {
+    const { data, error } = await this.client.GET('/api/accounts', {
       params: {
         query: params,
       },
@@ -26,7 +27,11 @@ export class AccountService extends BaseApi {
       },
     });
 
-    return (data as PaginationDto & { data: AccountDto[] }) ?? null;
+    if (error) {
+      throw new Error('Failed to fetch accounts', error);
+    }
+
+    return data as GenericPaginationDto<AccountDto>;
   }
 
   public static async getById(id: string): Promise<AccountDto | null> {
@@ -58,5 +63,35 @@ export class AccountService extends BaseApi {
       accounts?.data.reduce((acc, { balance }) => acc + (balance ?? 0), 0) ??
       NaN
     );
+  }
+
+  public static async add(newAccount: CreateAccountDto): Promise<void> {
+    const { error } = await this.client.POST('/api/accounts', {
+      body: newAccount,
+    });
+
+    if (error) {
+      throw new Error('Failed to add account', error);
+    }
+
+    await this.clearCache();
+  }
+
+  public static async update(
+    id: string,
+    updatedAccount: CreateAccountDto,
+  ): Promise<void> {
+    const { error } = await this.client.PATCH(`/api/accounts/{id}`, {
+      params: {
+        path: { id },
+      },
+      body: updatedAccount,
+    });
+
+    if (error) {
+      throw new Error('Failed to update account', error);
+    }
+
+    await this.clearCache();
   }
 }

@@ -1,10 +1,12 @@
+import { FC } from 'react';
+
 import { settingsPaths } from '$constants/settings-paths';
 import { IconName } from '$elements/icon/icon';
 import { LinkList } from '$elements/link-list/link-list';
 import { LinkListLink } from '$elements/link-list/link-list.link';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
-export const UserPreferences = (): JSX.Element => {
+export const UserPreferences: FC = () => {
   return (
     <>
       <UpdatePageInfo backLink={settingsPaths.default} />

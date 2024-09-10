@@ -1,5 +1,6 @@
 'use client';
 
+import { FC } from 'react';
 import { useDispatch } from 'react-redux';
 
 import {
@@ -23,7 +24,9 @@ interface TemplateEditContainerProps {
   id: string;
 }
 
-export const TemplateEditContainer = ({ id }: TemplateEditContainerProps) => {
+export const TemplateEditContainer: FC<TemplateEditContainerProps> = ({
+  id,
+}) => {
   const { push } = useViewTransitionRouter();
 
   const [editTransactionTemplate] = useTransactionTemplatesUpdateMutation();

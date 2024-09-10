@@ -1,3 +1,5 @@
+import { FC } from 'react';
+
 import { LinkViewTransition } from '$elements/link/link-view-transition';
 import { ViewTransition } from '$hooks/useViewTransitionRouter';
 
@@ -10,14 +12,14 @@ interface ButtonInternalProps {
   testId?: string;
 }
 
-export const ButtonInternal = ({
+export const ButtonInternal: FC<ButtonInternalProps> = ({
   children,
   className,
   link,
   transition,
   onClick,
   testId,
-}: ButtonInternalProps): JSX.Element => {
+}) => {
   return (
     <LinkViewTransition
       href={link}

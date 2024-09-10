@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { FC } from 'react';
 
 import { DetailsItem, DetailsListItem } from './details-list.item';
 
@@ -11,12 +12,12 @@ interface DetailsListProps {
   heading?: string;
 }
 
-export const DetailsList = ({
+export const DetailsList: FC<DetailsListProps> = ({
   className = '',
   items,
   testId: rawTestId,
   heading,
-}: DetailsListProps) => {
+}) => {
   const testId = rawTestId ?? 'details-list';
 
   return (

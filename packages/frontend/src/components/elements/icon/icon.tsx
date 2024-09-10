@@ -1,3 +1,5 @@
+import { FC } from 'react';
+
 import { IconAnnotation } from './svgs/icon.annotation';
 import { IconArrowLeft } from './svgs/icon.arrowLeft';
 import { IconArrowRight } from './svgs/icon.arrowRight';
@@ -92,11 +94,7 @@ interface IconProps {
   isSolid?: boolean;
 }
 
-export const Icon = ({
-  type,
-  className = '',
-  isSolid,
-}: IconProps): JSX.Element => {
+export const Icon: FC<IconProps> = ({ type, className = '', isSolid }) => {
   let defaultIconClasses = 'h-6 w-6';
 
   if (className) {

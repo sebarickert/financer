@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { FC } from 'react';
 
 import {
   TransactionTemplateDto,
@@ -15,28 +15,23 @@ interface TemplateListingProps {
   templates: TransactionTemplateDto[];
 }
 
-export const TemplateListing = ({
-  templates,
-}: TemplateListingProps): JSX.Element => {
-  const filteredTemplates = useMemo(
-    () => [
-      {
-        label: 'Manual',
-        items: templates.filter(
-          ({ templateType }) =>
-            templateType[0] === TransactionTemplateType.Manual,
-        ),
-      },
-      {
-        label: 'Automatic',
-        items: templates.filter(
-          ({ templateType }) =>
-            templateType[0] === TransactionTemplateType.Auto,
-        ),
-      },
-    ],
-    [templates],
-  );
+const getLabel = (templateType: TransactionTemplateType): string => {
+  switch (templateType) {
+    case TransactionTemplateType.Manual:
+      return 'Manual';
+    case TransactionTemplateType.Auto:
+      return 'Automatic';
+    default:
+      return 'Unknown';
+  }
+};
+
+export const TemplateListing: FC<TemplateListingProps> = ({ templates }) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const filteredTemplates = (Map as any).groupBy(
+    templates,
+    ({ templateType }: TransactionTemplateDto) => templateType[0],
+  ) as Map<TransactionTemplateType, TransactionTemplateDto[]>;
 
   return (
     <>
@@ -53,8 +48,8 @@ export const TemplateListing = ({
         }
       />
       <section className="grid gap-8">
-        {filteredTemplates.map(({ label, items }) => (
-          <LinkList label={label} key={label}>
+        {[...filteredTemplates.entries()].map(([label, items]) => (
+          <LinkList label={getLabel(label)} key={label}>
             {items.map(({ templateName, id }) => (
               <LinkListLink
                 icon={IconName.lightningBolt}

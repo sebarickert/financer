@@ -15,7 +15,7 @@ interface ButtonProps {
   link?: string;
   transition?: ViewTransition;
   onClick?(): void;
-  type?: 'button' | 'submit' | 'reset' | undefined;
+  type?: 'button' | 'submit' | 'reset';
   testId?: string;
   isDisabled?: boolean;
 }
@@ -26,7 +26,7 @@ export const Button = ({
   className = '',
   link,
   transition,
-  onClick = () => {},
+  onClick,
   type = 'button',
   testId,
   isDisabled,
