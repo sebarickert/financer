@@ -1,8 +1,8 @@
 interface ButtonPlainProps {
   children: React.ReactNode;
-  onClick(): void;
+  onClick?(): void;
   className?: string;
-  type?: 'button' | 'submit' | 'reset' | undefined;
+  type?: 'button' | 'submit' | 'reset';
   testId?: string;
   isDisabled?: boolean;
 }

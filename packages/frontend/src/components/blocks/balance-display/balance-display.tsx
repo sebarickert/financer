@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { FC } from 'react';
 
 import { TransactionType } from '$api/generated/financerApi';
 import { Icon, IconName } from '$elements/icon/icon';
@@ -14,7 +15,7 @@ interface BalanceDisplayProps {
   childTestId?: string;
 }
 
-export const BalanceDisplay = ({
+export const BalanceDisplay: FC<BalanceDisplayProps> = ({
   className = '',
   type,
   children,
@@ -22,7 +23,7 @@ export const BalanceDisplay = ({
   iconName,
   testId,
   childTestId,
-}: BalanceDisplayProps) => {
+}) => {
   const formattedAmount = formatCurrency(amount);
 
   const defaultValues = {

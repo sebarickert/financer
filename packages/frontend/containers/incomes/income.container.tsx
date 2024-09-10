@@ -1,31 +1,17 @@
-'use client';
+import { FC } from 'react';
 
-import {
-  useIncomesFindOneQuery,
-  useAccountsFindOneByIdQuery,
-} from '$api/generated/financerApi';
-import { DataHandler } from '$blocks/data-handler/data-handler';
 import { Transaction } from '$blocks/transaction/transaction';
+import { AccountService } from '$ssr/api/account.service';
+import { TransactionService } from '$ssr/api/transaction.service';
 
 interface IncomeContainerProps {
   id: string;
 }
 
-export const IncomeContainer = ({ id }: IncomeContainerProps) => {
-  const incomeData = useIncomesFindOneQuery({ id });
-  const { data: income } = incomeData;
+export const IncomeContainer: FC<IncomeContainerProps> = async ({ id }) => {
+  const income = await TransactionService.getIncomeById(id);
 
-  const accountData = useAccountsFindOneByIdQuery(
-    { id: income?.toAccount as string },
-    { skip: !income?.toAccount },
-  );
+  const account = await AccountService.getById(income.toAccount);
 
-  const account = accountData.data;
-
-  return (
-    <>
-      <DataHandler {...incomeData} />
-      {income && <Transaction transaction={income} toAccount={account?.name} />}
-    </>
-  );
+  return <Transaction transaction={income} toAccount={account?.name} />;
 };

@@ -1,3 +1,5 @@
+import { FC } from 'react';
+
 import { AccountType } from '$api/generated/financerApi';
 import { accountTypeIconMapping } from '$constants/account/accountTypeMapping';
 import { LinkList } from '$elements/link-list/link-list';
@@ -18,11 +20,11 @@ interface AccountsListProps {
   className?: string;
 }
 
-export const AccountListing = ({
+export const AccountListing: FC<AccountsListProps> = ({
   label,
   items,
   className,
-}: AccountsListProps): JSX.Element | null => {
+}) => {
   if (!items?.length) return null;
 
   return (

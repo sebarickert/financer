@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, ChangeEvent } from 'react';
+import { useState, useMemo, ChangeEvent, FC } from 'react';
 import { useDispatch } from 'react-redux';
 
 import {
@@ -12,7 +12,7 @@ import { addToastMessage } from '$reducer/notifications.reducer';
 import { clearAllCaches } from '$ssr/api/clear-cache';
 import { OverrideUserData } from '$views/settings/override-user-data';
 
-export const OverrideUserDataContainer = () => {
+export const OverrideUserDataContainer: FC = () => {
   const [uploadedUserData, setUploadedUserData] =
     useState<UserDataImportDto | null>(null);
   const [overrideFilename, setOverrideFilename] = useState<string | null>(null);

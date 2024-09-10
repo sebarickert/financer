@@ -224,4 +224,104 @@ export class TransactionService extends BaseApi {
 
     return data;
   }
+
+  public static async getById(id: string): Promise<TransactionDto> {
+    const { data, error } = await this.client.GET(`/api/transactions/{id}`, {
+      params: {
+        path: {
+          id,
+        },
+      },
+      next: {
+        tags: [
+          this.API_TAG.TRANSACTION,
+          this.API_TAG.EXPENSE,
+          this.API_TAG.INCOME,
+          this.API_TAG.TRANSFER,
+          this.getEntityTag(this.API_TAG.TRANSACTION, id),
+          this.getEntityTag(this.API_TAG.EXPENSE, id),
+          this.getEntityTag(this.API_TAG.INCOME, id),
+          this.getEntityTag(this.API_TAG.TRANSFER, id),
+        ],
+      },
+    });
+
+    if (error) {
+      throw new Error('Failed to fetch transaction', error);
+    }
+
+    return data as TransactionDto;
+  }
+
+  public static async getIncomeById(id: string): Promise<IncomeDto> {
+    const { data, error } = await this.client.GET(`/api/incomes/{id}`, {
+      params: {
+        path: {
+          id,
+        },
+      },
+      next: {
+        tags: [
+          this.API_TAG.TRANSACTION,
+          this.API_TAG.INCOME,
+          this.getEntityTag(this.API_TAG.TRANSACTION, id),
+          this.getEntityTag(this.API_TAG.INCOME, id),
+        ],
+      },
+    });
+
+    if (error) {
+      throw new Error('Failed to fetch income', error);
+    }
+
+    return data as IncomeDto;
+  }
+
+  public static async getExpenseById(id: string): Promise<ExpenseDto> {
+    const { data, error } = await this.client.GET(`/api/expenses/{id}`, {
+      params: {
+        path: {
+          id,
+        },
+      },
+      next: {
+        tags: [
+          this.API_TAG.TRANSACTION,
+          this.API_TAG.EXPENSE,
+          this.getEntityTag(this.API_TAG.TRANSACTION, id),
+          this.getEntityTag(this.API_TAG.EXPENSE, id),
+        ],
+      },
+    });
+
+    if (error) {
+      throw new Error('Failed to fetch expense', error);
+    }
+
+    return data as ExpenseDto;
+  }
+
+  public static async getTransferById(id: string): Promise<TransferDto> {
+    const { data, error } = await this.client.GET(`/api/transfers/{id}`, {
+      params: {
+        path: {
+          id,
+        },
+      },
+      next: {
+        tags: [
+          this.API_TAG.TRANSACTION,
+          this.API_TAG.TRANSFER,
+          this.getEntityTag(this.API_TAG.TRANSACTION, id),
+          this.getEntityTag(this.API_TAG.TRANSFER, id),
+        ],
+      },
+    });
+
+    if (error) {
+      throw new Error('Failed to fetch transfer', error);
+    }
+
+    return data as TransferDto;
+  }
 }

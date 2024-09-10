@@ -132,8 +132,7 @@ export class PagerService {
           PagerService.gotoYearMonthPage(newFilter);
         },
         isAvailable: !(
-          year === firstAvailableDate.getFullYear() &&
-          month === firstAvailableDate.getMonth() + 1
+          year === now.getFullYear() && month === now.getMonth() + 1
         ),
       },
       previousPage: {

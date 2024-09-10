@@ -1,11 +1,6 @@
-'use client';
+import { FC } from 'react';
 
-import { useMemo } from 'react';
-
-import {
-  useAccountsFindAllByUserQuery,
-  AccountType,
-} from '$api/generated/financerApi';
+import { AccountType } from '$api/generated/financerApi';
 import {
   AccountListing,
   AccountListingItem,
@@ -13,52 +8,48 @@ import {
 import { ButtonInternal } from '$elements/button/button.internal';
 import { Icon, IconName } from '$elements/icon/icon';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { AccountService } from '$ssr/api/account.service';
 import { formatCurrency } from '$utils/formatCurrency';
 
-export const AccountListingContainer = () => {
-  const { data: accountsRaw } = useAccountsFindAllByUserQuery({});
+const accountCategories = {
+  savings: 'savings',
+  investments: 'investments',
+  loans: 'loans',
+} as const;
 
-  const accounts = useMemo(() => {
-    if (!accountsRaw) {
-      return {
-        savings: [],
-        investments: [],
-        loans: [],
-      };
-    }
+export const AccountListingContainer: FC = async () => {
+  const { data } = await AccountService.getAll();
 
-    const formattedAccounts = accountsRaw.data.map(
-      ({ id, balance, name, type }) => ({
-        label: name,
-        link: `/accounts/${id}`,
-        balanceAmount: formatCurrency(balance),
-        type: type as AccountType,
-        accountType: type.charAt(0).toUpperCase() + type.slice(1),
-        id,
-      }),
-    ) as AccountListingItem[];
+  const formattedAccounts: AccountListingItem[] = data.map(
+    ({ id, balance, name, type }) => ({
+      label: name,
+      link: `/accounts/${id}`,
+      balanceAmount: formatCurrency(balance),
+      accountType: type.charAt(0).toUpperCase() + type.slice(1),
+      type,
+      id,
+    }),
+  );
 
-    const savings = formattedAccounts.filter(
-      ({ type }) =>
-        type !== AccountType.Loan &&
-        type !== AccountType.Investment &&
-        type !== AccountType.Credit,
-    );
+  // typescript does not support Object.groupBy but browser and nodejs runtime does
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const groupedAccounts = (Object as any).groupBy(
+    formattedAccounts,
+    ({ type }: AccountListingItem) => {
+      if (type === AccountType.Loan || type === AccountType.Credit) {
+        return accountCategories.loans;
+      }
 
-    const investments = formattedAccounts.filter(
-      ({ type }) => type === AccountType.Investment,
-    );
+      if (type === AccountType.Investment) {
+        return accountCategories.investments;
+      }
 
-    const loans = formattedAccounts.filter(
-      ({ type }) => type === AccountType.Loan || type === AccountType.Credit,
-    );
-
-    return {
-      savings,
-      investments,
-      loans,
-    };
-  }, [accountsRaw]);
+      return accountCategories.savings;
+    },
+  ) as Record<
+    (typeof accountCategories)[keyof typeof accountCategories],
+    AccountListingItem[]
+  >;
 
   return (
     <>
@@ -75,9 +66,15 @@ export const AccountListingContainer = () => {
         }
       />
       <section className="grid gap-8">
-        <AccountListing label="Savings" items={accounts.savings} />
-        <AccountListing label="Investments" items={accounts.investments} />
-        <AccountListing label="Credits and Loans" items={accounts.loans} />
+        <AccountListing label="Savings" items={groupedAccounts.savings} />
+        <AccountListing
+          label="Investments"
+          items={groupedAccounts.investments}
+        />
+        <AccountListing
+          label="Credits and Loans"
+          items={groupedAccounts.loans}
+        />
       </section>
     </>
   );

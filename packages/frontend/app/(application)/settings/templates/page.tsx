@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { FC } from 'react';
 
 import { TemplateListingContainer } from '$container/templates/template.listing.container';
 import { Layout } from '$layouts/layout/layout';
@@ -7,7 +8,7 @@ export const metadata: Metadata = {
   title: 'Templates',
 };
 
-const TemplateListingPage = () => {
+const TemplateListingPage: FC = () => {
   return (
     <Layout title="Templates">
       <TemplateListingContainer />

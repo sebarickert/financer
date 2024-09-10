@@ -1,41 +1,26 @@
-'use client';
+import { FC } from 'react';
 
-import {
-  useTransfersFindOneQuery,
-  useAccountsFindOneByIdQuery,
-} from '$api/generated/financerApi';
-import { DataHandler } from '$blocks/data-handler/data-handler';
 import { Transaction } from '$blocks/transaction/transaction';
+import { AccountService } from '$ssr/api/account.service';
+import { TransactionService } from '$ssr/api/transaction.service';
 
 interface TransferContainerProps {
   id: string;
 }
 
-export const TransferContainer = ({ id }: TransferContainerProps) => {
-  const transferData = useTransfersFindOneQuery({ id });
-  const { data: transfer } = transferData;
+export const TransferContainer: FC<TransferContainerProps> = async ({ id }) => {
+  const transfer = await TransactionService.getTransferById(id);
 
-  const fromAccountData = useAccountsFindOneByIdQuery(
-    { id: transfer?.fromAccount as string },
-    { skip: !transfer?.fromAccount },
-  );
-  const toAccountData = useAccountsFindOneByIdQuery(
-    { id: transfer?.toAccount as string },
-    { skip: !transfer?.toAccount },
-  );
-  const fromAccount = toAccountData.data;
-  const toAccount = fromAccountData.data;
+  const [fromAccount, toAccount] = await Promise.all([
+    AccountService.getById(transfer.fromAccount),
+    AccountService.getById(transfer.toAccount),
+  ]);
 
   return (
-    <>
-      <DataHandler {...transferData} />
-      {transfer && (
-        <Transaction
-          transaction={transfer}
-          fromAccount={fromAccount?.name}
-          toAccount={toAccount?.name}
-        />
-      )}
-    </>
+    <Transaction
+      transaction={transfer}
+      fromAccount={fromAccount?.name}
+      toAccount={toAccount?.name}
+    />
   );
 };

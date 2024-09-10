@@ -1,33 +1,17 @@
-'use client';
+import { FC } from 'react';
 
-import {
-  useExpensesFindOneQuery,
-  useAccountsFindOneByIdQuery,
-} from '$api/generated/financerApi';
-import { DataHandler } from '$blocks/data-handler/data-handler';
 import { Transaction } from '$blocks/transaction/transaction';
+import { AccountService } from '$ssr/api/account.service';
+import { TransactionService } from '$ssr/api/transaction.service';
 
 interface ExpenseContainerProps {
   id: string;
 }
 
-export const ExpenseContainer = ({ id }: ExpenseContainerProps) => {
-  const expenseData = useExpensesFindOneQuery({ id });
-  const { data: expense } = expenseData;
+export const ExpenseContainer: FC<ExpenseContainerProps> = async ({ id }) => {
+  const expense = await TransactionService.getExpenseById(id);
 
-  const accountData = useAccountsFindOneByIdQuery(
-    { id: expense?.fromAccount as string },
-    { skip: !expense?.fromAccount },
-  );
+  const account = await AccountService.getById(expense.fromAccount);
 
-  const account = accountData.data;
-
-  return (
-    <>
-      <DataHandler {...expenseData} />
-      {expense && (
-        <Transaction transaction={expense} fromAccount={account?.name} />
-      )}
-    </>
-  );
+  return <Transaction transaction={expense} fromAccount={account?.name} />;
 };

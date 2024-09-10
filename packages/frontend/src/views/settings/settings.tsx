@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { FC, useMemo } from 'react';
 
 import { Role } from '$api/generated/financerApi';
 import { settingsPaths } from '$constants/settings-paths';
@@ -12,7 +12,7 @@ interface SettingsProps {
   roles?: Role[];
 }
 
-export const Settings = ({ roles }: SettingsProps): JSX.Element => {
+export const Settings: FC<SettingsProps> = ({ roles }) => {
   const urls = useMemo(
     () => [
       {

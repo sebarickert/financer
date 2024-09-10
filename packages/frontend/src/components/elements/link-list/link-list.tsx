@@ -1,4 +1,4 @@
-import { Children } from 'react';
+import { Children, FC } from 'react';
 
 import { Heading } from '../heading/heading';
 
@@ -13,14 +13,14 @@ interface LinkListProps {
   testId?: string;
 }
 
-export const LinkList = ({
+export const LinkList: FC<LinkListProps> = ({
   label,
   link,
   children,
   className = '',
   isVertical,
   testId: rawTestId,
-}: LinkListProps): JSX.Element => {
+}) => {
   const testId = rawTestId ?? 'link-list';
 
   return (

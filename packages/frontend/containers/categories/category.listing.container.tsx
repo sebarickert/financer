@@ -1,14 +1,12 @@
-'use client';
-
-import { useMemo } from 'react';
+import { FC } from 'react';
 
 import { settingsPaths } from '$constants/settings-paths';
 import { ButtonInternal } from '$elements/button/button.internal';
 import { Icon, IconName } from '$elements/icon/icon';
 import { LinkList } from '$elements/link-list/link-list';
 import { LinkListLink } from '$elements/link-list/link-list.link';
-import { useGetAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useGetAllTransactionCategoriesWithCategoryTree';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { CategoryService } from '$ssr/api/category.service';
 
 const generateCategoryGroupChild = (
   childName: CategoryItem['label'],
@@ -35,50 +33,49 @@ interface CategoryItem {
   id: string;
 }
 
-export const CategoryListingContainer = () => {
-  const { data: categories } = useGetAllTransactionCategoriesWithCategoryTree();
+export const CategoryListingContainer: FC = async () => {
+  const categories = await CategoryService.getAllWithTree();
 
-  const categoryRows = useMemo<CategoryParentItem[]>(() => {
-    if (!categories) return [];
+  const allParentIds = categories.map(
+    ({ parentCategoryId }) => parentCategoryId,
+  );
 
-    const allParentIds = categories.map(
-      ({ parentCategoryId }) => parentCategoryId,
-    );
+  const categoriesWithChildren = categories
+    .filter(
+      ({ id, parentCategoryId }) =>
+        allParentIds.includes(id) || !!parentCategoryId,
+    )
+    .reduce((prev, { name, id, parentCategoryId, categoryTree }) => {
+      if (!parentCategoryId) {
+        prev.push({
+          ...generateCategoryGroupChild(name, id, categoryTree, false),
+          items: [],
+        });
+      } else {
+        prev[prev.length - 1].items.push(
+          generateCategoryGroupChild(name, id, categoryTree),
+        );
+      }
 
-    const categoriesWithChildren = categories
+      return prev;
+    }, [] as CategoryParentItem[]);
+
+  const generalCategoryGroup = {
+    label: 'General',
+    items: categories
       .filter(
         ({ id, parentCategoryId }) =>
-          allParentIds.includes(id) || !!parentCategoryId,
+          !allParentIds.includes(id) && !parentCategoryId,
       )
-      .reduce((prev, { name, id, parentCategoryId, categoryTree }) => {
-        if (!parentCategoryId) {
-          prev.push({
-            ...generateCategoryGroupChild(name, id, categoryTree, false),
-            items: [],
-          });
-        } else {
-          prev[prev.length - 1].items.push(
-            generateCategoryGroupChild(name, id, categoryTree),
-          );
-        }
+      .map(({ id, name, categoryTree }) =>
+        generateCategoryGroupChild(name, id, categoryTree, false),
+      ),
+  };
 
-        return prev;
-      }, [] as CategoryParentItem[]);
-
-    const generalCategoryGroup = {
-      label: 'General',
-      items: categories
-        .filter(
-          ({ id, parentCategoryId }) =>
-            !allParentIds.includes(id) && !parentCategoryId,
-        )
-        .map(({ id, name, categoryTree }) =>
-          generateCategoryGroupChild(name, id, categoryTree, false),
-        ),
-    };
-
-    return [generalCategoryGroup, ...categoriesWithChildren];
-  }, [categories]);
+  const categoryRows: CategoryParentItem[] = [
+    generalCategoryGroup,
+    ...categoriesWithChildren,
+  ];
 
   return (
     <>

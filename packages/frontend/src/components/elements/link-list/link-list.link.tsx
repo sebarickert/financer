@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { FC } from 'react';
 
 import { isExternalLink } from '$elements/button/is-external-link';
 import { Icon, IconName } from '$elements/icon/icon';
@@ -13,14 +14,14 @@ interface LinkListLinkProps {
   className?: string;
 }
 
-export const LinkListLink = ({
+export const LinkListLink: FC<LinkListLinkProps> = ({
   icon,
   link,
   children,
   testId,
   className = '',
   entityTitle,
-}: LinkListLinkProps): JSX.Element => {
+}) => {
   const linkClasses = clsx(
     'relative flex gap-4 items-center focus-within:bg-gray-dark hover:bg-gray-dark overflow-hidden pl-4 lg:rounded-md',
     {
