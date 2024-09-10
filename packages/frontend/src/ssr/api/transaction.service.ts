@@ -136,6 +136,12 @@ export class TransactionService extends BaseApi {
         tags: [
           this.API_TAG.TRANSACTION,
           this.getListTag(this.API_TAG.TRANSACTION),
+          this.API_TAG.EXPENSE,
+          this.getListTag(this.API_TAG.EXPENSE),
+          this.API_TAG.INCOME,
+          this.getListTag(this.API_TAG.INCOME),
+          this.API_TAG.TRANSFER,
+          this.getListTag(this.API_TAG.TRANSFER),
         ],
       },
     });

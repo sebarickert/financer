@@ -6,6 +6,7 @@ import {
   useUserPreferencesFindOneQuery,
   useUserPreferencesUpdateMutation,
 } from '$api/generated/financerApi';
+import { clearUserPreferenceCache } from '$ssr/api/clear-cache';
 
 const userPreferenceProperty = UserPreferenceProperty.DashboardSettings;
 
@@ -46,6 +47,7 @@ export const useUpdateUserDashboardSettings = (): [
           value: JSON.stringify(newValue),
         },
       }).unwrap();
+      await clearUserPreferenceCache();
     },
     [updateMutation],
   );

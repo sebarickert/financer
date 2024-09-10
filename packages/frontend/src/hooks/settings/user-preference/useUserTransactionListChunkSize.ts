@@ -5,6 +5,7 @@ import {
   useUserPreferencesFindOneQuery,
   useUserPreferencesUpdateMutation,
 } from '$api/generated/financerApi';
+import { clearUserPreferenceCache } from '$ssr/api/clear-cache';
 
 const userPreferenceProperty = UserPreferenceProperty.TransactionListChunkSize;
 
@@ -33,6 +34,7 @@ export const useUpdateUserTransactionListChunkSize = (): [
           value: newValue.toString(),
         },
       }).unwrap();
+      await clearUserPreferenceCache();
     },
     [updateMutation],
   );

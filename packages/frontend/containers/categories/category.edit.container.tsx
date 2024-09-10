@@ -13,6 +13,7 @@ import { ToastMessageTypes } from '$blocks/toast/toast';
 import { settingsPaths } from '$constants/settings-paths';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { addToastMessage } from '$reducer/notifications.reducer';
+import { clearCategoryCache } from '$ssr/api/clear-cache';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 import { CategoryEdit } from '$views/settings/categories/category.edit';
 
@@ -45,6 +46,7 @@ export const CategoryEditContainer = ({ id }: CategoryEditContainerProps) => {
           parentCategoryId: newTransactionCategoryData.parentCategoryId || null,
         },
       }).unwrap();
+      await clearCategoryCache();
 
       push(settingsPaths.categories);
 
@@ -70,6 +72,7 @@ export const CategoryEditContainer = ({ id }: CategoryEditContainerProps) => {
 
   const handleDelete = async () => {
     await deleteTransactionCategory({ id });
+    await clearCategoryCache();
     push(settingsPaths.categories);
   };
 

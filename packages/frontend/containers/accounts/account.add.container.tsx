@@ -7,6 +7,7 @@ import { useAccountsCreateMutation } from '$api/generated/financerApi';
 import { ToastMessageTypes } from '$blocks/toast/toast';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { addToastMessage } from '$reducer/notifications.reducer';
+import { clearAccountCache } from '$ssr/api/clear-cache';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 import { AccountAdd } from '$views/accounts/account.add';
 import { AccountFormFields } from '$views/accounts/account.form';
@@ -22,6 +23,7 @@ export const AccountAddContainer = () => {
         await addAccount({
           createAccountDto: newAccountData,
         }).unwrap();
+        await clearAccountCache();
 
         push('/accounts');
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

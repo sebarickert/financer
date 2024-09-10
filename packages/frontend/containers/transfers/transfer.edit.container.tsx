@@ -16,6 +16,7 @@ import { TransactionForm } from '$blocks/transaction-form/transaction-form';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { addToastMessage } from '$reducer/notifications.reducer';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { clearTransferCache } from '$ssr/api/clear-cache';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 import { DateFormat, formatDate } from '$utils/formatDate';
 
@@ -42,6 +43,7 @@ export const TransferEditContainer = ({ id }: TransferEditContainerProps) => {
         updateTransferDto,
         id,
       }).unwrap();
+      await clearTransferCache();
 
       push(`/statistics/transfers/${transfer?.id}`);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -70,6 +72,8 @@ export const TransferEditContainer = ({ id }: TransferEditContainerProps) => {
       return;
     }
     await deleteTransfer({ id }).unwrap();
+    await clearTransferCache();
+
     push('/statistics/transfers');
   }, [deleteTransfer, id, push]);
 

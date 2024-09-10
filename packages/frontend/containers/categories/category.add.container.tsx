@@ -10,6 +10,7 @@ import { ToastMessageTypes } from '$blocks/toast/toast';
 import { settingsPaths } from '$constants/settings-paths';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { addToastMessage } from '$reducer/notifications.reducer';
+import { clearCategoryCache } from '$ssr/api/clear-cache';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 import { CategoryAdd } from '$views/settings/categories/category.add';
 
@@ -29,6 +30,7 @@ export const CategoryAddContainer = () => {
           parentCategoryId: newTransactionCategoryData.parentCategoryId || null,
         },
       }).unwrap();
+      await clearCategoryCache();
 
       push(settingsPaths.categories);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
