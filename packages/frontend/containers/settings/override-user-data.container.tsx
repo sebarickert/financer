@@ -9,6 +9,7 @@ import {
 } from '$api/generated/financerApi';
 import { ToastMessageTypes } from '$blocks/toast/toast';
 import { addToastMessage } from '$reducer/notifications.reducer';
+import { clearAllCaches } from '$ssr/api/clear-cache';
 import { OverrideUserData } from '$views/settings/override-user-data';
 
 export const OverrideUserDataContainer = () => {
@@ -46,6 +47,7 @@ export const OverrideUserDataContainer = () => {
       const { payload: overrideMessage = '' } = await overrideProfileData({
         userDataImportDto: uploadedUserData,
       }).unwrap();
+      await clearAllCaches();
 
       dispatch(
         addToastMessage({

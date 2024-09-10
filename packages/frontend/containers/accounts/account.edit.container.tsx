@@ -45,7 +45,6 @@ export const AccountEditContainer = ({ id }: AccountEditContainerProps) => {
           id: account.id,
           updateAccountDto: newAccountData,
         });
-
         await clearAccountCache();
 
         if ('message' in newAccount) {

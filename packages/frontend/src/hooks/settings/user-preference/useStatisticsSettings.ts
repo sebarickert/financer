@@ -6,6 +6,7 @@ import {
   useUserPreferencesFindOneQuery,
   useUserPreferencesUpdateMutation,
 } from '$api/generated/financerApi';
+import { clearUserPreferenceCache } from '$ssr/api/clear-cache';
 
 type UserStatisticsSettings = {
   accountTypes: AccountType[];
@@ -46,6 +47,7 @@ export const useUpdateUserStatisticsSettings = (): [
           value: JSON.stringify(newValue),
         },
       }).unwrap();
+      await clearUserPreferenceCache();
     },
     [updateMutation],
   );

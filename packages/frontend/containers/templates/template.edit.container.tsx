@@ -12,6 +12,7 @@ import { ToastMessageTypes } from '$blocks/toast/toast';
 import { settingsPaths } from '$constants/settings-paths';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { addToastMessage } from '$reducer/notifications.reducer';
+import { clearTransactionTemplateCache } from '$ssr/api/clear-cache';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 import {
   TemplateEdit,
@@ -52,6 +53,7 @@ export const TemplateEditContainer = ({ id }: TemplateEditContainerProps) => {
         id: template.id,
         updateTransactionTemplateDto: data,
       }).unwrap();
+      await clearTransactionTemplateCache();
 
       push(settingsPaths.templates);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -79,7 +81,9 @@ export const TemplateEditContainer = ({ id }: TemplateEditContainerProps) => {
       console.error('Failed to delete template: no id');
       return;
     }
-    deleteTransactionTemplate({ id });
+    await deleteTransactionTemplate({ id }).unwrap();
+    await clearTransactionTemplateCache();
+
     push(settingsPaths.templates);
   };
   return (

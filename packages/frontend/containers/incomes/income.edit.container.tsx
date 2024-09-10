@@ -16,6 +16,7 @@ import { TransactionForm } from '$blocks/transaction-form/transaction-form';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { addToastMessage } from '$reducer/notifications.reducer';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { clearIncomeCache } from '$ssr/api/clear-cache';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 import { DateFormat, formatDate } from '$utils/formatDate';
 
@@ -41,6 +42,7 @@ export const IncomeEditContainer = ({ id }: IncomeEditContainerProps) => {
         updateIncomeDto,
         id,
       }).unwrap();
+      await clearIncomeCache();
 
       push(`/statistics/incomes/${income?.id}`);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -69,6 +71,8 @@ export const IncomeEditContainer = ({ id }: IncomeEditContainerProps) => {
       return;
     }
     await deleteIncome({ id }).unwrap();
+    await clearIncomeCache();
+
     push('/statistics');
   }, [deleteIncome, id, push]);
 

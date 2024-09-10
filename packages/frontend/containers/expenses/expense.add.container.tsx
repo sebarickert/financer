@@ -17,6 +17,7 @@ import { useUserDefaultExpenseAccount } from '$hooks/settings/user-preference/us
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { addToastMessage } from '$reducer/notifications.reducer';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { clearExpenseCache } from '$ssr/api/clear-cache';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 interface ExpenseAddContainerProps {
@@ -45,6 +46,7 @@ export const ExpenseAddContainer = ({
       const { id } = await addExpense({
         createExpenseDto,
       }).unwrap();
+      await clearExpenseCache();
 
       push(`/statistics/expenses/${id}`);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

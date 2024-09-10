@@ -18,6 +18,7 @@ import { useUserDefaultTransferTargetAccount } from '$hooks/settings/user-prefer
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { addToastMessage } from '$reducer/notifications.reducer';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { clearTransferCache } from '$ssr/api/clear-cache';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 interface TransferAddContainerProps {
@@ -48,6 +49,7 @@ export const TransferAddContainer = ({
       const { id } = await addTransfer({
         createTransferDto,
       }).unwrap();
+      await clearTransferCache();
 
       push(`/statistics/transfers/${id}`);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

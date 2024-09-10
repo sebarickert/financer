@@ -17,6 +17,7 @@ import { useUserDefaultIncomeAccount } from '$hooks/settings/user-preference/use
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { addToastMessage } from '$reducer/notifications.reducer';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { clearIncomeCache } from '$ssr/api/clear-cache';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 interface IncomeAddContainerProps {
@@ -41,6 +42,7 @@ export const IncomeAddContainer = ({ templateId }: IncomeAddContainerProps) => {
   const handleSubmit = async (createIncomeDto: CreateIncomeDto) => {
     try {
       const { id } = await addIncome({ createIncomeDto }).unwrap();
+      await clearIncomeCache();
 
       push(`/statistics/incomes/${id}`);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

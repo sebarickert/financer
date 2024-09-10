@@ -16,6 +16,7 @@ import { TransactionForm } from '$blocks/transaction-form/transaction-form';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { addToastMessage } from '$reducer/notifications.reducer';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { clearExpenseCache } from '$ssr/api/clear-cache';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 import { DateFormat, formatDate } from '$utils/formatDate';
 
@@ -41,6 +42,7 @@ export const EditExpenseContainer = ({ id }: EditExpenseContainerProps) => {
         updateExpenseDto,
         id,
       }).unwrap();
+      await clearExpenseCache();
 
       push(`/statistics/expenses/${expense?.id}`);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -69,6 +71,8 @@ export const EditExpenseContainer = ({ id }: EditExpenseContainerProps) => {
       return;
     }
     await deleteExpense({ id }).unwrap();
+    await clearExpenseCache();
+
     push('/statistics');
   }, [deleteExpense, id, push]);
 

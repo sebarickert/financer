@@ -7,6 +7,7 @@ import { ToastMessageTypes } from '$blocks/toast/toast';
 import { settingsPaths } from '$constants/settings-paths';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 import { addToastMessage } from '$reducer/notifications.reducer';
+import { clearTransactionTemplateCache } from '$ssr/api/clear-cache';
 import { parseErrorMessagesToArray } from '$utils/apiHelper';
 import {
   TemplateAdd,
@@ -34,6 +35,7 @@ export const TemplateAddContainer = () => {
       await addTransactionTemplate({
         createTransactionTemplateDto: data,
       }).unwrap();
+      await clearTransactionTemplateCache();
 
       push(settingsPaths.templates);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

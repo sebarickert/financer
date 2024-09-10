@@ -5,6 +5,7 @@ import {
   useUserPreferencesFindOneQuery,
   useUserPreferencesUpdateMutation,
 } from '$api/generated/financerApi';
+import { clearUserPreferenceCache } from '$ssr/api/clear-cache';
 
 export type UserDefaultMarketUpdateSettings = {
   transactionDescription: string;
@@ -47,6 +48,7 @@ export const useUpdateUserDefaultMarketUpdateSettings = (): [
           value: JSON.stringify(newValue),
         },
       }).unwrap();
+      await clearUserPreferenceCache();
     },
     [updateMutation],
   );

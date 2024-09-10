@@ -12,12 +12,13 @@ import {
 } from '$api/generated/financerApi';
 import { ToastMessageTypes } from '$blocks/toast/toast';
 import { useUserDefaultMarketUpdateSettings } from '$hooks/settings/user-preference/useDefaultMarketUpdateSettings';
+import { addToastMessage } from '$reducer/notifications.reducer';
+import { clearExpenseCache, clearIncomeCache } from '$ssr/api/clear-cache';
+import { parseErrorMessagesToArray } from '$utils/apiHelper';
 import {
   AccountUpdateMarketValue,
   AccountUpdateMarketValueFormFields,
 } from '$views/accounts/account.update-market-value';
-import { addToastMessage } from '$reducer/notifications.reducer';
-import { parseErrorMessagesToArray } from '$utils/apiHelper';
 
 interface AccountUpdateMarketValueContainerProps {
   account: AccountDto;
@@ -82,6 +83,7 @@ export const AccountUpdateMarketValueContainer = ({
                   undefined) as any,
             },
           }).unwrap();
+          await clearIncomeCache();
 
           if ('message' in newIncomeJson) {
             dispatch(
@@ -115,6 +117,7 @@ export const AccountUpdateMarketValueContainer = ({
                   undefined) as any,
             },
           }).unwrap();
+          await clearExpenseCache();
 
           if ('message' in newExpenseJson) {
             dispatch(

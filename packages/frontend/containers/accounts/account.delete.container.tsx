@@ -2,6 +2,7 @@
 
 import { useAccountsRemoveMutation } from '$api/generated/financerApi';
 import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
+import { clearAccountCache } from '$ssr/api/clear-cache';
 import { AccountDelete } from '$views/accounts/account.delete';
 
 interface DeleteAccountContainerProps {
@@ -19,6 +20,7 @@ export const DeleteAccountContainer = ({ id }: DeleteAccountContainerProps) => {
       return;
     }
     await deleteAccount({ id }).unwrap();
+    await clearAccountCache();
     push('/accounts');
   };
 

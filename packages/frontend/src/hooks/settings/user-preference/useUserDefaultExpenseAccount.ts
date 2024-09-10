@@ -5,6 +5,7 @@ import {
   useUserPreferencesFindOneQuery,
   useUserPreferencesUpdateMutation,
 } from '$api/generated/financerApi';
+import { clearUserPreferenceCache } from '$ssr/api/clear-cache';
 
 const userPreferenceProperty = UserPreferenceProperty.DefaultExpenseAccount;
 
@@ -36,6 +37,7 @@ export const useUpdateUserDefaultExpenseAccount = (): [
           value: userPreferenceValue,
         },
       }).unwrap();
+      await clearUserPreferenceCache();
     },
     [updateMutation],
   );
