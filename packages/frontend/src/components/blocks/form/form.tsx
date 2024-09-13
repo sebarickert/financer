@@ -1,19 +1,32 @@
-import { FieldValues, FormProvider, UseFormReturn } from 'react-hook-form';
-
-import { ButtonAccentColor } from '../../elements/button/button';
+import {
+  FieldValues,
+  FormProvider,
+  SubmitHandler,
+  UseFormReturn,
+} from 'react-hook-form';
 
 import { FormFooter } from './form.footer';
 
-interface FormProps<FormValues extends FieldValues> {
+import { ButtonAccentColor } from '$elements/button/button';
+
+type FormProps<FormValues extends FieldValues> = {
   children: React.ReactNode;
   submitLabel: string;
   accentColor?: ButtonAccentColor;
   formFooterBackLink?: string;
   methods: UseFormReturn<FormValues>;
-  onSubmit: (values: FormValues) => void;
   id?: string;
   optionalFooterComponent?: React.ReactNode;
-}
+} & (
+  | {
+      onSubmit: SubmitHandler<FormValues>;
+      action?: never;
+    }
+  | {
+      onSubmit?: never;
+      action: (values: FormData) => void;
+    }
+);
 
 export const Form = <T extends FieldValues>({
   children,
@@ -24,12 +37,17 @@ export const Form = <T extends FieldValues>({
   optionalFooterComponent,
   id,
   methods,
+  action,
 }: FormProps<T>): JSX.Element => {
   const { handleSubmit } = methods;
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)} id={id}>
+      <form
+        action={action}
+        onSubmit={onSubmit ? handleSubmit(onSubmit) : undefined}
+        id={id}
+      >
         {children}
         <FormFooter
           submitLabel={submitLabel}

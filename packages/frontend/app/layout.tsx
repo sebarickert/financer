@@ -40,23 +40,23 @@ const RootLayout: FC<ChildrenProp> = async ({ children }) => {
   const cookiesStore = cookies();
 
   const authenticationStatus = await AuthenticationService.getStatus();
-  const pathname = headersList.get('x-pathname');
-
-  if (!pathname) {
-    throw new Error('Pathname is not provided');
-  }
+  const pathname = headersList.get('x-pathname') ?? '';
 
   if (
     !authenticationStatus?.authenticated &&
     !PUBLIC_ROUTES.includes(pathname)
   ) {
     redirect('/login', RedirectType.replace);
+  } else if (pathname === '/login/' && authenticationStatus?.authenticated) {
+    redirect('/', RedirectType.replace);
   } else if (
     authenticationStatus?.authenticated &&
     !cookiesStore.get(REDIRECT_COOKIE_NAME) &&
-    !authenticationStatus.hasAccounts
+    !authenticationStatus.hasAccounts &&
+    pathname !== '/accounts/add/'
   ) {
-    cookiesStore.set(REDIRECT_COOKIE_NAME, 'true', { maxAge: 60 * 10 }); // 10 minutes
+    // TODO This causes error because we can set cookies only from server actions
+    // cookiesStore.set(REDIRECT_COOKIE_NAME, 'true', { maxAge: 60 * 10 }); // 10 minutes
     redirect('/accounts/add', RedirectType.replace);
   }
 

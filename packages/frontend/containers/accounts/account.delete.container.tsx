@@ -1,8 +1,6 @@
-'use client';
+import { redirect, RedirectType } from 'next/navigation';
 
-import { useAccountsRemoveMutation } from '$api/generated/financerApi';
-import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { clearAccountCache } from '$ssr/api/clear-cache';
+import { AccountService } from '$ssr/api/account.service';
 import { AccountDelete } from '$views/accounts/account.delete';
 
 interface DeleteAccountContainerProps {
@@ -10,18 +8,15 @@ interface DeleteAccountContainerProps {
 }
 
 export const DeleteAccountContainer = ({ id }: DeleteAccountContainerProps) => {
-  const { push } = useViewTransitionRouter();
-
-  const [deleteAccount] = useAccountsRemoveMutation();
-
   const handleDelete = async () => {
+    'use server';
+
     if (!id) {
       console.error('Failure to delete account: no id');
       return;
     }
-    await deleteAccount({ id }).unwrap();
-    await clearAccountCache();
-    push('/accounts');
+    await AccountService.delete(id);
+    redirect('/accounts', RedirectType.push);
   };
 
   return <AccountDelete onDelete={handleDelete} />;

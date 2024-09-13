@@ -7,6 +7,8 @@ import {
   AccountsFindAllByUserApiArg,
   CreateAccountDto,
 } from '$api/generated/financerApi';
+import { ValidationException } from '$exceptions/validation.exception';
+import { isValidationErrorResponse } from '$utils/apiHelper';
 import { GenericPaginationDto } from 'src/types/pagination.dto';
 
 export class AccountService extends BaseApi {
@@ -68,9 +70,22 @@ export class AccountService extends BaseApi {
   public static async add(newAccount: CreateAccountDto): Promise<void> {
     const { error } = await this.client.POST('/api/accounts', {
       body: newAccount,
+      next: {
+        revalidate: 0,
+      },
     });
 
     if (error) {
+      // TODO ugly hack to handle missing types
+      const unknownError = error as unknown;
+
+      if (isValidationErrorResponse(unknownError)) {
+        throw new ValidationException(
+          'Failed to add account',
+          unknownError.message,
+        );
+      }
+
       throw new Error('Failed to add account', error);
     }
 
@@ -89,7 +104,31 @@ export class AccountService extends BaseApi {
     });
 
     if (error) {
-      throw new Error('Failed to update account', error);
+      // TODO ugly hack to handle missing types
+      const unknownError = error as unknown;
+
+      if (isValidationErrorResponse(unknownError)) {
+        throw new ValidationException(
+          'Failed to add account',
+          unknownError.message,
+        );
+      }
+
+      throw new Error('Failed to add account', error);
+    }
+
+    await this.clearCache();
+  }
+
+  public static async delete(id: string): Promise<void> {
+    const { error } = await this.client.DELETE(`/api/accounts/{id}`, {
+      params: {
+        path: { id },
+      },
+    });
+
+    if (error) {
+      throw new Error('Failed to delete account', error);
     }
 
     await this.clearCache();

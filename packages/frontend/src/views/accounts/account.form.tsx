@@ -1,16 +1,20 @@
 'use client';
 
 import { useEffect, useMemo } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 import { AccountType } from '$api/generated/financerApi';
 import { Form } from '$blocks/form/form';
 import { Input } from '$elements/input/input';
 import { Select, Option } from '$elements/select/select';
+import {
+  DefaultFormActionHandler,
+  useFinancerFormState,
+} from '$hooks/useFinancerFormState';
 import { capitalize } from '$utils/capitalize';
 
 interface AccountFormProps {
-  onSubmit: SubmitHandler<AccountFormFields>;
+  onSubmit: DefaultFormActionHandler;
   submitLabel: string;
   initialValues?: Partial<AccountFormFields>;
 }
@@ -26,6 +30,8 @@ export const AccountForm = ({
   submitLabel,
   initialValues,
 }: AccountFormProps): JSX.Element => {
+  const action = useFinancerFormState('account-form', onSubmit);
+
   const defaultValues = useMemo(() => {
     return { type: AccountType.Savings, ...initialValues };
   }, [initialValues]);
@@ -54,7 +60,7 @@ export const AccountForm = ({
     <Form
       methods={methods}
       submitLabel={submitLabel}
-      onSubmit={onSubmit}
+      action={action}
       formFooterBackLink="/accounts"
     >
       <section>
