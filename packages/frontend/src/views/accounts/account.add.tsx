@@ -1,11 +1,12 @@
 import { FC } from 'react';
 
-import { AccountForm, AccountFormFields } from './account.form';
+import { AccountForm } from './account.form';
 
+import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
 export interface AddAccountProps {
-  onAddAccount: (newAccountData: AccountFormFields) => Promise<void>;
+  onAddAccount: DefaultFormActionHandler;
 }
 
 export const AccountAdd: FC<AddAccountProps> = ({ onAddAccount }) => {

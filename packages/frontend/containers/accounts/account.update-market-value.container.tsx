@@ -5,8 +5,6 @@ import { useDispatch } from 'react-redux';
 import {
   AccountDto,
   CreateTransactionCategoryMappingWithoutTransactionDto,
-} from '$api/generated/financerApi';
-import {
   useIncomesCreateMutation,
   useExpensesCreateMutation,
 } from '$api/generated/financerApi';

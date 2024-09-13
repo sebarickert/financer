@@ -1,12 +1,13 @@
-import { AccountForm, AccountFormFields } from './account.form';
+import { AccountForm } from './account.form';
 
 import { AccountDto } from '$api/generated/financerApi';
 import { DeleteAccountContainer } from '$container/accounts/account.delete.container';
+import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
 interface EditAccountParams {
   account: AccountDto;
-  onSave: (newAccountData: AccountFormFields) => Promise<void>;
+  onSave: DefaultFormActionHandler;
 }
 
 export const AccountEdit = ({

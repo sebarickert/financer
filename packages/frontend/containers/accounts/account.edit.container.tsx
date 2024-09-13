@@ -1,76 +1,52 @@
-'use client';
+import { redirect, RedirectType } from 'next/navigation';
+import { FC } from 'react';
 
-import { FC, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
-
-import {
-  useAccountsUpdateMutation,
-  useAccountsFindOneByIdQuery,
-} from '$api/generated/financerApi';
-import { DataHandler } from '$blocks/data-handler/data-handler';
-import { ToastMessageTypes } from '$blocks/toast/toast';
-import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { addToastMessage } from '$reducer/notifications.reducer';
-import { clearAccountCache } from '$ssr/api/clear-cache';
+import { AccountType } from '$api/generated/financerApi';
+import { ValidationException } from '$exceptions/validation.exception';
+import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
+import { AccountService } from '$ssr/api/account.service';
 import { AccountEdit } from '$views/accounts/account.edit';
-import { AccountFormFields } from '$views/accounts/account.form';
 
 interface AccountEditContainerProps {
   id: string;
 }
 
-export const AccountEditContainer: FC<AccountEditContainerProps> = ({ id }) => {
-  const { push } = useViewTransitionRouter();
-  const [editAccount] = useAccountsUpdateMutation();
+export const AccountEditContainer: FC<AccountEditContainerProps> = async ({
+  id,
+}) => {
+  const account = await AccountService.getById(id);
 
-  const data = useAccountsFindOneByIdQuery({ id });
-  const account = data.data;
-  const dispatch = useDispatch();
+  const handleSubmit: DefaultFormActionHandler = async (
+    prevState,
+    formData,
+  ) => {
+    'use server';
 
-  const handleSubmit = useCallback(
-    async (newAccountData: AccountFormFields) => {
-      if (!account?.id) {
-        dispatch(
-          addToastMessage({
-            type: ToastMessageTypes.ERROR,
-            message: 'Submission failed',
-            additionalInformation: 'Account not found',
-          }),
-        );
-        return;
+    if (!account?.id) {
+      return { status: 'error', errors: ['Account not found'] };
+    }
+
+    try {
+      await AccountService.update(account.id, {
+        balance: parseInt(formData.get('balance') as string),
+        name: formData.get('name') as string,
+        type: formData.get('type') as AccountType,
+      });
+    } catch (error) {
+      if (error instanceof ValidationException) {
+        return { status: 'error', errors: error.errors };
       }
 
-      try {
-        const newAccount = await editAccount({
-          id: account.id,
-          updateAccountDto: newAccountData,
-        });
-        await clearAccountCache();
+      console.error(error);
+      return { status: 'error', errors: ['Something went wrong'] };
+    }
 
-        if ('message' in newAccount) {
-          dispatch(
-            addToastMessage({
-              type: ToastMessageTypes.ERROR,
-              message: 'Submission failed',
-              additionalInformation: newAccount?.message as string,
-            }),
-          );
-          return;
-        }
+    redirect(`/accounts/${id}`, RedirectType.push);
+  };
 
-        push(`/accounts/${id}`);
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error(error);
-      }
-    },
-    [account?.id, dispatch, editAccount, id, push],
-  );
+  if (!account) {
+    throw new Error('Account not found');
+  }
 
-  return (
-    <>
-      <DataHandler {...data} />
-      {account && <AccountEdit account={account} onSave={handleSubmit} />}
-    </>
-  );
+  return <AccountEdit account={account} onSave={handleSubmit} />;
 };

@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 
 import { Drawer } from '$blocks/drawer/drawer';
@@ -49,7 +51,7 @@ export const HeaderDrawerAction = ({
         <ButtonGroup isReverse isHorizontal>
           <Button
             accentColor={drawerButtonAccentColor}
-            onClick={onSubmit}
+            onClick={() => onSubmit()}
             testId={`${buttonTestId}-confirm`}
           >
             {drawerButtonLabel}

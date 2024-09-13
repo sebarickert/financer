@@ -6,6 +6,7 @@ import session from 'express-session';
 import passport from 'passport';
 
 import { configuration } from './config/configuration';
+import { HttpAccessLogMiddleware } from './middlewares/http-access-log.middleware';
 import { AccountBalanceChangesModule } from './modules/account-balance-changes/account-balance-changes.module';
 import { AccountsModule } from './modules/accounts/accounts.module';
 import { AuthModule } from './modules/auth/auth.module';
@@ -52,6 +53,7 @@ export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(
+        HttpAccessLogMiddleware,
         session({
           secret: this.configService.get<string>('cookieKey'),
           cookie: {

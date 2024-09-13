@@ -64,7 +64,27 @@ export abstract class BaseApi {
       const headers = new Headers(request.headers);
       headers.set('Cookie', `connect.sid=${await getSessionId()}`);
 
-      return fetch(request.url, { ...request, headers, next });
+      const body = await request.text();
+
+      return fetch(request.url, {
+        body:
+          request.method !== 'GET' && request.method !== 'HEAD'
+            ? body
+            : undefined,
+        // We are using revalidateTag in the API, so next will throw warnings if we have a cache default and revalidate set
+        cache: request.cache === 'default' ? undefined : request.cache,
+        credentials: request.credentials,
+        headers,
+        integrity: request.integrity,
+        method: request.method,
+        mode: request.mode,
+        redirect: request.redirect,
+        referrer: request.referrer,
+        referrerPolicy: request.referrerPolicy,
+        keepalive: request.keepalive,
+        signal: request.signal,
+        next,
+      });
     },
     querySerializer: {
       array: {

@@ -17,6 +17,7 @@
       "$constants/*": ["./src/constants/*"],
       "$context/*": ["./src/context/*"],
       "$ssr/*": ["./src/ssr/*"],
+      "$exceptions/*": ["./src/exceptions/*"],
       "$container/*": ["./containers/*"]
     }
   }
