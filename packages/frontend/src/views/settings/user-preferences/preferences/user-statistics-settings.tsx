@@ -1,4 +1,6 @@
-import { useEffect } from 'react';
+'use client';
+
+import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { AccountType } from '$api/generated/financerApi';
@@ -9,6 +11,10 @@ import { Checkbox } from '$elements/checkbox/checkbox';
 import { CheckboxGroup } from '$elements/checkbox/checkbox.group';
 import { Heading } from '$elements/heading/heading';
 import { Paragraph } from '$elements/paragraph/paragraph';
+import {
+  DefaultFormActionHandler,
+  useFinancerFormState,
+} from '$hooks/useFinancerFormState';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { capitalize } from '$utils/capitalize';
 
@@ -20,13 +26,14 @@ export interface UserStatisticsSettingsFormFields {
 
 interface UserStatisticsSettingsProps {
   data?: UserStatisticsSettingsFormFields;
-  onSave: (data: UserStatisticsSettingsFormFields) => void;
+  onSave: DefaultFormActionHandler;
 }
 
-export const UserStatisticsSettings = ({
+export const UserStatisticsSettings: FC<UserStatisticsSettingsProps> = ({
   data,
   onSave,
-}: UserStatisticsSettingsProps): JSX.Element | null => {
+}) => {
+  const action = useFinancerFormState('user-statistics-settings', onSave);
   const methods = useForm<UserStatisticsSettingsFormFields>();
 
   useEffect(() => {
@@ -38,7 +45,7 @@ export const UserStatisticsSettings = ({
       <UpdatePageInfo backLink={settingsPaths.userPreferences} />
       <Form
         methods={methods}
-        onSubmit={onSave}
+        action={action}
         submitLabel="Save"
         formFooterBackLink={settingsPaths.userPreferences}
       >

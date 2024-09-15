@@ -1,105 +1,98 @@
-'use client';
+import { redirect, RedirectType } from 'next/navigation';
+import { FC } from 'react';
 
-import { useCallback, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
-
+import { TransferDto } from '$api/generated/financerApi';
 import {
-  UpdateTransferDto,
-  useTransfersFindOneQuery,
-  useTransfersRemoveMutation,
-  useTransfersUpdateMutation,
-} from '$api/generated/financerApi';
-import { DataHandler } from '$blocks/data-handler/data-handler';
-import { ToastMessageTypes } from '$blocks/toast/toast';
+  isCategoriesFormFullFields,
+  parseCategoriesFormFullFields,
+} from '$blocks/transaction-categories/transaction-categories.types';
 import { TransactionDelete } from '$blocks/transaction-delete/transaction-delete';
 import { TransactionForm } from '$blocks/transaction-form/transaction-form';
-import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { addToastMessage } from '$reducer/notifications.reducer';
+import { ValidationException } from '$exceptions/validation.exception';
+import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
-import { clearTransferCache } from '$ssr/api/clear-cache';
-import { parseErrorMessagesToArray } from '$utils/apiHelper';
+import { TransferService } from '$ssr/api/transfer.service';
 import { DateFormat, formatDate } from '$utils/formatDate';
+import { parseArrayFromFormData } from '$utils/parseArrayFromFormData';
 
 interface TransferEditContainerProps {
   id: string;
 }
 
-export const TransferEditContainer = ({ id }: TransferEditContainerProps) => {
-  const { push } = useViewTransitionRouter();
+export const TransferEditContainer: FC<TransferEditContainerProps> = async ({
+  id,
+}) => {
+  const transfer = await TransferService.getById(id);
 
-  const transferData = useTransfersFindOneQuery({ id });
-  const { data: transfer } = transferData;
-  const [editTransfer] = useTransfersUpdateMutation();
-  const [deleteTransfer] = useTransfersRemoveMutation();
-  const dispatch = useDispatch();
+  const handleSubmit: DefaultFormActionHandler = async (
+    prevState,
+    formData,
+  ) => {
+    'use server';
 
-  const handleSubmit = async (updateTransferDto: UpdateTransferDto) => {
-    if (!id) {
-      console.error('Failed to edit transfer: no id');
-      return;
+    if (!transfer) {
+      throw new Error('Transfer not found');
     }
-    try {
-      await editTransfer({
-        updateTransferDto,
-        id,
-      }).unwrap();
-      await clearTransferCache();
 
-      push(`/statistics/transfers/${transfer?.id}`);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      if (error.status === 400 || error.status === 404) {
-        dispatch(
-          addToastMessage({
-            type: ToastMessageTypes.ERROR,
-            message: 'Submission failed',
-            additionalInformation: parseErrorMessagesToArray(
-              error?.data?.message,
-            ),
-          }),
-        );
-        return;
+    const categories = parseArrayFromFormData(
+      formData,
+      'categories',
+      isCategoriesFormFullFields,
+      parseCategoriesFormFullFields,
+    );
+
+    let data: TransferDto;
+
+    try {
+      data = await TransferService.update(transfer.id, {
+        amount: parseFloat(formData.get('amount') as string),
+        description: formData.get('description') as string,
+        date: formData.get('date') as string,
+        toAccount: formData.get('toAccount') as string,
+        fromAccount: formData.get('fromAccount') as string,
+        categories: categories,
+      });
+    } catch (error) {
+      if (error instanceof ValidationException) {
+        return { status: 'ERROR', errors: error.errors };
       }
 
-      // eslint-disable-next-line no-console
       console.error(error);
+      return { status: 'ERROR', errors: ['Something went wrong'] };
     }
+
+    redirect(`/statistics/transfers/${data.id}`, RedirectType.push);
   };
 
-  const handleDelete = useCallback(async () => {
+  const handleDelete = async () => {
+    'use server';
+
     if (!id) {
       console.error('Failed to delete transfer: no id');
       return;
     }
-    await deleteTransfer({ id }).unwrap();
-    await clearTransferCache();
+    await TransferService.delete(id);
 
-    push('/statistics/transfers');
-  }, [deleteTransfer, id, push]);
+    redirect('/statistics', RedirectType.push);
+  };
 
-  const initialValues = useMemo(() => {
-    if (!transfer) return undefined;
-    return {
-      ...transfer,
-      date: formatDate(new Date(transfer.date), DateFormat.input),
-    };
-  }, [transfer]);
+  const initialValues = {
+    ...transfer,
+    date: formatDate(new Date(transfer.date), DateFormat.input),
+  };
 
   return (
     <>
-      <DataHandler {...transferData} />
       <UpdatePageInfo
         backLink={`/statistics/transfer/${transfer?.id}`}
         headerAction={<TransactionDelete onDelete={handleDelete} />}
       />
-      {transfer && (
-        <TransactionForm
-          initialValues={initialValues}
-          onSubmit={handleSubmit}
-          hasToAccountField
-          hasFromAccountField
-        />
-      )}
+      <TransactionForm
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+        hasToAccountField
+        hasFromAccountField
+      />
     </>
   );
 };

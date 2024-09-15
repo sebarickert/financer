@@ -1,5 +1,7 @@
-import { useEffect, useMemo } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+'use client';
+
+import { FC, useMemo } from 'react';
+import { useForm } from 'react-hook-form';
 
 import {
   TransactionTemplateType,
@@ -8,17 +10,19 @@ import {
   VisibilityType,
 } from '$api/generated/financerApi';
 import { Form } from '$blocks/form/form';
-import {
-  TransactionCategories,
-  TransactionCategoriesFormFields,
-} from '$blocks/transaction-categories/transaction-categories';
+import { TransactionCategories } from '$blocks/transaction-categories/transaction-categories';
+import { CategoriesFormOnlyCategory } from '$blocks/transaction-categories/transaction-categories.types';
 import { Input } from '$elements/input/input';
 import { Select, Option } from '$elements/select/select';
 import { useGetAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useGetAllTransactionCategoriesWithCategoryTree';
+import {
+  DefaultFormActionHandler,
+  useFinancerFormState,
+} from '$hooks/useFinancerFormState';
 import { capitalize } from '$utils/capitalize';
 
 interface TemplateFormProps {
-  onSubmit: SubmitHandler<TemplateFormFields>;
+  onSubmit: DefaultFormActionHandler;
   submitLabel: string;
   optionalFooterComponent?: React.ReactNode;
   initialValues?: Partial<TemplateFormFields>;
@@ -34,14 +38,16 @@ export interface TemplateFormFields {
   toAccount?: string | null;
   dayOfMonth?: number;
   dayOfMonthToCreate?: number;
-  categories: TransactionCategoriesFormFields[];
+  categories: CategoriesFormOnlyCategory[];
 }
 
-const TransactionCategoriesFormWrapper = ({
-  type,
-}: {
+type TransactionCategoriesFormWrapperProps = {
   type: VisibilityType;
-}): JSX.Element | null => {
+};
+
+const TransactionCategoriesFormWrapper: FC<
+  TransactionCategoriesFormWrapperProps
+> = ({ type }) => {
   const { data: transactionCategoriesRaw } =
     useGetAllTransactionCategoriesWithCategoryTree({
       visibilityType: type as unknown as VisibilityType,
@@ -58,34 +64,27 @@ const TransactionCategoriesFormWrapper = ({
 
   return (
     <TransactionCategories
-      className="my-8 space-y-8"
       categorySelectOnly
       transactionCategories={transactionCategories}
     />
   );
 };
 
-export const TemplateForm = ({
+export const TemplateForm: FC<TemplateFormProps> = ({
   onSubmit,
   submitLabel,
   optionalFooterComponent,
   initialValues,
-}: TemplateFormProps): JSX.Element | null => {
+}) => {
+  const action = useFinancerFormState('add-template', onSubmit);
   const methods = useForm<TemplateFormFields>({
     defaultValues: initialValues,
   });
 
-  const { watch, reset } = methods;
+  const { watch } = methods;
 
   const templateType = watch('templateType');
   const templateVisibility = watch('templateVisibility');
-
-  const initialTemplateType =
-    TransactionTemplateType[
-      capitalize(
-        initialValues?.templateType?.[0] ?? 'manual',
-      ) as keyof typeof TransactionTemplateType
-    ];
 
   const { data: accounts } = useAccountsFindAllByUserQuery({});
 
@@ -97,17 +96,19 @@ export const TemplateForm = ({
     }));
   }, [accounts]);
 
-  const handleSubmit = async (data: TemplateFormFields) => {
-    const { templateVisibility: submittedTemplateVisibility } = data;
+  const handleSubmit = async (data: FormData) => {
+    const submittedTemplateVisibility = data.get('templateVisibility');
 
     const isExpense = submittedTemplateVisibility === TransactionType.Expense;
     const isIncome = submittedTemplateVisibility === TransactionType.Income;
 
-    onSubmit({
-      ...data,
-      fromAccount: isIncome ? null : data.fromAccount,
-      toAccount: isExpense ? null : data.toAccount,
-    });
+    if (isExpense) {
+      data.delete('toAccount');
+    } else if (isIncome) {
+      data.delete('fromAccount');
+    }
+
+    action(data);
   };
 
   const selectedTransactionType = useMemo(() => {
@@ -135,21 +136,11 @@ export const TemplateForm = ({
     label: capitalize(TransactionType[type]),
   }));
 
-  useEffect(() => {
-    if (!initialValues) return;
-
-    reset((previousValues) => ({
-      ...previousValues,
-      ...initialValues,
-      templateType: initialTemplateType,
-    }));
-  }, [initialTemplateType, initialValues, reset]);
-
   return (
     <Form
       methods={methods}
+      action={handleSubmit}
       submitLabel={submitLabel}
-      onSubmit={handleSubmit}
       formFooterBackLink="/"
       optionalFooterComponent={optionalFooterComponent}
     >

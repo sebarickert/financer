@@ -1,104 +1,89 @@
-'use client';
+import { redirect, RedirectType } from 'next/navigation';
+import { FC } from 'react';
 
-import { useMemo } from 'react';
-import { useDispatch } from 'react-redux';
-
+import { TransactionType, TransferDto } from '$api/generated/financerApi';
 import {
-  CreateTransferDto,
-  useTransfersCreateMutation,
-  useTransactionTemplatesFindOneQuery,
-  TransactionType,
-} from '$api/generated/financerApi';
-import { DataHandler } from '$blocks/data-handler/data-handler';
-import { ToastMessageTypes } from '$blocks/toast/toast';
+  isCategoriesFormFullFields,
+  parseCategoriesFormFullFields,
+} from '$blocks/transaction-categories/transaction-categories.types';
 import { TransactionForm } from '$blocks/transaction-form/transaction-form';
 import { TransactionTemplateSwitcher } from '$blocks/transaction-template-switcher/transaction-template-switcher';
-import { useUserDefaultTransferSourceAccount } from '$hooks/settings/user-preference/useUserDefaultTransferSourceAccount';
-import { useUserDefaultTransferTargetAccount } from '$hooks/settings/user-preference/useUserDefaultTransferTargetAccount';
-import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { addToastMessage } from '$reducer/notifications.reducer';
+import { ValidationException } from '$exceptions/validation.exception';
+import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
-import { clearTransferCache } from '$ssr/api/clear-cache';
-import { parseErrorMessagesToArray } from '$utils/apiHelper';
+import { TransactionTemplateService } from '$ssr/api/transaction-template.service';
+import { TransferService } from '$ssr/api/transfer.service';
+import { UserPreferenceService } from '$ssr/api/user-preference.service';
+import { parseArrayFromFormData } from '$utils/parseArrayFromFormData';
 
 interface TransferAddContainerProps {
   templateId?: string;
 }
 
-export const TransferAddContainer = ({
+export const TransferAddContainer: FC<TransferAddContainerProps> = async ({
   templateId,
-}: TransferAddContainerProps) => {
-  const { push } = useViewTransitionRouter();
-  const [addTransfer] = useTransfersCreateMutation();
-  const { data: defaultTransferSourceAccount } =
-    useUserDefaultTransferSourceAccount({ skip: !!templateId });
-  const { data: defaultTransferTargetAccount } =
-    useUserDefaultTransferTargetAccount({ skip: !!templateId });
+}) => {
+  const defaultTransferSourceAccount =
+    await UserPreferenceService.getDefaultTransferSourceAccount();
+  const defaultTransferTargetAccount =
+    await UserPreferenceService.getDefaultTransferTargetAccount();
 
-  const dispatch = useDispatch();
+  const transactionTemplate = !!templateId
+    ? await TransactionTemplateService.getById(templateId)
+    : undefined;
 
-  const templateData = useTransactionTemplatesFindOneQuery(
-    { id: templateId as string },
-    { skip: !templateId },
-  );
+  const handleSubmit: DefaultFormActionHandler = async (
+    prevState,
+    formData,
+  ) => {
+    'use server';
 
-  const { data: transactionTemplate } = templateData;
+    const categories = parseArrayFromFormData(
+      formData,
+      'categories',
+      isCategoriesFormFullFields,
+      parseCategoriesFormFullFields,
+    );
 
-  const handleSubmit = async (createTransferDto: CreateTransferDto) => {
+    let data: TransferDto;
+
     try {
-      const { id } = await addTransfer({
-        createTransferDto,
-      }).unwrap();
-      await clearTransferCache();
-
-      push(`/statistics/transfers/${id}`);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      if (error.status === 400 || error.status === 404) {
-        dispatch(
-          addToastMessage({
-            type: ToastMessageTypes.ERROR,
-            message: 'Submission failed',
-            additionalInformation: parseErrorMessagesToArray(
-              error?.data?.message,
-            ),
-          }),
-        );
-        return;
+      data = await TransferService.add({
+        amount: parseFloat(formData.get('amount') as string),
+        description: formData.get('description') as string,
+        date: formData.get('date') as string,
+        toAccount: formData.get('toAccount') as string,
+        fromAccount: formData.get('fromAccount') as string,
+        categories: categories,
+      });
+    } catch (error) {
+      if (error instanceof ValidationException) {
+        return { status: 'ERROR', errors: error.errors };
       }
 
-      // eslint-disable-next-line no-console
       console.error(error);
+      return { status: 'ERROR', errors: ['Something went wrong'] };
     }
+
+    redirect(`/statistics/transfers/${data.id}`, RedirectType.push);
   };
 
-  const initialValues = useMemo(() => {
-    if (!transactionTemplate) {
-      return {
+  const initialValues = !transactionTemplate
+    ? {
         fromAccount: defaultTransferSourceAccount,
         toAccount: defaultTransferTargetAccount,
+      }
+    : {
+        ...transactionTemplate,
+        fromAccount: transactionTemplate.fromAccount ?? undefined,
+        toAccount: transactionTemplate.toAccount ?? undefined,
+        categories: transactionTemplate.categories?.map((categoryId) => ({
+          categoryId,
+          amount: NaN,
+        })),
       };
-    }
-    const categories = transactionTemplate?.categories?.map((categoryId) => ({
-      categoryId: categoryId,
-      amount: NaN,
-    }));
-
-    return {
-      ...transactionTemplate,
-      fromAccount: transactionTemplate.fromAccount ?? undefined,
-      toAccount: transactionTemplate.toAccount ?? undefined,
-      categories,
-    };
-  }, [
-    defaultTransferSourceAccount,
-    defaultTransferTargetAccount,
-    transactionTemplate,
-  ]);
-
   return (
     <>
-      <DataHandler skipNotFound {...templateData} />
       <UpdatePageInfo
         headerAction={
           <TransactionTemplateSwitcher
@@ -107,14 +92,12 @@ export const TransferAddContainer = ({
           />
         }
       />
-      {(!templateId || transactionTemplate) && (
-        <TransactionForm
-          initialValues={initialValues}
-          onSubmit={handleSubmit}
-          hasToAccountField
-          hasFromAccountField
-        />
-      )}
+      <TransactionForm
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+        hasToAccountField
+        hasFromAccountField
+      />
     </>
   );
 };

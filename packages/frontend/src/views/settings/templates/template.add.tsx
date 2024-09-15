@@ -1,11 +1,14 @@
+import { FC } from 'react';
+
 import { TemplateForm } from './template.form';
 
 import {
   CreateTransactionTemplateDto,
   TransactionTemplateType,
 } from '$api/generated/financerApi';
-import { TransactionCategoriesFormFields } from '$blocks/transaction-categories/transaction-categories';
+import { CategoriesFormOnlyCategory } from '$blocks/transaction-categories/transaction-categories.types';
 import { settingsPaths } from '$constants/settings-paths';
+import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
 export type CreateTransactionTemplateDtoWithCategory = Omit<
@@ -14,16 +17,14 @@ export type CreateTransactionTemplateDtoWithCategory = Omit<
 > & {
   // TODO change this to match the backend, so make both of them to be array or non-array
   templateType: TransactionTemplateType;
-  categories: TransactionCategoriesFormFields[];
+  categories: CategoriesFormOnlyCategory[];
 };
 
 interface TemplateAddProps {
-  onSubmit: (data: CreateTransactionTemplateDtoWithCategory) => void;
+  onSubmit: DefaultFormActionHandler;
 }
 
-export const TemplateAdd = ({
-  onSubmit,
-}: TemplateAddProps): JSX.Element | null => {
+export const TemplateAdd: FC<TemplateAddProps> = ({ onSubmit }) => {
   return (
     <>
       <UpdatePageInfo backLink={settingsPaths.templates} />

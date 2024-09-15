@@ -1,94 +1,86 @@
-'use client';
+import { redirect, RedirectType } from 'next/navigation';
+import { FC } from 'react';
 
-import { useMemo } from 'react';
-import { useDispatch } from 'react-redux';
-
+import { ExpenseDto, TransactionType } from '$api/generated/financerApi';
 import {
-  CreateExpenseDto,
-  TransactionType,
-  useExpensesCreateMutation,
-  useTransactionTemplatesFindOneQuery,
-} from '$api/generated/financerApi';
-import { DataHandler } from '$blocks/data-handler/data-handler';
-import { ToastMessageTypes } from '$blocks/toast/toast';
+  isCategoriesFormFullFields,
+  parseCategoriesFormFullFields,
+} from '$blocks/transaction-categories/transaction-categories.types';
 import { TransactionForm } from '$blocks/transaction-form/transaction-form';
 import { TransactionTemplateSwitcher } from '$blocks/transaction-template-switcher/transaction-template-switcher';
-import { useUserDefaultExpenseAccount } from '$hooks/settings/user-preference/useUserDefaultExpenseAccount';
-import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { addToastMessage } from '$reducer/notifications.reducer';
+import { ValidationException } from '$exceptions/validation.exception';
+import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
-import { clearExpenseCache } from '$ssr/api/clear-cache';
-import { parseErrorMessagesToArray } from '$utils/apiHelper';
+import { ExpenseService } from '$ssr/api/expense.service ';
+import { TransactionTemplateService } from '$ssr/api/transaction-template.service';
+import { UserPreferenceService } from '$ssr/api/user-preference.service';
+import { parseArrayFromFormData } from '$utils/parseArrayFromFormData';
 
 interface ExpenseAddContainerProps {
   templateId?: string;
 }
 
-export const ExpenseAddContainer = ({
+export const ExpenseAddContainer: FC<ExpenseAddContainerProps> = async ({
   templateId,
-}: ExpenseAddContainerProps) => {
-  const { push } = useViewTransitionRouter();
-  const [addExpense] = useExpensesCreateMutation();
-  const { data: defaultExpenseAccount } = useUserDefaultExpenseAccount({
-    skip: !!templateId,
-  });
-  const dispatch = useDispatch();
+}) => {
+  const defaultExpenseAccount =
+    await UserPreferenceService.getDefaultExpenseAccount();
 
-  const templateData = useTransactionTemplatesFindOneQuery(
-    { id: templateId as string },
-    { skip: !templateId },
-  );
+  const transactionTemplate = !!templateId
+    ? await TransactionTemplateService.getById(templateId)
+    : undefined;
 
-  const { currentData: transactionTemplate } = templateData;
+  const handleSubmit: DefaultFormActionHandler = async (
+    prevState,
+    formData,
+  ) => {
+    'use server';
 
-  const handleSubmit = async (createExpenseDto: CreateExpenseDto) => {
+    const categories = parseArrayFromFormData(
+      formData,
+      'categories',
+      isCategoriesFormFullFields,
+      parseCategoriesFormFullFields,
+    );
+
+    let data: ExpenseDto;
+
     try {
-      const { id } = await addExpense({
-        createExpenseDto,
-      }).unwrap();
-      await clearExpenseCache();
-
-      push(`/statistics/expenses/${id}`);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      if (error.status === 400 || error.status === 404) {
-        dispatch(
-          addToastMessage({
-            type: ToastMessageTypes.ERROR,
-            message: 'Submission failed',
-            additionalInformation: parseErrorMessagesToArray(
-              error?.data?.message,
-            ),
-          }),
-        );
-        return;
+      data = await ExpenseService.add({
+        amount: parseFloat(formData.get('amount') as string),
+        description: formData.get('description') as string,
+        date: formData.get('date') as string,
+        fromAccount: formData.get('fromAccount') as string,
+        categories: categories,
+      });
+    } catch (error) {
+      if (error instanceof ValidationException) {
+        return { status: 'ERROR', errors: error.errors };
       }
 
-      // eslint-disable-next-line no-console
       console.error(error);
+      return { status: 'ERROR', errors: ['Something went wrong'] };
     }
+
+    redirect(`/statistics/expenses/${data.id}`, RedirectType.push);
   };
 
-  const initialValues = useMemo(() => {
-    if (!transactionTemplate) {
-      return { fromAccount: defaultExpenseAccount };
-    }
-    const categories = transactionTemplate?.categories?.map((categoryId) => ({
-      categoryId,
-      amount: NaN,
-    }));
-
-    return {
-      ...transactionTemplate,
-      fromAccount: transactionTemplate.fromAccount ?? undefined,
-      toAccount: transactionTemplate.toAccount ?? undefined,
-      categories,
-    };
-  }, [defaultExpenseAccount, transactionTemplate]);
+  const initialValues = !transactionTemplate
+    ? {
+        fromAccount: defaultExpenseAccount,
+      }
+    : {
+        ...transactionTemplate,
+        fromAccount: transactionTemplate.fromAccount ?? undefined,
+        toAccount: undefined,
+        categories: transactionTemplate.categories?.map((categoryId) => ({
+          categoryId,
+          amount: NaN,
+        })),
+      };
 
   return (
     <>
-      <DataHandler skipNotFound {...templateData} />
       <UpdatePageInfo
         headerAction={
           <TransactionTemplateSwitcher
@@ -97,13 +89,11 @@ export const ExpenseAddContainer = ({
           />
         }
       />
-      {(!templateId || transactionTemplate) && (
-        <TransactionForm
-          initialValues={initialValues}
-          onSubmit={handleSubmit}
-          hasFromAccountField
-        />
-      )}
+      <TransactionForm
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+        hasFromAccountField
+      />
     </>
   );
 };

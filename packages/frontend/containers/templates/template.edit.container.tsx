@@ -1,104 +1,95 @@
-'use client';
-
+import { redirect, RedirectType } from 'next/navigation';
 import { FC } from 'react';
-import { useDispatch } from 'react-redux';
 
 import {
-  useTransactionTemplatesUpdateMutation,
-  useTransactionTemplatesRemoveMutation,
-  useTransactionTemplatesFindOneQuery,
+  TransactionTemplateType,
+  TransactionType,
 } from '$api/generated/financerApi';
-import { DataHandler } from '$blocks/data-handler/data-handler';
-import { ToastMessageTypes } from '$blocks/toast/toast';
+import { isCategoriesFormOnlyCategory } from '$blocks/transaction-categories/transaction-categories.types';
 import { settingsPaths } from '$constants/settings-paths';
-import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { addToastMessage } from '$reducer/notifications.reducer';
-import { clearTransactionTemplateCache } from '$ssr/api/clear-cache';
-import { parseErrorMessagesToArray } from '$utils/apiHelper';
-import {
-  TemplateEdit,
-  UpdateTransactionTemplateDtoWithCategory,
-} from '$views/settings/templates/template.edit';
+import { ValidationException } from '$exceptions/validation.exception';
+import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
+import { TransactionTemplateService } from '$ssr/api/transaction-template.service';
+import { parseArrayFromFormData } from '$utils/parseArrayFromFormData';
+import { TemplateEdit } from '$views/settings/templates/template.edit';
 
 interface TemplateEditContainerProps {
   id: string;
 }
 
-export const TemplateEditContainer: FC<TemplateEditContainerProps> = ({
+export const TemplateEditContainer: FC<TemplateEditContainerProps> = async ({
   id,
 }) => {
-  const { push } = useViewTransitionRouter();
+  const template = await TransactionTemplateService.getById(id);
 
-  const [editTransactionTemplate] = useTransactionTemplatesUpdateMutation();
-  const [deleteTransactionTemplate] = useTransactionTemplatesRemoveMutation();
-  const templateData = useTransactionTemplatesFindOneQuery({ id });
-  const { data: template } = templateData;
-  const dispatch = useDispatch();
+  const handleSubmit: DefaultFormActionHandler = async (prev, formData) => {
+    'use server';
 
-  const handleSubmit = async (
-    newTransactionTemplateData: UpdateTransactionTemplateDtoWithCategory,
-  ) => {
     if (!template?.id) {
-      console.error('transactionTemplate is not defined');
-      return;
+      throw new Error('transactionTemplate is not found');
     }
 
-    const data = {
-      ...newTransactionTemplateData,
-      templateType: [newTransactionTemplateData.templateType],
-      categories: newTransactionTemplateData.categories?.map(
-        ({ categoryId }) => categoryId,
-      ),
-    };
+    const dayOfMonth = formData.get('dayOfMonth');
+    const dayOfMonthToCreate = formData.get('dayOfMonthToCreate');
+
+    const categories = parseArrayFromFormData(
+      formData,
+      'categories',
+      isCategoriesFormOnlyCategory,
+    );
 
     try {
-      await editTransactionTemplate({
-        id: template.id,
-        updateTransactionTemplateDto: data,
-      }).unwrap();
-      await clearTransactionTemplateCache();
-
-      push(settingsPaths.templates);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      if (error.status === 400 || error.status === 404) {
-        dispatch(
-          addToastMessage({
-            type: ToastMessageTypes.ERROR,
-            message: 'Submission failed',
-            additionalInformation: parseErrorMessagesToArray(
-              error?.data?.message,
-            ),
-          }),
-        );
-        return;
+      await TransactionTemplateService.update(template?.id, {
+        templateName: formData.get('templateName') as string,
+        templateType: [
+          formData.get('templateType') as unknown as TransactionTemplateType,
+        ],
+        templateVisibility: formData.get(
+          'templateVisibility',
+        ) as TransactionType,
+        description: formData.get('description') as string,
+        amount: parseFloat(formData.get('amount') as string),
+        fromAccount: formData.get('fromAccount') as string,
+        toAccount: formData.get('toAccount') as string,
+        dayOfMonth: dayOfMonth ? parseInt(dayOfMonth as string) : undefined,
+        dayOfMonthToCreate: dayOfMonthToCreate
+          ? parseInt(dayOfMonthToCreate as string)
+          : undefined,
+        categories: categories.map(({ categoryId }) => categoryId),
+      });
+    } catch (error) {
+      if (error instanceof ValidationException) {
+        return { status: 'ERROR', errors: error.errors };
       }
 
-      // eslint-disable-next-line no-console
       console.error(error);
+      return { status: 'ERROR', errors: ['Something went wrong'] };
     }
+
+    redirect(settingsPaths.templates, RedirectType.push);
   };
 
   const handleDelete = async () => {
+    'use server';
+
     if (!id) {
       console.error('Failed to delete template: no id');
       return;
     }
-    await deleteTransactionTemplate({ id }).unwrap();
-    await clearTransactionTemplateCache();
+    await TransactionTemplateService.delete(id);
 
-    push(settingsPaths.templates);
+    redirect(settingsPaths.templates, RedirectType.push);
   };
+
+  if (!template) {
+    throw new Error('Template not found');
+  }
+
   return (
-    <>
-      <DataHandler {...templateData} />
-      {template && (
-        <TemplateEdit
-          template={template}
-          onSubmit={handleSubmit}
-          onDelete={handleDelete}
-        />
-      )}
-    </>
+    <TemplateEdit
+      template={template}
+      onSubmit={handleSubmit}
+      onDelete={handleDelete}
+    />
   );
 };

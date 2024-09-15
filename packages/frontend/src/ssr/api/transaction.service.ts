@@ -1,6 +1,9 @@
 import { revalidateTag } from 'next/cache';
 
 import { BaseApi } from './base-api';
+import { ExpenseService } from './expense.service ';
+import { IncomeService } from './income.service';
+import { TransferService } from './transfer.service';
 
 import {
   ExpenseDto,
@@ -17,14 +20,14 @@ import { GenericPaginationDto } from 'src/types/pagination.dto';
 
 export type TransactionListOptions = TransactionsFindAllByUserApiArg;
 
-type FirstTransactionByTypeOptions = Omit<
+export type FirstTransactionByTypeOptions = Omit<
   TransactionListOptions,
   'limit' | 'page' | 'sortOrder'
 >;
 
 export class TransactionService extends BaseApi {
   // TODO temporary solution to clear cache while migration
-  public static clearCache(): void {
+  public static async clearCache(): Promise<void> {
     'use server';
     revalidateTag(this.API_TAG.TRANSACTION);
   }
@@ -111,16 +114,12 @@ export class TransactionService extends BaseApi {
     | GenericPaginationDto<TransferDto>
   > {
     if (type === TransactionType.Expense) {
-      // Handle Expense case
-      return this.getExpenses(options);
+      return ExpenseService.getAll(options);
     } else if (type === TransactionType.Income) {
-      // Handle Income case
-      return this.getIncomes(options);
+      return IncomeService.getAll(options);
     } else if (type === TransactionType.Transfer) {
-      // Handle Transfer case
-      return this.getTransfers(options);
+      return TransferService.getAll(options);
     } else {
-      // Handle null case
       return this.getAll(options);
     }
   }
@@ -153,78 +152,6 @@ export class TransactionService extends BaseApi {
     return data;
   }
 
-  private static async getExpenses(
-    options: TransactionListOptions,
-  ): Promise<GenericPaginationDto<ExpenseDto>> {
-    const { data, error } = await this.client.GET('/api/expenses', {
-      params: {
-        query: options,
-      },
-      next: {
-        tags: [
-          this.API_TAG.EXPENSE,
-          this.API_TAG.TRANSACTION,
-          this.getListTag(this.API_TAG.EXPENSE),
-          this.getListTag(this.API_TAG.TRANSACTION),
-        ],
-      },
-    });
-
-    if (error) {
-      throw new Error('Failed to fetch expenses', error);
-    }
-
-    return data;
-  }
-
-  private static async getIncomes(
-    options: TransactionListOptions,
-  ): Promise<GenericPaginationDto<IncomeDto>> {
-    const { data, error } = await this.client.GET('/api/incomes', {
-      params: {
-        query: options,
-      },
-      next: {
-        tags: [
-          this.API_TAG.INCOME,
-          this.API_TAG.TRANSACTION,
-          this.getListTag(this.API_TAG.INCOME),
-          this.getListTag(this.API_TAG.TRANSACTION),
-        ],
-      },
-    });
-
-    if (error) {
-      throw new Error('Failed to fetch incomes', error);
-    }
-
-    return data;
-  }
-
-  private static async getTransfers(
-    options: TransactionListOptions,
-  ): Promise<GenericPaginationDto<TransferDto>> {
-    const { data, error } = await this.client.GET('/api/transfers', {
-      params: {
-        query: options,
-      },
-      next: {
-        tags: [
-          this.API_TAG.TRANSFER,
-          this.API_TAG.TRANSACTION,
-          this.getListTag(this.API_TAG.TRANSFER),
-          this.getListTag(this.API_TAG.TRANSACTION),
-        ],
-      },
-    });
-
-    if (error) {
-      throw new Error('Failed to fetch transfers', error);
-    }
-
-    return data;
-  }
-
   public static async getById(id: string): Promise<TransactionDto> {
     const { data, error } = await this.client.GET(`/api/transactions/{id}`, {
       params: {
@@ -251,77 +178,5 @@ export class TransactionService extends BaseApi {
     }
 
     return data as TransactionDto;
-  }
-
-  public static async getIncomeById(id: string): Promise<IncomeDto> {
-    const { data, error } = await this.client.GET(`/api/incomes/{id}`, {
-      params: {
-        path: {
-          id,
-        },
-      },
-      next: {
-        tags: [
-          this.API_TAG.TRANSACTION,
-          this.API_TAG.INCOME,
-          this.getEntityTag(this.API_TAG.TRANSACTION, id),
-          this.getEntityTag(this.API_TAG.INCOME, id),
-        ],
-      },
-    });
-
-    if (error) {
-      throw new Error('Failed to fetch income', error);
-    }
-
-    return data as IncomeDto;
-  }
-
-  public static async getExpenseById(id: string): Promise<ExpenseDto> {
-    const { data, error } = await this.client.GET(`/api/expenses/{id}`, {
-      params: {
-        path: {
-          id,
-        },
-      },
-      next: {
-        tags: [
-          this.API_TAG.TRANSACTION,
-          this.API_TAG.EXPENSE,
-          this.getEntityTag(this.API_TAG.TRANSACTION, id),
-          this.getEntityTag(this.API_TAG.EXPENSE, id),
-        ],
-      },
-    });
-
-    if (error) {
-      throw new Error('Failed to fetch expense', error);
-    }
-
-    return data as ExpenseDto;
-  }
-
-  public static async getTransferById(id: string): Promise<TransferDto> {
-    const { data, error } = await this.client.GET(`/api/transfers/{id}`, {
-      params: {
-        path: {
-          id,
-        },
-      },
-      next: {
-        tags: [
-          this.API_TAG.TRANSACTION,
-          this.API_TAG.TRANSFER,
-          this.getEntityTag(this.API_TAG.TRANSACTION, id),
-          this.getEntityTag(this.API_TAG.TRANSFER, id),
-        ],
-      },
-    });
-
-    if (error) {
-      throw new Error('Failed to fetch transfer', error);
-    }
-
-    return data as TransferDto;
   }
 }

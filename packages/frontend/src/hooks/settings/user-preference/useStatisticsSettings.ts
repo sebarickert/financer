@@ -1,12 +1,10 @@
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import {
   AccountType,
   UserPreferenceProperty,
   useUserPreferencesFindOneQuery,
-  useUserPreferencesUpdateMutation,
 } from '$api/generated/financerApi';
-import { clearUserPreferenceCache } from '$ssr/api/clear-cache';
 
 type UserStatisticsSettings = {
   accountTypes: AccountType[];
@@ -31,26 +29,4 @@ export const useUserStatisticsSettings = () => {
     ...data,
     data: parsedData,
   };
-};
-
-export const useUpdateUserStatisticsSettings = (): [
-  (newValue: UserStatisticsSettings) => Promise<void>,
-  ReturnType<typeof useUserPreferencesUpdateMutation>[1],
-] => {
-  const [updateMutation, data] = useUserPreferencesUpdateMutation();
-
-  const updateUserPreference = useCallback(
-    async (newValue: UserStatisticsSettings) => {
-      await updateMutation({
-        updateUserPreferenceDto: {
-          key: userPreferenceProperty,
-          value: JSON.stringify(newValue),
-        },
-      }).unwrap();
-      await clearUserPreferenceCache();
-    },
-    [updateMutation],
-  );
-
-  return [updateUserPreference, data];
 };

@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 
 import { TransactionCategoriesForm } from './transaction-categories.form';
 import { TransactionCategoriesItem } from './transaction-categories.item';
+import { CategoriesFormFullFields } from './transaction-categories.types';
 
 import { Drawer } from '$blocks/drawer/drawer';
 import { Button } from '$elements/button/button';
@@ -10,20 +11,13 @@ import { Option } from '$elements/select/select';
 import { useGetAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useGetAllTransactionCategoriesWithCategoryTree';
 
 interface TransactionCategoriesProps {
-  className?: string;
   transactionCategories: Option[];
   testId?: string;
   categorySelectOnly?: boolean;
 }
 
-export interface TransactionCategoriesFormFields {
-  description?: string;
-  categoryId: string;
-  amount: number;
-}
-
 export interface FieldArrayFields {
-  categories: TransactionCategoriesFormFields[];
+  categories: CategoriesFormFullFields[];
 }
 
 const defaultSelectedIndex = -1;
@@ -46,7 +40,7 @@ export const TransactionCategories = ({
     [transactionCategoriesRaw],
   );
 
-  const { getValues, setValue, reset } = useFormContext<FieldArrayFields>();
+  const { getValues, setValue } = useFormContext<FieldArrayFields>();
 
   const { fields, remove, update } = useFieldArray<FieldArrayFields>({
     name: 'categories',
@@ -66,7 +60,7 @@ export const TransactionCategories = ({
   };
 
   const isEmptyCategory = (index: number) =>
-    isNaN(parseInt(`${getValues(`categories.${index}`).amount}`));
+    isNaN(parseFloat(`${getValues(`categories.${index}`).amount}`));
 
   const setUnallocatedAmount = () => {
     const unallocatedAmount =
@@ -107,13 +101,6 @@ export const TransactionCategories = ({
     setIsFormOpen(true);
   };
 
-  useEffect(() => {
-    if (!categorySelectOnly) return;
-
-    setSelectedIndex(defaultSelectedIndex);
-    reset((oldValues) => ({ ...oldValues, categories: [] }));
-  }, [categorySelectOnly, reset, transactionCategories]);
-
   return (
     <>
       <Button
@@ -148,6 +135,7 @@ export const TransactionCategories = ({
             <TransactionCategoriesItem
               key={id}
               index={index}
+              categorySelectOnly={categorySelectOnly}
               onClick={() => handleCategoryItemClick(index)}
               getCategoryNameById={getCategoryNameById}
             />

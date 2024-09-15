@@ -1,12 +1,10 @@
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import {
   AccountType,
   UserPreferenceProperty,
   useUserPreferencesFindOneQuery,
-  useUserPreferencesUpdateMutation,
 } from '$api/generated/financerApi';
-import { clearUserPreferenceCache } from '$ssr/api/clear-cache';
 
 const userPreferenceProperty = UserPreferenceProperty.DashboardSettings;
 
@@ -31,26 +29,4 @@ export const useUserDashboardSettings = () => {
     ...data,
     data: parsedData,
   };
-};
-
-export const useUpdateUserDashboardSettings = (): [
-  (newValue: UserDashboardSettings) => Promise<void>,
-  ReturnType<typeof useUserPreferencesUpdateMutation>[1],
-] => {
-  const [updateMutation, data] = useUserPreferencesUpdateMutation();
-
-  const updateUserPreference = useCallback(
-    async (newValue: UserDashboardSettings) => {
-      await updateMutation({
-        updateUserPreferenceDto: {
-          key: userPreferenceProperty,
-          value: JSON.stringify(newValue),
-        },
-      }).unwrap();
-      await clearUserPreferenceCache();
-    },
-    [updateMutation],
-  );
-
-  return [updateUserPreference, data];
 };

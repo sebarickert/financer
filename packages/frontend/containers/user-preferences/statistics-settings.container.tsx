@@ -1,30 +1,27 @@
-'use client';
+import { redirect, RedirectType } from 'next/navigation';
+import { FC } from 'react';
 
+import { AccountType } from '$api/generated/financerApi';
 import { settingsPaths } from '$constants/settings-paths';
-import {
-  useUserStatisticsSettings,
-  useUpdateUserStatisticsSettings,
-} from '$hooks/settings/user-preference/useStatisticsSettings';
-import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import {
-  UserStatisticsSettings,
-  UserStatisticsSettingsFormFields,
-} from '$views/settings/user-preferences/preferences/user-statistics-settings';
+import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
+import { UserPreferenceService } from '$ssr/api/user-preference.service';
+import { UserStatisticsSettings } from '$views/settings/user-preferences/preferences/user-statistics-settings';
 
-export const StatisticsSettingsContainer = () => {
-  const { push } = useViewTransitionRouter();
-  const { data } = useUserStatisticsSettings();
-  const [setStatisticsSettings] = useUpdateUserStatisticsSettings();
+export const StatisticsSettingsContainer: FC = async () => {
+  const statisticsSettings =
+    await UserPreferenceService.getStatisticsSettings();
 
-  const handleSave = async (
-    newUserStatisticsData: UserStatisticsSettingsFormFields,
-  ) => {
-    await setStatisticsSettings({
-      accountTypes: newUserStatisticsData.accountTypes,
+  const handleSave: DefaultFormActionHandler = async (prev, formData) => {
+    'use server';
+
+    await UserPreferenceService.updateStatisticsSettings({
+      accountTypes: formData.getAll('accountTypes') as AccountType[],
     });
 
-    push(settingsPaths.userPreferences);
+    redirect(settingsPaths.userPreferences, RedirectType.push);
   };
 
-  return <UserStatisticsSettings data={data} onSave={handleSave} />;
+  return (
+    <UserStatisticsSettings data={statisticsSettings} onSave={handleSave} />
+  );
 };

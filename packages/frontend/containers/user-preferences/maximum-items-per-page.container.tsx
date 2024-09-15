@@ -1,30 +1,23 @@
-'use client';
+import { redirect, RedirectType } from 'next/navigation';
+import { FC } from 'react';
 
 import { settingsPaths } from '$constants/settings-paths';
-import {
-  useUserTransactionListChunkSize,
-  useUpdateUserTransactionListChunkSize,
-} from '$hooks/settings/user-preference/useUserTransactionListChunkSize';
-import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import {
-  UserTransactionListChunkSize,
-  UserTransactionListChunkSizeFormFields,
-} from '$views/settings/user-preferences/preferences/user-transaction-list-chunk-size';
+import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
+import { UserPreferenceService } from '$ssr/api/user-preference.service';
+import { UserTransactionListChunkSize } from '$views/settings/user-preferences/preferences/user-transaction-list-chunk-size';
 
-export const MaximumItemsPerPageContainer = () => {
-  const { push } = useViewTransitionRouter();
-  const { data: defaultChunkSize } = useUserTransactionListChunkSize();
+export const MaximumItemsPerPageContainer: FC = async () => {
+  const defaultChunkSize =
+    await UserPreferenceService.getTransactionListChunkSize();
 
-  const [setDefaultChunkSize] = useUpdateUserTransactionListChunkSize();
+  const handleSave: DefaultFormActionHandler = async (prev, formData) => {
+    'use server';
 
-  const handleSave = async (
-    newUserTransactionListChunkSizeData: UserTransactionListChunkSizeFormFields,
-  ) => {
-    const { chunkSize } = newUserTransactionListChunkSizeData;
+    await UserPreferenceService.updateTransactionListChunkSize(
+      parseInt(formData.get('chunkSize') as string),
+    );
 
-    await setDefaultChunkSize(chunkSize);
-
-    push(settingsPaths.userPreferences);
+    redirect(settingsPaths.userPreferences, RedirectType.push);
   };
 
   return (

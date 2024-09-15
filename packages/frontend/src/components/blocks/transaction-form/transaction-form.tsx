@@ -1,41 +1,47 @@
-import { useEffect, useMemo, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+'use client';
+
+import { FC, useEffect, useMemo, useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 import {
   VisibilityType,
   useAccountsFindAllByUserQuery,
 } from '$api/generated/financerApi';
 import { Form } from '$blocks/form/form';
-import {
-  TransactionCategories,
-  TransactionCategoriesFormFields,
-} from '$blocks/transaction-categories/transaction-categories';
+import { TransactionCategories } from '$blocks/transaction-categories/transaction-categories';
+import { CategoriesFormFullFields } from '$blocks/transaction-categories/transaction-categories.types';
 import { Input } from '$elements/input/input';
 import { Option, Select } from '$elements/select/select';
 import { useGetAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useGetAllTransactionCategoriesWithCategoryTree';
+import {
+  DefaultFormActionHandler,
+  useFinancerFormState,
+} from '$hooks/useFinancerFormState';
 import { DateFormat, formatDate } from '$utils/formatDate';
 
 interface TransactionFormProps {
   hasFromAccountField?: boolean;
   hasToAccountField?: boolean;
   initialValues?: Partial<TransactionFormFields>;
-  onSubmit: SubmitHandler<TransactionFormFields>;
+  onSubmit: DefaultFormActionHandler;
 }
 export interface TransactionFormFields {
   amount: number;
   description: string;
   date: string;
-  categories: TransactionCategoriesFormFields[];
+  categories: CategoriesFormFullFields[];
   toAccount: string;
   fromAccount: string;
 }
 
-export const TransactionForm = ({
+export const TransactionForm: FC<TransactionFormProps> = ({
   hasFromAccountField,
   hasToAccountField,
   initialValues,
   onSubmit,
-}: TransactionFormProps) => {
+}) => {
+  const action = useFinancerFormState('transaction-form', onSubmit);
+
   const defaultValues = useMemo(
     () => ({
       date: formatDate(new Date(), DateFormat.input),
@@ -110,8 +116,8 @@ export const TransactionForm = ({
   return (
     <Form
       methods={methods}
+      action={action}
       submitLabel={'Submit'}
-      onSubmit={onSubmit}
       formFooterBackLink="/"
     >
       <section>
@@ -151,7 +157,6 @@ export const TransactionForm = ({
         <section className="mt-8">
           <h2 className="sr-only">Categories</h2>
           <TransactionCategories
-            className="my-8 space-y-8"
             transactionCategories={transactionCategories}
           />
         </section>

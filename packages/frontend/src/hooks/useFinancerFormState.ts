@@ -10,23 +10,37 @@ import {
 
 export type DefaultFormActionHandler = (
   prevState: DefaultFormAction,
-  newAccountData: FormData,
+  formData: FormData,
 ) => Promise<DefaultFormAction>;
 
-export type DefaultFormAction = {
-  status?: string;
-  errors?: string[];
-};
+export type DefaultFormAction =
+  | {
+      status: 'ERROR';
+      errors: string[];
+    }
+  | {
+      status: 'OK';
+      errors?: never;
+    }
+  | {
+      status?: never;
+      errors?: never;
+    };
 
 export const useFinancerFormState = (
   formName: string,
   submitHandler: DefaultFormActionHandler,
+  okHandler?: () => void,
 ) => {
   const dispatch = useDispatch();
   const [state, action] = useFormState(submitHandler, {});
 
   useEffect(() => {
     const errors = state.errors;
+
+    if (state.status === 'OK' && okHandler) {
+      okHandler();
+    }
 
     if (!errors?.length) return;
 
@@ -42,7 +56,7 @@ export const useFinancerFormState = (
     return () => {
       dispatch(removeToastMessage(formName));
     };
-  }, [dispatch, state, formName]);
+  }, [dispatch, state, formName, okHandler]);
 
   return action;
 };

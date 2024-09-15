@@ -1,9 +1,15 @@
-import { useEffect } from 'react';
+'use client';
+
+import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Form } from '$blocks/form/form';
 import { settingsPaths } from '$constants/settings-paths';
 import { Input } from '$elements/input/input';
+import {
+  DefaultFormActionHandler,
+  useFinancerFormState,
+} from '$hooks/useFinancerFormState';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
 export interface UserTransactionListChunkSizeFormFields {
@@ -12,13 +18,14 @@ export interface UserTransactionListChunkSizeFormFields {
 
 interface UserTransactionListChunkSizeProps {
   defaultChunkSize: number;
-  onSave: (data: UserTransactionListChunkSizeFormFields) => void;
+  onSave: DefaultFormActionHandler;
 }
 
-export const UserTransactionListChunkSize = ({
-  defaultChunkSize,
-  onSave,
-}: UserTransactionListChunkSizeProps): JSX.Element | null => {
+export const UserTransactionListChunkSize: FC<
+  UserTransactionListChunkSizeProps
+> = ({ defaultChunkSize, onSave }) => {
+  const action = useFinancerFormState('transaction-list-chunk-size', onSave);
+
   const methods = useForm<UserTransactionListChunkSizeFormFields>();
 
   useEffect(() => {
@@ -30,7 +37,7 @@ export const UserTransactionListChunkSize = ({
       <UpdatePageInfo backLink={settingsPaths.userPreferences} />
       <Form
         methods={methods}
-        onSubmit={onSave}
+        action={action}
         submitLabel="Save"
         formFooterBackLink={settingsPaths.userPreferences}
       >
