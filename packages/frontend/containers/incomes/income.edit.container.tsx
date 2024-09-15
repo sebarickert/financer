@@ -1,103 +1,96 @@
-'use client';
+import { redirect, RedirectType } from 'next/navigation';
+import { FC } from 'react';
 
-import { useCallback, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
-
+import { IncomeDto } from '$api/generated/financerApi';
 import {
-  UpdateIncomeDto,
-  useIncomesFindOneQuery,
-  useIncomesRemoveMutation,
-  useIncomesUpdateMutation,
-} from '$api/generated/financerApi';
-import { DataHandler } from '$blocks/data-handler/data-handler';
-import { ToastMessageTypes } from '$blocks/toast/toast';
+  isCategoriesFormFullFields,
+  parseCategoriesFormFullFields,
+} from '$blocks/transaction-categories/transaction-categories.types';
 import { TransactionDelete } from '$blocks/transaction-delete/transaction-delete';
 import { TransactionForm } from '$blocks/transaction-form/transaction-form';
-import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { addToastMessage } from '$reducer/notifications.reducer';
+import { ValidationException } from '$exceptions/validation.exception';
+import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
-import { clearIncomeCache } from '$ssr/api/clear-cache';
-import { parseErrorMessagesToArray } from '$utils/apiHelper';
+import { IncomeService } from '$ssr/api/income.service';
 import { DateFormat, formatDate } from '$utils/formatDate';
+import { parseArrayFromFormData } from '$utils/parseArrayFromFormData';
 
 interface IncomeEditContainerProps {
   id: string;
 }
 
-export const IncomeEditContainer = ({ id }: IncomeEditContainerProps) => {
-  const { push } = useViewTransitionRouter();
-  const [deleteIncome] = useIncomesRemoveMutation();
-  const incomeData = useIncomesFindOneQuery({ id });
-  const { data: income } = incomeData;
-  const [editIncome] = useIncomesUpdateMutation();
-  const dispatch = useDispatch();
+export const IncomeEditContainer: FC<IncomeEditContainerProps> = async ({
+  id,
+}) => {
+  const income = await IncomeService.getById(id);
 
-  const handleSubmit = async (updateIncomeDto: UpdateIncomeDto) => {
-    if (!id) {
-      console.error('Failed to edit income: no id');
-      return;
+  const handleSubmit: DefaultFormActionHandler = async (
+    prevState,
+    formData,
+  ) => {
+    'use server';
+
+    if (!income) {
+      throw new Error('Income not found');
     }
-    try {
-      await editIncome({
-        updateIncomeDto,
-        id,
-      }).unwrap();
-      await clearIncomeCache();
 
-      push(`/statistics/incomes/${income?.id}`);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      if (error.status === 400 || error.status === 404) {
-        dispatch(
-          addToastMessage({
-            type: ToastMessageTypes.ERROR,
-            message: 'Submission failed',
-            additionalInformation: parseErrorMessagesToArray(
-              error?.data?.message,
-            ),
-          }),
-        );
-        return;
+    const categories = parseArrayFromFormData(
+      formData,
+      'categories',
+      isCategoriesFormFullFields,
+      parseCategoriesFormFullFields,
+    );
+
+    let data: IncomeDto;
+
+    try {
+      data = await IncomeService.update(income.id, {
+        amount: parseFloat(formData.get('amount') as string),
+        description: formData.get('description') as string,
+        date: formData.get('date') as string,
+        toAccount: formData.get('toAccount') as string,
+        categories: categories,
+      });
+    } catch (error) {
+      if (error instanceof ValidationException) {
+        return { status: 'ERROR', errors: error.errors };
       }
 
-      // eslint-disable-next-line no-console
       console.error(error);
+      return { status: 'ERROR', errors: ['Something went wrong'] };
     }
+
+    redirect(`/statistics/incomes/${data.id}`, RedirectType.push);
   };
 
-  const handleDelete = useCallback(async () => {
+  const handleDelete = async () => {
+    'use server';
+
     if (!id) {
-      console.error('Failed to delete income: no id');
+      console.error('Failed to delete expense: no id');
       return;
     }
-    await deleteIncome({ id }).unwrap();
-    await clearIncomeCache();
+    await IncomeService.delete(id);
 
-    push('/statistics');
-  }, [deleteIncome, id, push]);
+    redirect('/statistics', RedirectType.push);
+  };
 
-  const initialValues = useMemo(() => {
-    if (!income) return undefined;
-    return {
-      ...income,
-      date: formatDate(new Date(income.date), DateFormat.input),
-    };
-  }, [income]);
+  const initialValues = {
+    ...income,
+    date: formatDate(new Date(income.date), DateFormat.input),
+  };
 
   return (
     <>
-      <DataHandler {...incomeData} />
       <UpdatePageInfo
         backLink={`/statistics/incomes/${income?.id}`}
         headerAction={<TransactionDelete onDelete={handleDelete} />}
       />
-      {income && (
-        <TransactionForm
-          initialValues={initialValues}
-          onSubmit={handleSubmit}
-          hasToAccountField
-        />
-      )}
+      <TransactionForm
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+        hasToAccountField
+      />
     </>
   );
 };

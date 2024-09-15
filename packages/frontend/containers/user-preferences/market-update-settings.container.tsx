@@ -1,42 +1,32 @@
-'use client';
+import { redirect, RedirectType } from 'next/navigation';
+import { FC } from 'react';
 
 import { settingsPaths } from '$constants/settings-paths';
-import {
-  useUserDefaultMarketUpdateSettings,
-  useUpdateUserDefaultMarketUpdateSettings,
-} from '$hooks/settings/user-preference/useDefaultMarketUpdateSettings';
-import { useGetAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useGetAllTransactionCategoriesWithCategoryTree';
-import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import {
-  UserDefaultMarketUpdateSettings,
-  UserDefaultMarketUpdateSettingsFormFields,
-} from '$views/settings/user-preferences/preferences/user-default-market-update-settings';
+import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
+import { CategoryService } from '$ssr/api/category.service';
+import { UserPreferenceService } from '$ssr/api/user-preference.service';
+import { UserDefaultMarketUpdateSettings } from '$views/settings/user-preferences/preferences/user-default-market-update-settings';
 
-export const MarketUpdateSettingsContainer = () => {
-  const { push } = useViewTransitionRouter();
-  const { data } = useUserDefaultMarketUpdateSettings();
-  const [setDefaultMarketUpdateSettings] =
-    useUpdateUserDefaultMarketUpdateSettings();
+export const MarketUpdateSettingsContainer: FC = async () => {
+  const marketUpdateSettings =
+    await UserPreferenceService.getDefaultMarketUpdateSettings();
 
-  const { data: categories = [] } =
-    useGetAllTransactionCategoriesWithCategoryTree();
+  const categories = await CategoryService.getAllWithTree();
 
-  const handleSave = async (
-    newUserDefaultMarketUpdateData: UserDefaultMarketUpdateSettingsFormFields,
-  ) => {
-    const { transactionDescription, category } = newUserDefaultMarketUpdateData;
+  const handleSave: DefaultFormActionHandler = async (prev, formData) => {
+    'use server';
 
-    await setDefaultMarketUpdateSettings({
-      transactionDescription,
-      category,
+    await UserPreferenceService.updateDefaultMarketUpdateSettings({
+      transactionDescription: formData.get('transactionDescription') as string,
+      category: formData.get('category') as string,
     });
 
-    push(settingsPaths.userPreferences);
+    redirect(settingsPaths.userPreferences, RedirectType.push);
   };
 
   return (
     <UserDefaultMarketUpdateSettings
-      data={data}
+      data={marketUpdateSettings}
       categories={categories}
       onSave={handleSave}
     />

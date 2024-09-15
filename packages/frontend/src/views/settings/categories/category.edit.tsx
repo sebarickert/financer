@@ -1,17 +1,15 @@
 import { CategoryDelete } from './category.delete';
 import { CategoryForm } from './category.form';
 
-import {
-  TransactionCategoryDto,
-  UpdateTransactionCategoryDto,
-} from '$api/generated/financerApi';
+import { TransactionCategoryDto } from '$api/generated/financerApi';
 import { settingsPaths } from '$constants/settings-paths';
+import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
 import { Container } from '$layouts/container/container';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
 interface CategoryEditProps {
   category: TransactionCategoryDto;
-  onSubmit: (newTransactionCategoryData: UpdateTransactionCategoryDto) => void;
+  onSubmit: DefaultFormActionHandler;
   onDelete: () => void;
 }
 

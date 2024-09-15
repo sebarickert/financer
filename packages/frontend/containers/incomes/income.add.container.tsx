@@ -1,90 +1,86 @@
-'use client';
+import { redirect, RedirectType } from 'next/navigation';
+import { FC } from 'react';
 
-import { useMemo } from 'react';
-import { useDispatch } from 'react-redux';
-
+import { IncomeDto, TransactionType } from '$api/generated/financerApi';
 import {
-  CreateIncomeDto,
-  TransactionType,
-  useIncomesCreateMutation,
-  useTransactionTemplatesFindOneQuery,
-} from '$api/generated/financerApi';
-import { DataHandler } from '$blocks/data-handler/data-handler';
-import { ToastMessageTypes } from '$blocks/toast/toast';
+  isCategoriesFormFullFields,
+  parseCategoriesFormFullFields,
+} from '$blocks/transaction-categories/transaction-categories.types';
 import { TransactionForm } from '$blocks/transaction-form/transaction-form';
 import { TransactionTemplateSwitcher } from '$blocks/transaction-template-switcher/transaction-template-switcher';
-import { useUserDefaultIncomeAccount } from '$hooks/settings/user-preference/useUserDefaultIncomeAccount';
-import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { addToastMessage } from '$reducer/notifications.reducer';
+import { ValidationException } from '$exceptions/validation.exception';
+import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
-import { clearIncomeCache } from '$ssr/api/clear-cache';
-import { parseErrorMessagesToArray } from '$utils/apiHelper';
+import { IncomeService } from '$ssr/api/income.service';
+import { TransactionTemplateService } from '$ssr/api/transaction-template.service';
+import { UserPreferenceService } from '$ssr/api/user-preference.service';
+import { parseArrayFromFormData } from '$utils/parseArrayFromFormData';
 
 interface IncomeAddContainerProps {
   templateId?: string;
 }
 
-export const IncomeAddContainer = ({ templateId }: IncomeAddContainerProps) => {
-  const { push } = useViewTransitionRouter();
-  const [addIncome] = useIncomesCreateMutation();
-  const { data: defaultIncomeAccount } = useUserDefaultIncomeAccount({
-    skip: !!templateId,
-  });
-  const dispatch = useDispatch();
+export const IncomeAddContainer: FC<IncomeAddContainerProps> = async ({
+  templateId,
+}) => {
+  const defaultIncomeAccount =
+    await UserPreferenceService.getDefaultIncomeAccount();
 
-  const templateData = useTransactionTemplatesFindOneQuery(
-    { id: templateId as string },
-    { skip: !templateId },
-  );
+  const transactionTemplate = !!templateId
+    ? await TransactionTemplateService.getById(templateId)
+    : undefined;
 
-  const { data: transactionTemplate } = templateData;
+  const handleSubmit: DefaultFormActionHandler = async (
+    prevState,
+    formData,
+  ) => {
+    'use server';
 
-  const handleSubmit = async (createIncomeDto: CreateIncomeDto) => {
+    const categories = parseArrayFromFormData(
+      formData,
+      'categories',
+      isCategoriesFormFullFields,
+      parseCategoriesFormFullFields,
+    );
+
+    let data: IncomeDto;
+
     try {
-      const { id } = await addIncome({ createIncomeDto }).unwrap();
-      await clearIncomeCache();
-
-      push(`/statistics/incomes/${id}`);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      if (error.status === 400 || error.status === 404) {
-        dispatch(
-          addToastMessage({
-            type: ToastMessageTypes.ERROR,
-            message: 'Submission failed',
-            additionalInformation: parseErrorMessagesToArray(
-              error?.data?.message,
-            ),
-          }),
-        );
-        return;
+      data = await IncomeService.add({
+        amount: parseFloat(formData.get('amount') as string),
+        description: formData.get('description') as string,
+        date: formData.get('date') as string,
+        toAccount: formData.get('toAccount') as string,
+        categories: categories,
+      });
+    } catch (error) {
+      if (error instanceof ValidationException) {
+        return { status: 'ERROR', errors: error.errors };
       }
 
-      // eslint-disable-next-line no-console
       console.error(error);
+      return { status: 'ERROR', errors: ['Something went wrong'] };
     }
+
+    redirect(`/statistics/incomes/${data.id}`, RedirectType.push);
   };
 
-  const initialValues = useMemo(() => {
-    if (!transactionTemplate) {
-      return { toAccount: defaultIncomeAccount };
-    }
-    const categories = transactionTemplate?.categories?.map((categoryId) => ({
-      categoryId: categoryId,
-      amount: NaN,
-    }));
-
-    return {
-      ...transactionTemplate,
-      fromAccount: transactionTemplate.fromAccount ?? undefined,
-      toAccount: transactionTemplate.toAccount ?? undefined,
-      categories,
-    };
-  }, [defaultIncomeAccount, transactionTemplate]);
+  const initialValues = !transactionTemplate
+    ? {
+        fromAccount: defaultIncomeAccount,
+      }
+    : {
+        ...transactionTemplate,
+        fromAccount: undefined,
+        toAccount: transactionTemplate.toAccount ?? undefined,
+        categories: transactionTemplate.categories?.map((categoryId) => ({
+          categoryId,
+          amount: NaN,
+        })),
+      };
 
   return (
     <>
-      <DataHandler skipNotFound {...templateData} />
       <UpdatePageInfo
         headerAction={
           <TransactionTemplateSwitcher
@@ -93,13 +89,11 @@ export const IncomeAddContainer = ({ templateId }: IncomeAddContainerProps) => {
           />
         }
       />
-      {(!templateId || transactionTemplate) && (
-        <TransactionForm
-          initialValues={initialValues}
-          onSubmit={handleSubmit}
-          hasToAccountField
-        />
-      )}
+      <TransactionForm
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+        hasToAccountField
+      />
     </>
   );
 };

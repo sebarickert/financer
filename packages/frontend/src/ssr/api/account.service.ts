@@ -6,6 +6,7 @@ import {
   AccountDto,
   AccountsFindAllByUserApiArg,
   CreateAccountDto,
+  UpdateAccountDto,
 } from '$api/generated/financerApi';
 import { ValidationException } from '$exceptions/validation.exception';
 import { isValidationErrorResponse } from '$utils/apiHelper';
@@ -70,9 +71,6 @@ export class AccountService extends BaseApi {
   public static async add(newAccount: CreateAccountDto): Promise<void> {
     const { error } = await this.client.POST('/api/accounts', {
       body: newAccount,
-      next: {
-        revalidate: 0,
-      },
     });
 
     if (error) {
@@ -94,7 +92,7 @@ export class AccountService extends BaseApi {
 
   public static async update(
     id: string,
-    updatedAccount: CreateAccountDto,
+    updatedAccount: UpdateAccountDto,
   ): Promise<void> {
     const { error } = await this.client.PATCH(`/api/accounts/{id}`, {
       params: {

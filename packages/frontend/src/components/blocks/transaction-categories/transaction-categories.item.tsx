@@ -6,25 +6,26 @@ import { Icon, IconName } from '$elements/icon/icon';
 
 type TransactionCategoriesItemProps = {
   index: number;
+  categorySelectOnly?: boolean;
   onClick: () => void;
   getCategoryNameById: (categoryId: string) => string;
 };
 
 export const TransactionCategoriesItem = ({
   index,
+  categorySelectOnly,
   onClick,
   getCategoryNameById,
 }: TransactionCategoriesItemProps) => {
   const { watch, getValues } = useFormContext<FieldArrayFields>();
   const values = watch(`categories.${index}`);
 
-  const transactionCategory = getCategoryNameById(
-    getValues(`categories.${index}.categoryId`),
-  );
+  const categoryId = getValues(`categories.${index}.categoryId`);
+  const transactionCategory = getCategoryNameById(categoryId);
 
   const { description, amount } = getValues(`categories.${index}`);
 
-  const isEmptyCategory = isNaN(parseInt(`${values.amount}`));
+  const isEmptyCategory = isNaN(parseFloat(`${values.amount}`));
 
   const categoryAmount = isEmptyCategory ? '-' : amount;
 
@@ -36,6 +37,25 @@ export const TransactionCategoriesItem = ({
       data-testid={testId}
     >
       <span className="grid">
+        <input
+          type="hidden"
+          name={`categories[${index}][categoryId]`}
+          value={categoryId}
+        />
+        {!categorySelectOnly && (
+          <>
+            <input
+              type="hidden"
+              name={`categories[${index}][description]`}
+              value={description}
+            />
+            <input
+              type="hidden"
+              name={`categories[${index}][amount]`}
+              value={amount}
+            />
+          </>
+        )}
         <span className="font-medium truncate" data-testid={`${testId}-name`}>
           {transactionCategory}
         </span>

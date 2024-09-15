@@ -1,145 +1,99 @@
-'use client';
-
-import { useDispatch } from 'react-redux';
+import { FC } from 'react';
 
 import {
   AccountDto,
   CreateTransactionCategoryMappingWithoutTransactionDto,
-  useIncomesCreateMutation,
-  useExpensesCreateMutation,
 } from '$api/generated/financerApi';
-import { ToastMessageTypes } from '$blocks/toast/toast';
-import { useUserDefaultMarketUpdateSettings } from '$hooks/settings/user-preference/useDefaultMarketUpdateSettings';
-import { addToastMessage } from '$reducer/notifications.reducer';
-import { clearExpenseCache, clearIncomeCache } from '$ssr/api/clear-cache';
-import { parseErrorMessagesToArray } from '$utils/apiHelper';
-import {
-  AccountUpdateMarketValue,
-  AccountUpdateMarketValueFormFields,
-} from '$views/accounts/account.update-market-value';
+import { ValidationException } from '$exceptions/validation.exception';
+import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
+import { ExpenseService } from '$ssr/api/expense.service ';
+import { IncomeService } from '$ssr/api/income.service';
+import { UserPreferenceService } from '$ssr/api/user-preference.service';
+import { AccountUpdateMarketValue } from '$views/accounts/account.update-market-value';
 
 interface AccountUpdateMarketValueContainerProps {
   account: AccountDto;
 }
 
-export const AccountUpdateMarketValueContainer = ({
-  account,
-}: AccountUpdateMarketValueContainerProps) => {
-  const { data: marketSettings } = useUserDefaultMarketUpdateSettings();
-  const [addIncome] = useIncomesCreateMutation();
-  const [addExpense] = useExpensesCreateMutation();
-
-  const dispatch = useDispatch();
+export const AccountUpdateMarketValueContainer: FC<
+  AccountUpdateMarketValueContainerProps
+> = async ({ account }) => {
+  const marketSettings =
+    await UserPreferenceService.getDefaultMarketUpdateSettings();
 
   const { id, balance } = account;
 
-  const handleUpdate =
-    (closeDrawer: () => void) =>
-    async (
-      newAccountUpdateMarketValueData: AccountUpdateMarketValueFormFields,
-    ) => {
-      if (!id) {
-        console.error('Failure to update market value: no id');
-        return;
-      }
+  const handleUpdate: DefaultFormActionHandler = async (prev, formData) => {
+    'use server';
 
-      if (!account) {
-        console.error(
-          'Failure to update market value: no account data available',
-        );
-        return;
-      }
+    if (!id) {
+      throw new Error('Failure to update market value: id not found');
+    }
 
-      const { currentMarketValue, date } = newAccountUpdateMarketValueData;
+    if (!account) {
+      throw new Error('Failure to update market value: account not found');
+    }
 
-      const transactionDescription =
-        marketSettings?.transactionDescription ?? 'Market value change';
-      const marketValueChangeAmount = currentMarketValue - account.balance;
+    const currentMarketValue = parseFloat(
+      formData.get('currentMarketValue') as string,
+    );
+    const date = new Date(formData.get('date') as string);
 
-      const mappedCategory: CreateTransactionCategoryMappingWithoutTransactionDto =
-        {
-          amount: Math.abs(marketValueChangeAmount),
-          description: transactionDescription,
-          categoryId:
-            marketSettings?.category !== undefined
-              ? marketSettings.category
-              : '',
-        };
+    const transactionDescription =
+      marketSettings?.transactionDescription ?? 'Market value change';
+    const marketValueChangeAmount = currentMarketValue - account.balance;
 
-      if (marketValueChangeAmount > 0) {
-        try {
-          const newIncomeJson = await addIncome({
-            createIncomeDto: {
-              toAccount: id,
-              amount: marketValueChangeAmount,
-              description: transactionDescription,
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              date: (date ?? new Date()) as any,
-              categories: (marketSettings?.category
-                ? [mappedCategory]
-                : // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  undefined) as any,
-            },
-          }).unwrap();
-          await clearIncomeCache();
+    if (isNaN(marketValueChangeAmount) || marketValueChangeAmount === 0) {
+      console.log('Current value is same as previous, no update needed.');
 
-          if ('message' in newIncomeJson) {
-            dispatch(
-              addToastMessage({
-                type: ToastMessageTypes.ERROR,
-                message: 'Submission failed',
-                additionalInformation: parseErrorMessagesToArray(
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  (newIncomeJson as any).message,
-                ),
-              }),
-            );
-            return;
-          }
-        } catch (transactionError) {
-          // eslint-disable-next-line no-console
-          console.error(transactionError);
-        }
-      } else if (marketValueChangeAmount < 0) {
-        try {
-          const newExpenseJson = await addExpense({
-            createExpenseDto: {
-              fromAccount: id,
+      return { status: 'OK' };
+    }
+
+    const categoryId = marketSettings?.category;
+
+    const categories: CreateTransactionCategoryMappingWithoutTransactionDto[] =
+      typeof categoryId === 'undefined'
+        ? []
+        : [
+            {
               amount: Math.abs(marketValueChangeAmount),
               description: transactionDescription,
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              date: (date ?? new Date()) as any,
-              categories: (marketSettings?.category
-                ? [mappedCategory]
-                : // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  undefined) as any,
+              categoryId,
             },
-          }).unwrap();
-          await clearExpenseCache();
+          ];
 
-          if ('message' in newExpenseJson) {
-            dispatch(
-              addToastMessage({
-                type: ToastMessageTypes.ERROR,
-                message: 'Submission failed',
-                additionalInformation: parseErrorMessagesToArray(
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  (newExpenseJson as any).message,
-                ),
-              }),
-            );
-            return;
-          }
-        } catch (transactionError) {
-          // eslint-disable-next-line no-console
-          console.error(transactionError);
-        }
+    const transactionBaseFields = {
+      amount: Math.abs(marketValueChangeAmount),
+      description: transactionDescription,
+      date: date?.toISOString() ?? new Date().toISOString(),
+      categories,
+    };
+
+    try {
+      if (marketValueChangeAmount > 0) {
+        await IncomeService.add({
+          toAccount: id,
+          ...transactionBaseFields,
+        });
       } else {
-        console.log('Current value is same as previous, no update needed.');
+        await ExpenseService.add({
+          fromAccount: id,
+          ...transactionBaseFields,
+        });
+      }
+    } catch (error) {
+      if (error instanceof ValidationException) {
+        return { status: 'ERROR', errors: error.errors };
       }
 
-      closeDrawer();
+      console.error(error);
+      return { status: 'ERROR', errors: ['Something went wrong'] };
+    }
+
+    return {
+      status: 'OK',
     };
+  };
 
   return (
     <AccountUpdateMarketValue currentValue={balance} onUpdate={handleUpdate} />

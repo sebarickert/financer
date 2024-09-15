@@ -23,22 +23,22 @@ export const AccountEditContainer: FC<AccountEditContainerProps> = async ({
     'use server';
 
     if (!account?.id) {
-      return { status: 'error', errors: ['Account not found'] };
+      return { status: 'ERROR', errors: ['Account not found'] };
     }
 
     try {
       await AccountService.update(account.id, {
-        balance: parseInt(formData.get('balance') as string),
+        balance: parseFloat(formData.get('balance') as string),
         name: formData.get('name') as string,
         type: formData.get('type') as AccountType,
       });
     } catch (error) {
       if (error instanceof ValidationException) {
-        return { status: 'error', errors: error.errors };
+        return { status: 'ERROR', errors: error.errors };
       }
 
       console.error(error);
-      return { status: 'error', errors: ['Something went wrong'] };
+      return { status: 'ERROR', errors: ['Something went wrong'] };
     }
 
     redirect(`/accounts/${id}`, RedirectType.push);

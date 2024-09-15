@@ -1,91 +1,63 @@
-'use client';
+import { redirect, RedirectType } from 'next/navigation';
+import { FC } from 'react';
 
-import { useDispatch } from 'react-redux';
-
-import {
-  UpdateTransactionCategoryDto,
-  useTransactionCategoriesFindOneQuery,
-  useTransactionCategoriesRemoveMutation,
-  useTransactionCategoriesUpdateMutation,
-} from '$api/generated/financerApi';
-import { DataHandler } from '$blocks/data-handler/data-handler';
-import { ToastMessageTypes } from '$blocks/toast/toast';
+import { TransactionType } from '$api/generated/financerApi';
 import { settingsPaths } from '$constants/settings-paths';
-import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { addToastMessage } from '$reducer/notifications.reducer';
-import { clearCategoryCache } from '$ssr/api/clear-cache';
-import { parseErrorMessagesToArray } from '$utils/apiHelper';
+import { ValidationException } from '$exceptions/validation.exception';
+import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
+import { CategoryService } from '$ssr/api/category.service';
 import { CategoryEdit } from '$views/settings/categories/category.edit';
 
 interface CategoryEditContainerProps {
   id: string;
 }
 
-export const CategoryEditContainer = ({ id }: CategoryEditContainerProps) => {
-  const { push } = useViewTransitionRouter();
+export const CategoryEditContainer: FC<CategoryEditContainerProps> = async ({
+  id,
+}) => {
+  const category = await CategoryService.getById(id);
 
-  const categoryData = useTransactionCategoriesFindOneQuery({ id });
-  const { data: category } = categoryData;
-  const [deleteTransactionCategory] = useTransactionCategoriesRemoveMutation();
-  const [editTransactionCategory] = useTransactionCategoriesUpdateMutation();
-  const dispatch = useDispatch();
+  const handleSubmit: DefaultFormActionHandler = async (prev, formData) => {
+    'use server';
 
-  const handleSubmit = async (
-    newTransactionCategoryData: UpdateTransactionCategoryDto,
-  ) => {
-    if (!category?.id) {
-      console.error('transactionCategory is not defined');
-      return;
+    if (!category.id) {
+      throw new Error('category is not found');
     }
+
     try {
-      await editTransactionCategory({
-        id: category.id,
-        updateTransactionCategoryDto: {
-          ...newTransactionCategoryData,
-          visibility: newTransactionCategoryData.visibility || [],
-          parentCategoryId: newTransactionCategoryData.parentCategoryId || null,
-        },
-      }).unwrap();
-      await clearCategoryCache();
-
-      push(settingsPaths.categories);
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      if (error.status === 400 || error.status === 404) {
-        dispatch(
-          addToastMessage({
-            type: ToastMessageTypes.ERROR,
-            message: 'Submission failed',
-            additionalInformation: parseErrorMessagesToArray(
-              error?.data?.message,
-            ),
-          }),
-        );
-        return;
+      await CategoryService.update(category.id, {
+        name: formData.get('name') as string,
+        parentCategoryId: formData.get('parentCategoryId') as string,
+        visibility: formData.getAll('visibility') as TransactionType[],
+      });
+    } catch (error) {
+      if (error instanceof ValidationException) {
+        return { status: 'ERROR', errors: error.errors };
       }
 
-      // eslint-disable-next-line no-console
       console.error(error);
+      return { status: 'ERROR', errors: ['Something went wrong'] };
     }
+
+    redirect(settingsPaths.categories, RedirectType.push);
   };
 
   const handleDelete = async () => {
-    await deleteTransactionCategory({ id });
-    await clearCategoryCache();
-    push(settingsPaths.categories);
+    'use server';
+
+    await CategoryService.delete(category.id);
+    redirect(settingsPaths.categories, RedirectType.push);
   };
 
+  if (!category.id) {
+    throw new Error('category is not found');
+  }
+
   return (
-    <>
-      <DataHandler {...categoryData} />
-      {category && (
-        <CategoryEdit
-          onSubmit={handleSubmit}
-          onDelete={handleDelete}
-          category={category}
-        />
-      )}
-    </>
+    <CategoryEdit
+      onSubmit={handleSubmit}
+      onDelete={handleDelete}
+      category={category}
+    />
   );
 };

@@ -1,13 +1,19 @@
-import { useEffect } from 'react';
+'use client';
+
+import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Form } from '$blocks/form/form';
 import { settingsPaths } from '$constants/settings-paths';
 import { Input } from '$elements/input/input';
 import { Select } from '$elements/select/select';
-import { UserDefaultMarketUpdateSettings as UserDefaultMarketUpdateSettingsType } from '$hooks/settings/user-preference/useDefaultMarketUpdateSettings';
 import { TransactionCategoryDtoWithCategoryTree } from '$hooks/transactionCategories/useGetAllTransactionCategoriesWithCategoryTree';
+import {
+  DefaultFormActionHandler,
+  useFinancerFormState,
+} from '$hooks/useFinancerFormState';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { UserDefaultMarketUpdateSettings as UserDefaultMarketUpdateSettingsType } from '$ssr/api/user-preference.service';
 
 export interface UserDefaultMarketUpdateSettingsFormFields {
   transactionDescription: string;
@@ -17,14 +23,16 @@ export interface UserDefaultMarketUpdateSettingsFormFields {
 interface UserDefaultMarketUpdateSettingsProps {
   categories: TransactionCategoryDtoWithCategoryTree[];
   data?: UserDefaultMarketUpdateSettingsType;
-  onSave: (data: UserDefaultMarketUpdateSettingsFormFields) => void;
+  onSave: DefaultFormActionHandler;
 }
 
-export const UserDefaultMarketUpdateSettings = ({
-  categories,
-  data,
-  onSave,
-}: UserDefaultMarketUpdateSettingsProps): JSX.Element | null => {
+export const UserDefaultMarketUpdateSettings: FC<
+  UserDefaultMarketUpdateSettingsProps
+> = ({ categories, data, onSave }) => {
+  const action = useFinancerFormState(
+    'user-default-market-update-settings',
+    onSave,
+  );
   const methods = useForm<UserDefaultMarketUpdateSettingsFormFields>();
 
   useEffect(() => {
@@ -36,7 +44,7 @@ export const UserDefaultMarketUpdateSettings = ({
       <UpdatePageInfo backLink={settingsPaths.userPreferences} />
       <Form
         methods={methods}
-        onSubmit={onSave}
+        action={action}
         submitLabel="Save"
         formFooterBackLink={settingsPaths.userPreferences}
       >

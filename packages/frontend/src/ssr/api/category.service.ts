@@ -3,15 +3,19 @@ import { revalidateTag } from 'next/cache';
 import { BaseApi } from './base-api';
 
 import {
+  CreateTransactionCategoryDto,
   TransactionCategoriesFindAllByUserApiArg,
   TransactionCategoryDto,
+  UpdateTransactionCategoryDto,
 } from '$api/generated/financerApi';
+import { ValidationException } from '$exceptions/validation.exception';
 import { TransactionCategoryDtoWithCategoryTree } from '$hooks/transactionCategories/useGetAllTransactionCategoriesWithCategoryTree';
+import { isValidationErrorResponse } from '$utils/apiHelper';
 import { parseParentCategoryPath } from 'src/services/TransactionCategoriesService';
 
 export class CategoryService extends BaseApi {
   // TODO temporary solution to clear cache while migration
-  public static clearCache(): void {
+  public static async clearCache(): Promise<void> {
     'use server';
     revalidateTag(this.API_TAG.CATEGORY);
   }
@@ -83,5 +87,77 @@ export class CategoryService extends BaseApi {
     }
 
     return data as TransactionCategoryDto;
+  }
+
+  public static async add(
+    newCategory: CreateTransactionCategoryDto,
+  ): Promise<void> {
+    const { error } = await this.client.POST('/api/transaction-categories', {
+      body: newCategory,
+    });
+
+    if (error) {
+      // TODO ugly hack to handle missing types
+      const unknownError = error as unknown;
+
+      if (isValidationErrorResponse(unknownError)) {
+        throw new ValidationException(
+          'Failed to add account',
+          unknownError.message,
+        );
+      }
+
+      throw new Error('Failed to add account', error);
+    }
+
+    await this.clearCache();
+  }
+
+  public static async update(
+    id: string,
+    updatedCategory: UpdateTransactionCategoryDto,
+  ): Promise<void> {
+    const { error } = await this.client.PATCH(
+      `/api/transaction-categories/{id}`,
+      {
+        params: {
+          path: { id },
+        },
+        body: updatedCategory,
+      },
+    );
+
+    if (error) {
+      // TODO ugly hack to handle missing types
+      const unknownError = error as unknown;
+
+      if (isValidationErrorResponse(unknownError)) {
+        throw new ValidationException(
+          'Failed to add account',
+          unknownError.message,
+        );
+      }
+
+      throw new Error('Failed to add account', error);
+    }
+
+    await this.clearCache();
+  }
+
+  public static async delete(id: string): Promise<void> {
+    const { error } = await this.client.DELETE(
+      `/api/transaction-categories/{id}`,
+      {
+        params: {
+          path: { id },
+        },
+      },
+    );
+
+    if (error) {
+      throw new Error('Failed to delete category', error);
+    }
+
+    await this.clearCache();
   }
 }

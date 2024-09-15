@@ -14,6 +14,12 @@ interface TransactionListingWithMonthlyPagerSummaryProps {
   filterOptions: TransactionListOptions;
 }
 
+const emptySummary = {
+  totalAmount: NaN,
+  expenseAmount: NaN,
+  incomeAmount: NaN,
+} as TransactionMonthSummaryDto;
+
 const getSummaryDetails = ({
   totalAmount,
   expenseAmount,
@@ -52,7 +58,7 @@ export const TransactionListingWithMonthlyPagerSummary: FC<
   });
 
   const monthlyDetails = getSummaryDetails(
-    monthlySummary.at(-1) as TransactionMonthSummaryDto,
+    monthlySummary.at(-1) ?? emptySummary,
   );
 
   return (

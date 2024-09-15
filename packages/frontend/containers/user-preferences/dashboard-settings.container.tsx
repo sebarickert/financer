@@ -1,30 +1,24 @@
-'use client';
+import { redirect, RedirectType } from 'next/navigation';
+import { FC } from 'react';
 
+import { AccountType } from '$api/generated/financerApi';
 import { settingsPaths } from '$constants/settings-paths';
-import {
-  useUserDashboardSettings,
-  useUpdateUserDashboardSettings,
-} from '$hooks/settings/user-preference/useDashboardSettings';
-import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import {
-  UserDashboardSettings,
-  UserDashboardSettingsFormFields,
-} from '$views/settings/user-preferences/preferences/user-dashboard-settings';
+import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
+import { UserPreferenceService } from '$ssr/api/user-preference.service';
+import { UserDashboardSettings } from '$views/settings/user-preferences/preferences/user-dashboard-settings';
 
-export const DashboardSettingsContainer = () => {
-  const { push } = useViewTransitionRouter();
-  const { data } = useUserDashboardSettings();
-  const [setDashboardSettings] = useUpdateUserDashboardSettings();
+export const DashboardSettingsContainer: FC = async () => {
+  const dashboardSettings = await UserPreferenceService.getDashboardSettings();
 
-  const handleSave = async (
-    newUserDashboardData: UserDashboardSettingsFormFields,
-  ) => {
-    await setDashboardSettings({
-      accountTypes: newUserDashboardData.accountTypes,
+  const handleSave: DefaultFormActionHandler = async (prev, formData) => {
+    'use server';
+
+    await UserPreferenceService.updateDashboardSettings({
+      accountTypes: formData.getAll('accountTypes') as AccountType[],
     });
 
-    push(settingsPaths.userPreferences);
+    redirect(settingsPaths.userPreferences, RedirectType.push);
   };
 
-  return <UserDashboardSettings data={data} onSave={handleSave} />;
+  return <UserDashboardSettings data={dashboardSettings} onSave={handleSave} />;
 };

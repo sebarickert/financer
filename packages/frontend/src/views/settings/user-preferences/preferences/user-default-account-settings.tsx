@@ -1,10 +1,16 @@
-import { useEffect } from 'react';
+'use client';
+
+import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { AccountDto } from '$api/generated/financerApi';
 import { Form } from '$blocks/form/form';
 import { settingsPaths } from '$constants/settings-paths';
 import { Select } from '$elements/select/select';
+import {
+  DefaultFormActionHandler,
+  useFinancerFormState,
+} from '$hooks/useFinancerFormState';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
 export interface UserDefaultAccountSettingsFormFields {
@@ -20,17 +26,20 @@ interface UserDefaultAccountSettingsProps {
   defaultTransferSourceAccount?: string;
   defaultIncomeAccount?: string;
   defaultTransferTargetAccount?: string;
-  onSave: (data: UserDefaultAccountSettingsFormFields) => void;
+  onSave: DefaultFormActionHandler;
 }
 
-export const UserDefaultAccountSettings = ({
+export const UserDefaultAccountSettings: FC<
+  UserDefaultAccountSettingsProps
+> = ({
   accounts,
   defaultExpenseAccount,
   defaultTransferSourceAccount,
   defaultIncomeAccount,
   defaultTransferTargetAccount,
   onSave,
-}: UserDefaultAccountSettingsProps): JSX.Element | null => {
+}) => {
+  const action = useFinancerFormState('user-default-account-settings', onSave);
   const methods = useForm<UserDefaultAccountSettingsFormFields>();
 
   useEffect(() => {
@@ -55,8 +64,8 @@ export const UserDefaultAccountSettings = ({
     <>
       <UpdatePageInfo backLink={settingsPaths.userPreferences} />
       <Form
-        onSubmit={onSave}
         methods={methods}
+        action={action}
         submitLabel="Save"
         formFooterBackLink={settingsPaths.userPreferences}
       >

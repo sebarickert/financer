@@ -1,61 +1,59 @@
-'use client';
+import { redirect, RedirectType } from 'next/navigation';
 
-import { useDispatch } from 'react-redux';
-
-import { useTransactionTemplatesCreateMutation } from '$api/generated/financerApi';
-import { ToastMessageTypes } from '$blocks/toast/toast';
-import { settingsPaths } from '$constants/settings-paths';
-import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
-import { addToastMessage } from '$reducer/notifications.reducer';
-import { clearTransactionTemplateCache } from '$ssr/api/clear-cache';
-import { parseErrorMessagesToArray } from '$utils/apiHelper';
 import {
-  TemplateAdd,
-  CreateTransactionTemplateDtoWithCategory,
-} from '$views/settings/templates/template.add';
+  TransactionTemplateType,
+  TransactionType,
+} from '$api/generated/financerApi';
+import { isCategoriesFormOnlyCategory } from '$blocks/transaction-categories/transaction-categories.types';
+import { settingsPaths } from '$constants/settings-paths';
+import { ValidationException } from '$exceptions/validation.exception';
+import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
+import { TransactionTemplateService } from '$ssr/api/transaction-template.service';
+import { parseArrayFromFormData } from '$utils/parseArrayFromFormData';
+import { TemplateAdd } from '$views/settings/templates/template.add';
 
 export const TemplateAddContainer = () => {
-  const { push } = useViewTransitionRouter();
+  const handleSubmit: DefaultFormActionHandler = async (prev, formData) => {
+    'use server';
 
-  const [addTransactionTemplate] = useTransactionTemplatesCreateMutation();
-  const dispatch = useDispatch();
+    const dayOfMonth = formData.get('dayOfMonth');
+    const dayOfMonthToCreate = formData.get('dayOfMonthToCreate');
 
-  const handleSubmit = async (
-    newTransactionTemplateData: CreateTransactionTemplateDtoWithCategory,
-  ) => {
-    const data = {
-      ...newTransactionTemplateData,
-      templateType: [newTransactionTemplateData.templateType],
-      categories: newTransactionTemplateData.categories?.map(
-        ({ categoryId }) => categoryId,
-      ),
-    };
+    const categories = parseArrayFromFormData(
+      formData,
+      'categories',
+      isCategoriesFormOnlyCategory,
+    );
 
     try {
-      await addTransactionTemplate({
-        createTransactionTemplateDto: data,
-      }).unwrap();
-      await clearTransactionTemplateCache();
-
-      push(settingsPaths.templates);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      if (error.status === 400 || error.status === 404) {
-        dispatch(
-          addToastMessage({
-            type: ToastMessageTypes.ERROR,
-            message: 'Submission failed',
-            additionalInformation: parseErrorMessagesToArray(
-              error?.data?.message,
-            ),
-          }),
-        );
-        return;
+      await TransactionTemplateService.add({
+        templateName: formData.get('templateName') as string,
+        templateType: [
+          formData.get('templateType') as unknown as TransactionTemplateType,
+        ],
+        templateVisibility: formData.get(
+          'templateVisibility',
+        ) as TransactionType,
+        description: formData.get('description') as string,
+        amount: parseFloat(formData.get('amount') as string),
+        fromAccount: formData.get('fromAccount') as string,
+        toAccount: formData.get('toAccount') as string,
+        dayOfMonth: dayOfMonth ? parseInt(dayOfMonth as string) : undefined,
+        dayOfMonthToCreate: dayOfMonthToCreate
+          ? parseInt(dayOfMonthToCreate as string)
+          : undefined,
+        categories: categories.map(({ categoryId }) => categoryId),
+      });
+    } catch (error) {
+      if (error instanceof ValidationException) {
+        return { status: 'ERROR', errors: error.errors };
       }
 
-      // eslint-disable-next-line no-console
       console.error(error);
+      return { status: 'ERROR', errors: ['Something went wrong'] };
     }
+
+    redirect(settingsPaths.templates, RedirectType.push);
   };
 
   return <TemplateAdd onSubmit={handleSubmit} />;

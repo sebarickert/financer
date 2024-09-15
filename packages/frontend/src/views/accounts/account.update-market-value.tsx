@@ -1,17 +1,20 @@
-import { useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+'use client';
 
-import { Input } from '../../components/elements/input/input';
+import { useCallback, useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 import { Drawer } from '$blocks/drawer/drawer';
 import { Form } from '$blocks/form/form';
 import { Button } from '$elements/button/button';
+import { Input } from '$elements/input/input';
+import {
+  DefaultFormActionHandler,
+  useFinancerFormState,
+} from '$hooks/useFinancerFormState';
 import { DateFormat, formatDate } from '$utils/formatDate';
 
 interface AccountUpdateMarketValueProps {
-  onUpdate: (
-    closeDrawer: () => void,
-  ) => SubmitHandler<AccountUpdateMarketValueFormFields>;
+  onUpdate: DefaultFormActionHandler;
   currentValue: number;
 }
 
@@ -32,7 +35,13 @@ export const AccountUpdateMarketValue = ({
   });
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleToggleOpen = () => setIsOpen(!isOpen);
+  const handleToggleOpen = useCallback(() => setIsOpen((prev) => !prev), []);
+
+  const action = useFinancerFormState(
+    'update-market-value',
+    onUpdate,
+    handleToggleOpen,
+  );
 
   return (
     <>
@@ -44,11 +53,7 @@ export const AccountUpdateMarketValue = ({
         onClose={handleToggleOpen}
         heading="Update Market Value"
       >
-        <Form
-          methods={methods}
-          onSubmit={onUpdate(() => setIsOpen(false))}
-          submitLabel="Update"
-        >
+        <Form methods={methods} action={action} submitLabel="Update">
           <div className="space-y-4">
             <Input id="currentMarketValue" type="number" isRequired>
               Current Market Value

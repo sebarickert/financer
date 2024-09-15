@@ -40,9 +40,10 @@ export abstract class BaseApi {
 
   private static async getNextOptions(
     requestOptions: NextFetchRequestConfig | undefined,
+    method: string,
   ): Promise<NextFetchRequestConfig> {
     const baseOptions = {
-      revalidate: 900, // 15 minutes
+      revalidate: method === 'GET' ? 900 : undefined, // 15 minutes for GET requests
       tags: [(await getSessionId()) ?? ''],
     };
 
@@ -59,7 +60,10 @@ export abstract class BaseApi {
   protected static readonly client = createClient<paths>({
     baseUrl: getInternalApiRootAddress(),
     fetch: async (request) => {
-      const next = await this.getNextOptions((request as RequestInit).next);
+      const next = await this.getNextOptions(
+        (request as RequestInit).next,
+        request.method,
+      );
 
       const headers = new Headers(request.headers);
       headers.set('Cookie', `connect.sid=${await getSessionId()}`);
@@ -68,7 +72,7 @@ export abstract class BaseApi {
 
       return fetch(request.url, {
         body:
-          request.method !== 'GET' && request.method !== 'HEAD'
+          ['POST', 'PUT', 'PATCH', 'OPTIONS'].includes(request.method) && body
             ? body
             : undefined,
         // We are using revalidateTag in the API, so next will throw warnings if we have a cache default and revalidate set

@@ -1,5 +1,7 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+'use client';
+
+import React, { FC, useEffect, useMemo, useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 import { getAllChildCategoryIds } from '../../../services/TransactionCategoriesService';
 
@@ -11,9 +13,13 @@ import { CheckboxGroup } from '$elements/checkbox/checkbox.group';
 import { Input } from '$elements/input/input';
 import { Select, Option } from '$elements/select/select';
 import { useGetAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useGetAllTransactionCategoriesWithCategoryTree';
+import {
+  DefaultFormActionHandler,
+  useFinancerFormState,
+} from '$hooks/useFinancerFormState';
 
 interface CategoryFormProps {
-  onSubmit: SubmitHandler<TransactionCategoryFormFields>;
+  onSubmit: DefaultFormActionHandler;
   submitLabel: string;
   optionalFooterComponent?: React.ReactNode;
   currentCategoryId?: string;
@@ -26,13 +32,15 @@ export interface TransactionCategoryFormFields {
   parentCategoryId: string | null;
 }
 
-export const CategoryForm = ({
+export const CategoryForm: FC<CategoryFormProps> = ({
   onSubmit,
   submitLabel,
   optionalFooterComponent,
   currentCategoryId,
   initialValues,
-}: CategoryFormProps): JSX.Element | null => {
+}) => {
+  const action = useFinancerFormState('category-form', onSubmit);
+
   const defaultValues = useMemo(() => {
     return {
       ...initialValues,
@@ -86,7 +94,7 @@ export const CategoryForm = ({
     <Form
       methods={methods}
       submitLabel={submitLabel}
-      onSubmit={onSubmit}
+      action={action}
       formFooterBackLink={settingsPaths.categories}
       optionalFooterComponent={optionalFooterComponent}
     >

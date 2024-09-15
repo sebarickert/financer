@@ -15,17 +15,17 @@ export const AccountAddContainer = () => {
 
     try {
       await AccountService.add({
-        balance: parseInt(formData.get('balance') as string),
+        balance: parseFloat(formData.get('balance') as string),
         name: formData.get('name') as string,
         type: formData.get('type') as AccountType,
       });
     } catch (error) {
       if (error instanceof ValidationException) {
-        return { status: 'error', errors: error.errors };
+        return { status: 'ERROR', errors: error.errors };
       }
 
       console.error(error);
-      return { status: 'error', errors: ['Something went wrong'] };
+      return { status: 'ERROR', errors: ['Something went wrong'] };
     }
 
     redirect('/accounts', RedirectType.push);

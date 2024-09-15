@@ -1,15 +1,17 @@
+import { FC } from 'react';
+
 import { CategoryForm } from './category.form';
 
-import { CreateTransactionCategoryDto } from '$api/generated/financerApi';
 import { settingsPaths } from '$constants/settings-paths';
+import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
 import { Container } from '$layouts/container/container';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
 interface CategoryAddProps {
-  onSubmit: (newTransactionCategoryData: CreateTransactionCategoryDto) => void;
+  onSubmit: DefaultFormActionHandler;
 }
 
-export const CategoryAdd = ({ onSubmit }: CategoryAddProps): JSX.Element => {
+export const CategoryAdd: FC<CategoryAddProps> = ({ onSubmit }) => {
   return (
     <Container>
       <UpdatePageInfo backLink={settingsPaths.categories} />
