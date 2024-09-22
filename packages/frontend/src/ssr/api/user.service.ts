@@ -2,7 +2,9 @@ import { revalidateTag } from 'next/cache';
 
 import { BaseApi } from './base-api';
 
-import { UserDto } from '$api/generated/financerApi';
+import { UserDataImportDto, UserDto } from '$api/generated/financerApi';
+import { ValidationException } from '$exceptions/validation.exception';
+import { isValidationErrorResponse } from '$utils/apiHelper';
 
 export class UserService extends BaseApi {
   private static readonly OWN_USER_ID = 'my-user';
@@ -28,5 +30,32 @@ export class UserService extends BaseApi {
     }
 
     return data as UserDto;
+  }
+
+  public static async DEBUG_overrideOwnUserData(
+    user: UserDataImportDto,
+  ): Promise<string | undefined> {
+    const { error, data } = await this.client.POST(
+      `/api/users/my-user/my-data`,
+      {
+        body: user,
+      },
+    );
+
+    if (error) {
+      // TODO ugly hack to handle missing types
+      const unknownError = error as unknown;
+
+      if (isValidationErrorResponse(unknownError)) {
+        throw new ValidationException(
+          'Failed to override user data',
+          unknownError.message,
+        );
+      }
+
+      throw new Error('Failed to add transfer', error);
+    }
+
+    return data.payload;
   }
 }
