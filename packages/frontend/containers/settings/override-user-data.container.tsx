@@ -1,121 +1,75 @@
-'use client';
-
-import { useState, useMemo, ChangeEvent, FC } from 'react';
-import { useDispatch } from 'react-redux';
+import { FC } from 'react';
 
 import {
-  UserDataImportDto,
-  useUsersOverrideAllOwnUserDataMutation,
+  AccountBalanceChangeDto,
+  AccountDto,
+  TransactionCategoryDto,
+  TransactionCategoryMappingDto,
+  TransactionDto,
+  TransactionTemplateDto,
+  UserPreferenceDto,
 } from '$api/generated/financerApi';
-import { ToastMessageTypes } from '$blocks/toast/toast';
-import { addToastMessage } from '$reducer/notifications.reducer';
-import { clearAllCaches } from '$ssr/api/clear-cache';
+import { ValidationException } from '$exceptions/validation.exception';
+import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
+import { UserService } from '$ssr/api/user.service';
 import { OverrideUserData } from '$views/settings/override-user-data';
 
 export const OverrideUserDataContainer: FC = () => {
-  const [uploadedUserData, setUploadedUserData] =
-    useState<UserDataImportDto | null>(null);
-  const [overrideFilename, setOverrideFilename] = useState<string | null>(null);
+  const handleOverrideData: DefaultFormActionHandler = async (
+    prev,
+    formData,
+  ) => {
+    'use server';
 
-  const [overrideProfileData] = useUsersOverrideAllOwnUserDataMutation();
+    const accountBalanceChanges = JSON.parse(
+      formData.get('accountBalanceChanges') as string,
+    ) as AccountBalanceChangeDto[];
 
-  const dispatch = useDispatch();
+    const accounts = JSON.parse(
+      formData.get('accounts') as string,
+    ) as AccountDto[];
 
-  const overrideTransactionCount = useMemo(() => {
-    if (!uploadedUserData) return null;
-    return uploadedUserData.transactions.length;
-  }, [uploadedUserData]);
+    const transactionCategories = JSON.parse(
+      formData.get('transactionCategories') as string,
+    ) as TransactionCategoryDto[];
 
-  const overrideAccountCount = useMemo(() => {
-    if (!uploadedUserData) return null;
-    return uploadedUserData.accounts.length;
-  }, [uploadedUserData]);
+    const transactionCategoryMappings = JSON.parse(
+      formData.get('transactionCategoryMappings') as string,
+    ) as TransactionCategoryMappingDto[];
 
-  const handleOverrideData = async () => {
-    if (!uploadedUserData) {
-      dispatch(
-        addToastMessage({
-          type: ToastMessageTypes.ERROR,
-          message: 'Upload failed',
-          additionalInformation: 'Cannot update uploaded user data',
-        }),
-      );
-      return;
-    }
+    const transactions = JSON.parse(
+      formData.get('transactions') as string,
+    ) as TransactionDto[];
+
+    const transactionTemplates = JSON.parse(
+      formData.get('transactionTemplates') as string,
+    ) as TransactionTemplateDto[];
+
+    const userPreferences = JSON.parse(
+      formData.get('userPreferences') as string,
+    ) as UserPreferenceDto[];
 
     try {
-      const { payload: overrideMessage = '' } = await overrideProfileData({
-        userDataImportDto: uploadedUserData,
-      }).unwrap();
-      await clearAllCaches();
-
-      dispatch(
-        addToastMessage({
-          type: ToastMessageTypes.SUCCESS,
-          message: overrideMessage,
-        }),
-      );
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      dispatch(
-        addToastMessage({
-          type: ToastMessageTypes.ERROR,
-          message: 'Override failed',
-          additionalInformation: error.payload,
-        }),
-      );
-    }
-  };
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleFileChange = (changeEvent: ChangeEvent<HTMLInputElement>) => {
-    const { files } = changeEvent.target;
-    const targetFile = files?.item(0);
-    if (!targetFile) {
-      setOverrideFilename(null);
-      setUploadedUserData(null);
-
-      dispatch(
-        addToastMessage({
-          type: ToastMessageTypes.ERROR,
-          message: 'Upload failed',
-          additionalInformation: 'File not found',
-        }),
-      );
-
-      return;
-    }
-
-    const fr = new FileReader();
-    fr.onload = (readerEvent) => {
-      if (
-        readerEvent?.target?.result &&
-        typeof readerEvent?.target?.result === 'string'
-      ) {
-        const result = JSON.parse(readerEvent.target.result);
-        setUploadedUserData(result);
-        setOverrideFilename(targetFile.name);
-      } else {
-        dispatch(
-          addToastMessage({
-            type: ToastMessageTypes.ERROR,
-            message: 'Upload failed',
-            additionalInformation: 'Failed to parse JSON file',
-          }),
-        );
+      await UserService.DEBUG_overrideOwnUserData({
+        accountBalanceChanges,
+        accounts,
+        transactionCategories,
+        transactionCategoryMappings,
+        transactions,
+        transactionTemplates,
+        userPreferences,
+      });
+    } catch (error) {
+      if (error instanceof ValidationException) {
+        return { status: 'ERROR', errors: error.errors };
       }
-    };
-    fr.readAsText(targetFile);
+
+      console.error(error);
+      return { status: 'ERROR', errors: ['Something went wrong'] };
+    }
+
+    return { status: 'OK' };
   };
 
-  return (
-    <OverrideUserData
-      overrideFilename={overrideFilename}
-      overrideAccountCount={overrideAccountCount}
-      overrideTransactionCount={overrideTransactionCount}
-      onFileChange={handleFileChange}
-      onOverrideData={handleOverrideData}
-    />
-  );
+  return <OverrideUserData onOverrideData={handleOverrideData} />;
 };
