@@ -2,6 +2,7 @@ import { headers } from 'next/headers';
 import { redirect, RedirectType } from 'next/navigation';
 
 import { PaginationDto } from '$api/generated/financerApi';
+import { CustomHeader } from 'src/types/custom-headers';
 
 export type PagerOptions = {
   nextPage: {
@@ -21,14 +22,18 @@ export type PagerOptions = {
 export class PagerService {
   public static getCurrentPage(): number {
     const headersList = headers();
-    const searchParams = new URLSearchParams(headersList.get('x-query') ?? '');
+    const searchParams = new URLSearchParams(
+      headersList.get(CustomHeader.QUERY) ?? '',
+    );
 
     return Number(searchParams.get('page') ?? 1);
   }
 
   public static getCurrentDateFilter(): Date {
     const headersList = headers();
-    const searchParams = new URLSearchParams(headersList.get('x-query') ?? '');
+    const searchParams = new URLSearchParams(
+      headersList.get(CustomHeader.QUERY) ?? '',
+    );
 
     const date = searchParams.get('date');
 
@@ -41,8 +46,10 @@ export class PagerService {
 
   private static gotoPage(page: number): void {
     const headersList = headers();
-    const searchParams = new URLSearchParams(headersList.get('x-query') ?? '');
-    const pathname = headersList.get('x-pathname') ?? '';
+    const searchParams = new URLSearchParams(
+      headersList.get(CustomHeader.QUERY) ?? '',
+    );
+    const pathname = headersList.get(CustomHeader.PATHNAME) ?? '';
 
     searchParams.set('page', page.toString());
 
@@ -53,8 +60,10 @@ export class PagerService {
 
   private static gotoYearMonthPage(date: Date): void {
     const headersList = headers();
-    const searchParams = new URLSearchParams(headersList.get('x-query') ?? '');
-    const pathname = headersList.get('x-pathname') ?? '';
+    const searchParams = new URLSearchParams(
+      headersList.get(CustomHeader.QUERY) ?? '',
+    );
+    const pathname = headersList.get(CustomHeader.PATHNAME) ?? '';
 
     const year = date.getFullYear();
     const month = date.getMonth() + 1;

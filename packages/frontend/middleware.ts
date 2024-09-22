@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { getInternalApiRootAddress } from '$utils/address.helper';
+import { CustomHeader } from 'src/types/custom-headers';
 
 const isPrefetchRequest = (headers: Headers) => {
   const purpose = headers.get('purpose');
@@ -55,11 +56,11 @@ export async function middleware(request: NextRequest) {
   const responseHeaders = new Headers();
 
   // Pass path name to SSR components
-  requestHeaders.set('x-pathname', request.nextUrl.pathname);
+  requestHeaders.set(CustomHeader.PATHNAME, request.nextUrl.pathname);
   // Pass query to SSR components
-  requestHeaders.set('x-query', request.nextUrl.search);
+  requestHeaders.set(CustomHeader.QUERY, request.nextUrl.search);
   // Pass prefetch status to SSR components
-  requestHeaders.set('x-is-prefetch', isPrefetch.valueOf().toString());
+  requestHeaders.set(CustomHeader.IS_PREFETCH, isPrefetch.valueOf().toString());
 
   return NextResponse.next({
     headers: responseHeaders,

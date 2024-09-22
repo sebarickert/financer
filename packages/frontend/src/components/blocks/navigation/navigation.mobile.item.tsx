@@ -1,17 +1,15 @@
 import clsx from 'clsx';
 
-import { useIsActiveLink } from '../../../hooks/useIsActiveLink';
-import { Icon } from '../../elements/icon/icon';
-
 import { NavigationItem } from './navigation';
 
+import { Icon } from '$elements/icon/icon';
 import { LinkViewTransition } from '$elements/link/link-view-transition';
+import { useIsActiveLink } from '$hooks/useIsActiveLink';
 
 export const NavigationMobileItem = ({
   url,
   iconName,
   label,
-  onClick = () => {},
   ariaLabel,
   isExact,
   disallowedPathEndings,
@@ -23,7 +21,6 @@ export const NavigationMobileItem = ({
       <LinkViewTransition
         href={url}
         className={`flex flex-col items-center justify-center focus:text-charcoal hover:text-charcoal h-14`}
-        onClick={onClick}
         aria-label={ariaLabel}
       >
         <Icon type={iconName} isSolid={isActive} />
