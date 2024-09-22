@@ -21,6 +21,8 @@ interface OverrideUserDataProps {
   onOverrideData: DefaultFormActionHandler;
 }
 
+const formName = 'override-user-data';
+
 export const OverrideUserData = ({
   onOverrideData,
 }: OverrideUserDataProps): JSX.Element => {
@@ -31,15 +33,12 @@ export const OverrideUserData = ({
       addToastMessage({
         type: ToastMessageTypes.SUCCESS,
         message: 'User data has been successfully updated',
+        id: formName,
       }),
     );
   }, [dispatch]);
 
-  const action = useFinancerFormState(
-    'override-user-data',
-    onOverrideData,
-    successHandler,
-  );
+  const action = useFinancerFormState(formName, onOverrideData, successHandler);
 
   const [uploadedUserData, setUploadedUserData] =
     useState<UserDataImportDto | null>(null);

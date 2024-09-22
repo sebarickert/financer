@@ -27,7 +27,7 @@ export const TransactionListingWithMonthlyPager: FC<
   filterOptions: additionalFilterOptions,
   type = null,
 }) => {
-  const transaction = await TransactionService.getFirstByType(null);
+  const transaction = await TransactionService.getFirstByType();
 
   const firstAvailableTransaction = new Date(transaction?.date ?? new Date());
   const pagerOptions = PagerService.getYearMonthPageOptions(

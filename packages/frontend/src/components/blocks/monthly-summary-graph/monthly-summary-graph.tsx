@@ -2,7 +2,6 @@
 
 import { ChartData, ChartOptions } from 'chart.js';
 import { useMemo } from 'react';
-import { Chart } from 'react-chartjs-2';
 
 import { useTransactionsFindMonthlySummariesByUserQuery } from '$api/generated/financerApi';
 import { colorPalette } from '$constants/colorPalette';
@@ -169,9 +168,12 @@ export const MonthlySummaryGraph = ({
 
   return (
     <section className={`${className}`}>
-      <ChartWrapperDynamic isLoading={!monthlySummaryHistory?.length}>
-        <Chart type="line" data={chartData} options={chartOptions} />
-      </ChartWrapperDynamic>
+      <ChartWrapperDynamic
+        isLoading={!monthlySummaryHistory?.length}
+        type="line"
+        data={chartData}
+        options={chartOptions}
+      />
     </section>
   );
 };

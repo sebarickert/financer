@@ -58,23 +58,23 @@ export class TransactionService extends BaseApi {
   }
 
   public static async getFirstByType(
-    type: TransactionType.Expense,
+    type?: TransactionType.Expense,
     options?: FirstTransactionByTypeOptions,
   ): Promise<ExpenseDto>;
   public static async getFirstByType(
-    type: TransactionType.Income,
+    type?: TransactionType.Income,
     options?: FirstTransactionByTypeOptions,
   ): Promise<IncomeDto>;
   public static async getFirstByType(
-    type: TransactionType.Transfer,
+    type?: TransactionType.Transfer,
     options?: FirstTransactionByTypeOptions,
   ): Promise<TransferDto>;
   public static async getFirstByType(
-    type: null,
+    type?: null,
     options?: FirstTransactionByTypeOptions,
   ): Promise<TransactionDto>;
   public static async getFirstByType(
-    type: TransactionType | null,
+    type: TransactionType | null = null,
     options: FirstTransactionByTypeOptions = {},
   ): Promise<TransactionDto | ExpenseDto | IncomeDto | TransferDto> {
     // For some reason ts fails to infer the type of the response so lets just cast as null
@@ -83,6 +83,37 @@ export class TransactionService extends BaseApi {
       limit: 1,
       page: 1,
       sortOrder: SortOrder.Asc,
+    });
+
+    return data.data[0];
+  }
+
+  public static async getLatestByType(
+    type?: TransactionType.Expense,
+    options?: FirstTransactionByTypeOptions,
+  ): Promise<ExpenseDto>;
+  public static async getLatestByType(
+    type?: TransactionType.Income,
+    options?: FirstTransactionByTypeOptions,
+  ): Promise<IncomeDto>;
+  public static async getLatestByType(
+    type?: TransactionType.Transfer,
+    options?: FirstTransactionByTypeOptions,
+  ): Promise<TransferDto>;
+  public static async getLatestByType(
+    type?: null,
+    options?: FirstTransactionByTypeOptions,
+  ): Promise<TransactionDto>;
+  public static async getLatestByType(
+    type: TransactionType | null = null,
+    options: FirstTransactionByTypeOptions = {},
+  ): Promise<TransactionDto | ExpenseDto | IncomeDto | TransferDto> {
+    // For some reason ts fails to infer the type of the response so lets just cast as null
+    const data = await this.getAllByType(type as null, {
+      ...options,
+      limit: 1,
+      page: 1,
+      sortOrder: SortOrder.Desc,
     });
 
     return data.data[0];

@@ -10,13 +10,13 @@ import {
 } from 'chart.js';
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
+import { Chart as ChartComponent, ChartProps } from 'react-chartjs-2';
 
-interface ChartWrapperProps {
-  children: React.ReactElement;
+type ChartWrapperProps = {
   isLoading?: boolean;
-}
+} & ChartProps;
 
-const ChartWrapper = ({ children, isLoading }: ChartWrapperProps) => {
+const ChartWrapper = ({ isLoading, ...chartProps }: ChartWrapperProps) => {
   const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
@@ -44,7 +44,7 @@ const ChartWrapper = ({ children, isLoading }: ChartWrapperProps) => {
         { 'animate-pulse': isLoading || !isInitialized },
       )}
     >
-      {isInitialized && children}
+      {isInitialized && <ChartComponent {...chartProps} />}
     </section>
   );
 };
