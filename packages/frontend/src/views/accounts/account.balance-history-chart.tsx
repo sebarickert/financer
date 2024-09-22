@@ -3,7 +3,6 @@
 import { ChartData, ChartOptions } from 'chart.js';
 import { isAfter } from 'date-fns';
 import { FC, useMemo } from 'react';
-import { Chart } from 'react-chartjs-2';
 
 import {
   AccountDto,
@@ -108,8 +107,6 @@ export const AccountBalanceHistoryChart: FC<
   }
 
   return (
-    <ChartWrapperDynamic>
-      <Chart type="line" data={chartData} options={chartOptions} />
-    </ChartWrapperDynamic>
+    <ChartWrapperDynamic type="line" data={chartData} options={chartOptions} />
   );
 };

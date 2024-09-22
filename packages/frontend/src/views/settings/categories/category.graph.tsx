@@ -3,7 +3,6 @@
 import { ChartData, ChartOptions } from 'chart.js';
 import { isAfter } from 'date-fns';
 import { FC, useMemo } from 'react';
-import { Chart } from 'react-chartjs-2';
 
 import {
   TransactionCategoryDto,
@@ -104,9 +103,11 @@ export const CategoryGraph: FC<CategoryGraphProps> = ({
 
   return (
     <div className="min-h-[300px] h-[20vh] md:h-auto md:min-h-0 md:aspect-video -mx-4 md:-mx-0">
-      <ChartWrapperDynamic>
-        <Chart type="line" data={chartData} options={chartOptions} />
-      </ChartWrapperDynamic>
+      <ChartWrapperDynamic
+        type="line"
+        data={chartData}
+        options={chartOptions}
+      />
     </div>
   );
 };
