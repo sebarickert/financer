@@ -1,10 +1,8 @@
 import { usePathname } from 'next/navigation';
 
-type UseIsActiveLinkProps = {
-  url: string;
-  isExact?: boolean;
-  disallowedPathEndings?: string[];
-};
+import { IsActiveLink } from '$utils/is-link-active';
+
+type UseIsActiveLinkProps = Omit<IsActiveLink, 'pathname'>;
 
 export const useIsActiveLink = ({
   url,

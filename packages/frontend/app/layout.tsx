@@ -7,6 +7,7 @@ import { faviconList } from '$assets/favicon-list';
 import { RootProviderContainer } from '$container/root.provider';
 import { AuthenticationService } from '$ssr/api/authentication.service';
 import { ChildrenProp } from 'src/types/children-prop';
+import { CustomHeader } from 'src/types/custom-headers';
 
 import '$assets/tailwind.css';
 
@@ -40,7 +41,7 @@ const RootLayout: FC<ChildrenProp> = async ({ children }) => {
   const cookiesStore = cookies();
 
   const authenticationStatus = await AuthenticationService.getStatus();
-  const pathname = headersList.get('x-pathname') ?? '';
+  const pathname = headersList.get(CustomHeader.PATHNAME) ?? '';
 
   if (
     !authenticationStatus?.authenticated &&

@@ -7,7 +7,6 @@ export type NavigationItem = {
   label: string;
   url: string;
   iconName: IconName;
-  onClick?(): void;
   ariaLabel?: string;
   isExact?: boolean;
   disallowedPathEndings?: string[];

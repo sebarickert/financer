@@ -1,24 +1,29 @@
-'use client';
+'use server';
 
 import clsx from 'clsx';
+import { headers } from 'next/headers';
+import { FC } from 'react';
 
 import { NavigationItem } from './navigation';
 
 import { isExternalLink } from '$elements/button/is-external-link';
 import { Icon } from '$elements/icon/icon';
 import { LinkViewTransition } from '$elements/link/link-view-transition';
-import { useIsActiveLink } from '$hooks/useIsActiveLink';
+import { isActiveLink } from '$utils/is-link-active';
+import { CustomHeader } from 'src/types/custom-headers';
 
-export const NavigationDesktopItem = ({
+export const NavigationDesktopItem: FC<NavigationItem> = async ({
   url,
   iconName,
   label,
-  onClick = () => {},
   ariaLabel,
   isExact = false,
   disallowedPathEndings = [],
-}: NavigationItem): JSX.Element => {
-  const isActive = useIsActiveLink({
+}) => {
+  const headerList = headers();
+
+  const isActive = isActiveLink({
+    pathname: headerList.get(CustomHeader.PATHNAME) as string,
     url,
     isExact,
     disallowedPathEndings,
@@ -53,7 +58,6 @@ export const NavigationDesktopItem = ({
       <LinkViewTransition
         href={url}
         className={linkClasses}
-        onClick={onClick}
         aria-label={ariaLabel}
       >
         {linkContent}
