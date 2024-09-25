@@ -117,5 +117,5 @@ kube exec mongodb-deployment-XXXXXXXXX-XXXXX -- bash -c 'rm /tmp/mongo.gz'
 
 ## Authors
 
-- **Sebastian Hämäläinen** - [shamalainen](https://github.com/shamalainen)
+- **Sebastian Rickert** - [sebarickert](https://github.com/sebarickert)
 - **Teemu Sillantaus** - [silte](https://github.com/silte)
