@@ -1,6 +1,7 @@
 import { FC, useMemo } from 'react';
 
 import { Role } from '$api/generated/financerApi';
+import { HardRefreshButton } from '$blocks/HardRefreshButton';
 import { settingsPaths } from '$constants/settings-paths';
 import { Button } from '$elements/button/button';
 import { IconName } from '$elements/icon/icon';
@@ -70,13 +71,12 @@ export const Settings: FC<SettingsProps> = ({ roles }) => {
           </LinkList>
         ))}
       </section>
-      <Button
-        accentColor="plain"
-        link="/auth/logout"
-        className="mt-12 lg:hidden"
-      >
-        Sign out
-      </Button>
+      <div className="flex flex-col gap-2 mt-12 sm:flex-row">
+        <HardRefreshButton />
+        <Button accentColor="plain" link="/auth/logout" className="lg:hidden">
+          Sign out
+        </Button>
+      </div>
     </>
   );
 };
