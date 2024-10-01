@@ -1,4 +1,4 @@
-import { Controller, DefaultValuePipe, Query } from '@nestjs/common';
+import { Controller, DefaultValuePipe, Get, Query } from '@nestjs/common';
 import { Role } from '@prisma/client';
 
 import { Auth } from '../auth/decorators/auht.decorator';
@@ -16,6 +16,7 @@ export class SystemController {
     return date;
   }
 
+  @Get('logs')
   async getLogs(
     @Query('start', new DefaultValuePipe(SystemController.getMonthAgo()))
     start: Date,
