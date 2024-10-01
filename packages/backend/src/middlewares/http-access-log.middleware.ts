@@ -12,6 +12,7 @@ export class HttpAccessLogMiddleware implements NestMiddleware {
     /^\/apple-touch-icon.*$/,
     /^\/android-chrome-192x192.png/,
     /^\/manifest.json/,
+    /^\/health-check\/ping$/,
   ];
 
   private readonly ignorePattern = new RegExp(
