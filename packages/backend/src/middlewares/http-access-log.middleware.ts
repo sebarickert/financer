@@ -21,7 +21,7 @@ export class HttpAccessLogMiddleware implements NestMiddleware {
 
   use(req: Request, res: Response, next: NextFunction): void {
     // Skip logging for paths that match the ignore patterns.
-    if (this.ignorePattern.test(req.path)) {
+    if (this.ignorePattern.test(req.originalUrl)) {
       return next();
     }
     const start = Date.now();
@@ -29,7 +29,7 @@ export class HttpAccessLogMiddleware implements NestMiddleware {
     // The endpoint name to logging because our current log parsing pipeline in the datadog cannot
     // parse the endpoint name from the request path.
     // This can be removed once the log parsing pipeline is updated.
-    const endpointName = `endpoint:${this._parseEndpointNameFromPath(req.path)}`;
+    const endpointName = `endpoint:${this._parseEndpointNameFromPath(req.originalUrl)}`;
 
     res.on('finish', () => {
       const duration = Date.now() - start;
@@ -38,7 +38,7 @@ export class HttpAccessLogMiddleware implements NestMiddleware {
 
       // Log basic information about the request.
       this.logger.log(
-        `${req.method} ${req.url} ${status}, ${durationMs}, ${endpointName}`,
+        `${req.method} ${req.originalUrl} ${status}, ${durationMs}, ${endpointName}`,
       );
     });
 
