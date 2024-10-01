@@ -1,4 +1,4 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, DefaultValuePipe, Query } from '@nestjs/common';
 import { Role } from '@prisma/client';
 
 import { Auth } from '../auth/decorators/auht.decorator';
@@ -10,8 +10,17 @@ import { SystemService } from './system.service';
 export class SystemController {
   constructor(private readonly systemService: SystemService) {}
 
-  @Get('logs')
-  async getLogs(@Query('start') start: Date, @Query('end') end: Date) {
+  private static getMonthAgo(): Date {
+    const date = new Date();
+    date.setMonth(date.getMonth() - 1);
+    return date;
+  }
+
+  async getLogs(
+    @Query('start', new DefaultValuePipe(SystemController.getMonthAgo()))
+    start: Date,
+    @Query('end', new DefaultValuePipe(new Date())) end: Date,
+  ) {
     return this.systemService.getLogs(start, end);
   }
 }

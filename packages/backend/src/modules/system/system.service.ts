@@ -9,14 +9,7 @@ import { CreateSystemLogDto } from './dto/create-system-log.dto';
 export class SystemService {
   constructor(private readonly systemLogRepo: SystemLogRepo) {}
 
-  async getLogs(startDate: Date, endDate: Date): Promise<SystemLog[]> {
-    const start =
-      startDate.toString() !== 'Invalid Date'
-        ? startDate
-        : new Date(Date.now() - 30 * 24 * 60 * 60 * 1000); // 30 days
-
-    const end = endDate.toString() !== 'Invalid Date' ? endDate : new Date();
-
+  async getLogs(start: Date, end: Date): Promise<SystemLog[]> {
     return this.systemLogRepo.findMany({
       where: {
         createdAt: { gte: start, lte: end },
