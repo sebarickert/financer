@@ -64,7 +64,7 @@ export const TransactionListingWithMonthlyPagerSummary: FC<
   return (
     <DetailsList
       items={monthlyDetails}
-      className="mb-4 py-4 border-t border-b border-gray-dark"
+      className="py-4 mb-4 border-t border-b border-gray-dark"
     />
   );
 };

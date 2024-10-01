@@ -7,13 +7,15 @@ export const formatCurrency = (
   number: number,
   hasAbbreviation?: boolean,
 ): string => {
-  if (hasAbbreviation) {
-    const isNumberPositive = number > 0 ? '+' : '';
+  const validatedNumber = isNaN(number) ? 0 : number;
 
-    return `${isNumberPositive}${formatter.format(number)}`;
+  if (hasAbbreviation) {
+    const isNumberPositive = validatedNumber > 0 ? '+' : '';
+
+    return `${isNumberPositive}${formatter.format(validatedNumber)}`;
   }
 
-  return formatter.format(number);
+  return formatter.format(validatedNumber);
 };
 
 export const formatCurrencyAbbreviation = (num: number): string => {

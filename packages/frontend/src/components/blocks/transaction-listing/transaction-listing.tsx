@@ -24,7 +24,9 @@ export const TransactionListing = ({
   if (!rows.length) {
     return (
       <section className={`${className}`}>
-        <p className="text-gray-700">No transactions to show</p>
+        <p className="pt-4 text-center text-gray-700">
+          No transactions to show
+        </p>
       </section>
     );
   }
