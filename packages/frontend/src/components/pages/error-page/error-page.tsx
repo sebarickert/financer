@@ -47,11 +47,11 @@ export const ErrorPage = ({ errorPageType }: ErrorPageProps) => {
           <ul>
             <li>
               <a
-                href="https://github.com/shamalainen"
+                href="https://github.com/sebarickert"
                 className="text-blue-financer"
                 target={'_blank'}
               >
-                @shamalainen
+                @sebarickert
                 <span className="sr-only">(Link opens in a new tab)</span>
               </a>
             </li>

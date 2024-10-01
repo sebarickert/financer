@@ -1,4 +1,5 @@
 # Contributing to Financer
+
 We love your input! We want to make contributing to this project as easy and transparent as possible, whether it's:
 
 - Reporting a bug
@@ -8,9 +9,11 @@ We love your input! We want to make contributing to this project as easy and tra
 - Becoming a maintainer
 
 ## We Develop with Github
+
 We use github to host code, to track issues and feature requests, as well as accept pull requests.
 
 ## Proposing changes
+
 Pull requests are the best way to propose changes to the codebase. We actively welcome your pull requests:
 
 1. Fork the repo and create your branch from `production`.
@@ -21,12 +24,15 @@ Pull requests are the best way to propose changes to the codebase. We actively w
 6. Issue that pull request!
 
 ## Any contributions you make will be under the MIT Software License
+
 In short, when you submit code changes, your submissions are understood to be under the same [MIT License](http://choosealicense.com/licenses/mit/) that covers the project. Feel free to contact the maintainers if that's a concern.
 
-## Report bugs using Github's [issues](https://github.com/shamalainen/financer/issues)
+## Report bugs using Github's [issues](https://github.com/sebarickert/financer/issues)
+
 We use GitHub issues to track public bugs. Report a bug by opening a new issue; it's that easy!
 
 ## Write bug reports with detail, background, and sample code
+
 **Great Bug Reports** tend to have:
 
 - A quick summary and/or background
@@ -37,15 +43,17 @@ We use GitHub issues to track public bugs. Report a bug by opening a new issue; 
 - What actually happens
 - Notes (possibly including why you think this might be happening, or stuff you tried that didn't work)
 
-People *love* thorough bug reports. I'm not even kidding.
+People _love_ thorough bug reports. I'm not even kidding.
 
 ## Use a Consistent Coding Style
 
-* 2 spaces for indentation rather than tabs
-* You can try running `npm run lint` for style unification
+- 2 spaces for indentation rather than tabs
+- You can try running `npm run lint` for style unification
 
 ## License
+
 By contributing, you agree that your contributions will be licensed under its MIT License.
 
 ## References
+
 This document was adapted from the open-source contribution guidelines for [Facebook's Draft](https://github.com/facebook/draft-js/blob/a9316a723f9e918afde44dea68b5f9f39b7d9b00/CONTRIBUTING.md)

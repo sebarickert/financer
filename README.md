@@ -30,7 +30,7 @@ Register application!
 ### Clone the repository
 
 ```
-$ git clone git@github.com:shamalainen/financer.git
+$ git clone git@github.com:sebarickert/financer.git
 $ cd financer
 ```
 
