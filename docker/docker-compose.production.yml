@@ -2,7 +2,7 @@ version: "3.4"
 
 services:
   webapp:
-    image: ghcr.io/shamalainen/financer:latest
+    image: ghcr.io/sebarickert/financer:latest
     container_name: financer-production_webapp
     restart: unless-stopped
     environment:

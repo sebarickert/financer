@@ -20,7 +20,7 @@ spec:
         app: webapp-dev
     spec:
       containers:
-        - image: ghcr.io/shamalainen/financer:latest-dev
+        - image: ghcr.io/sebarickert/financer:latest-dev
           name: webapp-dev
           imagePullPolicy: Always
           resources:
