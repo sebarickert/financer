@@ -1,8 +1,8 @@
 import { FC } from 'react';
 
 import { settingsPaths } from '$constants/settings-paths';
-import { ButtonInternal } from '$elements/button/button.internal';
 import { Icon, IconName } from '$elements/icon/icon';
+import { Link } from '$elements/link/link';
 import { LinkList } from '$elements/link-list/link-list';
 import { LinkListLink } from '$elements/link-list/link-list.link';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
@@ -82,14 +82,14 @@ export const CategoryListingContainer: FC = async () => {
       <UpdatePageInfo
         backLink={settingsPaths.default}
         headerAction={
-          <ButtonInternal
-            link={`${settingsPaths.categories}/add`}
+          <Link
+            href={`${settingsPaths.categories}/add`}
             className="inline-flex items-center justify-center -mr-3 h-11 w-11"
             testId="add-category-button"
           >
             <span className="sr-only">Add category</span>
             <Icon type={IconName.plus} />
-          </ButtonInternal>
+          </Link>
         }
       />
       <section className="grid gap-8">

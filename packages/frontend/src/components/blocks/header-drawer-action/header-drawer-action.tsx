@@ -5,7 +5,6 @@ import { useState } from 'react';
 import { Drawer } from '$blocks/drawer/drawer';
 import { Button, ButtonAccentColor } from '$elements/button/button';
 import { ButtonGroup } from '$elements/button/button.group';
-import { ButtonPlain } from '$elements/button/button.plain';
 import { Icon, IconName } from '$elements/icon/icon';
 
 interface HeaderDrawerActionProps {
@@ -34,14 +33,16 @@ export const HeaderDrawerAction = ({
 
   return (
     <>
-      <ButtonPlain
+      <Button
+        applyBaseStyles={false}
+        accentColor="unstyled"
         onClick={handleToggle}
         testId={buttonTestId}
         className="inline-flex items-center justify-center -mr-3 h-11 w-11"
       >
         <span className="sr-only">{buttonLabel}</span>
         <Icon type={buttonIcon} />
-      </ButtonPlain>
+      </Button>
       <Drawer
         isOpen={isOpen}
         onClose={handleToggle}

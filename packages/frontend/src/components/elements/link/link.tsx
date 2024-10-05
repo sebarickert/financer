@@ -6,7 +6,7 @@ import {
   useTransitionRouter,
 } from 'next-view-transitions';
 
-import { isExternalLink } from '$elements/button/is-external-link';
+import { isExternalLink } from '$utils/isExternalLink';
 import {
   transitionAnimations,
   TransitionType,

@@ -12,7 +12,7 @@ export const LoginActions = ({
   onClick = () => {},
 }: LoginActionsProps): JSX.Element => {
   return (
-    <Button link={loginUrl} onClick={onClick}>
+    <Button href={loginUrl} onClick={onClick}>
       {submitButtonLabel}
     </Button>
   );

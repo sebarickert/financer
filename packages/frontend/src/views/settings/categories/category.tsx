@@ -9,8 +9,8 @@ import {
 import { DetailsList } from '$blocks/details-list/details-list';
 import { TransactionListingWithMonthlyPager } from '$blocks/transaction-listing-with-monthly-pager/transaction-listing.with.monthly-pager';
 import { settingsPaths } from '$constants/settings-paths';
-import { ButtonInternal } from '$elements/button/button.internal';
 import { Icon, IconName } from '$elements/icon/icon';
+import { Link } from '$elements/link/link';
 import { Container } from '$layouts/container/container';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { capitalize } from '$utils/capitalize';
@@ -76,14 +76,14 @@ export const Category: FC<CategoryProps> = ({
       <UpdatePageInfo
         backLink={settingsPaths.categories}
         headerAction={
-          <ButtonInternal
-            link={`${settingsPaths.categories}/${category.id}/edit`}
+          <Link
+            href={`${settingsPaths.categories}/${category.id}/edit`}
             className="inline-flex items-center justify-center -mr-3 h-11 w-11"
             testId="edit-category"
           >
             <span className="sr-only">Edit</span>
             <Icon type={IconName.pencilSquare} />
-          </ButtonInternal>
+          </Link>
         }
       />
       <section>
