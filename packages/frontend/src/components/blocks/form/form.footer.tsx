@@ -1,5 +1,9 @@
+import { useFormStatus } from 'react-dom';
+
 import { ButtonAccentColor, Button } from '../../elements/button/button';
 import { ButtonGroup } from '../../elements/button/button.group';
+
+import { Loader } from '$elements/loader/loader';
 
 interface FormFooterProps {
   submitLabel: string;
@@ -14,6 +18,8 @@ export const FormFooter = ({
   formFooterBackLink = './',
   optionalComponent,
 }: FormFooterProps): JSX.Element => {
+  const { pending } = useFormStatus();
+
   return (
     <>
       <div className="mt-12">
@@ -25,6 +31,11 @@ export const FormFooter = ({
             Cancel
           </Button>
         </ButtonGroup>
+        {pending && (
+          <div className="flex justify-center mt-8">
+            <Loader.Icon />
+          </div>
+        )}
       </div>
       {optionalComponent && (
         <div className="py-4 mt-8 border-t border-gray-dark lg:mt-0 sm:flex sm:flex-row-reverse">
