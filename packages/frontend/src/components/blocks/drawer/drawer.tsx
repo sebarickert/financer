@@ -144,13 +144,10 @@ export const Drawer = ({
         <div
           data-testid="drawer-backdrop"
           aria-hidden="true"
-          className={clsx(
-            'fixed inset-0 bg-black/[.50] transition-opacity duration-200',
-            {
-              ['z-[102] opacity-100']: isOpen,
-              ['-z-10 opacity-0']: !isOpen || !isOpenDelayed,
-            },
-          )}
+          className={clsx('fixed inset-0 bg-black/[.50]', {
+            ['z-[102] opacity-100']: isOpen,
+            ['-z-10 opacity-0']: !isOpen || !isOpenDelayed,
+          })}
         />
       )}
     </>

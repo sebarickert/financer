@@ -27,7 +27,6 @@ export const Layout = ({ children, title }: LayoutProps): JSX.Element => {
             'hidden lg:block ',
             'relative border-r border-gray-dark',
             'after:bg-gray after:ml-[-100vw] after:pr-[100vw] after:absolute after:top-0 after:bottom-0 after:right-0',
-            'vt-name-[desktop-navigation]',
           )}
         >
           <div className="sticky top-0 z-10 min-h-screen pt-12 pb-12 pl-8 pr-4 bottom-12">
