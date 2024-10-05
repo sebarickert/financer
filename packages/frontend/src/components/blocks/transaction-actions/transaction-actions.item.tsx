@@ -1,7 +1,7 @@
 import clsx from 'clsx';
-import Link from 'next/link';
 
 import { Icon, IconName } from '$elements/icon/icon';
+import { Link } from '$elements/link/link';
 
 export interface TransactionActionsItemProps {
   label: string;
