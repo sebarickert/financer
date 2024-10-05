@@ -5,8 +5,8 @@ import {
   AccountListing,
   AccountListingItem,
 } from '$blocks/account-listing/accounts-listing';
-import { ButtonInternal } from '$elements/button/button.internal';
 import { Icon, IconName } from '$elements/icon/icon';
+import { Link } from '$elements/link/link';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { AccountService } from '$ssr/api/account.service';
 import { formatCurrency } from '$utils/formatCurrency';
@@ -55,14 +55,14 @@ export const AccountListingContainer: FC = async () => {
     <>
       <UpdatePageInfo
         headerAction={
-          <ButtonInternal
-            link="/accounts/add"
+          <Link
+            href="/accounts/add"
             className="inline-flex items-center justify-center -mr-3 h-11 w-11"
             testId="add-account"
           >
             <span className="sr-only">Add account</span>
             <Icon type={IconName.viewGridAdd} />
-          </ButtonInternal>
+          </Link>
         }
       />
       <section className="grid gap-8">

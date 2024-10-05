@@ -5,8 +5,8 @@ import {
   TransactionTemplateType,
 } from '$api/generated/financerApi';
 import { settingsPaths } from '$constants/settings-paths';
-import { ButtonInternal } from '$elements/button/button.internal';
 import { Icon, IconName } from '$elements/icon/icon';
+import { Link } from '$elements/link/link';
 import { LinkList } from '$elements/link-list/link-list';
 import { LinkListLink } from '$elements/link-list/link-list.link';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
@@ -38,13 +38,13 @@ export const TemplateListing: FC<TemplateListingProps> = ({ templates }) => {
       <UpdatePageInfo
         backLink={settingsPaths.default}
         headerAction={
-          <ButtonInternal
-            link={`${settingsPaths.templates}/add`}
+          <Link
+            href={`${settingsPaths.templates}/add`}
             className="inline-flex items-center justify-center -mr-3 h-11 w-11"
           >
             <span className="sr-only">Add template</span>
             <Icon type={IconName.plus} />
-          </ButtonInternal>
+          </Link>
         }
       />
       <section className="grid gap-8">

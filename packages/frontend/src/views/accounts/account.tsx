@@ -8,8 +8,8 @@ import { DetailsList } from '$blocks/details-list/details-list';
 import { TransactionListingWithMonthlyPager } from '$blocks/transaction-listing-with-monthly-pager/transaction-listing.with.monthly-pager';
 import { accountTypeIconMapping } from '$constants/account/accountTypeMapping';
 import { AccountUpdateMarketValueContainer } from '$container/accounts/account.update-market-value.container';
-import { ButtonInternal } from '$elements/button/button.internal';
 import { Icon, IconName } from '$elements/icon/icon';
+import { Link } from '$elements/link/link';
 import { LoaderSuspense } from '$elements/loader/loader-suspense';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { capitalize } from '$utils/capitalize';
@@ -37,14 +37,14 @@ export const Account: FC<AccountProps> = ({ account }) => {
       <UpdatePageInfo
         backLink="/accounts"
         headerAction={
-          <ButtonInternal
-            link={`/accounts/${account.id}/edit`}
+          <Link
+            href={`/accounts/${account.id}/edit`}
             className="inline-flex items-center justify-center -mr-3 h-11 w-11"
             testId="edit-account"
           >
             <span className="sr-only">Edit</span>
             <Icon type={IconName.pencilSquare} />
-          </ButtonInternal>
+          </Link>
         }
       />
       <section>
@@ -60,7 +60,7 @@ export const Account: FC<AccountProps> = ({ account }) => {
           <DetailsList
             testId="account-details"
             items={accountDetails}
-            className="py-4 border-t border-b border-gray-dark mt-6"
+            className="py-4 mt-6 border-t border-b border-gray-dark"
           />
         </section>
         <LoaderSuspense>

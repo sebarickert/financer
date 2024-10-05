@@ -1,7 +1,6 @@
 import clsx from 'clsx';
 import { FC } from 'react';
 
-import { isExternalLink } from '$elements/button/is-external-link';
 import { Icon, IconName } from '$elements/icon/icon';
 import { Link } from '$elements/link/link';
 
@@ -50,27 +49,14 @@ export const LinkListLink: FC<LinkListLinkProps> = ({
   );
 
   return (
-    <>
-      {isExternalLink(link) ? (
-        <a
-          href={link}
-          className={linkClasses}
-          data-testid={testId}
-          data-entity-title={entityTitle ?? undefined}
-        >
-          {linkContent}
-        </a>
-      ) : (
-        <Link
-          href={link}
-          className={linkClasses}
-          data-testid={testId}
-          data-entity-title={entityTitle ?? undefined}
-          transition="slideInFromRight"
-        >
-          {linkContent}
-        </Link>
-      )}
-    </>
+    <Link
+      href={link}
+      className={linkClasses}
+      data-testid={testId}
+      data-entity-title={entityTitle ?? undefined}
+      transition="slideInFromRight"
+    >
+      {linkContent}
+    </Link>
   );
 };

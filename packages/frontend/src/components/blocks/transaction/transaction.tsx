@@ -8,9 +8,9 @@ import {
 } from '$api/generated/financerApi';
 import { BalanceDisplay } from '$blocks/balance-display/balance-display';
 import { DetailsList } from '$blocks/details-list/details-list';
-import { ButtonInternal } from '$elements/button/button.internal';
 import { Heading } from '$elements/heading/heading';
 import { Icon, IconName } from '$elements/icon/icon';
+import { Link } from '$elements/link/link';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { CategoryService } from '$ssr/api/category.service';
 import { capitalize } from '$utils/capitalize';
@@ -121,15 +121,15 @@ export const Transaction: FC<TransactionProps> = async ({
       <UpdatePageInfo
         backLink="/statistics"
         headerAction={
-          <ButtonInternal
-            link={`/statistics/${transactionDetailsMapping.url}/${transaction.id}/edit`}
+          <Link
+            href={`/statistics/${transactionDetailsMapping.url}/${transaction.id}/edit`}
             testId={`edit-${transactionDetailsMapping.type}-button`}
             transition="slideInFromRight"
             className="inline-flex items-center justify-center -mr-3 h-11 w-11"
           >
             <span className="sr-only">Edit</span>
             <Icon type={IconName.pencilSquare} />
-          </ButtonInternal>
+          </Link>
         }
       />
       <section>
