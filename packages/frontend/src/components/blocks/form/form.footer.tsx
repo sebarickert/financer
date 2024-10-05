@@ -3,7 +3,7 @@ import { useFormStatus } from 'react-dom';
 import { ButtonAccentColor, Button } from '../../elements/button/button';
 import { ButtonGroup } from '../../elements/button/button.group';
 
-import { Loader } from '$elements/loader/loader';
+import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 
 interface FormFooterProps {
   submitLabel: string;
@@ -24,18 +24,19 @@ export const FormFooter = ({
     <>
       <div className="mt-12">
         <ButtonGroup isReverse isHorizontal>
-          <Button accentColor={accentColor} type="submit" testId="submit">
+          <Button
+            accentColor={accentColor}
+            type="submit"
+            testId="submit"
+            isDisabled={pending}
+          >
             {submitLabel}
           </Button>
           <Button accentColor="plain" href={formFooterBackLink} testId="cancel">
             Cancel
           </Button>
         </ButtonGroup>
-        {pending && (
-          <div className="flex justify-center mt-8">
-            <Loader.Icon />
-          </div>
-        )}
+        {pending && <LoaderFullScreen />}
       </div>
       {optionalComponent && (
         <div className="py-4 mt-8 border-t border-gray-dark lg:mt-0 sm:flex sm:flex-row-reverse">
