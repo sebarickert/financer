@@ -3,7 +3,7 @@ import { FC } from 'react';
 
 import { isExternalLink } from '$elements/button/is-external-link';
 import { Icon, IconName } from '$elements/icon/icon';
-import { LinkViewTransition } from '$elements/link/link-view-transition';
+import { Link } from '$elements/link/link';
 
 interface LinkListLinkProps {
   icon?: IconName;
@@ -61,15 +61,15 @@ export const LinkListLink: FC<LinkListLinkProps> = ({
           {linkContent}
         </a>
       ) : (
-        <LinkViewTransition
+        <Link
           href={link}
           className={linkClasses}
           data-testid={testId}
           data-entity-title={entityTitle ?? undefined}
-          transition="open-from-right"
+          transition="slideInFromRight"
         >
           {linkContent}
-        </LinkViewTransition>
+        </Link>
       )}
     </>
   );

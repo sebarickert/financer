@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 
-import { LinkViewTransition } from '$elements/link/link-view-transition';
+import { Link } from '$elements/link/link';
 
 export const metadata: Metadata = {
   title: 'Issues with login',
@@ -48,12 +48,12 @@ const ResolveAuth0Issues = (): JSX.Element => {
 const IssuesWithLogin = (): JSX.Element => {
   return (
     <div className="py-16 mx-auto prose max-w-prose ">
-      <LinkViewTransition
+      <Link
         href="/"
         className="inline-block mb-12 text-base font-semibold tracking-wide text-blue-600 uppercase rounded-sm focus:outline-none focus:ring-2 focus:ring-offset-4"
       >
         Go back
-      </LinkViewTransition>
+      </Link>
       <h1>
         <span className="block mt-2 text-3xl font-extrabold leading-8 tracking-tight text-gray-900 sm:text-4xl">
           Login issues to Financer

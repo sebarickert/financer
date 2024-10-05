@@ -1,13 +1,13 @@
 import { FC } from 'react';
 
-import { LinkViewTransition } from '$elements/link/link-view-transition';
-import { ViewTransition } from '$hooks/useViewTransitionRouter';
+import { Link } from '$elements/link/link';
+import { TransitionType } from '$utils/transitionAnimations';
 
 interface ButtonInternalProps {
   children: React.ReactNode;
   className: string;
   link: string;
-  transition?: ViewTransition;
+  transition?: TransitionType;
   onClick?(): void;
   testId?: string;
 }
@@ -21,7 +21,7 @@ export const ButtonInternal: FC<ButtonInternalProps> = ({
   testId,
 }) => {
   return (
-    <LinkViewTransition
+    <Link
       href={link}
       className={className}
       onClick={onClick}
@@ -29,6 +29,6 @@ export const ButtonInternal: FC<ButtonInternalProps> = ({
       transition={transition}
     >
       {children}
-    </LinkViewTransition>
+    </Link>
   );
 };

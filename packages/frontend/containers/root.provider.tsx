@@ -1,10 +1,10 @@
 'use client';
 
+import { ViewTransitions } from 'next-view-transitions';
 import { FC, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { StoreProvider } from './store.provider';
-import { TransitionProvider } from './transition.provider';
 
 import { ToastMessageTypes } from '$blocks/toast/toast';
 import { PageInfoProvider } from '$context/pageInfoContext';
@@ -72,12 +72,12 @@ export const RootProviderContainer: FC<RootProviderContainerProps> = (
 ) => {
   return (
     <StoreProvider>
-      <TransitionProvider>
+      <ViewTransitions>
         <PageInfoProvider>
           <ScrollToTop />
           <App {...props} />
         </PageInfoProvider>
-      </TransitionProvider>
+      </ViewTransitions>
     </StoreProvider>
   );
 };

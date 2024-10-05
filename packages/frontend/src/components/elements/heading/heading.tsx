@@ -1,7 +1,7 @@
 import { clsx } from 'clsx';
 import { ReactNode } from 'react';
 
-import { LinkViewTransition } from '$elements/link/link-view-transition';
+import { Link } from '$elements/link/link';
 
 type HeadingVariants = 'h1' | 'h2' | 'h3' | 'h4';
 
@@ -46,14 +46,14 @@ export const Heading = ({
         {children}
       </HeadingType>
       {ctaUrl && ctaLabel && (
-        <LinkViewTransition
+        <Link
           href={ctaUrl}
           className="flex-shrink-0 tracking-tight text-charcoal hover:underline"
           data-entity-title={ctaEntityTitle ?? undefined}
-          transition="open-from-right"
+          transition="slideInFromRight"
         >
           {ctaLabel}
-        </LinkViewTransition>
+        </Link>
       )}
     </section>
   );

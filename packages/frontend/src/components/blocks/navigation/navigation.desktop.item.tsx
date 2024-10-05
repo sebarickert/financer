@@ -6,9 +6,8 @@ import { FC } from 'react';
 
 import { NavigationItem } from './navigation';
 
-import { isExternalLink } from '$elements/button/is-external-link';
 import { Icon } from '$elements/icon/icon';
-import { LinkViewTransition } from '$elements/link/link-view-transition';
+import { Link } from '$elements/link/link';
 import { isActiveLink } from '$utils/is-link-active';
 import { CustomHeader } from 'src/types/custom-headers';
 
@@ -36,32 +35,12 @@ export const NavigationDesktopItem: FC<NavigationItem> = async ({
     },
   );
 
-  const linkContent = (
-    <>
-      <Icon type={iconName} isSolid={isActive} />
-      <span className={clsx('ml-4 text-base')}>{label}</span>
-    </>
-  );
-
-  if (isExternalLink(url)) {
-    return (
-      <li>
-        <a href={url} className={linkClasses} aria-label={ariaLabel}>
-          {linkContent}
-        </a>
-      </li>
-    );
-  }
-
   return (
     <li>
-      <LinkViewTransition
-        href={url}
-        className={linkClasses}
-        aria-label={ariaLabel}
-      >
-        {linkContent}
-      </LinkViewTransition>
+      <Link href={url} className={linkClasses} aria-label={ariaLabel}>
+        <Icon type={iconName} isSolid={isActive} />
+        <span className={clsx('ml-4 text-base')}>{label}</span>
+      </Link>
     </li>
   );
 };

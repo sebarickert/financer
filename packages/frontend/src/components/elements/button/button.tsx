@@ -5,7 +5,7 @@ import { ButtonInternal } from './button.internal';
 import { ButtonPlain } from './button.plain';
 import { isExternalLink } from './is-external-link';
 
-import { ViewTransition } from '$hooks/useViewTransitionRouter';
+import { TransitionType } from '$utils/transitionAnimations';
 
 export type ButtonAccentColor = 'blue' | 'plain' | 'black' | 'red';
 interface ButtonProps {
@@ -13,7 +13,7 @@ interface ButtonProps {
   children: React.ReactNode;
   className?: string;
   link?: string;
-  transition?: ViewTransition;
+  transition?: TransitionType;
   onClick?(): void;
   type?: 'button' | 'submit' | 'reset';
   testId?: string;
