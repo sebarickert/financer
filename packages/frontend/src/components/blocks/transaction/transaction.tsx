@@ -124,7 +124,7 @@ export const Transaction: FC<TransactionProps> = async ({
           <ButtonInternal
             link={`/statistics/${transactionDetailsMapping.url}/${transaction.id}/edit`}
             testId={`edit-${transactionDetailsMapping.type}-button`}
-            transition="open-from-right"
+            transition="slideInFromRight"
             className="inline-flex items-center justify-center -mr-3 h-11 w-11"
           >
             <span className="sr-only">Edit</span>
@@ -147,7 +147,7 @@ export const Transaction: FC<TransactionProps> = async ({
         {categoryDetails.length > 0 && (
           <section className="mt-8">
             <Heading className="mb-4">Categories</Heading>
-            <div className="grid divide-y divide-gray-dark border-t border-b border-gray-dark">
+            <div className="grid border-t border-b divide-y divide-gray-dark border-gray-dark">
               {categoryDetails.map((category) => (
                 <DetailsList
                   testId="category-details"

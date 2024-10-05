@@ -2,7 +2,7 @@ import clsx from 'clsx';
 
 import { TransactionType } from '$api/generated/financerApi';
 import { IconName, Icon } from '$elements/icon/icon';
-import { LinkViewTransition } from '$elements/link/link-view-transition';
+import { Link } from '$elements/link/link';
 
 export interface TransactionListingItemProps {
   transactionCategories?: string;
@@ -33,10 +33,10 @@ export const TransactionListingItem = ({
 
   return (
     <li data-testid={id} className="group">
-      <LinkViewTransition
+      <Link
         href={link}
         className={`relative flex gap-4 items-center focus-within:bg-gray-dark hover:bg-gray-dark overflow-hidden pl-4 lg:rounded-md`}
-        transition="open-from-right"
+        transition="slideInFromRight"
       >
         <span className="inline-flex items-center justify-center border rounded-full bg-gray h-11 w-11 border-gray-dark">
           <Icon
@@ -81,7 +81,7 @@ export const TransactionListingItem = ({
             className="flex-shrink-0 pointer-events-none stroke-gray-darkest -mr-1.5"
           />
         </span>
-      </LinkViewTransition>
+      </Link>
     </li>
   );
 };

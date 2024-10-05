@@ -5,7 +5,7 @@ import { Container } from '../container/container';
 
 import { Navigation } from '$blocks/navigation/navigation';
 import { ToastContainer } from '$blocks/toast/toast.container';
-import { LinkViewTransition } from '$elements/link/link-view-transition';
+import { Link } from '$elements/link/link';
 import { Header } from '$layouts/header/header';
 
 type LayoutProps = {
@@ -32,10 +32,7 @@ export const Layout = ({ children, title }: LayoutProps): JSX.Element => {
         >
           <div className="sticky top-0 z-10 min-h-screen pt-12 pb-12 pl-8 pr-4 bottom-12">
             <header>
-              <LinkViewTransition
-                href="/"
-                className="inline-flex items-center gap-3 mb-8"
-              >
+              <Link href="/" className="inline-flex items-center gap-3 mb-8">
                 <Image
                   src="/logo.svg"
                   alt="Financer logo"
@@ -47,7 +44,7 @@ export const Layout = ({ children, title }: LayoutProps): JSX.Element => {
                 <h2 className="text-xl font-extrabold tracking-tighter text-black uppercase">
                   Financer
                 </h2>
-              </LinkViewTransition>
+              </Link>
               <Navigation variant="desktop" />
             </header>
           </div>

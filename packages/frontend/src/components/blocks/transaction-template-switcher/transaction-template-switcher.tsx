@@ -1,5 +1,6 @@
 'use client';
 
+import { useTransitionRouter } from 'next-view-transitions';
 import { useMemo, useState } from 'react';
 
 import {
@@ -14,7 +15,6 @@ import { ButtonPlain } from '$elements/button/button.plain';
 import { Icon, IconName } from '$elements/icon/icon';
 import { Radio } from '$elements/radio/radio';
 import { RadioGroup } from '$elements/radio/radio.group';
-import { useViewTransitionRouter } from '$hooks/useViewTransitionRouter';
 
 interface TransactionTemplateSwitcherProps {
   selectedTemplate?: string;
@@ -28,6 +28,7 @@ export const TransactionTemplateSwitcher = ({
   const [isOpen, setIsOpen] = useState(false);
   const { currentData: transactionTemplates = [] } =
     useTransactionTemplatesFindAllManualTypeByUserQuery();
+  const router = useTransitionRouter();
 
   const targetTemplates = useMemo(
     () =>
@@ -37,14 +38,12 @@ export const TransactionTemplateSwitcher = ({
     [templateType, transactionTemplates],
   );
 
-  const { push } = useViewTransitionRouter();
-
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     const { templateSwitcher } = event.target;
     const selectedTemplateId = templateSwitcher.value;
-    push(
+    router.push(
       `/statistics/${transactionTypeLabelMapping[templateType].plural}/add/${selectedTemplateId}`,
     );
     setIsOpen(false);

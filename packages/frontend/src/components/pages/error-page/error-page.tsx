@@ -7,7 +7,7 @@ import Image from 'next/image';
 import logo from '$assets/logo.svg';
 import { Button } from '$elements/button/button';
 import { Heading } from '$elements/heading/heading';
-import { LinkViewTransition } from '$elements/link/link-view-transition';
+import { Link } from '$elements/link/link';
 import { Container } from '$layouts/container/container';
 
 interface ErrorPageProps {
@@ -80,9 +80,9 @@ export const ErrorPage = ({ errorPageType }: ErrorPageProps) => {
       <div className="flex items-center gap-2">
         <Button onClick={() => window.location.reload()}>Fix error</Button>
         <span> or </span>
-        <LinkViewTransition href={'/'} className="font-medium underline ">
+        <Link href={'/'} className="font-medium underline ">
           return to homepage
-        </LinkViewTransition>
+        </Link>
       </div>
     </>
   );

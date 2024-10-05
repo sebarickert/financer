@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 
-import { LinkViewTransition } from '$elements/link/link-view-transition';
+import { Link } from '$elements/link/link';
 
 export const metadata: Metadata = {
   title: 'Privacy policy',
@@ -10,12 +10,12 @@ export const metadata: Metadata = {
 const PrivacyPolicy = (): JSX.Element => {
   return (
     <div className="py-16 mx-auto prose max-w-prose ">
-      <LinkViewTransition
+      <Link
         href="/"
         className="inline-block mb-12 text-base font-semibold tracking-tight uppercase"
       >
         Go back
-      </LinkViewTransition>
+      </Link>
       <h1>
         <span className="block text-base font-semibold tracking-wide text-blue-600 uppercase">
           Privacy policy

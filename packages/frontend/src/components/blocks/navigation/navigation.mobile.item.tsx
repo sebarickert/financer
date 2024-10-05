@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { NavigationItem } from './navigation';
 
 import { Icon } from '$elements/icon/icon';
-import { LinkViewTransition } from '$elements/link/link-view-transition';
+import { Link } from '$elements/link/link';
 import { useIsActiveLink } from '$hooks/useIsActiveLink';
 
 export const NavigationMobileItem = ({
@@ -18,14 +18,14 @@ export const NavigationMobileItem = ({
 
   return (
     <li>
-      <LinkViewTransition
+      <Link
         href={url}
         className={`flex flex-col items-center justify-center focus:text-charcoal hover:text-charcoal h-14`}
         aria-label={ariaLabel}
       >
         <Icon type={iconName} isSolid={isActive} />
         <span className={clsx('sr-only')}>{label}</span>
-      </LinkViewTransition>
+      </Link>
     </li>
   );
 };
