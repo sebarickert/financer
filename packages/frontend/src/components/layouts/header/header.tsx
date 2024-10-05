@@ -38,7 +38,7 @@ export const Header: FC<HeaderProps> = ({ title }) => {
         <Link
           href={backLink}
           className="inline-flex items-center justify-center -ml-3 h-11 w-11"
-          data-testid="header-back-link"
+          testId="header-back-link"
           transition="slideInFromLeft"
         >
           <span className="sr-only">Go back</span>
