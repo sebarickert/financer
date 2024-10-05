@@ -52,7 +52,7 @@ export const LinkListLink: FC<LinkListLinkProps> = ({
     <Link
       href={link}
       className={linkClasses}
-      data-testid={testId}
+      testId={testId}
       data-entity-title={entityTitle ?? undefined}
       transition="slideInFromRight"
     >
