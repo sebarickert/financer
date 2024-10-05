@@ -22,7 +22,7 @@ export const NavigationMobile = ({
     <div
       className={clsx(
         className,
-        'fixed bottom-0 left-0 right-0  w-full border-t bg-gray border-gray-dark pb-safe vt-name-[mobile-navigation]',
+        'fixed bottom-0 left-0 right-0  w-full border-t bg-gray border-gray-dark pb-safe',
         { ['z-[101]']: isActionsModalOpen, ['z-[100]']: !isActionsModalOpen },
       )}
     >
