@@ -1,7 +1,7 @@
 export type TransitionType = keyof typeof transitionAnimations;
 
 const defaultKeyframeAnimationOptions: KeyframeAnimationOptions = {
-  duration: 200,
+  duration: 300,
   easing: 'ease',
   fill: 'forwards',
 };
@@ -14,8 +14,8 @@ const slideInFromLeft = () => {
         transform: 'translate(0, 0)',
       },
       {
-        opacity: 0,
-        transform: 'translate(100px, 0)',
+        opacity: 1,
+        transform: 'translate(100%, 0)',
       },
     ],
     {
@@ -27,8 +27,8 @@ const slideInFromLeft = () => {
   document.documentElement.animate(
     [
       {
-        opacity: 0,
-        transform: 'translate(-100px, 0)',
+        opacity: 1,
+        transform: 'translate(-100%, 0)',
       },
       {
         opacity: 1,
@@ -50,8 +50,8 @@ const slideInFromRight = () => {
         transform: 'translate(0, 0)',
       },
       {
-        opacity: 0,
-        transform: 'translate(-100px, 0)',
+        opacity: 1,
+        transform: 'translate(-100%, 0)',
       },
     ],
     {
@@ -63,8 +63,8 @@ const slideInFromRight = () => {
   document.documentElement.animate(
     [
       {
-        opacity: 0,
-        transform: 'translate(100px, 0)',
+        opacity: 1,
+        transform: 'translate(100%, 0)',
       },
       {
         opacity: 1,
