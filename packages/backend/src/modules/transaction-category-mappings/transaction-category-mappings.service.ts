@@ -6,6 +6,7 @@ import {
 } from '@prisma/client';
 
 import { TransactionCategoryMappingRepo } from '../../database/repos/transaction-category-mapping.repo';
+import { ForceMutable } from '../../types/force-mutable';
 import { DateService } from '../../utils/date.service';
 import { CategoryMonthlySummaryDto } from '../transaction-categories/dto/transaction-month-summary.dto';
 
@@ -70,154 +71,121 @@ export class TransactionCategoryMappingsService {
     year?: number,
     month?: number,
   ): Promise<CategoryMonthlySummaryDto[]> {
-    return this.transactionCategoryMappingRepo.aggregateRaw([
-      {
-        $match: {
-          owner: { $oid: userId },
-          category_id: {
-            $in: categoryIds.map((categoryId) => ({ $oid: categoryId })),
-          },
-          ...this.filterRawMongoYearAndMonthFilter(year, month, 'laterThan'),
-        },
+    const allMappings = await this.transactionCategoryMappingRepo.findMany({
+      where: {
+        userId,
+        categoryId: { in: categoryIds },
       },
-      {
-        $lookup: {
-          from: 'transactions',
-          localField: 'transaction_id',
-          foreignField: '_id',
-          as: 'transaction',
-        },
-      },
-      {
-        $project: {
-          date: {
-            $arrayElemAt: ['$transaction.date', 0],
-          },
-          amount: '$amount',
-          transactionAmount: {
-            $arrayElemAt: ['$transaction.amount', 0],
-          },
-          fromAccount: {
-            $arrayElemAt: ['$transaction.fromAccount', 0],
-          },
-          toAccount: {
-            $arrayElemAt: ['$transaction.toAccount', 0],
+      include: {
+        transaction: {
+          select: {
+            date: true,
+            fromAccount: true,
+            toAccount: true,
           },
         },
       },
-      {
-        $group: {
-          _id: {
-            year: { $year: '$date' },
-            month: { $month: '$date' },
-          },
-          totalCount: {
-            $sum: this.filterRawMongoMonthlySummaryCondition(userId, 1, null),
-          },
-          incomeCount: {
-            $sum: this.filterRawMongoMonthlySummaryCondition(
-              userId,
-              1,
-              TransactionType.INCOME,
-            ),
-          },
-          expenseCount: {
-            $sum: this.filterRawMongoMonthlySummaryCondition(
-              userId,
-              1,
-              TransactionType.EXPENSE,
-            ),
-          },
-          transferCount: {
-            $sum: this.filterRawMongoMonthlySummaryCondition(
-              userId,
-              1,
-              TransactionType.TRANSFER,
-            ),
-          },
-          totalAmount: {
-            $sum: this.filterRawMongoMonthlySummaryCondition(
-              userId,
-              '$amount',
-              null,
-            ),
-          },
-          totalTransactionAmount: {
-            $sum: this.filterRawMongoMonthlySummaryCondition(
-              userId,
-              '$transactionAmount',
-              null,
-            ),
-          },
-          incomeAmount: {
-            $sum: this.filterRawMongoMonthlySummaryCondition(
-              userId,
-              '$amount',
-              TransactionType.INCOME,
-            ),
-          },
-          incomeTransactionAmount: {
-            $sum: this.filterRawMongoMonthlySummaryCondition(
-              userId,
-              '$transactionAmount',
-              TransactionType.INCOME,
-            ),
-          },
-          expenseAmount: {
-            $sum: this.filterRawMongoMonthlySummaryCondition(
-              userId,
-              '$amount',
-              TransactionType.EXPENSE,
-            ),
-          },
-          expenseTransactionAmount: {
-            $sum: this.filterRawMongoMonthlySummaryCondition(
-              userId,
-              '$transactionAmount',
-              TransactionType.EXPENSE,
-            ),
-          },
-          transferAmount: {
-            $sum: this.filterRawMongoMonthlySummaryCondition(
-              userId,
-              '$amount',
-              TransactionType.TRANSFER,
-            ),
-          },
-          transferTransactionAmount: {
-            $sum: this.filterRawMongoMonthlySummaryCondition(
-              userId,
-              '$transactionAmount',
-              TransactionType.TRANSFER,
-            ),
-          },
-        },
-      },
-      {
-        $sort: {
-          _id: -1,
-        },
-      },
-      {
-        $project: {
-          id: '$_id',
-          _id: 0,
-          'total.count': '$totalCount',
-          'total.amount': '$totalAmount',
-          'total.transactionAmount': '$totalTransactionAmount',
-          'income.count': '$incomeCount',
-          'income.amount': '$incomeAmount',
-          'income.transactionAmount': '$incomeTransactionAmount',
-          'expense.count': '$expenseCount',
-          'expense.amount': '$expenseAmount',
-          'expense.transactionAmount': '$expenseTransactionAmount',
-          'transfer.count': '$transferCount',
-          'transfer.amount': '$transferAmount',
-          'transfer.transactionAmount': '$transferTransactionAmount',
-        },
-      },
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ]) as any;
+    });
+
+    const filterDate = DateService.fromZonedTime(year, month - 1 || 0, 1);
+
+    const filteredMappings = allMappings.filter(
+      (mapping) =>
+        (!year && !month) ||
+        DateService.toZonedTime(mapping.transaction.date) >= filterDate,
+    );
+
+    const summaries = new Map<
+      string,
+      ForceMutable<CategoryMonthlySummaryDto>
+    >();
+
+    Array.from(
+      Map.groupBy(filteredMappings, (mapping) => {
+        const zonedDate = DateService.toZonedTime(mapping.transaction.date);
+
+        const transactionMonth = zonedDate.getMonth() + 1;
+        const transactionYear = zonedDate.getFullYear();
+
+        let type: TransactionType;
+
+        const hasToAccount = !!mapping.transaction.toAccount;
+        const hasFromAccount = !!mapping.transaction.fromAccount;
+
+        if (hasFromAccount && hasToAccount) {
+          type = TransactionType.TRANSFER;
+        } else if (hasFromAccount) {
+          type = TransactionType.EXPENSE;
+        } else {
+          type = TransactionType.INCOME;
+        }
+
+        return {
+          type,
+          month: transactionMonth,
+          year: transactionYear,
+        };
+      }).entries(),
+    ).forEach(([key, value]) => {
+      const { type, month: transactionMonth, year: transactionYear } = key;
+
+      const count = value.length;
+      const amount = value.reduce((acc, mapping) => acc + mapping.amount, 0);
+
+      const summary = summaries.get(
+        `${transactionYear}-${transactionMonth}`,
+      ) || {
+        id: { month: transactionMonth, year: transactionYear },
+        totalCount: 0,
+        incomesCount: 0,
+        expensesCount: 0,
+        transfersCount: 0,
+        totalAmount: 0,
+        incomeAmount: 0,
+        expenseAmount: 0,
+        transferAmount: 0,
+      };
+
+      summary.totalCount += count;
+
+      if (type === TransactionType.TRANSFER) {
+        summary.transfersCount += count;
+        summary.transferAmount += amount;
+      } else if (type === TransactionType.EXPENSE) {
+        summary.expensesCount += count;
+        summary.expenseAmount += amount;
+
+        summary.totalAmount -= amount;
+      } else {
+        summary.incomesCount += count;
+        summary.incomeAmount += amount;
+
+        summary.totalAmount += amount;
+      }
+
+      summaries.set(`${transactionYear}-${transactionMonth}`, summary);
+    });
+
+    return Array.from(summaries.values())
+      .sort((a, b) => {
+        // Compare years first
+        if (a.id.year > b.id.year) return -1;
+        if (a.id.year < b.id.year) return 1;
+
+        // If years are equal, compare months
+        if (a.id.month > b.id.month) return -1;
+        if (a.id.month < b.id.month) return 1;
+
+        // If both year and month are equal, consider them equal in terms of sorting
+        return 0;
+      })
+      .map((summary) => ({
+        ...summary,
+        totalAmount: Number(summary.totalAmount.toFixed(2)),
+        incomeAmount: Number(summary.incomeAmount.toFixed(2)),
+        expenseAmount: Number(summary.expenseAmount.toFixed(2)),
+        transferAmount: Number(summary.transferAmount.toFixed(2)),
+      }));
   }
 
   private filterRawMongoYearAndMonthFilter(

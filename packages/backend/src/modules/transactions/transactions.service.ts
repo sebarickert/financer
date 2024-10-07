@@ -13,6 +13,7 @@ import {
 } from '@prisma/client';
 
 import { TransactionRepo } from '../../database/repos/transaction.repo';
+import { ForceMutable } from '../../types/force-mutable';
 import { PaginationDto } from '../../types/pagination.dto';
 import { DateService } from '../../utils/date.service';
 import { AccountsService } from '../accounts/accounts.service';
@@ -27,10 +28,6 @@ import { TransactionMonthSummaryDto } from './dto/transaction-month-summary.dto'
 import { TransactionDto } from './dto/transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 
-type Mutable<T> = {
-  -readonly [P in keyof T]: T[P];
-};
-
 @Injectable()
 export class TransactionsService {
   private readonly logger = new Logger(TransactionsService.name);
@@ -38,9 +35,9 @@ export class TransactionsService {
   constructor(
     private readonly transactionRepo: TransactionRepo,
     @Inject(forwardRef(() => AccountsService))
-    private accountService: AccountsService,
-    private transactionCategoriesService: TransactionCategoriesService,
-    private transactionCategoryMappingsService: TransactionCategoryMappingsService,
+    private readonly accountService: AccountsService,
+    private readonly transactionCategoriesService: TransactionCategoriesService,
+    private readonly transactionCategoryMappingsService: TransactionCategoryMappingsService,
   ) {}
 
   async create(
@@ -148,8 +145,7 @@ export class TransactionsService {
     });
 
     return {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      data: transactions as any,
+      data: transactions,
       currentPage: page ?? 1,
       limit: page ? limit : totalCount,
       totalPageCount: lastPage,
@@ -192,7 +188,10 @@ export class TransactionsService {
       },
     });
 
-    const summaries = new Map<string, Mutable<TransactionMonthSummaryDto>>();
+    const summaries = new Map<
+      string,
+      ForceMutable<TransactionMonthSummaryDto>
+    >();
 
     Array.from(
       Map.groupBy(transactions, (transaction) => {
@@ -238,7 +237,6 @@ export class TransactionsService {
         `${transactionYear}-${transactionMonth}`,
       ) || {
         id: { month: transactionMonth, year: transactionYear },
-        count: 0,
         totalCount: 0,
         incomesCount: 0,
         expensesCount: 0,
@@ -250,7 +248,6 @@ export class TransactionsService {
       };
 
       summary.totalCount += count;
-      summary.count += count;
 
       if (type === TransactionType.TRANSFER) {
         summary.transfersCount += count;

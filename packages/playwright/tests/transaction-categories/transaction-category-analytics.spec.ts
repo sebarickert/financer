@@ -39,20 +39,16 @@ test.describe('Transaction category analytics', () => {
     expect(response.status()).toBe(200);
     const [body] = await response.json();
 
-    expect(body.total.count).toBe(4);
-    expect(roundToTwoDecimals(body.total.amount)).toBe(1135.55);
-    expect(roundToTwoDecimals(body.total.transactionAmount)).toBe(872.95);
+    expect(body.totalCount).toBe(4);
+    expect(roundToTwoDecimals(body.totalAmount)).toBe(1135.55);
 
-    expect(body.income.count).toBe(2);
-    expect(roundToTwoDecimals(body.income.amount)).toBe(2271.53);
-    expect(roundToTwoDecimals(body.income.transactionAmount)).toBe(3367.11);
+    expect(body.incomesCount).toBe(2);
+    expect(roundToTwoDecimals(body.incomeAmount)).toBe(2271.53);
 
-    expect(body.expense.count).toBe(2);
-    expect(roundToTwoDecimals(body.expense.amount)).toBe(1135.98);
-    expect(roundToTwoDecimals(body.expense.transactionAmount)).toBe(2494.16);
+    expect(body.expensesCount).toBe(2);
+    expect(roundToTwoDecimals(body.expenseAmount)).toBe(1135.98);
 
-    expect(body.transfer.count).toBe(0);
-    expect(roundToTwoDecimals(body.transfer.amount)).toBe(0);
-    expect(roundToTwoDecimals(body.transfer.transactionAmount)).toBe(0);
+    expect(body.transfersCount).toBe(0);
+    expect(roundToTwoDecimals(body.transferAmount)).toBe(0);
   });
 });

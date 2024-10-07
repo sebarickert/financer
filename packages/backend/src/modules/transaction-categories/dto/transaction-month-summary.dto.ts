@@ -2,7 +2,6 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Allow } from 'class-validator';
 
 export class CategoryMonthlySummaryDto {
-  // TODO get rid of underscore
   @ApiProperty()
   @Allow()
   readonly id: {
@@ -11,10 +10,26 @@ export class CategoryMonthlySummaryDto {
   };
 
   @ApiProperty()
-  @Allow()
-  readonly count: number;
+  readonly totalCount: number;
 
   @ApiProperty()
-  @Allow()
+  readonly incomesCount: number;
+
+  @ApiProperty()
+  readonly expensesCount: number;
+
+  @ApiProperty()
+  readonly transfersCount: number;
+
+  @ApiProperty()
   readonly totalAmount: number;
+
+  @ApiProperty()
+  readonly incomeAmount: number;
+
+  @ApiProperty()
+  readonly expenseAmount: number;
+
+  @ApiProperty()
+  readonly transferAmount: number;
 }

@@ -5,7 +5,7 @@ import { PrismaService } from '../prisma.service';
 
 @Injectable()
 export class TransactionCategoryMappingRepo {
-  constructor(private prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async findOne(
     transactionCategoryMappingWhereUniqueInput: Prisma.TransactionCategoryMappingWhereUniqueInput,
@@ -15,21 +15,13 @@ export class TransactionCategoryMappingRepo {
     });
   }
 
-  async findMany(params: {
-    skip?: number;
-    take?: number;
-    cursor?: Prisma.TransactionCategoryMappingWhereUniqueInput;
-    where?: Prisma.TransactionCategoryMappingWhereInput;
-    orderBy?: Prisma.TransactionCategoryMappingOrderByWithRelationInput;
-  }): Promise<TransactionCategoryMapping[]> {
-    const { skip, take, cursor, where, orderBy } = params;
-    return this.prisma.transactionCategoryMapping.findMany({
-      skip,
-      take,
-      cursor,
-      where,
-      orderBy,
-    });
+  async findMany<T extends Prisma.TransactionCategoryMappingFindManyArgs>(
+    params: T,
+  ): Promise<
+    Prisma.TransactionCategoryMappingGetPayload<{ include: T['include'] }>[]
+  > {
+    // @ts-expect-error - Prisma is not able to infer the correct type for include
+    return this.prisma.transactionCategoryMapping.findMany(params);
   }
 
   async getCount(params: {
@@ -47,10 +39,6 @@ export class TransactionCategoryMappingRepo {
       where,
       orderBy,
     });
-  }
-
-  async aggregateRaw(pipeline: Prisma.InputJsonValue[]) {
-    return this.prisma.transactionCategoryMapping.aggregateRaw({ pipeline });
   }
 
   async create(

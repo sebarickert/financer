@@ -8209,7 +8209,6 @@ exports[`TransactionsService should return all transactions for user for specifi
 exports[`TransactionsService should return monthly summaries for user 1`] = `
 [
   {
-    "count": 3,
     "expenseAmount": 0,
     "expensesCount": 0,
     "id": {
@@ -8224,7 +8223,6 @@ exports[`TransactionsService should return monthly summaries for user 1`] = `
     "transfersCount": 2,
   },
   {
-    "count": 3,
     "expenseAmount": 0,
     "expensesCount": 0,
     "id": {
@@ -8239,7 +8237,6 @@ exports[`TransactionsService should return monthly summaries for user 1`] = `
     "transfersCount": 2,
   },
   {
-    "count": 3,
     "expenseAmount": 0,
     "expensesCount": 0,
     "id": {
@@ -8254,7 +8251,6 @@ exports[`TransactionsService should return monthly summaries for user 1`] = `
     "transfersCount": 2,
   },
   {
-    "count": 3,
     "expenseAmount": 0,
     "expensesCount": 0,
     "id": {
@@ -8269,7 +8265,6 @@ exports[`TransactionsService should return monthly summaries for user 1`] = `
     "transfersCount": 2,
   },
   {
-    "count": 3,
     "expenseAmount": 0,
     "expensesCount": 0,
     "id": {
@@ -8284,7 +8279,6 @@ exports[`TransactionsService should return monthly summaries for user 1`] = `
     "transfersCount": 2,
   },
   {
-    "count": 3,
     "expenseAmount": 0,
     "expensesCount": 0,
     "id": {
@@ -8299,7 +8293,6 @@ exports[`TransactionsService should return monthly summaries for user 1`] = `
     "transfersCount": 2,
   },
   {
-    "count": 3,
     "expenseAmount": 0,
     "expensesCount": 0,
     "id": {
@@ -8314,7 +8307,6 @@ exports[`TransactionsService should return monthly summaries for user 1`] = `
     "transfersCount": 2,
   },
   {
-    "count": 3,
     "expenseAmount": 0,
     "expensesCount": 0,
     "id": {
@@ -8329,7 +8321,6 @@ exports[`TransactionsService should return monthly summaries for user 1`] = `
     "transfersCount": 2,
   },
   {
-    "count": 3,
     "expenseAmount": 0,
     "expensesCount": 0,
     "id": {
@@ -8344,7 +8335,6 @@ exports[`TransactionsService should return monthly summaries for user 1`] = `
     "transfersCount": 2,
   },
   {
-    "count": 3,
     "expenseAmount": 0,
     "expensesCount": 0,
     "id": {
@@ -8359,7 +8349,6 @@ exports[`TransactionsService should return monthly summaries for user 1`] = `
     "transfersCount": 2,
   },
   {
-    "count": 3,
     "expenseAmount": 0,
     "expensesCount": 0,
     "id": {
@@ -8374,7 +8363,6 @@ exports[`TransactionsService should return monthly summaries for user 1`] = `
     "transfersCount": 2,
   },
   {
-    "count": 3,
     "expenseAmount": 0,
     "expensesCount": 0,
     "id": {
@@ -8389,7 +8377,6 @@ exports[`TransactionsService should return monthly summaries for user 1`] = `
     "transfersCount": 2,
   },
   {
-    "count": 29,
     "expenseAmount": 9073.42,
     "expensesCount": 9,
     "id": {
@@ -8404,7 +8391,6 @@ exports[`TransactionsService should return monthly summaries for user 1`] = `
     "transfersCount": 10,
   },
   {
-    "count": 21,
     "expenseAmount": 3232.48,
     "expensesCount": 4,
     "id": {
@@ -8419,7 +8405,6 @@ exports[`TransactionsService should return monthly summaries for user 1`] = `
     "transfersCount": 12,
   },
   {
-    "count": 27,
     "expenseAmount": 15371.25,
     "expensesCount": 14,
     "id": {
@@ -8434,7 +8419,6 @@ exports[`TransactionsService should return monthly summaries for user 1`] = `
     "transfersCount": 8,
   },
   {
-    "count": 23,
     "expenseAmount": 7055.56,
     "expensesCount": 10,
     "id": {
@@ -8449,7 +8433,6 @@ exports[`TransactionsService should return monthly summaries for user 1`] = `
     "transfersCount": 2,
   },
   {
-    "count": 21,
     "expenseAmount": 5124.78,
     "expensesCount": 7,
     "id": {
@@ -8464,7 +8447,6 @@ exports[`TransactionsService should return monthly summaries for user 1`] = `
     "transfersCount": 9,
   },
   {
-    "count": 29,
     "expenseAmount": 9531.96,
     "expensesCount": 9,
     "id": {
@@ -8479,7 +8461,6 @@ exports[`TransactionsService should return monthly summaries for user 1`] = `
     "transfersCount": 10,
   },
   {
-    "count": 28,
     "expenseAmount": 8841.58,
     "expensesCount": 10,
     "id": {
@@ -8494,7 +8475,6 @@ exports[`TransactionsService should return monthly summaries for user 1`] = `
     "transfersCount": 7,
   },
   {
-    "count": 20,
     "expenseAmount": 7507.07,
     "expensesCount": 8,
     "id": {
@@ -8509,7 +8489,6 @@ exports[`TransactionsService should return monthly summaries for user 1`] = `
     "transfersCount": 4,
   },
   {
-    "count": 24,
     "expenseAmount": 10854.23,
     "expensesCount": 11,
     "id": {
@@ -8524,7 +8503,6 @@ exports[`TransactionsService should return monthly summaries for user 1`] = `
     "transfersCount": 2,
   },
   {
-    "count": 25,
     "expenseAmount": 4021.54,
     "expensesCount": 7,
     "id": {
@@ -8539,7 +8517,6 @@ exports[`TransactionsService should return monthly summaries for user 1`] = `
     "transfersCount": 9,
   },
   {
-    "count": 31,
     "expenseAmount": 10582.82,
     "expensesCount": 9,
     "id": {
@@ -8554,7 +8531,6 @@ exports[`TransactionsService should return monthly summaries for user 1`] = `
     "transfersCount": 11,
   },
   {
-    "count": 11,
     "expenseAmount": 1195.35,
     "expensesCount": 2,
     "id": {
@@ -8574,7 +8550,6 @@ exports[`TransactionsService should return monthly summaries for user 1`] = `
 exports[`TransactionsService should return monthly summaries for user for specified account types 1`] = `
 [
   {
-    "count": 3,
     "expenseAmount": 3000,
     "expensesCount": 2,
     "id": {
@@ -8589,7 +8564,6 @@ exports[`TransactionsService should return monthly summaries for user for specif
     "transfersCount": 0,
   },
   {
-    "count": 3,
     "expenseAmount": 3000,
     "expensesCount": 2,
     "id": {
@@ -8604,7 +8578,6 @@ exports[`TransactionsService should return monthly summaries for user for specif
     "transfersCount": 0,
   },
   {
-    "count": 3,
     "expenseAmount": 3000,
     "expensesCount": 2,
     "id": {
@@ -8619,7 +8592,6 @@ exports[`TransactionsService should return monthly summaries for user for specif
     "transfersCount": 0,
   },
   {
-    "count": 3,
     "expenseAmount": 2000,
     "expensesCount": 2,
     "id": {
@@ -8634,7 +8606,6 @@ exports[`TransactionsService should return monthly summaries for user for specif
     "transfersCount": 0,
   },
   {
-    "count": 3,
     "expenseAmount": 2000,
     "expensesCount": 2,
     "id": {
@@ -8649,7 +8620,6 @@ exports[`TransactionsService should return monthly summaries for user for specif
     "transfersCount": 0,
   },
   {
-    "count": 3,
     "expenseAmount": 4000,
     "expensesCount": 2,
     "id": {
@@ -8664,7 +8634,6 @@ exports[`TransactionsService should return monthly summaries for user for specif
     "transfersCount": 0,
   },
   {
-    "count": 3,
     "expenseAmount": 2000,
     "expensesCount": 2,
     "id": {
@@ -8679,7 +8648,6 @@ exports[`TransactionsService should return monthly summaries for user for specif
     "transfersCount": 0,
   },
   {
-    "count": 3,
     "expenseAmount": 3000,
     "expensesCount": 2,
     "id": {
@@ -8694,7 +8662,6 @@ exports[`TransactionsService should return monthly summaries for user for specif
     "transfersCount": 0,
   },
   {
-    "count": 3,
     "expenseAmount": 1100,
     "expensesCount": 2,
     "id": {
@@ -8709,7 +8676,6 @@ exports[`TransactionsService should return monthly summaries for user for specif
     "transfersCount": 0,
   },
   {
-    "count": 3,
     "expenseAmount": 4000,
     "expensesCount": 2,
     "id": {
@@ -8724,7 +8690,6 @@ exports[`TransactionsService should return monthly summaries for user for specif
     "transfersCount": 0,
   },
   {
-    "count": 3,
     "expenseAmount": 3000,
     "expensesCount": 2,
     "id": {
@@ -8739,7 +8704,6 @@ exports[`TransactionsService should return monthly summaries for user for specif
     "transfersCount": 0,
   },
   {
-    "count": 3,
     "expenseAmount": 2500,
     "expensesCount": 2,
     "id": {
@@ -8754,7 +8718,6 @@ exports[`TransactionsService should return monthly summaries for user for specif
     "transfersCount": 0,
   },
   {
-    "count": 23,
     "expenseAmount": 9308.26,
     "expensesCount": 9,
     "id": {
@@ -8769,7 +8732,6 @@ exports[`TransactionsService should return monthly summaries for user for specif
     "transfersCount": 3,
   },
   {
-    "count": 21,
     "expenseAmount": 5102.41,
     "expensesCount": 6,
     "id": {
@@ -8784,7 +8746,6 @@ exports[`TransactionsService should return monthly summaries for user for specif
     "transfersCount": 8,
   },
   {
-    "count": 25,
     "expenseAmount": 13045.23,
     "expensesCount": 12,
     "id": {
@@ -8799,7 +8760,6 @@ exports[`TransactionsService should return monthly summaries for user for specif
     "transfersCount": 6,
   },
   {
-    "count": 18,
     "expenseAmount": 6286.61,
     "expensesCount": 9,
     "id": {
@@ -8814,7 +8774,6 @@ exports[`TransactionsService should return monthly summaries for user for specif
     "transfersCount": 1,
   },
   {
-    "count": 19,
     "expenseAmount": 5899.93,
     "expensesCount": 8,
     "id": {
@@ -8829,7 +8788,6 @@ exports[`TransactionsService should return monthly summaries for user for specif
     "transfersCount": 6,
   },
   {
-    "count": 28,
     "expenseAmount": 10895.49,
     "expensesCount": 9,
     "id": {
@@ -8844,7 +8802,6 @@ exports[`TransactionsService should return monthly summaries for user for specif
     "transfersCount": 8,
   },
   {
-    "count": 25,
     "expenseAmount": 8628.48,
     "expensesCount": 10,
     "id": {
@@ -8859,7 +8816,6 @@ exports[`TransactionsService should return monthly summaries for user for specif
     "transfersCount": 5,
   },
   {
-    "count": 20,
     "expenseAmount": 7507.07,
     "expensesCount": 8,
     "id": {
@@ -8874,7 +8830,6 @@ exports[`TransactionsService should return monthly summaries for user for specif
     "transfersCount": 2,
   },
   {
-    "count": 22,
     "expenseAmount": 11252.46,
     "expensesCount": 10,
     "id": {
@@ -8889,7 +8844,6 @@ exports[`TransactionsService should return monthly summaries for user for specif
     "transfersCount": 1,
   },
   {
-    "count": 23,
     "expenseAmount": 3975.67,
     "expensesCount": 6,
     "id": {
@@ -8904,7 +8858,6 @@ exports[`TransactionsService should return monthly summaries for user for specif
     "transfersCount": 7,
   },
   {
-    "count": 28,
     "expenseAmount": 12305.44,
     "expensesCount": 11,
     "id": {
@@ -8919,7 +8872,6 @@ exports[`TransactionsService should return monthly summaries for user for specif
     "transfersCount": 6,
   },
   {
-    "count": 9,
     "expenseAmount": 2487.74,
     "expensesCount": 2,
     "id": {

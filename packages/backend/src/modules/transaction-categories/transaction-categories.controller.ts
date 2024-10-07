@@ -91,13 +91,25 @@ export class TransactionCategoriesController {
     name: 'id',
     type: String,
   })
+  @ApiQuery({
+    name: 'month',
+    required: false,
+  })
+  @ApiQuery({
+    name: 'year',
+    required: false,
+  })
   getCategorySummary(
     @UserId() userId: string,
     @Param('id', ValidateEntityId) id: string,
+    @Query('month') month?: number,
+    @Query('year') year?: number,
   ) {
     return this.transactionCategoriesService.findMonthlySummariesByUserAndId(
       userId,
       id,
+      year,
+      month,
     );
   }
 
