@@ -1,6 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Decimal } from '@prisma/client/runtime/library';
+
+import {
+  IsDecimal,
+  TransformDecimal,
+} from '../../../utils/is-decimal.decorator';
 
 class TransactionMonthSummaryIdDto {
+  constructor(values: TransactionMonthSummaryIdDto) {
+    Object.assign(this, values);
+  }
+
   @ApiProperty()
   year: number;
 
@@ -9,6 +19,10 @@ class TransactionMonthSummaryIdDto {
 }
 
 export class TransactionMonthSummaryDto {
+  constructor(values: TransactionMonthSummaryDto) {
+    Object.assign(this, values);
+  }
+
   @ApiProperty({ type: TransactionMonthSummaryIdDto })
   readonly id: TransactionMonthSummaryIdDto;
 
@@ -25,14 +39,47 @@ export class TransactionMonthSummaryDto {
   readonly transfersCount: number;
 
   @ApiProperty()
-  readonly totalAmount: number;
+  @TransformDecimal()
+  @IsDecimal()
+  readonly totalAmount: Decimal;
 
   @ApiProperty()
-  readonly incomeAmount: number;
+  @TransformDecimal()
+  @IsDecimal()
+  readonly incomeAmount: Decimal;
 
   @ApiProperty()
-  readonly expenseAmount: number;
+  @TransformDecimal()
+  @IsDecimal()
+  readonly expenseAmount: Decimal;
 
   @ApiProperty()
-  readonly transferAmount: number;
+  @TransformDecimal()
+  @IsDecimal()
+  readonly transferAmount: Decimal;
+
+  public static createFromPlain(
+    data: TransactionMonthSummaryDto,
+  ): TransactionMonthSummaryDto;
+  public static createFromPlain(
+    data: TransactionMonthSummaryDto[],
+  ): TransactionMonthSummaryDto[];
+  public static createFromPlain(
+    data: TransactionMonthSummaryDto | TransactionMonthSummaryDto[],
+  ): TransactionMonthSummaryDto | TransactionMonthSummaryDto[] {
+    if (Array.isArray(data)) {
+      return data.map((item) =>
+        TransactionMonthSummaryDto.createFromPlain(item),
+      );
+    }
+
+    return new TransactionMonthSummaryDto({
+      ...data,
+      id: new TransactionMonthSummaryIdDto(data.id),
+      totalAmount: new Decimal(data.totalAmount),
+      incomeAmount: new Decimal(data.incomeAmount),
+      expenseAmount: new Decimal(data.expenseAmount),
+      transferAmount: new Decimal(data.transferAmount),
+    });
+  }
 }

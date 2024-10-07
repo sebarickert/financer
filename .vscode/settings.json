@@ -39,5 +39,8 @@
   "sonarlint.connectedMode.project": {
     "connectionId": "financer",
     "projectKey": "financer_common"
+  },
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
   }
 }

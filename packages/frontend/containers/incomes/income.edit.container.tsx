@@ -1,4 +1,4 @@
-import { redirect, RedirectType } from 'next/navigation';
+import { notFound, redirect, RedirectType } from 'next/navigation';
 import { FC } from 'react';
 
 import { IncomeDto } from '$api/generated/financerApi';
@@ -24,15 +24,15 @@ export const IncomeEditContainer: FC<IncomeEditContainerProps> = async ({
 }) => {
   const income = await IncomeService.getById(id);
 
+  if (!income) {
+    notFound();
+  }
+
   const handleSubmit: DefaultFormActionHandler = async (
     prevState,
     formData,
   ) => {
     'use server';
-
-    if (!income) {
-      throw new Error('Income not found');
-    }
 
     const categories = parseArrayFromFormData(
       formData,

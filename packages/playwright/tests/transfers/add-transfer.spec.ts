@@ -54,7 +54,8 @@ test.describe('Add transfer', () => {
 
     const targetToAccountTransactionBefore = transactionsBefore.at(
       -1,
-    ) as ITransactionWithDateObject;
+    ) as ITransactionWithDateObject<TransactionDto>;
+
     const targetToAccountId = getAccountFromTransactions(
       targetToAccountTransactionBefore,
     );
@@ -111,7 +112,7 @@ test.describe('Add transfer', () => {
 
     const targetToAccountTransactionBefore = transactionsBefore.at(
       -1,
-    ) as ITransactionWithDateObject;
+    ) as ITransactionWithDateObject<TransactionDto>;
     const targetToAccountId = getAccountFromTransactions(
       targetToAccountTransactionBefore,
     );
@@ -170,7 +171,7 @@ test.describe('Add transfer', () => {
 
     const targetToAccountTransactionBefore = transactionsBefore.at(
       0,
-    ) as ITransactionWithDateObject;
+    ) as ITransactionWithDateObject<TransactionDto>;
     const targetToAccountId = getAccountFromTransactions(
       targetToAccountTransactionBefore,
     );
@@ -229,8 +230,8 @@ test.describe('Add transfer', () => {
     await page.locator('#date').fill(formatDate(date));
     await page.locator('#amount').fill(newTransactionAmountStr);
 
-    await page.locator('#fromAccount').selectOption('61460d8554ea082ad0256759');
-    await page.locator('#toAccount').selectOption('61460d9454ea082ad0256762');
+    await page.locator('#fromAccount').selectOption({ index: 1 });
+    await page.locator('#toAccount').selectOption({ index: 2 });
 
     await page.getByTestId('submit').click();
 

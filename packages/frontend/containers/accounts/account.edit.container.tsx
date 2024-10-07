@@ -1,4 +1,4 @@
-import { redirect, RedirectType } from 'next/navigation';
+import { notFound, redirect, RedirectType } from 'next/navigation';
 import { FC } from 'react';
 
 import { AccountType } from '$api/generated/financerApi';
@@ -45,7 +45,7 @@ export const AccountEditContainer: FC<AccountEditContainerProps> = async ({
   };
 
   if (!account) {
-    throw new Error('Account not found');
+    notFound();
   }
 
   return <AccountEdit account={account} onSave={handleSubmit} />;

@@ -1,3 +1,4 @@
+import { notFound } from 'next/navigation';
 import { FC } from 'react';
 
 import {
@@ -23,16 +24,12 @@ export const AccountUpdateMarketValueContainer: FC<
 
   const { id, balance } = account;
 
+  if (!account || !id) {
+    notFound();
+  }
+
   const handleUpdate: DefaultFormActionHandler = async (prev, formData) => {
     'use server';
-
-    if (!id) {
-      throw new Error('Failure to update market value: id not found');
-    }
-
-    if (!account) {
-      throw new Error('Failure to update market value: account not found');
-    }
 
     const currentMarketValue = parseFloat(
       formData.get('currentMarketValue') as string,

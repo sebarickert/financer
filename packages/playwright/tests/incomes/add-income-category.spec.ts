@@ -6,7 +6,6 @@ const INCOME_NAME = 'Test income';
 
 test.describe('Add income with category', () => {
   const ids = {
-    accountId: '61460d8554ea082ad0256759',
     editExpenseButton: 'edit-expense-button',
     addCategoryButton: 'add-category-button',
     transactionCategoriesForm: 'transaction-categories-form',
@@ -18,7 +17,7 @@ test.describe('Add income with category', () => {
 
     await page.goto('/statistics/incomes/add');
 
-    await page.locator('#toAccount').selectOption(ids.accountId);
+    await page.locator('#toAccount').selectOption({ index: 1 });
     await page.locator('#description').fill(INCOME_NAME);
     await page.locator('#amount').fill('10000.50');
 
@@ -65,7 +64,7 @@ test.describe('Add income with category', () => {
         `[data-testid=transaction-categories-form-select]`,
       ) as Element;
 
-      targetElement.innerHTML = `${targetElement.innerHTML}<option value="123456789012345678901234">non-existing-category</option>`;
+      targetElement.innerHTML = `${targetElement.innerHTML}<option value="5407b06b-0ac2-44ec-951c-466778c2cd3a">non-existing-category</option>`;
     });
 
     await page

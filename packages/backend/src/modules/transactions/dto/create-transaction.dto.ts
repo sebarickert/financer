@@ -21,7 +21,6 @@ export class CreateTransactionDto extends IntersectionType(
     'toAccount',
     'updatedAt',
     'createdAt',
-    'v',
   ] as const),
   PartialType(PickType(TransactionDto, ['fromAccount', 'toAccount'] as const)),
 ) {

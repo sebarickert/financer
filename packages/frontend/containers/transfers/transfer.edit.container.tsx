@@ -1,4 +1,4 @@
-import { redirect, RedirectType } from 'next/navigation';
+import { notFound, redirect, RedirectType } from 'next/navigation';
 import { FC } from 'react';
 
 import { TransferDto } from '$api/generated/financerApi';
@@ -24,15 +24,15 @@ export const TransferEditContainer: FC<TransferEditContainerProps> = async ({
 }) => {
   const transfer = await TransferService.getById(id);
 
+  if (!transfer) {
+    notFound();
+  }
+
   const handleSubmit: DefaultFormActionHandler = async (
     prevState,
     formData,
   ) => {
     'use server';
-
-    if (!transfer) {
-      throw new Error('Transfer not found');
-    }
 
     const categories = parseArrayFromFormData(
       formData,

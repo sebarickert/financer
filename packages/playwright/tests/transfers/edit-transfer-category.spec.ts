@@ -1,14 +1,13 @@
+import { submitTransactionCategoryForm } from '$utils/api-helper';
 import {
-  getTransactionById,
-  submitTransactionCategoryForm,
-} from '$utils/api-helper';
+  getTransferIdWithMultipleCategories,
+  getTransferIdWithSingleCategory,
+} from '$utils/entity-id-api-helper';
 import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
 
 test.describe('Edit transfer with category', () => {
   const ids = {
-    transferWithSingleCategory: '623de2a0c839cf72d59b0df2',
-    transferWithMultipleCategories: '623de2c0c839cf72d59b0e10',
     editTransferButton: 'edit-transfer-button',
     transactionCategoriesForm: 'transaction-categories-form',
     transactionCategoriesItem: 'transaction-categories-item',
@@ -19,17 +18,16 @@ test.describe('Edit transfer with category', () => {
   });
 
   test('Edit with single category', async ({ page }) => {
-    const targetTransaction = await getTransactionById(
-      ids.transferWithSingleCategory,
-    );
-    const transactionYear = targetTransaction.dateObj.getFullYear();
-    const transactionMonth = (targetTransaction.dateObj.getMonth() + 1)
+    const transferWithSingleCategory = await getTransferIdWithSingleCategory();
+
+    const transactionYear = transferWithSingleCategory.dateObj.getFullYear();
+    const transactionMonth = (transferWithSingleCategory.dateObj.getMonth() + 1)
       .toString()
       .padStart(2, '0');
     const dateQuery = `${transactionYear}-${transactionMonth}`;
     await page.goto(`/statistics/transfers?date=${dateQuery}&page=1`);
 
-    await page.getByTestId(ids.transferWithSingleCategory).click();
+    await page.getByTestId(transferWithSingleCategory.id).click();
     await page.getByTestId(ids.editTransferButton).click();
 
     await page.getByRole('button', { name: 'Edit category' }).click();
@@ -59,7 +57,7 @@ test.describe('Edit transfer with category', () => {
     await page.getByTestId('submit').click();
 
     await page.goto(`/statistics/transfers?date=${dateQuery}&page=1`);
-    await page.getByTestId(ids.transferWithSingleCategory).click();
+    await page.getByTestId(transferWithSingleCategory.id).click();
     await page.getByTestId(ids.editTransferButton).click();
 
     await page.getByRole('button', { name: 'Edit category' }).click();
@@ -74,17 +72,20 @@ test.describe('Edit transfer with category', () => {
   });
 
   test('Delete one categories with multiple categories', async ({ page }) => {
-    const targetTransaction = await getTransactionById(
-      ids.transferWithSingleCategory,
-    );
-    const transactionYear = targetTransaction.dateObj.getFullYear();
-    const transactionMonth = (targetTransaction.dateObj.getMonth() + 1)
+    const transferWithMultipleCategories =
+      await getTransferIdWithMultipleCategories();
+
+    const transactionYear =
+      transferWithMultipleCategories.dateObj.getFullYear();
+    const transactionMonth = (
+      transferWithMultipleCategories.dateObj.getMonth() + 1
+    )
       .toString()
       .padStart(2, '0');
     const dateQuery = `${transactionYear}-${transactionMonth}`;
     await page.goto(`/statistics/transfers?date=${dateQuery}&page=1`);
 
-    await page.getByTestId(ids.transferWithMultipleCategories).click();
+    await page.getByTestId(transferWithMultipleCategories.id).click();
     await page.getByTestId(ids.editTransferButton).click();
 
     const item = page.getByTestId(ids.transactionCategoriesItem);
@@ -127,7 +128,7 @@ test.describe('Edit transfer with category', () => {
     await page.getByTestId('submit').click();
 
     await page.goto(`/statistics/transfers?date=${dateQuery}&page=1`);
-    await page.getByTestId(ids.transferWithMultipleCategories).click();
+    await page.getByTestId(transferWithMultipleCategories.id).click();
     await page.getByTestId(ids.editTransferButton).click();
 
     await expect(item).toHaveCount(1);
@@ -139,17 +140,20 @@ test.describe('Edit transfer with category', () => {
   });
 
   test('Delete all categories with multiple categories', async ({ page }) => {
-    const targetTransaction = await getTransactionById(
-      ids.transferWithSingleCategory,
-    );
-    const transactionYear = targetTransaction.dateObj.getFullYear();
-    const transactionMonth = (targetTransaction.dateObj.getMonth() + 1)
+    const transferWithMultipleCategories =
+      await getTransferIdWithMultipleCategories();
+
+    const transactionYear =
+      transferWithMultipleCategories.dateObj.getFullYear();
+    const transactionMonth = (
+      transferWithMultipleCategories.dateObj.getMonth() + 1
+    )
       .toString()
       .padStart(2, '0');
     const dateQuery = `${transactionYear}-${transactionMonth}`;
     await page.goto(`/statistics/transfers?date=${dateQuery}&page=1`);
 
-    await page.getByTestId(ids.transferWithMultipleCategories).click();
+    await page.getByTestId(transferWithMultipleCategories.id).click();
     await page.getByTestId(ids.editTransferButton).click();
 
     const item = page.getByTestId(ids.transactionCategoriesItem);
@@ -173,7 +177,7 @@ test.describe('Edit transfer with category', () => {
     await page.getByTestId('submit').click();
 
     await page.goto(`/statistics/transfers?date=${dateQuery}&page=1`);
-    await page.getByTestId(ids.transferWithMultipleCategories).click();
+    await page.getByTestId(transferWithMultipleCategories.id).click();
     await page.getByTestId(ids.editTransferButton).click();
 
     await expect(item).toHaveCount(0);

@@ -1,4 +1,8 @@
-import { AccountDto, TransferDto } from '$types/generated/financer';
+import {
+  AccountDto,
+  TransactionDto,
+  TransferDto,
+} from '$types/generated/financer';
 import {
   getAllTransaction,
   getAccount,
@@ -64,7 +68,7 @@ test.describe('Delete transfer', () => {
     );
     const targetTransactionBefore = transfersBefore.at(
       -1,
-    ) as ITransactionWithDateObject;
+    ) as ITransactionWithDateObject<TransactionDto>;
 
     const targetTransactionId = targetTransactionBefore.id;
     const targetToAccountId = targetTransactionBefore.toAccount;

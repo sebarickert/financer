@@ -1,6 +1,6 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import MongoStore from 'connect-mongo';
+import ConnectPgSimple from 'connect-pg-simple';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import passport from 'passport';
@@ -48,7 +48,9 @@ import { UsersModule } from './modules/users/users.module';
   ],
 })
 export class AppModule implements NestModule {
-  constructor(private configService: ConfigService) {}
+  private static readonly PgSession = ConnectPgSimple(session);
+
+  constructor(private readonly configService: ConfigService) {}
 
   configure(consumer: MiddlewareConsumer) {
     consumer
@@ -61,9 +63,8 @@ export class AppModule implements NestModule {
           },
           saveUninitialized: false,
           resave: false,
-          store: MongoStore.create({
-            mongoUrl: this.configService.get('mongodbConnectionString'),
-            touchAfter: 60 * 60 * 24,
+          store: new AppModule.PgSession({
+            conString: this.configService.get<string>('dbConnectionString'),
           }),
         }),
         cookieParser(),

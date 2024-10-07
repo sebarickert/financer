@@ -1,4 +1,4 @@
-import { redirect, RedirectType } from 'next/navigation';
+import { notFound, redirect, RedirectType } from 'next/navigation';
 import { FC } from 'react';
 
 import { ExpenseDto } from '$api/generated/financerApi';
@@ -24,15 +24,15 @@ export const EditExpenseContainer: FC<EditExpenseContainerProps> = async ({
 }) => {
   const expense = await ExpenseService.getById(id);
 
+  if (!expense) {
+    notFound();
+  }
+
   const handleSubmit: DefaultFormActionHandler = async (
     prevState,
     formData,
   ) => {
     'use server';
-
-    if (!expense) {
-      throw new Error('Expense not found');
-    }
 
     const categories = parseArrayFromFormData(
       formData,

@@ -23,10 +23,6 @@ export class TransactionRepo {
     return this.prisma.transaction.findMany(params);
   }
 
-  async aggregateRaw(pipeline: Prisma.InputJsonValue[]) {
-    return this.prisma.transaction.aggregateRaw({ pipeline });
-  }
-
   async getCount(params: {
     skip?: number;
     take?: number;

@@ -7,7 +7,6 @@ exports[`TransactionCategoriesService should return a transaction category by id
   "name": "Category for all types",
   "parentCategoryId": null,
   "userId": "61460d7354ea082ad0256749",
-  "v": 0,
   "visibility": [
     "INCOME",
     "EXPENSE",
@@ -24,7 +23,6 @@ exports[`TransactionCategoriesService should return an array of transaction cate
     "name": "Category for all types",
     "parentCategoryId": null,
     "userId": "61460d7354ea082ad0256749",
-    "v": 0,
     "visibility": [
       "INCOME",
       "EXPENSE",
@@ -37,7 +35,6 @@ exports[`TransactionCategoriesService should return an array of transaction cate
     "name": "Invisible category",
     "parentCategoryId": null,
     "userId": "61460d7354ea082ad0256749",
-    "v": 0,
     "visibility": [],
   },
   {
@@ -46,7 +43,6 @@ exports[`TransactionCategoriesService should return an array of transaction cate
     "name": "Expense category",
     "parentCategoryId": null,
     "userId": "61460d7354ea082ad0256749",
-    "v": 0,
     "visibility": [
       "EXPENSE",
     ],
@@ -57,7 +53,6 @@ exports[`TransactionCategoriesService should return an array of transaction cate
     "name": "Income category",
     "parentCategoryId": null,
     "userId": "61460d7354ea082ad0256749",
-    "v": 0,
     "visibility": [
       "INCOME",
     ],
@@ -68,7 +63,6 @@ exports[`TransactionCategoriesService should return an array of transaction cate
     "name": "Transfer category",
     "parentCategoryId": null,
     "userId": "61460d7354ea082ad0256749",
-    "v": 0,
     "visibility": [
       "TRANSFER",
     ],
@@ -79,7 +73,6 @@ exports[`TransactionCategoriesService should return an array of transaction cate
     "name": "Transfer sub category",
     "parentCategoryId": "623b58b8a3deba9879422fc2",
     "userId": "61460d7354ea082ad0256749",
-    "v": 0,
     "visibility": [
       "TRANSFER",
     ],
@@ -90,7 +83,6 @@ exports[`TransactionCategoriesService should return an array of transaction cate
     "name": "Income sub category",
     "parentCategoryId": "623b58b8a3deba9879422fc2",
     "userId": "61460d7354ea082ad0256749",
-    "v": 0,
     "visibility": [
       "INCOME",
     ],
@@ -101,7 +93,6 @@ exports[`TransactionCategoriesService should return an array of transaction cate
     "name": "Expense sub category",
     "parentCategoryId": "623b58b8a3deba9879422fc2",
     "userId": "61460d7354ea082ad0256749",
-    "v": 0,
     "visibility": [
       "EXPENSE",
     ],
@@ -112,7 +103,6 @@ exports[`TransactionCategoriesService should return an array of transaction cate
     "name": "Invisble sub category",
     "parentCategoryId": "623b58ada3deba9879422fbf",
     "userId": "61460d7354ea082ad0256749",
-    "v": 0,
     "visibility": [],
   },
   {
@@ -121,7 +111,6 @@ exports[`TransactionCategoriesService should return an array of transaction cate
     "name": "Sub category for all types",
     "parentCategoryId": "623b58b8a3deba9879422fc2",
     "userId": "61460d7354ea082ad0256749",
-    "v": 0,
     "visibility": [
       "INCOME",
       "EXPENSE",
@@ -133,18 +122,18 @@ exports[`TransactionCategoriesService should return an array of transaction cate
 
 exports[`TransactionCategoriesService should return an array of transaction categories from findMonthlySummariesByUserAndId 1`] = `
 [
-  {
-    "expenseAmount": 1135.98,
+  CategoryMonthlySummaryDto {
+    "expenseAmount": "1135.98",
     "expensesCount": 2,
     "id": {
       "month": 1,
       "year": 2022,
     },
-    "incomeAmount": 2271.53,
+    "incomeAmount": "2271.53",
     "incomesCount": 2,
-    "totalAmount": 1135.55,
+    "totalAmount": "1135.55",
     "totalCount": 4,
-    "transferAmount": 0,
+    "transferAmount": "0",
     "transfersCount": 0,
   },
 ]

@@ -7,9 +7,11 @@ import {
 import { TransactionCategory, TransactionType } from '@prisma/client';
 
 import { TransactionCategoryRepo } from '../../database/repos/transaction-category.repo';
+import { UserId } from '../../types/user-id';
 import { TransactionCategoryMappingsService } from '../transaction-category-mappings/transaction-category-mappings.service';
 
 import { CreateTransactionCategoryDto } from './dto/create-transaction-category.dto';
+import { TransactionCategoryDto } from './dto/transaction-category.dto';
 import { CategoryMonthlySummaryDto } from './dto/transaction-month-summary.dto';
 import { UpdateTransactionCategoryDto } from './dto/update-transaction-category.dto';
 
@@ -31,7 +33,7 @@ export class TransactionCategoriesService {
   }
 
   async create(
-    userId: string,
+    userId: UserId,
     createTransactionCategoryDto: CreateTransactionCategoryDto,
   ): Promise<TransactionCategory> {
     const newCategory = {
@@ -47,11 +49,15 @@ export class TransactionCategoriesService {
   }
 
   async createMany(
-    userId: string,
+    userId: UserId,
     createTransactionCategoryDto: CreateTransactionCategoryDto[],
   ) {
     return this.transactionCategoryRepo.createMany(
-      createTransactionCategoryDto.map((category) => ({ ...category, userId })),
+      // @ts-expect-error - remove legacy `v` from import data
+      createTransactionCategoryDto.map(({ v, ...category }) => ({
+        ...category,
+        userId,
+      })),
     );
   }
 
@@ -59,7 +65,7 @@ export class TransactionCategoriesService {
     return `This action returns all transactionCategories`;
   }
 
-  async findOne(userId: string, id: string): Promise<TransactionCategory> {
+  async findOne(userId: UserId, id: string): Promise<TransactionCategory> {
     const category = await this.transactionCategoryRepo.findOne({ id, userId });
 
     if (!category) {
@@ -100,7 +106,7 @@ export class TransactionCategoriesService {
   }
 
   async findAllByUser(
-    userId: string,
+    userId: UserId,
     visibilityType: TransactionType | null = null,
   ): Promise<TransactionCategory[]> {
     return this.transactionCategoryRepo.findMany({
@@ -116,12 +122,15 @@ export class TransactionCategoriesService {
     });
   }
 
-  async findAllByUserForExport(userId: string) {
-    return this.transactionCategoryRepo.findMany({ where: { userId } });
+  async findAllByUserForExport(userId: UserId) {
+    const categories = await this.transactionCategoryRepo.findMany({
+      where: { userId },
+    });
+    return TransactionCategoryDto.createFromPlain(categories);
   }
 
   async findMonthlySummariesByUserAndId(
-    userId: string,
+    userId: UserId,
     parentCategoryId: string,
     year?: number,
     month?: number,
@@ -141,7 +150,7 @@ export class TransactionCategoriesService {
   }
 
   async update(
-    userId: string,
+    userId: UserId,
     id: string,
     updateTransactionCategoryDto: UpdateTransactionCategoryDto,
   ) {
@@ -163,7 +172,7 @@ export class TransactionCategoriesService {
     });
   }
 
-  async remove(userId: string, id: string) {
+  async remove(userId: UserId, id: string) {
     await this.findOne(userId, id);
 
     await this.transactionCategoryRepo.update({
@@ -172,7 +181,7 @@ export class TransactionCategoriesService {
     });
   }
 
-  async removeAllByUser(userId: string) {
+  async removeAllByUser(userId: UserId) {
     await this.transactionCategoryRepo.deleteMany({ userId });
   }
 
