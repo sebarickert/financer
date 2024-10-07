@@ -5,7 +5,7 @@ import { PrismaService } from '../prisma.service';
 
 @Injectable()
 export class AccountBalanceChangeRepo {
-  constructor(private prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async findOne(
     accountBalanceChangeWhereUniqueInput: Prisma.AccountBalanceChangeWhereUniqueInput,

@@ -6,7 +6,7 @@ import { PrismaService } from '../prisma.service';
 
 @Injectable()
 export class TransactionRepo {
-  constructor(private prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async findOne(
     transactionWhereUniqueInput: Prisma.TransactionWhereUniqueInput,
@@ -16,9 +16,10 @@ export class TransactionRepo {
     });
   }
 
-  async findMany(
-    params: Prisma.TransactionFindManyArgs,
-  ): Promise<Transaction[]> {
+  async findMany<T extends Prisma.TransactionFindManyArgs>(
+    params: T,
+  ): Promise<Prisma.TransactionGetPayload<{ include: T['include'] }>[]> {
+    // @ts-expect-error - Prisma is not able to infer the correct type for include
     return this.prisma.transaction.findMany(params);
   }
 

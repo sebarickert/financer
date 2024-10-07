@@ -1908,7 +1908,6 @@
         "type": "object",
         "properties": {
           "id": { "$ref": "#/components/schemas/TransactionMonthSummaryIdDto" },
-          "count": { "type": "number" },
           "totalCount": { "type": "number" },
           "incomesCount": { "type": "number" },
           "expensesCount": { "type": "number" },
@@ -1920,7 +1919,6 @@
         },
         "required": [
           "id",
-          "count",
           "totalCount",
           "incomesCount",
           "expensesCount",
@@ -1936,10 +1934,26 @@
         "type": "object",
         "properties": {
           "id": { "type": "object" },
-          "count": { "type": "number" },
-          "totalAmount": { "type": "number" }
+          "totalCount": { "type": "number" },
+          "incomesCount": { "type": "number" },
+          "expensesCount": { "type": "number" },
+          "transfersCount": { "type": "number" },
+          "totalAmount": { "type": "number" },
+          "incomeAmount": { "type": "number" },
+          "expenseAmount": { "type": "number" },
+          "transferAmount": { "type": "number" }
         },
-        "required": ["id", "count", "totalAmount"]
+        "required": [
+          "id",
+          "totalCount",
+          "incomesCount",
+          "expensesCount",
+          "transfersCount",
+          "totalAmount",
+          "incomeAmount",
+          "expenseAmount",
+          "transferAmount"
+        ]
       },
       "CreateTransactionCategoryDto": {
         "type": "object",

@@ -5,7 +5,7 @@ import { PrismaService } from '../prisma.service';
 
 @Injectable()
 export class TransactionTemplateLogRepo {
-  constructor(private prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async findOne(
     transactionTemplateLogWhereUniqueInput: Prisma.TransactionTemplateLogWhereUniqueInput,

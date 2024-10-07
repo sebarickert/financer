@@ -5,7 +5,7 @@ import { PrismaService } from '../prisma.service';
 
 @Injectable()
 export class UserPreferencesRepo {
-  constructor(private prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async findOne(
     userPreferencesWhereUniqueInput: Prisma.UserPreferencesWhereUniqueInput,

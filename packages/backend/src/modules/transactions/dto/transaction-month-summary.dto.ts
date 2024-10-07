@@ -13,9 +13,6 @@ export class TransactionMonthSummaryDto {
   readonly id: TransactionMonthSummaryIdDto;
 
   @ApiProperty()
-  readonly count: number;
-
-  @ApiProperty()
   readonly totalCount: number;
 
   @ApiProperty()

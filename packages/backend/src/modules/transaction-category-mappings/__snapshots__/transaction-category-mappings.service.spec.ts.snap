@@ -103,30 +103,18 @@ exports[`TransactionCategoryMappingsService should return all transactionCategor
 exports[`TransactionCategoryMappingsService should return all transactionCategoryMappings by user and category ids 2`] = `
 [
   {
-    "expense": {
-      "amount": 1135.98,
-      "count": 2,
-      "transactionAmount": 2494.16,
-    },
+    "expenseAmount": 1135.98,
+    "expensesCount": 2,
     "id": {
       "month": 1,
       "year": 2022,
     },
-    "income": {
-      "amount": 2271.5299999999997,
-      "count": 2,
-      "transactionAmount": 3367.1099999999997,
-    },
-    "total": {
-      "amount": 1135.55,
-      "count": 4,
-      "transactionAmount": 872.9499999999998,
-    },
-    "transfer": {
-      "amount": 0,
-      "count": 0,
-      "transactionAmount": 0,
-    },
+    "incomeAmount": 2271.53,
+    "incomesCount": 2,
+    "totalAmount": 1135.55,
+    "totalCount": 4,
+    "transferAmount": 0,
+    "transfersCount": 0,
   },
 ]
 `;
