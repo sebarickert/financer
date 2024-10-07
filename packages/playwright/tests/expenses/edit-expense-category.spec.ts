@@ -1,14 +1,13 @@
+import { submitTransactionCategoryForm } from '$utils/api-helper';
 import {
-  getTransactionById,
-  submitTransactionCategoryForm,
-} from '$utils/api-helper';
+  getExpenseIdWithMultipleCategories,
+  getExpenseIdWithSingleCategory,
+} from '$utils/entity-id-api-helper';
 import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
 
 test.describe('Edit expense with category', () => {
   const ids = {
-    expenseWithSingleCategory: '623de25fc839cf72d59b0dbd',
-    expenseWithMultipleCategories: '623de288c839cf72d59b0dd2',
     editExpenseButton: 'edit-expense-button',
     transactionCategoriesForm: 'transaction-categories-form',
     transactionCategoriesItem: 'transaction-categories-item',
@@ -19,17 +18,16 @@ test.describe('Edit expense with category', () => {
   });
 
   test('Edit with single category', async ({ page }) => {
-    const targetTransaction = await getTransactionById(
-      ids.expenseWithSingleCategory,
-    );
-    const transactionYear = targetTransaction.dateObj.getFullYear();
-    const transactionMonth = (targetTransaction.dateObj.getMonth() + 1)
+    const expenseWithSingleCategory = await getExpenseIdWithSingleCategory();
+
+    const transactionYear = expenseWithSingleCategory.dateObj.getFullYear();
+    const transactionMonth = (expenseWithSingleCategory.dateObj.getMonth() + 1)
       .toString()
       .padStart(2, '0');
     const dateQuery = `${transactionYear}-${transactionMonth}`;
     await page.goto(`/statistics/expenses?date=${dateQuery}&page=1`);
 
-    await page.getByTestId(ids.expenseWithSingleCategory).click();
+    await page.getByTestId(expenseWithSingleCategory.id).click();
     await page.getByTestId(ids.editExpenseButton).click();
 
     await page.getByRole('button', { name: 'Edit category' }).click();
@@ -59,7 +57,7 @@ test.describe('Edit expense with category', () => {
     await page.getByTestId('submit').click();
 
     await page.goto(`/statistics/expenses?date=${dateQuery}&page=1`);
-    await page.getByTestId(ids.expenseWithSingleCategory).click();
+    await page.getByTestId(expenseWithSingleCategory.id).click();
     await page.getByTestId(ids.editExpenseButton).click();
 
     await page.getByRole('button', { name: 'Edit category' }).click();
@@ -74,17 +72,19 @@ test.describe('Edit expense with category', () => {
   });
 
   test('Delete one categories with multiple categories', async ({ page }) => {
-    const targetTransaction = await getTransactionById(
-      ids.expenseWithMultipleCategories,
-    );
-    const transactionYear = targetTransaction.dateObj.getFullYear();
-    const transactionMonth = (targetTransaction.dateObj.getMonth() + 1)
+    const expenseWithMultipleCategories =
+      await getExpenseIdWithMultipleCategories();
+
+    const transactionYear = expenseWithMultipleCategories.dateObj.getFullYear();
+    const transactionMonth = (
+      expenseWithMultipleCategories.dateObj.getMonth() + 1
+    )
       .toString()
       .padStart(2, '0');
     const dateQuery = `${transactionYear}-${transactionMonth}`;
     await page.goto(`/statistics/expenses?date=${dateQuery}&page=1`);
 
-    await page.getByTestId(ids.expenseWithMultipleCategories).click();
+    await page.getByTestId(expenseWithMultipleCategories.id).click();
     await page.getByTestId(ids.editExpenseButton).click();
 
     const item = page.getByTestId(ids.transactionCategoriesItem);
@@ -127,7 +127,7 @@ test.describe('Edit expense with category', () => {
     await page.getByTestId('submit').click();
 
     await page.goto(`/statistics/expenses?date=${dateQuery}&page=1`);
-    await page.getByTestId(ids.expenseWithMultipleCategories).click();
+    await page.getByTestId(expenseWithMultipleCategories.id).click();
     await page.getByTestId(ids.editExpenseButton).click();
 
     await expect(item).toHaveCount(1);
@@ -137,17 +137,19 @@ test.describe('Edit expense with category', () => {
   });
 
   test('Delete all categories with multiple categories', async ({ page }) => {
-    const targetTransaction = await getTransactionById(
-      ids.expenseWithMultipleCategories,
-    );
-    const transactionYear = targetTransaction.dateObj.getFullYear();
-    const transactionMonth = (targetTransaction.dateObj.getMonth() + 1)
+    const expenseWithMultipleCategories =
+      await getExpenseIdWithMultipleCategories();
+
+    const transactionYear = expenseWithMultipleCategories.dateObj.getFullYear();
+    const transactionMonth = (
+      expenseWithMultipleCategories.dateObj.getMonth() + 1
+    )
       .toString()
       .padStart(2, '0');
     const dateQuery = `${transactionYear}-${transactionMonth}`;
     await page.goto(`/statistics/expenses?date=${dateQuery}&page=1`);
 
-    await page.getByTestId(ids.expenseWithMultipleCategories).click();
+    await page.getByTestId(expenseWithMultipleCategories.id).click();
     await page.getByTestId(ids.editExpenseButton).click();
 
     const item = page.getByTestId(ids.transactionCategoriesItem);
@@ -171,7 +173,7 @@ test.describe('Edit expense with category', () => {
     await page.getByTestId('submit').click();
 
     await page.goto(`/statistics/expenses?date=${dateQuery}&page=1`);
-    await page.getByTestId(ids.expenseWithMultipleCategories).click();
+    await page.getByTestId(expenseWithMultipleCategories.id).click();
     await page.getByTestId(ids.editExpenseButton).click();
 
     await expect(item).toHaveCount(0);

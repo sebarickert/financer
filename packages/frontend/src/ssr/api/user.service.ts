@@ -53,7 +53,7 @@ export class UserService extends BaseApi {
         );
       }
 
-      throw new Error('Failed to add transfer', error);
+      throw new Error('Failed to override user data', error);
     }
 
     return data.payload;

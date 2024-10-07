@@ -3,58 +3,36 @@
 exports[`TransactionCategoryMappingsService should return all transactionCategoryMappings by user 1`] = `
 [
   {
-    "amount": 500,
+    "amount": "500",
     "categoryId": "623b58ada3deba9879422fbf",
     "description": "",
     "id": "637e234fbda8050a85b1b6b7",
     "transactionId": "624befb66ba655edad8f824e",
     "userId": "61460d7354ea082ad0256749",
-    "v": 0,
   },
   {
-    "amount": 1358.18,
-    "categoryId": "623b6b91a3deba9879422fe1",
-    "description": "",
-    "id": "637e234fbda8050a85b1b6b8",
-    "transactionId": "624befb66ba655edad8f824e",
-    "userId": "61460d7354ea082ad0256749",
-    "v": 0,
-  },
-  {
-    "amount": 635.98,
+    "amount": "635.98",
     "categoryId": "623b58ada3deba9879422fbf",
     "description": "",
     "id": "637e2371bda8050a85b1b70b",
     "transactionId": "624befb96ba655edad8f82ad",
     "userId": "61460d7354ea082ad0256749",
-    "v": 0,
   },
   {
-    "amount": 700,
+    "amount": "700",
     "categoryId": "623b58ada3deba9879422fbf",
     "description": "",
     "id": "637e2389bda8050a85b1b760",
     "transactionId": "624bef946ba655edad8f7f3d",
     "userId": "61460d7354ea082ad0256749",
-    "v": 0,
   },
   {
-    "amount": 1095.58,
-    "categoryId": "623b6b91a3deba9879422fe1",
-    "description": "",
-    "id": "637e2389bda8050a85b1b761",
-    "transactionId": "624bef946ba655edad8f7f3d",
-    "userId": "61460d7354ea082ad0256749",
-    "v": 0,
-  },
-  {
-    "amount": 1571.53,
+    "amount": "1571.53",
     "categoryId": "623b58ada3deba9879422fbf",
     "description": "",
     "id": "637e239cbda8050a85b1b7b8",
     "transactionId": "624bef936ba655edad8f7f33",
     "userId": "61460d7354ea082ad0256749",
-    "v": 0,
   },
 ]
 `;
@@ -62,59 +40,36 @@ exports[`TransactionCategoryMappingsService should return all transactionCategor
 exports[`TransactionCategoryMappingsService should return all transactionCategoryMappings by user and category ids 1`] = `
 [
   {
-    "amount": 500,
+    "amount": "500",
     "categoryId": "623b58ada3deba9879422fbf",
     "description": "",
     "id": "637e234fbda8050a85b1b6b7",
     "transactionId": "624befb66ba655edad8f824e",
     "userId": "61460d7354ea082ad0256749",
-    "v": 0,
   },
   {
-    "amount": 635.98,
+    "amount": "635.98",
     "categoryId": "623b58ada3deba9879422fbf",
     "description": "",
     "id": "637e2371bda8050a85b1b70b",
     "transactionId": "624befb96ba655edad8f82ad",
     "userId": "61460d7354ea082ad0256749",
-    "v": 0,
   },
   {
-    "amount": 700,
+    "amount": "700",
     "categoryId": "623b58ada3deba9879422fbf",
     "description": "",
     "id": "637e2389bda8050a85b1b760",
     "transactionId": "624bef946ba655edad8f7f3d",
     "userId": "61460d7354ea082ad0256749",
-    "v": 0,
   },
   {
-    "amount": 1571.53,
+    "amount": "1571.53",
     "categoryId": "623b58ada3deba9879422fbf",
     "description": "",
     "id": "637e239cbda8050a85b1b7b8",
     "transactionId": "624bef936ba655edad8f7f33",
     "userId": "61460d7354ea082ad0256749",
-    "v": 0,
-  },
-]
-`;
-
-exports[`TransactionCategoryMappingsService should return all transactionCategoryMappings by user and category ids 2`] = `
-[
-  {
-    "expenseAmount": 1135.98,
-    "expensesCount": 2,
-    "id": {
-      "month": 1,
-      "year": 2022,
-    },
-    "incomeAmount": 2271.53,
-    "incomesCount": 2,
-    "totalAmount": 1135.55,
-    "totalCount": 4,
-    "transferAmount": 0,
-    "transfersCount": 0,
   },
 ]
 `;
@@ -122,22 +77,55 @@ exports[`TransactionCategoryMappingsService should return all transactionCategor
 exports[`TransactionCategoryMappingsService should return all transactionCategoryMappings by user and transaction id 1`] = `
 [
   {
-    "amount": 500,
+    "amount": "500",
     "categoryId": "623b58ada3deba9879422fbf",
     "description": "",
     "id": "637e234fbda8050a85b1b6b7",
     "transactionId": "624befb66ba655edad8f824e",
     "userId": "61460d7354ea082ad0256749",
-    "v": 0,
   },
   {
-    "amount": 1358.18,
-    "categoryId": "623b6b91a3deba9879422fe1",
+    "amount": "635.98",
+    "categoryId": "623b58ada3deba9879422fbf",
     "description": "",
-    "id": "637e234fbda8050a85b1b6b8",
-    "transactionId": "624befb66ba655edad8f824e",
+    "id": "637e2371bda8050a85b1b70b",
+    "transactionId": "624befb96ba655edad8f82ad",
     "userId": "61460d7354ea082ad0256749",
-    "v": 0,
+  },
+  {
+    "amount": "700",
+    "categoryId": "623b58ada3deba9879422fbf",
+    "description": "",
+    "id": "637e2389bda8050a85b1b760",
+    "transactionId": "624bef946ba655edad8f7f3d",
+    "userId": "61460d7354ea082ad0256749",
+  },
+  {
+    "amount": "1571.53",
+    "categoryId": "623b58ada3deba9879422fbf",
+    "description": "",
+    "id": "637e239cbda8050a85b1b7b8",
+    "transactionId": "624bef936ba655edad8f7f33",
+    "userId": "61460d7354ea082ad0256749",
+  },
+]
+`;
+
+exports[`TransactionCategoryMappingsService should return transaction category monthly summary by user and category ids 1`] = `
+[
+  CategoryMonthlySummaryDto {
+    "expenseAmount": "1135.98",
+    "expensesCount": 2,
+    "id": {
+      "month": 1,
+      "year": 2022,
+    },
+    "incomeAmount": "2271.53",
+    "incomesCount": 2,
+    "totalAmount": "1135.55",
+    "totalCount": 4,
+    "transferAmount": "0",
+    "transfersCount": 0,
   },
 ]
 `;

@@ -40,6 +40,14 @@ export const startServer = async (
       NODE_ENV: 'test',
       PATH: process.env.PATH,
       SCHEMA: 'packages/backend/prisma/schema.prisma',
+      // In CI, we have action service that runs the postgres container
+      // and we have to initialize the schema and test user
+      INITIALIZE_SCHEMA_AND_TEST_USER:
+        process.env.INITIALIZE_SCHEMA_AND_TEST_USER,
+      DB_USER: process.env.DB_USER,
+      DB_PASSWORD: process.env.DB_PASSWORD,
+      DB_HOST: process.env.DB_HOST,
+      DB_NAME: process.env.DB_NAME,
     },
   });
 

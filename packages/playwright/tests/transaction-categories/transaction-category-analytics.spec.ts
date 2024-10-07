@@ -1,5 +1,6 @@
 import { Response } from '@playwright/test';
 
+import { getCategoryForAllTypes } from '$utils/entity-id-api-helper';
 import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
 
@@ -13,9 +14,10 @@ test.describe('Transaction category analytics', () => {
   test('Should return correct amounts when category has incomes and expenses', async ({
     page,
   }) => {
-    // 623b58ada3deba9879422fbf = Category for all types
+    const categoryForAllTypes = await getCategoryForAllTypes();
+
     const response = (await page.goto(
-      '/api/transactions/monthly-summaries?year=2022&month=01&page=1&limit=500&parentTransactionCategory=623b58ada3deba9879422fbf',
+      `/api/transactions/monthly-summaries?year=2022&month=01&page=1&limit=500&parentTransactionCategory=${categoryForAllTypes.id}`,
     )) as Response;
     expect(response.status()).toBe(200);
     const [body] = await response.json();
@@ -32,9 +34,10 @@ test.describe('Transaction category analytics', () => {
   });
 
   test('Should return correct amounts', async ({ page }) => {
-    // 623b58ada3deba9879422fbf = Category for all types
+    const categoryForAllTypes = await getCategoryForAllTypes();
+
     const response = (await page.goto(
-      '/api/transaction-categories/623b58ada3deba9879422fbf/summary?year=2022&month=01&page=1&limit=500',
+      `/api/transaction-categories/${categoryForAllTypes.id}/summary?year=2022&month=01&page=1&limit=500`,
     )) as Response;
     expect(response.status()).toBe(200);
     const [body] = await response.json();

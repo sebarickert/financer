@@ -1,4 +1,4 @@
-import { redirect, RedirectType } from 'next/navigation';
+import { notFound, redirect, RedirectType } from 'next/navigation';
 import { FC } from 'react';
 
 import {
@@ -22,12 +22,12 @@ export const TemplateEditContainer: FC<TemplateEditContainerProps> = async ({
 }) => {
   const template = await TransactionTemplateService.getById(id);
 
+  if (!template) {
+    notFound();
+  }
+
   const handleSubmit: DefaultFormActionHandler = async (prev, formData) => {
     'use server';
-
-    if (!template?.id) {
-      throw new Error('transactionTemplate is not found');
-    }
 
     const dayOfMonth = formData.get('dayOfMonth');
     const dayOfMonthToCreate = formData.get('dayOfMonthToCreate');
@@ -80,10 +80,6 @@ export const TemplateEditContainer: FC<TemplateEditContainerProps> = async ({
 
     redirect(settingsPaths.templates, RedirectType.push);
   };
-
-  if (!template) {
-    throw new Error('Template not found');
-  }
 
   return (
     <TemplateEdit

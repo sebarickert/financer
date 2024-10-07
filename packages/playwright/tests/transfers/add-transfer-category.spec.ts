@@ -6,8 +6,6 @@ const TRANSFER_NAME = 'Test transfer';
 
 test.describe('Add transfer with category', () => {
   const ids = {
-    accountId1: '61460d8554ea082ad0256759',
-    accountId2: '61460da354ea082ad025676b',
     editExpenseButton: 'edit-transfer-button',
     addCategoryButton: 'add-category-button',
     transactionCategoriesForm: 'transaction-categories-form',
@@ -22,8 +20,8 @@ test.describe('Add transfer with category', () => {
     await page.locator('#description').fill(TRANSFER_NAME);
     await page.locator('#amount').fill('10000.50');
 
-    await page.locator('#fromAccount').selectOption(ids.accountId1);
-    await page.locator('#toAccount').selectOption(ids.accountId2);
+    await page.locator('#fromAccount').selectOption({ index: 1 });
+    await page.locator('#toAccount').selectOption({ index: 2 });
 
     await page.getByTestId(ids.addCategoryButton).click();
   });
@@ -67,7 +65,7 @@ test.describe('Add transfer with category', () => {
       const targetElement = document.querySelector(
         `[data-testid=transaction-categories-form-select]`,
       ) as Element;
-      targetElement.innerHTML = `${targetElement.innerHTML}<option value="123456789012345678901234">non-existing-category</option>`;
+      targetElement.innerHTML = `${targetElement.innerHTML}<option value="bff23d1d-6bac-4d00-a456-4deabfdd1110">non-existing-category</option>`;
     });
 
     await page

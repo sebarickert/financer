@@ -2,8 +2,11 @@ name: Playwright Tests
 description: Run Playwright tests
 
 inputs:
-  target-project:
-    description: "The project to run the tests on"
+  SHARD:
+    description: "Shard number e.g. 1"
+    required: true
+  SHARD_COUNT:
+    description: "Total number of shards e.g. 5"
     required: true
 
 runs:
@@ -11,20 +14,14 @@ runs:
   steps:
     - name: Install Playwright Browsers
       shell: bash
-      run: |
-        if [ "${{ inputs.target-project }}" = "chromium" ] || [ "${{ inputs.target-project }}" = "Mobile_Chrome" ]; then
-          npx playwright install --with-deps chromium
-        elif [ "${{ inputs.target-project }}" = "firefox" ]; then
-          npx playwright install --with-deps firefox
-        elif [ "${{ inputs.target-project }}" = "webkit" ] || [ "${{ inputs.target-project }}" = "Mobile_Safari" ]; then
-          npx playwright install --with-deps webkit
-        fi
+      run: npx playwright install --with-deps
     - name: Run Playwright tests
       shell: bash
-      run: npm run e2e:test -- --project=${{ inputs.target-project }}
+      run: npm run e2e:test -- --shard ${{ inputs.SHARD }}/${{ inputs.SHARD_COUNT }}
+
     - uses: actions/upload-artifact@v4
       if: always()
       with:
-        name: playwright-report
+        name: all-playwright-blob-reports
         path: packages/playwright/playwright-report/
-        retention-days: 30
+        retention-days: 7

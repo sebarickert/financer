@@ -3,7 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
+  // provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
@@ -51,206 +52,201 @@ enum SystemLogLevel {
 }
 
 model AccountBalanceChange {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  v         Int?     @map("__v")
-  accountId String   @db.ObjectId
-  amount    Float
-  createdAt DateTime @default(now()) @db.Date
-  date      DateTime @db.Date
-  updatedAt DateTime @updatedAt @db.Date
-  userId    String   @db.ObjectId
+  id        String   @id @default(uuid())
+  accountId String
+  amount    Decimal  @db.Decimal(10, 2)
+  date      DateTime
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  Account Account? @relation(fields: [accountId], references: [id], onDelete: Cascade)
-  User    User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  account Account? @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  user    User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@map("account-balance-changes")
+  @@map("account_balance_change")
 }
 
 model Account {
-  id        String      @id @default(auto()) @map("_id") @db.ObjectId
-  v         Int?        @map("__v")
-  balance   Float
-  createdAt DateTime    @default(now()) @db.Date
+  id        String      @id @default(uuid())
+  balance   Decimal     @db.Decimal(10, 2)
   isDeleted Boolean     @default(false)
   name      String
-  userId    String      @map("owner") @db.ObjectId
+  userId    String
   type      AccountType
-  updatedAt DateTime    @updatedAt @db.Date
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
 
   user                 User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
   accountBalanceChange AccountBalanceChange[]
-  fromTransactions     Transaction[]          @relation("FromAccountTransaction")
-  toTransactions       Transaction[]          @relation("ToAccountTransaction")
-  fromTemplates        TransactionTemplate[]  @relation("FromAccountTemplate")
-  toTemplates          TransactionTemplate[]  @relation("ToAccountTemplate")
+  fromTransactions     Transaction[]          @relation("TransactionFromAccount")
+  toTransactions       Transaction[]          @relation("TransactionToAccount")
+  fromTemplates        TransactionTemplate[]  @relation("TemplateFromAccount")
+  toTemplates          TransactionTemplate[]  @relation("TemplateToAccount")
 
-  @@index([type], map: "type_1")
-  @@index([userId], map: "owner_1")
-  @@index([isDeleted], map: "isDeleted_1")
-  @@map("accounts")
+  @@index([type])
+  @@index([userId])
+  @@index([isDeleted])
+  @@map("account")
 }
 
-model sessions {
-  id           String   @id @map("_id")
-  expires      DateTime @db.Date
-  lastModified DateTime @db.Date
-  session      String
+model Session {
+  sid    String   @id @db.VarChar
+  sess   Json     @db.Json
+  expire DateTime @db.Timestamp(6)
+
+  @@index([expire], map: "IDX_session_expire")
+  @@map("session")
 }
 
 model SystemLog {
-  id        String         @id @default(auto()) @map("_id") @db.ObjectId
+  id        String         @id @default(uuid())
   module    String
   service   String
   message   String
   level     SystemLogLevel
-  createdAt DateTime       @default(now()) @db.Date
-  updatedAt DateTime       @updatedAt @db.Date
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
 
   @@map("systemlogs")
 }
 
 model TransactionCategory {
-  id               String            @id @default(auto()) @map("_id") @db.ObjectId
-  v                Int?              @map("__v")
-  createdAt        DateTime          @default(now()) @db.Date
+  id               String            @id @default(uuid())
   deleted          Boolean           @default(false)
   name             String
-  userId           String            @map("owner") @db.ObjectId
-  parentCategoryId String?           @map("parent_category_id") @db.ObjectId
-  updatedAt        DateTime          @updatedAt @db.Date
+  userId           String
+  parentCategoryId String?
   visibility       TransactionType[]
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
 
   user                       User                         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  // category TransactionCategory @relation((fields: [parentCategoryId], references: [id]), onDelete: Cascade)
   transactionCategoryMapping TransactionCategoryMapping[]
 
-  @@index([userId], map: "owner_1")
-  @@index([visibility], map: "visibility_1")
-  @@index([deleted], map: "deleted_1")
-  @@map("transaction-categories")
+  @@index([userId])
+  @@index([visibility])
+  @@index([deleted])
+  @@map("category")
 }
 
 model TransactionCategoryMapping {
-  id            String   @id @default(auto()) @map("_id") @db.ObjectId
-  v             Int?     @map("__v")
-  amount        Float
-  categoryId    String   @map("category_id") @db.ObjectId
-  createdAt     DateTime @default(now()) @db.Date
+  id            String   @id @default(uuid())
+  amount        Decimal  @db.Decimal(10, 2)
+  categoryId    String
   description   String?
-  userId        String   @map("owner") @db.ObjectId
-  transactionId String   @map("transaction_id") @db.ObjectId
-  updatedAt     DateTime @updatedAt @db.Date
+  userId        String
+  transactionId String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   user        User                @relation(fields: [userId], references: [id], onDelete: Cascade)
   category    TransactionCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   transaction Transaction         @relation(fields: [transactionId], references: [id], onDelete: Cascade)
 
-  @@index([userId], map: "owner_1")
-  @@index([transactionId], map: "transaction_id_1")
-  @@map("transaction-category-mappings")
+  @@index([userId])
+  @@index([transactionId])
+  @@map("category_mapping")
 }
 
 model TransactionTemplateLog {
-  id            String                  @id @default(auto()) @map("_id") @db.ObjectId
+  id            String                  @id @default(uuid())
   eventType     TransactionTemplateType
-  executed      DateTime                @db.Date
-  templateId    String                  @db.ObjectId
-  transactionId String                  @db.ObjectId
-  userId        String                  @db.ObjectId
+  executed      DateTime                @default(now())
+  templateId    String
+  transactionId String
+  userId        String
+  createdAt     DateTime                @default(now())
+  updatedAt     DateTime                @updatedAt
 
   user        User                @relation(fields: [userId], references: [id], onDelete: Cascade)
   transaction Transaction         @relation(fields: [transactionId], references: [id], onDelete: Cascade)
   template    TransactionTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
 
-  @@index([userId], map: "userId_1")
-  @@index([eventType], map: "eventType_1")
-  @@index([transactionId], map: "transactionId_1")
-  @@index([templateId], map: "templateId_1")
-  @@index([executed], map: "executed_1")
-  @@map("transaction-template-logs")
+  @@index([userId])
+  @@index([eventType])
+  @@index([transactionId])
+  @@index([templateId])
+  @@index([executed])
+  @@map("template_log")
 }
 
 model TransactionTemplate {
-  id                 String                    @id @default(auto()) @map("_id") @db.ObjectId
-  v                  Int?                      @map("__v")
-  amount             Float?
+  id                 String                    @id @default(uuid())
+  amount             Decimal?                  @db.Decimal(10, 2)
   categories         String[]                  @default([])
-  createdAt          DateTime                  @default(now()) @db.Date
   dayOfMonth         Int?
   dayOfMonthToCreate Int?
   description        String
-  fromAccount        String?                   @db.ObjectId
+  fromAccount        String?
+  toAccount          String?
   templateName       String
   templateType       TransactionTemplateType[]
   templateVisibility TransactionType?
-  toAccount          String?                   @db.ObjectId
-  updatedAt          DateTime                  @updatedAt @db.Date
-  userId             String                    @db.ObjectId
+  userId             String
+  createdAt          DateTime                  @default(now())
+  updatedAt          DateTime                  @updatedAt
 
   user                   User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  from                   Account?                 @relation("FromAccountTemplate", fields: [fromAccount], references: [id], onDelete: Cascade)
-  to                     Account?                 @relation("ToAccountTemplate", fields: [toAccount], references: [id], onDelete: Cascade)
+  from                   Account?                 @relation("TemplateFromAccount", fields: [fromAccount], references: [id], onDelete: Cascade)
+  to                     Account?                 @relation("TemplateToAccount", fields: [toAccount], references: [id], onDelete: Cascade)
   transactionTemplateLog TransactionTemplateLog[]
 
-  @@index([userId], map: "userId_1")
-  @@index([templateType], map: "templateType_1")
-  @@index([templateVisibility], map: "templateVisibility_1")
-  @@index([dayOfMonthToCreate], map: "dayOfMonthToCreate_1")
-  @@map("transaction-templates")
+  @@index([userId])
+  @@index([templateType])
+  @@index([templateVisibility])
+  @@index([dayOfMonthToCreate])
+  @@map("transaction_template")
 }
 
 model Transaction {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  v           Int?     @map("__v")
-  amount      Float
-  createdAt   DateTime @default(now()) @db.Date
-  date        DateTime @db.Date
+  id          String   @id @default(uuid())
+  amount      Decimal  @db.Decimal(10, 2)
+  date        DateTime
   description String
-  fromAccount String?  @db.ObjectId
-  toAccount   String?  @db.ObjectId
-  updatedAt   DateTime @updatedAt @db.Date
-  userId      String   @map("user") @db.ObjectId
+  fromAccount String?
+  toAccount   String?
+  userId      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   user                   User                         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  from                   Account?                     @relation("FromAccountTransaction", fields: [fromAccount], references: [id], onDelete: Cascade)
-  to                     Account?                     @relation("ToAccountTransaction", fields: [toAccount], references: [id], onDelete: Cascade)
+  from                   Account?                     @relation("TransactionFromAccount", fields: [fromAccount], references: [id], onDelete: Cascade)
+  to                     Account?                     @relation("TransactionToAccount", fields: [toAccount], references: [id], onDelete: Cascade)
   categories             TransactionCategoryMapping[]
   transactionTemplateLog TransactionTemplateLog[]
 
-  @@index([fromAccount], map: "fromAccount_1")
-  @@index([toAccount], map: "toAccount_1")
-  @@index([date], map: "date_1")
-  @@index([userId], map: "user_1")
-  @@map("transactions")
+  @@index([fromAccount])
+  @@index([toAccount])
+  @@index([date])
+  @@index([userId])
+  @@map("transaction")
 }
 
 model UserPreferences {
-  id        String                 @id @default(auto()) @map("_id") @db.ObjectId
-  v         Int?                   @map("__v")
-  createdAt DateTime               @default(now()) @db.Date
+  id        String                 @id @default(uuid())
   key       UserPreferenceProperty
-  updatedAt DateTime               @updatedAt @db.Date
-  userId    String                 @db.ObjectId
+  userId    String
   value     String
+  createdAt DateTime               @default(now())
+  updatedAt DateTime               @updatedAt
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, key], name: "userId_key")
-  @@index([userId], map: "userId_1")
-  @@map("userpreferences")
+  @@index([userId])
+  @@map("user_preference")
 }
 
 model User {
-  id              String   @id @default(auto()) @map("_id") @db.ObjectId
-  v               Int?     @map("__v")
+  id              String   @id @default(uuid())
   auth0Id         String?  @unique
-  createdAt       DateTime @default(now()) @db.Date
   githubId        String?  @unique
   name            String
   nickname        String
   profileImageUrl String?
   roles           Role[]   @default([])
-  updatedAt       DateTime @updatedAt @db.Date
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
   accountBalanceChange       AccountBalanceChange[]
   account                    Account[]
@@ -261,5 +257,5 @@ model User {
   transaction                Transaction[]
   userPreferences            UserPreferences[]
 
-  @@map("users")
+  @@map("user")
 }

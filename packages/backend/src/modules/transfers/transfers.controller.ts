@@ -19,11 +19,11 @@ import {
 } from '@nestjs/swagger';
 import { AccountType } from '@prisma/client';
 
+import { UserId } from '../../types/user-id';
 import { ApiPaginatedDto } from '../../utils/pagination.decorator';
 import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
 import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
-import { TransactionMonthSummaryDto } from '../transactions/dto/transaction-month-summary.dto';
-import { UserId } from '../users/users.decorators';
+import { UserIdDecorator } from '../users/users.decorators';
 
 import { CreateTransferDto } from './dto/create-transfer.dto';
 import { TransferDto } from './dto/transfer.dto';
@@ -32,7 +32,7 @@ import { TransfersService } from './transfers.service';
 
 @Controller('api/transfers')
 @ApiTags('Transfers')
-@ApiExtraModels(TransferDto, TransactionMonthSummaryDto)
+@ApiExtraModels(TransferDto)
 @LoggedIn()
 export class TransfersController {
   constructor(private readonly transfersService: TransfersService) {}
@@ -64,7 +64,7 @@ export class TransfersController {
     required: false,
   })
   async findAllByUser(
-    @UserId() userId: string,
+    @UserIdDecorator() userId: UserId,
     @Query('month') month: number,
     @Query('year') year: number,
     @Query('page') page: number,
@@ -97,7 +97,7 @@ export class TransfersController {
     type: String,
   })
   async findOne(
-    @UserId() userId: string,
+    @UserIdDecorator() userId: UserId,
     @Param('id', ValidateEntityId) id: string,
   ) {
     return this.transfersService.findOne(userId, id);
@@ -107,7 +107,7 @@ export class TransfersController {
   @ApiBody({ type: CreateTransferDto })
   @ApiOkResponse({ type: TransferDto })
   async create(
-    @UserId() userId: string,
+    @UserIdDecorator() userId: UserId,
     @Body() createTransfer: CreateTransferDto,
   ) {
     return this.transfersService.create(userId, createTransfer);
@@ -121,7 +121,7 @@ export class TransfersController {
     type: String,
   })
   update(
-    @UserId() userId: string,
+    @UserIdDecorator() userId: UserId,
     @Param('id', ValidateEntityId) id: string,
     @Body() updateTransactionDto: UpdateTransferDto,
   ) {
@@ -133,7 +133,10 @@ export class TransfersController {
     name: 'id',
     type: String,
   })
-  remove(@UserId() userId: string, @Param('id', ValidateEntityId) id: string) {
+  remove(
+    @UserIdDecorator() userId: UserId,
+    @Param('id', ValidateEntityId) id: string,
+  ) {
     return this.transfersService.remove(userId, id);
   }
 }

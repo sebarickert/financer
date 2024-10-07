@@ -2,22 +2,28 @@ import { Page, getBaseUrl } from './financer-page';
 
 import {
   AccountDto,
+  ExpenseDto,
+  IncomeDto,
   PaginationDto as PaginationDtoBase,
+  TransactionCategoryDto,
   TransactionDto,
+  TransferDto,
 } from '$types/generated/financer';
 
 type PaginationDto<Data extends object> = PaginationDtoBase & {
   data: Data;
 };
 
-export interface ITransactionWithDateObject extends TransactionDto {
+export type ITransactionWithDateObject<
+  Transaction extends TransactionDto | IncomeDto | ExpenseDto | TransferDto,
+> = Transaction & {
   dateObj: Date;
-}
+};
 
 export const MINUTE_IN_MS = 60000;
 
 export const formatDate = (date: Date): string => {
-  const addLeadingZero = (number: number): string => `0${number}`.substr(-2);
+  const addLeadingZero = (number: number): string => `0${number}`.substring(-2);
 
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
@@ -37,19 +43,23 @@ export const getAccount = async (accountId: string): Promise<AccountDto> => {
   return rawAccount.json();
 };
 
-const parseTransactionDate = (
-  transactions: PaginationDto<TransactionDto[]>,
-): ITransactionWithDateObject[] =>
+const parseTransactionDate = <
+  Transaction extends TransactionDto | TransferDto | IncomeDto | ExpenseDto,
+>(
+  transactions: PaginationDto<Transaction[]>,
+): ITransactionWithDateObject<Transaction>[] =>
   transactions.data
     .map(({ date, ...rest }) => ({
       ...rest,
       date,
       dateObj: new Date(date),
     }))
-    .sort((a, b) => (a.date < b.date ? -1 : 1));
+    .sort((a, b) =>
+      a.date < b.date ? -1 : 1,
+    ) as unknown as ITransactionWithDateObject<Transaction>[];
 
 export const getAllTransaction = async (): Promise<
-  ITransactionWithDateObject[]
+  ITransactionWithDateObject<TransactionDto>[]
 > => {
   const baseUrl = getBaseUrl();
   const transactions = (await (
@@ -60,34 +70,34 @@ export const getAllTransaction = async (): Promise<
 };
 
 export const getAllIncomes = async (): Promise<
-  ITransactionWithDateObject[]
+  ITransactionWithDateObject<IncomeDto>[]
 > => {
   const baseUrl = getBaseUrl();
   const transactions = (await (
     await fetch(`${baseUrl}/api/incomes`)
-  ).json()) as PaginationDto<TransactionDto[]>;
+  ).json()) as PaginationDto<IncomeDto[]>;
 
   return parseTransactionDate(transactions);
 };
 
 export const getAllExpenses = async (): Promise<
-  ITransactionWithDateObject[]
+  ITransactionWithDateObject<ExpenseDto>[]
 > => {
   const baseUrl = getBaseUrl();
   const transactions = (await (
     await fetch(`${baseUrl}/api/expenses`)
-  ).json()) as PaginationDto<TransactionDto[]>;
+  ).json()) as PaginationDto<ExpenseDto[]>;
 
   return parseTransactionDate(transactions);
 };
 
 export const getAllTransfers = async (): Promise<
-  ITransactionWithDateObject[]
+  ITransactionWithDateObject<TransferDto>[]
 > => {
   const baseUrl = getBaseUrl();
   const transactions = (await (
     await fetch(`${baseUrl}/api/transfers`)
-  ).json()) as PaginationDto<TransactionDto[]>;
+  ).json()) as PaginationDto<TransferDto[]>;
 
   return parseTransactionDate(transactions);
 };
@@ -103,7 +113,7 @@ export const getTransactionByIdRaw = async (
 
 export const getTransactionById = async (
   transactionId: string,
-): Promise<ITransactionWithDateObject> => {
+): Promise<ITransactionWithDateObject<TransactionDto>> => {
   const transaction = await getTransactionByIdRaw(transactionId);
 
   return { ...transaction, dateObj: new Date(transaction?.date) };
@@ -111,7 +121,7 @@ export const getTransactionById = async (
 
 export const getAllTransactionsByAccountId = async (
   accountId: string,
-): Promise<ITransactionWithDateObject[]> => {
+): Promise<ITransactionWithDateObject<TransactionDto>[]> => {
   const baseUrl = getBaseUrl();
   const transactions = (await (
     await fetch(`${baseUrl}/api/transactions/account/${accountId}`)
@@ -150,4 +160,11 @@ export const submitTransactionCategoryForm = async (
   await descriptionInput.fill(description ?? '');
 
   await page.getByTestId(`${testId}-submit`).click();
+};
+
+export const getAllCategories = async () => {
+  const baseUrl = getBaseUrl();
+  return (await (
+    await fetch(`${baseUrl}/api/categories`)
+  ).json()) as TransactionCategoryDto[];
 };

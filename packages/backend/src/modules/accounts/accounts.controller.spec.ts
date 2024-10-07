@@ -74,7 +74,7 @@ describe('AccountsController', () => {
         .expect(400)
         .expect({
           statusCode: 400,
-          message: ['Balance must be a number.'],
+          message: ['Balance must be a decimal number, with 2 decimals.'],
           error: 'Bad Request',
         })
         .then(() => {
@@ -99,7 +99,7 @@ describe('AccountsController', () => {
         .expect(400)
         .expect({
           statusCode: 400,
-          message: ['Balance must be a number.'],
+          message: ['Balance must be a decimal number, with 2 decimals.'],
           error: 'Bad Request',
         })
         .then(() => {
@@ -240,7 +240,7 @@ describe('AccountsController', () => {
             'name must be a string',
             'Name must not be empty.',
             'Type must be one of the following: CASH, SAVINGS, INVESTMENT, CREDIT, LOAN, LONG_TERM_SAVINGS, PRE_ASSIGNED_CASH.',
-            'Balance must be a number.',
+            'Balance must be a decimal number, with 2 decimals.',
           ],
           error: 'Bad Request',
         })

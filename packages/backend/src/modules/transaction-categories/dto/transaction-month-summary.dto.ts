@@ -1,7 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Decimal } from '@prisma/client/runtime/library';
 import { Allow } from 'class-validator';
 
+import {
+  IsDecimal,
+  TransformDecimal,
+} from '../../../utils/is-decimal.decorator';
+
 export class CategoryMonthlySummaryDto {
+  constructor(data: CategoryMonthlySummaryDto) {
+    Object.assign(this, data);
+  }
+
   @ApiProperty()
   @Allow()
   readonly id: {
@@ -22,14 +32,38 @@ export class CategoryMonthlySummaryDto {
   readonly transfersCount: number;
 
   @ApiProperty()
-  readonly totalAmount: number;
+  @IsDecimal()
+  @TransformDecimal()
+  readonly totalAmount: Decimal;
 
   @ApiProperty()
-  readonly incomeAmount: number;
+  @IsDecimal()
+  @TransformDecimal()
+  readonly incomeAmount: Decimal;
 
   @ApiProperty()
-  readonly expenseAmount: number;
+  @IsDecimal()
+  @TransformDecimal()
+  readonly expenseAmount: Decimal;
 
   @ApiProperty()
-  readonly transferAmount: number;
+  @IsDecimal()
+  @TransformDecimal()
+  readonly transferAmount: Decimal;
+
+  public static createFromPlain(
+    summaries: CategoryMonthlySummaryDto,
+  ): CategoryMonthlySummaryDto;
+  public static createFromPlain(
+    summaries: CategoryMonthlySummaryDto[],
+  ): CategoryMonthlySummaryDto[];
+  public static createFromPlain(
+    summaries: CategoryMonthlySummaryDto | CategoryMonthlySummaryDto[],
+  ): CategoryMonthlySummaryDto | CategoryMonthlySummaryDto[] {
+    if (Array.isArray(summaries)) {
+      return summaries.map((summary) => new CategoryMonthlySummaryDto(summary));
+    }
+
+    return new CategoryMonthlySummaryDto(summaries);
+  }
 }

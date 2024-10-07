@@ -6,7 +6,6 @@ const EXPENSE_NAME = 'Test expense';
 
 test.describe('Add expense with category', () => {
   const ids = {
-    accountId: '61460d8554ea082ad0256759',
     editExpenseButton: 'edit-expense-button',
     addCategoryButton: 'add-category-button',
     transactionCategoriesForm: 'transaction-categories-form',
@@ -18,7 +17,7 @@ test.describe('Add expense with category', () => {
 
     await page.goto('/statistics/expenses/add');
 
-    await page.locator('#fromAccount').selectOption(ids.accountId);
+    await page.locator('#fromAccount').selectOption({ index: 1 });
     await page.fill('#description', EXPENSE_NAME);
     await page.fill('#amount', '10000.50');
 
@@ -67,7 +66,7 @@ test.describe('Add expense with category', () => {
 
       if (!targetElement) return;
 
-      targetElement.innerHTML = `${targetElement.innerHTML}<option value="123456789012345678901234">non-existing-category</option>`;
+      targetElement.innerHTML = `${targetElement.innerHTML}<option value="271b4b38-fb8e-4716-91ef-6e133f67f94d">non-existing-category</option>`;
     });
 
     await page
