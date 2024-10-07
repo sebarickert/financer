@@ -16,10 +16,11 @@ import {
 } from '@nestjs/swagger';
 import { AccountType, Prisma } from '@prisma/client';
 
+import { UserId } from '../../types/user-id';
 import { ApiPaginatedDto } from '../../utils/pagination.decorator';
 import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
 import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
-import { UserId } from '../users/users.decorators';
+import { UserIdDecorator } from '../users/users.decorators';
 
 import { TransactionMonthSummaryDto } from './dto/transaction-month-summary.dto';
 import { TransactionDto } from './dto/transaction.dto';
@@ -70,7 +71,7 @@ export class TransactionsController {
     type: String,
   })
   async findAllByUser(
-    @UserId() userId: string,
+    @UserIdDecorator() userId: UserId,
     @Query('month') month?: number,
     @Query('year') year?: number,
     @Query('page') page?: number,
@@ -132,7 +133,7 @@ export class TransactionsController {
     type: String,
   })
   async findMonthlySummariesByUser(
-    @UserId() userId: string,
+    @UserIdDecorator() userId: UserId,
     @Query('month') month?: number,
     @Query('year') year?: number,
     @Query(
@@ -171,7 +172,7 @@ export class TransactionsController {
     type: String,
   })
   async findOne(
-    @UserId() userId: string,
+    @UserIdDecorator() userId: UserId,
     @Param('id', ValidateEntityId) id: string,
   ) {
     return this.transactionsService.findOne(userId, id);

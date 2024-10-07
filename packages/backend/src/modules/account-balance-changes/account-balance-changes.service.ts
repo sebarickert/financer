@@ -2,7 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { AccountBalanceChange } from '@prisma/client';
 
 import { AccountBalanceChangeRepo } from '../../database/repos/account-balance-change.repo';
+import { UserId } from '../../types/user-id';
 
+import { AccountBalanceChangeDto } from './dto/account-balance-change.dto';
 import { CreateAccountBalanceChangeDto } from './dto/create-account-balance-change.dto';
 
 @Injectable()
@@ -12,29 +14,49 @@ export class AccountBalanceChangesService {
   ) {}
 
   async create(
-    createAccountBalanceChange: CreateAccountBalanceChangeDto,
+    userId: UserId,
+    { accountId, amount, date }: CreateAccountBalanceChangeDto,
   ): Promise<AccountBalanceChange> {
-    return this.accountBalanceChangeRepo.create(createAccountBalanceChange);
+    return this.accountBalanceChangeRepo.create({
+      amount: amount,
+      date: date,
+      user: {
+        connect: { id: userId },
+      },
+      account: {
+        connect: { id: accountId },
+      },
+    });
   }
 
   async createMany(
+    userId: UserId,
     createAccountBalanceChanges: CreateAccountBalanceChangeDto[],
   ): Promise<void> {
-    await this.accountBalanceChangeRepo.createMany(createAccountBalanceChanges);
+    await this.accountBalanceChangeRepo.createMany(
+      // @ts-expect-error - remove legacy `v` from import data
+      createAccountBalanceChanges.map(({ v, ...change }) => ({
+        ...change,
+        userId,
+      })),
+    );
   }
 
-  async findAllByUser(userId: string): Promise<AccountBalanceChange[]> {
+  async findAllByUser(userId: UserId): Promise<AccountBalanceChange[]> {
     return this.accountBalanceChangeRepo.findMany({ where: { userId } });
   }
 
   async findAllByUserForExport(
-    userId: string,
+    userId: UserId,
   ): Promise<AccountBalanceChange[]> {
-    return this.accountBalanceChangeRepo.findMany({ where: { userId } });
+    const balanceChanges = await this.accountBalanceChangeRepo.findMany({
+      where: { userId },
+    });
+    return AccountBalanceChangeDto.createFromPlain(balanceChanges);
   }
 
   async findAllByUserAndAccount(
-    userId: string,
+    userId: UserId,
     accountId: string,
   ): Promise<AccountBalanceChange[]> {
     return this.accountBalanceChangeRepo.findMany({
@@ -42,7 +64,7 @@ export class AccountBalanceChangesService {
     });
   }
 
-  async removeAllByUser(userId: string): Promise<void> {
+  async removeAllByUser(userId: UserId): Promise<void> {
     await this.accountBalanceChangeRepo.deleteMany({ userId });
   }
 }

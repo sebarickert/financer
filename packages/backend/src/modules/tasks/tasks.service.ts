@@ -3,6 +3,7 @@ import { SystemLogLevel, TransactionTemplateType } from '@prisma/client';
 
 import { DateService } from '../../utils/date.service';
 import { SystemService } from '../system/system.service';
+import { TransactionTemplateDto } from '../transaction-templates/dto/transaction-template.dto';
 import { TransactionTemplatesService } from '../transaction-templates/transaction-templates.service';
 import { TransactionsService } from '../transactions/transactions.service';
 
@@ -45,9 +46,11 @@ export class TasksService {
 
         if (hasAddedTransactionThisMonth) return 'skipped';
 
+        const templateDto = TransactionTemplateDto.createFromPlain(template);
+
         const transactionData =
-          this.templateService.getTransactionFromTemplate(template);
-        const userId = template.userId;
+          this.templateService.getTransactionFromTemplate(templateDto);
+        const userId = templateDto.userId;
 
         const transaction = await this.transactionsService.create(
           userId,

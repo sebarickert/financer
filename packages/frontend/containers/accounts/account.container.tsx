@@ -1,3 +1,4 @@
+import { notFound } from 'next/navigation';
 import { FC } from 'react';
 
 import { AccountService } from '$ssr/api/account.service';
@@ -11,7 +12,7 @@ export const AccountContainer: FC<AccountContainerProps> = async ({ id }) => {
   const account = await AccountService.getById(id);
 
   if (!account) {
-    throw new Error('Account not found');
+    notFound();
   }
 
   return <Account account={account} />;

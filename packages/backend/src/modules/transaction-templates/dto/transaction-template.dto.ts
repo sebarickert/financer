@@ -4,6 +4,7 @@ import {
   TransactionTemplateType,
   TransactionType,
 } from '@prisma/client';
+import { Decimal } from '@prisma/client/runtime/library';
 import {
   IsArray,
   IsEnum,
@@ -15,8 +16,17 @@ import {
   Min,
 } from 'class-validator';
 
+import { UserId } from '../../../types/user-id';
+import {
+  IsDecimal,
+  TransformDecimal,
+} from '../../../utils/is-decimal.decorator';
+import { MinDecimal } from '../../../utils/min-decimal.decorator';
+
 export class TransactionTemplateDto implements TransactionTemplate {
-  v: number;
+  constructor(partial: TransactionTemplate) {
+    Object.assign(this, partial);
+  }
 
   @ApiProperty()
   createdAt: Date;
@@ -57,9 +67,13 @@ export class TransactionTemplateDto implements TransactionTemplate {
   readonly templateVisibility: TransactionType;
 
   @ApiPropertyOptional()
-  @Min(0.01, { message: 'Amount must be a positive number.' })
+  @MinDecimal(new Decimal(0.01), {
+    message: 'Amount must be a positive number.',
+  })
   @IsOptional()
-  readonly amount: number = null;
+  @TransformDecimal()
+  @IsDecimal({ message: 'Amount must be a decimal number.' })
+  readonly amount: Decimal = null;
 
   @ApiPropertyOptional()
   @IsString()
@@ -83,7 +97,7 @@ export class TransactionTemplateDto implements TransactionTemplate {
 
   @ApiProperty({ type: String })
   @IsMongoId()
-  readonly userId: string;
+  readonly userId: UserId;
 
   @ApiPropertyOptional({ type: String, nullable: true })
   @IsOptional()
@@ -104,4 +118,22 @@ export class TransactionTemplateDto implements TransactionTemplate {
     each: true,
   })
   categories: string[] = null;
+
+  public static createFromPlain(
+    transactionTemplate: TransactionTemplate,
+  ): TransactionTemplateDto;
+  public static createFromPlain(
+    transactionTemplates: TransactionTemplate[],
+  ): TransactionTemplateDto[];
+  public static createFromPlain(
+    transactionTemplate: TransactionTemplate | TransactionTemplate[],
+  ): TransactionTemplateDto | TransactionTemplateDto[] {
+    if (Array.isArray(transactionTemplate)) {
+      return transactionTemplate.map((template) =>
+        TransactionTemplateDto.createFromPlain(template),
+      );
+    }
+
+    return new TransactionTemplateDto(transactionTemplate);
+  }
 }

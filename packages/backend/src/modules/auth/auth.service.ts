@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { User } from '@prisma/client';
 
+import { UserId } from '../../types/user-id';
 import { AccountsService } from '../accounts/accounts.service';
 import { AccountDto } from '../accounts/dto/account.dto';
 import { UsersService } from '../users/users.service';
@@ -8,13 +9,13 @@ import { UsersService } from '../users/users.service';
 @Injectable()
 export class AuthService {
   constructor(
-    private usersService: UsersService,
-    private accountsService: AccountsService,
+    private readonly usersService: UsersService,
+    private readonly accountsService: AccountsService,
   ) {}
 
   async getAuthenticationStatus(user?: User) {
     const accounts = user
-      ? await this.accountsService.findAllByUser(user.id)
+      ? await this.accountsService.findAllByUser(user.id as UserId)
       : { data: [] as AccountDto[] };
     return {
       authenticated: Boolean(user),
@@ -27,7 +28,7 @@ export class AuthService {
     return this.usersService.findOneByGithubId(githubId);
   }
 
-  async validateUserByAuth0(auht0Id: string): Promise<User> {
-    return this.usersService.findOneByAuth0Id(auht0Id);
+  async validateUserByAuth0(auth0Id: string): Promise<User> {
+    return this.usersService.findOneByAuth0Id(auth0Id);
   }
 }

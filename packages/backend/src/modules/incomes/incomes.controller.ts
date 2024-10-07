@@ -18,10 +18,11 @@ import {
 } from '@nestjs/swagger';
 import { AccountType } from '@prisma/client';
 
+import { UserId } from '../../types/user-id';
 import { ApiPaginatedDto } from '../../utils/pagination.decorator';
 import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
 import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
-import { UserId } from '../users/users.decorators';
+import { UserIdDecorator } from '../users/users.decorators';
 
 import { CreateIncomeDto } from './dto/create-income.dto';
 import { IncomeDto } from './dto/income.dto';
@@ -61,7 +62,7 @@ export class IncomesController {
     required: false,
   })
   async findAllByUser(
-    @UserId() userId: string,
+    @UserIdDecorator() userId: UserId,
     @Query('month') month: number,
     @Query('year') year: number,
     @Query('page') page: number,
@@ -94,7 +95,7 @@ export class IncomesController {
     type: String,
   })
   async findOne(
-    @UserId() userId: string,
+    @UserIdDecorator() userId: UserId,
     @Param('id', ValidateEntityId) id: string,
   ) {
     return this.incomesService.findOne(userId, id);
@@ -104,7 +105,7 @@ export class IncomesController {
   @ApiBody({ type: CreateIncomeDto })
   @ApiOkResponse({ type: IncomeDto })
   async create(
-    @UserId() userId: string,
+    @UserIdDecorator() userId: UserId,
     @Body() createIncome: CreateIncomeDto,
   ) {
     return this.incomesService.create(userId, createIncome);
@@ -118,7 +119,7 @@ export class IncomesController {
     type: String,
   })
   update(
-    @UserId() userId: string,
+    @UserIdDecorator() userId: UserId,
     @Param('id', ValidateEntityId) id: string,
     @Body() updateTransactionDto: UpdateIncomeDto,
   ) {
@@ -130,7 +131,10 @@ export class IncomesController {
     name: 'id',
     type: String,
   })
-  remove(@UserId() userId: string, @Param('id', ValidateEntityId) id: string) {
+  remove(
+    @UserIdDecorator() userId: UserId,
+    @Param('id', ValidateEntityId) id: string,
+  ) {
     return this.incomesService.remove(userId, id);
   }
 }

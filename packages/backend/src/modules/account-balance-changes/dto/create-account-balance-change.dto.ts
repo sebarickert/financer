@@ -4,5 +4,5 @@ import { AccountBalanceChangeDto } from './account-balance-change.dto';
 
 export class CreateAccountBalanceChangeDto extends OmitType(
   AccountBalanceChangeDto,
-  ['id', 'createdAt', 'updatedAt', 'v'] as const,
+  ['id', 'createdAt', 'updatedAt', 'userId'] as const,
 ) {}

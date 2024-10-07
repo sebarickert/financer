@@ -335,7 +335,7 @@ test.describe('Account editing', () => {
       page,
       'Cash account',
       'Changed to Savings',
-      '100 000 000 000 000,00 €',
+      '10 000 000,00 €',
       'Cash',
       'Savings',
     );

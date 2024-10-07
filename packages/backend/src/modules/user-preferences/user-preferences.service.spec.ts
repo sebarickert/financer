@@ -1,24 +1,26 @@
-import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { testConfiguration } from '../../config/test-configuration';
-import { DatabaseModule } from '../../database/database.module';
+import { createMockServiceProvider } from '../../../test/create-mock-service-provider';
+import { UserPreferencesRepo } from '../../database/repos/user-preferences.repo';
 
 import { UserPreferencesService } from './user-preferences.service';
 
 describe('UserPreferencesService', () => {
   let service: UserPreferencesService;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [
-        ConfigModule.forRoot({ isGlobal: true, load: [testConfiguration] }),
-        DatabaseModule,
+      providers: [
+        UserPreferencesService,
+        createMockServiceProvider(UserPreferencesRepo),
       ],
-      providers: [UserPreferencesService],
     }).compile();
 
     service = module.get<UserPreferencesService>(UserPreferencesService);
+  });
+
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
   it('should be defined', () => {

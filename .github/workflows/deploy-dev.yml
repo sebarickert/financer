@@ -11,21 +11,21 @@ jobs:
   install:
     runs-on: ubuntu-latest
     steps:
-      - uses: serkfi/financer/.github/actions/prepare-node-job@main
+      - uses: sebarickert/financer/.github/actions/prepare-node-job@main
 
   lint:
     runs-on: ubuntu-latest
     needs: install
     steps:
-      - uses: serkfi/financer/.github/actions/prepare-node-job@main
+      - uses: sebarickert/financer/.github/actions/prepare-node-job@main
 
-      - uses: serkfi/financer/.github/actions/lint-app@main
+      - uses: sebarickert/financer/.github/actions/lint-app@main
 
   lint-type:
     runs-on: ubuntu-latest
     needs: install
     steps:
-      - uses: serkfi/financer/.github/actions/prepare-node-job@main
+      - uses: sebarickert/financer/.github/actions/prepare-node-job@main
 
       - name: Lint TS types
         run: npm run check-types
@@ -34,30 +34,30 @@ jobs:
     runs-on: ubuntu-latest
     needs: install
     steps:
-      - uses: serkfi/financer/.github/actions/prepare-node-job@main
+      - uses: sebarickert/financer/.github/actions/prepare-node-job@main
 
-      - uses: serkfi/financer/.github/actions/test-frontend@main
+      - uses: sebarickert/financer/.github/actions/test-frontend@main
 
   unit-test-backend:
     runs-on: ubuntu-latest
     needs: install
     steps:
-      - uses: serkfi/financer/.github/actions/prepare-node-job@main
+      - uses: sebarickert/financer/.github/actions/prepare-node-job@main
 
-      - uses: serkfi/financer/.github/actions/test-backend@main
+      - uses: sebarickert/financer/.github/actions/test-backend@main
 
   build:
     runs-on: ubuntu-latest
     needs: install
     steps:
-      - uses: serkfi/financer/.github/actions/prepare-node-job@main
+      - uses: sebarickert/financer/.github/actions/prepare-node-job@main
 
-      - uses: serkfi/financer/.github/actions/build-app@main
+      - uses: sebarickert/financer/.github/actions/build-app@main
 
   docker-build:
     runs-on: ubuntu-latest
     steps:
-      - uses: serkfi/financer/.github/actions/build-docker-image@main
+      - uses: sebarickert/financer/.github/actions/build-docker-image@main
         with:
           REGISTRY_TOKEN: ${{ secrets.REGISTERY_TOKEN }}
 
@@ -71,6 +71,6 @@ jobs:
       - build
     runs-on: ubuntu-latest
     steps:
-      - uses: serkfi/financer/.github/actions/publish-docker-image@main
+      - uses: sebarickert/financer/.github/actions/publish-docker-image@main
         with:
           REGISTRY_TOKEN: ${{ secrets.REGISTERY_TOKEN }}

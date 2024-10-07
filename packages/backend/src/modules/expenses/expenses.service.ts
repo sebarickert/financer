@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { AccountType, TransactionType } from '@prisma/client';
 
 import { PaginationDto } from '../../types/pagination.dto';
+import { UserId } from '../../types/user-id';
 import { TransactionsService } from '../transactions/transactions.service';
 
 import { CreateExpenseDto } from './dto/create-expense.dto';
@@ -13,7 +14,7 @@ export class ExpensesService {
   constructor(private transactionService: TransactionsService) {}
 
   async findAllByUser(
-    userId: string,
+    userId: UserId,
     page: number,
     limit: number,
     year: number,
@@ -33,16 +34,16 @@ export class ExpensesService {
     );
   }
 
-  async findOne(userId: string, id: string): Promise<ExpenseDto> {
+  async findOne(userId: UserId, id: string): Promise<ExpenseDto> {
     return this.transactionService.findOne(userId, id);
   }
 
-  async create(userId: string, createExpense: CreateExpenseDto) {
+  async create(userId: UserId, createExpense: CreateExpenseDto) {
     return this.transactionService.create(userId, createExpense);
   }
 
   async update(
-    userId: string,
+    userId: UserId,
     id: string,
     updateTransactionDto: UpdateExpenseDto,
   ) {
@@ -50,7 +51,7 @@ export class ExpensesService {
     return this.transactionService.update(userId, id, updateTransactionDto);
   }
 
-  async remove(userId: string, id: string) {
+  async remove(userId: UserId, id: string) {
     const transaction = await this.findOne(userId, id);
     await this.transactionService.remove(transaction, userId);
   }

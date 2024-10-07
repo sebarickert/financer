@@ -1,27 +1,35 @@
 import { Injectable } from '@nestjs/common';
 import { User } from '@prisma/client';
 
-import { isNodeEnvInTest } from '../../config/configuration';
+import { isApplicationInTestMode } from '../../config/configuration';
 import { DUMMY_TEST_USER } from '../../config/mockAuthenticationMiddleware';
 import { UserRepo } from '../../database/repos/user.repo';
 
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { UserDto } from './dto/user.dto';
 
 @Injectable()
 export class UsersService {
   constructor(private readonly userRepo: UserRepo) {}
 
-  async findAll(): Promise<User[]> {
-    return !isNodeEnvInTest()
-      ? this.userRepo.findMany({})
-      : ([DUMMY_TEST_USER] as User[]);
+  async findAll(): Promise<UserDto[]> {
+    if (isApplicationInTestMode()) {
+      return [DUMMY_TEST_USER as UserDto];
+    }
+
+    const users = await this.userRepo.findMany({});
+
+    return UserDto.createFromPlain(users);
   }
 
-  async findOne(id: string): Promise<User> {
-    return !isNodeEnvInTest()
-      ? this.userRepo.findOne({ id })
-      : (DUMMY_TEST_USER as User);
+  async findOne(id: string): Promise<UserDto> {
+    if (isApplicationInTestMode()) {
+      return DUMMY_TEST_USER as UserDto;
+    }
+
+    const user = await this.userRepo.findOne({ id });
+    return UserDto.createFromPlain(user);
   }
 
   async findOneByGithubId(githubId: string): Promise<User> {

@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   TransactionTemplateLog,
   TransactionTemplateType,
@@ -5,12 +6,14 @@ import {
 import { Type } from 'class-transformer';
 import { IsMongoId, IsEnum, IsDate } from 'class-validator';
 
+import { UserId } from '../../../types/user-id';
+
 export class TransactionTemplateLogDto implements TransactionTemplateLog {
   @IsMongoId()
   readonly id: string;
 
   @IsMongoId()
-  readonly userId: string;
+  readonly userId: UserId;
 
   @IsEnum(TransactionTemplateType, {
     each: true,
@@ -27,4 +30,10 @@ export class TransactionTemplateLogDto implements TransactionTemplateLog {
   @IsDate({ message: 'Date must not be empty.' })
   @Type(() => Date)
   readonly executed: Date;
+
+  @ApiProperty()
+  createdAt: Date;
+
+  @ApiProperty()
+  updatedAt: Date;
 }

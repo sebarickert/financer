@@ -8,5 +8,4 @@ export class CreateAccountDto extends OmitType(AccountDto, [
   'isDeleted',
   'createdAt',
   'updatedAt',
-  'v',
 ] as const) {}

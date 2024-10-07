@@ -1,2 +1,4 @@
-export const sumArrayItems = (array: number[]) =>
-  array.reduce((a, b) => a + b, 0);
+import { Decimal } from '@prisma/client/runtime/library';
+
+export const sumArrayItems = (array: Decimal[]) =>
+  array.reduce((a, b) => a.add(b), new Decimal(0));

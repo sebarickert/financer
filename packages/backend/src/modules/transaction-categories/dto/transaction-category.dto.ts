@@ -8,8 +8,12 @@ import {
   IsOptional,
 } from 'class-validator';
 
+import { UserId } from '../../../types/user-id';
+
 export class TransactionCategoryDto implements TransactionCategory {
-  v: number;
+  constructor(transactionCategory: TransactionCategory) {
+    Object.assign(this, transactionCategory);
+  }
 
   @ApiProperty()
   createdAt: Date;
@@ -23,7 +27,7 @@ export class TransactionCategoryDto implements TransactionCategory {
 
   @ApiProperty({ type: String })
   @IsMongoId()
-  userId: string;
+  userId: UserId;
 
   @ApiProperty()
   @IsNotEmpty({ message: 'Name must not be empty.' })
@@ -51,4 +55,21 @@ export class TransactionCategoryDto implements TransactionCategory {
   @IsOptional()
   @IsMongoId({ message: 'parentCategoryId must not be empty.' })
   parentCategoryId: string | null;
+
+  public static createFromPlain(
+    category: TransactionCategory,
+  ): TransactionCategoryDto;
+  public static createFromPlain(
+    categories: TransactionCategory[],
+  ): TransactionCategoryDto[];
+  public static createFromPlain(
+    categoryOrCategories: TransactionCategory | TransactionCategory[],
+  ): TransactionCategoryDto | TransactionCategoryDto[] {
+    if (Array.isArray(categoryOrCategories)) {
+      return categoryOrCategories.map((category) =>
+        TransactionCategoryDto.createFromPlain(category),
+      );
+    }
+    return new TransactionCategoryDto(categoryOrCategories);
+  }
 }

@@ -6,6 +6,7 @@ import {
 
 import { TransactionTemplateLogRepo } from '../../database/repos/transaction-template-log.repo';
 import { TransactionTemplateRepo } from '../../database/repos/transaction-template.repo';
+import { UserId } from '../../types/user-id';
 import { DateService } from '../../utils/date.service';
 import { CreateTransactionDto } from '../transactions/dto/create-transaction.dto';
 
@@ -23,7 +24,7 @@ export class TransactionTemplatesService {
 
   async create(
     createTransactionTemplateDto: CreateTransactionTemplateDto,
-    userId: string,
+    userId: UserId,
   ) {
     return this.transactionTemplateRepo.create({
       ...createTransactionTemplateDto,
@@ -32,24 +33,31 @@ export class TransactionTemplatesService {
   }
 
   async createMany(
-    userId: string,
+    userId: UserId,
     createTransactionTemplateDto: CreateTransactionTemplateDto[],
   ) {
     return this.transactionTemplateRepo.createMany(
-      createTransactionTemplateDto.map((template) => ({ ...template, userId })),
+      // @ts-expect-error - remove legacy `v` from import data
+      createTransactionTemplateDto.map(({ v, ...template }) => ({
+        ...template,
+        userId,
+      })),
     );
   }
 
-  async findAllByUser(userId: string) {
+  async findAllByUser(userId: UserId) {
     return this.transactionTemplateRepo.findMany({ where: { userId } });
   }
 
-  async findAllByUserForExport(userId: string) {
-    return this.transactionTemplateRepo.findMany({ where: { userId } });
+  async findAllByUserForExport(userId: UserId) {
+    const templates = await this.transactionTemplateRepo.findMany({
+      where: { userId },
+    });
+    return TransactionTemplateDto.createFromPlain(templates);
   }
 
   async findAllByUserAndType(
-    userId: string,
+    userId: UserId,
     templateType: TransactionTemplateType,
   ) {
     return this.transactionTemplateRepo.findMany({
@@ -62,7 +70,7 @@ export class TransactionTemplatesService {
     });
   }
 
-  async findOne(id: string, userId: string) {
+  async findOne(id: string, userId: UserId) {
     const template = await this.transactionTemplateRepo.findOne({ id, userId });
 
     if (!template) {
@@ -75,7 +83,7 @@ export class TransactionTemplatesService {
   async update(
     id: string,
     updateTransactionTemplateDto: UpdateTransactionTemplateDto,
-    userId: string,
+    userId: UserId,
   ) {
     await this.findOne(id, userId);
     return this.transactionTemplateRepo.update({
@@ -99,12 +107,12 @@ export class TransactionTemplatesService {
     });
   }
 
-  async remove(id: string, userId: string) {
+  async remove(id: string, userId: UserId) {
     await this.findOne(id, userId);
     return this.transactionTemplateRepo.delete({ id, userId });
   }
 
-  async removeAllByUser(userId: string) {
+  async removeAllByUser(userId: UserId) {
     await this.transactionTemplateLogRepo.deleteMany({ userId });
     await this.transactionTemplateRepo.deleteMany({ userId });
   }
@@ -127,7 +135,9 @@ export class TransactionTemplatesService {
       date.setDate(template.dayOfMonth);
     }
 
-    const categoryAmount = template.amount / template.categories.length;
+    const categoryAmount = template.amount.dividedBy(
+      template.categories.length,
+    );
 
     const categories = template.categories.map((category) => ({
       categoryId: category.toString(),

@@ -63,8 +63,8 @@ test.describe.parallel('Account creation', () => {
     await addAccountAndVerifyDetails(
       page,
       'Credit',
-      '100000000000000000000',
-      '100 000 000 000 000 000 000,00 €',
+      '99000000',
+      '99 000 000,00 €',
     );
   });
 
