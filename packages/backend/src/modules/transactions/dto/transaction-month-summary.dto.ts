@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Decimal } from '@prisma/client/runtime/library';
 
 class TransactionMonthSummaryIdDto {
   @ApiProperty()
@@ -25,14 +26,14 @@ export class TransactionMonthSummaryDto {
   readonly transfersCount: number;
 
   @ApiProperty()
-  readonly totalAmount: number;
+  readonly totalAmount: Decimal;
 
   @ApiProperty()
-  readonly incomeAmount: number;
+  readonly incomeAmount: Decimal;
 
   @ApiProperty()
-  readonly expenseAmount: number;
+  readonly expenseAmount: Decimal;
 
   @ApiProperty()
-  readonly transferAmount: number;
+  readonly transferAmount: Decimal;
 }

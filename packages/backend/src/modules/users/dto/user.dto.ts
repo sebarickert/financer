@@ -7,8 +7,6 @@ export class UserDto implements User {
   @ApiProperty({ type: 'string' })
   id: string;
 
-  v: number;
-
   @ApiProperty()
   createdAt: Date;
 

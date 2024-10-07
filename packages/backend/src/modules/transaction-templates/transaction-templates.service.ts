@@ -123,7 +123,9 @@ export class TransactionTemplatesService {
       date.setDate(template.dayOfMonth);
     }
 
-    const categoryAmount = template.amount / template.categories.length;
+    const categoryAmount = template.amount.dividedBy(
+      template.categories.length,
+    );
 
     const categories = template.categories.map((category) => ({
       categoryId: category.toString(),

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { User } from '@prisma/client';
 
-import { isNodeEnvInTest } from '../../config/configuration';
+import { isApplicationInTestMode } from '../../config/configuration';
 import { DUMMY_TEST_USER } from '../../config/mockAuthenticationMiddleware';
 import { UserRepo } from '../../database/repos/user.repo';
 
@@ -13,13 +13,13 @@ export class UsersService {
   constructor(private readonly userRepo: UserRepo) {}
 
   async findAll(): Promise<User[]> {
-    return !isNodeEnvInTest()
+    return !isApplicationInTestMode()
       ? this.userRepo.findMany({})
       : ([DUMMY_TEST_USER] as User[]);
   }
 
   async findOne(id: string): Promise<User> {
-    return !isNodeEnvInTest()
+    return !isApplicationInTestMode()
       ? this.userRepo.findOne({ id })
       : (DUMMY_TEST_USER as User);
   }

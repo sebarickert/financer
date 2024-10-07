@@ -1,9 +1,6 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import {
-  TransactionCategoryMapping,
-  TransactionType,
-  Prisma,
-} from '@prisma/client';
+import { Injectable } from '@nestjs/common';
+import { TransactionCategoryMapping, TransactionType } from '@prisma/client';
+import { Decimal } from '@prisma/client/runtime/library';
 
 import { TransactionCategoryMappingRepo } from '../../database/repos/transaction-category-mapping.repo';
 import { ForceMutable } from '../../types/force-mutable';
@@ -130,7 +127,10 @@ export class TransactionCategoryMappingsService {
       const { type, month: transactionMonth, year: transactionYear } = key;
 
       const count = value.length;
-      const amount = value.reduce((acc, mapping) => acc + mapping.amount, 0);
+      const amount = value.reduce(
+        (acc, transaction) => acc.add(transaction.amount),
+        new Decimal(0),
+      );
 
       const summary = summaries.get(
         `${transactionYear}-${transactionMonth}`,
@@ -140,27 +140,27 @@ export class TransactionCategoryMappingsService {
         incomesCount: 0,
         expensesCount: 0,
         transfersCount: 0,
-        totalAmount: 0,
-        incomeAmount: 0,
-        expenseAmount: 0,
-        transferAmount: 0,
+        totalAmount: new Decimal(0),
+        incomeAmount: new Decimal(0),
+        expenseAmount: new Decimal(0),
+        transferAmount: new Decimal(0),
       };
 
       summary.totalCount += count;
 
       if (type === TransactionType.TRANSFER) {
         summary.transfersCount += count;
-        summary.transferAmount += amount;
+        summary.transferAmount = summary.transferAmount.add(amount);
       } else if (type === TransactionType.EXPENSE) {
         summary.expensesCount += count;
-        summary.expenseAmount += amount;
+        summary.expenseAmount = summary.expenseAmount.add(amount);
 
-        summary.totalAmount -= amount;
+        summary.totalAmount = summary.totalAmount.minus(amount);
       } else {
         summary.incomesCount += count;
-        summary.incomeAmount += amount;
+        summary.incomeAmount = summary.incomeAmount.add(amount);
 
-        summary.totalAmount += amount;
+        summary.totalAmount = summary.totalAmount.add(amount);
       }
 
       summaries.set(`${transactionYear}-${transactionMonth}`, summary);
@@ -181,87 +181,11 @@ export class TransactionCategoryMappingsService {
       })
       .map((summary) => ({
         ...summary,
-        totalAmount: Number(summary.totalAmount.toFixed(2)),
-        incomeAmount: Number(summary.incomeAmount.toFixed(2)),
-        expenseAmount: Number(summary.expenseAmount.toFixed(2)),
-        transferAmount: Number(summary.transferAmount.toFixed(2)),
+        totalAmount: summary.totalAmount,
+        incomeAmount: summary.incomeAmount,
+        expenseAmount: summary.expenseAmount,
+        transferAmount: summary.transferAmount,
       }));
-  }
-
-  private filterRawMongoYearAndMonthFilter(
-    year?: number,
-    month?: number,
-    filterMode: 'targetMonth' | 'laterThan' = 'targetMonth',
-  ): Prisma.InputJsonObject {
-    if (!year && month) {
-      throw new BadRequestException('Year is required when month is provided');
-    }
-
-    if (!year && !month) {
-      return {};
-    }
-
-    if (filterMode === 'laterThan') {
-      return {
-        date: {
-          $gte: DateService.fromZonedTime(year, month - 1 || 0, 1),
-        },
-      };
-    }
-
-    return {
-      date: {
-        $gte: DateService.fromZonedTime(year, month - 1 || 0, 1),
-        $lt: DateService.fromZonedTime(year, month || 12, 1),
-      },
-    };
-  }
-
-  private filterRawMongoMonthlySummaryCondition(
-    userId: string,
-    operator: '$amount' | '$transactionAmount' | 1 | 0,
-    transactionType: TransactionType,
-  ): Prisma.InputJsonValue {
-    const selectedQuery =
-      this.filterRawMongoAggregationTransactionTypeFilter(transactionType);
-
-    if (transactionType !== null || typeof operator !== 'string') {
-      return { $cond: [{ $and: selectedQuery }, operator, 0] };
-    }
-
-    return {
-      $cond: [
-        { $and: [...selectedQuery, { $eq: ['$fromAccount', null] }] },
-        operator,
-        {
-          $cond: [
-            { $and: [...selectedQuery, { $eq: ['$toAccount', null] }] },
-            { $multiply: [operator, -1] },
-            0,
-          ],
-        },
-      ],
-    };
-  }
-
-  private filterRawMongoAggregationTransactionTypeFilter(
-    transactionType: TransactionType,
-  ): Prisma.InputJsonObject[] {
-    const isEmpty = (fieldName: string) => ({ $eq: [fieldName, null] });
-    const isNotEmpty = (fieldName: string) => ({ $ne: [fieldName, null] });
-
-    switch (transactionType) {
-      case TransactionType.INCOME:
-        return [isNotEmpty('$toAccount'), isEmpty('$fromAccount')];
-      case TransactionType.EXPENSE:
-        return [isNotEmpty('$fromAccount'), isEmpty('$toAccount')];
-      case TransactionType.TRANSFER:
-        return [isNotEmpty('$fromAccount'), isNotEmpty('$toAccount')];
-      case null:
-        return [];
-      default:
-        throw new Error(`Invalid transaction type: ${transactionType}`);
-    }
   }
 
   update(id: number) {

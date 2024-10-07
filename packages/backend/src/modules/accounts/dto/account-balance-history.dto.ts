@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Decimal } from '@prisma/client/runtime/library';
 import { IsDate, IsNumber } from 'class-validator';
 
 export class AccountBalanceHistoryDto {
@@ -8,9 +9,9 @@ export class AccountBalanceHistoryDto {
 
   @ApiProperty()
   @IsNumber()
-  amount: number;
+  amount: Decimal;
 
   @ApiProperty()
   @IsNumber()
-  balance: number;
+  balance: Decimal;
 }

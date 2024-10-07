@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Decimal } from '@prisma/client/runtime/library';
 import { Allow } from 'class-validator';
 
 export class CategoryMonthlySummaryDto {
@@ -22,14 +23,14 @@ export class CategoryMonthlySummaryDto {
   readonly transfersCount: number;
 
   @ApiProperty()
-  readonly totalAmount: number;
+  readonly totalAmount: Decimal;
 
   @ApiProperty()
-  readonly incomeAmount: number;
+  readonly incomeAmount: Decimal;
 
   @ApiProperty()
-  readonly expenseAmount: number;
+  readonly expenseAmount: Decimal;
 
   @ApiProperty()
-  readonly transferAmount: number;
+  readonly transferAmount: Decimal;
 }

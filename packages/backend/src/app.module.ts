@@ -1,6 +1,5 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import MongoStore from 'connect-mongo';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import passport from 'passport';
@@ -61,10 +60,11 @@ export class AppModule implements NestModule {
           },
           saveUninitialized: false,
           resave: false,
-          store: MongoStore.create({
-            mongoUrl: this.configService.get('mongodbConnectionString'),
-            touchAfter: 60 * 60 * 24,
-          }),
+          // TODO: Uncomment when MongoStore is fixed
+          // store: MongoStore.create({
+          //   mongoUrl: this.configService.get('mongodbConnectionString'),
+          //   touchAfter: 60 * 60 * 24,
+          // }),
         }),
         cookieParser(),
         passport.initialize(),

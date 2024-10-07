@@ -4,6 +4,7 @@ import {
   TransactionTemplateType,
   TransactionType,
 } from '@prisma/client';
+import { Decimal } from '@prisma/client/runtime/library';
 import {
   IsArray,
   IsEnum,
@@ -15,9 +16,13 @@ import {
   Min,
 } from 'class-validator';
 
-export class TransactionTemplateDto implements TransactionTemplate {
-  v: number;
+import {
+  IsDecimal,
+  TransformDecimal,
+} from '../../../utils/is-decimal.decorator';
+import { MinDecimal } from '../../../utils/min-decimal.decorator';
 
+export class TransactionTemplateDto implements TransactionTemplate {
   @ApiProperty()
   createdAt: Date;
 
@@ -57,9 +62,13 @@ export class TransactionTemplateDto implements TransactionTemplate {
   readonly templateVisibility: TransactionType;
 
   @ApiPropertyOptional()
-  @Min(0.01, { message: 'Amount must be a positive number.' })
+  @MinDecimal(new Decimal(0.01), {
+    message: 'Amount must be a positive number.',
+  })
   @IsOptional()
-  readonly amount: number = null;
+  @TransformDecimal()
+  @IsDecimal({ message: 'Amount must be a decimal number.' })
+  readonly amount: Decimal = null;
 
   @ApiPropertyOptional()
   @IsString()

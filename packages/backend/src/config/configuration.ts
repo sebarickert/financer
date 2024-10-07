@@ -2,24 +2,31 @@ import { getMemoryDbUri } from './memoryDatabaseServer';
 
 const isNotEmptyString = (value: string) => value && value.length > 0;
 
-export const isNodeEnvInTest = () => process.env.NODE_ENV === 'test';
 export const isNodeEnvInDev = () => process.env.NODE_ENV === 'development';
+export const isNodeEnvInTest = () => process.env.NODE_ENV === 'test';
+
+export const shouldUseInternalDockerDb = () =>
+  process.env.USE_INTERNAL_DOCKER_DB === 'true';
+
+export const isApplicationInTestMode = () =>
+  isNodeEnvInTest() || shouldUseInternalDockerDb();
+
 export const shouldOnlyExportApiSpec = () =>
   `${process.env.NEST_ONLY_EXPORT_API_SPEC}`.toUpperCase() === 'TRUE';
 
 export const isGithubAuthEnabled = () =>
-  !isNodeEnvInTest() &&
+  !isApplicationInTestMode() &&
   isNotEmptyString(process.env.GITHUB_CLIENT_ID) &&
   isNotEmptyString(process.env.GITHUB_CLIENT_SECRET);
 
 export const isAuth0AuthEnabled = () =>
-  !isNodeEnvInTest() &&
+  !isApplicationInTestMode() &&
   isNotEmptyString(process.env.AUTH0_DOMAIN) &&
   isNotEmptyString(process.env.AUTH0_CLIENT_ID) &&
   isNotEmptyString(process.env.AUTH0_CLIENT_SECRET);
 
 const parseMongoDbUri = async (): Promise<string> => {
-  if (!isNodeEnvInTest() && !shouldOnlyExportApiSpec()) {
+  if (!shouldUseInternalDockerDb() && !shouldOnlyExportApiSpec()) {
     return Promise.resolve(
       `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/${process.env.DB_NAME}`,
     );

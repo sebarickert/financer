@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   TransactionTemplateLog,
   TransactionTemplateType,
@@ -27,4 +28,10 @@ export class TransactionTemplateLogDto implements TransactionTemplateLog {
   @IsDate({ message: 'Date must not be empty.' })
   @Type(() => Date)
   readonly executed: Date;
+
+  @ApiProperty()
+  createdAt: Date;
+
+  @ApiProperty()
+  updatedAt: Date;
 }

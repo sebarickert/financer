@@ -12,8 +12,9 @@ import { json } from 'express';
 import { AppModule } from './app.module';
 import {
   isNodeEnvInDev,
-  isNodeEnvInTest,
+  isApplicationInTestMode,
   shouldOnlyExportApiSpec,
+  shouldUseInternalDockerDb,
 } from './config/configuration';
 import { getMemoryDbUri } from './config/memoryDatabaseServer';
 import { mockAuthenticationMiddleware } from './config/mockAuthenticationMiddleware';
@@ -26,7 +27,8 @@ const options: SwaggerDocumentOptions = {
 };
 
 async function bootstrap() {
-  if (isNodeEnvInTest() || shouldOnlyExportApiSpec()) await getMemoryDbUri();
+  if (shouldUseInternalDockerDb() || shouldOnlyExportApiSpec())
+    await getMemoryDbUri();
 
   const app = await NestFactory.create(AppModule);
   app.use(json({ limit: '50mb' }));
@@ -37,7 +39,7 @@ async function bootstrap() {
     }),
   );
 
-  if (isNodeEnvInTest()) app.use(mockAuthenticationMiddleware);
+  if (isApplicationInTestMode()) app.use(mockAuthenticationMiddleware);
 
   if (isNodeEnvInDev()) {
     const config = new DocumentBuilder()

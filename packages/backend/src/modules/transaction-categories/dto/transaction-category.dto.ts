@@ -9,8 +9,6 @@ import {
 } from 'class-validator';
 
 export class TransactionCategoryDto implements TransactionCategory {
-  v: number;
-
   @ApiProperty()
   createdAt: Date;
 

@@ -11,6 +11,7 @@ import {
   Transaction,
   TransactionType,
 } from '@prisma/client';
+import { Decimal } from '@prisma/client/runtime/library';
 
 import { TransactionRepo } from '../../database/repos/transaction.repo';
 import { ForceMutable } from '../../types/force-mutable';
@@ -229,8 +230,8 @@ export class TransactionsService {
 
       const count = value.length;
       const amount = value.reduce(
-        (acc, transaction) => acc + transaction.amount,
-        0,
+        (acc, transaction) => acc.add(transaction.amount),
+        new Decimal(0),
       );
 
       const summary = summaries.get(
@@ -241,27 +242,27 @@ export class TransactionsService {
         incomesCount: 0,
         expensesCount: 0,
         transfersCount: 0,
-        totalAmount: 0,
-        incomeAmount: 0,
-        expenseAmount: 0,
-        transferAmount: 0,
+        totalAmount: new Decimal(0),
+        incomeAmount: new Decimal(0),
+        expenseAmount: new Decimal(0),
+        transferAmount: new Decimal(0),
       };
 
       summary.totalCount += count;
 
       if (type === TransactionType.TRANSFER) {
         summary.transfersCount += count;
-        summary.transferAmount += amount;
+        summary.transferAmount = summary.transferAmount.add(amount);
       } else if (type === TransactionType.EXPENSE) {
         summary.expensesCount += count;
-        summary.expenseAmount += amount;
+        summary.expenseAmount = summary.expenseAmount.add(amount);
 
-        summary.totalAmount -= amount;
+        summary.totalAmount = summary.totalAmount.minus(amount);
       } else {
         summary.incomesCount += count;
-        summary.incomeAmount += amount;
+        summary.incomeAmount = summary.incomeAmount.add(amount);
 
-        summary.totalAmount += amount;
+        summary.totalAmount = summary.totalAmount.add(amount);
       }
 
       summaries.set(`${transactionYear}-${transactionMonth}`, summary);
@@ -282,10 +283,10 @@ export class TransactionsService {
       })
       .map((summary) => ({
         ...summary,
-        totalAmount: Number(summary.totalAmount.toFixed(2)),
-        incomeAmount: Number(summary.incomeAmount.toFixed(2)),
-        expenseAmount: Number(summary.expenseAmount.toFixed(2)),
-        transferAmount: Number(summary.transferAmount.toFixed(2)),
+        totalAmount: summary.totalAmount,
+        incomeAmount: summary.incomeAmount,
+        expenseAmount: summary.expenseAmount,
+        transferAmount: summary.transferAmount,
       }));
   };
 
@@ -348,10 +349,10 @@ export class TransactionsService {
   private async updateRelatedAccountBalance(
     userId: string,
     transaction: Partial<Transaction>,
-    amount: number,
+    amount: Decimal,
     type: 'add' | 'remove',
   ): Promise<void> {
-    const amountToApply = type === 'add' ? amount : -amount;
+    const amountToApply = type === 'add' ? amount : amount.negated();
 
     if (transaction.toAccount) {
       await this.accountService.updateBalance(
@@ -364,7 +365,7 @@ export class TransactionsService {
       await this.accountService.updateBalance(
         userId.toString(),
         transaction.fromAccount.toString(),
-        -amountToApply,
+        amountToApply.negated(),
       );
     }
   }
