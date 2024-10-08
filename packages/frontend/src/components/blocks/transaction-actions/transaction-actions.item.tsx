@@ -2,6 +2,7 @@ import clsx from 'clsx';
 
 import { Icon, IconName } from '$elements/icon/icon';
 import { Link } from '$elements/link/link';
+import { TransitionType } from '$utils/transitionAnimations';
 
 export interface TransactionActionsItemProps {
   label: string;
@@ -9,6 +10,7 @@ export interface TransactionActionsItemProps {
   url: string;
   ariaLabel: string;
   onClick?(): void;
+  transition?: TransitionType;
 }
 
 export const TransactionActionsItem = ({
@@ -17,6 +19,7 @@ export const TransactionActionsItem = ({
   url,
   ariaLabel,
   onClick = () => {},
+  transition,
 }: TransactionActionsItemProps) => {
   return (
     <Link
@@ -24,6 +27,7 @@ export const TransactionActionsItem = ({
       className={`flex flex-col items-center justify-center`}
       onClick={onClick}
       aria-label={ariaLabel}
+      transition={transition}
     >
       <span className="inline-flex items-center justify-center rounded-full bg-gray h-11 w-11 text-black/75">
         <Icon type={icon} />
