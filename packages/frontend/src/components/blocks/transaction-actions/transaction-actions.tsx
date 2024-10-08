@@ -3,9 +3,11 @@ import clsx from 'clsx';
 import { TransactionActionsItem } from './transaction-actions.item';
 
 import { IconName } from '$elements/icon/icon';
+import { TransitionType } from '$utils/transitionAnimations';
 
 interface TransactionActionsProps {
   className?: string;
+  transition?: TransitionType;
   onClick?(param: boolean): void;
 }
 
@@ -33,6 +35,7 @@ const actionItems = [
 export const TransactionActions = ({
   className = '',
   onClick = () => {},
+  transition,
 }: TransactionActionsProps) => {
   return (
     <div className={clsx('', { [className]: true })}>
@@ -43,6 +46,7 @@ export const TransactionActions = ({
               <li key={actionItem.url}>
                 <TransactionActionsItem
                   {...actionItem}
+                  transition={transition}
                   onClick={() => onClick(false)}
                 />
               </li>

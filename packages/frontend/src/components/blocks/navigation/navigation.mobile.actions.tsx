@@ -35,7 +35,10 @@ export const NavigationMobileActions = ({
         onClose={() => setIsActionsModalOpen(false)}
         heading="Add transaction"
       >
-        <TransactionActions onClick={setIsActionsModalOpen} />
+        <TransactionActions
+          onClick={setIsActionsModalOpen}
+          transition="slideInFromBottom"
+        />
       </Drawer>
     </li>
   );
