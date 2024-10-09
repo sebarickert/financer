@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import { settingsPaths } from '$constants/settings-paths';
-import { Icon } from '$elements/icon/icon.new';
+import { Icon } from '$elements/Icon';
 import { Link } from '$elements/link/link';
 import { LinkList } from '$elements/link-list/link-list';
 import { LinkListLink } from '$elements/link-list/link-list.link';

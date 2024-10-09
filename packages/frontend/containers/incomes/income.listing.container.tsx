@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { TransactionType } from '$api/generated/financerApi';
 import { TransactionListingWithMonthlyPager } from '$blocks/transaction-listing-with-monthly-pager/transaction-listing.with.monthly-pager';
-import { Icon } from '$elements/icon/icon.new';
+import { Icon } from '$elements/Icon';
 import { Link } from '$elements/link/link';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 

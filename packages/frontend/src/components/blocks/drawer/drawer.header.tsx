@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 
 import { Heading } from '$elements/heading/heading';
-import { Icon } from '$elements/icon/icon.new';
+import { Icon } from '$elements/Icon';
 import { Paragraph } from '$elements/paragraph/paragraph';
 
 interface DrawerHeaderProps {

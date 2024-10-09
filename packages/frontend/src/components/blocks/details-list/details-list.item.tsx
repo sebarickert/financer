@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { Icon, IconName } from '$elements/icon/icon.new';
+import { Icon, IconName } from '$elements/Icon';
 
 export type DetailsItem = {
   icon: IconName;

@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { FC } from 'react';
 
-import { Icon, IconName } from '$elements/icon/icon.new';
+import { Icon, IconName } from '$elements/Icon';
 import { Link } from '$elements/link/link';
 
 interface LinkListLinkProps {

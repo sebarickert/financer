@@ -2,7 +2,7 @@ import clsx from 'clsx';
 
 import { Drawer } from '$blocks/drawer/drawer';
 import { TransactionActions } from '$blocks/transaction-actions/transaction-actions';
-import { Icon } from '$elements/icon/icon.new';
+import { Icon } from '$elements/Icon';
 
 interface NavigationMobileActionsProps {
   isActionsModalOpen: boolean;

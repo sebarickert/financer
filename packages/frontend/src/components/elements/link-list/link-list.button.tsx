@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 
-import { Icon, IconName } from '$elements/icon/icon.new';
+import { Icon, IconName } from '$elements/Icon';
 
 interface LinkListButtonProps {
   icon?: IconName;

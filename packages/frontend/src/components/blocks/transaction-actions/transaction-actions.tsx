@@ -2,7 +2,7 @@ import clsx from 'clsx';
 
 import { TransactionActionsItem } from './transaction-actions.item';
 
-import { IconName } from '$elements/icon/icon.new';
+import { IconName } from '$elements/Icon';
 import { TransitionType } from '$utils/transitionAnimations';
 
 interface TransactionActionsProps {

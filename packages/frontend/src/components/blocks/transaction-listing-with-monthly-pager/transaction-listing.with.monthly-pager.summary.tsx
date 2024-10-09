@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { TransactionMonthSummaryDto } from '$api/generated/financerApi';
 import { DetailsList } from '$blocks/details-list/details-list';
-import { IconName } from '$elements/icon/icon.new';
+import { IconName } from '$elements/Icon';
 import {
   TransactionListOptions,
   TransactionService,

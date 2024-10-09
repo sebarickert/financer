@@ -6,7 +6,7 @@ import { FC } from 'react';
 
 import { NavigationItem } from './navigation';
 
-import { Icon } from '$elements/icon/icon.new';
+import { Icon } from '$elements/Icon';
 import { Link } from '$elements/link/link';
 import { isActiveLink } from '$utils/is-link-active';
 import { CustomHeader } from 'src/types/custom-headers';

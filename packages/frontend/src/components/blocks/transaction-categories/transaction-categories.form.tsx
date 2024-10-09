@@ -5,7 +5,7 @@ import { Option } from '../../elements/select/select';
 import { Select } from '../../elements/select/select';
 
 import { ButtonGroup } from '$elements/button/button.group';
-import { Icon } from '$elements/icon/icon.new';
+import { Icon } from '$elements/Icon';
 
 interface TransactionCategoriesFormProps {
   className?: string;

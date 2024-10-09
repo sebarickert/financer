@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Drawer } from '$blocks/drawer/drawer';
 import { Button, ButtonAccentColor } from '$elements/button/button';
 import { ButtonGroup } from '$elements/button/button.group';
-import { Icon, IconName } from '$elements/icon/icon.new';
+import { Icon, IconName } from '$elements/Icon';
 
 interface HeaderDrawerActionProps {
   onSubmit: () => void;

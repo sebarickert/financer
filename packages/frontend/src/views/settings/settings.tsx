@@ -4,7 +4,7 @@ import { Role } from '$api/generated/financerApi';
 import { HardRefreshButton } from '$blocks/HardRefreshButton';
 import { settingsPaths } from '$constants/settings-paths';
 import { Button } from '$elements/button/button';
-import { IconName } from '$elements/icon/icon.new';
+import { IconName } from '$elements/Icon';
 import { LinkList } from '$elements/link-list/link-list';
 import { LinkListLink } from '$elements/link-list/link-list.link';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';

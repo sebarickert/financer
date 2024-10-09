@@ -10,7 +10,7 @@ import { BalanceDisplay } from '$blocks/balance-display/balance-display';
 import { DetailsList } from '$blocks/details-list/details-list';
 import { DetailsItem } from '$blocks/details-list/details-list.item';
 import { Heading } from '$elements/heading/heading';
-import { Icon, IconName } from '$elements/icon/icon.new';
+import { Icon, IconName } from '$elements/Icon';
 import { Link } from '$elements/link/link';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { CategoryService } from '$ssr/api/category.service';

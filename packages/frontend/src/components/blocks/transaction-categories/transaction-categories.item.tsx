@@ -2,7 +2,7 @@ import { useFormContext } from 'react-hook-form';
 
 import { FieldArrayFields } from './transaction-categories';
 
-import { Icon } from '$elements/icon/icon.new';
+import { Icon } from '$elements/Icon';
 
 type TransactionCategoriesItemProps = {
   index: number;

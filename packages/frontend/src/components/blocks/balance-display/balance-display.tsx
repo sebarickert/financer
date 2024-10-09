@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { FC } from 'react';
 
 import { TransactionType } from '$api/generated/financerApi';
-import { Icon, IconName } from '$elements/icon/icon.new';
+import { Icon, IconName } from '$elements/Icon';
 import { formatCurrency } from '$utils/formatCurrency';
 
 interface BalanceDisplayProps {

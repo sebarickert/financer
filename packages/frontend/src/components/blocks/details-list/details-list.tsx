@@ -3,7 +3,7 @@ import { FC } from 'react';
 
 import { DetailsItem, DetailsListItem } from './details-list.item';
 
-import { Icon } from '$elements/icon/icon.new';
+import { Icon } from '$elements/Icon';
 
 interface DetailsListProps {
   className?: string;

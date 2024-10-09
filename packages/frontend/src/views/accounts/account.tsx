@@ -9,7 +9,7 @@ import { DetailsItem } from '$blocks/details-list/details-list.item';
 import { TransactionListingWithMonthlyPager } from '$blocks/transaction-listing-with-monthly-pager/transaction-listing.with.monthly-pager';
 import { accountTypeIconMapping } from '$constants/account/accountTypeMapping';
 import { AccountUpdateMarketValueContainer } from '$container/accounts/account.update-market-value.container';
-import { Icon, IconName } from '$elements/icon/icon.new';
+import { Icon, IconName } from '$elements/Icon';
 import { Link } from '$elements/link/link';
 import { LoaderSuspense } from '$elements/loader/loader-suspense';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
