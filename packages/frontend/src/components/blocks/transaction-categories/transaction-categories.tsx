@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useId, useState } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 
 import { TransactionCategoriesForm } from './transaction-categories.form';
@@ -28,7 +28,7 @@ export const TransactionCategories = ({
   categorySelectOnly,
 }: TransactionCategoriesProps): JSX.Element => {
   const [selectedIndex, setSelectedIndex] = useState(defaultSelectedIndex);
-  const [isFormOpen, setIsFormOpen] = useState(false);
+  const formId = useId();
 
   const { data: transactionCategoriesRaw } =
     useGetAllTransactionCategoriesWithCategoryTree();
@@ -56,7 +56,6 @@ export const TransactionCategories = ({
 
   const addNewCategory = () => {
     setSelectedIndex(fields.length);
-    setIsFormOpen(true);
   };
 
   const isEmptyCategory = (index: number) =>
@@ -73,13 +72,10 @@ export const TransactionCategories = ({
       remove(selectedIndex);
     }
 
-    setIsFormOpen(false);
     setSelectedIndex(defaultSelectedIndex);
   };
 
   const handleDelete = async () => {
-    setIsFormOpen(false);
-
     setTimeout(() => {
       remove(selectedIndex);
     }, 100);
@@ -93,12 +89,10 @@ export const TransactionCategories = ({
 
     const values = getValues(`categories.${selectedIndex}`);
     update(selectedIndex, values);
-    setIsFormOpen(false);
   };
 
   const handleCategoryItemClick = (index: number) => {
     setSelectedIndex(index);
-    setIsFormOpen(true);
   };
 
   return (
@@ -108,11 +102,12 @@ export const TransactionCategories = ({
         accentColor="plain"
         isDisabled={!transactionAmount || transactionAmount < 0}
         testId="add-category-button"
+        popoverTarget={formId}
       >
         Add category
       </Button>
       <Drawer
-        isOpen={isFormOpen}
+        id={formId}
         onClose={onClose}
         heading={!isNewCategory ? 'Edit category item' : 'Add category item'}
       >

@@ -1,11 +1,16 @@
 import clsx from 'clsx';
+import { HTMLAttributes } from 'react';
 
 import { Link } from '$elements/link/link';
 import { isExternalLink } from '$utils/isExternalLink';
 import { TransitionType } from '$utils/transitionAnimations';
 
 export type ButtonAccentColor = 'blue' | 'plain' | 'black' | 'red' | 'unstyled';
-interface ButtonProps {
+interface ButtonProps
+  extends Pick<
+    HTMLAttributes<unknown>,
+    'popoverTarget' | 'popoverTargetAction'
+  > {
   accentColor?: ButtonAccentColor;
   children: React.ReactNode;
   className?: string;
@@ -29,6 +34,7 @@ export const Button = ({
   testId,
   isDisabled,
   applyBaseStyles = true,
+  ...props
 }: ButtonProps): JSX.Element => {
   const buttonClasses = clsx({
     ['inline-flex justify-center w-full sm:w-auto rounded-md items-center py-3 px-6 focus:ring-2 focus:ring-offset-2 focus:outline-none transition ease-in-out duration-150 tracking-tight font-normal text-base hover:opacity-75 focus:opacity-75']:
@@ -79,6 +85,7 @@ export const Button = ({
       )}
       data-testid={testId}
       disabled={isDisabled}
+      {...props}
     >
       {children}
     </button>

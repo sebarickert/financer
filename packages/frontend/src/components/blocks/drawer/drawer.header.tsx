@@ -8,7 +8,8 @@ interface DrawerHeaderProps {
   className?: string;
   heading?: string;
   children?: string;
-  onClose: () => void;
+  onClose?: () => void;
+  id: string;
 }
 
 export const DrawerHeader = ({
@@ -16,6 +17,7 @@ export const DrawerHeader = ({
   onClose,
   children,
   heading,
+  id,
 }: DrawerHeaderProps) => {
   return (
     <section
@@ -34,6 +36,8 @@ export const DrawerHeader = ({
       <button
         className="col-[2] overflow-hidden inline-flex items-center justify-center h-11 w-11 -my-2 translate-x-1/3"
         onClick={onClose}
+        popoverTarget={id}
+        popoverTargetAction="hide"
       >
         <Icon name="PlusIcon" className="w-6 h-6 rotate-45" />
         <span className="sr-only">Close drawer</span>
