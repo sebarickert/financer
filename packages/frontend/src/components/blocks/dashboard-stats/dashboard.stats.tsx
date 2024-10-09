@@ -3,8 +3,8 @@ import { FC } from 'react';
 
 import { BalanceDisplay } from '$blocks/balance-display/balance-display';
 import { DetailsList } from '$blocks/details-list/details-list';
+import { DetailsItem } from '$blocks/details-list/details-list.item';
 import { currentMonthAndYearInLongFormat } from '$constants/months';
-import { IconName } from '$elements/icon/icon';
 import { AccountService } from '$ssr/api/account.service';
 import { TransactionService } from '$ssr/api/transaction.service';
 import { UserPreferenceService } from '$ssr/api/user-preference.service';
@@ -39,9 +39,9 @@ export const DashboardStats: FC = async () => {
 
   const balance = Number.isNaN(totalBalance) ? 0 : totalBalance;
 
-  const monthlyDetails = [
+  const monthlyDetails: DetailsItem[] = [
     {
-      icon: IconName.download,
+      icon: 'ArrowDownTrayIcon',
       label: 'Incomes',
       description: (
         <span className="text-green">
@@ -50,14 +50,14 @@ export const DashboardStats: FC = async () => {
       ),
     },
     {
-      icon: IconName.upload,
+      icon: 'ArrowUpTrayIcon',
       label: 'Expenses',
       description: (
         <span className="text-red">{formatCurrency(totalExpenses) ?? '-'}</span>
       ),
     },
     {
-      icon: IconName.plus,
+      icon: 'PlusIcon',
       label: 'Net Total',
       description: formatCurrency(totalIncomes - totalExpenses) ?? '-',
     },

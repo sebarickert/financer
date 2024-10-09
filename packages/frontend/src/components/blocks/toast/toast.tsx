@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { IconName, Icon } from '$elements/icon/icon';
+import { IconName, Icon } from '$elements/icon/icon.new';
 import { removeToastMessage } from '$reducer/notifications.reducer';
 
 export enum ToastMessageTypes {
@@ -40,11 +40,11 @@ export const Toast = ({
   const toastIcon = (toastType: ToastMessageTypes) => {
     switch (toastType) {
       case ToastMessageTypes.ERROR:
-        return IconName.exclamation;
+        return 'ExclamationTriangleIcon' as IconName;
       case ToastMessageTypes.GENERAL:
-        return IconName.informationCircle;
+        return 'InformationCircleIcon' as IconName;
       case ToastMessageTypes.SUCCESS:
-        return IconName.check;
+        return 'CheckIcon' as IconName;
     }
   };
 
@@ -75,7 +75,7 @@ export const Toast = ({
       data-testid="toast-item"
       data-toast-type={type}
     >
-      <Icon type={toastIcon(type)} className="h-6 w-6" />
+      <Icon name={toastIcon(type)} className="w-6 h-6" />
       <p>{message}</p>
       {additionalInformation && additionalInformationContent}
       {id && (
@@ -84,10 +84,7 @@ export const Toast = ({
           onClick={handleRemove}
           data-testid="toast-remove"
         >
-          <Icon
-            type={IconName.plus}
-            className="h-6 w-6 rotate-45 fill-current"
-          />
+          <Icon name="PlusIcon" className="w-6 h-6 rotate-45 fill-current" />
           <span className="sr-only">Close</span>
         </button>
       )}

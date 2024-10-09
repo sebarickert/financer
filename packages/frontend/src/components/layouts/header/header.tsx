@@ -5,7 +5,7 @@ import { FC } from 'react';
 
 import { usePageInfoContext } from '$context/pageInfoContext';
 import { Heading } from '$elements/heading/heading';
-import { Icon, IconName } from '$elements/icon/icon';
+import { Icon } from '$elements/icon/icon.new';
 import { Link } from '$elements/link/link';
 import { useAppSelector } from '$store';
 
@@ -41,7 +41,7 @@ export const Header: FC<HeaderProps> = ({ title }) => {
           transition="slideInFromLeft"
         >
           <span className="sr-only">Go back</span>
-          <Icon type={IconName.arrowLeft} />
+          <Icon name="ArrowLeftIcon" />
         </Link>
       )}
       <Heading

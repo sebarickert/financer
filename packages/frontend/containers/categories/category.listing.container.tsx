@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import { settingsPaths } from '$constants/settings-paths';
-import { Icon, IconName } from '$elements/icon/icon';
+import { Icon } from '$elements/icon/icon.new';
 import { Link } from '$elements/link/link';
 import { LinkList } from '$elements/link-list/link-list';
 import { LinkListLink } from '$elements/link-list/link-list.link';
@@ -88,7 +88,7 @@ export const CategoryListingContainer: FC = async () => {
             testId="add-category-button"
           >
             <span className="sr-only">Add category</span>
-            <Icon type={IconName.plus} />
+            <Icon name="PlusIcon" />
           </Link>
         }
       />
@@ -100,12 +100,12 @@ export const CategoryListingContainer: FC = async () => {
             testId="category-list"
           >
             {parentLink && (
-              <LinkListLink link={parentLink} icon={IconName.tag}>
+              <LinkListLink link={parentLink} icon={'TagIcon'}>
                 {parentLabel}
               </LinkListLink>
             )}
             {items.map(({ id, link, label }) => (
-              <LinkListLink key={id} link={link} icon={IconName.tag}>
+              <LinkListLink key={id} link={link} icon={'TagIcon'}>
                 {label}
               </LinkListLink>
             ))}

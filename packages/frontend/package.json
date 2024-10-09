@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@heroicons/react": "^2.1.5",
     "@reduxjs/toolkit": "^2.2.7",
     "chart.js": "^4.4.1",
     "clsx": "^2.0.0",

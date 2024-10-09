@@ -6,7 +6,7 @@ import { FC } from 'react';
 
 import { NavigationItem } from './navigation';
 
-import { Icon } from '$elements/icon/icon';
+import { Icon } from '$elements/icon/icon.new';
 import { Link } from '$elements/link/link';
 import { isActiveLink } from '$utils/is-link-active';
 import { CustomHeader } from 'src/types/custom-headers';
@@ -38,7 +38,7 @@ export const NavigationDesktopItem: FC<NavigationItem> = async ({
   return (
     <li>
       <Link href={url} className={linkClasses} aria-label={ariaLabel}>
-        <Icon type={iconName} isSolid={isActive} />
+        <Icon name={iconName} isSolid={isActive} />
         <span className={clsx('ml-4 text-base')}>{label}</span>
       </Link>
     </li>

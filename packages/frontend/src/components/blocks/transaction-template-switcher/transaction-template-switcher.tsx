@@ -11,7 +11,7 @@ import { Drawer } from '$blocks/drawer/drawer';
 import { transactionTypeLabelMapping } from '$constants/transaction/transactionTypeMapping';
 import { Button } from '$elements/button/button';
 import { ButtonGroup } from '$elements/button/button.group';
-import { Icon, IconName } from '$elements/icon/icon';
+import { Icon } from '$elements/icon/icon.new';
 import { Radio } from '$elements/radio/radio';
 import { RadioGroup } from '$elements/radio/radio.group';
 
@@ -67,7 +67,7 @@ export const TransactionTemplateSwitcher = ({
         className="inline-flex items-center justify-center -mr-3 h-11 w-11"
       >
         <span className="sr-only">Switch template</span>
-        <Icon type={IconName.lightningBolt} />
+        <Icon name="BoltIcon" />
       </Button>
       <Drawer isOpen={isOpen} onClose={onClose} heading="Switch template">
         <form onSubmit={handleSubmit}>

@@ -4,7 +4,7 @@ import { Role } from '$api/generated/financerApi';
 import { HardRefreshButton } from '$blocks/HardRefreshButton';
 import { settingsPaths } from '$constants/settings-paths';
 import { Button } from '$elements/button/button';
-import { IconName } from '$elements/icon/icon';
+import { IconName } from '$elements/icon/icon.new';
 import { LinkList } from '$elements/link-list/link-list';
 import { LinkListLink } from '$elements/link-list/link-list.link';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
@@ -22,12 +22,12 @@ export const Settings: FC<SettingsProps> = ({ roles }) => {
           {
             children: 'User preferences',
             link: settingsPaths.userPreferences,
-            icon: IconName.userCircle,
+            icon: 'UserCircleIcon' as IconName,
           },
           {
             children: 'Download my data',
             link: settingsPaths.dataDownload,
-            icon: IconName.cloudDownload,
+            icon: 'CloudArrowDownIcon' as IconName,
           },
         ],
       },
@@ -37,19 +37,19 @@ export const Settings: FC<SettingsProps> = ({ roles }) => {
           {
             children: 'Templates',
             link: settingsPaths.templates,
-            icon: IconName.lightningBolt,
+            icon: 'BoltIcon' as IconName,
           },
           {
             children: 'Categories',
             link: settingsPaths.categories,
-            icon: IconName.tag,
+            icon: 'TagIcon' as IconName,
           },
           ...(roles?.includes(Role.TestUser)
             ? [
                 {
                   children: 'Overrite data',
                   link: settingsPaths.dataOverride,
-                  icon: IconName.exclamation,
+                  icon: 'ExclamationTriangleIcon' as IconName,
                 },
               ]
             : []),

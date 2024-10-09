@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 
-import { Icon, IconName } from '$elements/icon/icon';
+import { Icon, IconName } from '$elements/icon/icon.new';
 import { Link } from '$elements/link/link';
 import { TransitionType } from '$utils/transitionAnimations';
 
@@ -30,7 +30,7 @@ export const TransactionActionsItem = ({
       transition={transition}
     >
       <span className="inline-flex items-center justify-center rounded-full bg-gray h-11 w-11 text-black/75">
-        <Icon type={icon} />
+        <Icon name={icon} />
       </span>
       <span className={clsx('text-sm tracking-tight mt-2')}>{label}</span>
     </Link>

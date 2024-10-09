@@ -8,8 +8,9 @@ import {
 } from '$api/generated/financerApi';
 import { BalanceDisplay } from '$blocks/balance-display/balance-display';
 import { DetailsList } from '$blocks/details-list/details-list';
+import { DetailsItem } from '$blocks/details-list/details-list.item';
 import { Heading } from '$elements/heading/heading';
-import { Icon, IconName } from '$elements/icon/icon';
+import { Icon, IconName } from '$elements/icon/icon.new';
 import { Link } from '$elements/link/link';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { CategoryService } from '$ssr/api/category.service';
@@ -59,11 +60,11 @@ export const Transaction: FC<TransactionProps> = async ({
 
   const transactionDetailsMapping = getUrlMapping(transactionType);
 
-  const transactionDetails = [
+  const transactionDetails: DetailsItem[] = [
     ...(fromAccount
       ? [
           {
-            icon: IconName.viewGrid,
+            icon: 'Squares2X2Icon' as IconName,
             label: 'From Account',
             description: fromAccount,
           },
@@ -72,41 +73,41 @@ export const Transaction: FC<TransactionProps> = async ({
     ...(toAccount
       ? [
           {
-            icon: IconName.viewGrid,
+            icon: 'Squares2X2Icon' as IconName,
             label: 'To Account',
             description: toAccount,
           },
         ]
       : []),
     {
-      icon: IconName.calendar,
+      icon: 'CalendarIcon',
       label: 'Date',
       description: formatDate(new Date(transaction?.date), DateFormat.long),
     },
     {
-      icon: IconName.informationCircle,
+      icon: 'InformationCircleIcon',
       label: 'Type',
       description: capitalize(transactionDetailsMapping.type ?? '-'),
     },
   ];
 
-  const categoryDetails = transaction.categories.map(
+  const categoryDetails: DetailsItem[][] = transaction.categories.map(
     ({ amount, categoryId, description }) => {
       return [
         {
-          icon: IconName.tag,
+          icon: 'TagIcon' as IconName,
           label: 'Category',
           description: getCategoryNameById(categoryId as unknown as string),
         },
         {
-          icon: IconName.informationCircle,
+          icon: 'InformationCircleIcon' as IconName,
           label: 'Amount',
           description: formatCurrency(amount),
         },
         ...(description
           ? [
               {
-                icon: IconName.annotation,
+                icon: 'ChatBubbleBottomCenterIcon' as IconName,
                 label: 'Description',
                 description,
               },
@@ -128,7 +129,7 @@ export const Transaction: FC<TransactionProps> = async ({
             className="inline-flex items-center justify-center -mr-3 h-11 w-11"
           >
             <span className="sr-only">Edit</span>
-            <Icon type={IconName.pencilSquare} />
+            <Icon name="PencilSquareIcon" />
           </Link>
         }
       />

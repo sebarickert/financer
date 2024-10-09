@@ -1,11 +1,11 @@
 import { Button } from '../../elements/button/button';
 import { Divider } from '../../elements/divider/divider';
-import { Icon, IconName } from '../../elements/icon/icon';
 import { Input } from '../../elements/input/input';
 import { Option } from '../../elements/select/select';
 import { Select } from '../../elements/select/select';
 
 import { ButtonGroup } from '$elements/button/button.group';
+import { Icon } from '$elements/icon/icon.new';
 
 interface TransactionCategoriesFormProps {
   className?: string;
@@ -72,7 +72,7 @@ export const TransactionCategoriesForm = ({
                   type="button"
                 >
                   <span className="sr-only">Add unallocated amount</span>
-                  <Icon type={IconName.plus} />
+                  <Icon name="PlusIcon" />
                 </button>
               </div>
               <Input

@@ -5,7 +5,7 @@ import {
   TransactionTemplateType,
 } from '$api/generated/financerApi';
 import { settingsPaths } from '$constants/settings-paths';
-import { Icon, IconName } from '$elements/icon/icon';
+import { Icon } from '$elements/icon/icon.new';
 import { Link } from '$elements/link/link';
 import { LinkList } from '$elements/link-list/link-list';
 import { LinkListLink } from '$elements/link-list/link-list.link';
@@ -43,7 +43,7 @@ export const TemplateListing: FC<TemplateListingProps> = ({ templates }) => {
             className="inline-flex items-center justify-center -mr-3 h-11 w-11"
           >
             <span className="sr-only">Add template</span>
-            <Icon type={IconName.plus} />
+            <Icon name="PlusIcon" />
           </Link>
         }
       />
@@ -52,7 +52,7 @@ export const TemplateListing: FC<TemplateListingProps> = ({ templates }) => {
           <LinkList label={getLabel(label)} key={label}>
             {items.map(({ templateName, id }) => (
               <LinkListLink
-                icon={IconName.lightningBolt}
+                icon={'BoltIcon'}
                 key={id}
                 link={`${settingsPaths.templates}/${id}/edit`}
               >

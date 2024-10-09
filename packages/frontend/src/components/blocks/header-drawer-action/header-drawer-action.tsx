@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Drawer } from '$blocks/drawer/drawer';
 import { Button, ButtonAccentColor } from '$elements/button/button';
 import { ButtonGroup } from '$elements/button/button.group';
-import { Icon, IconName } from '$elements/icon/icon';
+import { Icon, IconName } from '$elements/icon/icon.new';
 
 interface HeaderDrawerActionProps {
   onSubmit: () => void;
@@ -41,7 +41,7 @@ export const HeaderDrawerAction = ({
         className="inline-flex items-center justify-center -mr-3 h-11 w-11"
       >
         <span className="sr-only">{buttonLabel}</span>
-        <Icon type={buttonIcon} />
+        <Icon name={buttonIcon} />
       </Button>
       <Drawer
         isOpen={isOpen}

@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { TransactionType } from '$api/generated/financerApi';
 import { TransactionListingWithMonthlyPager } from '$blocks/transaction-listing-with-monthly-pager/transaction-listing.with.monthly-pager';
-import { Icon, IconName } from '$elements/icon/icon';
+import { Icon } from '$elements/icon/icon.new';
 import { Link } from '$elements/link/link';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
@@ -18,7 +18,7 @@ export const ExpenseListingContainer: FC = () => {
             testId="add-expense"
           >
             <span className="sr-only">Add expense</span>
-            <Icon type={IconName.plus} />
+            <Icon name="PlusIcon" />
           </Link>
         }
       />

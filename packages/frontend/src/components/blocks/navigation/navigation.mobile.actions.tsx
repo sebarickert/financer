@@ -1,9 +1,8 @@
 import clsx from 'clsx';
 
-import { Icon, IconName } from '../../elements/icon/icon';
-
 import { Drawer } from '$blocks/drawer/drawer';
 import { TransactionActions } from '$blocks/transaction-actions/transaction-actions';
+import { Icon } from '$elements/icon/icon.new';
 
 interface NavigationMobileActionsProps {
   isActionsModalOpen: boolean;
@@ -24,7 +23,7 @@ export const NavigationMobileActions = ({
         onClick={() => setIsActionsModalOpen(!isActionsModalOpen)}
       >
         <Icon
-          type={IconName.plus}
+          name="PlusIcon"
           className={clsx('transition duration-250 ease-in-out', {
             ['rotate-45']: isActionsModalOpen,
           })}

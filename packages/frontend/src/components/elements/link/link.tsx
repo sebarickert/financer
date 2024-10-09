@@ -43,7 +43,6 @@ export const Link = ({
   );
 
   if (isExternalLink(href)) {
-    console.log('external link', href);
     return (
       <a {...props} href={href} className={linkClasses} data-testid={testId}>
         {linkContent}
@@ -52,7 +51,6 @@ export const Link = ({
   }
 
   if (transition) {
-    console.log('transition link', href);
     return (
       <a
         {...props}

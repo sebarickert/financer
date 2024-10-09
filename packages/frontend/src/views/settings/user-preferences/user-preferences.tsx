@@ -1,7 +1,6 @@
 import { FC } from 'react';
 
 import { settingsPaths } from '$constants/settings-paths';
-import { IconName } from '$elements/icon/icon';
 import { LinkList } from '$elements/link-list/link-list';
 import { LinkListLink } from '$elements/link-list/link-list.link';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
@@ -13,31 +12,31 @@ export const UserPreferences: FC = () => {
       <LinkList>
         <LinkListLink
           link={`${settingsPaths.userPreferences}/dashboard-settings`}
-          icon={IconName.home}
+          icon={'HomeIcon'}
         >
           Dashboard settings
         </LinkListLink>
         <LinkListLink
           link={`${settingsPaths.userPreferences}/statistics-settings`}
-          icon={IconName.chartBar}
+          icon={'ChartBarIcon'}
         >
           Statistics settings
         </LinkListLink>
         <LinkListLink
           link={`${settingsPaths.userPreferences}/default-account-settings`}
-          icon={IconName.viewGrid}
+          icon={'Squares2X2Icon'}
         >
           Default account settings
         </LinkListLink>
         <LinkListLink
           link={`${settingsPaths.userPreferences}/maximum-items-per-page`}
-          icon={IconName.collection}
+          icon={'RectangleStackIcon'}
         >
           Max amount of items per page
         </LinkListLink>
         <LinkListLink
           link={`${settingsPaths.userPreferences}/market-update-settings`}
-          icon={IconName.trendingUp}
+          icon={'ArrowTrendingUpIcon'}
         >
           Market update settings
         </LinkListLink>

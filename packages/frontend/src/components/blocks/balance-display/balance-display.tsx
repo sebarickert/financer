@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { FC } from 'react';
 
 import { TransactionType } from '$api/generated/financerApi';
-import { Icon, IconName } from '$elements/icon/icon';
+import { Icon, IconName } from '$elements/icon/icon.new';
 import { formatCurrency } from '$utils/formatCurrency';
 
 interface BalanceDisplayProps {
@@ -35,16 +35,16 @@ export const BalanceDisplay: FC<BalanceDisplayProps> = ({
   const typeMapping = {
     [TransactionType.Income]: {
       balance: `+ ${formattedAmount}`,
-      icon: IconName.download,
+      icon: 'ArrowDownTrayIcon' as IconName,
       color: 'text-green',
     },
     [TransactionType.Expense]: {
       balance: `- ${formattedAmount}`,
-      icon: IconName.upload,
+      icon: 'ArrowUpTrayIcon' as IconName,
       color: 'text-red',
     },
     [TransactionType.Transfer]: {
-      icon: IconName.switchHorizontal,
+      icon: 'ArrowsRightLeftIcon' as IconName,
     },
   };
 
@@ -69,7 +69,7 @@ export const BalanceDisplay: FC<BalanceDisplayProps> = ({
           )}
         >
           <Icon
-            type={icon}
+            name={icon}
             className={clsx(
               'flex-shrink-0 pointer-events-none stroke-black/75',
             )}
