@@ -2,7 +2,7 @@ import clsx from 'clsx';
 
 import { NavigationItem } from './navigation';
 
-import { Icon } from '$elements/icon/icon.new';
+import { Icon } from '$elements/Icon';
 import { Link } from '$elements/link/link';
 import { useIsActiveLink } from '$hooks/useIsActiveLink';
 

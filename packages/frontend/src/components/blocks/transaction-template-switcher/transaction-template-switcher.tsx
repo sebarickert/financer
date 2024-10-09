@@ -11,7 +11,7 @@ import { Drawer } from '$blocks/drawer/drawer';
 import { transactionTypeLabelMapping } from '$constants/transaction/transactionTypeMapping';
 import { Button } from '$elements/button/button';
 import { ButtonGroup } from '$elements/button/button.group';
-import { Icon } from '$elements/icon/icon.new';
+import { Icon } from '$elements/Icon';
 import { Radio } from '$elements/radio/radio';
 import { RadioGroup } from '$elements/radio/radio.group';
 

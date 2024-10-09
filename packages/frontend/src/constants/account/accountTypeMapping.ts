@@ -1,5 +1,5 @@
 import { AccountType } from '$api/generated/financerApi';
-import { IconName } from '$elements/icon/icon.new';
+import { IconName } from '$elements/Icon';
 
 export const accountTypeIconMapping: { [key in AccountType]: IconName } = {
   [AccountType.Cash]: 'BanknotesIcon',

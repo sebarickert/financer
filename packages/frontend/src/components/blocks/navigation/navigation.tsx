@@ -1,7 +1,7 @@
 import { NavigationDesktop } from './navigation.desktop';
 import { NavigationMobile } from './navigation.mobile';
 
-import { IconName } from '$elements/icon/icon.new';
+import { IconName } from '$elements/Icon';
 
 export type NavigationItem = {
   label: string;

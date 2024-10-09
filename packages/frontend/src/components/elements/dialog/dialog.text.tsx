@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { Heading } from '../heading/heading';
 import { Paragraph } from '../paragraph/paragraph';
 
-import { Icon, IconName } from '$elements/icon/icon.new';
+import { Icon, IconName } from '$elements/Icon';
 
 interface DialogTextProps {
   children?: string;

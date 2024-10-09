@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { IconName, Icon } from '$elements/icon/icon.new';
+import { IconName, Icon } from '$elements/Icon';
 import { removeToastMessage } from '$reducer/notifications.reducer';
 
 export enum ToastMessageTypes {

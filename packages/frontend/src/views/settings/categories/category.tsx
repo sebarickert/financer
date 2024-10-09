@@ -10,7 +10,7 @@ import { DetailsList } from '$blocks/details-list/details-list';
 import { DetailsItem } from '$blocks/details-list/details-list.item';
 import { TransactionListingWithMonthlyPager } from '$blocks/transaction-listing-with-monthly-pager/transaction-listing.with.monthly-pager';
 import { settingsPaths } from '$constants/settings-paths';
-import { Icon, IconName } from '$elements/icon/icon.new';
+import { Icon, IconName } from '$elements/Icon';
 import { Link } from '$elements/link/link';
 import { Container } from '$layouts/container/container';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';

@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 
-import { Icon, IconName } from '$elements/icon/icon.new';
+import { Icon } from '$elements/Icon';
 import { Link } from '$elements/link/link';
 import { TransitionType } from '$utils/transitionAnimations';
 

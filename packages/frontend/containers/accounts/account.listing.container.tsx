@@ -5,7 +5,7 @@ import {
   AccountListing,
   AccountListingItem,
 } from '$blocks/account-listing/accounts-listing';
-import { Icon } from '$elements/icon/icon.new';
+import { Icon } from '$elements/Icon';
 import { Link } from '$elements/link/link';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { AccountService } from '$ssr/api/account.service';

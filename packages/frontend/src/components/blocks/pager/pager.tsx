@@ -5,7 +5,7 @@ import { FC } from 'react';
 
 import { PagerOptions } from './pager.service';
 
-import { Icon } from '$elements/icon/icon.new';
+import { Icon } from '$elements/Icon';
 
 interface PagerProps {
   className?: string;
