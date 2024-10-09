@@ -1,7 +1,7 @@
 'use client';
 
 import { useTransitionRouter } from 'next-view-transitions';
-import { useMemo, useState } from 'react';
+import { useId, useMemo } from 'react';
 
 import {
   TransactionType,
@@ -24,7 +24,7 @@ export const TransactionTemplateSwitcher = ({
   selectedTemplate,
   templateType,
 }: TransactionTemplateSwitcherProps): JSX.Element | null => {
-  const [isOpen, setIsOpen] = useState(false);
+  const templateSwitcherId = useId();
   const { currentData: transactionTemplates = [] } =
     useTransactionTemplatesFindAllManualTypeByUserQuery();
   const router = useTransitionRouter();
@@ -45,15 +45,6 @@ export const TransactionTemplateSwitcher = ({
     router.push(
       `/statistics/${transactionTypeLabelMapping[templateType].plural}/add/${selectedTemplateId}`,
     );
-    setIsOpen(false);
-  };
-
-  const handleToggleOpen = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const onClose = () => {
-    setIsOpen(false);
   };
 
   if (!targetTemplates.length) return null;
@@ -63,13 +54,13 @@ export const TransactionTemplateSwitcher = ({
       <Button
         applyBaseStyles={false}
         accentColor="unstyled"
-        onClick={handleToggleOpen}
         className="inline-flex items-center justify-center -mr-3 h-11 w-11"
+        popoverTarget={templateSwitcherId}
       >
         <span className="sr-only">Switch template</span>
         <Icon name="BoltIcon" />
       </Button>
-      <Drawer isOpen={isOpen} onClose={onClose} heading="Switch template">
+      <Drawer id={templateSwitcherId} heading="Switch template">
         <form onSubmit={handleSubmit}>
           <section className="-mx-4">
             <RadioGroup>
@@ -94,7 +85,11 @@ export const TransactionTemplateSwitcher = ({
           </section>
           <ButtonGroup className="mt-12" isReverse isHorizontal>
             <Button type="submit">Switch</Button>
-            <Button onClick={() => setIsOpen(false)} accentColor="plain">
+            <Button
+              popoverTargetAction="hide"
+              popoverTarget={templateSwitcherId}
+              accentColor="plain"
+            >
               Cancel
             </Button>
           </ButtonGroup>

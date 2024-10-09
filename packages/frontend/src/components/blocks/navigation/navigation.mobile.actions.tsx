@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { useId } from 'react';
 
 import { Drawer } from '$blocks/drawer/drawer';
 import { TransactionActions } from '$blocks/transaction-actions/transaction-actions';
@@ -13,32 +14,33 @@ export const NavigationMobileActions = ({
   isActionsModalOpen,
   setIsActionsModalOpen = () => {},
 }: NavigationMobileActionsProps): JSX.Element => {
+  const id = useId();
+
   return (
     <li>
-      <button
-        type="button"
-        className={`flex w-full h-full justify-center items-center`}
-        aria-expanded={isActionsModalOpen}
-        aria-label="Add new transaction"
-        onClick={() => setIsActionsModalOpen(!isActionsModalOpen)}
-      >
-        <Icon
-          name="PlusIcon"
-          className={clsx('transition duration-250 ease-in-out', {
-            ['rotate-45']: isActionsModalOpen,
-          })}
-        />
-      </button>
       <Drawer
-        isOpen={isActionsModalOpen}
         onClose={() => setIsActionsModalOpen(false)}
         heading="Add transaction"
+        id={id}
       >
         <TransactionActions
           onClick={setIsActionsModalOpen}
           transition="slideInFromBottom"
         />
       </Drawer>
+      <button
+        type="button"
+        className={`flex w-full h-full justify-center items-center popover-open-rotate`}
+        aria-expanded={isActionsModalOpen}
+        aria-label="Add new transaction"
+        onClick={() => setIsActionsModalOpen(!isActionsModalOpen)}
+        popoverTarget={id}
+      >
+        <Icon
+          name="PlusIcon"
+          className={clsx('transition duration-250 ease-in-out')}
+        />
+      </button>
     </li>
   );
 };

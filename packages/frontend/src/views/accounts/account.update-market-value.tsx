@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import { useId } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Drawer } from '$blocks/drawer/drawer';
@@ -27,32 +27,22 @@ export const AccountUpdateMarketValue = ({
   onUpdate,
   currentValue,
 }: AccountUpdateMarketValueProps) => {
+  const formId = useId();
   const methods = useForm<AccountUpdateMarketValueFormFields>({
     defaultValues: {
       currentMarketValue: currentValue,
       date: formatDate(new Date(), DateFormat.input),
     },
   });
-  const [isOpen, setIsOpen] = useState(false);
 
-  const handleToggleOpen = useCallback(() => setIsOpen((prev) => !prev), []);
-
-  const action = useFinancerFormState(
-    'update-market-value',
-    onUpdate,
-    handleToggleOpen,
-  );
+  const action = useFinancerFormState('update-market-value', onUpdate);
 
   return (
     <>
-      <Button testId="update-market-value" onClick={handleToggleOpen}>
+      <Button testId="update-market-value" popoverTarget={formId}>
         Update market value
       </Button>
-      <Drawer
-        isOpen={isOpen}
-        onClose={handleToggleOpen}
-        heading="Update Market Value"
-      >
+      <Drawer id={formId} heading="Update Market Value">
         <Form methods={methods} action={action} submitLabel="Update">
           <div className="space-y-4">
             <Input id="currentMarketValue" type="number" isRequired>

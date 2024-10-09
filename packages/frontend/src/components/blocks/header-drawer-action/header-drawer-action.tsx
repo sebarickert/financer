@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useId } from 'react';
 
 import { Drawer } from '$blocks/drawer/drawer';
 import { Button, ButtonAccentColor } from '$elements/button/button';
@@ -28,27 +28,21 @@ export const HeaderDrawerAction = ({
   drawerHeading,
   drawerDescription,
 }: HeaderDrawerActionProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const handleToggle = () => setIsOpen(!isOpen);
+  const id = useId();
 
   return (
     <>
       <Button
         applyBaseStyles={false}
         accentColor="unstyled"
-        onClick={handleToggle}
         testId={buttonTestId}
         className="inline-flex items-center justify-center -mr-3 h-11 w-11"
+        popoverTarget={id}
       >
         <span className="sr-only">{buttonLabel}</span>
         <Icon name={buttonIcon} />
       </Button>
-      <Drawer
-        isOpen={isOpen}
-        onClose={handleToggle}
-        heading={drawerHeading}
-        description={drawerDescription}
-      >
+      <Drawer id={id} heading={drawerHeading} description={drawerDescription}>
         <ButtonGroup isReverse isHorizontal>
           <Button
             accentColor={drawerButtonAccentColor}
@@ -58,9 +52,10 @@ export const HeaderDrawerAction = ({
             {drawerButtonLabel}
           </Button>
           <Button
-            onClick={handleToggle}
             accentColor="plain"
             testId={`${buttonTestId}-cancel`}
+            popoverTargetAction="hide"
+            popoverTarget={id}
           >
             Cancel
           </Button>
