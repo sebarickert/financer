@@ -5,7 +5,7 @@ import {
   AccountListing,
   AccountListingItem,
 } from '$blocks/account-listing/accounts-listing';
-import { Icon, IconName } from '$elements/icon/icon';
+import { Icon } from '$elements/icon/icon.new';
 import { Link } from '$elements/link/link';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { AccountService } from '$ssr/api/account.service';
@@ -61,7 +61,7 @@ export const AccountListingContainer: FC = async () => {
             testId="add-account"
           >
             <span className="sr-only">Add account</span>
-            <Icon type={IconName.viewGridAdd} />
+            <Icon name="SquaresPlusIcon" />
           </Link>
         }
       />

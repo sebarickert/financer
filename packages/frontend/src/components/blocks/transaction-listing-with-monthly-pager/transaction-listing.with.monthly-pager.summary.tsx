@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { TransactionMonthSummaryDto } from '$api/generated/financerApi';
 import { DetailsList } from '$blocks/details-list/details-list';
-import { IconName } from '$elements/icon/icon';
+import { IconName } from '$elements/icon/icon.new';
 import {
   TransactionListOptions,
   TransactionService,
@@ -26,21 +26,21 @@ const getSummaryDetails = ({
   incomeAmount,
 }: TransactionMonthSummaryDto) => [
   {
-    icon: IconName.download,
+    icon: 'ArrowDownTrayIcon' as IconName,
     label: 'Incomes',
     description: (
       <span className="text-green">{formatCurrency(incomeAmount) ?? '-'}</span>
     ),
   },
   {
-    icon: IconName.upload,
+    icon: 'ArrowUpTrayIcon' as IconName,
     label: 'Expenses',
     description: (
       <span className="text-red">{formatCurrency(expenseAmount) ?? '-'}</span>
     ),
   },
   {
-    icon: IconName.plus,
+    icon: 'PlusIcon' as IconName,
     label: 'Net Total',
     description: formatCurrency(totalAmount) ?? '-',
   },

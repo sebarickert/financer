@@ -3,7 +3,7 @@ import { FC } from 'react';
 
 import { DetailsItem, DetailsListItem } from './details-list.item';
 
-import { Icon, IconName } from '$elements/icon/icon';
+import { Icon } from '$elements/icon/icon.new';
 
 interface DetailsListProps {
   className?: string;
@@ -24,7 +24,7 @@ export const DetailsList: FC<DetailsListProps> = ({
     <section className={clsx('grid gap-3', { [className]: true })}>
       {heading && (
         <h2 className="inline-flex items-center gap-2 font-normal text-black/75">
-          <Icon type={IconName.informationCircle} />
+          <Icon name="InformationCircleIcon" />
           {heading}
         </h2>
       )}

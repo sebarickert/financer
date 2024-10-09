@@ -2,7 +2,7 @@ import clsx from 'clsx';
 
 import { TransactionActionsItem } from './transaction-actions.item';
 
-import { IconName } from '$elements/icon/icon';
+import { IconName } from '$elements/icon/icon.new';
 import { TransitionType } from '$utils/transitionAnimations';
 
 interface TransactionActionsProps {
@@ -14,19 +14,19 @@ interface TransactionActionsProps {
 const actionItems = [
   {
     label: 'Income',
-    icon: IconName.download,
+    icon: 'ArrowDownTrayIcon' as IconName,
     url: '/statistics/incomes/add',
     ariaLabel: 'Add new income transaction',
   },
   {
     label: 'Expense',
-    icon: IconName.upload,
+    icon: 'ArrowUpTrayIcon' as IconName,
     url: '/statistics/expenses/add',
     ariaLabel: 'Add new expense transaction',
   },
   {
     label: 'Transfer',
-    icon: IconName.switchHorizontal,
+    icon: 'ArrowsRightLeftIcon' as IconName,
     url: '/statistics/transfers/add',
     ariaLabel: 'Add new transfer transaction',
   },

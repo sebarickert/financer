@@ -5,7 +5,7 @@ import { FC } from 'react';
 
 import { PagerOptions } from './pager.service';
 
-import { Icon, IconName } from '$elements/icon/icon';
+import { Icon } from '$elements/icon/icon.new';
 
 interface PagerProps {
   className?: string;
@@ -43,7 +43,7 @@ const PagerButton: FC<PagerButtonProps> = ({
     >
       <span className="sr-only">{children}</span>
       <Icon
-        type={isNext ? IconName.chevronRight : IconName.chevronLeft}
+        name={isNext ? 'ChevronRightIcon' : 'ChevronLeftIcon'}
         className="stroke-black group-disabled:opacity-50"
       />
     </button>

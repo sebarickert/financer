@@ -9,7 +9,7 @@ import { ToastMessageTypes } from '$blocks/toast/toast';
 import { settingsPaths } from '$constants/settings-paths';
 import { Button } from '$elements/button/button';
 import { Heading } from '$elements/heading/heading';
-import { IconName } from '$elements/icon/icon';
+import { IconName } from '$elements/icon/icon.new';
 import {
   DefaultFormActionHandler,
   useFinancerFormState,
@@ -111,12 +111,12 @@ export const OverrideUserData = ({
 
     return [
       {
-        icon: IconName.informationCircle,
+        icon: 'InformationCircleIcon' as IconName,
         label: 'Account count',
         description: overrideAccountCount ?? '-',
       },
       {
-        icon: IconName.informationCircle,
+        icon: 'InformationCircleIcon' as IconName,
         label: 'Transaction count',
         description: overrideTransactionCount ?? '-',
       },

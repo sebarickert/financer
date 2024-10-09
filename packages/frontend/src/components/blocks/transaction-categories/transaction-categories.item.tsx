@@ -2,7 +2,7 @@ import { useFormContext } from 'react-hook-form';
 
 import { FieldArrayFields } from './transaction-categories';
 
-import { Icon, IconName } from '$elements/icon/icon';
+import { Icon } from '$elements/icon/icon.new';
 
 type TransactionCategoriesItemProps = {
   index: number;
@@ -83,7 +83,7 @@ export const TransactionCategoriesItem = ({
       >
         <span className="sr-only">Edit category</span>
         <span className="absolute inset-0" aria-hidden="true" />
-        <Icon type={IconName.pencilSquare} />
+        <Icon name="PencilSquareIcon" />
       </button>
     </li>
   );

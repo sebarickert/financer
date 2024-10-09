@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { Icon, IconName } from '$elements/icon/icon';
+import { Icon, IconName } from '$elements/icon/icon.new';
 
 export type DetailsItem = {
   icon: IconName;
@@ -21,10 +21,10 @@ export const DetailsListItem: FC<DetailsItem> = ({
       data-testid={testId}
     >
       <dt className="inline-flex items-center gap-2 font-normal text-black/75">
-        <Icon type={icon} />
+        <Icon name={icon} />
         <span data-testid={`${testId}-label`}>{label}</span>
       </dt>
-      <dd className="text-right truncate font-medium">
+      <dd className="font-medium text-right truncate">
         <span data-testid={`${testId}-description`}>{description}</span>
       </dd>
     </div>

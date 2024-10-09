@@ -1,5 +1,4 @@
 import { HeaderDrawerAction } from '$blocks/header-drawer-action/header-drawer-action';
-import { IconName } from '$elements/icon/icon';
 
 interface CategoryDeleteProps {
   onDelete: () => void;
@@ -9,7 +8,7 @@ export const CategoryDelete = ({ onDelete }: CategoryDeleteProps) => {
   return (
     <HeaderDrawerAction
       onSubmit={onDelete}
-      buttonIcon={IconName.trash}
+      buttonIcon={'TrashIcon'}
       buttonLabel="Delete category"
       buttonTestId="delete-category"
       drawerButtonAccentColor="red"

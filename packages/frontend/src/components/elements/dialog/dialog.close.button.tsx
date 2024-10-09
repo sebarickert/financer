@@ -1,4 +1,4 @@
-import { Icon, IconName } from '../icon/icon';
+import { Icon } from '$elements/icon/icon.new';
 
 interface DialogCloseButtonProps {
   isDialogOpen?: boolean;
@@ -15,7 +15,7 @@ export const DialogCloseButton = ({
       onClick={() => setIsDialogOpen(!isDialogOpen)}
     >
       <span className="sr-only">Close dialog</span>
-      <Icon type={IconName.plus} className="rotate-45 stroke-gray-darkest" />
+      <Icon name="PlusIcon" className="rotate-45 stroke-gray-darkest" />
     </button>
   );
 };

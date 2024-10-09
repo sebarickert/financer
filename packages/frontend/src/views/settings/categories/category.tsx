@@ -7,9 +7,10 @@ import {
   TransactionMonthSummaryDto,
 } from '$api/generated/financerApi';
 import { DetailsList } from '$blocks/details-list/details-list';
+import { DetailsItem } from '$blocks/details-list/details-list.item';
 import { TransactionListingWithMonthlyPager } from '$blocks/transaction-listing-with-monthly-pager/transaction-listing.with.monthly-pager';
 import { settingsPaths } from '$constants/settings-paths';
-import { Icon, IconName } from '$elements/icon/icon';
+import { Icon, IconName } from '$elements/icon/icon.new';
 import { Link } from '$elements/link/link';
 import { Container } from '$layouts/container/container';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
@@ -29,7 +30,7 @@ export const Category: FC<CategoryProps> = ({
   categories,
   parentTransactionCategoryId,
 }) => {
-  const categoryDetails = useMemo(() => {
+  const categoryDetails: DetailsItem[] = useMemo(() => {
     const categoryVisibilityCapitalized = category.visibility.map((item) =>
       capitalize(item),
     );
@@ -41,14 +42,14 @@ export const Category: FC<CategoryProps> = ({
 
     return [
       {
-        icon: IconName.tag,
+        icon: 'TagIcon' as IconName,
         label: 'Name',
         description: category.name,
       },
       ...(category.parentCategoryId
         ? [
             {
-              icon: IconName.viewGrid,
+              icon: 'Squares2X2Icon' as IconName,
               label: 'Parent Category',
               description:
                 parseParentCategoryPath(
@@ -59,7 +60,7 @@ export const Category: FC<CategoryProps> = ({
           ]
         : []),
       {
-        icon: IconName.informationCircle,
+        icon: 'InformationCircleIcon',
         label: 'Type',
         description: formatter.format(categoryVisibilityCapitalized),
       },
@@ -82,7 +83,7 @@ export const Category: FC<CategoryProps> = ({
             testId="edit-category"
           >
             <span className="sr-only">Edit</span>
-            <Icon type={IconName.pencilSquare} />
+            <Icon name="PencilSquareIcon" />
           </Link>
         }
       />

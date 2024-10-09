@@ -3,8 +3,6 @@ import clsx from 'clsx';
 import { NavigationItem } from './navigation';
 import { NavigationDesktopItem } from './navigation.desktop.item';
 
-import { IconName } from '$elements/icon/icon';
-
 interface NavigationDesktopProps {
   navigationItems: Record<string, NavigationItem>;
   className?: string;
@@ -31,19 +29,19 @@ export const NavigationDesktop = ({
         <ul className="-ml-4 space-y-2">
           <NavigationDesktopItem
             label="Income"
-            iconName={IconName.download}
+            iconName={'ArrowDownTrayIcon'}
             url="/statistics/incomes/add"
             ariaLabel="Add new income transaction"
           />
           <NavigationDesktopItem
             label="Expense"
-            iconName={IconName.upload}
+            iconName={'ArrowUpTrayIcon'}
             url="/statistics/expenses/add"
             ariaLabel="Add new expense transaction"
           />
           <NavigationDesktopItem
             label="Transfer"
-            iconName={IconName.switchHorizontal}
+            iconName={'ArrowsRightLeftIcon'}
             url="/statistics/transfers/add"
             ariaLabel="Add new transfer transaction"
           />
@@ -56,7 +54,7 @@ export const NavigationDesktop = ({
         <ul className="-ml-4">
           <NavigationDesktopItem
             label="Sign out"
-            iconName={IconName.logout}
+            iconName={'ArrowRightStartOnRectangleIcon'}
             url="/auth/logout"
           />
         </ul>

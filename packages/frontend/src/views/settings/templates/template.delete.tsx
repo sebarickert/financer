@@ -1,5 +1,4 @@
 import { HeaderDrawerAction } from '$blocks/header-drawer-action/header-drawer-action';
-import { IconName } from '$elements/icon/icon';
 
 interface TemplateDeleteProps {
   onSubmit: () => void;
@@ -10,7 +9,7 @@ export const TemplateDelete = ({ onSubmit }: TemplateDeleteProps) => {
     <HeaderDrawerAction
       onSubmit={onSubmit}
       buttonLabel="Delete template"
-      buttonIcon={IconName.trash}
+      buttonIcon={'TrashIcon'}
       drawerButtonAccentColor="red"
       drawerButtonLabel="Delete"
       drawerHeading="Delete template"

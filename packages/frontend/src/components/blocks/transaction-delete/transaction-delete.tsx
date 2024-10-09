@@ -1,5 +1,4 @@
 import { HeaderDrawerAction } from '$blocks/header-drawer-action/header-drawer-action';
-import { IconName } from '$elements/icon/icon';
 
 interface TransactionDeleteProps {
   onDelete: () => void;
@@ -9,7 +8,7 @@ export const TransactionDelete = ({ onDelete }: TransactionDeleteProps) => {
   return (
     <HeaderDrawerAction
       onSubmit={onDelete}
-      buttonIcon={IconName.trash}
+      buttonIcon={'TrashIcon'}
       buttonLabel="Delete transaction"
       buttonTestId="delete-transaction"
       drawerButtonAccentColor="red"

@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 
 import { Heading } from '$elements/heading/heading';
-import { Icon, IconName } from '$elements/icon/icon';
+import { Icon } from '$elements/icon/icon.new';
 import { Paragraph } from '$elements/paragraph/paragraph';
 
 interface DrawerHeaderProps {
@@ -35,7 +35,7 @@ export const DrawerHeader = ({
         className="col-[2] overflow-hidden inline-flex items-center justify-center h-11 w-11 -my-2 translate-x-1/3"
         onClick={onClose}
       >
-        <Icon type={IconName.plus} className="w-6 h-6 rotate-45" />
+        <Icon name="PlusIcon" className="w-6 h-6 rotate-45" />
         <span className="sr-only">Close drawer</span>
       </button>
     </section>

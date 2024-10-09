@@ -5,10 +5,11 @@ import { AccountBalanceHistoryChart } from './account.balance-history-chart';
 import { AccountDto, AccountType } from '$api/generated/financerApi';
 import { BalanceDisplay } from '$blocks/balance-display/balance-display';
 import { DetailsList } from '$blocks/details-list/details-list';
+import { DetailsItem } from '$blocks/details-list/details-list.item';
 import { TransactionListingWithMonthlyPager } from '$blocks/transaction-listing-with-monthly-pager/transaction-listing.with.monthly-pager';
 import { accountTypeIconMapping } from '$constants/account/accountTypeMapping';
 import { AccountUpdateMarketValueContainer } from '$container/accounts/account.update-market-value.container';
-import { Icon, IconName } from '$elements/icon/icon';
+import { Icon, IconName } from '$elements/icon/icon.new';
 import { Link } from '$elements/link/link';
 import { LoaderSuspense } from '$elements/loader/loader-suspense';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
@@ -19,10 +20,10 @@ interface AccountProps {
 }
 
 export const Account: FC<AccountProps> = ({ account }) => {
-  const accountDetails = useMemo(
+  const accountDetails: DetailsItem[] = useMemo(
     () => [
       {
-        icon: IconName.informationCircle,
+        icon: 'InformationCircleIcon' as IconName,
         label: 'Type',
         description: capitalize(
           account.type.replaceAll('_', ' ').toLowerCase(),
@@ -43,7 +44,7 @@ export const Account: FC<AccountProps> = ({ account }) => {
             testId="edit-account"
           >
             <span className="sr-only">Edit</span>
-            <Icon type={IconName.pencilSquare} />
+            <Icon name="PencilSquareIcon" />
           </Link>
         }
       />

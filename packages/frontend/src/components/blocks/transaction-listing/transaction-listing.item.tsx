@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 
 import { TransactionType } from '$api/generated/financerApi';
-import { IconName, Icon } from '$elements/icon/icon';
+import { IconName, Icon } from '$elements/icon/icon.new';
 import { Link } from '$elements/link/link';
 
 export interface TransactionListingItemProps {
@@ -26,9 +26,9 @@ export const TransactionListingItem = ({
   const iconTypeMapping: {
     [key in TransactionType]: IconName;
   } = {
-    EXPENSE: IconName.upload,
-    INCOME: IconName.download,
-    TRANSFER: IconName.switchHorizontal,
+    EXPENSE: 'ArrowUpTrayIcon',
+    INCOME: 'ArrowDownTrayIcon',
+    TRANSFER: 'ArrowsRightLeftIcon',
   };
 
   return (
@@ -40,7 +40,7 @@ export const TransactionListingItem = ({
       >
         <span className="inline-flex items-center justify-center border rounded-full bg-gray h-11 w-11 border-gray-dark">
           <Icon
-            type={iconTypeMapping[transactionType]}
+            name={iconTypeMapping[transactionType]}
             className={`stroke-charcoal flex-shrink-0 pointer-events-none`}
           />
         </span>
@@ -77,7 +77,7 @@ export const TransactionListingItem = ({
             {transactionAmount}
           </span>
           <Icon
-            type={IconName.chevronRight}
+            name={'ChevronRightIcon'}
             className="flex-shrink-0 pointer-events-none stroke-gray-darkest -mr-1.5"
           />
         </span>

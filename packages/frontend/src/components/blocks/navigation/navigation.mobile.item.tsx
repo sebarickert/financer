@@ -2,7 +2,7 @@ import clsx from 'clsx';
 
 import { NavigationItem } from './navigation';
 
-import { Icon } from '$elements/icon/icon';
+import { Icon } from '$elements/icon/icon.new';
 import { Link } from '$elements/link/link';
 import { useIsActiveLink } from '$hooks/useIsActiveLink';
 
@@ -24,7 +24,7 @@ export const NavigationMobileItem = ({
         aria-label={ariaLabel}
         transition="slideInFromBottom"
       >
-        <Icon type={iconName} isSolid={isActive} />
+        <Icon name={iconName} isSolid={isActive} />
         <span className={clsx('sr-only')}>{label}</span>
       </Link>
     </li>

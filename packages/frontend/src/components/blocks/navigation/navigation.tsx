@@ -1,7 +1,7 @@
 import { NavigationDesktop } from './navigation.desktop';
 import { NavigationMobile } from './navigation.mobile';
 
-import { IconName } from '$elements/icon/icon';
+import { IconName } from '$elements/icon/icon.new';
 
 export type NavigationItem = {
   label: string;
@@ -17,21 +17,21 @@ interface NavigationProps {
   variant: 'desktop' | 'mobile';
 }
 
-const navigationItems = {
-  home: { label: 'Home', url: '/', iconName: IconName.home, isExact: true },
+const navigationItems: Record<string, NavigationItem> = {
+  home: { label: 'Home', url: '/', iconName: 'HomeIcon', isExact: true },
   statistics: {
     label: 'Statistics',
     url: '/statistics',
-    iconName: IconName.chartBar,
+    iconName: 'ChartBarIcon',
     disallowedPathEndings: ['add'],
   },
   accounts: {
     label: 'Accounts',
     url: '/accounts',
-    iconName: IconName.viewGrid,
+    iconName: 'Squares2X2Icon',
   },
-  settings: { label: 'Settings', url: '/settings', iconName: IconName.cog },
-} as Record<string, NavigationItem>;
+  settings: { label: 'Settings', url: '/settings', iconName: 'Cog8ToothIcon' },
+};
 
 export const Navigation = ({
   variant = 'desktop',

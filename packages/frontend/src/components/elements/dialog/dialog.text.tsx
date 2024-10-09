@@ -1,8 +1,9 @@
 import clsx from 'clsx';
 
 import { Heading } from '../heading/heading';
-import { Icon, IconName } from '../icon/icon';
 import { Paragraph } from '../paragraph/paragraph';
+
+import { Icon, IconName } from '$elements/icon/icon.new';
 
 interface DialogTextProps {
   children?: string;
@@ -26,7 +27,7 @@ export const DialogText = ({
           )}
         >
           <Icon
-            type={iconName}
+            name={iconName}
             className={clsx(
               'flex-shrink-0 pointer-events-none stroke-white',
               {},
