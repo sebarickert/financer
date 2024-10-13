@@ -63,19 +63,21 @@ export class UserDataService {
     userId: string,
   ): Promise<{ filename: string; data: ExportUserDataDto }> {
     const user = await this.usersService.findOne(userId);
-    const accounts =
-      await this.accountsService.findAllIncludeDeletedByUser(userId);
+    const accounts = await this.accountsService.findAllByUserForExport(userId);
     const accountBalanceChanges =
-      await this.accountBalanceChangesService.findAllByUser(userId);
+      await this.accountBalanceChangesService.findAllByUserForExport(userId);
     const transactions =
       await this.transactionService.findAllByUserForExport(userId);
     const transactionCategories =
-      await this.transactionCategoriesService.findAllByUser(userId);
+      await this.transactionCategoriesService.findAllByUserForExport(userId);
     const transactionCategoryMappings =
-      await this.transactionCategoryMappingService.findAllByUser(userId);
-    const userPreferences = await this.userPreferencesService.findAll(userId);
+      await this.transactionCategoryMappingService.findAllByUserForExport(
+        userId,
+      );
+    const userPreferences =
+      await this.userPreferencesService.findAllByUserForExport(userId);
     const transactionTemplates =
-      await this.transactionTemplateService.findAllByUser(userId);
+      await this.transactionTemplateService.findAllByUserForExport(userId);
 
     const filename = getMyDataFilename();
     const data = {

@@ -116,6 +116,10 @@ export class TransactionCategoriesService {
     });
   }
 
+  async findAllByUserForExport(userId: string) {
+    return this.transactionCategoryRepo.findMany({ where: { userId } });
+  }
+
   async findMonthlySummariesByUserAndId(
     userId: string,
     parentCategoryId: string,

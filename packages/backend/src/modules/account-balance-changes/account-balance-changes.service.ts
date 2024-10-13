@@ -27,6 +27,12 @@ export class AccountBalanceChangesService {
     return this.accountBalanceChangeRepo.findMany({ where: { userId } });
   }
 
+  async findAllByUserForExport(
+    userId: string,
+  ): Promise<AccountBalanceChange[]> {
+    return this.accountBalanceChangeRepo.findMany({ where: { userId } });
+  }
+
   async findAllByUserAndAccount(
     userId: string,
     accountId: string,
