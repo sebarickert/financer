@@ -84,7 +84,7 @@ export class AccountsService {
     };
   }
 
-  async findAllIncludeDeletedByUser(userId: string): Promise<Account[]> {
+  async findAllByUserForExport(userId: string): Promise<Account[]> {
     return this.accountRepo.findMany({ where: { userId } });
   }
 

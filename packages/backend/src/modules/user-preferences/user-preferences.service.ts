@@ -33,6 +33,10 @@ export class UserPreferencesService {
     return this.userPreferencesRepo.findMany({ where: { userId } });
   }
 
+  async findAllByUserForExport(userId: string): Promise<UserPreferences[]> {
+    return this.userPreferencesRepo.findMany({ where: { userId } });
+  }
+
   async findOneByUserAndProperty(
     userPreferenceProperty: UserPreferenceProperty,
     userId: string,

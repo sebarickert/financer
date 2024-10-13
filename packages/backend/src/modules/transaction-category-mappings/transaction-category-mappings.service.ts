@@ -42,6 +42,12 @@ export class TransactionCategoryMappingsService {
     return this.transactionCategoryMappingRepo.findMany({ where: { userId } });
   }
 
+  async findAllByUserForExport(
+    userId: string,
+  ): Promise<TransactionCategoryMapping[]> {
+    return this.transactionCategoryMappingRepo.findMany({ where: { userId } });
+  }
+
   async findAllByUserAndCategoryIds(
     userId: string,
     categoryIds: string[],

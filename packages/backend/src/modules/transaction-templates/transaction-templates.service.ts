@@ -44,6 +44,10 @@ export class TransactionTemplatesService {
     return this.transactionTemplateRepo.findMany({ where: { userId } });
   }
 
+  async findAllByUserForExport(userId: string) {
+    return this.transactionTemplateRepo.findMany({ where: { userId } });
+  }
+
   async findAllByUserAndType(
     userId: string,
     templateType: TransactionTemplateType,
