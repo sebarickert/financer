@@ -731,6 +731,18 @@
             "required": true,
             "in": "path",
             "schema": { "type": "string" }
+          },
+          {
+            "name": "month",
+            "required": false,
+            "in": "query",
+            "schema": { "type": "number" }
+          },
+          {
+            "name": "year",
+            "required": false,
+            "in": "query",
+            "schema": { "type": "number" }
           }
         ],
         "responses": {

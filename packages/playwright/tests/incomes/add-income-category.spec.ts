@@ -56,7 +56,7 @@ test.describe('Add income with category', () => {
       amount: '50',
     });
 
-    await page.getByRole('button', { name: 'Edit category' }).click();
+    await page.getByTestId('transaction-categories-item-edit').click();
     // eslint-disable-next-line playwright/no-wait-for-timeout
     await page.waitForTimeout(100);
 
