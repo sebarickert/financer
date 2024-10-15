@@ -1,3 +1,5 @@
+import { execSync } from 'child_process';
+
 import { MongoMemoryReplSet } from 'mongodb-memory-server';
 
 // Extend the default timeout so MongoDB binaries can download
@@ -28,11 +30,11 @@ export const setupMemoryDbSchema = async (rawUri: string): Promise<string> => {
 
   await new Promise((resolve) => setTimeout(resolve, 1000));
 
-  // execSync(`npx prisma db push --schema=$SCHEMA --skip-generate`, {
-  //   // Uncomment to see command output
-  //   // stdio: 'inherit',
-  //   env: { ...process.env, DATABASE_URL: uri.toString() },
-  // });
+  execSync(`npx prisma db push --schema=$SCHEMA --skip-generate`, {
+    // Uncomment to see command output
+    // stdio: 'inherit',
+    env: { ...process.env, DATABASE_URL: uri.toString() },
+  });
 
   return uri.toString();
 };
