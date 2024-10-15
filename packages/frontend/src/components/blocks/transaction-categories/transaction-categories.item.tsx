@@ -9,6 +9,7 @@ type TransactionCategoriesItemProps = {
   categorySelectOnly?: boolean;
   onClick: () => void;
   getCategoryNameById: (categoryId: string) => string;
+  formId: string;
 };
 
 export const TransactionCategoriesItem = ({
@@ -16,6 +17,7 @@ export const TransactionCategoriesItem = ({
   categorySelectOnly,
   onClick,
   getCategoryNameById,
+  formId,
 }: TransactionCategoriesItemProps) => {
   const { watch, getValues } = useFormContext<FieldArrayFields>();
   const values = watch(`categories.${index}`);
@@ -80,6 +82,8 @@ export const TransactionCategoriesItem = ({
         type="button"
         className="inline-flex items-center justify-center -mr-3 h-11 w-11"
         data-testid={`${testId}-edit`}
+        // @ts-expect-error popovertarget is not a valid prop
+        popovertarget={formId}
       >
         <span className="sr-only">Edit category</span>
         <span className="absolute inset-0" aria-hidden="true" />

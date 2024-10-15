@@ -122,6 +122,7 @@ export const TransactionCategories = ({
           handleCancel={onClose}
           handleSubmit={handleSubmit}
           handleDelete={handleDelete}
+          formId={formId}
         />
       </Drawer>
       {!!fields.length && (
@@ -133,6 +134,7 @@ export const TransactionCategories = ({
               categorySelectOnly={categorySelectOnly}
               onClick={() => handleCategoryItemClick(index)}
               getCategoryNameById={getCategoryNameById}
+              formId={formId}
             />
           ))}
         </ul>

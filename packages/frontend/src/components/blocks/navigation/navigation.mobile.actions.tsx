@@ -34,7 +34,8 @@ export const NavigationMobileActions = ({
         aria-expanded={isActionsModalOpen}
         aria-label="Add new transaction"
         onClick={() => setIsActionsModalOpen(!isActionsModalOpen)}
-        popoverTarget={id}
+        // @ts-expect-error popovertarget is not a valid prop
+        popovertarget={id}
       >
         <Icon
           name="PlusIcon"
