@@ -34,6 +34,8 @@ export const Button = ({
   testId,
   isDisabled,
   applyBaseStyles = true,
+  popoverTarget,
+  popoverTargetAction,
   ...props
 }: ButtonProps): JSX.Element => {
   const buttonClasses = clsx({
@@ -85,6 +87,9 @@ export const Button = ({
       )}
       data-testid={testId}
       disabled={isDisabled}
+      // @ts-expect-error popovertarget is not a valid prop
+      popovertarget={popoverTarget}
+      popovertargetaction={popoverTargetAction}
       {...props}
     >
       {children}

@@ -19,6 +19,7 @@ interface TransactionCategoriesFormProps {
   handleCancel: () => void;
   handleDelete(): void;
   handleSubmit: () => void;
+  formId: string;
 }
 
 export const TransactionCategoriesForm = ({
@@ -33,6 +34,7 @@ export const TransactionCategoriesForm = ({
   handleCancel,
   handleDelete,
   handleSubmit,
+  formId,
 }: TransactionCategoriesFormProps): JSX.Element => {
   const namePrefix = `categories.${index}` as const;
 
@@ -85,7 +87,12 @@ export const TransactionCategoriesForm = ({
           )}
         </div>
         <ButtonGroup className="mt-12" isReverse isHorizontal>
-          <Button onClick={handleSubmit} testId={`${testId}-submit`}>
+          <Button
+            onClick={handleSubmit}
+            testId={`${testId}-submit`}
+            popoverTarget={formId}
+            popoverTargetAction="hide"
+          >
             {!isNewCategory ? 'Update' : 'Add'}
           </Button>
           {!isNewCategory ? (
@@ -93,6 +100,8 @@ export const TransactionCategoriesForm = ({
               onClick={handleDelete}
               testId={`${testId}-delete`}
               accentColor="plain"
+              popoverTarget={formId}
+              popoverTargetAction="hide"
             >
               Delete
             </Button>
@@ -101,6 +110,8 @@ export const TransactionCategoriesForm = ({
               onClick={handleCancel}
               testId={`${testId}-cancel`}
               accentColor="plain"
+              popoverTarget={formId}
+              popoverTargetAction="hide"
             >
               Cancel
             </Button>
