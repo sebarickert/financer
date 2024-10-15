@@ -1,3 +1,5 @@
+import { FC } from 'react';
+
 import { Button } from '../../elements/button/button';
 import { Divider } from '../../elements/divider/divider';
 import { Input } from '../../elements/input/input';
@@ -22,7 +24,7 @@ interface TransactionCategoriesFormProps {
   formId: string;
 }
 
-export const TransactionCategoriesForm = ({
+export const TransactionCategoriesForm: FC<TransactionCategoriesFormProps> = ({
   className = '',
   index,
   categories,
@@ -35,7 +37,9 @@ export const TransactionCategoriesForm = ({
   handleDelete,
   handleSubmit,
   formId,
-}: TransactionCategoriesFormProps): JSX.Element => {
+}) => {
+  if (index < 0) return null;
+
   const namePrefix = `categories.${index}` as const;
 
   const testId = `${testIdRaw}-form`;
