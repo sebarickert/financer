@@ -13,6 +13,7 @@ import { ApiBody, ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
 import { Role } from '@prisma/client';
 import { Response } from 'express';
 
+import { UserId } from '../../types/user-id';
 import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
 import { Auth } from '../auth/decorators/auht.decorator';
 import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
@@ -25,7 +26,7 @@ import {
 
 import { UpdateUserDto, UpdateUserOwnUserDto } from './dto/update-user.dto';
 import { UserDto } from './dto/user.dto';
-import { UserId } from './users.decorators';
+import { UserIdDecorator } from './users.decorators';
 import { UsersService } from './users.service';
 
 @Controller('api/users')
@@ -40,13 +41,13 @@ export class UsersController {
 
   @Get('my-user')
   @ApiOkResponse({ type: UserDto })
-  async findOwnUser(@UserId() userId: string) {
+  async findOwnUser(@UserIdDecorator() userId: UserId) {
     return this.usersService.findOne(userId);
   }
 
   @Get('my-user/my-data')
   @ApiOkResponse({ type: UserDataExportDto })
-  getAllOwnUserData(@UserId() userId: string, @Res() res: Response) {
+  getAllOwnUserData(@UserIdDecorator() userId: UserId, @Res() res: Response) {
     this.getAllOneUserData(userId, res);
   }
 
@@ -55,7 +56,7 @@ export class UsersController {
   @ApiBody({ type: UserDataImportDto })
   @ApiOkResponse({ schema: { properties: { payload: { type: 'string' } } } })
   overrideAllOwnUserData(
-    @UserId() userId: string,
+    @UserIdDecorator() userId: UserId,
     @Body() userData: ImportUserDataDto,
   ) {
     return this.userDataService.overrideUserData(userId, userData);
@@ -65,7 +66,7 @@ export class UsersController {
   @ApiBody({ type: UpdateUserOwnUserDto })
   @ApiOkResponse({ type: UserDto })
   updateOwnUser(
-    @UserId() userId: string,
+    @UserIdDecorator() userId: UserId,
     @Body() updateUserDto: UpdateUserOwnUserDto,
   ) {
     return this.usersService.update(userId, updateUserDto);
@@ -99,7 +100,7 @@ export class UsersController {
     description: 'Entity id from users collection.',
   })
   async getAllOneUserData(
-    @Param('id', ValidateEntityId) userId: string,
+    @Param('id', ValidateEntityId) userId: UserId,
     @Res() res: Response,
   ) {
     const { filename, data } =

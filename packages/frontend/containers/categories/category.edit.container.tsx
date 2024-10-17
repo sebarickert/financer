@@ -1,4 +1,4 @@
-import { redirect, RedirectType } from 'next/navigation';
+import { notFound, redirect, RedirectType } from 'next/navigation';
 import { FC } from 'react';
 
 import { TransactionType } from '$api/generated/financerApi';
@@ -17,12 +17,12 @@ export const CategoryEditContainer: FC<CategoryEditContainerProps> = async ({
 }) => {
   const category = await CategoryService.getById(id);
 
+  if (!category.id) {
+    notFound();
+  }
+
   const handleSubmit: DefaultFormActionHandler = async (prev, formData) => {
     'use server';
-
-    if (!category.id) {
-      throw new Error('category is not found');
-    }
 
     try {
       await CategoryService.update(category.id, {
@@ -48,10 +48,6 @@ export const CategoryEditContainer: FC<CategoryEditContainerProps> = async ({
     await CategoryService.delete(category.id);
     redirect(settingsPaths.categories, RedirectType.push);
   };
-
-  if (!category.id) {
-    throw new Error('category is not found');
-  }
 
   return (
     <CategoryEdit

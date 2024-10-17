@@ -8,8 +8,6 @@ const config: JestConfigWithTsJest = {
     prefix: '<rootDir>/',
   }),
   collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}', '!**/node_modules/**'],
-  globalSetup: '<rootDir>/test/setup.ts',
-  globalTeardown: '<rootDir>/test/teardown.ts',
 };
 
 // Test setup does not work with named exports. Hence, we need to use default export.

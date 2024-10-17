@@ -78,7 +78,10 @@ describe('ExpensesController', () => {
         .expect(400)
         .expect({
           statusCode: 400,
-          message: ['Amount must be a positive number.'],
+          message: [
+            'Amount must be a decimal number.',
+            'Amount must be a positive number.',
+          ],
           error: 'Bad Request',
         })
         .then(() => {
@@ -105,7 +108,10 @@ describe('ExpensesController', () => {
         .expect(400)
         .expect({
           statusCode: 400,
-          message: ['Amount must be a positive number.'],
+          message: [
+            'Amount must be a decimal number.',
+            'Amount must be a positive number.',
+          ],
           error: 'Bad Request',
         })
         .then(() => {
@@ -230,6 +236,7 @@ describe('ExpensesController', () => {
         .expect({
           statusCode: 400,
           message: [
+            'Amount must be a decimal number.',
             'Amount must be a positive number.',
             'description must be a string',
             'Description must not be empty.',

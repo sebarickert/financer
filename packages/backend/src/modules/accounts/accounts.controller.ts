@@ -19,10 +19,11 @@ import {
 } from '@nestjs/swagger';
 import { AccountType } from '@prisma/client';
 
+import { UserId } from '../../types/user-id';
 import { ApiPaginatedDto } from '../../utils/pagination.decorator';
 import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
 import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
-import { UserId } from '../users/users.decorators';
+import { UserIdDecorator } from '../users/users.decorators';
 
 import { AccountsService } from './accounts.service';
 import { AccountBalanceHistoryDto } from './dto/account-balance-history.dto';
@@ -41,7 +42,7 @@ export class AccountsController {
   @ApiBody({ type: CreateAccountDto })
   @ApiOkResponse({ schema: { properties: { payload: { type: 'string' } } } })
   async create(
-    @UserId() userId: string,
+    @UserIdDecorator() userId: UserId,
     @Body() createAccountDto: CreateAccountDto,
   ) {
     return this.accountsService.create(userId, createAccountDto);
@@ -62,7 +63,7 @@ export class AccountsController {
     required: false,
   })
   async findAllByUser(
-    @UserId() userId: string,
+    @UserIdDecorator() userId: UserId,
     @Query('limit') limit?: number,
     @Query('page') page?: number,
     @Query(
@@ -89,7 +90,7 @@ export class AccountsController {
     type: String,
   })
   async findOneById(
-    @UserId() userId: string,
+    @UserIdDecorator() userId: UserId,
     @Param('id', ValidateEntityId) id: string,
   ) {
     return this.accountsService.findOne(userId, id);
@@ -103,7 +104,7 @@ export class AccountsController {
     type: String,
   })
   async update(
-    @UserId() userId: string,
+    @UserIdDecorator() userId: UserId,
     @Param('id', ValidateEntityId) id: string,
     @Body() updateAccountDto: UpdateAccountDto,
   ) {
@@ -115,7 +116,7 @@ export class AccountsController {
     name: 'id',
     type: String,
   })
-  remove(@UserId() userId: string, @Param('id') id: string) {
+  remove(@UserIdDecorator() userId: UserId, @Param('id') id: string) {
     return this.accountsService.remove(id, userId);
   }
 
@@ -130,7 +131,7 @@ export class AccountsController {
     type: String,
   })
   async getAccountBalanceHistory(
-    @UserId() userId: string,
+    @UserIdDecorator() userId: UserId,
     @Param('id', ValidateEntityId) id: string,
   ) {
     return this.accountsService.getAccountBalanceHistory(userId, id);

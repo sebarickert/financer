@@ -5,9 +5,11 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { Account, AccountType } from '@prisma/client';
+import { Decimal } from '@prisma/client/runtime/library';
 
 import { AccountRepo } from '../../database/repos/account.repo';
 import { PaginationDto } from '../../types/pagination.dto';
+import { UserId } from '../../types/user-id';
 import { sumArrayItems } from '../../utils/arrays';
 import { DateService } from '../../utils/date.service';
 import { AccountBalanceChangesService } from '../account-balance-changes/account-balance-changes.service';
@@ -23,102 +25,114 @@ export class AccountsService {
   constructor(
     private readonly accountRepo: AccountRepo,
     @Inject(forwardRef(() => TransactionsService))
-    private transactionsService: TransactionsService,
-    private accountBalanceChangeService: AccountBalanceChangesService,
+    private readonly transactionsService: TransactionsService,
+    private readonly accountBalanceChangeService: AccountBalanceChangesService,
   ) {}
 
   async create(
-    userId: string,
+    userId: UserId,
     createAccountDto: CreateAccountDto,
-  ): Promise<Account> {
-    return this.accountRepo.create({ ...createAccountDto, userId });
+  ): Promise<AccountDto> {
+    const account = await this.accountRepo.create({
+      ...createAccountDto,
+      userId,
+    });
+
+    return AccountDto.createFromPlain(account);
   }
 
   async createMany(
     createAccountDto: CreateAccountDto[],
-    userId: string,
+    userId: UserId,
   ): Promise<void> {
     await this.accountRepo.createMany(
-      createAccountDto.map((account) => ({ ...account, userId })),
+      // @ts-expect-error - remove legacy `v` from import data
+      createAccountDto.map(({ v, ...account }) => ({ ...account, userId })),
     );
   }
 
-  async findOne(userId: string, id: string): Promise<Account> {
+  async findOne(userId: UserId, id: string): Promise<Account> {
     const account = await this.accountRepo.findOne({ id, userId });
 
     if (!account) {
       throw new NotFoundException('Account not found.');
     }
 
-    return account;
+    return AccountDto.createFromPlain(account);
   }
 
   async findAllByUser(
-    userId: string,
+    userId: UserId,
     accountTypes?: AccountType[],
     limit = 20,
     page = 1,
   ): Promise<PaginationDto<AccountDto[]>> {
     const skip = page * limit - limit;
 
+    const type = accountTypes ? { type: { in: accountTypes } } : {};
+    const whereQuery = { userId, isDeleted: false, ...type };
+
     const accounts = await this.accountRepo.findMany({
-      where: { userId, isDeleted: false, type: { in: accountTypes } },
+      where: whereQuery,
       take: limit,
       skip,
     });
 
     const totalCount = await this.accountRepo.getCount({
-      where: { userId, isDeleted: false, type: { in: accountTypes } },
+      where: whereQuery,
     });
 
     const lastPage = page ? Math.ceil(totalCount / limit) : 1;
 
-    return {
-      data: accounts,
+    return new PaginationDto({
+      data: AccountDto.createFromPlain(accounts),
       currentPage: page ?? 1,
       limit: page ? limit : totalCount,
       totalPageCount: lastPage,
       hasNextPage: (page ?? 1) < lastPage,
       hasPreviousPage: (page ?? 1) > 1,
       totalRowCount: totalCount,
-    };
+    });
   }
 
-  async findAllByUserForExport(userId: string): Promise<Account[]> {
-    return this.accountRepo.findMany({ where: { userId } });
+  async findAllByUserForExport(userId: UserId): Promise<AccountDto[]> {
+    const accounts = await this.accountRepo.findMany({ where: { userId } });
+    return AccountDto.createFromPlain(accounts);
   }
 
   async update(
-    userId: string,
+    userId: UserId,
     id: string,
     updateAccountDto: UpdateAccountDto,
-  ): Promise<Account> {
+  ): Promise<AccountDto> {
     const accountBeforeChange = await this.findOne(userId, id);
 
     if (
       updateAccountDto.balance &&
       updateAccountDto.balance !== accountBeforeChange.balance
     ) {
-      const balanceChangeAmount =
-        updateAccountDto.balance - accountBeforeChange.balance;
-      await this.accountBalanceChangeService.create({
-        accountId: id.toString(),
-        userId: userId.toString(),
+      const balanceChangeAmount = updateAccountDto.balance.minus(
+        accountBeforeChange.balance,
+      );
+      await this.accountBalanceChangeService.create(userId, {
+        accountId: id,
         amount: balanceChangeAmount,
         date: DateService.fromZonedTime(),
       });
     }
 
-    return this.accountRepo.update({
+    const account = await this.accountRepo.update({
       where: { userId, id },
       data: updateAccountDto,
     });
+
+    return AccountDto.createFromPlain(account);
   }
 
   async updateBalance(
-    userId: string,
+    userId: UserId,
     id: string,
-    amount: number,
+    amount: Decimal,
   ): Promise<Account> {
     await this.findOne(userId, id);
 
@@ -128,7 +142,7 @@ export class AccountsService {
     });
   }
 
-  async remove(id: string, userId: string) {
+  async remove(id: string, userId: UserId) {
     await this.findOne(userId, id);
     await this.accountRepo.update({
       where: { id, userId },
@@ -136,19 +150,19 @@ export class AccountsService {
     });
   }
 
-  async removeAllByUser(userId: string) {
+  async removeAllByUser(userId: UserId) {
     await this.accountRepo.deleteMany({ userId });
   }
 
   async getAccountBalanceHistory(
-    userId: string,
+    userId: UserId,
     accountId: string,
   ): Promise<AccountBalanceHistoryDto[]> {
     const account = await this.findOne(userId, accountId);
 
     const accountBalanceChanges = (
       await this.accountBalanceChangeService.findAllByUserAndAccount(
-        userId.toString(),
+        userId,
         accountId.toString(),
       )
     ).map(({ amount, date }) => ({ amount, date }));
@@ -165,7 +179,7 @@ export class AccountsService {
       )
     ).data.map(({ amount, date, toAccount }) => ({
       date,
-      amount: accountId === toAccount ? amount : -amount,
+      amount: accountId === toAccount ? amount : amount.negated(),
     }));
 
     const allBalanceChanges = accountBalanceChanges.concat(accountTransactions);
@@ -194,7 +208,7 @@ export class AccountsService {
 
         const previousAmount = previous.at(-1)?.amount ?? 0;
 
-        const newBalance = previousBalance - previousAmount;
+        const newBalance = previousBalance.minus(previousAmount);
 
         return previous.concat({
           date,
@@ -203,16 +217,6 @@ export class AccountsService {
         });
       }, [] as AccountBalanceHistoryDto[]);
 
-    return summarizedBalanceChanges;
-  }
-
-  private getAccountTypeFilter(accountTypes?: AccountType[]) {
-    if (!accountTypes?.length) return {};
-
-    return {
-      type: {
-        $in: accountTypes,
-      },
-    };
+    return AccountBalanceHistoryDto.createFromPlain(summarizedBalanceChanges);
   }
 }

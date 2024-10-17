@@ -1,7 +1,8 @@
 import fs from 'fs';
 
-import { ValidationPipe } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
+import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
+import { NestFactory, Reflector } from '@nestjs/core';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import {
   DocumentBuilder,
   SwaggerDocumentOptions,
@@ -12,8 +13,9 @@ import { json } from 'express';
 import { AppModule } from './app.module';
 import {
   isNodeEnvInDev,
-  isNodeEnvInTest,
+  isApplicationInTestMode,
   shouldOnlyExportApiSpec,
+  shouldUseInternalDockerDb,
 } from './config/configuration';
 import { getMemoryDbUri } from './config/memoryDatabaseServer';
 import { mockAuthenticationMiddleware } from './config/mockAuthenticationMiddleware';
@@ -26,10 +28,13 @@ const options: SwaggerDocumentOptions = {
 };
 
 async function bootstrap() {
-  if (isNodeEnvInTest() || shouldOnlyExportApiSpec()) await getMemoryDbUri();
+  if (shouldUseInternalDockerDb() || shouldOnlyExportApiSpec())
+    await getMemoryDbUri();
 
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.use(json({ limit: '50mb' }));
+  app.enableShutdownHooks();
+  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
@@ -37,7 +42,7 @@ async function bootstrap() {
     }),
   );
 
-  if (isNodeEnvInTest()) app.use(mockAuthenticationMiddleware);
+  if (isApplicationInTestMode()) app.use(mockAuthenticationMiddleware);
 
   if (isNodeEnvInDev()) {
     const config = new DocumentBuilder()

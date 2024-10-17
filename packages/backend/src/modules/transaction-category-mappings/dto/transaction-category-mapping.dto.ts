@@ -1,11 +1,21 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { TransactionCategoryMapping } from '@prisma/client';
-import { IsMongoId, IsOptional, IsString, Min } from 'class-validator';
+import { Decimal } from '@prisma/client/runtime/library';
+import { IsMongoId, IsOptional, IsString } from 'class-validator';
+
+import { UserId } from '../../../types/user-id';
+import {
+  IsDecimal,
+  TransformDecimal,
+} from '../../../utils/is-decimal.decorator';
+import { MinDecimal } from '../../../utils/min-decimal.decorator';
 
 export class TransactionCategoryMappingDto
   implements TransactionCategoryMapping
 {
-  v: number;
+  constructor(mapping: TransactionCategoryMapping) {
+    Object.assign(this, mapping);
+  }
 
   @ApiProperty()
   createdAt: Date;
@@ -19,7 +29,7 @@ export class TransactionCategoryMappingDto
 
   @ApiProperty({ type: String })
   @IsMongoId()
-  userId: string;
+  userId: UserId;
 
   @ApiPropertyOptional()
   @IsOptional()
@@ -35,6 +45,28 @@ export class TransactionCategoryMappingDto
   transactionId: string;
 
   @ApiProperty()
-  @Min(0.01, { message: 'Amount must be a positive number.' })
-  amount: number;
+  @MinDecimal(new Decimal(0.01), {
+    message: 'Amount must be a positive number.',
+  })
+  @TransformDecimal()
+  @IsDecimal({ message: 'Amount must be a decimal number.' })
+  amount: Decimal;
+
+  public static createFromPlain(
+    mappings: TransactionCategoryMapping,
+  ): TransactionCategoryMappingDto;
+  public static createFromPlain(
+    mappings: TransactionCategoryMapping[],
+  ): TransactionCategoryMappingDto[];
+  public static createFromPlain(
+    mappings: TransactionCategoryMapping | TransactionCategoryMapping[],
+  ): TransactionCategoryMappingDto | TransactionCategoryMappingDto[] {
+    if (Array.isArray(mappings)) {
+      return mappings.map(
+        (mapping) => new TransactionCategoryMappingDto(mapping),
+      );
+    }
+
+    return new TransactionCategoryMappingDto(mappings);
+  }
 }

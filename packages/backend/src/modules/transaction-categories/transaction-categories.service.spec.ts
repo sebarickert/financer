@@ -1,67 +1,130 @@
-import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 
+import { createMockServiceProvider } from '../../../test/create-mock-service-provider';
 import { removeCreatedAndUpdated } from '../../../test/test-helper';
 import { DUMMY_TEST_USER } from '../../config/mockAuthenticationMiddleware';
-import { testConfiguration } from '../../config/test-configuration';
-import { DatabaseModule } from '../../database/database.module';
-import fixtureData from '../../fixtures/large_fixture-data.json';
-import { TransactionCategoryMappingsModule } from '../transaction-category-mappings/transaction-category-mappings.module';
-import { UserDataModule } from '../user-data/user-data.module';
+import { transactionCategoryMappingRepoFindAllByUserIdTransactionData } from '../../database/repos/mocks/transaction-category-mapping-repo-mock';
 import {
-  ImportUserDataDto,
-  UserDataService,
-} from '../user-data/user-data.service';
+  transactionCategoryRepoMockDataFindById,
+  transactionCategoryRepoUserMockDataFindAllBy,
+} from '../../database/repos/mocks/transaction-category-repo-mock';
+import { TransactionCategoryMappingRepo } from '../../database/repos/transaction-category-mapping.repo';
+import { TransactionCategoryRepo } from '../../database/repos/transaction-category.repo';
+import { TransactionCategoryMappingsService } from '../transaction-category-mappings/transaction-category-mappings.service';
 
 import { TransactionCategoriesService } from './transaction-categories.service';
 
 describe('TransactionCategoriesService', () => {
   let service: TransactionCategoriesService;
+  let transactionCategoryRepo: jest.Mocked<TransactionCategoryRepo>;
+  let transactionCategoryMappingRepo: jest.Mocked<TransactionCategoryMappingRepo>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [
-        ConfigModule.forRoot({ isGlobal: true, load: [testConfiguration] }),
-        DatabaseModule,
-        TransactionCategoryMappingsModule,
-
-        // Modules required to bootstrap with UserDataModule
-        UserDataModule,
+      providers: [
+        TransactionCategoriesService,
+        TransactionCategoryMappingsService,
+        createMockServiceProvider(TransactionCategoryRepo),
+        createMockServiceProvider(TransactionCategoryMappingRepo),
       ],
-      providers: [TransactionCategoriesService],
     }).compile();
 
     service = module.get<TransactionCategoriesService>(
       TransactionCategoriesService,
     );
-    const userDataService = module.get<UserDataService>(UserDataService);
-
-    await userDataService.overrideUserData(
-      DUMMY_TEST_USER.id,
-      fixtureData as unknown as ImportUserDataDto,
+    transactionCategoryRepo = module.get<jest.Mocked<TransactionCategoryRepo>>(
+      TransactionCategoryRepo,
     );
-  }, 10000);
+    transactionCategoryMappingRepo = module.get<
+      jest.Mocked<TransactionCategoryMappingRepo>
+    >(TransactionCategoryMappingRepo);
+  });
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
   it('should return a transaction category by id', async () => {
-    const transactionCategory = await service.findOne(
-      DUMMY_TEST_USER.id,
-      '623b58ada3deba9879422fbf',
-    );
+    const id = '623b58ada3deba9879422fbf';
+    jest
+      .spyOn(transactionCategoryRepo, 'findOne')
+      .mockResolvedValue(transactionCategoryRepoMockDataFindById[id]);
+
+    const transactionCategory = await service.findOne(DUMMY_TEST_USER.id, id);
+
+    expect(transactionCategoryRepo.findOne).toHaveBeenCalledTimes(1);
+    expect(transactionCategoryRepo.findOne).toHaveBeenCalledWith({
+      id: '623b58ada3deba9879422fbf',
+      userId: '61460d7354ea082ad0256749',
+    });
+
     expect(removeCreatedAndUpdated(transactionCategory)).toMatchSnapshot();
   });
 
   it('should return an array of transaction categories from findAllByUser', async () => {
+    jest
+      .spyOn(transactionCategoryRepo, 'findMany')
+      .mockResolvedValue(transactionCategoryRepoUserMockDataFindAllBy);
+
     const transactionCategories = await service.findAllByUser(
       DUMMY_TEST_USER.id,
     );
+
+    expect(transactionCategoryRepo.findMany).toHaveBeenCalledTimes(1);
+    expect(transactionCategoryRepo.findMany).toHaveBeenCalledWith({
+      where: {
+        deleted: {
+          not: true,
+        },
+        userId: '61460d7354ea082ad0256749',
+        visibility: undefined,
+      },
+    });
+
     expect(removeCreatedAndUpdated(transactionCategories)).toMatchSnapshot();
   });
 
   it('should return an array of transaction categories from findMonthlySummariesByUserAndId', async () => {
+    jest.spyOn(transactionCategoryRepo, 'findMany').mockResolvedValue([]);
+    jest
+      .spyOn(transactionCategoryMappingRepo, 'findMany')
+      .mockResolvedValue(
+        transactionCategoryMappingRepoFindAllByUserIdTransactionData,
+      );
+
     const transactionCategories = await service.findMonthlySummariesByUserAndId(
       DUMMY_TEST_USER.id,
       '623b58ada3deba9879422fbf',
     );
+
+    expect(transactionCategoryRepo.findMany).toHaveBeenCalledTimes(1);
+    expect(transactionCategoryRepo.findMany).toHaveBeenCalledWith({
+      where: {
+        parentCategoryId: {
+          in: ['623b58ada3deba9879422fbf'],
+        },
+      },
+    });
+
+    expect(transactionCategoryMappingRepo.findMany).toHaveBeenCalledTimes(1);
+    expect(transactionCategoryMappingRepo.findMany).toHaveBeenCalledWith({
+      include: {
+        transaction: {
+          select: {
+            date: true,
+            fromAccount: true,
+            toAccount: true,
+          },
+        },
+      },
+      where: {
+        categoryId: {
+          in: ['623b58ada3deba9879422fbf'],
+        },
+        userId: '61460d7354ea082ad0256749',
+      },
+    });
+
     expect(transactionCategories).toMatchSnapshot();
   });
 });

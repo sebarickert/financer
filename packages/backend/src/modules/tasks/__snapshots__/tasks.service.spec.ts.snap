@@ -1,0 +1,108 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TasksService should create transaction from template 1`] = `
+[
+  {
+    "amount": "200",
+    "date": 2022-09-30T09:00:00.000Z,
+    "description": "Test template 2",
+    "fromAccount": null,
+    "toAccount": "61460da354ea082ad025676b",
+    "userId": "61460d7354ea082ad0256749",
+  },
+]
+`;
+
+exports[`TasksService should create transaction from template 2`] = `
+[
+  {
+    "level": "INFO",
+    "message": "Added 1 transactions, skipped 0 and found 0 templates with missing data",
+    "module": "tasks",
+    "service": "generateTransactions",
+  },
+]
+`;
+
+exports[`TasksService should create transaction to next month if dayOfMonthToCreate is greater than dayOfMonth 1`] = `
+[
+  {
+    "amount": "200",
+    "date": 2022-01-31T10:00:00.000Z,
+    "description": "Test template 2",
+    "fromAccount": null,
+    "toAccount": "61460da354ea082ad025676b",
+    "userId": "61460d7354ea082ad0256749",
+  },
+]
+`;
+
+exports[`TasksService should create transaction to next month if dayOfMonthToCreate is greater than dayOfMonth 2`] = `
+[
+  {
+    "level": "INFO",
+    "message": "Added 1 transactions, skipped 0 and found 0 templates with missing data",
+    "module": "tasks",
+    "service": "generateTransactions",
+  },
+]
+`;
+
+exports[`TasksService should not create duplicated transaction from template with multiple executions 1`] = `
+[
+  {
+    "level": "INFO",
+    "message": "Added 0 transactions, skipped 1 and found 0 templates with missing data",
+    "module": "tasks",
+    "service": "generateTransactions",
+  },
+]
+`;
+
+exports[`TasksService should run templates on last day of month even with higher dayOfMonthToCreate values 1`] = `
+[
+  {
+    "amount": "200",
+    "date": 2022-02-28T10:00:00.000Z,
+    "description": "Test template 2",
+    "fromAccount": null,
+    "toAccount": "61460da354ea082ad025676b",
+    "userId": "61460d7354ea082ad0256749",
+  },
+]
+`;
+
+exports[`TasksService should run templates on last day of month even with higher dayOfMonthToCreate values 2`] = `
+[
+  {
+    "level": "INFO",
+    "message": "Added 1 transactions, skipped 0 and found 0 templates with missing data",
+    "module": "tasks",
+    "service": "generateTransactions",
+  },
+]
+`;
+
+exports[`TasksService should use last day of month id dayOfMonth is higher than amount of days 1`] = `
+[
+  {
+    "amount": "200",
+    "date": 2022-02-28T10:00:00.000Z,
+    "description": "Test template 2",
+    "fromAccount": null,
+    "toAccount": "61460da354ea082ad025676b",
+    "userId": "61460d7354ea082ad0256749",
+  },
+]
+`;
+
+exports[`TasksService should use last day of month id dayOfMonth is higher than amount of days 2`] = `
+[
+  {
+    "level": "INFO",
+    "message": "Added 1 transactions, skipped 0 and found 0 templates with missing data",
+    "module": "tasks",
+    "service": "generateTransactions",
+  },
+]
+`;

@@ -11,15 +11,16 @@ import {
   Transaction,
   TransactionType,
 } from '@prisma/client';
+import { Decimal } from '@prisma/client/runtime/library';
 
 import { TransactionRepo } from '../../database/repos/transaction.repo';
 import { ForceMutable } from '../../types/force-mutable';
 import { PaginationDto } from '../../types/pagination.dto';
+import { UserId } from '../../types/user-id';
 import { DateService } from '../../utils/date.service';
 import { AccountsService } from '../accounts/accounts.service';
 import { TransactionCategoriesService } from '../transaction-categories/transaction-categories.service';
 import { CreateTransactionCategoryMappingDto } from '../transaction-category-mappings/dto/create-transaction-category-mapping.dto';
-import { TransactionCategoryMappingDto } from '../transaction-category-mappings/dto/transaction-category-mapping.dto';
 import { UpdateTransactionCategoryMappingDto } from '../transaction-category-mappings/dto/update-transaction-category-mapping.dto';
 import { TransactionCategoryMappingsService } from '../transaction-category-mappings/transaction-category-mappings.service';
 
@@ -41,9 +42,9 @@ export class TransactionsService {
   ) {}
 
   async create(
-    userId: string,
+    userId: UserId,
     createTransactionDto: CreateTransactionDto,
-  ): Promise<Transaction> {
+  ): Promise<TransactionDto> {
     const { categories: rawCategories, ...transactionRawData } =
       createTransactionDto;
 
@@ -61,15 +62,16 @@ export class TransactionsService {
       'add',
     );
 
-    return transaction;
+    return TransactionDto.createFromPlain(transaction);
   }
 
   async createMany(
-    userId: string,
+    userId: UserId,
     createTransactionDto: CreateTransactionDto[],
   ): Promise<void> {
     await this.transactionRepo.createMany(
-      createTransactionDto.map((transaction) => ({
+      // @ts-expect-error - remove legacy `v` from import data
+      createTransactionDto.map(({ v, ...transaction }) => ({
         ...transaction,
         userId,
         categories: undefined,
@@ -77,7 +79,7 @@ export class TransactionsService {
     );
   }
 
-  async findOne(userId: string, id: string): Promise<TransactionDto> {
+  async findOne(userId: UserId, id: string): Promise<TransactionDto> {
     const transaction = await this.transactionRepo.findOne({ id, userId });
 
     if (!transaction) {
@@ -85,19 +87,20 @@ export class TransactionsService {
     }
 
     const categories =
-      (await this.transactionCategoryMappingsService.findAllByUserAndTransaction(
-        userId.toString(),
+      await this.transactionCategoryMappingsService.findAllByUserAndTransaction(
+        userId,
         transaction.id,
-      )) as TransactionCategoryMappingDto[];
+      );
 
-    return {
+    return TransactionDto.createFromPlain({
       ...transaction,
+      // @ts-expect-error - `categories` is not a field in the Transaction model
       categories,
-    };
+    });
   }
 
   async findAllByUser(
-    userId: string,
+    userId: UserId,
     transactionType: TransactionType | null,
     page?: number,
     limit = 10,
@@ -144,27 +147,28 @@ export class TransactionsService {
       },
     });
 
-    return {
-      data: transactions,
+    return new PaginationDto({
+      data: TransactionDto.createFromPlain(transactions),
       currentPage: page ?? 1,
       limit: page ? limit : totalCount,
       totalPageCount: lastPage,
       hasNextPage: (page ?? 1) < lastPage,
       hasPreviousPage: (page ?? 1) > 1,
       totalRowCount: totalCount,
-    };
+    });
   }
 
-  async findAllByUserForExport(userId: string): Promise<Transaction[]> {
-    return this.transactionRepo.findMany({
+  async findAllByUserForExport(userId: UserId): Promise<Transaction[]> {
+    const transactions = await this.transactionRepo.findMany({
       where: {
         userId,
       },
     });
+    return TransactionDto.createFromPlain(transactions);
   }
 
   findMonthlySummariesByUser = async (
-    userId: string,
+    userId: UserId,
     year?: number,
     month?: number,
     accountTypes?: AccountType[],
@@ -229,8 +233,8 @@ export class TransactionsService {
 
       const count = value.length;
       const amount = value.reduce(
-        (acc, transaction) => acc + transaction.amount,
-        0,
+        (acc, transaction) => acc.add(transaction.amount),
+        new Decimal(0),
       );
 
       const summary = summaries.get(
@@ -241,33 +245,33 @@ export class TransactionsService {
         incomesCount: 0,
         expensesCount: 0,
         transfersCount: 0,
-        totalAmount: 0,
-        incomeAmount: 0,
-        expenseAmount: 0,
-        transferAmount: 0,
+        totalAmount: new Decimal(0),
+        incomeAmount: new Decimal(0),
+        expenseAmount: new Decimal(0),
+        transferAmount: new Decimal(0),
       };
 
       summary.totalCount += count;
 
       if (type === TransactionType.TRANSFER) {
         summary.transfersCount += count;
-        summary.transferAmount += amount;
+        summary.transferAmount = summary.transferAmount.add(amount);
       } else if (type === TransactionType.EXPENSE) {
         summary.expensesCount += count;
-        summary.expenseAmount += amount;
+        summary.expenseAmount = summary.expenseAmount.add(amount);
 
-        summary.totalAmount -= amount;
+        summary.totalAmount = summary.totalAmount.minus(amount);
       } else {
         summary.incomesCount += count;
-        summary.incomeAmount += amount;
+        summary.incomeAmount = summary.incomeAmount.add(amount);
 
-        summary.totalAmount += amount;
+        summary.totalAmount = summary.totalAmount.add(amount);
       }
 
       summaries.set(`${transactionYear}-${transactionMonth}`, summary);
     });
 
-    return Array.from(summaries.values())
+    const data = Array.from(summaries.values())
       .sort((a, b) => {
         // Compare years first
         if (a.id.year > b.id.year) return -1;
@@ -282,18 +286,20 @@ export class TransactionsService {
       })
       .map((summary) => ({
         ...summary,
-        totalAmount: Number(summary.totalAmount.toFixed(2)),
-        incomeAmount: Number(summary.incomeAmount.toFixed(2)),
-        expenseAmount: Number(summary.expenseAmount.toFixed(2)),
-        transferAmount: Number(summary.transferAmount.toFixed(2)),
+        totalAmount: summary.totalAmount,
+        incomeAmount: summary.incomeAmount,
+        expenseAmount: summary.expenseAmount,
+        transferAmount: summary.transferAmount,
       }));
+
+    return TransactionMonthSummaryDto.createFromPlain(data);
   };
 
   async update(
-    userId: string,
+    userId: UserId,
     id: string,
     updateTransactionDto: UpdateTransactionDto,
-  ): Promise<Transaction> {
+  ): Promise<TransactionDto> {
     const { categories: rawCategories, ...transactionData } =
       updateTransactionDto;
 
@@ -313,8 +319,8 @@ export class TransactionsService {
     });
 
     await this.transactionCategoryMappingsService.removeAllByUserAndTransaction(
-      userId.toString(),
-      id.toString(),
+      userId,
+      id,
     );
     await this.createCategories(userId, id, rawCategories);
     await this.updateRelatedAccountBalance(
@@ -324,12 +330,12 @@ export class TransactionsService {
       'add',
     );
 
-    return transaction;
+    return TransactionDto.createFromPlain(transaction);
   }
 
   async remove(
     transaction: Partial<TransactionDto>,
-    userId: string,
+    userId: UserId,
   ): Promise<void> {
     await this.updateRelatedAccountBalance(
       userId,
@@ -341,49 +347,43 @@ export class TransactionsService {
     await this.transactionRepo.delete({ id: transaction.id });
   }
 
-  async removeAllByUser(userId: string): Promise<void> {
+  async removeAllByUser(userId: UserId): Promise<void> {
     await this.transactionRepo.deleteMany({ userId });
   }
 
   private async updateRelatedAccountBalance(
-    userId: string,
+    userId: UserId,
     transaction: Partial<Transaction>,
-    amount: number,
+    amount: Decimal,
     type: 'add' | 'remove',
   ): Promise<void> {
-    const amountToApply = type === 'add' ? amount : -amount;
+    const amountToApply = type === 'add' ? amount : amount.negated();
 
     if (transaction.toAccount) {
       await this.accountService.updateBalance(
-        userId.toString(),
-        transaction.toAccount.toString(),
+        userId,
+        transaction.toAccount,
         amountToApply,
       );
     }
     if (transaction.fromAccount) {
       await this.accountService.updateBalance(
-        userId.toString(),
-        transaction.fromAccount.toString(),
-        -amountToApply,
+        userId,
+        transaction.fromAccount,
+        amountToApply.negated(),
       );
     }
   }
 
   private async verifyTransactionAccountOwnership(
-    userId: string,
+    userId: UserId,
     transaction: Partial<Transaction>,
   ) {
     if (transaction.toAccount) {
-      await this.accountService.findOne(
-        userId.toString(),
-        transaction.toAccount.toString(),
-      );
+      await this.accountService.findOne(userId, transaction.toAccount);
     }
     if (transaction.fromAccount) {
-      await this.accountService.findOne(
-        userId.toString(),
-        transaction.fromAccount.toString(),
-      );
+      await this.accountService.findOne(userId, transaction.fromAccount);
     }
   }
 
@@ -402,7 +402,7 @@ export class TransactionsService {
   }
 
   private async createCategories(
-    userId: string,
+    userId: UserId,
     transactionId: string,
     categories?: Omit<CreateTransactionCategoryMappingDto, 'transactionId'>[],
   ) {
@@ -418,13 +418,13 @@ export class TransactionsService {
       }));
 
     await this.transactionCategoryMappingsService.createMany(
-      userId.toString(),
+      userId,
       categoriesWithAllFields,
     );
   }
 
   private async filterTransactionsByCategory(
-    userId: string,
+    userId: UserId,
     categoryIds?: string[],
   ) {
     if (!categoryIds) {
@@ -433,7 +433,7 @@ export class TransactionsService {
 
     const transactionIds = (
       await this.transactionCategoryMappingsService.findAllByUserAndCategoryIds(
-        userId.toString(),
+        userId,
         categoryIds.map((id) => id.toString()),
       )
     ).map(({ transactionId }) => transactionId);
@@ -442,7 +442,7 @@ export class TransactionsService {
   }
 
   private async getAccountIdsByType(
-    userId: string,
+    userId: UserId,
     accountTypes?: AccountType[],
   ) {
     if (!accountTypes?.length) return [];
@@ -456,7 +456,7 @@ export class TransactionsService {
   }
 
   private async filterTransactionsByAccountType(
-    userId: string,
+    userId: UserId,
     accountTypes?: AccountType[],
   ) {
     if (!accountTypes?.length) return {};

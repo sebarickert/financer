@@ -1,80 +1,141 @@
-import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 
+import { createMockServiceProvider } from '../../../test/create-mock-service-provider';
 import { removeCreatedAndUpdated } from '../../../test/test-helper';
 import { DUMMY_TEST_USER } from '../../config/mockAuthenticationMiddleware';
-import { testConfiguration } from '../../config/test-configuration';
-import { DatabaseModule } from '../../database/database.module';
-import fixtureData from '../../fixtures/large_fixture-data.json';
-import { UserDataModule } from '../user-data/user-data.module';
 import {
-  ImportUserDataDto,
-  UserDataService,
-} from '../user-data/user-data.service';
+  transactionCategoryMappingRepoFindAllByUserId,
+  transactionCategoryMappingRepoFindAllByUserIdTransactionData,
+} from '../../database/repos/mocks/transaction-category-mapping-repo-mock';
+import { TransactionCategoryMappingRepo } from '../../database/repos/transaction-category-mapping.repo';
 
 import { TransactionCategoryMappingsService } from './transaction-category-mappings.service';
 
 describe('TransactionCategoryMappingsService', () => {
   let service: TransactionCategoryMappingsService;
+  let transactionCategoryMappingRepo: jest.Mocked<TransactionCategoryMappingRepo>;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [
-        ConfigModule.forRoot({ isGlobal: true, load: [testConfiguration] }),
-        DatabaseModule,
-
-        // Modules required to bootstrap with UserDataModule
-        UserDataModule,
+      providers: [
+        TransactionCategoryMappingsService,
+        createMockServiceProvider(TransactionCategoryMappingRepo),
       ],
-      providers: [TransactionCategoryMappingsService],
     }).compile();
 
     service = module.get<TransactionCategoryMappingsService>(
       TransactionCategoryMappingsService,
     );
-    const userDataService = module.get<UserDataService>(UserDataService);
+    transactionCategoryMappingRepo = module.get<
+      jest.Mocked<TransactionCategoryMappingRepo>
+    >(TransactionCategoryMappingRepo);
+  });
 
-    await userDataService.overrideUserData(
-      DUMMY_TEST_USER.id,
-      fixtureData as unknown as ImportUserDataDto,
-    );
-  }, 10000);
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
   it('should return all transactionCategoryMappings by user', async () => {
+    jest
+      .spyOn(transactionCategoryMappingRepo, 'findMany')
+      .mockResolvedValue(transactionCategoryMappingRepoFindAllByUserId);
+
     const transactionCategoryMappings = await service.findAllByUser(
       DUMMY_TEST_USER.id,
     );
+
+    expect(transactionCategoryMappingRepo.findMany).toHaveBeenCalledTimes(1);
+    expect(transactionCategoryMappingRepo.findMany).toHaveBeenCalledWith({
+      where: {
+        userId: '61460d7354ea082ad0256749',
+      },
+    });
+
     expect(
       removeCreatedAndUpdated(transactionCategoryMappings),
     ).toMatchSnapshot();
   });
 
   it('should return all transactionCategoryMappings by user and category ids', async () => {
+    jest
+      .spyOn(transactionCategoryMappingRepo, 'findMany')
+      .mockResolvedValue(transactionCategoryMappingRepoFindAllByUserId);
+
     const transactionCategoryMappings =
       await service.findAllByUserAndCategoryIds(DUMMY_TEST_USER.id, [
         '623b58ada3deba9879422fbf',
       ]);
+
+    expect(transactionCategoryMappingRepo.findMany).toHaveBeenCalledTimes(1);
+    expect(transactionCategoryMappingRepo.findMany).toHaveBeenCalledWith({
+      where: {
+        userId: '61460d7354ea082ad0256749',
+        categoryId: {
+          in: ['623b58ada3deba9879422fbf'],
+        },
+      },
+    });
+
     expect(
       removeCreatedAndUpdated(transactionCategoryMappings),
     ).toMatchSnapshot();
   });
 
   it('should return all transactionCategoryMappings by user and transaction id', async () => {
+    jest
+      .spyOn(transactionCategoryMappingRepo, 'findMany')
+      .mockResolvedValue(transactionCategoryMappingRepoFindAllByUserId);
+
     const transactionCategoryMappings =
       await service.findAllByUserAndTransaction(
         DUMMY_TEST_USER.id,
         '624befb66ba655edad8f824e',
       );
+
+    expect(transactionCategoryMappingRepo.findMany).toHaveBeenCalledTimes(1);
+    expect(transactionCategoryMappingRepo.findMany).toHaveBeenCalledWith({
+      where: {
+        userId: '61460d7354ea082ad0256749',
+        transactionId: '624befb66ba655edad8f824e',
+      },
+    });
+
     expect(
       removeCreatedAndUpdated(transactionCategoryMappings),
     ).toMatchSnapshot();
   });
 
-  it('should return all transactionCategoryMappings by user and category ids', async () => {
+  it('should return transaction category monthly summary by user and category ids', async () => {
+    jest
+      .spyOn(transactionCategoryMappingRepo, 'findMany')
+      .mockResolvedValue(
+        transactionCategoryMappingRepoFindAllByUserIdTransactionData,
+      );
+
     const transactionCategoryMappings =
       await service.findMonthlySummariesByUserAndId(DUMMY_TEST_USER.id, [
         '623b58ada3deba9879422fbf',
       ]);
+
+    expect(transactionCategoryMappingRepo.findMany).toHaveBeenCalledTimes(1);
+    expect(transactionCategoryMappingRepo.findMany).toHaveBeenCalledWith({
+      include: {
+        transaction: {
+          select: {
+            date: true,
+            fromAccount: true,
+            toAccount: true,
+          },
+        },
+      },
+      where: {
+        categoryId: {
+          in: ['623b58ada3deba9879422fbf'],
+        },
+        userId: '61460d7354ea082ad0256749',
+      },
+    });
+
     expect(transactionCategoryMappings).toMatchSnapshot();
   });
 });

@@ -1,16 +1,15 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import {
-  TransactionCategoryMapping,
-  TransactionType,
-  Prisma,
-} from '@prisma/client';
+import { Injectable } from '@nestjs/common';
+import { TransactionType } from '@prisma/client';
+import { Decimal } from '@prisma/client/runtime/library';
 
 import { TransactionCategoryMappingRepo } from '../../database/repos/transaction-category-mapping.repo';
 import { ForceMutable } from '../../types/force-mutable';
+import { UserId } from '../../types/user-id';
 import { DateService } from '../../utils/date.service';
 import { CategoryMonthlySummaryDto } from '../transaction-categories/dto/transaction-month-summary.dto';
 
 import { CreateTransactionCategoryMappingDto } from './dto/create-transaction-category-mapping.dto';
+import { TransactionCategoryMappingDto } from './dto/transaction-category-mapping.dto';
 
 @Injectable()
 export class TransactionCategoryMappingsService {
@@ -19,11 +18,12 @@ export class TransactionCategoryMappingsService {
   ) {}
 
   async createMany(
-    userId: string,
+    userId: UserId,
     createTransactionCategoryMappingDto: CreateTransactionCategoryMappingDto[],
   ) {
     return this.transactionCategoryMappingRepo.createMany(
-      createTransactionCategoryMappingDto.map((category) => ({
+      // @ts-expect-error - remove legacy `v` from import data
+      createTransactionCategoryMappingDto.map(({ v, ...category }) => ({
         ...category,
         userId,
       })),
@@ -38,21 +38,30 @@ export class TransactionCategoryMappingsService {
     return `This action returns a #${id} transactionCategoryMapping`;
   }
 
-  async findAllByUser(userId: string): Promise<TransactionCategoryMapping[]> {
-    return this.transactionCategoryMappingRepo.findMany({ where: { userId } });
+  async findAllByUser(
+    userId: UserId,
+  ): Promise<TransactionCategoryMappingDto[]> {
+    const mappings = await this.transactionCategoryMappingRepo.findMany({
+      where: { userId },
+    });
+
+    return TransactionCategoryMappingDto.createFromPlain(mappings);
   }
 
   async findAllByUserForExport(
-    userId: string,
-  ): Promise<TransactionCategoryMapping[]> {
-    return this.transactionCategoryMappingRepo.findMany({ where: { userId } });
+    userId: UserId,
+  ): Promise<TransactionCategoryMappingDto[]> {
+    const mappings = await this.transactionCategoryMappingRepo.findMany({
+      where: { userId },
+    });
+    return TransactionCategoryMappingDto.createFromPlain(mappings);
   }
 
   async findAllByUserAndCategoryIds(
-    userId: string,
+    userId: UserId,
     categoryIds: string[],
-  ): Promise<TransactionCategoryMapping[]> {
-    return this.transactionCategoryMappingRepo.findMany({
+  ): Promise<TransactionCategoryMappingDto[]> {
+    const mappings = await this.transactionCategoryMappingRepo.findMany({
       where: {
         userId,
         categoryId: {
@@ -60,19 +69,23 @@ export class TransactionCategoryMappingsService {
         },
       },
     });
+
+    return TransactionCategoryMappingDto.createFromPlain(mappings);
   }
 
   async findAllByUserAndTransaction(
-    userId: string,
+    userId: UserId,
     transactionId: string,
-  ): Promise<TransactionCategoryMapping[]> {
-    return this.transactionCategoryMappingRepo.findMany({
+  ): Promise<TransactionCategoryMappingDto[]> {
+    const mappings = await this.transactionCategoryMappingRepo.findMany({
       where: { userId, transactionId },
     });
+
+    return TransactionCategoryMappingDto.createFromPlain(mappings);
   }
 
   async findMonthlySummariesByUserAndId(
-    userId: string,
+    userId: UserId,
     categoryIds: string[],
     year?: number,
     month?: number,
@@ -136,7 +149,10 @@ export class TransactionCategoryMappingsService {
       const { type, month: transactionMonth, year: transactionYear } = key;
 
       const count = value.length;
-      const amount = value.reduce((acc, mapping) => acc + mapping.amount, 0);
+      const amount = value.reduce(
+        (acc, transaction) => acc.add(transaction.amount),
+        new Decimal(0),
+      );
 
       const summary = summaries.get(
         `${transactionYear}-${transactionMonth}`,
@@ -146,33 +162,33 @@ export class TransactionCategoryMappingsService {
         incomesCount: 0,
         expensesCount: 0,
         transfersCount: 0,
-        totalAmount: 0,
-        incomeAmount: 0,
-        expenseAmount: 0,
-        transferAmount: 0,
+        totalAmount: new Decimal(0),
+        incomeAmount: new Decimal(0),
+        expenseAmount: new Decimal(0),
+        transferAmount: new Decimal(0),
       };
 
       summary.totalCount += count;
 
       if (type === TransactionType.TRANSFER) {
         summary.transfersCount += count;
-        summary.transferAmount += amount;
+        summary.transferAmount = summary.transferAmount.add(amount);
       } else if (type === TransactionType.EXPENSE) {
         summary.expensesCount += count;
-        summary.expenseAmount += amount;
+        summary.expenseAmount = summary.expenseAmount.add(amount);
 
-        summary.totalAmount -= amount;
+        summary.totalAmount = summary.totalAmount.minus(amount);
       } else {
         summary.incomesCount += count;
-        summary.incomeAmount += amount;
+        summary.incomeAmount = summary.incomeAmount.add(amount);
 
-        summary.totalAmount += amount;
+        summary.totalAmount = summary.totalAmount.add(amount);
       }
 
       summaries.set(`${transactionYear}-${transactionMonth}`, summary);
     });
 
-    return Array.from(summaries.values())
+    const monthlyData = Array.from(summaries.values())
       .sort((a, b) => {
         // Compare years first
         if (a.id.year > b.id.year) return -1;
@@ -187,87 +203,13 @@ export class TransactionCategoryMappingsService {
       })
       .map((summary) => ({
         ...summary,
-        totalAmount: Number(summary.totalAmount.toFixed(2)),
-        incomeAmount: Number(summary.incomeAmount.toFixed(2)),
-        expenseAmount: Number(summary.expenseAmount.toFixed(2)),
-        transferAmount: Number(summary.transferAmount.toFixed(2)),
+        totalAmount: summary.totalAmount,
+        incomeAmount: summary.incomeAmount,
+        expenseAmount: summary.expenseAmount,
+        transferAmount: summary.transferAmount,
       }));
-  }
 
-  private filterRawMongoYearAndMonthFilter(
-    year?: number,
-    month?: number,
-    filterMode: 'targetMonth' | 'laterThan' = 'targetMonth',
-  ): Prisma.InputJsonObject {
-    if (!year && month) {
-      throw new BadRequestException('Year is required when month is provided');
-    }
-
-    if (!year && !month) {
-      return {};
-    }
-
-    if (filterMode === 'laterThan') {
-      return {
-        date: {
-          $gte: DateService.fromZonedTime(year, month - 1 || 0, 1),
-        },
-      };
-    }
-
-    return {
-      date: {
-        $gte: DateService.fromZonedTime(year, month - 1 || 0, 1),
-        $lt: DateService.fromZonedTime(year, month || 12, 1),
-      },
-    };
-  }
-
-  private filterRawMongoMonthlySummaryCondition(
-    userId: string,
-    operator: '$amount' | '$transactionAmount' | 1 | 0,
-    transactionType: TransactionType,
-  ): Prisma.InputJsonValue {
-    const selectedQuery =
-      this.filterRawMongoAggregationTransactionTypeFilter(transactionType);
-
-    if (transactionType !== null || typeof operator !== 'string') {
-      return { $cond: [{ $and: selectedQuery }, operator, 0] };
-    }
-
-    return {
-      $cond: [
-        { $and: [...selectedQuery, { $eq: ['$fromAccount', null] }] },
-        operator,
-        {
-          $cond: [
-            { $and: [...selectedQuery, { $eq: ['$toAccount', null] }] },
-            { $multiply: [operator, -1] },
-            0,
-          ],
-        },
-      ],
-    };
-  }
-
-  private filterRawMongoAggregationTransactionTypeFilter(
-    transactionType: TransactionType,
-  ): Prisma.InputJsonObject[] {
-    const isEmpty = (fieldName: string) => ({ $eq: [fieldName, null] });
-    const isNotEmpty = (fieldName: string) => ({ $ne: [fieldName, null] });
-
-    switch (transactionType) {
-      case TransactionType.INCOME:
-        return [isNotEmpty('$toAccount'), isEmpty('$fromAccount')];
-      case TransactionType.EXPENSE:
-        return [isNotEmpty('$fromAccount'), isEmpty('$toAccount')];
-      case TransactionType.TRANSFER:
-        return [isNotEmpty('$fromAccount'), isNotEmpty('$toAccount')];
-      case null:
-        return [];
-      default:
-        throw new Error(`Invalid transaction type: ${transactionType}`);
-    }
+    return CategoryMonthlySummaryDto.createFromPlain(monthlyData);
   }
 
   update(id: number) {
@@ -278,14 +220,14 @@ export class TransactionCategoryMappingsService {
     return `This action removes a #${id} transactionCategoryMapping`;
   }
 
-  async removeAllByUserAndTransaction(userId: string, transactionId: string) {
+  async removeAllByUserAndTransaction(userId: UserId, transactionId: string) {
     await this.transactionCategoryMappingRepo.deleteMany({
       userId,
       transactionId,
     });
   }
 
-  async removeAllByUser(userId: string) {
+  async removeAllByUser(userId: UserId) {
     await this.transactionCategoryMappingRepo.deleteMany({
       userId,
     });

@@ -70,7 +70,10 @@ describe('TransfersController', () => {
       .expect(400)
       .expect({
         statusCode: 400,
-        message: ['Amount must be a positive number.'],
+        message: [
+          'Amount must be a decimal number.',
+          'Amount must be a positive number.',
+        ],
         error: 'Bad Request',
       });
     expect(createMock).not.toHaveBeenCalled();
@@ -88,7 +91,10 @@ describe('TransfersController', () => {
       .expect(400)
       .expect({
         statusCode: 400,
-        message: ['Amount must be a positive number.'],
+        message: [
+          'Amount must be a decimal number.',
+          'Amount must be a positive number.',
+        ],
         error: 'Bad Request',
       });
     expect(createMock).not.toHaveBeenCalled();
@@ -206,6 +212,7 @@ describe('TransfersController', () => {
         message: [
           'fromAccount must not be empty.',
           "Target and source accounts can't be the same account.",
+          'Amount must be a decimal number.',
           'Amount must be a positive number.',
           'description must be a string',
           'Description must not be empty.',

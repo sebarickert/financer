@@ -1,23 +1,91 @@
 import { execSync } from 'child_process';
 
-import { MongoMemoryReplSet } from 'mongodb-memory-server';
+import { PrismaClient } from '@prisma/client';
+import { Client } from 'pg';
 
-// Extend the default timeout so MongoDB binaries can download
-// jest.setTimeout(60000);
+import { DUMMY_TEST_USER } from './mockAuthenticationMiddleware';
 
-let replSet: MongoMemoryReplSet;
+let serverStarted: null | true = null;
 
-const getDbUri = () => replSet.getUri(`financer_test`);
+const containerName = 'financer-test-postgres';
+const username = 'postgres';
+const password = 'password';
+const port = 39425;
 
-export const setupMemoryDbSchema = async (rawUri: string): Promise<string> => {
-  const uri = new URL(rawUri);
-  uri.pathname = `${uri.pathname}_${process.pid}`;
+const getDbUri = () =>
+  `postgresql://${username}:${password}@localhost:${port}/testdb_${process.pid}`;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const isContainerRunning = (targetContainerName: string): boolean => {
+  try {
+    const result = execSync(
+      `docker inspect -f '{{.State.Running}}' ${targetContainerName}`,
+    )
+      .toString()
+      .trim();
+    return result === 'true';
+  } catch (error) {
+    return false;
+  }
+};
+
+const isContainerExists = (targetContainerName: string): boolean => {
+  try {
+    execSync(`docker inspect ${targetContainerName}`);
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
+const removeContainer = (targetContainerName: string): void => {
+  try {
+    execSync(`docker rm -f ${targetContainerName}`);
+  } catch (error) {
+    console.warn(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      `Failed to remove container ${targetContainerName}: ${(error as any).message}`,
+    );
+  }
+};
+
+const createDatabaseIfNotExists = async (dbUri: string): Promise<void> => {
+  const uri = new URL(dbUri);
+  const dbName = uri.pathname.split('/').pop();
+  uri.pathname = '/postgres';
+
+  const client = new Client({ connectionString: uri.toString() });
+  await client.connect();
+
+  const res = await client.query(
+    `SELECT 1 FROM pg_database WHERE datname='${dbName}'`,
+  );
+  if (res.rowCount === 0) {
+    await client.query(`CREATE DATABASE "${dbName}"`);
+    console.log(`Database ${dbName} created.`);
+  }
+
+  await client.end();
+};
+
+const createTestUserIfNotExists = async (dbUri: string): Promise<void> => {
+  const prisma = new PrismaClient({ datasources: { db: { url: dbUri } } });
+
+  await prisma.user.upsert({
+    where: { id: DUMMY_TEST_USER.id },
+    update: {},
+    create: DUMMY_TEST_USER,
+  });
+
+  await prisma.$disconnect();
+};
+
+export const setupDatabaseSchema = async (rawUri: string): Promise<string> => {
   const setupEnvValue = process.env[`MEMORY_DB_SETUP_DONE_${process.pid}`];
 
   // Db schema has already been setup
   if (setupEnvValue === 'true') {
-    return uri.toString();
+    return rawUri;
   }
 
   // With some platforms, the memory db takes a while to start
@@ -26,6 +94,8 @@ export const setupMemoryDbSchema = async (rawUri: string): Promise<string> => {
     await new Promise((resolve) => setTimeout(resolve, 250));
   }
 
+  await createDatabaseIfNotExists(rawUri);
+
   process.env[`MEMORY_DB_SETUP_DONE_${process.pid}`] = 'true';
 
   await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -33,40 +103,45 @@ export const setupMemoryDbSchema = async (rawUri: string): Promise<string> => {
   execSync(`npx prisma db push --schema=$SCHEMA --skip-generate`, {
     // Uncomment to see command output
     // stdio: 'inherit',
-    env: { ...process.env, DATABASE_URL: uri.toString() },
+    env: { ...process.env, DATABASE_URL: rawUri },
   });
 
-  return uri.toString();
+  await createTestUserIfNotExists(rawUri);
+
+  return rawUri;
 };
 
-export const startMemoryDb = async (): Promise<MongoMemoryReplSet> => {
-  console.log('Starting memory db');
-  replSet = await MongoMemoryReplSet.create({
-    replSet: { storageEngine: 'wiredTiger' },
-    binary: {
-      version: '7.0.9',
-    },
-    // configSettings: {
-    //   getLastErrorDefaults: { w: 'majority', wtimeout: 5000 },
-    // },
-  });
+const startMemoryDb = async (): Promise<void> => {
+  if (!serverStarted && !isContainerRunning(containerName)) {
+    console.log(`Starting PostgreSQL Docker container ${containerName}`);
+    if (isContainerExists(containerName)) {
+      removeContainer(containerName);
+    }
 
-  return replSet;
+    execSync(
+      `docker run --name ${containerName} -e POSTGRES_USER=${username} -e POSTGRES_PASSWORD=${password} -p ${port}:5432 -d postgres`,
+    );
+
+    console.log('Waiting for PostgreSQL to be ready...');
+    await new Promise((resolve) => setTimeout(resolve, 10000)); // Adjust the sleep duration as needed
+    serverStarted = true;
+  }
 };
 
-export const stopMemoryDb = async (): Promise<void> => {
-  if (replSet) {
-    console.log('Stopping memory db');
-    await replSet.stop();
-  } else {
-    console.warn('No memory db instance running, stopping skipped');
+// TODO should call this some point
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const stopMemoryDb = (): void => {
+  if (serverStarted || isContainerRunning(containerName)) {
+    console.log(`Stopping PostgreSQL Docker container ${containerName}`);
+    removeContainer(containerName);
+    serverStarted = null;
   }
 };
 
 export const getMemoryDbUri = async (): Promise<string> => {
-  if (!replSet) {
+  if (!serverStarted) {
     await startMemoryDb();
   }
 
-  return setupMemoryDbSchema(getDbUri());
+  return setupDatabaseSchema(getDbUri());
 };

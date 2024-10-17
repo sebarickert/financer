@@ -1,19 +1,27 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transaction } from '@prisma/client';
+import { Decimal } from '@prisma/client/runtime/library';
 import { Type } from 'class-transformer';
 import {
   IsDate,
   IsMongoId,
   IsNotEmpty,
   IsString,
-  Min,
   ValidateNested,
 } from 'class-validator';
 
+import { UserId } from '../../../types/user-id';
+import {
+  IsDecimal,
+  TransformDecimal,
+} from '../../../utils/is-decimal.decorator';
+import { MinDecimal } from '../../../utils/min-decimal.decorator';
 import { CreateTransactionCategoryMappingWithoutTransactionDto } from '../../transaction-category-mappings/dto/create-transaction-category-mapping.dto';
 
 export class TransactionDto implements Transaction {
-  v: number;
+  constructor(values: Transaction) {
+    Object.assign(this, values);
+  }
 
   @ApiProperty()
   createdAt: Date;
@@ -26,8 +34,12 @@ export class TransactionDto implements Transaction {
   readonly id: string;
 
   @ApiProperty()
-  @Min(0.01, { message: 'Amount must be a positive number.' })
-  readonly amount: number;
+  @MinDecimal(new Decimal(0.01), {
+    message: 'Amount must be a positive number.',
+  })
+  @TransformDecimal()
+  @IsDecimal({ message: 'Amount must be a decimal number.' })
+  readonly amount: Decimal;
 
   @ApiProperty()
   @IsNotEmpty({ message: 'Description must not be empty.' })
@@ -41,7 +53,7 @@ export class TransactionDto implements Transaction {
 
   @ApiProperty({ type: String })
   @IsMongoId()
-  readonly userId: string;
+  readonly userId: UserId;
 
   @ApiProperty({ type: String })
   @IsMongoId({ message: 'fromAccount must not be empty.' })
@@ -58,4 +70,20 @@ export class TransactionDto implements Transaction {
   @ValidateNested({ each: true })
   @Type(() => CreateTransactionCategoryMappingWithoutTransactionDto)
   categories: CreateTransactionCategoryMappingWithoutTransactionDto[];
+
+  public static createFromPlain(transaction: Transaction): TransactionDto;
+  public static createFromPlain(transaction: Transaction[]): TransactionDto[];
+  public static createFromPlain(
+    transaction: Transaction | Transaction[],
+  ): TransactionDto | TransactionDto[] {
+    if (Array.isArray(transaction)) {
+      return transaction.map((a) => TransactionDto.createFromPlain(a));
+    }
+
+    return new TransactionDto({
+      ...transaction,
+      amount: new Decimal(transaction.amount),
+      date: new Date(transaction.date),
+    });
+  }
 }

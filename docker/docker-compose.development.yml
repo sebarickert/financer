@@ -1,44 +1,38 @@
 services:
-  mongodb:
-    image: mongo:7.0.9
-    hostname: mongodb
+  postgres:
+    image: postgres:latest
+    hostname: postgres
     restart: always
-    container_name: financer_dev-mongodb
+    container_name: financer_dev-postgres
     ports:
-      - 27017:27017
+      - 5432:5432
     environment:
-      - MONGO_INITDB_DATABASE=financer_dev
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=change-me
+      - POSTGRES_DB=financer_dev
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=change-me
     volumes:
-      - ./mongo-entrypoint:/docker-entrypoint-initdb.d
-      - mongo_data:/data/db
-      - mongo_config:/data/configdb
-    healthcheck:
-      test: test $$(mongosh -u admin -p change-me --quiet --eval "try {rs.initiate().ok } catch { rs.status().ok }") -eq 1
-      interval: 10s
-      start_period: 30s
-    command: /bin/sh -c "mkdir -p /data/secrets && openssl rand -base64 756 > /data/secrets/keyfile && chmod 400 /data/secrets/keyfile && chown 999:999 /data/secrets/keyfile && docker-entrypoint.sh --keyFile /data/secrets/keyfile --replSet rs0 --bind_ip_all"
+      - postgres_data:/var/lib/postgresql/data
+    # healthcheck:
+    #   test: ["CMD-SHELL", "pg_isready -U admin -d financer_dev"]
+    #   interval: 10s
+    #   start_period: 30s
 
-  mongodbclient:
-    image: mongo-express:latest
-    container_name: financer_dev-mongoclient
-    hostname: mongoclient
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: financer_dev-pgadmin
+    hostname: pgadmin
     environment:
-      - ME_CONFIG_MONGODB_SERVER=mongodb
-      - ME_CONFIG_MONGODB_AUTH_DATABASE=financer_dev
-      - ME_CONFIG_MONGODB_AUTH_USERNAME=admin
-      - ME_CONFIG_MONGODB_AUTH_PASSWORD=change-me
-      - ME_CONFIG_MONGODB_ENABLE_ADMIN=false
-      - ME_CONFIG_BASICAUTH_USERNAME=admin
-      - ME_CONFIG_BASICAUTH_PASSWORD=admin
+      - PGADMIN_CONFIG_SERVER_MODE=False
+      - MASTER_PASSWORD_REQUIRED=False
+      - PGADMIN_DEFAULT_EMAIL=admin@financer
+      - PGADMIN_DEFAULT_PASSWORD=admin
     depends_on:
-      - mongodb
+      - postgres
     ports:
-      - 3300:8081
+      - 3300:80
+    volumes:
+      - ./pgadmin-config/servers.json:/pgadmin4/servers.json
 
 volumes:
-  mongo_data:
-    name: financer_dev-mongodata
-  mongo_config:
-    name: financer_dev-mongoconfig
+  postgres_data:
+    name: financer_dev-postgresdata

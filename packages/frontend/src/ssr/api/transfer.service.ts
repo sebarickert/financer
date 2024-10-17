@@ -129,12 +129,12 @@ export class TransferService extends BaseApi {
 
       if (isValidationErrorResponse(unknownError)) {
         throw new ValidationException(
-          'Failed to add transfer',
+          'Failed to update transfer',
           unknownError.message,
         );
       }
 
-      throw new Error('Failed to add transfer', error);
+      throw new Error('Failed to update transfer', error);
     }
 
     await this.clearCache();

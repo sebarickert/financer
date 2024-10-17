@@ -1,16 +1,24 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Account, AccountType } from '@prisma/client';
+import { Decimal } from '@prisma/client/runtime/library';
 import {
   IsBoolean,
   IsEnum,
   IsMongoId,
   IsNotEmpty,
-  IsNumber,
   IsString,
 } from 'class-validator';
 
+import { UserId } from '../../../types/user-id';
+import {
+  IsDecimal,
+  TransformDecimal,
+} from '../../../utils/is-decimal.decorator';
+
 export class AccountDto implements Account {
-  v: number;
+  constructor(values: Account) {
+    Object.assign(this, values);
+  }
 
   @ApiProperty()
   createdAt: Date;
@@ -38,14 +46,32 @@ export class AccountDto implements Account {
   readonly type: AccountType;
 
   @ApiProperty()
-  @IsNumber({}, { message: 'Balance must be a number.' })
-  readonly balance: number;
+  @TransformDecimal()
+  @IsDecimal({ message: 'Balance must be a decimal number, with 2 decimals.' })
+  readonly balance: Decimal;
 
   @ApiProperty({ type: String })
   @IsMongoId()
-  readonly userId: string;
+  readonly userId: UserId;
 
   @ApiProperty()
   @IsBoolean()
   isDeleted: boolean;
+
+  public static createFromPlain(account: Account): AccountDto;
+  public static createFromPlain(account: Account[]): AccountDto[];
+  public static createFromPlain(
+    account: Account | Account[],
+  ): AccountDto | AccountDto[] {
+    if (Array.isArray(account)) {
+      return account.map((a) => AccountDto.createFromPlain(a));
+    }
+
+    return new AccountDto({
+      ...account,
+      createdAt: new Date(account.createdAt),
+      updatedAt: new Date(account.updatedAt),
+      balance: new Decimal(account.balance),
+    });
+  }
 }

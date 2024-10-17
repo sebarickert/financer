@@ -1,26 +1,30 @@
-import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { testConfiguration } from '../../config/test-configuration';
-import { DatabaseModule } from '../../database/database.module';
+import { createMockServiceProvider } from '../../../test/create-mock-service-provider';
+import { TransactionTemplateLogRepo } from '../../database/repos/transaction-template-log.repo';
+import { TransactionTemplateRepo } from '../../database/repos/transaction-template.repo';
 
-import { TransactionTemplatesService as TransactionTemplatesService } from './transaction-templates.service';
+import { TransactionTemplatesService } from './transaction-templates.service';
 
 describe('TransactionTemplatesService', () => {
   let service: TransactionTemplatesService;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [
-        ConfigModule.forRoot({ isGlobal: true, load: [testConfiguration] }),
-        DatabaseModule,
+      providers: [
+        TransactionTemplatesService,
+        createMockServiceProvider(TransactionTemplateRepo),
+        createMockServiceProvider(TransactionTemplateLogRepo),
       ],
-      providers: [TransactionTemplatesService],
     }).compile();
 
     service = module.get<TransactionTemplatesService>(
       TransactionTemplatesService,
     );
+  });
+
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
   it('should be defined', () => {

@@ -270,15 +270,6 @@
   ],
   "transactionCategoryMappings": [
     {
-      "id": "623de0afc839cf72d59b0cfb",
-      "userId": "61460d7354ea082ad0256749",
-      "description": "",
-      "categoryId": "623b58ada3deba9879422fbf",
-      "transactionId": "623de0afc839cf72d59b0cf9",
-      "amount": 10,
-      "v": 0
-    },
-    {
       "id": "623de1f2c839cf72d59b0d93",
       "userId": "61460d7354ea082ad0256749",
       "description": "dummy description",

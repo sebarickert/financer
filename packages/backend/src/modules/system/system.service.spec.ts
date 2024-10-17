@@ -1,24 +1,23 @@
-import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { testConfiguration } from '../../config/test-configuration';
-import { DatabaseModule } from '../../database/database.module';
+import { createMockServiceProvider } from '../../../test/create-mock-service-provider';
+import { SystemLogRepo } from '../../database/repos/system-log.repo';
 
 import { SystemService } from './system.service';
 
 describe('SystemService', () => {
   let service: SystemService;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [
-        ConfigModule.forRoot({ isGlobal: true, load: [testConfiguration] }),
-        DatabaseModule,
-      ],
-      providers: [SystemService],
+      providers: [SystemService, createMockServiceProvider(SystemLogRepo)],
     }).compile();
 
     service = module.get<SystemService>(SystemService);
+  });
+
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
   it('should be defined', () => {
