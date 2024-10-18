@@ -61,12 +61,6 @@ export class TransactionRepo {
   createMany(
     data: Prisma.TransactionUncheckedCreateInput[],
   ): PrismaPromise<Prisma.BatchPayload> {
-    if (data.length === 0) {
-      return Promise.resolve({
-        count: 0,
-      }) as PrismaPromise<Prisma.BatchPayload>;
-    }
-
     return this.prisma.transaction.createMany({
       data,
     });

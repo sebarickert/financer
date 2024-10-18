@@ -58,12 +58,6 @@ export class AccountRepo {
   createMany(
     data: Prisma.AccountUncheckedCreateInput[],
   ): PrismaPromise<Prisma.BatchPayload> {
-    if (data.length === 0) {
-      return Promise.resolve({
-        count: 0,
-      }) as PrismaPromise<Prisma.BatchPayload>;
-    }
-
     return this.prisma.account.createMany({
       data,
     });
