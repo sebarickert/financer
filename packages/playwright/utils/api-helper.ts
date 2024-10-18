@@ -160,6 +160,6 @@ export const submitTransactionCategoryForm = async (
 export const getAllCategories = async () => {
   const baseUrl = getBaseUrl();
   return (await (
-    await fetch(`${baseUrl}/api/categories`)
+    await fetch(`${baseUrl}/api/transaction-categories`)
   ).json()) as TransactionCategoryDto[];
 };

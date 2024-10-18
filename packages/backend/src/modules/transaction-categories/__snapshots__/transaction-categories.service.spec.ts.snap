@@ -100,7 +100,7 @@ exports[`TransactionCategoriesService should return an array of transaction cate
   {
     "deleted": false,
     "id": "623b6b84a3deba9879422fdd",
-    "name": "Invisble sub category",
+    "name": "Invisible sub category",
     "parentCategoryId": "623b58ada3deba9879422fbf",
     "userId": "61460d7354ea082ad0256749",
     "visibility": [],
