@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { FC, useState } from 'react';
+import { FC } from 'react';
 
 import { TransactionTypeSwitcherItem } from './TransactionTypeSwitcherItem';
 
@@ -8,7 +8,8 @@ import { IconName } from '$elements/Icon';
 
 type TransactionActionsProps = {
   className?: string;
-  onTransactionTypeChange?(type: TransactionType): void;
+  onChange(event: React.ChangeEvent<HTMLInputElement>): void;
+  defaultChecked?: TransactionType;
 };
 
 const switcherItems = [
@@ -31,17 +32,9 @@ const switcherItems = [
 
 export const TransactionTypeSwitcher: FC<TransactionActionsProps> = ({
   className = '',
-  onTransactionTypeChange,
+  onChange,
+  defaultChecked = TransactionType.Expense,
 }) => {
-  const [transactionType, setTransactionType] = useState<TransactionType>(
-    TransactionType.Expense,
-  );
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onTransactionTypeChange?.(event.target.value as TransactionType);
-    setTransactionType(event.target.value as TransactionType);
-  };
-
   return (
     <div className={clsx('', className)}>
       <ul className="grid items-center justify-center grid-cols-3">
@@ -49,8 +42,9 @@ export const TransactionTypeSwitcher: FC<TransactionActionsProps> = ({
           <li key={switcherItem.value}>
             <TransactionTypeSwitcherItem
               {...switcherItem}
-              onChange={handleChange}
+              onChange={onChange}
               name="transactionTypeSwitcher"
+              isChecked={defaultChecked === switcherItem.value}
             />
           </li>
         ))}

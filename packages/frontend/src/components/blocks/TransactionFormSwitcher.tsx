@@ -26,14 +26,16 @@ export const TransactionFormSwitcher: FC<TransactionFormSwitcherProps> = ({
     },
   };
 
-  const handleTransactionTypeChange = (type: TransactionType) => {
-    setTransactionType(type);
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTransactionType?.(event.target.value as TransactionType);
   };
 
   return (
     <section>
       <TransactionTypeSwitcher
-        onTransactionTypeChange={handleTransactionTypeChange}
+        onChange={handleChange}
+        className="mb-4"
+        defaultChecked={transactionType}
       />
       <TransactionForm
         onSubmit={onSubmit}
