@@ -4,9 +4,9 @@ import { Decimal } from '@prisma/client/runtime/library';
 import {
   IsBoolean,
   IsEnum,
-  IsMongoId,
   IsNotEmpty,
   IsString,
+  IsUUID,
 } from 'class-validator';
 
 import { UserId } from '../../../types/user-id';
@@ -27,7 +27,7 @@ export class AccountDto implements Account {
   updatedAt: Date;
 
   @ApiProperty({ type: String })
-  @IsMongoId()
+  @IsUUID()
   readonly id: string;
 
   @ApiProperty()
@@ -51,7 +51,7 @@ export class AccountDto implements Account {
   readonly balance: Decimal;
 
   @ApiProperty({ type: String })
-  @IsMongoId()
+  @IsUUID()
   readonly userId: UserId;
 
   @ApiProperty()

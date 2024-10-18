@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { AccountBalanceChange } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime/library';
 import { Type } from 'class-transformer';
-import { IsDate, IsMongoId } from 'class-validator';
+import { IsDate, IsUUID } from 'class-validator';
 
 import { UserId } from '../../../types/user-id';
 import {
@@ -22,7 +22,7 @@ export class AccountBalanceChangeDto implements AccountBalanceChange {
   updatedAt: Date;
 
   @ApiProperty()
-  @IsMongoId()
+  @IsUUID()
   readonly id: string;
 
   @ApiProperty()
@@ -36,11 +36,11 @@ export class AccountBalanceChangeDto implements AccountBalanceChange {
   readonly amount: Decimal;
 
   @ApiProperty()
-  @IsMongoId()
+  @IsUUID()
   readonly userId: UserId;
 
   @ApiProperty()
-  @IsMongoId()
+  @IsUUID()
   readonly accountId: string;
 
   public static createFromPlain(

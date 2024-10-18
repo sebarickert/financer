@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Allow, IsMongoId } from 'class-validator';
+import { Allow, IsUUID } from 'class-validator';
 
 import { IsNotEqual } from '../../../utils/is-not-equal.decorator';
 import { TransactionDto } from '../../transactions/dto/transaction.dto';
@@ -9,6 +9,6 @@ export class TransferDto extends TransactionDto {
   @IsNotEqual('toAccount', {
     message: "Target and source accounts can't be the same account.",
   })
-  @IsMongoId({ message: 'fromAccount must not be empty.' })
+  @IsUUID('all', { message: 'fromAccount must not be empty.' })
   declare fromAccount: string;
 }

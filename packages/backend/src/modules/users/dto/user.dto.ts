@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Role, User } from '@prisma/client';
-import { IsMongoId, IsNotEmpty, IsOptional, IsEnum } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsEnum, IsUUID } from 'class-validator';
 
 import { UserId } from '../../../types/user-id';
 
@@ -9,7 +9,7 @@ export class UserDto implements User {
     Object.assign(this, data);
   }
 
-  @IsMongoId()
+  @IsUUID()
   @ApiProperty({ type: 'string' })
   id: UserId;
 

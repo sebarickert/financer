@@ -3,9 +3,9 @@ import { TransactionCategory, TransactionType } from '@prisma/client';
 import {
   IsBoolean,
   IsEnum,
-  IsMongoId,
   IsNotEmpty,
   IsOptional,
+  IsUUID,
 } from 'class-validator';
 
 import { UserId } from '../../../types/user-id';
@@ -22,11 +22,11 @@ export class TransactionCategoryDto implements TransactionCategory {
   updatedAt: Date;
 
   @ApiProperty({ type: String })
-  @IsMongoId()
+  @IsUUID()
   id: string;
 
   @ApiProperty({ type: String })
-  @IsMongoId()
+  @IsUUID()
   userId: UserId;
 
   @ApiProperty()
@@ -53,7 +53,7 @@ export class TransactionCategoryDto implements TransactionCategory {
 
   @ApiProperty({ type: String, nullable: true })
   @IsOptional()
-  @IsMongoId({ message: 'parentCategoryId must not be empty.' })
+  @IsUUID('all', { message: 'parentCategoryId must not be empty.' })
   parentCategoryId: string | null;
 
   public static createFromPlain(
