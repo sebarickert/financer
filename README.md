@@ -68,13 +68,13 @@ $ npm start
 ### Frontend
 
 ```bash
-$ npm --w frontend install DEPENDENCY-NAME
+$ npm -w frontend install DEPENDENCY-NAME
 ```
 
 ### Backend
 
 ```bash
-$ npm --w backend install DEPENDENCY-NAME
+$ npm -w backend install DEPENDENCY-NAME
 ```
 
 ## Authors
