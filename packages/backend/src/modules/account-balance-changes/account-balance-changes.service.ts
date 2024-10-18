@@ -29,11 +29,11 @@ export class AccountBalanceChangesService {
     });
   }
 
-  async createMany(
+  createMany(
     userId: UserId,
     createAccountBalanceChanges: CreateAccountBalanceChangeDto[],
-  ): Promise<void> {
-    await this.accountBalanceChangeRepo.createMany(
+  ) {
+    return this.accountBalanceChangeRepo.createMany(
       // @ts-expect-error - remove legacy `v` from import data
       createAccountBalanceChanges.map(({ v, ...change }) => ({
         ...change,
@@ -64,7 +64,7 @@ export class AccountBalanceChangesService {
     });
   }
 
-  async removeAllByUser(userId: UserId): Promise<void> {
-    await this.accountBalanceChangeRepo.deleteMany({ userId });
+  removeAllByUser(userId: UserId) {
+    return this.accountBalanceChangeRepo.deleteMany({ userId });
   }
 }

@@ -32,7 +32,7 @@ export class TransactionTemplatesService {
     });
   }
 
-  async createMany(
+  createMany(
     userId: UserId,
     createTransactionTemplateDto: CreateTransactionTemplateDto[],
   ) {
@@ -112,9 +112,11 @@ export class TransactionTemplatesService {
     return this.transactionTemplateRepo.delete({ id, userId });
   }
 
-  async removeAllByUser(userId: UserId) {
-    await this.transactionTemplateLogRepo.deleteMany({ userId });
-    await this.transactionTemplateRepo.deleteMany({ userId });
+  removeAllByUser(userId: UserId) {
+    return [
+      this.transactionTemplateLogRepo.deleteMany({ userId }),
+      this.transactionTemplateRepo.deleteMany({ userId }),
+    ] as const;
   }
 
   getTransactionFromTemplate(

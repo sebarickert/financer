@@ -1,5 +1,6 @@
 import { Module, forwardRef } from '@nestjs/common';
 
+import { DatabaseModule } from '../../database/database.module';
 import { AccountBalanceChangesModule } from '../account-balance-changes/account-balance-changes.module';
 import { AccountsModule } from '../accounts/accounts.module';
 import { TransactionCategoriesModule } from '../transaction-categories/transaction-categories.module';
@@ -21,6 +22,7 @@ import { UserDataService } from './user-data.service';
     TransactionCategoryMappingsModule,
     UserPreferencesModule,
     TransactionTemplateModule,
+    DatabaseModule,
   ],
   providers: [UserDataService],
   exports: [UserDataService],

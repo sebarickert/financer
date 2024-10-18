@@ -65,11 +65,8 @@ export class TransactionsService {
     return TransactionDto.createFromPlain(transaction);
   }
 
-  async createMany(
-    userId: UserId,
-    createTransactionDto: CreateTransactionDto[],
-  ): Promise<void> {
-    await this.transactionRepo.createMany(
+  createMany(userId: UserId, createTransactionDto: CreateTransactionDto[]) {
+    return this.transactionRepo.createMany(
       // @ts-expect-error - remove legacy `v` from import data
       createTransactionDto.map(({ v, ...transaction }) => ({
         ...transaction,
@@ -347,8 +344,8 @@ export class TransactionsService {
     await this.transactionRepo.delete({ id: transaction.id });
   }
 
-  async removeAllByUser(userId: UserId): Promise<void> {
-    await this.transactionRepo.deleteMany({ userId });
+  removeAllByUser(userId: UserId) {
+    return this.transactionRepo.deleteMany({ userId });
   }
 
   private async updateRelatedAccountBalance(

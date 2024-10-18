@@ -88,10 +88,8 @@ export class TransactionTemplateLogRepo {
     });
   }
 
-  async deleteMany(
-    where: Prisma.TransactionTemplateLogWhereInput,
-  ): Promise<void> {
-    await this.prisma.transactionTemplateLog.deleteMany({
+  deleteMany(where: Prisma.TransactionTemplateLogWhereInput) {
+    return this.prisma.transactionTemplateLog.deleteMany({
       where,
     });
   }

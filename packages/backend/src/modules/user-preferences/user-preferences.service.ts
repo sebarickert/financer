@@ -22,11 +22,11 @@ export class UserPreferencesService {
     });
   }
 
-  async createMany(
+  createMany(
     userId: UserId,
     createUserPreferenceDto: CreateUserPreferenceDto[],
-  ): Promise<void> {
-    await this.userPreferencesRepo.createMany(
+  ) {
+    return this.userPreferencesRepo.createMany(
       // @ts-expect-error - remove legacy `v` from import data
       createUserPreferenceDto.map(({ v, ...preference }) => ({
         ...preference,
@@ -76,7 +76,7 @@ export class UserPreferencesService {
     });
   }
 
-  async removeAllByUser(userId: UserId): Promise<void> {
-    await this.userPreferencesRepo.deleteMany({ userId });
+  removeAllByUser(userId: UserId) {
+    return this.userPreferencesRepo.deleteMany({ userId });
   }
 }

@@ -48,7 +48,7 @@ export class TransactionCategoriesService {
     return this.transactionCategoryRepo.create(newCategory);
   }
 
-  async createMany(
+  createMany(
     userId: UserId,
     createTransactionCategoryDto: CreateTransactionCategoryDto[],
   ) {
@@ -181,8 +181,8 @@ export class TransactionCategoriesService {
     });
   }
 
-  async removeAllByUser(userId: UserId) {
-    await this.transactionCategoryRepo.deleteMany({ userId });
+  removeAllByUser(userId: UserId) {
+    return this.transactionCategoryRepo.deleteMany({ userId });
   }
 
   async ensureCategoriesExist(ids: string[]) {

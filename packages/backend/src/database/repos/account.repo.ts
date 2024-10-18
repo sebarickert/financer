@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma, Account } from '@prisma/client';
+import { Prisma, Account, PrismaPromise } from '@prisma/client';
 
 import { PrismaService } from '../prisma.service';
 
@@ -55,12 +55,16 @@ export class AccountRepo {
     });
   }
 
-  async createMany(data: Prisma.AccountUncheckedCreateInput[]): Promise<void> {
+  createMany(
+    data: Prisma.AccountUncheckedCreateInput[],
+  ): PrismaPromise<Prisma.BatchPayload> {
     if (data.length === 0) {
-      return Promise.resolve();
+      return Promise.resolve({
+        count: 0,
+      }) as PrismaPromise<Prisma.BatchPayload>;
     }
 
-    await this.prisma.account.createMany({
+    return this.prisma.account.createMany({
       data,
     });
   }
@@ -82,8 +86,8 @@ export class AccountRepo {
     });
   }
 
-  async deleteMany(where: Prisma.AccountWhereInput): Promise<void> {
-    await this.prisma.account.deleteMany({
+  deleteMany(where: Prisma.AccountWhereInput) {
+    return this.prisma.account.deleteMany({
       where,
     });
   }

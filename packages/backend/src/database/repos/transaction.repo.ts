@@ -1,5 +1,10 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { Prisma, Transaction, TransactionType } from '@prisma/client';
+import {
+  Prisma,
+  PrismaPromise,
+  Transaction,
+  TransactionType,
+} from '@prisma/client';
 
 import { DateService } from '../../utils/date.service';
 import { PrismaService } from '../prisma.service';
@@ -53,14 +58,16 @@ export class TransactionRepo {
     });
   }
 
-  async createMany(
+  createMany(
     data: Prisma.TransactionUncheckedCreateInput[],
-  ): Promise<void> {
+  ): PrismaPromise<Prisma.BatchPayload> {
     if (data.length === 0) {
-      return Promise.resolve();
+      return Promise.resolve({
+        count: 0,
+      }) as PrismaPromise<Prisma.BatchPayload>;
     }
 
-    await this.prisma.transaction.createMany({
+    return this.prisma.transaction.createMany({
       data,
     });
   }
@@ -84,8 +91,8 @@ export class TransactionRepo {
     });
   }
 
-  async deleteMany(where: Prisma.TransactionWhereInput): Promise<void> {
-    await this.prisma.transaction.deleteMany({
+  deleteMany(where: Prisma.TransactionWhereInput) {
+    return this.prisma.transaction.deleteMany({
       where,
     });
   }

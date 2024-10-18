@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 
+import { PrismaTransactionService } from './prisma-transaction.service';
 import { PrismaService } from './prisma.service';
 import { AccountBalanceChangeRepo } from './repos/account-balance-change.repo';
 import { AccountRepo } from './repos/account.repo';
@@ -25,6 +26,7 @@ import { UserRepo } from './repos/user.repo';
     TransactionTemplateRepo,
     TransactionTemplateLogRepo,
     TransactionRepo,
+    PrismaTransactionService,
   ],
   exports: [
     UserRepo,
@@ -37,6 +39,7 @@ import { UserRepo } from './repos/user.repo';
     TransactionTemplateRepo,
     TransactionTemplateLogRepo,
     TransactionRepo,
+    PrismaTransactionService,
   ],
 })
 export class DatabaseModule {}
