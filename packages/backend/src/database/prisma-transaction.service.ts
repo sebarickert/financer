@@ -8,7 +8,7 @@ import { PrismaService } from './prisma.service';
 export class PrismaTransactionService {
   constructor(private readonly prisma: PrismaService) {}
 
-  public async transaction<P extends PrismaPromise<any>[]>(
+  public async transaction<P extends PrismaPromise<unknown>[]>(
     actions: [...P],
   ): Promise<Types.Utils.UnwrapTuple<P>> {
     return this.prisma.$transaction(actions);

@@ -8,6 +8,8 @@ import { setupTestNestApp } from '../../setup-test-nest-app';
 import { ExpensesController } from './expenses.controller';
 import { ExpensesService } from './expenses.service';
 
+const mockFromAccountId = 'af0756cb-b481-4c4c-b182-a1691669afd5';
+
 describe('ExpensesController', () => {
   let app: INestApplication;
   let service: ExpensesService;
@@ -35,7 +37,7 @@ describe('ExpensesController', () => {
   describe('/POST create expense', () => {
     it('Check create expense with empty description', async () => {
       const expensePayload = {
-        fromAccount: '5fb42f145712ea336a98ef20',
+        fromAccount: mockFromAccountId,
         amount: 19,
         description: '',
         date: '2023-03-03T19:54:00.000Z',
@@ -62,7 +64,7 @@ describe('ExpensesController', () => {
 
     it('Check create expense with missing amount', async () => {
       const expensePayload = {
-        fromAccount: '5fb42f145712ea336a98ef20',
+        fromAccount: mockFromAccountId,
         description: 'test',
         date: '2023-03-03T19:54:00.000Z',
         categories: [] as string[],
@@ -91,7 +93,7 @@ describe('ExpensesController', () => {
 
     it('Check create expense with invalid amount', async () => {
       const expensePayload = {
-        fromAccount: '5fb42f145712ea336a98ef20',
+        fromAccount: mockFromAccountId,
         amount: 'not-a-number',
         description: 'test',
         date: '2023-03-03T19:54:00.000Z',
@@ -121,7 +123,7 @@ describe('ExpensesController', () => {
 
     it('Check create expense with valid data', async () => {
       const expensePayload = {
-        fromAccount: '5fb42f145712ea336a98ef20',
+        fromAccount: mockFromAccountId,
         amount: 10,
         description: 'test',
         date: '2023-03-03T19:54:00.000Z',
@@ -143,7 +145,7 @@ describe('ExpensesController', () => {
 
     it('Check create expense with zero amount', async () => {
       const expensePayload = {
-        fromAccount: '5fb42f145712ea336a98ef20',
+        fromAccount: mockFromAccountId,
         amount: 0,
         description: 'test',
         date: '2023-03-03T19:54:00.000Z',
@@ -170,7 +172,7 @@ describe('ExpensesController', () => {
 
     it('Check create expense with negative amount', async () => {
       const expensePayload = {
-        fromAccount: '5fb42f145712ea336a98ef20',
+        fromAccount: mockFromAccountId,
         amount: -10,
         description: 'test',
         date: '2023-03-03T19:54:00.000Z',

@@ -9,6 +9,8 @@ import { TransactionsService } from '../transactions/transactions.service';
 import { IncomesController } from './incomes.controller';
 import { IncomesService } from './incomes.service';
 
+const mockToAccountId = '8941f57e-84e9-4ac2-a5de-1bd944ec3568';
+
 describe('IncomesController', () => {
   let app: INestApplication;
   let controller: IncomesController;
@@ -47,7 +49,7 @@ describe('IncomesController', () => {
     await supertest(app.getHttpServer())
       .post('/api/incomes')
       .send({
-        toAccount: '5fb42f145712ea336a98ef20',
+        toAccount: mockToAccountId,
         amount: 19,
         description: '',
         date: '2023-03-03T19:54:00.000Z',
@@ -64,7 +66,7 @@ describe('IncomesController', () => {
     await supertest(app.getHttpServer())
       .post('/api/incomes')
       .send({
-        toAccount: '5fb42f145712ea336a98ef20',
+        toAccount: mockToAccountId,
         description: 'test',
         date: '2023-03-03T19:54:00.000Z',
         categories: [],
@@ -83,7 +85,7 @@ describe('IncomesController', () => {
     await supertest(app.getHttpServer())
       .post('/api/incomes')
       .send({
-        toAccount: '5fb42f145712ea336a98ef20',
+        toAccount: mockToAccountId,
         amount: 'not-a-number',
         description: 'test',
         date: '2023-03-03T19:54:00.000Z',
@@ -103,7 +105,7 @@ describe('IncomesController', () => {
     await supertest(app.getHttpServer())
       .post('/api/incomes')
       .send({
-        toAccount: '5fb42f145712ea336a98ef20',
+        toAccount: mockToAccountId,
         amount: 10,
         description: 'test',
         date: '2023-03-03T19:54:00.000Z',
@@ -116,7 +118,7 @@ describe('IncomesController', () => {
     await supertest(app.getHttpServer())
       .post('/api/incomes')
       .send({
-        toAccount: '5fb42f145712ea336a98ef20',
+        toAccount: mockToAccountId,
         amount: 0,
         description: 'test',
         date: '2023-03-03T19:54:00.000Z',
@@ -133,7 +135,7 @@ describe('IncomesController', () => {
     await supertest(app.getHttpServer())
       .post('/api/incomes')
       .send({
-        toAccount: '5fb42f145712ea336a98ef20',
+        toAccount: mockToAccountId,
         amount: -10,
         description: 'test',
         date: '2023-03-03T19:54:00.000Z',

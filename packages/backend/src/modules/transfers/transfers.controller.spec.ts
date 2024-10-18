@@ -9,6 +9,9 @@ import { TransactionsService } from '../transactions/transactions.service';
 import { TransfersController } from './transfers.controller';
 import { TransfersService } from './transfers.service';
 
+const mockFromAccountId = 'af0756cb-b481-4c4c-b182-a1691669afd5';
+const mockToAccountId = '8941f57e-84e9-4ac2-a5de-1bd944ec3568';
+
 describe('TransfersController', () => {
   let app: INestApplication;
   let controller: TransfersController;
@@ -43,8 +46,8 @@ describe('TransfersController', () => {
     await supertest(app.getHttpServer())
       .post('/api/transfers')
       .send({
-        fromAccount: '5fb42f145712ea336a98ef21',
-        toAccount: '5fb42f145712ea336a98ef20',
+        fromAccount: mockFromAccountId,
+        toAccount: mockToAccountId,
         amount: 19,
         description: '',
         date: '2023-03-03T19:54:00.000Z',
@@ -61,8 +64,8 @@ describe('TransfersController', () => {
     await supertest(app.getHttpServer())
       .post('/api/transfers')
       .send({
-        fromAccount: '5fb42f145712ea336a98ef21',
-        toAccount: '5fb42f145712ea336a98ef20',
+        fromAccount: mockFromAccountId,
+        toAccount: mockToAccountId,
         description: 'test',
         date: '2023-03-03T19:54:00.000Z',
         categories: [],
@@ -81,8 +84,8 @@ describe('TransfersController', () => {
     await supertest(app.getHttpServer())
       .post('/api/transfers')
       .send({
-        fromAccount: '5fb42f145712ea336a98ef21',
-        toAccount: '5fb42f145712ea336a98ef20',
+        fromAccount: mockFromAccountId,
+        toAccount: mockToAccountId,
         amount: 'not-a-number',
         description: 'test',
         date: '2023-03-03T19:54:00.000Z',
@@ -102,8 +105,8 @@ describe('TransfersController', () => {
     await supertest(app.getHttpServer())
       .post('/api/transfers')
       .send({
-        fromAccount: '5fb42f145712ea336a98ef21',
-        toAccount: '5fb42f145712ea336a98ef20',
+        fromAccount: mockFromAccountId,
+        toAccount: mockToAccountId,
         amount: 10,
         description: 'test',
         date: '2023-03-03T19:54:00.000Z',
@@ -116,8 +119,8 @@ describe('TransfersController', () => {
     await supertest(app.getHttpServer())
       .post('/api/transfers')
       .send({
-        fromAccount: '5fb42f145712ea336a98ef21',
-        toAccount: '5fb42f145712ea336a98ef20',
+        fromAccount: mockFromAccountId,
+        toAccount: mockToAccountId,
         amount: 0,
         description: 'test',
         date: '2023-03-03T19:54:00.000Z',
@@ -134,8 +137,8 @@ describe('TransfersController', () => {
     await supertest(app.getHttpServer())
       .post('/api/transfers')
       .send({
-        fromAccount: '5fb42f145712ea336a98ef21',
-        toAccount: '5fb42f145712ea336a98ef20',
+        fromAccount: mockFromAccountId,
+        toAccount: mockToAccountId,
         amount: -10,
         description: 'test',
         date: '2023-03-03T19:54:00.000Z',
@@ -153,7 +156,7 @@ describe('TransfersController', () => {
       .post('/api/transfers')
       .send({
         fromAccount: '',
-        toAccount: '5fb42f145712ea336a98ef20',
+        toAccount: mockToAccountId,
         amount: 10,
         description: 'test',
         date: '2023-03-03T19:54:00.000Z',
@@ -170,7 +173,7 @@ describe('TransfersController', () => {
     await supertest(app.getHttpServer())
       .post('/api/transfers')
       .send({
-        fromAccount: '5fb42f145712ea336a98ef21',
+        fromAccount: mockFromAccountId,
         toAccount: '',
         amount: 10,
         description: 'test',
@@ -188,8 +191,8 @@ describe('TransfersController', () => {
     await supertest(app.getHttpServer())
       .post('/api/transfers')
       .send({
-        fromAccount: '5fb42f145712ea336a98ef21',
-        toAccount: '5fb42f145712ea336a98ef21',
+        fromAccount: mockFromAccountId,
+        toAccount: mockFromAccountId,
         amount: 10,
         description: 'test',
         date: '2023-03-03T19:54:00.000Z',
