@@ -17,6 +17,7 @@ type FormProps<FormValues extends FieldValues> = {
   methods: UseFormReturn<FormValues>;
   id?: string;
   optionalFooterComponent?: React.ReactNode;
+  hasCancelButton?: boolean;
 } & (
   | {
       onSubmit: SubmitHandler<FormValues>;
@@ -38,6 +39,7 @@ export const Form = <T extends FieldValues>({
   id,
   methods,
   action,
+  hasCancelButton,
 }: FormProps<T>): JSX.Element => {
   const { handleSubmit } = methods;
 
@@ -54,6 +56,7 @@ export const Form = <T extends FieldValues>({
           accentColor={accentColor}
           formFooterBackLink={formFooterBackLink}
           optionalComponent={optionalFooterComponent}
+          hasCancelButton={hasCancelButton}
         />
       </form>
     </FormProvider>
