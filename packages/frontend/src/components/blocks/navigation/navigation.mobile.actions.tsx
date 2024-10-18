@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { useId } from 'react';
 
 import { Drawer } from '$blocks/drawer/drawer';
-import { TransactionActions } from '$blocks/transaction-actions/transaction-actions';
+import { TransactionFormSwitcher } from '$blocks/TransactionFormSwitcher';
 import { Icon } from '$elements/Icon';
 
 interface NavigationMobileActionsProps {
@@ -23,10 +23,7 @@ export const NavigationMobileActions = ({
         heading="Add transaction"
         id={id}
       >
-        <TransactionActions
-          onClick={setIsActionsModalOpen}
-          transition="slideInFromBottom"
-        />
+        <TransactionFormSwitcher onSubmit={() => {}} />
       </Drawer>
       <button
         type="button"
