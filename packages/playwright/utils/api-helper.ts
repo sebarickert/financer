@@ -23,18 +23,13 @@ export type ITransactionWithDateObject<
 export const MINUTE_IN_MS = 60000;
 
 export const formatDate = (date: Date): string => {
-  const addLeadingZero = (number: number): string => `0${number}`.substring(-2);
-
   const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
 
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
-
-  return `${year}-${addLeadingZero(month)}-${addLeadingZero(
-    day,
-  )}T${addLeadingZero(hours)}:${addLeadingZero(minutes)}`;
+  return `${year}-${month}-${day}T${hours}:${minutes}`;
 };
 
 export const getAccount = async (accountId: string): Promise<AccountDto> => {
