@@ -17,7 +17,7 @@ export class TransactionCategoryMappingsService {
     private readonly transactionCategoryMappingRepo: TransactionCategoryMappingRepo,
   ) {}
 
-  async createMany(
+  createMany(
     userId: UserId,
     createTransactionCategoryMappingDto: CreateTransactionCategoryMappingDto[],
   ) {
@@ -227,8 +227,8 @@ export class TransactionCategoryMappingsService {
     });
   }
 
-  async removeAllByUser(userId: UserId) {
-    await this.transactionCategoryMappingRepo.deleteMany({
+  removeAllByUser(userId: UserId) {
+    return this.transactionCategoryMappingRepo.deleteMany({
       userId,
     });
   }

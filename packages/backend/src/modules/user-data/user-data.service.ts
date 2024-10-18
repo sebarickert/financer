@@ -13,6 +13,7 @@ import {
   UserPreferences,
 } from '@prisma/client';
 
+import { PrismaTransactionService } from '../../database/prisma-transaction.service';
 import { UserId } from '../../types/user-id';
 import { AccountBalanceChangesService } from '../account-balance-changes/account-balance-changes.service';
 import { AccountsService } from '../accounts/accounts.service';
@@ -68,6 +69,7 @@ export class UserDataService {
     private readonly transactionCategoryMappingService: TransactionCategoryMappingsService,
     private readonly userPreferencesService: UserPreferencesService,
     private readonly transactionTemplateService: TransactionTemplatesService,
+    private readonly prismaTransactionService: PrismaTransactionService,
   ) {}
 
   async findAllOneUserData(
@@ -240,22 +242,18 @@ export class UserDataService {
       return { ...userPreference, id: newId };
     });
 
-    await Promise.all([
+    await this.prismaTransactionService.transaction([
       this.accountBalanceChangesService.removeAllByUser(userId),
       this.transactionCategoryMappingService.removeAllByUser(userId),
-      this.transactionTemplateService.removeAllByUser(userId),
-    ]);
-
-    await Promise.all([
+      ...this.transactionTemplateService.removeAllByUser(userId),
       this.accountsService.removeAllByUser(userId),
       this.transactionService.removeAllByUser(userId),
       this.transactionCategoriesService.removeAllByUser(userId),
       this.userPreferencesService.removeAllByUser(userId),
     ]);
 
-    await this.accountsService.createMany(accounts, userId);
-
-    await Promise.all([
+    await this.prismaTransactionService.transaction([
+      this.accountsService.createMany(userId, accounts),
       this.transactionService.createMany(userId, transactions),
       this.transactionCategoriesService.createMany(
         userId,
@@ -263,9 +261,6 @@ export class UserDataService {
       ),
       this.userPreferencesService.createMany(userId, userPreferences),
       this.transactionTemplateService.createMany(userId, transactionTemplates),
-    ]);
-
-    await Promise.all([
       this.accountBalanceChangesService.createMany(
         userId,
         accountBalanceChanges,

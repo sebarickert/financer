@@ -1,5 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma, TransactionCategoryMapping } from '@prisma/client';
+import {
+  Prisma,
+  PrismaPromise,
+  TransactionCategoryMapping,
+} from '@prisma/client';
 
 import { PrismaService } from '../prisma.service';
 
@@ -49,14 +53,16 @@ export class TransactionCategoryMappingRepo {
     });
   }
 
-  async createMany(
+  createMany(
     data: Prisma.TransactionCategoryMappingUncheckedCreateInput[],
-  ): Promise<void> {
+  ): PrismaPromise<Prisma.BatchPayload> {
     if (data.length === 0) {
-      return Promise.resolve();
+      return Promise.resolve({
+        count: 0,
+      }) as PrismaPromise<Prisma.BatchPayload>;
     }
 
-    await this.prisma.transactionCategoryMapping.createMany({
+    return this.prisma.transactionCategoryMapping.createMany({
       data,
     });
   }
@@ -80,10 +86,8 @@ export class TransactionCategoryMappingRepo {
     });
   }
 
-  async deleteMany(
-    where: Prisma.TransactionCategoryMappingWhereInput,
-  ): Promise<void> {
-    await this.prisma.transactionCategoryMapping.deleteMany({
+  deleteMany(where: Prisma.TransactionCategoryMappingWhereInput) {
+    return this.prisma.transactionCategoryMapping.deleteMany({
       where,
     });
   }

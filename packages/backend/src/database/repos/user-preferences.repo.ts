@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma, UserPreferences } from '@prisma/client';
+import { Prisma, PrismaPromise, UserPreferences } from '@prisma/client';
 
 import { PrismaService } from '../prisma.service';
 
@@ -40,14 +40,16 @@ export class UserPreferencesRepo {
     });
   }
 
-  async createMany(
+  createMany(
     data: Prisma.UserPreferencesUncheckedCreateInput[],
-  ): Promise<void> {
+  ): PrismaPromise<Prisma.BatchPayload> {
     if (data.length === 0) {
-      return Promise.resolve();
+      return Promise.resolve({
+        count: 0,
+      }) as PrismaPromise<Prisma.BatchPayload>;
     }
 
-    await this.prisma.userPreferences.createMany({
+    return this.prisma.userPreferences.createMany({
       data,
     });
   }
@@ -71,8 +73,8 @@ export class UserPreferencesRepo {
     });
   }
 
-  async deleteMany(where: Prisma.UserPreferencesWhereInput): Promise<void> {
-    await this.prisma.userPreferences.deleteMany({
+  deleteMany(where: Prisma.UserPreferencesWhereInput) {
+    return this.prisma.userPreferences.deleteMany({
       where,
     });
   }

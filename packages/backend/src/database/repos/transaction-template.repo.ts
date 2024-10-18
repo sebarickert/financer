@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma, TransactionTemplate } from '@prisma/client';
+import { Prisma, PrismaPromise, TransactionTemplate } from '@prisma/client';
 
 import { PrismaService } from '../prisma.service';
 
@@ -57,14 +57,16 @@ export class TransactionTemplateRepo {
     });
   }
 
-  async createMany(
+  createMany(
     data: Prisma.TransactionTemplateUncheckedCreateInput[],
-  ): Promise<void> {
+  ): PrismaPromise<Prisma.BatchPayload> {
     if (data.length === 0) {
-      return Promise.resolve();
+      return Promise.resolve({
+        count: 0,
+      }) as PrismaPromise<Prisma.BatchPayload>;
     }
 
-    await this.prisma.transactionTemplate.createMany({
+    return this.prisma.transactionTemplate.createMany({
       data,
     });
   }
@@ -88,8 +90,8 @@ export class TransactionTemplateRepo {
     });
   }
 
-  async deleteMany(where: Prisma.TransactionTemplateWhereInput): Promise<void> {
-    await this.prisma.transactionTemplate.deleteMany({
+  deleteMany(where: Prisma.TransactionTemplateWhereInput) {
+    return this.prisma.transactionTemplate.deleteMany({
       where,
     });
   }

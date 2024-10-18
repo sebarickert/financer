@@ -41,11 +41,8 @@ export class AccountsService {
     return AccountDto.createFromPlain(account);
   }
 
-  async createMany(
-    createAccountDto: CreateAccountDto[],
-    userId: UserId,
-  ): Promise<void> {
-    await this.accountRepo.createMany(
+  createMany(userId: UserId, createAccountDto: CreateAccountDto[]) {
+    return this.accountRepo.createMany(
       // @ts-expect-error - remove legacy `v` from import data
       createAccountDto.map(({ v, ...account }) => ({ ...account, userId })),
     );
@@ -150,8 +147,8 @@ export class AccountsService {
     });
   }
 
-  async removeAllByUser(userId: UserId) {
-    await this.accountRepo.deleteMany({ userId });
+  removeAllByUser(userId: UserId) {
+    return this.accountRepo.deleteMany({ userId });
   }
 
   async getAccountBalanceHistory(

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma, AccountBalanceChange } from '@prisma/client';
+import { Prisma, AccountBalanceChange, PrismaPromise } from '@prisma/client';
 
 import { PrismaService } from '../prisma.service';
 
@@ -40,14 +40,16 @@ export class AccountBalanceChangeRepo {
     });
   }
 
-  async createMany(
+  createMany(
     data: Prisma.AccountBalanceChangeCreateManyInput[],
-  ): Promise<void> {
+  ): PrismaPromise<Prisma.BatchPayload> {
     if (data.length === 0) {
-      return Promise.resolve();
+      return Promise.resolve({
+        count: 0,
+      }) as PrismaPromise<Prisma.BatchPayload>;
     }
 
-    await this.prisma.accountBalanceChange.createMany({
+    return this.prisma.accountBalanceChange.createMany({
       data,
     });
   }
@@ -71,10 +73,8 @@ export class AccountBalanceChangeRepo {
     });
   }
 
-  async deleteMany(
-    where: Prisma.AccountBalanceChangeWhereInput,
-  ): Promise<void> {
-    await this.prisma.accountBalanceChange.deleteMany({
+  deleteMany(where: Prisma.AccountBalanceChangeWhereInput) {
+    return this.prisma.accountBalanceChange.deleteMany({
       where,
     });
   }
