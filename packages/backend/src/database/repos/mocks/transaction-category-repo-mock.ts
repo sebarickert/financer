@@ -102,7 +102,7 @@ export const transactionCategoryRepoUserMockDataFindAllBy: TransactionCategory[]
       id: '623b6b84a3deba9879422fdd',
       createdAt: new Date('2024-05-10T10:21:18.364Z'),
       deleted: false,
-      name: 'Invisble sub category',
+      name: 'Invisible sub category',
       userId: '61460d7354ea082ad0256749',
       parentCategoryId: '623b58ada3deba9879422fbf',
       updatedAt: new Date('2024-05-10T10:21:18.364Z'),

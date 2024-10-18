@@ -18,7 +18,9 @@ test.describe('Transaction category form', () => {
 
     await page.goto(`/settings/categories/${categoryForAllTypes.id}/edit`);
 
-    const categoryName = 'Category for all types';
+    const categoryName = categoryForAllTypes.name;
+    const childCategoryName = categoryForAllTypesChild.name;
+    const childCategoryId = categoryForAllTypesChild.id;
 
     // Verify that we have correct category
     await expect(page.locator('#name')).toHaveValue(categoryName);
@@ -29,18 +31,19 @@ test.describe('Transaction category form', () => {
       .allTextContents();
 
     expect(parentCategoryOptions).not.toContain(categoryName);
+    expect(parentCategoryOptions).not.toContain(childCategoryName);
 
     await page.evaluate(
-      ([scopedCategoryForAllTypesChild]) => {
+      ([scopedChildCategoryName, scopedChildCategoryId]) => {
         const targetElement = document.querySelector(
           '#parentCategoryId',
         ) as Element;
-        targetElement.innerHTML = `${targetElement.innerHTML}<option value="${scopedCategoryForAllTypesChild.id}">${scopedCategoryForAllTypesChild.name}</option>`;
+        targetElement.innerHTML = `${targetElement.innerHTML}<option value="${scopedChildCategoryId}">${scopedChildCategoryName}</option>`;
       },
-      [categoryForAllTypesChild],
+      [childCategoryName, childCategoryId],
     );
 
-    await page.locator('#parentCategoryId').selectOption(categoryName);
+    await page.locator('#parentCategoryId').selectOption(childCategoryName);
 
     await page.getByTestId('submit').click();
 
