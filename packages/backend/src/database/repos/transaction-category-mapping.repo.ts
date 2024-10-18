@@ -56,12 +56,6 @@ export class TransactionCategoryMappingRepo {
   createMany(
     data: Prisma.TransactionCategoryMappingUncheckedCreateInput[],
   ): PrismaPromise<Prisma.BatchPayload> {
-    if (data.length === 0) {
-      return Promise.resolve({
-        count: 0,
-      }) as PrismaPromise<Prisma.BatchPayload>;
-    }
-
     return this.prisma.transactionCategoryMapping.createMany({
       data,
     });

@@ -43,12 +43,6 @@ export class UserPreferencesRepo {
   createMany(
     data: Prisma.UserPreferencesUncheckedCreateInput[],
   ): PrismaPromise<Prisma.BatchPayload> {
-    if (data.length === 0) {
-      return Promise.resolve({
-        count: 0,
-      }) as PrismaPromise<Prisma.BatchPayload>;
-    }
-
     return this.prisma.userPreferences.createMany({
       data,
     });
