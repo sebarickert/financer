@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { UserPreferenceProperty, UserPreferences } from '@prisma/client';
-import { IsMongoId, IsEnum, IsNotEmpty } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsUUID } from 'class-validator';
 
 import { UserId } from '../../../types/user-id';
 
@@ -15,11 +15,11 @@ export class UserPreferenceDto implements UserPreferences {
   @ApiProperty()
   updatedAt: Date;
 
-  @IsMongoId()
+  @IsUUID()
   @ApiProperty({ type: String })
   readonly id: string;
 
-  @IsMongoId()
+  @IsUUID()
   @ApiProperty({ type: String })
   readonly userId: UserId;
 

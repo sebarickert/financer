@@ -1,8 +1,8 @@
 import { SystemLog, SystemLogLevel } from '@prisma/client';
-import { Allow, IsEnum, IsMongoId, IsString } from 'class-validator';
+import { Allow, IsEnum, IsString, IsUUID } from 'class-validator';
 
 export class SystemLogDto implements SystemLog {
-  @IsMongoId()
+  @IsUUID()
   readonly id: string;
 
   @IsString()

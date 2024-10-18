@@ -1,7 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { TransactionCategoryMapping } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime/library';
-import { IsMongoId, IsOptional, IsString } from 'class-validator';
+import { IsOptional, IsString, IsUUID } from 'class-validator';
 
 import { UserId } from '../../../types/user-id';
 import {
@@ -24,11 +24,11 @@ export class TransactionCategoryMappingDto
   updatedAt: Date;
 
   @ApiProperty({ type: String })
-  @IsMongoId()
+  @IsUUID()
   id: string;
 
   @ApiProperty({ type: String })
-  @IsMongoId()
+  @IsUUID()
   userId: UserId;
 
   @ApiPropertyOptional()
@@ -37,11 +37,11 @@ export class TransactionCategoryMappingDto
   description: string = null;
 
   @ApiProperty({ type: String })
-  @IsMongoId({ message: 'categoryId must not be empty.' })
+  @IsUUID('all', { message: 'categoryId must not be empty.' })
   categoryId: string;
 
   @ApiProperty({ type: String })
-  @IsMongoId({ message: 'transactionId must not be empty.' })
+  @IsUUID('all', { message: 'transactionId must not be empty.' })
   transactionId: string;
 
   @ApiProperty()

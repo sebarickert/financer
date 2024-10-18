@@ -8,10 +8,10 @@ import { Decimal } from '@prisma/client/runtime/library';
 import {
   IsArray,
   IsEnum,
-  IsMongoId,
   IsNotEmpty,
   IsOptional,
   IsString,
+  IsUUID,
   Max,
   Min,
 } from 'class-validator';
@@ -35,7 +35,7 @@ export class TransactionTemplateDto implements TransactionTemplate {
   updatedAt: Date;
 
   @ApiProperty({ type: String })
-  @IsMongoId()
+  @IsUUID()
   readonly id: string;
 
   @ApiProperty()
@@ -96,24 +96,24 @@ export class TransactionTemplateDto implements TransactionTemplate {
   readonly dayOfMonthToCreate: number = null;
 
   @ApiProperty({ type: String })
-  @IsMongoId()
+  @IsUUID()
   readonly userId: UserId;
 
   @ApiPropertyOptional({ type: String, nullable: true })
   @IsOptional()
-  @IsMongoId({
+  @IsUUID('all', {
     message: 'fromAccount must be formatted as objectId.',
   })
   readonly fromAccount: string = null;
 
   @ApiPropertyOptional({ type: String, nullable: true })
   @IsOptional()
-  @IsMongoId({ message: 'toAccount must be formatted as objectId.' })
+  @IsUUID('all', { message: 'toAccount must be formatted as objectId.' })
   readonly toAccount: string = null;
 
   @ApiPropertyOptional({ type: String, isArray: true })
   @IsOptional()
-  @IsMongoId({
+  @IsUUID('all', {
     message: 'Categories must be formatted as objectId array.',
     each: true,
   })

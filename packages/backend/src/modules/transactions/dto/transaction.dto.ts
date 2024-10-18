@@ -4,9 +4,9 @@ import { Decimal } from '@prisma/client/runtime/library';
 import { Type } from 'class-transformer';
 import {
   IsDate,
-  IsMongoId,
   IsNotEmpty,
   IsString,
+  IsUUID,
   ValidateNested,
 } from 'class-validator';
 
@@ -30,7 +30,7 @@ export class TransactionDto implements Transaction {
   updatedAt: Date;
 
   @ApiProperty({ type: String })
-  @IsMongoId()
+  @IsUUID()
   readonly id: string;
 
   @ApiProperty()
@@ -52,15 +52,15 @@ export class TransactionDto implements Transaction {
   readonly date: Date;
 
   @ApiProperty({ type: String })
-  @IsMongoId()
+  @IsUUID()
   readonly userId: UserId;
 
   @ApiProperty({ type: String })
-  @IsMongoId({ message: 'fromAccount must not be empty.' })
+  @IsUUID('all', { message: 'fromAccount must not be empty.' })
   readonly fromAccount: string;
 
   @ApiProperty({ type: String })
-  @IsMongoId({ message: 'toAccount must not be empty.' })
+  @IsUUID('all', { message: 'toAccount must not be empty.' })
   readonly toAccount: string;
 
   @ApiProperty({

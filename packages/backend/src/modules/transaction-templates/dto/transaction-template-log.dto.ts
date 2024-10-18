@@ -4,15 +4,15 @@ import {
   TransactionTemplateType,
 } from '@prisma/client';
 import { Type } from 'class-transformer';
-import { IsMongoId, IsEnum, IsDate } from 'class-validator';
+import { IsEnum, IsDate, IsUUID } from 'class-validator';
 
 import { UserId } from '../../../types/user-id';
 
 export class TransactionTemplateLogDto implements TransactionTemplateLog {
-  @IsMongoId()
+  @IsUUID()
   readonly id: string;
 
-  @IsMongoId()
+  @IsUUID()
   readonly userId: UserId;
 
   @IsEnum(TransactionTemplateType, {
@@ -21,10 +21,10 @@ export class TransactionTemplateLogDto implements TransactionTemplateLog {
   })
   readonly eventType: TransactionTemplateType;
 
-  @IsMongoId()
+  @IsUUID()
   readonly transactionId: string = null;
 
-  @IsMongoId()
+  @IsUUID()
   readonly templateId: string = null;
 
   @IsDate({ message: 'Date must not be empty.' })
