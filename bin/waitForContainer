@@ -1,0 +1,16 @@
+#!/bin/bash
+
+CONTAINER_NAME=$1
+
+if [ -z "$CONTAINER_NAME" ]; then
+  echo "Container name is required"
+  exit 1
+fi
+
+# Wait until the container is running
+while [ "$(docker inspect -f '{{.State.Status}}' $CONTAINER_NAME)" != "running" ]; do
+  echo "Waiting for $CONTAINER_NAME to be running..."
+  sleep 2
+done
+
+echo "$CONTAINER_NAME is running!"
