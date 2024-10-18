@@ -1,118 +1,80 @@
 # Financer
 
-Financer is a simple financial tracker app. You are able to track your monthly expenses and income as well as your savings and investments.
+Financer is a simple financial tracker app that helps you track monthly expenses, income, savings, and investments.
 
-## 🚀 Quick start
+## 🚀 Quick Start
 
-This quick start guide should get you up and running in no time with local development environment.
+Follow this guide to quickly set up your local development environment.
 
-## Requirements for Financer
+## Requirements
 
-- Docker 18.06.0+
+- Docker
 - Docker Compose
 - NVM
-- Github account to create OAuth App
+- GitHub account (for OAuth setup)
 
-## Create new OAuth App for development purposes
+## Create an OAuth App for Development
 
-Go to [github developer settings](https://github.com/settings/developers) and click `New OAuth App`
+1. Visit the [GitHub Developer Settings](https://github.com/settings/developers) and click `New OAuth App`.
+2. Fill out the form with the following details:
 
-Fill the form with these:
+   - **Application Name:** Can be anything you like.
+   - **Homepage URL:** `http://localhost:3000/`
+   - **Authorization Callback URL:** `http://localhost:3000/auth/github/redirect`
 
-- `Application name` as you want, doesn't matter.
-- `Homepage URL` as `http://localhost:3000/`.
-- `Authorization callback URL` as `http://localhost:3000/auth/github/redirect`.
+3. Register the application.
 
-Register application!
+## Local Development Setup
 
-## Set up the local development environment
+### 1. Clone the Repository
 
-### Clone the repository
-
-```
+```bash
 $ git clone git@github.com:sebarickert/financer.git
 $ cd financer
 ```
 
-### Add your OAuth tokens to the backend
+### 2. Add OAuth Tokens
 
-```
+```bash
 $ cd backend
 $ cp .env .env.local
 ```
 
-Go modify that `.env.local` file in your IDE of choice. Add your tokens to `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET`
+Edit the .env.local file and add your `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET`.
 
-## Start the local development environment
+## Start the Development Environment
 
-### Use the correct node version
+### 1. Use the correct Node version
 
-```
-// Go back to the root of the repository.
-$ ../
-// Install the correct node version with nvm if prompted.
-$ nvm use
-// Install necessary node dependencies.
-$ npm ci
+```bash
+$ nvm use    # Install Node version (via nvm)
+$ npm ci     # Install dependencies
 ```
 
-#### Known issues
+### 2. Start Docker
 
-If `npm ci` doesn't work, do this:
-
-```
-// Delete node_modules and package-lock.json
-$ rm -rf node_modules/ package-lock.json
-// Install all dependencies.
-$ npm i --legacy-peer-deps
-```
-
-### Start up docker
-
-```
+```bash
 $ ./bin/startDevDocker
 ```
 
-### Start up the backend and frontend
+### 3. Start the App
 
-```
+```bash
 $ npm start
 ```
 
-## Install new dependencies
+## Installing New Dependencies
 
 ### Frontend
 
-```
-$ npm --prefix frontend install DEPENDENCY-NAME
+```bash
+$ npm --w frontend install DEPENDENCY-NAME
 ```
 
 ### Backend
 
-```
-$ npm --prefix backend install DEPENDENCY-NAME
-```
-
-#### Known issues
-
-If backend fails after first authentication attempt, restart the backend.
-
-```
-$ npm start
-```
-
-## Production deployment
-
-### Import the database in kubernetes
-
-Get your database dump and copy it to your pod in kubernetes. Using to code sample below. Replace `mongodb-deployment-XXXXXXXXX-XXXXX` with your pod name. And finally remove dump from pod.
-
-```
-kubens financer
-kubectl cp financer_2022-01-01_03-00.gz mongodb-deployment-XXXXXXXXX-XXXXX:/tmp/mongo.gz
-kube exec mongodb-deployment-XXXXXXXXX-XXXXX -- bash -c 'mongorestore  -u $DB_USER -p $DB_PASSWORD --gzip --archive=/tmp/mongo.gz'
-kube exec mongodb-deployment-XXXXXXXXX-XXXXX -- bash -c 'rm /tmp/mongo.gz'
-
+```bash
+$ npm --w backend install DEPENDENCY-NAME
 ```
 
 ## Authors
