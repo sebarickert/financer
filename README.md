@@ -77,6 +77,14 @@ $ npm -w frontend install DEPENDENCY-NAME
 $ npm -w backend install DEPENDENCY-NAME
 ```
 
+## Adding `TEST_ROLE` to Users (Development Only)
+
+For development purposes, you can assign the `TEST_ROLE` to all users by running the following command:
+
+```bash
+docker exec -it financer_dev-postgres psql -U admin -d financer_dev -c "UPDATE \"user\" SET roles = '{TEST_USER}';"
+```
+
 ## Authors
 
 - **Sebastian Rickert** - [sebarickert](https://github.com/sebarickert)
