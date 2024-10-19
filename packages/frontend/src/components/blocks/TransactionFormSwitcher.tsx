@@ -1,6 +1,7 @@
 import { FC, useState } from 'react';
 
 import { TransactionForm } from './transaction-form/transaction-form';
+import { TransactionTemplateSwitcher } from './TransactionTemplateSwitcher';
 import { TransactionTypeSwitcher } from './TransactionTypeSwitcher/TransactionTypeSwitcher';
 
 import { TransactionType } from '$api/generated/financerApi';
@@ -32,11 +33,16 @@ export const TransactionFormSwitcher: FC<TransactionFormSwitcherProps> = ({
 
   return (
     <section>
-      <TransactionTypeSwitcher
-        onChange={handleChange}
-        className="mb-6"
-        defaultChecked={transactionType}
-      />
+      <div className="grid gap-4 mb-6">
+        <TransactionTypeSwitcher
+          onChange={handleChange}
+          defaultChecked={transactionType}
+        />
+        <TransactionTemplateSwitcher
+          // selectedTemplate={templateId}
+          templateType={transactionType}
+        />
+      </div>
       <TransactionForm
         onSubmit={onSubmit}
         {...formPropsMapping[transactionType]}
