@@ -26,7 +26,7 @@ export const TransactionTypeSwitcherItem: FC<
       />
       <span
         className={clsx(
-          'flex items-center justify-center text-sm tracking-tight text-black py-2.5 rounded-md',
+          'flex items-center justify-center text-sm text-black py-2.5 rounded-md',
           'peer-checked:font-medium peer-checked:bg-white peer-checked:border peer-checked:border-gray-dark',
         )}
       >

@@ -93,10 +93,7 @@ export const Select = ({
 
   return (
     <div className={className}>
-      <label
-        htmlFor={id}
-        className="block text-xs font-medium tracking-tight uppercase text-black/75"
-      >
+      <label htmlFor={id} className="block text-sm text-black">
         {children}
         <select
           data-testid={testId}
