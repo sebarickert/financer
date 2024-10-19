@@ -22,7 +22,6 @@ export const NavigationMobileItem = ({
         href={url}
         className={`flex flex-col items-center justify-center focus:text-charcoal hover:text-charcoal h-14`}
         aria-label={ariaLabel}
-        transition="slideInFromBottom"
       >
         <Icon name={iconName} isSolid={isActive} />
         <span className={clsx('sr-only')}>{label}</span>
