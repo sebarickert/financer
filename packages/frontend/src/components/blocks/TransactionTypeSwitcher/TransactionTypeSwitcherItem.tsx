@@ -1,10 +1,7 @@
 import clsx from 'clsx';
 import { FC } from 'react';
 
-import { IconName } from '$elements/Icon';
-
 type TransactionTypeSwitcherItemProps = {
-  icon: IconName;
   children: string;
   className?: string;
   value: string;
@@ -15,29 +12,22 @@ type TransactionTypeSwitcherItemProps = {
 
 export const TransactionTypeSwitcherItem: FC<
   TransactionTypeSwitcherItemProps
-> = ({ icon, children, className = '', name, value, isChecked, onChange }) => {
+> = ({ children, className = '', name, value, isChecked, onChange }) => {
   return (
-    <label
-      className={clsx(
-        'flex items-center p-4 gap-4 rounded-md hover:bg-gray focus-within:bg-gray hover:cursor-pointer',
-        className,
-      )}
-      htmlFor={`${name}-${value}`}
-    >
+    <label className={clsx('', className)} htmlFor={`${name}-${value}`}>
       <input
         id={`${name}-${value}`}
         name={name}
         type="radio"
         value={value}
-        className={clsx(
-          'w-6 h-6 text-dreamless-sleep bg-gray border-gray-dark focus:ring-dreamless-sleep focus:ring-2 peer',
-        )}
+        className={clsx('peer sr-only')}
         defaultChecked={isChecked}
         onChange={onChange}
       />
       <span
         className={clsx(
-          'text-base tracking-tight text-black peer-checked:font-medium',
+          'flex items-center justify-center text-sm tracking-tight text-black py-2.5 rounded-md',
+          'peer-checked:font-medium peer-checked:bg-white peer-checked:border peer-checked:border-gray-dark',
         )}
       >
         {children}

@@ -34,7 +34,7 @@ export const TransactionFormSwitcher: FC<TransactionFormSwitcherProps> = ({
     <section>
       <TransactionTypeSwitcher
         onChange={handleChange}
-        className="mb-4"
+        className="mb-6"
         defaultChecked={transactionType}
       />
       <TransactionForm
