@@ -45,7 +45,7 @@ export const Drawer = ({
       <DrawerHeader
         onClose={onClose}
         heading={heading}
-        className="sticky top-0 pt-8 pb-8 bg-white"
+        className="sticky top-0 z-10 pt-8 pb-8 bg-white"
         id={id}
       >
         {description}
