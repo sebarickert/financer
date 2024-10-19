@@ -21,6 +21,7 @@ interface ButtonProps
   testId?: string;
   isDisabled?: boolean;
   applyBaseStyles?: boolean;
+  size?: 'small' | 'default';
 }
 
 export const Button = ({
@@ -36,10 +37,11 @@ export const Button = ({
   applyBaseStyles = true,
   popoverTarget,
   popoverTargetAction,
+  size = 'default',
   ...props
 }: ButtonProps): JSX.Element => {
   const buttonClasses = clsx({
-    ['inline-flex justify-center w-full sm:w-auto rounded-md items-center py-3 px-6 focus:ring-2 focus:ring-offset-2 focus:outline-none transition ease-in-out duration-150 tracking-tight font-normal text-base hover:opacity-75 focus:opacity-75']:
+    ['inline-flex justify-center w-full sm:w-auto font-normal rounded-md items-center focus:ring-2 focus:ring-offset-2 focus:outline-none transition ease-in-out duration-150 hover:opacity-75 focus:opacity-75']:
       applyBaseStyles,
     ['bg-charcoal text-white focus:ring-charcoal']: accentColor === 'black',
     ['bg-blue text-white focus:ring-blue']: accentColor === 'blue',
@@ -47,6 +49,8 @@ export const Button = ({
     ['bg-gray text-black focus:ring-charcoal hover:bg-gray-dark border border-gray-dark focus:opacity-100 hover:opacity-100']:
       accentColor === 'plain',
     ['']: accentColor === 'unstyled',
+    ['py-3 px-6 text-base']: size === 'default',
+    ['py-2.5 px-4 text-sm']: size === 'small',
     [className]: true,
   });
 

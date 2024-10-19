@@ -11,7 +11,6 @@ import { Drawer } from '$blocks/drawer/drawer';
 import { transactionTypeLabelMapping } from '$constants/transaction/transactionTypeMapping';
 import { Button } from '$elements/button/button';
 import { ButtonGroup } from '$elements/button/button.group';
-import { Icon } from '$elements/Icon';
 import { Radio } from '$elements/radio/radio';
 import { RadioGroup } from '$elements/radio/radio.group';
 
@@ -52,13 +51,12 @@ export const TransactionTemplateSwitcher = ({
   return (
     <>
       <Button
-        applyBaseStyles={false}
-        accentColor="unstyled"
-        className="inline-flex items-center justify-center -mr-3 h-11 w-11"
+        accentColor="plain"
+        className="inline-flex items-center justify-center"
         popoverTarget={templateSwitcherId}
+        size="small"
       >
-        <span className="sr-only">Switch template</span>
-        <Icon name="BoltIcon" />
+        <span>Switch Template</span>
       </Button>
       <Drawer id={templateSwitcherId} heading="Switch template">
         <form onSubmit={handleSubmit}>
