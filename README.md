@@ -62,15 +62,15 @@ Follow this guide to quickly set up your local development environment.
 ### 1. Clone the Repository
 
 ```bash
-$ git clone git@github.com:sebarickert/financer.git
-$ cd financer
+git clone git@github.com:sebarickert/financer.git
+cd financer
 ```
 
 ### 2. Add OAuth Tokens
 
 ```bash
-$ cd backend
-$ cp .env .env.local
+cd backend
+cp .env .env.local
 ```
 
 Edit the `.env.local` file and add your `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET`.
@@ -80,14 +80,14 @@ Edit the `.env.local` file and add your `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SE
 ### 1. Use the correct Node version
 
 ```bash
-$ nvm use    # Install Node version (via nvm)
-$ npm ci     # Install dependencies
+nvm use    # Install Node version (via nvm)
+npm ci     # Install dependencies
 ```
 
 ### 2. Start the App
 
 ```bash
-$ npm start
+npm start
 ```
 
 ## Installing New Dependencies
@@ -95,13 +95,13 @@ $ npm start
 ### Frontend
 
 ```bash
-$ npm -w frontend install DEPENDENCY-NAME
+npm -w frontend install DEPENDENCY-NAME
 ```
 
 ### Backend
 
 ```bash
-$ npm -w backend install DEPENDENCY-NAME
+npm -w backend install DEPENDENCY-NAME
 ```
 
 ## Production Tooling
@@ -240,7 +240,7 @@ kubectl rollout restart deployment webapp-deployment -n financer
 For development purposes, you can assign the `TEST_ROLE` to all users by running the following command:
 
 ```bash
-docker exec -it financer_dev-postgres psql -U admin -d financer_dev -c "UPDATE \"user\" SET roles = '{TEST_USER}';"
+npm run setup:development-users
 ```
 
 ## Authors
