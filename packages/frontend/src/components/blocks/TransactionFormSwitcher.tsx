@@ -11,7 +11,7 @@ import {
 import { createTransaction } from '$ssr/createTransaction';
 
 const emptyFormValues = {
-  amount: NaN,
+  amount: null as never,
   toAccount: undefined,
   fromAccount: undefined,
   description: '',
@@ -36,8 +36,9 @@ export const TransactionFormSwitcher: FC = () => {
   >(undefined);
 
   useEffect(() => {
-    if (!templateId || !currentData)
+    if (templateId === '') {
       return setTemplateFormValues(emptyFormValues);
+    }
 
     const values = {
       amount: currentData?.amount,
@@ -65,7 +66,6 @@ export const TransactionFormSwitcher: FC = () => {
   const handleTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTransactionType(event.target.value as TransactionType);
     setTemplateId(undefined);
-    setTemplateFormValues(emptyFormValues);
   };
 
   const handleTemplateChange = (event: React.ChangeEvent<HTMLFormElement>) => {
@@ -86,6 +86,7 @@ export const TransactionFormSwitcher: FC = () => {
         />
       </div>
       <TransactionForm
+        key={transactionType}
         onSubmit={createTransaction}
         initialValues={templateFormValues}
         {...formPropsMapping[transactionType]}
