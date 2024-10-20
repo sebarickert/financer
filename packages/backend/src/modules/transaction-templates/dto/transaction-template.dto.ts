@@ -7,6 +7,7 @@ import {
 import { Decimal } from '@prisma/client/runtime/library';
 import {
   IsArray,
+  isEmpty,
   IsEnum,
   IsNotEmpty,
   IsOptional,
@@ -136,7 +137,10 @@ export class TransactionTemplateDto implements TransactionTemplate {
 
     return new TransactionTemplateDto({
       ...transactionTemplate,
-      amount: new Decimal(transactionTemplate.amount),
+      amount:
+        !isEmpty || transactionTemplate.amount instanceof Decimal
+          ? new Decimal(transactionTemplate.amount)
+          : null,
     });
   }
 }
