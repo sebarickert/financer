@@ -38,7 +38,7 @@ export class DatabaseServer {
     );
   };
 
-  public static readonly stopMemoryDb = (): void => {
+  public static readonly stopServer = (): void => {
     const name = this.getContainerName();
 
     if (DockerDatabase.isContainerExists(name)) {
