@@ -1,6 +1,6 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 
-import { TransactionForm } from './TransactionForm';
+import { TransactionForm, TransactionFormFields } from './TransactionForm';
 import { TransactionTemplateSwitcher } from './TransactionTemplateSwitcher';
 import { TransactionTypeSwitcher } from './TransactionTypeSwitcher/TransactionTypeSwitcher';
 
@@ -20,7 +20,6 @@ export const TransactionFormSwitcher: FC<TransactionFormSwitcherProps> = ({
   const [transactionType, setTransactionType] = useState<TransactionType>(
     TransactionType.Expense,
   );
-
   const [templateId, setTemplateId] = useState<string | undefined>();
 
   const { currentData } = useTransactionTemplatesFindOneQuery(
@@ -29,6 +28,35 @@ export const TransactionFormSwitcher: FC<TransactionFormSwitcherProps> = ({
     },
     { skip: !templateId },
   );
+
+  const [templateFormValues, setTemplateFormValues] = useState<
+    Partial<TransactionFormFields> | undefined
+  >(undefined);
+
+  useEffect(() => {
+    if (!templateId || !currentData)
+      return setTemplateFormValues({
+        // Switching from template to empty doesn't reset the form
+        amount: undefined,
+        toAccount: undefined,
+        fromAccount: undefined,
+        description: '',
+        categories: undefined,
+      });
+
+    const values = {
+      amount: currentData?.amount,
+      toAccount: currentData?.toAccount ?? undefined,
+      fromAccount: currentData?.fromAccount ?? undefined,
+      description: currentData?.description,
+      categories: currentData?.categories?.map((categoryId) => ({
+        categoryId,
+        amount: NaN,
+      })),
+    };
+
+    setTemplateFormValues(values);
+  }, [currentData, templateId]);
 
   const formPropsMapping = {
     [TransactionType.Income]: { hasToAccountField: true },
@@ -40,11 +68,12 @@ export const TransactionFormSwitcher: FC<TransactionFormSwitcherProps> = ({
   };
 
   const handleTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTransactionType?.(event.target.value as TransactionType);
+    setTransactionType(event.target.value as TransactionType);
+    setTemplateId(undefined);
   };
 
   const handleTemplateChange = (event: React.ChangeEvent<HTMLFormElement>) => {
-    setTemplateId?.(event.target.templateSwitcher.value);
+    setTemplateId(event.target.templateSwitcher.value);
   };
 
   return (
@@ -62,6 +91,7 @@ export const TransactionFormSwitcher: FC<TransactionFormSwitcherProps> = ({
       </div>
       <TransactionForm
         onSubmit={onSubmit}
+        initialValues={templateFormValues}
         {...formPropsMapping[transactionType]}
       />
     </section>

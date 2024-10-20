@@ -1,6 +1,6 @@
 'use client';
 
-import { useId, useMemo } from 'react';
+import { useId, useMemo, useRef } from 'react';
 
 import {
   TransactionType,
@@ -23,6 +23,7 @@ export const TransactionTemplateSwitcher = ({
   templateType,
   onChange,
 }: TransactionTemplateSwitcherProps): JSX.Element | null => {
+  const popoverRef = useRef<HTMLDivElement>(null);
   const templateSwitcherId = useId();
   const { currentData: transactionTemplates = [] } =
     useTransactionTemplatesFindAllManualTypeByUserQuery();
@@ -38,6 +39,7 @@ export const TransactionTemplateSwitcher = ({
   const handleSubmit = async (event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
     onChange(event);
+    popoverRef?.current?.hidePopover();
   };
 
   if (!targetTemplates.length) return null;
@@ -52,7 +54,7 @@ export const TransactionTemplateSwitcher = ({
       >
         <span>Use Template</span>
       </Button>
-      <Drawer id={templateSwitcherId} heading="Use Template">
+      <Drawer id={templateSwitcherId} heading="Use Template" ref={popoverRef}>
         <form onSubmit={handleSubmit}>
           <section className="-mx-4">
             <RadioGroup>
