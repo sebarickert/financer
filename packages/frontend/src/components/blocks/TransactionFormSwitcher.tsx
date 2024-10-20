@@ -27,20 +27,25 @@ export const TransactionFormSwitcher: FC<TransactionFormSwitcherProps> = ({
     },
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTransactionType?.(event.target.value as TransactionType);
+  };
+
+  const handleTemplateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('asdasdasdasd', event);
   };
 
   return (
     <section>
       <div className="grid gap-3 mb-6">
         <TransactionTypeSwitcher
-          onChange={handleChange}
+          onChange={handleTypeChange}
           defaultChecked={transactionType}
         />
         <TransactionTemplateSwitcher
           // selectedTemplate={templateId}
           templateType={transactionType}
+          onChange={handleTemplateChange}
         />
       </div>
       <TransactionForm
