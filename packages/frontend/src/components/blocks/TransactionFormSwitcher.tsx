@@ -10,6 +10,14 @@ import {
 } from '$api/generated/financerApi';
 import { createTransaction } from '$ssr/createTransaction';
 
+const emptyFormValues = {
+  amount: NaN,
+  toAccount: undefined,
+  fromAccount: undefined,
+  description: '',
+  categories: undefined,
+};
+
 export const TransactionFormSwitcher: FC = () => {
   const [transactionType, setTransactionType] = useState<TransactionType>(
     TransactionType.Expense,
@@ -29,14 +37,7 @@ export const TransactionFormSwitcher: FC = () => {
 
   useEffect(() => {
     if (!templateId || !currentData)
-      return setTemplateFormValues({
-        // Switching from template to empty doesn't reset the form
-        amount: undefined,
-        toAccount: undefined,
-        fromAccount: undefined,
-        description: '',
-        categories: undefined,
-      });
+      return setTemplateFormValues(emptyFormValues);
 
     const values = {
       amount: currentData?.amount,
@@ -64,6 +65,7 @@ export const TransactionFormSwitcher: FC = () => {
   const handleTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTransactionType(event.target.value as TransactionType);
     setTemplateId(undefined);
+    setTemplateFormValues(emptyFormValues);
   };
 
   const handleTemplateChange = (event: React.ChangeEvent<HTMLFormElement>) => {
