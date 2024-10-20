@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 
 import { NavigationItem } from './navigation';
+import { NavigationDesktopActions } from './navigation.desktop.actions';
 import { NavigationDesktopItem } from './navigation.desktop.item';
 
 interface NavigationDesktopProps {
@@ -27,24 +28,7 @@ export const NavigationDesktop = ({
         aria-label="Quick transaction actions navigation in desktop view mode."
       >
         <ul className="-ml-4 space-y-2">
-          <NavigationDesktopItem
-            label="Income"
-            iconName={'ArrowDownTrayIcon'}
-            url="/statistics/incomes/add"
-            ariaLabel="Add new income transaction"
-          />
-          <NavigationDesktopItem
-            label="Expense"
-            iconName={'ArrowUpTrayIcon'}
-            url="/statistics/expenses/add"
-            ariaLabel="Add new expense transaction"
-          />
-          <NavigationDesktopItem
-            label="Transfer"
-            iconName={'ArrowsRightLeftIcon'}
-            url="/statistics/transfers/add"
-            ariaLabel="Add new transfer transaction"
-          />
+          <NavigationDesktopActions />
         </ul>
       </nav>
       <nav

@@ -20,7 +20,7 @@ export const NavigationMobileActions = ({
     <li>
       <Drawer
         onClose={() => setIsActionsModalOpen(false)}
-        heading="Add transaction"
+        heading="Add Transaction"
         id={id}
       >
         <TransactionFormSwitcher />
@@ -29,7 +29,7 @@ export const NavigationMobileActions = ({
         type="button"
         className={`flex w-full h-full justify-center items-center popover-open-rotate`}
         aria-expanded={isActionsModalOpen}
-        aria-label="Add new transaction"
+        aria-label="Add New Transaction"
         onClick={() => setIsActionsModalOpen(!isActionsModalOpen)}
         // @ts-expect-error popovertarget is not a valid prop
         popovertarget={id}

@@ -29,9 +29,9 @@ export const NavigationDesktopItem: FC<NavigationItem> = async ({
   });
 
   const linkClasses = clsx(
-    'flex items-center p-4 hover:bg-gray-dark rounded-md tracking-tight font-medium',
+    'flex items-center p-4 hover:bg-gray-dark rounded-md',
     {
-      ['bg-gray-dark']: isActive,
+      ['bg-gray-dark font-medium']: isActive,
     },
   );
 

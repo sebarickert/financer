@@ -44,21 +44,23 @@ export const Form = <T extends FieldValues>({
   const { handleSubmit } = methods;
 
   return (
-    <FormProvider {...methods}>
-      <form
-        action={action}
-        onSubmit={onSubmit ? handleSubmit(onSubmit) : undefined}
-        id={id}
-      >
-        {children}
-        <FormFooter
-          submitLabel={submitLabel}
-          accentColor={accentColor}
-          formFooterBackLink={formFooterBackLink}
-          optionalComponent={optionalFooterComponent}
-          hasCancelButton={hasCancelButton}
-        />
-      </form>
-    </FormProvider>
+    <>
+      <FormProvider {...methods}>
+        <form
+          action={action}
+          onSubmit={onSubmit ? handleSubmit(onSubmit) : undefined}
+          id={id}
+        >
+          {children}
+          <FormFooter
+            submitLabel={submitLabel}
+            accentColor={accentColor}
+            formFooterBackLink={formFooterBackLink}
+            optionalComponent={optionalFooterComponent}
+            hasCancelButton={hasCancelButton}
+          />
+        </form>
+      </FormProvider>
+    </>
   );
 };
