@@ -1,6 +1,5 @@
 'use client';
 
-import { useTransitionRouter } from 'next-view-transitions';
 import { useId, useMemo } from 'react';
 
 import {
@@ -8,7 +7,6 @@ import {
   useTransactionTemplatesFindAllManualTypeByUserQuery,
 } from '$api/generated/financerApi';
 import { Drawer } from '$blocks/drawer/drawer';
-import { transactionTypeLabelMapping } from '$constants/transaction/transactionTypeMapping';
 import { Button } from '$elements/button/button';
 import { ButtonGroup } from '$elements/button/button.group';
 import { Radio } from '$elements/radio/radio';
@@ -17,16 +15,18 @@ import { RadioGroup } from '$elements/radio/radio.group';
 interface TransactionTemplateSwitcherProps {
   selectedTemplate?: string;
   templateType: TransactionType;
+  onChange(event: React.ChangeEvent<HTMLInputElement>): void;
 }
 
 export const TransactionTemplateSwitcher = ({
   selectedTemplate,
   templateType,
+  onChange,
 }: TransactionTemplateSwitcherProps): JSX.Element | null => {
   const templateSwitcherId = useId();
   const { currentData: transactionTemplates = [] } =
     useTransactionTemplatesFindAllManualTypeByUserQuery();
-  const router = useTransitionRouter();
+  // const router = useTransitionRouter();
 
   const targetTemplates = useMemo(
     () =>
@@ -39,11 +39,12 @@ export const TransactionTemplateSwitcher = ({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-    const { templateSwitcher } = event.target;
-    const selectedTemplateId = templateSwitcher.value;
-    router.push(
-      `/statistics/${transactionTypeLabelMapping[templateType].plural}/add/${selectedTemplateId}`,
-    );
+    // const { templateSwitcher } = event.target;
+    // const selectedTemplateId = templateSwitcher.value;
+    onChange(event);
+    // router.push(
+    //   `/statistics/${transactionTypeLabelMapping[templateType].plural}/add/${selectedTemplateId}`,
+    // );
   };
 
   if (!targetTemplates.length) return null;
