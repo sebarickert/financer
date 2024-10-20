@@ -17,8 +17,7 @@ Financer is a simple financial tracker app that helps you track monthly expenses
   - [2. Add OAuth Tokens](#2-add-oauth-tokens)
 - [Start the Development Environment](#start-the-development-environment)
   - [1. Use the correct Node version](#1-use-the-correct-node-version)
-  - [2. Start Docker](#2-start-docker)
-  - [3. Start the App](#3-start-the-app)
+  - [2. Start the App](#2-start-the-app)
 - [Installing New Dependencies](#installing-new-dependencies)
   - [Frontend](#frontend)
   - [Backend](#backend)
@@ -85,13 +84,7 @@ $ nvm use    # Install Node version (via nvm)
 $ npm ci     # Install dependencies
 ```
 
-### 2. Start Docker
-
-```bash
-$ ./bin/startDevDocker
-```
-
-### 3. Start the App
+### 2. Start the App
 
 ```bash
 $ npm start
