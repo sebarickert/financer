@@ -8,15 +8,9 @@ import {
   TransactionType,
   useTransactionTemplatesFindOneQuery,
 } from '$api/generated/financerApi';
-import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
+import { createTransaction } from '$ssr/createTransaction';
 
-type TransactionFormSwitcherProps = {
-  onSubmit: DefaultFormActionHandler;
-};
-
-export const TransactionFormSwitcher: FC<TransactionFormSwitcherProps> = ({
-  onSubmit,
-}) => {
+export const TransactionFormSwitcher: FC = () => {
   const [transactionType, setTransactionType] = useState<TransactionType>(
     TransactionType.Expense,
   );
@@ -90,7 +84,7 @@ export const TransactionFormSwitcher: FC<TransactionFormSwitcherProps> = ({
         />
       </div>
       <TransactionForm
-        onSubmit={onSubmit}
+        onSubmit={createTransaction}
         initialValues={templateFormValues}
         {...formPropsMapping[transactionType]}
       />

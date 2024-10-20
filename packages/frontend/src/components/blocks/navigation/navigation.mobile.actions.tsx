@@ -23,7 +23,7 @@ export const NavigationMobileActions = ({
         heading="Add transaction"
         id={id}
       >
-        <TransactionFormSwitcher onSubmit={() => {}} />
+        <TransactionFormSwitcher />
       </Drawer>
       <button
         type="button"
