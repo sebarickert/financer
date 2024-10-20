@@ -15,7 +15,7 @@ import { RadioGroup } from '$elements/radio/radio.group';
 interface TransactionTemplateSwitcherProps {
   selectedTemplate?: string;
   templateType: TransactionType;
-  onChange(event: React.ChangeEvent<HTMLInputElement>): void;
+  onChange(event: React.ChangeEvent<HTMLFormElement>): void;
 }
 
 export const TransactionTemplateSwitcher = ({
@@ -26,7 +26,6 @@ export const TransactionTemplateSwitcher = ({
   const templateSwitcherId = useId();
   const { currentData: transactionTemplates = [] } =
     useTransactionTemplatesFindAllManualTypeByUserQuery();
-  // const router = useTransitionRouter();
 
   const targetTemplates = useMemo(
     () =>
@@ -36,15 +35,9 @@ export const TransactionTemplateSwitcher = ({
     [templateType, transactionTemplates],
   );
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleSubmit = async (event: any) => {
+  const handleSubmit = async (event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // const { templateSwitcher } = event.target;
-    // const selectedTemplateId = templateSwitcher.value;
     onChange(event);
-    // router.push(
-    //   `/statistics/${transactionTypeLabelMapping[templateType].plural}/add/${selectedTemplateId}`,
-    // );
   };
 
   if (!targetTemplates.length) return null;
