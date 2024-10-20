@@ -26,10 +26,12 @@ export class TransactionTemplatesService {
     createTransactionTemplateDto: CreateTransactionTemplateDto,
     userId: UserId,
   ) {
-    return this.transactionTemplateRepo.create({
+    const template = await this.transactionTemplateRepo.create({
       ...createTransactionTemplateDto,
       userId,
     });
+
+    return TransactionTemplateDto.createFromPlain(template);
   }
 
   createMany(
@@ -46,13 +48,18 @@ export class TransactionTemplatesService {
   }
 
   async findAllByUser(userId: UserId) {
-    return this.transactionTemplateRepo.findMany({ where: { userId } });
+    const templates = await this.transactionTemplateRepo.findMany({
+      where: { userId },
+    });
+
+    return TransactionTemplateDto.createFromPlain(templates);
   }
 
   async findAllByUserForExport(userId: UserId) {
     const templates = await this.transactionTemplateRepo.findMany({
       where: { userId },
     });
+
     return TransactionTemplateDto.createFromPlain(templates);
   }
 
@@ -60,7 +67,7 @@ export class TransactionTemplatesService {
     userId: UserId,
     templateType: TransactionTemplateType,
   ) {
-    return this.transactionTemplateRepo.findMany({
+    const templates = await this.transactionTemplateRepo.findMany({
       where: {
         userId,
         templateType: {
@@ -68,6 +75,8 @@ export class TransactionTemplatesService {
         },
       },
     });
+
+    return TransactionTemplateDto.createFromPlain(templates);
   }
 
   async findOne(id: string, userId: UserId) {
@@ -77,7 +86,7 @@ export class TransactionTemplatesService {
       throw new NotFoundException('Transaction template not found.');
     }
 
-    return template;
+    return TransactionTemplateDto.createFromPlain(template);
   }
 
   async update(
@@ -86,25 +95,29 @@ export class TransactionTemplatesService {
     userId: UserId,
   ) {
     await this.findOne(id, userId);
-    return this.transactionTemplateRepo.update({
+    const template = await this.transactionTemplateRepo.update({
       where: {
         id,
         userId,
       },
       data: updateTransactionTemplateDto,
     });
+
+    return TransactionTemplateDto.createFromPlain(template);
   }
 
   async findAutomatedTemplatesWithCreationDateBefore(
     dayOfMonth: number,
     dateOperator: 'equals' | 'gte' = 'equals',
   ) {
-    return this.transactionTemplateRepo.findMany({
+    const templates = await this.transactionTemplateRepo.findMany({
       where: {
         templateType: { has: TransactionTemplateType.AUTO },
         dayOfMonthToCreate: { [dateOperator]: dayOfMonth },
       },
     });
+
+    return TransactionTemplateDto.createFromPlain(templates);
   }
 
   async remove(id: string, userId: UserId) {
