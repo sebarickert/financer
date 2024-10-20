@@ -6,7 +6,7 @@ import {
   isCategoriesFormFullFields,
   parseCategoriesFormFullFields,
 } from '$blocks/transaction-categories/transaction-categories.types';
-import { TransactionForm } from '$blocks/transaction-form/transaction-form';
+import { TransactionForm } from '$blocks/TransactionForm';
 import { TransactionTemplateSwitcher } from '$blocks/TransactionTemplateSwitcher';
 import { ValidationException } from '$exceptions/validation.exception';
 import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
