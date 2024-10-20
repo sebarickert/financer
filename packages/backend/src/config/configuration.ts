@@ -1,15 +1,18 @@
-import { getMemoryDbUri, setupDatabaseSchema } from './memoryDatabaseServer';
+import { DatabaseServer } from './database-server';
 
 const isNotEmptyString = (value: string) => value && value.length > 0;
 
 export const isNodeEnvInDev = () => process.env.NODE_ENV === 'development';
 export const isNodeEnvInTest = () => process.env.NODE_ENV === 'test';
 
-export const shouldUseInternalDockerDb = () =>
-  process.env.USE_INTERNAL_DOCKER_DB === 'true';
+export const shouldUseInternalTestDockerDb = () =>
+  process.env.USE_INTERNAL_TEST_DOCKER_DB === 'true';
+
+export const shouldUseInternalDevelopmentDockerDb = () =>
+  process.env.USE_INTERNAL_DEVELOPMENT_DOCKER_DB === 'true';
 
 export const isApplicationInTestMode = () =>
-  isNodeEnvInTest() || shouldUseInternalDockerDb();
+  isNodeEnvInTest() || shouldUseInternalTestDockerDb();
 
 export const shouldOnlyExportApiSpec = () =>
   `${process.env.NEST_ONLY_EXPORT_API_SPEC}`.toUpperCase() === 'TRUE';
@@ -25,21 +28,29 @@ export const isAuth0AuthEnabled = () =>
   isNotEmptyString(process.env.AUTH0_CLIENT_ID) &&
   isNotEmptyString(process.env.AUTH0_CLIENT_SECRET);
 
+export const shouldUseInternalDockerDb = () =>
+  shouldUseInternalDevelopmentDockerDb() ||
+  shouldUseInternalTestDockerDb() ||
+  shouldOnlyExportApiSpec();
+
+/** Test database is hosted and started externally e.g. Github Action service which we have to provision with schema and test user  */
 const shouldInitializeSchemaAndTestUser = () =>
   process.env.INITIALIZE_SCHEMA_AND_TEST_USER === 'true';
 
 const parseDbUri = async (): Promise<string> => {
   const connectionString = `postgres://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/${process.env.DB_NAME}`;
 
-  if (!shouldUseInternalDockerDb() && !shouldOnlyExportApiSpec()) {
+  const hasExternalDb = !shouldUseInternalDockerDb();
+
+  if (hasExternalDb) {
     if (shouldInitializeSchemaAndTestUser()) {
-      return setupDatabaseSchema(connectionString);
+      return DatabaseServer.setupTestDatabase(connectionString);
     } else {
       return Promise.resolve(connectionString);
     }
   }
 
-  return getMemoryDbUri();
+  return DatabaseServer.setupDevelopmentDatabase();
 };
 
 export const configuration = async () => ({

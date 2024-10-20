@@ -1,6 +1,7 @@
 import {
   Injectable,
   InternalServerErrorException,
+  Logger,
   ServiceUnavailableException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -12,10 +13,12 @@ import { AuthService } from '../auth.service';
 
 @Injectable()
 export class Auth0Strategy extends PassportStrategy(Strategy, 'auth0') {
+  private readonly logger = new Logger(Auth0Strategy.name);
+
   constructor(
-    private authService: AuthService,
-    private userService: UsersService,
-    private configService: ConfigService,
+    private readonly authService: AuthService,
+    private readonly userService: UsersService,
+    private readonly configService: ConfigService,
   ) {
     const auth0Keys = configService.get('auth0Keys');
     const publicUrl = configService.get('publicUrl');
@@ -25,7 +28,7 @@ export class Auth0Strategy extends PassportStrategy(Strategy, 'auth0') {
       callbackURL: `${publicUrl}/auth/auth0/redirect`,
     });
 
-    console.log('auth0 oauth enabled');
+    this.logger.log('auth0 oauth enabled');
   }
 
   async validate(
@@ -54,6 +57,7 @@ export class Auth0Strategy extends PassportStrategy(Strategy, 'auth0') {
         roles: [],
       });
     } catch (error) {
+      this.logger.error('Error validating user by auth0', error);
       throw new InternalServerErrorException();
     }
   }

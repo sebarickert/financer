@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: mongodb-backup
+  name: postgres-backup
   namespace: financer
 spec:
   schedule: "0 3 * * *"
@@ -10,12 +10,12 @@ spec:
       template:
         spec:
           containers:
-            - name: mongodb-backup
-              image: mongo:5.0.7
+            - name: postgres-backup
+              image: postgres:17-alpine
               args:
                 - "/bin/sh"
                 - "-c"
-                - '/usr/bin/mongodump -u $DB_USER -p $DB_PASSWORD --db $DB_NAME -h $DB_HOST --gzip --archive=/backup/financer_$(date +"%Y-%m-%d_%H-%M").gz'
+                - 'PGPASSWORD=$DB_PASSWORD pg_dump -U $DB_USER -h $DB_HOST -d $DB_NAME -F c -b -v -f /backup/financer_$(date +"%Y-%m-%d_%H-%M").backup'
               envFrom:
                 - secretRef:
                     name: webapp-environment-secret
@@ -26,13 +26,13 @@ spec:
           volumes:
             - name: backup-volume
               persistentVolumeClaim:
-                claimName: mongodb-backup-volume
+                claimName: postgres-backup-volume
 
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: mongodb-backup-volume
+  name: postgres-backup-volume
   namespace: financer
 spec:
   accessModes:

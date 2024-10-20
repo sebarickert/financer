@@ -1,6 +1,7 @@
 import {
   Injectable,
   InternalServerErrorException,
+  Logger,
   ServiceUnavailableException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -12,10 +13,12 @@ import { AuthService } from '../auth.service';
 
 @Injectable()
 export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
+  private readonly logger = new Logger(GithubStrategy.name);
+
   constructor(
-    private authService: AuthService,
-    private userService: UsersService,
-    private configService: ConfigService,
+    private readonly authService: AuthService,
+    private readonly userService: UsersService,
+    private readonly configService: ConfigService,
   ) {
     const githubKeys = configService.get('githubKeys');
     const publicUrl = configService.get('publicUrl');
@@ -24,7 +27,7 @@ export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
       callbackURL: `${publicUrl}/auth/github/redirect`,
     });
 
-    console.log('github oauth enabled');
+    this.logger.log('github oauth enabled');
   }
 
   async validate(_accessToken: never, _refreshToken: never, profile: Profile) {
@@ -47,7 +50,7 @@ export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
         roles: [],
       });
     } catch (error) {
-      console.error('Error validating user by github', error);
+      this.logger.error('Error validating user by github', error);
       throw new InternalServerErrorException();
     }
   }

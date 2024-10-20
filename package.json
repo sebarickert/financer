@@ -6,7 +6,7 @@
     "packages/*"
   ],
   "scripts": {
-    "start": "npm run docker:wait-for-container && npm run prisma:db-push && run-p start:backend start:frontend",
+    "start": "run-p start:backend start:frontend",
     "start:ci": "run-p start:backend:ci start:frontend:ci",
     "start:test": "run-p start:backend:test start:frontend",
     "start:backend": "npm -w backend run start:dev",
@@ -24,8 +24,7 @@
     "types:copy": "cp packages/backend/api-spec.json packages/frontend/src/redux/schema/api-spec.json",
     "types:generate": "npm -w frontend run types:generate && npm -w @local/playwright run types:generate",
     "check-types": "npm run -ws check-types",
-    "prisma:db-push": "cd packages/backend && npx prisma db push && cd -",
-    "docker:wait-for-container": "./bin/waitForContainer financer_dev-postgres"
+    "setup:development-users": "docker exec -it financer-development-postgres psql -U admin -d financer_dev -c \"UPDATE \\\"user\\\" SET roles = '{TEST_USER}';\""
   },
   "author": "",
   "license": "ISC",
