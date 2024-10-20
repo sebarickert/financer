@@ -7,7 +7,7 @@ import {
   parseCategoriesFormFullFields,
 } from '$blocks/transaction-categories/transaction-categories.types';
 import { TransactionDelete } from '$blocks/transaction-delete/transaction-delete';
-import { TransactionForm } from '$blocks/transaction-form/transaction-form';
+import { TransactionForm } from '$blocks/TransactionForm';
 import { ValidationException } from '$exceptions/validation.exception';
 import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';

@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
 
-import { TransactionForm } from './transaction-form/transaction-form';
+import { TransactionForm } from './TransactionForm';
 import { TransactionTemplateSwitcher } from './TransactionTemplateSwitcher';
 import { TransactionTypeSwitcher } from './TransactionTypeSwitcher/TransactionTypeSwitcher';
 

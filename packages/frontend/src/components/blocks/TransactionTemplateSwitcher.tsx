@@ -56,9 +56,9 @@ export const TransactionTemplateSwitcher = ({
         popoverTarget={templateSwitcherId}
         size="small"
       >
-        <span>Switch Template</span>
+        <span>Use Template</span>
       </Button>
-      <Drawer id={templateSwitcherId} heading="Switch template">
+      <Drawer id={templateSwitcherId} heading="Use Template">
         <form onSubmit={handleSubmit}>
           <section className="-mx-4">
             <RadioGroup>
