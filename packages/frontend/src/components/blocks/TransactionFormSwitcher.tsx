@@ -4,7 +4,10 @@ import { TransactionForm } from './TransactionForm';
 import { TransactionTemplateSwitcher } from './TransactionTemplateSwitcher';
 import { TransactionTypeSwitcher } from './TransactionTypeSwitcher/TransactionTypeSwitcher';
 
-import { TransactionType } from '$api/generated/financerApi';
+import {
+  TransactionType,
+  useTransactionTemplatesFindOneQuery,
+} from '$api/generated/financerApi';
 import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
 
 type TransactionFormSwitcherProps = {
@@ -16,6 +19,15 @@ export const TransactionFormSwitcher: FC<TransactionFormSwitcherProps> = ({
 }) => {
   const [transactionType, setTransactionType] = useState<TransactionType>(
     TransactionType.Expense,
+  );
+
+  const [templateId, setTemplateId] = useState<string | undefined>();
+
+  const { currentData } = useTransactionTemplatesFindOneQuery(
+    {
+      id: templateId ?? '',
+    },
+    { skip: !templateId },
   );
 
   const formPropsMapping = {
@@ -31,8 +43,8 @@ export const TransactionFormSwitcher: FC<TransactionFormSwitcherProps> = ({
     setTransactionType?.(event.target.value as TransactionType);
   };
 
-  const handleTemplateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('asdasdasdasd', event);
+  const handleTemplateChange = (event: React.ChangeEvent<HTMLFormElement>) => {
+    setTemplateId?.(event.target.templateSwitcher.value);
   };
 
   return (
@@ -43,7 +55,7 @@ export const TransactionFormSwitcher: FC<TransactionFormSwitcherProps> = ({
           defaultChecked={transactionType}
         />
         <TransactionTemplateSwitcher
-          // selectedTemplate={templateId}
+          selectedTemplate={templateId}
           templateType={transactionType}
           onChange={handleTemplateChange}
         />
