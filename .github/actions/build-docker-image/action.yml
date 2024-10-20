@@ -55,7 +55,7 @@ runs:
         push: false
         cache-from: type=gha
         cache-to: type=gha,mode=max
-        file: docker/Dockerfile
+        file: Dockerfile
         tags: |
           ${{ steps.build-tags.outputs.BUILD_NUMBER }}
           ${{ steps.build-tags.outputs.COMMIT_REF }}

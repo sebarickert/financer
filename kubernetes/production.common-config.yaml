@@ -19,7 +19,7 @@ stringData:
   DB_USER: admin
   DB_PASSWORD: change-me
   DB_NAME: financer
-  DB_HOST: mongodb:27017
+  DB_HOST: postgres:5432
 
 ---
 apiVersion: v1
@@ -30,18 +30,6 @@ metadata:
 data:
   PUBLIC_URL: https://financer.silte.fi
   COOKIE_KEY: financer-production
-
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: mongodb-crentials-secret
-  namespace: financer
-type: Opaque
-stringData:
-  MONGO_INITDB_DATABASE: financer
-  MONGO_INITDB_ROOT_USERNAME: admin
-  MONGO_INITDB_ROOT_PASSWORD: change-me
 
 ---
 apiVersion: v1

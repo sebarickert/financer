@@ -17,7 +17,7 @@ import {
   shouldOnlyExportApiSpec,
   shouldUseInternalDockerDb,
 } from './config/configuration';
-import { getMemoryDbUri } from './config/memoryDatabaseServer';
+import { DatabaseServer } from './config/database-server';
 import { mockAuthenticationMiddleware } from './config/mockAuthenticationMiddleware';
 
 const PORT = process.env.PORT || 4000;
@@ -28,8 +28,7 @@ const options: SwaggerDocumentOptions = {
 };
 
 async function bootstrap() {
-  if (shouldUseInternalDockerDb() || shouldOnlyExportApiSpec())
-    await getMemoryDbUri();
+  if (shouldUseInternalDockerDb()) await DatabaseServer.startServer();
 
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.use(json({ limit: '50mb' }));
