@@ -134,6 +134,9 @@ export class TransactionTemplateDto implements TransactionTemplate {
       );
     }
 
-    return new TransactionTemplateDto(transactionTemplate);
+    return new TransactionTemplateDto({
+      ...transactionTemplate,
+      amount: new Decimal(transactionTemplate.amount),
+    });
   }
 }
