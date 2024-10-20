@@ -32,9 +32,7 @@ export const Link = ({
 }: LinkProps): JSX.Element => {
   const router = useTransitionRouter();
 
-  const linkClasses = clsx('font-medium tracking-tight', {
-    [className]: true,
-  });
+  const linkClasses = clsx('text-black', className);
   const linkContent = (
     <>
       {isAbsolute && <span className="absolute inset-0" aria-hidden="true" />}

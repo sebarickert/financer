@@ -22,6 +22,7 @@ export const TransactionFormSwitcher: FC = () => {
   const [transactionType, setTransactionType] = useState<TransactionType>(
     TransactionType.Expense,
   );
+
   const [templateId, setTemplateId] = useState<string | undefined>();
 
   const { currentData } = useTransactionTemplatesFindOneQuery(
