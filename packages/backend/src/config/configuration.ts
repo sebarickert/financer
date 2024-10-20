@@ -50,7 +50,9 @@ const parseDbUri = async (): Promise<string> => {
     }
   }
 
-  return DatabaseServer.setupDevelopmentDatabase();
+  return shouldUseInternalDevelopmentDockerDb()
+    ? DatabaseServer.setupDevelopmentDatabase()
+    : DatabaseServer.setupTestDatabase();
 };
 
 export const configuration = async () => ({

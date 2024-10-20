@@ -10,6 +10,7 @@ import {
 import { Form } from '$blocks/form/form';
 import { TransactionCategories } from '$blocks/transaction-categories/transaction-categories';
 import { CategoriesFormFullFields } from '$blocks/transaction-categories/transaction-categories.types';
+import { accountTypeIconMapping } from '$constants/account/accountTypeMapping';
 import { Input } from '$elements/input/input';
 import { Option, Select } from '$elements/select/select';
 import { useGetAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useGetAllTransactionCategoriesWithCategoryTree';
@@ -17,6 +18,7 @@ import {
   DefaultFormActionHandler,
   useFinancerFormState,
 } from '$hooks/useFinancerFormState';
+import { formatCurrency } from '$utils/formatCurrency';
 import { DateFormat, formatDate } from '$utils/formatDate';
 
 interface TransactionFormProps {
@@ -62,9 +64,11 @@ export const TransactionForm: FC<TransactionFormProps> = ({
 
   const accountOptions = useMemo(() => {
     if (!accounts) return [];
-    return accounts.data.map(({ id, name }) => ({
+    return accounts.data.map(({ id, name, type, balance }) => ({
       value: id,
       label: name,
+      icon: accountTypeIconMapping[type],
+      description: `Balance ${formatCurrency(balance)}`,
     }));
   }, [accounts]);
 

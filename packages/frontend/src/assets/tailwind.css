@@ -18,6 +18,19 @@
     -webkit-tap-highlight-color: transparent;
   }
 
+  select,
+  ::picker(select) {
+    appearance: base-select;
+  }
+
+  selectedoption .option-label-after-from-data::after {
+    @apply hidden;
+  }
+
+  .option-label-after-from-data::after {
+    content: attr(data-description) !important;
+  }
+
   .backdrop {
     &::backdrop {
       @apply bg-black/0 ease-in;
