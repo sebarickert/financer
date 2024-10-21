@@ -34,14 +34,14 @@ export const TransactionTypeSwitcher: FC<TransactionActionsProps> = ({
   name,
 }) => {
   return (
-    <div className={clsx('', className)}>
+    <div className={clsx('', className)} data-testid="transactionTypeSwitcher">
       <ul className="grid items-center justify-center grid-cols-3 gap-0.5 p-1 rounded-lg bg-gray">
         {switcherItems.map((switcherItem) => (
           <li key={switcherItem.value}>
             <TransactionTypeSwitcherItem
               {...switcherItem}
               onChange={onChange}
-              name={name ?? 'transactionTypeSwitcher'}
+              name={name ?? 'transactionTypeSwitcherItem'}
               isChecked={defaultChecked === switcherItem.value}
             />
           </li>

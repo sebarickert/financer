@@ -90,6 +90,7 @@ export const IncomeEditContainer: FC<IncomeEditContainerProps> = async ({
         initialValues={initialValues}
         onSubmit={handleSubmit}
         hasToAccountField
+        testId="edit-income-form"
       />
     </>
   );

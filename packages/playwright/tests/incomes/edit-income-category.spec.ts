@@ -54,7 +54,7 @@ test.describe('Edit income with category', () => {
     // eslint-disable-next-line playwright/no-wait-for-timeout
     await page.waitForTimeout(100);
 
-    await page.getByTestId('submit').click();
+    await page.getByTestId('edit-income-form').getByTestId('submit').click();
 
     await page.goto(`/statistics/incomes?date=${dateQuery}&page=1`);
     await page.getByTestId(incomeWithSingleCategory.id).click();
@@ -122,7 +122,7 @@ test.describe('Edit income with category', () => {
 
     await expect(item).toHaveCount(1);
 
-    await page.getByTestId('submit').click();
+    await page.getByTestId('edit-income-form').getByTestId('submit').click();
 
     await page.goto(`/statistics/incomes?date=${dateQuery}&page=1`);
     await page.getByTestId(incomeWithMultipleCategories.id).click();
@@ -168,7 +168,7 @@ test.describe('Edit income with category', () => {
 
     await expect(item).toHaveCount(0);
 
-    await page.getByTestId('submit').click();
+    await page.getByTestId('edit-income-form').getByTestId('submit').click();
 
     await page.goto(`/statistics/incomes?date=${dateQuery}&page=1`);
     await page.getByTestId(incomeWithMultipleCategories.id).click();

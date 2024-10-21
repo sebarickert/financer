@@ -27,6 +27,7 @@ interface TransactionFormProps {
   hasToAccountField?: boolean;
   initialValues?: Partial<TransactionFormFields>;
   onSubmit: DefaultFormActionHandler;
+  testId?: string;
 }
 export interface TransactionFormFields {
   amount: number;
@@ -42,6 +43,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
   hasToAccountField,
   initialValues,
   onSubmit,
+  testId,
 }) => {
   const action = useFinancerFormState('transaction-form', onSubmit);
 
@@ -124,6 +126,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
       action={action}
       submitLabel={'Submit'}
       formFooterBackLink="/"
+      testId={testId ?? 'transaction-form'}
     >
       <section>
         <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
