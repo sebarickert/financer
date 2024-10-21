@@ -92,6 +92,7 @@ export const TransferEditContainer: FC<TransferEditContainerProps> = async ({
         onSubmit={handleSubmit}
         hasToAccountField
         hasFromAccountField
+        testId="edit-transfer-form"
       />
     </>
   );

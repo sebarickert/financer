@@ -54,7 +54,7 @@ test.describe('Edit transfer with category', () => {
     // eslint-disable-next-line playwright/no-wait-for-timeout
     await page.waitForTimeout(100);
 
-    await page.getByTestId('submit').click();
+    await page.getByTestId('edit-transfer-form').getByTestId('submit').click();
 
     await page.goto(`/statistics/transfers?date=${dateQuery}&page=1`);
     await page.getByTestId(transferWithSingleCategory.id).click();
@@ -125,7 +125,7 @@ test.describe('Edit transfer with category', () => {
 
     await expect(item).toHaveCount(1);
 
-    await page.getByTestId('submit').click();
+    await page.getByTestId('edit-transfer-form').getByTestId('submit').click();
 
     await page.goto(`/statistics/transfers?date=${dateQuery}&page=1`);
     await page.getByTestId(transferWithMultipleCategories.id).click();
@@ -174,7 +174,7 @@ test.describe('Edit transfer with category', () => {
 
     await expect(item).toHaveCount(0);
 
-    await page.getByTestId('submit').click();
+    await page.getByTestId('edit-transfer-form').getByTestId('submit').click();
 
     await page.goto(`/statistics/transfers?date=${dateQuery}&page=1`);
     await page.getByTestId(transferWithMultipleCategories.id).click();

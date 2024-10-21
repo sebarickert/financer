@@ -15,13 +15,23 @@ test.describe('Add income with category', () => {
   test.beforeEach(async ({ page }) => {
     await applyFixture('large');
 
-    await page.goto('/statistics/incomes/add');
+    await page.goto('/');
+    await page.getByTestId('add-transaction-desktop').click();
 
-    await page.locator('#toAccount').selectOption({ index: 1 });
-    await page.locator('#description').fill(INCOME_NAME);
-    await page.locator('#amount').fill('10000.50');
+    const drawer = page.getByTestId('add-transaction-drawer-desktop');
 
-    await page.getByTestId(ids.addCategoryButton).click();
+    await drawer
+      .getByTestId('transactionTypeSwitcher')
+      .getByLabel('Expense', { exact: true })
+      .focus();
+
+    await page.keyboard.press('ArrowLeft');
+
+    await drawer.locator('#toAccount').selectOption({ index: 1 });
+    await drawer.locator('#description').fill(INCOME_NAME);
+    await drawer.locator('#amount').fill('10000.50');
+
+    await drawer.getByTestId(ids.addCategoryButton).click();
   });
 
   test('Add income with category', async ({ page }) => {
@@ -30,7 +40,10 @@ test.describe('Add income with category', () => {
       amount: '50',
     });
 
-    await page.getByTestId('submit').click();
+    await page
+      .getByTestId('add-transaction-drawer-desktop')
+      .getByTestId('submit')
+      .click();
 
     await expect(page).not.toHaveURL('/add');
     await page.getByText(INCOME_NAME).click();
@@ -72,7 +85,10 @@ test.describe('Add income with category', () => {
       .selectOption('non-existing-category');
     await page.getByTestId(`${ids.transactionCategoriesForm}-submit`).click();
 
-    await page.getByTestId('submit').click();
+    await page
+      .getByTestId('add-transaction-drawer-desktop')
+      .getByTestId('submit')
+      .click();
 
     const formErrors = page.getByTestId('toast-item');
     await expect(formErrors).toContainText('Submission failed');

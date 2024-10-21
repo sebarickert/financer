@@ -75,11 +75,14 @@ test.describe('Edit expense', () => {
     await page.getByTestId(targetTransactionBefore.id).click();
 
     await page.getByTestId('edit-expense-button').click();
-    await page.locator('#description').fill(editedTransactionName);
-    await page.locator('#amount').fill(newAmount.toString());
-    await page.locator('#fromAccount').selectOption(targetAccountId);
 
-    await page.getByTestId('submit').click();
+    const editExpenseForm = page.getByTestId('edit-expense-form');
+
+    await editExpenseForm.locator('#description').fill(editedTransactionName);
+    await editExpenseForm.locator('#amount').fill(newAmount.toString());
+    await editExpenseForm.locator('#fromAccount').selectOption(targetAccountId);
+
+    await editExpenseForm.getByTestId('submit').click();
 
     await page.getByTestId('edit-expense-button').waitFor();
 
@@ -128,10 +131,13 @@ test.describe('Edit expense', () => {
     await page.getByTestId(targetTransactionBefore.id).click();
 
     await page.getByTestId('edit-expense-button').click();
-    await page.locator('#description').fill(editedTransactionName);
-    await page.locator('#amount').fill(newAmount.toString());
 
-    await page.getByTestId('submit').click();
+    const editExpenseForm = page.getByTestId('edit-expense-form');
+
+    await editExpenseForm.locator('#description').fill(editedTransactionName);
+    await editExpenseForm.locator('#amount').fill(newAmount.toString());
+
+    await editExpenseForm.getByTestId('submit').click();
 
     await page.getByTestId('edit-expense-button').waitFor();
 

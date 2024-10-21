@@ -12,7 +12,11 @@ export const NavigationDesktopActions = (): JSX.Element => {
 
   return (
     <li>
-      <Drawer heading="Add Transaction" id={id}>
+      <Drawer
+        heading="Add Transaction"
+        id={id}
+        testId="add-transaction-drawer-desktop"
+      >
         <TransactionFormSwitcher
           typeSwitcherName="transactionTypeSwitcherDesktop"
           templateSwitcherName="templateTypeSwitcherDesktop"
@@ -23,6 +27,7 @@ export const NavigationDesktopActions = (): JSX.Element => {
         className={`flex items-center p-4 hover:bg-gray-dark rounded-md w-full`}
         // @ts-expect-error popovertarget is not a valid prop
         popovertarget={id}
+        data-testid="add-transaction-desktop"
       >
         <Icon name="PlusIcon" />
         <span className={clsx('ml-4 text-base')}>{'Add New Transaction'}</span>

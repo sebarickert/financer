@@ -58,28 +58,53 @@ test.describe('Transaction categories visibility in transaction forms', () => {
 
   // eslint-disable-next-line playwright/expect-expect
   test('Verify add income categories', async ({ page }) => {
-    await page.goto('/statistics/incomes/add');
-    await page.locator('#amount').fill('100');
+    await page.goto('/');
+    await page.getByTestId('add-transaction-desktop').click();
 
-    await page.getByTestId('add-category-button').click();
+    const drawer = page.getByTestId('add-transaction-drawer-desktop');
+
+    await drawer
+      .getByTestId('transactionTypeSwitcher')
+      .getByLabel('Expense', { exact: true })
+      .focus();
+
+    await page.keyboard.press('ArrowLeft');
+    await drawer.locator('#amount').fill('100');
+
+    await drawer.getByTestId('add-category-button').click();
     await verifyIncomeCategories(page);
   });
 
   // eslint-disable-next-line playwright/expect-expect
   test('Verify add expense categories', async ({ page }) => {
-    await page.goto('/statistics/expenses/add');
-    await page.locator('#amount').fill('100');
+    await page.goto('/');
+    await page.getByTestId('add-transaction-desktop').click();
 
-    await page.getByTestId('add-category-button').click();
+    const drawer = page.getByTestId('add-transaction-drawer-desktop');
+
+    await drawer.locator('#amount').fill('100');
+
+    await drawer.getByTestId('add-category-button').click();
     await verifyExpenseCategories(page);
   });
 
   // eslint-disable-next-line playwright/expect-expect
   test('Verify add transfer categories', async ({ page }) => {
-    await page.goto('/statistics/transfers/add');
-    await page.locator('#amount').fill('100');
+    await page.goto('/');
+    await page.getByTestId('add-transaction-desktop').click();
 
-    await page.getByTestId('add-category-button').click();
+    const drawer = page.getByTestId('add-transaction-drawer-desktop');
+
+    await drawer
+      .getByTestId('transactionTypeSwitcher')
+      .getByLabel('Expense', { exact: true })
+      .focus();
+
+    await page.keyboard.press('ArrowRight');
+
+    await drawer.locator('#amount').fill('100');
+
+    await drawer.getByTestId('add-category-button').click();
     await verifyTransferCategories(page);
   });
 });

@@ -91,6 +91,7 @@ export const EditExpenseContainer: FC<EditExpenseContainerProps> = async ({
           initialValues={initialValues}
           onSubmit={handleSubmit}
           hasFromAccountField
+          testId="edit-expense-form"
         />
       )}
     </>
