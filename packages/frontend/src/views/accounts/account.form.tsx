@@ -62,6 +62,7 @@ export const AccountForm = ({
       submitLabel={submitLabel}
       action={action}
       formFooterBackLink="/accounts"
+      testId="account-form"
     >
       <section>
         <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">

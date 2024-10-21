@@ -97,6 +97,7 @@ export const CategoryForm: FC<CategoryFormProps> = ({
       action={action}
       formFooterBackLink={settingsPaths.categories}
       optionalFooterComponent={optionalFooterComponent}
+      testId="category-form"
     >
       <div className="grid gap-4">
         <Input id="name" isRequired>
