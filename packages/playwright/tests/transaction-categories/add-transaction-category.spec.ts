@@ -21,7 +21,7 @@ test.describe('Transaction category creation', () => {
       .getByText(newName);
     await expect(childRowAfter).toHaveCount(0);
 
-    await page.getByTestId('add-category-button').click();
+    await page.getByTestId('add-category-link').click();
 
     await page.locator('#name').fill(newName);
 
@@ -34,7 +34,7 @@ test.describe('Transaction category creation', () => {
 
     await page.locator('#parentCategoryId').selectOption(parent);
 
-    await page.getByTestId('submit').click();
+    await page.getByTestId('category-form').getByTestId('submit').click();
     await expect(page).not.toHaveURL('/add');
 
     await page.getByText(newName).first().click();

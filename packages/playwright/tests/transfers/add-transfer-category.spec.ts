@@ -15,15 +15,25 @@ test.describe('Add transfer with category', () => {
   test.beforeEach(async ({ page }) => {
     await applyFixture('large');
 
-    await page.goto('/statistics/transfers/add');
+    await page.goto('/');
+    await page.getByTestId('add-transaction-desktop').click();
 
-    await page.locator('#description').fill(TRANSFER_NAME);
-    await page.locator('#amount').fill('10000.50');
+    const drawer = page.getByTestId('add-transaction-drawer-desktop');
 
-    await page.locator('#fromAccount').selectOption({ index: 1 });
-    await page.locator('#toAccount').selectOption({ index: 2 });
+    await drawer
+      .getByTestId('transactionTypeSwitcher')
+      .getByLabel('Expense', { exact: true })
+      .focus();
 
-    await page.getByTestId(ids.addCategoryButton).click();
+    await page.keyboard.press('ArrowRight');
+
+    await drawer.locator('#description').fill(TRANSFER_NAME);
+    await drawer.locator('#amount').fill('10000.50');
+
+    await drawer.locator('#fromAccount').selectOption({ index: 1 });
+    await drawer.locator('#toAccount').selectOption({ index: 2 });
+
+    await drawer.getByTestId(ids.addCategoryButton).click();
   });
 
   test('Add transfer with category', async ({ page }) => {
@@ -32,7 +42,10 @@ test.describe('Add transfer with category', () => {
       amount: '50',
     });
 
-    await page.getByTestId('submit').click();
+    await page
+      .getByTestId('add-transaction-drawer-desktop')
+      .getByTestId('submit')
+      .click();
 
     await expect(page).not.toHaveURL('/add');
     await page.getByText(TRANSFER_NAME).click();
@@ -73,7 +86,10 @@ test.describe('Add transfer with category', () => {
       .selectOption('non-existing-category');
     await page.getByTestId(`${ids.transactionCategoriesForm}-submit`).click();
 
-    await page.getByTestId('submit').click();
+    await page
+      .getByTestId('add-transaction-drawer-desktop')
+      .getByTestId('submit')
+      .click();
 
     const formErrors = page.getByTestId('toast-item');
     await expect(formErrors).toContainText('Submission failed');

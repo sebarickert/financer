@@ -15,13 +15,16 @@ test.describe('Add expense with category', () => {
   test.beforeEach(async ({ page }) => {
     await applyFixture('large');
 
-    await page.goto('/statistics/expenses/add');
+    await page.goto('/');
+    await page.getByTestId('add-transaction-desktop').click();
 
-    await page.locator('#fromAccount').selectOption({ index: 1 });
-    await page.fill('#description', EXPENSE_NAME);
-    await page.fill('#amount', '10000.50');
+    const drawer = page.getByTestId('add-transaction-drawer-desktop');
 
-    await page.getByTestId(ids.addCategoryButton).click();
+    await drawer.locator('#fromAccount').selectOption({ index: 1 });
+    await drawer.locator('#description').fill(EXPENSE_NAME);
+    await drawer.locator('#amount').fill('10000.50');
+
+    await drawer.getByTestId(ids.addCategoryButton).click();
   });
 
   test('Add expense with category', async ({ page }) => {
@@ -30,9 +33,11 @@ test.describe('Add expense with category', () => {
       amount: '50',
     });
 
-    await page.getByTestId('submit').click();
+    await page
+      .getByTestId('add-transaction-drawer-desktop')
+      .getByTestId('submit')
+      .click();
 
-    await expect(page).not.toHaveURL('/add');
     await page.getByText(EXPENSE_NAME).click();
 
     const categoryDetails = page.getByTestId('category-details');
@@ -74,7 +79,10 @@ test.describe('Add expense with category', () => {
       .selectOption('non-existing-category');
     await page.getByTestId(`${ids.transactionCategoriesForm}-submit`).click();
 
-    await page.getByTestId('submit').click();
+    await page
+      .getByTestId('add-transaction-drawer-desktop')
+      .getByTestId('submit')
+      .click();
 
     const formErrors = page.getByTestId('toast-item');
     await expect(formErrors).toContainText('Submission failed');

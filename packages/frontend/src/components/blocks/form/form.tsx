@@ -15,8 +15,9 @@ type FormProps<FormValues extends FieldValues> = {
   accentColor?: ButtonAccentColor;
   formFooterBackLink?: string;
   methods: UseFormReturn<FormValues>;
-  id?: string;
+  testId?: string;
   optionalFooterComponent?: React.ReactNode;
+  hasCancelButton?: boolean;
 } & (
   | {
       onSubmit: SubmitHandler<FormValues>;
@@ -35,27 +36,31 @@ export const Form = <T extends FieldValues>({
   accentColor = 'black',
   formFooterBackLink,
   optionalFooterComponent,
-  id,
+  testId,
   methods,
   action,
+  hasCancelButton,
 }: FormProps<T>): JSX.Element => {
   const { handleSubmit } = methods;
 
   return (
-    <FormProvider {...methods}>
-      <form
-        action={action}
-        onSubmit={onSubmit ? handleSubmit(onSubmit) : undefined}
-        id={id}
-      >
-        {children}
-        <FormFooter
-          submitLabel={submitLabel}
-          accentColor={accentColor}
-          formFooterBackLink={formFooterBackLink}
-          optionalComponent={optionalFooterComponent}
-        />
-      </form>
-    </FormProvider>
+    <>
+      <FormProvider {...methods}>
+        <form
+          action={action}
+          onSubmit={onSubmit ? handleSubmit(onSubmit) : undefined}
+          data-testid={testId}
+        >
+          {children}
+          <FormFooter
+            submitLabel={submitLabel}
+            accentColor={accentColor}
+            formFooterBackLink={formFooterBackLink}
+            optionalComponent={optionalFooterComponent}
+            hasCancelButton={hasCancelButton}
+          />
+        </form>
+      </FormProvider>
+    </>
   );
 };

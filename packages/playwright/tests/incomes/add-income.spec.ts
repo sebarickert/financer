@@ -63,13 +63,23 @@ test.describe('Add income', () => {
       targetTransactionBefore.dateObj.getTime() + MINUTE_IN_MS,
     );
 
-    await page.getByTestId('add-income').click();
-    await page.locator('#description').fill(newTransactionName);
-    await page.locator('#date').fill(formatDate(newTransactionDate));
-    await page.locator('#amount').fill(newTransactionAmountStr);
-    await page.locator('#toAccount').selectOption(targetAccountId);
+    await page.getByTestId('add-transaction-desktop').click();
 
-    await page.getByTestId('submit').click();
+    const drawer = page.getByTestId('add-transaction-drawer-desktop');
+
+    await drawer
+      .getByTestId('transactionTypeSwitcher')
+      .getByLabel('Expense', { exact: true })
+      .focus();
+
+    await page.keyboard.press('ArrowLeft');
+
+    await drawer.locator('#description').fill(newTransactionName);
+    await drawer.locator('#date').fill(formatDate(newTransactionDate));
+    await drawer.locator('#amount').fill(newTransactionAmountStr);
+    await drawer.locator('#toAccount').selectOption(targetAccountId);
+
+    await drawer.getByTestId('submit').click();
 
     await page.getByTestId('edit-income-button').waitFor();
 
@@ -102,13 +112,23 @@ test.describe('Add income', () => {
 
     const accountBefore = await getAccount(targetAccountId);
 
-    await page.getByTestId('add-income').click();
-    await page.locator('#description').fill(newTransactionName);
-    await page.locator('#date').fill(formatDate(newTransactionDate));
-    await page.locator('#amount').fill(newTransactionAmountStr);
-    await page.locator('#toAccount').selectOption(targetAccountId);
+    await page.getByTestId('add-transaction-desktop').click();
 
-    await page.getByTestId('submit').click();
+    const drawer = page.getByTestId('add-transaction-drawer-desktop');
+
+    await drawer
+      .getByTestId('transactionTypeSwitcher')
+      .getByLabel('Expense', { exact: true })
+      .focus();
+
+    await page.keyboard.press('ArrowLeft');
+
+    await drawer.locator('#description').fill(newTransactionName);
+    await drawer.locator('#date').fill(formatDate(newTransactionDate));
+    await drawer.locator('#amount').fill(newTransactionAmountStr);
+    await drawer.locator('#toAccount').selectOption(targetAccountId);
+
+    await drawer.getByTestId('submit').click();
 
     await page.getByTestId('edit-income-button').waitFor();
 
@@ -142,13 +162,23 @@ test.describe('Add income', () => {
 
     const accountBefore = await getAccount(targetAccountId);
 
-    await page.getByTestId('add-income').click();
-    await page.locator('#description').fill(newTransactionName);
-    await page.locator('#date').fill(formatDate(newTransactionDate));
-    await page.locator('#amount').fill(newTransactionAmountStr);
-    await page.locator('#toAccount').selectOption(targetAccountId);
+    await page.getByTestId('add-transaction-desktop').click();
 
-    await page.getByTestId('submit').click();
+    const drawer = page.getByTestId('add-transaction-drawer-desktop');
+
+    await drawer
+      .getByTestId('transactionTypeSwitcher')
+      .getByLabel('Expense', { exact: true })
+      .focus();
+
+    await page.keyboard.press('ArrowLeft');
+
+    await drawer.locator('#description').fill(newTransactionName);
+    await drawer.locator('#date').fill(formatDate(newTransactionDate));
+    await drawer.locator('#amount').fill(newTransactionAmountStr);
+    await drawer.locator('#toAccount').selectOption(targetAccountId);
+
+    await drawer.getByTestId('submit').click();
 
     await page.getByTestId('edit-income-button').waitFor();
 
@@ -176,18 +206,31 @@ test.describe('Add income', () => {
     date.setSeconds(0);
     date.setMilliseconds(0);
 
-    await page.getByTestId('add-income').click();
-    await page.locator('#description').fill(newTransactionName);
-    await page.locator('#date').fill(formatDate(date));
-    await page.locator('#amount').fill(newTransactionAmountStr);
-    await page.locator('#toAccount').selectOption(targetAccountId);
+    await page.getByTestId('add-transaction-desktop').click();
 
-    await page.getByTestId('submit').click();
+    const drawer = page.getByTestId('add-transaction-drawer-desktop');
+
+    await drawer
+      .getByTestId('transactionTypeSwitcher')
+      .getByLabel('Expense', { exact: true })
+      .focus();
+
+    await page.keyboard.press('ArrowLeft');
+
+    await drawer.locator('#description').fill(newTransactionName);
+    await drawer.locator('#date').fill(formatDate(date));
+    await drawer.locator('#amount').fill(newTransactionAmountStr);
+    await drawer.locator('#toAccount').selectOption(targetAccountId);
+
+    await drawer.getByTestId('submit').click();
 
     await page.getByText(newTransactionName).click();
     await page.getByTestId('edit-income-button').click();
 
-    const inputValue = await page.locator('#date').inputValue();
+    const inputValue = await page
+      .getByTestId('edit-income-form')
+      .locator('#date')
+      .inputValue();
     expect(date.toISOString()).toEqual(new Date(inputValue).toISOString());
   });
 });

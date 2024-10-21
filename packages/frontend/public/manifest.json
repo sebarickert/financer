@@ -30,21 +30,5 @@
       "sizes": "512x512",
       "purpose": "maskable"
     }
-  ],
-  "shortcuts": [
-    {
-      "name": "Add income",
-      "url": "/statistics/incomes/add",
-      "icons": [{ "src": "/android-icon-192x192.png", "sizes": "192x192" }]
-    },
-    {
-      "name": "Add expense",
-      "url": "/statistics/expenses/add",
-      "icons": [{ "src": "/android-icon-192x192.png", "sizes": "192x192" }]
-    },
-    {
-      "name": "Add transfer",
-      "url": "/statistics/transfers/add"
-    }
   ]
 }

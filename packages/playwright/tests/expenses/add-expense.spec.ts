@@ -63,13 +63,14 @@ test.describe('Add expense', () => {
       targetTransactionBefore.dateObj.getTime() + MINUTE_IN_MS,
     );
 
-    await page.getByTestId('add-expense').click();
-    await page.locator('#description').fill(newTransactionName);
-    await page.locator('#date').fill(formatDate(newTransactionDate));
-    await page.locator('#amount').fill(newTransactionAmountStr);
-    await page.locator('#fromAccount').selectOption(targetAccountId);
+    await page.getByTestId('add-transaction-desktop').click();
 
-    await page.getByTestId('submit').click();
+    const drawer = page.getByTestId('add-transaction-drawer-desktop');
+    await drawer.locator('#description').fill(newTransactionName);
+    await drawer.locator('#date').fill(formatDate(newTransactionDate));
+    await drawer.locator('#amount').fill(newTransactionAmountStr);
+    await drawer.locator('#fromAccount').selectOption(targetAccountId);
+    await drawer.getByTestId('submit').click();
 
     await page.getByTestId('edit-expense-button').waitFor();
 
@@ -103,13 +104,14 @@ test.describe('Add expense', () => {
 
     const accountBefore = await getAccount(targetAccountId);
 
-    await page.getByTestId('add-expense').click();
-    await page.locator('#description').fill(newTransactionName);
-    await page.locator('#date').fill(formatDate(newTransactionDate));
-    await page.locator('#amount').fill(newTransactionAmountStr);
-    await page.locator('#fromAccount').selectOption(targetAccountId);
+    await page.getByTestId('add-transaction-desktop').click();
 
-    await page.getByTestId('submit').click();
+    const drawer = page.getByTestId('add-transaction-drawer-desktop');
+    await drawer.locator('#description').fill(newTransactionName);
+    await drawer.locator('#date').fill(formatDate(newTransactionDate));
+    await drawer.locator('#amount').fill(newTransactionAmountStr);
+    await drawer.locator('#fromAccount').selectOption(targetAccountId);
+    await drawer.getByTestId('submit').click();
 
     await page.getByTestId('edit-expense-button').waitFor();
 
@@ -143,13 +145,14 @@ test.describe('Add expense', () => {
 
     const accountBefore = await getAccount(targetAccountId);
 
-    await page.getByTestId('add-expense').click();
-    await page.locator('#description').fill(newTransactionName);
-    await page.locator('#date').fill(formatDate(newTransactionDate));
-    await page.locator('#amount').fill(newTransactionAmountStr);
-    await page.locator('#fromAccount').selectOption(targetAccountId);
+    await page.getByTestId('add-transaction-desktop').click();
 
-    await page.getByTestId('submit').click();
+    const drawer = page.getByTestId('add-transaction-drawer-desktop');
+    await drawer.locator('#description').fill(newTransactionName);
+    await drawer.locator('#date').fill(formatDate(newTransactionDate));
+    await drawer.locator('#amount').fill(newTransactionAmountStr);
+    await drawer.locator('#fromAccount').selectOption(targetAccountId);
+    await drawer.getByTestId('submit').click();
 
     await page.getByTestId('edit-expense-button').waitFor();
 
@@ -178,18 +181,22 @@ test.describe('Add expense', () => {
     date.setSeconds(0);
     date.setMilliseconds(0);
 
-    await page.getByTestId('add-expense').click();
-    await page.locator('#description').fill(newTransactionName);
-    await page.locator('#date').fill(formatDate(date));
-    await page.locator('#amount').fill(newTransactionAmountStr);
-    await page.locator('#fromAccount').selectOption(targetAccountId);
+    await page.getByTestId('add-transaction-desktop').click();
 
-    await page.getByTestId('submit').click();
+    const drawer = page.getByTestId('add-transaction-drawer-desktop');
+    await drawer.locator('#description').fill(newTransactionName);
+    await drawer.locator('#date').fill(formatDate(date));
+    await drawer.locator('#amount').fill(newTransactionAmountStr);
+    await drawer.locator('#fromAccount').selectOption(targetAccountId);
+    await drawer.getByTestId('submit').click();
 
     await page.getByText(newTransactionName).click();
     await page.getByTestId('edit-expense-button').click();
 
-    const inputValue = await page.locator('#date').inputValue();
+    const inputValue = await page
+      .getByTestId('edit-expense-form')
+      .locator('#date')
+      .inputValue();
     expect(date.toISOString()).toEqual(new Date(inputValue).toISOString());
   });
 });

@@ -85,7 +85,7 @@ export const CategoryListingContainer: FC = async () => {
           <Link
             href={`${settingsPaths.categories}/add`}
             className="inline-flex items-center justify-center -mr-3 h-11 w-11"
-            testId="add-category-button"
+            testId="add-category-link"
           >
             <span className="sr-only">Add category</span>
             <Icon name="PlusIcon" />

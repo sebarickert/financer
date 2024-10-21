@@ -25,7 +25,7 @@ test.describe.parallel('Account creation', () => {
     await page.locator('#name').fill(newAccountName);
     await page.locator('#balance').fill(accountBalance);
     await page.locator('#type').selectOption({ label: accountType });
-    await page.getByTestId('submit').click();
+    await page.getByTestId('account-form').getByTestId('submit').click();
 
     await expect(page).toHaveURL(/\/accounts\/?$/);
 

@@ -39,10 +39,7 @@ export const Input = ({
 
   return (
     <div>
-      <label
-        htmlFor={id}
-        className="block text-xs tracking-tight text-black/75 uppercase font-medium"
-      >
+      <label htmlFor={id} className="block text-sm text-black">
         {children}
       </label>
       <div className="mt-1 rounded-md">

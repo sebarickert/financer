@@ -63,7 +63,7 @@ test.describe('Edit transaction category', () => {
         .textContent()) as string;
     }
 
-    await page.getByTestId('submit').click();
+    await page.getByTestId('category-form').getByTestId('submit').click();
 
     await page.getByRole('link', { name: newName, exact: true }).click();
     await page.getByTestId('edit-category').click();

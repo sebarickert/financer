@@ -1,5 +1,6 @@
 'use client';
 
+import clsx from 'clsx';
 import { FC, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -26,6 +27,7 @@ interface TransactionFormProps {
   hasToAccountField?: boolean;
   initialValues?: Partial<TransactionFormFields>;
   onSubmit: DefaultFormActionHandler;
+  testId?: string;
 }
 export interface TransactionFormFields {
   amount: number;
@@ -41,6 +43,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
   hasToAccountField,
   initialValues,
   onSubmit,
+  testId,
 }) => {
   const action = useFinancerFormState('transaction-form', onSubmit);
 
@@ -123,29 +126,37 @@ export const TransactionForm: FC<TransactionFormProps> = ({
       action={action}
       submitLabel={'Submit'}
       formFooterBackLink="/"
+      testId={testId ?? 'transaction-form'}
     >
       <section>
         <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
-          {hasFromAccountField && (
-            <Select
-              id="fromAccount"
-              options={accountOptions}
-              isRequired
-              placeholder="Select account"
-            >
-              From Account
-            </Select>
-          )}
-          {hasToAccountField && (
-            <Select
-              id="toAccount"
-              options={accountOptions}
-              isRequired
-              placeholder="Select account"
-            >
-              To Account
-            </Select>
-          )}
+          <div
+            className={clsx({
+              'max-sm:grid max-sm:grid-cols-2 max-sm:gap-x-4 sm:contents':
+                hasFromAccountField && hasToAccountField,
+            })}
+          >
+            {hasFromAccountField && (
+              <Select
+                id="fromAccount"
+                options={accountOptions}
+                isRequired
+                placeholder="Select Account"
+              >
+                From Account
+              </Select>
+            )}
+            {hasToAccountField && (
+              <Select
+                id="toAccount"
+                options={accountOptions}
+                isRequired
+                placeholder="Select Account"
+              >
+                To Account
+              </Select>
+            )}
+          </div>
           <Input id="amount" type="number" min={0.01} step={0.01} isRequired>
             Amount
           </Input>

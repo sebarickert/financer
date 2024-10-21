@@ -17,13 +17,22 @@ Financer is a simple financial tracker app that helps you track monthly expenses
   - [2. Add OAuth Tokens](#2-add-oauth-tokens)
 - [Start the Development Environment](#start-the-development-environment)
   - [1. Use the correct Node version](#1-use-the-correct-node-version)
-  - [2. Start Docker](#2-start-docker)
-  - [3. Start the App](#3-start-the-app)
+  - [2. Start the App](#2-start-the-app)
 - [Installing New Dependencies](#installing-new-dependencies)
   - [Frontend](#frontend)
   - [Backend](#backend)
 - [Production Tooling](#production-tooling)
   - [Update the Database version](#update-the-database-version)
+    - [1. Create a new backup from the database](#1-create-a-new-backup-from-the-database)
+    - [2. Check that the backup was successful](#2-check-that-the-backup-was-successful)
+    - [3. If the job status is Completed, delete the manual job](#3-if-the-job-status-is-completed-delete-the-manual-job)
+    - [4. Delete the existing PostgreSQL cluster](#4-delete-the-existing-postgresql-cluster)
+    - [5. Deploy a new PostgreSQL instance with the latest version, update image tag before applying](#5-deploy-a-new-postgresql-instance-with-the-latest-version-update-image-tag-before-applying)
+    - [6. Wait for the new PostgreSQL instance to be ready](#6-wait-for-the-new-postgresql-instance-to-be-ready)
+    - [7. List all backups in the /backup folder](#7-list-all-backups-in-the-backup-folder)
+    - [8. Restore the backup to the new PostgreSQL instance](#8-restore-the-backup-to-the-new-postgresql-instance)
+    - [9. Restart the web application deployment to refresh the DB connection](#9-restart-the-web-application-deployment-to-refresh-the-db-connection)
+- [Adding `TEST_ROLE` to Users (Development Only)](#adding-test_role-to-users-development-only)
 - [Authors](#authors)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -53,15 +62,15 @@ Follow this guide to quickly set up your local development environment.
 ### 1. Clone the Repository
 
 ```bash
-$ git clone git@github.com:sebarickert/financer.git
-$ cd financer
+git clone git@github.com:sebarickert/financer.git
+cd financer
 ```
 
 ### 2. Add OAuth Tokens
 
 ```bash
-$ cd backend
-$ cp .env .env.local
+cd backend
+cp .env .env.local
 ```
 
 Edit the `.env.local` file and add your `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET`.
@@ -71,20 +80,14 @@ Edit the `.env.local` file and add your `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SE
 ### 1. Use the correct Node version
 
 ```bash
-$ nvm use    # Install Node version (via nvm)
-$ npm ci     # Install dependencies
+nvm use    # Install Node version (via nvm)
+npm ci     # Install dependencies
 ```
 
-### 2. Start Docker
+### 2. Start the App
 
 ```bash
-$ ./bin/startDevDocker
-```
-
-### 3. Start the App
-
-```bash
-$ npm start
+npm start
 ```
 
 ## Installing New Dependencies
@@ -92,26 +95,26 @@ $ npm start
 ### Frontend
 
 ```bash
-$ npm -w frontend install DEPENDENCY-NAME
+npm -w frontend install DEPENDENCY-NAME
 ```
 
 ### Backend
 
 ```bash
-$ npm -w backend install DEPENDENCY-NAME
+npm -w backend install DEPENDENCY-NAME
 ```
 
 ## Production Tooling
 
 ### Update the Database version
 
-1. Create a new backup from the database
+#### 1. Create a new backup from the database
 
 ```bash
 kubectl create job --from=cronjob/postgres-backup postgres-backup-manual -n financer
 ```
 
-2. Check that the backup was successful
+#### 2. Check that the backup was successful
 
 ```bash
 kubectl get pods -n financer
@@ -124,31 +127,31 @@ NAME                          READY   STATUS      RESTARTS   AGE
 postgres-backup-manual-x2nt9  0/1     Completed   0          61s
 ```
 
-3. If the job status is Completed, delete the manual job
+#### 3. If the job status is Completed, delete the manual job
 
 ```bash
 kubectl delete job postgres-backup-manual -n financer
 ```
 
-4. Delete the existing PostgreSQL cluster
+#### 4. Delete the existing PostgreSQL cluster
 
 ```bash
 kubectl delete -f kubernetes/production.postgres-deployment.yaml
 ```
 
-5. Deploy a new PostgreSQL instance with the latest version, update image tag before applying
+#### 5. Deploy a new PostgreSQL instance with the latest version, update image tag before applying
 
 ```bash
 kubectl apply -f kubernetes/production.postgres-deployment.yaml
 ```
 
-6. Wait for the new PostgreSQL instance to be ready
+#### 6. Wait for the new PostgreSQL instance to be ready
 
 ```bash
 kubectl rollout status statefulset/postgres-deployment -n financer
 ```
 
-7. List all backups in the /backup folder
+#### 7. List all backups in the /backup folder
 
 ```bash
 kubectl run -i --tty --rm list-backups --image=busybox --restart=Never --namespace=financer --overrides='
@@ -182,7 +185,7 @@ kubectl run -i --tty --rm list-backups --image=busybox --restart=Never --namespa
 }'
 ```
 
-8. Restore the backup to the new PostgreSQL instance
+#### 8. Restore the backup to the new PostgreSQL instance
 
 Note: Please find the backup name from the list-backups output and use the backup that you created in step 1.
 
@@ -226,10 +229,18 @@ kubectl run -i --tty --rm postgres-restore --image=postgres:latest --restart=Nev
 }"
 ```
 
-9. Restart the web application deployment to refresh the DB connection
+#### 9. Restart the web application deployment to refresh the DB connection
 
 ```bash
 kubectl rollout restart deployment webapp-deployment -n financer
+```
+
+## Adding `TEST_ROLE` to Users (Development Only)
+
+For development purposes, you can assign the `TEST_ROLE` to all users by running the following command:
+
+```bash
+npm run setup:development-users
 ```
 
 ## Authors
