@@ -23,7 +23,10 @@ export const NavigationMobileActions = ({
         heading="Add Transaction"
         id={id}
       >
-        <TransactionFormSwitcher />
+        <TransactionFormSwitcher
+          typeSwitcherName="transactionTypeSwitcherMobile"
+          templateSwitcherName="templateTypeSwitcherMobile"
+        />
       </Drawer>
       <button
         type="button"

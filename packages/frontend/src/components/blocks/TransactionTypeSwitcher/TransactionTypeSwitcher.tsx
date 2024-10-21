@@ -9,6 +9,7 @@ type TransactionActionsProps = {
   className?: string;
   onChange(event: React.ChangeEvent<HTMLInputElement>): void;
   defaultChecked?: TransactionType;
+  name?: string;
 };
 
 const switcherItems = [
@@ -30,6 +31,7 @@ export const TransactionTypeSwitcher: FC<TransactionActionsProps> = ({
   className = '',
   onChange,
   defaultChecked = TransactionType.Expense,
+  name,
 }) => {
   return (
     <div className={clsx('', className)}>
@@ -39,7 +41,7 @@ export const TransactionTypeSwitcher: FC<TransactionActionsProps> = ({
             <TransactionTypeSwitcherItem
               {...switcherItem}
               onChange={onChange}
-              name="transactionTypeSwitcher"
+              name={name ?? 'transactionTypeSwitcher'}
               isChecked={defaultChecked === switcherItem.value}
             />
           </li>

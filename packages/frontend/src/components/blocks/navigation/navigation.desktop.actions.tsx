@@ -13,7 +13,10 @@ export const NavigationDesktopActions = (): JSX.Element => {
   return (
     <li>
       <Drawer heading="Add Transaction" id={id}>
-        <TransactionFormSwitcher />
+        <TransactionFormSwitcher
+          typeSwitcherName="transactionTypeSwitcherDesktop"
+          templateSwitcherName="templateTypeSwitcherDesktop"
+        />
       </Drawer>
       <button
         type="button"

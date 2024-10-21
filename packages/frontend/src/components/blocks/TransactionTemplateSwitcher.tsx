@@ -16,12 +16,14 @@ interface TransactionTemplateSwitcherProps {
   selectedTemplate?: string;
   templateType: TransactionType;
   onChange(event: React.ChangeEvent<HTMLFormElement>): void;
+  name?: string;
 }
 
 export const TransactionTemplateSwitcher = ({
   selectedTemplate,
   templateType,
   onChange,
+  name,
 }: TransactionTemplateSwitcherProps): JSX.Element | null => {
   const popoverRef = useRef<HTMLDivElement>(null);
   const templateSwitcherId = useId();
@@ -59,7 +61,7 @@ export const TransactionTemplateSwitcher = ({
           <section className="-mx-4">
             <RadioGroup>
               <Radio
-                name="templateSwitcher"
+                name={name ?? 'templateSwitcher'}
                 value={''}
                 isChecked={!selectedTemplate}
               >
@@ -67,7 +69,7 @@ export const TransactionTemplateSwitcher = ({
               </Radio>
               {targetTemplates.map(({ id, templateName }) => (
                 <Radio
-                  name="templateSwitcher"
+                  name={name ?? 'templateSwitcher'}
                   value={id}
                   key={id}
                   isChecked={id === selectedTemplate}
