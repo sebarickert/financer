@@ -15,7 +15,7 @@ type FormProps<FormValues extends FieldValues> = {
   accentColor?: ButtonAccentColor;
   formFooterBackLink?: string;
   methods: UseFormReturn<FormValues>;
-  id?: string;
+  testId?: string;
   optionalFooterComponent?: React.ReactNode;
   hasCancelButton?: boolean;
 } & (
@@ -36,7 +36,7 @@ export const Form = <T extends FieldValues>({
   accentColor = 'black',
   formFooterBackLink,
   optionalFooterComponent,
-  id,
+  testId,
   methods,
   action,
   hasCancelButton,
@@ -49,7 +49,7 @@ export const Form = <T extends FieldValues>({
         <form
           action={action}
           onSubmit={onSubmit ? handleSubmit(onSubmit) : undefined}
-          id={id}
+          data-testid={testId}
         >
           {children}
           <FormFooter

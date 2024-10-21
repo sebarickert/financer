@@ -19,7 +19,7 @@
     "test": "CI=true npm -w backend run test && CI=true npm -w frontend run test",
     "build": "./bin/buildApp",
     "e2e:test": "npm -w @local/playwright run test --",
-    "e2e:open": "npm -w @local/playwright run ui --",
+    "e2e:open": "TEST_SERVER_URL=http://localhost:3000 npm -w @local/playwright run ui --",
     "types:update": "npm -w backend run types:export && npm run types:copy && npm run types:generate",
     "types:copy": "cp packages/backend/api-spec.json packages/frontend/src/redux/schema/api-spec.json",
     "types:generate": "npm -w frontend run types:generate && npm -w @local/playwright run types:generate",

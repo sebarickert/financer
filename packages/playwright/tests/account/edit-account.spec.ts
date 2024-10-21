@@ -67,7 +67,7 @@ test.describe('Account editing', () => {
     await page.getByTestId('edit-account').click();
 
     await page.locator('#name').fill(newAccountName);
-    await page.getByTestId('submit').click();
+    await page.getByTestId('account-form').getByTestId('submit').click();
 
     await page.waitForURL(/\/accounts\/[a-zA-Z0-9-]+\/?$/);
     await page.goto('/accounts');
@@ -97,7 +97,7 @@ test.describe('Account editing', () => {
     await page.getByTestId('edit-account').click();
 
     await page.locator('#type').selectOption(newAccountType);
-    await page.getByTestId('submit').click();
+    await page.getByTestId('account-form').getByTestId('submit').click();
 
     await page.waitForURL(/\/accounts\/[a-zA-Z0-9-]+\/?$/);
 
@@ -134,7 +134,7 @@ test.describe('Account editing', () => {
           .replace(String.fromCharCode(8722), String.fromCharCode(45)),
       );
 
-    await page.getByTestId('submit').click();
+    await page.getByTestId('account-form').getByTestId('submit').click();
 
     await page.waitForURL(/\/accounts\/[a-zA-Z0-9-]+\/?$/);
     await page.goto('/accounts');
@@ -179,7 +179,7 @@ test.describe('Account editing', () => {
           .replace(String.fromCharCode(8722), String.fromCharCode(45)),
       );
 
-    await page.getByTestId('submit').click();
+    await page.getByTestId('account-form').getByTestId('submit').click();
 
     await page.waitForURL(/\/accounts\/[a-zA-Z0-9-]+\/?$/);
     await page.goto('/accounts');

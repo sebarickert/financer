@@ -45,7 +45,7 @@ test.describe('Transaction category form', () => {
 
     await page.locator('#parentCategoryId').selectOption(childCategoryName);
 
-    await page.getByTestId('submit').click();
+    await page.getByTestId('category-form').getByTestId('submit').click();
 
     const formErrors = page.getByTestId('toast-item');
     await expect(formErrors).toContainText('Submission failed');
