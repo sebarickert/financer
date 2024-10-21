@@ -18,7 +18,15 @@ const emptyFormValues = {
   categories: undefined,
 };
 
-export const TransactionFormSwitcher: FC = () => {
+type TransactionFormSwitcherProps = {
+  typeSwitcherName?: string;
+  templateSwitcherName?: string;
+};
+
+export const TransactionFormSwitcher: FC<TransactionFormSwitcherProps> = ({
+  typeSwitcherName,
+  templateSwitcherName,
+}) => {
   const [transactionType, setTransactionType] = useState<TransactionType>(
     TransactionType.Expense,
   );
@@ -67,10 +75,13 @@ export const TransactionFormSwitcher: FC = () => {
   const handleTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTransactionType(event.target.value as TransactionType);
     setTemplateId(undefined);
+    setTemplateFormValues(emptyFormValues);
   };
 
   const handleTemplateChange = (event: React.ChangeEvent<HTMLFormElement>) => {
-    setTemplateId(event.target.templateSwitcher.value);
+    setTemplateId(
+      event.target[templateSwitcherName ?? 'templateSwitcher'].value,
+    );
   };
 
   return (
@@ -79,11 +90,13 @@ export const TransactionFormSwitcher: FC = () => {
         <TransactionTypeSwitcher
           onChange={handleTypeChange}
           defaultChecked={transactionType}
+          name={typeSwitcherName}
         />
         <TransactionTemplateSwitcher
           selectedTemplate={templateId}
           templateType={transactionType}
           onChange={handleTemplateChange}
+          name={templateSwitcherName}
         />
       </div>
       <TransactionForm
