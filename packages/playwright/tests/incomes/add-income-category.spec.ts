@@ -16,9 +16,9 @@ test.describe('Add income with category', () => {
     await applyFixture('large');
 
     await page.goto('/');
-    await page.getByTestId('add-transaction-desktop').click();
+    await page.getByTestId('add-transaction').click();
 
-    const drawer = page.getByTestId('add-transaction-drawer-desktop');
+    const drawer = page.getByTestId('add-transaction-drawer');
 
     await drawer
       .getByTestId('transactionTypeSwitcher')
@@ -41,7 +41,7 @@ test.describe('Add income with category', () => {
     });
 
     await page
-      .getByTestId('add-transaction-drawer-desktop')
+      .getByTestId('add-transaction-drawer')
       .getByTestId('submit')
       .click();
 
@@ -86,7 +86,7 @@ test.describe('Add income with category', () => {
     await page.getByTestId(`${ids.transactionCategoriesForm}-submit`).click();
 
     await page
-      .getByTestId('add-transaction-drawer-desktop')
+      .getByTestId('add-transaction-drawer')
       .getByTestId('submit')
       .click();
 
