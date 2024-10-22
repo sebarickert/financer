@@ -26,10 +26,10 @@ export const NavigationCreateTransactionButton: FC<
         type="button"
         aria-label="Add Transaction"
         className={clsx(
-          'items-center justify-center theme-focus',
+          'items-center justify-center theme-focus theme-text-primary',
           'max-lg:flex max-lg:flex-col max-lg:h-full max-lg:w-full',
           'lg:inline-flex lg:gap-2 lg:py-3 lg:px-5 lg:rounded-md lg:border lg:border-transparent',
-          'lg:theme-button-secondary',
+          'lg:theme-button-primary',
         )}
         // @ts-expect-error popovertarget is not a valid prop
         popovertarget={id}
