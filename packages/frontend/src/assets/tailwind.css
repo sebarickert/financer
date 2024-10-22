@@ -97,10 +97,6 @@
     @apply bg-white dark:bg-gray-1000;
   }
 
-  .theme-bg-color-inverted {
-    @apply bg-gray-1000 dark:bg-white;
-  }
-
   .theme-bg-color-with-hover {
     @apply theme-bg-color duration-200 hover:bg-gray-500/[0.12] dark:hover:bg-gray-500/[0.16];
   }
@@ -121,10 +117,6 @@
     @apply text-gray-1000 dark:text-gray-100;
   }
 
-  .theme-text-primary-inverted {
-    @apply text-gray-100 dark:text-gray-1000;
-  }
-
   .theme-text-secondary {
     @apply text-gray-700 dark:text-gray-300;
   }
@@ -133,12 +125,8 @@
     @apply border-gray-200 dark:border-gray-800;
   }
 
-  .theme-divide-primary {
-    @apply divide-gray-200 dark:divide-gray-800;
-  }
-
   .theme-border-secondary {
-    @apply border-gray-300 dark:border-gray-800;
+    @apply border-gray-200 dark:border-gray-700;
   }
 
   .theme-backdrop {
@@ -157,16 +145,8 @@
     @apply focus:theme-focus-without-prefix;
   }
 
-  .theme-focus-inverted {
-    @apply focus:theme-focus-inverted-without-prefix;
-  }
-
   .theme-focus-without-prefix {
     @apply outline-none ring ring-blue-600 dark:ring-white;
-  }
-
-  .theme-focus-inverted-without-prefix {
-    @apply outline-none ring ring-white dark:ring-blue-600;
   }
 
   .theme-main-menu {

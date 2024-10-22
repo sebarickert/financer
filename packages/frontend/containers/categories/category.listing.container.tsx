@@ -3,8 +3,8 @@ import { FC } from 'react';
 import { settingsPaths } from '$constants/settings-paths';
 import { Icon } from '$elements/Icon';
 import { Link } from '$elements/link/link';
-import { LinkList } from '$elements/link-list/link-list';
-import { LinkListLink } from '$elements/link-list/link-list.link';
+import { LinkList } from '$elements/LinkList/LinkList';
+import { LinkListLink } from '$elements/LinkList/LinkListLink';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { CategoryService } from '$ssr/api/category.service';
 

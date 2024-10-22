@@ -1,8 +1,8 @@
 import { FC } from 'react';
 
 import { settingsPaths } from '$constants/settings-paths';
-import { LinkList } from '$elements/link-list/link-list';
-import { LinkListLink } from '$elements/link-list/link-list.link';
+import { LinkList } from '$elements/LinkList/LinkList';
+import { LinkListLink } from '$elements/LinkList/LinkListLink';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
 export const UserPreferences: FC = () => {
