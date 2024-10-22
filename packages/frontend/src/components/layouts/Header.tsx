@@ -12,7 +12,6 @@ export const Header: FC = () => {
     <header
       className={clsx(
         'theme-layer-color vt-name-[navigation] z-[100] pb-safe',
-        'theme-border-primary max-lg:border-t lg:border-b',
         'fixed left-0 right-0 max-lg:bottom-0 lg:top-0',
         'lg:py-4',
       )}
@@ -31,7 +30,7 @@ export const Header: FC = () => {
             width={48}
             height={48}
           />
-          <h2 className="text-xl font-extrabold tracking-tighter text-black uppercase">
+          <h2 className="text-xl font-semibold tracking-tight uppercase theme-text-primary">
             Financer
           </h2>
         </Link>
