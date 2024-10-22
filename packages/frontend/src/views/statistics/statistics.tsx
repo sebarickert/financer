@@ -2,8 +2,8 @@ import { FC } from 'react';
 
 import { MonthlySummaryGraph } from '$blocks/monthly-summary-graph/monthly-summary-graph';
 import { TransactionListingWithMonthlyPager } from '$blocks/transaction-listing-with-monthly-pager/transaction-listing.with.monthly-pager';
-import { LinkList } from '$elements/link-list/link-list';
-import { LinkListLink } from '$elements/link-list/link-list.link';
+import { LinkList } from '$elements/LinkList/LinkList';
+import { LinkListLink } from '$elements/LinkList/LinkListLink';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
 export const Statistics: FC = () => {
