@@ -16,7 +16,7 @@ export const NavigationCreateTransactionButton: FC<
 
   return (
     <li className={clsx(className)}>
-      <Drawer heading="Add Transaction" id={id}>
+      <Drawer heading="Add Transaction" id={id} testId="add-transaction-drawer">
         <TransactionFormSwitcher
           typeSwitcherName="transactionTypeSwitcher"
           templateSwitcherName="templateTypeSwitcher"
@@ -33,6 +33,7 @@ export const NavigationCreateTransactionButton: FC<
         )}
         // @ts-expect-error popovertarget is not a valid prop
         popovertarget={id}
+        data-testid="add-transaction"
       >
         <Icon name="PlusIcon" />
         <span className="max-lg:hidden">Transaction</span>

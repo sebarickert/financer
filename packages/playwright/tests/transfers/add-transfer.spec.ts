@@ -76,9 +76,9 @@ test.describe('Add transfer', () => {
       targetToAccountTransactionBefore.dateObj.getTime() + MINUTE_IN_MS,
     );
 
-    await page.getByTestId('add-transaction-desktop').click();
+    await page.getByTestId('add-transaction').click();
 
-    const drawer = page.getByTestId('add-transaction-drawer-desktop');
+    const drawer = page.getByTestId('add-transaction-drawer');
 
     await drawer
       .getByTestId('transactionTypeSwitcher')
@@ -145,9 +145,9 @@ test.describe('Add transfer', () => {
     const toAccountBefore = await getAccount(targetToAccountId);
     const fromAccountBefore = await getAccount(targetFromAccountId);
 
-    await page.getByTestId('add-transaction-desktop').click();
+    await page.getByTestId('add-transaction').click();
 
-    const drawer = page.getByTestId('add-transaction-drawer-desktop');
+    const drawer = page.getByTestId('add-transaction-drawer');
 
     await drawer
       .getByTestId('transactionTypeSwitcher')
@@ -212,9 +212,9 @@ test.describe('Add transfer', () => {
     const toAccountBefore = await getAccount(targetToAccountId);
     const fromAccountBefore = await getAccount(targetFromAccountId);
 
-    await page.getByTestId('add-transaction-desktop').click();
+    await page.getByTestId('add-transaction').click();
 
-    const drawer = page.getByTestId('add-transaction-drawer-desktop');
+    const drawer = page.getByTestId('add-transaction-drawer');
 
     await drawer
       .getByTestId('transactionTypeSwitcher')
@@ -255,9 +255,9 @@ test.describe('Add transfer', () => {
     date.setSeconds(0);
     date.setMilliseconds(0);
 
-    await page.getByTestId('add-transaction-desktop').click();
+    await page.getByTestId('add-transaction').click();
 
-    const drawer = page.getByTestId('add-transaction-drawer-desktop');
+    const drawer = page.getByTestId('add-transaction-drawer');
 
     await drawer
       .getByTestId('transactionTypeSwitcher')
