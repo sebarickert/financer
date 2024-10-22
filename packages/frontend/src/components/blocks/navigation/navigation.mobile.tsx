@@ -3,7 +3,7 @@
 import clsx from 'clsx';
 import { useState } from 'react';
 
-import { NavigationItem } from './navigation';
+import { NavigationItem } from './Navigation';
 import { NavigationMobileActions } from './navigation.mobile.actions';
 import { NavigationMobileItem } from './navigation.mobile.item';
 

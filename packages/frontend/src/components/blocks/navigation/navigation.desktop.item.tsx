@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { headers } from 'next/headers';
 import { FC } from 'react';
 
-import { NavigationItem } from './navigation';
+import { NavigationItem } from './Navigation';
 
 import { Icon } from '$elements/Icon';
 import { Link } from '$elements/link/link';

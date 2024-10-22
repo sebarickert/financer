@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 
-import { NavigationItem } from './navigation';
+import { NavigationItem } from './Navigation';
 
 import { Icon } from '$elements/Icon';
 import { Link } from '$elements/link/link';

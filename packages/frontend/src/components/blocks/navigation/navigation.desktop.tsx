@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 
-import { NavigationItem } from './navigation';
+import { NavigationItem } from './Navigation';
 import { NavigationDesktopActions } from './navigation.desktop.actions';
 import { NavigationDesktopItem } from './navigation.desktop.item';
 

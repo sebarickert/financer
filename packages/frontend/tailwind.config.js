@@ -1,21 +1,31 @@
+/** @type {import('tailwindcss').Config} */
+const { colors } = require("@carbon/colors");
 const defaultTheme = require("tailwindcss/defaultTheme");
-const colors = require("tailwindcss/colors");
-const colorPalette = require("./src/constants/colorPaletteRaw.json");
+
+const carbonColors = Object.keys(colors).reduce((acc, color) => {
+  if (Object.keys(colors[color]).length === 1) {
+    return { ...acc, [color]: Object.values(colors[color])[0] };
+  }
+
+  const palette = Object.keys(colors[color]).reduce((paletteAcc, stop) => {
+    const stopNumber = Number(`${stop}0`);
+    paletteAcc[stopNumber] = colors[color][stop];
+    return paletteAcc;
+  }, {});
+
+  return { ...acc, [color]: palette };
+}, {});
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./(src|app|containers)/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    colors: {
-      transparent: "transparent",
-      current: "currentColor",
-      black: colors.black,
-      white: colors.white,
-      ...colorPalette,
-    },
     extend: {
       fontFamily: {
         sans: ["Euclid Circular A", ...defaultTheme.fontFamily.sans],
+      },
+      colors: {
+        ...carbonColors,
       },
     },
   },
