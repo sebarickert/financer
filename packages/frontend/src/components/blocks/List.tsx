@@ -1,11 +1,10 @@
 import clsx from 'clsx';
 import { Children, FC } from 'react';
 
-import { Heading } from '$elements/heading/heading';
+import { Heading } from '$elements/Heading';
 
 interface ListProps {
   label?: string;
-  link?: string;
   children: React.ReactNode | React.ReactNode[];
   className?: string;
   testId?: string;
@@ -13,7 +12,6 @@ interface ListProps {
 
 export const List: FC<ListProps> = ({
   label,
-  link,
   children,
   className,
   testId: rawTestId,
@@ -22,17 +20,7 @@ export const List: FC<ListProps> = ({
 
   return (
     <section className={clsx(className)} data-testid={testId}>
-      {label && (
-        <Heading
-          className={'mb-2'}
-          ctaLabel={`View '${label}'`}
-          ctaUrl={link}
-          ctaEntityTitle={label}
-          testId={`${testId}-heading`}
-        >
-          {label}
-        </Heading>
-      )}
+      {label && <Heading testId={`${testId}-heading`}>{label}</Heading>}
       <ul className="space-y-0.5">
         {Children.map(children, (child) => {
           return (

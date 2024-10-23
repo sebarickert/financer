@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { FC } from 'react';
 
 import { usePageInfoContext } from '$context/pageInfoContext';
-import { Heading } from '$elements/heading/heading';
+import { Heading } from '$elements/Heading';
 import { Icon } from '$elements/Icon';
 import { Link } from '$elements/Link';
 import { useAppSelector } from '$store';

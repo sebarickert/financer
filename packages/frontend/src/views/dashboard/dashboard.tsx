@@ -1,7 +1,7 @@
 import { BalanceGraph } from '$blocks/balance-graph/balance-graph';
 import { DashboardStats } from '$blocks/dashboard-stats/dashboard.stats';
 import { TransactionListingContainer } from '$blocks/transaction-listing/transaction-listing.container';
-import { Heading } from '$elements/heading/heading';
+import { Heading } from '$elements/Heading';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
 export const Dashboard = (): JSX.Element => {
@@ -14,8 +14,8 @@ export const Dashboard = (): JSX.Element => {
           <BalanceGraph />
         </section>
         <section>
-          <Heading className="mb-4" ctaLabel="See all" ctaUrl="/statistics">
-            Recent activity
+          <Heading cta={{ label: 'See All', url: '/statistics' }}>
+            Recent Activity
           </Heading>
           <TransactionListingContainer
             isPagerHidden

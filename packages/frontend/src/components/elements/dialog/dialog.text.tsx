@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 
-import { Heading } from '../heading/heading';
+import { Heading } from '../Heading';
 import { Paragraph } from '../paragraph/paragraph';
 
 import { Icon, IconName } from '$elements/Icon';
