@@ -1,9 +1,6 @@
-import { TransactionListingItemProps } from './transaction-listing.item';
-
 import { TransactionDto, TransactionType } from '$api/generated/financerApi';
+import { TransactionListItemProps } from '$blocks/TransactionList/TransactionListItem';
 import { CategoryService } from '$ssr/api/category.service';
-import { formatCurrency } from '$utils/formatCurrency';
-import { formatDate } from '$utils/formatDate';
 import { getTransactionType } from '$utils/transaction/getTransactionType';
 
 type TransactionDtoForConvert = Omit<
@@ -24,7 +21,7 @@ const mapTransactionTypeToUrlPrefix: {
 
 export const parseRowFromTransaction = async (
   transaction: TransactionDtoForConvert,
-): Promise<TransactionListingItemProps> => {
+): Promise<TransactionListItemProps> => {
   const transactionType = getTransactionType(
     transaction.toAccount,
     transaction.fromAccount,
@@ -38,11 +35,11 @@ export const parseRowFromTransaction = async (
 
   return {
     transactionCategories: categoryNames.join(', '),
-    transactionAmount: formatCurrency(transaction.amount),
-    date: formatDate(new Date(transaction.date)),
-    label: transaction.description,
-    link: `/statistics/${mapTransactionTypeToUrlPrefix[transactionType]}/${transaction.id}`,
+    description: transaction.description,
+    url: `/statistics/${mapTransactionTypeToUrlPrefix[transactionType]}/${transaction.id}`,
     transactionType,
+    date: transaction.date,
+    amount: transaction.amount,
     id: transaction.id,
   };
 };

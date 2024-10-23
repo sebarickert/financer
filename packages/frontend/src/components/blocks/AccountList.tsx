@@ -62,7 +62,7 @@ export const AccountList: FC<AccountListProps> = ({
               )}
             >
               <span className="truncate">{name}</span>
-              <span className="text-lg font-medium text-right">
+              <span className="text-lg font-medium text-right whitespace-nowrap">
                 {formatCurrency(balance)}
               </span>
             </div>
