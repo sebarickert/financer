@@ -5,7 +5,7 @@ import { TransactionListingWithMonthlyPagerSummary } from './transaction-listing
 import { TransactionType } from '$api/generated/financerApi';
 import { Pager } from '$blocks/pager/pager';
 import { PagerService } from '$blocks/pager/pager.service';
-import { TransactionListingContainer } from '$blocks/transaction-listing/transaction-listing.container';
+import { TransactionList } from '$blocks/TransactionList/TransactionList';
 import { monthNames } from '$constants/months';
 import {
   TransactionListOptions,
@@ -54,7 +54,7 @@ export const TransactionListingWithMonthlyPager: FC<
           filterOptions={filterOptions}
         />
       )}
-      <TransactionListingContainer
+      <TransactionList
         filterOptions={filterOptions}
         className="mt-4"
         type={type}
