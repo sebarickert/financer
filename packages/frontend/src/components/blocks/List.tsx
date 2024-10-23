@@ -1,9 +1,9 @@
 import clsx from 'clsx';
 import { Children, FC } from 'react';
 
-import { Heading } from '../heading/heading';
+import { Heading } from '$elements/heading/heading';
 
-interface LinkListProps {
+interface ListProps {
   label?: string;
   link?: string;
   children: React.ReactNode | React.ReactNode[];
@@ -11,14 +11,14 @@ interface LinkListProps {
   testId?: string;
 }
 
-export const LinkList: FC<LinkListProps> = ({
+export const List: FC<ListProps> = ({
   label,
   link,
   children,
   className,
   testId: rawTestId,
 }) => {
-  const testId = rawTestId ?? 'link-list';
+  const testId = rawTestId ?? 'list';
 
   return (
     <section className={clsx(className)} data-testid={testId}>
@@ -38,7 +38,6 @@ export const LinkList: FC<LinkListProps> = ({
           return (
             child && (
               <li
-                key={`LinkListRow-${Math.random()}`}
                 data-testid={testId}
                 className={clsx(
                   'first:rounded-t-md last:rounded-b-md overflow-hidden',

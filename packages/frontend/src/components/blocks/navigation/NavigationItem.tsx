@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { FC } from 'react';
 
 import { Icon, IconName } from '$elements/Icon';
-import { Link } from '$elements/link/link';
+import { Link } from '$elements/Link';
 import { useIsActiveLink } from '$hooks/useIsActiveLink';
 
 export type NavigationItemProps = {

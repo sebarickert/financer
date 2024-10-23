@@ -10,7 +10,7 @@ import { TransactionListingWithMonthlyPager } from '$blocks/transaction-listing-
 import { accountTypeIconMapping } from '$constants/account/accountTypeMapping';
 import { AccountUpdateMarketValueContainer } from '$container/accounts/account.update-market-value.container';
 import { Icon, IconName } from '$elements/Icon';
-import { Link } from '$elements/link/link';
+import { Link } from '$elements/Link';
 import { LoaderSuspense } from '$elements/loader/loader-suspense';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { capitalize } from '$utils/capitalize';

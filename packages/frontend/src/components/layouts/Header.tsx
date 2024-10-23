@@ -5,7 +5,7 @@ import { FC } from 'react';
 import { Container } from './container/container';
 
 import { Navigation } from '$blocks/Navigation/Navigation';
-import { Link } from '$elements/link/link';
+import { Link } from '$elements/Link';
 
 export const Header: FC = () => {
   return (

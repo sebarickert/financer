@@ -1,9 +1,9 @@
 import { FC } from 'react';
 
 import { AccountType } from '$api/generated/financerApi';
+import { List } from '$blocks/List';
+import { ProminentLink } from '$blocks/ProminentLink';
 import { accountTypeIconMapping } from '$constants/account/accountTypeMapping';
-import { LinkList } from '$elements/LinkList/LinkList';
-import { LinkListLink } from '$elements/LinkList/LinkListLink';
 
 export interface AccountListingItem {
   accountType: string;
@@ -14,24 +14,24 @@ export interface AccountListingItem {
   id: string;
 }
 
-interface AccountsListProps {
+interface AccountListProps {
   label?: string;
   items: AccountListingItem[];
   className?: string;
 }
 
-export const AccountListing: FC<AccountsListProps> = ({
+export const AccountList: FC<AccountListProps> = ({
   label,
   items,
   className,
 }) => {
-  if (!items?.length) return null;
+  if (items.length === 0) return null;
 
   return (
-    <LinkList label={label} className={`${className}`} testId="account-list">
+    <List label={label} className={`${className}`} testId="account-list">
       {items.map(({ id, balanceAmount, label: rowLabel, link, type }) => {
         return (
-          <LinkListLink
+          <ProminentLink
             link={link ?? ''}
             icon={accountTypeIconMapping[type]}
             testId="account-row"
@@ -44,9 +44,9 @@ export const AccountListing: FC<AccountsListProps> = ({
                 {balanceAmount}
               </span>
             </span>
-          </LinkListLink>
+          </ProminentLink>
         );
       })}
-    </LinkList>
+    </List>
   );
 };
