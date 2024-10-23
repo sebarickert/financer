@@ -6,7 +6,7 @@ import {
   formatCurrency,
 } from '$utils/formatCurrency';
 
-const baseChartFontFamily = 'Euclid Circular A';
+const baseChartFontFamily = 'Inter var';
 
 const baseTextConfiguration = {
   size: 15,
