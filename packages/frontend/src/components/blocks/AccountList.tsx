@@ -3,6 +3,8 @@ import { FC } from 'react';
 
 import { AccountDto } from '$api/generated/financerApi';
 import { List } from '$blocks/List';
+import { accountTypeIconMapping } from '$constants/account/accountTypeMapping';
+import { Icon } from '$elements/Icon';
 import { Link } from '$elements/Link';
 import { formatCurrency } from '$utils/formatCurrency';
 
@@ -27,24 +29,43 @@ export const AccountList: FC<AccountListProps> = ({
   if (accounts.length === 0) return null;
 
   return (
-    <List label={label} className={clsx(className)} testId="account-list">
-      {accounts.map(({ id, balance, name }) => {
+    <List
+      label={label}
+      className={clsx(className)}
+      testId="account-list"
+      isHorizontal
+    >
+      {accounts.map(({ id, balance, name, type }) => {
         return (
           <Link
             href={`/accounts/${id}`}
             testId="account-row"
             key={id}
             className={clsx(
-              'relative px-4 py-5',
-              'grid grid-cols-[auto,1fr] items-center gap-2',
               'theme-layer-color-with-hover',
+              'py-5 px-4',
+              'flex items-center gap-4',
             )}
             transition="slideInFromRight"
           >
-            <span className="truncate">{name}</span>
-            <span className="text-lg font-medium text-right">
-              {formatCurrency(balance)}
-            </span>
+            <div
+              className={clsx(
+                'theme-layer-secondary-color rounded-xl h-11 w-11',
+                'inline-flex items-center justify-center shrink-0',
+              )}
+            >
+              <Icon name={accountTypeIconMapping[type]} />
+            </div>
+            <div
+              className={clsx(
+                'grid grid-cols-[auto,1fr] items-center gap-2 grow',
+              )}
+            >
+              <span className="truncate">{name}</span>
+              <span className="text-lg font-medium text-right">
+                {formatCurrency(balance)}
+              </span>
+            </div>
           </Link>
         );
       })}
