@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 
-import { Heading } from '$elements/heading/heading';
+import { Heading } from '$elements/Heading';
 import { Icon } from '$elements/Icon';
 import { Paragraph } from '$elements/paragraph/paragraph';
 
@@ -27,7 +27,7 @@ export const DrawerHeader = ({
     >
       {heading && (
         <>
-          <Heading className="col-[1] ">{heading}</Heading>
+          <Heading className="col-[1]">{heading}</Heading>
           {children && (
             <Paragraph className="row-[2] col-span-full">{children}</Paragraph>
           )}

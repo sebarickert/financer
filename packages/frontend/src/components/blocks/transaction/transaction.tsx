@@ -9,7 +9,7 @@ import {
 import { BalanceDisplay } from '$blocks/balance-display/balance-display';
 import { DetailsList } from '$blocks/details-list/details-list';
 import { DetailsItem } from '$blocks/details-list/details-list.item';
-import { Heading } from '$elements/heading/heading';
+import { Heading } from '$elements/Heading';
 import { Icon, IconName } from '$elements/Icon';
 import { Link } from '$elements/Link';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
@@ -147,7 +147,7 @@ export const Transaction: FC<TransactionProps> = async ({
         />
         {categoryDetails.length > 0 && (
           <section className="mt-8">
-            <Heading className="mb-4">Categories</Heading>
+            <Heading>Categories</Heading>
             <div className="grid border-t border-b divide-y divide-gray-dark border-gray-dark">
               {categoryDetails.map((category) => (
                 <DetailsList

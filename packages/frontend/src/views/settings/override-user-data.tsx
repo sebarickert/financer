@@ -8,7 +8,7 @@ import { DetailsList } from '$blocks/details-list/details-list';
 import { ToastMessageTypes } from '$blocks/toast/toast';
 import { settingsPaths } from '$constants/settings-paths';
 import { Button } from '$elements/button/button';
-import { Heading } from '$elements/heading/heading';
+import { Heading } from '$elements/Heading';
 import { IconName } from '$elements/Icon';
 import {
   DefaultFormActionHandler,
