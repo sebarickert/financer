@@ -6,7 +6,7 @@ import { FC } from 'react';
 import { usePageInfoContext } from '$context/pageInfoContext';
 import { Heading } from '$elements/heading/heading';
 import { Icon } from '$elements/Icon';
-import { Link } from '$elements/link/link';
+import { Link } from '$elements/Link';
 import { useAppSelector } from '$store';
 
 type HeaderProps = {

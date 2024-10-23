@@ -4,11 +4,11 @@ import {
   TransactionTemplateDto,
   TransactionTemplateType,
 } from '$api/generated/financerApi';
+import { List } from '$blocks/List';
+import { ProminentLink } from '$blocks/ProminentLink';
 import { settingsPaths } from '$constants/settings-paths';
 import { Icon } from '$elements/Icon';
-import { Link } from '$elements/link/link';
-import { LinkList } from '$elements/LinkList/LinkList';
-import { LinkListLink } from '$elements/LinkList/LinkListLink';
+import { Link } from '$elements/Link';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
 interface TemplateListingProps {
@@ -49,17 +49,17 @@ export const TemplateListing: FC<TemplateListingProps> = ({ templates }) => {
       />
       <section className="grid gap-8">
         {[...filteredTemplates.entries()].map(([label, items]) => (
-          <LinkList label={getLabel(label)} key={label}>
+          <List label={getLabel(label)} key={label}>
             {items.map(({ templateName, id }) => (
-              <LinkListLink
+              <ProminentLink
                 icon={'BoltIcon'}
                 key={id}
                 link={`${settingsPaths.templates}/${id}/edit`}
               >
                 {templateName}
-              </LinkListLink>
+              </ProminentLink>
             ))}
-          </LinkList>
+          </List>
         ))}
       </section>
     </>

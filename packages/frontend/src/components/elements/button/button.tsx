@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { HTMLAttributes } from 'react';
 
-import { Link } from '$elements/link/link';
+import { Link } from '$elements/Link';
 import { isExternalLink } from '$utils/isExternalLink';
 import { TransitionType } from '$utils/transitionAnimations';
 

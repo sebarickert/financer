@@ -2,11 +2,11 @@ import { FC } from 'react';
 
 import { AccountType } from '$api/generated/financerApi';
 import {
-  AccountListing,
+  AccountList,
   AccountListingItem,
-} from '$blocks/account-listing/accounts-listing';
+} from '$blocks/AccountList/AccountList';
 import { Icon } from '$elements/Icon';
-import { Link } from '$elements/link/link';
+import { Link } from '$elements/Link';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { AccountService } from '$ssr/api/account.service';
 import { formatCurrency } from '$utils/formatCurrency';
@@ -66,15 +66,9 @@ export const AccountListingContainer: FC = async () => {
         }
       />
       <section className="grid gap-8">
-        <AccountListing label="Savings" items={groupedAccounts.savings} />
-        <AccountListing
-          label="Investments"
-          items={groupedAccounts.investments}
-        />
-        <AccountListing
-          label="Credits and Loans"
-          items={groupedAccounts.loans}
-        />
+        <AccountList label="Savings" items={groupedAccounts.savings} />
+        <AccountList label="Investments" items={groupedAccounts.investments} />
+        <AccountList label="Credits and Loans" items={groupedAccounts.loans} />
       </section>
     </>
   );

@@ -1,7 +1,7 @@
 import { clsx } from 'clsx';
 import { ReactNode } from 'react';
 
-import { Link } from '$elements/link/link';
+import { Link } from '$elements/Link';
 
 type HeadingVariants = 'h1' | 'h2' | 'h3' | 'h4';
 

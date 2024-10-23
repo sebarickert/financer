@@ -1,9 +1,9 @@
 import { FC } from 'react';
 
+import { List } from '$blocks/List';
 import { MonthlySummaryGraph } from '$blocks/monthly-summary-graph/monthly-summary-graph';
+import { ProminentLink } from '$blocks/ProminentLink';
 import { TransactionListingWithMonthlyPager } from '$blocks/transaction-listing-with-monthly-pager/transaction-listing.with.monthly-pager';
-import { LinkList } from '$elements/LinkList/LinkList';
-import { LinkListLink } from '$elements/LinkList/LinkListLink';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
 export const Statistics: FC = () => {
@@ -12,17 +12,20 @@ export const Statistics: FC = () => {
       <UpdatePageInfo />
       <MonthlySummaryGraph className="mb-6" />
       <TransactionListingWithMonthlyPager isSummaryVisible />
-      <LinkList className="mt-8" isVertical>
-        <LinkListLink link="/statistics/incomes" icon={'ArrowDownTrayIcon'}>
+      <List className="mt-8">
+        <ProminentLink link="/statistics/incomes" icon={'ArrowDownTrayIcon'}>
           Incomes
-        </LinkListLink>
-        <LinkListLink link="/statistics/expenses" icon={'ArrowUpTrayIcon'}>
+        </ProminentLink>
+        <ProminentLink link="/statistics/expenses" icon={'ArrowUpTrayIcon'}>
           Expenses
-        </LinkListLink>
-        <LinkListLink link="/statistics/transfers" icon={'ArrowsRightLeftIcon'}>
+        </ProminentLink>
+        <ProminentLink
+          link="/statistics/transfers"
+          icon={'ArrowsRightLeftIcon'}
+        >
           Transfers
-        </LinkListLink>
-      </LinkList>
+        </ProminentLink>
+      </List>
     </>
   );
 };

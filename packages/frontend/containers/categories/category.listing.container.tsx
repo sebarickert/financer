@@ -1,10 +1,10 @@
 import { FC } from 'react';
 
+import { List } from '$blocks/List';
+import { ProminentLink } from '$blocks/ProminentLink';
 import { settingsPaths } from '$constants/settings-paths';
 import { Icon } from '$elements/Icon';
-import { Link } from '$elements/link/link';
-import { LinkList } from '$elements/LinkList/LinkList';
-import { LinkListLink } from '$elements/LinkList/LinkListLink';
+import { Link } from '$elements/Link';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { CategoryService } from '$ssr/api/category.service';
 
@@ -94,22 +94,18 @@ export const CategoryListingContainer: FC = async () => {
       />
       <section className="grid gap-8">
         {categoryRows.map(({ label: parentLabel, items, link: parentLink }) => (
-          <LinkList
-            key={parentLabel}
-            label={parentLabel}
-            testId="category-list"
-          >
+          <List key={parentLabel} label={parentLabel} testId="category-list">
             {parentLink && (
-              <LinkListLink link={parentLink} icon={'TagIcon'}>
+              <ProminentLink link={parentLink} icon={'TagIcon'}>
                 {parentLabel}
-              </LinkListLink>
+              </ProminentLink>
             )}
             {items.map(({ id, link, label }) => (
-              <LinkListLink key={id} link={link} icon={'TagIcon'}>
+              <ProminentLink key={id} link={link} icon={'TagIcon'}>
                 {label}
-              </LinkListLink>
+              </ProminentLink>
             ))}
-          </LinkList>
+          </List>
         ))}
       </section>
     </>

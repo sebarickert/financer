@@ -2,7 +2,7 @@ import clsx from 'clsx';
 
 import { TransactionType } from '$api/generated/financerApi';
 import { IconName, Icon } from '$elements/Icon';
-import { Link } from '$elements/link/link';
+import { Link } from '$elements/Link';
 
 export interface TransactionListingItemProps {
   transactionCategories?: string;

@@ -7,7 +7,7 @@ import Image from 'next/image';
 import logo from '$assets/logo.svg';
 import { Button } from '$elements/button/button';
 import { Heading } from '$elements/heading/heading';
-import { Link } from '$elements/link/link';
+import { Link } from '$elements/Link';
 import { Container } from '$layouts/container/container';
 
 interface ErrorPageProps {

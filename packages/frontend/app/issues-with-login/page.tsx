@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 
-import { Link } from '$elements/link/link';
+import { Link } from '$elements/Link';
 
 export const metadata: Metadata = {
   title: 'Issues with login',
