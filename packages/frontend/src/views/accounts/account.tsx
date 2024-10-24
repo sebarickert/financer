@@ -3,7 +3,7 @@ import { FC, useMemo } from 'react';
 import { AccountBalanceHistoryChart } from './account.balance-history-chart';
 
 import { AccountDto, AccountType } from '$api/generated/financerApi';
-import { BalanceDisplay } from '$blocks/balance-display/balance-display';
+import { BalanceDisplay } from '$blocks/BalanceDisplay';
 import { DetailsList } from '$blocks/details-list/details-list';
 import { DetailsItem } from '$blocks/details-list/details-list.item';
 import { TransactionListWithMonthlyPager } from '$blocks/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
