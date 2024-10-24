@@ -5,22 +5,23 @@ import { FC } from 'react';
 
 import { PagerOptions } from './pager.service';
 
+import { Heading } from '$elements/Heading';
 import { Icon } from '$elements/Icon';
 
-interface PagerProps {
+type PagerProps = {
   className?: string;
   pagerOptions: PagerOptions;
   children?: string;
   isStatusHidden?: boolean;
-}
+};
 
-interface PagerButtonProps {
+type PagerButtonProps = {
   handleClick(): void;
   children: string;
   isNext?: boolean;
   className?: string;
   isDisabled?: boolean;
-}
+};
 
 const PagerButton: FC<PagerButtonProps> = ({
   handleClick,
@@ -32,20 +33,18 @@ const PagerButton: FC<PagerButtonProps> = ({
   return (
     <button
       className={clsx(
-        'h-11 w-11 inline-flex justify-center items-center group disabled:hover:cursor-not-allowed',
-        {
-          [className]: true,
-        },
+        'h-11 w-11',
+        'theme-focus theme-layer-color-with-hover theme-text-primary',
+        'inline-flex justify-center items-center',
+        'disabled:pointer-events-none disabled:opacity-50',
+        className,
       )}
       onClick={() => handleClick()}
       disabled={isDisabled}
       title={children}
     >
       <span className="sr-only">{children}</span>
-      <Icon
-        name={isNext ? 'ChevronRightIcon' : 'ChevronLeftIcon'}
-        className="stroke-black group-disabled:opacity-50"
-      />
+      <Icon name={isNext ? 'ChevronRightIcon' : 'ChevronLeftIcon'} />
     </button>
   );
 };
@@ -58,22 +57,26 @@ export const Pager: FC<PagerProps> = ({
 }) => {
   const { nextPage, previousPage, pageCount, currentPage } = pagerOptions;
   return (
-    <section
-      className={clsx({
-        [className]: true,
+    <div
+      className={clsx('flex items-end', className, {
+        'justify-between': children,
+        'justify-center': !children,
       })}
     >
-      <div className="grid grid-cols-[auto,1fr,auto] gap-2 items-center text-center">
+      {children && (
+        <Heading className="text-center" noMargin>
+          {children}
+        </Heading>
+      )}
+      <div className={clsx('inline-flex justify-center items-center gap-2')}>
         <PagerButton
           handleClick={previousPage.load}
           isDisabled={!previousPage.isAvailable}
-          className="-ml-4"
         >
           Previous page
         </PagerButton>
-        {children && <p>{children}</p>}
         {!isStatusHidden && currentPage && pageCount && (
-          <p className="mx-4 font-medium tracking-tight text-charcoal">
+          <p className="mx-4 font-medium theme-text-primary">
             <span className="sr-only">
               Current page: {currentPage} of {pageCount}
             </span>
@@ -86,11 +89,10 @@ export const Pager: FC<PagerProps> = ({
           isDisabled={!nextPage.isAvailable}
           handleClick={nextPage.load}
           isNext
-          className="col-[3] -mr-4"
         >
           Next page
         </PagerButton>
       </div>
-    </section>
+    </div>
   );
 };
