@@ -1,5 +1,6 @@
 'use client';
 
+import clsx from 'clsx';
 import { ChangeEvent, useCallback, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -17,15 +18,15 @@ import {
 import { addToastMessage } from '$reducer/notifications.reducer';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
-interface OverrideUserDataProps {
-  onOverrideData: DefaultFormActionHandler;
+interface OverwriteUserDataProps {
+  onOverwriteData: DefaultFormActionHandler;
 }
 
 const formName = 'override-user-data';
 
 export const OverrideUserData = ({
-  onOverrideData,
-}: OverrideUserDataProps): JSX.Element => {
+  onOverwriteData,
+}: OverwriteUserDataProps): JSX.Element => {
   const dispatch = useDispatch();
 
   const successHandler = useCallback(() => {
@@ -38,7 +39,11 @@ export const OverrideUserData = ({
     );
   }, [dispatch]);
 
-  const action = useFinancerFormState(formName, onOverrideData, successHandler);
+  const action = useFinancerFormState(
+    formName,
+    onOverwriteData,
+    successHandler,
+  );
 
   const [uploadedUserData, setUploadedUserData] =
     useState<UserDataImportDto | null>(null);
@@ -112,12 +117,12 @@ export const OverrideUserData = ({
     return [
       {
         icon: 'InformationCircleIcon' as IconName,
-        label: 'Account count',
+        label: 'Account Count',
         description: overrideAccountCount ?? '-',
       },
       {
         icon: 'InformationCircleIcon' as IconName,
-        label: 'Transaction count',
+        label: 'Transaction Count',
         description: overrideTransactionCount ?? '-',
       },
     ];
@@ -129,14 +134,18 @@ export const OverrideUserData = ({
   return (
     <>
       <UpdatePageInfo backLink={settingsPaths.default} />
-      <div className="mb-8">
+      <div className="mb-8 theme-text-primary">
         <label
           htmlFor="selectFiles"
-          className="inline-flex items-center justify-center w-full px-6 py-3 text-base font-medium tracking-tight text-white transition duration-150 ease-in-out rounded-md cursor-pointer sm:w-auto focus:ring-2 focus:ring-offset-2 focus:outline-none hover:opacity-75 focus:opacity-75 bg-charcoal focus:ring-charcoal"
+          className={clsx(
+            'focus-within:theme-focus-without-prefix theme-button-secondary',
+            'px-6 py-3 rounded-md',
+            'inline-flex items-center justify-center w-full cursor-pointer sm:w-auto',
+          )}
         >
           Choose file
           <input
-            className="hidden"
+            className="sr-only"
             type="file"
             id="selectFiles"
             onChange={handleFileChange}
@@ -146,11 +155,13 @@ export const OverrideUserData = ({
         <span className="ml-2">{overrideFilename ?? 'No file selected'}</span>
       </div>
       <section>
-        <Heading>Override data details</Heading>
-        <DetailsList items={overrideDetails} className="mt-4" />
+        <Heading>Overwrite Data Details</Heading>
+        <div className="p-6 theme-layer-color">
+          <DetailsList items={overrideDetails} />
+        </div>
       </section>
       <Button onClick={handleSubmit} className="mt-12">
-        Override my data
+        Overwrite My Data
       </Button>
     </>
   );

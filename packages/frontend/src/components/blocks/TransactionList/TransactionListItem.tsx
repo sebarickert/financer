@@ -59,7 +59,7 @@ export const TransactionListItem: FC<TransactionListItemProps> = ({
           <span
             className={clsx(
               'inline-flex justify-center items-center translate-y-1/4 translate-x-1/4',
-              'w-6 h-6 text-white rounded-full theme-brand-color',
+              'w-6 h-6 text-white rounded-full bg-blue-600',
               'absolute bottom-0 right-0',
             )}
           >

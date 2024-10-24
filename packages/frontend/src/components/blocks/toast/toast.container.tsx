@@ -15,11 +15,11 @@ export const ToastContainer = memo(
   ({ className = '' }: ToastContainerProps): JSX.Element | null => {
     const { toastMessages } = useAppSelector((state) => state.notification);
 
-    if (!toastMessages.length) return null;
+    if (toastMessages.length === 0) return null;
 
     return (
       <div className={clsx('', { [className]: true })} data-testid="toast">
-        <ul className="space-y-4">
+        <ul className="space-y-4" aria-live="polite">
           {toastMessages.map((toast) => (
             <li key={toast.id}>
               <Toast {...toast} />

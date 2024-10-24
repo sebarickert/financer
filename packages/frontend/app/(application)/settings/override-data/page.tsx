@@ -5,12 +5,12 @@ import { OverrideUserDataContainer } from '$container/settings/override-user-dat
 import { Layout } from '$layouts/Layout';
 
 export const metadata: Metadata = {
-  title: 'Override User Data (DANGER ZONE)',
+  title: 'Overwrite User Data (DANGER ZONE)',
 };
 
 const OverrideUserDataPage: FC = () => {
   return (
-    <Layout title="Override User Data (DANGER ZONE)">
+    <Layout title="Overwrite User Data (DANGER ZONE)">
       <OverrideUserDataContainer />
     </Layout>
   );
