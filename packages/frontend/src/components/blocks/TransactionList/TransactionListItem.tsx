@@ -37,6 +37,8 @@ export const TransactionListItem: FC<TransactionListItemProps> = ({
   const isIncome = transactionType === 'INCOME';
   const isExpense = transactionType === 'EXPENSE';
 
+  const isRecurring = false;
+
   return (
     <Link
       href={url}
@@ -51,7 +53,7 @@ export const TransactionListItem: FC<TransactionListItemProps> = ({
     >
       <div
         className={clsx(
-          'rounded-xl h-11 w-11',
+          'relative rounded-xl h-11 w-11',
           'inline-flex items-center justify-center shrink-0',
           { 'bg-green-400/15': isIncome },
           { 'bg-red-400/15': isExpense },
@@ -59,6 +61,17 @@ export const TransactionListItem: FC<TransactionListItemProps> = ({
         )}
       >
         <Icon name={iconTypeMapping[transactionType]} />
+        {isRecurring && (
+          <span
+            className={clsx(
+              'inline-flex justify-center items-center translate-y-1/4 translate-x-1/4',
+              'w-6 h-6 text-white rounded-full theme-brand-color',
+              'absolute bottom-0 right-0',
+            )}
+          >
+            <Icon name="ArrowPathIcon" className="w-4 h-4" />
+          </span>
+        )}
       </div>
       <div
         className={clsx('grid grid-cols-[auto,1fr] items-center gap-2 grow')}
