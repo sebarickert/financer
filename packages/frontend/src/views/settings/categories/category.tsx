@@ -12,7 +12,7 @@ import { TransactionListWithMonthlyPager } from '$blocks/TransactionListWithMont
 import { settingsPaths } from '$constants/settings-paths';
 import { Icon, IconName } from '$elements/Icon';
 import { Link } from '$elements/Link';
-import { Container } from '$layouts/container/container';
+import { Container } from '$layouts/Container';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { capitalize } from '$utils/capitalize';
 import { parseParentCategoryPath } from 'src/services/TransactionCategoriesService';
