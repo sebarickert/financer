@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import { MonthlySummaryGraph } from '$blocks/monthly-summary-graph/monthly-summary-graph';
-import { TransactionListingWithMonthlyPager } from '$blocks/transaction-listing-with-monthly-pager/transaction-listing.with.monthly-pager';
+import { TransactionListWithMonthlyPager } from '$blocks/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
 export const Statistics: FC = () => {
@@ -9,7 +9,7 @@ export const Statistics: FC = () => {
     <>
       <UpdatePageInfo />
       <MonthlySummaryGraph className="mb-6" />
-      <TransactionListingWithMonthlyPager isSummaryVisible />
+      <TransactionListWithMonthlyPager isSummaryVisible />
     </>
   );
 };

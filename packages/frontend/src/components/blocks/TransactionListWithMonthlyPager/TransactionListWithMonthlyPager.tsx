@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { TransactionListingWithMonthlyPagerSummary } from './transaction-listing.with.monthly-pager.summary';
+import { TransactionListWithMonthlySummary } from './TransactionListWithMonthlySummary';
 
 import { TransactionType } from '$api/generated/financerApi';
 import { Pager } from '$blocks/pager/pager';
@@ -12,14 +12,14 @@ import {
   TransactionService,
 } from '$ssr/api/transaction.service';
 
-interface TransactionListingWithMonthlyPagerProps {
+type TransactionListingWithMonthlyPagerProps = {
   className?: string;
   isSummaryVisible?: boolean;
   filterOptions?: TransactionListOptions;
   type?: TransactionType | null;
-}
+};
 
-export const TransactionListingWithMonthlyPager: FC<
+export const TransactionListWithMonthlyPager: FC<
   TransactionListingWithMonthlyPagerProps
 > = async ({
   className = '',
@@ -50,13 +50,11 @@ export const TransactionListingWithMonthlyPager: FC<
         {pagerLabel}
       </Pager>
       {isSummaryVisible && (
-        <TransactionListingWithMonthlyPagerSummary
-          filterOptions={filterOptions}
-        />
+        <TransactionListWithMonthlySummary filterOptions={filterOptions} />
       )}
       <TransactionList
         filterOptions={filterOptions}
-        className="mt-4"
+        className="mt-2"
         type={type}
       />
     </section>

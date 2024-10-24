@@ -34,5 +34,6 @@ module.exports = {
     require("tailwindcss-safe-area"),
     require("@tailwindcss/typography"),
     require("tailwindcss-view-transitions"),
+    require("@tailwindcss/container-queries"),
   ],
 };

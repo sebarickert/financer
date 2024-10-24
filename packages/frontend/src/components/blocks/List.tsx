@@ -8,7 +8,7 @@ type ListProps = {
   children: React.ReactNode | React.ReactNode[];
   className?: string;
   testId?: string;
-  isHorizontal?: boolean;
+  columns?: 1 | 2 | 3;
 };
 
 export const List: FC<ListProps> = ({
@@ -16,15 +16,19 @@ export const List: FC<ListProps> = ({
   children,
   className,
   testId: rawTestId,
-  isHorizontal,
+  columns = 1,
 }) => {
   const testId = rawTestId ?? 'list';
-  const childrenCount = Children.count(children);
 
   return (
     <section className={clsx(className)} data-testid={testId}>
       {label && <Heading testId={`${testId}-heading`}>{label}</Heading>}
-      <ul className={clsx('grid gap-1', { ['lg:grid-cols-2']: isHorizontal })}>
+      <ul
+        className={clsx('grid gap-1', {
+          'lg:grid-cols-2': columns === 2,
+          'lg:grid-cols-3': columns === 3,
+        })}
+      >
         {Children.map(children, (child) => {
           return (
             child && (
@@ -32,24 +36,6 @@ export const List: FC<ListProps> = ({
                 data-testid={testId}
                 className={clsx(
                   'focus-within:theme-focus-without-prefix focus-within:z-10 focus-within:relative overflow-hidden',
-                  {
-                    ['first:rounded-t-md last:rounded-b-md']: !isHorizontal,
-                    ['max-lg:first:rounded-t-md max-lg:last:rounded-b-md']:
-                      isHorizontal,
-                    ['rounded-md']: isHorizontal && childrenCount === 1,
-                    ['lg:first:rounded-s-md lg:last:rounded-e-md']:
-                      isHorizontal && childrenCount === 2,
-                    ['lg:first:rounded-tl-md lg:[&:nth-child(2)]:rounded-tr-md']:
-                      isHorizontal && childrenCount >= 2,
-                    ['lg:[&:nth-last-child(2)]:rounded-bl-md lg:last:rounded-br-md']:
-                      isHorizontal &&
-                      childrenCount > 2 &&
-                      childrenCount % 2 === 0,
-                    ['lg:last:rounded-bl-md']:
-                      isHorizontal &&
-                      childrenCount > 2 &&
-                      childrenCount % 2 !== 0,
-                  },
                 )}
               >
                 {child}

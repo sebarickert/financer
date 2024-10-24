@@ -8,7 +8,7 @@ import {
 } from '$api/generated/financerApi';
 import { DetailsList } from '$blocks/details-list/details-list';
 import { DetailsItem } from '$blocks/details-list/details-list.item';
-import { TransactionListingWithMonthlyPager } from '$blocks/transaction-listing-with-monthly-pager/transaction-listing.with.monthly-pager';
+import { TransactionListWithMonthlyPager } from '$blocks/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
 import { settingsPaths } from '$constants/settings-paths';
 import { Icon, IconName } from '$elements/Icon';
 import { Link } from '$elements/Link';
@@ -94,7 +94,7 @@ export const Category: FC<CategoryProps> = ({
           category={category}
         />
 
-        <TransactionListingWithMonthlyPager
+        <TransactionListWithMonthlyPager
           className="mt-6"
           filterOptions={{
             parentTransactionCategory: parentTransactionCategoryId,

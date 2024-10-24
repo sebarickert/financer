@@ -6,7 +6,7 @@ import { AccountDto, AccountType } from '$api/generated/financerApi';
 import { BalanceDisplay } from '$blocks/balance-display/balance-display';
 import { DetailsList } from '$blocks/details-list/details-list';
 import { DetailsItem } from '$blocks/details-list/details-list.item';
-import { TransactionListingWithMonthlyPager } from '$blocks/transaction-listing-with-monthly-pager/transaction-listing.with.monthly-pager';
+import { TransactionListWithMonthlyPager } from '$blocks/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
 import { accountTypeIconMapping } from '$constants/account/accountTypeMapping';
 import { AccountUpdateMarketValueContainer } from '$container/accounts/account.update-market-value.container';
 import { Icon, IconName } from '$elements/Icon';
@@ -72,7 +72,7 @@ export const Account: FC<AccountProps> = ({ account }) => {
             <AccountUpdateMarketValueContainer account={account} />
           )}
         </div>
-        <TransactionListingWithMonthlyPager
+        <TransactionListWithMonthlyPager
           filterOptions={{ accountId: account.id }}
         />
       </section>
