@@ -126,7 +126,7 @@ export const Transaction: FC<TransactionProps> = async ({
             href={`/statistics/${transactionDetailsMapping.url}/${transaction.id}/edit`}
             testId={`edit-${transactionDetailsMapping.type}-button`}
             transition="slideInFromRight"
-            className="inline-flex items-center justify-center -mr-3 h-11 w-11"
+            // className="inline-flex items-center justify-center h-11 w-11 theme-layer-color-with-hover"
           >
             <span className="sr-only">Edit</span>
             <Icon name="PencilSquareIcon" />
