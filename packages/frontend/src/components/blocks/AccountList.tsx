@@ -50,7 +50,7 @@ export const AccountList: FC<AccountListProps> = ({
           >
             <div
               className={clsx(
-                'theme-layer-secondary-color rounded-xl h-11 w-11',
+                'bg-gray-400/15 rounded-xl h-11 w-11',
                 'inline-flex items-center justify-center shrink-0',
               )}
             >

@@ -3,6 +3,7 @@ import { FC } from 'react';
 
 import { TransactionType } from '$api/generated/financerApi';
 import { transactionTypeIconMapping } from '$constants/transaction/transactionTypeIconMapping';
+import { transactionTypeThemeMapping } from '$constants/transaction/transactionTypeMapping';
 import { Icon } from '$elements/Icon';
 import { Link } from '$elements/Link';
 import { formatCurrency } from '$utils/formatCurrency';
@@ -29,6 +30,8 @@ export const TransactionListItem: FC<TransactionListItemProps> = ({
 }) => {
   const isIncome = transactionType === 'INCOME';
   const isExpense = transactionType === 'EXPENSE';
+  const { color: transactionTypeColor } =
+    transactionTypeThemeMapping[transactionType];
 
   const isRecurring = false;
 
@@ -48,9 +51,7 @@ export const TransactionListItem: FC<TransactionListItemProps> = ({
         className={clsx(
           'relative rounded-xl h-11 w-11',
           'inline-flex items-center justify-center shrink-0',
-          { 'bg-green-400/15': isIncome },
-          { 'bg-red-400/15': isExpense },
-          { 'bg-gray-400/15': !isIncome && !isExpense },
+          transactionTypeColor,
         )}
       >
         <Icon name={transactionTypeIconMapping[transactionType]} />
@@ -87,10 +88,8 @@ export const TransactionListItem: FC<TransactionListItemProps> = ({
         <span className={clsx('font-medium text-right whitespace-nowrap')}>
           <span
             className={clsx(
-              'py-2 px-3 rounded-md',
-              { 'bg-green-400/15': isIncome },
-              { 'bg-red-400/15': isExpense },
-              { 'bg-gray-400/15': !isIncome && !isExpense },
+              { [transactionTypeColor]: isIncome || isExpense },
+              { 'py-2 px-3 rounded-md': isIncome || isExpense },
             )}
           >
             {transactionType === 'INCOME' && '+ '}

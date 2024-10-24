@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { FC, useMemo } from 'react';
 
 import { AccountBalanceHistoryChart } from './account.balance-history-chart';
@@ -24,7 +25,7 @@ export const Account: FC<AccountProps> = ({ account }) => {
     () => [
       {
         icon: 'InformationCircleIcon' as IconName,
-        label: 'Type',
+        label: 'Account Type',
         description: capitalize(
           account.type.replaceAll('_', ' ').toLowerCase(),
         ),
@@ -48,30 +49,30 @@ export const Account: FC<AccountProps> = ({ account }) => {
           </Link>
         }
       />
-      <section>
-        <section className="mb-8">
-          <BalanceDisplay
-            amount={account.balance}
-            iconName={accountTypeIconMapping[account.type]}
-            testId={'account-balance'}
-            childTestId={'account-name'}
-          >
-            {account.name}
-          </BalanceDisplay>
-          <DetailsList
-            testId="account-details"
-            items={accountDetails}
-            className="py-4 mt-6 border-t border-b border-gray-dark"
-          />
+      <section className="grid gap-6">
+        <section className={clsx('@container')}>
+          <div className={clsx('grid gap-2')}>
+            <div className="grid gap-8 p-6 py-8 theme-layer-color">
+              <BalanceDisplay
+                amount={account.balance}
+                iconName={accountTypeIconMapping[account.type]}
+                testId={'account-balance'}
+                childTestId={'account-name'}
+              >
+                {account.name}
+              </BalanceDisplay>
+            </div>
+            <div className="p-6 theme-layer-color">
+              <DetailsList testId="account-details" items={accountDetails} />
+            </div>
+          </div>
         </section>
         <LoaderSuspense>
           <AccountBalanceHistoryChart accountId={account.id} />
         </LoaderSuspense>
-        <div className="grid gap-2 my-6">
-          {account.type === AccountType.Investment && (
-            <AccountUpdateMarketValueContainer account={account} />
-          )}
-        </div>
+        {account.type === AccountType.Investment && (
+          <AccountUpdateMarketValueContainer account={account} />
+        )}
         <TransactionListWithMonthlyPager
           filterOptions={{ accountId: account.id }}
         />

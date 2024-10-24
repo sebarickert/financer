@@ -26,9 +26,10 @@ export const ProminentDetailItem: FC<ProminentDetailItemProps> = ({
     >
       <div
         className={clsx(
-          'theme-layer-secondary-color rounded-xl h-11 w-11',
+          'rounded-xl h-11 w-11',
           'inline-flex items-center justify-center shrink-0',
           {
+            'bg-gray-400/15': !highlightColor,
             [String(highlightColor)]: highlightColor,
           },
         )}
@@ -40,14 +41,7 @@ export const ProminentDetailItem: FC<ProminentDetailItemProps> = ({
       >
         <span className="truncate">{label}</span>
         <span className="text-lg font-medium text-right whitespace-nowrap">
-          <span
-            className={clsx({
-              'py-2 px-3 rounded-md': highlightColor,
-              [String(highlightColor)]: highlightColor,
-            })}
-          >
-            {children}
-          </span>
+          {children}
         </span>
       </div>
     </div>

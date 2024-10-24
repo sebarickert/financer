@@ -68,7 +68,7 @@ export const BalanceDisplay: FC<BalanceDisplayProps> = ({
           className={clsx(
             'relative rounded-xl h-11 w-11',
             'inline-flex items-center justify-center shrink-0',
-            { 'theme-layer-color': !color },
+            { 'bg-gray-400/15': !color },
             { [color]: color },
           )}
         >
