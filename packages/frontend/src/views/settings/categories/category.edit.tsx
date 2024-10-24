@@ -4,7 +4,7 @@ import { CategoryForm } from './category.form';
 import { TransactionCategoryDto } from '$api/generated/financerApi';
 import { settingsPaths } from '$constants/settings-paths';
 import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
-import { Container } from '$layouts/container/container';
+import { Container } from '$layouts/Container';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
 interface CategoryEditProps {

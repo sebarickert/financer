@@ -9,11 +9,11 @@ import { Icon } from '$elements/Icon';
 import { Link } from '$elements/Link';
 import { useAppSelector } from '$store';
 
-type HeaderProps = {
+type ContentHeaderProps = {
   title?: string;
 };
 
-export const Header: FC<HeaderProps> = ({ title }) => {
+export const ContentHeader: FC<ContentHeaderProps> = ({ title }) => {
   const [{ backLink, headerAction }] = usePageInfoContext();
 
   const { isHeaderActionActive } = useAppSelector((state) => state.app);
@@ -21,7 +21,7 @@ export const Header: FC<HeaderProps> = ({ title }) => {
   const hasBackLinkAndOrAction = !!backLink || !!headerAction;
 
   return (
-    <div
+    <header
       className={clsx(
         'max-lg:text-center max-lg:fixed max-lg:inset-x-0 max-lg:top-0 max-lg:px-4 max-lg:h-16 max-lg:border-b max-lg:bg-white',
         'grid items-center grid-cols-[44px,1fr,44px] z-10',
@@ -57,6 +57,6 @@ export const Header: FC<HeaderProps> = ({ title }) => {
           {headerAction}
         </div>
       )}
-    </div>
+    </header>
   );
 };

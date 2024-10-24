@@ -8,7 +8,7 @@ import logo from '$assets/logo.svg';
 import { Button } from '$elements/button/button';
 import { Heading } from '$elements/Heading';
 import { Link } from '$elements/Link';
-import { Container } from '$layouts/container/container';
+import { Container } from '$layouts/Container';
 
 interface ErrorPageProps {
   errorPageType: 'full-app' | 'in-app';

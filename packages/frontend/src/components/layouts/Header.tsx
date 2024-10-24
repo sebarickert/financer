@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import Image from 'next/image';
 import { FC } from 'react';
 
-import { Container } from './container/container';
+import { Container } from './Container';
 
 import { Navigation } from '$blocks/Navigation/Navigation';
 import { Link } from '$elements/Link';
