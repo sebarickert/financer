@@ -129,7 +129,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
       testId={testId ?? 'transaction-form'}
     >
       <section>
-        <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
+        <div className="grid gap-4">
           <div
             className={clsx({
               'max-sm:grid max-sm:grid-cols-2 max-sm:gap-x-4 sm:contents':

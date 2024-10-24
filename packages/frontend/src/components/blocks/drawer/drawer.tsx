@@ -20,7 +20,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
   ) => {
     const drawerBaseClasses = clsx('', className, {
       ['drawer backdrop']: true,
-      ['bg-white fixed text-left']: true,
+      ['theme-bg-color theme-text-primary fixed text-left']: true,
       ['px-8 pt-0 pb-[calc(env(safe-area-inset-bottom)+48px)]']: true,
       ['max-lg:inset-x-0 max-lg:top-auto max-lg:w-full max-lg:rounded-t-2xl']:
         true,
@@ -43,7 +43,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
         <DrawerHeader
           onClose={onClose}
           heading={heading}
-          className="sticky top-0 z-10 pt-8 pb-8 bg-white"
+          className="sticky top-0 z-10 pt-8 pb-8 theme-bg-color"
           id={id}
         >
           {description}

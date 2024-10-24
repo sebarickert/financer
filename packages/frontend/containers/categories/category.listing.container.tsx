@@ -94,7 +94,12 @@ export const CategoryListingContainer: FC = async () => {
       />
       <section className="grid gap-8">
         {categoryRows.map(({ label: parentLabel, items, link: parentLink }) => (
-          <List key={parentLabel} label={parentLabel} testId="category-list">
+          <List
+            key={parentLabel}
+            label={parentLabel}
+            testId="category-list"
+            columns={2}
+          >
             {parentLink && (
               <ProminentLink link={parentLink} icon={'TagIcon'}>
                 {parentLabel}
