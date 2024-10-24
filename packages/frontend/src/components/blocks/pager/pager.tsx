@@ -33,7 +33,7 @@ const PagerButton: FC<PagerButtonProps> = ({
   return (
     <button
       className={clsx(
-        'h-11 w-11',
+        'h-11 w-11 rounded-md',
         'theme-focus theme-layer-color-with-hover theme-text-primary',
         'inline-flex justify-center items-center',
         'disabled:pointer-events-none disabled:opacity-50',
