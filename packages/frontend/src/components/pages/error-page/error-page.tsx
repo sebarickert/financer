@@ -6,9 +6,9 @@ import Image from 'next/image';
 // @ts-ignore
 import logo from '$assets/logo.svg';
 import { Button } from '$elements/button/button';
-import { Heading } from '$elements/heading/heading';
-import { Link } from '$elements/link/link';
-import { Container } from '$layouts/container/container';
+import { Heading } from '$elements/Heading';
+import { Link } from '$elements/Link';
+import { Container } from '$layouts/Container';
 
 interface ErrorPageProps {
   errorPageType: 'full-app' | 'in-app';
@@ -29,7 +29,7 @@ export const ErrorPage = ({ errorPageType }: ErrorPageProps) => {
               Financer
             </h2>
           </span>
-          <Heading variant="h1" titleClassName="mb-6">
+          <Heading variant="h1" className="!mb-6">
             Error
           </Heading>
           <p className="max-w-xl mb-4 text-lg">

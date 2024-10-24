@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { FC } from 'react';
 
 import { AccountContainer } from '$container/accounts/account.container';
-import { Layout } from '$layouts/layout/layout';
+import { Layout } from '$layouts/Layout';
 
 // TODO change to dynamic title
 export const metadata: Metadata = {

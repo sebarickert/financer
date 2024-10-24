@@ -17,7 +17,7 @@ type FormFooterProps = {
 
 export const FormFooter: FC<FormFooterProps> = ({
   submitLabel,
-  accentColor = 'black',
+  accentColor,
   formFooterBackLink = './',
   optionalComponent,
   hasCancelButton,
@@ -38,7 +38,7 @@ export const FormFooter: FC<FormFooterProps> = ({
           </Button>
           {hasCancelButton && (
             <Button
-              accentColor="plain"
+              accentColor="secondary"
               href={formFooterBackLink}
               testId="cancel"
             >

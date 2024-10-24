@@ -103,7 +103,7 @@ export const TransactionCategoriesForm: FC<TransactionCategoriesFormProps> = ({
             <Button
               onClick={handleDelete}
               testId={`${testId}-delete`}
-              accentColor="plain"
+              accentColor="secondary"
               popoverTarget={formId}
               popoverTargetAction="hide"
             >
@@ -113,7 +113,7 @@ export const TransactionCategoriesForm: FC<TransactionCategoriesFormProps> = ({
             <Button
               onClick={handleCancel}
               testId={`${testId}-cancel`}
-              accentColor="plain"
+              accentColor="secondary"
               popoverTarget={formId}
               popoverTargetAction="hide"
             >

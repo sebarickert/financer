@@ -2,11 +2,11 @@ import { FC, useMemo } from 'react';
 
 import { Role } from '$api/generated/financerApi';
 import { HardRefreshButton } from '$blocks/HardRefreshButton';
+import { List } from '$blocks/List';
+import { ProminentLink } from '$blocks/ProminentLink';
 import { settingsPaths } from '$constants/settings-paths';
 import { Button } from '$elements/button/button';
 import { IconName } from '$elements/Icon';
-import { LinkList } from '$elements/link-list/link-list';
-import { LinkListLink } from '$elements/link-list/link-list.link';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
 interface SettingsProps {
@@ -48,7 +48,7 @@ export const Settings: FC<SettingsProps> = ({ roles }) => {
             ? [
                 {
                   children: 'Overrite data',
-                  link: settingsPaths.dataOverride,
+                  link: settingsPaths.dataOverwrite,
                   icon: 'ExclamationTriangleIcon' as IconName,
                 },
               ]
@@ -64,16 +64,16 @@ export const Settings: FC<SettingsProps> = ({ roles }) => {
       <UpdatePageInfo />
       <section className="grid gap-8">
         {urls.map(({ label, items }) => (
-          <LinkList key={label} label={label}>
+          <List key={label} label={label}>
             {items.map((item) => (
-              <LinkListLink key={item.link} {...item} />
+              <ProminentLink key={item.link} {...item} />
             ))}
-          </LinkList>
+          </List>
         ))}
       </section>
       <div className="flex flex-col gap-2 mt-12 sm:flex-row">
         <HardRefreshButton />
-        <Button accentColor="plain" href="/auth/logout" className="lg:hidden">
+        <Button accentColor="secondary" href="/auth/logout">
           Sign out
         </Button>
       </div>

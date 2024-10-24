@@ -14,10 +14,6 @@
 }
 
 @layer base {
-  html {
-    -webkit-tap-highlight-color: transparent;
-  }
-
   select,
   ::picker(select) {
     appearance: base-select;
@@ -73,27 +69,67 @@
     }
   }
 
-  @font-face {
-    font-family: "Euclid Circular A";
-    font-weight: 300;
-    src: url("/fonts/Euclid_Circular_A_Light.ttf") format("truetype");
+  .theme-bg-color {
+    @apply bg-white dark:bg-gray-1000;
   }
 
-  @font-face {
-    font-family: "Euclid Circular A";
-    font-weight: 400;
-    src: url("/fonts/Euclid_Circular_A_Regular.ttf") format("truetype");
+  .theme-bg-color-with-hover {
+    @apply theme-bg-color hover:bg-gray-500/[0.12] dark:hover:bg-gray-500/[0.16];
   }
 
-  @font-face {
-    font-family: "Euclid Circular A";
-    font-weight: 500;
-    src: url("/fonts/Euclid_Circular_A_Medium.ttf") format("truetype");
+  .theme-layer-color {
+    @apply bg-gray-100 dark:bg-gray-900;
   }
 
-  @font-face {
-    font-family: "Euclid Circular A";
-    font-weight: 600;
-    src: url("/fonts/Euclid_Circular_A_SemiBold.ttf") format("truetype");
+  .theme-layer-color-with-hover {
+    @apply theme-layer-color hover:bg-gray-100/50 dark:hover:bg-gray-900/50;
+  }
+
+  .theme-layer-secondary-color {
+    @apply bg-white dark:bg-gray-800;
+  }
+
+  .theme-text-primary {
+    @apply text-gray-1000 dark:text-gray-100;
+  }
+
+  .theme-text-secondary {
+    @apply text-gray-700 dark:text-gray-300;
+  }
+
+  .theme-border-primary {
+    @apply border-gray-200 dark:border-gray-800;
+  }
+
+  .theme-button-primary {
+    @apply bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-900;
+  }
+
+  .theme-button-secondary {
+    @apply bg-gray-800 text-white hover:bg-gray-700 active:bg-gray-600 dark:bg-gray-600  dark:hover:bg-gray-700 dark:active:bg-gray-800;
+  }
+
+  .theme-button-danger {
+    @apply bg-red-600 text-white hover:bg-red-700 active:hover:bg-red-800;
+  }
+
+  .theme-focus {
+    @apply focus:theme-focus-without-prefix;
+  }
+
+  .theme-focus-without-prefix {
+    @apply outline-none ring ring-blue-600 dark:ring-white;
+  }
+
+  .theme-link {
+    @apply theme-focus theme-link-without-focus;
+  }
+
+  .theme-link-without-focus {
+    @apply text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300;
+  }
+
+  .theme-field {
+    @apply theme-focus theme-layer-color-with-hover border-none theme-text-primary appearance-none;
   }
 }

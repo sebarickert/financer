@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 
-import { Heading } from '$elements/heading/heading';
+import { Heading } from '$elements/Heading';
 import { Icon } from '$elements/Icon';
 import { Paragraph } from '$elements/paragraph/paragraph';
 
@@ -27,14 +27,19 @@ export const DrawerHeader = ({
     >
       {heading && (
         <>
-          <Heading className="col-[1] ">{heading}</Heading>
+          <Heading className="col-[1]" noMargin disableResponsiveSizing>
+            {heading}
+          </Heading>
           {children && (
             <Paragraph className="row-[2] col-span-full">{children}</Paragraph>
           )}
         </>
       )}
       <button
-        className="col-[2] overflow-hidden inline-flex items-center justify-center h-11 w-11 -my-2 translate-x-1/3"
+        className={clsx(
+          'theme-layer-color-with-hover theme-focus rounded-md',
+          'col-[2] overflow-hidden inline-flex items-center justify-center h-11 w-11 -my-2 translate-x-1/3',
+        )}
         onClick={onClose}
         // @ts-expect-error popovertarget is not a valid prop
         popovertarget={id}

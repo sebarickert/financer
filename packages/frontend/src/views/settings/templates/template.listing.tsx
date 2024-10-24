@@ -4,11 +4,11 @@ import {
   TransactionTemplateDto,
   TransactionTemplateType,
 } from '$api/generated/financerApi';
+import { List } from '$blocks/List';
+import { ProminentLink } from '$blocks/ProminentLink';
 import { settingsPaths } from '$constants/settings-paths';
-import { Icon } from '$elements/Icon';
-import { Link } from '$elements/link/link';
-import { LinkList } from '$elements/link-list/link-list';
-import { LinkListLink } from '$elements/link-list/link-list.link';
+import { Icon, IconName } from '$elements/Icon';
+import { Link } from '$elements/Link';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
 interface TemplateListingProps {
@@ -17,13 +17,16 @@ interface TemplateListingProps {
 
 const getLabel = (templateType: TransactionTemplateType): string => {
   switch (templateType) {
-    case TransactionTemplateType.Manual:
-      return 'Manual';
     case TransactionTemplateType.Auto:
-      return 'Automatic';
+      return 'Recurring Templates';
     default:
-      return 'Unknown';
+      return '';
   }
+};
+
+const templateIconMapping: Record<string, IconName> = {
+  [TransactionTemplateType.Manual]: 'BoltIcon',
+  [TransactionTemplateType.Auto]: 'ArrowPathIcon',
 };
 
 export const TemplateListing: FC<TemplateListingProps> = ({ templates }) => {
@@ -49,17 +52,17 @@ export const TemplateListing: FC<TemplateListingProps> = ({ templates }) => {
       />
       <section className="grid gap-8">
         {[...filteredTemplates.entries()].map(([label, items]) => (
-          <LinkList label={getLabel(label)} key={label}>
-            {items.map(({ templateName, id }) => (
-              <LinkListLink
-                icon={'BoltIcon'}
+          <List label={getLabel(label)} key={label} columns={2}>
+            {items.map(({ templateName, id, templateType }) => (
+              <ProminentLink
+                icon={templateIconMapping[templateType[0]]}
                 key={id}
                 link={`${settingsPaths.templates}/${id}/edit`}
               >
                 {templateName}
-              </LinkListLink>
+              </ProminentLink>
             ))}
-          </LinkList>
+          </List>
         ))}
       </section>
     </>

@@ -8,11 +8,11 @@ import {
 } from '$api/generated/financerApi';
 import { DetailsList } from '$blocks/details-list/details-list';
 import { DetailsItem } from '$blocks/details-list/details-list.item';
-import { TransactionListingWithMonthlyPager } from '$blocks/transaction-listing-with-monthly-pager/transaction-listing.with.monthly-pager';
+import { TransactionListWithMonthlyPager } from '$blocks/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
 import { settingsPaths } from '$constants/settings-paths';
 import { Icon, IconName } from '$elements/Icon';
-import { Link } from '$elements/link/link';
-import { Container } from '$layouts/container/container';
+import { Link } from '$elements/Link';
+import { Container } from '$layouts/Container';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { capitalize } from '$utils/capitalize';
 import { parseParentCategoryPath } from 'src/services/TransactionCategoriesService';
@@ -49,7 +49,7 @@ export const Category: FC<CategoryProps> = ({
       ...(category.parentCategoryId
         ? [
             {
-              icon: 'Squares2X2Icon' as IconName,
+              icon: 'TagIcon' as IconName,
               label: 'Parent Category',
               description:
                 parseParentCategoryPath(
@@ -61,7 +61,10 @@ export const Category: FC<CategoryProps> = ({
         : []),
       {
         icon: 'InformationCircleIcon',
-        label: 'Type',
+        label:
+          categoryVisibilityCapitalized.length > 1
+            ? 'Transaction Types'
+            : 'Transaction Type',
         description: formatter.format(categoryVisibilityCapitalized),
       },
     ];
@@ -83,19 +86,19 @@ export const Category: FC<CategoryProps> = ({
             testId="edit-category"
           >
             <span className="sr-only">Edit</span>
-            <Icon name="PencilSquareIcon" />
+            <Icon name="PencilIcon" />
           </Link>
         }
       />
-      <section>
-        <DetailsList items={categoryDetails} className="mb-8" />
+      <section className="grid gap-6">
+        <div className="p-6 theme-layer-color">
+          <DetailsList items={categoryDetails} />
+        </div>
         <CategoryGraph
           transactionsMonthlySummaries={transactionsMonthlySummaries}
           category={category}
         />
-
-        <TransactionListingWithMonthlyPager
-          className="mt-6"
+        <TransactionListWithMonthlyPager
           filterOptions={{
             parentTransactionCategory: parentTransactionCategoryId,
           }}

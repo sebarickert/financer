@@ -99,7 +99,7 @@ export const TransactionCategories = ({
     <>
       <Button
         onClick={addNewCategory}
-        accentColor="plain"
+        accentColor="secondary"
         isDisabled={!transactionAmount || transactionAmount < 0}
         testId="add-category-button"
         popoverTarget={formId}
@@ -110,7 +110,7 @@ export const TransactionCategories = ({
       <Drawer
         id={formId}
         onClose={onClose}
-        heading={!isNewCategory ? 'Edit category item' : 'Add category item'}
+        heading={!isNewCategory ? 'Edit Category Item' : 'Add Category Item'}
       >
         <TransactionCategoriesForm
           testId={testId}

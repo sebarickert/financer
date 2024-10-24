@@ -1,15 +1,11 @@
 import { FC } from 'react';
 
-import { AccountType } from '$api/generated/financerApi';
-import {
-  AccountListing,
-  AccountListingItem,
-} from '$blocks/account-listing/accounts-listing';
+import { AccountDto, AccountType } from '$api/generated/financerApi';
+import { AccountList } from '$blocks/AccountList';
 import { Icon } from '$elements/Icon';
-import { Link } from '$elements/link/link';
+import { Link } from '$elements/Link';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { AccountService } from '$ssr/api/account.service';
-import { formatCurrency } from '$utils/formatCurrency';
 
 const accountCategories = {
   savings: 'savings',
@@ -18,24 +14,13 @@ const accountCategories = {
 } as const;
 
 export const AccountListingContainer: FC = async () => {
-  const { data } = await AccountService.getAll();
-
-  const formattedAccounts: AccountListingItem[] = data.map(
-    ({ id, balance, name, type }) => ({
-      label: name,
-      link: `/accounts/${id}`,
-      balanceAmount: formatCurrency(balance),
-      accountType: type.charAt(0).toUpperCase() + type.slice(1),
-      type,
-      id,
-    }),
-  );
+  const { data: accounts } = await AccountService.getAll();
 
   // typescript does not support Object.groupBy but browser and nodejs runtime does
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const groupedAccounts = (Object as any).groupBy(
-    formattedAccounts,
-    ({ type }: AccountListingItem) => {
+    accounts,
+    ({ type }: AccountDto) => {
       if (type === AccountType.Loan || type === AccountType.Credit) {
         return accountCategories.loans;
       }
@@ -48,7 +33,7 @@ export const AccountListingContainer: FC = async () => {
     },
   ) as Record<
     (typeof accountCategories)[keyof typeof accountCategories],
-    AccountListingItem[]
+    AccountDto[]
   >;
 
   return (
@@ -61,19 +46,19 @@ export const AccountListingContainer: FC = async () => {
             testId="add-account"
           >
             <span className="sr-only">Add account</span>
-            <Icon name="SquaresPlusIcon" />
+            <Icon name="PlusIcon" />
           </Link>
         }
       />
       <section className="grid gap-8">
-        <AccountListing label="Savings" items={groupedAccounts.savings} />
-        <AccountListing
+        <AccountList label="Savings" accounts={groupedAccounts.savings} />
+        <AccountList
           label="Investments"
-          items={groupedAccounts.investments}
+          accounts={groupedAccounts.investments}
         />
-        <AccountListing
+        <AccountList
           label="Credits and Loans"
-          items={groupedAccounts.loans}
+          accounts={groupedAccounts.loans}
         />
       </section>
     </>

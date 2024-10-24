@@ -2,13 +2,13 @@ import { AccountType } from '$api/generated/financerApi';
 import { IconName } from '$elements/Icon';
 
 export const accountTypeIconMapping: { [key in AccountType]: IconName } = {
-  [AccountType.Cash]: 'BanknotesIcon',
-  [AccountType.Savings]: 'StarIcon',
+  [AccountType.Cash]: 'WalletIcon',
+  [AccountType.Savings]: 'BanknotesIcon',
   [AccountType.Investment]: 'ArrowTrendingUpIcon',
   [AccountType.Credit]: 'CreditCardIcon',
   [AccountType.Loan]: 'BuildingLibraryIcon',
-  [AccountType.LongTermSavings]: 'StarIcon',
-  [AccountType.PreAssignedCash]: 'PaperAirplaneIcon',
+  [AccountType.LongTermSavings]: 'BanknotesIcon',
+  [AccountType.PreAssignedCash]: 'LockClosedIcon',
 };
 
 export const accountTypeLabelMapping: { [key in AccountType]: string } = {

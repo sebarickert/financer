@@ -9,7 +9,7 @@ import { accountTypeLabelMapping } from '$constants/account/accountTypeMapping';
 import { settingsPaths } from '$constants/settings-paths';
 import { Checkbox } from '$elements/checkbox/checkbox';
 import { CheckboxGroup } from '$elements/checkbox/checkbox.group';
-import { Heading } from '$elements/heading/heading';
+import { Heading } from '$elements/Heading';
 import { Paragraph } from '$elements/paragraph/paragraph';
 import {
   DefaultFormActionHandler,
@@ -50,7 +50,7 @@ export const UserStatisticsSettings: FC<UserStatisticsSettingsProps> = ({
         formFooterBackLink={settingsPaths.userPreferences}
       >
         <section className="mb-4">
-          <Heading className="mb-2">Account types</Heading>
+          <Heading>Account types</Heading>
           <Paragraph>
             Selected types will be calculated into statistics and graphs on the
             statistics page.

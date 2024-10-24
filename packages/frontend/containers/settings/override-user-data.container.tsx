@@ -12,7 +12,7 @@ import {
 import { ValidationException } from '$exceptions/validation.exception';
 import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
 import { UserService } from '$ssr/api/user.service';
-import { OverrideUserData } from '$views/settings/override-user-data';
+import { OverrideUserData } from '$views/settings/overwrite-user-data';
 
 export const OverrideUserDataContainer: FC = () => {
   const handleOverrideData: DefaultFormActionHandler = async (
@@ -71,5 +71,5 @@ export const OverrideUserDataContainer: FC = () => {
     return { status: 'OK' };
   };
 
-  return <OverrideUserData onOverrideData={handleOverrideData} />;
+  return <OverrideUserData onOverwriteData={handleOverrideData} />;
 };

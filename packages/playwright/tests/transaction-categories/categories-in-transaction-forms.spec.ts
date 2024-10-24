@@ -59,9 +59,9 @@ test.describe('Transaction categories visibility in transaction forms', () => {
   // eslint-disable-next-line playwright/expect-expect
   test('Verify add income categories', async ({ page }) => {
     await page.goto('/');
-    await page.getByTestId('add-transaction-desktop').click();
+    await page.getByTestId('add-transaction').click();
 
-    const drawer = page.getByTestId('add-transaction-drawer-desktop');
+    const drawer = page.getByTestId('add-transaction-drawer');
 
     await drawer
       .getByTestId('transactionTypeSwitcher')
@@ -78,9 +78,9 @@ test.describe('Transaction categories visibility in transaction forms', () => {
   // eslint-disable-next-line playwright/expect-expect
   test('Verify add expense categories', async ({ page }) => {
     await page.goto('/');
-    await page.getByTestId('add-transaction-desktop').click();
+    await page.getByTestId('add-transaction').click();
 
-    const drawer = page.getByTestId('add-transaction-drawer-desktop');
+    const drawer = page.getByTestId('add-transaction-drawer');
 
     await drawer.locator('#amount').fill('100');
 
@@ -91,9 +91,9 @@ test.describe('Transaction categories visibility in transaction forms', () => {
   // eslint-disable-next-line playwright/expect-expect
   test('Verify add transfer categories', async ({ page }) => {
     await page.goto('/');
-    await page.getByTestId('add-transaction-desktop').click();
+    await page.getByTestId('add-transaction').click();
 
-    const drawer = page.getByTestId('add-transaction-drawer-desktop');
+    const drawer = page.getByTestId('add-transaction-drawer');
 
     await drawer
       .getByTestId('transactionTypeSwitcher')

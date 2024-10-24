@@ -36,7 +36,7 @@ export const HeaderDrawerAction = ({
         applyBaseStyles={false}
         accentColor="unstyled"
         testId={buttonTestId}
-        className="inline-flex items-center justify-center -mr-3 h-11 w-11"
+        className="inline-flex items-center justify-center rounded-md h-11 w-11 theme-layer-color-with-hover theme-text-primary theme-focus"
         popoverTarget={id}
       >
         <span className="sr-only">{buttonLabel}</span>
@@ -52,7 +52,7 @@ export const HeaderDrawerAction = ({
             {drawerButtonLabel}
           </Button>
           <Button
-            accentColor="plain"
+            accentColor="secondary"
             testId={`${buttonTestId}-cancel`}
             popoverTargetAction="hide"
             popoverTarget={id}

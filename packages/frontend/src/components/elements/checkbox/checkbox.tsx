@@ -1,12 +1,12 @@
 import clsx from 'clsx';
 import { useFormContext } from 'react-hook-form';
 
-interface CheckboxProps {
+type CheckboxProps = {
   id: string;
   label: string;
   name: string;
   value: string;
-}
+};
 
 export const Checkbox = ({
   id,
@@ -19,7 +19,7 @@ export const Checkbox = ({
   return (
     <label
       className={clsx(
-        'flex items-center p-4 gap-4 rounded-md hover:bg-gray focus-within:bg-gray hover:cursor-pointer',
+        'flex items-center p-4 gap-4 rounded-md theme-bg-color-with-hover hover:cursor-pointer theme-text-primary',
       )}
       htmlFor={id}
     >
@@ -28,13 +28,12 @@ export const Checkbox = ({
         type="checkbox"
         value={value}
         className={clsx(
-          'rounded-sm w-6 h-6 text-dreamless-sleep bg-gray border-gray-dark focus:ring-dreamless-sleep focus:ring-2 peer',
+          'w-6 h-6 peer rounded-sm',
+          'theme-layer-color-with-hover border theme-border-primary text-blue-600',
         )}
         {...register(name)}
       />
-      <span className="text-base tracking-tight text-black peer-checked:font-medium">
-        {label}
-      </span>
+      <span>{label}</span>
     </label>
   );
 };

@@ -1,26 +1,23 @@
+import { FC } from 'react';
+
 import { BalanceGraph } from '$blocks/balance-graph/balance-graph';
 import { DashboardStats } from '$blocks/dashboard-stats/dashboard.stats';
-import { TransactionListingContainer } from '$blocks/transaction-listing/transaction-listing.container';
-import { Heading } from '$elements/heading/heading';
+import { TransactionList } from '$blocks/TransactionList/TransactionList';
+import { Heading } from '$elements/Heading';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
-export const Dashboard = (): JSX.Element => {
+export const Dashboard: FC = () => {
   return (
     <>
       <UpdatePageInfo />
-      <section className="grid gap-6 md:gap-8">
+      <section className="grid gap-6">
+        <DashboardStats />
+        <BalanceGraph />
         <section>
-          <DashboardStats />
-          <BalanceGraph />
-        </section>
-        <section>
-          <Heading className="mb-4" ctaLabel="See all" ctaUrl="/statistics">
-            Recent activity
+          <Heading cta={{ label: 'See All', url: '/statistics' }}>
+            Recent Activity
           </Heading>
-          <TransactionListingContainer
-            isPagerHidden
-            filterOptions={{ limit: 8 }}
-          />
+          <TransactionList isPagerHidden filterOptions={{ limit: 8 }} />
         </section>
       </section>
     </>

@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 import { DefaultAccountSettingsContainer } from '$container/user-preferences/default-account-settings.container';
-import { Layout } from '$layouts/layout/layout';
+import { Layout } from '$layouts/Layout';
 
 export const metadata: Metadata = {
   title: 'Default Account Settings',

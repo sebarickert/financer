@@ -26,9 +26,9 @@ export const TransactionTypeSwitcherItem: FC<
       />
       <span
         className={clsx(
-          'flex items-center justify-center text-sm text-black py-2.5 rounded-md',
-          'peer-checked:font-medium peer-checked:bg-white peer-checked:border peer-checked:border-gray-dark',
-          'peer-focus:ring-2 peer-focus:ring-offset-2 peer-focus:outline-none peer-focus:ring-charcoal transition ease-in-out duration-150 peer-hover:opacity-75 peer-focus:opacity-75 peer-hover:cursor-pointer',
+          'flex items-center justify-center text-sm py-2.5 rounded-md',
+          'peer-checked:font-medium peer-checked:theme-layer-secondary-color peer-checked:border peer-checked:theme-border-primary',
+          'peer-focus:theme-focus-without-prefix peer-hover:cursor-pointer',
         )}
       >
         {children}

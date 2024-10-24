@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { Transaction } from '$blocks/transaction/transaction';
+import { Transaction } from '$blocks/Transaction';
 import { AccountService } from '$ssr/api/account.service';
 import { IncomeService } from '$ssr/api/income.service';
 

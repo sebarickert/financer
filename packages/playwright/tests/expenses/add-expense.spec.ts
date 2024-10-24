@@ -63,9 +63,9 @@ test.describe('Add expense', () => {
       targetTransactionBefore.dateObj.getTime() + MINUTE_IN_MS,
     );
 
-    await page.getByTestId('add-transaction-desktop').click();
+    await page.getByTestId('add-transaction').click();
 
-    const drawer = page.getByTestId('add-transaction-drawer-desktop');
+    const drawer = page.getByTestId('add-transaction-drawer');
     await drawer.locator('#description').fill(newTransactionName);
     await drawer.locator('#date').fill(formatDate(newTransactionDate));
     await drawer.locator('#amount').fill(newTransactionAmountStr);
@@ -104,9 +104,9 @@ test.describe('Add expense', () => {
 
     const accountBefore = await getAccount(targetAccountId);
 
-    await page.getByTestId('add-transaction-desktop').click();
+    await page.getByTestId('add-transaction').click();
 
-    const drawer = page.getByTestId('add-transaction-drawer-desktop');
+    const drawer = page.getByTestId('add-transaction-drawer');
     await drawer.locator('#description').fill(newTransactionName);
     await drawer.locator('#date').fill(formatDate(newTransactionDate));
     await drawer.locator('#amount').fill(newTransactionAmountStr);
@@ -145,9 +145,9 @@ test.describe('Add expense', () => {
 
     const accountBefore = await getAccount(targetAccountId);
 
-    await page.getByTestId('add-transaction-desktop').click();
+    await page.getByTestId('add-transaction').click();
 
-    const drawer = page.getByTestId('add-transaction-drawer-desktop');
+    const drawer = page.getByTestId('add-transaction-drawer');
     await drawer.locator('#description').fill(newTransactionName);
     await drawer.locator('#date').fill(formatDate(newTransactionDate));
     await drawer.locator('#amount').fill(newTransactionAmountStr);
@@ -181,9 +181,9 @@ test.describe('Add expense', () => {
     date.setSeconds(0);
     date.setMilliseconds(0);
 
-    await page.getByTestId('add-transaction-desktop').click();
+    await page.getByTestId('add-transaction').click();
 
-    const drawer = page.getByTestId('add-transaction-drawer-desktop');
+    const drawer = page.getByTestId('add-transaction-drawer');
     await drawer.locator('#description').fill(newTransactionName);
     await drawer.locator('#date').fill(formatDate(date));
     await drawer.locator('#amount').fill(newTransactionAmountStr);

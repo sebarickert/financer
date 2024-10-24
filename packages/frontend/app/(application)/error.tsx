@@ -3,7 +3,7 @@
 import { Metadata } from 'next';
 import { FC } from 'react';
 
-import { Layout } from '$layouts/layout/layout';
+import { Layout } from '$layouts/Layout';
 import { ErrorPage as ErrorPageComponent } from '$pages/error-page/error-page';
 
 export const metadata: Metadata = {

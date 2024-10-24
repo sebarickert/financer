@@ -32,9 +32,9 @@ export const Toast = ({
   const dispatch = useDispatch();
 
   const toastStyles = clsx({
-    ['bg-red text-white']: type === ToastMessageTypes.ERROR,
-    ['bg-charcoal text-white']: type === ToastMessageTypes.GENERAL,
-    ['bg-green text-white']: type === ToastMessageTypes.SUCCESS,
+    ['bg-red-600/25']: type === ToastMessageTypes.ERROR,
+    ['bg-gray-600/25']: type === ToastMessageTypes.GENERAL,
+    ['bg-green-600/25']: type === ToastMessageTypes.SUCCESS,
   });
 
   const toastIcon = (toastType: ToastMessageTypes) => {
@@ -42,7 +42,7 @@ export const Toast = ({
       case ToastMessageTypes.ERROR:
         return 'ExclamationTriangleIcon' as IconName;
       case ToastMessageTypes.GENERAL:
-        return 'InformationCircleIcon' as IconName;
+        return 'BellIcon' as IconName;
       case ToastMessageTypes.SUCCESS:
         return 'CheckIcon' as IconName;
     }
@@ -53,38 +53,46 @@ export const Toast = ({
   }, [dispatch, id]);
 
   const additionalInformationContent = Array.isArray(additionalInformation) ? (
-    <ul className="col-[2] mt-2 list-disc pb-2 pl-5 text-[0.875rem]">
+    <ul className="pb-2 pl-5 mt-2 list-disc">
       {additionalInformation.map((information) => (
         <li key={information}>{information}</li>
       ))}
     </ul>
   ) : (
-    <p className="col-[2] mt-2 pb-2 text-[0.875rem]">{additionalInformation}</p>
+    <p className="pb-2 mt-2">{additionalInformation}</p>
   );
 
   return (
     <div
       className={clsx(
-        'grid grid-cols-[auto,1fr,auto] items-start gap-x-4 p-4 rounded-md',
-        {
-          [className]: true,
-          [toastStyles]: true,
-        },
+        'theme-layer-color theme-text-primary',
+        'grid grid-cols-[auto,1fr,auto] items-start gap-x-4 py-5 px-4 rounded-md',
+        className,
       )}
       role="status"
       data-testid="toast-item"
       data-toast-type={type}
     >
-      <Icon name={toastIcon(type)} className="w-6 h-6" />
-      <p>{message}</p>
-      {additionalInformation && additionalInformationContent}
+      <div
+        className={clsx(
+          'rounded-xl h-11 w-11',
+          'inline-flex items-center justify-center shrink-0',
+          toastStyles,
+        )}
+      >
+        <Icon name={toastIcon(type)} />
+      </div>
+      <div className="mt-2.5">
+        <p>{message}</p>
+        {additionalInformation && additionalInformationContent}
+      </div>
       {id && (
         <button
-          className="col-[3] row-span-full inline-flex items-center justify-center"
+          className="col-[3] row-span-full inline-flex items-center justify-center h-11 w-11 rounded-md theme-focus hover:opacity-50"
           onClick={handleRemove}
           data-testid="toast-remove"
         >
-          <Icon name="PlusIcon" className="w-6 h-6 rotate-45 fill-current" />
+          <Icon name="XMarkIcon" />
           <span className="sr-only">Close</span>
         </button>
       )}

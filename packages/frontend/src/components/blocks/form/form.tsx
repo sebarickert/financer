@@ -33,7 +33,7 @@ export const Form = <T extends FieldValues>({
   children,
   submitLabel,
   onSubmit,
-  accentColor = 'black',
+  accentColor,
   formFooterBackLink,
   optionalFooterComponent,
   testId,

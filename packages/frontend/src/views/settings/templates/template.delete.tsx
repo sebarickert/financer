@@ -10,7 +10,7 @@ export const TemplateDelete = ({ onSubmit }: TemplateDeleteProps) => {
       onSubmit={onSubmit}
       buttonLabel="Delete template"
       buttonIcon={'TrashIcon'}
-      drawerButtonAccentColor="red"
+      drawerButtonAccentColor="danger"
       drawerButtonLabel="Delete"
       drawerHeading="Delete template"
       drawerDescription="Are you sure you want to permanently delete this template?"

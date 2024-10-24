@@ -4,9 +4,8 @@ import { useFormContext } from 'react-hook-form';
 
 import { Icon, IconName } from '$elements/Icon';
 
-interface SelectProps {
+type SelectProps = {
   children: React.ReactNode;
-  help?: string;
   id: string;
   isRequired?: boolean;
   isDisabled?: boolean;
@@ -17,7 +16,7 @@ interface SelectProps {
   testId?: string;
   placeholder?: string;
   shouldUnregister?: boolean;
-}
+};
 
 export interface Option {
   value: string;
@@ -53,7 +52,7 @@ const OptionElement: FC<OptionElementProps> = ({
     })}
     disabled={isDisabled}
   >
-    <div className="flex flex-row gap-4 items-center">
+    <div className="flex flex-row items-center gap-4">
       {icon && <Icon name={icon} className="text-gray-darkest" />}
       {!icon && hasIconPlaceholder && <span className="w-6" />}
       <div className="flex flex-col gap-1">
@@ -70,7 +69,6 @@ const OptionElement: FC<OptionElementProps> = ({
 
 export const Select = ({
   children,
-  help = '',
   id,
   isRequired = false,
   options,
@@ -92,15 +90,14 @@ export const Select = ({
   const hasSomeOptionIcon = options.some((option) => option.icon);
 
   return (
-    <div className={className}>
-      <label htmlFor={id} className="block text-sm text-black">
+    <div className={clsx('theme-text-primary', className)}>
+      <label htmlFor={id} className="block">
         {children}
         <select
           data-testid={testId}
           id={id}
-          className="relative block w-full py-3 pl-3 pr-10 mt-1 text-base font-normal tracking-normal border border-transparent rounded-md bg-gray text-charcoal focus:outline-none focus:ring-black focus:border-black hover:cursor-pointer"
+          className={clsx('theme-field', 'block w-full p-3 rounded-md mt-1')}
           required={isRequired}
-          aria-describedby={help && `${id}-description`}
           disabled={isDisabled}
           {...register(id, {
             disabled: isDisabled,
@@ -131,11 +128,6 @@ export const Select = ({
           ))}
         </select>
       </label>
-      {help && (
-        <p className="mt-2 text-sm text-charcoal" id={`${id}-description`}>
-          {help}
-        </p>
-      )}
     </div>
   );
 };

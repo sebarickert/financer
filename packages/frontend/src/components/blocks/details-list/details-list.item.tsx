@@ -20,7 +20,7 @@ export const DetailsListItem: FC<DetailsItem> = ({
       className="grid grid-cols-[auto,1fr] gap-2 items-center"
       data-testid={testId}
     >
-      <dt className="inline-flex items-center gap-2 font-normal text-black/75">
+      <dt className="inline-flex items-center gap-2 font-normal">
         <Icon name={icon} />
         <span data-testid={`${testId}-label`}>{label}</span>
       </dt>
