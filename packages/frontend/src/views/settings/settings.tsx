@@ -48,7 +48,7 @@ export const Settings: FC<SettingsProps> = ({ roles }) => {
             ? [
                 {
                   children: 'Overrite data',
-                  link: settingsPaths.dataOverride,
+                  link: settingsPaths.dataOverwrite,
                   icon: 'ExclamationTriangleIcon' as IconName,
                 },
               ]

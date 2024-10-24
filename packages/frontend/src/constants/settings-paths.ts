@@ -3,6 +3,6 @@ export const settingsPaths = {
   userPreferences: `/settings/user-preferences`,
   templates: '/settings/templates',
   categories: '/settings/categories',
-  dataOverride: '/settings/override-data',
+  dataOverwrite: '/settings/overwrite-data',
   dataDownload: '/api/users/my-user/my-data',
 };
