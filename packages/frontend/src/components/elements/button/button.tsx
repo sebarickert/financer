@@ -5,7 +5,7 @@ import { Link } from '$elements/Link';
 import { isExternalLink } from '$utils/isExternalLink';
 import { TransitionType } from '$utils/transitionAnimations';
 
-export type ButtonAccentColor = 'blue' | 'plain' | 'black' | 'red' | 'unstyled';
+export type ButtonAccentColor = 'unstyled' | 'primary' | 'secondary' | 'danger';
 interface ButtonProps
   extends Pick<
     HTMLAttributes<unknown>,
@@ -25,9 +25,9 @@ interface ButtonProps
 }
 
 export const Button = ({
-  accentColor = 'black',
+  accentColor = 'primary',
   children,
-  className = '',
+  className,
   href,
   transition,
   onClick,
@@ -40,18 +40,15 @@ export const Button = ({
   size = 'default',
   ...props
 }: ButtonProps): JSX.Element => {
-  const buttonClasses = clsx({
-    ['inline-flex justify-center w-full sm:w-auto font-normal rounded-md items-center focus:ring-2 focus:ring-offset-2 focus:outline-none transition ease-in-out duration-150 hover:opacity-75 focus:opacity-75']:
+  const buttonClasses = clsx(className, {
+    ['theme-focus ring-offset-2 dark:ring-offset-0 rounded-md inline-block w-full text-center sm:w-fit']:
       applyBaseStyles,
-    ['bg-charcoal text-white focus:ring-charcoal']: accentColor === 'black',
-    ['bg-blue text-white focus:ring-blue']: accentColor === 'blue',
-    ['bg-red text-white focus:ring-red']: accentColor === 'red',
-    ['bg-gray text-black focus:ring-charcoal hover:bg-gray-dark border border-gray-dark focus:opacity-100 hover:opacity-100']:
-      accentColor === 'plain',
-    ['']: accentColor === 'unstyled',
     ['py-3 px-6 text-base']: size === 'default',
     ['py-2.5 px-4 text-sm']: size === 'small',
-    [className]: true,
+    ['theme-button-primary']: accentColor === 'primary',
+    ['theme-button-secondary']: accentColor === 'secondary',
+    ['theme-button-danger']: accentColor === 'danger',
+    ['']: accentColor === 'unstyled',
   });
 
   if (typeof href === 'string' && href.length > 0 && !isDisabled) {
@@ -87,7 +84,7 @@ export const Button = ({
       onClick={onClick}
       className={clsx(
         buttonClasses,
-        'disabled:cursor-not-allowed disabled:text-opacity-25',
+        'disabled:pointer-events-none disabled:opacity-25',
       )}
       data-testid={testId}
       disabled={isDisabled}

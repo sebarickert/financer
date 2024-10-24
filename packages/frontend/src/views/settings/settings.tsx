@@ -73,7 +73,11 @@ export const Settings: FC<SettingsProps> = ({ roles }) => {
       </section>
       <div className="flex flex-col gap-2 mt-12 sm:flex-row">
         <HardRefreshButton />
-        <Button accentColor="plain" href="/auth/logout" className="lg:hidden">
+        <Button
+          accentColor="secondary"
+          href="/auth/logout"
+          className="lg:hidden"
+        >
           Sign out
         </Button>
       </div>

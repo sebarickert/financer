@@ -74,7 +74,7 @@
   }
 
   .theme-bg-color-with-hover {
-    @apply theme-bg-color duration-200 hover:bg-gray-500/[0.12] dark:hover:bg-gray-500/[0.16];
+    @apply theme-bg-color hover:bg-gray-500/[0.12] dark:hover:bg-gray-500/[0.16];
   }
 
   .theme-layer-color {
@@ -82,7 +82,7 @@
   }
 
   .theme-layer-color-with-hover {
-    @apply theme-layer-color duration-200 hover:bg-gray-100/50 dark:hover:bg-gray-900/50;
+    @apply theme-layer-color hover:bg-gray-100/50 dark:hover:bg-gray-900/50;
   }
 
   .theme-layer-secondary-color {
@@ -110,11 +110,15 @@
   }
 
   .theme-button-primary {
-    @apply theme-focus bg-blue-600 text-white hover:bg-blue-700 focus:bg-blue-900;
+    @apply bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-900;
   }
 
   .theme-button-secondary {
-    @apply theme-focus bg-gray-800 text-white hover:bg-gray-700 focus:bg-gray-600 dark:bg-gray-600  dark:hover:bg-gray-700 dark:focus:bg-gray-800;
+    @apply bg-gray-800 text-white hover:bg-gray-700 active:bg-gray-600 dark:bg-gray-600  dark:hover:bg-gray-700 dark:active:bg-gray-800;
+  }
+
+  .theme-button-danger {
+    @apply bg-red-600 text-white hover:bg-red-700 active:hover:bg-red-800;
   }
 
   .theme-focus {

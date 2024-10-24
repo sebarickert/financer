@@ -52,7 +52,7 @@ export const HeaderDrawerAction = ({
             {drawerButtonLabel}
           </Button>
           <Button
-            accentColor="plain"
+            accentColor="secondary"
             testId={`${buttonTestId}-cancel`}
             popoverTargetAction="hide"
             popoverTarget={id}

@@ -11,7 +11,7 @@ export const CategoryDelete = ({ onDelete }: CategoryDeleteProps) => {
       buttonIcon={'TrashIcon'}
       buttonLabel="Delete category"
       buttonTestId="delete-category"
-      drawerButtonAccentColor="red"
+      drawerButtonAccentColor="danger"
       drawerButtonLabel="Delete"
       drawerHeading="Delete category"
       drawerDescription="Are you sure you want to permanently delete this category?"

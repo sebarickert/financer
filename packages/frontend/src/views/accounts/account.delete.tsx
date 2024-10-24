@@ -11,7 +11,7 @@ export const AccountDelete = ({ onDelete }: AccountDeleteProps) => {
       buttonIcon={'TrashIcon'}
       buttonLabel="Delete account"
       buttonTestId="delete-account"
-      drawerButtonAccentColor="red"
+      drawerButtonAccentColor="danger"
       drawerButtonLabel="Delete"
       drawerHeading="Delete account"
       drawerDescription="Are you sure you want to permanently delete this account?"

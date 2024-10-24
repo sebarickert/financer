@@ -99,7 +99,7 @@ export const TransactionCategories = ({
     <>
       <Button
         onClick={addNewCategory}
-        accentColor="plain"
+        accentColor="secondary"
         isDisabled={!transactionAmount || transactionAmount < 0}
         testId="add-category-button"
         popoverTarget={formId}

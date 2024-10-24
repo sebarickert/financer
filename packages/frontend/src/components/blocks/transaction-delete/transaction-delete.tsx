@@ -11,7 +11,7 @@ export const TransactionDelete = ({ onDelete }: TransactionDeleteProps) => {
       buttonIcon={'TrashIcon'}
       buttonLabel="Delete transaction"
       buttonTestId="delete-transaction"
-      drawerButtonAccentColor="red"
+      drawerButtonAccentColor="danger"
       drawerButtonLabel="Delete"
       drawerHeading="Delete transaction"
       drawerDescription="Are you sure you want to permanently delete this transaction?"
