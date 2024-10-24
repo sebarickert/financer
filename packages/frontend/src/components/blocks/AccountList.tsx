@@ -33,7 +33,7 @@ export const AccountList: FC<AccountListProps> = ({
       label={label}
       className={clsx(className)}
       testId="account-list"
-      isHorizontal
+      columns={2}
     >
       {accounts.map(({ id, balance, name, type }) => {
         return (

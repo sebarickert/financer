@@ -6,6 +6,7 @@
     "@carbon/colors": "^11.27.0",
     "@heroicons/react": "^2.1.5",
     "@reduxjs/toolkit": "^2.2.7",
+    "@tailwindcss/container-queries": "^0.1.1",
     "chart.js": "^4.4.1",
     "clsx": "^2.0.0",
     "date-fns": "^3.0.5",
