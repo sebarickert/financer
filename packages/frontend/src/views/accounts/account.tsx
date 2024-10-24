@@ -50,23 +50,21 @@ export const Account: FC<AccountProps> = ({ account }) => {
         }
       />
       <section className="grid gap-6">
-        <section className={clsx('@container')}>
-          <div className={clsx('grid gap-2')}>
-            <div className="grid gap-8 p-6 py-8 theme-layer-color">
-              <BalanceDisplay
-                amount={account.balance}
-                iconName={accountTypeIconMapping[account.type]}
-                testId={'account-balance'}
-                childTestId={'account-name'}
-              >
-                {account.name}
-              </BalanceDisplay>
-            </div>
-            <div className="p-6 theme-layer-color">
-              <DetailsList testId="account-details" items={accountDetails} />
-            </div>
+        <div className={clsx('grid gap-2')}>
+          <div className="grid gap-8 p-6 py-8 theme-layer-color">
+            <BalanceDisplay
+              amount={account.balance}
+              iconName={accountTypeIconMapping[account.type]}
+              testId={'account-balance'}
+              childTestId={'account-name'}
+            >
+              {account.name}
+            </BalanceDisplay>
           </div>
-        </section>
+          <div className="p-6 theme-layer-color">
+            <DetailsList testId="account-details" items={accountDetails} />
+          </div>
+        </div>
         <LoaderSuspense>
           <AccountBalanceHistoryChart accountId={account.id} />
         </LoaderSuspense>

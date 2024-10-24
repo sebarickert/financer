@@ -49,7 +49,7 @@ export const Category: FC<CategoryProps> = ({
       ...(category.parentCategoryId
         ? [
             {
-              icon: 'Squares2X2Icon' as IconName,
+              icon: 'TagIcon' as IconName,
               label: 'Parent Category',
               description:
                 parseParentCategoryPath(
@@ -61,7 +61,10 @@ export const Category: FC<CategoryProps> = ({
         : []),
       {
         icon: 'InformationCircleIcon',
-        label: 'Type',
+        label:
+          categoryVisibilityCapitalized.length > 1
+            ? 'Transaction Types'
+            : 'Transaction Type',
         description: formatter.format(categoryVisibilityCapitalized),
       },
     ];
@@ -87,15 +90,15 @@ export const Category: FC<CategoryProps> = ({
           </Link>
         }
       />
-      <section>
-        <DetailsList items={categoryDetails} className="mb-8" />
+      <section className="grid gap-6">
+        <div className="p-6 theme-layer-color">
+          <DetailsList items={categoryDetails} />
+        </div>
         <CategoryGraph
           transactionsMonthlySummaries={transactionsMonthlySummaries}
           category={category}
         />
-
         <TransactionListWithMonthlyPager
-          className="mt-6"
           filterOptions={{
             parentTransactionCategory: parentTransactionCategoryId,
           }}
