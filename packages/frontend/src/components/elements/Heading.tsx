@@ -16,6 +16,7 @@ type HeadingProps = {
     url: string;
     entityTitle?: string;
   };
+  noMargin?: boolean;
 };
 
 export const Heading: FC<HeadingProps> = ({
@@ -25,6 +26,7 @@ export const Heading: FC<HeadingProps> = ({
   className = '',
   testId,
   cta,
+  noMargin,
 }) => {
   const HeadingType = variant;
 
@@ -32,7 +34,7 @@ export const Heading: FC<HeadingProps> = ({
     <div
       className={clsx('flex', className, {
         ['justify-between items-end']: cta,
-        ['mb-2 lg:mb-4']: variant !== 'h1',
+        ['mb-2 lg:mb-4']: variant !== 'h1' && !noMargin,
       })}
     >
       <HeadingType

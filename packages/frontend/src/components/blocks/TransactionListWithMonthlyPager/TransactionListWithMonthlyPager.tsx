@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { FC } from 'react';
 
 import { TransactionListWithMonthlySummary } from './TransactionListWithMonthlySummary';
@@ -45,18 +46,14 @@ export const TransactionListWithMonthlyPager: FC<
   const pagerLabel = `${pageVisibleMonth} ${pageVisibleYear}`;
 
   return (
-    <section className={className}>
-      <Pager className="mb-4" pagerOptions={pagerOptions} isStatusHidden>
+    <section className={clsx('grid gap-4', className)}>
+      <Pager pagerOptions={pagerOptions} isStatusHidden>
         {pagerLabel}
       </Pager>
       {isSummaryVisible && (
         <TransactionListWithMonthlySummary filterOptions={filterOptions} />
       )}
-      <TransactionList
-        filterOptions={filterOptions}
-        className="mt-2"
-        type={type}
-      />
+      <TransactionList filterOptions={filterOptions} type={type} />
     </section>
   );
 };
