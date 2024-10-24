@@ -1,13 +1,19 @@
 import clsx from 'clsx';
 import { FC } from 'react';
 
+import { TransactionType } from '$api/generated/financerApi';
 import { BalanceDisplay } from '$blocks/BalanceDisplay';
 import { DetailsList } from '$blocks/details-list/details-list';
 import { DetailsItem } from '$blocks/details-list/details-list.item';
 import { currentMonthAndYearInLongFormat } from '$constants/months';
+import {
+  transactionTypeLabelMapping,
+  transactionTypeThemeMapping,
+} from '$constants/transaction/transactionTypeMapping';
 import { AccountService } from '$ssr/api/account.service';
 import { TransactionService } from '$ssr/api/transaction.service';
 import { UserPreferenceService } from '$ssr/api/user-preference.service';
+import { capitalize } from '$utils/capitalize';
 import { formatCurrency } from '$utils/formatCurrency';
 
 const currentMonthFilterOptions = {
@@ -41,40 +47,39 @@ export const DashboardStats: FC = async () => {
 
   const monthlyDetails: DetailsItem[] = [
     {
-      icon: 'ArrowDownTrayIcon',
-      label: 'Incomes',
-      description: (
-        <span className="text-green">
-          {formatCurrency(totalIncomes) ?? '-'}
-        </span>
+      icon: transactionTypeThemeMapping[TransactionType.Income].icon,
+      label: capitalize(
+        transactionTypeLabelMapping[TransactionType.Income].plural,
       ),
+      description: formatCurrency(totalIncomes) ?? '-',
     },
     {
-      icon: 'ArrowUpTrayIcon',
-      label: 'Expenses',
-      description: (
-        <span className="text-red">{formatCurrency(totalExpenses) ?? '-'}</span>
+      icon: transactionTypeThemeMapping[TransactionType.Expense].icon,
+      label: capitalize(
+        transactionTypeLabelMapping[TransactionType.Expense].plural,
       ),
+      description: formatCurrency(totalExpenses) ?? '-',
     },
     {
-      icon: 'PlusIcon',
-      label: 'Net Total',
+      icon: 'EqualsIcon',
+      label: 'Balance',
       description: formatCurrency(totalIncomes - totalExpenses) ?? '-',
     },
   ];
 
   return (
-    <section
-      className={clsx(
-        'lg:grid grid-cols-[1.5fr,2fr] lg:pb-6 lg:divide-x lg:divide-gray-dark',
-      )}
-    >
-      <BalanceDisplay amount={balance}>Balance</BalanceDisplay>
-      <DetailsList
-        heading={currentMonthAndYearInLongFormat}
-        items={monthlyDetails}
-        className="max-lg:py-4 max-lg:border-t max-lg:border-gray-dark max-lg:mt-6 lg:pl-6"
-      />
+    <section className={clsx('@container')}>
+      <div className={clsx('grid @2xl:grid-cols-2 gap-2')}>
+        <div className="grid gap-8 p-6 py-8 theme-layer-color">
+          <BalanceDisplay amount={balance}>Balance</BalanceDisplay>
+        </div>
+        <div className="p-6 theme-layer-color">
+          <DetailsList
+            heading={currentMonthAndYearInLongFormat}
+            items={monthlyDetails}
+          />
+        </div>
+      </div>
     </section>
   );
 };

@@ -44,7 +44,7 @@ export const Account: FC<AccountProps> = ({ account }) => {
             testId="edit-account"
           >
             <span className="sr-only">Edit</span>
-            <Icon name="PencilSquareIcon" />
+            <Icon name="PencilIcon" />
           </Link>
         }
       />

@@ -72,7 +72,7 @@ export const BalanceDisplay: FC<BalanceDisplayProps> = ({
             { [color]: color },
           )}
         >
-          <Icon name={icon as IconName} />
+          <Icon name={icon} />
         </div>
       )}
       <div>

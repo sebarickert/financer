@@ -17,6 +17,7 @@ type HeadingProps = {
     entityTitle?: string;
   };
   noMargin?: boolean;
+  disableResponsiveSizing?: boolean;
 };
 
 export const Heading: FC<HeadingProps> = ({
@@ -27,6 +28,7 @@ export const Heading: FC<HeadingProps> = ({
   testId,
   cta,
   noMargin,
+  disableResponsiveSizing,
 }) => {
   const HeadingType = variant;
 
@@ -42,7 +44,7 @@ export const Heading: FC<HeadingProps> = ({
           'theme-text-primary text-lg font-medium',
           titleClassName,
           {
-            ['lg:text-2xl']: variant !== 'h1',
+            ['lg:text-2xl']: variant !== 'h1' && !disableResponsiveSizing,
             ['lg:text-3xl lg:font-semibold']: variant === 'h1',
           },
         )}
