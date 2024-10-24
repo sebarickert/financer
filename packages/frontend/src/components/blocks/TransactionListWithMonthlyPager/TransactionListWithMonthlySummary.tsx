@@ -5,7 +5,7 @@ import {
   TransactionType,
 } from '$api/generated/financerApi';
 import { List } from '$blocks/List';
-import { transactionTypeIconMapping } from '$constants/transaction/transactionTypeIconMapping';
+import { transactionTypeThemeMapping } from '$constants/transaction/transactionTypeMapping';
 import { ProminentDetailItem } from '$elements/ProminentDetailItem';
 import {
   TransactionListOptions,
@@ -64,13 +64,8 @@ export const TransactionListWithMonthlySummary: FC<
     <List columns={3}>
       {monthlyDetails.map(({ label, description, transactionType }) => {
         const icon = transactionType
-          ? transactionTypeIconMapping[transactionType]
+          ? transactionTypeThemeMapping[transactionType].icon
           : 'EqualsIcon';
-
-        const highlightColorMapping: Record<TransactionType, string> = {
-          [TransactionType.Income]: 'bg-green-400/15',
-          [TransactionType.Expense]: 'bg-red-400/15',
-        } as Record<TransactionType, string>;
 
         return (
           <ProminentDetailItem
@@ -79,8 +74,8 @@ export const TransactionListWithMonthlySummary: FC<
             key={label}
             highlightColor={
               transactionType
-                ? highlightColorMapping[transactionType]
-                : 'bg-gray-400/15'
+                ? transactionTypeThemeMapping[transactionType].color
+                : undefined
             }
           >
             {description}
