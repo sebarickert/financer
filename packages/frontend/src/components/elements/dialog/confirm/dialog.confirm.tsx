@@ -34,7 +34,7 @@ export const DialogConfirm = ({
         </Button>
         <Button
           onClick={onCancel}
-          accentColor="plain"
+          accentColor="secondary"
           testId={`${testId}_cancel-button`}
         >
           Cancel

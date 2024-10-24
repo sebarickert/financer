@@ -49,7 +49,7 @@ export const TransactionTemplateSwitcher = ({
   return (
     <>
       <Button
-        accentColor="plain"
+        accentColor="secondary"
         className="inline-flex items-center justify-center"
         popoverTarget={templateSwitcherId}
         size="small"
@@ -84,7 +84,7 @@ export const TransactionTemplateSwitcher = ({
             <Button
               popoverTargetAction="hide"
               popoverTarget={templateSwitcherId}
-              accentColor="plain"
+              accentColor="secondary"
             >
               Cancel
             </Button>
