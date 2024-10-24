@@ -148,4 +148,8 @@
   .theme-brand-color {
     @apply bg-blue-600;
   }
+
+  .theme-field {
+    @apply theme-focus theme-layer-color-with-hover border-none theme-text-primary appearance-none;
+  }
 }
