@@ -2,7 +2,8 @@ import clsx from 'clsx';
 import { FC } from 'react';
 
 import { TransactionType } from '$api/generated/financerApi';
-import { IconName, Icon } from '$elements/Icon';
+import { transactionTypeIconMapping } from '$constants/transaction/transactionTypeIconMapping';
+import { Icon } from '$elements/Icon';
 import { Link } from '$elements/Link';
 import { formatCurrency } from '$utils/formatCurrency';
 import { formatDate } from '$utils/formatDate';
@@ -26,14 +27,6 @@ export const TransactionListItem: FC<TransactionListItemProps> = ({
   transactionType,
   id,
 }) => {
-  const iconTypeMapping: {
-    [key in TransactionType]: IconName;
-  } = {
-    EXPENSE: 'ArrowTurnUpRightIcon',
-    INCOME: 'ArrowTurnDownLeftIcon',
-    TRANSFER: 'ArrowsRightLeftIcon',
-  };
-
   const isIncome = transactionType === 'INCOME';
   const isExpense = transactionType === 'EXPENSE';
 
@@ -60,7 +53,7 @@ export const TransactionListItem: FC<TransactionListItemProps> = ({
           { 'bg-gray-400/15': !isIncome && !isExpense },
         )}
       >
-        <Icon name={iconTypeMapping[transactionType]} />
+        <Icon name={transactionTypeIconMapping[transactionType]} />
         {isRecurring && (
           <span
             className={clsx(
