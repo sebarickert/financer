@@ -35,7 +35,7 @@ export const TransactionCategoriesItem = ({
 
   return (
     <li
-      className="grid grid-cols-[1fr,auto] items-center relative py-2"
+      className="grid grid-cols-[1fr,auto] items-center relative py-2 theme-text-primary"
       data-testid={testId}
     >
       <span className="grid">
@@ -80,7 +80,7 @@ export const TransactionCategoriesItem = ({
       <button
         onClick={onClick}
         type="button"
-        className="inline-flex items-center justify-center -mr-3 h-11 w-11"
+        className="inline-flex items-center justify-center -mr-3 rounded-md h-11 w-11 theme-focus theme-layer-color-with-hover"
         data-testid={`${testId}-edit`}
         // @ts-expect-error popovertarget is not a valid prop
         popovertarget={formId}

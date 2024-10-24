@@ -43,8 +43,8 @@ export const Button = ({
   const buttonClasses = clsx(className, {
     ['theme-focus ring-offset-2 dark:ring-offset-0 rounded-md inline-block w-full text-center sm:w-fit']:
       applyBaseStyles,
-    ['py-3 px-6 text-base']: size === 'default',
-    ['py-2.5 px-4 text-sm']: size === 'small',
+    ['py-3 px-6 text-base']: size === 'default' && accentColor !== 'unstyled',
+    ['py-2.5 px-4 text-sm']: size === 'small' && accentColor !== 'unstyled',
     ['theme-button-primary']: accentColor === 'primary',
     ['theme-button-secondary']: accentColor === 'secondary',
     ['theme-button-danger']: accentColor === 'danger',

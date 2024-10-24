@@ -18,7 +18,7 @@ export const Radio = ({
   return (
     <label
       className={clsx(
-        'flex items-center p-4 gap-4 rounded-md hover:bg-gray focus-within:bg-gray hover:cursor-pointer',
+        'flex items-center p-4 gap-4 rounded-md theme-bg-color-with-hover hover:cursor-pointer',
         { [className]: true },
       )}
       htmlFor={`${name}-${value}`}
@@ -29,17 +29,12 @@ export const Radio = ({
         type="radio"
         value={value}
         className={clsx(
-          'w-6 h-6 text-dreamless-sleep bg-gray border-gray-dark focus:ring-dreamless-sleep focus:ring-2 peer',
+          'w-6 h-6 peer appearance-none',
+          'theme-layer-color-with-hover border theme-border-primary text-blue-600',
         )}
         defaultChecked={isChecked}
       />
-      <span
-        className={clsx(
-          'text-base tracking-tight text-black peer-checked:font-medium',
-        )}
-      >
-        {children}
-      </span>
+      <span>{children}</span>
     </label>
   );
 };
