@@ -46,7 +46,7 @@ export const AccountListingContainer: FC = async () => {
             testId="add-account"
           >
             <span className="sr-only">Add account</span>
-            <Icon name="SquaresPlusIcon" />
+            <Icon name="PlusIcon" />
           </Link>
         }
       />

@@ -13,7 +13,7 @@ interface DetailsListProps {
 }
 
 export const DetailsList: FC<DetailsListProps> = ({
-  className = '',
+  className,
   items,
   testId: rawTestId,
   heading,
@@ -21,9 +21,9 @@ export const DetailsList: FC<DetailsListProps> = ({
   const testId = rawTestId ?? 'details-list';
 
   return (
-    <section className={clsx('grid gap-3', { [className]: true })}>
+    <section className={clsx('grid gap-3 theme-text-primary', className)}>
       {heading && (
-        <h2 className="inline-flex items-center gap-2 font-normal text-black/75">
+        <h2 className="inline-flex items-center gap-2 font-medium">
           <Icon name="InformationCircleIcon" />
           {heading}
         </h2>

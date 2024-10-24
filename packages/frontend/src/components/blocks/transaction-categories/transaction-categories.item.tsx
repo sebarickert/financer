@@ -87,7 +87,7 @@ export const TransactionCategoriesItem = ({
       >
         <span className="sr-only">Edit category</span>
         <span className="absolute inset-0" aria-hidden="true" />
-        <Icon name="PencilSquareIcon" />
+        <Icon name="PencilIcon" />
       </button>
     </li>
   );

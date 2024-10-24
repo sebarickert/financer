@@ -83,7 +83,7 @@ export const Category: FC<CategoryProps> = ({
             testId="edit-category"
           >
             <span className="sr-only">Edit</span>
-            <Icon name="PencilSquareIcon" />
+            <Icon name="PencilIcon" />
           </Link>
         }
       />

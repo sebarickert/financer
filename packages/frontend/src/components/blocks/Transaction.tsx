@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { FC } from 'react';
 
 import {
@@ -19,11 +20,11 @@ import { formatCurrency } from '$utils/formatCurrency';
 import { DateFormat, formatDate } from '$utils/formatDate';
 import { getTransactionType } from '$utils/transaction/getTransactionType';
 
-interface TransactionProps {
+type TransactionProps = {
   transaction: IncomeDto | ExpenseDto | TransferDto;
   toAccount?: string;
   fromAccount?: string;
-}
+};
 
 const getUrlMapping = (transactionType: TransactionType) => {
   switch (transactionType) {
@@ -107,7 +108,7 @@ export const Transaction: FC<TransactionProps> = async ({
         ...(description
           ? [
               {
-                icon: 'ChatBubbleBottomCenterIcon' as IconName,
+                icon: 'ChatBubbleBottomCenterTextIcon' as IconName,
                 label: 'Description',
                 description,
               },
@@ -128,37 +129,40 @@ export const Transaction: FC<TransactionProps> = async ({
             transition="slideInFromRight"
           >
             <span className="sr-only">Edit</span>
-            <Icon name="PencilSquareIcon" />
+            <Icon name="PencilIcon" />
           </Link>
         }
       />
-      <section>
-        <BalanceDisplay
-          className="mb-6"
-          type={transactionType}
-          amount={transaction?.amount}
+      <section className={clsx('@container')}>
+        <div
+          className={clsx(
+            'theme-layer-color rounded-md',
+            'pt-8 pb-4 px-4',
+            'grid gap-y-8 gap-x-4',
+            '@3xl:pt-4 @3xl:grid-cols-[1fr,1.5fr]',
+          )}
         >
-          {`${transaction?.description}`}
-        </BalanceDisplay>
-        <DetailsList
-          items={transactionDetails}
-          className="py-4 border-t border-b border-gray-dark"
-        />
-        {categoryDetails.length > 0 && (
-          <section className="mt-8">
-            <Heading>Categories</Heading>
-            <div className="grid border-t border-b divide-y divide-gray-dark border-gray-dark">
-              {categoryDetails.map((category) => (
-                <DetailsList
-                  testId="category-details"
-                  key={category[0].label}
-                  items={category}
-                  className="py-4"
-                />
-              ))}
-            </div>
-          </section>
-        )}
+          <BalanceDisplay type={transactionType} amount={transaction?.amount}>
+            {`${transaction?.description}`}
+          </BalanceDisplay>
+          <div className="grid gap-8 p-6 border rounded-md theme-layer-secondary-color theme-border-primary">
+            <DetailsList items={transactionDetails} />
+            {categoryDetails.length > 0 && (
+              <div>
+                <Heading disableResponsiveSizing noMargin className="mb-4">
+                  Categories
+                </Heading>
+                {categoryDetails.map((category) => (
+                  <DetailsList
+                    testId="category-details"
+                    key={category[0].label}
+                    items={category}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
       </section>
     </>
   );

@@ -1,6 +1,7 @@
 import { transactionTypeIconMapping } from './transactionTypeIconMapping';
 
 import { TransactionType } from '$api/generated/financerApi';
+import { IconName } from '$elements/Icon';
 
 export const transactionTypeLabelMapping: {
   [key in TransactionType]: { default: string; plural: string };
@@ -12,7 +13,7 @@ export const transactionTypeLabelMapping: {
 
 export const transactionTypeThemeMapping: Record<
   TransactionType,
-  Record<'color' | 'icon', string>
+  { color: string; icon: IconName }
 > = {
   [TransactionType.Income]: {
     color: 'bg-green-400/15',
