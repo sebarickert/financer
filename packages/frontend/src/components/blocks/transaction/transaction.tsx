@@ -6,7 +6,7 @@ import {
   TransactionType,
   TransferDto,
 } from '$api/generated/financerApi';
-import { BalanceDisplay } from '$blocks/balance-display/balance-display';
+import { BalanceDisplay } from '$blocks/BalanceDisplay';
 import { DetailsList } from '$blocks/details-list/details-list';
 import { DetailsItem } from '$blocks/details-list/details-list.item';
 import { Heading } from '$elements/Heading';
@@ -126,7 +126,6 @@ export const Transaction: FC<TransactionProps> = async ({
             href={`/statistics/${transactionDetailsMapping.url}/${transaction.id}/edit`}
             testId={`edit-${transactionDetailsMapping.type}-button`}
             transition="slideInFromRight"
-            // className="inline-flex items-center justify-center h-11 w-11 theme-layer-color-with-hover"
           >
             <span className="sr-only">Edit</span>
             <Icon name="PencilSquareIcon" />

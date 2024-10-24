@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { FC } from 'react';
 
-import { BalanceDisplay } from '$blocks/balance-display/balance-display';
+import { BalanceDisplay } from '$blocks/BalanceDisplay';
 import { DetailsList } from '$blocks/details-list/details-list';
 import { DetailsItem } from '$blocks/details-list/details-list.item';
 import { currentMonthAndYearInLongFormat } from '$constants/months';
