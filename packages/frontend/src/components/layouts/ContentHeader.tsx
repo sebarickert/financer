@@ -29,7 +29,7 @@ export const ContentHeader: FC<ContentHeaderProps> = ({ title }) => {
         <Link
           href={backLink}
           className={clsx(
-            'inline-flex items-center justify-center h-11 w-11 theme-layer-color-with-hover',
+            'inline-flex items-center justify-center h-11 w-11 theme-layer-color-with-hover rounded-md',
           )}
           testId="header-back-link"
           transition="slideInFromLeft"
@@ -52,7 +52,7 @@ export const ContentHeader: FC<ContentHeaderProps> = ({ title }) => {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
           className: clsx(
-            'theme-layer-color-with-hover theme-focus',
+            'theme-layer-color-with-hover theme-focus rounded-md',
             'inline-flex items-center justify-center h-11 w-11',
           ),
         })}
