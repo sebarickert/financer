@@ -12,6 +12,7 @@ export const Header: FC = () => {
     <header
       className={clsx(
         'theme-layer-color vt-name-[navigation] z-[100] pb-safe',
+        'theme-border-primary max-lg:border-t lg:border-b',
         'fixed left-0 right-0 max-lg:bottom-0 lg:top-0',
         'lg:py-4',
       )}
