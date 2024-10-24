@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { FC } from 'react';
 
 import { OverrideUserDataContainer } from '$container/settings/override-user-data.container';
-import { Layout } from '$layouts/layout/layout';
+import { Layout } from '$layouts/Layout';
 
 export const metadata: Metadata = {
   title: 'Override User Data (DANGER ZONE)',

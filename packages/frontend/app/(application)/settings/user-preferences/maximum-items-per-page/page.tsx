@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 import { MaximumItemsPerPageContainer } from '$container/user-preferences/maximum-items-per-page.container';
-import { Layout } from '$layouts/layout/layout';
+import { Layout } from '$layouts/Layout';
 
 export const metadata: Metadata = {
   title: 'Maximum Items Per Page',

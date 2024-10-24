@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { FC } from 'react';
 
-import { Layout } from '$layouts/layout/layout';
+import { Layout } from '$layouts/Layout';
 import { UserPreferences } from '$views/settings/user-preferences/user-preferences';
 
 export const metadata: Metadata = {

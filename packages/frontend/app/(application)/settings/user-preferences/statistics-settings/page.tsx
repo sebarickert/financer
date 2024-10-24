@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 import { StatisticsSettingsContainer } from '$container/user-preferences/statistics-settings.container';
-import { Layout } from '$layouts/layout/layout';
+import { Layout } from '$layouts/Layout';
 
 export const metadata: Metadata = {
   title: 'Statistics Settings',

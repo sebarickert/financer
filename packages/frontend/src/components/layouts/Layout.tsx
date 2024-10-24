@@ -1,4 +1,4 @@
-import { Container } from '../container/container';
+import { Container } from './container/container';
 
 import { ToastContainer } from '$blocks/toast/toast.container';
 import { Header } from '$layouts/Header';

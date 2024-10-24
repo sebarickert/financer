@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { FC } from 'react';
 
 import { CategoryListingContainer } from '$container/categories/category.listing.container';
-import { Layout } from '$layouts/layout/layout';
+import { Layout } from '$layouts/Layout';
 
 export const metadata: Metadata = {
   title: 'Categories',

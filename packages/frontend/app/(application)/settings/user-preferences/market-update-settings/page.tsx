@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 import { MarketUpdateSettingsContainer } from '$container/user-preferences/market-update-settings.container';
-import { Layout } from '$layouts/layout/layout';
+import { Layout } from '$layouts/Layout';
 
 export const metadata: Metadata = {
   title: 'Market Update Settings',
