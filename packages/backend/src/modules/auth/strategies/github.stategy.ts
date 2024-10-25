@@ -48,6 +48,7 @@ export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
         profileImageUrl: profile.photos?.slice().shift()?.value,
         auth0Id: null,
         roles: [],
+        theme: 'AUTO',
       });
     } catch (error) {
       this.logger.error('Error validating user by github', error);

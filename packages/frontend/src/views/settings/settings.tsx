@@ -4,6 +4,7 @@ import { Role } from '$api/generated/financerApi';
 import { HardRefreshButton } from '$blocks/HardRefreshButton';
 import { List } from '$blocks/List';
 import { ProminentLink } from '$blocks/ProminentLink';
+import { ThemeSwitcher } from '$blocks/ThemeSwitcher/ThemeSwitcher';
 import { settingsPaths } from '$constants/settings-paths';
 import { Button } from '$elements/button/button';
 import { IconName } from '$elements/Icon';
@@ -71,6 +72,7 @@ export const Settings: FC<SettingsProps> = ({ roles }) => {
           </List>
         ))}
       </section>
+      <ThemeSwitcher />
       <div className="flex flex-col gap-2 mt-12 sm:flex-row">
         <HardRefreshButton />
         <Button accentColor="secondary" href="/auth/logout">

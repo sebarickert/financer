@@ -55,6 +55,7 @@ export class Auth0Strategy extends PassportStrategy(Strategy, 'auth0') {
         githubId: null,
         auth0Id: profile.id,
         roles: [],
+        theme: 'AUTO',
       });
     } catch (error) {
       this.logger.error('Error validating user by auth0', error);
