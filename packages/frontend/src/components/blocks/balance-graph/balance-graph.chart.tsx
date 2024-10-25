@@ -3,6 +3,7 @@
 import { ChartData, ChartOptions } from 'chart.js';
 import { FC, useMemo } from 'react';
 
+import { Theme } from '$api/generated/financerApi';
 import { baseChartOptions } from '$constants/graph/graph.settings';
 import { ChartWrapperDynamic } from '$elements/chart/chart-wrapper.dynamic';
 import { formatCurrency } from '$utils/formatCurrency';
@@ -72,10 +73,12 @@ const chartOptions: ChartOptions = {
 
 type BalanceGraphChartProps = {
   balanceHistory: BalanceHistory[];
+  userTheme: Theme;
 };
 
 export const BalanceGraphChart: FC<BalanceGraphChartProps> = ({
   balanceHistory,
+  userTheme,
 }) => {
   const chartData: ChartData = useMemo(
     () => ({
@@ -110,6 +113,7 @@ export const BalanceGraphChart: FC<BalanceGraphChartProps> = ({
       type="line"
       data={chartData}
       options={chartOptions}
+      userTheme={userTheme}
     />
   );
 };

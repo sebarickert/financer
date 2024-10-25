@@ -1,4 +1,3 @@
-import { updateChartColors } from '$constants/graph/graph.settings';
 import {
   CategoryScale,
   Chart,
@@ -14,15 +13,30 @@ import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 import { Chart as ChartComponent, ChartProps } from 'react-chartjs-2';
 
+import { Theme } from '$api/generated/financerApi';
+import { updateChartColors } from '$constants/graph/graph.settings';
+import { useDefaultColorScheme } from '$hooks/useDefaultColorScheme';
+
 type ChartWrapperProps = {
   isLoading?: boolean;
+  userTheme?: Theme;
 } & ChartProps;
 
-const ChartWrapper = ({ isLoading, options: optionsOriginal, ...chartProps }: ChartWrapperProps) => {
+const ChartWrapper = ({
+  isLoading,
+  userTheme = Theme.Auto,
+  options: optionsOriginal,
+  ...chartProps
+}: ChartWrapperProps) => {
   const [isInitialized, setIsInitialized] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const defaultTheme = useDefaultColorScheme();
 
-  const options = updateChartColors(optionsOriginal as ChartOptions, isDarkMode);
+  const theme = userTheme === Theme.Auto ? defaultTheme : userTheme;
+
+  const options = updateChartColors(
+    optionsOriginal as ChartOptions,
+    theme === Theme.Dark,
+  );
 
   useEffect(() => {
     const register = async () => {
