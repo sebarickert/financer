@@ -6,7 +6,7 @@ import {
   formatCurrency,
 } from '$utils/formatCurrency';
 
-const baseChartFontFamily = 'Inter var';
+const baseChartFontFamily = 'InterVariable';
 
 const baseTextConfiguration = {
   size: 15,
@@ -112,13 +112,6 @@ export const baseChartOptions = {
       bodyFont: baseTextConfiguration,
       footerFont: baseTextConfiguration,
       callbacks: {
-        // Try to get these circles centered with text...
-        // labelColor(tooltipItem) {
-        //   return {
-        //     backgroundColor: tooltipItem.dataset.borderColor,
-        //     borderColor: tooltipItem.dataset.borderColor,
-        //   };
-        // },
         label: (context) => {
           const label = context.dataset.label || '';
           const value = formatCurrency(context.parsed.y || 0);

@@ -22,7 +22,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Inter var", ...defaultTheme.fontFamily.sans],
+        sans: ["InterVariable", ...defaultTheme.fontFamily.sans],
       },
       colors: {
         ...carbonColors,
