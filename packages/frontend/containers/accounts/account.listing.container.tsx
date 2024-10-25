@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { AccountDto, AccountType } from '$api/generated/financerApi';
+import { AccountType } from '$api/generated/financerApi';
 import { AccountList } from '$blocks/AccountList';
 import { Icon } from '$elements/Icon';
 import { Link } from '$elements/Link';
@@ -16,25 +16,17 @@ const accountCategories = {
 export const AccountListingContainer: FC = async () => {
   const { data: accounts } = await AccountService.getAll();
 
-  // typescript does not support Object.groupBy but browser and nodejs runtime does
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const groupedAccounts = (Object as any).groupBy(
-    accounts,
-    ({ type }: AccountDto) => {
-      if (type === AccountType.Loan || type === AccountType.Credit) {
-        return accountCategories.loans;
-      }
+  const groupedAccounts = Object.groupBy(accounts, ({ type }) => {
+    if (type === AccountType.Loan || type === AccountType.Credit) {
+      return accountCategories.loans;
+    }
 
-      if (type === AccountType.Investment) {
-        return accountCategories.investments;
-      }
+    if (type === AccountType.Investment) {
+      return accountCategories.investments;
+    }
 
-      return accountCategories.savings;
-    },
-  ) as Record<
-    (typeof accountCategories)[keyof typeof accountCategories],
-    AccountDto[]
-  >;
+    return accountCategories.savings;
+  });
 
   return (
     <>

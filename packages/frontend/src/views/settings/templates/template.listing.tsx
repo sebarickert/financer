@@ -30,8 +30,7 @@ const templateIconMapping: Record<string, IconName> = {
 };
 
 export const TemplateListing: FC<TemplateListingProps> = ({ templates }) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const filteredTemplates = (Map as any).groupBy(
+  const filteredTemplates = Map.groupBy(
     templates,
     ({ templateType }: TransactionTemplateDto) => templateType[0],
   ) as Map<TransactionTemplateType, TransactionTemplateDto[]>;
