@@ -46,15 +46,14 @@ const RootLayout: FC<ChildrenProp> = async ({ children }) => {
   const authenticationStatus = await AuthenticationService.getStatus();
   const pathname = headersList.get(CustomHeader.PATHNAME) ?? '';
 
-  if (
-    !authenticationStatus?.authenticated &&
-    !PUBLIC_ROUTES.includes(pathname)
-  ) {
+  const isLoggedIn = !!authenticationStatus?.authenticated;
+
+  if (!isLoggedIn && !PUBLIC_ROUTES.includes(pathname)) {
     redirect('/login', RedirectType.replace);
-  } else if (pathname === '/login/' && authenticationStatus?.authenticated) {
+  } else if (pathname === '/login/' && isLoggedIn) {
     redirect('/', RedirectType.replace);
   } else if (
-    authenticationStatus?.authenticated &&
+    isLoggedIn &&
     !cookiesStore.get(REDIRECT_COOKIE_NAME) &&
     !authenticationStatus.hasAccounts &&
     pathname !== '/accounts/add/'
@@ -64,7 +63,7 @@ const RootLayout: FC<ChildrenProp> = async ({ children }) => {
     redirect('/accounts/add', RedirectType.replace);
   }
 
-  const theme = await UserService.getOwnUserTheme();
+  const theme = isLoggedIn ? await UserService.getOwnUserTheme() : Theme.Auto;
 
   // We don't have to polyfill every feature by our self, since next js already does by default for many features
   // See the full list from here: https://nextjs.org/docs/architecture/supported-browsers

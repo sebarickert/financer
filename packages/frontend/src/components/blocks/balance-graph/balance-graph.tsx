@@ -23,8 +23,7 @@ const yearAgoFilterOptions = {
 
 export const BalanceGraph: FC = async () => {
   const dashboardSettings = await UserPreferenceService.getDashboardSettings();
-    const theme = await UserService.getOwnUserTheme();
-;
+  const theme = await UserService.getOwnUserTheme();
   const accountTypeFilter = { accountTypes: dashboardSettings?.accountTypes };
 
   const totalBalance = await AccountService.getTotalBalance(accountTypeFilter);
