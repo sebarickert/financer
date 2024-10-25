@@ -3,7 +3,6 @@
 import { ChartData, ChartOptions } from 'chart.js';
 import { FC, useMemo } from 'react';
 
-import { colorPalette } from '$constants/colorPalette';
 import { baseChartOptions } from '$constants/graph/graph.settings';
 import { ChartWrapperDynamic } from '$elements/chart/chart-wrapper.dynamic';
 import { formatCurrency } from '$utils/formatCurrency';
@@ -91,7 +90,7 @@ export const BalanceGraphChart: FC<BalanceGraphChartProps> = ({
         {
           label: 'Balance',
           fill: true,
-          borderColor: colorPalette.blue,
+          borderColor: '#0f62fe',
           backgroundColor: setGradientLineGraphBackground,
           data: balanceHistory.map(({ balance }) => balance),
           tension: 0.25,

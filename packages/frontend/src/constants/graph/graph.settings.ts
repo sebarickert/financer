@@ -1,6 +1,5 @@
 import { ChartOptions, FontSpec, Tooltip } from 'chart.js';
 
-import { colorPalette } from '$constants/colorPalette';
 import {
   formatCurrencyAbbreviation,
   formatCurrency,
@@ -18,6 +17,65 @@ Tooltip.positioners.topLeft = function () {
   return {
     x: 16,
     y: 12,
+  };
+};
+
+const lightModeColors = {
+  xTicksColor: `#525252`, // theme-text-secondary
+  yGridColor: `#f4f4f4`, // theme-layer-color
+  yTicksColor: `#525252`, // theme-text-secondary
+  tooltipBackgroundColor: `#f4f4f4`, // theme-layer-color
+  tooltipTitleColor: '#161616', // theme-text-primary
+  tooltipBodyColor: '#161616', // theme-text-primary
+  tooltipFooterColor: '#161616', // theme-text-primary
+};
+
+const darkModeColors = {
+  xTicksColor: `#c6c6c6`, // theme-text-secondary
+  yGridColor: `#262626`, // theme-layer-color
+  yTicksColor: `#c6c6c6`, // theme-text-secondary
+  tooltipBackgroundColor: `#262626`, // theme-layer-color
+  tooltipTitleColor: '#f4f4f4', // theme-text-primary
+  tooltipBodyColor: '#f4f4f4', // theme-text-primary
+  tooltipFooterColor: '#f4f4f4', // theme-text-primary
+};
+
+export const updateChartColors = (options: ChartOptions, isDarkMode: boolean): ChartOptions => {
+  const chartColors = isDarkMode ? darkModeColors : lightModeColors;
+
+  return {
+    ...options,
+    scales: {
+      ...options.scales,
+      x: {
+        ...options.scales?.x,
+        ticks: {
+          ...options.scales?.x?.ticks,
+          color: chartColors.xTicksColor,
+        },
+      },
+      y: {
+        ...options.scales?.y,
+        grid: {
+          ...options.scales?.y?.grid,
+          color: chartColors.yGridColor,
+        },
+        ticks: {
+          ...options.scales?.y?.ticks,
+          color: chartColors.yTicksColor,
+        },
+      },
+    },
+    plugins: {
+      ...options.plugins,
+      tooltip: {
+        ...options.plugins?.tooltip,
+        backgroundColor: chartColors.tooltipBackgroundColor,
+        titleColor: chartColors.tooltipTitleColor,
+        bodyColor: chartColors.tooltipBodyColor,
+        footerColor: chartColors.tooltipFooterColor,
+      },
+    },
   };
 };
 
@@ -45,7 +103,6 @@ export const baseChartOptions = {
       ticks: {
         padding: 0,
         maxRotation: 0,
-        color: `${colorPalette.charcoal}99`,
         font: {
           size: 12,
           family: baseChartFontFamily,
@@ -58,9 +115,6 @@ export const baseChartOptions = {
       border: {
         display: false,
       },
-      grid: {
-        color: `${colorPalette.charcoal}0D`,
-      },
       ticks: {
         mirror: true,
         padding: 0,
@@ -68,7 +122,6 @@ export const baseChartOptions = {
           if (index % 2 === 0 || ticks.length - 1 === index) return null;
           return `${formatCurrencyAbbreviation(Number(val))} `;
         },
-        color: `${colorPalette.charcoal}66`,
       },
     },
   },
@@ -93,8 +146,6 @@ export const baseChartOptions = {
     tooltip: {
       position: 'topLeft',
       caretSize: 0,
-      backgroundColor: `${colorPalette.gray}`,
-      borderColor: colorPalette['gray-dark'],
       borderWidth: 1,
       cornerRadius: 2,
       padding: 16,
@@ -104,9 +155,6 @@ export const baseChartOptions = {
       boxWidth: 8,
       boxPadding: 4,
       bodySpacing: 4,
-      titleColor: '#000000',
-      bodyColor: '#000000',
-      footerColor: colorPalette.charcoal,
       titleMarginBottom: 4,
       titleFont: baseTextConfiguration,
       bodyFont: baseTextConfiguration,

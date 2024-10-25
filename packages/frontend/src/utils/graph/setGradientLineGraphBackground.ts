@@ -1,17 +1,15 @@
 import { ScriptableContext } from 'chart.js';
 
-import { colorPalette } from '$constants/colorPalette';
-
 const getGradientColorByLabel = (label: string) => {
   switch (label) {
     case 'expenses':
-      return colorPalette.red;
+      return '#da1e28'
 
     case 'incomes':
-      return colorPalette.green;
+      return '#198038';
 
     default:
-      return colorPalette.blue;
+      return '#0f62fe';
   }
 };
 
