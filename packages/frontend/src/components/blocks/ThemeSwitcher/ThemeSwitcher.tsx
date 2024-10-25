@@ -4,8 +4,12 @@ import { ThemeSwitcherClient } from './ThemeSwitcherClient';
 
 import { UserService } from '$ssr/api/user.service';
 
-export const ThemeSwitcher: FC = async () => {
+type ThemeSwitcherProps = {
+  className?: string;
+};
+
+export const ThemeSwitcher: FC<ThemeSwitcherProps> = async ({ className }) => {
   const { theme } = await UserService.getOwnUser();
 
-  return <ThemeSwitcherClient theme={theme} />;
+  return <ThemeSwitcherClient theme={theme} className={className} />;
 };
