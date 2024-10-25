@@ -45,7 +45,7 @@ export class AccountDto implements Account {
   })
   readonly type: AccountType;
 
-  @ApiProperty()
+  @ApiProperty({ type: Number })
   @TransformDecimal()
   @IsDecimal({ message: 'Balance must be a decimal number, with 2 decimals.' })
   readonly balance: Decimal;

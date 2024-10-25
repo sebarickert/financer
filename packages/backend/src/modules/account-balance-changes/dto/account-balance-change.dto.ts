@@ -30,7 +30,7 @@ export class AccountBalanceChangeDto implements AccountBalanceChange {
   @Type(() => Date)
   readonly date: Date;
 
-  @ApiProperty()
+  @ApiProperty({ type: Number })
   @TransformDecimal()
   @IsDecimal({ message: 'Amount must be a decimal number.' })
   readonly amount: Decimal;

@@ -67,7 +67,7 @@ export class TransactionTemplateDto implements TransactionTemplate {
   })
   readonly templateVisibility: TransactionType;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ type: Number })
   @MinDecimal(new Decimal(0.01), {
     message: 'Amount must be a positive number.',
   })

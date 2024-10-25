@@ -16,12 +16,12 @@ export class AccountBalanceHistoryDto {
   @IsDate()
   date: Date;
 
-  @ApiProperty()
+  @ApiProperty({ type: Number })
   @TransformDecimal()
   @IsDecimal()
   amount: Decimal;
 
-  @ApiProperty()
+  @ApiProperty({ type: Number })
   @TransformDecimal()
   @IsDecimal()
   balance: Decimal;
