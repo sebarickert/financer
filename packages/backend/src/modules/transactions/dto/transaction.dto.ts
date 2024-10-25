@@ -33,7 +33,7 @@ export class TransactionDto implements Transaction {
   @IsUUID()
   readonly id: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: Number })
   @MinDecimal(new Decimal(0.01), {
     message: 'Amount must be a positive number.',
   })

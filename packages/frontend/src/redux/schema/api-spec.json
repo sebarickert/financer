@@ -1568,13 +1568,12 @@
         },
         "required": ["createdAt", "updatedAt", "id", "userId", "key", "value"]
       },
-      "i": { "type": "object", "properties": {} },
       "CreateTransactionCategoryMappingWithoutTransactionDto": {
         "type": "object",
         "properties": {
           "description": { "type": "string" },
           "categoryId": { "type": "string" },
-          "amount": { "$ref": "#/components/schemas/i" }
+          "amount": { "type": "number" }
         },
         "required": ["categoryId", "amount"]
       },
@@ -1584,7 +1583,7 @@
           "createdAt": { "format": "date-time", "type": "string" },
           "updatedAt": { "format": "date-time", "type": "string" },
           "id": { "type": "string" },
-          "amount": { "$ref": "#/components/schemas/i" },
+          "amount": { "type": "number" },
           "description": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
           "userId": { "type": "string" },
@@ -1630,7 +1629,7 @@
           "id": { "type": "string" },
           "name": { "type": "string" },
           "type": { "$ref": "#/components/schemas/AccountType" },
-          "balance": { "$ref": "#/components/schemas/i" },
+          "balance": { "type": "number" },
           "userId": { "type": "string" },
           "isDeleted": { "type": "boolean" }
         },
@@ -1652,7 +1651,7 @@
           "updatedAt": { "format": "date-time", "type": "string" },
           "id": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
-          "amount": { "$ref": "#/components/schemas/i" },
+          "amount": { "type": "number" },
           "userId": { "type": "string" },
           "accountId": { "type": "string" }
         },
@@ -1706,7 +1705,7 @@
           "description": { "type": "string" },
           "categoryId": { "type": "string" },
           "transactionId": { "type": "string" },
-          "amount": { "$ref": "#/components/schemas/i" }
+          "amount": { "type": "number" }
         },
         "required": [
           "createdAt",
@@ -1736,7 +1735,7 @@
           "templateVisibility": {
             "$ref": "#/components/schemas/TransactionType"
           },
-          "amount": { "$ref": "#/components/schemas/i" },
+          "amount": { "type": "number" },
           "description": { "type": "string" },
           "dayOfMonth": { "type": "number" },
           "dayOfMonthToCreate": { "type": "number" },
@@ -1874,7 +1873,7 @@
         "properties": {
           "name": { "type": "string" },
           "type": { "$ref": "#/components/schemas/AccountType" },
-          "balance": { "$ref": "#/components/schemas/i" }
+          "balance": { "type": "number" }
         },
         "required": ["name", "type", "balance"]
       },
@@ -1902,15 +1901,15 @@
         "properties": {
           "name": { "type": "string" },
           "type": { "$ref": "#/components/schemas/AccountType" },
-          "balance": { "$ref": "#/components/schemas/i" }
+          "balance": { "type": "number" }
         }
       },
       "AccountBalanceHistoryDto": {
         "type": "object",
         "properties": {
           "date": { "format": "date-time", "type": "string" },
-          "amount": { "$ref": "#/components/schemas/i" },
-          "balance": { "$ref": "#/components/schemas/i" }
+          "amount": { "type": "number" },
+          "balance": { "type": "number" }
         },
         "required": ["date", "amount", "balance"]
       },
@@ -1930,10 +1929,10 @@
           "incomesCount": { "type": "number" },
           "expensesCount": { "type": "number" },
           "transfersCount": { "type": "number" },
-          "totalAmount": { "$ref": "#/components/schemas/i" },
-          "incomeAmount": { "$ref": "#/components/schemas/i" },
-          "expenseAmount": { "$ref": "#/components/schemas/i" },
-          "transferAmount": { "$ref": "#/components/schemas/i" }
+          "totalAmount": { "type": "number" },
+          "incomeAmount": { "type": "number" },
+          "expenseAmount": { "type": "number" },
+          "transferAmount": { "type": "number" }
         },
         "required": [
           "id",
@@ -1956,10 +1955,10 @@
           "incomesCount": { "type": "number" },
           "expensesCount": { "type": "number" },
           "transfersCount": { "type": "number" },
-          "totalAmount": { "$ref": "#/components/schemas/i" },
-          "incomeAmount": { "$ref": "#/components/schemas/i" },
-          "expenseAmount": { "$ref": "#/components/schemas/i" },
-          "transferAmount": { "$ref": "#/components/schemas/i" }
+          "totalAmount": { "type": "number" },
+          "incomeAmount": { "type": "number" },
+          "expenseAmount": { "type": "number" },
+          "transferAmount": { "type": "number" }
         },
         "required": [
           "id",
@@ -2019,7 +2018,7 @@
           "templateVisibility": {
             "$ref": "#/components/schemas/TransactionType"
           },
-          "amount": { "$ref": "#/components/schemas/i" },
+          "amount": { "type": "number" },
           "description": { "type": "string" },
           "dayOfMonth": { "type": "number" },
           "dayOfMonthToCreate": { "type": "number" },
@@ -2040,7 +2039,7 @@
           "templateVisibility": {
             "$ref": "#/components/schemas/TransactionType"
           },
-          "amount": { "$ref": "#/components/schemas/i" },
+          "amount": { "type": "number" },
           "description": { "type": "string" },
           "dayOfMonth": { "type": "number" },
           "dayOfMonthToCreate": { "type": "number" },
@@ -2055,7 +2054,7 @@
           "createdAt": { "format": "date-time", "type": "string" },
           "updatedAt": { "format": "date-time", "type": "string" },
           "id": { "type": "string" },
-          "amount": { "$ref": "#/components/schemas/i" },
+          "amount": { "type": "number" },
           "description": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
           "userId": { "type": "string" },
@@ -2082,7 +2081,7 @@
       "CreateExpenseDto": {
         "type": "object",
         "properties": {
-          "amount": { "$ref": "#/components/schemas/i" },
+          "amount": { "type": "number" },
           "description": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
           "fromAccount": { "type": "string" },
@@ -2104,7 +2103,7 @@
       "UpdateExpenseDto": {
         "type": "object",
         "properties": {
-          "amount": { "$ref": "#/components/schemas/i" },
+          "amount": { "type": "number" },
           "description": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
           "fromAccount": { "type": "string" },
@@ -2122,7 +2121,7 @@
           "createdAt": { "format": "date-time", "type": "string" },
           "updatedAt": { "format": "date-time", "type": "string" },
           "id": { "type": "string" },
-          "amount": { "$ref": "#/components/schemas/i" },
+          "amount": { "type": "number" },
           "description": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
           "userId": { "type": "string" },
@@ -2149,7 +2148,7 @@
       "CreateIncomeDto": {
         "type": "object",
         "properties": {
-          "amount": { "$ref": "#/components/schemas/i" },
+          "amount": { "type": "number" },
           "description": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
           "toAccount": { "type": "string" },
@@ -2165,7 +2164,7 @@
       "UpdateIncomeDto": {
         "type": "object",
         "properties": {
-          "amount": { "$ref": "#/components/schemas/i" },
+          "amount": { "type": "number" },
           "description": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
           "toAccount": { "type": "string" },
@@ -2183,7 +2182,7 @@
           "createdAt": { "format": "date-time", "type": "string" },
           "updatedAt": { "format": "date-time", "type": "string" },
           "id": { "type": "string" },
-          "amount": { "$ref": "#/components/schemas/i" },
+          "amount": { "type": "number" },
           "description": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
           "userId": { "type": "string" },
@@ -2212,7 +2211,7 @@
       "CreateTransferDto": {
         "type": "object",
         "properties": {
-          "amount": { "$ref": "#/components/schemas/i" },
+          "amount": { "type": "number" },
           "description": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
           "fromAccount": { "type": "string" },
@@ -2236,7 +2235,7 @@
       "UpdateTransferDto": {
         "type": "object",
         "properties": {
-          "amount": { "$ref": "#/components/schemas/i" },
+          "amount": { "type": "number" },
           "description": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
           "fromAccount": { "type": "string" },

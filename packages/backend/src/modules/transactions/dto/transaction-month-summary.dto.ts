@@ -38,22 +38,22 @@ export class TransactionMonthSummaryDto {
   @ApiProperty()
   readonly transfersCount: number;
 
-  @ApiProperty()
+  @ApiProperty({ type: Number })
   @TransformDecimal()
   @IsDecimal()
   readonly totalAmount: Decimal;
 
-  @ApiProperty()
+  @ApiProperty({ type: Number })
   @TransformDecimal()
   @IsDecimal()
   readonly incomeAmount: Decimal;
 
-  @ApiProperty()
+  @ApiProperty({ type: Number })
   @TransformDecimal()
   @IsDecimal()
   readonly expenseAmount: Decimal;
 
-  @ApiProperty()
+  @ApiProperty({ type: Number })
   @TransformDecimal()
   @IsDecimal()
   readonly transferAmount: Decimal;

@@ -31,22 +31,22 @@ export class CategoryMonthlySummaryDto {
   @ApiProperty()
   readonly transfersCount: number;
 
-  @ApiProperty()
+  @ApiProperty({ type: Number })
   @IsDecimal()
   @TransformDecimal()
   readonly totalAmount: Decimal;
 
-  @ApiProperty()
+  @ApiProperty({ type: Number })
   @IsDecimal()
   @TransformDecimal()
   readonly incomeAmount: Decimal;
 
-  @ApiProperty()
+  @ApiProperty({ type: Number })
   @IsDecimal()
   @TransformDecimal()
   readonly expenseAmount: Decimal;
 
-  @ApiProperty()
+  @ApiProperty({ type: Number })
   @IsDecimal()
   @TransformDecimal()
   readonly transferAmount: Decimal;
