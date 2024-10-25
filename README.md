@@ -21,6 +21,11 @@ Financer is a simple financial tracker app that helps you track monthly expenses
 - [Installing New Dependencies](#installing-new-dependencies)
   - [Frontend](#frontend)
   - [Backend](#backend)
+- [Updating Types](#updating-types)
+- [Testing Guide](#testing-guide)
+  - [Unit Tests](#unit-tests)
+  - [End-to-End Tests](#end-to-end-tests)
+  - [Type Checking](#type-checking)
 - [Production Tooling](#production-tooling)
   - [Update the Database version](#update-the-database-version)
     - [1. Create a new backup from the database](#1-create-a-new-backup-from-the-database)
@@ -102,6 +107,66 @@ npm -w frontend install DEPENDENCY-NAME
 
 ```bash
 npm -w backend install DEPENDENCY-NAME
+```
+
+## Updating Types
+
+To update the types, run:
+
+```bash
+npm run types:update
+```
+
+This will export the types from the backend, copy the API spec to the frontend, and generate the necessary types for both the frontend and Playwright.
+
+By following these commands, you can ensure that your codebase remains robust and maintainable.
+
+## Testing Guide
+
+To ensure the quality and reliability of the application, we have set up various testing commands. Below are the commands you can use to run different types of tests:
+
+### Unit Tests
+
+To run unit tests for both the backend and frontend, use the following command:
+
+```bash
+npm run test
+```
+
+### End-to-End Tests
+
+We use Playwright for end-to-end testing. You can run the tests using the following commands:
+
+- To run all end-to-end tests:
+
+```bash
+npm run e2e:test
+```
+
+- To run end-to-end tests against an external server:
+
+```bash
+npm run e2e:test:external
+```
+
+- To open the Playwright test UI:
+
+```bash
+npm run e2e:open
+```
+
+- To open the Playwright test UI against an external server:
+
+```bash
+npm run e2e:open:external
+```
+
+### Type Checking
+
+To check the types across the workspace, use:
+
+```bash
+npm run check-types
 ```
 
 ## Production Tooling
