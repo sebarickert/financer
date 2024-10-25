@@ -33,7 +33,7 @@ export const List: FC<ListProps> = ({
           return (
             child && (
               <li
-                data-testid={testId}
+                data-testid={`${testId}-item`}
                 className={clsx(
                   'focus-within:theme-focus-without-prefix focus-within:z-10 focus-within:relative overflow-hidden',
                 )}

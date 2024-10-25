@@ -3,7 +3,7 @@ import { ScriptableContext } from 'chart.js';
 const getGradientColorByLabel = (label: string) => {
   switch (label) {
     case 'expenses':
-      return '#da1e28'
+      return '#da1e28';
 
     case 'incomes':
       return '#198038';

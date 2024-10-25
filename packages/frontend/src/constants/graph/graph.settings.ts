@@ -40,7 +40,10 @@ const darkModeColors = {
   tooltipFooterColor: '#f4f4f4', // theme-text-primary
 };
 
-export const updateChartColors = (options: ChartOptions, isDarkMode: boolean): ChartOptions => {
+export const updateChartColors = (
+  options: ChartOptions,
+  isDarkMode: boolean,
+): ChartOptions => {
   const chartColors = isDarkMode ? darkModeColors : lightModeColors;
 
   return {

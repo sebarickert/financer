@@ -73,7 +73,7 @@ export const ErrorPage = ({ errorPageType }: ErrorPageProps) => {
 
   return (
     <>
-      <p className="max-w-xl mb-4 text-lg">
+      <p className="max-w-xl mb-4 text-lg theme-text-primary">
         Oops... Something went wrong. We are not sure what happened. Click the
         button below to try to fix the error.
       </p>

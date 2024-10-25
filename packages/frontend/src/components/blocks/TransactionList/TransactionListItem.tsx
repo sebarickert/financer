@@ -38,14 +38,13 @@ export const TransactionListItem: FC<TransactionListItemProps> = ({
   return (
     <Link
       href={url}
-      testId="account-row"
+      testId={id}
       className={clsx(
         'theme-layer-color-with-hover',
         'py-5 px-4',
         'flex items-center gap-4',
       )}
       transition="slideInFromRight"
-      data-testid={id}
     >
       <div
         className={clsx(

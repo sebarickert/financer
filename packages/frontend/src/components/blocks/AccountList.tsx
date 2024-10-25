@@ -17,13 +17,13 @@ export interface AccountListingItem {
 
 type AccountListProps = {
   label?: string;
-  accounts: AccountDto[];
+  accounts: AccountDto[] | undefined;
   className?: string;
 };
 
 export const AccountList: FC<AccountListProps> = ({
   label,
-  accounts,
+  accounts = [],
   className,
 }) => {
   if (accounts.length === 0) return null;
