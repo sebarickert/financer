@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 import { Layout } from '$layouts/Layout';
-import { Dashboard } from '$views/dashboard/Dashboard';
+import { Dashboard } from '$views/dashboard/dashboard';
 
 export const metadata: Metadata = {
   title: 'Dashboard',
