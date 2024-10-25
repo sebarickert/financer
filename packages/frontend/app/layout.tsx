@@ -1,11 +1,14 @@
+import clsx from 'clsx';
 import { Metadata, Viewport } from 'next';
 import { cookies, headers } from 'next/headers';
 import { redirect, RedirectType } from 'next/navigation';
 import { FC } from 'react';
 
+import { Theme } from '$api/generated/financerApi';
 import { faviconList } from '$assets/favicon-list';
 import { RootProviderContainer } from '$container/root.provider';
 import { AuthenticationService } from '$ssr/api/authentication.service';
+import { UserService } from '$ssr/api/user.service';
 import { ChildrenProp } from 'src/types/children-prop';
 import { CustomHeader } from 'src/types/custom-headers';
 
@@ -61,14 +64,22 @@ const RootLayout: FC<ChildrenProp> = async ({ children }) => {
     redirect('/accounts/add', RedirectType.replace);
   }
 
+  const { theme } = await UserService.getOwnUser();
+
   // We don't have to polyfill every feature by our self, since next js already does by default for many features
   // See the full list from here: https://nextjs.org/docs/architecture/supported-browsers
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      className={clsx({
+        ['dark']: theme === Theme.Dark,
+        ['light']: theme === Theme.Light,
+      })}
+    >
       <head>
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
       </head>
-      <body className="min-h-screen theme-bg-color">
+      <body className="min-h-screen theme-bg-color ">
         <RootProviderContainer
           shouldShowOnboarding={!authenticationStatus?.hasAccounts}
           // eslint-disable-next-line @typescript-eslint/no-explicit-any

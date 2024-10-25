@@ -11,6 +11,7 @@
     "build": "nest build",
     "format": "eslint {src,test}/**/*.ts --fix",
     "lint": "eslint \"{src,test}/**/*.ts\"",
+    "start": "nest start",
     "start:dev": "USE_INTERNAL_DEVELOPMENT_DOCKER_DB=true NODE_ENV=development nest start --watch",
     "start:test": "USE_INTERNAL_TEST_DOCKER_DB=true nest start --watch",
     "test": "TZ=Europe/Helsinki jest",

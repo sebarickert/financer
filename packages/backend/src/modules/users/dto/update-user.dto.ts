@@ -8,4 +8,5 @@ export class UpdateUserOwnUserDto extends PickType(UpdateUserDto, [
   'name',
   'nickname',
   'profileImageUrl',
+  'theme',
 ]) {}

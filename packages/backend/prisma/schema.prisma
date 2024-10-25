@@ -51,6 +51,12 @@ enum SystemLogLevel {
   DEBUG
 }
 
+enum Theme {
+  AUTO
+  LIGHT
+  DARK
+}
+
 model AccountBalanceChange {
   id        String   @id @default(uuid())
   accountId String
@@ -247,6 +253,7 @@ model User {
   roles           Role[]   @default([])
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
+  theme           Theme    @default(AUTO)
 
   accountBalanceChange       AccountBalanceChange[]
   account                    Account[]

@@ -12,6 +12,7 @@ export const DUMMY_TEST_USER: Omit<UserDto, 'createdAt' | 'updatedAt'> = {
   githubId: '',
   nickname: '',
   profileImageUrl: '',
+  theme: 'AUTO',
 };
 
 export const mockAuthenticationMiddleware = (

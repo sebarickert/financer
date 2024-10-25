@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Role, User } from '@prisma/client';
+import { Role, User, Theme } from '@prisma/client';
 import { IsNotEmpty, IsOptional, IsEnum, IsUUID } from 'class-validator';
 
 import { UserId } from '../../../types/user-id';
@@ -51,6 +51,11 @@ export class UserDto implements User {
   })
   @ApiProperty({ enum: Role, enumName: 'Role', type: [Role] })
   roles: Role[];
+
+  @IsOptional()
+  @IsEnum(Theme)
+  @ApiProperty({ enum: Theme, enumName: 'Theme', type: Theme })
+  theme: Theme;
 
   public static createFromPlain(users: User): UserDto;
   public static createFromPlain(users: User[]): UserDto[];
