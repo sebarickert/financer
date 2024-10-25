@@ -9,7 +9,8 @@ type ThemeSwitcherProps = {
 };
 
 export const ThemeSwitcher: FC<ThemeSwitcherProps> = async ({ className }) => {
-  const { theme } = await UserService.getOwnUser();
+    const theme = await UserService.getOwnUserTheme();
+;
 
   return <ThemeSwitcherClient theme={theme} className={className} />;
 };

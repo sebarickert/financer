@@ -64,7 +64,7 @@ const RootLayout: FC<ChildrenProp> = async ({ children }) => {
     redirect('/accounts/add', RedirectType.replace);
   }
 
-  const { theme } = await UserService.getOwnUser();
+  const theme = await UserService.getOwnUserTheme();
 
   // We don't have to polyfill every feature by our self, since next js already does by default for many features
   // See the full list from here: https://nextjs.org/docs/architecture/supported-browsers

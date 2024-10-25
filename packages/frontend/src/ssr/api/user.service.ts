@@ -2,7 +2,7 @@ import { revalidateTag } from 'next/cache';
 
 import { BaseApi } from './base-api';
 
-import { UserDataImportDto, UserDto } from '$api/generated/financerApi';
+import { Theme, UserDataImportDto, UserDto } from '$api/generated/financerApi';
 import { ValidationException } from '$exceptions/validation.exception';
 import { isValidationErrorResponse } from '$utils/apiHelper';
 
@@ -13,6 +13,15 @@ export class UserService extends BaseApi {
   public static clearCache(): void {
     'use server';
     revalidateTag(this.API_TAG.USER);
+  }
+
+  public static async getOwnUserTheme(): Promise<Theme> {
+    try {
+      const user = await this.getOwnUser();
+      return user.theme;
+    } catch {
+      return Theme.Auto;
+    }
   }
 
   public static async getOwnUser(): Promise<UserDto> {
