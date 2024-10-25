@@ -6,6 +6,7 @@ import { FC, useMemo } from 'react';
 
 import {
   AccountDto,
+  Theme,
   useAccountsGetAccountBalanceHistoryQuery,
 } from '$api/generated/financerApi';
 import { baseChartOptions } from '$constants/graph/graph.settings';
@@ -22,11 +23,12 @@ interface AccountBalanceHistory {
 
 interface AccountBalanceHistoryChartProps {
   accountId: AccountDto['id'];
+  userTheme: Theme;
 }
 
 export const AccountBalanceHistoryChart: FC<
   AccountBalanceHistoryChartProps
-> = ({ accountId }) => {
+> = ({ accountId, userTheme }) => {
   const { data: accountBalanceHistoryData } =
     useAccountsGetAccountBalanceHistoryQuery({ id: accountId });
 
@@ -106,6 +108,11 @@ export const AccountBalanceHistoryChart: FC<
   }
 
   return (
-    <ChartWrapperDynamic type="line" data={chartData} options={chartOptions} />
+    <ChartWrapperDynamic
+      type="line"
+      data={chartData}
+      options={chartOptions}
+      userTheme={userTheme}
+    />
   );
 };

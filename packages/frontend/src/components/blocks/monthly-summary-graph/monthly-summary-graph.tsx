@@ -3,7 +3,10 @@
 import { ChartData, ChartOptions } from 'chart.js';
 import { useMemo } from 'react';
 
-import { useTransactionsFindMonthlySummariesByUserQuery } from '$api/generated/financerApi';
+import {
+  Theme,
+  useTransactionsFindMonthlySummariesByUserQuery,
+} from '$api/generated/financerApi';
 import { baseChartOptions } from '$constants/graph/graph.settings';
 import { ChartWrapperDynamic } from '$elements/chart/chart-wrapper.dynamic';
 import { useUserStatisticsSettings } from '$hooks/settings/user-preference/useStatisticsSettings';
@@ -14,6 +17,7 @@ import { setGradientLineGraphBackground } from '$utils/graph/setGradientLineGrap
 
 interface BalanceGraphProps {
   className?: string;
+  userTheme: Theme;
 }
 
 const yearAgoFilterOptions = {
@@ -32,6 +36,7 @@ type MonthlySummaryHistory = {
 
 export const MonthlySummaryGraph = ({
   className = '',
+  userTheme,
 }: BalanceGraphProps): JSX.Element | null => {
   const { data: statisticsSettings } = useUserStatisticsSettings();
 
@@ -172,6 +177,7 @@ export const MonthlySummaryGraph = ({
         type="line"
         data={chartData}
         options={chartOptions}
+        userTheme={userTheme}
       />
     </section>
   );

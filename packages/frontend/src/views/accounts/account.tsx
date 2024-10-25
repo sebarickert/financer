@@ -3,7 +3,7 @@ import { FC, useMemo } from 'react';
 
 import { AccountBalanceHistoryChart } from './account.balance-history-chart';
 
-import { AccountDto, AccountType } from '$api/generated/financerApi';
+import { AccountDto, AccountType, Theme } from '$api/generated/financerApi';
 import { BalanceDisplay } from '$blocks/BalanceDisplay';
 import { DetailsList } from '$blocks/details-list/details-list';
 import { DetailsItem } from '$blocks/details-list/details-list.item';
@@ -18,9 +18,10 @@ import { capitalize } from '$utils/capitalize';
 
 interface AccountProps {
   account: AccountDto;
+  userTheme: Theme;
 }
 
-export const Account: FC<AccountProps> = ({ account }) => {
+export const Account: FC<AccountProps> = ({ account, userTheme }) => {
   const accountDetails: DetailsItem[] = useMemo(
     () => [
       {
@@ -66,7 +67,10 @@ export const Account: FC<AccountProps> = ({ account }) => {
           </div>
         </div>
         <LoaderSuspense>
-          <AccountBalanceHistoryChart accountId={account.id} />
+          <AccountBalanceHistoryChart
+            accountId={account.id}
+            userTheme={userTheme}
+          />
         </LoaderSuspense>
         {account.type === AccountType.Investment && (
           <AccountUpdateMarketValueContainer account={account} />

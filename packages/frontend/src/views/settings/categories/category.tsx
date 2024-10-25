@@ -3,6 +3,7 @@ import { FC, useMemo } from 'react';
 import { CategoryGraph } from './category.graph';
 
 import {
+  Theme,
   TransactionCategoryDto,
   TransactionMonthSummaryDto,
 } from '$api/generated/financerApi';
@@ -22,6 +23,7 @@ interface CategoryProps {
   category: TransactionCategoryDto;
   categories: TransactionCategoryDto[];
   parentTransactionCategoryId: string;
+  userTheme: Theme;
 }
 
 export const Category: FC<CategoryProps> = ({
@@ -29,6 +31,7 @@ export const Category: FC<CategoryProps> = ({
   category,
   categories,
   parentTransactionCategoryId,
+  userTheme,
 }) => {
   const categoryDetails: DetailsItem[] = useMemo(() => {
     const categoryVisibilityCapitalized = category.visibility.map((item) =>
@@ -97,6 +100,7 @@ export const Category: FC<CategoryProps> = ({
         <CategoryGraph
           transactionsMonthlySummaries={transactionsMonthlySummaries}
           category={category}
+          userTheme={userTheme}
         />
         <TransactionListWithMonthlyPager
           filterOptions={{

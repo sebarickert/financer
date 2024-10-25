@@ -5,6 +5,7 @@ import { BalanceGraphChart } from './balance-graph.chart';
 import { AccountService } from '$ssr/api/account.service';
 import { TransactionService } from '$ssr/api/transaction.service';
 import { UserPreferenceService } from '$ssr/api/user-preference.service';
+import { UserService } from '$ssr/api/user.service';
 import { generateDateFromYearAndMonth } from '$utils/generateDateFromYearAndMonth';
 
 export type BalanceHistory = {
@@ -22,6 +23,7 @@ const yearAgoFilterOptions = {
 
 export const BalanceGraph: FC = async () => {
   const dashboardSettings = await UserPreferenceService.getDashboardSettings();
+  const { theme } = await UserService.getOwnUser();
   const accountTypeFilter = { accountTypes: dashboardSettings?.accountTypes };
 
   const totalBalance = await AccountService.getTotalBalance(accountTypeFilter);
@@ -60,5 +62,7 @@ export const BalanceGraph: FC = async () => {
       ? newBalanceHistory.slice(-12)
       : newBalanceHistory;
 
-  return <BalanceGraphChart balanceHistory={balanceHistory} />;
+  return (
+    <BalanceGraphChart balanceHistory={balanceHistory} userTheme={theme} />
+  );
 };

@@ -5,6 +5,7 @@ import { isAfter } from 'date-fns';
 import { FC, useMemo } from 'react';
 
 import {
+  Theme,
   TransactionCategoryDto,
   TransactionMonthSummaryDto,
 } from '$api/generated/financerApi';
@@ -24,11 +25,13 @@ interface CategoryHistory {
 interface CategoryGraphProps {
   transactionsMonthlySummaries?: TransactionMonthSummaryDto[];
   category: TransactionCategoryDto;
+  userTheme: Theme;
 }
 
 export const CategoryGraph: FC<CategoryGraphProps> = ({
   transactionsMonthlySummaries,
   category,
+  userTheme,
 }) => {
   const categoryHistory: CategoryHistory[] = useMemo(() => {
     if (!category || !transactionsMonthlySummaries) return [];
@@ -106,6 +109,7 @@ export const CategoryGraph: FC<CategoryGraphProps> = ({
         type="line"
         data={chartData}
         options={chartOptions}
+        userTheme={userTheme}
       />
     </div>
   );
