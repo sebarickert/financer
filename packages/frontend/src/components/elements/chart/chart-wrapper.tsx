@@ -1,6 +1,8 @@
+import { updateChartColors } from '$constants/graph/graph.settings';
 import {
   CategoryScale,
   Chart,
+  ChartOptions,
   Filler,
   LineController,
   LineElement,
@@ -16,8 +18,11 @@ type ChartWrapperProps = {
   isLoading?: boolean;
 } & ChartProps;
 
-const ChartWrapper = ({ isLoading, ...chartProps }: ChartWrapperProps) => {
+const ChartWrapper = ({ isLoading, options: optionsOriginal, ...chartProps }: ChartWrapperProps) => {
   const [isInitialized, setIsInitialized] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const options = updateChartColors(optionsOriginal as ChartOptions, isDarkMode);
 
   useEffect(() => {
     const register = async () => {
@@ -44,7 +49,7 @@ const ChartWrapper = ({ isLoading, ...chartProps }: ChartWrapperProps) => {
         { 'animate-pulse': isLoading || !isInitialized },
       )}
     >
-      {isInitialized && <ChartComponent {...chartProps} />}
+      {isInitialized && <ChartComponent options={options} {...chartProps} />}
     </section>
   );
 };
