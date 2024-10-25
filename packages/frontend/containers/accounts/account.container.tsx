@@ -11,7 +11,8 @@ interface AccountContainerProps {
 
 export const AccountContainer: FC<AccountContainerProps> = async ({ id }) => {
   const account = await AccountService.getById(id);
-  const { theme } = await UserService.getOwnUser();
+    const theme = await UserService.getOwnUserTheme();
+;
 
   if (!account) {
     notFound();

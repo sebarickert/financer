@@ -12,7 +12,8 @@ interface CategoryContainerProps {
 export const CategoryContainer: FC<CategoryContainerProps> = async ({ id }) => {
   const allCategories = await CategoryService.getAll();
   const category = await CategoryService.getById(id);
-  const { theme } = await UserService.getOwnUser();
+    const theme = await UserService.getOwnUserTheme();
+;
 
   const transactionsMonthlySummaries =
     await TransactionService.getMonthlySummary({
