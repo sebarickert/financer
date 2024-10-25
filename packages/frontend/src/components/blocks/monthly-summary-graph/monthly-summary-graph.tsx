@@ -4,7 +4,6 @@ import { ChartData, ChartOptions } from 'chart.js';
 import { useMemo } from 'react';
 
 import { useTransactionsFindMonthlySummariesByUserQuery } from '$api/generated/financerApi';
-import { colorPalette } from '$constants/colorPalette';
 import { baseChartOptions } from '$constants/graph/graph.settings';
 import { ChartWrapperDynamic } from '$elements/chart/chart-wrapper.dynamic';
 import { useUserStatisticsSettings } from '$hooks/settings/user-preference/useStatisticsSettings';
@@ -144,7 +143,7 @@ export const MonthlySummaryGraph = ({
           {
             label: 'Incomes',
             fill: true,
-            borderColor: colorPalette.green,
+            borderColor: '#198038',
             backgroundColor: setGradientLineGraphBackground,
             data: monthlySummaryHistory.map(({ incomes }) => incomes),
             tension: 0.25,
@@ -152,7 +151,7 @@ export const MonthlySummaryGraph = ({
           {
             label: 'Expenses',
             fill: true,
-            borderColor: colorPalette.red,
+            borderColor: '#da1e28',
             backgroundColor: setGradientLineGraphBackground,
             data: monthlySummaryHistory.map(({ expenses }) => expenses),
             tension: 0.25,

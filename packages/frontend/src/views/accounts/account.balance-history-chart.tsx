@@ -8,7 +8,6 @@ import {
   AccountDto,
   useAccountsGetAccountBalanceHistoryQuery,
 } from '$api/generated/financerApi';
-import { colorPalette } from '$constants/colorPalette';
 import { baseChartOptions } from '$constants/graph/graph.settings';
 import { monthAgoDate } from '$constants/months';
 import { ChartWrapperDynamic } from '$elements/chart/chart-wrapper.dynamic';
@@ -92,7 +91,7 @@ export const AccountBalanceHistoryChart: FC<
           {
             label: 'Balance',
             fill: true,
-            borderColor: colorPalette.blue,
+            borderColor: '#0f62fe',
             backgroundColor: setGradientLineGraphBackground,
             data: accountBalanceHistory.map(({ balance }) => balance),
             tension: 0.25,
