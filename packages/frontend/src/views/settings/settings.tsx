@@ -7,6 +7,7 @@ import { ProminentLink } from '$blocks/ProminentLink';
 import { ThemeSwitcher } from '$blocks/ThemeSwitcher/ThemeSwitcher';
 import { settingsPaths } from '$constants/settings-paths';
 import { Button } from '$elements/button/button';
+import { Heading } from '$elements/Heading';
 import { IconName } from '$elements/Icon';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
@@ -71,8 +72,11 @@ export const Settings: FC<SettingsProps> = ({ roles }) => {
             ))}
           </List>
         ))}
+        <div>
+          <Heading>Theme</Heading>
+          <ThemeSwitcher />
+        </div>
       </section>
-      <ThemeSwitcher />
       <div className="flex flex-col gap-2 mt-12 sm:flex-row">
         <HardRefreshButton />
         <Button accentColor="secondary" href="/auth/logout">
