@@ -65,6 +65,9 @@ const RootLayout: FC<ChildrenProp> = async ({ children }) => {
   // See the full list from here: https://nextjs.org/docs/architecture/supported-browsers
   return (
     <html lang="en">
+      <head>
+        <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+      </head>
       <body className="min-h-screen theme-bg-color">
         <RootProviderContainer
           shouldShowOnboarding={!authenticationStatus?.hasAccounts}

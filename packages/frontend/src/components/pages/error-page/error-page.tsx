@@ -25,11 +25,11 @@ export const ErrorPage = ({ errorPageType }: ErrorPageProps) => {
               className="relative block w-auto h-10 rounded"
               alt="logo"
             />
-            <h2 className="text-2xl font-bold tracking-tight text-black">
+            <h2 className="text-2xl font-semibold tracking-tight theme-text-primary">
               Financer
             </h2>
           </span>
-          <Heading variant="h1" className="!mb-6">
+          <Heading variant="h1" noMargin className="mb-6">
             Error
           </Heading>
           <p className="max-w-xl mb-4 text-lg">

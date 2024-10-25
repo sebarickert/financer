@@ -40,7 +40,7 @@ const ChartWrapper = ({ isLoading, ...chartProps }: ChartWrapperProps) => {
   return (
     <section
       className={clsx(
-        'min-h-[200px] md:min-h-[400px] md:aspect-auto max-lg:-mx-4',
+        'min-h-[250px] md:min-h-[500px] md:aspect-auto max-lg:-mx-4',
         { 'animate-pulse': isLoading || !isInitialized },
       )}
     >
