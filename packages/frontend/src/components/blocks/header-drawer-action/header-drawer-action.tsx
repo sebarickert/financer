@@ -33,6 +33,7 @@ export const HeaderDrawerAction = ({
   return (
     <>
       <Button
+        haptic="heavy"
         applyBaseStyles={false}
         accentColor="unstyled"
         testId={buttonTestId}
@@ -45,6 +46,7 @@ export const HeaderDrawerAction = ({
       <Drawer id={id} heading={drawerHeading} description={drawerDescription}>
         <ButtonGroup isReverse isHorizontal>
           <Button
+            haptic="heavy"
             accentColor={drawerButtonAccentColor}
             onClick={() => onSubmit()}
             testId={`${buttonTestId}-confirm`}
@@ -52,6 +54,7 @@ export const HeaderDrawerAction = ({
             {drawerButtonLabel}
           </Button>
           <Button
+            haptic="light"
             accentColor="secondary"
             testId={`${buttonTestId}-cancel`}
             popoverTargetAction="hide"

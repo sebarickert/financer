@@ -25,6 +25,7 @@ export const NavigationItem: FC<NavigationItemProps> = ({
   return (
     <li className={clsx(className)}>
       <Link
+        haptic="heavy"
         href={url}
         className={clsx(
           'items-center justify-center theme-focus',

@@ -106,7 +106,7 @@ export const Select = ({
             shouldUnregister,
           })}
         >
-          <button className="after:absolute after:inset-0">
+          <button type="button" className="after:absolute after:inset-0">
             <SelectedOption />
           </button>
           <OptionElement

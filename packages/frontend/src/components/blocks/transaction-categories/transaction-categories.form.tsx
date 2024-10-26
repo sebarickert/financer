@@ -92,6 +92,7 @@ export const TransactionCategoriesForm: FC<TransactionCategoriesFormProps> = ({
         </div>
         <ButtonGroup className="mt-12" isReverse isHorizontal>
           <Button
+            haptic="light"
             onClick={handleSubmit}
             testId={`${testId}-submit`}
             popoverTarget={formId}
@@ -101,6 +102,7 @@ export const TransactionCategoriesForm: FC<TransactionCategoriesFormProps> = ({
           </Button>
           {!isNewCategory ? (
             <Button
+              haptic="medium"
               onClick={handleDelete}
               testId={`${testId}-delete`}
               accentColor="secondary"
@@ -111,6 +113,7 @@ export const TransactionCategoriesForm: FC<TransactionCategoriesFormProps> = ({
             </Button>
           ) : (
             <Button
+              haptic="ultra-light"
               onClick={handleCancel}
               testId={`${testId}-cancel`}
               accentColor="secondary"

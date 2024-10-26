@@ -23,6 +23,7 @@ export const ProminentLink: FC<ProminentLinkProps> = ({
 }) => {
   return (
     <Link
+      haptic="ultra-light"
       href={link}
       className={clsx(
         'relative pl-4 pr-3 py-5',

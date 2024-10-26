@@ -3,6 +3,7 @@ import { FC } from 'react';
 
 import { Theme } from '$api/generated/financerApi';
 import { Icon, IconName } from '$elements/Icon';
+import { hapticRunner } from '$utils/haptic.helper';
 
 type ThemeSwitcherItemProps = {
   children: string;
@@ -37,6 +38,7 @@ export const ThemeSwitcherItem: FC<ThemeSwitcherItemProps> = ({
         className={clsx('peer sr-only')}
         defaultChecked={isChecked}
         onChange={onChange}
+        onClick={() => hapticRunner('medium')}
       />
       <span
         className={clsx(

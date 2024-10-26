@@ -6,6 +6,7 @@ import {
   useTransitionRouter,
 } from 'next-view-transitions';
 
+import { hapticRunner, HapticType } from '$utils/haptic.helper';
 import { isExternalLink } from '$utils/isExternalLink';
 import {
   transitionAnimations,
@@ -19,6 +20,8 @@ interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   isAbsolute?: boolean;
   href: string;
   transition?: TransitionType;
+  /** defaults to `none` */
+  haptic?: HapticType;
 }
 
 export const Link = ({
@@ -28,6 +31,7 @@ export const Link = ({
   isAbsolute,
   href,
   transition,
+  haptic = 'none',
   ...props
 }: LinkProps): JSX.Element => {
   const router = useTransitionRouter();
@@ -53,6 +57,7 @@ export const Link = ({
       <a
         {...props}
         onClick={(e) => {
+          hapticRunner(haptic);
           e.preventDefault();
           props.onClick?.(e);
           router.push(href, {

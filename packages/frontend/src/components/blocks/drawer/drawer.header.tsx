@@ -36,6 +36,7 @@ export const DrawerHeader = ({
         </>
       )}
       <button
+        type="button"
         className={clsx(
           'theme-layer-color-with-hover theme-focus rounded-md',
           'col-[2] overflow-hidden inline-flex items-center justify-center h-11 w-11 -my-2 translate-x-1/3',

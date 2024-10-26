@@ -1,7 +1,10 @@
+'use client';
+
 import clsx from 'clsx';
-import { HTMLAttributes } from 'react';
+import { HTMLAttributes, useCallback } from 'react';
 
 import { Link } from '$elements/Link';
+import { hapticRunner, HapticType } from '$utils/haptic.helper';
 import { isExternalLink } from '$utils/isExternalLink';
 import { TransitionType } from '$utils/transitionAnimations';
 
@@ -22,6 +25,8 @@ interface ButtonProps
   isDisabled?: boolean;
   applyBaseStyles?: boolean;
   size?: 'small' | 'default';
+  /** defaults to `none` */
+  haptic?: HapticType;
 }
 
 export const Button = ({
@@ -38,6 +43,7 @@ export const Button = ({
   popoverTarget,
   popoverTargetAction,
   size = 'default',
+  haptic = 'none',
   ...props
 }: ButtonProps): JSX.Element => {
   const buttonClasses = clsx(className, {
@@ -51,13 +57,19 @@ export const Button = ({
     ['']: accentColor === 'unstyled',
   });
 
+  const onClickWithHaptic = useCallback(() => {
+    hapticRunner(haptic);
+
+    onClick?.();
+  }, [haptic, onClick]);
+
   if (typeof href === 'string' && href.length > 0 && !isDisabled) {
     if (isExternalLink(href)) {
       return (
         <a
           href={href}
           className={buttonClasses}
-          onClick={onClick}
+          onClick={() => onClickWithHaptic()}
           data-testid={testId}
         >
           {children}
@@ -70,6 +82,7 @@ export const Button = ({
         href={href}
         className={buttonClasses}
         onClick={onClick}
+        haptic={haptic}
         testId={testId}
         transition={transition}
       >
@@ -81,7 +94,7 @@ export const Button = ({
   return (
     <button
       type={type}
-      onClick={onClick}
+      onClick={() => onClickWithHaptic()}
       className={clsx(
         buttonClasses,
         'disabled:pointer-events-none disabled:opacity-25',
