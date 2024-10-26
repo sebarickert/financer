@@ -124,6 +124,7 @@ export const Transaction: FC<TransactionProps> = async ({
         backLink="/statistics"
         headerAction={
           <Link
+            haptic="medium"
             href={`/statistics/${transactionDetailsMapping.url}/${transaction.id}/edit`}
             testId={`edit-${transactionDetailsMapping.type}-button`}
             transition="slideInFromRight"

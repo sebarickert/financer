@@ -37,6 +37,7 @@ export const TransactionListItem: FC<TransactionListItemProps> = ({
 
   return (
     <Link
+      haptic="ultra-light"
       href={url}
       testId={id}
       className={clsx(

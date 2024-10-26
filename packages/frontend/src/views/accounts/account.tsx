@@ -41,6 +41,7 @@ export const Account: FC<AccountProps> = ({ account, userTheme }) => {
         backLink="/accounts"
         headerAction={
           <Link
+            haptic="medium"
             href={`/accounts/${account.id}/edit`}
             className="inline-flex items-center justify-center -mr-3 h-11 w-11"
             testId="edit-account"
