@@ -84,6 +84,7 @@ export const Category: FC<CategoryProps> = ({
         backLink={settingsPaths.categories}
         headerAction={
           <Link
+            haptic="medium"
             href={`${settingsPaths.categories}/${category.id}/edit`}
             className="inline-flex items-center justify-center -mr-3 h-11 w-11"
             testId="edit-category"

@@ -13,7 +13,8 @@ import {
   TransitionType,
 } from '$utils/transitionAnimations';
 
-interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+interface LinkProps
+  extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'onClick'> {
   className?: string;
   children: React.ReactNode | React.ReactNode[];
   testId?: string;
@@ -22,6 +23,7 @@ interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   transition?: TransitionType;
   /** defaults to `none` */
   haptic?: HapticType;
+  onClick?: () => void;
 }
 
 export const Link = ({
@@ -46,7 +48,16 @@ export const Link = ({
 
   if (isExternalLink(href)) {
     return (
-      <a {...props} href={href} className={linkClasses} data-testid={testId}>
+      <a
+        {...props}
+        onClick={() => {
+          hapticRunner(haptic);
+          props.onClick?.();
+        }}
+        href={href}
+        className={linkClasses}
+        data-testid={testId}
+      >
         {linkContent}
       </a>
     );
@@ -59,7 +70,7 @@ export const Link = ({
         onClick={(e) => {
           hapticRunner(haptic);
           e.preventDefault();
-          props.onClick?.(e);
+          props.onClick?.();
           router.push(href, {
             onTransitionReady: transitionAnimations[transition],
           });
@@ -79,6 +90,10 @@ export const Link = ({
       href={href}
       className={linkClasses}
       data-testid={testId}
+      onClick={() => {
+        hapticRunner(haptic);
+        props.onClick?.();
+      }}
     >
       {linkContent}
     </TransitionLink>
