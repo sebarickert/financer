@@ -36,12 +36,12 @@ export const Heading: FC<HeadingProps> = ({
     <div
       className={clsx('flex', className, {
         ['justify-between items-end']: cta,
-        ['mb-2 lg:mb-4']: variant !== 'h1' && !noMargin,
+        ['mb-4']: variant !== 'h1' && !noMargin,
       })}
     >
       <HeadingType
         className={clsx(
-          'theme-text-primary text-lg font-medium',
+          'theme-text-primary text-xl font-medium',
           titleClassName,
           {
             ['lg:text-2xl']: variant !== 'h1' && !disableResponsiveSizing,
