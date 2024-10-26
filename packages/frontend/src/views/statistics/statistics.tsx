@@ -13,7 +13,7 @@ export const Statistics: FC<StatisticsProps> = ({ userTheme }) => {
   return (
     <>
       <UpdatePageInfo />
-      <MonthlySummaryGraph className="mb-6" userTheme={userTheme} />
+      <MonthlySummaryGraph className="mb-8" userTheme={userTheme} />
       <TransactionListWithMonthlyPager isSummaryVisible />
     </>
   );

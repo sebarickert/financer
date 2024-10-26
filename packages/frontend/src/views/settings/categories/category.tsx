@@ -94,7 +94,7 @@ export const Category: FC<CategoryProps> = ({
           </Link>
         }
       />
-      <section className="grid gap-6">
+      <section className="grid gap-8">
         <div className="p-6 theme-layer-color">
           <DetailsList items={categoryDetails} />
         </div>

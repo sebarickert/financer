@@ -51,7 +51,7 @@ export const Account: FC<AccountProps> = ({ account, userTheme }) => {
           </Link>
         }
       />
-      <section className="grid gap-6">
+      <section className="grid gap-8">
         <div className={clsx('grid gap-2')}>
           <div className="grid gap-8 p-6 py-8 theme-layer-color">
             <BalanceDisplay
