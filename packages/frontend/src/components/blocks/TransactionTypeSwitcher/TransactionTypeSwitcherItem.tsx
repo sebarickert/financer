@@ -28,7 +28,7 @@ export const TransactionTypeSwitcherItem: FC<
         className={clsx(
           'flex items-center justify-center text-sm py-2.5 rounded-md',
           'peer-checked:font-medium peer-checked:theme-layer-secondary-color peer-checked:border peer-checked:theme-border-primary',
-          'peer-focus:theme-focus-without-prefix peer-hover:cursor-pointer',
+          'peer-focus-visible:theme-focus-without-prefix peer-hover:cursor-pointer',
         )}
       >
         {children}

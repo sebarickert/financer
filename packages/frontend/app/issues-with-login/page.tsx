@@ -35,7 +35,7 @@ const ResolveAuth0Issues = (): JSX.Element => {
       <p>
         <a
           href="/auth/logout/auth0"
-          className="mb-12 text-blue-600 rounded-sm focus:outline-none focus:ring-2 focus:ring-offset-4"
+          className="mb-12 text-blue-600 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4"
         >
           Click here
         </a>{' '}
@@ -50,7 +50,7 @@ const IssuesWithLogin = (): JSX.Element => {
     <div className="py-16 mx-auto prose max-w-prose ">
       <Link
         href="/"
-        className="inline-block mb-12 text-base font-semibold tracking-wide text-blue-600 uppercase rounded-sm focus:outline-none focus:ring-2 focus:ring-offset-4"
+        className="inline-block mb-12 text-base font-semibold tracking-wide text-blue-600 uppercase rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4"
       >
         Go back
       </Link>

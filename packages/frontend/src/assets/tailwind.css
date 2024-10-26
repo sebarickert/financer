@@ -114,7 +114,7 @@
   }
 
   .theme-focus {
-    @apply focus:theme-focus-without-prefix;
+    @apply focus-visible:theme-focus-without-prefix;
   }
 
   .theme-focus-without-prefix {
