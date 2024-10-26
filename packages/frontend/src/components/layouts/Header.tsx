@@ -18,7 +18,7 @@ export const Header: FC = () => {
       )}
     >
       <Container
-        className={clsx('lg:px-8', 'lg:flex lg:gap-8 lg:justify-between')}
+        className={clsx('lg:px-8', 'lg:flex lg:items-center lg:gap-16')}
       >
         <Link
           haptic="heavy"
