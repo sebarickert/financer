@@ -32,7 +32,7 @@ export const NavigationItem: FC<NavigationItemProps> = ({
         className={clsx(
           'items-center justify-center theme-focus',
           'max-lg:flex max-lg:flex-col max-lg:h-14',
-          'lg:inline-flex lg:py-2 lg:px-3 lg:rounded-md lg:font-medium',
+          'lg:inline-flex lg:gap-2 lg:py-3 lg:px-4 lg:rounded-md lg:font-medium',
           'lg:hover:theme-border-primary lg:hover:theme-layer-secondary-color',
           {
             [`lg:theme-layer-secondary-color lg:theme-border-primary`]:
@@ -43,7 +43,7 @@ export const NavigationItem: FC<NavigationItemProps> = ({
           },
         )}
       >
-        <Icon name={iconName} isSolid={isActive} className="lg:hidden" />
+        <Icon name={iconName} isSolid={isActive} />
         <span className="max-lg:sr-only">{label}</span>
       </Link>
     </li>

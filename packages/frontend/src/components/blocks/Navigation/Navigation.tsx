@@ -25,7 +25,7 @@ export const Navigation: FC = () => {
       <ul
         className={clsx(
           'max-lg:grid max-lg:grid-cols-5',
-          'lg:flex lg:gap-4 lg:items-center',
+          'lg:flex lg:gap-4 lg:items-center lg:justify-end',
         )}
       >
         <NavigationItem {...navigationItems.home} />
@@ -38,7 +38,7 @@ export const Navigation: FC = () => {
           {...navigationItems.settings}
           className="max-lg:order-5"
         />
-        <NavigationCreateTransactionButton className="max-lg:order-3 lg:ml-auto" />
+        <NavigationCreateTransactionButton className="max-lg:order-3" />
       </ul>
     </nav>
   );
