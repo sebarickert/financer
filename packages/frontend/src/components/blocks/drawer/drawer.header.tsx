@@ -1,3 +1,5 @@
+'use client';
+
 import clsx from 'clsx';
 
 import { Heading } from '$elements/Heading';
@@ -41,7 +43,7 @@ export const DrawerHeader = ({
           'theme-layer-color-with-hover theme-focus rounded-md',
           'col-[2] overflow-hidden inline-flex items-center justify-center h-11 w-11 -my-2 translate-x-1/3',
         )}
-        onClick={onClose}
+        onClick={() => onClose?.()}
         // @ts-expect-error popovertarget is not a valid prop
         popovertarget={id}
         popovertargetaction="hide"
