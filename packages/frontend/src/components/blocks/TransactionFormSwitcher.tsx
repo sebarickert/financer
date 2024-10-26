@@ -1,4 +1,6 @@
-import { FC, useEffect, useState } from 'react';
+'use client';
+
+import { FC, useMemo, useState } from 'react';
 
 import { TransactionForm, TransactionFormFields } from './TransactionForm';
 import { TransactionTemplateSwitcher } from './TransactionTemplateSwitcher';
@@ -21,11 +23,29 @@ const emptyFormValues = {
 type TransactionFormSwitcherProps = {
   typeSwitcherName?: string;
   templateSwitcherName?: string;
+
+  defaultExpenseAccountId: string | undefined;
+  defaultIncomeAccountId: string | undefined;
+  defaultTransferToAccountId: string | undefined;
+  defaultTransferFromAccountId: string | undefined;
+};
+
+const formPropsMapping = {
+  [TransactionType.Income]: { hasToAccountField: true },
+  [TransactionType.Expense]: { hasFromAccountField: true },
+  [TransactionType.Transfer]: {
+    hasToAccountField: true,
+    hasFromAccountField: true,
+  },
 };
 
 export const TransactionFormSwitcher: FC<TransactionFormSwitcherProps> = ({
   typeSwitcherName,
   templateSwitcherName,
+  defaultExpenseAccountId,
+  defaultIncomeAccountId,
+  defaultTransferToAccountId,
+  defaultTransferFromAccountId,
 }) => {
   const [transactionType, setTransactionType] = useState<TransactionType>(
     TransactionType.Expense,
@@ -40,42 +60,53 @@ export const TransactionFormSwitcher: FC<TransactionFormSwitcherProps> = ({
     { skip: !templateId },
   );
 
-  const [templateFormValues, setTemplateFormValues] = useState<
-    Partial<TransactionFormFields> | undefined
-  >(undefined);
+  const templateFormValues: Partial<TransactionFormFields> | undefined =
+    useMemo(() => {
+      if (!currentData) {
+        switch (transactionType) {
+          case TransactionType.Income:
+            return {
+              ...emptyFormValues,
+              toAccount: defaultIncomeAccountId,
+            };
+          case TransactionType.Expense:
+            return {
+              ...emptyFormValues,
+              fromAccount: defaultExpenseAccountId,
+            };
+          case TransactionType.Transfer:
+            return {
+              ...emptyFormValues,
+              toAccount: defaultTransferToAccountId,
+              fromAccount: defaultTransferFromAccountId,
+            };
+          default:
+            return emptyFormValues;
+        }
+      }
 
-  useEffect(() => {
-    if (templateId === '') {
-      return setTemplateFormValues(emptyFormValues);
-    }
-
-    const values = {
-      amount: currentData?.amount,
-      toAccount: currentData?.toAccount ?? undefined,
-      fromAccount: currentData?.fromAccount ?? undefined,
-      description: currentData?.description,
-      categories: currentData?.categories?.map((categoryId) => ({
-        categoryId,
-        amount: NaN,
-      })),
-    };
-
-    setTemplateFormValues(values);
-  }, [currentData, templateId]);
-
-  const formPropsMapping = {
-    [TransactionType.Income]: { hasToAccountField: true },
-    [TransactionType.Expense]: { hasFromAccountField: true },
-    [TransactionType.Transfer]: {
-      hasToAccountField: true,
-      hasFromAccountField: true,
-    },
-  };
+      return {
+        amount: currentData?.amount,
+        toAccount: currentData?.toAccount ?? undefined,
+        fromAccount: currentData?.fromAccount ?? undefined,
+        description: currentData?.description,
+        categories: currentData?.categories?.map((categoryId) => ({
+          categoryId,
+          amount: NaN,
+        })),
+      };
+    }, [
+      currentData,
+      defaultExpenseAccountId,
+      defaultIncomeAccountId,
+      defaultTransferFromAccountId,
+      defaultTransferToAccountId,
+      transactionType,
+    ]);
 
   const handleTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTransactionType(event.target.value as TransactionType);
     setTemplateId(undefined);
-    setTemplateFormValues(emptyFormValues);
   };
 
   const handleTemplateChange = (event: React.ChangeEvent<HTMLFormElement>) => {

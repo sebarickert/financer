@@ -3,8 +3,9 @@ import { FC, useId } from 'react';
 
 import { Drawer } from '$blocks/drawer/drawer';
 import { TransactionFormSwitcher } from '$blocks/TransactionFormSwitcher';
+import { Button } from '$elements/button/button';
 import { Icon } from '$elements/Icon';
-import { hapticRunner } from '$utils/haptic.helper';
+import { UserPreferenceService } from '$ssr/api/user-preference.service';
 
 type NavigationCreateTransactionButtonProps = {
   className?: string;
@@ -12,8 +13,17 @@ type NavigationCreateTransactionButtonProps = {
 
 export const NavigationCreateTransactionButton: FC<
   NavigationCreateTransactionButtonProps
-> = ({ className }) => {
+> = async ({ className }) => {
   const id = useId();
+
+  const defaultExpenseAccountId =
+    await UserPreferenceService.getDefaultExpenseAccount();
+  const defaultIncomeAccountId =
+    await UserPreferenceService.getDefaultIncomeAccount();
+  const defaultTransferToAccountId =
+    await UserPreferenceService.getDefaultTransferTargetAccount();
+  const defaultTransferFromAccountId =
+    await UserPreferenceService.getDefaultTransferSourceAccount();
 
   return (
     <li className={clsx(className)}>
@@ -21,25 +31,29 @@ export const NavigationCreateTransactionButton: FC<
         <TransactionFormSwitcher
           typeSwitcherName="transactionTypeSwitcher"
           templateSwitcherName="templateTypeSwitcher"
+          defaultExpenseAccountId={defaultExpenseAccountId}
+          defaultIncomeAccountId={defaultIncomeAccountId}
+          defaultTransferToAccountId={defaultTransferToAccountId}
+          defaultTransferFromAccountId={defaultTransferFromAccountId}
         />
       </Drawer>
-      <button
-        onClick={() => hapticRunner('heavy')}
+      <Button
+        accentColor="unstyled"
+        haptic="heavy"
         type="button"
         aria-label="Add Transaction"
         className={clsx(
           'items-center justify-center theme-focus theme-text-primary',
-          'max-lg:flex max-lg:flex-col max-lg:h-full max-lg:w-full',
+          'max-lg:flex max-lg:flex-col max-lg:h-full max-lg:!w-full',
           'lg:inline-flex lg:gap-2 lg:py-3 lg:px-5 lg:rounded-md lg:border lg:border-transparent',
           'lg:theme-button-primary',
         )}
-        // @ts-expect-error popovertarget is not a valid prop
-        popovertarget={id}
+        popoverTarget={id}
         data-testid="add-transaction"
       >
         <Icon name="PlusIcon" />
         <span className="max-lg:hidden">Transaction</span>
-      </button>
+      </Button>
     </li>
   );
 };
