@@ -21,11 +21,11 @@ const navigationItems: Record<string, NavigationItemProps> = {
 
 export const Navigation: FC = () => {
   return (
-    <nav>
+    <nav className="grow">
       <ul
         className={clsx(
           'max-lg:grid max-lg:grid-cols-5',
-          'lg:inline-flex lg:gap-1',
+          'lg:flex lg:gap-4 lg:items-center lg:justify-end',
         )}
       >
         <NavigationItem {...navigationItems.home} />
@@ -38,7 +38,7 @@ export const Navigation: FC = () => {
           {...navigationItems.settings}
           className="max-lg:order-5"
         />
-        <NavigationCreateTransactionButton className="max-lg:order-3 lg:ml-4" />
+        <NavigationCreateTransactionButton className="max-lg:order-3" />
       </ul>
     </nav>
   );

@@ -32,10 +32,10 @@ export const NavigationItem: FC<NavigationItemProps> = ({
         className={clsx(
           'items-center justify-center theme-focus',
           'max-lg:flex max-lg:flex-col max-lg:h-14',
-          'lg:inline-flex lg:gap-2 lg:py-3 lg:px-5 lg:border lg:rounded-md',
+          'lg:inline-flex lg:gap-2 lg:py-3 lg:px-4 lg:rounded-md lg:font-medium',
           'lg:hover:theme-border-primary lg:hover:theme-layer-secondary-color',
           {
-            [`lg:theme-layer-secondary-color lg:theme-border-primary lg:font-medium`]:
+            [`lg:theme-layer-secondary-color lg:theme-border-primary`]:
               isActive,
           },
           {

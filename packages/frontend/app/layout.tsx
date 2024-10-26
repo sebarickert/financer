@@ -32,7 +32,10 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1.0,
   viewportFit: 'cover',
-  themeColor: '#FFFFFF',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#f4f4f4' },
+    { media: '(prefers-color-scheme: dark)', color: '#262626' },
+  ],
 };
 
 const REDIRECT_COOKIE_NAME = 'onboardingRedirect';

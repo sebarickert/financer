@@ -10,7 +10,7 @@ export const Dashboard: FC = () => {
   return (
     <>
       <UpdatePageInfo />
-      <section className="grid gap-6">
+      <section className="grid gap-8">
         <DashboardStats />
         <BalanceGraph />
         <section>

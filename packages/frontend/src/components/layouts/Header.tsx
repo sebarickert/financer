@@ -1,9 +1,9 @@
 import clsx from 'clsx';
-import Image from 'next/image';
 import { FC } from 'react';
 
 import { Container } from './Container';
 
+import { Logo } from '$blocks/Logo';
 import { Navigation } from '$blocks/Navigation/Navigation';
 import { Link } from '$elements/Link';
 
@@ -18,23 +18,14 @@ export const Header: FC = () => {
       )}
     >
       <Container
-        className={clsx('lg:px-8', 'lg:flex lg:gap-8 lg:justify-between')}
+        className={clsx('lg:px-8', 'lg:flex lg:items-center lg:gap-20')}
       >
         <Link
           haptic="heavy"
           href="/"
-          className={clsx('inline-flex items-center gap-3', 'max-lg:hidden')}
+          className={clsx('max-lg:hidden lg:inline-flex')}
         >
-          <Image
-            src="/logo.svg"
-            alt="Financer logo"
-            className="w-12 h-12"
-            width={48}
-            height={48}
-          />
-          <h2 className="text-xl font-semibold tracking-tight uppercase theme-text-primary">
-            Financer
-          </h2>
+          <Logo />
         </Link>
         <Navigation />
       </Container>

@@ -1,13 +1,13 @@
 'use client';
 
-import Image from 'next/image';
+import clsx from 'clsx';
 import { useState } from 'react';
 
-import { LoginActions } from './login.actions';
-
+import { Logo } from '$blocks/Logo';
+import { Button } from '$elements/button/button';
 import { ButtonGroup } from '$elements/button/button.group';
-import { DialogText } from '$elements/dialog/dialog.text';
 import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
+import { Paragraph } from '$elements/paragraph/paragraph';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
 const NEXT_PUBLIC_IS_GITHUB_OAUTH_ENABLED =
@@ -27,40 +27,38 @@ export const Login = (): JSX.Element => {
     <>
       <UpdatePageInfo />
       {isLoadingOAuthPage && <LoaderFullScreen />}
-      <section className="flex flex-col items-center justify-end h-screen bg-charcoal sm:justify-center max-sm:pb-[calc(78px+env(safe-area-inset-bottom))]">
-        <section className="p-6 border rounded-md sm:w-full backdrop:bg-charcoal backdrop:opacity-30 max-sm:mx-6 sm:max-w-screen-sm bg-gray border-gray-dark">
-          <span className="inline-flex items-center gap-3 mb-6">
-            <Image
-              src="/logo.svg"
-              alt="Financer logo"
-              className="w-12 h-12"
-              width={48}
-              height={48}
-            />
-            <h2 className="text-xl font-extrabold tracking-tighter text-black uppercase">
-              Financer
-            </h2>
-          </span>
-          <DialogText label="Welcome to Financer!" className="mb-8">
-            Please login to manage your accounts, expenses and incomes.
-          </DialogText>
-          <ButtonGroup isReverse>
-            {checkIsEnabled(NEXT_PUBLIC_IS_GITHUB_OAUTH_ENABLED) && (
-              <LoginActions
-                submitButtonLabel="Login with Github"
-                loginUrl="/auth/github"
-                onClick={startAuthLoading}
-              />
-            )}
-            {checkIsEnabled(NEXT_PUBLIC_IS_AUTH0_OAUTH_ENABLED) && (
-              <LoginActions
-                submitButtonLabel="Login with Auth0"
-                loginUrl="/auth/auth0"
-                onClick={startAuthLoading}
-              />
-            )}
-          </ButtonGroup>
-        </section>
+      <section
+        className={clsx(
+          'flex flex-col justify-center items-center h-screen px-4',
+        )}
+      >
+        <div className="grid w-full max-w-xl gap-8">
+          <Logo />
+          <div className="p-6 theme-layer-color">
+            <h1 className="mb-4 text-2xl font-medium theme-text-primary">
+              Welcome to Financer!
+            </h1>
+            <Paragraph className="max-w-md mb-6">
+              Financer is your simple financial tracker for expenses, income,
+              savings, and investments.
+            </Paragraph>
+            <Paragraph className="mb-8">
+              Log in to take control of your finances.
+            </Paragraph>
+            <ButtonGroup isReverse>
+              {checkIsEnabled(NEXT_PUBLIC_IS_GITHUB_OAUTH_ENABLED) && (
+                <Button href="/auth/github" onClick={startAuthLoading}>
+                  Log In to Financer
+                </Button>
+              )}
+              {checkIsEnabled(NEXT_PUBLIC_IS_AUTH0_OAUTH_ENABLED) && (
+                <Button href="/auth/auth0" onClick={startAuthLoading}>
+                  Log In to Financer
+                </Button>
+              )}
+            </ButtonGroup>
+          </div>
+        </div>
       </section>
     </>
   );
