@@ -88,6 +88,7 @@ export const Toast = ({
       </div>
       {id && (
         <button
+          type="button"
           className="col-[3] row-span-full inline-flex items-center justify-center h-11 w-11 rounded-md theme-focus hover:opacity-50"
           onClick={handleRemove}
           data-testid="toast-remove"

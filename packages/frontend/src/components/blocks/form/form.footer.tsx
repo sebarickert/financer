@@ -33,6 +33,7 @@ export const FormFooter: FC<FormFooterProps> = ({
             type="submit"
             testId="submit"
             isDisabled={pending}
+            haptic="medium"
           >
             {submitLabel}
           </Button>
@@ -41,6 +42,7 @@ export const FormFooter: FC<FormFooterProps> = ({
               accentColor="secondary"
               href={formFooterBackLink}
               testId="cancel"
+              haptic="light"
             >
               Cancel
             </Button>

@@ -31,6 +31,7 @@ export const ContentHeader: FC<ContentHeaderProps> = ({ title }) => {
           className={clsx(
             'inline-flex items-center justify-center h-11 w-11 theme-layer-color-with-hover rounded-md',
           )}
+          haptic="light"
           testId="header-back-link"
           transition="slideInFromLeft"
         >

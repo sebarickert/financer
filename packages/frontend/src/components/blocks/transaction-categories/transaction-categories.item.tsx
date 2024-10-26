@@ -3,6 +3,7 @@ import { useFormContext } from 'react-hook-form';
 import { FieldArrayFields } from './transaction-categories';
 
 import { Icon } from '$elements/Icon';
+import { hapticRunner } from '$utils/haptic.helper';
 
 type TransactionCategoriesItemProps = {
   index: number;
@@ -78,7 +79,10 @@ export const TransactionCategoriesItem = ({
         </span>
       </span>
       <button
-        onClick={onClick}
+        onClick={() => {
+          hapticRunner('light');
+          onClick();
+        }}
         type="button"
         className="inline-flex items-center justify-center -mr-3 rounded-md h-11 w-11 theme-focus theme-layer-color-with-hover"
         data-testid={`${testId}-edit`}

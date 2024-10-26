@@ -104,6 +104,7 @@ export const TransactionCategories = ({
         testId="add-category-button"
         popoverTarget={formId}
         size="small"
+        haptic="light"
       >
         Add category
       </Button>

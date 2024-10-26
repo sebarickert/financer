@@ -11,6 +11,7 @@ export const DialogCloseButton = ({
 }: DialogCloseButtonProps) => {
   return (
     <button
+      type="button"
       className="inline-flex items-center justify-center rounded-full h-11 w-11 bg-gray hover:bg-gray-dark"
       onClick={() => setIsDialogOpen(!isDialogOpen)}
     >

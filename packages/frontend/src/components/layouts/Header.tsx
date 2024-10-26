@@ -21,6 +21,7 @@ export const Header: FC = () => {
         className={clsx('lg:px-8', 'lg:flex lg:gap-8 lg:justify-between')}
       >
         <Link
+          haptic="heavy"
           href="/"
           className={clsx('inline-flex items-center gap-3', 'max-lg:hidden')}
         >

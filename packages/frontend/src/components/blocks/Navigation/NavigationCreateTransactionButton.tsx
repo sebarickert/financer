@@ -4,6 +4,7 @@ import { FC, useId } from 'react';
 import { Drawer } from '$blocks/drawer/drawer';
 import { TransactionFormSwitcher } from '$blocks/TransactionFormSwitcher';
 import { Icon } from '$elements/Icon';
+import { hapticRunner } from '$utils/haptic.helper';
 
 type NavigationCreateTransactionButtonProps = {
   className?: string;
@@ -23,6 +24,7 @@ export const NavigationCreateTransactionButton: FC<
         />
       </Drawer>
       <button
+        onClick={() => hapticRunner('heavy')}
         type="button"
         aria-label="Add Transaction"
         className={clsx(
