@@ -6,7 +6,7 @@ export const hapticRunner = (type: HapticType): void => {
   if (window.navigator.vibrate) {
     switch (type) {
       case 'ultra-light':
-        window.navigator.vibrate(1);
+        window.navigator.vibrate(2);
         break;
       case 'light':
         window.navigator.vibrate(5);
