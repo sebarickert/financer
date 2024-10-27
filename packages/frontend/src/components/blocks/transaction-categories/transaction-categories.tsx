@@ -103,7 +103,6 @@ export const TransactionCategories = ({
         isDisabled={!transactionAmount || transactionAmount < 0}
         testId="add-category-button"
         popoverTarget={formId}
-        size="small"
         haptic="light"
       >
         Add category

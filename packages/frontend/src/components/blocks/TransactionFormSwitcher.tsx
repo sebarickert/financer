@@ -116,8 +116,8 @@ export const TransactionFormSwitcher: FC<TransactionFormSwitcherProps> = ({
   };
 
   return (
-    <section>
-      <div className="grid gap-3 mb-6">
+    <div>
+      <div className="grid grid-cols-[1fr,auto] gap-2 mb-6">
         <TransactionTypeSwitcher
           onChange={handleTypeChange}
           defaultChecked={transactionType}
@@ -136,6 +136,6 @@ export const TransactionFormSwitcher: FC<TransactionFormSwitcherProps> = ({
         initialValues={templateFormValues}
         {...formPropsMapping[transactionType]}
       />
-    </section>
+    </div>
   );
 };
