@@ -9,6 +9,7 @@ import {
 import { Drawer } from '$blocks/drawer/drawer';
 import { Button } from '$elements/button/button';
 import { ButtonGroup } from '$elements/button/button.group';
+import { Icon } from '$elements/Icon';
 import { Radio } from '$elements/radio/radio';
 import { RadioGroup } from '$elements/radio/radio.group';
 
@@ -44,17 +45,17 @@ export const TransactionTemplateSwitcher = ({
     popoverRef?.current?.hidePopover();
   };
 
-  if (!targetTemplates.length) return null;
-
   return (
     <>
       <Button
         accentColor="secondary"
-        className="inline-flex items-center justify-center"
+        className="!w-[50px] !p-0 inline-flex justify-center items-center"
         popoverTarget={templateSwitcherId}
         size="small"
+        isDisabled={!targetTemplates.length}
       >
-        <span>Use Template</span>
+        <Icon name="BoltIcon" />
+        <span className="sr-only">Use Template</span>
       </Button>
       <Drawer id={templateSwitcherId} heading="Use Template" ref={popoverRef}>
         <form onSubmit={handleSubmit}>

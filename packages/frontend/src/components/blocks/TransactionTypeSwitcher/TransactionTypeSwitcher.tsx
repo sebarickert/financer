@@ -35,7 +35,7 @@ export const TransactionTypeSwitcher: FC<TransactionActionsProps> = ({
 }) => {
   return (
     <div className={clsx('', className)} data-testid="transactionTypeSwitcher">
-      <ul className="grid items-center justify-center grid-cols-3 gap-0.5 p-1 rounded-lg theme-layer-color">
+      <ul className="grid items-center justify-center grid-cols-3 gap-1 p-1 rounded-lg theme-layer-color">
         {switcherItems.map((switcherItem) => (
           <li key={switcherItem.value}>
             <TransactionTypeSwitcherItem

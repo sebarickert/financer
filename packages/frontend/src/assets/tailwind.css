@@ -106,11 +106,11 @@
   }
 
   .theme-button-secondary {
-    @apply bg-gray-800 text-white hover:bg-gray-700 active:bg-gray-600 dark:bg-gray-600  dark:hover:bg-gray-700 dark:active:bg-gray-800;
+    @apply theme-layer-color-with-hover theme-text-primary;
   }
 
   .theme-button-danger {
-    @apply bg-red-600 text-white hover:bg-red-700 active:hover:bg-red-800;
+    @apply bg-red-600 text-white hover:bg-red-700 active:bg-red-800;
   }
 
   .theme-focus {

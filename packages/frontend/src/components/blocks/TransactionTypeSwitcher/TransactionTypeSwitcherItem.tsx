@@ -1,10 +1,14 @@
 import clsx from 'clsx';
 import { FC } from 'react';
 
+import { TransactionType } from '$api/generated/financerApi';
+import { transactionTypeThemeMapping } from '$constants/transaction/transactionTypeMapping';
+import { Icon } from '$elements/Icon';
+
 type TransactionTypeSwitcherItemProps = {
   children: string;
   className?: string;
-  value: string;
+  value: TransactionType;
   name: string;
   isChecked?: boolean;
   onChange(event: React.ChangeEvent<HTMLInputElement>): void;
@@ -26,12 +30,13 @@ export const TransactionTypeSwitcherItem: FC<
       />
       <span
         className={clsx(
-          'flex items-center justify-center text-sm py-2.5 rounded-md',
-          'peer-checked:font-medium peer-checked:theme-layer-secondary-color peer-checked:border peer-checked:theme-border-primary',
+          'flex items-center justify-center rounded-md py-2',
+          'peer-checked:theme-layer-secondary-color peer-checked:border peer-checked:theme-border-primary',
           'peer-focus-visible:theme-focus-without-prefix peer-hover:cursor-pointer',
         )}
       >
-        {children}
+        <Icon name={transactionTypeThemeMapping[value].icon} />
+        <span className="sr-only">{children}</span>
       </span>
     </label>
   );

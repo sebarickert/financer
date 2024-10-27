@@ -21,7 +21,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const drawerBaseClasses = clsx('', className, {
       ['drawer backdrop']: true,
       ['theme-bg-color theme-text-primary fixed text-left']: true,
-      ['px-8 pt-0 pb-[calc(env(safe-area-inset-bottom)+48px)]']: true,
+      ['px-6 lg:px-8 pt-0 pb-[calc(env(safe-area-inset-bottom)+48px)]']: true,
       ['max-lg:inset-x-0 max-lg:top-auto max-lg:w-full max-lg:rounded-t-2xl']:
         true,
       ['lg:inset-y-0 lg:overflow-y-auto lg:max-w-[600px] lg:w-3/4 lg:left-auto lg:h-full']:
@@ -33,7 +33,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     });
 
     return (
-      <div
+      <section
         className={drawerBaseClasses}
         popover="auto"
         id={id}
@@ -43,13 +43,17 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
         <DrawerHeader
           onClose={onClose}
           heading={heading}
-          className="sticky top-0 z-10 pt-8 pb-8 theme-bg-color"
+          className={clsx(
+            `sticky top-0 z-10 theme-bg-color`,
+            'pt-8 pb-6 mb-2',
+            'px-6 lg:px-8 -mx-6 lg:-mx-8',
+          )}
           id={id}
         >
           {description}
         </DrawerHeader>
         {children}
-      </div>
+      </section>
     );
   },
 );
