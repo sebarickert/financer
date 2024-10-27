@@ -41,7 +41,7 @@ export const Heading: FC<HeadingProps> = ({
     >
       <HeadingType
         className={clsx(
-          'theme-text-primary text-xl font-medium',
+          'theme-text-primary text-lg font-medium',
           titleClassName,
           {
             ['lg:text-2xl']: variant !== 'h1' && !disableResponsiveSizing,

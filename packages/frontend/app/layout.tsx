@@ -28,15 +28,34 @@ export const metadata: Metadata = {
   manifest: '/manifest.json',
 };
 
-export const viewport: Viewport = {
-  width: 'device-width',
-  initialScale: 1.0,
-  viewportFit: 'cover',
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#f4f4f4' },
-    { media: '(prefers-color-scheme: dark)', color: '#262626' },
-  ],
-};
+export async function generateViewport(): Promise<Viewport> {
+  const authenticationStatus = await AuthenticationService.getStatus();
+  const isLoggedIn = !!authenticationStatus?.authenticated;
+  const theme = isLoggedIn ? await UserService.getOwnUserTheme() : Theme.Auto;
+
+  let themeColor: Viewport['themeColor'];
+
+  switch (theme) {
+    case Theme.Light:
+      themeColor = '#f4f4f4';
+      break;
+    case Theme.Dark:
+      themeColor = '#262626';
+      break;
+    default:
+      themeColor = [
+        { media: '(prefers-color-scheme: light)', color: '#f4f4f4' },
+        { media: '(prefers-color-scheme: dark)', color: '#262626' },
+      ];
+  }
+
+  return {
+    width: 'device-width',
+    initialScale: 1.0,
+    viewportFit: 'cover',
+    themeColor,
+  };
+}
 
 const REDIRECT_COOKIE_NAME = 'onboardingRedirect';
 
