@@ -28,9 +28,7 @@ export const Login = (): JSX.Element => {
       <UpdatePageInfo />
       {isLoadingOAuthPage && <LoaderFullScreen />}
       <section
-        className={clsx(
-          'flex flex-col justify-center items-center h-screen px-4',
-        )}
+        className={clsx('flex flex-col justify-center items-center h-dvh px-4')}
       >
         <div className="grid w-full max-w-xl gap-8">
           <Logo />
