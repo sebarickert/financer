@@ -1,33 +1,30 @@
 'use client';
 
 import clsx from 'clsx';
+import { FC } from 'react';
 
 import { Heading } from '$elements/Heading';
 import { Icon } from '$elements/Icon';
 import { Paragraph } from '$elements/paragraph/paragraph';
 import { hapticRunner } from '$utils/haptic.helper';
 
-interface DrawerHeaderProps {
+type DrawerHeaderProps = {
   className?: string;
   heading?: string;
   children?: string;
   onClose?: () => void;
   id: string;
-}
+};
 
-export const DrawerHeader = ({
+export const DrawerHeader: FC<DrawerHeaderProps> = ({
   className = '',
   onClose,
   children,
   heading,
   id,
-}: DrawerHeaderProps) => {
+}) => {
   return (
-    <div
-      className={clsx('grid grid-cols-[1fr,44px] gap-y-4', {
-        [className]: true,
-      })}
-    >
+    <div className={clsx('grid grid-cols-[1fr,44px] gap-y-4', className)}>
       {heading && (
         <>
           <Heading className="col-[1]" noMargin disableResponsiveSizing>

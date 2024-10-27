@@ -43,7 +43,11 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
         <DrawerHeader
           onClose={onClose}
           heading={heading}
-          className="sticky top-0 z-10 pt-8 pb-8 theme-bg-color"
+          className={clsx(
+            `sticky top-0 z-10 theme-bg-color`,
+            'pt-8 pb-6 mb-2',
+            'px-6 lg:px-8 -mx-6 lg:-mx-8',
+          )}
           id={id}
         >
           {description}
