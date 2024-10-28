@@ -213,14 +213,11 @@ describe('TransfersController', () => {
       .expect({
         statusCode: 400,
         message: [
-          'fromAccount must not be empty.',
-          "Target and source accounts can't be the same account.",
           'Amount must be a decimal number.',
           'Amount must be a positive number.',
           'description must be a string',
           'Description must not be empty.',
           'Date must not be empty.',
-          'toAccount must not be empty.',
         ],
         error: 'Bad Request',
       });

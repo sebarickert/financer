@@ -132,7 +132,21 @@ describe('AccountsService', () => {
     expect(transactionRepo.findMany).toHaveBeenCalledTimes(1);
     expect(transactionRepo.findMany).toHaveBeenCalledWith({
       include: {
-        categories: true,
+        categories: {
+          select: {
+            category: {
+              select: {
+                name: true,
+              },
+            },
+            categoryId: true,
+          },
+        },
+        transactionTemplateLog: {
+          select: {
+            id: true,
+          },
+        },
       },
       orderBy: {
         date: 'desc',

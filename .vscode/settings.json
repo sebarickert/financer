@@ -1,4 +1,5 @@
 {
+  "jest.runMode": { "type": "on-demand", "revealOutput": "on-run" },
   "tailwindCSS.experimental.classRegex": [["clsx\\(([^)]*)\\)", "'([^']*)'"]],
   "eslint.workingDirectories": [
     {

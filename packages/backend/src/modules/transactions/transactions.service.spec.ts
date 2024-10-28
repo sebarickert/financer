@@ -4,7 +4,6 @@ import { AccountType } from '@prisma/client';
 import { createMockServiceProvider } from '../../../test/create-mock-service-provider';
 import { DUMMY_TEST_USER } from '../../config/mockAuthenticationMiddleware';
 import { accountsRepoFindAllMockData } from '../../database/repos/mocks/account-repo-mock';
-import { transactionCategoryMappingRepoFindByIdMock } from '../../database/repos/mocks/transaction-category-mapping-repo-mock';
 import {
   transactionsRepoFindAllByIdMockData,
   transactionsRepoFindAllByTypeAndUserMockData,
@@ -21,7 +20,6 @@ import { TransactionsService } from './transactions.service';
 describe('TransactionsService', () => {
   let service: TransactionsService;
   let transactionRepo: jest.Mocked<TransactionRepo>;
-  let transactionCategoryMappingRepo: jest.Mocked<TransactionCategoryMappingRepo>;
   let accountsService: jest.Mocked<AccountsService>;
 
   beforeAll(async () => {
@@ -39,9 +37,6 @@ describe('TransactionsService', () => {
 
     service = module.get<TransactionsService>(TransactionsService);
     transactionRepo = module.get<jest.Mocked<TransactionRepo>>(TransactionRepo);
-    transactionCategoryMappingRepo = module.get<
-      jest.Mocked<TransactionCategoryMappingRepo>
-    >(TransactionCategoryMappingRepo);
     accountsService = module.get<jest.Mocked<AccountsService>>(AccountsService);
   });
 
@@ -68,7 +63,21 @@ describe('TransactionsService', () => {
     expect(transactionRepo.findMany).toHaveBeenCalledTimes(1);
     expect(transactionRepo.findMany).toHaveBeenCalledWith({
       include: {
-        categories: true,
+        categories: {
+          select: {
+            category: {
+              select: {
+                name: true,
+              },
+            },
+            categoryId: true,
+          },
+        },
+        transactionTemplateLog: {
+          select: {
+            id: true,
+          },
+        },
       },
       orderBy: {
         date: 'desc',
@@ -124,7 +133,21 @@ describe('TransactionsService', () => {
     expect(transactionRepo.findMany).toHaveBeenCalledTimes(1);
     expect(transactionRepo.findMany).toHaveBeenCalledWith({
       include: {
-        categories: true,
+        categories: {
+          select: {
+            category: {
+              select: {
+                name: true,
+              },
+            },
+            categoryId: true,
+          },
+        },
+        transactionTemplateLog: {
+          select: {
+            id: true,
+          },
+        },
       },
       orderBy: {
         date: 'desc',
@@ -318,22 +341,42 @@ describe('TransactionsService', () => {
     jest
       .spyOn(transactionRepo, 'findOne')
       .mockResolvedValueOnce(transactionsRepoFindAllByIdMockData[id]);
-    jest
-      .spyOn(transactionCategoryMappingRepo, 'findMany')
-      .mockResolvedValueOnce(transactionCategoryMappingRepoFindByIdMock[id]);
 
     const transaction = await service.findOne(DUMMY_TEST_USER.id, id);
 
     expect(transactionRepo.findOne).toHaveBeenCalledTimes(1);
     expect(transactionRepo.findOne).toHaveBeenCalledWith({
-      id: '624befb66ba655edad8f824e',
-      userId: '61460d7354ea082ad0256749',
-    });
-
-    expect(transactionCategoryMappingRepo.findMany).toHaveBeenCalledTimes(1);
-    expect(transactionCategoryMappingRepo.findMany).toHaveBeenCalledWith({
+      include: {
+        categories: {
+          select: {
+            amount: true,
+            category: {
+              select: {
+                name: true,
+              },
+            },
+            categoryId: true,
+            description: true,
+          },
+        },
+        from: {
+          select: {
+            name: true,
+          },
+        },
+        to: {
+          select: {
+            name: true,
+          },
+        },
+        transactionTemplateLog: {
+          select: {
+            id: true,
+          },
+        },
+      },
       where: {
-        transactionId: '624befb66ba655edad8f824e',
+        id: '624befb66ba655edad8f824e',
         userId: '61460d7354ea082ad0256749',
       },
     });
