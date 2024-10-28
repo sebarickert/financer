@@ -25,6 +25,11 @@ import { UpdateTransactionCategoryMappingDto } from '../transaction-category-map
 import { TransactionCategoryMappingsService } from '../transaction-category-mappings/transaction-category-mappings.service';
 
 import { CreateTransactionDto } from './dto/create-transaction.dto';
+import { TransactionDetailsDto } from './dto/transaction-details.dto';
+import {
+  TransactionListItem,
+  TransactionListItemDto,
+} from './dto/transaction-list-item.dto';
 import { TransactionMonthSummaryDto } from './dto/transaction-month-summary.dto';
 import { TransactionDto } from './dto/transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
@@ -76,23 +81,58 @@ export class TransactionsService {
     );
   }
 
-  async findOne(userId: UserId, id: string): Promise<TransactionDto> {
-    const transaction = await this.transactionRepo.findOne({ id, userId });
+  async findOne(userId: UserId, id: string): Promise<TransactionDetailsDto> {
+    const transaction = await this.transactionRepo.findOne({
+      where: { id, userId },
+      include: {
+        transactionTemplateLog: {
+          select: {
+            id: true,
+          },
+        },
+        categories: {
+          select: {
+            categoryId: true,
+            description: true,
+            amount: true,
+            category: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
+        from: {
+          select: {
+            name: true,
+          },
+        },
+        to: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
 
     if (!transaction) {
       throw new NotFoundException('Transaction not found.');
     }
 
-    const categories =
-      await this.transactionCategoryMappingsService.findAllByUserAndTransaction(
-        userId,
-        transaction.id,
-      );
+    const { from, to, categories, transactionTemplateLog, ...transactionData } =
+      transaction;
 
-    return TransactionDto.createFromPlain({
-      ...transaction,
-      // @ts-expect-error - `categories` is not a field in the Transaction model
-      categories,
+    return TransactionDetailsDto.createFromPlain({
+      ...transactionData,
+      fromAccountName: from?.name ?? null,
+      toAccountName: to?.name ?? null,
+      isRecurring: transactionTemplateLog.length > 0,
+      categories: categories.map((category) => ({
+        id: category.categoryId,
+        description: category.description,
+        amount: category.amount,
+        name: category.category.name,
+      })),
     });
   }
 
@@ -108,7 +148,7 @@ export class TransactionsService {
     sortOrder: Prisma.SortOrder = Prisma.SortOrder.desc,
     transactionCategories?: string[],
     parentTransactionCategory?: string,
-  ): Promise<PaginationDto<TransactionDto[]>> {
+  ): Promise<PaginationDto<TransactionListItemDto[]>> {
     const targetCategoryIds =
       transactionCategories ||
       (await this.findChildrenCategoryIds(parentTransactionCategory));
@@ -140,12 +180,37 @@ export class TransactionsService {
       skip: page ? (page - 1) * limit : 0,
       take: page ? limit : totalCount,
       include: {
-        categories: true,
+        categories: {
+          select: {
+            categoryId: true,
+            category: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
+        transactionTemplateLog: {
+          select: {
+            id: true,
+          },
+        },
       },
     });
 
     return new PaginationDto({
-      data: TransactionDto.createFromPlain(transactions),
+      data: TransactionListItemDto.createFromPlain(
+        transactions.map<TransactionListItem>(
+          ({ categories, transactionTemplateLog, ...transaction }) => ({
+            ...transaction,
+            isRecurring: transactionTemplateLog.length > 0,
+            categories: categories.map(({ categoryId, category }) => ({
+              name: category.name,
+              id: categoryId,
+            })),
+          }),
+        ),
+      ),
       currentPage: page ?? 1,
       limit: page ? limit : totalCount,
       totalPageCount: lastPage,

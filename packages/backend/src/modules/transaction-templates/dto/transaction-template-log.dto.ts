@@ -9,6 +9,10 @@ import { IsEnum, IsDate, IsUUID } from 'class-validator';
 import { UserId } from '../../../types/user-id';
 
 export class TransactionTemplateLogDto implements TransactionTemplateLog {
+  constructor(partial: TransactionTemplateLog) {
+    Object.assign(this, partial);
+  }
+
   @IsUUID()
   readonly id: string;
 
@@ -36,4 +40,24 @@ export class TransactionTemplateLogDto implements TransactionTemplateLog {
 
   @ApiProperty()
   updatedAt: Date;
+
+  public static createFromPlain(
+    transactionTemplateLog: TransactionTemplateLog,
+  ): TransactionTemplateLogDto;
+  public static createFromPlain(
+    transactionTemplateLog: TransactionTemplateLog[],
+  ): TransactionTemplateLogDto[];
+  public static createFromPlain(
+    transactionTemplateLog: TransactionTemplateLog | TransactionTemplateLog[],
+  ): TransactionTemplateLogDto | TransactionTemplateLogDto[] {
+    if (Array.isArray(transactionTemplateLog)) {
+      return transactionTemplateLog.map((templateLog) =>
+        TransactionTemplateLogDto.createFromPlain(templateLog),
+      );
+    }
+
+    return new TransactionTemplateLogDto({
+      ...transactionTemplateLog,
+    });
+  }
 }

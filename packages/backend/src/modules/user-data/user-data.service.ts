@@ -8,6 +8,7 @@ import {
   TransactionCategory,
   TransactionCategoryMapping,
   TransactionTemplate,
+  TransactionTemplateLog,
   User,
   UserPreferenceProperty,
   UserPreferences,
@@ -32,6 +33,7 @@ export type ImportUserDataDto = {
   transactionCategoryMappings: TransactionCategoryMapping[];
   userPreferences: UserPreferences[];
   transactionTemplates: TransactionTemplate[];
+  transactionTemplateLogs: TransactionTemplateLog[];
 };
 
 export type ExportUserDataDto = ImportUserDataDto & {
@@ -91,6 +93,8 @@ export class UserDataService {
       await this.userPreferencesService.findAllByUserForExport(userId);
     const transactionTemplates =
       await this.transactionTemplateService.findAllByUserForExport(userId);
+    const transactionTemplateLogs =
+      await this.transactionTemplateService.findAllLogsByUserForExport(userId);
 
     const filename = getMyDataFilename();
     const data = {
@@ -102,6 +106,7 @@ export class UserDataService {
       transactionCategoryMappings,
       userPreferences,
       transactionTemplates,
+      transactionTemplateLogs,
     };
 
     return { filename, data };
@@ -117,11 +122,13 @@ export class UserDataService {
       transactionCategoryMappings: originalTransactionCategoryMappings = [],
       userPreferences: originalUserPreferences = [],
       transactionTemplates: originalTransactionTemplates = [],
+      transactionTemplateLogs: originalTransactionTemplateLogs = [],
     }: ImportUserDataDto,
   ) {
     const accountIdMapping = new Map<string, string>();
     const transactionIdMapping = new Map<string, string>();
     const transactionCategoryIdMapping = new Map<string, string>();
+    const transactionTemplateIdMapping = new Map<string, string>();
 
     const accounts = originalAccounts.map((account) => {
       const newId = crypto.randomUUID();
@@ -199,6 +206,8 @@ export class UserDataService {
       (transactionTemplate) => {
         const newId = crypto.randomUUID();
 
+        transactionTemplateIdMapping.set(transactionTemplate.id, newId);
+
         const newToAccount = transactionTemplate.toAccount
           ? accountIdMapping.get(transactionTemplate.toAccount)
           : null;
@@ -216,6 +225,27 @@ export class UserDataService {
           categories: newCategories,
           toAccount: newToAccount,
           fromAccount: newFromAccount,
+        };
+      },
+    );
+
+    const transactionTemplateLogs = originalTransactionTemplateLogs.map(
+      (transactionTemplateLog) => {
+        const newId = crypto.randomUUID();
+
+        const newTemplateId = transactionTemplateIdMapping.get(
+          transactionTemplateLog.templateId,
+        );
+
+        const newTransactionId = transactionIdMapping.get(
+          transactionTemplateLog.transactionId,
+        );
+
+        return {
+          ...transactionTemplateLog,
+          id: newId,
+          templateId: newTemplateId,
+          transactionId: newTransactionId,
         };
       },
     );
@@ -245,7 +275,8 @@ export class UserDataService {
     await this.prismaTransactionService.transaction([
       this.accountBalanceChangesService.removeAllByUser(userId),
       this.transactionCategoryMappingService.removeAllByUser(userId),
-      ...this.transactionTemplateService.removeAllByUser(userId),
+      this.transactionTemplateService.removeAllByUser(userId),
+      this.transactionTemplateService.removeAllLogsByUser(userId),
       this.accountsService.removeAllByUser(userId),
       this.transactionService.removeAllByUser(userId),
       this.transactionCategoriesService.removeAllByUser(userId),
@@ -261,6 +292,10 @@ export class UserDataService {
       ),
       this.userPreferencesService.createMany(userId, userPreferences),
       this.transactionTemplateService.createMany(userId, transactionTemplates),
+      this.transactionTemplateService.createManyLogs(
+        userId,
+        transactionTemplateLogs,
+      ),
       this.accountBalanceChangesService.createMany(
         userId,
         accountBalanceChanges,

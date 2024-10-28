@@ -25,7 +25,8 @@ import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
 import { UserIdDecorator } from '../users/users.decorators';
 
 import { CreateIncomeDto } from './dto/create-income.dto';
-import { IncomeDto } from './dto/income.dto';
+import { IncomeDetailsDto } from './dto/income-details.dto';
+import { IncomeListItemDto } from './dto/income-list-item.dto';
 import { UpdateIncomeDto } from './dto/update-income.dto';
 import { IncomesService } from './incomes.service';
 
@@ -36,7 +37,7 @@ export class IncomesController {
   constructor(private readonly incomesService: IncomesService) {}
 
   @Get()
-  @ApiPaginatedDto(IncomeDto)
+  @ApiPaginatedDto(IncomeListItemDto)
   @ApiQuery({
     name: 'month',
     required: false,
@@ -87,7 +88,7 @@ export class IncomesController {
 
   @Get(':id')
   @ApiOkResponse({
-    type: IncomeDto,
+    type: IncomeDetailsDto,
     description: 'Return transaction by id',
   })
   @ApiParam({
@@ -103,7 +104,7 @@ export class IncomesController {
 
   @Post()
   @ApiBody({ type: CreateIncomeDto })
-  @ApiOkResponse({ type: IncomeDto })
+  @ApiOkResponse({ type: IncomeDetailsDto })
   async create(
     @UserIdDecorator() userId: UserId,
     @Body() createIncome: CreateIncomeDto,
@@ -113,7 +114,7 @@ export class IncomesController {
 
   @Patch(':id')
   @ApiBody({ type: UpdateIncomeDto })
-  @ApiOkResponse({ type: IncomeDto })
+  @ApiOkResponse({ type: IncomeDetailsDto })
   @ApiParam({
     name: 'id',
     type: String,

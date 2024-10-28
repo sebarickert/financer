@@ -6,7 +6,8 @@ import { UserId } from '../../types/user-id';
 import { TransactionsService } from '../transactions/transactions.service';
 
 import { CreateIncomeDto } from './dto/create-income.dto';
-import { IncomeDto } from './dto/income.dto';
+import { IncomeDetailsDto } from './dto/income-details.dto';
+import { IncomeListItemDto } from './dto/income-list-item.dto';
 import { UpdateIncomeDto } from './dto/update-income.dto';
 
 @Injectable()
@@ -21,7 +22,7 @@ export class IncomesService {
     month: number,
     accountTypes: AccountType[],
     accountId?: string,
-  ): Promise<PaginationDto<IncomeDto[]>> {
+  ): Promise<PaginationDto<IncomeListItemDto[]>> {
     return this.transactionService.findAllByUser(
       userId,
       TransactionType.INCOME,
@@ -34,7 +35,7 @@ export class IncomesService {
     );
   }
 
-  async findOne(userId: UserId, id: string): Promise<IncomeDto> {
+  async findOne(userId: UserId, id: string): Promise<IncomeDetailsDto> {
     return this.transactionService.findOne(userId, id);
   }
 

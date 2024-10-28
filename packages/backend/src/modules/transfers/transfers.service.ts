@@ -6,7 +6,8 @@ import { UserId } from '../../types/user-id';
 import { TransactionsService } from '../transactions/transactions.service';
 
 import { CreateTransferDto } from './dto/create-transfer.dto';
-import { TransferDto } from './dto/transfer.dto';
+import { TransferDetailsDto } from './dto/transfer-details.dto';
+import { TransferListItemDto } from './dto/transfer-list-item.dto';
 import { UpdateTransferDto } from './dto/update-transfer.dto';
 
 @Injectable()
@@ -21,7 +22,7 @@ export class TransfersService {
     month: number,
     accountTypes: AccountType[],
     accountId?: string,
-  ): Promise<PaginationDto<TransferDto[]>> {
+  ): Promise<PaginationDto<TransferListItemDto[]>> {
     return this.transactionService.findAllByUser(
       userId,
       TransactionType.TRANSFER,
@@ -34,7 +35,7 @@ export class TransfersService {
     );
   }
 
-  async findOne(userId: UserId, id: string): Promise<TransferDto> {
+  async findOne(userId: UserId, id: string): Promise<TransferDetailsDto> {
     return this.transactionService.findOne(userId, id);
   }
 

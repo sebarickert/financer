@@ -13,12 +13,11 @@ import { PrismaService } from '../prisma.service';
 export class TransactionRepo {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findOne(
-    transactionWhereUniqueInput: Prisma.TransactionWhereUniqueInput,
-  ): Promise<Transaction | null> {
-    return this.prisma.transaction.findUnique({
-      where: transactionWhereUniqueInput,
-    });
+  async findOne<T extends Prisma.TransactionFindUniqueArgs>(
+    transactionWhereUniqueInput: T,
+  ): Promise<Prisma.TransactionGetPayload<{ include: T['include'] }>> {
+    // @ts-expect-error - Prisma is not able to infer the correct type for include
+    return this.prisma.transaction.findUnique(transactionWhereUniqueInput);
   }
 
   async findMany<T extends Prisma.TransactionFindManyArgs>(

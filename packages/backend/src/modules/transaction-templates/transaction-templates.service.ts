@@ -12,6 +12,7 @@ import { CreateTransactionDto } from '../transactions/dto/create-transaction.dto
 
 import { CreateTransactionTemplateLogDto } from './dto/create-transaction-template-log.dto';
 import { CreateTransactionTemplateDto } from './dto/create-transaction-template.dto';
+import { TransactionTemplateLogDto } from './dto/transaction-template-log.dto';
 import { TransactionTemplateDto } from './dto/transaction-template.dto';
 import { UpdateTransactionTemplateDto } from './dto/update-transaction-template.dto';
 
@@ -47,6 +48,22 @@ export class TransactionTemplatesService {
     );
   }
 
+  createManyLogs(
+    userId: UserId,
+    createTransactionTemplateLogDto: Omit<
+      CreateTransactionTemplateLogDto,
+      'userId'
+    >[],
+  ) {
+    return this.transactionTemplateLogRepo.createMany(
+      // @ts-expect-error - remove legacy `v` from import data
+      createTransactionTemplateLogDto.map(({ v, ...template }) => ({
+        ...template,
+        userId,
+      })),
+    );
+  }
+
   async findAllByUser(userId: UserId) {
     const templates = await this.transactionTemplateRepo.findMany({
       where: { userId },
@@ -61,6 +78,14 @@ export class TransactionTemplatesService {
     });
 
     return TransactionTemplateDto.createFromPlain(templates);
+  }
+
+  async findAllLogsByUserForExport(userId: UserId) {
+    const templates = await this.transactionTemplateLogRepo.findMany({
+      where: { userId },
+    });
+
+    return TransactionTemplateLogDto.createFromPlain(templates);
   }
 
   async findAllByUserAndType(
@@ -126,10 +151,11 @@ export class TransactionTemplatesService {
   }
 
   removeAllByUser(userId: UserId) {
-    return [
-      this.transactionTemplateLogRepo.deleteMany({ userId }),
-      this.transactionTemplateRepo.deleteMany({ userId }),
-    ] as const;
+    return this.transactionTemplateRepo.deleteMany({ userId });
+  }
+
+  removeAllLogsByUser(userId: UserId) {
+    return this.transactionTemplateLogRepo.deleteMany({ userId });
   }
 
   getTransactionFromTemplate(

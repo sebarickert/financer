@@ -16,7 +16,6 @@ export class CreateTransactionDto extends IntersectionType(
   OmitType(TransactionDto, [
     'id',
     'userId',
-    'categories',
     'fromAccount',
     'toAccount',
     'updatedAt',
