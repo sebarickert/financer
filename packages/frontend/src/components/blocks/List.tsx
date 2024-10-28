@@ -9,6 +9,7 @@ type ListProps = {
   className?: string;
   testId?: string;
   columns?: 1 | 2 | 3;
+  hasItemRoundness?: boolean;
 };
 
 export const List: FC<ListProps> = ({
@@ -17,6 +18,7 @@ export const List: FC<ListProps> = ({
   className,
   testId: rawTestId,
   columns = 1,
+  hasItemRoundness,
 }) => {
   const testId = rawTestId ?? 'list';
 
@@ -36,6 +38,7 @@ export const List: FC<ListProps> = ({
                 data-testid={`${testId}-item`}
                 className={clsx(
                   'focus-within:theme-focus-without-prefix focus-within:z-10 focus-within:relative overflow-hidden',
+                  { 'rounded-md': hasItemRoundness },
                 )}
               >
                 {child}

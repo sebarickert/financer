@@ -9,9 +9,11 @@ import {
 import { BalanceDisplay } from '$blocks/BalanceDisplay';
 import { DetailsList } from '$blocks/details-list/details-list';
 import { DetailsItem } from '$blocks/details-list/details-list.item';
+import { Button } from '$elements/button/button';
 import { Heading } from '$elements/Heading';
 import { Icon, IconName } from '$elements/Icon';
 import { Link } from '$elements/Link';
+import { Popper } from '$elements/Popper';
 import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { CategoryService } from '$ssr/api/category.service';
 import { capitalize } from '$utils/capitalize';
@@ -120,6 +122,19 @@ export const Transaction: FC<TransactionProps> = async ({
         }
       />
       <section className={clsx('@container')}>
+        <Button popoverTarget="transactionPopper" accentColor="secondary">
+          plaa
+        </Button>
+        <Popper
+          id="transactionPopper"
+          items={[
+            {
+              href: `/statistics/${transactionDetailsMapping.url}/${transaction.id}/edit`,
+              icon: 'PencilIcon',
+              label: 'Edit',
+            },
+          ]}
+        />
         <div
           className={clsx(
             'theme-layer-color rounded-md',
