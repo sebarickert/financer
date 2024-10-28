@@ -1027,7 +1027,9 @@
                       "properties": {
                         "data": {
                           "type": "array",
-                          "items": { "$ref": "#/components/schemas/ExpenseDto" }
+                          "items": {
+                            "$ref": "#/components/schemas/ExpenseListItemDto"
+                          }
                         }
                       },
                       "required": ["data"]
@@ -1056,7 +1058,7 @@
             "description": "",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ExpenseDto" }
+                "schema": { "$ref": "#/components/schemas/ExpenseDetailsDto" }
               }
             }
           }
@@ -1080,7 +1082,7 @@
             "description": "Return transaction by id",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ExpenseDto" }
+                "schema": { "$ref": "#/components/schemas/ExpenseDetailsDto" }
               }
             }
           }
@@ -1110,7 +1112,7 @@
             "description": "",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ExpenseDto" }
+                "schema": { "$ref": "#/components/schemas/ExpenseDetailsDto" }
               }
             }
           }
@@ -1184,7 +1186,9 @@
                       "properties": {
                         "data": {
                           "type": "array",
-                          "items": { "$ref": "#/components/schemas/IncomeDto" }
+                          "items": {
+                            "$ref": "#/components/schemas/IncomeListItemDto"
+                          }
                         }
                       },
                       "required": ["data"]
@@ -1213,7 +1217,7 @@
             "description": "",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/IncomeDto" }
+                "schema": { "$ref": "#/components/schemas/IncomeDetailsDto" }
               }
             }
           }
@@ -1237,7 +1241,7 @@
             "description": "Return transaction by id",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/IncomeDto" }
+                "schema": { "$ref": "#/components/schemas/IncomeDetailsDto" }
               }
             }
           }
@@ -1267,7 +1271,7 @@
             "description": "",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/IncomeDto" }
+                "schema": { "$ref": "#/components/schemas/IncomeDetailsDto" }
               }
             }
           }
@@ -1342,7 +1346,7 @@
                         "data": {
                           "type": "array",
                           "items": {
-                            "$ref": "#/components/schemas/TransferDto"
+                            "$ref": "#/components/schemas/TransferListItemDto"
                           }
                         }
                       },
@@ -1372,7 +1376,7 @@
             "description": "",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/TransferDto" }
+                "schema": { "$ref": "#/components/schemas/TransferDetailsDto" }
               }
             }
           }
@@ -1396,7 +1400,7 @@
             "description": "Return transaction by id",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/TransferDto" }
+                "schema": { "$ref": "#/components/schemas/TransferDetailsDto" }
               }
             }
           }
@@ -1426,7 +1430,7 @@
             "description": "",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/TransferDto" }
+                "schema": { "$ref": "#/components/schemas/TransferDetailsDto" }
               }
             }
           }
@@ -1568,15 +1572,6 @@
         },
         "required": ["createdAt", "updatedAt", "id", "userId", "key", "value"]
       },
-      "CreateTransactionCategoryMappingWithoutTransactionDto": {
-        "type": "object",
-        "properties": {
-          "description": { "type": "string" },
-          "categoryId": { "type": "string" },
-          "amount": { "type": "number" }
-        },
-        "required": ["categoryId", "amount"]
-      },
       "TransactionDto": {
         "type": "object",
         "properties": {
@@ -1588,13 +1583,7 @@
           "date": { "format": "date-time", "type": "string" },
           "userId": { "type": "string" },
           "fromAccount": { "type": "string" },
-          "toAccount": { "type": "string" },
-          "categories": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CreateTransactionCategoryMappingWithoutTransactionDto"
-            }
-          }
+          "toAccount": { "type": "string" }
         },
         "required": [
           "createdAt",
@@ -1605,8 +1594,7 @@
           "date",
           "userId",
           "fromAccount",
-          "toAccount",
-          "categories"
+          "toAccount"
         ]
       },
       "AccountType": {
@@ -1667,6 +1655,7 @@
       },
       "TransactionType": {
         "type": "string",
+        "description": "Type of the transaction",
         "enum": ["INCOME", "EXPENSE", "TRANSFER"]
       },
       "TransactionCategoryDto": {
@@ -2048,7 +2037,17 @@
           "categories": { "type": "array", "items": { "type": "string" } }
         }
       },
-      "ExpenseDto": {
+      "TransactionDetailCategoryDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "description": { "type": "string" },
+          "amount": { "type": "number" },
+          "name": { "type": "string" }
+        },
+        "required": ["id", "description", "amount", "name"]
+      },
+      "ExpenseDetailsDto": {
         "type": "object",
         "properties": {
           "createdAt": { "format": "date-time", "type": "string" },
@@ -2059,10 +2058,13 @@
           "date": { "format": "date-time", "type": "string" },
           "userId": { "type": "string" },
           "fromAccount": { "type": "string" },
+          "fromAccountName": { "type": "string" },
+          "isRecurring": { "type": "boolean" },
+          "type": { "$ref": "#/components/schemas/TransactionType" },
           "categories": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/CreateTransactionCategoryMappingWithoutTransactionDto"
+              "$ref": "#/components/schemas/TransactionDetailCategoryDto"
             }
           }
         },
@@ -2075,6 +2077,43 @@
           "date",
           "userId",
           "fromAccount",
+          "fromAccountName",
+          "isRecurring",
+          "type",
+          "categories"
+        ]
+      },
+      "TransactionListItemCategoryDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" }
+        },
+        "required": ["id", "name"]
+      },
+      "ExpenseListItemDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "amount": { "type": "number" },
+          "date": { "format": "date-time", "type": "string" },
+          "fromAccount": { "type": "string" },
+          "isRecurring": { "type": "boolean" },
+          "type": { "$ref": "#/components/schemas/TransactionType" },
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransactionListItemCategoryDto"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "amount",
+          "date",
+          "fromAccount",
+          "isRecurring",
+          "type",
           "categories"
         ]
       },
@@ -2085,20 +2124,9 @@
           "description": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
           "fromAccount": { "type": "string" },
-          "categories": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CreateTransactionCategoryMappingWithoutTransactionDto"
-            }
-          }
+          "categories": { "type": "array", "items": { "type": "string" } }
         },
-        "required": [
-          "amount",
-          "description",
-          "date",
-          "fromAccount",
-          "categories"
-        ]
+        "required": ["amount", "description", "date"]
       },
       "UpdateExpenseDto": {
         "type": "object",
@@ -2107,15 +2135,10 @@
           "description": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
           "fromAccount": { "type": "string" },
-          "categories": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CreateTransactionCategoryMappingWithoutTransactionDto"
-            }
-          }
+          "categories": { "type": "array", "items": { "type": "string" } }
         }
       },
-      "IncomeDto": {
+      "IncomeDetailsDto": {
         "type": "object",
         "properties": {
           "createdAt": { "format": "date-time", "type": "string" },
@@ -2126,10 +2149,13 @@
           "date": { "format": "date-time", "type": "string" },
           "userId": { "type": "string" },
           "toAccount": { "type": "string" },
+          "toAccountName": { "type": "string" },
+          "isRecurring": { "type": "boolean" },
+          "type": { "$ref": "#/components/schemas/TransactionType" },
           "categories": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/CreateTransactionCategoryMappingWithoutTransactionDto"
+              "$ref": "#/components/schemas/TransactionDetailCategoryDto"
             }
           }
         },
@@ -2142,6 +2168,35 @@
           "date",
           "userId",
           "toAccount",
+          "toAccountName",
+          "isRecurring",
+          "type",
+          "categories"
+        ]
+      },
+      "IncomeListItemDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "amount": { "type": "number" },
+          "date": { "format": "date-time", "type": "string" },
+          "toAccount": { "type": "string" },
+          "isRecurring": { "type": "boolean" },
+          "type": { "$ref": "#/components/schemas/TransactionType" },
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransactionListItemCategoryDto"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "amount",
+          "date",
+          "toAccount",
+          "isRecurring",
+          "type",
           "categories"
         ]
       },
@@ -2152,14 +2207,9 @@
           "description": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
           "toAccount": { "type": "string" },
-          "categories": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CreateTransactionCategoryMappingWithoutTransactionDto"
-            }
-          }
+          "categories": { "type": "array", "items": { "type": "string" } }
         },
-        "required": ["amount", "description", "date", "toAccount", "categories"]
+        "required": ["amount", "description", "date"]
       },
       "UpdateIncomeDto": {
         "type": "object",
@@ -2168,15 +2218,10 @@
           "description": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
           "toAccount": { "type": "string" },
-          "categories": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CreateTransactionCategoryMappingWithoutTransactionDto"
-            }
-          }
+          "categories": { "type": "array", "items": { "type": "string" } }
         }
       },
-      "TransferDto": {
+      "TransferDetailsDto": {
         "type": "object",
         "properties": {
           "createdAt": { "format": "date-time", "type": "string" },
@@ -2188,10 +2233,14 @@
           "userId": { "type": "string" },
           "fromAccount": { "type": "string" },
           "toAccount": { "type": "string" },
+          "fromAccountName": { "type": "string" },
+          "toAccountName": { "type": "string" },
+          "isRecurring": { "type": "boolean" },
+          "type": { "$ref": "#/components/schemas/TransactionType" },
           "categories": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/CreateTransactionCategoryMappingWithoutTransactionDto"
+              "$ref": "#/components/schemas/TransactionDetailCategoryDto"
             }
           }
         },
@@ -2205,6 +2254,38 @@
           "userId",
           "fromAccount",
           "toAccount",
+          "fromAccountName",
+          "toAccountName",
+          "isRecurring",
+          "type",
+          "categories"
+        ]
+      },
+      "TransferListItemDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "amount": { "type": "number" },
+          "date": { "format": "date-time", "type": "string" },
+          "fromAccount": { "type": "string" },
+          "toAccount": { "type": "string" },
+          "isRecurring": { "type": "boolean" },
+          "type": { "$ref": "#/components/schemas/TransactionType" },
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransactionListItemCategoryDto"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "amount",
+          "date",
+          "fromAccount",
+          "toAccount",
+          "isRecurring",
+          "type",
           "categories"
         ]
       },
@@ -2216,21 +2297,9 @@
           "date": { "format": "date-time", "type": "string" },
           "fromAccount": { "type": "string" },
           "toAccount": { "type": "string" },
-          "categories": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CreateTransactionCategoryMappingWithoutTransactionDto"
-            }
-          }
+          "categories": { "type": "array", "items": { "type": "string" } }
         },
-        "required": [
-          "amount",
-          "description",
-          "date",
-          "fromAccount",
-          "toAccount",
-          "categories"
-        ]
+        "required": ["amount", "description", "date"]
       },
       "UpdateTransferDto": {
         "type": "object",
@@ -2240,12 +2309,7 @@
           "date": { "format": "date-time", "type": "string" },
           "fromAccount": { "type": "string" },
           "toAccount": { "type": "string" },
-          "categories": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CreateTransactionCategoryMappingWithoutTransactionDto"
-            }
-          }
+          "categories": { "type": "array", "items": { "type": "string" } }
         }
       }
     }

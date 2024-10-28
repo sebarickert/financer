@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 import {
   ApiBody,
+  ApiExtraModels,
   ApiOkResponse,
   ApiParam,
   ApiQuery,
@@ -33,6 +34,7 @@ import { IncomesService } from './incomes.service';
 @Controller('api/incomes')
 @ApiTags('Incomes')
 @LoggedIn()
+@ApiExtraModels(IncomeDetailsDto, IncomeListItemDto)
 export class IncomesController {
   constructor(private readonly incomesService: IncomesService) {}
 

@@ -33,7 +33,7 @@ import { TransfersService } from './transfers.service';
 
 @Controller('api/transfers')
 @ApiTags('Transfers')
-@ApiExtraModels(TransferDetailsDto)
+@ApiExtraModels(TransferDetailsDto, TransferListItemDto)
 @LoggedIn()
 export class TransfersController {
   constructor(private readonly transfersService: TransfersService) {}
