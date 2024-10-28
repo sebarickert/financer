@@ -23,18 +23,19 @@ import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
 import { UserIdDecorator } from '../users/users.decorators';
 
 import { TransactionDetailsDto } from './dto/transaction-details.dto';
+import { TransactionListItemDto } from './dto/transaction-list-item.dto';
 import { TransactionMonthSummaryDto } from './dto/transaction-month-summary.dto';
 import { TransactionsService } from './transactions.service';
 
 @Controller('api/transactions')
 @ApiTags('Transactions')
-@ApiExtraModels(TransactionDetailsDto, TransactionMonthSummaryDto)
+@ApiExtraModels(TransactionListItemDto, TransactionMonthSummaryDto)
 @LoggedIn()
 export class TransactionsController {
   constructor(private readonly transactionsService: TransactionsService) {}
 
   @Get()
-  @ApiPaginatedDto(TransactionDetailsDto)
+  @ApiPaginatedDto(TransactionListItemDto)
   @ApiQuery({
     name: 'month',
     required: false,

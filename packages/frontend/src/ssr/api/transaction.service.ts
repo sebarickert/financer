@@ -6,15 +6,16 @@ import { IncomeService } from './income.service';
 import { TransferService } from './transfer.service';
 
 import {
-  ExpenseDto,
-  IncomeDto,
+  ExpenseListItemDto,
+  IncomeListItemDto,
   SortOrder,
-  TransactionDto,
+  TransactionDetailsDto,
+  TransactionListItemDto,
   TransactionMonthSummaryDto,
   TransactionsFindAllByUserApiArg,
   TransactionsFindMonthlySummariesByUserApiArg,
   TransactionType,
-  TransferDto,
+  TransferListItemDto,
 } from '$api/generated/financerApi';
 import { GenericPaginationDto } from 'src/types/pagination.dto';
 
@@ -60,23 +61,28 @@ export class TransactionService extends BaseApi {
   public static async getFirstByType(
     type?: TransactionType.Expense,
     options?: FirstTransactionByTypeOptions,
-  ): Promise<ExpenseDto>;
+  ): Promise<ExpenseListItemDto>;
   public static async getFirstByType(
     type?: TransactionType.Income,
     options?: FirstTransactionByTypeOptions,
-  ): Promise<IncomeDto>;
+  ): Promise<IncomeListItemDto>;
   public static async getFirstByType(
     type?: TransactionType.Transfer,
     options?: FirstTransactionByTypeOptions,
-  ): Promise<TransferDto>;
+  ): Promise<TransferListItemDto>;
   public static async getFirstByType(
     type?: null,
     options?: FirstTransactionByTypeOptions,
-  ): Promise<TransactionDto>;
+  ): Promise<TransactionListItemDto>;
   public static async getFirstByType(
     type: TransactionType | null = null,
     options: FirstTransactionByTypeOptions = {},
-  ): Promise<TransactionDto | ExpenseDto | IncomeDto | TransferDto> {
+  ): Promise<
+    | TransactionListItemDto
+    | ExpenseListItemDto
+    | IncomeListItemDto
+    | TransferListItemDto
+  > {
     // For some reason ts fails to infer the type of the response so lets just cast as null
     const data = await this.getAllByType(type as null, {
       ...options,
@@ -91,23 +97,28 @@ export class TransactionService extends BaseApi {
   public static async getLatestByType(
     type?: TransactionType.Expense,
     options?: FirstTransactionByTypeOptions,
-  ): Promise<ExpenseDto>;
+  ): Promise<ExpenseListItemDto>;
   public static async getLatestByType(
     type?: TransactionType.Income,
     options?: FirstTransactionByTypeOptions,
-  ): Promise<IncomeDto>;
+  ): Promise<IncomeListItemDto>;
   public static async getLatestByType(
     type?: TransactionType.Transfer,
     options?: FirstTransactionByTypeOptions,
-  ): Promise<TransferDto>;
+  ): Promise<TransferListItemDto>;
   public static async getLatestByType(
     type?: null,
     options?: FirstTransactionByTypeOptions,
-  ): Promise<TransactionDto>;
+  ): Promise<TransactionListItemDto>;
   public static async getLatestByType(
     type: TransactionType | null = null,
     options: FirstTransactionByTypeOptions = {},
-  ): Promise<TransactionDto | ExpenseDto | IncomeDto | TransferDto> {
+  ): Promise<
+    | TransactionListItemDto
+    | ExpenseListItemDto
+    | IncomeListItemDto
+    | TransferListItemDto
+  > {
     // For some reason ts fails to infer the type of the response so lets just cast as null
     const data = await this.getAllByType(type as null, {
       ...options,
@@ -122,27 +133,27 @@ export class TransactionService extends BaseApi {
   public static async getAllByType(
     type: TransactionType.Expense,
     options?: TransactionListOptions,
-  ): Promise<GenericPaginationDto<ExpenseDto>>;
+  ): Promise<GenericPaginationDto<ExpenseListItemDto>>;
   public static async getAllByType(
     type: TransactionType.Income,
     options?: TransactionListOptions,
-  ): Promise<GenericPaginationDto<IncomeDto>>;
+  ): Promise<GenericPaginationDto<IncomeListItemDto>>;
   public static async getAllByType(
     type: TransactionType.Transfer,
     options?: TransactionListOptions,
-  ): Promise<GenericPaginationDto<TransferDto>>;
+  ): Promise<GenericPaginationDto<TransferListItemDto>>;
   public static async getAllByType(
     type: null,
     options?: TransactionListOptions,
-  ): Promise<GenericPaginationDto<TransactionDto>>;
+  ): Promise<GenericPaginationDto<TransactionListItemDto>>;
   public static async getAllByType(
     type: TransactionType | null,
     options: TransactionListOptions = {},
   ): Promise<
-    | GenericPaginationDto<TransactionDto>
-    | GenericPaginationDto<ExpenseDto>
-    | GenericPaginationDto<IncomeDto>
-    | GenericPaginationDto<TransferDto>
+    | GenericPaginationDto<TransactionListItemDto>
+    | GenericPaginationDto<ExpenseListItemDto>
+    | GenericPaginationDto<IncomeListItemDto>
+    | GenericPaginationDto<TransferListItemDto>
   > {
     if (type === TransactionType.Expense) {
       return ExpenseService.getAll(options);
@@ -157,7 +168,7 @@ export class TransactionService extends BaseApi {
 
   private static async getAll(
     options: TransactionListOptions,
-  ): Promise<GenericPaginationDto<TransactionDto>> {
+  ): Promise<GenericPaginationDto<TransactionListItemDto>> {
     const { data, error } = await this.client.GET('/api/transactions', {
       params: {
         query: options,
@@ -180,10 +191,10 @@ export class TransactionService extends BaseApi {
       throw new Error('Failed to fetch transactions', error);
     }
 
-    return data;
+    return data as GenericPaginationDto<TransactionListItemDto>;
   }
 
-  public static async getById(id: string): Promise<TransactionDto> {
+  public static async getById(id: string): Promise<TransactionDetailsDto> {
     const { data, error } = await this.client.GET(`/api/transactions/{id}`, {
       params: {
         path: {
@@ -208,6 +219,6 @@ export class TransactionService extends BaseApi {
       throw new Error('Failed to fetch transaction', error);
     }
 
-    return data as TransactionDto;
+    return data as TransactionDetailsDto;
   }
 }

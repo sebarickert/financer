@@ -1,7 +1,7 @@
 import { notFound, redirect, RedirectType } from 'next/navigation';
 import { FC } from 'react';
 
-import { TransferDto } from '$api/generated/financerApi';
+import { TransferDetailsDto } from '$api/generated/financerApi';
 import {
   isCategoriesFormFullFields,
   parseCategoriesFormFullFields,
@@ -41,7 +41,7 @@ export const TransferEditContainer: FC<TransferEditContainerProps> = async ({
       parseCategoriesFormFullFields,
     );
 
-    let data: TransferDto;
+    let data: TransferDetailsDto;
 
     try {
       data = await TransferService.update(transfer.id, {
@@ -78,6 +78,13 @@ export const TransferEditContainer: FC<TransferEditContainerProps> = async ({
 
   const initialValues = {
     ...transfer,
+    categories: transfer.categories.map(
+      ({ id: categoryId, amount, description }) => ({
+        categoryId: categoryId,
+        amount,
+        description,
+      }),
+    ),
     date: formatDate(new Date(transfer.date), DateFormat.input),
   };
 

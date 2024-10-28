@@ -503,7 +503,7 @@
                         "data": {
                           "type": "array",
                           "items": {
-                            "$ref": "#/components/schemas/TransactionDetailsDto"
+                            "$ref": "#/components/schemas/TransactionListItemDto"
                           }
                         }
                       },
@@ -1904,6 +1904,78 @@
         },
         "required": ["date", "amount", "balance"]
       },
+      "TransactionListItemCategoryDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" }
+        },
+        "required": ["id", "name"]
+      },
+      "TransactionListItemDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "amount": { "type": "number" },
+          "description": { "type": "string" },
+          "date": { "format": "date-time", "type": "string" },
+          "fromAccount": { "type": "string" },
+          "toAccount": { "type": "string" },
+          "isRecurring": { "type": "boolean" },
+          "type": { "$ref": "#/components/schemas/TransactionType" },
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransactionListItemCategoryDto"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "amount",
+          "description",
+          "date",
+          "fromAccount",
+          "toAccount",
+          "isRecurring",
+          "type",
+          "categories"
+        ]
+      },
+      "TransactionMonthSummaryIdDto": {
+        "type": "object",
+        "properties": {
+          "year": { "type": "number" },
+          "month": { "type": "number" }
+        },
+        "required": ["year", "month"]
+      },
+      "TransactionMonthSummaryDto": {
+        "type": "object",
+        "properties": {
+          "id": { "$ref": "#/components/schemas/TransactionMonthSummaryIdDto" },
+          "totalCount": { "type": "number" },
+          "incomesCount": { "type": "number" },
+          "expensesCount": { "type": "number" },
+          "transfersCount": { "type": "number" },
+          "totalAmount": { "type": "number" },
+          "incomeAmount": { "type": "number" },
+          "expenseAmount": { "type": "number" },
+          "transferAmount": { "type": "number" }
+        },
+        "required": [
+          "id",
+          "totalCount",
+          "incomesCount",
+          "expensesCount",
+          "transfersCount",
+          "totalAmount",
+          "incomeAmount",
+          "expenseAmount",
+          "transferAmount"
+        ]
+      },
+      "SortOrder": { "type": "string", "enum": ["asc", "desc"] },
       "TransactionDetailCategoryDto": {
         "type": "object",
         "properties": {
@@ -1955,40 +2027,6 @@
           "categories"
         ]
       },
-      "TransactionMonthSummaryIdDto": {
-        "type": "object",
-        "properties": {
-          "year": { "type": "number" },
-          "month": { "type": "number" }
-        },
-        "required": ["year", "month"]
-      },
-      "TransactionMonthSummaryDto": {
-        "type": "object",
-        "properties": {
-          "id": { "$ref": "#/components/schemas/TransactionMonthSummaryIdDto" },
-          "totalCount": { "type": "number" },
-          "incomesCount": { "type": "number" },
-          "expensesCount": { "type": "number" },
-          "transfersCount": { "type": "number" },
-          "totalAmount": { "type": "number" },
-          "incomeAmount": { "type": "number" },
-          "expenseAmount": { "type": "number" },
-          "transferAmount": { "type": "number" }
-        },
-        "required": [
-          "id",
-          "totalCount",
-          "incomesCount",
-          "expensesCount",
-          "transfersCount",
-          "totalAmount",
-          "incomeAmount",
-          "expenseAmount",
-          "transferAmount"
-        ]
-      },
-      "SortOrder": { "type": "string", "enum": ["asc", "desc"] },
       "CategoryMonthlySummaryDto": {
         "type": "object",
         "properties": {
@@ -2154,19 +2192,12 @@
           "categories"
         ]
       },
-      "TransactionListItemCategoryDto": {
-        "type": "object",
-        "properties": {
-          "id": { "type": "string" },
-          "name": { "type": "string" }
-        },
-        "required": ["id", "name"]
-      },
       "ExpenseListItemDto": {
         "type": "object",
         "properties": {
           "id": { "type": "string" },
           "amount": { "type": "number" },
+          "description": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
           "fromAccount": { "type": "string" },
           "isRecurring": { "type": "boolean" },
@@ -2181,12 +2212,22 @@
         "required": [
           "id",
           "amount",
+          "description",
           "date",
           "fromAccount",
           "isRecurring",
           "type",
           "categories"
         ]
+      },
+      "CreateTransactionCategoryMappingWithoutTransactionDto": {
+        "type": "object",
+        "properties": {
+          "description": { "type": "string" },
+          "categoryId": { "type": "string" },
+          "amount": { "type": "number" }
+        },
+        "required": ["categoryId", "amount"]
       },
       "CreateExpenseDto": {
         "type": "object",
@@ -2195,7 +2236,12 @@
           "description": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
           "fromAccount": { "type": "string" },
-          "categories": { "type": "array", "items": { "type": "string" } }
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateTransactionCategoryMappingWithoutTransactionDto"
+            }
+          }
         },
         "required": ["amount", "description", "date"]
       },
@@ -2206,7 +2252,12 @@
           "description": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
           "fromAccount": { "type": "string" },
-          "categories": { "type": "array", "items": { "type": "string" } }
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateTransactionCategoryMappingWithoutTransactionDto"
+            }
+          }
         }
       },
       "IncomeDetailsDto": {
@@ -2250,6 +2301,7 @@
         "properties": {
           "id": { "type": "string" },
           "amount": { "type": "number" },
+          "description": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
           "toAccount": { "type": "string" },
           "isRecurring": { "type": "boolean" },
@@ -2264,6 +2316,7 @@
         "required": [
           "id",
           "amount",
+          "description",
           "date",
           "toAccount",
           "isRecurring",
@@ -2278,7 +2331,12 @@
           "description": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
           "toAccount": { "type": "string" },
-          "categories": { "type": "array", "items": { "type": "string" } }
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateTransactionCategoryMappingWithoutTransactionDto"
+            }
+          }
         },
         "required": ["amount", "description", "date"]
       },
@@ -2289,7 +2347,12 @@
           "description": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
           "toAccount": { "type": "string" },
-          "categories": { "type": "array", "items": { "type": "string" } }
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateTransactionCategoryMappingWithoutTransactionDto"
+            }
+          }
         }
       },
       "TransferDetailsDto": {
@@ -2337,6 +2400,7 @@
         "properties": {
           "id": { "type": "string" },
           "amount": { "type": "number" },
+          "description": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
           "fromAccount": { "type": "string" },
           "toAccount": { "type": "string" },
@@ -2352,6 +2416,7 @@
         "required": [
           "id",
           "amount",
+          "description",
           "date",
           "fromAccount",
           "toAccount",
@@ -2368,7 +2433,12 @@
           "date": { "format": "date-time", "type": "string" },
           "fromAccount": { "type": "string" },
           "toAccount": { "type": "string" },
-          "categories": { "type": "array", "items": { "type": "string" } }
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateTransactionCategoryMappingWithoutTransactionDto"
+            }
+          }
         },
         "required": ["amount", "description", "date"]
       },
@@ -2380,7 +2450,12 @@
           "date": { "format": "date-time", "type": "string" },
           "fromAccount": { "type": "string" },
           "toAccount": { "type": "string" },
-          "categories": { "type": "array", "items": { "type": "string" } }
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateTransactionCategoryMappingWithoutTransactionDto"
+            }
+          }
         }
       }
     }

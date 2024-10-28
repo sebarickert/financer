@@ -23,7 +23,9 @@ export class CreateTransactionDto extends IntersectionType(
   ] as const),
   PartialType(PickType(TransactionDto, ['fromAccount', 'toAccount'] as const)),
 ) {
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({
+    type: [CreateTransactionCategoryMappingWithoutTransactionDto],
+  })
   @IsOptional()
   @ValidateNested({ each: true })
   @Type(() => CreateTransactionCategoryMappingWithoutTransactionDto)

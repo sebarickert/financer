@@ -1,4 +1,4 @@
-import { ApiProperty, PickType } from '@nestjs/swagger';
+import { ApiHideProperty, ApiProperty, PickType } from '@nestjs/swagger';
 import { Transaction, TransactionType } from '@prisma/client';
 import { Exclude, Transform, Type } from 'class-transformer';
 import { IsBoolean, IsEnum, ValidateNested } from 'class-validator';
@@ -8,7 +8,7 @@ import { TransactionDto } from './transaction.dto';
 
 export type TransactionListItem = Pick<
   Transaction,
-  'amount' | 'id' | 'date' | 'fromAccount' | 'toAccount'
+  'description' | 'amount' | 'id' | 'date' | 'fromAccount' | 'toAccount'
 > & {
   isRecurring: boolean;
   categories: TransactionListItemCategoryDto[];
@@ -16,6 +16,7 @@ export type TransactionListItem = Pick<
 
 export class TransactionListItemDto
   extends PickType(TransactionDto, [
+    'description',
     'amount',
     'id',
     'date',
@@ -50,9 +51,11 @@ export class TransactionListItemDto
   })
   type: TransactionType;
 
+  @ApiHideProperty()
   @Exclude()
   readonly fromAccount: string;
 
+  @ApiHideProperty()
   @Exclude()
   readonly toAccount: string;
 
