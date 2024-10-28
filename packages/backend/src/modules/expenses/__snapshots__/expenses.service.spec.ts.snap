@@ -2855,9 +2855,10 @@ PaginationDto {
 `;
 
 exports[`ExpensesService should return one expense for user 1`] = `
-{
+TransactionDetailsDto {
   "amount": "1858.18",
   "categories": [],
+  "createdAt": 2024-05-10T10:21:18.363Z,
   "date": 2022-01-27T23:23:00.000Z,
   "description": "Dummy expense 80",
   "fromAccount": "61460de154ea082ad0256786",
@@ -2867,6 +2868,7 @@ exports[`ExpensesService should return one expense for user 1`] = `
   "toAccount": null,
   "toAccountName": null,
   "type": undefined,
+  "updatedAt": 2024-05-10T10:21:18.363Z,
   "userId": "61460d7354ea082ad0256749",
 }
 `;

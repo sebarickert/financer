@@ -1,7 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { createMockServiceProvider } from '../../../test/create-mock-service-provider';
-import { removeCreatedAndUpdated } from '../../../test/test-helper';
 import { DUMMY_TEST_USER } from '../../config/mockAuthenticationMiddleware';
 import { AccountBalanceChangeRepo } from '../../database/repos/account-balance-change.repo';
 import { AccountRepo } from '../../database/repos/account.repo';
@@ -76,7 +75,7 @@ describe('AccountsService', () => {
       },
     });
 
-    expect(removeCreatedAndUpdated(accounts)).toMatchSnapshot();
+    expect(accounts).toMatchSnapshot();
   });
 
   it('should return an account from findOne', async () => {
@@ -94,7 +93,7 @@ describe('AccountsService', () => {
       userId: '61460d7354ea082ad0256749',
     });
 
-    expect(removeCreatedAndUpdated(account)).toMatchSnapshot();
+    expect(account).toMatchSnapshot();
   });
 
   it('should return an array of account balance history from getAccountBalanceHistory', async () => {

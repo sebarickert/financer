@@ -4,6 +4,7 @@ import { AccountType } from '@prisma/client';
 import { createMockServiceProvider } from '../../../test/create-mock-service-provider';
 import { DUMMY_TEST_USER } from '../../config/mockAuthenticationMiddleware';
 import { accountsRepoFindAllMockData } from '../../database/repos/mocks/account-repo-mock';
+import { transactionCategoryRepoUserMockDataFindAllBy } from '../../database/repos/mocks/transaction-category-repo-mock';
 import {
   transactionsRepoFindAllByIdMockData,
   transactionsRepoFindAllByTypeAndUserMockData,
@@ -20,6 +21,7 @@ import { TransactionsService } from './transactions.service';
 describe('TransactionsService', () => {
   let service: TransactionsService;
   let transactionRepo: jest.Mocked<TransactionRepo>;
+  let transactionCategoriesRepo: jest.Mocked<TransactionCategoryRepo>;
   let accountsService: jest.Mocked<AccountsService>;
 
   beforeAll(async () => {
@@ -37,6 +39,9 @@ describe('TransactionsService', () => {
 
     service = module.get<TransactionsService>(TransactionsService);
     transactionRepo = module.get<jest.Mocked<TransactionRepo>>(TransactionRepo);
+    transactionCategoriesRepo = module.get<
+      jest.Mocked<TransactionCategoryRepo>
+    >(TransactionCategoryRepo);
     accountsService = module.get<jest.Mocked<AccountsService>>(AccountsService);
   });
 
@@ -342,6 +347,10 @@ describe('TransactionsService', () => {
       .spyOn(transactionRepo, 'findOne')
       .mockResolvedValueOnce(transactionsRepoFindAllByIdMockData[id]);
 
+    jest
+      .spyOn(transactionCategoriesRepo, 'findMany')
+      .mockResolvedValueOnce(transactionCategoryRepoUserMockDataFindAllBy);
+
     const transaction = await service.findOne(DUMMY_TEST_USER.id, id);
 
     expect(transactionRepo.findOne).toHaveBeenCalledTimes(1);
@@ -378,6 +387,17 @@ describe('TransactionsService', () => {
       where: {
         id: '624befb66ba655edad8f824e',
         userId: '61460d7354ea082ad0256749',
+      },
+    });
+
+    expect(transactionCategoriesRepo.findMany).toHaveBeenCalledTimes(1);
+    expect(transactionCategoriesRepo.findMany).toHaveBeenCalledWith({
+      where: {
+        userId: '61460d7354ea082ad0256749',
+        deleted: {
+          not: true,
+        },
+        visibility: undefined,
       },
     });
 

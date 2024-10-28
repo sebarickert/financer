@@ -1,11 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`TransactionCategoriesService should return a transaction category by id 1`] = `
-{
+TransactionCategoryDetailsDto {
+  "createdAt": 2024-05-10T10:21:18.363Z,
   "deleted": false,
   "id": "623b58ada3deba9879422fbf",
   "name": "Category for all types",
   "parentCategoryId": null,
+  "path": "Category for all types",
+  "updatedAt": 2024-05-10T10:21:18.363Z,
   "userId": "61460d7354ea082ad0256749",
   "visibility": [
     "INCOME",
@@ -17,11 +20,13 @@ exports[`TransactionCategoriesService should return a transaction category by id
 
 exports[`TransactionCategoriesService should return an array of transaction categories from findAllByUser 1`] = `
 [
-  {
+  TransactionCategoryDto {
+    "createdAt": 2024-05-10T10:21:18.363Z,
     "deleted": false,
     "id": "623b58ada3deba9879422fbf",
     "name": "Category for all types",
     "parentCategoryId": null,
+    "updatedAt": 2024-05-10T10:21:18.363Z,
     "userId": "61460d7354ea082ad0256749",
     "visibility": [
       "INCOME",
@@ -29,87 +34,105 @@ exports[`TransactionCategoriesService should return an array of transaction cate
       "TRANSFER",
     ],
   },
-  {
+  TransactionCategoryDto {
+    "createdAt": 2024-05-10T10:21:18.364Z,
     "deleted": false,
     "id": "623b58b8a3deba9879422fc2",
     "name": "Invisible category",
     "parentCategoryId": null,
+    "updatedAt": 2024-05-10T10:21:18.364Z,
     "userId": "61460d7354ea082ad0256749",
     "visibility": [],
   },
-  {
+  TransactionCategoryDto {
+    "createdAt": 2024-05-10T10:21:18.364Z,
     "deleted": false,
     "id": "623b58bfa3deba9879422fc5",
     "name": "Expense category",
     "parentCategoryId": null,
+    "updatedAt": 2024-05-10T10:21:18.364Z,
     "userId": "61460d7354ea082ad0256749",
     "visibility": [
       "EXPENSE",
     ],
   },
-  {
+  TransactionCategoryDto {
+    "createdAt": 2024-05-10T10:21:18.364Z,
     "deleted": false,
     "id": "623b58c5a3deba9879422fc8",
     "name": "Income category",
     "parentCategoryId": null,
+    "updatedAt": 2024-05-10T10:21:18.364Z,
     "userId": "61460d7354ea082ad0256749",
     "visibility": [
       "INCOME",
     ],
   },
-  {
+  TransactionCategoryDto {
+    "createdAt": 2024-05-10T10:21:18.364Z,
     "deleted": false,
     "id": "623b6b17a3deba9879422fcd",
     "name": "Transfer category",
     "parentCategoryId": null,
+    "updatedAt": 2024-05-10T10:21:18.364Z,
     "userId": "61460d7354ea082ad0256749",
     "visibility": [
       "TRANSFER",
     ],
   },
-  {
+  TransactionCategoryDto {
+    "createdAt": 2024-05-10T10:21:18.364Z,
     "deleted": false,
     "id": "623b6b36a3deba9879422fd1",
     "name": "Transfer sub category",
     "parentCategoryId": "623b58b8a3deba9879422fc2",
+    "updatedAt": 2024-05-10T10:21:18.364Z,
     "userId": "61460d7354ea082ad0256749",
     "visibility": [
       "TRANSFER",
     ],
   },
-  {
+  TransactionCategoryDto {
+    "createdAt": 2024-05-10T10:21:18.364Z,
     "deleted": false,
     "id": "623b6b51a3deba9879422fd5",
     "name": "Income sub category",
     "parentCategoryId": "623b58b8a3deba9879422fc2",
+    "updatedAt": 2024-05-10T10:21:18.364Z,
     "userId": "61460d7354ea082ad0256749",
     "visibility": [
       "INCOME",
     ],
   },
-  {
+  TransactionCategoryDto {
+    "createdAt": 2024-05-10T10:21:18.364Z,
     "deleted": false,
     "id": "623b6b64a3deba9879422fd9",
     "name": "Expense sub category",
     "parentCategoryId": "623b58b8a3deba9879422fc2",
+    "updatedAt": 2024-05-10T10:21:18.364Z,
     "userId": "61460d7354ea082ad0256749",
     "visibility": [
       "EXPENSE",
     ],
   },
-  {
+  TransactionCategoryDto {
+    "createdAt": 2024-05-10T10:21:18.364Z,
     "deleted": false,
     "id": "623b6b84a3deba9879422fdd",
     "name": "Invisible sub category",
     "parentCategoryId": "623b58ada3deba9879422fbf",
+    "updatedAt": 2024-05-10T10:21:18.364Z,
     "userId": "61460d7354ea082ad0256749",
     "visibility": [],
   },
-  {
+  TransactionCategoryDto {
+    "createdAt": 2024-05-10T10:21:18.364Z,
     "deleted": false,
     "id": "623b6b91a3deba9879422fe1",
     "name": "Sub category for all types",
     "parentCategoryId": "623b58b8a3deba9879422fc2",
+    "updatedAt": 2024-05-10T10:21:18.364Z,
     "userId": "61460d7354ea082ad0256749",
     "visibility": [
       "INCOME",

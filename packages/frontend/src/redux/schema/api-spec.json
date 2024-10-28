@@ -641,7 +641,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/TransactionCategoryDto"
+                    "$ref": "#/components/schemas/TransactionCategoryDetailsDto"
                   }
                 }
               }
@@ -668,7 +668,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TransactionCategoryDto"
+                  "$ref": "#/components/schemas/TransactionCategoryDetailsDto"
                 }
               }
             }
@@ -1910,9 +1910,10 @@
           "id": { "type": "string" },
           "description": { "type": "string" },
           "amount": { "type": "number" },
-          "name": { "type": "string" }
+          "name": { "type": "string" },
+          "path": { "type": "string" }
         },
-        "required": ["id", "description", "amount", "name"]
+        "required": ["id", "description", "amount", "name", "path"]
       },
       "TransactionDetailsDto": {
         "type": "object",
@@ -2028,6 +2029,34 @@
       "visibilityType": {
         "type": "string",
         "enum": ["INCOME", "EXPENSE", "TRANSFER"]
+      },
+      "TransactionCategoryDetailsDto": {
+        "type": "object",
+        "properties": {
+          "createdAt": { "format": "date-time", "type": "string" },
+          "updatedAt": { "format": "date-time", "type": "string" },
+          "id": { "type": "string" },
+          "userId": { "type": "string" },
+          "name": { "type": "string" },
+          "visibility": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/TransactionType" }
+          },
+          "deleted": { "type": "boolean" },
+          "parentCategoryId": { "type": "string", "nullable": true },
+          "path": { "type": "string" }
+        },
+        "required": [
+          "createdAt",
+          "updatedAt",
+          "id",
+          "userId",
+          "name",
+          "visibility",
+          "deleted",
+          "parentCategoryId",
+          "path"
+        ]
       },
       "UpdateTransactionCategoryDto": {
         "type": "object",

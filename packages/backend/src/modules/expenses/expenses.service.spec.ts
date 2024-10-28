@@ -2,9 +2,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AccountType } from '@prisma/client';
 
 import { createMockServiceProvider } from '../../../test/create-mock-service-provider';
-import { removeCreatedAndUpdated } from '../../../test/test-helper';
 import { DUMMY_TEST_USER } from '../../config/mockAuthenticationMiddleware';
 import { accountsRepoFindAllMockData } from '../../database/repos/mocks/account-repo-mock';
+import { transactionCategoryRepoUserMockDataFindAllBy } from '../../database/repos/mocks/transaction-category-repo-mock';
 import {
   transactionsRepoFindAllByIdMockData,
   transactionsRepoFindAllByTypeAndUserMockData,
@@ -22,6 +22,7 @@ import { ExpensesService } from './expenses.service';
 describe('ExpensesService', () => {
   let service: ExpensesService;
   let transactionRepo: jest.Mocked<TransactionRepo>;
+  let transactionCategoriesRepo: jest.Mocked<TransactionCategoryRepo>;
   let accountsService: jest.Mocked<AccountsService>;
 
   beforeAll(async () => {
@@ -40,6 +41,9 @@ describe('ExpensesService', () => {
 
     service = module.get<ExpensesService>(ExpensesService);
     transactionRepo = module.get<jest.Mocked<TransactionRepo>>(TransactionRepo);
+    transactionCategoriesRepo = module.get<
+      jest.Mocked<TransactionCategoryRepo>
+    >(TransactionCategoryRepo);
     accountsService = module.get<jest.Mocked<AccountsService>>(AccountsService);
   });
 
@@ -274,6 +278,10 @@ describe('ExpensesService', () => {
       .spyOn(transactionRepo, 'findOne')
       .mockResolvedValueOnce(transactionsRepoFindAllByIdMockData[id]);
 
+    jest
+      .spyOn(transactionCategoriesRepo, 'findMany')
+      .mockResolvedValueOnce(transactionCategoryRepoUserMockDataFindAllBy);
+
     const expense = await service.findOne(DUMMY_TEST_USER.id, id);
 
     expect(transactionRepo.findOne).toHaveBeenCalledTimes(1);
@@ -313,6 +321,17 @@ describe('ExpensesService', () => {
       },
     });
 
-    expect(removeCreatedAndUpdated(expense)).toMatchSnapshot();
+    expect(transactionCategoriesRepo.findMany).toHaveBeenCalledTimes(1);
+    expect(transactionCategoriesRepo.findMany).toHaveBeenCalledWith({
+      where: {
+        userId: '61460d7354ea082ad0256749',
+        deleted: {
+          not: true,
+        },
+        visibility: undefined,
+      },
+    });
+
+    expect(expense).toMatchSnapshot();
   });
 });

@@ -119,6 +119,9 @@ export class TransactionsService {
       throw new NotFoundException('Transaction not found.');
     }
 
+    const allCategories =
+      await this.transactionCategoriesService.findAllByUser(userId);
+
     const { from, to, categories, transactionTemplateLog, ...transactionData } =
       transaction;
 
@@ -132,6 +135,10 @@ export class TransactionsService {
         description: category.description,
         amount: category.amount,
         name: category.category.name,
+        path: TransactionCategoriesService.buildParentCategoryPath(
+          allCategories,
+          category.categoryId,
+        ),
       })),
     });
   }

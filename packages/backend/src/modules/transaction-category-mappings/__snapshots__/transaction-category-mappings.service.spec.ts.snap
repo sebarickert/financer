@@ -2,36 +2,44 @@
 
 exports[`TransactionCategoryMappingsService should return all transactionCategoryMappings by user 1`] = `
 [
-  {
+  TransactionCategoryMappingDto {
     "amount": "500",
     "categoryId": "623b58ada3deba9879422fbf",
+    "createdAt": 2024-05-10T10:21:18.365Z,
     "description": "",
     "id": "637e234fbda8050a85b1b6b7",
     "transactionId": "624befb66ba655edad8f824e",
+    "updatedAt": 2024-05-10T10:21:18.365Z,
     "userId": "61460d7354ea082ad0256749",
   },
-  {
+  TransactionCategoryMappingDto {
     "amount": "635.98",
     "categoryId": "623b58ada3deba9879422fbf",
+    "createdAt": 2024-05-10T10:21:18.365Z,
     "description": "",
     "id": "637e2371bda8050a85b1b70b",
     "transactionId": "624befb96ba655edad8f82ad",
+    "updatedAt": 2024-05-10T10:21:18.365Z,
     "userId": "61460d7354ea082ad0256749",
   },
-  {
+  TransactionCategoryMappingDto {
     "amount": "700",
     "categoryId": "623b58ada3deba9879422fbf",
+    "createdAt": 2024-05-10T10:21:18.365Z,
     "description": "",
     "id": "637e2389bda8050a85b1b760",
     "transactionId": "624bef946ba655edad8f7f3d",
+    "updatedAt": 2024-05-10T10:21:18.365Z,
     "userId": "61460d7354ea082ad0256749",
   },
-  {
+  TransactionCategoryMappingDto {
     "amount": "1571.53",
     "categoryId": "623b58ada3deba9879422fbf",
+    "createdAt": 2024-05-10T10:21:18.365Z,
     "description": "",
     "id": "637e239cbda8050a85b1b7b8",
     "transactionId": "624bef936ba655edad8f7f33",
+    "updatedAt": 2024-05-10T10:21:18.365Z,
     "userId": "61460d7354ea082ad0256749",
   },
 ]
@@ -39,36 +47,44 @@ exports[`TransactionCategoryMappingsService should return all transactionCategor
 
 exports[`TransactionCategoryMappingsService should return all transactionCategoryMappings by user and category ids 1`] = `
 [
-  {
+  TransactionCategoryMappingDto {
     "amount": "500",
     "categoryId": "623b58ada3deba9879422fbf",
+    "createdAt": 2024-05-10T10:21:18.365Z,
     "description": "",
     "id": "637e234fbda8050a85b1b6b7",
     "transactionId": "624befb66ba655edad8f824e",
+    "updatedAt": 2024-05-10T10:21:18.365Z,
     "userId": "61460d7354ea082ad0256749",
   },
-  {
+  TransactionCategoryMappingDto {
     "amount": "635.98",
     "categoryId": "623b58ada3deba9879422fbf",
+    "createdAt": 2024-05-10T10:21:18.365Z,
     "description": "",
     "id": "637e2371bda8050a85b1b70b",
     "transactionId": "624befb96ba655edad8f82ad",
+    "updatedAt": 2024-05-10T10:21:18.365Z,
     "userId": "61460d7354ea082ad0256749",
   },
-  {
+  TransactionCategoryMappingDto {
     "amount": "700",
     "categoryId": "623b58ada3deba9879422fbf",
+    "createdAt": 2024-05-10T10:21:18.365Z,
     "description": "",
     "id": "637e2389bda8050a85b1b760",
     "transactionId": "624bef946ba655edad8f7f3d",
+    "updatedAt": 2024-05-10T10:21:18.365Z,
     "userId": "61460d7354ea082ad0256749",
   },
-  {
+  TransactionCategoryMappingDto {
     "amount": "1571.53",
     "categoryId": "623b58ada3deba9879422fbf",
+    "createdAt": 2024-05-10T10:21:18.365Z,
     "description": "",
     "id": "637e239cbda8050a85b1b7b8",
     "transactionId": "624bef936ba655edad8f7f33",
+    "updatedAt": 2024-05-10T10:21:18.365Z,
     "userId": "61460d7354ea082ad0256749",
   },
 ]
@@ -76,36 +92,44 @@ exports[`TransactionCategoryMappingsService should return all transactionCategor
 
 exports[`TransactionCategoryMappingsService should return all transactionCategoryMappings by user and transaction id 1`] = `
 [
-  {
+  TransactionCategoryMappingDto {
     "amount": "500",
     "categoryId": "623b58ada3deba9879422fbf",
+    "createdAt": 2024-05-10T10:21:18.365Z,
     "description": "",
     "id": "637e234fbda8050a85b1b6b7",
     "transactionId": "624befb66ba655edad8f824e",
+    "updatedAt": 2024-05-10T10:21:18.365Z,
     "userId": "61460d7354ea082ad0256749",
   },
-  {
+  TransactionCategoryMappingDto {
     "amount": "635.98",
     "categoryId": "623b58ada3deba9879422fbf",
+    "createdAt": 2024-05-10T10:21:18.365Z,
     "description": "",
     "id": "637e2371bda8050a85b1b70b",
     "transactionId": "624befb96ba655edad8f82ad",
+    "updatedAt": 2024-05-10T10:21:18.365Z,
     "userId": "61460d7354ea082ad0256749",
   },
-  {
+  TransactionCategoryMappingDto {
     "amount": "700",
     "categoryId": "623b58ada3deba9879422fbf",
+    "createdAt": 2024-05-10T10:21:18.365Z,
     "description": "",
     "id": "637e2389bda8050a85b1b760",
     "transactionId": "624bef946ba655edad8f7f3d",
+    "updatedAt": 2024-05-10T10:21:18.365Z,
     "userId": "61460d7354ea082ad0256749",
   },
-  {
+  TransactionCategoryMappingDto {
     "amount": "1571.53",
     "categoryId": "623b58ada3deba9879422fbf",
+    "createdAt": 2024-05-10T10:21:18.365Z,
     "description": "",
     "id": "637e239cbda8050a85b1b7b8",
     "transactionId": "624bef936ba655edad8f7f33",
+    "updatedAt": 2024-05-10T10:21:18.365Z,
     "userId": "61460d7354ea082ad0256749",
   },
 ]

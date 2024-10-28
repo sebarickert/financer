@@ -3163,9 +3163,10 @@ PaginationDto {
 `;
 
 exports[`TransfersService should return one transfer for user 1`] = `
-{
+TransactionDetailsDto {
   "amount": "2000",
   "categories": [],
+  "createdAt": 2024-05-10T10:27:05.180Z,
   "date": 2022-08-10T11:12:00.000Z,
   "description": "Transfer 8 to preassigned CASH",
   "fromAccount": "663df55ad8ef53dcb2bc9347",
@@ -3175,6 +3176,7 @@ exports[`TransfersService should return one transfer for user 1`] = `
   "toAccount": "663df62cd8ef53dcb2bc93c4",
   "toAccountName": null,
   "type": undefined,
+  "updatedAt": 2024-05-10T10:27:05.180Z,
   "userId": "61460d7354ea082ad0256749",
 }
 `;

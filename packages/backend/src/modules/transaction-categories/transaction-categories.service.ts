@@ -11,6 +11,7 @@ import { UserId } from '../../types/user-id';
 import { TransactionCategoryMappingsService } from '../transaction-category-mappings/transaction-category-mappings.service';
 
 import { CreateTransactionCategoryDto } from './dto/create-transaction-category.dto';
+import { TransactionCategoryDetailsDto } from './dto/transaction-category-details.dto';
 import { TransactionCategoryDto } from './dto/transaction-category.dto';
 import { CategoryMonthlySummaryDto } from './dto/transaction-month-summary.dto';
 import { UpdateTransactionCategoryDto } from './dto/update-transaction-category.dto';
@@ -65,14 +66,25 @@ export class TransactionCategoriesService {
     return `This action returns all transactionCategories`;
   }
 
-  async findOne(userId: UserId, id: string): Promise<TransactionCategory> {
+  async findOne(
+    userId: UserId,
+    id: string,
+  ): Promise<TransactionCategoryDetailsDto> {
     const category = await this.transactionCategoryRepo.findOne({ id, userId });
 
     if (!category) {
       throw new NotFoundException('Category not found.');
     }
 
-    return category;
+    const allCategories = await this.findAllByUser(userId);
+
+    return TransactionCategoryDetailsDto.createFromPlain({
+      ...category,
+      path: TransactionCategoriesService.buildParentCategoryPath(
+        allCategories,
+        category.id,
+      ),
+    });
   }
 
   async findAllChildrenById(
@@ -105,11 +117,30 @@ export class TransactionCategoriesService {
     return [...categories, ...childCategories];
   }
 
+  async findAllDetailsByUser(
+    userId: UserId,
+    visibilityType: TransactionType | null = null,
+  ): Promise<TransactionCategoryDetailsDto[]> {
+    const categories = await this.findAllByUser(userId, visibilityType);
+
+    const allCategories = await this.findAllByUser(userId);
+
+    return TransactionCategoryDetailsDto.createFromPlain(
+      categories.map((category) => ({
+        ...category,
+        path: TransactionCategoriesService.buildParentCategoryPath(
+          allCategories,
+          category.id,
+        ),
+      })),
+    );
+  }
+
   async findAllByUser(
     userId: UserId,
     visibilityType: TransactionType | null = null,
-  ): Promise<TransactionCategory[]> {
-    return this.transactionCategoryRepo.findMany({
+  ): Promise<TransactionCategoryDto[]> {
+    const categories = await this.transactionCategoryRepo.findMany({
       where: {
         userId,
         deleted: { not: true },
@@ -120,6 +151,12 @@ export class TransactionCategoriesService {
           : undefined,
       },
     });
+
+    return TransactionCategoryDto.createFromPlain(
+      categories.map((category) => ({
+        ...category,
+      })),
+    );
   }
 
   async findAllByUserForExport(userId: UserId) {
@@ -201,5 +238,24 @@ export class TransactionCategoriesService {
     if (!hasMatchingCategoryIds) {
       throw new BadRequestException('One or more categories does not exist.');
     }
+  }
+
+  public static buildParentCategoryPath(
+    allCategories: Pick<
+      TransactionCategoryDto,
+      'name' | 'id' | 'parentCategoryId'
+    >[],
+    categoryId: string,
+  ): string {
+    const targetCategory = allCategories.find(({ id }) => id === categoryId);
+
+    if (!targetCategory?.parentCategoryId) {
+      return `${targetCategory?.name}`;
+    }
+    const parentPath = TransactionCategoriesService.buildParentCategoryPath(
+      allCategories,
+      targetCategory.parentCategoryId,
+    );
+    return `${parentPath} > ${targetCategory?.name}`;
   }
 }

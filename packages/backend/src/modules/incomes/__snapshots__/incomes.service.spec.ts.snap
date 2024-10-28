@@ -3219,9 +3219,10 @@ PaginationDto {
 `;
 
 exports[`IncomesService should return one income for user 1`] = `
-{
+TransactionDetailsDto {
   "amount": "3500",
   "categories": [],
+  "createdAt": 2024-05-10T10:24:12.469Z,
   "date": 2023-01-10T11:12:00.000Z,
   "description": "Income13 to big money",
   "fromAccount": null,
@@ -3231,6 +3232,7 @@ exports[`IncomesService should return one income for user 1`] = `
   "toAccount": "663df55ad8ef53dcb2bc9347",
   "toAccountName": null,
   "type": undefined,
+  "updatedAt": 2024-05-10T10:24:12.469Z,
   "userId": "61460d7354ea082ad0256749",
 }
 `;

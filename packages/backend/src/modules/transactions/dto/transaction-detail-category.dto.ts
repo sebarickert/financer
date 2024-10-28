@@ -22,4 +22,8 @@ export class TransactionDetailCategoryDto {
   @ApiProperty()
   @IsString()
   name: string;
+
+  @ApiProperty()
+  @IsString()
+  path: string;
 }
