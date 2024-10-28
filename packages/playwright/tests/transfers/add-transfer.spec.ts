@@ -1,13 +1,17 @@
-import { AccountDto, TransactionDetailsDto } from '$types/generated/financer';
 import {
-  getAllTransaction,
+  AccountDto,
+  TransactionListItemDto,
+  TransferListItemDto,
+} from '$types/generated/financer';
+import {
+  getAllTransactions,
   getAccount,
   MINUTE_IN_MS,
   formatDate,
-  getAccountFromTransactions,
+  getAccountFromTransactionListItem,
   roundToTwoDecimal,
   getAllTransfers,
-  ITransactionWithDateObject,
+  getTransactionById,
 } from '$utils/api-helper';
 import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
@@ -39,8 +43,8 @@ test.describe('Add transfer', () => {
   };
 
   const verifyNewTransferCreated = async (
-    transfersBefore: TransactionDetailsDto[],
-    transfersAfter: TransactionDetailsDto[],
+    transfersBefore: TransactionListItemDto[],
+    transfersAfter: TransactionListItemDto[],
   ) => {
     expect(transfersBefore.length + 1).toEqual(transfersAfter.length);
   };
@@ -49,14 +53,14 @@ test.describe('Add transfer', () => {
   test('Add newest transfer', async ({ page }) => {
     const newTransactionName = getNewTransactionName();
 
-    const transactionsBefore = await getAllTransaction();
+    const transactionsBefore = await getAllTransactions();
     const transfersBefore = await getAllTransfers();
 
     const targetToAccountTransactionBefore = transactionsBefore.at(
       -1,
-    ) as ITransactionWithDateObject<TransactionDetailsDto>;
+    ) as TransactionListItemDto;
 
-    const targetToAccountId = getAccountFromTransactions(
+    const targetToAccountId = await getAccountFromTransactionListItem(
       targetToAccountTransactionBefore,
     );
 
@@ -65,7 +69,7 @@ test.describe('Add transfer', () => {
         toAccount !== targetToAccountId && fromAccount !== targetToAccountId,
     )[0];
 
-    const targetFromAccountId = getAccountFromTransactions(
+    const targetFromAccountId = await getAccountFromTransactionListItem(
       targetFromAccountTransactionBefore,
     );
 
@@ -73,7 +77,7 @@ test.describe('Add transfer', () => {
     const fromAccountBefore = await getAccount(targetFromAccountId);
 
     const newTransactionDate = new Date(
-      targetToAccountTransactionBefore.dateObj.getTime() + MINUTE_IN_MS,
+      new Date(targetToAccountTransactionBefore.date).getTime() + MINUTE_IN_MS,
     );
 
     await page.getByTestId('add-transaction').click();
@@ -117,29 +121,41 @@ test.describe('Add transfer', () => {
   test('Add second newest transfer', async ({ page }) => {
     const newTransactionName = getNewTransactionName();
 
-    const transactionsBefore = await getAllTransaction();
+    const transactionsBefore = await getAllTransactions();
     const transfersBefore = await getAllTransfers();
 
     const targetToAccountTransactionBefore = transactionsBefore.at(
       -1,
-    ) as ITransactionWithDateObject<TransactionDetailsDto>;
-    const targetToAccountId = getAccountFromTransactions(
+    ) as TransactionListItemDto;
+    const targetToAccountId = await getAccountFromTransactionListItem(
       targetToAccountTransactionBefore,
     );
 
-    const targetFromAccountTransactionBefore = transactionsBefore
-      .concat()
-      .reverse()
-      .filter(
-        ({ toAccount, fromAccount }) =>
-          toAccount !== targetToAccountId && fromAccount !== targetToAccountId,
-      )[0];
+    const targetFromAccountTransactionBefore = (
+      await Promise.all(
+        transactionsBefore.map(async ({ id }) => {
+          try {
+            const { toAccount, fromAccount } = await getTransactionById(id);
+            return { id, toAccount, fromAccount };
+          } catch (error) {
+            console.error(`Failed to fetch transaction with id ${id}:`, error);
+            return null;
+          }
+        }),
+      )
+    ).filter(
+      (transaction) =>
+        transaction &&
+        transaction.toAccount !== targetToAccountId &&
+        transaction.fromAccount !== targetToAccountId,
+    )[0] as TransferListItemDto;
 
-    const targetFromAccountId = getAccountFromTransactions(
+    const targetFromAccountId = await getAccountFromTransactionListItem(
       targetFromAccountTransactionBefore,
     );
+
     const newTransactionDate = new Date(
-      targetToAccountTransactionBefore.dateObj.getTime() - MINUTE_IN_MS,
+      new Date(targetToAccountTransactionBefore.date).getTime() - MINUTE_IN_MS,
     );
 
     const toAccountBefore = await getAccount(targetToAccountId);
@@ -186,27 +202,41 @@ test.describe('Add transfer', () => {
   test('Add oldest transfer', async ({ page }) => {
     const newTransactionName = getNewTransactionName();
 
-    const transactionsBefore = await getAllTransaction();
+    const transactionsBefore = await getAllTransactions();
     const transfersBefore = await getAllTransfers();
 
     const targetToAccountTransactionBefore = transactionsBefore.at(
       0,
-    ) as ITransactionWithDateObject<TransactionDetailsDto>;
-    const targetToAccountId = getAccountFromTransactions(
+    ) as TransactionListItemDto;
+    const targetToAccountId = await getAccountFromTransactionListItem(
       targetToAccountTransactionBefore,
     );
 
-    const targetFromAccountTransactionBefore = transactionsBefore.filter(
-      ({ toAccount, fromAccount }) =>
-        toAccount !== targetToAccountId && fromAccount !== targetToAccountId,
-    )[0];
+    const targetFromAccountTransactionBefore = (
+      await Promise.all(
+        transactionsBefore.map(async ({ id }) => {
+          try {
+            const { toAccount, fromAccount } = await getTransactionById(id);
+            return { id, toAccount, fromAccount };
+          } catch (error) {
+            console.error(`Failed to fetch transaction with id ${id}:`, error);
+            return null;
+          }
+        }),
+      )
+    ).filter(
+      (transaction) =>
+        transaction &&
+        transaction.toAccount !== targetToAccountId &&
+        transaction.fromAccount !== targetToAccountId,
+    )[0] as TransferListItemDto;
 
-    const targetFromAccountId = getAccountFromTransactions(
+    const targetFromAccountId = await getAccountFromTransactionListItem(
       targetFromAccountTransactionBefore,
     );
 
     const newTransactionDate = new Date(
-      targetToAccountTransactionBefore.dateObj.getTime() - MINUTE_IN_MS,
+      new Date(targetToAccountTransactionBefore.date).getTime() - MINUTE_IN_MS,
     );
 
     const toAccountBefore = await getAccount(targetToAccountId);
@@ -234,7 +264,6 @@ test.describe('Add transfer', () => {
 
     await page.getByTestId('edit-transfer-button').waitFor();
 
-    //   cy.location('pathname').should('not.contain', '/add').then(() => {
     const toAccountAfter = await getAccount(targetToAccountId);
     const fromAccountAfter = await getAccount(targetFromAccountId);
     const transfersAfter = await getAllTransfers();

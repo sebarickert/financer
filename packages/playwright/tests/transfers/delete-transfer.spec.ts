@@ -1,14 +1,9 @@
+import { AccountDto, TransferListItemDto } from '$types/generated/financer';
 import {
-  AccountDto,
-  TransactionDetailsDto,
-  TransferDetailsDto,
-} from '$types/generated/financer';
-import {
-  getAllTransaction,
   getAccount,
   roundToTwoDecimal,
-  getTransactionByIdRaw,
-  ITransactionWithDateObject,
+  getTransactionById,
+  getAllTransfers,
 } from '$utils/api-helper';
 import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
@@ -22,7 +17,7 @@ test.describe('Delete transfer', () => {
   const verifyToAccountBalanceChangeByTargetTransactionAmount = async (
     accountBefore: AccountDto,
     accountAfter: AccountDto,
-    targetTransactionBefore: TransferDetailsDto,
+    targetTransactionBefore: TransferListItemDto,
   ) => {
     const changedAmount = roundToTwoDecimal(targetTransactionBefore.amount);
     const balanceBefore = roundToTwoDecimal(accountBefore.balance);
@@ -37,7 +32,7 @@ test.describe('Delete transfer', () => {
   const verifyFromAccountBalanceChangeByTargetTransactionAmount = async (
     accountBefore: AccountDto,
     accountAfter: AccountDto,
-    targetTransactionBefore: TransferDetailsDto,
+    targetTransactionBefore: TransferListItemDto,
   ) => {
     const changedAmount = roundToTwoDecimal(targetTransactionBefore.amount);
     const balanceBefore = roundToTwoDecimal(accountBefore.balance);
@@ -50,9 +45,9 @@ test.describe('Delete transfer', () => {
   };
 
   const verifyTargetTransactionDoesNotExistsAfter = async (
-    targetTransactionBefore: TransferDetailsDto,
+    targetTransactionBefore: TransferListItemDto,
   ) => {
-    const targetTransactionAfter = await getTransactionByIdRaw(
+    const targetTransactionAfter = await getTransactionById(
       targetTransactionBefore.id,
     );
 
@@ -61,24 +56,25 @@ test.describe('Delete transfer', () => {
   };
 
   test('Delete newest transfer', async ({ page }) => {
-    const transactionsBefore = await getAllTransaction();
+    const transfersBefore = await getAllTransfers();
 
-    const transfersBefore = transactionsBefore.filter(
-      ({ fromAccount, toAccount }) => fromAccount && toAccount,
-    );
     const targetTransactionBefore = transfersBefore.at(
       -1,
-    ) as ITransactionWithDateObject<TransactionDetailsDto>;
+    ) as TransferListItemDto;
 
     const targetTransactionId = targetTransactionBefore.id;
-    const targetToAccountId = targetTransactionBefore.toAccount;
-    const targetFromAccountId = targetTransactionBefore.fromAccount;
+    const { fromAccount: targetFromAccountId, toAccount: targetToAccountId } =
+      await getTransactionById(targetTransactionBefore.id);
 
     const toAccountBefore = await getAccount(targetToAccountId);
     const fromAccountBefore = await getAccount(targetFromAccountId);
 
-    const transactionYear = targetTransactionBefore.dateObj.getFullYear();
-    const transactionMonth = (targetTransactionBefore.dateObj.getMonth() + 1)
+    const transactionYear = new Date(
+      targetTransactionBefore.date,
+    ).getFullYear();
+    const transactionMonth = (
+      new Date(targetTransactionBefore.date).getMonth() + 1
+    )
       .toString()
       .padStart(2, '0');
     const dateQuery = `${transactionYear}-${transactionMonth}`;
@@ -109,22 +105,23 @@ test.describe('Delete transfer', () => {
   });
 
   test('Delete oldest transfer', async ({ page }) => {
-    const transactionsBefore = await getAllTransaction();
+    const transfersBefore = await getAllTransfers();
 
-    const transfersBefore = transactionsBefore.filter(
-      ({ fromAccount, toAccount }) => fromAccount && toAccount,
-    );
     const targetTransactionBefore = transfersBefore[0];
 
     const targetTransactionId = targetTransactionBefore.id;
-    const targetToAccountId = targetTransactionBefore.toAccount;
-    const targetFromAccountId = targetTransactionBefore.fromAccount;
+    const { fromAccount: targetFromAccountId, toAccount: targetToAccountId } =
+      await getTransactionById(targetTransactionBefore.id);
 
     const toAccountBefore = await getAccount(targetToAccountId);
     const fromAccountBefore = await getAccount(targetFromAccountId);
 
-    const transactionYear = targetTransactionBefore.dateObj.getFullYear();
-    const transactionMonth = (targetTransactionBefore.dateObj.getMonth() + 1)
+    const transactionYear = new Date(
+      targetTransactionBefore.date,
+    ).getFullYear();
+    const transactionMonth = (
+      new Date(targetTransactionBefore.date).getMonth() + 1
+    )
       .toString()
       .padStart(2, '0');
     const dateQuery = `${transactionYear}-${transactionMonth}`;

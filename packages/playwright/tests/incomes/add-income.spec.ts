@@ -1,17 +1,16 @@
 import {
   AccountDto,
-  IncomeDetailsDto,
-  TransactionDetailsDto,
+  IncomeListItemDto,
+  TransactionListItemDto,
 } from '$types/generated/financer';
 import {
-  getAllTransaction,
+  getAllTransactions,
   getAccount,
   MINUTE_IN_MS,
   formatDate,
-  getAccountFromTransactions,
+  getAccountFromTransactionListItem,
   roundToTwoDecimal,
   getAllIncomes,
-  ITransactionWithDateObject,
 } from '$utils/api-helper';
 import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
@@ -38,8 +37,8 @@ test.describe('Add income', () => {
   };
 
   const verifyNewIncomeCreated = async (
-    incomesBefore: IncomeDetailsDto[],
-    incomesAfter: IncomeDetailsDto[],
+    incomesBefore: IncomeListItemDto[],
+    incomesAfter: IncomeListItemDto[],
   ) => {
     expect(incomesBefore.length + 1).toEqual(incomesAfter.length);
   };
@@ -48,19 +47,21 @@ test.describe('Add income', () => {
   test('Add newest income', async ({ page }) => {
     const newTransactionName = getNewTransactionName();
 
-    const transactionsBefore = await getAllTransaction();
+    const transactionsBefore = await getAllTransactions();
     const incomesBefore = await getAllIncomes();
 
     const targetTransactionBefore = transactionsBefore.at(
       -1,
-    ) as ITransactionWithDateObject<TransactionDetailsDto>;
+    ) as TransactionListItemDto;
 
-    const targetAccountId = getAccountFromTransactions(targetTransactionBefore);
+    const targetAccountId = await getAccountFromTransactionListItem(
+      targetTransactionBefore,
+    );
 
     const accountBefore = await getAccount(targetAccountId);
 
     const newTransactionDate = new Date(
-      targetTransactionBefore.dateObj.getTime() + MINUTE_IN_MS,
+      new Date(targetTransactionBefore.date).getTime() + MINUTE_IN_MS,
     );
 
     await page.getByTestId('add-transaction').click();
@@ -98,16 +99,18 @@ test.describe('Add income', () => {
   test('Add second newest income', async ({ page }) => {
     const newTransactionName = getNewTransactionName();
 
-    const transactionsBefore = await getAllTransaction();
+    const transactionsBefore = await getAllTransactions();
     const incomesBefore = await getAllIncomes();
 
     const targetTransactionBefore = transactionsBefore.at(
       -1,
-    ) as ITransactionWithDateObject<TransactionDetailsDto>;
-    const targetAccountId = getAccountFromTransactions(targetTransactionBefore);
+    ) as TransactionListItemDto;
+    const targetAccountId = await getAccountFromTransactionListItem(
+      targetTransactionBefore,
+    );
 
     const newTransactionDate = new Date(
-      targetTransactionBefore.dateObj.getTime() - MINUTE_IN_MS,
+      new Date(targetTransactionBefore.date).getTime() - MINUTE_IN_MS,
     );
 
     const accountBefore = await getAccount(targetAccountId);
@@ -147,17 +150,19 @@ test.describe('Add income', () => {
   test('Add oldest income', async ({ page }) => {
     const newTransactionName = getNewTransactionName();
 
-    const transactionsBefore = await getAllTransaction();
+    const transactionsBefore = await getAllTransactions();
     const incomesBefore = await getAllIncomes();
 
     const targetTransactionBefore = transactionsBefore.at(
       0,
-    ) as ITransactionWithDateObject<TransactionDetailsDto>;
+    ) as TransactionListItemDto;
 
-    const targetAccountId = getAccountFromTransactions(targetTransactionBefore);
+    const targetAccountId = await getAccountFromTransactionListItem(
+      targetTransactionBefore,
+    );
 
     const newTransactionDate = new Date(
-      targetTransactionBefore.dateObj.getTime() - MINUTE_IN_MS,
+      new Date(targetTransactionBefore.date).getTime() - MINUTE_IN_MS,
     );
 
     const accountBefore = await getAccount(targetAccountId);
@@ -196,11 +201,13 @@ test.describe('Add income', () => {
   test('Check that date is correct', async ({ page }) => {
     const newTransactionName = getNewTransactionName();
 
-    const transactionsBefore = await getAllTransaction();
+    const transactionsBefore = await getAllTransactions();
     const targetTransactionBefore = transactionsBefore.at(
       -1,
-    ) as ITransactionWithDateObject<TransactionDetailsDto>;
-    const targetAccountId = getAccountFromTransactions(targetTransactionBefore);
+    ) as TransactionListItemDto;
+    const targetAccountId = await getAccountFromTransactionListItem(
+      targetTransactionBefore,
+    );
 
     const date = new Date();
     date.setSeconds(0);

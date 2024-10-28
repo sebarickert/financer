@@ -1,14 +1,14 @@
 import {
   AccountDto,
-  ExpenseDetailsDto,
-  TransactionDetailsDto,
+  ExpenseListItemDto,
+  TransactionListItemDto,
 } from '$types/generated/financer';
 import {
-  getAllTransaction,
   getAccount,
   roundToTwoDecimal,
-  getTransactionByIdRaw,
-  ITransactionWithDateObject,
+  getTransactionById,
+  getAccountFromTransactionListItem,
+  getAllExpenses,
 } from '$utils/api-helper';
 import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
@@ -22,7 +22,7 @@ test.describe('Delete expense', () => {
   const verifyAccountBalanceChangeByTargetTransactionAmount = async (
     accountBefore: AccountDto,
     accountAfter: AccountDto,
-    targetTransactionBefore: ExpenseDetailsDto,
+    targetTransactionBefore: ExpenseListItemDto,
   ) => {
     const changedAmount = roundToTwoDecimal(targetTransactionBefore.amount);
     const balanceBefore = roundToTwoDecimal(accountBefore.balance);
@@ -35,9 +35,9 @@ test.describe('Delete expense', () => {
   };
 
   const verifyTargetTransactionDoesNotExistsAfter = async (
-    targetTransactionBefore: ExpenseDetailsDto,
+    targetTransactionBefore: ExpenseListItemDto,
   ) => {
-    const targetTransactionAfter = await getTransactionByIdRaw(
+    const targetTransactionAfter = await getTransactionById(
       targetTransactionBefore.id,
     );
 
@@ -45,23 +45,28 @@ test.describe('Delete expense', () => {
     expect((targetTransactionAfter as any).statusCode).toBe(404);
   };
 
-  test('Delete newest expense', async ({ page }) => {
-    const transactionsBefore = await getAllTransaction();
+  test('should delete the newest expense and verify account balance and transaction removal', async ({
+    page,
+  }) => {
+    const expensesBefore = await getAllExpenses();
 
-    const expensesBefore = transactionsBefore.filter(
-      ({ fromAccount, toAccount }) => fromAccount && !toAccount,
-    );
     const targetTransactionBefore = expensesBefore.at(
       -1,
-    ) as ITransactionWithDateObject<TransactionDetailsDto>;
+    ) as TransactionListItemDto;
 
     const targetTransactionId = targetTransactionBefore.id;
-    const targetAccountId = targetTransactionBefore.fromAccount;
+    const targetAccountId = await getAccountFromTransactionListItem(
+      targetTransactionBefore,
+    );
 
     const accountBefore = await getAccount(targetAccountId);
 
-    const transactionYear = targetTransactionBefore.dateObj.getFullYear();
-    const transactionMonth = (targetTransactionBefore.dateObj.getMonth() + 1)
+    const transactionYear = new Date(
+      targetTransactionBefore.date,
+    ).getFullYear();
+    const transactionMonth = (
+      new Date(targetTransactionBefore.date).getMonth() + 1
+    )
       .toString()
       .padStart(2, '0');
     const dateQuery = `${transactionYear}-${transactionMonth}`;
@@ -85,21 +90,26 @@ test.describe('Delete expense', () => {
     verifyTargetTransactionDoesNotExistsAfter(targetTransactionBefore);
   });
 
-  test('Delete oldest expense', async ({ page }) => {
-    const transactionsBefore = await getAllTransaction();
+  test('should delete the oldest expense and verify account balance and transaction removal', async ({
+    page,
+  }) => {
+    const expensesBefore = await getAllExpenses();
 
-    const expensesBefore = transactionsBefore.filter(
-      ({ fromAccount, toAccount }) => fromAccount && !toAccount,
-    );
     const targetTransactionBefore = expensesBefore[0];
 
     const targetTransactionId = targetTransactionBefore.id;
-    const targetAccountId = targetTransactionBefore.fromAccount;
+    const targetAccountId = await getAccountFromTransactionListItem(
+      targetTransactionBefore,
+    );
 
     const accountBefore = await getAccount(targetAccountId);
 
-    const transactionYear = targetTransactionBefore.dateObj.getFullYear();
-    const transactionMonth = (targetTransactionBefore.dateObj.getMonth() + 1)
+    const transactionYear = new Date(
+      targetTransactionBefore.date,
+    ).getFullYear();
+    const transactionMonth = (
+      new Date(targetTransactionBefore.date).getMonth() + 1
+    )
       .toString()
       .padStart(2, '0');
     const dateQuery = `${transactionYear}-${transactionMonth}`;

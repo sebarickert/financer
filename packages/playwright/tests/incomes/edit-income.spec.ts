@@ -1,10 +1,16 @@
-import { AccountDto, TransactionDetailsDto } from '$types/generated/financer';
 import {
-  getAllTransaction,
+  AccountDto,
+  ExpenseListItemDto,
+  IncomeListItemDto,
+  TransactionListItemDto,
+  TransferListItemDto,
+} from '$types/generated/financer';
+import {
   getAccount,
   getTransactionById,
-  ITransactionWithDateObject,
   roundToTwoDecimal,
+  getAllIncomes,
+  getAccountFromTransactionListItem,
 } from '$utils/api-helper';
 import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
@@ -34,8 +40,16 @@ test.describe('Edit income', () => {
   const verifyTargetTransactionChanged = async (
     newName: string,
     changedAmount: number,
-    transactionBefore: ITransactionWithDateObject<TransactionDetailsDto>,
-    transactionAfter: ITransactionWithDateObject<TransactionDetailsDto>,
+    transactionBefore:
+      | TransactionListItemDto
+      | IncomeListItemDto
+      | ExpenseListItemDto
+      | TransferListItemDto,
+    transactionAfter:
+      | TransactionListItemDto
+      | IncomeListItemDto
+      | ExpenseListItemDto
+      | TransferListItemDto,
   ) => {
     const nameAfter = transactionAfter.description;
     const amountAfter = roundToTwoDecimal(transactionAfter.amount);
@@ -51,22 +65,25 @@ test.describe('Edit income', () => {
   // eslint-disable-next-line playwright/expect-expect
   test('Edit newest income', async ({ page }) => {
     const editedTransactionName = getEditedTransactionName();
-    const transactionsBefore = await getAllTransaction();
+    const incomesBefore = await getAllIncomes();
 
-    const incomesBefore = transactionsBefore.filter(
-      ({ fromAccount, toAccount }) => !fromAccount && toAccount,
-    );
     const targetTransactionBefore = incomesBefore[incomesBefore.length - 1];
 
-    const targetAccountId = targetTransactionBefore.toAccount;
+    const targetAccountId = await getAccountFromTransactionListItem(
+      targetTransactionBefore,
+    );
 
     const accountBefore = await getAccount(targetAccountId);
 
     const newAmount =
       targetTransactionBefore.amount + amountToChangeTransaction;
 
-    const transactionYear = targetTransactionBefore.dateObj.getFullYear();
-    const transactionMonth = (targetTransactionBefore.dateObj.getMonth() + 1)
+    const transactionYear = new Date(
+      targetTransactionBefore.date,
+    ).getFullYear();
+    const transactionMonth = (
+      new Date(targetTransactionBefore.date).getMonth() + 1
+    )
       .toString()
       .padStart(2, '0');
     const dateQuery = `${transactionYear}-${transactionMonth}`;
@@ -107,22 +124,25 @@ test.describe('Edit income', () => {
   // eslint-disable-next-line playwright/expect-expect
   test('Edit oldest income', async ({ page }) => {
     const editedTransactionName = getEditedTransactionName();
-    const transactionsBefore = await getAllTransaction();
+    const incomesBefore = await getAllIncomes();
 
-    const incomesBefore = transactionsBefore.filter(
-      ({ fromAccount, toAccount }) => !fromAccount && toAccount,
-    );
     const targetTransactionBefore = incomesBefore[0];
 
-    const targetAccountId = targetTransactionBefore.toAccount;
+    const targetAccountId = await getAccountFromTransactionListItem(
+      targetTransactionBefore,
+    );
 
     const accountBefore = await getAccount(targetAccountId);
 
     const newAmount =
       targetTransactionBefore.amount + amountToChangeTransaction;
 
-    const transactionYear = targetTransactionBefore.dateObj.getFullYear();
-    const transactionMonth = (targetTransactionBefore.dateObj.getMonth() + 1)
+    const transactionYear = new Date(
+      targetTransactionBefore.date,
+    ).getFullYear();
+    const transactionMonth = (
+      new Date(targetTransactionBefore.date).getMonth() + 1
+    )
       .toString()
       .padStart(2, '0');
     const dateQuery = `${transactionYear}-${transactionMonth}`;

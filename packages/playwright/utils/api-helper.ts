@@ -2,26 +2,17 @@ import { Page, getBaseUrl } from './financer-page';
 
 import {
   AccountDto,
-  ExpenseDetailsDto,
-  IncomeDetailsDto,
+  ExpenseListItemDto,
+  IncomeListItemDto,
   PaginationDto as PaginationDtoBase,
   TransactionCategoryDto,
   TransactionDetailsDto,
-  TransferDetailsDto,
+  TransactionListItemDto,
+  TransferListItemDto,
 } from '$types/generated/financer';
 
 type PaginationDto<Data extends object> = PaginationDtoBase & {
   data: Data;
-};
-
-export type ITransactionWithDateObject<
-  Transaction extends
-    | TransactionDetailsDto
-    | IncomeDetailsDto
-    | ExpenseDetailsDto
-    | TransferDetailsDto,
-> = Transaction & {
-  dateObj: Date;
 };
 
 export const MINUTE_IN_MS = 60000;
@@ -42,70 +33,45 @@ export const getAccount = async (accountId: string): Promise<AccountDto> => {
   return rawAccount.json();
 };
 
-const parseTransactionDate = <
-  Transaction extends
-    | TransactionDetailsDto
-    | IncomeDetailsDto
-    | ExpenseDetailsDto
-    | TransferDetailsDto,
->(
-  transactions: PaginationDto<Transaction[]>,
-): ITransactionWithDateObject<Transaction>[] =>
-  transactions.data
-    .map(({ date, ...rest }) => ({
-      ...rest,
-      date,
-      dateObj: new Date(date),
-    }))
-    .sort((a, b) =>
-      a.date < b.date ? -1 : 1,
-    ) as unknown as ITransactionWithDateObject<Transaction>[];
-
-export const getAllTransaction = async (): Promise<
-  ITransactionWithDateObject<TransactionDetailsDto>[]
+export const getAllTransactions = async (): Promise<
+  TransactionListItemDto[]
 > => {
   const baseUrl = getBaseUrl();
   const transactions = (await (
     await fetch(`${baseUrl}/api/transactions`)
-  ).json()) as PaginationDto<TransactionDetailsDto[]>;
+  ).json()) as PaginationDto<TransactionListItemDto[]>;
 
-  return parseTransactionDate(transactions);
+  return transactions.data;
 };
 
-export const getAllIncomes = async (): Promise<
-  ITransactionWithDateObject<IncomeDetailsDto>[]
-> => {
+export const getAllIncomes = async (): Promise<IncomeListItemDto[]> => {
   const baseUrl = getBaseUrl();
   const transactions = (await (
     await fetch(`${baseUrl}/api/incomes`)
-  ).json()) as PaginationDto<IncomeDetailsDto[]>;
+  ).json()) as PaginationDto<IncomeListItemDto[]>;
 
-  return parseTransactionDate(transactions);
+  return transactions.data;
 };
 
-export const getAllExpenses = async (): Promise<
-  ITransactionWithDateObject<ExpenseDetailsDto>[]
-> => {
+export const getAllExpenses = async (): Promise<ExpenseListItemDto[]> => {
   const baseUrl = getBaseUrl();
   const transactions = (await (
     await fetch(`${baseUrl}/api/expenses`)
-  ).json()) as PaginationDto<ExpenseDetailsDto[]>;
+  ).json()) as PaginationDto<ExpenseListItemDto[]>;
 
-  return parseTransactionDate(transactions);
+  return transactions.data;
 };
 
-export const getAllTransfers = async (): Promise<
-  ITransactionWithDateObject<TransferDetailsDto>[]
-> => {
+export const getAllTransfers = async (): Promise<TransferListItemDto[]> => {
   const baseUrl = getBaseUrl();
   const transactions = (await (
     await fetch(`${baseUrl}/api/transfers`)
-  ).json()) as PaginationDto<TransferDetailsDto[]>;
+  ).json()) as PaginationDto<TransferListItemDto[]>;
 
-  return parseTransactionDate(transactions);
+  return transactions.data;
 };
 
-export const getTransactionByIdRaw = async (
+export const getTransactionById = async (
   transactionId: string,
 ): Promise<TransactionDetailsDto> => {
   const baseUrl = getBaseUrl();
@@ -114,34 +80,28 @@ export const getTransactionByIdRaw = async (
   ).json()) as TransactionDetailsDto;
 };
 
-export const getTransactionById = async (
-  transactionId: string,
-): Promise<ITransactionWithDateObject<TransactionDetailsDto>> => {
-  const transaction = await getTransactionByIdRaw(transactionId);
-
-  return { ...transaction, dateObj: new Date(transaction?.date) };
-};
-
 export const getAllTransactionsByAccountId = async (
   accountId: string,
-): Promise<ITransactionWithDateObject<TransactionDetailsDto>[]> => {
+): Promise<TransactionListItemDto[]> => {
   const baseUrl = getBaseUrl();
   const transactions = (await (
     await fetch(`${baseUrl}/api/transactions/account/${accountId}`)
-  ).json()) as PaginationDto<TransactionDetailsDto[]>;
+  ).json()) as PaginationDto<TransactionListItemDto[]>;
 
-  return transactions.data
-    .map(({ date, ...rest }) => ({
-      ...rest,
-      date,
-      dateObj: new Date(date),
-    }))
-    .sort((a, b) => (a.date < b.date ? -1 : 1));
+  return transactions.data.sort((a, b) => (a.date < b.date ? -1 : 1));
 };
 
-export const getAccountFromTransactions = (
-  transaction: TransactionDetailsDto,
-) => transaction.toAccount || transaction.fromAccount;
+export const getAccountFromTransactionListItem = async (
+  transaction:
+    | TransactionListItemDto
+    | ExpenseListItemDto
+    | TransferListItemDto
+    | IncomeListItemDto,
+) => {
+  const { toAccount, fromAccount } = await getTransactionById(transaction.id);
+
+  return toAccount || fromAccount;
+};
 
 export const roundToTwoDecimal = (number: number): number =>
   Math.round(number * 100) / 100;

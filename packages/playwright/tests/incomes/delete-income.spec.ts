@@ -1,14 +1,10 @@
+import { AccountDto, IncomeListItemDto } from '$types/generated/financer';
 import {
-  AccountDto,
-  IncomeDetailsDto,
-  TransactionDetailsDto,
-} from '$types/generated/financer';
-import {
-  getAllTransaction,
   getAccount,
   roundToTwoDecimal,
-  getTransactionByIdRaw,
-  ITransactionWithDateObject,
+  getTransactionById,
+  getAllIncomes,
+  getAccountFromTransactionListItem,
 } from '$utils/api-helper';
 import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
@@ -22,7 +18,7 @@ test.describe('Delete income', () => {
   const verifyAccountBalanceChangeByTargetTransactionAmount = async (
     accountBefore: AccountDto,
     accountAfter: AccountDto,
-    targetTransactionBefore: IncomeDetailsDto,
+    targetTransactionBefore: IncomeListItemDto,
   ) => {
     const changedAmount = roundToTwoDecimal(targetTransactionBefore.amount);
     const balanceBefore = roundToTwoDecimal(accountBefore.balance);
@@ -35,9 +31,9 @@ test.describe('Delete income', () => {
   };
 
   const verifyTargetTransactionDoesNotExistsAfter = async (
-    targetTransactionBefore: IncomeDetailsDto,
+    targetTransactionBefore: IncomeListItemDto,
   ) => {
-    const targetTransactionAfter = await getTransactionByIdRaw(
+    const targetTransactionAfter = await getTransactionById(
       targetTransactionBefore.id,
     );
 
@@ -46,22 +42,23 @@ test.describe('Delete income', () => {
   };
 
   test('Delete newest income', async ({ page }) => {
-    const transactionsBefore = await getAllTransaction();
+    const incomesBefore = await getAllIncomes();
 
-    const incomesBefore = transactionsBefore.filter(
-      ({ fromAccount, toAccount }) => !fromAccount && toAccount,
-    );
-    const targetTransactionBefore = incomesBefore.at(
-      -1,
-    ) as ITransactionWithDateObject<TransactionDetailsDto>;
+    const targetTransactionBefore = incomesBefore.at(-1) as IncomeListItemDto;
 
     const targetTransactionId = targetTransactionBefore.id;
-    const targetAccountId = targetTransactionBefore.fromAccount;
+    const targetAccountId = await getAccountFromTransactionListItem(
+      targetTransactionBefore,
+    );
 
     const accountBefore = await getAccount(targetAccountId);
 
-    const transactionYear = targetTransactionBefore.dateObj.getFullYear();
-    const transactionMonth = (targetTransactionBefore.dateObj.getMonth() + 1)
+    const transactionYear = new Date(
+      targetTransactionBefore.date,
+    ).getFullYear();
+    const transactionMonth = (
+      new Date(targetTransactionBefore.date).getMonth() + 1
+    )
       .toString()
       .padStart(2, '0');
     const dateQuery = `${transactionYear}-${transactionMonth}`;
@@ -86,20 +83,23 @@ test.describe('Delete income', () => {
   });
 
   test('Delete oldest income', async ({ page }) => {
-    const transactionsBefore = await getAllTransaction();
+    const incomesBefore = await getAllIncomes();
 
-    const incomesBefore = transactionsBefore.filter(
-      ({ fromAccount, toAccount }) => !fromAccount && toAccount,
-    );
     const targetTransactionBefore = incomesBefore[0];
 
     const targetTransactionId = targetTransactionBefore.id;
-    const targetAccountId = targetTransactionBefore.fromAccount;
+    const targetAccountId = await getAccountFromTransactionListItem(
+      targetTransactionBefore,
+    );
 
     const accountBefore = await getAccount(targetAccountId);
 
-    const transactionYear = targetTransactionBefore.dateObj.getFullYear();
-    const transactionMonth = (targetTransactionBefore.dateObj.getMonth() + 1)
+    const transactionYear = new Date(
+      targetTransactionBefore.date,
+    ).getFullYear();
+    const transactionMonth = (
+      new Date(targetTransactionBefore.date).getMonth() + 1
+    )
       .toString()
       .padStart(2, '0');
     const dateQuery = `${transactionYear}-${transactionMonth}`;

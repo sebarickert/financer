@@ -1,10 +1,10 @@
-import { AccountDto, ExpenseDetailsDto } from '$types/generated/financer';
+import { AccountDto, ExpenseListItemDto } from '$types/generated/financer';
 import {
-  getAllTransaction,
   getAccount,
   getTransactionById,
-  ITransactionWithDateObject,
   roundToTwoDecimal,
+  getAllExpenses,
+  getAccountFromTransactionListItem,
 } from '$utils/api-helper';
 import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
@@ -34,8 +34,8 @@ test.describe('Edit expense', () => {
   const verifyTargetTransactionChanged = async (
     newName: string,
     changedAmount: number,
-    transactionBefore: ITransactionWithDateObject<ExpenseDetailsDto>,
-    transactionAfter: ITransactionWithDateObject<ExpenseDetailsDto>,
+    transactionBefore: ExpenseListItemDto,
+    transactionAfter: ExpenseListItemDto,
   ) => {
     const nameAfter = transactionAfter.description;
     const amountAfter = roundToTwoDecimal(transactionAfter.amount);
@@ -49,24 +49,29 @@ test.describe('Edit expense', () => {
   };
 
   // eslint-disable-next-line playwright/expect-expect
-  test('Edit newest expense', async ({ page }) => {
+  test('should edit the newest expense and verify the changes', async ({
+    page,
+  }) => {
     const editedTransactionName = getEditedTransactionName();
-    const transactionsBefore = await getAllTransaction();
+    const expensesBefore = await getAllExpenses();
 
-    const expensesBefore = transactionsBefore.filter(
-      ({ fromAccount, toAccount }) => fromAccount && !toAccount,
-    );
     const targetTransactionBefore = expensesBefore[expensesBefore.length - 1];
 
-    const targetAccountId = targetTransactionBefore.fromAccount;
+    const targetAccountId = await getAccountFromTransactionListItem(
+      targetTransactionBefore,
+    );
 
     const accountBefore = await getAccount(targetAccountId);
 
     const newAmount =
       targetTransactionBefore.amount + amountToChangeTransaction;
 
-    const transactionYear = targetTransactionBefore.dateObj.getFullYear();
-    const transactionMonth = (targetTransactionBefore.dateObj.getMonth() + 1)
+    const transactionYear = new Date(
+      targetTransactionBefore.date,
+    ).getFullYear();
+    const transactionMonth = (
+      new Date(targetTransactionBefore.date).getMonth() + 1
+    )
       .toString()
       .padStart(2, '0');
     const dateQuery = `${transactionYear}-${transactionMonth}`;
@@ -105,24 +110,29 @@ test.describe('Edit expense', () => {
   });
 
   // eslint-disable-next-line playwright/expect-expect
-  test('Edit oldest expense', async ({ page }) => {
+  test('should edit the oldest expense and verify the changes', async ({
+    page,
+  }) => {
     const editedTransactionName = getEditedTransactionName();
-    const transactionsBefore = await getAllTransaction();
+    const expensesBefore = await getAllExpenses();
 
-    const expensesBefore = transactionsBefore.filter(
-      ({ fromAccount, toAccount }) => fromAccount && !toAccount,
-    );
     const targetTransactionBefore = expensesBefore[0];
 
-    const targetAccountId = targetTransactionBefore.fromAccount;
+    const targetAccountId = await getAccountFromTransactionListItem(
+      targetTransactionBefore,
+    );
 
     const accountBefore = await getAccount(targetAccountId);
 
     const newAmount =
       targetTransactionBefore.amount + amountToChangeTransaction;
 
-    const transactionYear = targetTransactionBefore.dateObj.getFullYear();
-    const transactionMonth = (targetTransactionBefore.dateObj.getMonth() + 1)
+    const transactionYear = new Date(
+      targetTransactionBefore.date,
+    ).getFullYear();
+    const transactionMonth = (
+      new Date(targetTransactionBefore.date).getMonth() + 1
+    )
       .toString()
       .padStart(2, '0');
     const dateQuery = `${transactionYear}-${transactionMonth}`;

@@ -3,105 +3,98 @@ import {
   getAllExpenses,
   getAllIncomes,
   getAllTransfers,
-  ITransactionWithDateObject,
 } from './api-helper';
 
 import {
-  ExpenseDetailsDto,
-  IncomeDetailsDto,
+  ExpenseListItemDto,
+  IncomeListItemDto,
   TransactionCategoryDto,
-  TransferDetailsDto,
+  TransferListItemDto,
 } from '$types/generated/financer';
 
-export const getExpenseIdWithSingleCategory = async (): Promise<
-  ITransactionWithDateObject<ExpenseDetailsDto>
-> => {
-  const expenses = await getAllExpenses();
-  const expense = expenses.find(
-    ({ description }) => description === 'Expense with category',
-  );
+export const getExpenseIdWithSingleCategory =
+  async (): Promise<ExpenseListItemDto> => {
+    const expenses = await getAllExpenses();
+    const expense = expenses.find(
+      ({ description }) => description === 'Expense with category',
+    );
 
-  if (!expense) {
-    throw new Error('Expense with single category not found');
-  }
+    if (!expense) {
+      throw new Error('Expense with single category not found');
+    }
 
-  return expense;
-};
+    return expense;
+  };
 
-export const getExpenseIdWithMultipleCategories = async (): Promise<
-  ITransactionWithDateObject<ExpenseDetailsDto>
-> => {
-  const expenses = await getAllExpenses();
-  const expense = expenses.find(
-    ({ description }) => description === 'Expense with multiple categories',
-  );
+export const getExpenseIdWithMultipleCategories =
+  async (): Promise<ExpenseListItemDto> => {
+    const expenses = await getAllExpenses();
+    const expense = expenses.find(
+      ({ description }) => description === 'Expense with multiple categories',
+    );
 
-  if (!expense) {
-    throw new Error('Expense with multiple categories not found');
-  }
+    if (!expense) {
+      throw new Error('Expense with multiple categories not found');
+    }
 
-  return expense;
-};
+    return expense;
+  };
 
-export const getIncomeIdWithSingleCategory = async (): Promise<
-  ITransactionWithDateObject<IncomeDetailsDto>
-> => {
-  const incomes = await getAllIncomes();
-  const income = incomes.find(
-    ({ description }) => description === 'Income with category',
-  );
+export const getIncomeIdWithSingleCategory =
+  async (): Promise<IncomeListItemDto> => {
+    const incomes = await getAllIncomes();
+    const income = incomes.find(
+      ({ description }) => description === 'Income with category',
+    );
 
-  if (!income) {
-    throw new Error('Income with single category not found');
-  }
+    if (!income) {
+      throw new Error('Income with single category not found');
+    }
 
-  return income;
-};
+    return income;
+  };
 
-export const getIncomeIdWithMultipleCategories = async (): Promise<
-  ITransactionWithDateObject<IncomeDetailsDto>
-> => {
-  const incomes = await getAllIncomes();
-  const income = incomes.find(
-    ({ description }) => description === 'Income with multiple categories',
-  );
+export const getIncomeIdWithMultipleCategories =
+  async (): Promise<IncomeListItemDto> => {
+    const incomes = await getAllIncomes();
+    const income = incomes.find(
+      ({ description }) => description === 'Income with multiple categories',
+    );
 
-  if (!income) {
-    throw new Error('Income with multiple categories not found');
-  }
+    if (!income) {
+      throw new Error('Income with multiple categories not found');
+    }
 
-  return income;
-};
+    return income;
+  };
 
-export const getTransferIdWithSingleCategory = async (): Promise<
-  ITransactionWithDateObject<TransferDetailsDto>
-> => {
-  const transfers = await getAllTransfers();
-  const transfer = transfers.find(
-    ({ description }) => description === 'Transfer with category',
-  );
+export const getTransferIdWithSingleCategory =
+  async (): Promise<TransferListItemDto> => {
+    const transfers = await getAllTransfers();
+    const transfer = transfers.find(
+      ({ description }) => description === 'Transfer with category',
+    );
 
-  if (!transfer) {
-    throw new Error('Transfer with single category not found');
-  }
+    if (!transfer) {
+      throw new Error('Transfer with single category not found');
+    }
 
-  return transfer;
-};
+    return transfer;
+  };
 
-export const getTransferIdWithMultipleCategories = async (): Promise<
-  ITransactionWithDateObject<TransferDetailsDto>
-> => {
-  const transfers = await getAllTransfers();
-  const transfer = transfers.find(
-    ({ description }) => description === 'Transfer with multiple categories',
-  );
+export const getTransferIdWithMultipleCategories =
+  async (): Promise<TransferListItemDto> => {
+    const transfers = await getAllTransfers();
+    const transfer = transfers.find(
+      ({ description }) => description === 'Transfer with multiple categories',
+    );
 
-  if (!transfer) {
-    throw new Error('Transfer with multiple categories not found');
-  }
+    if (!transfer) {
+      throw new Error('Transfer with multiple categories not found');
+    }
 
-  return transfer;
-};
+    return transfer;
+  };
 
 export const getCategoryForAllTypes =
   async (): Promise<TransactionCategoryDto> => {
