@@ -2,10 +2,9 @@ import clsx from 'clsx';
 import { FC } from 'react';
 
 import {
-  ExpenseDto,
-  IncomeDto,
-  TransactionType,
-  TransferDto,
+  ExpenseDetailsDto,
+  IncomeDetailsDto,
+  TransferDetailsDto,
 } from '$api/generated/financerApi';
 import { BalanceDisplay } from '$blocks/BalanceDisplay';
 import { DetailsList } from '$blocks/details-list/details-list';
@@ -18,99 +17,85 @@ import { CategoryService } from '$ssr/api/category.service';
 import { capitalize } from '$utils/capitalize';
 import { formatCurrency } from '$utils/formatCurrency';
 import { DateFormat, formatDate } from '$utils/formatDate';
-import { getTransactionType } from '$utils/transaction/getTransactionType';
 
-type TransactionProps = {
-  transaction: IncomeDto | ExpenseDto | TransferDto;
-  toAccount?: string;
-  fromAccount?: string;
-};
-
-const getUrlMapping = (transactionType: TransactionType) => {
-  switch (transactionType) {
-    case TransactionType.Transfer:
-      return {
-        type: 'transfer',
-        url: 'transfers',
-      };
-    case TransactionType.Income:
-      return {
-        type: 'income',
-        url: 'incomes',
-      };
-    case TransactionType.Expense:
-      return {
-        type: 'expense',
-        url: 'expenses',
-      };
-  }
-};
+type TransactionProps =
+  | IncomeDetailsDto
+  | ExpenseDetailsDto
+  | TransferDetailsDto;
 
 export const Transaction: FC<TransactionProps> = async ({
-  transaction,
-  toAccount,
-  fromAccount,
+  type,
+  date,
+  categories,
+  id,
+  amount,
+  description,
+  ...props
 }) => {
+  const fromAccountName =
+    'fromAccountName' in props ? props.fromAccountName : null;
+  const toAccountName = 'toAccountName' in props ? props.toAccountName : null;
+
   const transactionCategories = await CategoryService.getAllWithTree();
 
   const getCategoryNameById = (categoryId: string) =>
     transactionCategories?.find((category) => category.id === categoryId)
       ?.categoryTree || categoryId;
 
-  const transactionType = getTransactionType(toAccount, fromAccount);
-
-  const transactionDetailsMapping = getUrlMapping(transactionType);
-
   const transactionDetails: DetailsItem[] = [
-    ...(fromAccount
+    ...(fromAccountName
       ? [
           {
             icon: 'Squares2X2Icon' as IconName,
             label: 'From Account',
-            description: fromAccount,
+            description: fromAccountName,
           },
         ]
       : []),
-    ...(toAccount
+    ...(toAccountName
       ? [
           {
             icon: 'Squares2X2Icon' as IconName,
             label: 'To Account',
-            description: toAccount,
+            description: toAccountName,
           },
         ]
       : []),
     {
       icon: 'CalendarIcon',
       label: 'Date',
-      description: formatDate(new Date(transaction?.date), DateFormat.long),
+      description: formatDate(new Date(date), DateFormat.long),
     },
     {
       icon: 'InformationCircleIcon',
       label: 'Type',
-      description: capitalize(transactionDetailsMapping.type ?? '-'),
+      description: capitalize(type.toLowerCase()),
     },
   ];
 
-  const categoryDetails: DetailsItem[][] = transaction.categories.map(
-    ({ amount, categoryId, description }) => {
+  const categoryDetails: DetailsItem[][] = categories.map(
+    ({
+      amount: categoryAmount,
+      description: categoryDescription,
+      id: categoryId,
+    }) => {
       return [
         {
-          icon: 'TagIcon' as IconName,
+          icon: 'TagIcon',
           label: 'Category',
           description: getCategoryNameById(categoryId as unknown as string),
         },
         {
-          icon: 'InformationCircleIcon' as IconName,
+          icon: 'InformationCircleIcon',
           label: 'Amount',
-          description: formatCurrency(amount),
+          description: formatCurrency(categoryAmount),
         },
-        ...(description
+        ...(categoryDescription
           ? [
               {
                 icon: 'ChatBubbleBottomCenterTextIcon' as IconName,
                 label: 'Description',
-                description,
+                description: categoryDescription,
               },
             ]
           : []),
@@ -125,8 +110,8 @@ export const Transaction: FC<TransactionProps> = async ({
         headerAction={
           <Link
             haptic="medium"
-            href={`/statistics/${transactionDetailsMapping.url}/${transaction.id}/edit`}
-            testId={`edit-${transactionDetailsMapping.type}-button`}
+            href={`/statistics/${type.toLowerCase()}s/${id}/edit`}
+            testId={`edit-${type.toLowerCase()}-button`}
             transition="slideInFromRight"
           >
             <span className="sr-only">Edit</span>
@@ -143,8 +128,8 @@ export const Transaction: FC<TransactionProps> = async ({
             '@3xl:pt-4 @3xl:grid-cols-[1fr,1.5fr]',
           )}
         >
-          <BalanceDisplay type={transactionType} amount={transaction?.amount}>
-            {`${transaction?.description}`}
+          <BalanceDisplay type={type} amount={amount}>
+            {`${description}`}
           </BalanceDisplay>
           <div className="grid gap-8 p-6 border rounded-md theme-layer-secondary-color theme-border-primary">
             <DetailsList items={transactionDetails} />

@@ -1,7 +1,7 @@
 import {
   AccountDto,
-  ExpenseDto,
-  TransactionDto,
+  ExpenseDetailsDto,
+  TransactionDetailsDto,
 } from '$types/generated/financer';
 import {
   getAllTransaction,
@@ -22,7 +22,7 @@ test.describe('Delete expense', () => {
   const verifyAccountBalanceChangeByTargetTransactionAmount = async (
     accountBefore: AccountDto,
     accountAfter: AccountDto,
-    targetTransactionBefore: ExpenseDto,
+    targetTransactionBefore: ExpenseDetailsDto,
   ) => {
     const changedAmount = roundToTwoDecimal(targetTransactionBefore.amount);
     const balanceBefore = roundToTwoDecimal(accountBefore.balance);
@@ -35,7 +35,7 @@ test.describe('Delete expense', () => {
   };
 
   const verifyTargetTransactionDoesNotExistsAfter = async (
-    targetTransactionBefore: ExpenseDto,
+    targetTransactionBefore: ExpenseDetailsDto,
   ) => {
     const targetTransactionAfter = await getTransactionByIdRaw(
       targetTransactionBefore.id,
@@ -53,7 +53,7 @@ test.describe('Delete expense', () => {
     );
     const targetTransactionBefore = expensesBefore.at(
       -1,
-    ) as ITransactionWithDateObject<TransactionDto>;
+    ) as ITransactionWithDateObject<TransactionDetailsDto>;
 
     const targetTransactionId = targetTransactionBefore.id;
     const targetAccountId = targetTransactionBefore.fromAccount;

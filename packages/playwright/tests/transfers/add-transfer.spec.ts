@@ -1,4 +1,4 @@
-import { AccountDto, TransactionDto } from '$types/generated/financer';
+import { AccountDto, TransactionDetailsDto } from '$types/generated/financer';
 import {
   getAllTransaction,
   getAccount,
@@ -39,8 +39,8 @@ test.describe('Add transfer', () => {
   };
 
   const verifyNewTransferCreated = async (
-    transfersBefore: TransactionDto[],
-    transfersAfter: TransactionDto[],
+    transfersBefore: TransactionDetailsDto[],
+    transfersAfter: TransactionDetailsDto[],
   ) => {
     expect(transfersBefore.length + 1).toEqual(transfersAfter.length);
   };
@@ -54,7 +54,7 @@ test.describe('Add transfer', () => {
 
     const targetToAccountTransactionBefore = transactionsBefore.at(
       -1,
-    ) as ITransactionWithDateObject<TransactionDto>;
+    ) as ITransactionWithDateObject<TransactionDetailsDto>;
 
     const targetToAccountId = getAccountFromTransactions(
       targetToAccountTransactionBefore,
@@ -122,7 +122,7 @@ test.describe('Add transfer', () => {
 
     const targetToAccountTransactionBefore = transactionsBefore.at(
       -1,
-    ) as ITransactionWithDateObject<TransactionDto>;
+    ) as ITransactionWithDateObject<TransactionDetailsDto>;
     const targetToAccountId = getAccountFromTransactions(
       targetToAccountTransactionBefore,
     );
@@ -191,7 +191,7 @@ test.describe('Add transfer', () => {
 
     const targetToAccountTransactionBefore = transactionsBefore.at(
       0,
-    ) as ITransactionWithDateObject<TransactionDto>;
+    ) as ITransactionWithDateObject<TransactionDetailsDto>;
     const targetToAccountId = getAccountFromTransactions(
       targetToAccountTransactionBefore,
     );

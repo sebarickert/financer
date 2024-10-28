@@ -7,14 +7,14 @@ import {
 } from './api-helper';
 
 import {
-  ExpenseDto,
-  IncomeDto,
+  ExpenseDetailsDto,
+  IncomeDetailsDto,
   TransactionCategoryDto,
-  TransferDto,
+  TransferDetailsDto,
 } from '$types/generated/financer';
 
 export const getExpenseIdWithSingleCategory = async (): Promise<
-  ITransactionWithDateObject<ExpenseDto>
+  ITransactionWithDateObject<ExpenseDetailsDto>
 > => {
   const expenses = await getAllExpenses();
   const expense = expenses.find(
@@ -29,7 +29,7 @@ export const getExpenseIdWithSingleCategory = async (): Promise<
 };
 
 export const getExpenseIdWithMultipleCategories = async (): Promise<
-  ITransactionWithDateObject<ExpenseDto>
+  ITransactionWithDateObject<ExpenseDetailsDto>
 > => {
   const expenses = await getAllExpenses();
   const expense = expenses.find(
@@ -44,7 +44,7 @@ export const getExpenseIdWithMultipleCategories = async (): Promise<
 };
 
 export const getIncomeIdWithSingleCategory = async (): Promise<
-  ITransactionWithDateObject<IncomeDto>
+  ITransactionWithDateObject<IncomeDetailsDto>
 > => {
   const incomes = await getAllIncomes();
   const income = incomes.find(
@@ -59,7 +59,7 @@ export const getIncomeIdWithSingleCategory = async (): Promise<
 };
 
 export const getIncomeIdWithMultipleCategories = async (): Promise<
-  ITransactionWithDateObject<IncomeDto>
+  ITransactionWithDateObject<IncomeDetailsDto>
 > => {
   const incomes = await getAllIncomes();
   const income = incomes.find(
@@ -74,7 +74,7 @@ export const getIncomeIdWithMultipleCategories = async (): Promise<
 };
 
 export const getTransferIdWithSingleCategory = async (): Promise<
-  ITransactionWithDateObject<TransferDto>
+  ITransactionWithDateObject<TransferDetailsDto>
 > => {
   const transfers = await getAllTransfers();
   const transfer = transfers.find(
@@ -89,7 +89,7 @@ export const getTransferIdWithSingleCategory = async (): Promise<
 };
 
 export const getTransferIdWithMultipleCategories = async (): Promise<
-  ITransactionWithDateObject<TransferDto>
+  ITransactionWithDateObject<TransferDetailsDto>
 > => {
   const transfers = await getAllTransfers();
   const transfer = transfers.find(

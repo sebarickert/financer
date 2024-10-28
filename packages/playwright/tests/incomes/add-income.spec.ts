@@ -1,7 +1,7 @@
 import {
   AccountDto,
-  IncomeDto,
-  TransactionDto,
+  IncomeDetailsDto,
+  TransactionDetailsDto,
 } from '$types/generated/financer';
 import {
   getAllTransaction,
@@ -38,8 +38,8 @@ test.describe('Add income', () => {
   };
 
   const verifyNewIncomeCreated = async (
-    incomesBefore: IncomeDto[],
-    incomesAfter: IncomeDto[],
+    incomesBefore: IncomeDetailsDto[],
+    incomesAfter: IncomeDetailsDto[],
   ) => {
     expect(incomesBefore.length + 1).toEqual(incomesAfter.length);
   };
@@ -53,7 +53,7 @@ test.describe('Add income', () => {
 
     const targetTransactionBefore = transactionsBefore.at(
       -1,
-    ) as ITransactionWithDateObject<TransactionDto>;
+    ) as ITransactionWithDateObject<TransactionDetailsDto>;
 
     const targetAccountId = getAccountFromTransactions(targetTransactionBefore);
 
@@ -103,7 +103,7 @@ test.describe('Add income', () => {
 
     const targetTransactionBefore = transactionsBefore.at(
       -1,
-    ) as ITransactionWithDateObject<TransactionDto>;
+    ) as ITransactionWithDateObject<TransactionDetailsDto>;
     const targetAccountId = getAccountFromTransactions(targetTransactionBefore);
 
     const newTransactionDate = new Date(
@@ -152,7 +152,7 @@ test.describe('Add income', () => {
 
     const targetTransactionBefore = transactionsBefore.at(
       0,
-    ) as ITransactionWithDateObject<TransactionDto>;
+    ) as ITransactionWithDateObject<TransactionDetailsDto>;
 
     const targetAccountId = getAccountFromTransactions(targetTransactionBefore);
 
@@ -199,7 +199,7 @@ test.describe('Add income', () => {
     const transactionsBefore = await getAllTransaction();
     const targetTransactionBefore = transactionsBefore.at(
       -1,
-    ) as ITransactionWithDateObject<TransactionDto>;
+    ) as ITransactionWithDateObject<TransactionDetailsDto>;
     const targetAccountId = getAccountFromTransactions(targetTransactionBefore);
 
     const date = new Date();

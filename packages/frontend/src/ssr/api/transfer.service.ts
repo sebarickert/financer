@@ -8,10 +8,11 @@ import type {
 } from './transaction.service';
 
 import {
-  TransferDto,
   SortOrder,
   CreateTransferDto,
   UpdateTransferDto,
+  TransferDetailsDto,
+  TransferListItemDto,
 } from '$api/generated/financerApi';
 import { ValidationException } from '$exceptions/validation.exception';
 import { isValidationErrorResponse } from '$utils/apiHelper';
@@ -26,7 +27,7 @@ export class TransferService extends BaseApi {
 
   public static async getFirst(
     options?: FirstTransactionByTypeOptions,
-  ): Promise<TransferDto> {
+  ): Promise<TransferListItemDto> {
     const data = await this.getAll({
       ...options,
       limit: 1,
@@ -39,7 +40,7 @@ export class TransferService extends BaseApi {
 
   public static async getAll(
     options: TransactionListOptions,
-  ): Promise<GenericPaginationDto<TransferDto>> {
+  ): Promise<GenericPaginationDto<TransferListItemDto>> {
     const { data, error } = await this.client.GET('/api/transfers', {
       params: {
         query: options,
@@ -58,10 +59,10 @@ export class TransferService extends BaseApi {
       throw new Error('Failed to fetch transfers', error);
     }
 
-    return data;
+    return data as GenericPaginationDto<TransferListItemDto>;
   }
 
-  public static async getById(id: string): Promise<TransferDto> {
+  public static async getById(id: string): Promise<TransferDetailsDto> {
     const { data, error } = await this.client.GET(`/api/transfers/{id}`, {
       params: {
         path: {
@@ -82,12 +83,12 @@ export class TransferService extends BaseApi {
       throw new Error('Failed to fetch transfer', error);
     }
 
-    return data as TransferDto;
+    return data as TransferDetailsDto;
   }
 
   public static async add(
     newTransfer: CreateTransferDto,
-  ): Promise<TransferDto> {
+  ): Promise<TransferDetailsDto> {
     const { error, data } = await this.client.POST('/api/transfers', {
       body: newTransfer,
     });
@@ -109,13 +110,13 @@ export class TransferService extends BaseApi {
     await this.clearCache();
     await AccountService.clearCache();
 
-    return data;
+    return data as TransferDetailsDto;
   }
 
   public static async update(
     id: string,
     updatedTransfer: UpdateTransferDto,
-  ): Promise<TransferDto> {
+  ): Promise<TransferDetailsDto> {
     const { error, data } = await this.client.PATCH(`/api/transfers/{id}`, {
       params: {
         path: { id },
@@ -140,7 +141,7 @@ export class TransferService extends BaseApi {
     await this.clearCache();
     await AccountService.clearCache();
 
-    return data;
+    return data as TransferDetailsDto;
   }
 
   public static async delete(id: string): Promise<void> {

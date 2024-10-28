@@ -503,7 +503,7 @@
                         "data": {
                           "type": "array",
                           "items": {
-                            "$ref": "#/components/schemas/TransactionDto"
+                            "$ref": "#/components/schemas/TransactionDetailsDto"
                           }
                         }
                       },
@@ -587,7 +587,9 @@
             "description": "Return transaction by id",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/TransactionDto" }
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionDetailsDto"
+                }
               }
             }
           }
@@ -1902,6 +1904,56 @@
         },
         "required": ["date", "amount", "balance"]
       },
+      "TransactionDetailCategoryDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "description": { "type": "string" },
+          "amount": { "type": "number" },
+          "name": { "type": "string" }
+        },
+        "required": ["id", "description", "amount", "name"]
+      },
+      "TransactionDetailsDto": {
+        "type": "object",
+        "properties": {
+          "createdAt": { "format": "date-time", "type": "string" },
+          "updatedAt": { "format": "date-time", "type": "string" },
+          "id": { "type": "string" },
+          "amount": { "type": "number" },
+          "description": { "type": "string" },
+          "date": { "format": "date-time", "type": "string" },
+          "userId": { "type": "string" },
+          "fromAccount": { "type": "string" },
+          "toAccount": { "type": "string" },
+          "fromAccountName": { "type": "string" },
+          "toAccountName": { "type": "string" },
+          "isRecurring": { "type": "boolean" },
+          "type": { "$ref": "#/components/schemas/TransactionType" },
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransactionDetailCategoryDto"
+            }
+          }
+        },
+        "required": [
+          "createdAt",
+          "updatedAt",
+          "id",
+          "amount",
+          "description",
+          "date",
+          "userId",
+          "fromAccount",
+          "toAccount",
+          "fromAccountName",
+          "toAccountName",
+          "isRecurring",
+          "type",
+          "categories"
+        ]
+      },
       "TransactionMonthSummaryIdDto": {
         "type": "object",
         "properties": {
@@ -2036,16 +2088,6 @@
           "toAccount": { "type": "string", "nullable": true },
           "categories": { "type": "array", "items": { "type": "string" } }
         }
-      },
-      "TransactionDetailCategoryDto": {
-        "type": "object",
-        "properties": {
-          "id": { "type": "string" },
-          "description": { "type": "string" },
-          "amount": { "type": "number" },
-          "name": { "type": "string" }
-        },
-        "required": ["id", "description", "amount", "name"]
       },
       "ExpenseDetailsDto": {
         "type": "object",

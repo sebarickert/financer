@@ -1,4 +1,4 @@
-import { AccountDto, TransactionDto } from '$types/generated/financer';
+import { AccountDto, TransactionDetailsDto } from '$types/generated/financer';
 import {
   getAllTransaction,
   getAccount,
@@ -45,8 +45,8 @@ test.describe('Edit transfer', () => {
   const verifyTargetTransactionChanged = async (
     newName: string,
     changedAmount: number,
-    transactionBefore: ITransactionWithDateObject<TransactionDto>,
-    transactionAfter: ITransactionWithDateObject<TransactionDto>,
+    transactionBefore: ITransactionWithDateObject<TransactionDetailsDto>,
+    transactionAfter: ITransactionWithDateObject<TransactionDetailsDto>,
   ) => {
     const nameAfter = transactionAfter.description;
     const amountAfter = roundToTwoDecimal(transactionAfter.amount);
