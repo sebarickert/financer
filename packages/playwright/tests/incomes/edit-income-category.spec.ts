@@ -20,8 +20,12 @@ test.describe('Edit income with category', () => {
   test('Edit with single category', async ({ page }) => {
     const incomeWithSingleCategory = await getIncomeIdWithSingleCategory();
 
-    const transactionYear = incomeWithSingleCategory.dateObj.getFullYear();
-    const transactionMonth = (incomeWithSingleCategory.dateObj.getMonth() + 1)
+    const transactionYear = new Date(
+      incomeWithSingleCategory.date,
+    ).getFullYear();
+    const transactionMonth = (
+      new Date(incomeWithSingleCategory.date).getMonth() + 1
+    )
       .toString()
       .padStart(2, '0');
     const dateQuery = `${transactionYear}-${transactionMonth}`;
@@ -75,9 +79,11 @@ test.describe('Edit income with category', () => {
     const incomeWithMultipleCategories =
       await getIncomeIdWithMultipleCategories();
 
-    const transactionYear = incomeWithMultipleCategories.dateObj.getFullYear();
+    const transactionYear = new Date(
+      incomeWithMultipleCategories.date,
+    ).getFullYear();
     const transactionMonth = (
-      incomeWithMultipleCategories.dateObj.getMonth() + 1
+      new Date(incomeWithMultipleCategories.date).getMonth() + 1
     )
       .toString()
       .padStart(2, '0');
@@ -138,9 +144,11 @@ test.describe('Edit income with category', () => {
     const incomeWithMultipleCategories =
       await getIncomeIdWithMultipleCategories();
 
-    const transactionYear = incomeWithMultipleCategories.dateObj.getFullYear();
+    const transactionYear = new Date(
+      incomeWithMultipleCategories.date,
+    ).getFullYear();
     const transactionMonth = (
-      incomeWithMultipleCategories.dateObj.getMonth() + 1
+      new Date(incomeWithMultipleCategories.date).getMonth() + 1
     )
       .toString()
       .padStart(2, '0');

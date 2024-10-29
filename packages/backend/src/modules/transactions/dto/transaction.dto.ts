@@ -2,13 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Transaction } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime/library';
 import { Type } from 'class-transformer';
-import {
-  IsDate,
-  IsNotEmpty,
-  IsString,
-  IsUUID,
-  ValidateNested,
-} from 'class-validator';
+import { IsDate, IsNotEmpty, IsString, IsUUID } from 'class-validator';
 
 import { UserId } from '../../../types/user-id';
 import {
@@ -16,7 +10,6 @@ import {
   TransformDecimal,
 } from '../../../utils/is-decimal.decorator';
 import { MinDecimal } from '../../../utils/min-decimal.decorator';
-import { CreateTransactionCategoryMappingWithoutTransactionDto } from '../../transaction-category-mappings/dto/create-transaction-category-mapping.dto';
 
 export class TransactionDto implements Transaction {
   constructor(values: Transaction) {
@@ -62,14 +55,6 @@ export class TransactionDto implements Transaction {
   @ApiProperty({ type: String })
   @IsUUID('all', { message: 'toAccount must not be empty.' })
   readonly toAccount: string;
-
-  @ApiProperty({
-    type: CreateTransactionCategoryMappingWithoutTransactionDto,
-    isArray: true,
-  })
-  @ValidateNested({ each: true })
-  @Type(() => CreateTransactionCategoryMappingWithoutTransactionDto)
-  categories: CreateTransactionCategoryMappingWithoutTransactionDto[];
 
   public static createFromPlain(transaction: Transaction): TransactionDto;
   public static createFromPlain(transaction: Transaction[]): TransactionDto[];

@@ -26,19 +26,20 @@ import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
 import { UserIdDecorator } from '../users/users.decorators';
 
 import { CreateTransferDto } from './dto/create-transfer.dto';
-import { TransferDto } from './dto/transfer.dto';
+import { TransferDetailsDto } from './dto/transfer-details.dto';
+import { TransferListItemDto } from './dto/transfer-list-item.dto';
 import { UpdateTransferDto } from './dto/update-transfer.dto';
 import { TransfersService } from './transfers.service';
 
 @Controller('api/transfers')
 @ApiTags('Transfers')
-@ApiExtraModels(TransferDto)
+@ApiExtraModels(TransferDetailsDto, TransferListItemDto)
 @LoggedIn()
 export class TransfersController {
   constructor(private readonly transfersService: TransfersService) {}
 
   @Get()
-  @ApiPaginatedDto(TransferDto)
+  @ApiPaginatedDto(TransferListItemDto)
   @ApiQuery({
     name: 'month',
     required: false,
@@ -89,7 +90,7 @@ export class TransfersController {
 
   @Get(':id')
   @ApiOkResponse({
-    type: TransferDto,
+    type: TransferDetailsDto,
     description: 'Return transaction by id',
   })
   @ApiParam({
@@ -105,7 +106,7 @@ export class TransfersController {
 
   @Post()
   @ApiBody({ type: CreateTransferDto })
-  @ApiOkResponse({ type: TransferDto })
+  @ApiOkResponse({ type: TransferDetailsDto })
   async create(
     @UserIdDecorator() userId: UserId,
     @Body() createTransfer: CreateTransferDto,
@@ -115,7 +116,7 @@ export class TransfersController {
 
   @Patch(':id')
   @ApiBody({ type: UpdateTransferDto })
-  @ApiOkResponse({ type: TransferDto })
+  @ApiOkResponse({ type: TransferDetailsDto })
   @ApiParam({
     name: 'id',
     type: String,

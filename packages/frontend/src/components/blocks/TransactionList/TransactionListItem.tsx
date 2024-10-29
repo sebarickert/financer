@@ -28,8 +28,8 @@ export const TransactionListItem: FC<TransactionListItemProps> = ({
   transactionType,
   id,
 }) => {
-  const isIncome = transactionType === 'INCOME';
-  const isExpense = transactionType === 'EXPENSE';
+  const isIncome = transactionType === TransactionType.Income;
+  const isExpense = transactionType === TransactionType.Expense;
   const { color: transactionTypeColor } =
     transactionTypeThemeMapping[transactionType];
 

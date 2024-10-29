@@ -20,8 +20,12 @@ test.describe('Edit transfer with category', () => {
   test('Edit with single category', async ({ page }) => {
     const transferWithSingleCategory = await getTransferIdWithSingleCategory();
 
-    const transactionYear = transferWithSingleCategory.dateObj.getFullYear();
-    const transactionMonth = (transferWithSingleCategory.dateObj.getMonth() + 1)
+    const transactionYear = new Date(
+      transferWithSingleCategory.date,
+    ).getFullYear();
+    const transactionMonth = (
+      new Date(transferWithSingleCategory.date).getMonth() + 1
+    )
       .toString()
       .padStart(2, '0');
     const dateQuery = `${transactionYear}-${transactionMonth}`;
@@ -75,10 +79,11 @@ test.describe('Edit transfer with category', () => {
     const transferWithMultipleCategories =
       await getTransferIdWithMultipleCategories();
 
-    const transactionYear =
-      transferWithMultipleCategories.dateObj.getFullYear();
+    const transactionYear = new Date(
+      transferWithMultipleCategories.date,
+    ).getFullYear();
     const transactionMonth = (
-      transferWithMultipleCategories.dateObj.getMonth() + 1
+      new Date(transferWithMultipleCategories.date).getMonth() + 1
     )
       .toString()
       .padStart(2, '0');
@@ -143,10 +148,11 @@ test.describe('Edit transfer with category', () => {
     const transferWithMultipleCategories =
       await getTransferIdWithMultipleCategories();
 
-    const transactionYear =
-      transferWithMultipleCategories.dateObj.getFullYear();
+    const transactionYear = new Date(
+      transferWithMultipleCategories.date,
+    ).getFullYear();
     const transactionMonth = (
-      transferWithMultipleCategories.dateObj.getMonth() + 1
+      new Date(transferWithMultipleCategories.date).getMonth() + 1
     )
       .toString()
       .padStart(2, '0');

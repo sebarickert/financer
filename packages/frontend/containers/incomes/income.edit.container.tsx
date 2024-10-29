@@ -1,7 +1,7 @@
 import { notFound, redirect, RedirectType } from 'next/navigation';
 import { FC } from 'react';
 
-import { IncomeDto } from '$api/generated/financerApi';
+import { IncomeDetailsDto } from '$api/generated/financerApi';
 import {
   isCategoriesFormFullFields,
   parseCategoriesFormFullFields,
@@ -41,7 +41,7 @@ export const IncomeEditContainer: FC<IncomeEditContainerProps> = async ({
       parseCategoriesFormFullFields,
     );
 
-    let data: IncomeDto;
+    let data: IncomeDetailsDto;
 
     try {
       data = await IncomeService.update(income.id, {
@@ -77,6 +77,13 @@ export const IncomeEditContainer: FC<IncomeEditContainerProps> = async ({
 
   const initialValues = {
     ...income,
+    categories: income.categories.map(
+      ({ id: categoryId, amount, description }) => ({
+        categoryId: categoryId,
+        amount,
+        description,
+      }),
+    ),
     date: formatDate(new Date(income.date), DateFormat.input),
   };
 

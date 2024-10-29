@@ -178,7 +178,6 @@ describe('IncomesController', () => {
           'description must be a string',
           'Description must not be empty.',
           'Date must not be empty.',
-          'toAccount must not be empty.',
         ],
         error: 'Bad Request',
       });

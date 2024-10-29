@@ -2,10 +2,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AccountType } from '@prisma/client';
 
 import { createMockServiceProvider } from '../../../test/create-mock-service-provider';
-import { removeCreatedAndUpdated } from '../../../test/test-helper';
 import { DUMMY_TEST_USER } from '../../config/mockAuthenticationMiddleware';
 import { accountsRepoFindAllMockData } from '../../database/repos/mocks/account-repo-mock';
-import { transactionCategoryMappingRepoFindByIdMock } from '../../database/repos/mocks/transaction-category-mapping-repo-mock';
+import { transactionCategoryRepoUserMockDataFindAllBy } from '../../database/repos/mocks/transaction-category-repo-mock';
 import {
   transactionsRepoFindAllByIdMockData,
   transactionsRepoFindAllByTypeAndUserMockData,
@@ -23,7 +22,7 @@ import { IncomesService } from './incomes.service';
 describe('IncomesService', () => {
   let service: IncomesService;
   let transactionRepo: jest.Mocked<TransactionRepo>;
-  let transactionCategoryMappingRepo: jest.Mocked<TransactionCategoryMappingRepo>;
+  let transactionCategoriesRepo: jest.Mocked<TransactionCategoryRepo>;
   let accountsService: jest.Mocked<AccountsService>;
 
   beforeAll(async () => {
@@ -42,9 +41,9 @@ describe('IncomesService', () => {
 
     service = module.get<IncomesService>(IncomesService);
     transactionRepo = module.get<jest.Mocked<TransactionRepo>>(TransactionRepo);
-    transactionCategoryMappingRepo = module.get<
-      jest.Mocked<TransactionCategoryMappingRepo>
-    >(TransactionCategoryMappingRepo);
+    transactionCategoriesRepo = module.get<
+      jest.Mocked<TransactionCategoryRepo>
+    >(TransactionCategoryRepo);
     accountsService = module.get<jest.Mocked<AccountsService>>(AccountsService);
   });
 
@@ -72,7 +71,21 @@ describe('IncomesService', () => {
     expect(transactionRepo.findMany).toHaveBeenCalledTimes(1);
     expect(transactionRepo.findMany).toHaveBeenCalledWith({
       include: {
-        categories: true,
+        categories: {
+          select: {
+            category: {
+              select: {
+                name: true,
+              },
+            },
+            categoryId: true,
+          },
+        },
+        transactionTemplateLog: {
+          select: {
+            id: true,
+          },
+        },
       },
       orderBy: {
         date: 'desc',
@@ -103,7 +116,7 @@ describe('IncomesService', () => {
       },
     });
 
-    expect(removeCreatedAndUpdated(incomes)).toMatchSnapshot();
+    expect(incomes).toMatchSnapshot();
   });
 
   it('should return all incomes for user for specified account types', async () => {
@@ -140,7 +153,21 @@ describe('IncomesService', () => {
     expect(transactionRepo.findMany).toHaveBeenCalledTimes(1);
     expect(transactionRepo.findMany).toHaveBeenCalledWith({
       include: {
-        categories: true,
+        categories: {
+          select: {
+            category: {
+              select: {
+                name: true,
+              },
+            },
+            categoryId: true,
+          },
+        },
+        transactionTemplateLog: {
+          select: {
+            id: true,
+          },
+        },
       },
       orderBy: {
         date: 'desc',
@@ -241,7 +268,7 @@ describe('IncomesService', () => {
       ['CASH', 'CREDIT', 'INVESTMENT', 'SAVINGS'],
     );
 
-    expect(removeCreatedAndUpdated(incomes)).toMatchSnapshot();
+    expect(incomes).toMatchSnapshot();
   });
 
   it('should return one income for user', async () => {
@@ -250,26 +277,61 @@ describe('IncomesService', () => {
     jest
       .spyOn(transactionRepo, 'findOne')
       .mockResolvedValueOnce(transactionsRepoFindAllByIdMockData[id]);
+
     jest
-      .spyOn(transactionCategoryMappingRepo, 'findMany')
-      .mockResolvedValueOnce(transactionCategoryMappingRepoFindByIdMock[id]);
+      .spyOn(transactionCategoriesRepo, 'findMany')
+      .mockResolvedValueOnce(transactionCategoryRepoUserMockDataFindAllBy);
 
     const income = await service.findOne(DUMMY_TEST_USER.id, id);
 
     expect(transactionRepo.findOne).toHaveBeenCalledTimes(1);
     expect(transactionRepo.findOne).toHaveBeenCalledWith({
-      id: id,
-      userId: '61460d7354ea082ad0256749',
-    });
-
-    expect(transactionCategoryMappingRepo.findMany).toHaveBeenCalledTimes(1);
-    expect(transactionCategoryMappingRepo.findMany).toHaveBeenCalledWith({
+      include: {
+        categories: {
+          select: {
+            amount: true,
+            category: {
+              select: {
+                name: true,
+              },
+            },
+            categoryId: true,
+            description: true,
+          },
+        },
+        from: {
+          select: {
+            name: true,
+          },
+        },
+        to: {
+          select: {
+            name: true,
+          },
+        },
+        transactionTemplateLog: {
+          select: {
+            id: true,
+          },
+        },
+      },
       where: {
-        transactionId: id,
+        id: '663df5ccd8ef53dcb2bc93a0',
         userId: '61460d7354ea082ad0256749',
       },
     });
 
-    expect(removeCreatedAndUpdated(income)).toMatchSnapshot();
+    expect(transactionCategoriesRepo.findMany).toHaveBeenCalledTimes(1);
+    expect(transactionCategoriesRepo.findMany).toHaveBeenCalledWith({
+      where: {
+        userId: '61460d7354ea082ad0256749',
+        deleted: {
+          not: true,
+        },
+        visibility: undefined,
+      },
+    });
+
+    expect(income).toMatchSnapshot();
   });
 });

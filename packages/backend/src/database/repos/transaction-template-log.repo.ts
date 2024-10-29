@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma, TransactionTemplateLog } from '@prisma/client';
+import { Prisma, PrismaPromise, TransactionTemplateLog } from '@prisma/client';
 
 import { PrismaService } from '../prisma.service';
 
@@ -57,14 +57,10 @@ export class TransactionTemplateLogRepo {
     });
   }
 
-  async createMany(
+  createMany(
     data: Prisma.TransactionTemplateLogUncheckedCreateInput[],
-  ): Promise<void> {
-    if (data.length === 0) {
-      return Promise.resolve();
-    }
-
-    await this.prisma.transactionTemplateLog.createMany({
+  ): PrismaPromise<Prisma.BatchPayload> {
+    return this.prisma.transactionTemplateLog.createMany({
       data,
     });
   }

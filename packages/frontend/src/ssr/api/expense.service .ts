@@ -9,7 +9,8 @@ import type {
 
 import {
   CreateExpenseDto,
-  ExpenseDto,
+  ExpenseDetailsDto,
+  ExpenseListItemDto,
   SortOrder,
   UpdateExpenseDto,
 } from '$api/generated/financerApi';
@@ -26,7 +27,7 @@ export class ExpenseService extends BaseApi {
 
   public static async getFirst(
     options?: FirstTransactionByTypeOptions,
-  ): Promise<ExpenseDto> {
+  ): Promise<ExpenseListItemDto> {
     const data = await this.getAll({
       ...options,
       limit: 1,
@@ -39,7 +40,7 @@ export class ExpenseService extends BaseApi {
 
   public static async getAll(
     options: TransactionListOptions,
-  ): Promise<GenericPaginationDto<ExpenseDto>> {
+  ): Promise<GenericPaginationDto<ExpenseListItemDto>> {
     const { data, error } = await this.client.GET('/api/expenses', {
       params: {
         query: options,
@@ -58,10 +59,10 @@ export class ExpenseService extends BaseApi {
       throw new Error('Failed to fetch expenses', error);
     }
 
-    return data;
+    return data as GenericPaginationDto<ExpenseListItemDto>;
   }
 
-  public static async getById(id: string): Promise<ExpenseDto> {
+  public static async getById(id: string): Promise<ExpenseDetailsDto> {
     const { data, error } = await this.client.GET(`/api/expenses/{id}`, {
       params: {
         path: {
@@ -82,10 +83,12 @@ export class ExpenseService extends BaseApi {
       throw new Error('Failed to fetch expense', error);
     }
 
-    return data as ExpenseDto;
+    return data as ExpenseDetailsDto;
   }
 
-  public static async add(newExpense: CreateExpenseDto): Promise<ExpenseDto> {
+  public static async add(
+    newExpense: CreateExpenseDto,
+  ): Promise<ExpenseDetailsDto> {
     const { error, data } = await this.client.POST('/api/expenses', {
       body: newExpense,
     });
@@ -107,13 +110,13 @@ export class ExpenseService extends BaseApi {
     await this.clearCache();
     await AccountService.clearCache();
 
-    return data;
+    return data as ExpenseDetailsDto;
   }
 
   public static async update(
     id: string,
     updatedExpense: UpdateExpenseDto,
-  ): Promise<ExpenseDto> {
+  ): Promise<ExpenseDetailsDto> {
     const { error, data } = await this.client.PATCH(`/api/expenses/{id}`, {
       params: {
         path: { id },
@@ -138,7 +141,7 @@ export class ExpenseService extends BaseApi {
     await this.clearCache();
     await AccountService.clearCache();
 
-    return data;
+    return data as ExpenseDetailsDto;
   }
 
   public static async delete(id: string): Promise<void> {

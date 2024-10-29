@@ -243,7 +243,6 @@ describe('ExpensesController', () => {
             'description must be a string',
             'Description must not be empty.',
             'Date must not be empty.',
-            'fromAccount must not be empty.',
           ],
           error: 'Bad Request',
         })

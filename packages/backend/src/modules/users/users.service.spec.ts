@@ -1,7 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { createMockServiceProvider } from '../../../test/create-mock-service-provider';
-import { removeCreatedAndUpdated } from '../../../test/test-helper';
 import { DUMMY_TEST_USER } from '../../config/mockAuthenticationMiddleware';
 import { UserRepo } from '../../database/repos/user.repo';
 
@@ -25,12 +24,12 @@ describe('UsersService', () => {
   it('should return a user by id', async () => {
     const user = await service.findOne(DUMMY_TEST_USER.id);
 
-    expect(removeCreatedAndUpdated(user)).toMatchSnapshot();
+    expect(user).toMatchSnapshot();
   });
 
   it('should return an array of users from findAll', async () => {
     const users = await service.findAll();
 
-    expect(removeCreatedAndUpdated(users)).toMatchSnapshot();
+    expect(users).toMatchSnapshot();
   });
 });

@@ -22,19 +22,20 @@ import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
 import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
 import { UserIdDecorator } from '../users/users.decorators';
 
+import { TransactionDetailsDto } from './dto/transaction-details.dto';
+import { TransactionListItemDto } from './dto/transaction-list-item.dto';
 import { TransactionMonthSummaryDto } from './dto/transaction-month-summary.dto';
-import { TransactionDto } from './dto/transaction.dto';
 import { TransactionsService } from './transactions.service';
 
 @Controller('api/transactions')
 @ApiTags('Transactions')
-@ApiExtraModels(TransactionDto, TransactionMonthSummaryDto)
+@ApiExtraModels(TransactionListItemDto, TransactionMonthSummaryDto)
 @LoggedIn()
 export class TransactionsController {
   constructor(private readonly transactionsService: TransactionsService) {}
 
   @Get()
-  @ApiPaginatedDto(TransactionDto)
+  @ApiPaginatedDto(TransactionListItemDto)
   @ApiQuery({
     name: 'month',
     required: false,
@@ -164,7 +165,7 @@ export class TransactionsController {
 
   @Get(':id')
   @ApiOkResponse({
-    type: TransactionDto,
+    type: TransactionDetailsDto,
     description: 'Return transaction by id',
   })
   @ApiParam({

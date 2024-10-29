@@ -9,7 +9,8 @@ import type {
 
 import {
   CreateIncomeDto,
-  IncomeDto,
+  IncomeDetailsDto,
+  IncomeListItemDto,
   SortOrder,
   UpdateIncomeDto,
 } from '$api/generated/financerApi';
@@ -26,7 +27,7 @@ export class IncomeService extends BaseApi {
 
   public static async getFirst(
     options?: FirstTransactionByTypeOptions,
-  ): Promise<IncomeDto> {
+  ): Promise<IncomeListItemDto> {
     const data = await this.getAll({
       ...options,
       limit: 1,
@@ -39,7 +40,7 @@ export class IncomeService extends BaseApi {
 
   public static async getAll(
     options: TransactionListOptions,
-  ): Promise<GenericPaginationDto<IncomeDto>> {
+  ): Promise<GenericPaginationDto<IncomeDetailsDto>> {
     const { data, error } = await this.client.GET('/api/incomes', {
       params: {
         query: options,
@@ -58,10 +59,10 @@ export class IncomeService extends BaseApi {
       throw new Error('Failed to fetch incomes', error);
     }
 
-    return data;
+    return data as GenericPaginationDto<IncomeDetailsDto>;
   }
 
-  public static async getById(id: string): Promise<IncomeDto> {
+  public static async getById(id: string): Promise<IncomeDetailsDto> {
     const { data, error } = await this.client.GET(`/api/incomes/{id}`, {
       params: {
         path: {
@@ -82,10 +83,12 @@ export class IncomeService extends BaseApi {
       throw new Error('Failed to fetch income', error);
     }
 
-    return data as IncomeDto;
+    return data as IncomeDetailsDto;
   }
 
-  public static async add(newIncome: CreateIncomeDto): Promise<IncomeDto> {
+  public static async add(
+    newIncome: CreateIncomeDto,
+  ): Promise<IncomeDetailsDto> {
     const { error, data } = await this.client.POST('/api/incomes', {
       body: newIncome,
     });
@@ -107,13 +110,13 @@ export class IncomeService extends BaseApi {
     await this.clearCache();
     await AccountService.clearCache();
 
-    return data;
+    return data as IncomeDetailsDto;
   }
 
   public static async update(
     id: string,
     updatedIncome: UpdateIncomeDto,
-  ): Promise<IncomeDto> {
+  ): Promise<IncomeDetailsDto> {
     const { error, data } = await this.client.PATCH(`/api/incomes/{id}`, {
       params: {
         path: { id },
@@ -138,7 +141,7 @@ export class IncomeService extends BaseApi {
     await this.clearCache();
     await AccountService.clearCache();
 
-    return data;
+    return data as IncomeDetailsDto;
   }
 
   public static async delete(id: string): Promise<void> {

@@ -24,6 +24,7 @@ import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
 import { UserIdDecorator } from '../users/users.decorators';
 
 import { CreateTransactionCategoryDto } from './dto/create-transaction-category.dto';
+import { TransactionCategoryDetailsDto } from './dto/transaction-category-details.dto';
 import { TransactionCategoryDto } from './dto/transaction-category.dto';
 import { CategoryMonthlySummaryDto } from './dto/transaction-month-summary.dto';
 import { UpdateTransactionCategoryDto } from './dto/update-transaction-category.dto';
@@ -53,7 +54,7 @@ export class TransactionCategoriesController {
 
   @Get()
   @ApiOkResponse({
-    type: [TransactionCategoryDto],
+    type: [TransactionCategoryDetailsDto],
     description: 'Return transaction category by id',
   })
   @ApiQuery({
@@ -66,7 +67,7 @@ export class TransactionCategoriesController {
     @UserIdDecorator() userId: UserId,
     @Query('visibilityType') visibilityType?: TransactionType,
   ) {
-    return this.transactionCategoriesService.findAllByUser(
+    return this.transactionCategoriesService.findAllDetailsByUser(
       userId,
       visibilityType,
     );
@@ -74,7 +75,7 @@ export class TransactionCategoriesController {
 
   @Get(':id')
   @ApiOkResponse({
-    type: TransactionCategoryDto,
+    type: TransactionCategoryDetailsDto,
   })
   @ApiParam({
     name: 'id',

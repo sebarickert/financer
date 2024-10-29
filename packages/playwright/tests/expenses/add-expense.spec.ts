@@ -1,17 +1,16 @@
 import {
   AccountDto,
-  ExpenseDto,
-  TransactionDto,
+  ExpenseListItemDto,
+  TransactionListItemDto,
 } from '$types/generated/financer';
 import {
-  getAllTransaction,
+  getAllTransactions,
   getAccount,
   MINUTE_IN_MS,
   formatDate,
-  getAccountFromTransactions,
+  getAccountFromTransactionListItem,
   roundToTwoDecimal,
   getAllExpenses,
-  ITransactionWithDateObject,
 } from '$utils/api-helper';
 import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
@@ -38,29 +37,32 @@ test.describe('Add expense', () => {
   };
 
   const verifyNewExpenseCreated = async (
-    expensesBefore: ExpenseDto[],
-    expensesAfter: ExpenseDto[],
+    expensesBefore: ExpenseListItemDto[],
+    expensesAfter: ExpenseListItemDto[],
   ) => {
     expect(expensesAfter.length).toEqual(expensesBefore.length + 1);
   };
 
   // eslint-disable-next-line playwright/expect-expect
-  test('Add newest expense', async ({ page }) => {
+  test('should add a new expense and verify account balance and expense list', async ({
+    page,
+  }) => {
     const newTransactionName = getNewTransactionName();
 
-    const transactionsBefore = await getAllTransaction();
-    const expensesBefore = await getAllExpenses();
+    const initialTransactions = await getAllTransactions();
+    const initialExpenses = await getAllExpenses();
 
-    const targetTransactionBefore = transactionsBefore.at(
+    const targetTransaction = initialTransactions.at(
       -1,
-    ) as ITransactionWithDateObject<TransactionDto>;
+    ) as TransactionListItemDto;
 
-    const targetAccountId = getAccountFromTransactions(targetTransactionBefore);
+    const targetTransactionAccountId =
+      await getAccountFromTransactionListItem(targetTransaction);
 
-    const accountBefore = await getAccount(targetAccountId);
+    const accountBefore = await getAccount(targetTransactionAccountId);
 
     const newTransactionDate = new Date(
-      targetTransactionBefore.dateObj.getTime() + MINUTE_IN_MS,
+      new Date(targetTransaction.date).getTime() + MINUTE_IN_MS,
     );
 
     await page.getByTestId('add-transaction').click();
@@ -69,13 +71,14 @@ test.describe('Add expense', () => {
     await drawer.locator('#description').fill(newTransactionName);
     await drawer.locator('#date').fill(formatDate(newTransactionDate));
     await drawer.locator('#amount').fill(newTransactionAmountStr);
-    await drawer.locator('#fromAccount').selectOption(targetAccountId);
+    await drawer
+      .locator('#fromAccount')
+      .selectOption(targetTransactionAccountId);
     await drawer.getByTestId('submit').click();
 
     await page.getByTestId('edit-expense-button').waitFor();
 
-    const accountAfter = await getAccount(targetAccountId);
-
+    const accountAfter = await getAccount(targetTransactionAccountId);
     const expensesAfter = await getAllExpenses();
 
     await verifyAccountBalanceChange(
@@ -83,26 +86,30 @@ test.describe('Add expense', () => {
       accountBefore,
       accountAfter,
     );
-    await verifyNewExpenseCreated(expensesBefore, expensesAfter);
+    await verifyNewExpenseCreated(initialExpenses, expensesAfter);
   });
 
   // eslint-disable-next-line playwright/expect-expect
-  test('Add second newest expense', async ({ page }) => {
+  test('should add a second newest expense and verify account balance and expense list', async ({
+    page,
+  }) => {
     const newTransactionName = getNewTransactionName();
 
-    const transactionsBefore = await getAllTransaction();
-    const expensesBefore = await getAllExpenses();
+    const initialTransactions = await getAllTransactions();
+    const initialExpenses = await getAllExpenses();
 
-    const targetTransactionBefore = transactionsBefore.at(
+    const targetTransaction = initialTransactions.at(
       -1,
-    ) as ITransactionWithDateObject<TransactionDto>;
-    const targetAccountId = getAccountFromTransactions(targetTransactionBefore);
+    ) as TransactionListItemDto;
+
+    const targetTransactionAccountId =
+      await getAccountFromTransactionListItem(targetTransaction);
 
     const newTransactionDate = new Date(
-      targetTransactionBefore.dateObj.getTime() - MINUTE_IN_MS,
+      new Date(targetTransaction.date).getTime() - MINUTE_IN_MS,
     );
 
-    const accountBefore = await getAccount(targetAccountId);
+    const accountBefore = await getAccount(targetTransactionAccountId);
 
     await page.getByTestId('add-transaction').click();
 
@@ -110,12 +117,14 @@ test.describe('Add expense', () => {
     await drawer.locator('#description').fill(newTransactionName);
     await drawer.locator('#date').fill(formatDate(newTransactionDate));
     await drawer.locator('#amount').fill(newTransactionAmountStr);
-    await drawer.locator('#fromAccount').selectOption(targetAccountId);
+    await drawer
+      .locator('#fromAccount')
+      .selectOption(targetTransactionAccountId);
     await drawer.getByTestId('submit').click();
 
     await page.getByTestId('edit-expense-button').waitFor();
 
-    const accountAfter = await getAccount(targetAccountId);
+    const accountAfter = await getAccount(targetTransactionAccountId);
     const expensesAfter = await getAllExpenses();
 
     await verifyAccountBalanceChange(
@@ -123,27 +132,28 @@ test.describe('Add expense', () => {
       accountBefore,
       accountAfter,
     );
-    await verifyNewExpenseCreated(expensesBefore, expensesAfter);
+    await verifyNewExpenseCreated(initialExpenses, expensesAfter);
   });
 
   // eslint-disable-next-line playwright/expect-expect
   test('Add oldest expense', async ({ page }) => {
     const newTransactionName = getNewTransactionName();
 
-    const transactionsBefore = await getAllTransaction();
-    const expensesBefore = await getAllExpenses();
+    const initialTransactions = await getAllTransactions();
+    const initialExpenses = await getAllExpenses();
 
-    const targetTransactionBefore = transactionsBefore.at(
+    const targetTransaction = initialTransactions.at(
       0,
-    ) as ITransactionWithDateObject<TransactionDto>;
+    ) as TransactionListItemDto;
 
-    const targetAccountId = getAccountFromTransactions(targetTransactionBefore);
+    const targetTransactionAccountId =
+      await getAccountFromTransactionListItem(targetTransaction);
 
     const newTransactionDate = new Date(
-      targetTransactionBefore.dateObj.getTime() - MINUTE_IN_MS,
+      new Date(targetTransaction.date).getTime() - MINUTE_IN_MS,
     );
 
-    const accountBefore = await getAccount(targetAccountId);
+    const accountBefore = await getAccount(targetTransactionAccountId);
 
     await page.getByTestId('add-transaction').click();
 
@@ -151,13 +161,14 @@ test.describe('Add expense', () => {
     await drawer.locator('#description').fill(newTransactionName);
     await drawer.locator('#date').fill(formatDate(newTransactionDate));
     await drawer.locator('#amount').fill(newTransactionAmountStr);
-    await drawer.locator('#fromAccount').selectOption(targetAccountId);
+    await drawer
+      .locator('#fromAccount')
+      .selectOption(targetTransactionAccountId);
     await drawer.getByTestId('submit').click();
 
     await page.getByTestId('edit-expense-button').waitFor();
 
-    //   cy.location('pathname').should('not.contain', '/add').then(() => {
-    const accountAfter = await getAccount(targetAccountId);
+    const accountAfter = await getAccount(targetTransactionAccountId);
     const expensesAfter = await getAllExpenses();
 
     await verifyAccountBalanceChange(
@@ -165,17 +176,20 @@ test.describe('Add expense', () => {
       accountBefore,
       accountAfter,
     );
-    await verifyNewExpenseCreated(expensesBefore, expensesAfter);
+    await verifyNewExpenseCreated(initialExpenses, expensesAfter);
   });
 
-  test('Check that date is correct', async ({ page }) => {
+  test('should add a new expense and verify the date is correct', async ({
+    page,
+  }) => {
     const newTransactionName = getNewTransactionName();
 
-    const transactionsBefore = await getAllTransaction();
-    const targetTransactionBefore = transactionsBefore.at(
+    const initialTransactions = await getAllTransactions();
+    const targetTransaction = initialTransactions.at(
       -1,
-    ) as ITransactionWithDateObject<TransactionDto>;
-    const targetAccountId = getAccountFromTransactions(targetTransactionBefore);
+    ) as TransactionListItemDto;
+    const targetTransactionAccountId =
+      await getAccountFromTransactionListItem(targetTransaction);
 
     const date = new Date();
     date.setSeconds(0);
@@ -187,7 +201,9 @@ test.describe('Add expense', () => {
     await drawer.locator('#description').fill(newTransactionName);
     await drawer.locator('#date').fill(formatDate(date));
     await drawer.locator('#amount').fill(newTransactionAmountStr);
-    await drawer.locator('#fromAccount').selectOption(targetAccountId);
+    await drawer
+      .locator('#fromAccount')
+      .selectOption(targetTransactionAccountId);
     await drawer.getByTestId('submit').click();
 
     await page.getByText(newTransactionName).click();

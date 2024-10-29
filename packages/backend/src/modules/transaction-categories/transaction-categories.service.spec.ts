@@ -1,7 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { createMockServiceProvider } from '../../../test/create-mock-service-provider';
-import { removeCreatedAndUpdated } from '../../../test/test-helper';
 import { DUMMY_TEST_USER } from '../../config/mockAuthenticationMiddleware';
 import { transactionCategoryMappingRepoFindAllByUserIdTransactionData } from '../../database/repos/mocks/transaction-category-mapping-repo-mock';
 import {
@@ -50,6 +49,10 @@ describe('TransactionCategoriesService', () => {
       .spyOn(transactionCategoryRepo, 'findOne')
       .mockResolvedValue(transactionCategoryRepoMockDataFindById[id]);
 
+    jest
+      .spyOn(transactionCategoryRepo, 'findMany')
+      .mockResolvedValue(transactionCategoryRepoUserMockDataFindAllBy);
+
     const transactionCategory = await service.findOne(DUMMY_TEST_USER.id, id);
 
     expect(transactionCategoryRepo.findOne).toHaveBeenCalledTimes(1);
@@ -58,7 +61,18 @@ describe('TransactionCategoriesService', () => {
       userId: '61460d7354ea082ad0256749',
     });
 
-    expect(removeCreatedAndUpdated(transactionCategory)).toMatchSnapshot();
+    expect(transactionCategoryRepo.findMany).toHaveBeenCalledTimes(1);
+    expect(transactionCategoryRepo.findMany).toHaveBeenCalledWith({
+      where: {
+        deleted: {
+          not: true,
+        },
+        userId: '61460d7354ea082ad0256749',
+        visibility: undefined,
+      },
+    });
+
+    expect(transactionCategory).toMatchSnapshot();
   });
 
   it('should return an array of transaction categories from findAllByUser', async () => {
@@ -81,7 +95,7 @@ describe('TransactionCategoriesService', () => {
       },
     });
 
-    expect(removeCreatedAndUpdated(transactionCategories)).toMatchSnapshot();
+    expect(transactionCategories).toMatchSnapshot();
   });
 
   it('should return an array of transaction categories from findMonthlySummariesByUserAndId', async () => {

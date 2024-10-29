@@ -1,7 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { createMockServiceProvider } from '../../../test/create-mock-service-provider';
-import { removeCreatedAndUpdated } from '../../../test/test-helper';
 import { DUMMY_TEST_USER } from '../../config/mockAuthenticationMiddleware';
 import {
   transactionCategoryMappingRepoFindAllByUserId,
@@ -51,9 +50,7 @@ describe('TransactionCategoryMappingsService', () => {
       },
     });
 
-    expect(
-      removeCreatedAndUpdated(transactionCategoryMappings),
-    ).toMatchSnapshot();
+    expect(transactionCategoryMappings).toMatchSnapshot();
   });
 
   it('should return all transactionCategoryMappings by user and category ids', async () => {
@@ -76,9 +73,7 @@ describe('TransactionCategoryMappingsService', () => {
       },
     });
 
-    expect(
-      removeCreatedAndUpdated(transactionCategoryMappings),
-    ).toMatchSnapshot();
+    expect(transactionCategoryMappings).toMatchSnapshot();
   });
 
   it('should return all transactionCategoryMappings by user and transaction id', async () => {
@@ -100,9 +95,7 @@ describe('TransactionCategoryMappingsService', () => {
       },
     });
 
-    expect(
-      removeCreatedAndUpdated(transactionCategoryMappings),
-    ).toMatchSnapshot();
+    expect(transactionCategoryMappings).toMatchSnapshot();
   });
 
   it('should return transaction category monthly summary by user and category ids', async () => {

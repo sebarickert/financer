@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 import {
   ApiBody,
+  ApiExtraModels,
   ApiOkResponse,
   ApiParam,
   ApiQuery,
@@ -25,18 +26,20 @@ import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
 import { UserIdDecorator } from '../users/users.decorators';
 
 import { CreateExpenseDto } from './dto/create-expense.dto';
-import { ExpenseDto } from './dto/expense.dto';
+import { ExpenseDetailsDto } from './dto/expense-details.dto';
+import { ExpenseListItemDto } from './dto/expense-list-item.dto';
 import { UpdateExpenseDto } from './dto/update-expense.dto';
 import { ExpensesService } from './expenses.service';
 
 @Controller('api/expenses')
 @ApiTags('Expenses')
 @LoggedIn()
+@ApiExtraModels(ExpenseDetailsDto, ExpenseListItemDto)
 export class ExpensesController {
   constructor(private readonly expensesService: ExpensesService) {}
 
   @Get()
-  @ApiPaginatedDto(ExpenseDto)
+  @ApiPaginatedDto(ExpenseListItemDto)
   @ApiQuery({
     name: 'month',
     required: false,
@@ -87,7 +90,7 @@ export class ExpensesController {
 
   @Get(':id')
   @ApiOkResponse({
-    type: ExpenseDto,
+    type: ExpenseDetailsDto,
     description: 'Return transaction by id',
   })
   @ApiParam({
@@ -103,7 +106,7 @@ export class ExpensesController {
 
   @Post()
   @ApiBody({ type: CreateExpenseDto })
-  @ApiOkResponse({ type: ExpenseDto })
+  @ApiOkResponse({ type: ExpenseDetailsDto })
   async create(
     @UserIdDecorator() userId: UserId,
     @Body() createExpense: CreateExpenseDto,
@@ -113,7 +116,7 @@ export class ExpensesController {
 
   @Patch(':id')
   @ApiBody({ type: UpdateExpenseDto })
-  @ApiOkResponse({ type: ExpenseDto })
+  @ApiOkResponse({ type: ExpenseDetailsDto })
   @ApiParam({
     name: 'id',
     type: String,

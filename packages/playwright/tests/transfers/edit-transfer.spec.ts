@@ -1,10 +1,9 @@
-import { AccountDto, TransactionDto } from '$types/generated/financer';
+import { AccountDto, TransferListItemDto } from '$types/generated/financer';
 import {
-  getAllTransaction,
   getAccount,
   getTransactionById,
-  ITransactionWithDateObject,
   roundToTwoDecimal,
+  getAllTransfers,
 } from '$utils/api-helper';
 import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
@@ -45,8 +44,8 @@ test.describe('Edit transfer', () => {
   const verifyTargetTransactionChanged = async (
     newName: string,
     changedAmount: number,
-    transactionBefore: ITransactionWithDateObject<TransactionDto>,
-    transactionAfter: ITransactionWithDateObject<TransactionDto>,
+    transactionBefore: TransferListItemDto,
+    transactionAfter: TransferListItemDto,
   ) => {
     const nameAfter = transactionAfter.description;
     const amountAfter = roundToTwoDecimal(transactionAfter.amount);
@@ -62,16 +61,13 @@ test.describe('Edit transfer', () => {
   // eslint-disable-next-line playwright/expect-expect
   test('Edit newest transfer', async ({ page }) => {
     const editedTransactionName = getEditedTransactionName();
-    const transactionsBefore = await getAllTransaction();
+    const transfersBefore = await getAllTransfers();
 
-    const transfersBefore = transactionsBefore.filter(
-      ({ fromAccount, toAccount }) => fromAccount && toAccount,
-    );
     const targetTransactionBefore = transfersBefore[transfersBefore.length - 1];
 
     const targetTransactionId = targetTransactionBefore.id;
-    const targetToAccountId = targetTransactionBefore.toAccount;
-    const targetFromAccountId = targetTransactionBefore.fromAccount;
+    const { fromAccount: targetFromAccountId, toAccount: targetToAccountId } =
+      await getTransactionById(targetTransactionBefore.id);
 
     const toAccountBefore = await getAccount(targetToAccountId);
     const fromAccountBefore = await getAccount(targetFromAccountId);
@@ -79,8 +75,12 @@ test.describe('Edit transfer', () => {
     const newAmount =
       targetTransactionBefore.amount + amountToChangeTransaction;
 
-    const transactionYear = targetTransactionBefore.dateObj.getFullYear();
-    const transactionMonth = (targetTransactionBefore.dateObj.getMonth() + 1)
+    const transactionYear = new Date(
+      targetTransactionBefore.date,
+    ).getFullYear();
+    const transactionMonth = (
+      new Date(targetTransactionBefore.date).getMonth() + 1
+    )
       .toString()
       .padStart(2, '0');
     const dateQuery = `${transactionYear}-${transactionMonth}`;
@@ -132,16 +132,13 @@ test.describe('Edit transfer', () => {
   // eslint-disable-next-line playwright/expect-expect
   test('Edit oldest transfer', async ({ page }) => {
     const editedTransactionName = getEditedTransactionName();
-    const transactionsBefore = await getAllTransaction();
+    const transfersBefore = await getAllTransfers();
 
-    const transfersBefore = transactionsBefore.filter(
-      ({ fromAccount, toAccount }) => fromAccount && toAccount,
-    );
     const targetTransactionBefore = transfersBefore[0];
 
     const targetTransactionId = targetTransactionBefore.id;
-    const targetToAccountId = targetTransactionBefore.toAccount;
-    const targetFromAccountId = targetTransactionBefore.fromAccount;
+    const { fromAccount: targetFromAccountId, toAccount: targetToAccountId } =
+      await getTransactionById(targetTransactionBefore.id);
 
     const toAccountBefore = await getAccount(targetToAccountId);
     const fromAccountBefore = await getAccount(targetFromAccountId);
@@ -149,8 +146,12 @@ test.describe('Edit transfer', () => {
     const newAmount =
       targetTransactionBefore.amount + amountToChangeTransaction;
 
-    const transactionYear = targetTransactionBefore.dateObj.getFullYear();
-    const transactionMonth = (targetTransactionBefore.dateObj.getMonth() + 1)
+    const transactionYear = new Date(
+      targetTransactionBefore.date,
+    ).getFullYear();
+    const transactionMonth = (
+      new Date(targetTransactionBefore.date).getMonth() + 1
+    )
       .toString()
       .padStart(2, '0');
     const dateQuery = `${transactionYear}-${transactionMonth}`;

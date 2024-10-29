@@ -7,10 +7,10 @@ import { IncomeService } from './api/income.service';
 import { TransferService } from './api/transfer.service';
 
 import {
-  ExpenseDto,
-  IncomeDto,
+  ExpenseDetailsDto,
+  IncomeDetailsDto,
   TransactionType,
-  TransferDto,
+  TransferDetailsDto,
 } from '$api/generated/financerApi';
 import {
   isCategoriesFormFullFields,
@@ -57,7 +57,7 @@ export const createTransaction: DefaultFormActionHandler = async (
     },
   };
 
-  let data: IncomeDto | ExpenseDto | TransferDto;
+  let data: IncomeDetailsDto | ExpenseDetailsDto | TransferDetailsDto;
 
   try {
     data = await TransactionDataMapping[type].service.add({

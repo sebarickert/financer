@@ -1,10 +1,7 @@
 import { OmitType } from '@nestjs/swagger';
 
-import { IncomeDto } from './income.dto';
+import { CreateTransactionDto } from '../../transactions/dto/create-transaction.dto';
 
-export class CreateIncomeDto extends OmitType(IncomeDto, [
-  'id',
-  'userId',
-  'createdAt',
-  'updatedAt',
+export class CreateIncomeDto extends OmitType(CreateTransactionDto, [
+  'fromAccount',
 ] as const) {}

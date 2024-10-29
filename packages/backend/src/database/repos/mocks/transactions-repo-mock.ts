@@ -1,4 +1,3 @@
-import { Transaction } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime/library';
 
 type FindByType = 'any' | 'income' | 'expense' | 'transfer';
@@ -21,6 +20,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.362Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9e6ba655edad8f805a',
@@ -33,6 +33,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.362Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef966ba655edad8f7f74',
@@ -45,6 +46,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.362Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc66ba655edad8f835b',
@@ -57,6 +59,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.361Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd26ba655edad8f8513',
@@ -69,6 +72,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.361Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc56ba655edad8f832b',
@@ -81,6 +85,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.361Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb16ba655edad8f81c7',
@@ -93,6 +98,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.360Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befcb6ba655edad8f8413',
@@ -105,6 +111,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.360Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befcd6ba655edad8f845b',
@@ -117,6 +124,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.359Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befab6ba655edad8f812c',
@@ -129,6 +137,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.359Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc76ba655edad8f8373',
@@ -141,6 +150,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.358Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd46ba655edad8f854b',
@@ -153,6 +163,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.358Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befce6ba655edad8f848b',
@@ -165,6 +176,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.358Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befcf6ba655edad8f84b3',
@@ -177,6 +189,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.358Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb66ba655edad8f8253',
@@ -189,6 +202,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.357Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befce6ba655edad8f8483',
@@ -201,6 +215,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.357Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9b6ba655edad8f7ffb',
@@ -213,6 +228,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.357Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9d6ba655edad8f8032',
@@ -225,6 +241,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.357Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb16ba655edad8f81cc',
@@ -237,6 +254,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.357Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb06ba655edad8f81a4',
@@ -249,6 +267,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.356Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb16ba655edad8f81c2',
@@ -261,6 +280,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.356Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef976ba655edad8f7f88',
@@ -273,6 +293,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.356Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc96ba655edad8f83d3',
@@ -285,6 +306,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.355Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9b6ba655edad8f8000',
@@ -297,6 +319,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.355Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa16ba655edad8f80a5',
@@ -309,6 +332,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.354Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befab6ba655edad8f8136',
@@ -321,6 +345,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.353Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd36ba655edad8f852b',
@@ -333,6 +358,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.353Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc46ba655edad8f82fb',
@@ -345,6 +371,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.353Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befcd6ba655edad8f8463',
@@ -357,6 +384,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.352Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc76ba655edad8f837b',
@@ -369,6 +397,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.352Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc36ba655edad8f82d3',
@@ -381,6 +410,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.352Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb26ba655edad8f81e0',
@@ -393,6 +423,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.352Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb86ba655edad8f828a',
@@ -405,6 +436,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.351Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc86ba655edad8f83b3',
@@ -417,6 +449,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.351Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb86ba655edad8f8285',
@@ -429,6 +462,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.351Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd46ba655edad8f855b',
@@ -441,6 +475,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.351Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa76ba655edad8f80be',
@@ -453,6 +488,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.351Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc96ba655edad8f83db',
@@ -465,6 +501,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.351Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9d6ba655edad8f8041',
@@ -477,6 +514,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.350Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef986ba655edad8f7fa1',
@@ -489,6 +527,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.350Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef916ba655edad8f7ef2',
@@ -501,6 +540,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.349Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc46ba655edad8f830b',
@@ -513,6 +553,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.346Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd46ba655edad8f8543',
@@ -525,6 +566,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.346Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befae6ba655edad8f8181',
@@ -537,6 +579,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.346Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9c6ba655edad8f801e',
@@ -549,6 +592,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.345Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befad6ba655edad8f8168',
@@ -561,6 +605,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.345Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef966ba655edad8f7f6f',
@@ -573,6 +618,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.345Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc46ba655edad8f8303',
@@ -585,6 +631,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.345Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befac6ba655edad8f814a',
@@ -597,6 +644,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.345Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9b6ba655edad8f7ff1',
@@ -609,6 +657,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.344Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befcf6ba655edad8f84a3',
@@ -621,6 +670,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.343Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb06ba655edad8f81b3',
@@ -633,6 +683,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.343Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa26ba655edad8f80b9',
@@ -645,6 +696,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.343Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa16ba655edad8f8096',
@@ -657,6 +709,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.343Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef906ba655edad8f7ee3',
@@ -669,6 +722,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.342Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef966ba655edad8f7f83',
@@ -681,6 +735,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.342Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa16ba655edad8f80aa',
@@ -693,6 +748,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.342Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd06ba655edad8f84c3',
@@ -705,6 +761,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.342Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef906ba655edad8f7eca',
@@ -717,6 +774,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.340Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc26ba655edad8f82b3',
@@ -729,6 +787,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.339Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef996ba655edad8f7fd3',
@@ -741,6 +800,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.337Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd16ba655edad8f84fb',
@@ -753,6 +813,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.337Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befae6ba655edad8f817c',
@@ -765,6 +826,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.337Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc56ba655edad8f833b',
@@ -777,6 +839,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.336Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd26ba655edad8f851b',
@@ -789,6 +852,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.336Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befad6ba655edad8f815e',
@@ -801,6 +865,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.335Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd16ba655edad8f84eb',
@@ -813,6 +878,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.335Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef926ba655edad8f7f10',
@@ -825,6 +891,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.335Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9e6ba655edad8f804b',
@@ -837,6 +904,7 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.335Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc76ba655edad8f8383',
@@ -849,46 +917,53 @@ export const transactionsRepoFindAllByAccountIdMockData: Record<
       updatedAt: new Date(new Date('2024-05-10T10:21:18.335Z')),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
   ],
 };
 
-export const transactionsRepoFindAllByIdMockData: Record<string, Transaction> =
-  {
-    '624befb66ba655edad8f824e': {
-      id: '624befb66ba655edad8f824e',
-      amount: new Decimal(1858.18),
-      createdAt: new Date('2024-05-10T10:21:18.363Z'),
-      date: new Date('2022-01-27T23:23:00.000Z'),
-      description: 'Dummy expense 80',
-      fromAccount: '61460de154ea082ad0256786',
-      toAccount: null,
-      updatedAt: new Date('2024-05-10T10:21:18.363Z'),
-      userId: '61460d7354ea082ad0256749',
-    },
-    '663df679d8ef53dcb2bc9411': {
-      id: '663df679d8ef53dcb2bc9411',
-      amount: new Decimal(2000),
-      createdAt: new Date('2024-05-10T10:27:05.180Z'),
-      date: new Date('2022-08-10T11:12:00.000Z'),
-      description: 'Transfer 8 to preassigned CASH',
-      fromAccount: '663df55ad8ef53dcb2bc9347',
-      toAccount: '663df62cd8ef53dcb2bc93c4',
-      updatedAt: new Date('2024-05-10T10:27:05.180Z'),
-      userId: '61460d7354ea082ad0256749',
-    },
-    '663df5ccd8ef53dcb2bc93a0': {
-      id: '663df5ccd8ef53dcb2bc93a0',
-      amount: new Decimal(3500),
-      createdAt: new Date('2024-05-10T10:24:12.469Z'),
-      date: new Date('2023-01-10T11:12:00.000Z'),
-      description: 'Income13 to big money',
-      fromAccount: null,
-      toAccount: '663df55ad8ef53dcb2bc9347',
-      updatedAt: new Date('2024-05-10T10:24:12.469Z'),
-      userId: '61460d7354ea082ad0256749',
-    },
-  };
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const transactionsRepoFindAllByIdMockData: Record<string, any> = {
+  '624befb66ba655edad8f824e': {
+    id: '624befb66ba655edad8f824e',
+    amount: new Decimal(1858.18),
+    createdAt: new Date('2024-05-10T10:21:18.363Z'),
+    date: new Date('2022-01-27T23:23:00.000Z'),
+    description: 'Dummy expense 80',
+    fromAccount: '61460de154ea082ad0256786',
+    toAccount: null,
+    updatedAt: new Date('2024-05-10T10:21:18.363Z'),
+    userId: '61460d7354ea082ad0256749',
+    categories: [],
+    transactionTemplateLog: [],
+  },
+  '663df679d8ef53dcb2bc9411': {
+    id: '663df679d8ef53dcb2bc9411',
+    amount: new Decimal(2000),
+    createdAt: new Date('2024-05-10T10:27:05.180Z'),
+    date: new Date('2022-08-10T11:12:00.000Z'),
+    description: 'Transfer 8 to preassigned CASH',
+    fromAccount: '663df55ad8ef53dcb2bc9347',
+    toAccount: '663df62cd8ef53dcb2bc93c4',
+    updatedAt: new Date('2024-05-10T10:27:05.180Z'),
+    userId: '61460d7354ea082ad0256749',
+    categories: [],
+    transactionTemplateLog: [],
+  },
+  '663df5ccd8ef53dcb2bc93a0': {
+    id: '663df5ccd8ef53dcb2bc93a0',
+    amount: new Decimal(3500),
+    createdAt: new Date('2024-05-10T10:24:12.469Z'),
+    date: new Date('2023-01-10T11:12:00.000Z'),
+    description: 'Income13 to big money',
+    fromAccount: null,
+    toAccount: '663df55ad8ef53dcb2bc9347',
+    updatedAt: new Date('2024-05-10T10:24:12.469Z'),
+    userId: '61460d7354ea082ad0256749',
+    categories: [],
+    transactionTemplateLog: [],
+  },
+};
 
 export const transactionsRepoFindAllByTypeAndUserMockData: Record<
   FindByType,
@@ -907,6 +982,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:28:36.667Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df679d8ef53dcb2bc943e',
@@ -919,6 +995,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:27:05.346Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df5ccd8ef53dcb2bc93a0',
@@ -931,6 +1008,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:24:12.469Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df6d4d8ef53dcb2bc94cd',
@@ -943,6 +1021,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:28:36.638Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df679d8ef53dcb2bc9435',
@@ -955,6 +1034,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:27:05.314Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df5ccd8ef53dcb2bc939a',
@@ -967,6 +1047,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:24:12.437Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df6d4d8ef53dcb2bc94c4',
@@ -979,6 +1060,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:28:36.609Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df679d8ef53dcb2bc942c',
@@ -991,6 +1073,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:27:05.282Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df5ccd8ef53dcb2bc9394',
@@ -1003,6 +1086,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:24:12.408Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df6d4d8ef53dcb2bc94bb',
@@ -1015,6 +1099,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:28:36.580Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df679d8ef53dcb2bc9423',
@@ -1027,6 +1112,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:27:05.250Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df5ccd8ef53dcb2bc938e',
@@ -1039,6 +1125,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:24:12.377Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df6d4d8ef53dcb2bc94b2',
@@ -1051,6 +1138,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:28:36.551Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df679d8ef53dcb2bc941a',
@@ -1063,6 +1151,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:27:05.215Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df5ccd8ef53dcb2bc9388',
@@ -1075,6 +1164,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:24:12.344Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df6d4d8ef53dcb2bc94a9',
@@ -1087,6 +1177,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:28:36.515Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df679d8ef53dcb2bc9411',
@@ -1099,6 +1190,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:27:05.180Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df5ccd8ef53dcb2bc9382',
@@ -1111,6 +1203,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:24:12.314Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df6d4d8ef53dcb2bc94a0',
@@ -1123,6 +1216,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:28:36.484Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df679d8ef53dcb2bc9408',
@@ -1135,6 +1229,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:27:05.143Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df5ccd8ef53dcb2bc937c',
@@ -1147,6 +1242,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:24:12.281Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df6d4d8ef53dcb2bc9497',
@@ -1159,6 +1255,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:28:36.451Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df679d8ef53dcb2bc93ff',
@@ -1171,6 +1268,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:27:05.114Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df5ccd8ef53dcb2bc9376',
@@ -1183,6 +1281,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:24:12.244Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df6d4d8ef53dcb2bc948e',
@@ -1195,6 +1294,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:28:36.420Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df679d8ef53dcb2bc93f6',
@@ -1207,6 +1307,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:27:05.081Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df5ccd8ef53dcb2bc9370',
@@ -1219,6 +1320,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:24:12.216Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df6d4d8ef53dcb2bc9485',
@@ -1231,6 +1333,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:28:36.384Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df679d8ef53dcb2bc93ed',
@@ -1243,6 +1346,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:27:05.049Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df5ccd8ef53dcb2bc936a',
@@ -1255,6 +1359,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:24:12.187Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df6d4d8ef53dcb2bc947c',
@@ -1267,6 +1372,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:28:36.352Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df679d8ef53dcb2bc93e4',
@@ -1279,6 +1385,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:27:05.013Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df5ccd8ef53dcb2bc9364',
@@ -1291,6 +1398,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:24:12.156Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df6d4d8ef53dcb2bc9473',
@@ -1303,6 +1411,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:28:36.313Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df678d8ef53dcb2bc93db',
@@ -1315,6 +1424,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:27:04.972Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df5ccd8ef53dcb2bc935e',
@@ -1327,6 +1437,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:24:12.112Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb66ba655edad8f824e',
@@ -1348,6 +1459,9 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
           userId: '61460d7354ea082ad0256749',
           transactionId: '624befb66ba655edad8f824e',
           updatedAt: new Date('2024-05-10T10:21:18.365Z'),
+          category: {
+            name: 'Food',
+          },
         },
         {
           id: '637e234fbda8050a85b1b6b8',
@@ -1358,8 +1472,12 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
           userId: '61460d7354ea082ad0256749',
           transactionId: '624befb66ba655edad8f824e',
           updatedAt: new Date('2024-05-10T10:21:18.365Z'),
+          category: {
+            name: 'Food',
+          },
         },
       ],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb96ba655edad8f82ad',
@@ -1381,8 +1499,12 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
           userId: '61460d7354ea082ad0256749',
           transactionId: '624befb96ba655edad8f82ad',
           updatedAt: new Date('2024-05-10T10:21:18.365Z'),
+          category: {
+            name: 'Food',
+          },
         },
       ],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb16ba655edad8f81d6',
@@ -1395,6 +1517,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.363Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb96ba655edad8f82a8',
@@ -1407,6 +1530,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.363Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef946ba655edad8f7f3d',
@@ -1428,6 +1552,9 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
           userId: '61460d7354ea082ad0256749',
           transactionId: '624bef946ba655edad8f7f3d',
           updatedAt: new Date('2024-05-10T10:21:18.365Z'),
+          category: {
+            name: 'Food',
+          },
         },
         {
           id: '637e2389bda8050a85b1b761',
@@ -1438,8 +1565,12 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
           userId: '61460d7354ea082ad0256749',
           transactionId: '624bef946ba655edad8f7f3d',
           updatedAt: new Date('2024-05-10T10:21:18.365Z'),
+          category: {
+            name: 'Food',
+          },
         },
       ],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd36ba655edad8f8533',
@@ -1452,6 +1583,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.362Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef936ba655edad8f7f33',
@@ -1473,8 +1605,12 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
           userId: '61460d7354ea082ad0256749',
           transactionId: '624bef936ba655edad8f7f33',
           updatedAt: new Date('2024-05-10T10:21:18.365Z'),
+          category: {
+            name: 'Food',
+          },
         },
       ],
+      transactionTemplateLog: [],
     },
     {
       id: '624befae6ba655edad8f8172',
@@ -1487,6 +1623,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.362Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd06ba655edad8f84cb',
@@ -1499,6 +1636,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.362Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9e6ba655edad8f805a',
@@ -1511,6 +1649,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.362Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef966ba655edad8f7f74',
@@ -1523,6 +1662,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.362Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef906ba655edad8f7ed4',
@@ -1535,6 +1675,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.362Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa06ba655edad8f807d',
@@ -1547,6 +1688,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.362Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9c6ba655edad8f8023',
@@ -1559,6 +1701,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.362Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befcd6ba655edad8f8453',
@@ -1571,6 +1714,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.362Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa06ba655edad8f808c',
@@ -1583,6 +1727,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.362Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befcf6ba655edad8f849b',
@@ -1595,6 +1740,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.361Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befae6ba655edad8f8186',
@@ -1607,6 +1753,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.361Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df6d4d8ef53dcb2bc946a',
@@ -1619,6 +1766,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:28:36.277Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df678d8ef53dcb2bc93d2',
@@ -1631,6 +1779,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:27:04.939Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df5ccd8ef53dcb2bc9358',
@@ -1643,6 +1792,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:24:12.074Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd36ba655edad8f853b',
@@ -1655,6 +1805,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.361Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc66ba655edad8f835b',
@@ -1667,6 +1818,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.361Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd26ba655edad8f8513',
@@ -1679,6 +1831,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.361Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befcc6ba655edad8f8433',
@@ -1691,6 +1844,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.361Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa76ba655edad8f80cd',
@@ -1703,6 +1857,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.361Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb46ba655edad8f8226',
@@ -1715,6 +1870,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.361Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9f6ba655edad8f8073',
@@ -1727,6 +1883,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.361Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb86ba655edad8f8294',
@@ -1739,6 +1896,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.361Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc56ba655edad8f832b',
@@ -1751,6 +1909,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.361Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befca6ba655edad8f83eb',
@@ -1763,6 +1922,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.361Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc86ba655edad8f83ab',
@@ -1775,6 +1935,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.361Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc86ba655edad8f83a3',
@@ -1787,6 +1948,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.361Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9f6ba655edad8f805f',
@@ -1799,6 +1961,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.361Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb46ba655edad8f8221',
@@ -1811,6 +1974,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.361Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befcc6ba655edad8f843b',
@@ -1823,6 +1987,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.360Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef996ba655edad8f7fc4',
@@ -1835,6 +2000,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.360Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb16ba655edad8f81c7',
@@ -1847,6 +2013,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.360Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc36ba655edad8f82cb',
@@ -1859,6 +2026,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.360Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befcb6ba655edad8f8413',
@@ -1871,6 +2039,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.360Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc96ba655edad8f83c3',
@@ -1883,6 +2052,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.360Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9b6ba655edad8f8005',
@@ -1895,6 +2065,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.360Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befcd6ba655edad8f845b',
@@ -1907,6 +2078,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.359Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befab6ba655edad8f812c',
@@ -1919,6 +2091,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.359Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd16ba655edad8f84f3',
@@ -1931,6 +2104,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.359Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befae6ba655edad8f8177',
@@ -1943,6 +2117,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.359Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc76ba655edad8f8373',
@@ -1955,6 +2130,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.358Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef926ba655edad8f7f0b',
@@ -1967,6 +2143,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.358Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd46ba655edad8f854b',
@@ -1979,6 +2156,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.358Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa16ba655edad8f80a0',
@@ -1991,6 +2169,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.358Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befce6ba655edad8f848b',
@@ -2003,6 +2182,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.358Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb56ba655edad8f8230',
@@ -2015,6 +2195,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.358Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa86ba655edad8f80dc',
@@ -2027,6 +2208,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.358Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befce6ba655edad8f8493',
@@ -2039,6 +2221,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.358Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa96ba655edad8f80e6',
@@ -2051,6 +2234,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.358Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befaf6ba655edad8f819a',
@@ -2063,6 +2247,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.358Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb46ba655edad8f8212',
@@ -2075,6 +2260,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.358Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef976ba655edad8f7f97',
@@ -2087,6 +2273,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.358Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa96ba655edad8f80ff',
@@ -2099,6 +2286,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.358Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb46ba655edad8f8217',
@@ -2111,6 +2299,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.358Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb56ba655edad8f8244',
@@ -2123,6 +2312,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.358Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc76ba655edad8f8393',
@@ -2135,6 +2325,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.358Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befcf6ba655edad8f84b3',
@@ -2147,6 +2338,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.358Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9a6ba655edad8f7fd8',
@@ -2159,6 +2351,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.357Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb56ba655edad8f823a',
@@ -2171,6 +2364,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.357Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc66ba655edad8f8363',
@@ -2183,6 +2377,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.357Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb66ba655edad8f8253',
@@ -2195,6 +2390,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.357Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befce6ba655edad8f8483',
@@ -2207,6 +2403,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.357Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef936ba655edad8f7f1f',
@@ -2219,6 +2416,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.357Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa76ba655edad8f80c8',
@@ -2231,6 +2429,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.357Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9b6ba655edad8f7ffb',
@@ -2243,6 +2442,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.357Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9d6ba655edad8f8032',
@@ -2255,6 +2455,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.357Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb16ba655edad8f81cc',
@@ -2267,6 +2468,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.357Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc36ba655edad8f82f3',
@@ -2279,6 +2481,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.357Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc36ba655edad8f82db',
@@ -2291,6 +2494,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.357Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb06ba655edad8f81a4',
@@ -2303,6 +2507,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.356Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb46ba655edad8f821c',
@@ -2315,6 +2520,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.356Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef996ba655edad8f7fce',
@@ -2327,6 +2533,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.356Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befac6ba655edad8f814f',
@@ -2339,6 +2546,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.356Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb16ba655edad8f81c2',
@@ -2351,6 +2559,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.356Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb86ba655edad8f828f',
@@ -2363,6 +2572,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.356Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef976ba655edad8f7f88',
@@ -2375,6 +2585,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.356Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa06ba655edad8f8082',
@@ -2387,6 +2598,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.355Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc96ba655edad8f83d3',
@@ -2399,6 +2611,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.355Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb26ba655edad8f81e5',
@@ -2411,6 +2624,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.355Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb26ba655edad8f81ea',
@@ -2423,6 +2637,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.355Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef976ba655edad8f7f9c',
@@ -2435,6 +2650,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.355Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9b6ba655edad8f8000',
@@ -2447,6 +2663,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.355Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef936ba655edad8f7f2e',
@@ -2459,6 +2676,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.355Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9c6ba655edad8f800a',
@@ -2471,6 +2689,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.354Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb06ba655edad8f81ae',
@@ -2483,6 +2702,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.354Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef966ba655edad8f7f6a',
@@ -2495,6 +2715,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.354Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9a6ba655edad8f7fdd',
@@ -2507,6 +2728,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.354Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa16ba655edad8f80a5',
@@ -2519,6 +2741,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.354Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb76ba655edad8f826c',
@@ -2531,6 +2754,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.354Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb76ba655edad8f8267',
@@ -2543,6 +2767,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.354Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befab6ba655edad8f8136',
@@ -2555,6 +2780,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.353Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd36ba655edad8f852b',
@@ -2567,6 +2793,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.353Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb96ba655edad8f8299',
@@ -2579,6 +2806,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.353Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9f6ba655edad8f806e',
@@ -2591,6 +2819,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.353Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befcd6ba655edad8f846b',
@@ -2603,6 +2832,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.353Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef956ba655edad8f7f51',
@@ -2615,6 +2845,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.353Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc46ba655edad8f82fb',
@@ -2627,6 +2858,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.353Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef906ba655edad8f7ecf',
@@ -2639,6 +2871,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.353Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9a6ba655edad8f7fec',
@@ -2651,6 +2884,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.352Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd06ba655edad8f84bb',
@@ -2663,6 +2897,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.352Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc96ba655edad8f83cb',
@@ -2675,6 +2910,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.352Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befcd6ba655edad8f8463',
@@ -2687,6 +2923,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.352Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa86ba655edad8f80d7',
@@ -2699,6 +2936,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.352Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc76ba655edad8f837b',
@@ -2711,6 +2949,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.352Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc36ba655edad8f82d3',
@@ -2723,6 +2962,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.352Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb26ba655edad8f81e0',
@@ -2735,6 +2975,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.352Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb96ba655edad8f82a3',
@@ -2747,6 +2988,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.352Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befcc6ba655edad8f844b',
@@ -2759,6 +3001,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.352Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb76ba655edad8f8262',
@@ -2771,6 +3014,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.352Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef926ba655edad8f7f06',
@@ -2783,6 +3027,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.352Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb66ba655edad8f8258',
@@ -2795,6 +3040,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.352Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb86ba655edad8f828a',
@@ -2807,6 +3053,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.351Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc86ba655edad8f83b3',
@@ -2819,6 +3066,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.351Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef976ba655edad8f7f92',
@@ -2831,6 +3079,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.351Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befab6ba655edad8f8122',
@@ -2843,6 +3092,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.351Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb86ba655edad8f8285',
@@ -2855,6 +3105,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.351Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd46ba655edad8f855b',
@@ -2867,6 +3118,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.351Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa16ba655edad8f809b',
@@ -2879,6 +3131,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.351Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa76ba655edad8f80be',
@@ -2891,6 +3144,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.351Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc96ba655edad8f83db',
@@ -2903,6 +3157,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.351Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc36ba655edad8f82e3',
@@ -2915,6 +3170,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.350Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef946ba655edad8f7f38',
@@ -2927,6 +3183,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.350Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9d6ba655edad8f8041',
@@ -2939,6 +3196,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.350Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9a6ba655edad8f7fe7',
@@ -2951,6 +3209,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.350Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb66ba655edad8f825d',
@@ -2963,6 +3222,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.350Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb16ba655edad8f81bd',
@@ -2975,6 +3235,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.350Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef946ba655edad8f7f47',
@@ -2987,6 +3248,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.350Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef986ba655edad8f7fa1',
@@ -2999,6 +3261,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.350Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befca6ba655edad8f83e3',
@@ -3011,6 +3274,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.350Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc86ba655edad8f839b',
@@ -3023,6 +3287,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.350Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc86ba655edad8f83bb',
@@ -3035,6 +3300,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.350Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb36ba655edad8f81fe',
@@ -3047,6 +3313,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.349Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef916ba655edad8f7efc',
@@ -3059,6 +3326,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.349Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9d6ba655edad8f8037',
@@ -3071,6 +3339,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.349Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef916ba655edad8f7ef2',
@@ -3083,6 +3352,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.349Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc56ba655edad8f8323',
@@ -3095,6 +3365,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.346Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb26ba655edad8f81ef',
@@ -3107,6 +3378,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.346Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befac6ba655edad8f813b',
@@ -3119,6 +3391,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.346Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef916ba655edad8f7eed',
@@ -3131,6 +3404,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.346Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befcc6ba655edad8f8443',
@@ -3143,6 +3417,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.346Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc66ba655edad8f834b',
@@ -3155,6 +3430,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.346Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc46ba655edad8f830b',
@@ -3167,6 +3443,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.346Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb26ba655edad8f81f4',
@@ -3179,6 +3456,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.346Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb76ba655edad8f8276',
@@ -3191,6 +3469,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.346Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd46ba655edad8f8543',
@@ -3203,6 +3482,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.346Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa86ba655edad8f80e1',
@@ -3215,6 +3495,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.346Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befae6ba655edad8f8181',
@@ -3227,6 +3508,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.346Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9c6ba655edad8f801e',
@@ -3239,6 +3521,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.345Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befad6ba655edad8f8168',
@@ -3251,6 +3534,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.345Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa96ba655edad8f80f0',
@@ -3263,6 +3547,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.345Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef966ba655edad8f7f6f',
@@ -3275,6 +3560,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.345Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befce6ba655edad8f847b',
@@ -3287,6 +3573,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.345Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd26ba655edad8f850b',
@@ -3299,6 +3586,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.345Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc56ba655edad8f8333',
@@ -3311,6 +3599,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.345Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9c6ba655edad8f8019',
@@ -3323,6 +3612,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.345Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befaa6ba655edad8f8104',
@@ -3335,6 +3625,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.345Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc46ba655edad8f8303',
@@ -3347,6 +3638,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.345Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befaa6ba655edad8f8113',
@@ -3359,6 +3651,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.345Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc76ba655edad8f836b',
@@ -3371,6 +3664,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.345Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befac6ba655edad8f814a',
@@ -3383,6 +3677,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.345Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd16ba655edad8f84db',
@@ -3395,6 +3690,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.345Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9b6ba655edad8f7ff1',
@@ -3407,6 +3703,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.344Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef936ba655edad8f7f1a',
@@ -3419,6 +3716,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.344Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef996ba655edad8f7fc9',
@@ -3431,6 +3729,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.344Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa96ba655edad8f80fa',
@@ -3443,6 +3742,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.344Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befab6ba655edad8f8131',
@@ -3455,6 +3755,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.344Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef956ba655edad8f7f5b',
@@ -3467,6 +3768,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.344Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa96ba655edad8f80eb',
@@ -3479,6 +3781,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.344Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef956ba655edad8f7f56',
@@ -3491,6 +3794,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.344Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9d6ba655edad8f803c',
@@ -3503,6 +3807,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.344Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9f6ba655edad8f8064',
@@ -3515,6 +3820,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.344Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa06ba655edad8f8078',
@@ -3527,6 +3833,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.344Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb56ba655edad8f823f',
@@ -3539,6 +3846,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.344Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb86ba655edad8f8280',
@@ -3551,6 +3859,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.344Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb76ba655edad8f8271',
@@ -3563,6 +3872,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.344Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb36ba655edad8f8208',
@@ -3575,6 +3885,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.343Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befcb6ba655edad8f8423',
@@ -3587,6 +3898,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.343Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befcf6ba655edad8f84a3',
@@ -3599,6 +3911,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.343Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9e6ba655edad8f8055',
@@ -3611,6 +3924,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.343Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9d6ba655edad8f802d',
@@ -3623,6 +3937,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.343Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb06ba655edad8f81b3',
@@ -3635,6 +3950,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.343Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9c6ba655edad8f800f',
@@ -3647,6 +3963,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.343Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa26ba655edad8f80b9',
@@ -3659,6 +3976,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.343Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb56ba655edad8f822b',
@@ -3671,6 +3989,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.343Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb56ba655edad8f8235',
@@ -3683,6 +4002,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.343Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa16ba655edad8f8096',
@@ -3695,6 +4015,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.343Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befca6ba655edad8f83fb',
@@ -3707,6 +4028,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.343Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9b6ba655edad8f7ff6',
@@ -3719,6 +4041,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.343Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef956ba655edad8f7f65',
@@ -3731,6 +4054,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.343Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd26ba655edad8f8523',
@@ -3743,6 +4067,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.343Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef906ba655edad8f7ee3',
@@ -3755,6 +4080,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.342Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb16ba655edad8f81d1',
@@ -3767,6 +4093,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.342Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef966ba655edad8f7f83',
@@ -3779,6 +4106,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.342Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befaa6ba655edad8f8109',
@@ -3791,6 +4119,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.342Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befab6ba655edad8f811d',
@@ -3803,6 +4132,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.342Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befac6ba655edad8f8145',
@@ -3815,6 +4145,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.342Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befaf6ba655edad8f819f',
@@ -3827,6 +4158,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.342Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb36ba655edad8f8203',
@@ -3839,6 +4171,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.342Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa16ba655edad8f80aa',
@@ -3851,6 +4184,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.342Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9d6ba655edad8f8028',
@@ -3863,6 +4197,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.342Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd06ba655edad8f84c3',
@@ -3875,6 +4210,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.342Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befad6ba655edad8f8159',
@@ -3887,6 +4223,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.342Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb36ba655edad8f81f9',
@@ -3899,6 +4236,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.342Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb06ba655edad8f81a9',
@@ -3911,6 +4249,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.341Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef966ba655edad8f7f7e',
@@ -3923,6 +4262,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.341Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb26ba655edad8f81db',
@@ -3935,6 +4275,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.341Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa26ba655edad8f80b4',
@@ -3947,6 +4288,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.341Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb66ba655edad8f8249',
@@ -3959,6 +4301,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.341Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef906ba655edad8f7ede',
@@ -3971,6 +4314,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.341Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef916ba655edad8f7ef7',
@@ -3983,6 +4327,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.341Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef926ba655edad8f7f15',
@@ -3995,6 +4340,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.341Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befca6ba655edad8f83f3',
@@ -4007,6 +4353,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.341Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9e6ba655edad8f8046',
@@ -4019,6 +4366,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.341Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befaf6ba655edad8f8195',
@@ -4031,6 +4379,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.341Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef916ba655edad8f7ee8',
@@ -4043,6 +4392,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.341Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa06ba655edad8f8087',
@@ -4055,6 +4405,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.341Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb86ba655edad8f827b',
@@ -4067,6 +4418,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.341Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9e6ba655edad8f8050',
@@ -4079,6 +4431,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.341Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef936ba655edad8f7f24',
@@ -4091,6 +4444,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.340Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9f6ba655edad8f8069',
@@ -4103,6 +4457,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.340Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa76ba655edad8f80c3',
@@ -4115,6 +4470,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.340Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef946ba655edad8f7f4c',
@@ -4127,6 +4483,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.340Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc46ba655edad8f8313',
@@ -4139,6 +4496,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.340Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befcb6ba655edad8f842b',
@@ -4151,6 +4509,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.340Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef986ba655edad8f7fb0',
@@ -4163,6 +4522,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.340Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc76ba655edad8f838b',
@@ -4175,6 +4535,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.340Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef906ba655edad8f7eca',
@@ -4187,6 +4548,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.340Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef906ba655edad8f7ed9',
@@ -4199,6 +4561,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.340Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc26ba655edad8f82c3',
@@ -4211,6 +4574,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.340Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa86ba655edad8f80d2',
@@ -4223,6 +4587,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.340Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc26ba655edad8f82bb',
@@ -4235,6 +4600,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.340Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb36ba655edad8f820d',
@@ -4247,6 +4613,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.340Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd46ba655edad8f8553',
@@ -4259,6 +4626,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.339Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc26ba655edad8f82b3',
@@ -4271,6 +4639,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.339Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa16ba655edad8f8091',
@@ -4283,6 +4652,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.339Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befaf6ba655edad8f8190',
@@ -4295,6 +4665,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.339Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef986ba655edad8f7fab',
@@ -4307,6 +4678,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.338Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa96ba655edad8f80f5',
@@ -4319,6 +4691,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.338Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd26ba655edad8f8503',
@@ -4331,6 +4704,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.338Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befaa6ba655edad8f810e',
@@ -4343,6 +4717,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.338Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc46ba655edad8f831b',
@@ -4355,6 +4730,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.338Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc66ba655edad8f8353',
@@ -4367,6 +4743,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.338Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd16ba655edad8f84d3',
@@ -4379,6 +4756,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.337Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb06ba655edad8f81b8',
@@ -4391,6 +4769,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.337Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef996ba655edad8f7fd3',
@@ -4403,6 +4782,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.337Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb96ba655edad8f829e',
@@ -4415,6 +4795,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.337Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befad6ba655edad8f8154',
@@ -4427,6 +4808,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.337Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd16ba655edad8f84fb',
@@ -4439,6 +4821,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.337Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef996ba655edad8f7fba',
@@ -4451,6 +4834,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.337Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef946ba655edad8f7f42',
@@ -4463,6 +4847,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.337Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befae6ba655edad8f817c',
@@ -4475,6 +4860,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.337Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef976ba655edad8f7f8d',
@@ -4487,6 +4873,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.337Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befab6ba655edad8f8127',
@@ -4499,6 +4886,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.337Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9c6ba655edad8f8014',
@@ -4511,6 +4899,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.337Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befce6ba655edad8f8473',
@@ -4523,6 +4912,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.337Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9a6ba655edad8f7fe2',
@@ -4535,6 +4925,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.337Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc56ba655edad8f833b',
@@ -4547,6 +4938,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.336Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befca6ba655edad8f8403',
@@ -4559,6 +4951,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.336Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef956ba655edad8f7f60',
@@ -4571,6 +4964,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.336Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef986ba655edad8f7fa6',
@@ -4583,6 +4977,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.336Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef936ba655edad8f7f29',
@@ -4595,6 +4990,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.336Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd26ba655edad8f851b',
@@ -4607,6 +5003,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.336Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befaf6ba655edad8f818b',
@@ -4619,6 +5016,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.336Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef926ba655edad8f7f01',
@@ -4631,6 +5029,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.336Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befad6ba655edad8f8163',
@@ -4643,6 +5042,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.336Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befcb6ba655edad8f841b',
@@ -4655,6 +5055,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.336Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd16ba655edad8f84e3',
@@ -4667,6 +5068,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.336Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc36ba655edad8f82eb',
@@ -4679,6 +5081,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.336Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa26ba655edad8f80af',
@@ -4691,6 +5094,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.336Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befae6ba655edad8f816d',
@@ -4703,6 +5107,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.336Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befad6ba655edad8f815e',
@@ -4715,6 +5120,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.335Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd16ba655edad8f84eb',
@@ -4727,6 +5133,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.335Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef926ba655edad8f7f10',
@@ -4739,6 +5146,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.335Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9e6ba655edad8f804b',
@@ -4751,6 +5159,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.335Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef986ba655edad8f7fb5',
@@ -4763,6 +5172,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.335Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc76ba655edad8f8383',
@@ -4775,6 +5185,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.335Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befaa6ba655edad8f8118',
@@ -4787,6 +5198,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.335Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befac6ba655edad8f8140',
@@ -4799,6 +5211,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.335Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef996ba655edad8f7fbf',
@@ -4811,6 +5224,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.335Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befcf6ba655edad8f84ab',
@@ -4823,6 +5237,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.335Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befca6ba655edad8f840b',
@@ -4835,6 +5250,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.335Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef966ba655edad8f7f79',
@@ -4847,6 +5263,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.335Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc56ba655edad8f8343',
@@ -4859,6 +5276,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.335Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
   ],
   income: [
@@ -4873,6 +5291,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:24:12.469Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df5ccd8ef53dcb2bc939a',
@@ -4885,6 +5304,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:24:12.437Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df5ccd8ef53dcb2bc9394',
@@ -4897,6 +5317,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:24:12.408Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df5ccd8ef53dcb2bc938e',
@@ -4909,6 +5330,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:24:12.377Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df5ccd8ef53dcb2bc9388',
@@ -4921,6 +5343,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:24:12.344Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df5ccd8ef53dcb2bc9382',
@@ -4933,6 +5356,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:24:12.314Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df5ccd8ef53dcb2bc937c',
@@ -4945,6 +5369,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:24:12.281Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df5ccd8ef53dcb2bc9376',
@@ -4957,6 +5382,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:24:12.244Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df5ccd8ef53dcb2bc9370',
@@ -4969,6 +5395,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:24:12.216Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df5ccd8ef53dcb2bc936a',
@@ -4981,6 +5408,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:24:12.187Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df5ccd8ef53dcb2bc9364',
@@ -4993,6 +5421,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:24:12.156Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df5ccd8ef53dcb2bc935e',
@@ -5005,6 +5434,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:24:12.112Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef946ba655edad8f7f3d',
@@ -5026,6 +5456,9 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
           userId: '61460d7354ea082ad0256749',
           transactionId: '624bef946ba655edad8f7f3d',
           updatedAt: new Date('2024-05-10T10:21:18.365Z'),
+          category: {
+            name: 'Food',
+          },
         },
         {
           id: '637e2389bda8050a85b1b761',
@@ -5036,8 +5469,12 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
           userId: '61460d7354ea082ad0256749',
           transactionId: '624bef946ba655edad8f7f3d',
           updatedAt: new Date('2024-05-10T10:21:18.365Z'),
+          category: {
+            name: 'Food',
+          },
         },
       ],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef936ba655edad8f7f33',
@@ -5059,8 +5496,12 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
           userId: '61460d7354ea082ad0256749',
           transactionId: '624bef936ba655edad8f7f33',
           updatedAt: new Date('2024-05-10T10:21:18.365Z'),
+          category: {
+            name: 'Food',
+          },
         },
       ],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9e6ba655edad8f805a',
@@ -5073,6 +5514,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.362Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef966ba655edad8f7f74',
@@ -5085,6 +5527,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.362Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef906ba655edad8f7ed4',
@@ -5097,6 +5540,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.362Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa06ba655edad8f807d',
@@ -5109,6 +5553,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.362Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9c6ba655edad8f8023',
@@ -5121,6 +5566,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.362Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa06ba655edad8f808c',
@@ -5133,6 +5579,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.362Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df5ccd8ef53dcb2bc9358',
@@ -5145,6 +5592,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:24:12.074Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9f6ba655edad8f8073',
@@ -5157,6 +5605,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.361Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9f6ba655edad8f805f',
@@ -5169,6 +5618,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.361Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef996ba655edad8f7fc4',
@@ -5181,6 +5631,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.360Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9b6ba655edad8f8005',
@@ -5193,6 +5644,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.360Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef926ba655edad8f7f0b',
@@ -5205,6 +5657,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.358Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa16ba655edad8f80a0',
@@ -5217,6 +5670,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.358Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef976ba655edad8f7f97',
@@ -5229,6 +5683,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.358Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9a6ba655edad8f7fd8',
@@ -5241,6 +5696,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.357Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef936ba655edad8f7f1f',
@@ -5253,6 +5709,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.357Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9b6ba655edad8f7ffb',
@@ -5265,6 +5722,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.357Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9d6ba655edad8f8032',
@@ -5277,6 +5735,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.357Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef996ba655edad8f7fce',
@@ -5289,6 +5748,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.356Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef976ba655edad8f7f88',
@@ -5301,6 +5761,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.356Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa06ba655edad8f8082',
@@ -5313,6 +5774,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.355Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef976ba655edad8f7f9c',
@@ -5325,6 +5787,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.355Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9b6ba655edad8f8000',
@@ -5337,6 +5800,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.355Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef936ba655edad8f7f2e',
@@ -5349,6 +5813,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.355Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9c6ba655edad8f800a',
@@ -5361,6 +5826,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.354Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef966ba655edad8f7f6a',
@@ -5373,6 +5839,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.354Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9a6ba655edad8f7fdd',
@@ -5385,6 +5852,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.354Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa16ba655edad8f80a5',
@@ -5397,6 +5865,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.354Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9f6ba655edad8f806e',
@@ -5409,6 +5878,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.353Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef956ba655edad8f7f51',
@@ -5421,6 +5891,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.353Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef906ba655edad8f7ecf',
@@ -5433,6 +5904,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.353Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9a6ba655edad8f7fec',
@@ -5445,6 +5917,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.352Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef926ba655edad8f7f06',
@@ -5457,6 +5930,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.352Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef976ba655edad8f7f92',
@@ -5469,6 +5943,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.351Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa16ba655edad8f809b',
@@ -5481,6 +5956,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.351Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef946ba655edad8f7f38',
@@ -5493,6 +5969,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.350Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9d6ba655edad8f8041',
@@ -5505,6 +5982,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.350Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9a6ba655edad8f7fe7',
@@ -5517,6 +5995,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.350Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef946ba655edad8f7f47',
@@ -5529,6 +6008,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.350Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef986ba655edad8f7fa1',
@@ -5541,6 +6021,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.350Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef916ba655edad8f7efc',
@@ -5553,6 +6034,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.349Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9d6ba655edad8f8037',
@@ -5565,6 +6047,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.349Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef916ba655edad8f7ef2',
@@ -5577,6 +6060,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.349Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef916ba655edad8f7eed',
@@ -5589,6 +6073,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.346Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9c6ba655edad8f801e',
@@ -5601,6 +6086,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.345Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef966ba655edad8f7f6f',
@@ -5613,6 +6099,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.345Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9c6ba655edad8f8019',
@@ -5625,6 +6112,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.345Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9b6ba655edad8f7ff1',
@@ -5637,6 +6125,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.344Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef936ba655edad8f7f1a',
@@ -5649,6 +6138,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.344Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef996ba655edad8f7fc9',
@@ -5661,6 +6151,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.344Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef956ba655edad8f7f5b',
@@ -5673,6 +6164,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.344Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef956ba655edad8f7f56',
@@ -5685,6 +6177,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.344Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9d6ba655edad8f803c',
@@ -5697,6 +6190,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.344Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9f6ba655edad8f8064',
@@ -5709,6 +6203,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.344Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa06ba655edad8f8078',
@@ -5721,6 +6216,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.344Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9e6ba655edad8f8055',
@@ -5733,6 +6229,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.343Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9d6ba655edad8f802d',
@@ -5745,6 +6242,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.343Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9c6ba655edad8f800f',
@@ -5757,6 +6255,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.343Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa26ba655edad8f80b9',
@@ -5769,6 +6268,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.343Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa16ba655edad8f8096',
@@ -5781,6 +6281,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.343Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9b6ba655edad8f7ff6',
@@ -5793,6 +6294,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.343Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef956ba655edad8f7f65',
@@ -5805,6 +6307,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.343Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef906ba655edad8f7ee3',
@@ -5817,6 +6320,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.342Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef966ba655edad8f7f83',
@@ -5829,6 +6333,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.342Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa16ba655edad8f80aa',
@@ -5841,6 +6346,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.342Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9d6ba655edad8f8028',
@@ -5853,6 +6359,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.342Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef966ba655edad8f7f7e',
@@ -5865,6 +6372,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.341Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa26ba655edad8f80b4',
@@ -5877,6 +6385,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.341Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef906ba655edad8f7ede',
@@ -5889,6 +6398,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.341Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef916ba655edad8f7ef7',
@@ -5901,6 +6411,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.341Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef926ba655edad8f7f15',
@@ -5913,6 +6424,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.341Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9e6ba655edad8f8046',
@@ -5925,6 +6437,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.341Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef916ba655edad8f7ee8',
@@ -5937,6 +6450,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.341Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa06ba655edad8f8087',
@@ -5949,6 +6463,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.341Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9e6ba655edad8f8050',
@@ -5961,6 +6476,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.341Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef936ba655edad8f7f24',
@@ -5973,6 +6489,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.340Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9f6ba655edad8f8069',
@@ -5985,6 +6502,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.340Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef946ba655edad8f7f4c',
@@ -5997,6 +6515,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.340Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef986ba655edad8f7fb0',
@@ -6009,6 +6528,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.340Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef906ba655edad8f7eca',
@@ -6021,6 +6541,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.340Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef906ba655edad8f7ed9',
@@ -6033,6 +6554,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.340Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa16ba655edad8f8091',
@@ -6045,6 +6567,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.339Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef986ba655edad8f7fab',
@@ -6057,6 +6580,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.338Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef996ba655edad8f7fd3',
@@ -6069,6 +6593,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.337Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef996ba655edad8f7fba',
@@ -6081,6 +6606,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.337Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef946ba655edad8f7f42',
@@ -6093,6 +6619,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.337Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef976ba655edad8f7f8d',
@@ -6105,6 +6632,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.337Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9c6ba655edad8f8014',
@@ -6117,6 +6645,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.337Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9a6ba655edad8f7fe2',
@@ -6129,6 +6658,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.337Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef956ba655edad8f7f60',
@@ -6141,6 +6671,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.336Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef986ba655edad8f7fa6',
@@ -6153,6 +6684,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.336Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef936ba655edad8f7f29',
@@ -6165,6 +6697,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.336Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef926ba655edad8f7f01',
@@ -6177,6 +6710,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.336Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa26ba655edad8f80af',
@@ -6189,6 +6723,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.336Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef926ba655edad8f7f10',
@@ -6201,6 +6736,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.335Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef9e6ba655edad8f804b',
@@ -6213,6 +6749,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.335Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef986ba655edad8f7fb5',
@@ -6225,6 +6762,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.335Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef996ba655edad8f7fbf',
@@ -6237,6 +6775,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.335Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624bef966ba655edad8f7f79',
@@ -6249,6 +6788,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.335Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
   ],
   expense: [
@@ -6272,6 +6812,9 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
           userId: '61460d7354ea082ad0256749',
           transactionId: '624befb66ba655edad8f824e',
           updatedAt: new Date('2024-05-10T10:21:18.365Z'),
+          category: {
+            name: 'Food',
+          },
         },
         {
           id: '637e234fbda8050a85b1b6b8',
@@ -6282,8 +6825,12 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
           userId: '61460d7354ea082ad0256749',
           transactionId: '624befb66ba655edad8f824e',
           updatedAt: new Date('2024-05-10T10:21:18.365Z'),
+          category: {
+            name: 'Food',
+          },
         },
       ],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb96ba655edad8f82ad',
@@ -6305,8 +6852,12 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
           userId: '61460d7354ea082ad0256749',
           transactionId: '624befb96ba655edad8f82ad',
           updatedAt: new Date('2024-05-10T10:21:18.365Z'),
+          category: {
+            name: 'Food',
+          },
         },
       ],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb16ba655edad8f81d6',
@@ -6319,6 +6870,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.363Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb96ba655edad8f82a8',
@@ -6331,6 +6883,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.363Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befae6ba655edad8f8172',
@@ -6343,6 +6896,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.362Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befae6ba655edad8f8186',
@@ -6355,6 +6909,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.361Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa76ba655edad8f80cd',
@@ -6367,6 +6922,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.361Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb46ba655edad8f8226',
@@ -6379,6 +6935,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.361Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb86ba655edad8f8294',
@@ -6391,6 +6948,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.361Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb46ba655edad8f8221',
@@ -6403,6 +6961,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.361Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb16ba655edad8f81c7',
@@ -6415,6 +6974,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.360Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befab6ba655edad8f812c',
@@ -6427,6 +6987,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.359Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befae6ba655edad8f8177',
@@ -6439,6 +7000,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.359Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb56ba655edad8f8230',
@@ -6451,6 +7013,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.358Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa86ba655edad8f80dc',
@@ -6463,6 +7026,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.358Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa96ba655edad8f80e6',
@@ -6475,6 +7039,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.358Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befaf6ba655edad8f819a',
@@ -6487,6 +7052,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.358Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb46ba655edad8f8212',
@@ -6499,6 +7065,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.358Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa96ba655edad8f80ff',
@@ -6511,6 +7078,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.358Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb46ba655edad8f8217',
@@ -6523,6 +7091,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.358Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb56ba655edad8f8244',
@@ -6535,6 +7104,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.358Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb56ba655edad8f823a',
@@ -6547,6 +7117,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.357Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb66ba655edad8f8253',
@@ -6559,6 +7130,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.357Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa76ba655edad8f80c8',
@@ -6571,6 +7143,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.357Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb16ba655edad8f81cc',
@@ -6583,6 +7156,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.357Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb06ba655edad8f81a4',
@@ -6595,6 +7169,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.356Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb46ba655edad8f821c',
@@ -6607,6 +7182,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.356Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befac6ba655edad8f814f',
@@ -6619,6 +7195,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.356Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb16ba655edad8f81c2',
@@ -6631,6 +7208,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.356Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb86ba655edad8f828f',
@@ -6643,6 +7221,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.356Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb26ba655edad8f81e5',
@@ -6655,6 +7234,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.355Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb26ba655edad8f81ea',
@@ -6667,6 +7247,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.355Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb06ba655edad8f81ae',
@@ -6679,6 +7260,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.354Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb76ba655edad8f826c',
@@ -6691,6 +7273,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.354Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb76ba655edad8f8267',
@@ -6703,6 +7286,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.354Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befab6ba655edad8f8136',
@@ -6715,6 +7299,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.353Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb96ba655edad8f8299',
@@ -6727,6 +7312,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.353Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa86ba655edad8f80d7',
@@ -6739,6 +7325,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.352Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb26ba655edad8f81e0',
@@ -6751,6 +7338,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.352Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb96ba655edad8f82a3',
@@ -6763,6 +7351,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.352Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb76ba655edad8f8262',
@@ -6775,6 +7364,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.352Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb66ba655edad8f8258',
@@ -6787,6 +7377,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.352Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb86ba655edad8f828a',
@@ -6799,6 +7390,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.351Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befab6ba655edad8f8122',
@@ -6811,6 +7403,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.351Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb86ba655edad8f8285',
@@ -6823,6 +7416,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.351Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa76ba655edad8f80be',
@@ -6835,6 +7429,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.351Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb66ba655edad8f825d',
@@ -6847,6 +7442,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.350Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb16ba655edad8f81bd',
@@ -6859,6 +7455,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.350Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb36ba655edad8f81fe',
@@ -6871,6 +7468,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.349Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb26ba655edad8f81ef',
@@ -6883,6 +7481,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.346Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befac6ba655edad8f813b',
@@ -6895,6 +7494,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.346Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb26ba655edad8f81f4',
@@ -6907,6 +7507,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.346Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb76ba655edad8f8276',
@@ -6919,6 +7520,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.346Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa86ba655edad8f80e1',
@@ -6931,6 +7533,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.346Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befae6ba655edad8f8181',
@@ -6943,6 +7546,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.346Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befad6ba655edad8f8168',
@@ -6955,6 +7559,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.345Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa96ba655edad8f80f0',
@@ -6967,6 +7572,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.345Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befaa6ba655edad8f8104',
@@ -6979,6 +7585,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.345Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befaa6ba655edad8f8113',
@@ -6991,6 +7598,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.345Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befac6ba655edad8f814a',
@@ -7003,6 +7611,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.345Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa96ba655edad8f80fa',
@@ -7015,6 +7624,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.344Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befab6ba655edad8f8131',
@@ -7027,6 +7637,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.344Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa96ba655edad8f80eb',
@@ -7039,6 +7650,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.344Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb56ba655edad8f823f',
@@ -7051,6 +7663,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.344Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb86ba655edad8f8280',
@@ -7063,6 +7676,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.344Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb76ba655edad8f8271',
@@ -7075,6 +7689,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.344Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb36ba655edad8f8208',
@@ -7087,6 +7702,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.343Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb06ba655edad8f81b3',
@@ -7099,6 +7715,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.343Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb56ba655edad8f822b',
@@ -7111,6 +7728,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.343Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb56ba655edad8f8235',
@@ -7123,6 +7741,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.343Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb16ba655edad8f81d1',
@@ -7135,6 +7754,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.342Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befaa6ba655edad8f8109',
@@ -7147,6 +7767,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.342Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befab6ba655edad8f811d',
@@ -7159,6 +7780,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.342Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befac6ba655edad8f8145',
@@ -7171,6 +7793,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.342Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befaf6ba655edad8f819f',
@@ -7183,6 +7806,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.342Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb36ba655edad8f8203',
@@ -7195,6 +7819,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.342Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befad6ba655edad8f8159',
@@ -7207,6 +7832,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.342Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb36ba655edad8f81f9',
@@ -7219,6 +7845,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.342Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb06ba655edad8f81a9',
@@ -7231,6 +7858,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.341Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb26ba655edad8f81db',
@@ -7243,6 +7871,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.341Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb66ba655edad8f8249',
@@ -7255,6 +7884,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.341Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befaf6ba655edad8f8195',
@@ -7267,6 +7897,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.341Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb86ba655edad8f827b',
@@ -7279,6 +7910,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.341Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa76ba655edad8f80c3',
@@ -7291,6 +7923,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.340Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa86ba655edad8f80d2',
@@ -7303,6 +7936,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.340Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb36ba655edad8f820d',
@@ -7315,6 +7949,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.340Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befaf6ba655edad8f8190',
@@ -7327,6 +7962,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.339Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befa96ba655edad8f80f5',
@@ -7339,6 +7975,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.338Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befaa6ba655edad8f810e',
@@ -7351,6 +7988,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.338Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb06ba655edad8f81b8',
@@ -7363,6 +8001,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.337Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befb96ba655edad8f829e',
@@ -7375,6 +8014,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.337Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befad6ba655edad8f8154',
@@ -7387,6 +8027,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.337Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befae6ba655edad8f817c',
@@ -7399,6 +8040,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.337Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befab6ba655edad8f8127',
@@ -7411,6 +8053,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.337Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befaf6ba655edad8f818b',
@@ -7423,6 +8066,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.336Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befad6ba655edad8f8163',
@@ -7435,6 +8079,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.336Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befae6ba655edad8f816d',
@@ -7447,6 +8092,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.336Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befad6ba655edad8f815e',
@@ -7459,6 +8105,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.335Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befaa6ba655edad8f8118',
@@ -7471,6 +8118,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.335Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befac6ba655edad8f8140',
@@ -7483,6 +8131,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.335Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
   ],
   transfer: [
@@ -7497,6 +8146,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:28:36.667Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df679d8ef53dcb2bc943e',
@@ -7509,6 +8159,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:27:05.346Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df6d4d8ef53dcb2bc94cd',
@@ -7521,6 +8172,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:28:36.638Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df679d8ef53dcb2bc9435',
@@ -7533,6 +8185,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:27:05.314Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df6d4d8ef53dcb2bc94c4',
@@ -7545,6 +8198,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:28:36.609Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df679d8ef53dcb2bc942c',
@@ -7557,6 +8211,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:27:05.282Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df6d4d8ef53dcb2bc94bb',
@@ -7569,6 +8224,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:28:36.580Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df679d8ef53dcb2bc9423',
@@ -7581,6 +8237,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:27:05.250Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df6d4d8ef53dcb2bc94b2',
@@ -7593,6 +8250,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:28:36.551Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df679d8ef53dcb2bc941a',
@@ -7605,6 +8263,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:27:05.215Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df6d4d8ef53dcb2bc94a9',
@@ -7617,6 +8276,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:28:36.515Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df679d8ef53dcb2bc9411',
@@ -7629,6 +8289,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:27:05.180Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df6d4d8ef53dcb2bc94a0',
@@ -7641,6 +8302,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:28:36.484Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df679d8ef53dcb2bc9408',
@@ -7653,6 +8315,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:27:05.143Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df6d4d8ef53dcb2bc9497',
@@ -7665,6 +8328,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:28:36.451Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df679d8ef53dcb2bc93ff',
@@ -7677,6 +8341,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:27:05.114Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df6d4d8ef53dcb2bc948e',
@@ -7689,6 +8354,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:28:36.420Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df679d8ef53dcb2bc93f6',
@@ -7701,6 +8367,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:27:05.081Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df6d4d8ef53dcb2bc9485',
@@ -7713,6 +8380,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:28:36.384Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df679d8ef53dcb2bc93ed',
@@ -7725,6 +8393,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:27:05.049Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df6d4d8ef53dcb2bc947c',
@@ -7737,6 +8406,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:28:36.352Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df679d8ef53dcb2bc93e4',
@@ -7749,6 +8419,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:27:05.013Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df6d4d8ef53dcb2bc9473',
@@ -7761,6 +8432,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:28:36.313Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df678d8ef53dcb2bc93db',
@@ -7773,6 +8445,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:27:04.972Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd36ba655edad8f8533',
@@ -7785,6 +8458,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.362Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd06ba655edad8f84cb',
@@ -7797,6 +8471,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.362Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befcd6ba655edad8f8453',
@@ -7809,6 +8484,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.362Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befcf6ba655edad8f849b',
@@ -7821,6 +8497,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.361Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df6d4d8ef53dcb2bc946a',
@@ -7833,6 +8510,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:28:36.277Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '663df678d8ef53dcb2bc93d2',
@@ -7845,6 +8523,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:27:04.939Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd36ba655edad8f853b',
@@ -7857,6 +8536,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.361Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc66ba655edad8f835b',
@@ -7869,6 +8549,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.361Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd26ba655edad8f8513',
@@ -7881,6 +8562,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.361Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befcc6ba655edad8f8433',
@@ -7893,6 +8575,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.361Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc56ba655edad8f832b',
@@ -7905,6 +8588,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.361Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befca6ba655edad8f83eb',
@@ -7917,6 +8601,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.361Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc86ba655edad8f83ab',
@@ -7929,6 +8614,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.361Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc86ba655edad8f83a3',
@@ -7941,6 +8627,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.361Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befcc6ba655edad8f843b',
@@ -7953,6 +8640,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.360Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc36ba655edad8f82cb',
@@ -7965,6 +8653,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.360Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befcb6ba655edad8f8413',
@@ -7977,6 +8666,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.360Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc96ba655edad8f83c3',
@@ -7989,6 +8679,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.360Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befcd6ba655edad8f845b',
@@ -8001,6 +8692,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.359Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd16ba655edad8f84f3',
@@ -8013,6 +8705,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.359Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc76ba655edad8f8373',
@@ -8025,6 +8718,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.358Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd46ba655edad8f854b',
@@ -8037,6 +8731,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.358Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befce6ba655edad8f848b',
@@ -8049,6 +8744,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.358Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befce6ba655edad8f8493',
@@ -8061,6 +8757,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.358Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc76ba655edad8f8393',
@@ -8073,6 +8770,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.358Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befcf6ba655edad8f84b3',
@@ -8085,6 +8783,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.358Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc66ba655edad8f8363',
@@ -8097,6 +8796,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.357Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befce6ba655edad8f8483',
@@ -8109,6 +8809,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.357Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc36ba655edad8f82f3',
@@ -8121,6 +8822,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.357Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc36ba655edad8f82db',
@@ -8133,6 +8835,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.357Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc96ba655edad8f83d3',
@@ -8145,6 +8848,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.355Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd36ba655edad8f852b',
@@ -8157,6 +8861,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.353Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befcd6ba655edad8f846b',
@@ -8169,6 +8874,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.353Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc46ba655edad8f82fb',
@@ -8181,6 +8887,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.353Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd06ba655edad8f84bb',
@@ -8193,6 +8900,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.352Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc96ba655edad8f83cb',
@@ -8205,6 +8913,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.352Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befcd6ba655edad8f8463',
@@ -8217,6 +8926,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.352Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc76ba655edad8f837b',
@@ -8229,6 +8939,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.352Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc36ba655edad8f82d3',
@@ -8241,6 +8952,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.352Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befcc6ba655edad8f844b',
@@ -8253,6 +8965,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.352Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc86ba655edad8f83b3',
@@ -8265,6 +8978,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.351Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd46ba655edad8f855b',
@@ -8277,6 +8991,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.351Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc96ba655edad8f83db',
@@ -8289,6 +9004,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.351Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc36ba655edad8f82e3',
@@ -8301,6 +9017,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.350Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befca6ba655edad8f83e3',
@@ -8313,6 +9030,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.350Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc86ba655edad8f839b',
@@ -8325,6 +9043,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.350Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc86ba655edad8f83bb',
@@ -8337,6 +9056,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.350Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc56ba655edad8f8323',
@@ -8349,6 +9069,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.346Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befcc6ba655edad8f8443',
@@ -8361,6 +9082,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.346Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc66ba655edad8f834b',
@@ -8373,6 +9095,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.346Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc46ba655edad8f830b',
@@ -8385,6 +9108,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.346Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd46ba655edad8f8543',
@@ -8397,6 +9121,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.346Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befce6ba655edad8f847b',
@@ -8409,6 +9134,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.345Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd26ba655edad8f850b',
@@ -8421,6 +9147,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.345Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc56ba655edad8f8333',
@@ -8433,6 +9160,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.345Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc46ba655edad8f8303',
@@ -8445,6 +9173,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.345Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc76ba655edad8f836b',
@@ -8457,6 +9186,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.345Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd16ba655edad8f84db',
@@ -8469,6 +9199,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.345Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befcb6ba655edad8f8423',
@@ -8481,6 +9212,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.343Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befcf6ba655edad8f84a3',
@@ -8493,6 +9225,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.343Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befca6ba655edad8f83fb',
@@ -8505,6 +9238,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.343Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd26ba655edad8f8523',
@@ -8517,6 +9251,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.343Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd06ba655edad8f84c3',
@@ -8529,6 +9264,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.342Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befca6ba655edad8f83f3',
@@ -8541,6 +9277,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.341Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc46ba655edad8f8313',
@@ -8553,6 +9290,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.340Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befcb6ba655edad8f842b',
@@ -8565,6 +9303,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.340Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc76ba655edad8f838b',
@@ -8577,6 +9316,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.340Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc26ba655edad8f82c3',
@@ -8589,6 +9329,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.340Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc26ba655edad8f82bb',
@@ -8601,6 +9342,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.340Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd46ba655edad8f8553',
@@ -8613,6 +9355,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.339Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc26ba655edad8f82b3',
@@ -8625,6 +9368,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.339Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd26ba655edad8f8503',
@@ -8637,6 +9381,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.338Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc46ba655edad8f831b',
@@ -8649,6 +9394,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.338Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc66ba655edad8f8353',
@@ -8661,6 +9407,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.338Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd16ba655edad8f84d3',
@@ -8673,6 +9420,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.337Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd16ba655edad8f84fb',
@@ -8685,6 +9433,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.337Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befce6ba655edad8f8473',
@@ -8697,6 +9446,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.337Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc56ba655edad8f833b',
@@ -8709,6 +9459,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.336Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befca6ba655edad8f8403',
@@ -8721,6 +9472,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.336Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd26ba655edad8f851b',
@@ -8733,6 +9485,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.336Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befcb6ba655edad8f841b',
@@ -8745,6 +9498,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.336Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd16ba655edad8f84e3',
@@ -8757,6 +9511,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.336Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc36ba655edad8f82eb',
@@ -8769,6 +9524,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.336Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befd16ba655edad8f84eb',
@@ -8781,6 +9537,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.335Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc76ba655edad8f8383',
@@ -8793,6 +9550,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.335Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befcf6ba655edad8f84ab',
@@ -8805,6 +9563,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.335Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befca6ba655edad8f840b',
@@ -8817,6 +9576,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.335Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
     {
       id: '624befc56ba655edad8f8343',
@@ -8829,6 +9589,7 @@ export const transactionsRepoFindAllByTypeAndUserMockData: Record<
       updatedAt: new Date('2024-05-10T10:21:18.335Z'),
       userId: '61460d7354ea082ad0256749',
       categories: [],
+      transactionTemplateLog: [],
     },
   ],
 };

@@ -1,14 +1,7 @@
+import { ExpenseListItemDto } from '$types/generated/financer';
 import {
-  AccountDto,
-  ExpenseDto,
-  TransactionDto,
-} from '$types/generated/financer';
-import {
-  getAllTransaction,
-  getAccount,
-  roundToTwoDecimal,
-  getTransactionByIdRaw,
-  ITransactionWithDateObject,
+  getAccountFromTransactionListItem,
+  getAllExpenses,
 } from '$utils/api-helper';
 import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
@@ -19,107 +12,105 @@ test.describe('Delete expense', () => {
     await page.goto('/statistics/expenses');
   });
 
-  const verifyAccountBalanceChangeByTargetTransactionAmount = async (
-    accountBefore: AccountDto,
-    accountAfter: AccountDto,
-    targetTransactionBefore: ExpenseDto,
-  ) => {
-    const changedAmount = roundToTwoDecimal(targetTransactionBefore.amount);
-    const balanceBefore = roundToTwoDecimal(accountBefore.balance);
-    const balanceAfter = roundToTwoDecimal(accountAfter.balance);
-    const balanceBeforeWithChangedAmount = roundToTwoDecimal(
-      balanceBefore + changedAmount,
-    );
+  test('should delete the latest expense and verify that account balance has changed and the transaction does not exist anymore', async ({
+    page,
+  }) => {
+    const expenses = await getAllExpenses();
 
-    expect(balanceBeforeWithChangedAmount).toBe(balanceAfter);
-  };
+    const targetTransaction = expenses.at(-1) as ExpenseListItemDto;
 
-  const verifyTargetTransactionDoesNotExistsAfter = async (
-    targetTransactionBefore: ExpenseDto,
-  ) => {
-    const targetTransactionAfter = await getTransactionByIdRaw(
-      targetTransactionBefore.id,
-    );
+    const targetAccountId =
+      await getAccountFromTransactionListItem(targetTransaction);
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    expect((targetTransactionAfter as any).statusCode).toBe(404);
-  };
+    await page.goto(`/accounts/${targetAccountId}`);
 
-  test('Delete newest expense', async ({ page }) => {
-    const transactionsBefore = await getAllTransaction();
+    const accountBalanceBefore = (await page
+      .getByTestId('account-balance')
+      .textContent()) as string;
 
-    const expensesBefore = transactionsBefore.filter(
-      ({ fromAccount, toAccount }) => fromAccount && !toAccount,
-    );
-    const targetTransactionBefore = expensesBefore.at(
-      -1,
-    ) as ITransactionWithDateObject<TransactionDto>;
-
-    const targetTransactionId = targetTransactionBefore.id;
-    const targetAccountId = targetTransactionBefore.fromAccount;
-
-    const accountBefore = await getAccount(targetAccountId);
-
-    const transactionYear = targetTransactionBefore.dateObj.getFullYear();
-    const transactionMonth = (targetTransactionBefore.dateObj.getMonth() + 1)
+    const year = new Date(targetTransaction.date).getFullYear();
+    const month = (new Date(targetTransaction.date).getMonth() + 1)
       .toString()
       .padStart(2, '0');
-    const dateQuery = `${transactionYear}-${transactionMonth}`;
+
+    const dateQuery = `${year}-${month}`;
     await page.goto(`/statistics/expenses?date=${dateQuery}&page=1`);
-    await page.getByTestId(targetTransactionId).click();
 
+    await page.getByTestId(targetTransaction.id).click();
     await page.getByTestId('edit-expense-button').click();
-
     await page.getByTestId('delete-transaction').click();
     await page.getByTestId('delete-transaction-confirm').click();
 
-    await expect(page).not.toHaveURL(`/${targetAccountId}`);
+    await expect(page).not.toHaveURL(`/${targetTransaction.id}`);
 
-    const accountAfter = await getAccount(targetAccountId);
+    await page.goto(`/statistics/expenses?date=${dateQuery}&page=1`);
 
-    verifyAccountBalanceChangeByTargetTransactionAmount(
-      accountBefore,
-      accountAfter,
-      targetTransactionBefore,
+    await expect(page.getByTestId(targetTransaction.id)).toBeHidden();
+
+    await page.goto(`/accounts/${targetAccountId}`);
+
+    const accountBalanceAfter = (await page
+      .getByTestId('account-balance')
+      .textContent()) as string;
+
+    const balanceBefore = parseFloat(
+      accountBalanceBefore.replace(/[^0-9,-]+/g, '').replace(',', '.'),
     );
-    verifyTargetTransactionDoesNotExistsAfter(targetTransactionBefore);
+    const balanceAfter = parseFloat(
+      accountBalanceAfter.replace(/[^0-9,-]+/g, '').replace(',', '.'),
+    );
+
+    expect(balanceBefore - targetTransaction.amount).toBe(balanceAfter);
   });
 
-  test('Delete oldest expense', async ({ page }) => {
-    const transactionsBefore = await getAllTransaction();
+  test('should delete the oldest expense and verify that account balance has changed and the transaction does not exist anymore', async ({
+    page,
+  }) => {
+    const expenses = await getAllExpenses();
 
-    const expensesBefore = transactionsBefore.filter(
-      ({ fromAccount, toAccount }) => fromAccount && !toAccount,
-    );
-    const targetTransactionBefore = expensesBefore[0];
+    const targetTransaction = expenses.at(0) as ExpenseListItemDto;
 
-    const targetTransactionId = targetTransactionBefore.id;
-    const targetAccountId = targetTransactionBefore.fromAccount;
+    const targetAccountId =
+      await getAccountFromTransactionListItem(targetTransaction);
 
-    const accountBefore = await getAccount(targetAccountId);
+    await page.goto(`/accounts/${targetAccountId}`);
 
-    const transactionYear = targetTransactionBefore.dateObj.getFullYear();
-    const transactionMonth = (targetTransactionBefore.dateObj.getMonth() + 1)
+    const accountBalanceBefore = (await page
+      .getByTestId('account-balance')
+      .textContent()) as string;
+
+    const year = new Date(targetTransaction.date).getFullYear();
+    const month = (new Date(targetTransaction.date).getMonth() + 1)
       .toString()
       .padStart(2, '0');
-    const dateQuery = `${transactionYear}-${transactionMonth}`;
+
+    const dateQuery = `${year}-${month}`;
     await page.goto(`/statistics/expenses?date=${dateQuery}&page=1`);
-    await page.getByTestId(targetTransactionId).click();
 
+    await page.getByTestId(targetTransaction.id).click();
     await page.getByTestId('edit-expense-button').click();
-
     await page.getByTestId('delete-transaction').click();
     await page.getByTestId('delete-transaction-confirm').click();
 
-    await expect(page).not.toHaveURL(`/${targetAccountId}`);
+    await expect(page).not.toHaveURL(`/${targetTransaction.id}`);
 
-    const accountAfter = await getAccount(targetAccountId);
+    await page.goto(`/statistics/expenses?date=${dateQuery}&page=1`);
 
-    verifyAccountBalanceChangeByTargetTransactionAmount(
-      accountBefore,
-      accountAfter,
-      targetTransactionBefore,
+    await expect(page.getByTestId(targetTransaction.id)).toBeHidden();
+
+    await page.goto(`/accounts/${targetAccountId}`);
+
+    const accountBalanceAfter = (await page
+      .getByTestId('account-balance')
+      .textContent()) as string;
+
+    const balanceBefore = parseFloat(
+      accountBalanceBefore.replace(/[^0-9,-]+/g, '').replace(',', '.'),
     );
-    verifyTargetTransactionDoesNotExistsAfter(targetTransactionBefore);
+    const balanceAfter = parseFloat(
+      accountBalanceAfter.replace(/[^0-9,-]+/g, '').replace(',', '.'),
+    );
+
+    expect(balanceBefore - targetTransaction.amount).toBe(balanceAfter);
   });
 });

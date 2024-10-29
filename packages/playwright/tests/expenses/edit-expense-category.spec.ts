@@ -20,8 +20,12 @@ test.describe('Edit expense with category', () => {
   test('Edit with single category', async ({ page }) => {
     const expenseWithSingleCategory = await getExpenseIdWithSingleCategory();
 
-    const transactionYear = expenseWithSingleCategory.dateObj.getFullYear();
-    const transactionMonth = (expenseWithSingleCategory.dateObj.getMonth() + 1)
+    const transactionYear = new Date(
+      expenseWithSingleCategory.date,
+    ).getFullYear();
+    const transactionMonth = (
+      new Date(expenseWithSingleCategory.date).getMonth() + 1
+    )
       .toString()
       .padStart(2, '0');
     const dateQuery = `${transactionYear}-${transactionMonth}`;
@@ -75,9 +79,11 @@ test.describe('Edit expense with category', () => {
     const expenseWithMultipleCategories =
       await getExpenseIdWithMultipleCategories();
 
-    const transactionYear = expenseWithMultipleCategories.dateObj.getFullYear();
+    const transactionYear = new Date(
+      expenseWithMultipleCategories.date,
+    ).getFullYear();
     const transactionMonth = (
-      expenseWithMultipleCategories.dateObj.getMonth() + 1
+      new Date(expenseWithMultipleCategories.date).getMonth() + 1
     )
       .toString()
       .padStart(2, '0');
@@ -140,9 +146,11 @@ test.describe('Edit expense with category', () => {
     const expenseWithMultipleCategories =
       await getExpenseIdWithMultipleCategories();
 
-    const transactionYear = expenseWithMultipleCategories.dateObj.getFullYear();
+    const transactionYear = new Date(
+      expenseWithMultipleCategories.date,
+    ).getFullYear();
     const transactionMonth = (
-      expenseWithMultipleCategories.dateObj.getMonth() + 1
+      new Date(expenseWithMultipleCategories.date).getMonth() + 1
     )
       .toString()
       .padStart(2, '0');

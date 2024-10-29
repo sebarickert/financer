@@ -1,7 +1,6 @@
 import { FC } from 'react';
 
 import { Transaction } from '$blocks/Transaction';
-import { AccountService } from '$ssr/api/account.service';
 import { IncomeService } from '$ssr/api/income.service';
 
 interface IncomeContainerProps {
@@ -11,7 +10,5 @@ interface IncomeContainerProps {
 export const IncomeContainer: FC<IncomeContainerProps> = async ({ id }) => {
   const income = await IncomeService.getById(id);
 
-  const account = await AccountService.getById(income.toAccount);
-
-  return <Transaction transaction={income} toAccount={account?.name} />;
+  return <Transaction {...income} />;
 };
