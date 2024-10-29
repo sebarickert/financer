@@ -41,7 +41,7 @@ export const getAllTransactions = async (): Promise<
     await fetch(`${baseUrl}/api/transactions`)
   ).json()) as PaginationDto<TransactionListItemDto[]>;
 
-  return transactions.data;
+  return transactions.data.sort((a, b) => (a.date < b.date ? -1 : 1));
 };
 
 export const getAllIncomes = async (): Promise<IncomeListItemDto[]> => {
@@ -50,7 +50,7 @@ export const getAllIncomes = async (): Promise<IncomeListItemDto[]> => {
     await fetch(`${baseUrl}/api/incomes`)
   ).json()) as PaginationDto<IncomeListItemDto[]>;
 
-  return transactions.data;
+  return transactions.data.sort((a, b) => (a.date < b.date ? -1 : 1));
 };
 
 export const getAllExpenses = async (): Promise<ExpenseListItemDto[]> => {
@@ -59,7 +59,7 @@ export const getAllExpenses = async (): Promise<ExpenseListItemDto[]> => {
     await fetch(`${baseUrl}/api/expenses`)
   ).json()) as PaginationDto<ExpenseListItemDto[]>;
 
-  return transactions.data;
+  return transactions.data.sort((a, b) => (a.date < b.date ? -1 : 1));
 };
 
 export const getAllTransfers = async (): Promise<TransferListItemDto[]> => {
@@ -68,7 +68,7 @@ export const getAllTransfers = async (): Promise<TransferListItemDto[]> => {
     await fetch(`${baseUrl}/api/transfers`)
   ).json()) as PaginationDto<TransferListItemDto[]>;
 
-  return transactions.data;
+  return transactions.data.sort((a, b) => (a.date < b.date ? -1 : 1));
 };
 
 export const getTransactionById = async (
