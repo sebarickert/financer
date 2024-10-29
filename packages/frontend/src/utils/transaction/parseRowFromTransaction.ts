@@ -3,7 +3,6 @@ import {
   TransactionType,
 } from '$api/generated/financerApi';
 import { TransactionListItemProps } from '$blocks/TransactionList/TransactionListItem';
-import { getTransactionType } from '$utils/transaction/getTransactionType';
 
 const mapTransactionTypeToUrlPrefix: {
   [key in TransactionType]: 'incomes' | 'expenses' | 'transfers';
@@ -16,18 +15,13 @@ const mapTransactionTypeToUrlPrefix: {
 export const parseRowFromTransaction = async (
   transaction: TransactionListItemDto,
 ): Promise<TransactionListItemProps> => {
-  const transactionType = getTransactionType(
-    transaction.toAccount,
-    transaction.fromAccount,
-  );
-
   const categoryNames = transaction.categories.map(({ name }) => name);
 
   return {
     transactionCategories: categoryNames.join(', '),
     description: transaction.description,
-    url: `/statistics/${mapTransactionTypeToUrlPrefix[transactionType]}/${transaction.id}`,
-    transactionType,
+    url: `/statistics/${mapTransactionTypeToUrlPrefix[transaction.type]}/${transaction.id}`,
+    transactionType: transaction.type,
     date: transaction.date,
     amount: transaction.amount,
     id: transaction.id,
