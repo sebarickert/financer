@@ -1,8 +1,7 @@
 import { Metadata } from 'next';
 import { FC } from 'react';
 
-import { IncomeEditContainer } from '$container/incomes/income.edit.container';
-import { Layout } from '$layouts/Layout';
+import { IncomeEditContainer } from '$container/incomes/IncomeEditContainer';
 
 // TODO change to dynamic title
 export const metadata: Metadata = {
@@ -16,11 +15,7 @@ type EditIncomePageProps = {
 };
 
 const EditIncomePage: FC<EditIncomePageProps> = ({ params: { incomeId } }) => {
-  return (
-    <Layout title="Edit Income">
-      <IncomeEditContainer id={incomeId} />
-    </Layout>
-  );
+  return <IncomeEditContainer id={incomeId} />;
 };
 
 export default EditIncomePage;

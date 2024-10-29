@@ -6,11 +6,10 @@ import {
   isCategoriesFormFullFields,
   parseCategoriesFormFullFields,
 } from '$blocks/transaction-categories/transaction-categories.types';
-import { TransactionDelete } from '$blocks/transaction-delete/transaction-delete';
 import { TransactionForm } from '$blocks/TransactionForm';
 import { ValidationException } from '$exceptions/validation.exception';
 import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
-import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { Layout } from '$layouts/Layout';
 import { IncomeService } from '$ssr/api/income.service';
 import { DateFormat, formatDate } from '$utils/formatDate';
 import { parseArrayFromFormData } from '$utils/parseArrayFromFormData';
@@ -88,17 +87,17 @@ export const IncomeEditContainer: FC<IncomeEditContainerProps> = async ({
   };
 
   return (
-    <>
-      <UpdatePageInfo
+    <Layout title="Edit Income" backLink={`/statistics/incomes/${id}`}>
+      {/* <UpdatePageInfo
         backLink={`/statistics/incomes/${income?.id}`}
         headerAction={<TransactionDelete onDelete={handleDelete} />}
-      />
+      /> */}
       <TransactionForm
         initialValues={initialValues}
         onSubmit={handleSubmit}
         hasToAccountField
         testId="edit-income-form"
       />
-    </>
+    </Layout>
   );
 };

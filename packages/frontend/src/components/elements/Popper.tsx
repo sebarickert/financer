@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { FC } from 'react';
+import { FC, useId } from 'react';
 
 import { Button } from './button/button';
 import { Icon, IconName } from './Icon';
@@ -7,31 +7,21 @@ import { Link } from './Link';
 
 import { List } from '$blocks/List';
 
-type PopperItemBase = {
+type PopperItem = {
   icon: IconName;
   label: string;
-};
-
-type PopperItemWithHref = PopperItemBase & {
   href: string;
-  onClick?: never;
 };
-
-type PopperItemWithOnClick = PopperItemBase & {
-  onClick: () => void;
-  href?: never;
-};
-
-type PopperItem = PopperItemWithHref | PopperItemWithOnClick;
 
 type PopperProps = {
   id: string;
   className?: string;
   items: PopperItem[];
+  children?: React.ReactNode | React.ReactNode[];
 };
 
-export const Popper: FC<PopperProps> = ({ className, items }) => {
-  const popperId = 'anchored-popover';
+export const Popper: FC<PopperProps> = ({ className, items, children }) => {
+  const popperId = useId();
 
   const popperItemClasses = clsx(
     'flex items-center gap-2 px-2 py-1.5 theme-bg-color-with-hover',
@@ -66,32 +56,15 @@ export const Popper: FC<PopperProps> = ({ className, items }) => {
         id={popperId}
       >
         <List hasItemRoundness>
-          {items.map(({ icon, label, href, onClick }, index) => {
-            if (href) {
-              return (
-                <Link key={index} href={href} className={popperItemClasses}>
-                  <Icon name={icon} className="w-5 h-5" />
-                  <span className="inline-block pr-2">{label}</span>
-                </Link>
-              );
-            }
-
-            if (onClick) {
-              return (
-                <button
-                  key={index}
-                  type="button"
-                  onClick={onClick}
-                  className={popperItemClasses}
-                >
-                  <Icon name={icon} className="w-5 h-5" />
-                  <span className="inline-block pr-2">{label}</span>
-                </button>
-              );
-            }
-
-            return null;
+          {items.map(({ icon, label, href }, index) => {
+            return (
+              <Link key={index} href={href} className={popperItemClasses}>
+                <Icon name={icon} className="!w-5 !h-5" />
+                <span className="inline-block pr-2">{label}</span>
+              </Link>
+            );
           })}
+          {children}
         </List>
       </div>
     </div>
