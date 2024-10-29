@@ -227,7 +227,7 @@ export class TransactionsService {
     });
   }
 
-  async findAllByUserForExport(userId: UserId): Promise<Transaction[]> {
+  async findAllByUserForExport(userId: UserId): Promise<TransactionDto[]> {
     const transactions = await this.transactionRepo.findMany({
       where: {
         userId,

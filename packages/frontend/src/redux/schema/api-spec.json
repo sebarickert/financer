@@ -1745,6 +1745,14 @@
           "userId"
         ]
       },
+      "TransactionTemplateLogDto": {
+        "type": "object",
+        "properties": {
+          "createdAt": { "format": "date-time", "type": "string" },
+          "updatedAt": { "format": "date-time", "type": "string" }
+        },
+        "required": ["createdAt", "updatedAt"]
+      },
       "UserDataExportDto": {
         "type": "object",
         "properties": {
@@ -1778,6 +1786,12 @@
           "transactionTemplates": {
             "type": "array",
             "items": { "$ref": "#/components/schemas/TransactionTemplateDto" }
+          },
+          "transactionTemplateLogs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransactionTemplateLogDto"
+            }
           }
         },
         "required": [
@@ -1788,7 +1802,8 @@
           "accountBalanceChanges",
           "transactionCategories",
           "transactionCategoryMappings",
-          "transactionTemplates"
+          "transactionTemplates",
+          "transactionTemplateLogs"
         ]
       },
       "UserDataImportDto": {
@@ -1823,6 +1838,12 @@
           "transactionTemplates": {
             "type": "array",
             "items": { "$ref": "#/components/schemas/TransactionTemplateDto" }
+          },
+          "transactionTemplateLogs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransactionTemplateLogDto"
+            }
           }
         },
         "required": [
@@ -1832,7 +1853,8 @@
           "accountBalanceChanges",
           "transactionCategories",
           "transactionCategoryMappings",
-          "transactionTemplates"
+          "transactionTemplates",
+          "transactionTemplateLogs"
         ]
       },
       "UpdateUserOwnUserDto": {

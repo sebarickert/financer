@@ -17,6 +17,7 @@ export type TransactionListItemProps = {
   date: string;
   amount: number;
   id: string;
+  isRecurring: boolean;
 };
 
 export const TransactionListItem: FC<TransactionListItemProps> = ({
@@ -27,13 +28,12 @@ export const TransactionListItem: FC<TransactionListItemProps> = ({
   url,
   transactionType,
   id,
+  isRecurring,
 }) => {
   const isIncome = transactionType === TransactionType.Income;
   const isExpense = transactionType === TransactionType.Expense;
   const { color: transactionTypeColor } =
     transactionTypeThemeMapping[transactionType];
-
-  const isRecurring = false;
 
   return (
     <Link

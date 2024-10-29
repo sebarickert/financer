@@ -25,5 +25,6 @@ export const parseRowFromTransaction = async (
     date: transaction.date,
     amount: transaction.amount,
     id: transaction.id,
+    isRecurring: transaction.isRecurring,
   };
 };

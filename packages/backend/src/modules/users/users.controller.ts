@@ -19,10 +19,7 @@ import { Auth } from '../auth/decorators/auht.decorator';
 import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
 import { UserDataExportDto } from '../user-data/dto/user-data-export.dto';
 import { UserDataImportDto } from '../user-data/dto/user-data-import.dto';
-import {
-  UserDataService,
-  ImportUserDataDto,
-} from '../user-data/user-data.service';
+import { UserDataService } from '../user-data/user-data.service';
 
 import { UpdateUserDto, UpdateUserOwnUserDto } from './dto/update-user.dto';
 import { UserDto } from './dto/user.dto';
@@ -57,7 +54,7 @@ export class UsersController {
   @ApiOkResponse({ schema: { properties: { payload: { type: 'string' } } } })
   overrideAllOwnUserData(
     @UserIdDecorator() userId: UserId,
-    @Body() userData: ImportUserDataDto,
+    @Body() userData: UserDataImportDto,
   ) {
     return this.userDataService.overrideUserData(userId, userData);
   }

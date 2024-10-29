@@ -7,6 +7,7 @@ import {
   TransactionCategoryMappingDto,
   TransactionDto,
   TransactionTemplateDto,
+  TransactionTemplateLogDto,
   UserPreferenceDto,
 } from '$api/generated/financerApi';
 import { ValidationException } from '$exceptions/validation.exception';
@@ -49,6 +50,10 @@ export const OverrideUserDataContainer: FC = () => {
       formData.get('userPreferences') as string,
     ) as UserPreferenceDto[];
 
+    const transactionTemplateLogs = JSON.parse(
+      formData.get('transactionTemplateLogs') as string,
+    ) as TransactionTemplateLogDto[];
+
     try {
       await UserService.DEBUG_overrideOwnUserData({
         accountBalanceChanges,
@@ -58,6 +63,7 @@ export const OverrideUserDataContainer: FC = () => {
         transactions,
         transactionTemplates,
         userPreferences,
+        transactionTemplateLogs,
       });
     } catch (error) {
       if (error instanceof ValidationException) {

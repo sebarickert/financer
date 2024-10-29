@@ -1,18 +1,7 @@
 import crypto from 'crypto';
 
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
-import {
-  Account,
-  AccountBalanceChange,
-  Transaction,
-  TransactionCategory,
-  TransactionCategoryMapping,
-  TransactionTemplate,
-  TransactionTemplateLog,
-  User,
-  UserPreferenceProperty,
-  UserPreferences,
-} from '@prisma/client';
+import { UserPreferenceProperty } from '@prisma/client';
 
 import { PrismaTransactionService } from '../../database/prisma-transaction.service';
 import { UserId } from '../../types/user-id';
@@ -25,20 +14,8 @@ import { TransactionsService } from '../transactions/transactions.service';
 import { UserPreferencesService } from '../user-preferences/user-preferences.service';
 import { UsersService } from '../users/users.service';
 
-export type ImportUserDataDto = {
-  transactions: Transaction[];
-  accounts: Account[];
-  accountBalanceChanges: AccountBalanceChange[];
-  transactionCategories: TransactionCategory[];
-  transactionCategoryMappings: TransactionCategoryMapping[];
-  userPreferences: UserPreferences[];
-  transactionTemplates: TransactionTemplate[];
-  transactionTemplateLogs: TransactionTemplateLog[];
-};
-
-export type ExportUserDataDto = ImportUserDataDto & {
-  user: User;
-};
+import { UserDataExportDto } from './dto/user-data-export.dto';
+import { UserDataImportDto } from './dto/user-data-import.dto';
 
 const getMyDataFilename = (): string => {
   const addLeadingZero = (number: number): string => `0${number}`.substr(-2);
@@ -76,7 +53,7 @@ export class UserDataService {
 
   async findAllOneUserData(
     userId: UserId,
-  ): Promise<{ filename: string; data: ExportUserDataDto }> {
+  ): Promise<{ filename: string; data: UserDataExportDto }> {
     const user = await this.usersService.findOne(userId);
     const accounts = await this.accountsService.findAllByUserForExport(userId);
     const accountBalanceChanges =
@@ -123,7 +100,7 @@ export class UserDataService {
       userPreferences: originalUserPreferences = [],
       transactionTemplates: originalTransactionTemplates = [],
       transactionTemplateLogs: originalTransactionTemplateLogs = [],
-    }: ImportUserDataDto,
+    }: UserDataImportDto,
   ) {
     const accountIdMapping = new Map<string, string>();
     const transactionIdMapping = new Map<string, string>();
@@ -256,12 +233,14 @@ export class UserDataService {
       if (
         UserDataService.ACCOUNT_USER_PROPERTIES.includes(userPreference.key)
       ) {
+        // @ts-expect-error - We know that the key is in the array
         userPreference.value = accountIdMapping.get(userPreference.value);
       } else if (
         userPreference.key ===
         UserPreferenceProperty.UPDATE_INVESTMENT_MARKET_VALUE
       ) {
         transactionCategoryIdMapping.forEach((newCategoryId, oldCategoryId) => {
+          // @ts-expect-error - We know that the key is in the array
           userPreference.value = userPreference.value.replace(
             oldCategoryId,
             newCategoryId,
