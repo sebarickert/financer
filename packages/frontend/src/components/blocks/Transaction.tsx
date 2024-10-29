@@ -9,12 +9,8 @@ import {
 import { BalanceDisplay } from '$blocks/BalanceDisplay';
 import { DetailsList } from '$blocks/details-list/details-list';
 import { DetailsItem } from '$blocks/details-list/details-list.item';
-import { Button } from '$elements/button/button';
 import { Heading } from '$elements/Heading';
-import { Icon, IconName } from '$elements/Icon';
-import { Link } from '$elements/Link';
-import { Popper } from '$elements/Popper';
-import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { IconName } from '$elements/Icon';
 import { CategoryService } from '$ssr/api/category.service';
 import { capitalize } from '$utils/capitalize';
 import { formatCurrency } from '$utils/formatCurrency';
@@ -106,65 +102,36 @@ export const Transaction: FC<TransactionProps> = async ({
   );
 
   return (
-    <>
-      <UpdatePageInfo
-        backLink="/statistics"
-        headerAction={
-          <Link
-            haptic="medium"
-            href={`/statistics/${type.toLowerCase()}s/${id}/edit`}
-            testId={`edit-${type.toLowerCase()}-button`}
-            transition="slideInFromRight"
-          >
-            <span className="sr-only">Edit</span>
-            <Icon name="PencilIcon" />
-          </Link>
-        }
-      />
-      <section className={clsx('@container')}>
-        <Button popoverTarget="transactionPopper" accentColor="secondary">
-          plaa
-        </Button>
-        <Popper
-          id="transactionPopper"
-          items={[
-            {
-              href: `/statistics/${transactionDetailsMapping.url}/${transaction.id}/edit`,
-              icon: 'PencilIcon',
-              label: 'Edit',
-            },
-          ]}
-        />
-        <div
-          className={clsx(
-            'theme-layer-color rounded-md',
-            'pt-8 pb-4 px-4',
-            'grid gap-y-8 gap-x-4',
-            '@3xl:pt-4 @3xl:grid-cols-[1fr,1.5fr]',
+    <section className={clsx('@container')}>
+      <div
+        className={clsx(
+          'theme-layer-color rounded-md',
+          'pt-8 pb-4 px-4',
+          'grid gap-y-8 gap-x-4',
+          '@3xl:pt-4 @3xl:grid-cols-[1fr,1.5fr]',
+        )}
+      >
+        <BalanceDisplay type={type} amount={amount}>
+          {`${description}`}
+        </BalanceDisplay>
+        <div className="grid gap-8 p-6 border rounded-md theme-layer-secondary-color theme-border-primary">
+          <DetailsList items={transactionDetails} />
+          {categoryDetails.length > 0 && (
+            <div>
+              <Heading disableResponsiveSizing noMargin className="mb-4">
+                Categories
+              </Heading>
+              {categoryDetails.map((category) => (
+                <DetailsList
+                  testId="category-details"
+                  key={category[0].label}
+                  items={category}
+                />
+              ))}
+            </div>
           )}
-        >
-          <BalanceDisplay type={type} amount={amount}>
-            {`${description}`}
-          </BalanceDisplay>
-          <div className="grid gap-8 p-6 border rounded-md theme-layer-secondary-color theme-border-primary">
-            <DetailsList items={transactionDetails} />
-            {categoryDetails.length > 0 && (
-              <div>
-                <Heading disableResponsiveSizing noMargin className="mb-4">
-                  Categories
-                </Heading>
-                {categoryDetails.map((category) => (
-                  <DetailsList
-                    testId="category-details"
-                    key={category[0].label}
-                    items={category}
-                  />
-                ))}
-              </div>
-            )}
-          </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 };

@@ -27,48 +27,6 @@
     content: attr(data-description) !important;
   }
 
-  .backdrop {
-    &::backdrop {
-      @apply bg-black/0 ease-in;
-      transition: all 100ms allow-discrete;
-    }
-
-    &:popover-open::backdrop {
-      @apply bg-black/50 ease-out;
-      transition: all 200ms allow-discrete;
-    }
-
-    @starting-style {
-      &:popover-open::backdrop {
-        @apply bg-black/0;
-      }
-    }
-  }
-
-  .drawer {
-    @apply max-lg:translate-y-full lg:translate-x-full;
-    transition:
-      display 100ms allow-discrete,
-      transform 100ms;
-
-    &:popover-open {
-      @apply max-lg:translate-y-0 ease-out lg:translate-x-0;
-      transition:
-        display 200ms allow-discrete,
-        transform 200ms;
-    }
-
-    @starting-style {
-      &:popover-open {
-        @apply max-lg:translate-y-full lg:translate-x-full;
-      }
-    }
-
-    &:popover-open + .popover-open-rotate {
-      @apply rotate-45;
-    }
-  }
-
   .theme-bg-color {
     @apply bg-white dark:bg-gray-1000;
   }
