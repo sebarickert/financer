@@ -1,10 +1,8 @@
 'use client';
 
-import Image from 'next/image';
-
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import logo from '$assets/logo.svg';
+import { Logo } from '$blocks/Logo';
 import { Button } from '$elements/button/button';
 import { Heading } from '$elements/Heading';
 import { Link } from '$elements/Link';
@@ -19,16 +17,7 @@ export const ErrorPage = ({ errorPageType }: ErrorPageProps) => {
     return (
       <Container>
         <div className="px-8 py-12">
-          <span className="inline-flex items-center gap-3 mb-8">
-            <Image
-              src={logo}
-              className="relative block w-auto h-10 rounded"
-              alt="logo"
-            />
-            <h2 className="text-2xl font-semibold tracking-tight theme-text-primary">
-              Financer
-            </h2>
-          </span>
+          <Logo className="mb-8" />
           <Heading variant="h1" noMargin className="mb-6">
             Error
           </Heading>
