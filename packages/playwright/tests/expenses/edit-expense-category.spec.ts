@@ -6,9 +6,8 @@ import {
 import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
 
-test.describe('Edit expense with category', () => {
+test.describe('Edit Expense with Category', () => {
   const ids = {
-    editExpenseButton: 'edit-expense-button',
     transactionCategoriesForm: 'transaction-categories-form',
     transactionCategoriesItem: 'transaction-categories-item',
   };
@@ -32,7 +31,8 @@ test.describe('Edit expense with category', () => {
     await page.goto(`/statistics/expenses?date=${dateQuery}&page=1`);
 
     await page.getByTestId(expenseWithSingleCategory.id).click();
-    await page.getByTestId(ids.editExpenseButton).click();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     await page.getByRole('button', { name: 'Edit category' }).click();
     // eslint-disable-next-line playwright/no-wait-for-timeout
@@ -62,7 +62,8 @@ test.describe('Edit expense with category', () => {
 
     await page.goto(`/statistics/expenses?date=${dateQuery}&page=1`);
     await page.getByTestId(expenseWithSingleCategory.id).click();
-    await page.getByTestId(ids.editExpenseButton).click();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     await page.getByRole('button', { name: 'Edit category' }).click();
     // eslint-disable-next-line playwright/no-wait-for-timeout
@@ -91,7 +92,8 @@ test.describe('Edit expense with category', () => {
     await page.goto(`/statistics/expenses?date=${dateQuery}&page=1`);
 
     await page.getByTestId(expenseWithMultipleCategories.id).click();
-    await page.getByTestId(ids.editExpenseButton).click();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     const item = page.getByTestId(ids.transactionCategoriesItem);
     const name = page.getByTestId(`${ids.transactionCategoriesItem}-name`);
@@ -134,7 +136,9 @@ test.describe('Edit expense with category', () => {
 
     await page.goto(`/statistics/expenses?date=${dateQuery}&page=1`);
     await page.getByTestId(expenseWithMultipleCategories.id).click();
-    await page.getByTestId(ids.editExpenseButton).click();
+
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     await expect(item).toHaveCount(1);
     await expect(name).toHaveText('Expense category');
@@ -158,7 +162,8 @@ test.describe('Edit expense with category', () => {
     await page.goto(`/statistics/expenses?date=${dateQuery}&page=1`);
 
     await page.getByTestId(expenseWithMultipleCategories.id).click();
-    await page.getByTestId(ids.editExpenseButton).click();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     const item = page.getByTestId(ids.transactionCategoriesItem);
     await expect(item).toHaveCount(2);
@@ -182,7 +187,9 @@ test.describe('Edit expense with category', () => {
 
     await page.goto(`/statistics/expenses?date=${dateQuery}&page=1`);
     await page.getByTestId(expenseWithMultipleCategories.id).click();
-    await page.getByTestId(ids.editExpenseButton).click();
+
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     await expect(item).toHaveCount(0);
   });
