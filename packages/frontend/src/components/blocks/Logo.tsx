@@ -9,7 +9,7 @@ const LogoIcon = () => (
   <Image
     src="/logo.svg"
     alt="Financer logo"
-    className="w-12 h-12"
+    className="w-12 h-12 rounded"
     width={48}
     height={48}
   />
@@ -21,7 +21,7 @@ export const Logo = ({ className }: LogoProps): JSX.Element => {
       <LogoIcon />
       <h2
         className={clsx(
-          'font-semibold text-xl theme-text-primary tracking-normal uppercase',
+          'text-2xl font-semibold tracking-tight theme-text-primary',
         )}
       >
         Financer

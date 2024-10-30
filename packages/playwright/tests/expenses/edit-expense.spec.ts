@@ -9,7 +9,7 @@ import {
 import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
 
-test.describe('Edit expense', () => {
+test.describe('Edit Expense', () => {
   test.beforeEach(async ({ page }) => {
     await applyFixture('large');
     await page.goto('/statistics/expenses');
@@ -79,7 +79,8 @@ test.describe('Edit expense', () => {
 
     await page.getByTestId(targetTransactionBefore.id).click();
 
-    await page.getByTestId('edit-expense-button').click();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     const editExpenseForm = page.getByTestId('edit-expense-form');
 
@@ -89,7 +90,8 @@ test.describe('Edit expense', () => {
 
     await editExpenseForm.getByTestId('submit').click();
 
-    await page.getByTestId('edit-expense-button').waitFor();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     const accountAfter = await getAccount(targetAccountId);
     const targetTransactionAfter = await getTransactionById(
@@ -140,7 +142,8 @@ test.describe('Edit expense', () => {
 
     await page.getByTestId(targetTransactionBefore.id).click();
 
-    await page.getByTestId('edit-expense-button').click();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     const editExpenseForm = page.getByTestId('edit-expense-form');
 
@@ -149,7 +152,8 @@ test.describe('Edit expense', () => {
 
     await editExpenseForm.getByTestId('submit').click();
 
-    await page.getByTestId('edit-expense-button').waitFor();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     const accountAfter = await getAccount(targetAccountId);
     const targetTransactionAfter = await getTransactionById(

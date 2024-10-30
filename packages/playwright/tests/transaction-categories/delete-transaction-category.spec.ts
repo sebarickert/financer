@@ -15,10 +15,16 @@ test.describe('Delete transaction category', () => {
 
     await category.click();
 
-    await page.getByTestId('edit-category').click();
+    await page.getByTestId('popper-button').click();
+    await page
+      .getByTestId('popper-container')
+      .getByRole('button', { name: 'Delete' })
+      .click();
 
-    await page.getByTestId('delete-category').click();
-    await page.getByTestId('delete-category-confirm').click();
+    await page
+      .getByTestId('drawer')
+      .getByRole('button', { name: 'Delete' })
+      .click();
 
     await expect(category).toHaveCount(0);
   };

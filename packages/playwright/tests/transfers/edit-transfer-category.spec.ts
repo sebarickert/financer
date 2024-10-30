@@ -32,7 +32,8 @@ test.describe('Edit transfer with category', () => {
     await page.goto(`/statistics/transfers?date=${dateQuery}&page=1`);
 
     await page.getByTestId(transferWithSingleCategory.id).click();
-    await page.getByTestId(ids.editTransferButton).click();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     await page.getByRole('button', { name: 'Edit category' }).click();
     // eslint-disable-next-line playwright/no-wait-for-timeout
@@ -62,7 +63,8 @@ test.describe('Edit transfer with category', () => {
 
     await page.goto(`/statistics/transfers?date=${dateQuery}&page=1`);
     await page.getByTestId(transferWithSingleCategory.id).click();
-    await page.getByTestId(ids.editTransferButton).click();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     await page.getByRole('button', { name: 'Edit category' }).click();
     // eslint-disable-next-line playwright/no-wait-for-timeout
@@ -91,7 +93,8 @@ test.describe('Edit transfer with category', () => {
     await page.goto(`/statistics/transfers?date=${dateQuery}&page=1`);
 
     await page.getByTestId(transferWithMultipleCategories.id).click();
-    await page.getByTestId(ids.editTransferButton).click();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     const item = page.getByTestId(ids.transactionCategoriesItem);
     const name = page.getByTestId(`${ids.transactionCategoriesItem}-name`);
@@ -134,7 +137,8 @@ test.describe('Edit transfer with category', () => {
 
     await page.goto(`/statistics/transfers?date=${dateQuery}&page=1`);
     await page.getByTestId(transferWithMultipleCategories.id).click();
-    await page.getByTestId(ids.editTransferButton).click();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     await expect(item).toHaveCount(1);
     await expect(name).toHaveText(
@@ -160,7 +164,8 @@ test.describe('Edit transfer with category', () => {
     await page.goto(`/statistics/transfers?date=${dateQuery}&page=1`);
 
     await page.getByTestId(transferWithMultipleCategories.id).click();
-    await page.getByTestId(ids.editTransferButton).click();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     const item = page.getByTestId(ids.transactionCategoriesItem);
     await expect(item).toHaveCount(2);
@@ -184,7 +189,8 @@ test.describe('Edit transfer with category', () => {
 
     await page.goto(`/statistics/transfers?date=${dateQuery}&page=1`);
     await page.getByTestId(transferWithMultipleCategories.id).click();
-    await page.getByTestId(ids.editTransferButton).click();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     await expect(item).toHaveCount(0);
   });

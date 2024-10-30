@@ -18,12 +18,12 @@ type SelectProps = {
   shouldUnregister?: boolean;
 };
 
-export interface Option {
+export type Option = {
   value: string;
   label: string;
   icon?: IconName;
   description?: string;
-}
+};
 
 // @ts-expect-error - New experimental feature that is not yet supported by the TypeScript compiler
 const SelectedOption: FC = () => <selectedoption></selectedoption>;

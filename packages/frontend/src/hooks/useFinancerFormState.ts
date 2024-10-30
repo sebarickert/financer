@@ -8,10 +8,16 @@ import {
   removeToastMessage,
 } from '$reducer/notifications.reducer';
 
-export type DefaultFormActionHandler = (
-  prevState: DefaultFormAction,
-  formData: FormData,
-) => Promise<DefaultFormAction>;
+export type DefaultFormActionHandler<T = undefined> = T extends undefined
+  ? (
+      prevState: DefaultFormAction,
+      formData: FormData,
+    ) => Promise<DefaultFormAction>
+  : (
+      bindData: T,
+      prevState: DefaultFormAction,
+      formData: FormData,
+    ) => Promise<DefaultFormAction>;
 
 export type DefaultFormAction =
   | {

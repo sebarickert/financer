@@ -2,7 +2,7 @@
 
 import { Metadata } from 'next';
 
-import { ErrorPage as ErrorPageComponent } from 'src/components/pages/error-page/error-page';
+import { Error as ErrorPageComponent } from '$views/Error';
 
 export const metadata: Metadata = {
   title: 'Error',

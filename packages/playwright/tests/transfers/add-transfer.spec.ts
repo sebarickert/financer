@@ -100,7 +100,8 @@ test.describe('Add transfer', () => {
 
     await drawer.getByTestId('submit').click();
 
-    await page.getByTestId('edit-transfer-button').waitFor();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     //   cy.location('pathname').should('not.contain', '/add').then(() => {
     const toAccountAfter = await getAccount(targetToAccountId);
@@ -181,7 +182,8 @@ test.describe('Add transfer', () => {
 
     await drawer.getByTestId('submit').click();
 
-    await page.getByTestId('edit-transfer-button').waitFor();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     //   cy.location('pathname').should('not.contain', '/add').then(() => {
     const toAccountAfter = await getAccount(targetToAccountId);
@@ -262,7 +264,8 @@ test.describe('Add transfer', () => {
 
     await drawer.getByTestId('submit').click();
 
-    await page.getByTestId('edit-transfer-button').waitFor();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     const toAccountAfter = await getAccount(targetToAccountId);
     const fromAccountAfter = await getAccount(targetFromAccountId);
@@ -305,7 +308,8 @@ test.describe('Add transfer', () => {
     await drawer.getByTestId('submit').click();
 
     await page.getByText(newTransactionName).click();
-    await page.getByTestId('edit-transfer-button').click();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     const inputValue = await page
       .getByTestId('edit-transfer-form')

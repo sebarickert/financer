@@ -1,8 +1,7 @@
 import { Metadata } from 'next';
 import { FC } from 'react';
 
-import { CategoryEditContainer } from '$container/categories/category.edit.container';
-import { Layout } from '$layouts/Layout';
+import { CategoryEditContainer } from '$container/categories/CategoryEditContainer';
 
 // TODO change to dynamic title
 export const metadata: Metadata = {
@@ -18,11 +17,7 @@ type CategoryEditPageProps = {
 const CategoryEditPage: FC<CategoryEditPageProps> = ({
   params: { categoryId },
 }) => {
-  return (
-    <Layout title="Edit Category">
-      <CategoryEditContainer id={categoryId} />
-    </Layout>
-  );
+  return <CategoryEditContainer id={categoryId} />;
 };
 
 export default CategoryEditPage;

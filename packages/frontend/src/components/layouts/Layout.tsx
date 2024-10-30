@@ -7,9 +7,16 @@ import { Header } from '$layouts/Header';
 type LayoutProps = {
   title: string;
   children: React.ReactNode;
+  backLink?: string;
+  headerAction?: React.ReactNode;
 };
 
-export const Layout = ({ children, title }: LayoutProps): JSX.Element => {
+export const Layout = ({
+  children,
+  title,
+  backLink,
+  headerAction,
+}: LayoutProps): JSX.Element => {
   return (
     <div>
       <Header />
@@ -19,7 +26,11 @@ export const Layout = ({ children, title }: LayoutProps): JSX.Element => {
             className="px-4 max-lg:mt-[64px] lg:mt-[83px] max-lg:pt-8 max-lg:pb-24 lg:px-8 lg:py-12"
             data-testid="layout-root"
           >
-            <ContentHeader title={title} />
+            <ContentHeader
+              title={title}
+              backLink={backLink}
+              headerAction={headerAction}
+            />
             <ToastContainer className="mb-8 -mt-2" />
             {children}
           </div>

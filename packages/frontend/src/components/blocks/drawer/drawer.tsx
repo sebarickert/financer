@@ -18,19 +18,25 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     { className = '', onClose, children, testId, id, heading, description },
     ref,
   ) => {
-    const drawerBaseClasses = clsx('', className, {
-      ['drawer backdrop']: true,
-      ['theme-bg-color theme-text-primary fixed text-left']: true,
-      ['px-6 lg:px-8 pt-0 pb-[calc(env(safe-area-inset-bottom)+48px)]']: true,
-      ['max-lg:inset-x-0 max-lg:top-auto max-lg:w-full max-lg:rounded-t-2xl']:
-        true,
-      ['lg:inset-y-0 lg:overflow-y-auto lg:max-w-[600px] lg:w-3/4 lg:left-auto lg:h-full']:
-        true,
-      ['bottom-0 m-0']: true,
-      ['min-[1440px]:max-w-[552px] min-[1440px]:box-content min-[1440px]:pr-[100vw] min-[1440px]:mr-[-100vw] min-[1440px]:right-[calc(calc(100vw-1440px)/2+1.5rem)]']:
-        true,
-      ['max-h-dvh']: true,
-    });
+    const drawerBaseClasses = clsx(
+      // Backdrop
+      'backdrop:bg-black/0 backdrop:ease-in backdrop:transition-all backdrop:!transition-allow-discrete',
+      'backdrop:open:bg-black/50 backdrop:open:ease-out backdrop:open:transition-all backdrop:open:!transition-allow-discrete',
+      'starting:open:backdrop:bg-black/0',
+      // Drawer animation
+      'max-lg:translate-y-full lg:translate-x-full !transition-allow-discrete transition-all duration-100',
+      'open:max-lg:translate-y-0 open:ease-out open:lg:translate-x-0 open:!transition-allow-discrete open:transition-all open:duration-200',
+      'starting:open:max-lg:translate-y-full starting:open:lg:translate-x-full',
+      // Drawer
+      'theme-bg-color theme-text-primary fixed text-left',
+      'px-6 lg:px-8 pt-0 pb-[calc(env(safe-area-inset-bottom)+48px)]',
+      'max-lg:inset-x-0 max-lg:top-auto max-lg:w-full max-lg:rounded-t-2xl',
+      'lg:inset-y-0 lg:overflow-y-auto lg:max-w-[600px] lg:w-3/4 lg:left-auto lg:h-full',
+      'bottom-0 m-0',
+      'min-[1440px]:max-w-[552px] min-[1440px]:box-content min-[1440px]:pr-[100vw] min-[1440px]:mr-[-100vw] min-[1440px]:right-[calc(calc(100vw-1440px)/2+1.5rem)]',
+      'max-h-dvh',
+      className,
+    );
 
     return (
       <section

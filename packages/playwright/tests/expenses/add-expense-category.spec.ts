@@ -4,7 +4,7 @@ import { applyFixture } from '$utils/load-fixtures';
 
 const EXPENSE_NAME = 'Test expense';
 
-test.describe('Add expense with category', () => {
+test.describe('Add Expense with Category', () => {
   const ids = {
     editExpenseButton: 'edit-expense-button',
     addCategoryButton: 'add-category-button',

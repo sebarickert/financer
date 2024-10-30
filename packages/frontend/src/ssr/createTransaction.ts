@@ -12,11 +12,11 @@ import {
   TransactionType,
   TransferDetailsDto,
 } from '$api/generated/financerApi';
+import { ValidationException } from '$exceptions/validation.exception';
 import {
   isCategoriesFormFullFields,
   parseCategoriesFormFullFields,
-} from '$blocks/transaction-categories/transaction-categories.types';
-import { ValidationException } from '$exceptions/validation.exception';
+} from '$features/transaction/transaction-categories/transaction-categories.types';
 import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
 import { parseArrayFromFormData } from '$utils/parseArrayFromFormData';
 

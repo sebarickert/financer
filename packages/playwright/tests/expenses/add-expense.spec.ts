@@ -15,7 +15,7 @@ import {
 import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
 
-test.describe('Add expense', () => {
+test.describe('Add Expense', () => {
   test.beforeEach(async ({ page }) => {
     await applyFixture('large');
     await page.goto('/statistics/expenses');
@@ -76,7 +76,8 @@ test.describe('Add expense', () => {
       .selectOption(targetTransactionAccountId);
     await drawer.getByTestId('submit').click();
 
-    await page.getByTestId('edit-expense-button').waitFor();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     const accountAfter = await getAccount(targetTransactionAccountId);
     const expensesAfter = await getAllExpenses();
@@ -122,7 +123,8 @@ test.describe('Add expense', () => {
       .selectOption(targetTransactionAccountId);
     await drawer.getByTestId('submit').click();
 
-    await page.getByTestId('edit-expense-button').waitFor();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     const accountAfter = await getAccount(targetTransactionAccountId);
     const expensesAfter = await getAllExpenses();
@@ -166,7 +168,8 @@ test.describe('Add expense', () => {
       .selectOption(targetTransactionAccountId);
     await drawer.getByTestId('submit').click();
 
-    await page.getByTestId('edit-expense-button').waitFor();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     const accountAfter = await getAccount(targetTransactionAccountId);
     const expensesAfter = await getAllExpenses();
@@ -207,7 +210,8 @@ test.describe('Add expense', () => {
     await drawer.getByTestId('submit').click();
 
     await page.getByText(newTransactionName).click();
-    await page.getByTestId('edit-expense-button').click();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     const inputValue = await page
       .getByTestId('edit-expense-form')

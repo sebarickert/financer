@@ -6,7 +6,7 @@ import {
 import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
 
-test.describe('Delete expense', () => {
+test.describe('Delete Expense', () => {
   test.beforeEach(async ({ page }) => {
     await applyFixture('large');
     await page.goto('/statistics/expenses');
@@ -37,9 +37,16 @@ test.describe('Delete expense', () => {
     await page.goto(`/statistics/expenses?date=${dateQuery}&page=1`);
 
     await page.getByTestId(targetTransaction.id).click();
-    await page.getByTestId('edit-expense-button').click();
-    await page.getByTestId('delete-transaction').click();
-    await page.getByTestId('delete-transaction-confirm').click();
+    await page.getByTestId('popper-button').click();
+    await page
+      .getByTestId('popper-container')
+      .getByRole('button', { name: 'Delete' })
+      .click();
+
+    await page
+      .getByTestId('drawer')
+      .getByRole('button', { name: 'Delete' })
+      .click();
 
     await expect(page).not.toHaveURL(`/${targetTransaction.id}`);
 
@@ -88,9 +95,16 @@ test.describe('Delete expense', () => {
     await page.goto(`/statistics/expenses?date=${dateQuery}&page=1`);
 
     await page.getByTestId(targetTransaction.id).click();
-    await page.getByTestId('edit-expense-button').click();
-    await page.getByTestId('delete-transaction').click();
-    await page.getByTestId('delete-transaction-confirm').click();
+    await page.getByTestId('popper-button').click();
+    await page
+      .getByTestId('popper-container')
+      .getByRole('button', { name: 'Delete' })
+      .click();
+
+    await page
+      .getByTestId('drawer')
+      .getByRole('button', { name: 'Delete' })
+      .click();
 
     await expect(page).not.toHaveURL(`/${targetTransaction.id}`);
 

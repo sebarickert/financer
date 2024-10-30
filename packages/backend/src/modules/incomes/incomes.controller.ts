@@ -3,6 +3,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
   ParseArrayPipe,
   Patch,
@@ -130,6 +132,7 @@ export class IncomesController {
   }
 
   @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
   @ApiParam({
     name: 'id',
     type: String,

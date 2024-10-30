@@ -1,18 +1,13 @@
 import { Metadata } from 'next';
 
-import { StatisticsSettingsContainer } from '$container/user-preferences/statistics-settings.container';
-import { Layout } from '$layouts/Layout';
+import { StatisticsPageSettingsContainer } from '$container/user-preferences/StatisticsPageSettingsContainer';
 
 export const metadata: Metadata = {
   title: 'Statistics Settings',
 };
 
 const StatisticsSettingsUserPreferencePage = () => {
-  return (
-    <Layout title="Statistics Settings">
-      <StatisticsSettingsContainer />
-    </Layout>
-  );
+  return <StatisticsPageSettingsContainer />;
 };
 
 export default StatisticsSettingsUserPreferencePage;

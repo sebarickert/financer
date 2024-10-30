@@ -1,12 +1,12 @@
 import { Metadata } from 'next';
 import { FC } from 'react';
 
-import { Login } from '$views/login/login';
+import { LoginContainer } from '$container/LoginContainer';
 
 export const metadata: Metadata = {
   title: 'Login',
 };
 
-const LoginPage: FC = () => <Login />;
+const LoginPage: FC = () => <LoginContainer />;
 
 export default LoginPage;

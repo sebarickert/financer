@@ -39,7 +39,7 @@ export class UserPreferencesService {
     return this.userPreferencesRepo.findMany({ where: { userId } });
   }
 
-  async findAllByUserForExport(userId: UserId): Promise<UserPreferences[]> {
+  async findAllByUserForExport(userId: UserId): Promise<UserPreferenceDto[]> {
     const preferences = await this.userPreferencesRepo.findMany({
       where: { userId },
     });

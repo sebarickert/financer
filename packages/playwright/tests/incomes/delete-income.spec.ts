@@ -37,9 +37,16 @@ test.describe('Delete income', () => {
     await page.goto(`/statistics/incomes?date=${dateQuery}&page=1`);
 
     await page.getByTestId(targetTransaction.id).click();
-    await page.getByTestId('edit-income-button').click();
-    await page.getByTestId('delete-transaction').click();
-    await page.getByTestId('delete-transaction-confirm').click();
+    await page.getByTestId('popper-button').click();
+    await page
+      .getByTestId('popper-container')
+      .getByRole('button', { name: 'Delete' })
+      .click();
+
+    await page
+      .getByTestId('drawer')
+      .getByRole('button', { name: 'Delete' })
+      .click();
 
     await expect(page).not.toHaveURL(`/${targetTransaction.id}`);
 
@@ -88,9 +95,16 @@ test.describe('Delete income', () => {
     await page.goto(`/statistics/incomes?date=${dateQuery}&page=1`);
 
     await page.getByTestId(targetTransaction.id).click();
-    await page.getByTestId('edit-income-button').click();
-    await page.getByTestId('delete-transaction').click();
-    await page.getByTestId('delete-transaction-confirm').click();
+    await page.getByTestId('popper-button').click();
+    await page
+      .getByTestId('popper-container')
+      .getByRole('button', { name: 'Delete' })
+      .click();
+
+    await page
+      .getByTestId('drawer')
+      .getByRole('button', { name: 'Delete' })
+      .click();
 
     await expect(page).not.toHaveURL(`/${targetTransaction.id}`);
 

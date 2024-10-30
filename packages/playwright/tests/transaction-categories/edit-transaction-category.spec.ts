@@ -16,7 +16,8 @@ test.describe('Edit transaction category', () => {
     await page
       .getByRole('link', { name: targetCategoryName, exact: true })
       .click();
-    await page.getByTestId('edit-category').click();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     await page.locator('#name').fill(newName);
 
@@ -66,7 +67,8 @@ test.describe('Edit transaction category', () => {
     await page.getByTestId('category-form').getByTestId('submit').click();
 
     await page.getByRole('link', { name: newName, exact: true }).click();
-    await page.getByTestId('edit-category').click();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     await expect(page.locator('#name')).toHaveValue(newName);
 

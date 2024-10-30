@@ -2,7 +2,7 @@ import {
   TransactionListItemDto,
   TransactionType,
 } from '$api/generated/financerApi';
-import { TransactionListItemProps } from '$blocks/TransactionList/TransactionListItem';
+import { TransactionListItemProps } from '$features/transaction/TransactionList/TransactionListItem';
 
 const mapTransactionTypeToUrlPrefix: {
   [key in TransactionType]: 'incomes' | 'expenses' | 'transfers';
@@ -25,5 +25,6 @@ export const parseRowFromTransaction = async (
     date: transaction.date,
     amount: transaction.amount,
     id: transaction.id,
+    isRecurring: transaction.isRecurring,
   };
 };

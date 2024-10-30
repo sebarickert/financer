@@ -2,9 +2,9 @@ import clsx from 'clsx';
 import { FC, useId } from 'react';
 
 import { Drawer } from '$blocks/drawer/drawer';
-import { TransactionFormSwitcher } from '$blocks/TransactionFormSwitcher';
 import { Button } from '$elements/button/button';
 import { Icon } from '$elements/Icon';
+import { TransactionFormSwitcher } from '$features/transaction/TransactionFormSwitcher';
 import { UserPreferenceService } from '$ssr/api/user-preference.service';
 
 type NavigationCreateTransactionButtonProps = {

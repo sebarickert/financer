@@ -8,6 +8,8 @@ import {
   Delete,
   Query,
   ParseArrayPipe,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import {
   ApiBody,
@@ -112,6 +114,7 @@ export class AccountsController {
   }
 
   @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
   @ApiParam({
     name: 'id',
     type: String,

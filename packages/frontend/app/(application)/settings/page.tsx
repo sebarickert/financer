@@ -1,19 +1,14 @@
 import { Metadata } from 'next';
 import { FC } from 'react';
 
-import { SettingsContainer } from '$container/settings/settings.container';
-import { Layout } from '$layouts/Layout';
+import { SettingsContainer } from '$container/settings/SettingsContainer';
 
 export const metadata: Metadata = {
   title: 'Settings',
 };
 
 const SettingsPage: FC = () => {
-  return (
-    <Layout title="Settings">
-      <SettingsContainer />
-    </Layout>
-  );
+  return <SettingsContainer />;
 };
 
 export default SettingsPage;

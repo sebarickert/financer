@@ -1,18 +1,13 @@
 import { Metadata } from 'next';
 
-import { CategoryAddContainer } from '$container/categories/category.add.container';
-import { Layout } from '$layouts/Layout';
+import { CategoryAddContainer } from '$container/categories/CategoryAddContainer';
 
 export const metadata: Metadata = {
   title: 'Add Category',
 };
 
 const CategoryAddPage = () => {
-  return (
-    <Layout title="Add Category">
-      <CategoryAddContainer />
-    </Layout>
-  );
+  return <CategoryAddContainer />;
 };
 
 export default CategoryAddPage;

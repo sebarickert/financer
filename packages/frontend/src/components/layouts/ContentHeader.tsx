@@ -1,20 +1,23 @@
 'use client';
 
 import clsx from 'clsx';
-import { cloneElement, FC, isValidElement } from 'react';
+import { FC } from 'react';
 
-import { usePageInfoContext } from '$context/pageInfoContext';
 import { Heading } from '$elements/Heading';
 import { Icon } from '$elements/Icon';
 import { Link } from '$elements/Link';
 
 type ContentHeaderProps = {
   title?: string;
+  backLink?: string;
+  headerAction?: React.ReactNode;
 };
 
-export const ContentHeader: FC<ContentHeaderProps> = ({ title }) => {
-  const [{ backLink, headerAction }] = usePageInfoContext();
-
+export const ContentHeader: FC<ContentHeaderProps> = ({
+  title,
+  backLink,
+  headerAction,
+}) => {
   return (
     <header
       className={clsx(
@@ -47,7 +50,8 @@ export const ContentHeader: FC<ContentHeaderProps> = ({ title }) => {
       >
         {title ?? '-'}
       </Heading>
-      {headerAction &&
+      {headerAction}
+      {/* {headerAction &&
         isValidElement(headerAction) &&
         cloneElement(headerAction, {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -56,7 +60,7 @@ export const ContentHeader: FC<ContentHeaderProps> = ({ title }) => {
             'theme-layer-color-with-hover theme-focus rounded-md',
             'inline-flex items-center justify-center h-11 w-11',
           ),
-        })}
+        })} */}
     </header>
   );
 };

@@ -1,7 +1,7 @@
 import { test, expect, Page } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
 
-test.describe('Account editing', () => {
+test.describe('Edit Account', () => {
   test.beforeEach(async ({ page }) => {
     await applyFixture('accounts-only');
     await page.goto('/accounts');
@@ -64,7 +64,8 @@ test.describe('Account editing', () => {
       .textContent()) as string;
     await verifyAccountPage(page, oldAccountName, accountBalance, accountType);
 
-    await page.getByTestId('edit-account').click();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     await page.locator('#name').fill(newAccountName);
     await page.getByTestId('account-form').getByTestId('submit').click();
@@ -94,7 +95,8 @@ test.describe('Account editing', () => {
       .textContent()) as string;
     await verifyAccountPage(page, accountName, accountBalance, oldAccountType);
 
-    await page.getByTestId('edit-account').click();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     await page.locator('#type').selectOption(newAccountType);
     await page.getByTestId('account-form').getByTestId('submit').click();
@@ -122,7 +124,8 @@ test.describe('Account editing', () => {
     await verifyAccountPage(page, accountName, oldAccountBalance, accountType);
     verifyDifferentBalances(oldAccountBalance, newAccountBalance);
 
-    await page.getByTestId('edit-account').click();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     await page
       .locator('#balance')
@@ -165,7 +168,8 @@ test.describe('Account editing', () => {
     );
     verifyDifferentBalances(oldAccountBalance, newAccountBalance);
 
-    await page.getByTestId('edit-account').click();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     await page.locator('#name').fill(newAccountName);
     await page.locator('#type').selectOption(newAccountType);
@@ -199,193 +203,206 @@ test.describe('Account editing', () => {
     );
   };
 
-  // eslint-disable-next-line playwright/expect-expect
-  test('Change Cash account name', async ({ page }) => {
-    await editAccountNameAndVerify(
-      page,
-      'Cash account',
-      'Cash Renamed account',
-      'Cash',
-    );
+  test.describe('Update Account Name', () => {
+    // eslint-disable-next-line playwright/expect-expect
+    test('should update cash account name', async ({ page }) => {
+      await editAccountNameAndVerify(
+        page,
+        'Cash account',
+        'Cash Renamed account',
+        'Cash',
+      );
+    });
+
+    // eslint-disable-next-line playwright/expect-expect
+    test('should update saving account name', async ({ page }) => {
+      await editAccountNameAndVerify(
+        page,
+        'Saving account 2',
+        'Saving Renamed account 2',
+        'Savings',
+      );
+    });
+
+    // eslint-disable-next-line playwright/expect-expect
+    test('should update investment account name', async ({ page }) => {
+      await editAccountNameAndVerify(
+        page,
+        'Investment account',
+        'Investment Renamed account',
+        'Investment',
+      );
+    });
+
+    // eslint-disable-next-line playwright/expect-expect
+    test('should update credit account name', async ({ page }) => {
+      await editAccountNameAndVerify(
+        page,
+        'Credit account',
+        'Credit Renamed account',
+        'Credit',
+      );
+    });
+
+    // eslint-disable-next-line playwright/expect-expect
+    test('should update loan account name', async ({ page }) => {
+      await editAccountNameAndVerify(
+        page,
+        'Loan account',
+        'Loan Renamed account',
+        'Loan',
+      );
+    });
   });
 
-  // eslint-disable-next-line playwright/expect-expect
-  test('Change Saving account name', async ({ page }) => {
-    await editAccountNameAndVerify(
-      page,
-      'Saving account 2',
-      'Saving Renamed account 2',
-      'Savings',
-    );
+  test.describe('Update Account Type', () => {
+    // eslint-disable-next-line playwright/expect-expect
+    test('should update cash account type', async ({ page }) => {
+      await editAccountTypeAndVerify(page, 'Cash account', 'Cash', 'Loan');
+    });
+
+    // eslint-disable-next-line playwright/expect-expect
+    test('should update saving account type', async ({ page }) => {
+      await editAccountTypeAndVerify(
+        page,
+        'Saving account 2',
+        'Savings',
+        'Cash',
+      );
+    });
+
+    // eslint-disable-next-line playwright/expect-expect
+    test('should update investment account type', async ({ page }) => {
+      await editAccountTypeAndVerify(
+        page,
+        'Investment account',
+        'Investment',
+        'Savings',
+      );
+    });
+
+    // eslint-disable-next-line playwright/expect-expect
+    test('should update credit account type', async ({ page }) => {
+      await editAccountTypeAndVerify(
+        page,
+        'Credit account',
+        'Credit',
+        'Investment',
+      );
+    });
+
+    // eslint-disable-next-line playwright/expect-expect
+    test('should update loan account type', async ({ page }) => {
+      await editAccountTypeAndVerify(page, 'Loan account', 'Loan', 'Credit');
+    });
   });
 
-  // eslint-disable-next-line playwright/expect-expect
-  test('Change Investment account name', async ({ page }) => {
-    await editAccountNameAndVerify(
-      page,
-      'Investment account',
-      'Investment Renamed account',
-      'Investment',
-    );
+  test.describe('Update Account Balance', () => {
+    // eslint-disable-next-line playwright/expect-expect
+    test('should update cash account balance', async ({ page }) => {
+      await editAccountBalanceAndVerify(
+        page,
+        'Cash account',
+        '−1 040 350,00 €',
+        'Cash',
+      );
+    });
+
+    // eslint-disable-next-line playwright/expect-expect
+    test('should update saving account balance', async ({ page }) => {
+      await editAccountBalanceAndVerify(
+        page,
+        'Saving account 2',
+        '0,10 €',
+        'Savings',
+      );
+    });
+
+    // eslint-disable-next-line playwright/expect-expect
+    test('should update investment account balance', async ({ page }) => {
+      await editAccountBalanceAndVerify(
+        page,
+        'Investment account',
+        '1 000 000,00 €',
+        'Investment',
+      );
+    });
+
+    // eslint-disable-next-line playwright/expect-expect
+    test('should update credit account balance', async ({ page }) => {
+      await editAccountBalanceAndVerify(
+        page,
+        'Credit account',
+        '−251 950,00 €',
+        'Credit',
+      );
+    });
+
+    // eslint-disable-next-line playwright/expect-expect
+    test('should update loan account balance', async ({ page }) => {
+      await editAccountBalanceAndVerify(page, 'Loan account', '0,00 €', 'Loan');
+    });
   });
 
-  // eslint-disable-next-line playwright/expect-expect
-  test('Change Credit account name', async ({ page }) => {
-    await editAccountNameAndVerify(
-      page,
-      'Credit account',
-      'Credit Renamed account',
-      'Credit',
-    );
-  });
+  test.describe('Update All Account Fields', () => {
+    // eslint-disable-next-line playwright/expect-expect
+    test('should update cash account all fields', async ({ page }) => {
+      await editAccountAllDetailsAndVerify(
+        page,
+        'Cash account',
+        'Changed to Savings',
+        '10 000 000,00 €',
+        'Cash',
+        'Savings',
+      );
+    });
 
-  // eslint-disable-next-line playwright/expect-expect
-  test('Change Loan account name', async ({ page }) => {
-    await editAccountNameAndVerify(
-      page,
-      'Loan account',
-      'Loan Renamed account',
-      'Loan',
-    );
-  });
+    // eslint-disable-next-line playwright/expect-expect
+    test('should update saving account all fields', async ({ page }) => {
+      await editAccountAllDetailsAndVerify(
+        page,
+        'Saving account 2',
+        'Changed to Investment',
+        '-99 000,10 €',
+        'Savings',
+        'Investment',
+      );
+    });
 
-  // eslint-disable-next-line playwright/expect-expect
-  test('Change Cash account type', async ({ page }) => {
-    await editAccountTypeAndVerify(page, 'Cash account', 'Cash', 'Loan');
-  });
+    // eslint-disable-next-line playwright/expect-expect
+    test('should update investment account all fields', async ({ page }) => {
+      await editAccountAllDetailsAndVerify(
+        page,
+        'Investment account',
+        'Changed to Credit',
+        '-10,01 €',
+        'Investment',
+        'Credit',
+      );
+    });
 
-  // eslint-disable-next-line playwright/expect-expect
-  test('Change Saving account type', async ({ page }) => {
-    await editAccountTypeAndVerify(page, 'Saving account 2', 'Savings', 'Cash');
-  });
+    // eslint-disable-next-line playwright/expect-expect
+    test('should update credit account all fields', async ({ page }) => {
+      await editAccountAllDetailsAndVerify(
+        page,
+        'Credit account',
+        'Changed to Loan',
+        '999 999,99 €',
+        'Credit',
+        'Loan',
+      );
+    });
 
-  // eslint-disable-next-line playwright/expect-expect
-  test('Change Investment account type', async ({ page }) => {
-    await editAccountTypeAndVerify(
-      page,
-      'Investment account',
-      'Investment',
-      'Savings',
-    );
-  });
-
-  // eslint-disable-next-line playwright/expect-expect
-  test('Change Credit account type', async ({ page }) => {
-    await editAccountTypeAndVerify(
-      page,
-      'Credit account',
-      'Credit',
-      'Investment',
-    );
-  });
-
-  // eslint-disable-next-line playwright/expect-expect
-  test('Change Loan account type', async ({ page }) => {
-    await editAccountTypeAndVerify(page, 'Loan account', 'Loan', 'Credit');
-  });
-
-  // eslint-disable-next-line playwright/expect-expect
-  test('Change Cash account balance', async ({ page }) => {
-    await editAccountBalanceAndVerify(
-      page,
-      'Cash account',
-      '−1 040 350,00 €',
-      'Cash',
-    );
-  });
-
-  // eslint-disable-next-line playwright/expect-expect
-  test('Change Saving account balance', async ({ page }) => {
-    await editAccountBalanceAndVerify(
-      page,
-      'Saving account 2',
-      '0,10 €',
-      'Savings',
-    );
-  });
-
-  // eslint-disable-next-line playwright/expect-expect
-  test('Change Investment account balance', async ({ page }) => {
-    await editAccountBalanceAndVerify(
-      page,
-      'Investment account',
-      '1 000 000,00 €',
-      'Investment',
-    );
-  });
-
-  // eslint-disable-next-line playwright/expect-expect
-  test('Change Credit account balance', async ({ page }) => {
-    await editAccountBalanceAndVerify(
-      page,
-      'Credit account',
-      '−251 950,00 €',
-      'Credit',
-    );
-  });
-
-  // eslint-disable-next-line playwright/expect-expect
-  test('Change Loan account balance', async ({ page }) => {
-    await editAccountBalanceAndVerify(page, 'Loan account', '0,00 €', 'Loan');
-  });
-
-  // eslint-disable-next-line playwright/expect-expect
-  test('Change Cash account all fields', async ({ page }) => {
-    await editAccountAllDetailsAndVerify(
-      page,
-      'Cash account',
-      'Changed to Savings',
-      '10 000 000,00 €',
-      'Cash',
-      'Savings',
-    );
-  });
-
-  // eslint-disable-next-line playwright/expect-expect
-  test('Change Saving account all fields', async ({ page }) => {
-    await editAccountAllDetailsAndVerify(
-      page,
-      'Saving account 2',
-      'Changed to Investment',
-      '-99 000,10 €',
-      'Savings',
-      'Investment',
-    );
-  });
-
-  // eslint-disable-next-line playwright/expect-expect
-  test('Change Investment account all fields', async ({ page }) => {
-    await editAccountAllDetailsAndVerify(
-      page,
-      'Investment account',
-      'Changed to Credit',
-      '-10,01 €',
-      'Investment',
-      'Credit',
-    );
-  });
-
-  // eslint-disable-next-line playwright/expect-expect
-  test('Change Credit account all fields', async ({ page }) => {
-    await editAccountAllDetailsAndVerify(
-      page,
-      'Credit account',
-      'Changed to Loan',
-      '999 999,99 €',
-      'Credit',
-      'Loan',
-    );
-  });
-
-  // eslint-disable-next-line playwright/expect-expect
-  test('Change Loan account all fields', async ({ page }) => {
-    await editAccountAllDetailsAndVerify(
-      page,
-      'Loan account',
-      'Changed to Credit',
-      '-55,55 €',
-      'Loan',
-      'Credit',
-    );
+    // eslint-disable-next-line playwright/expect-expect
+    test('should update loan account all fields', async ({ page }) => {
+      await editAccountAllDetailsAndVerify(
+        page,
+        'Loan account',
+        'Changed to Credit',
+        '-55,55 €',
+        'Loan',
+        'Credit',
+      );
+    });
   });
 });
