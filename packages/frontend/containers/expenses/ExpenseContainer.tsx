@@ -1,11 +1,11 @@
 import { FC } from 'react';
 
 import { TransactionType } from '$api/generated/financerApi';
-import { TransactionDeletePopperItem } from '$blocks/TransactionDeletePopperItem';
 import { Popper } from '$elements/Popper';
 import { Layout } from '$layouts/Layout';
+import { TransactionDeletePopperItem } from '$modules/transaction/TransactionDeletePopperItem';
 import { ExpenseService } from '$ssr/api/expense.service ';
-import { Transaction } from 'src/components/views/Transaction';
+import { Transaction } from '$views/Transaction';
 
 type ExpenseContainerProps = {
   id: string;

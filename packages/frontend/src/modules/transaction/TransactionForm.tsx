@@ -4,13 +4,14 @@ import clsx from 'clsx';
 import { FC, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
+import { TransactionCategories } from './transaction-categories/transaction-categories';
+import { CategoriesFormFullFields } from './transaction-categories/transaction-categories.types';
+
 import {
   VisibilityType,
   useAccountsFindAllByUserQuery,
 } from '$api/generated/financerApi';
 import { Form } from '$blocks/form/form';
-import { TransactionCategories } from '$blocks/transaction-categories/transaction-categories';
-import { CategoriesFormFullFields } from '$blocks/transaction-categories/transaction-categories.types';
 import { accountTypeIconMapping } from '$constants/account/accountTypeMapping';
 import { Input } from '$elements/input/input';
 import { Option, Select } from '$elements/select/select';

@@ -1,12 +1,13 @@
 import clsx from 'clsx';
 import { FC } from 'react';
 
+import { TransactionList } from '../TransactionList/TransactionList';
+
 import { TransactionListWithMonthlySummary } from './TransactionListWithMonthlySummary';
 
 import { TransactionType } from '$api/generated/financerApi';
 import { Pager } from '$blocks/pager/pager';
 import { PagerService } from '$blocks/pager/pager.service';
-import { TransactionList } from '$blocks/TransactionList/TransactionList';
 import { monthNames } from '$constants/months';
 import {
   TransactionListOptions,

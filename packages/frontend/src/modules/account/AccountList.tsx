@@ -8,12 +8,12 @@ import { Icon } from '$elements/Icon';
 import { Link } from '$elements/Link';
 import { formatCurrency } from '$utils/formatCurrency';
 
-export interface AccountListingItem {
+export type AccountListingItem = {
   balanceAmount: string;
   accountName: string;
   url: string;
   id: string;
-}
+};
 
 type AccountListProps = {
   label?: string;

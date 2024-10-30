@@ -1,16 +1,15 @@
 import clsx from 'clsx';
 import { FC, useMemo } from 'react';
 
-import { AccountBalanceHistoryChart } from '../../views/accounts/account.balance-history-chart';
-
 import { AccountDto, Theme } from '$api/generated/financerApi';
 import { BalanceDisplay } from '$blocks/BalanceDisplay';
 import { DetailsList } from '$blocks/details-list/details-list';
 import { DetailsItem } from '$blocks/details-list/details-list.item';
-import { TransactionListWithMonthlyPager } from '$blocks/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
 import { accountTypeIconMapping } from '$constants/account/accountTypeMapping';
 import { IconName } from '$elements/Icon';
 import { LoaderSuspense } from '$elements/loader/loader-suspense';
+import { AccountBalanceHistoryChart } from '$modules/account/AccountBalanceHistoryChart';
+import { TransactionListWithMonthlyPager } from '$modules/transaction/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
 import { capitalize } from '$utils/capitalize';
 
 type AccountProps = {

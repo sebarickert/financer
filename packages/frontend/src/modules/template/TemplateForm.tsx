@@ -10,8 +10,6 @@ import {
   VisibilityType,
 } from '$api/generated/financerApi';
 import { Form } from '$blocks/form/form';
-import { TransactionCategories } from '$blocks/transaction-categories/transaction-categories';
-import { CategoriesFormOnlyCategory } from '$blocks/transaction-categories/transaction-categories.types';
 import { Input } from '$elements/input/input';
 import { Select, Option } from '$elements/select/select';
 import { useGetAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useGetAllTransactionCategoriesWithCategoryTree';
@@ -19,6 +17,8 @@ import {
   DefaultFormActionHandler,
   useFinancerFormState,
 } from '$hooks/useFinancerFormState';
+import { TransactionCategories } from '$modules/transaction/transaction-categories/transaction-categories';
+import { CategoriesFormOnlyCategory } from '$modules/transaction/transaction-categories/transaction-categories.types';
 import { capitalize } from '$utils/capitalize';
 
 type TemplateFormProps = {

@@ -3,23 +3,22 @@
 import clsx from 'clsx';
 import { FC, useId } from 'react';
 
-import { Drawer } from './drawer/drawer';
-
+import { handleCategoryDelete } from '$actions/category/handleCategoryDelete';
+import { Drawer } from '$blocks/drawer/drawer';
 import { Button } from '$elements/button/button';
 import { ButtonGroup } from '$elements/button/button.group';
 import { Icon } from '$elements/Icon';
-import { handleAccountDelete } from 'src/actions/account/handleAccountDelete';
 
-type AccountDeletePopperItemProps = {
+type CategoryDeletePopperItemProps = {
   id: string;
 };
 
-export const AccountDeletePopperItem: FC<AccountDeletePopperItemProps> = ({
+export const CategoryDeletePopperItem: FC<CategoryDeletePopperItemProps> = ({
   id,
 }) => {
   const popperId = useId();
 
-  const handleClick = () => handleAccountDelete(id);
+  const handleClick = () => handleCategoryDelete(id);
 
   return (
     <>
@@ -34,9 +33,9 @@ export const AccountDeletePopperItem: FC<AccountDeletePopperItemProps> = ({
       </button>
       <Drawer
         id={popperId}
-        heading={'Delete Account'}
+        heading={'Delete Category'}
         description={
-          'Are you sure you want to permanently delete this account?'
+          'Are you sure you want to permanently delete this category?'
         }
       >
         <ButtonGroup isReverse isHorizontal>

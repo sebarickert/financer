@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { Layout } from '$layouts/Layout';
 import { UserService } from '$ssr/api/user.service';
-import { Settings } from 'src/components/views/Settings';
+import { Settings } from '$views/Settings';
 
 export const SettingsContainer: FC = async () => {
   const userInfo = await UserService.getOwnUser();

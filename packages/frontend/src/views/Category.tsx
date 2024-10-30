@@ -1,7 +1,5 @@
 import { FC, useMemo } from 'react';
 
-import { CategoryGraph } from '../../views/settings/categories/category.graph';
-
 import {
   Theme,
   TransactionCategoryDto,
@@ -9,8 +7,9 @@ import {
 } from '$api/generated/financerApi';
 import { DetailsList } from '$blocks/details-list/details-list';
 import { DetailsItem } from '$blocks/details-list/details-list.item';
-import { TransactionListWithMonthlyPager } from '$blocks/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
 import { IconName } from '$elements/Icon';
+import { CategoryGraph } from '$modules/category/CategoryGraph';
+import { TransactionListWithMonthlyPager } from '$modules/transaction/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
 import { capitalize } from '$utils/capitalize';
 import { parseParentCategoryPath } from 'src/services/TransactionCategoriesService';
 

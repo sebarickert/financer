@@ -2,14 +2,14 @@ import { notFound, redirect, RedirectType } from 'next/navigation';
 import { FC } from 'react';
 
 import { TransferDetailsDto } from '$api/generated/financerApi';
-import {
-  isCategoriesFormFullFields,
-  parseCategoriesFormFullFields,
-} from '$blocks/transaction-categories/transaction-categories.types';
-import { TransactionForm } from '$blocks/TransactionForm';
 import { ValidationException } from '$exceptions/validation.exception';
 import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
 import { Layout } from '$layouts/Layout';
+import {
+  isCategoriesFormFullFields,
+  parseCategoriesFormFullFields,
+} from '$modules/transaction/transaction-categories/transaction-categories.types';
+import { TransactionForm } from '$modules/transaction/TransactionForm';
 import { TransferService } from '$ssr/api/transfer.service';
 import { DateFormat, formatDate } from '$utils/formatDate';
 import { parseArrayFromFormData } from '$utils/parseArrayFromFormData';

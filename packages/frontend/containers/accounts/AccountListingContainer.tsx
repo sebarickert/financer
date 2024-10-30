@@ -2,10 +2,10 @@ import clsx from 'clsx';
 import { FC } from 'react';
 
 import { AccountType } from '$api/generated/financerApi';
-import { AccountList } from '$blocks/AccountList';
 import { Icon } from '$elements/Icon';
 import { Link } from '$elements/Link';
 import { Layout } from '$layouts/Layout';
+import { AccountList } from '$modules/account/AccountList';
 import { AccountService } from '$ssr/api/account.service';
 
 const accountCategories = {

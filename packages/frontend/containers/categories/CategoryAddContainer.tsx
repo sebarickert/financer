@@ -1,7 +1,7 @@
 import { handleCategoryAdd } from '$actions/category/handleCategoryAdd';
-import { CategoryForm } from '$blocks/CategoryForm';
 import { settingsPaths } from '$constants/settings-paths';
 import { Layout } from '$layouts/Layout';
+import { CategoryForm } from '$modules/category/CategoryForm';
 
 export const CategoryAddContainer = () => {
   return (

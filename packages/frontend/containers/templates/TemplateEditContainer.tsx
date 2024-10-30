@@ -2,9 +2,9 @@ import { notFound } from 'next/navigation';
 import { FC } from 'react';
 
 import { handleTemplateEdit } from '$actions/template/handleTemplateEdit';
-import { TemplateForm } from '$blocks/TemplateForm';
 import { settingsPaths } from '$constants/settings-paths';
 import { Layout } from '$layouts/Layout';
+import { TemplateForm } from '$modules/template/TemplateForm';
 import { TransactionTemplateService } from '$ssr/api/transaction-template.service';
 
 type TemplateEditContainerProps = {

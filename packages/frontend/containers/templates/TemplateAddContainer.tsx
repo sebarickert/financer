@@ -1,7 +1,7 @@
 import { handleTemplateAdd } from '$actions/template/handleTemplateAdd';
-import { TemplateForm } from '$blocks/TemplateForm';
 import { settingsPaths } from '$constants/settings-paths';
 import { Layout } from '$layouts/Layout';
+import { TemplateForm } from '$modules/template/TemplateForm';
 
 export const TemplateAddContainer = () => {
   return (

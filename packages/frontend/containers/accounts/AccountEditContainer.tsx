@@ -1,10 +1,10 @@
 import { notFound } from 'next/navigation';
 import { FC } from 'react';
 
-import { AccountForm } from '$blocks/AccountForm';
+import { handleAccountEdit } from '$actions/account/handleAccountEdit';
 import { Layout } from '$layouts/Layout';
+import { AccountForm } from '$modules/account/AccountForm';
 import { AccountService } from '$ssr/api/account.service';
-import { handleAccountEdit } from 'src/actions/account/handleAccountEdit';
 
 type AccountEditContainerProps = {
   id: string;

@@ -6,10 +6,10 @@ import {
   TransactionTemplateType,
   TransactionType,
 } from '$api/generated/financerApi';
-import { isCategoriesFormOnlyCategory } from '$blocks/transaction-categories/transaction-categories.types';
 import { settingsPaths } from '$constants/settings-paths';
 import { ValidationException } from '$exceptions/validation.exception';
 import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
+import { isCategoriesFormOnlyCategory } from '$modules/transaction/transaction-categories/transaction-categories.types';
 import { TransactionTemplateService } from '$ssr/api/transaction-template.service';
 import { parseArrayFromFormData } from '$utils/parseArrayFromFormData';
 

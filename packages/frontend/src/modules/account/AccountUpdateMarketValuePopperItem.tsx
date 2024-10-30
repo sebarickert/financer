@@ -4,10 +4,9 @@ import clsx from 'clsx';
 import { FC, useId } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { Drawer } from './drawer/drawer';
-import { Form } from './form/form';
-
 import { AccountDto } from '$api/generated/financerApi';
+import { Drawer } from '$blocks/drawer/drawer';
+import { Form } from '$blocks/form/form';
 import { Icon } from '$elements/Icon';
 import { Input } from '$elements/input/input';
 import { useFinancerFormState } from '$hooks/useFinancerFormState';

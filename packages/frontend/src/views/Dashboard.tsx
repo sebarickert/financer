@@ -2,8 +2,8 @@ import { FC } from 'react';
 
 import { BalanceGraph } from '$blocks/balance-graph/balance-graph';
 import { DashboardStats } from '$blocks/dashboard-stats/dashboard.stats';
-import { TransactionList } from '$blocks/TransactionList/TransactionList';
 import { Heading } from '$elements/Heading';
+import { TransactionList } from '$modules/transaction/TransactionList/TransactionList';
 
 export const Dashboard: FC = () => {
   return (

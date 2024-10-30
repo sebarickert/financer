@@ -1,11 +1,11 @@
 import clsx from 'clsx';
 import { FC } from 'react';
 
-import { TemplateList } from '$blocks/TemplateList';
 import { settingsPaths } from '$constants/settings-paths';
 import { Icon } from '$elements/Icon';
 import { Link } from '$elements/Link';
 import { Layout } from '$layouts/Layout';
+import { TemplateList } from '$modules/template/TemplateList';
 import { TransactionTemplateService } from '$ssr/api/transaction-template.service';
 
 export const TemplateListingContainer: FC = async () => {

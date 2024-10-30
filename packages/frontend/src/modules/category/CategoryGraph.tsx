@@ -16,17 +16,17 @@ import { formatDate } from '$utils/formatDate';
 import { generateDateFromYearAndMonth } from '$utils/generateDateFromYearAndMonth';
 import { setGradientLineGraphBackground } from '$utils/graph/setGradientLineGraphBackground';
 
-interface CategoryHistory {
+type CategoryHistory = {
   dateStr: string;
   date: Date;
   balance: number;
-}
+};
 
-interface CategoryGraphProps {
+type CategoryGraphProps = {
   transactionsMonthlySummaries?: TransactionMonthSummaryDto[];
   category: TransactionCategoryDto;
   userTheme: Theme;
-}
+};
 
 export const CategoryGraph: FC<CategoryGraphProps> = ({
   transactionsMonthlySummaries,

@@ -15,16 +15,16 @@ import { ChartWrapperDynamic } from '$elements/chart/chart-wrapper.dynamic';
 import { formatDate } from '$utils/formatDate';
 import { setGradientLineGraphBackground } from '$utils/graph/setGradientLineGraphBackground';
 
-interface AccountBalanceHistory {
+type AccountBalanceHistory = {
   dateStr: string;
   date: Date;
   balance: number;
-}
+};
 
-interface AccountBalanceHistoryChartProps {
+type AccountBalanceHistoryChartProps = {
   accountId: AccountDto['id'];
   userTheme: Theme;
-}
+};
 
 export const AccountBalanceHistoryChart: FC<
   AccountBalanceHistoryChartProps

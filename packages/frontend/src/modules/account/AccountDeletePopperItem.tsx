@@ -3,25 +3,22 @@
 import clsx from 'clsx';
 import { FC, useId } from 'react';
 
-import { Drawer } from './drawer/drawer';
-
-import { TransactionType } from '$api/generated/financerApi';
+import { Drawer } from '$blocks/drawer/drawer';
 import { Button } from '$elements/button/button';
 import { ButtonGroup } from '$elements/button/button.group';
 import { Icon } from '$elements/Icon';
-import { handleTransactionDelete } from 'src/actions/transaction/handleTransactionDelete';
+import { handleAccountDelete } from 'src/actions/account/handleAccountDelete';
 
-type TransactionDeletePopperItemProps = {
-  type: TransactionType;
+type AccountDeletePopperItemProps = {
   id: string;
 };
 
-export const TransactionDeletePopperItem: FC<
-  TransactionDeletePopperItemProps
-> = ({ type, id }) => {
+export const AccountDeletePopperItem: FC<AccountDeletePopperItemProps> = ({
+  id,
+}) => {
   const popperId = useId();
 
-  const handleClick = () => handleTransactionDelete(id, type);
+  const handleClick = () => handleAccountDelete(id);
 
   return (
     <>
@@ -36,9 +33,9 @@ export const TransactionDeletePopperItem: FC<
       </button>
       <Drawer
         id={popperId}
-        heading={'Delete Transaction'}
+        heading={'Delete Account'}
         description={
-          'Are you sure you want to permanently delete this transaction?'
+          'Are you sure you want to permanently delete this account?'
         }
       >
         <ButtonGroup isReverse isHorizontal>

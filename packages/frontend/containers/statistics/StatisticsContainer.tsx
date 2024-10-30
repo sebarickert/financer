@@ -1,8 +1,8 @@
 import { FC } from 'react';
 
 import { MonthlySummaryGraph } from '$blocks/monthly-summary-graph/monthly-summary-graph';
-import { TransactionListWithMonthlyPager } from '$blocks/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
 import { Layout } from '$layouts/Layout';
+import { TransactionListWithMonthlyPager } from '$modules/transaction/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
 import { UserService } from '$ssr/api/user.service';
 
 export const StatisticsContainer: FC = async () => {

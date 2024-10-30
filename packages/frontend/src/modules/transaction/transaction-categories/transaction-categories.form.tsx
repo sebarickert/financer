@@ -1,15 +1,13 @@
 import { FC } from 'react';
 
-import { Button } from '../../elements/button/button';
-import { Divider } from '../../elements/divider/divider';
-import { Input } from '../../elements/input/input';
-import { Option } from '../../elements/select/select';
-import { Select } from '../../elements/select/select';
-
+import { Button } from '$elements/button/button';
 import { ButtonGroup } from '$elements/button/button.group';
+import { Divider } from '$elements/divider/divider';
 import { Icon } from '$elements/Icon';
+import { Input } from '$elements/input/input';
+import { Select, Option } from '$elements/select/select';
 
-interface TransactionCategoriesFormProps {
+type TransactionCategoriesFormProps = {
   className?: string;
   index: number;
   categories: Option[];
@@ -22,7 +20,7 @@ interface TransactionCategoriesFormProps {
   handleDelete(): void;
   handleSubmit: () => void;
   formId: string;
-}
+};
 
 export const TransactionCategoriesForm: FC<TransactionCategoriesFormProps> = ({
   className = '',
