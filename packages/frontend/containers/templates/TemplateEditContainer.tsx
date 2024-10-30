@@ -3,6 +3,7 @@ import { FC } from 'react';
 
 import { handleTemplateEdit } from '$actions/template/handleTemplateEdit';
 import { settingsPaths } from '$constants/settings-paths';
+import { TemplateDelete } from '$features/template/TemplateDelete';
 import { TemplateForm } from '$features/template/TemplateForm';
 import { Layout } from '$layouts/Layout';
 import { TransactionTemplateService } from '$ssr/api/transaction-template.service';
@@ -20,8 +21,6 @@ export const TemplateEditContainer: FC<TemplateEditContainerProps> = async ({
     notFound();
   }
 
-  // const handleDelete = () => handleTemplateDelete(template.id);
-
   const initialValues = {
     ...template,
     templateType: template.templateType.at(0),
@@ -37,8 +36,7 @@ export const TemplateEditContainer: FC<TemplateEditContainerProps> = async ({
     <Layout
       title="Edit Template"
       backLink={settingsPaths.templates}
-      // TODO Figure out why this crashes the page and failes fetch
-      // headerAction={<TemplateDelete onSubmit={handleDelete} />}
+      headerAction={<TemplateDelete id={template.id} />}
     >
       <TemplateForm
         onSubmit={handleSubmit}

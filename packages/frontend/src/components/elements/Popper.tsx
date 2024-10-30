@@ -39,6 +39,7 @@ export const Popper: FC<PopperProps> = ({ className, items, children }) => {
         testId="popper-button"
       >
         <Icon name="EllipsisVerticalIcon" />
+        {/* TODO Add screen reader text  */}
       </Button>
       <div
         className={clsx(
