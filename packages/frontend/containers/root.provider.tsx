@@ -11,7 +11,6 @@ import {
   addToastMessage,
   removeToastMessage,
 } from '$reducer/notifications.reducer';
-import { ScrollToTop } from '$renderers/scroll-to-top/scroll-to-top';
 
 type RootProviderContainerProps = {
   children: React.ReactNode;
@@ -72,7 +71,7 @@ export const RootProviderContainer: FC<RootProviderContainerProps> = (
   return (
     <StoreProvider>
       <ViewTransitions>
-        <ScrollToTop />
+        {/* <ScrollToTop /> */}
         <App {...props} />
       </ViewTransitions>
     </StoreProvider>
