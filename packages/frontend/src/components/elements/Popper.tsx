@@ -36,6 +36,7 @@ export const Popper: FC<PopperProps> = ({ className, items, children }) => {
           'anchor-name-[popover-anchor]',
         )}
         id="popover-anchor"
+        testId="popper-button"
       >
         <Icon name="EllipsisVerticalIcon" />
       </Button>
@@ -53,6 +54,7 @@ export const Popper: FC<PopperProps> = ({ className, items, children }) => {
         )}
         popover="auto"
         id={popperId}
+        data-testid="popper-container"
       >
         <List hasItemRoundness>
           {items.map(({ icon, label, href }, index) => {

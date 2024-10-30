@@ -40,7 +40,7 @@ export const AccountDeletePopperItem: FC<AccountDeletePopperItemProps> = ({
       >
         <ButtonGroup isReverse isHorizontal>
           <Button haptic="heavy" accentColor={'danger'} onClick={handleClick}>
-            {'Delete'}
+            Delete
           </Button>
           <Button
             haptic="light"
