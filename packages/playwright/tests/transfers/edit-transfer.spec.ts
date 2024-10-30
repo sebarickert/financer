@@ -88,7 +88,8 @@ test.describe('Edit transfer', () => {
 
     await page.getByTestId(targetTransactionId).click();
 
-    await page.getByTestId('edit-transfer-button').click();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     const editTransferForm = page.getByTestId('edit-transfer-form');
 
@@ -104,7 +105,8 @@ test.describe('Edit transfer', () => {
 
     await editTransferForm.getByTestId('submit').click();
 
-    await page.getByTestId('edit-transfer-button').waitFor();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     const toAccountAfter = await getAccount(targetToAccountId);
     const fromAccountAfter = await getAccount(targetFromAccountId);
@@ -159,7 +161,8 @@ test.describe('Edit transfer', () => {
 
     await page.getByTestId(targetTransactionId).click();
 
-    await page.getByTestId('edit-transfer-button').click();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     const editTransferForm = page.getByTestId('edit-transfer-form');
 
@@ -168,7 +171,8 @@ test.describe('Edit transfer', () => {
 
     await editTransferForm.getByTestId('submit').click();
 
-    await page.getByTestId('edit-transfer-button').waitFor();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     const toAccountAfter = await getAccount(targetToAccountId);
     const fromAccountAfter = await getAccount(targetFromAccountId);
