@@ -1,8 +1,7 @@
 import { Metadata } from 'next';
 import { FC } from 'react';
 
-import { TransferEditContainer } from '$container/transfers/transfer.edit.container';
-import { Layout } from '$layouts/Layout';
+import { TransferEditContainer } from '$container/transfers/TransferEditContainer';
 
 // TODO change to dynamic title
 export const metadata: Metadata = {
@@ -18,11 +17,7 @@ type EditTransferPageProps = {
 const EditTransferPage: FC<EditTransferPageProps> = ({
   params: { transferId },
 }) => {
-  return (
-    <Layout title="Edit Transfer">
-      <TransferEditContainer id={transferId} />
-    </Layout>
-  );
+  return <TransferEditContainer id={transferId} />;
 };
 
 export default EditTransferPage;

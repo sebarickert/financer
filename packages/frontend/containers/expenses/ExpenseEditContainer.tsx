@@ -6,18 +6,17 @@ import {
   isCategoriesFormFullFields,
   parseCategoriesFormFullFields,
 } from '$blocks/transaction-categories/transaction-categories.types';
-import { TransactionDelete } from '$blocks/transaction-delete/transaction-delete';
 import { TransactionForm } from '$blocks/TransactionForm';
 import { ValidationException } from '$exceptions/validation.exception';
 import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
-import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { Layout } from '$layouts/Layout';
 import { ExpenseService } from '$ssr/api/expense.service ';
 import { DateFormat, formatDate } from '$utils/formatDate';
 import { parseArrayFromFormData } from '$utils/parseArrayFromFormData';
 
-interface EditExpenseContainerProps {
+type EditExpenseContainerProps = {
   id: string;
-}
+};
 
 export const EditExpenseContainer: FC<EditExpenseContainerProps> = async ({
   id,
@@ -63,18 +62,6 @@ export const EditExpenseContainer: FC<EditExpenseContainerProps> = async ({
     redirect(`/statistics/expenses/${data.id}`, RedirectType.push);
   };
 
-  const handleDelete = async () => {
-    'use server';
-
-    if (!id) {
-      console.error('Failed to delete expense: no id');
-      return;
-    }
-    await ExpenseService.delete(id);
-
-    redirect('/statistics', RedirectType.push);
-  };
-
   const initialValues = {
     ...expense,
     categories: expense.categories.map(
@@ -88,19 +75,13 @@ export const EditExpenseContainer: FC<EditExpenseContainerProps> = async ({
   };
 
   return (
-    <>
-      <UpdatePageInfo
-        backLink={`/statistics/expenses/${expense?.id}`}
-        headerAction={<TransactionDelete onDelete={handleDelete} />}
+    <Layout title="Edit Expense" backLink={`/statistics/expenses/${id}`}>
+      <TransactionForm
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+        hasFromAccountField
+        testId="edit-expense-form"
       />
-      {expense && (
-        <TransactionForm
-          initialValues={initialValues}
-          onSubmit={handleSubmit}
-          hasFromAccountField
-          testId="edit-expense-form"
-        />
-      )}
-    </>
+    </Layout>
   );
 };

@@ -2,13 +2,12 @@ import { FC } from 'react';
 
 import { TransactionType } from '$api/generated/financerApi';
 import { TransactionListWithMonthlyPager } from '$blocks/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
-import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { Layout } from '$layouts/Layout';
 
 export const ExpenseListingContainer: FC = () => {
   return (
-    <>
-      <UpdatePageInfo backLink="/statistics" />
+    <Layout title="Expenses" backLink="/statistics">
       <TransactionListWithMonthlyPager type={TransactionType.Expense} />
-    </>
+    </Layout>
   );
 };

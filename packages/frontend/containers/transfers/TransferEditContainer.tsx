@@ -6,18 +6,17 @@ import {
   isCategoriesFormFullFields,
   parseCategoriesFormFullFields,
 } from '$blocks/transaction-categories/transaction-categories.types';
-import { TransactionDelete } from '$blocks/transaction-delete/transaction-delete';
 import { TransactionForm } from '$blocks/TransactionForm';
 import { ValidationException } from '$exceptions/validation.exception';
 import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
-import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { Layout } from '$layouts/Layout';
 import { TransferService } from '$ssr/api/transfer.service';
 import { DateFormat, formatDate } from '$utils/formatDate';
 import { parseArrayFromFormData } from '$utils/parseArrayFromFormData';
 
-interface TransferEditContainerProps {
+type TransferEditContainerProps = {
   id: string;
-}
+};
 
 export const TransferEditContainer: FC<TransferEditContainerProps> = async ({
   id,
@@ -64,18 +63,6 @@ export const TransferEditContainer: FC<TransferEditContainerProps> = async ({
     redirect(`/statistics/transfers/${data.id}`, RedirectType.push);
   };
 
-  const handleDelete = async () => {
-    'use server';
-
-    if (!id) {
-      console.error('Failed to delete transfer: no id');
-      return;
-    }
-    await TransferService.delete(id);
-
-    redirect('/statistics', RedirectType.push);
-  };
-
   const initialValues = {
     ...transfer,
     categories: transfer.categories.map(
@@ -89,11 +76,7 @@ export const TransferEditContainer: FC<TransferEditContainerProps> = async ({
   };
 
   return (
-    <>
-      <UpdatePageInfo
-        backLink={`/statistics/transfer/${transfer?.id}`}
-        headerAction={<TransactionDelete onDelete={handleDelete} />}
-      />
+    <Layout title="Edit Transfer" backLink={`/statistics/transfers/${id}`}>
       <TransactionForm
         initialValues={initialValues}
         onSubmit={handleSubmit}
@@ -101,6 +84,6 @@ export const TransferEditContainer: FC<TransferEditContainerProps> = async ({
         hasFromAccountField
         testId="edit-transfer-form"
       />
-    </>
+    </Layout>
   );
 };

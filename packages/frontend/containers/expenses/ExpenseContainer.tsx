@@ -5,37 +5,37 @@ import { Transaction } from '$blocks/Transaction';
 import { TransactionDeletePopperItem } from '$blocks/TransactionDeletePopperItem';
 import { Popper } from '$elements/Popper';
 import { Layout } from '$layouts/Layout';
-import { IncomeService } from '$ssr/api/income.service';
+import { ExpenseService } from '$ssr/api/expense.service ';
 
-type IncomeContainerProps = {
+type ExpenseContainerProps = {
   id: string;
 };
 
-export const IncomeContainer: FC<IncomeContainerProps> = async ({ id }) => {
-  const income = await IncomeService.getById(id);
+export const ExpenseContainer: FC<ExpenseContainerProps> = async ({ id }) => {
+  const expense = await ExpenseService.getById(id);
 
   return (
     <Layout
-      title="Income Details"
+      title="Expense Details"
       backLink="/statistics"
       headerAction={
         <Popper
           items={[
             {
-              href: `/statistics/${income.type.toLowerCase()}s/${id}/edit`,
+              href: `/statistics/${expense.type.toLowerCase()}s/${id}/edit`,
               icon: 'PencilIcon',
               label: 'Edit',
             },
           ]}
         >
           <TransactionDeletePopperItem
-            id={income.id}
-            type={TransactionType.Income}
+            id={expense.id}
+            type={TransactionType.Expense}
           />
         </Popper>
       }
     >
-      <Transaction {...income} />
+      <Transaction {...expense} />
     </Layout>
   );
 };

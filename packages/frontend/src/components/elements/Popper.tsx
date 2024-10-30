@@ -14,7 +14,6 @@ type PopperItem = {
 };
 
 type PopperProps = {
-  id: string;
   className?: string;
   items: PopperItem[];
   children?: React.ReactNode | React.ReactNode[];

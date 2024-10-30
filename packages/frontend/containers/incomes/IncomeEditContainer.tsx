@@ -62,18 +62,6 @@ export const IncomeEditContainer: FC<IncomeEditContainerProps> = async ({
     redirect(`/statistics/incomes/${data.id}`, RedirectType.push);
   };
 
-  const handleDelete = async () => {
-    'use server';
-
-    if (!id) {
-      console.error('Failed to delete expense: no id');
-      return;
-    }
-    await IncomeService.delete(id);
-
-    redirect('/statistics', RedirectType.push);
-  };
-
   const initialValues = {
     ...income,
     categories: income.categories.map(
@@ -88,10 +76,6 @@ export const IncomeEditContainer: FC<IncomeEditContainerProps> = async ({
 
   return (
     <Layout title="Edit Income" backLink={`/statistics/incomes/${id}`}>
-      {/* <UpdatePageInfo
-        backLink={`/statistics/incomes/${income?.id}`}
-        headerAction={<TransactionDelete onDelete={handleDelete} />}
-      /> */}
       <TransactionForm
         initialValues={initialValues}
         onSubmit={handleSubmit}
