@@ -7,7 +7,6 @@ import { useDispatch } from 'react-redux';
 import { StoreProvider } from './store.provider';
 
 import { ToastMessageTypes } from '$blocks/toast/toast';
-import { PageInfoProvider } from '$context/pageInfoContext';
 import {
   addToastMessage,
   removeToastMessage,
@@ -73,10 +72,8 @@ export const RootProviderContainer: FC<RootProviderContainerProps> = (
   return (
     <StoreProvider>
       <ViewTransitions>
-        <PageInfoProvider>
-          <ScrollToTop />
-          <App {...props} />
-        </PageInfoProvider>
+        <ScrollToTop />
+        <App {...props} />
       </ViewTransitions>
     </StoreProvider>
   );
