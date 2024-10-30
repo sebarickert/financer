@@ -3,8 +3,8 @@ import { FC } from 'react';
 
 import { handleCategoryEdit } from '$actions/category/handleCategoryEdit';
 import { settingsPaths } from '$constants/settings-paths';
+import { CategoryForm } from '$features/category/CategoryForm';
 import { Layout } from '$layouts/Layout';
-import { CategoryForm } from '$modules/category/CategoryForm';
 import { CategoryService } from '$ssr/api/category.service';
 
 type CategoryEditContainerProps = {

@@ -3,13 +3,13 @@ import { FC } from 'react';
 
 import { ExpenseDetailsDto } from '$api/generated/financerApi';
 import { ValidationException } from '$exceptions/validation.exception';
-import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
-import { Layout } from '$layouts/Layout';
 import {
   isCategoriesFormFullFields,
   parseCategoriesFormFullFields,
-} from '$modules/transaction/transaction-categories/transaction-categories.types';
-import { TransactionForm } from '$modules/transaction/TransactionForm';
+} from '$features/transaction/transaction-categories/transaction-categories.types';
+import { TransactionForm } from '$features/transaction/TransactionForm';
+import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
+import { Layout } from '$layouts/Layout';
 import { ExpenseService } from '$ssr/api/expense.service ';
 import { DateFormat, formatDate } from '$utils/formatDate';
 import { parseArrayFromFormData } from '$utils/parseArrayFromFormData';

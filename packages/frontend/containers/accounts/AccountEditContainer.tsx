@@ -2,8 +2,8 @@ import { notFound } from 'next/navigation';
 import { FC } from 'react';
 
 import { handleAccountEdit } from '$actions/account/handleAccountEdit';
+import { AccountForm } from '$features/account/AccountForm';
 import { Layout } from '$layouts/Layout';
-import { AccountForm } from '$modules/account/AccountForm';
 import { AccountService } from '$ssr/api/account.service';
 
 type AccountEditContainerProps = {

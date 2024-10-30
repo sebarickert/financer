@@ -4,7 +4,7 @@ import { FC, useId } from 'react';
 import { Drawer } from '$blocks/drawer/drawer';
 import { Button } from '$elements/button/button';
 import { Icon } from '$elements/Icon';
-import { TransactionFormSwitcher } from '$modules/transaction/TransactionFormSwitcher';
+import { TransactionFormSwitcher } from '$features/transaction/TransactionFormSwitcher';
 import { UserPreferenceService } from '$ssr/api/user-preference.service';
 
 type NavigationCreateTransactionButtonProps = {

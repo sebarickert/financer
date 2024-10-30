@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { BalanceGraph } from '$blocks/balance-graph/balance-graph';
 import { DashboardStats } from '$blocks/dashboard-stats/dashboard.stats';
 import { Heading } from '$elements/Heading';
-import { TransactionList } from '$modules/transaction/TransactionList/TransactionList';
+import { TransactionList } from '$features/transaction/TransactionList/TransactionList';
 
 export const Dashboard: FC = () => {
   return (

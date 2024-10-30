@@ -3,8 +3,8 @@ import { FC } from 'react';
 
 import { handleTemplateEdit } from '$actions/template/handleTemplateEdit';
 import { settingsPaths } from '$constants/settings-paths';
+import { TemplateForm } from '$features/template/TemplateForm';
 import { Layout } from '$layouts/Layout';
-import { TemplateForm } from '$modules/template/TemplateForm';
 import { TransactionTemplateService } from '$ssr/api/transaction-template.service';
 
 type TemplateEditContainerProps = {

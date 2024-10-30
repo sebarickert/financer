@@ -8,7 +8,7 @@
       "$blocks/*": ["./src/components/blocks/*"],
       "$elements/*": ["./src/components/elements/*"],
       "$layouts/*": ["./src/components/layouts/*"],
-      "$modules/*": ["./src/modules/*"],
+      "$features/*": ["./src/features/*"],
       "$views/*": ["./src/views/*"],
       "$pages/*": ["./src/components/pages/*"],
       "$hooks/*": ["./src/hooks/*"],

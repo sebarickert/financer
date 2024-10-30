@@ -1,8 +1,8 @@
 import { FC } from 'react';
 
 import { TransactionType } from '$api/generated/financerApi';
+import { TransactionListWithMonthlyPager } from '$features/transaction/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
 import { Layout } from '$layouts/Layout';
-import { TransactionListWithMonthlyPager } from '$modules/transaction/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
 
 export const ExpenseListingContainer: FC = () => {
   return (

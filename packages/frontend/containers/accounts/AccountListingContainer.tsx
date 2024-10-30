@@ -4,8 +4,8 @@ import { FC } from 'react';
 import { AccountType } from '$api/generated/financerApi';
 import { Icon } from '$elements/Icon';
 import { Link } from '$elements/Link';
+import { AccountList } from '$features/account/AccountList';
 import { Layout } from '$layouts/Layout';
-import { AccountList } from '$modules/account/AccountList';
 import { AccountService } from '$ssr/api/account.service';
 
 const accountCategories = {

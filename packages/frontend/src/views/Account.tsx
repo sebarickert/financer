@@ -8,8 +8,8 @@ import { DetailsItem } from '$blocks/details-list/details-list.item';
 import { accountTypeIconMapping } from '$constants/account/accountTypeMapping';
 import { IconName } from '$elements/Icon';
 import { LoaderSuspense } from '$elements/loader/loader-suspense';
-import { AccountBalanceHistoryChart } from '$modules/account/AccountBalanceHistoryChart';
-import { TransactionListWithMonthlyPager } from '$modules/transaction/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
+import { AccountBalanceHistoryChart } from '$features/account/AccountBalanceHistoryChart';
+import { TransactionListWithMonthlyPager } from '$features/transaction/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
 import { capitalize } from '$utils/capitalize';
 
 type AccountProps = {

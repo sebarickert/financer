@@ -2,8 +2,8 @@ import { FC } from 'react';
 
 import { settingsPaths } from '$constants/settings-paths';
 import { Popper } from '$elements/Popper';
+import { CategoryDeletePopperItem } from '$features/category/CategoryDeletePopperItem';
 import { Layout } from '$layouts/Layout';
-import { CategoryDeletePopperItem } from '$modules/category/CategoryDeletePopperItem';
 import { CategoryService } from '$ssr/api/category.service';
 import { TransactionService } from '$ssr/api/transaction.service';
 import { UserService } from '$ssr/api/user.service';

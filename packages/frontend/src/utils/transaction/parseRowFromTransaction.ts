@@ -2,7 +2,7 @@ import {
   TransactionListItemDto,
   TransactionType,
 } from '$api/generated/financerApi';
-import { TransactionListItemProps } from '$modules/transaction/TransactionList/TransactionListItem';
+import { TransactionListItemProps } from '$features/transaction/TransactionList/TransactionListItem';
 
 const mapTransactionTypeToUrlPrefix: {
   [key in TransactionType]: 'incomes' | 'expenses' | 'transfers';
