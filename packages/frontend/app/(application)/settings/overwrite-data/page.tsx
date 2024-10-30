@@ -1,19 +1,14 @@
 import { Metadata } from 'next';
 import { FC } from 'react';
 
-import { OverrideUserDataContainer } from '$container/settings/override-user-data.container';
-import { Layout } from '$layouts/Layout';
+import { OverwriteUserDataContainer } from '$container/settings/OverwriteUserDataContainer';
 
 export const metadata: Metadata = {
   title: 'Overwrite User Data (DANGER ZONE)',
 };
 
-const OverrideUserDataPage: FC = () => {
-  return (
-    <Layout title="Overwrite User Data (DANGER ZONE)">
-      <OverrideUserDataContainer />
-    </Layout>
-  );
+const OverwriteUserDataPage: FC = () => {
+  return <OverwriteUserDataContainer />;
 };
 
-export default OverrideUserDataPage;
+export default OverwriteUserDataPage;

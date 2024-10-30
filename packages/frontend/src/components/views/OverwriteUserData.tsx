@@ -7,7 +7,6 @@ import { useDispatch } from 'react-redux';
 import { UserDataImportDto } from '$api/generated/financerApi';
 import { DetailsList } from '$blocks/details-list/details-list';
 import { ToastMessageTypes } from '$blocks/toast/toast';
-import { settingsPaths } from '$constants/settings-paths';
 import { Button } from '$elements/button/button';
 import { Heading } from '$elements/Heading';
 import { IconName } from '$elements/Icon';
@@ -16,15 +15,14 @@ import {
   useFinancerFormState,
 } from '$hooks/useFinancerFormState';
 import { addToastMessage } from '$reducer/notifications.reducer';
-import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
-interface OverwriteUserDataProps {
+type OverwriteUserDataProps = {
   onOverwriteData: DefaultFormActionHandler;
-}
+};
 
-const formName = 'override-user-data';
+const formName = 'overwrite-user-data';
 
-export const OverrideUserData = ({
+export const OverwriteUserData = ({
   onOverwriteData,
 }: OverwriteUserDataProps): JSX.Element => {
   const dispatch = useDispatch();
@@ -132,8 +130,7 @@ export const OverrideUserData = ({
   ]);
 
   return (
-    <>
-      <UpdatePageInfo backLink={settingsPaths.default} />
+    <section>
       <div className="mb-8 theme-text-primary">
         <label
           htmlFor="selectFiles"
@@ -163,6 +160,6 @@ export const OverrideUserData = ({
       <Button onClick={handleSubmit} className="mt-12">
         Overwrite My Data
       </Button>
-    </>
+    </section>
   );
 };
