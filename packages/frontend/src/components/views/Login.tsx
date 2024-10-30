@@ -8,7 +8,6 @@ import { Button } from '$elements/button/button';
 import { ButtonGroup } from '$elements/button/button.group';
 import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { Paragraph } from '$elements/paragraph/paragraph';
-import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 
 const NEXT_PUBLIC_IS_GITHUB_OAUTH_ENABLED =
   process.env.NEXT_PUBLIC_IS_GITHUB_OAUTH_ENABLED;
@@ -25,7 +24,6 @@ export const Login = (): JSX.Element => {
 
   return (
     <>
-      <UpdatePageInfo />
       {isLoadingOAuthPage && <LoaderFullScreen />}
       <section
         className={clsx('flex flex-col justify-center items-center h-dvh px-4')}
