@@ -1,8 +1,7 @@
 import { Metadata } from 'next';
 import { FC } from 'react';
 
-import { CategoryContainer } from '$container/categories/category.container';
-import { Layout } from '$layouts/Layout';
+import { CategoryContainer } from '$container/categories/CategoryContainer';
 
 // TODO change to dynamic title
 export const metadata: Metadata = {
@@ -16,11 +15,7 @@ type CategoryPageProps = {
 };
 
 const CategoryPage: FC<CategoryPageProps> = ({ params: { categoryId } }) => {
-  return (
-    <Layout title="Category Details">
-      <CategoryContainer id={categoryId} />
-    </Layout>
-  );
+  return <CategoryContainer id={categoryId} />;
 };
 
 export default CategoryPage;

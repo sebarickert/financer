@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { FC } from 'react';
 
 import { List } from '$blocks/List';
@@ -5,7 +6,7 @@ import { ProminentLink } from '$blocks/ProminentLink';
 import { settingsPaths } from '$constants/settings-paths';
 import { Icon } from '$elements/Icon';
 import { Link } from '$elements/Link';
-import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { Layout } from '$layouts/Layout';
 import { CategoryService } from '$ssr/api/category.service';
 
 const generateCategoryGroupChild = (
@@ -20,18 +21,18 @@ const generateCategoryGroupChild = (
   link: `${settingsPaths.categories}/${childId}`,
 });
 
-interface CategoryParentItem {
+type CategoryParentItem = {
   label: string;
   items: CategoryItem[];
   link?: string;
-}
+};
 
-interface CategoryItem {
+type CategoryItem = {
   label: string;
   link: string;
   tree: string;
   id: string;
-}
+};
 
 export const CategoryListingContainer: FC = async () => {
   const categories = await CategoryService.getAllWithTree();
@@ -78,20 +79,23 @@ export const CategoryListingContainer: FC = async () => {
   ];
 
   return (
-    <>
-      <UpdatePageInfo
-        backLink={settingsPaths.default}
-        headerAction={
-          <Link
-            href={`${settingsPaths.categories}/add`}
-            className="inline-flex items-center justify-center -mr-3 h-11 w-11"
-            testId="add-category-link"
-          >
-            <span className="sr-only">Add category</span>
-            <Icon name="PlusIcon" />
-          </Link>
-        }
-      />
+    <Layout
+      title="Categories"
+      backLink={settingsPaths.default}
+      headerAction={
+        <Link
+          href={`${settingsPaths.categories}/add`}
+          className={clsx(
+            'theme-layer-color-with-hover theme-focus rounded-md',
+            'inline-flex items-center justify-center h-11 w-11',
+          )}
+          testId="add-category-link"
+        >
+          <span className="sr-only">Add category</span>
+          <Icon name="PlusIcon" />
+        </Link>
+      }
+    >
       <section className="grid gap-8">
         {categoryRows.map(({ label: parentLabel, items, link: parentLink }) => (
           <List
@@ -113,6 +117,6 @@ export const CategoryListingContainer: FC = async () => {
           </List>
         ))}
       </section>
-    </>
+    </Layout>
   );
 };

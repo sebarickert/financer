@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react';
 
-import { CategoryGraph } from './category.graph';
+import { CategoryGraph } from '../../views/settings/categories/category.graph';
 
 import {
   Theme,
@@ -10,21 +10,17 @@ import {
 import { DetailsList } from '$blocks/details-list/details-list';
 import { DetailsItem } from '$blocks/details-list/details-list.item';
 import { TransactionListWithMonthlyPager } from '$blocks/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
-import { settingsPaths } from '$constants/settings-paths';
-import { Icon, IconName } from '$elements/Icon';
-import { Link } from '$elements/Link';
-import { Container } from '$layouts/Container';
-import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { IconName } from '$elements/Icon';
 import { capitalize } from '$utils/capitalize';
 import { parseParentCategoryPath } from 'src/services/TransactionCategoriesService';
 
-interface CategoryProps {
+type CategoryProps = {
   transactionsMonthlySummaries?: TransactionMonthSummaryDto[];
   category: TransactionCategoryDto;
   categories: TransactionCategoryDto[];
   parentTransactionCategoryId: string;
   userTheme: Theme;
-}
+};
 
 export const Category: FC<CategoryProps> = ({
   transactionsMonthlySummaries,
@@ -79,36 +75,20 @@ export const Category: FC<CategoryProps> = ({
   ]);
 
   return (
-    <Container>
-      <UpdatePageInfo
-        backLink={settingsPaths.categories}
-        headerAction={
-          <Link
-            haptic="medium"
-            href={`${settingsPaths.categories}/${category.id}/edit`}
-            className="inline-flex items-center justify-center -mr-3 h-11 w-11"
-            testId="edit-category"
-          >
-            <span className="sr-only">Edit</span>
-            <Icon name="PencilIcon" />
-          </Link>
-        }
+    <section className="grid gap-8">
+      <div className="p-6 theme-layer-color">
+        <DetailsList items={categoryDetails} />
+      </div>
+      <CategoryGraph
+        transactionsMonthlySummaries={transactionsMonthlySummaries}
+        category={category}
+        userTheme={userTheme}
       />
-      <section className="grid gap-8">
-        <div className="p-6 theme-layer-color">
-          <DetailsList items={categoryDetails} />
-        </div>
-        <CategoryGraph
-          transactionsMonthlySummaries={transactionsMonthlySummaries}
-          category={category}
-          userTheme={userTheme}
-        />
-        <TransactionListWithMonthlyPager
-          filterOptions={{
-            parentTransactionCategory: parentTransactionCategoryId,
-          }}
-        />
-      </section>
-    </Container>
+      <TransactionListWithMonthlyPager
+        filterOptions={{
+          parentTransactionCategory: parentTransactionCategoryId,
+        }}
+      />
+    </section>
   );
 };

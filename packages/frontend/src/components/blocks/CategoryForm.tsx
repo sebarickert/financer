@@ -3,7 +3,7 @@
 import React, { FC, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { getAllChildCategoryIds } from '../../../services/TransactionCategoriesService';
+import { getAllChildCategoryIds } from '../../services/TransactionCategoriesService';
 
 import { TransactionType, VisibilityType } from '$api/generated/financerApi';
 import { Form } from '$blocks/form/form';
@@ -18,19 +18,19 @@ import {
   useFinancerFormState,
 } from '$hooks/useFinancerFormState';
 
-interface CategoryFormProps {
+type CategoryFormProps = {
   onSubmit: DefaultFormActionHandler;
   submitLabel: string;
   optionalFooterComponent?: React.ReactNode;
   currentCategoryId?: string;
   initialValues?: Partial<TransactionCategoryFormFields>;
-}
+};
 
-export interface TransactionCategoryFormFields {
+export type TransactionCategoryFormFields = {
   name: string;
   visibility: TransactionType[];
   parentCategoryId: string | null;
-}
+};
 
 export const CategoryForm: FC<CategoryFormProps> = ({
   onSubmit,
