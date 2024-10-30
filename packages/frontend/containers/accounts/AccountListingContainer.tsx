@@ -1,10 +1,11 @@
+import clsx from 'clsx';
 import { FC } from 'react';
 
 import { AccountType } from '$api/generated/financerApi';
 import { AccountList } from '$blocks/AccountList';
 import { Icon } from '$elements/Icon';
 import { Link } from '$elements/Link';
-import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
+import { Layout } from '$layouts/Layout';
 import { AccountService } from '$ssr/api/account.service';
 
 const accountCategories = {
@@ -29,19 +30,23 @@ export const AccountListingContainer: FC = async () => {
   });
 
   return (
-    <>
-      <UpdatePageInfo
-        headerAction={
-          <Link
-            href="/accounts/add"
-            className="inline-flex items-center justify-center -mr-3 h-11 w-11"
-            testId="add-account"
-          >
-            <span className="sr-only">Add account</span>
-            <Icon name="PlusIcon" />
-          </Link>
-        }
-      />
+    <Layout
+      title="Accounts"
+      headerAction={
+        <Link
+          href="/accounts/add"
+          className={clsx(
+            'theme-layer-color-with-hover theme-focus rounded-md',
+            'inline-flex items-center justify-center h-11 w-11',
+          )}
+          testId="add-account"
+          transition="slideInFromRight"
+        >
+          <span className="sr-only">Add account</span>
+          <Icon name="PlusIcon" />
+        </Link>
+      }
+    >
       <section className="grid gap-8">
         <AccountList label="Savings" accounts={groupedAccounts.savings} />
         <AccountList
@@ -53,6 +58,6 @@ export const AccountListingContainer: FC = async () => {
           accounts={groupedAccounts.loans}
         />
       </section>
-    </>
+    </Layout>
   );
 };

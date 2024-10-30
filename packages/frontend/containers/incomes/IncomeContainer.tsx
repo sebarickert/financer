@@ -1,11 +1,11 @@
 import { FC } from 'react';
 
 import { TransactionType } from '$api/generated/financerApi';
-import { Transaction } from '$blocks/Transaction';
 import { TransactionDeletePopperItem } from '$blocks/TransactionDeletePopperItem';
 import { Popper } from '$elements/Popper';
 import { Layout } from '$layouts/Layout';
 import { IncomeService } from '$ssr/api/income.service';
+import { Transaction } from 'src/components/views/Transaction';
 
 type IncomeContainerProps = {
   id: string;

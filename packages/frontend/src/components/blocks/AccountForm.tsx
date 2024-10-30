@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo } from 'react';
+import { FC, useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { AccountType } from '$api/generated/financerApi';
@@ -13,23 +13,23 @@ import {
 } from '$hooks/useFinancerFormState';
 import { capitalize } from '$utils/capitalize';
 
-interface AccountFormProps {
+type AccountFormProps = {
   onSubmit: DefaultFormActionHandler;
   submitLabel: string;
   initialValues?: Partial<AccountFormFields>;
-}
+};
 
-export interface AccountFormFields {
+export type AccountFormFields = {
   name: string;
   balance: number;
   type: AccountType;
-}
+};
 
-export const AccountForm = ({
+export const AccountForm: FC<AccountFormProps> = ({
   onSubmit,
   submitLabel,
   initialValues,
-}: AccountFormProps): JSX.Element => {
+}: AccountFormProps) => {
   const action = useFinancerFormState('account-form', onSubmit);
 
   const defaultValues = useMemo(() => {

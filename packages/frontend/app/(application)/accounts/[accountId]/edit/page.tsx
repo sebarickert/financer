@@ -1,8 +1,7 @@
 import { Metadata } from 'next';
 import { FC } from 'react';
 
-import { AccountEditContainer } from '$container/accounts/account.edit.container';
-import { Layout } from '$layouts/Layout';
+import { AccountEditContainer } from '$container/accounts/AccountEditContainer';
 
 // TODO change to dynamic title
 export const metadata: Metadata = {
@@ -18,11 +17,7 @@ type AccountEditPageProps = {
 const AccountEditPage: FC<AccountEditPageProps> = ({
   params: { accountId },
 }) => {
-  return (
-    <Layout title="Edit Account">
-      <AccountEditContainer id={accountId} />
-    </Layout>
-  );
+  return <AccountEditContainer id={accountId} />;
 };
 
 export default AccountEditPage;
