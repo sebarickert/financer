@@ -15,21 +15,20 @@ import {
   DefaultFormActionHandler,
   useFinancerFormState,
 } from '$hooks/useFinancerFormState';
-import { UpdatePageInfo } from '$renderers/seo/updatePageInfo';
 import { capitalize } from '$utils/capitalize';
 
 const allAccountTypes = Object.values(AccountType);
 
-export interface UserDashboardSettingsFormFields {
+export type UserDashboardSettingsFormFields = {
   accountTypes: AccountType[];
-}
+};
 
-interface UserDashboardSettingsProps {
+type UserDashboardSettingsFormProps = {
   data?: UserDashboardSettingsFormFields;
   onSave: DefaultFormActionHandler;
-}
+};
 
-export const UserDashboardSettings: FC<UserDashboardSettingsProps> = ({
+export const UserDashboardSettingsForm: FC<UserDashboardSettingsFormProps> = ({
   data,
   onSave,
 }) => {
@@ -41,33 +40,30 @@ export const UserDashboardSettings: FC<UserDashboardSettingsProps> = ({
   }, [data, methods]);
 
   return (
-    <>
-      <UpdatePageInfo backLink={settingsPaths.userPreferences} />
-      <Form
-        methods={methods}
-        action={action}
-        submitLabel="Save"
-        formFooterBackLink={settingsPaths.userPreferences}
-      >
-        <section className="mb-4">
-          <Heading>Account types</Heading>
-          <Paragraph>
-            Selected types will be calculated into statistics and graphs on the
-            dashboard.
-          </Paragraph>
-        </section>
-        <CheckboxGroup testId="dashboard-account-checkboxes" className="-mx-4">
-          {allAccountTypes.map((type) => (
-            <Checkbox
-              key={type}
-              id={type}
-              value={type}
-              label={capitalize(accountTypeLabelMapping[type])}
-              name={'accountTypes'}
-            />
-          ))}
-        </CheckboxGroup>
-      </Form>
-    </>
+    <Form
+      methods={methods}
+      action={action}
+      submitLabel="Save"
+      formFooterBackLink={settingsPaths.userPreferences}
+    >
+      <section className="mb-4">
+        <Heading>Account types</Heading>
+        <Paragraph>
+          Selected types will be calculated into statistics and graphs on the
+          dashboard.
+        </Paragraph>
+      </section>
+      <CheckboxGroup testId="dashboard-account-checkboxes" className="-mx-4">
+        {allAccountTypes.map((type) => (
+          <Checkbox
+            key={type}
+            id={type}
+            value={type}
+            label={capitalize(accountTypeLabelMapping[type])}
+            name={'accountTypes'}
+          />
+        ))}
+      </CheckboxGroup>
+    </Form>
   );
 };

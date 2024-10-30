@@ -1,18 +1,13 @@
 import { Metadata } from 'next';
 
-import { DefaultAccountSettingsContainer } from '$container/user-preferences/default-account-settings.container';
-import { Layout } from '$layouts/Layout';
+import { DefaultAccountSettingsContainer } from '$container/user-preferences/DefaultAccountSettingsContainer';
 
 export const metadata: Metadata = {
   title: 'Default Account Settings',
 };
 
 const DefaultAccountSettingsUserPreferencePage = () => {
-  return (
-    <Layout title="Default Account Settings">
-      <DefaultAccountSettingsContainer />
-    </Layout>
-  );
+  return <DefaultAccountSettingsContainer />;
 };
 
 export default DefaultAccountSettingsUserPreferencePage;
