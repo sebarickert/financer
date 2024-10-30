@@ -39,7 +39,8 @@ test.describe('Transaction category creation', () => {
 
     await page.getByText(newName).first().click();
 
-    await page.getByTestId('edit-category').click();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     await expect(page.locator('#name')).toHaveValue(newName);
 
