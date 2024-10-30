@@ -1,18 +1,16 @@
 'use client';
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import { Logo } from '$blocks/Logo';
 import { Button } from '$elements/button/button';
 import { Heading } from '$elements/Heading';
 import { Link } from '$elements/Link';
 import { Container } from '$layouts/Container';
 
-interface ErrorPageProps {
+type ErrorProps = {
   errorPageType: 'full-app' | 'in-app';
-}
+};
 
-export const ErrorPage = ({ errorPageType }: ErrorPageProps) => {
+export const Error = ({ errorPageType }: ErrorProps) => {
   if (errorPageType === 'full-app') {
     return (
       <Container>

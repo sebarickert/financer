@@ -3,7 +3,7 @@
 import { Metadata } from 'next';
 import { FC } from 'react';
 
-import { ErrorPage as ErrorPageComponent } from '$pages/error-page/error-page';
+import { Error as ErrorPageComponent } from '$views/Error';
 
 export const metadata: Metadata = {
   title: 'Error',
