@@ -1,8 +1,7 @@
 import { Metadata } from 'next';
 import { FC } from 'react';
 
-import { TemplateEditContainer } from '$container/templates/template.edit.container';
-import { Layout } from '$layouts/Layout';
+import { TemplateEditContainer } from '$container/templates/TemplateEditContainer';
 
 // TODO change to dynamic title
 export const metadata: Metadata = {
@@ -18,11 +17,7 @@ type EditTemplatePageProps = {
 const EditTemplatePage: FC<EditTemplatePageProps> = ({
   params: { templateId },
 }) => {
-  return (
-    <Layout title="Edit Template">
-      <TemplateEditContainer id={templateId} />
-    </Layout>
-  );
+  return <TemplateEditContainer id={templateId} />;
 };
 
 export default EditTemplatePage;

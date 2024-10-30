@@ -1,8 +1,8 @@
 import { HeaderDrawerAction } from '$blocks/header-drawer-action/header-drawer-action';
 
-interface TemplateDeleteProps {
+type TemplateDeleteProps = {
   onSubmit: () => void;
-}
+};
 
 export const TemplateDelete = ({ onSubmit }: TemplateDeleteProps) => {
   return (

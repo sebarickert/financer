@@ -21,14 +21,14 @@ import {
 } from '$hooks/useFinancerFormState';
 import { capitalize } from '$utils/capitalize';
 
-interface TemplateFormProps {
+type TemplateFormProps = {
   onSubmit: DefaultFormActionHandler;
   submitLabel: string;
   optionalFooterComponent?: React.ReactNode;
   initialValues?: Partial<TemplateFormFields>;
-}
+};
 
-export interface TemplateFormFields {
+export type TemplateFormFields = {
   templateName: string;
   templateType: TransactionTemplateType;
   templateVisibility: TransactionType;
@@ -39,7 +39,7 @@ export interface TemplateFormFields {
   dayOfMonth?: number;
   dayOfMonthToCreate?: number;
   categories: CategoriesFormOnlyCategory[];
-}
+};
 
 type TransactionCategoriesFormWrapperProps = {
   type: VisibilityType;

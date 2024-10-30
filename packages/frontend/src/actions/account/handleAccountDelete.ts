@@ -9,6 +9,7 @@ export const handleAccountDelete = async (id: string) => {
     console.error('Failure to delete account: no id');
     return;
   }
+
   await AccountService.delete(id);
   redirect('/accounts', RedirectType.push);
 };
