@@ -17,7 +17,7 @@ test.describe('Edit income with category', () => {
     await applyFixture('small');
   });
 
-  test('Edit with single category', async ({ page }) => {
+  test('Edit with Single Category', async ({ page }) => {
     const incomeWithSingleCategory = await getIncomeIdWithSingleCategory();
 
     const transactionYear = new Date(
@@ -32,7 +32,8 @@ test.describe('Edit income with category', () => {
     await page.goto(`/statistics/incomes?date=${dateQuery}&page=1`);
 
     await page.getByTestId(incomeWithSingleCategory.id).click();
-    await page.getByTestId(ids.editIncomeButton).click();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     await page.getByRole('button', { name: 'Edit category' }).click();
     // eslint-disable-next-line playwright/no-wait-for-timeout
@@ -62,7 +63,8 @@ test.describe('Edit income with category', () => {
 
     await page.goto(`/statistics/incomes?date=${dateQuery}&page=1`);
     await page.getByTestId(incomeWithSingleCategory.id).click();
-    await page.getByTestId(ids.editIncomeButton).click();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     await page.getByRole('button', { name: 'Edit category' }).click();
     // eslint-disable-next-line playwright/no-wait-for-timeout
@@ -91,7 +93,8 @@ test.describe('Edit income with category', () => {
     await page.goto(`/statistics/incomes?date=${dateQuery}&page=1`);
 
     await page.getByTestId(incomeWithMultipleCategories.id).click();
-    await page.getByTestId(ids.editIncomeButton).click();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     const item = page.getByTestId(ids.transactionCategoriesItem);
     const name = page.getByTestId(`${ids.transactionCategoriesItem}-name`);
@@ -132,7 +135,8 @@ test.describe('Edit income with category', () => {
 
     await page.goto(`/statistics/incomes?date=${dateQuery}&page=1`);
     await page.getByTestId(incomeWithMultipleCategories.id).click();
-    await page.getByTestId(ids.editIncomeButton).click();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     await expect(item).toHaveCount(1);
     await expect(name).toHaveText('Income category');
@@ -156,7 +160,8 @@ test.describe('Edit income with category', () => {
     await page.goto(`/statistics/incomes?date=${dateQuery}&page=1`);
 
     await page.getByTestId(incomeWithMultipleCategories.id).click();
-    await page.getByTestId(ids.editIncomeButton).click();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     const item = page.getByTestId(ids.transactionCategoriesItem);
     await expect(item).toHaveCount(2);
@@ -180,7 +185,8 @@ test.describe('Edit income with category', () => {
 
     await page.goto(`/statistics/incomes?date=${dateQuery}&page=1`);
     await page.getByTestId(incomeWithMultipleCategories.id).click();
-    await page.getByTestId(ids.editIncomeButton).click();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     await expect(item).toHaveCount(0);
   });

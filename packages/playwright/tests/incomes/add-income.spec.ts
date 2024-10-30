@@ -82,7 +82,8 @@ test.describe('Add income', () => {
 
     await drawer.getByTestId('submit').click();
 
-    await page.getByTestId('edit-income-button').waitFor();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     const accountAfter = await getAccount(targetAccountId);
     const incomesAfter = await getAllIncomes();
@@ -133,7 +134,8 @@ test.describe('Add income', () => {
 
     await drawer.getByTestId('submit').click();
 
-    await page.getByTestId('edit-income-button').waitFor();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     const accountAfter = await getAccount(targetAccountId);
     const incomesAfter = await getAllIncomes();
@@ -185,7 +187,8 @@ test.describe('Add income', () => {
 
     await drawer.getByTestId('submit').click();
 
-    await page.getByTestId('edit-income-button').waitFor();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     const accountAfter = await getAccount(targetAccountId);
     const incomesAfter = await getAllIncomes();
@@ -232,7 +235,8 @@ test.describe('Add income', () => {
     await drawer.getByTestId('submit').click();
 
     await page.getByText(newTransactionName).click();
-    await page.getByTestId('edit-income-button').click();
+    await page.getByTestId('popper-button').click();
+    await page.getByTestId('popper-container').getByText('Edit').click();
 
     const inputValue = await page
       .getByTestId('edit-income-form')
