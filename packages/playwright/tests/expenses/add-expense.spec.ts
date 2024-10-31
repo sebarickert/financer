@@ -77,7 +77,7 @@ test.describe('Add Expense', () => {
       return select.validationMessage;
     });
 
-    await expect(validationMessage).toBe('Please select an item in the list.');
+    expect(validationMessage).toBe('Please select an item in the list.');
     await expect(page.getByTestId('transaction-drawer')).toBeVisible();
   });
 });

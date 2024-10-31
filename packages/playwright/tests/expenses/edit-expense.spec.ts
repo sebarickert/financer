@@ -110,6 +110,7 @@ test.describe('Edit Expense', () => {
       .getByRole('button', { name: 'Submit' })
       .click();
 
+    // TODO Have to go to another page and come back to get the updated balance (cache issue)
     await page.goto('/statistics/expenses/?date=2022-1');
     await page.goto('/accounts');
 
@@ -118,14 +119,6 @@ test.describe('Edit Expense', () => {
 
     const updatedBalanceForNewAccount =
       await getAccountBalanceFromAccountListByName(page, 'Cash account');
-
-    console.log({
-      initialBalanceForPreviousAccount,
-      initialBalanceForNewAccount,
-      updatedBalanceForPreviousAccount,
-      updatedBalanceForNewAccount,
-      amount,
-    });
 
     expect(updatedBalanceForPreviousAccount).toEqual(
       initialBalanceForPreviousAccount.plus(amount.abs()),
