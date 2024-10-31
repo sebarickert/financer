@@ -120,14 +120,6 @@ test.describe('Edit Income', () => {
     const updatedBalanceForNewAccount =
       await getAccountBalanceFromAccountListByName(page, 'Cash account');
 
-    console.log({
-      initialBalanceForPreviousAccount,
-      initialBalanceForNewAccount,
-      updatedBalanceForPreviousAccount,
-      updatedBalanceForNewAccount,
-      amount,
-    });
-
     expect(updatedBalanceForPreviousAccount).toEqual(
       initialBalanceForPreviousAccount.minus(amount.abs()),
     );

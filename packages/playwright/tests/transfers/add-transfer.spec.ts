@@ -1,320 +1,97 @@
-import {
-  AccountDto,
-  TransactionListItemDto,
-  TransferListItemDto,
-} from '$types/generated/financer';
-import {
-  getAllTransactions,
-  getAccount,
-  MINUTE_IN_MS,
-  formatDate,
-  getAccountFromTransactionListItem,
-  roundToTwoDecimal,
-  getAllTransfers,
-  getTransactionById,
-} from '$utils/api-helper';
+import Decimal from 'decimal.js';
+
+import { TransactionType } from '$types/generated/financer';
+import { getAccountBalanceFromAccountListByName } from '$utils/account/getAccountBalanceFromAccountListByName';
 import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
+import { fillTransactionForm } from '$utils/transaction/fillTransactionForm';
+import { switchTransactionType } from '$utils/transaction/switchTransactionType';
 
-test.describe('Add transfer', () => {
-  test.beforeEach(async ({ page }) => {
+test.describe('Add Transfer', () => {
+  test.beforeEach(async () => {
     await applyFixture('large');
-    await page.goto('/statistics/transfers');
   });
 
-  const newTransactionAmountStr = '15.50';
-  const newTransactionAmount = parseFloat(newTransactionAmountStr);
-  const getNewTransactionName = () =>
-    `new dummy transaction created by test code ${Math.random()}`;
+  test('should add new transfer and verify account balances and transfer list', async ({
+    page,
+  }) => {
+    const transactionDescription = `dummy transfer transaction created by test code ${Math.random()}`;
 
-  const verifyAccountBalanceChange = async (
-    amount: number,
-    toAccountBefore: AccountDto,
-    toAccountAfter: AccountDto,
-    fromAccountBefore: AccountDto,
-    fromAccountAfter: AccountDto,
-  ) => {
-    expect(roundToTwoDecimal(toAccountBefore.balance + amount)).toEqual(
-      roundToTwoDecimal(toAccountAfter.balance),
-    );
-    expect(roundToTwoDecimal(fromAccountBefore.balance - amount)).toEqual(
-      roundToTwoDecimal(fromAccountAfter.balance),
-    );
-  };
-
-  const verifyNewTransferCreated = async (
-    transfersBefore: TransactionListItemDto[],
-    transfersAfter: TransactionListItemDto[],
-  ) => {
-    expect(transfersBefore.length + 1).toEqual(transfersAfter.length);
-  };
-
-  // eslint-disable-next-line playwright/expect-expect
-  test('Add newest transfer', async ({ page }) => {
-    const newTransactionName = getNewTransactionName();
-
-    const transactionsBefore = await getAllTransactions();
-    const transfersBefore = await getAllTransfers();
-
-    const targetToAccountTransactionBefore = transactionsBefore.at(
-      -1,
-    ) as TransactionListItemDto;
-
-    const targetToAccountId = await getAccountFromTransactionListItem(
-      targetToAccountTransactionBefore,
-    );
-
-    const targetFromAccountTransactionBefore = transactionsBefore.filter(
-      ({ toAccount, fromAccount }) =>
-        toAccount !== targetToAccountId && fromAccount !== targetToAccountId,
-    )[0];
-
-    const targetFromAccountId = await getAccountFromTransactionListItem(
-      targetFromAccountTransactionBefore,
-    );
-
-    const toAccountBefore = await getAccount(targetToAccountId);
-    const fromAccountBefore = await getAccount(targetFromAccountId);
-
-    const newTransactionDate = new Date(
-      new Date(targetToAccountTransactionBefore.date).getTime() + MINUTE_IN_MS,
-    );
+    await page.goto('/accounts');
+    const initialFromAccountBalance =
+      await getAccountBalanceFromAccountListByName(page, 'Credit account');
+    const initialToAccountBalance =
+      await getAccountBalanceFromAccountListByName(page, 'Saving account 2');
 
     await page.getByTestId('add-transaction').click();
 
-    const drawer = page.getByTestId('transaction-drawer');
+    await switchTransactionType(page, TransactionType.Transfer);
 
-    await drawer
-      .getByTestId('transaction-type-switcher')
-      .getByLabel('Expense', { exact: true })
-      .focus();
+    await fillTransactionForm(page, {
+      fromAccount: 'Credit account',
+      toAccount: 'Saving account 2',
+      amount: new Decimal(200.51),
+      description: transactionDescription,
+    });
 
-    await page.keyboard.press('ArrowRight');
-
-    await drawer.locator('#description').fill(newTransactionName);
-    await drawer.locator('#date').fill(formatDate(newTransactionDate));
-    await drawer.locator('#amount').fill(newTransactionAmountStr);
-
-    await drawer.locator('#fromAccount').selectOption(targetFromAccountId);
-    await drawer.locator('#toAccount').selectOption(targetToAccountId);
-
-    await drawer.getByTestId('submit').click();
-
-    await page.getByTestId('popper-button').click();
-    await page.getByTestId('popper-container').getByText('Edit').click();
-
-    //   cy.location('pathname').should('not.contain', '/add').then(() => {
-    const toAccountAfter = await getAccount(targetToAccountId);
-    const fromAccountAfter = await getAccount(targetFromAccountId);
-    const transfersAfter = await getAllTransfers();
-
-    await verifyAccountBalanceChange(
-      newTransactionAmount,
-      toAccountBefore,
-      toAccountAfter,
-      fromAccountBefore,
-      fromAccountAfter,
-    );
-    await verifyNewTransferCreated(transfersBefore, transfersAfter);
-  });
-
-  // eslint-disable-next-line playwright/expect-expect
-  test('Add second newest transfer', async ({ page }) => {
-    const newTransactionName = getNewTransactionName();
-
-    const transactionsBefore = await getAllTransactions();
-    const transfersBefore = await getAllTransfers();
-
-    const targetToAccountTransactionBefore = transactionsBefore.at(
-      -1,
-    ) as TransactionListItemDto;
-    const targetToAccountId = await getAccountFromTransactionListItem(
-      targetToAccountTransactionBefore,
-    );
-
-    const targetFromAccountTransactionBefore = (
-      await Promise.all(
-        transactionsBefore.map(async ({ id }) => {
-          try {
-            const { toAccount, fromAccount } = await getTransactionById(id);
-            return { id, toAccount, fromAccount };
-          } catch (error) {
-            console.error(`Failed to fetch transaction with id ${id}:`, error);
-            return null;
-          }
-        }),
-      )
-    ).filter(
-      (transaction) =>
-        transaction &&
-        transaction.toAccount !== targetToAccountId &&
-        transaction.fromAccount !== targetToAccountId,
-    )[0] as TransferListItemDto;
-
-    const targetFromAccountId = await getAccountFromTransactionListItem(
-      targetFromAccountTransactionBefore,
-    );
-
-    const newTransactionDate = new Date(
-      new Date(targetToAccountTransactionBefore.date).getTime() - MINUTE_IN_MS,
-    );
-
-    const toAccountBefore = await getAccount(targetToAccountId);
-    const fromAccountBefore = await getAccount(targetFromAccountId);
-
-    await page.getByTestId('add-transaction').click();
-
-    const drawer = page.getByTestId('transaction-drawer');
-
-    await drawer
-      .getByTestId('transaction-type-switcher')
-      .getByLabel('Expense', { exact: true })
-      .focus();
-
-    await page.keyboard.press('ArrowRight');
-
-    await drawer.locator('#description').fill(newTransactionName);
-    await drawer.locator('#date').fill(formatDate(newTransactionDate));
-    await drawer.locator('#amount').fill(newTransactionAmountStr);
-
-    await drawer.locator('#fromAccount').selectOption(targetFromAccountId);
-    await drawer.locator('#toAccount').selectOption(targetToAccountId);
-
-    await drawer.getByTestId('submit').click();
-
-    await page.getByTestId('popper-button').click();
-    await page.getByTestId('popper-container').getByText('Edit').click();
-
-    //   cy.location('pathname').should('not.contain', '/add').then(() => {
-    const toAccountAfter = await getAccount(targetToAccountId);
-    const fromAccountAfter = await getAccount(targetFromAccountId);
-    const transfersAfter = await getAllTransfers();
-
-    await verifyAccountBalanceChange(
-      newTransactionAmount,
-      toAccountBefore,
-      toAccountAfter,
-      fromAccountBefore,
-      fromAccountAfter,
-    );
-    await verifyNewTransferCreated(transfersBefore, transfersAfter);
-  });
-
-  // eslint-disable-next-line playwright/expect-expect
-  test('Add oldest transfer', async ({ page }) => {
-    const newTransactionName = getNewTransactionName();
-
-    const transactionsBefore = await getAllTransactions();
-    const transfersBefore = await getAllTransfers();
-
-    const targetToAccountTransactionBefore = transactionsBefore.at(
-      0,
-    ) as TransactionListItemDto;
-    const targetToAccountId = await getAccountFromTransactionListItem(
-      targetToAccountTransactionBefore,
-    );
-
-    const targetFromAccountTransactionBefore = (
-      await Promise.all(
-        transactionsBefore.map(async ({ id }) => {
-          try {
-            const { toAccount, fromAccount } = await getTransactionById(id);
-            return { id, toAccount, fromAccount };
-          } catch (error) {
-            console.error(`Failed to fetch transaction with id ${id}:`, error);
-            return null;
-          }
-        }),
-      )
-    ).filter(
-      (transaction) =>
-        transaction &&
-        transaction.toAccount !== targetToAccountId &&
-        transaction.fromAccount !== targetToAccountId,
-    )[0] as TransferListItemDto;
-
-    const targetFromAccountId = await getAccountFromTransactionListItem(
-      targetFromAccountTransactionBefore,
-    );
-
-    const newTransactionDate = new Date(
-      new Date(targetToAccountTransactionBefore.date).getTime() - MINUTE_IN_MS,
-    );
-
-    const toAccountBefore = await getAccount(targetToAccountId);
-    const fromAccountBefore = await getAccount(targetFromAccountId);
-
-    await page.getByTestId('add-transaction').click();
-
-    const drawer = page.getByTestId('transaction-drawer');
-
-    await drawer
-      .getByTestId('transaction-type-switcher')
-      .getByLabel('Expense', { exact: true })
-      .focus();
-
-    await page.keyboard.press('ArrowRight');
-
-    await drawer.locator('#description').fill(newTransactionName);
-    await drawer.locator('#date').fill(formatDate(newTransactionDate));
-    await drawer.locator('#amount').fill(newTransactionAmountStr);
-
-    await drawer.locator('#fromAccount').selectOption(targetFromAccountId);
-    await drawer.locator('#toAccount').selectOption(targetToAccountId);
-
-    await drawer.getByTestId('submit').click();
-
-    await page.getByTestId('popper-button').click();
-    await page.getByTestId('popper-container').getByText('Edit').click();
-
-    const toAccountAfter = await getAccount(targetToAccountId);
-    const fromAccountAfter = await getAccount(targetFromAccountId);
-    const transfersAfter = await getAllTransfers();
-
-    await verifyAccountBalanceChange(
-      newTransactionAmount,
-      toAccountBefore,
-      toAccountAfter,
-      fromAccountBefore,
-      fromAccountAfter,
-    );
-    await verifyNewTransferCreated(transfersBefore, transfersAfter);
-  });
-
-  test('Check that date is correct', async ({ page }) => {
-    const newTransactionName = getNewTransactionName();
-    const date = new Date();
-    date.setSeconds(0);
-    date.setMilliseconds(0);
-
-    await page.getByTestId('add-transaction').click();
-
-    const drawer = page.getByTestId('transaction-drawer');
-
-    await drawer
-      .getByTestId('transaction-type-switcher')
-      .getByLabel('Expense', { exact: true })
-      .focus();
-
-    await page.keyboard.press('ArrowRight');
-
-    await drawer.locator('#description').fill(newTransactionName);
-    await drawer.locator('#date').fill(formatDate(date));
-    await drawer.locator('#amount').fill(newTransactionAmountStr);
-
-    await drawer.locator('#fromAccount').selectOption({ index: 1 });
-    await drawer.locator('#toAccount').selectOption({ index: 2 });
-
-    await drawer.getByTestId('submit').click();
-
-    await page.getByText(newTransactionName).click();
-    await page.getByTestId('popper-button').click();
-    await page.getByTestId('popper-container').getByText('Edit').click();
-
-    const inputValue = await page
+    await page
       .getByTestId('transaction-form')
-      .locator('#date')
-      .inputValue();
-    expect(date.toISOString()).toEqual(new Date(inputValue).toISOString());
+      .getByRole('button', { name: 'Submit' })
+      .click();
+
+    await expect(page.getByTestId('transaction-details')).toBeVisible();
+    await expect(page.getByTestId('transaction-amount')).toContainText(
+      '200,51',
+    );
+    await expect(page.getByTestId('transaction-description')).toContainText(
+      transactionDescription,
+    );
+
+    await page.goto('/accounts');
+    const updatedFromAccountBalance =
+      await getAccountBalanceFromAccountListByName(page, 'Credit account');
+    const updatedToAccountBalance =
+      await getAccountBalanceFromAccountListByName(page, 'Saving account 2');
+
+    expect(updatedFromAccountBalance).toEqual(
+      initialFromAccountBalance.minus(200.51),
+    );
+    expect(updatedToAccountBalance).toEqual(
+      initialToAccountBalance.plus(200.51),
+    );
+
+    await page.goto('/statistics/transfers');
+    await expect(
+      page
+        .getByTestId('transaction-list-item')
+        .getByText(transactionDescription),
+    ).toBeVisible();
+  });
+
+  test('should not allow form submission with missing required fields', async ({
+    page,
+  }) => {
+    await page.goto('/');
+
+    await page.getByTestId('add-transaction').click();
+
+    await switchTransactionType(page, TransactionType.Transfer);
+
+    await page
+      .getByTestId('transaction-form')
+      .getByRole('button', { name: 'Submit' })
+      .click();
+
+    const accountSelect = page
+      .getByTestId('transaction-form')
+      .getByLabel('To Account');
+
+    const validationMessage = await accountSelect.evaluate((element) => {
+      const select = element as HTMLInputElement;
+      return select.validationMessage;
+    });
+
+    expect(validationMessage).toBe('Please select an item in the list.');
+    await expect(page.getByTestId('transaction-drawer')).toBeVisible();
   });
 });
