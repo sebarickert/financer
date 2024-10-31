@@ -61,8 +61,13 @@ export const AccountList: FC<AccountListProps> = ({
                 'grid grid-cols-[auto,1fr] items-center gap-2 grow',
               )}
             >
-              <span className="truncate">{name}</span>
-              <span className="text-lg font-medium text-right whitespace-nowrap">
+              <span className="truncate" data-testid="account-name">
+                {name}
+              </span>
+              <span
+                className="text-lg font-medium text-right whitespace-nowrap"
+                data-testid="account-balance"
+              >
                 {formatCurrency(balance)}
               </span>
             </div>

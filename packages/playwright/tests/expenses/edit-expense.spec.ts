@@ -1,175 +1,138 @@
-import { AccountDto, ExpenseListItemDto } from '$types/generated/financer';
-import {
-  getAccount,
-  getTransactionById,
-  roundToTwoDecimal,
-  getAllExpenses,
-  getAccountFromTransactionListItem,
-} from '$utils/api-helper';
+import Decimal from 'decimal.js';
+
+import { getAccountBalanceFromAccountListByName } from '$utils/account/getAccountBalanceFromAccountListByName';
+import { clickPopperLink } from '$utils/common/clickPopperLink';
 import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
+import { fillTransactionForm } from '$utils/transaction/fillTransactionForm';
+import { getTransactionDetails } from '$utils/transaction/getTransactionDetails';
 
 test.describe('Edit Expense', () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async () => {
     await applyFixture('large');
-    await page.goto('/statistics/expenses');
   });
 
-  const amountToChangeTransactionStr = '15.50';
-  const amountToChangeTransaction = parseFloat(amountToChangeTransactionStr);
-  const getEditedTransactionName = () =>
-    `edited dummy transaction created by test code ${Math.random()}`;
-
-  const verifyAccountBalanceChanges = async (
-    amount: number,
-    accountBefore: AccountDto,
-    accountAfter: AccountDto,
-  ) => {
-    const balanceBefore = roundToTwoDecimal(accountBefore.balance);
-    const balanceAfter = roundToTwoDecimal(accountAfter.balance);
-
-    expect(balanceBefore - amount).toEqual(balanceAfter);
-  };
-
-  const verifyTargetTransactionChanged = async (
-    newName: string,
-    changedAmount: number,
-    transactionBefore: ExpenseListItemDto,
-    transactionAfter: ExpenseListItemDto,
-  ) => {
-    const nameAfter = transactionAfter.description;
-    const amountAfter = roundToTwoDecimal(transactionAfter.amount);
-
-    const nameBefore = transactionBefore.description;
-    const amountBefore = roundToTwoDecimal(transactionBefore.amount);
-
-    expect(nameBefore).not.toEqual(newName);
-    expect(nameAfter).toEqual(newName);
-    expect(amountBefore + changedAmount).toEqual(amountAfter);
-  };
-
-  // eslint-disable-next-line playwright/expect-expect
-  test('should edit the newest expense and verify the changes', async ({
+  test('should edit expense and verify account balance and expense list', async ({
     page,
   }) => {
-    const editedTransactionName = getEditedTransactionName();
-    const expensesBefore = await getAllExpenses();
+    await page.goto('/statistics/expenses/?date=2022-1');
 
-    const targetTransactionBefore = expensesBefore[expensesBefore.length - 1];
+    await page.getByTestId('transaction-list-item').first().click();
 
-    const targetAccountId = await getAccountFromTransactionListItem(
-      targetTransactionBefore,
+    const {
+      id,
+      fromAccount,
+      amount: initialAmount,
+    } = await getTransactionDetails(page);
+
+    await page.goto('/accounts');
+
+    const initialAccountBalance = await getAccountBalanceFromAccountListByName(
+      page,
+      fromAccount as string,
     );
 
-    const accountBefore = await getAccount(targetAccountId);
+    await page.goto(`/statistics/expenses/${id}`);
+    await clickPopperLink(page, 'Edit');
 
-    const newAmount =
-      targetTransactionBefore.amount + amountToChangeTransaction;
+    const newAmount = new Decimal(249.99);
+    const newDescription = 'edited dummy transaction created by test code';
 
-    const transactionYear = new Date(
-      targetTransactionBefore.date,
-    ).getFullYear();
-    const transactionMonth = (
-      new Date(targetTransactionBefore.date).getMonth() + 1
-    )
-      .toString()
-      .padStart(2, '0');
-    const dateQuery = `${transactionYear}-${transactionMonth}`;
-    await page.goto(`/statistics/expenses?date=${dateQuery}&page=1`);
-
-    await page.getByTestId(targetTransactionBefore.id).click();
-
-    await page.getByTestId('popper-button').click();
-    await page.getByTestId('popper-container').getByText('Edit').click();
-
-    const editExpenseForm = page.getByTestId('edit-expense-form');
-
-    await editExpenseForm.locator('#description').fill(editedTransactionName);
-    await editExpenseForm.locator('#amount').fill(newAmount.toString());
-    await editExpenseForm.locator('#fromAccount').selectOption(targetAccountId);
-
-    await editExpenseForm.getByTestId('submit').click();
-
-    await page.getByTestId('popper-button').click();
-    await page.getByTestId('popper-container').getByText('Edit').click();
-
-    const accountAfter = await getAccount(targetAccountId);
-    const targetTransactionAfter = await getTransactionById(
-      targetTransactionBefore.id,
+    await fillTransactionForm(
+      page,
+      {
+        amount: newAmount,
+        description: newDescription,
+      },
+      'page',
     );
 
-    await verifyAccountBalanceChanges(
-      amountToChangeTransaction,
-      accountBefore,
-      accountAfter,
+    await page
+      .getByTestId('layout-root')
+      .getByTestId('transaction-form')
+      .getByRole('button', { name: 'Submit' })
+      .click();
+
+    const { amount: updatedAmount, description: updatedDescription } =
+      await getTransactionDetails(page);
+
+    expect(updatedAmount).toEqual(newAmount.negated());
+    expect(updatedDescription).toEqual(newDescription);
+
+    await page.goto('/accounts');
+
+    const updatedAccountBalance = await getAccountBalanceFromAccountListByName(
+      page,
+      fromAccount as string,
     );
-    await verifyTargetTransactionChanged(
-      editedTransactionName,
-      amountToChangeTransaction,
-      targetTransactionBefore,
-      targetTransactionAfter,
+
+    const initialAndNewAmountDifference = initialAmount.plus(newAmount);
+
+    expect(updatedAccountBalance).toEqual(
+      initialAccountBalance.minus(initialAndNewAmountDifference),
     );
+
+    await page.goto('/statistics/expenses/?date=2022-1');
+    await expect(page.getByTestId(id)).toContainText(updatedDescription);
   });
 
-  // eslint-disable-next-line playwright/expect-expect
-  test('should edit the oldest expense and verify the changes', async ({
+  test('should edit expense account field and verify balance updates', async ({
     page,
   }) => {
-    const editedTransactionName = getEditedTransactionName();
-    const expensesBefore = await getAllExpenses();
+    await page.goto('/statistics/expenses/?date=2022-1');
 
-    const targetTransactionBefore = expensesBefore[0];
+    await page.getByTestId('transaction-list-item').first().click();
 
-    const targetAccountId = await getAccountFromTransactionListItem(
-      targetTransactionBefore,
+    const { id, fromAccount, amount } = await getTransactionDetails(page);
+
+    await page.goto('/accounts');
+
+    const initialBalanceForPreviousAccount =
+      await getAccountBalanceFromAccountListByName(page, fromAccount as string);
+
+    const initialBalanceForNewAccount =
+      await getAccountBalanceFromAccountListByName(page, 'Cash account');
+
+    await page.goto(`/statistics/expenses/${id}`);
+    await clickPopperLink(page, 'Edit');
+
+    await fillTransactionForm(
+      page,
+      {
+        fromAccount: 'Cash account',
+      },
+      'page',
     );
 
-    const accountBefore = await getAccount(targetAccountId);
+    await page
+      .getByTestId('layout-root')
+      .getByTestId('transaction-form')
+      .getByRole('button', { name: 'Submit' })
+      .click();
 
-    const newAmount =
-      targetTransactionBefore.amount + amountToChangeTransaction;
+    await page.goto('/statistics/expenses/?date=2022-1');
+    await page.goto('/accounts');
 
-    const transactionYear = new Date(
-      targetTransactionBefore.date,
-    ).getFullYear();
-    const transactionMonth = (
-      new Date(targetTransactionBefore.date).getMonth() + 1
-    )
-      .toString()
-      .padStart(2, '0');
-    const dateQuery = `${transactionYear}-${transactionMonth}`;
-    await page.goto(`/statistics/expenses?date=${dateQuery}&page=1`);
+    const updatedBalanceForPreviousAccount =
+      await getAccountBalanceFromAccountListByName(page, fromAccount as string);
 
-    await page.getByTestId(targetTransactionBefore.id).click();
+    const updatedBalanceForNewAccount =
+      await getAccountBalanceFromAccountListByName(page, 'Cash account');
 
-    await page.getByTestId('popper-button').click();
-    await page.getByTestId('popper-container').getByText('Edit').click();
+    console.log({
+      initialBalanceForPreviousAccount,
+      initialBalanceForNewAccount,
+      updatedBalanceForPreviousAccount,
+      updatedBalanceForNewAccount,
+      amount,
+    });
 
-    const editExpenseForm = page.getByTestId('edit-expense-form');
-
-    await editExpenseForm.locator('#description').fill(editedTransactionName);
-    await editExpenseForm.locator('#amount').fill(newAmount.toString());
-
-    await editExpenseForm.getByTestId('submit').click();
-
-    await page.getByTestId('popper-button').click();
-    await page.getByTestId('popper-container').getByText('Edit').click();
-
-    const accountAfter = await getAccount(targetAccountId);
-    const targetTransactionAfter = await getTransactionById(
-      targetTransactionBefore.id,
+    expect(updatedBalanceForPreviousAccount).toEqual(
+      initialBalanceForPreviousAccount.plus(amount.abs()),
     );
 
-    await verifyAccountBalanceChanges(
-      amountToChangeTransaction,
-      accountBefore,
-      accountAfter,
-    );
-    await verifyTargetTransactionChanged(
-      editedTransactionName,
-      amountToChangeTransaction,
-      targetTransactionBefore,
-      targetTransactionAfter,
+    expect(updatedBalanceForNewAccount).toEqual(
+      initialBalanceForNewAccount.minus(amount.abs()),
     );
   });
 });

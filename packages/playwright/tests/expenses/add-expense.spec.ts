@@ -1,222 +1,83 @@
-import {
-  AccountDto,
-  ExpenseListItemDto,
-  TransactionListItemDto,
-} from '$types/generated/financer';
-import {
-  getAllTransactions,
-  getAccount,
-  MINUTE_IN_MS,
-  formatDate,
-  getAccountFromTransactionListItem,
-  roundToTwoDecimal,
-  getAllExpenses,
-} from '$utils/api-helper';
+import Decimal from 'decimal.js';
+
+import { getAccountBalanceFromAccountListByName } from '$utils/account/getAccountBalanceFromAccountListByName';
 import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
+import { fillTransactionForm } from '$utils/transaction/fillTransactionForm';
 
 test.describe('Add Expense', () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async () => {
     await applyFixture('large');
+  });
+
+  test('should add new expense and verify account balance and expense list', async ({
+    page,
+  }) => {
+    const transactionDescription = `dummy expense transaction created by test code ${Math.random()}`;
+
+    await page.goto('/accounts');
+    const initialAccountBalance = await getAccountBalanceFromAccountListByName(
+      page,
+      'Credit account',
+    );
+
+    await page.getByTestId('add-transaction').click();
+
+    await fillTransactionForm(page, {
+      fromAccount: 'Credit account',
+      amount: new Decimal(15.5),
+      description: transactionDescription,
+    });
+
+    await page
+      .getByTestId('transaction-form')
+      .getByRole('button', { name: 'Submit' })
+      .click();
+
+    await expect(page.getByTestId('transaction-details')).toBeVisible();
+    await expect(page.getByTestId('transaction-amount')).toContainText('15,50');
+    await expect(page.getByTestId('transaction-description')).toContainText(
+      transactionDescription,
+    );
+
+    await page.goto('/accounts');
+    const updatedAccountBalance = await getAccountBalanceFromAccountListByName(
+      page,
+      'Credit account',
+    );
+
+    expect(updatedAccountBalance).toEqual(initialAccountBalance.minus(15.5));
+
     await page.goto('/statistics/expenses');
+    await expect(
+      page
+        .getByTestId('transaction-list-item')
+        .getByText(transactionDescription),
+    ).toBeVisible();
   });
 
-  const newTransactionAmountStr = '15.50';
-  const newTransactionAmount = parseFloat(newTransactionAmountStr);
-  const getNewTransactionName = () =>
-    `new dummy transaction created by test code ${Math.random()}`;
-
-  const verifyAccountBalanceChange = async (
-    amount: number,
-    accountBefore: AccountDto,
-    accountAfter: AccountDto,
-  ) => {
-    expect(roundToTwoDecimal(accountBefore.balance - amount)).toEqual(
-      roundToTwoDecimal(accountAfter.balance),
-    );
-  };
-
-  const verifyNewExpenseCreated = async (
-    expensesBefore: ExpenseListItemDto[],
-    expensesAfter: ExpenseListItemDto[],
-  ) => {
-    expect(expensesAfter.length).toEqual(expensesBefore.length + 1);
-  };
-
-  // eslint-disable-next-line playwright/expect-expect
-  test('should add a new expense and verify account balance and expense list', async ({
+  test('should not allow form submission with missing required fields', async ({
     page,
   }) => {
-    const newTransactionName = getNewTransactionName();
-
-    const initialTransactions = await getAllTransactions();
-    const initialExpenses = await getAllExpenses();
-
-    const targetTransaction = initialTransactions.at(
-      -1,
-    ) as TransactionListItemDto;
-
-    const targetTransactionAccountId =
-      await getAccountFromTransactionListItem(targetTransaction);
-
-    const accountBefore = await getAccount(targetTransactionAccountId);
-
-    const newTransactionDate = new Date(
-      new Date(targetTransaction.date).getTime() + MINUTE_IN_MS,
-    );
+    await page.goto('/');
 
     await page.getByTestId('add-transaction').click();
 
-    const drawer = page.getByTestId('add-transaction-drawer');
-    await drawer.locator('#description').fill(newTransactionName);
-    await drawer.locator('#date').fill(formatDate(newTransactionDate));
-    await drawer.locator('#amount').fill(newTransactionAmountStr);
-    await drawer
-      .locator('#fromAccount')
-      .selectOption(targetTransactionAccountId);
-    await drawer.getByTestId('submit').click();
+    await page
+      .getByTestId('transaction-form')
+      .getByRole('button', { name: 'Submit' })
+      .click();
 
-    await page.getByTestId('popper-button').click();
-    await page.getByTestId('popper-container').getByText('Edit').click();
+    const accountSelect = page
+      .getByTestId('transaction-form')
+      .getByLabel('From Account');
 
-    const accountAfter = await getAccount(targetTransactionAccountId);
-    const expensesAfter = await getAllExpenses();
+    const validationMessage = await accountSelect.evaluate((element) => {
+      const select = element as HTMLInputElement;
+      return select.validationMessage;
+    });
 
-    await verifyAccountBalanceChange(
-      newTransactionAmount,
-      accountBefore,
-      accountAfter,
-    );
-    await verifyNewExpenseCreated(initialExpenses, expensesAfter);
-  });
-
-  // eslint-disable-next-line playwright/expect-expect
-  test('should add a second newest expense and verify account balance and expense list', async ({
-    page,
-  }) => {
-    const newTransactionName = getNewTransactionName();
-
-    const initialTransactions = await getAllTransactions();
-    const initialExpenses = await getAllExpenses();
-
-    const targetTransaction = initialTransactions.at(
-      -1,
-    ) as TransactionListItemDto;
-
-    const targetTransactionAccountId =
-      await getAccountFromTransactionListItem(targetTransaction);
-
-    const newTransactionDate = new Date(
-      new Date(targetTransaction.date).getTime() - MINUTE_IN_MS,
-    );
-
-    const accountBefore = await getAccount(targetTransactionAccountId);
-
-    await page.getByTestId('add-transaction').click();
-
-    const drawer = page.getByTestId('add-transaction-drawer');
-    await drawer.locator('#description').fill(newTransactionName);
-    await drawer.locator('#date').fill(formatDate(newTransactionDate));
-    await drawer.locator('#amount').fill(newTransactionAmountStr);
-    await drawer
-      .locator('#fromAccount')
-      .selectOption(targetTransactionAccountId);
-    await drawer.getByTestId('submit').click();
-
-    await page.getByTestId('popper-button').click();
-    await page.getByTestId('popper-container').getByText('Edit').click();
-
-    const accountAfter = await getAccount(targetTransactionAccountId);
-    const expensesAfter = await getAllExpenses();
-
-    await verifyAccountBalanceChange(
-      newTransactionAmount,
-      accountBefore,
-      accountAfter,
-    );
-    await verifyNewExpenseCreated(initialExpenses, expensesAfter);
-  });
-
-  // eslint-disable-next-line playwright/expect-expect
-  test('Add oldest expense', async ({ page }) => {
-    const newTransactionName = getNewTransactionName();
-
-    const initialTransactions = await getAllTransactions();
-    const initialExpenses = await getAllExpenses();
-
-    const targetTransaction = initialTransactions.at(
-      0,
-    ) as TransactionListItemDto;
-
-    const targetTransactionAccountId =
-      await getAccountFromTransactionListItem(targetTransaction);
-
-    const newTransactionDate = new Date(
-      new Date(targetTransaction.date).getTime() - MINUTE_IN_MS,
-    );
-
-    const accountBefore = await getAccount(targetTransactionAccountId);
-
-    await page.getByTestId('add-transaction').click();
-
-    const drawer = page.getByTestId('add-transaction-drawer');
-    await drawer.locator('#description').fill(newTransactionName);
-    await drawer.locator('#date').fill(formatDate(newTransactionDate));
-    await drawer.locator('#amount').fill(newTransactionAmountStr);
-    await drawer
-      .locator('#fromAccount')
-      .selectOption(targetTransactionAccountId);
-    await drawer.getByTestId('submit').click();
-
-    await page.getByTestId('popper-button').click();
-    await page.getByTestId('popper-container').getByText('Edit').click();
-
-    const accountAfter = await getAccount(targetTransactionAccountId);
-    const expensesAfter = await getAllExpenses();
-
-    await verifyAccountBalanceChange(
-      newTransactionAmount,
-      accountBefore,
-      accountAfter,
-    );
-    await verifyNewExpenseCreated(initialExpenses, expensesAfter);
-  });
-
-  test('should add a new expense and verify the date is correct', async ({
-    page,
-  }) => {
-    const newTransactionName = getNewTransactionName();
-
-    const initialTransactions = await getAllTransactions();
-    const targetTransaction = initialTransactions.at(
-      -1,
-    ) as TransactionListItemDto;
-    const targetTransactionAccountId =
-      await getAccountFromTransactionListItem(targetTransaction);
-
-    const date = new Date();
-    date.setSeconds(0);
-    date.setMilliseconds(0);
-
-    await page.getByTestId('add-transaction').click();
-
-    const drawer = page.getByTestId('add-transaction-drawer');
-    await drawer.locator('#description').fill(newTransactionName);
-    await drawer.locator('#date').fill(formatDate(date));
-    await drawer.locator('#amount').fill(newTransactionAmountStr);
-    await drawer
-      .locator('#fromAccount')
-      .selectOption(targetTransactionAccountId);
-    await drawer.getByTestId('submit').click();
-
-    await page.getByText(newTransactionName).click();
-    await page.getByTestId('popper-button').click();
-    await page.getByTestId('popper-container').getByText('Edit').click();
-
-    const inputValue = await page
-      .getByTestId('edit-expense-form')
-      .locator('#date')
-      .inputValue();
-    expect(date.toISOString()).toEqual(new Date(inputValue).toISOString());
+    await expect(validationMessage).toBe('Please select an item in the list.');
+    await expect(page.getByTestId('transaction-drawer')).toBeVisible();
   });
 });

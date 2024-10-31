@@ -61,10 +61,10 @@ test.describe('Transaction categories visibility in transaction forms', () => {
     await page.goto('/');
     await page.getByTestId('add-transaction').click();
 
-    const drawer = page.getByTestId('add-transaction-drawer');
+    const drawer = page.getByTestId('transaction-drawer');
 
     await drawer
-      .getByTestId('transactionTypeSwitcher')
+      .getByTestId('transaction-type-switcher')
       .getByLabel('Expense', { exact: true })
       .focus();
 
@@ -80,7 +80,7 @@ test.describe('Transaction categories visibility in transaction forms', () => {
     await page.goto('/');
     await page.getByTestId('add-transaction').click();
 
-    const drawer = page.getByTestId('add-transaction-drawer');
+    const drawer = page.getByTestId('transaction-drawer');
 
     await drawer.locator('#amount').fill('100');
 
@@ -93,10 +93,10 @@ test.describe('Transaction categories visibility in transaction forms', () => {
     await page.goto('/');
     await page.getByTestId('add-transaction').click();
 
-    const drawer = page.getByTestId('add-transaction-drawer');
+    const drawer = page.getByTestId('transaction-drawer');
 
     await drawer
-      .getByTestId('transactionTypeSwitcher')
+      .getByTestId('transaction-type-switcher')
       .getByLabel('Expense', { exact: true })
       .focus();
 

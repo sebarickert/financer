@@ -58,7 +58,7 @@ test.describe('Edit Expense with Category', () => {
     // eslint-disable-next-line playwright/no-wait-for-timeout
     await page.waitForTimeout(100);
 
-    await page.getByTestId('edit-expense-form').getByTestId('submit').click();
+    await page.getByTestId('transaction-form').getByTestId('submit').click();
 
     await page.goto(`/statistics/expenses?date=${dateQuery}&page=1`);
     await page.getByTestId(expenseWithSingleCategory.id).click();
@@ -132,7 +132,7 @@ test.describe('Edit Expense with Category', () => {
 
     await expect(item).toHaveCount(1);
 
-    await page.getByTestId('edit-expense-form').getByTestId('submit').click();
+    await page.getByTestId('transaction-form').getByTestId('submit').click();
 
     await page.goto(`/statistics/expenses?date=${dateQuery}&page=1`);
     await page.getByTestId(expenseWithMultipleCategories.id).click();
@@ -183,7 +183,7 @@ test.describe('Edit Expense with Category', () => {
 
     await expect(item).toHaveCount(0);
 
-    await page.getByTestId('edit-expense-form').getByTestId('submit').click();
+    await page.getByTestId('transaction-form').getByTestId('submit').click();
 
     await page.goto(`/statistics/expenses?date=${dateQuery}&page=1`);
     await page.getByTestId(expenseWithMultipleCategories.id).click();

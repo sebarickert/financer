@@ -18,10 +18,10 @@ test.describe('Add income with category', () => {
     await page.goto('/');
     await page.getByTestId('add-transaction').click();
 
-    const drawer = page.getByTestId('add-transaction-drawer');
+    const drawer = page.getByTestId('transaction-drawer');
 
     await drawer
-      .getByTestId('transactionTypeSwitcher')
+      .getByTestId('transaction-type-switcher')
       .getByLabel('Expense', { exact: true })
       .focus();
 
@@ -40,10 +40,7 @@ test.describe('Add income with category', () => {
       amount: '50',
     });
 
-    await page
-      .getByTestId('add-transaction-drawer')
-      .getByTestId('submit')
-      .click();
+    await page.getByTestId('transaction-drawer').getByTestId('submit').click();
 
     await expect(page).not.toHaveURL('/add');
     await page.getByText(INCOME_NAME).click();
@@ -85,10 +82,7 @@ test.describe('Add income with category', () => {
       .selectOption('non-existing-category');
     await page.getByTestId(`${ids.transactionCategoriesForm}-submit`).click();
 
-    await page
-      .getByTestId('add-transaction-drawer')
-      .getByTestId('submit')
-      .click();
+    await page.getByTestId('transaction-drawer').getByTestId('submit').click();
 
     const formErrors = page.getByTestId('toast-item');
     await expect(formErrors).toContainText('Submission failed');

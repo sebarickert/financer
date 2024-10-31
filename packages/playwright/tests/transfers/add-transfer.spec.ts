@@ -82,10 +82,10 @@ test.describe('Add transfer', () => {
 
     await page.getByTestId('add-transaction').click();
 
-    const drawer = page.getByTestId('add-transaction-drawer');
+    const drawer = page.getByTestId('transaction-drawer');
 
     await drawer
-      .getByTestId('transactionTypeSwitcher')
+      .getByTestId('transaction-type-switcher')
       .getByLabel('Expense', { exact: true })
       .focus();
 
@@ -164,10 +164,10 @@ test.describe('Add transfer', () => {
 
     await page.getByTestId('add-transaction').click();
 
-    const drawer = page.getByTestId('add-transaction-drawer');
+    const drawer = page.getByTestId('transaction-drawer');
 
     await drawer
-      .getByTestId('transactionTypeSwitcher')
+      .getByTestId('transaction-type-switcher')
       .getByLabel('Expense', { exact: true })
       .focus();
 
@@ -246,10 +246,10 @@ test.describe('Add transfer', () => {
 
     await page.getByTestId('add-transaction').click();
 
-    const drawer = page.getByTestId('add-transaction-drawer');
+    const drawer = page.getByTestId('transaction-drawer');
 
     await drawer
-      .getByTestId('transactionTypeSwitcher')
+      .getByTestId('transaction-type-switcher')
       .getByLabel('Expense', { exact: true })
       .focus();
 
@@ -289,10 +289,10 @@ test.describe('Add transfer', () => {
 
     await page.getByTestId('add-transaction').click();
 
-    const drawer = page.getByTestId('add-transaction-drawer');
+    const drawer = page.getByTestId('transaction-drawer');
 
     await drawer
-      .getByTestId('transactionTypeSwitcher')
+      .getByTestId('transaction-type-switcher')
       .getByLabel('Expense', { exact: true })
       .focus();
 
@@ -312,7 +312,7 @@ test.describe('Add transfer', () => {
     await page.getByTestId('popper-container').getByText('Edit').click();
 
     const inputValue = await page
-      .getByTestId('edit-transfer-form')
+      .getByTestId('transaction-form')
       .locator('#date')
       .inputValue();
     expect(date.toISOString()).toEqual(new Date(inputValue).toISOString());

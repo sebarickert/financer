@@ -1,3 +1,5 @@
+import Decimal from 'decimal.js';
+
 import { Page, getBaseUrl } from './financer-page';
 
 import {
@@ -25,6 +27,16 @@ export const formatDate = (date: Date): string => {
   const minutes = String(date.getMinutes()).padStart(2, '0');
 
   return `${year}-${month}-${day}T${hours}:${minutes}`;
+};
+
+export const parseCurrency = (currencyString: string): Decimal => {
+  const cleanedText = currencyString
+    .replace(/[ €]/g, '')
+    .replace(/\s/g, '')
+    .replace(',', '.')
+    .replace(/[−–—]/g, '-'); // Normalize dash characters to standard hyphen
+
+  return new Decimal(cleanedText);
 };
 
 export const getAccount = async (accountId: string): Promise<AccountDto> => {

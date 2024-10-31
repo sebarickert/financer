@@ -18,7 +18,7 @@ test.describe('Add Expense with Category', () => {
     await page.goto('/');
     await page.getByTestId('add-transaction').click();
 
-    const drawer = page.getByTestId('add-transaction-drawer');
+    const drawer = page.getByTestId('transaction-drawer');
 
     await drawer.locator('#fromAccount').selectOption({ index: 1 });
     await drawer.locator('#description').fill(EXPENSE_NAME);
@@ -33,10 +33,7 @@ test.describe('Add Expense with Category', () => {
       amount: '50',
     });
 
-    await page
-      .getByTestId('add-transaction-drawer')
-      .getByTestId('submit')
-      .click();
+    await page.getByTestId('transaction-drawer').getByTestId('submit').click();
 
     await page.getByText(EXPENSE_NAME).click();
 
@@ -79,10 +76,7 @@ test.describe('Add Expense with Category', () => {
       .selectOption('non-existing-category');
     await page.getByTestId(`${ids.transactionCategoriesForm}-submit`).click();
 
-    await page
-      .getByTestId('add-transaction-drawer')
-      .getByTestId('submit')
-      .click();
+    await page.getByTestId('transaction-drawer').getByTestId('submit').click();
 
     const formErrors = page.getByTestId('toast-item');
     await expect(formErrors).toContainText('Submission failed');

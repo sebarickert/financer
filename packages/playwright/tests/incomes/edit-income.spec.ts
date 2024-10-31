@@ -94,7 +94,7 @@ test.describe('Edit income', () => {
     await page.getByTestId('popper-button').click();
     await page.getByTestId('popper-container').getByText('Edit').click();
 
-    const editIncomeForm = page.getByTestId('edit-income-form');
+    const editIncomeForm = page.getByTestId('transaction-form');
 
     await editIncomeForm.locator('#description').fill(editedTransactionName);
     await editIncomeForm.locator('#amount').fill(newAmount.toString());
@@ -155,7 +155,7 @@ test.describe('Edit income', () => {
     await page.getByTestId('popper-button').click();
     await page.getByTestId('popper-container').getByText('Edit').click();
 
-    const editIncomeForm = page.getByTestId('edit-income-form');
+    const editIncomeForm = page.getByTestId('transaction-form');
 
     await editIncomeForm.locator('#description').fill(editedTransactionName);
     await editIncomeForm.locator('#amount').fill(newAmount.toString());
