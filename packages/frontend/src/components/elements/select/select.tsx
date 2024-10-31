@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { ChangeEvent, FC } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { IconName } from '$elements/Icon';
+import { Icon, IconName } from '$elements/Icon';
 
 type SelectProps = {
   children: React.ReactNode;
@@ -52,18 +52,18 @@ const OptionElement: FC<OptionElementProps> = ({
     })}
     disabled={isDisabled}
   >
-    {/* <div className="flex flex-row items-center gap-4">
+    <div className="flex flex-row items-center gap-4">
       {icon && <Icon name={icon} className="text-gray-darkest" />}
       {!icon && hasIconPlaceholder && <span className="w-6" />}
       <div className="flex flex-col gap-1">
         <span
           className="option-label-after-from-data contents after:text-xs after:text-gray-darkest"
           data-description={description}
-        > */}
-    {children}
-    {/* </span>
+        >
+          {children}
+        </span>
       </div>
-    </div> */}
+    </div>
   </option>
 );
 
@@ -106,7 +106,7 @@ export const Select = ({
             shouldUnregister,
           })}
         >
-          {/* <button type="button" className="after:absolute after:inset-0">
+          <button type="button" className="after:absolute after:inset-0">
             <SelectedOption />
           </button>
           <OptionElement
@@ -115,7 +115,7 @@ export const Select = ({
             hasIconPlaceholder={hasSomeOptionIcon}
           >
             {placeholder}
-          </OptionElement> */}
+          </OptionElement>
           {options.map(({ label, ...rest }, index) => (
             <OptionElement
               key={rest.value}
