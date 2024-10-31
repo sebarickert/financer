@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 
 import { StoreProvider } from './store.provider';
 
+import { ScrollToTop } from '$blocks/ScrollToTop';
 import { ToastMessageTypes } from '$blocks/toast/toast';
 import {
   addToastMessage,
@@ -71,7 +72,7 @@ export const RootProviderContainer: FC<RootProviderContainerProps> = (
   return (
     <StoreProvider>
       <ViewTransitions>
-        {/* <ScrollToTop /> */}
+        <ScrollToTop />
         <App {...props} />
       </ViewTransitions>
     </StoreProvider>

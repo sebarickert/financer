@@ -47,10 +47,13 @@ export const Popper: FC<PopperProps> = ({ className, items, children }) => {
           'min-w-48 shadow',
           'p-2 rounded-md lg:mt-2',
           'border theme-border-primary',
-          'absolute inset-[unset] right-anchor-[popover-anchor] top-anchor-[popover-anchor,bottom]',
+          'fixed lg:absolute inset-[unset]',
+          'supports-[anchor-name]:right-anchor-[popover-anchor] supports-[anchor-name]:top-anchor-[popover-anchor,bottom]',
           'transition-all !transition-allow-discrete duration-100 ease-in open:ease-out',
           'opacity-0 starting:opacity-0 open:opacity-100',
-          'translate-x-0 -translate-y-2 starting:translate-x-0 starting:-translate-y-2 open:translate-x-0 open:translate-y-0',
+          'starting:translate-x-0 starting:-translate-y-2',
+          'translate-x-0 -translate-y-2',
+          'supports-[anchor-name]:open:translate-x-0 open:translate-y-0 open:-translate-x-[calc(100%-44px)]',
           className,
         )}
         popover="auto"
