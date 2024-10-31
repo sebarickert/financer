@@ -23,5 +23,5 @@ runs:
       if: always()
       with:
         name: all-playwright-blob-reports
-        path: packages/playwright/playwright-report/
+        path: packages/playwright/blob-report/
         retention-days: 7
