@@ -22,6 +22,6 @@ runs:
     - uses: actions/upload-artifact@v4
       if: always()
       with:
-        name: all-playwright-blob-reports
+        name: playwright-blob-shard-${{ inputs.SHARD }}
         path: packages/playwright/blob-report/
         retention-days: 7
