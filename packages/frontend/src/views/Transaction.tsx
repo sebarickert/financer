@@ -122,7 +122,7 @@ export const Transaction: FC<TransactionProps> = async ({
         <div className="grid gap-8 p-6 border rounded-md theme-layer-secondary-color theme-border-primary">
           <DetailsList items={transactionDetails} />
           {categoryDetails.length > 0 && (
-            <div>
+            <div data-testId="transaction-categories">
               <Heading disableResponsiveSizing noMargin className="mb-4">
                 Categories
               </Heading>
