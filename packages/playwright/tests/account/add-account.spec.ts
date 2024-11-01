@@ -1,4 +1,9 @@
-import { test, expect, Page } from '$utils/financer-page';
+import Decimal from 'decimal.js';
+
+import { fillAccountForm } from '$utils/account/fillAccountForm';
+import { getAccountDataFromAccountList } from '$utils/account/getAccountDataFromAccountList';
+import { getAccountDetails } from '$utils/account/getAccountDetails';
+import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
 
 test.describe.parallel('Add Account', () => {
@@ -7,69 +12,59 @@ test.describe.parallel('Add Account', () => {
     await page.goto('/accounts');
   });
 
-  const addAccountAndVerifyDetails = async (
-    page: Page,
-    accountType: string,
-    accountBalance: string,
-    expectedBalance: string,
-  ) => {
-    const newAccountName = `New Test ${accountType} Account ${Math.random()}`;
-    const accountRow = page
-      .getByTestId('account-row')
-      .getByText(newAccountName);
-    await expect(accountRow).toHaveCount(0);
-
-    await page.getByTestId('add-account').click();
-
-    // Add account form
-    await page.locator('#name').fill(newAccountName);
-    await page.locator('#balance').fill(accountBalance);
-    await page.locator('#type').selectOption({ label: accountType });
-    await page.getByTestId('account-form').getByTestId('submit').click();
-
-    await expect(page).toHaveURL(/\/accounts\/?$/);
-
-    await page.getByText(newAccountName).click();
-
-    await expect(page).not.toHaveURL(/\/accounts\/?$/);
-
-    await expect(
-      page
-        .getByTestId('account-details')
-        .getByTestId('account-details-item-description'),
-    ).toHaveText(accountType);
-    await expect(page.getByTestId('account-balance')).toHaveText(
-      expectedBalance,
-    );
-  };
-
-  // eslint-disable-next-line playwright/expect-expect
-  test('should add cash account', async ({ page }) => {
-    await addAccountAndVerifyDetails(page, 'Credit', '1000', '1 000,00 €');
-  });
-
-  // eslint-disable-next-line playwright/expect-expect
-  test('should add savings account', async ({ page }) => {
-    await addAccountAndVerifyDetails(page, 'Savings', '0', '0,00 €');
-  });
-
-  // eslint-disable-next-line playwright/expect-expect
-  test('should add investment account', async ({ page }) => {
-    await addAccountAndVerifyDetails(page, 'Investment', '0.16', '0,16 €');
-  });
-
-  // eslint-disable-next-line playwright/expect-expect
-  test('should add credit account', async ({ page }) => {
-    await addAccountAndVerifyDetails(
+  [
+    'Cash',
+    'Savings',
+    'Investment',
+    'Credit',
+    'Loan',
+    'Long term savings',
+    'Pre assigned cash',
+  ].forEach((type) => {
+    test(`should add ${type.toLowerCase()} account and verify it appears in account list and is correct type`, async ({
       page,
-      'Credit',
-      '99000000',
-      '99 000 000,00 €',
-    );
-  });
+    }) => {
+      const initialAccounts = await getAccountDataFromAccountList(page);
+      await page.getByTestId('add-account').click();
 
-  // eslint-disable-next-line playwright/expect-expect
-  test('should add loan account', async ({ page }) => {
-    await addAccountAndVerifyDetails(page, 'Loan', '1', '1,00 €');
+      expect(
+        initialAccounts.some(
+          (account) => account.name === `New ${type} Account`,
+        ),
+      ).not.toBe(true);
+
+      await fillAccountForm(page, {
+        name: `New ${type} Account`,
+        balance: new Decimal(1000),
+        type,
+      });
+
+      await page.getByTestId('account-form').getByTestId('submit').click();
+
+      await expect(page).toHaveURL(/\/accounts\/?$/);
+
+      const updatedAccounts = await getAccountDataFromAccountList(page);
+
+      expect(
+        updatedAccounts.some(
+          (account) => account.name === `New ${type} Account`,
+        ),
+      ).toBe(true);
+      expect(
+        updatedAccounts.find(
+          (account) => account.name === `New ${type} Account`,
+        )?.balance,
+      ).toEqual(new Decimal(1000));
+
+      await page.getByText(`New ${type} Account`).click();
+
+      // TODO figure out how to achieve without waiting...
+      // eslint-disable-next-line playwright/no-wait-for-timeout
+      await page.waitForTimeout(1000);
+
+      const { type: accountType } = await getAccountDetails(page);
+
+      expect(accountType).toEqual(type);
+    });
   });
 });
