@@ -148,7 +148,7 @@ test.describe('Expense Transactions', () => {
 
       await page
         .getByTestId('transaction-list-item')
-        .getByText('Dummy EXPENSE 99')
+        .getByText('Dummy EXPENSE 99', { exact: true })
         .click();
 
       const { categories: initialCategories } =
@@ -176,15 +176,15 @@ test.describe('Expense Transactions', () => {
       const { categories: updatedCategories } =
         await getTransactionDetails(page);
 
-      expect(updatedCategories?.[0].category).not.toEqual(
-        initialCategories?.[0].category,
+      expect(updatedCategories[0].category).not.toEqual(
+        initialCategories[0].category,
       );
-      expect(updatedCategories?.[0].amount).not.toEqual(
-        initialCategories?.[0].amount,
+      expect(updatedCategories[0].amount).not.toEqual(
+        initialCategories[0].amount,
       );
 
-      expect(updatedCategories?.[0].category).toEqual('Expense category');
-      expect(updatedCategories?.[0].amount).toEqual(new Decimal(200));
+      expect(updatedCategories[0].category).toEqual('Expense category');
+      expect(updatedCategories[0].amount).toEqual(new Decimal(200));
     });
 
     test('should edit expense with multiple categories and remove one of the categories and verify it updates values in transaction details', async ({
@@ -194,7 +194,7 @@ test.describe('Expense Transactions', () => {
 
       await page
         .getByTestId('transaction-list-item')
-        .getByText('Dummy EXPENSE 80')
+        .getByText('Dummy EXPENSE 80', { exact: true })
         .click();
 
       const { id, categories: initialCategories } =
@@ -231,7 +231,7 @@ test.describe('Expense Transactions', () => {
       const { categories: updatedCategories } =
         await getTransactionDetails(page);
 
-      expect(updatedCategories?.length).not.toEqual(initialCategories?.length);
+      expect(updatedCategories.length).not.toEqual(initialCategories?.length);
       expect(updatedCategories).not.toContain('Category for all types');
     });
 
@@ -242,7 +242,7 @@ test.describe('Expense Transactions', () => {
 
       await page
         .getByTestId('transaction-list-item')
-        .getByText('Dummy EXPENSE 80')
+        .getByText('Dummy EXPENSE 80', { exact: true })
         .click();
 
       const { id, categories: initialCategories } =
@@ -287,7 +287,7 @@ test.describe('Expense Transactions', () => {
       const { categories: updatedCategories } =
         await getTransactionDetails(page);
 
-      expect(updatedCategories?.length).not.toEqual(initialCategories?.length);
+      expect(updatedCategories.length).not.toEqual(initialCategories.length);
       expect(updatedCategories).toHaveLength(0);
     });
   });

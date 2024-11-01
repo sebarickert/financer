@@ -13,21 +13,20 @@ export const fillAndSubmitTransactionCategoryForm = async (
   fields: TransactionCategoryFormFields,
   isTransactionEdit?: boolean,
 ) => {
-  const drawerHeading = (
-    isTransactionEdit
-      ? page.getByTestId('drawer')
-      : page.getByTestId('transaction-drawer')
-  )
-    .getByRole('heading')
-    .textContent();
-
-  const isEditMode = (await drawerHeading) === 'Edit Category Item';
-
   const transactionCategoriesForm = (
     isTransactionEdit
       ? page.getByTestId('drawer')
       : page.getByTestId('transaction-drawer')
   ).getByTestId('transaction-categories-form');
+
+  const drawerHeading = await transactionCategoriesForm.evaluate((form) => {
+    return (
+      form?.parentElement?.firstElementChild?.querySelector('h2')
+        ?.textContent ?? ''
+    );
+  });
+
+  const isEditMode = drawerHeading === 'Edit Category Item';
 
   const index = await transactionCategoriesForm.getAttribute(
     'data-category-index',

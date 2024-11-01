@@ -96,9 +96,9 @@ test.describe('Expense Transactions', () => {
 
       const { categories } = await getTransactionDetails(page);
 
-      expect(categories?.length).toEqual(1);
-      expect(categories?.[0].category).toEqual('Category for all types');
-      expect(categories?.[0].amount).toEqual(new Decimal(15.5));
+      expect(categories.length).toEqual(1);
+      expect(categories[0].category).toEqual('Category for all types');
+      expect(categories[0].amount).toEqual(new Decimal(15.5));
     });
   });
 

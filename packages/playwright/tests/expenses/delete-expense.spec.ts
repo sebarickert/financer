@@ -4,7 +4,7 @@ import { applyFixture } from '$utils/load-fixtures';
 import { deleteTransaction } from '$utils/transaction/deleteTransaction';
 import { getTransactionDetails } from '$utils/transaction/getTransactionDetails';
 
-test.describe('Delete Expense', () => {
+test.describe('Expense Transactions', () => {
   test.beforeEach(async () => {
     await applyFixture('large');
   });
