@@ -12,7 +12,7 @@ type TransactionDetails = {
   type: TransactionType;
   fromAccount?: string;
   toAccount?: string;
-  categories?: CategoryDetails[];
+  categories: CategoryDetails[];
 };
 
 type CategoryDetails = {
@@ -22,6 +22,14 @@ type CategoryDetails = {
 };
 
 const getCategories = async (page: Page): Promise<CategoryDetails[]> => {
+  const categoriesElement = await page
+    .getByTestId('transaction-categories')
+    .isVisible();
+
+  if (!categoriesElement) {
+    return [];
+  }
+
   const categories = await page
     .getByTestId('transaction-categories')
     .evaluate((element) => {

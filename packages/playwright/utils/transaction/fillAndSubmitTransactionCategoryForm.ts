@@ -11,16 +11,23 @@ type TransactionCategoryFormFields = {
 export const fillAndSubmitTransactionCategoryForm = async (
   page: Page,
   fields: TransactionCategoryFormFields,
-  formLocation: 'page' | 'drawer' = 'drawer',
+  isTransactionEdit?: boolean,
 ) => {
-  const transactionCategoriesForm =
-    formLocation === 'page'
-      ? page
-          .getByTestId('layout-root')
-          .getByTestId('transaction-categories-form')
-      : page
-          .getByTestId('transaction-drawer')
-          .getByTestId('transaction-categories-form');
+  const drawerHeading = (
+    isTransactionEdit
+      ? page.getByTestId('drawer')
+      : page.getByTestId('transaction-drawer')
+  )
+    .getByRole('heading')
+    .textContent();
+
+  const isEditMode = (await drawerHeading) === 'Edit Category Item';
+
+  const transactionCategoriesForm = (
+    isTransactionEdit
+      ? page.getByTestId('drawer')
+      : page.getByTestId('transaction-drawer')
+  ).getByTestId('transaction-categories-form');
 
   const index = await transactionCategoriesForm.getAttribute(
     'data-category-index',
@@ -51,6 +58,6 @@ export const fillAndSubmitTransactionCategoryForm = async (
   }
 
   await transactionCategoriesForm
-    .getByRole('button', { name: 'Add', exact: true })
+    .getByRole('button', { name: isEditMode ? 'Update' : 'Add', exact: true })
     .click();
 };
