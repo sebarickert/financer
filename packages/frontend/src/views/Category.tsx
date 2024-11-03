@@ -38,6 +38,8 @@ export const Category: FC<CategoryProps> = ({
       type: 'conjunction',
     });
 
+    console.log(categoryVisibilityCapitalized);
+
     return [
       {
         icon: 'TagIcon' as IconName,
@@ -57,14 +59,18 @@ export const Category: FC<CategoryProps> = ({
             },
           ]
         : []),
-      {
-        icon: 'InformationCircleIcon',
-        label:
-          categoryVisibilityCapitalized.length > 1
-            ? 'Transaction Types'
-            : 'Transaction Type',
-        description: formatter.format(categoryVisibilityCapitalized),
-      },
+      ...(categoryVisibilityCapitalized.length > 0
+        ? [
+            {
+              icon: 'InformationCircleIcon' as IconName,
+              label:
+                categoryVisibilityCapitalized.length > 1
+                  ? 'Transaction Types'
+                  : 'Transaction Type',
+              description: formatter.format(categoryVisibilityCapitalized),
+            },
+          ]
+        : []),
     ];
   }, [
     categories,
