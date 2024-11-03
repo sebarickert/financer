@@ -17,7 +17,7 @@ export const fillAccountForm = async (
   const formFields = {
     '#name': name,
     '#balance': balance?.toNumber(),
-    '#type': { label: type },
+    '#type': type ? { label: type } : undefined,
   };
 
   const accountForm = page.getByTestId('account-form');

@@ -1,7 +1,7 @@
 import Decimal from 'decimal.js';
 
 import { getAccountBalanceFromAccountListByName } from '$utils/account/getAccountBalanceFromAccountListByName';
-import { clickPopperLink } from '$utils/common/clickPopperLink';
+import { clickPopperItem } from '$utils/common/clickPopperItem';
 import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
 import { fillAndSubmitTransactionCategoryForm } from '$utils/transaction/fillAndSubmitTransactionCategoryForm';
@@ -33,7 +33,7 @@ test.describe('Income Transactions', () => {
         await getAccountBalanceFromAccountListByName(page, toAccount as string);
 
       await page.goto(`/statistics/incomes/${id}`);
-      await clickPopperLink(page, 'Edit');
+      await clickPopperItem(page, 'Edit');
 
       const newAmount = new Decimal(249.99);
       const newDescription = 'edited dummy transaction created by test code';
@@ -92,7 +92,7 @@ test.describe('Income Transactions', () => {
         await getAccountBalanceFromAccountListByName(page, 'Cash account');
 
       await page.goto(`/statistics/incomes/${id}`);
-      await clickPopperLink(page, 'Edit');
+      await clickPopperItem(page, 'Edit');
 
       await fillTransactionForm(
         page,
@@ -142,7 +142,7 @@ test.describe('Income Transactions', () => {
       const { categories: initialCategories } =
         await getTransactionDetails(page);
 
-      await clickPopperLink(page, 'Edit');
+      await clickPopperItem(page, 'Edit');
 
       await page.getByRole('button', { name: 'Edit category' }).click();
 
@@ -188,7 +188,7 @@ test.describe('Income Transactions', () => {
       const { id, categories: initialCategories } =
         await getTransactionDetails(page);
 
-      await clickPopperLink(page, 'Edit');
+      await clickPopperItem(page, 'Edit');
 
       await expect(page.getByTestId('transaction-categories-item')).toHaveCount(
         2,
@@ -236,7 +236,7 @@ test.describe('Income Transactions', () => {
       const { id, categories: initialCategories } =
         await getTransactionDetails(page);
 
-      await clickPopperLink(page, 'Edit');
+      await clickPopperItem(page, 'Edit');
 
       await expect(page.getByTestId('transaction-categories-item')).toHaveCount(
         2,

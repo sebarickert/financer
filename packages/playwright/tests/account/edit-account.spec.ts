@@ -1,5 +1,14 @@
-import { test, expect, Page } from '$utils/financer-page';
+import Decimal from 'decimal.js';
+
+import { TransactionType } from '$types/generated/financer';
+import { fillAccountForm } from '$utils/account/fillAccountForm';
+import { fillUpdateMarketValueForm } from '$utils/account/fillUpdateMarketValueForm';
+import { getAccountDetails } from '$utils/account/getAccountDetails';
+import { clickPopperItem } from '$utils/common/clickPopperItem';
+import { accountTypes } from '$utils/constants';
+import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
+import { getTransactionDataFromTransactionList } from '$utils/transaction/getTransactionDataFromTransactionList';
 
 test.describe('Edit Account', () => {
   test.beforeEach(async ({ page }) => {
@@ -7,402 +16,144 @@ test.describe('Edit Account', () => {
     await page.goto('/accounts');
   });
 
-  const parseFloatFromText = (text: string) => {
-    return parseFloat(
-      text
-        .replace(',', '.')
-        .replace(/\u00a0/g, ' ')
-        .replace(/ /g, '')
-        .replace(String.fromCharCode(8722), String.fromCharCode(45)),
-    );
-  };
+  test.describe('Edit Account Details', () => {
+    [
+      'Cash account',
+      'Saving account 1',
+      'Saving account 2',
+      'Investment account',
+      'Loan account',
+      'Credit account',
+    ].forEach((accountName) => {
+      test(`should update details for "${accountName}" account and verify changes are saved`, async ({
+        page,
+      }) => {
+        await page.getByTestId('account-row').getByText(accountName).click();
 
-  const verifyDifferentBalances = (balanceA: string, balanceB: string) => {
-    const a = parseFloatFromText(balanceA);
-    const b = parseFloatFromText(balanceB);
-    expect(a).not.toBeNaN();
-    expect(b).not.toBeNaN();
+        // TODO figure out how to achieve without waiting...
+        // eslint-disable-next-line playwright/no-wait-for-timeout
+        await page.waitForTimeout(200);
 
-    expect(a).not.toEqual(b);
-  };
-  const verifyAccountPage = async (
-    page: Page,
-    accountName: string,
-    accountBalance: string,
-    accountType: string,
-  ) => {
-    await expect(page.getByTestId('account-name')).toHaveText(accountName);
-    await expect(
-      page
-        .getByTestId('account-details')
-        .getByTestId('account-details-item-description'),
-    ).toHaveText(accountType);
+        const {
+          name: initialName,
+          balance: initialBalance,
+          type: initialType,
+        } = await getAccountDetails(page);
 
-    const currentBalance = (await page
-      .getByTestId('account-balance')
-      .textContent()) as string;
-    expect(parseFloatFromText(currentBalance)).toEqual(
-      parseFloatFromText(accountBalance),
-    );
-  };
+        await clickPopperItem(page, 'Edit');
 
-  const editAccountNameAndVerify = async (
-    page: Page,
-    oldAccountName: string,
-    newAccountName: string,
-    accountType: string,
-  ) => {
-    const deletedAccountRow = page
-      .getByTestId('account-row')
-      .getByText(newAccountName);
-    await expect(deletedAccountRow).toHaveCount(0);
+        await fillAccountForm(page, {
+          name: `${initialName} updated`,
+          balance: initialBalance.plus(100),
+          type: accountTypes.find((type) => type !== initialType),
+        });
 
-    await page.getByTestId('account-row').getByText(oldAccountName).click();
+        await page.getByTestId('account-form').getByTestId('submit').click();
 
-    const accountBalance = (await page
-      .getByTestId('account-balance')
-      .textContent()) as string;
-    await verifyAccountPage(page, oldAccountName, accountBalance, accountType);
+        // TODO figure out how to achieve without waiting...
+        // eslint-disable-next-line playwright/no-wait-for-timeout
+        await page.waitForTimeout(200);
 
-    await page.getByTestId('popper-button').click();
-    await page.getByTestId('popper-container').getByText('Edit').click();
+        const {
+          name: updatedName,
+          balance: updatedBalance,
+          type: updatedType,
+        } = await getAccountDetails(page);
 
-    await page.locator('#name').fill(newAccountName);
-    await page.getByTestId('account-form').getByTestId('submit').click();
+        expect(updatedName).toEqual(`${initialName} updated`);
+        expect(updatedBalance).toEqual(initialBalance.plus(100));
+        expect(updatedType).toEqual(
+          accountTypes.find((type) => type !== initialType),
+        );
+      });
+    });
+  });
 
-    await page.waitForURL(/\/accounts\/[a-zA-Z0-9-]+\/?$/);
-    await page.goto('/accounts');
-
-    const newAccount = page
-      .getByTestId('account-row')
-      .getByText(newAccountName);
-    await expect(newAccount).toHaveCount(1);
-    await page.getByTestId('account-row').getByText(newAccountName).click();
-
-    await verifyAccountPage(page, newAccountName, accountBalance, accountType);
-  };
-
-  const editAccountTypeAndVerify = async (
-    page: Page,
-    accountName: string,
-    oldAccountType: string,
-    newAccountType: string,
-  ) => {
-    await page.getByTestId('account-row').getByText(accountName).click();
-
-    const accountBalance = (await page
-      .getByTestId('account-balance')
-      .textContent()) as string;
-    await verifyAccountPage(page, accountName, accountBalance, oldAccountType);
-
-    await page.getByTestId('popper-button').click();
-    await page.getByTestId('popper-container').getByText('Edit').click();
-
-    await page.locator('#type').selectOption(newAccountType);
-    await page.getByTestId('account-form').getByTestId('submit').click();
-
-    await page.waitForURL(/\/accounts\/[a-zA-Z0-9-]+\/?$/);
-
-    await page.goto('/accounts');
-
-    await page.getByTestId('account-row').getByText(accountName).click();
-
-    await verifyAccountPage(page, accountName, accountBalance, newAccountType);
-  };
-
-  const editAccountBalanceAndVerify = async (
-    page: Page,
-    accountName: string,
-    newAccountBalance: string,
-    accountType: string,
-  ) => {
-    await page.getByTestId('account-row').getByText(accountName).click();
-
-    const oldAccountBalance = (await page
-      .getByTestId('account-balance')
-      .textContent()) as string;
-    await verifyAccountPage(page, accountName, oldAccountBalance, accountType);
-    verifyDifferentBalances(oldAccountBalance, newAccountBalance);
-
-    await page.getByTestId('popper-button').click();
-    await page.getByTestId('popper-container').getByText('Edit').click();
-
-    await page
-      .locator('#balance')
-      .fill(
-        newAccountBalance
-          .replace(',', '.')
-          .replace(/ /g, '')
-          .replace('€', '')
-          .replace(String.fromCharCode(8722), String.fromCharCode(45)),
-      );
-
-    await page.getByTestId('account-form').getByTestId('submit').click();
-
-    await page.waitForURL(/\/accounts\/[a-zA-Z0-9-]+\/?$/);
-    await page.goto('/accounts');
-
-    await page.getByTestId('account-row').getByText(accountName).click();
-
-    await verifyAccountPage(page, accountName, newAccountBalance, accountType);
-  };
-
-  const editAccountAllDetailsAndVerify = async (
-    page: Page,
-    oldAccountName: string,
-    newAccountName: string,
-    newAccountBalance: string,
-    oldAccountType: string,
-    newAccountType: string,
-  ) => {
-    await page.getByTestId('account-row').getByText(oldAccountName).click();
-
-    const oldAccountBalance = (await page
-      .getByTestId('account-balance')
-      .textContent()) as string;
-    await verifyAccountPage(
+  test.describe('Market Value', () => {
+    test('should update market value (positive) for investment account and verify changes are saved', async ({
       page,
-      oldAccountName,
-      oldAccountBalance,
-      oldAccountType,
-    );
-    verifyDifferentBalances(oldAccountBalance, newAccountBalance);
+    }) => {
+      await page
+        .getByTestId('account-row')
+        .getByText('Investment account')
+        .click();
 
-    await page.getByTestId('popper-button').click();
-    await page.getByTestId('popper-container').getByText('Edit').click();
+      // TODO figure out how to achieve without waiting...
+      // eslint-disable-next-line playwright/no-wait-for-timeout
+      await page.waitForTimeout(200);
 
-    await page.locator('#name').fill(newAccountName);
-    await page.locator('#type').selectOption(newAccountType);
-    await page
-      .locator('#balance')
-      .fill(
-        newAccountBalance
-          .replace(',', '.')
-          .replace(/ /g, '')
-          .replace('€', '')
-          .replace(String.fromCharCode(8722), String.fromCharCode(45)),
+      const { balance: initialBalance } = await getAccountDetails(page);
+
+      await clickPopperItem(page, 'Update Market Value');
+
+      await fillUpdateMarketValueForm(page, {
+        currentMarketValue: initialBalance.plus(100),
+      });
+
+      await page
+        .getByTestId('update-market-value-form')
+        .getByRole('button', { name: 'Update' })
+        .click();
+
+      // TODO figure out how to achieve without waiting...
+      // eslint-disable-next-line playwright/no-wait-for-timeout
+      await page.waitForTimeout(200);
+
+      const { balance: updatedBalance } = await getAccountDetails(page);
+      const transactionItems =
+        await getTransactionDataFromTransactionList(page);
+
+      const createdTransaction = transactionItems.find(
+        (transaction) => transaction.description === 'Market value change',
       );
 
-    await page.getByTestId('account-form').getByTestId('submit').click();
+      expect(updatedBalance).toEqual(initialBalance.plus(100));
+      expect(createdTransaction).toBeTruthy();
+      expect(createdTransaction?.amount).toEqual(new Decimal(100));
+      expect(createdTransaction?.type).toEqual(TransactionType.Income);
+    });
 
-    await page.waitForURL(/\/accounts\/[a-zA-Z0-9-]+\/?$/);
-    await page.goto('/accounts');
-
-    const newAccount = page
-      .getByTestId('account-row')
-      .getByText(newAccountName);
-
-    await expect(newAccount).toHaveCount(1);
-    await page.getByTestId('account-row').getByText(newAccountName).click();
-
-    await verifyAccountPage(
+    test('should update market value (negative) for investment account and verify changes are saved', async ({
       page,
-      newAccountName,
-      newAccountBalance,
-      newAccountType,
-    );
-  };
+    }) => {
+      await page
+        .getByTestId('account-row')
+        .getByText('Investment account')
+        .click();
 
-  test.describe('Update Account Name', () => {
-    // eslint-disable-next-line playwright/expect-expect
-    test('should update cash account name', async ({ page }) => {
-      await editAccountNameAndVerify(
-        page,
-        'Cash account',
-        'Cash Renamed account',
-        'Cash',
+      // TODO figure out how to achieve without waiting...
+      // eslint-disable-next-line playwright/no-wait-for-timeout
+      await page.waitForTimeout(200);
+
+      const { balance: initialBalance } = await getAccountDetails(page);
+
+      await clickPopperItem(page, 'Update Market Value');
+
+      await fillUpdateMarketValueForm(page, {
+        currentMarketValue: initialBalance.minus(100),
+      });
+
+      await page
+        .getByTestId('update-market-value-form')
+        .getByRole('button', { name: 'Update' })
+        .click();
+
+      // TODO figure out how to achieve without waiting...
+      // eslint-disable-next-line playwright/no-wait-for-timeout
+      await page.waitForTimeout(200);
+
+      const { balance: updatedBalance } = await getAccountDetails(page);
+      const transactionItems =
+        await getTransactionDataFromTransactionList(page);
+
+      const createdTransaction = transactionItems.find(
+        (transaction) => transaction.description === 'Market value change',
       );
-    });
 
-    // eslint-disable-next-line playwright/expect-expect
-    test('should update saving account name', async ({ page }) => {
-      await editAccountNameAndVerify(
-        page,
-        'Saving account 2',
-        'Saving Renamed account 2',
-        'Savings',
-      );
-    });
-
-    // eslint-disable-next-line playwright/expect-expect
-    test('should update investment account name', async ({ page }) => {
-      await editAccountNameAndVerify(
-        page,
-        'Investment account',
-        'Investment Renamed account',
-        'Investment',
-      );
-    });
-
-    // eslint-disable-next-line playwright/expect-expect
-    test('should update credit account name', async ({ page }) => {
-      await editAccountNameAndVerify(
-        page,
-        'Credit account',
-        'Credit Renamed account',
-        'Credit',
-      );
-    });
-
-    // eslint-disable-next-line playwright/expect-expect
-    test('should update loan account name', async ({ page }) => {
-      await editAccountNameAndVerify(
-        page,
-        'Loan account',
-        'Loan Renamed account',
-        'Loan',
-      );
-    });
-  });
-
-  test.describe('Update Account Type', () => {
-    // eslint-disable-next-line playwright/expect-expect
-    test('should update cash account type', async ({ page }) => {
-      await editAccountTypeAndVerify(page, 'Cash account', 'Cash', 'Loan');
-    });
-
-    // eslint-disable-next-line playwright/expect-expect
-    test('should update saving account type', async ({ page }) => {
-      await editAccountTypeAndVerify(
-        page,
-        'Saving account 2',
-        'Savings',
-        'Cash',
-      );
-    });
-
-    // eslint-disable-next-line playwright/expect-expect
-    test('should update investment account type', async ({ page }) => {
-      await editAccountTypeAndVerify(
-        page,
-        'Investment account',
-        'Investment',
-        'Savings',
-      );
-    });
-
-    // eslint-disable-next-line playwright/expect-expect
-    test('should update credit account type', async ({ page }) => {
-      await editAccountTypeAndVerify(
-        page,
-        'Credit account',
-        'Credit',
-        'Investment',
-      );
-    });
-
-    // eslint-disable-next-line playwright/expect-expect
-    test('should update loan account type', async ({ page }) => {
-      await editAccountTypeAndVerify(page, 'Loan account', 'Loan', 'Credit');
-    });
-  });
-
-  test.describe('Update Account Balance', () => {
-    // eslint-disable-next-line playwright/expect-expect
-    test('should update cash account balance', async ({ page }) => {
-      await editAccountBalanceAndVerify(
-        page,
-        'Cash account',
-        '−1 040 350,00 €',
-        'Cash',
-      );
-    });
-
-    // eslint-disable-next-line playwright/expect-expect
-    test('should update saving account balance', async ({ page }) => {
-      await editAccountBalanceAndVerify(
-        page,
-        'Saving account 2',
-        '0,10 €',
-        'Savings',
-      );
-    });
-
-    // eslint-disable-next-line playwright/expect-expect
-    test('should update investment account balance', async ({ page }) => {
-      await editAccountBalanceAndVerify(
-        page,
-        'Investment account',
-        '1 000 000,00 €',
-        'Investment',
-      );
-    });
-
-    // eslint-disable-next-line playwright/expect-expect
-    test('should update credit account balance', async ({ page }) => {
-      await editAccountBalanceAndVerify(
-        page,
-        'Credit account',
-        '−251 950,00 €',
-        'Credit',
-      );
-    });
-
-    // eslint-disable-next-line playwright/expect-expect
-    test('should update loan account balance', async ({ page }) => {
-      await editAccountBalanceAndVerify(page, 'Loan account', '0,00 €', 'Loan');
-    });
-  });
-
-  test.describe('Update All Account Fields', () => {
-    // eslint-disable-next-line playwright/expect-expect
-    test('should update cash account all fields', async ({ page }) => {
-      await editAccountAllDetailsAndVerify(
-        page,
-        'Cash account',
-        'Changed to Savings',
-        '10 000 000,00 €',
-        'Cash',
-        'Savings',
-      );
-    });
-
-    // eslint-disable-next-line playwright/expect-expect
-    test('should update saving account all fields', async ({ page }) => {
-      await editAccountAllDetailsAndVerify(
-        page,
-        'Saving account 2',
-        'Changed to Investment',
-        '-99 000,10 €',
-        'Savings',
-        'Investment',
-      );
-    });
-
-    // eslint-disable-next-line playwright/expect-expect
-    test('should update investment account all fields', async ({ page }) => {
-      await editAccountAllDetailsAndVerify(
-        page,
-        'Investment account',
-        'Changed to Credit',
-        '-10,01 €',
-        'Investment',
-        'Credit',
-      );
-    });
-
-    // eslint-disable-next-line playwright/expect-expect
-    test('should update credit account all fields', async ({ page }) => {
-      await editAccountAllDetailsAndVerify(
-        page,
-        'Credit account',
-        'Changed to Loan',
-        '999 999,99 €',
-        'Credit',
-        'Loan',
-      );
-    });
-
-    // eslint-disable-next-line playwright/expect-expect
-    test('should update loan account all fields', async ({ page }) => {
-      await editAccountAllDetailsAndVerify(
-        page,
-        'Loan account',
-        'Changed to Credit',
-        '-55,55 €',
-        'Loan',
-        'Credit',
-      );
+      expect(updatedBalance).toEqual(initialBalance.minus(100));
+      expect(createdTransaction).toBeTruthy();
+      expect(createdTransaction?.amount).toEqual(new Decimal(100).negated());
+      expect(createdTransaction?.type).toEqual(TransactionType.Expense);
     });
   });
 });

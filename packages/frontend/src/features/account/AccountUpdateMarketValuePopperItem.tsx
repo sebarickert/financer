@@ -60,7 +60,12 @@ export const AccountUpdateMarketValuePopperItem: FC<
         heading={'Update Market Value'}
         testId="update-market-value"
       >
-        <Form methods={methods} action={action} submitLabel="Update">
+        <Form
+          methods={methods}
+          action={action}
+          submitLabel="Update"
+          testId="update-market-value-form"
+        >
           <div className="space-y-4">
             <Input id="currentMarketValue" type="number" isRequired>
               Current Market Value

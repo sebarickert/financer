@@ -1,3 +1,5 @@
+import { getAccountDataFromAccountList } from '$utils/account/getAccountDataFromAccountList';
+import { clickPopperItem } from '$utils/common/clickPopperItem';
 import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
 
@@ -10,47 +12,46 @@ test.describe('Delete Account', () => {
   test('should delete an account and verify it is removed from the list', async ({
     page,
   }) => {
-    const accountRow = page
-      .getByTestId('account-row')
-      .getByText('Saving account 2');
-    await expect(accountRow).toHaveCount(1);
+    const initialAccounts = await getAccountDataFromAccountList(page);
 
-    await accountRow.click();
+    expect(
+      initialAccounts.some((account) => account.name === 'Saving account 2'),
+    ).toEqual(true);
 
-    await page.getByTestId('popper-button').click();
-    await page
-      .getByTestId('popper-container')
-      .getByRole('button', { name: 'Delete' })
-      .click();
+    await page.getByTestId('account-row').getByText('Saving account 2').click();
+
+    await clickPopperItem(page, 'Delete');
 
     await page
       .getByTestId('drawer')
       .getByRole('button', { name: 'Delete' })
       .click();
 
-    const deletedAccountRow = page
-      .getByTestId('account-row')
-      .getByText('Saving account 2');
+    // TODO figure out how to achieve without waiting...
+    // eslint-disable-next-line playwright/no-wait-for-timeout
+    await page.waitForTimeout(200);
 
-    await expect(deletedAccountRow).toHaveCount(0);
+    const updatedAccounts = await getAccountDataFromAccountList(page);
+
+    expect(
+      updatedAccounts.some((account) => account.name === 'Saving account 2'),
+    ).toEqual(false);
+
+    expect(initialAccounts.length - updatedAccounts.length).toEqual(1);
   });
 
   test('should not delete an account on form cancel and verify it remains on the list', async ({
     page,
   }) => {
-    const accountRowBefore = page
-      .getByTestId('account-row')
-      .getByText('Saving account 2');
+    const initialAccounts = await getAccountDataFromAccountList(page);
 
-    await expect(accountRowBefore).toHaveCount(1);
+    expect(
+      initialAccounts.some((account) => account.name === 'Saving account 2'),
+    ).toEqual(true);
 
-    await accountRowBefore.click();
+    await page.getByTestId('account-row').getByText('Saving account 2').click();
 
-    await page.getByTestId('popper-button').click();
-    await page
-      .getByTestId('popper-container')
-      .getByRole('button', { name: 'Delete' })
-      .click();
+    await clickPopperItem(page, 'Delete');
 
     await page
       .getByTestId('drawer')
@@ -59,10 +60,16 @@ test.describe('Delete Account', () => {
 
     await page.getByTestId('header-back-link').click();
 
-    const accountRowAfter = page
-      .getByTestId('account-row')
-      .getByText('Saving account 2');
+    // TODO figure out how to achieve without waiting...
+    // eslint-disable-next-line playwright/no-wait-for-timeout
+    await page.waitForTimeout(200);
 
-    await expect(accountRowAfter).toHaveCount(1);
+    const updatedAccounts = await getAccountDataFromAccountList(page);
+
+    expect(
+      updatedAccounts.some((account) => account.name === 'Saving account 2'),
+    ).toEqual(true);
+
+    expect(initialAccounts).toHaveLength(updatedAccounts.length);
   });
 });
