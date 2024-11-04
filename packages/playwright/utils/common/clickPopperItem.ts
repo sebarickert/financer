@@ -1,16 +1,21 @@
+import { expect } from '@playwright/test';
+
 import { Page } from '$utils/financer-page';
 
 export const clickPopperItem = async (page: Page, name: string) => {
-  const popperButton = page.getByTestId('popper-button');
-  const popperContainer = page.getByTestId('popper-container');
-  const popperItem = popperContainer.locator('li').filter({ hasText: name });
+  await expect(page.getByTestId('popper-button')).toBeVisible({
+    timeout: 5000,
+  });
 
-  await popperButton.click();
-  await popperContainer.waitFor({ state: 'visible' }); // Ensures the container is fully visible
+  await page.getByTestId('popper-button').click();
 
-  if (await popperItem.isVisible()) {
-    await popperItem.click();
-  } else {
-    throw new Error(`Popper item with name "${name}" not found`);
-  }
+  await expect(page.getByTestId('popper-container')).toBeVisible({
+    timeout: 5000,
+  });
+
+  await page
+    .getByTestId('popper-container')
+    .locator('li')
+    .filter({ hasText: name })
+    .click();
 };

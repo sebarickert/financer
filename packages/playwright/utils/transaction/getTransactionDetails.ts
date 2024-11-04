@@ -1,3 +1,4 @@
+import { expect } from '@playwright/test';
 import Decimal from 'decimal.js';
 
 import { TransactionType } from '$types/generated/financer';
@@ -72,9 +73,14 @@ const getCategories = async (page: Page): Promise<CategoryDetails[]> => {
 export const getTransactionDetails = async (
   page: Page,
 ): Promise<TransactionDetails> => {
-  // TODO figure out how to achieve without waiting...
-  // eslint-disable-next-line playwright/no-wait-for-timeout
-  await page.waitForTimeout(200);
+  await expect(page).toHaveURL(
+    /\/statistics\/(?:incomes|expenses|transfers)\/[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}/i,
+    { timeout: 5000 },
+  );
+
+  await expect(page.getByTestId('transaction-amount')).toBeVisible({
+    timeout: 5000,
+  });
 
   const amount = parseCurrency(
     (await page.getByTestId('transaction-amount').textContent()) ?? '',

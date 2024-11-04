@@ -54,12 +54,7 @@ test.describe.parallel('Add Account', () => {
           )?.balance,
         ).toEqual(balance);
 
-        // TODO figure out how to achieve without waiting...
-        // eslint-disable-next-line playwright/no-wait-for-timeout
-        await page.waitForTimeout(200);
         await page.getByText(`New ${type} Account`).click();
-        // eslint-disable-next-line playwright/no-wait-for-timeout
-        await page.waitForTimeout(200);
 
         const { type: accountType } = await getAccountDetails(page);
 

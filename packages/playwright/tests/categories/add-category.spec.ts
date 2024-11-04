@@ -66,7 +66,6 @@ test.describe('Add Category', () => {
         await page.getByTestId('category-form').getByTestId('submit').click();
         await page.getByRole('link', { name: categoryName }).click();
 
-        await expect(page.getByTestId('details-list-item')).toBeVisible();
         const { name, visibility } = await getCategoryDetails(page);
 
         expect(name).toEqual(categoryName);

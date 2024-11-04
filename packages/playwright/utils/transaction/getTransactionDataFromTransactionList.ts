@@ -1,3 +1,4 @@
+import { expect } from '@playwright/test';
 import Decimal from 'decimal.js';
 
 import { TransactionType } from '$types/generated/financer';
@@ -14,14 +15,7 @@ type TransactionRow = {
 export const getTransactionDataFromTransactionList = async (
   page: Page,
 ): Promise<TransactionRow[]> => {
-  const transactionList = await page
-    .getByTestId('transaction-list')
-    .first()
-    .isVisible();
-
-  if (!transactionList) {
-    throw new Error('Transaction list not found');
-  }
+  await expect(page.getByTestId('transaction-list').first()).toBeVisible();
 
   const transactionRows = (
     await page.getByTestId('transaction-list-item').evaluateAll((element) => {

@@ -36,7 +36,6 @@ test.describe('Edit Category', () => {
 
       await page.getByTestId('category-form').getByTestId('submit').click();
 
-      await expect(page.getByTestId('details-list-item').first()).toBeVisible();
       const {
         name: updatedName,
         visibility: updatedVisibility,
@@ -66,7 +65,7 @@ test.describe('Edit Category', () => {
 
       await page.getByTestId('header-back-link').click();
 
-      await expect(page.getByTestId('category-list')).toBeVisible();
+      await expect(page.getByTestId('category-list').first()).toBeVisible();
 
       await page
         .getByTestId('category-list')

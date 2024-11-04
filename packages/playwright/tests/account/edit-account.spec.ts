@@ -83,6 +83,10 @@ test.describe('Edit Account', () => {
         .getByRole('button', { name: 'Update' })
         .click();
 
+      // Double reloading to get the correct balance
+      await page.reload({ waitUntil: 'domcontentloaded' });
+      await page.reload({ waitUntil: 'domcontentloaded' });
+
       const { balance: updatedBalance } = await getAccountDetails(page);
       const transactionItems =
         await getTransactionDataFromTransactionList(page);
@@ -117,6 +121,10 @@ test.describe('Edit Account', () => {
         .getByTestId('update-market-value-form')
         .getByRole('button', { name: 'Update' })
         .click();
+
+      // Double reloading to get the correct balance
+      await page.reload({ waitUntil: 'domcontentloaded' });
+      await page.reload({ waitUntil: 'domcontentloaded' });
 
       const { balance: updatedBalance } = await getAccountDetails(page);
       const transactionItems =

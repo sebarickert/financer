@@ -1,3 +1,4 @@
+import { expect } from '@playwright/test';
 import Decimal from 'decimal.js';
 
 import { parseCurrency } from '$utils/api-helper';
@@ -11,18 +12,10 @@ type AccountRow = {
 export const getAccountDataFromAccountList = async (
   page: Page,
 ): Promise<AccountRow[]> => {
-  // TODO figure out how to achieve without waiting...
-  // eslint-disable-next-line playwright/no-wait-for-timeout
-  await page.waitForTimeout(200);
-
-  const accountList = await page
-    .getByTestId('account-list')
-    .first()
-    .isVisible();
-
-  if (!accountList) {
-    throw new Error('Account list not found');
-  }
+  await expect(page).toHaveURL(/\/accounts\/?$/, { timeout: 5000 });
+  await expect(page.getByTestId('account-list').first()).toBeVisible({
+    timeout: 5000,
+  });
 
   const accountRows = (
     await page.getByTestId('account-row').evaluateAll((element) => {

@@ -1,20 +1,14 @@
+import { expect } from '@playwright/test';
+
 import { Page } from '$utils/financer-page';
 
 export const getCategoryDataFromCategoryList = async (
   page: Page,
 ): Promise<string[]> => {
-  // TODO figure out how to achieve without waiting...
-  // eslint-disable-next-line playwright/no-wait-for-timeout
-  await page.waitForTimeout(200);
-
-  const accountList = await page
-    .getByTestId('category-list')
-    .first()
-    .isVisible();
-
-  if (!accountList) {
-    throw new Error('Category list not found');
-  }
+  await expect(page).toHaveURL(/\/settings\/categories/, { timeout: 5000 });
+  await expect(page.getByTestId('category-list').first()).toBeVisible({
+    timeout: 5000,
+  });
 
   const categoryRows = await page
     .getByTestId('category-list-item')

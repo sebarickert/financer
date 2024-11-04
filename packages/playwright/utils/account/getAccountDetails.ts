@@ -1,3 +1,4 @@
+import { expect } from '@playwright/test';
 import Decimal from 'decimal.js';
 
 import { parseCurrency } from '$utils/api-helper';
@@ -13,9 +14,14 @@ type AccountDetails = {
 export const getAccountDetails = async (
   page: Page,
 ): Promise<AccountDetails> => {
-  // TODO figure out how to achieve without waiting...
-  // eslint-disable-next-line playwright/no-wait-for-timeout
-  await page.waitForTimeout(500);
+  await expect(page).toHaveURL(
+    /\/accounts\/[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}/i,
+    { timeout: 5000 },
+  );
+
+  await expect(page.getByTestId('account-balance')).toBeVisible({
+    timeout: 5000,
+  });
 
   const balance = parseCurrency(
     (await page.getByTestId('account-balance').textContent()) ?? '',
