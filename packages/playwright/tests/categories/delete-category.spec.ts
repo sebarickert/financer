@@ -23,6 +23,10 @@ test.describe('Delete Category', () => {
           .getByRole('link', { name: categoryName, exact: true })
           .click();
 
+        // TODO figure out how to achieve without waiting...
+        // eslint-disable-next-line playwright/no-wait-for-timeout
+        await page.waitForTimeout(200);
+
         await clickPopperItem(page, 'Delete');
 
         await page
