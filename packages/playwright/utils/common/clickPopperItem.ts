@@ -3,11 +3,10 @@ import { expect } from '@playwright/test';
 import { Page } from '$utils/financer-page';
 
 export const clickPopperItem = async (page: Page, name: string) => {
-  await expect(page.getByTestId('popper-button')).toBeVisible({
-    timeout: 5000,
-  });
+  const popperButton = page.getByTestId('popper-button');
 
-  await page.getByTestId('popper-button').click({ force: true });
+  await expect(popperButton).toBeEnabled({ timeout: 5000 });
+  await popperButton.click({ force: true });
 
   await expect(page.getByTestId('popper-container')).toBeVisible({
     timeout: 5000,
@@ -17,5 +16,5 @@ export const clickPopperItem = async (page: Page, name: string) => {
     .getByTestId('popper-container')
     .locator('li')
     .filter({ hasText: name })
-    .click({ force: true });
+    .click();
 };
