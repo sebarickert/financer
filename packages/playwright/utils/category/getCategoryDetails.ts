@@ -15,11 +15,13 @@ const getTransactionTypeLocator = async (page: Page) => {
     .getByTestId('details-list-item')
     .getByText(/Transaction Type(s)?/);
 
-  if (await transactionTypeElement.isVisible()) {
+  try {
+    await transactionTypeElement.waitFor({ state: 'visible', timeout: 5000 });
     return transactionTypeElement;
+  } catch (error) {
+    console.error('Transaction Type element not found:', error);
+    return undefined;
   }
-
-  return undefined;
 };
 
 export const getCategoryDetails = async (
@@ -64,11 +66,12 @@ export const getCategoryDetails = async (
     TransactionType.Transfer,
   ];
 
-  const visibility: TransactionType[] = typesString
-    .replace(' and ', ', ')
-    .split(',')
-    .map((type) => type.trim() as TransactionType)
-    .filter((type) => validTypes.includes(type));
+  const visibility: TransactionType[] =
+    typesString
+      .replace(' and ', ', ')
+      .split(',')
+      .map((type) => type.trim() as TransactionType)
+      .filter((type) => validTypes.includes(type)) ?? [];
 
   const id =
     new URL(page.url()).pathname.split('/').filter(Boolean).pop() ?? '';
