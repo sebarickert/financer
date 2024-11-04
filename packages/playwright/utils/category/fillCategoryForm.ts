@@ -23,6 +23,12 @@ export const fillCategoryForm = async (
 
   const categoryForm = page.getByTestId('category-form');
 
+  if (visibility?.length) {
+    await categoryForm.locator('#incomeVisible').setChecked(false);
+    await categoryForm.locator('#expenseVisible').setChecked(false);
+    await categoryForm.locator('#transferVisible').setChecked(false);
+  }
+
   for (const [selector, value] of Object.entries(formFields)) {
     if (value) {
       if (selector === '#parentCategoryId') {
@@ -32,10 +38,6 @@ export const fillCategoryForm = async (
         selector === '#expenseVisible' ||
         selector === '#transferVisible'
       ) {
-        await categoryForm.locator('#incomeVisible').setChecked(false);
-        await categoryForm.locator('#expenseVisible').setChecked(false);
-        await categoryForm.locator('#transferVisible').setChecked(false);
-
         await categoryForm.locator(selector).check();
       } else {
         await categoryForm.locator(selector).fill(value.toString());

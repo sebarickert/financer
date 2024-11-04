@@ -72,6 +72,10 @@ const getCategories = async (page: Page): Promise<CategoryDetails[]> => {
 export const getTransactionDetails = async (
   page: Page,
 ): Promise<TransactionDetails> => {
+  // TODO figure out how to achieve without waiting...
+  // eslint-disable-next-line playwright/no-wait-for-timeout
+  await page.waitForTimeout(200);
+
   const amount = parseCurrency(
     (await page.getByTestId('transaction-amount').textContent()) ?? '',
   );

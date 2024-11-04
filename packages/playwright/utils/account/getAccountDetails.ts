@@ -13,6 +13,10 @@ type AccountDetails = {
 export const getAccountDetails = async (
   page: Page,
 ): Promise<AccountDetails> => {
+  // TODO figure out how to achieve without waiting...
+  // eslint-disable-next-line playwright/no-wait-for-timeout
+  await page.waitForTimeout(200);
+
   const balance = parseCurrency(
     (await page.getByTestId('account-balance').textContent()) ?? '',
   );
