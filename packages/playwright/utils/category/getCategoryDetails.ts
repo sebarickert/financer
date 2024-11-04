@@ -23,6 +23,10 @@ const getTransactionTypeLocator = async (page: Page) => {
 export const getCategoryDetails = async (
   page: Page,
 ): Promise<AccountDetails> => {
+  // TODO figure out how to achieve without waiting...
+  // eslint-disable-next-line playwright/no-wait-for-timeout
+  await page.waitForTimeout(200);
+
   const name =
     (await page
       .getByTestId('details-list-item')

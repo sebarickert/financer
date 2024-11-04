@@ -27,10 +27,6 @@ test.describe('Delete Account', () => {
       .getByRole('button', { name: 'Delete' })
       .click();
 
-    // TODO figure out how to achieve without waiting...
-    // eslint-disable-next-line playwright/no-wait-for-timeout
-    await page.waitForTimeout(200);
-
     const updatedAccounts = await getAccountDataFromAccountList(page);
 
     expect(
@@ -59,10 +55,6 @@ test.describe('Delete Account', () => {
       .click();
 
     await page.getByTestId('header-back-link').click();
-
-    // TODO figure out how to achieve without waiting...
-    // eslint-disable-next-line playwright/no-wait-for-timeout
-    await page.waitForTimeout(200);
 
     const updatedAccounts = await getAccountDataFromAccountList(page);
 

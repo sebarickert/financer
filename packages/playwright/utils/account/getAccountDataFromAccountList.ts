@@ -11,6 +11,10 @@ type AccountRow = {
 export const getAccountDataFromAccountList = async (
   page: Page,
 ): Promise<AccountRow[]> => {
+  // TODO figure out how to achieve without waiting...
+  // eslint-disable-next-line playwright/no-wait-for-timeout
+  await page.waitForTimeout(200);
+
   const accountList = await page
     .getByTestId('account-list')
     .first()

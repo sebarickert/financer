@@ -30,10 +30,6 @@ test.describe('Edit Account', () => {
       }) => {
         await page.getByTestId('account-row').getByText(accountName).click();
 
-        // TODO figure out how to achieve without waiting...
-        // eslint-disable-next-line playwright/no-wait-for-timeout
-        await page.waitForTimeout(200);
-
         const {
           name: initialName,
           balance: initialBalance,
@@ -49,10 +45,6 @@ test.describe('Edit Account', () => {
         });
 
         await page.getByTestId('account-form').getByTestId('submit').click();
-
-        // TODO figure out how to achieve without waiting...
-        // eslint-disable-next-line playwright/no-wait-for-timeout
-        await page.waitForTimeout(200);
 
         const {
           name: updatedName,
@@ -78,10 +70,6 @@ test.describe('Edit Account', () => {
         .getByText('Investment account')
         .click();
 
-      // TODO figure out how to achieve without waiting...
-      // eslint-disable-next-line playwright/no-wait-for-timeout
-      await page.waitForTimeout(200);
-
       const { balance: initialBalance } = await getAccountDetails(page);
 
       await clickPopperItem(page, 'Update Market Value');
@@ -94,10 +82,6 @@ test.describe('Edit Account', () => {
         .getByTestId('update-market-value-form')
         .getByRole('button', { name: 'Update' })
         .click();
-
-      // TODO figure out how to achieve without waiting...
-      // eslint-disable-next-line playwright/no-wait-for-timeout
-      await page.waitForTimeout(200);
 
       const { balance: updatedBalance } = await getAccountDetails(page);
       const transactionItems =
@@ -121,10 +105,6 @@ test.describe('Edit Account', () => {
         .getByText('Investment account')
         .click();
 
-      // TODO figure out how to achieve without waiting...
-      // eslint-disable-next-line playwright/no-wait-for-timeout
-      await page.waitForTimeout(200);
-
       const { balance: initialBalance } = await getAccountDetails(page);
 
       await clickPopperItem(page, 'Update Market Value');
@@ -137,10 +117,6 @@ test.describe('Edit Account', () => {
         .getByTestId('update-market-value-form')
         .getByRole('button', { name: 'Update' })
         .click();
-
-      // TODO figure out how to achieve without waiting...
-      // eslint-disable-next-line playwright/no-wait-for-timeout
-      await page.waitForTimeout(200);
 
       const { balance: updatedBalance } = await getAccountDetails(page);
       const transactionItems =
