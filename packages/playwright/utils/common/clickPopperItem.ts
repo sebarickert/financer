@@ -6,15 +6,16 @@ export const clickPopperItem = async (page: Page, name: string) => {
   const popperButton = page.getByTestId('popper-button');
 
   await expect(popperButton).toBeEnabled({ timeout: 5000 });
-  await popperButton.click({ force: true });
+  await popperButton.scrollIntoViewIfNeeded();
+  await popperButton.click();
 
-  await expect(page.getByTestId('popper-container')).toBeVisible({
-    timeout: 5000,
-  });
+  const popperContainer = page.getByTestId('popper-container');
+  await expect(popperContainer).toBeVisible({ timeout: 5000 });
 
-  await page
-    .getByTestId('popper-container')
-    .locator('li')
-    .filter({ hasText: name })
-    .click();
+  // eslint-disable-next-line playwright/no-wait-for-timeout
+  await page.waitForTimeout(100);
+
+  const popperItem = popperContainer.locator('li').filter({ hasText: name });
+  await expect(popperItem).toBeVisible({ timeout: 5000 });
+  await popperItem.click();
 };
