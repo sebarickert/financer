@@ -15,7 +15,7 @@ export const getAccountDetails = async (
 ): Promise<AccountDetails> => {
   // TODO figure out how to achieve without waiting...
   // eslint-disable-next-line playwright/no-wait-for-timeout
-  await page.waitForTimeout(200);
+  await page.waitForTimeout(500);
 
   const balance = parseCurrency(
     (await page.getByTestId('account-balance').textContent()) ?? '',

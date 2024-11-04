@@ -65,6 +65,10 @@ test.describe('Edit Category', () => {
 
       await page.getByTestId('header-back-link').click();
 
+      // TODO figure out how to achieve without waiting...
+      // eslint-disable-next-line playwright/no-wait-for-timeout
+      await page.waitForTimeout(200);
+
       await page
         .getByTestId('category-list')
         .getByRole('link', { name: 'Category for all types', exact: true })
