@@ -2,6 +2,7 @@ import Decimal from 'decimal.js';
 
 import { TransactionType } from '$types/generated/financer';
 import { getAccountBalanceFromAccountListByName } from '$utils/account/getAccountBalanceFromAccountListByName';
+import { getEmptyListErrorMessageByBrowserName } from '$utils/common/getEmptyListErrorMessageByBrowserName';
 import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
 import { fillAndSubmitTransactionCategoryForm } from '$utils/transaction/fillAndSubmitTransactionCategoryForm';
@@ -149,6 +150,7 @@ test.describe('Transfer Transactions', () => {
   test.describe('Form Validation', () => {
     test('should not allow form submission with missing required fields', async ({
       page,
+      browserName,
     }) => {
       await page.goto('/');
 
@@ -170,7 +172,9 @@ test.describe('Transfer Transactions', () => {
         return select.validationMessage;
       });
 
-      expect(validationMessage).toBe('Please select an item in the list.');
+      expect(validationMessage).toEqual(
+        getEmptyListErrorMessageByBrowserName(browserName),
+      );
       await expect(page.getByTestId('transaction-drawer')).toBeVisible();
     });
   });
