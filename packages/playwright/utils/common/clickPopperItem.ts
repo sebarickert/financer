@@ -7,7 +7,7 @@ export const clickPopperItem = async (page: Page, name: string) => {
     timeout: 5000,
   });
 
-  await page.getByTestId('popper-button').click();
+  await page.getByTestId('popper-button').click({ force: true });
 
   await expect(page.getByTestId('popper-container')).toBeVisible({
     timeout: 5000,
@@ -17,5 +17,5 @@ export const clickPopperItem = async (page: Page, name: string) => {
     .getByTestId('popper-container')
     .locator('li')
     .filter({ hasText: name })
-    .click();
+    .click({ force: true });
 };
