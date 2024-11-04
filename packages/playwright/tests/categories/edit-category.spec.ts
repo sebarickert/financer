@@ -67,7 +67,7 @@ test.describe('Edit Category', () => {
 
       // TODO figure out how to achieve without waiting...
       // eslint-disable-next-line playwright/no-wait-for-timeout
-      await page.waitForTimeout(200);
+      await page.waitForTimeout(1000);
 
       await page
         .getByTestId('category-list')
@@ -78,7 +78,7 @@ test.describe('Edit Category', () => {
 
       // TODO figure out how to achieve without waiting...
       // eslint-disable-next-line playwright/no-wait-for-timeout
-      await page.waitForTimeout(200);
+      await page.waitForTimeout(1000);
 
       await page.evaluate(
         ([scopedChildCategoryName, scopedChildCategoryId]) => {
