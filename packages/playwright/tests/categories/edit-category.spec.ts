@@ -36,6 +36,7 @@ test.describe('Edit Category', () => {
 
       await page.getByTestId('category-form').getByTestId('submit').click();
 
+      await expect(page.getByTestId('details-list-item').first()).toBeVisible();
       const {
         name: updatedName,
         visibility: updatedVisibility,
@@ -65,9 +66,7 @@ test.describe('Edit Category', () => {
 
       await page.getByTestId('header-back-link').click();
 
-      // TODO figure out how to achieve without waiting...
-      // eslint-disable-next-line playwright/no-wait-for-timeout
-      await page.waitForTimeout(1000);
+      await expect(page.getByTestId('category-list')).toBeVisible();
 
       await page
         .getByTestId('category-list')
@@ -76,9 +75,7 @@ test.describe('Edit Category', () => {
 
       await clickPopperItem(page, 'Edit');
 
-      // TODO figure out how to achieve without waiting...
-      // eslint-disable-next-line playwright/no-wait-for-timeout
-      await page.waitForTimeout(1000);
+      await expect(page.getByTestId('category-form')).toBeVisible();
 
       await page.evaluate(
         ([scopedChildCategoryName, scopedChildCategoryId]) => {
