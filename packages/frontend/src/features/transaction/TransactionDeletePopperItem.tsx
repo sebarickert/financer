@@ -28,7 +28,8 @@ export const TransactionDeletePopperItem: FC<
         className={clsx(
           'flex w-full items-center gap-2 px-2 py-1.5 theme-focus theme-bg-color-with-hover',
         )}
-        popoverTarget={popperId}
+        // @ts-expect-error popovertarget is not a valid prop
+        popovertarget={popperId}
       >
         <Icon name={'TrashIcon'} className="!w-5 !h-5" />
         <span className="inline-block pr-2">{'Delete'}</span>
