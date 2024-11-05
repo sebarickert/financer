@@ -25,6 +25,7 @@ const getFieldValue = async (locator: Locator) => {
 };
 
 type TemplateFormFields = {
+  id: string;
   templateType?: TransactionTemplateType;
   transactionType?: TransactionType;
   name?: string;
@@ -69,7 +70,11 @@ export const getTemplateFormValues = async (
     .locator('[data-testid="transaction-categories-item"]')
     .count();
 
+  const url = new URL(page.url()).pathname;
+  const id = url.match(/[0-9a-fA-F-]{36}/)?.[0] ?? '';
+
   return {
+    id,
     templateType,
     transactionType,
     name,
