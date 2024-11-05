@@ -11,7 +11,6 @@ type TransactionCategoriesFormProps = {
   className?: string;
   index: number;
   categories: Option[];
-  testId?: string;
   categorySelectOnly?: boolean;
   maxAmount: number;
   isNewCategory?: boolean;
@@ -26,7 +25,6 @@ export const TransactionCategoriesForm: FC<TransactionCategoriesFormProps> = ({
   className = '',
   index,
   categories,
-  testId: testIdRaw = '',
   categorySelectOnly,
   maxAmount,
   isNewCategory,
@@ -40,10 +38,10 @@ export const TransactionCategoriesForm: FC<TransactionCategoriesFormProps> = ({
 
   const namePrefix = `categories.${index}` as const;
 
-  const testId = `${testIdRaw}-form`;
+  const testId = `transaction-categories-form`;
 
   return (
-    <div className={className} data-testid={testId}>
+    <div className={className} data-testid={testId} data-category-index={index}>
       <Divider>{`Category Item #${index + 1}`}</Divider>
       <div className="grid items-start mt-4">
         <div className="grid gap-4">
@@ -51,7 +49,6 @@ export const TransactionCategoriesForm: FC<TransactionCategoriesFormProps> = ({
             id={`${namePrefix}.categoryId`}
             options={categories}
             isRequired
-            testId={`${testId}-select`}
             placeholder="Select category"
           >
             Category
@@ -66,7 +63,6 @@ export const TransactionCategoriesForm: FC<TransactionCategoriesFormProps> = ({
                   step={0.01}
                   max={maxAmount}
                   isRequired
-                  testId={`${testId}-amount`}
                 >
                   Amount
                 </Input>
@@ -79,12 +75,7 @@ export const TransactionCategoriesForm: FC<TransactionCategoriesFormProps> = ({
                   <Icon name="PlusIcon" />
                 </button>
               </div>
-              <Input
-                id={`${namePrefix}.description`}
-                testId={`${testId}-description`}
-              >
-                Description
-              </Input>
+              <Input id={`${namePrefix}.description`}>Description</Input>
             </>
           )}
         </div>
@@ -92,7 +83,6 @@ export const TransactionCategoriesForm: FC<TransactionCategoriesFormProps> = ({
           <Button
             haptic="light"
             onClick={handleSubmit}
-            testId={`${testId}-submit`}
             popoverTarget={formId}
             popoverTargetAction="hide"
           >
@@ -102,7 +92,6 @@ export const TransactionCategoriesForm: FC<TransactionCategoriesFormProps> = ({
             <Button
               haptic="medium"
               onClick={handleDelete}
-              testId={`${testId}-delete`}
               accentColor="secondary"
               popoverTarget={formId}
               popoverTargetAction="hide"
@@ -113,7 +102,6 @@ export const TransactionCategoriesForm: FC<TransactionCategoriesFormProps> = ({
             <Button
               haptic="ultra-light"
               onClick={handleCancel}
-              testId={`${testId}-cancel`}
               accentColor="secondary"
               popoverTarget={formId}
               popoverTargetAction="hide"

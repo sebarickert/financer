@@ -89,7 +89,7 @@ export const CategoryListingContainer: FC = async () => {
             'theme-layer-color-with-hover theme-focus rounded-md',
             'inline-flex items-center justify-center h-11 w-11',
           )}
-          testId="add-category-link"
+          testId="add-category"
         >
           <span className="sr-only">Add category</span>
           <Icon name="PlusIcon" />

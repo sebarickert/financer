@@ -60,13 +60,15 @@ export const TransactionListItem: FC<TransactionListItemProps> = ({
         className={clsx('grid grid-cols-[auto,1fr] items-center gap-2 grow')}
       >
         <div className="inline-flex flex-col truncate">
-          <span>{description}</span>
+          <span data-testId="transaction-description">{description}</span>
           <div className="text-sm">
-            <time dateTime={date}>{formatDate(new Date(date))}</time>
+            <time dateTime={date} data-testId="transaction-date">
+              {formatDate(new Date(date))}
+            </time>
             {transactionCategories && (
               <>
                 {' - '}
-                <span>
+                <span data-testId="transaction-categories">
                   <span className="sr-only">Categories: </span>
                   {transactionCategories}
                 </span>
@@ -80,6 +82,8 @@ export const TransactionListItem: FC<TransactionListItemProps> = ({
               { [transactionTypeColor]: isIncome || isExpense },
               { 'py-2 px-2 rounded-md': isIncome || isExpense },
             )}
+            data-testId="transaction-amount"
+            data-transaction-type={transactionType}
           >
             {transactionType === 'INCOME' && '+ '}
             {transactionType === 'EXPENSE' && '- '}

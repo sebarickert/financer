@@ -27,9 +27,9 @@ export const NavigationCreateTransactionButton: FC<
 
   return (
     <li className={clsx(className)}>
-      <Drawer heading="Add Transaction" id={id} testId="add-transaction-drawer">
+      <Drawer heading="Add Transaction" id={id} testId="transaction-drawer">
         <TransactionFormSwitcher
-          typeSwitcherName="transactionTypeSwitcher"
+          typeSwitcherName="transaction-type-switcher"
           templateSwitcherName="templateTypeSwitcher"
           defaultExpenseAccountId={defaultExpenseAccountId}
           defaultIncomeAccountId={defaultIncomeAccountId}

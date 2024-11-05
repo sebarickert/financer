@@ -24,7 +24,6 @@ const defaultSelectedIndex = -1;
 
 export const TransactionCategories = ({
   transactionCategories,
-  testId = 'transaction-categories',
   categorySelectOnly,
 }: TransactionCategoriesProps): JSX.Element => {
   const [selectedIndex, setSelectedIndex] = useState(defaultSelectedIndex);
@@ -113,7 +112,6 @@ export const TransactionCategories = ({
         heading={!isNewCategory ? 'Edit Category Item' : 'Add Category Item'}
       >
         <TransactionCategoriesForm
-          testId={testId}
           index={selectedIndex}
           categories={transactionCategories}
           categorySelectOnly={categorySelectOnly}

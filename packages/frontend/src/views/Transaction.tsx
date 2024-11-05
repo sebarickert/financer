@@ -102,7 +102,7 @@ export const Transaction: FC<TransactionProps> = async ({
   );
 
   return (
-    <section className={clsx('@container')}>
+    <section className={clsx('@container')} data-testid="transaction-details">
       <div
         className={clsx(
           'theme-layer-color rounded-md',
@@ -111,13 +111,18 @@ export const Transaction: FC<TransactionProps> = async ({
           '@3xl:pt-4 @3xl:grid-cols-[1fr,1.5fr]',
         )}
       >
-        <BalanceDisplay type={type} amount={amount}>
+        <BalanceDisplay
+          type={type}
+          amount={amount}
+          testId="transaction-amount"
+          childTestId="transaction-description"
+        >
           {`${description}`}
         </BalanceDisplay>
         <div className="grid gap-8 p-6 border rounded-md theme-layer-secondary-color theme-border-primary">
           <DetailsList items={transactionDetails} />
           {categoryDetails.length > 0 && (
-            <div>
+            <div data-testId="transaction-categories">
               <Heading disableResponsiveSizing noMargin className="mb-4">
                 Categories
               </Heading>

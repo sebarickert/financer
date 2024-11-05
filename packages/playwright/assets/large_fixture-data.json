@@ -108,6 +108,26 @@
   "accountBalanceChanges": [],
   "transactions": [
     {
+      "id": "623de2a0c839cf72d59b0df2",
+      "fromAccount": "61460d8554ea082ad0256759",
+      "toAccount": "61460dd554ea082ad025677d",
+      "amount": 333333,
+      "description": "TRANSFER WITH CATEGORY",
+      "date": "2022-03-25T15:41:00.000Z",
+      "userId": "61460d7354ea082ad0256749",
+      "v": 0
+    },
+    {
+      "id": "623de2c0c839cf72d59b0e10",
+      "fromAccount": "61460db554ea082ad0256774",
+      "toAccount": "61460d9454ea082ad0256762",
+      "amount": 3333333,
+      "description": "TRANSFER WITH MULTIPLE CATEGORIES",
+      "date": "2022-03-25T15:41:00.000Z",
+      "userId": "61460d7354ea082ad0256749",
+      "v": 0
+    },
+    {
       "id": "624befc56ba655edad8f8343",
       "fromAccount": "61460da354ea082ad025676b",
       "toAccount": "61460de154ea082ad0256786",
@@ -4186,6 +4206,33 @@
       "v": 0,
       "createdAt": "2024-05-10T10:21:18.365Z",
       "updatedAt": "2024-05-10T10:21:18.365Z"
+    },
+    {
+      "id": "623de2a0c839cf72d59b0df4",
+      "userId": "61460d7354ea082ad0256749",
+      "description": "dummy description",
+      "categoryId": "623b6b36a3deba9879422fd1",
+      "transactionId": "623de2a0c839cf72d59b0df2",
+      "amount": 3333,
+      "v": 0
+    },
+    {
+      "id": "623de2c0c839cf72d59b0e12",
+      "userId": "61460d7354ea082ad0256749",
+      "description": "dummy description",
+      "categoryId": "623b6b91a3deba9879422fe1",
+      "transactionId": "623de2c0c839cf72d59b0e10",
+      "amount": 333333,
+      "v": 0
+    },
+    {
+      "id": "623de2c0c839cf72d59b0e13",
+      "userId": "61460d7354ea082ad0256749",
+      "description": "not so dummy description",
+      "categoryId": "623b6b17a3deba9879422fcd",
+      "transactionId": "623de2c0c839cf72d59b0e10",
+      "amount": 3333,
+      "v": 0
     }
   ],
   "userPreferences": [

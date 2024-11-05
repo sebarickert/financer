@@ -57,7 +57,7 @@ export const TransactionList: FC<TransactionListProps> = async ({
 
   return (
     <section className={clsx(className)}>
-      <List testId="transaction-stacked-list-container">
+      <List testId="transaction-list">
         {rows.map((row) => (
           <TransactionListItem key={row.id} {...row} />
         ))}

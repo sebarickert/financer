@@ -1,199 +1,328 @@
-import { AccountDto, TransferListItemDto } from '$types/generated/financer';
-import {
-  getAccount,
-  getTransactionById,
-  roundToTwoDecimal,
-  getAllTransfers,
-} from '$utils/api-helper';
+import Decimal from 'decimal.js';
+
+import { getAccountBalanceFromAccountListByName } from '$utils/account/getAccountBalanceFromAccountListByName';
+import { clickPopperItem } from '$utils/common/clickPopperItem';
 import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
+import { fillAndSubmitTransactionCategoryForm } from '$utils/transaction/fillAndSubmitTransactionCategoryForm';
+import { fillTransactionForm } from '$utils/transaction/fillTransactionForm';
+import { getTransactionDetails } from '$utils/transaction/getTransactionDetails';
 
-test.describe('Edit transfer', () => {
-  test.beforeEach(async ({ page }) => {
+test.describe('Transfer Transactions', () => {
+  test.beforeEach(async () => {
     await applyFixture('large');
-    await page.goto('/statistics/transfers');
   });
 
-  const amountToChangeTransactionStr = '15.50';
-  const amountToChangeTransaction = parseFloat(amountToChangeTransactionStr);
-  const getEditedTransactionName = () =>
-    `edited dummy transaction created by test code ${Math.random()}`;
+  test.describe('Edit Transfer', () => {
+    test('should edit transfer and verify account balance and transfer list', async ({
+      page,
+    }) => {
+      await page.goto('/statistics/transfers/?date=2022-1');
 
-  const verifyToAccountBalanceChanges = async (
-    amount: number,
-    accountBefore: AccountDto,
-    accountAfter: AccountDto,
-  ) => {
-    const balanceBefore = roundToTwoDecimal(accountBefore.balance);
-    const balanceAfter = roundToTwoDecimal(accountAfter.balance);
+      await page.getByTestId('transaction-list-item').first().click();
 
-    expect(balanceBefore + amount).toEqual(balanceAfter);
-  };
+      const {
+        id,
+        toAccount,
+        fromAccount,
+        amount: initialAmount,
+      } = await getTransactionDetails(page);
 
-  const verifyFromAccountBalanceChanges = async (
-    amount: number,
-    accountBefore: AccountDto,
-    accountAfter: AccountDto,
-  ) => {
-    const balanceBefore = roundToTwoDecimal(accountBefore.balance);
-    const balanceAfter = roundToTwoDecimal(accountAfter.balance);
+      await page.goto('/accounts');
 
-    expect(balanceBefore - amount).toEqual(balanceAfter);
-  };
+      const initialFromAccountBalance =
+        await getAccountBalanceFromAccountListByName(
+          page,
+          fromAccount as string,
+        );
+      const initialToAccountBalance =
+        await getAccountBalanceFromAccountListByName(page, toAccount as string);
 
-  const verifyTargetTransactionChanged = async (
-    newName: string,
-    changedAmount: number,
-    transactionBefore: TransferListItemDto,
-    transactionAfter: TransferListItemDto,
-  ) => {
-    const nameAfter = transactionAfter.description;
-    const amountAfter = roundToTwoDecimal(transactionAfter.amount);
+      await page.goto(`/statistics/transfers/${id}`);
+      await clickPopperItem(page, 'Edit');
 
-    const nameBefore = transactionBefore.description;
-    const amountBefore = roundToTwoDecimal(transactionBefore.amount);
+      const newAmount = new Decimal(249.99);
+      const newDescription = 'edited dummy transaction created by test code';
 
-    expect(nameBefore).not.toEqual(newName);
-    expect(nameAfter).toEqual(newName);
-    expect(amountBefore + changedAmount).toEqual(amountAfter);
-  };
+      await fillTransactionForm(
+        page,
+        {
+          amount: newAmount,
+          description: newDescription,
+        },
+        'page',
+      );
 
-  // eslint-disable-next-line playwright/expect-expect
-  test('Edit newest transfer', async ({ page }) => {
-    const editedTransactionName = getEditedTransactionName();
-    const transfersBefore = await getAllTransfers();
+      await page
+        .getByTestId('layout-root')
+        .getByTestId('transaction-form')
+        .getByRole('button', { name: 'Submit' })
+        .click();
 
-    const targetTransactionBefore = transfersBefore[transfersBefore.length - 1];
+      const { amount: updatedAmount, description: updatedDescription } =
+        await getTransactionDetails(page);
 
-    const targetTransactionId = targetTransactionBefore.id;
-    const { fromAccount: targetFromAccountId, toAccount: targetToAccountId } =
-      await getTransactionById(targetTransactionBefore.id);
+      expect(updatedAmount).toEqual(newAmount);
+      expect(updatedDescription).toEqual(newDescription);
 
-    const toAccountBefore = await getAccount(targetToAccountId);
-    const fromAccountBefore = await getAccount(targetFromAccountId);
+      await page.goto('/accounts');
 
-    const newAmount =
-      targetTransactionBefore.amount + amountToChangeTransaction;
+      const updatedFromAccountBalance =
+        await getAccountBalanceFromAccountListByName(
+          page,
+          fromAccount as string,
+        );
+      const updatedToAccountBalance =
+        await getAccountBalanceFromAccountListByName(page, toAccount as string);
 
-    const transactionYear = new Date(
-      targetTransactionBefore.date,
-    ).getFullYear();
-    const transactionMonth = (
-      new Date(targetTransactionBefore.date).getMonth() + 1
-    )
-      .toString()
-      .padStart(2, '0');
-    const dateQuery = `${transactionYear}-${transactionMonth}`;
-    await page.goto(`/statistics/transfers?date=${dateQuery}&page=1`);
+      const initialAndNewAmountDifference = initialAmount.minus(newAmount);
 
-    await page.getByTestId(targetTransactionId).click();
+      expect(updatedFromAccountBalance).toEqual(
+        initialFromAccountBalance.plus(initialAndNewAmountDifference),
+      );
+      expect(updatedToAccountBalance).toEqual(
+        initialToAccountBalance.minus(initialAndNewAmountDifference),
+      );
 
-    await page.getByTestId('popper-button').click();
-    await page.getByTestId('popper-container').getByText('Edit').click();
+      await page.goto('/statistics/transfers/?date=2022-1');
+      await expect(page.getByTestId(id)).toContainText(updatedDescription);
+    });
 
-    const editTransferForm = page.getByTestId('edit-transfer-form');
+    test('should edit transfer account fields and verify balance updates', async ({
+      page,
+    }) => {
+      await page.goto('/statistics/transfers/?date=2022-1');
 
-    await editTransferForm.locator('#description').fill(editedTransactionName);
-    await editTransferForm.locator('#amount').fill(newAmount.toString());
+      await page.getByTestId('transaction-list-item').first().click();
 
-    await editTransferForm
-      .locator('#fromAccount')
-      .selectOption(targetFromAccountId);
-    await editTransferForm
-      .locator('#toAccount')
-      .selectOption(targetToAccountId);
+      const { id, toAccount, fromAccount, amount } =
+        await getTransactionDetails(page);
 
-    await editTransferForm.getByTestId('submit').click();
+      await page.goto('/accounts');
 
-    await page.getByTestId('popper-button').click();
-    await page.getByTestId('popper-container').getByText('Edit').click();
+      const initialBalanceForPreviousFromAccount =
+        await getAccountBalanceFromAccountListByName(
+          page,
+          fromAccount as string,
+        );
 
-    const toAccountAfter = await getAccount(targetToAccountId);
-    const fromAccountAfter = await getAccount(targetFromAccountId);
-    const targetTransactionAfter =
-      await getTransactionById(targetTransactionId);
+      const initialBalanceForNewFromAccount =
+        await getAccountBalanceFromAccountListByName(page, 'Long-term SAVINGS');
 
-    await verifyToAccountBalanceChanges(
-      amountToChangeTransaction,
-      toAccountBefore,
-      toAccountAfter,
-    );
-    await verifyFromAccountBalanceChanges(
-      amountToChangeTransaction,
-      fromAccountBefore,
-      fromAccountAfter,
-    );
-    await verifyTargetTransactionChanged(
-      editedTransactionName,
-      amountToChangeTransaction,
-      targetTransactionBefore,
-      targetTransactionAfter,
-    );
+      const initialBalanceForPreviousToAccount =
+        await getAccountBalanceFromAccountListByName(page, toAccount as string);
+
+      const initialBalanceForNewToAccount =
+        await getAccountBalanceFromAccountListByName(page, 'Big money');
+
+      await page.goto(`/statistics/transfers/${id}`);
+      await clickPopperItem(page, 'Edit');
+
+      await fillTransactionForm(
+        page,
+        {
+          fromAccount: 'Long-term SAVINGS',
+          toAccount: 'Big money',
+        },
+        'page',
+      );
+
+      await page
+        .getByTestId('layout-root')
+        .getByTestId('transaction-form')
+        .getByRole('button', { name: 'Submit' })
+        .click();
+
+      // TODO Have to go to another page and come back to get the updated balance (cache issue)
+      await page.goto('/statistics/transfers/?date=2022-1');
+      await page.goto('/accounts');
+
+      const updatedBalanceForPreviousFromAccount =
+        await getAccountBalanceFromAccountListByName(
+          page,
+          fromAccount as string,
+        );
+
+      const updatedBalanceForNewFromAccount =
+        await getAccountBalanceFromAccountListByName(page, 'Long-term SAVINGS');
+
+      const updatedBalanceForPreviousToAccount =
+        await getAccountBalanceFromAccountListByName(page, toAccount as string);
+
+      const updatedBalanceForNewToAccount =
+        await getAccountBalanceFromAccountListByName(page, 'Big money');
+
+      // Verify that the balance for the previous "from" account has been updated correctly
+      expect(updatedBalanceForPreviousFromAccount).toEqual(
+        initialBalanceForPreviousFromAccount.plus(amount),
+      );
+
+      // Verify that the balance for the previous "to" account has been updated correctly
+      expect(updatedBalanceForPreviousToAccount).toEqual(
+        initialBalanceForPreviousToAccount.minus(amount),
+      );
+
+      // Verify that the balance for the new "from" account has been updated correctly
+      expect(updatedBalanceForNewFromAccount).toEqual(
+        initialBalanceForNewFromAccount.minus(amount),
+      );
+
+      // Verify that the balance for the new "to" account has been updated correctly
+      expect(updatedBalanceForNewToAccount).toEqual(
+        initialBalanceForNewToAccount.plus(amount),
+      );
+    });
   });
 
-  // eslint-disable-next-line playwright/expect-expect
-  test('Edit oldest transfer', async ({ page }) => {
-    const editedTransactionName = getEditedTransactionName();
-    const transfersBefore = await getAllTransfers();
+  test.describe('Categories', () => {
+    test('should edit transfer with category and verify it updates values in transaction details', async ({
+      page,
+    }) => {
+      await page.goto('/statistics/transfers/?date=2022-3');
 
-    const targetTransactionBefore = transfersBefore[0];
+      await page
+        .getByTestId('transaction-list-item')
+        .getByText('TRANSFER WITH CATEGORY', { exact: true })
+        .click();
 
-    const targetTransactionId = targetTransactionBefore.id;
-    const { fromAccount: targetFromAccountId, toAccount: targetToAccountId } =
-      await getTransactionById(targetTransactionBefore.id);
+      const { categories: initialCategories } =
+        await getTransactionDetails(page);
 
-    const toAccountBefore = await getAccount(targetToAccountId);
-    const fromAccountBefore = await getAccount(targetFromAccountId);
+      await clickPopperItem(page, 'Edit');
 
-    const newAmount =
-      targetTransactionBefore.amount + amountToChangeTransaction;
+      await page.getByRole('button', { name: 'Edit category' }).click();
 
-    const transactionYear = new Date(
-      targetTransactionBefore.date,
-    ).getFullYear();
-    const transactionMonth = (
-      new Date(targetTransactionBefore.date).getMonth() + 1
-    )
-      .toString()
-      .padStart(2, '0');
-    const dateQuery = `${transactionYear}-${transactionMonth}`;
-    await page.goto(`/statistics/transfers?date=${dateQuery}&page=1`);
+      await fillAndSubmitTransactionCategoryForm(
+        page,
+        {
+          category: 'Transfer category',
+          amount: new Decimal(200),
+        },
+        true,
+      );
 
-    await page.getByTestId(targetTransactionId).click();
+      await page
+        .getByTestId('layout-root')
+        .getByTestId('transaction-form')
+        .getByRole('button', { name: 'Submit' })
+        .click();
 
-    await page.getByTestId('popper-button').click();
-    await page.getByTestId('popper-container').getByText('Edit').click();
+      const { categories: updatedCategories } =
+        await getTransactionDetails(page);
 
-    const editTransferForm = page.getByTestId('edit-transfer-form');
+      expect(updatedCategories[0].category).not.toEqual(
+        initialCategories[0].category,
+      );
+      expect(updatedCategories[0].amount).not.toEqual(
+        initialCategories[0].amount,
+      );
 
-    await editTransferForm.locator('#description').fill(editedTransactionName);
-    await editTransferForm.locator('#amount').fill(newAmount.toString());
+      expect(updatedCategories[0].category).toEqual('Transfer category');
+      expect(updatedCategories[0].amount).toEqual(new Decimal(200));
+    });
 
-    await editTransferForm.getByTestId('submit').click();
+    test('should edit transfer with multiple categories and remove one of the categories and verify it updates values in transaction details', async ({
+      page,
+    }) => {
+      await page.goto('/statistics/transfers/?date=2022-3');
 
-    await page.getByTestId('popper-button').click();
-    await page.getByTestId('popper-container').getByText('Edit').click();
+      await page
+        .getByTestId('transaction-list-item')
+        .getByText('TRANSFER WITH MULTIPLE CATEGORIES', { exact: true })
+        .click();
 
-    const toAccountAfter = await getAccount(targetToAccountId);
-    const fromAccountAfter = await getAccount(targetFromAccountId);
-    const targetTransactionAfter =
-      await getTransactionById(targetTransactionId);
+      const { id, categories: initialCategories } =
+        await getTransactionDetails(page);
 
-    await verifyToAccountBalanceChanges(
-      amountToChangeTransaction,
-      toAccountBefore,
-      toAccountAfter,
-    );
-    await verifyFromAccountBalanceChanges(
-      amountToChangeTransaction,
-      fromAccountBefore,
-      fromAccountAfter,
-    );
-    await verifyTargetTransactionChanged(
-      editedTransactionName,
-      amountToChangeTransaction,
-      targetTransactionBefore,
-      targetTransactionAfter,
-    );
+      await clickPopperItem(page, 'Edit');
+
+      await expect(page.getByTestId('transaction-categories-item')).toHaveCount(
+        2,
+      );
+
+      await page.getByRole('button', { name: 'Edit category' }).first().click();
+
+      await page
+        .getByTestId('drawer')
+        .getByTestId('transaction-categories-form')
+        .getByRole('button', { name: 'Delete', exact: true })
+        .click();
+
+      await expect(page.getByTestId('transaction-categories-item')).toHaveCount(
+        1,
+      );
+
+      await page
+        .getByTestId('layout-root')
+        .getByTestId('transaction-form')
+        .getByRole('button', { name: 'Submit' })
+        .click();
+
+      // TODO Have to go to another page and come back to get the updated data (cache issue)
+      await page.goto('/statistics/transfers/?date=2022-3');
+      await page.goto(`/statistics/transfers/${id}`);
+
+      const { categories: updatedCategories } =
+        await getTransactionDetails(page);
+
+      expect(updatedCategories.length).not.toEqual(initialCategories?.length);
+      expect(updatedCategories).not.toContain('Category for all types');
+    });
+
+    test('should edit transfer with multiple categories and remove all of the categories and verify it updates values in transaction details', async ({
+      page,
+    }) => {
+      await page.goto('/statistics/transfers/?date=2022-3');
+
+      await page
+        .getByTestId('transaction-list-item')
+        .getByText('TRANSFER WITH MULTIPLE CATEGORIES', { exact: true })
+        .click();
+
+      const { id, categories: initialCategories } =
+        await getTransactionDetails(page);
+
+      await clickPopperItem(page, 'Edit');
+
+      await expect(page.getByTestId('transaction-categories-item')).toHaveCount(
+        2,
+      );
+
+      await page.getByRole('button', { name: 'Edit category' }).first().click();
+
+      await page
+        .getByTestId('drawer')
+        .getByTestId('transaction-categories-form')
+        .getByRole('button', { name: 'Delete', exact: true })
+        .click();
+
+      await page.getByRole('button', { name: 'Edit category' }).first().click();
+
+      await page
+        .getByTestId('drawer')
+        .getByTestId('transaction-categories-form')
+        .getByRole('button', { name: 'Delete', exact: true })
+        .click();
+
+      await expect(page.getByTestId('transaction-categories-item')).toHaveCount(
+        0,
+      );
+
+      await page
+        .getByTestId('layout-root')
+        .getByTestId('transaction-form')
+        .getByRole('button', { name: 'Submit' })
+        .click();
+
+      // TODO Have to go to another page and come back to get the updated data (cache issue)
+      await page.goto('/statistics/transfers/?date=2022-1');
+      await page.goto(`/statistics/transfers/${id}`);
+
+      const { categories: updatedCategories } =
+        await getTransactionDetails(page);
+
+      expect(updatedCategories.length).not.toEqual(initialCategories.length);
+      expect(updatedCategories).toHaveLength(0);
+    });
   });
 });

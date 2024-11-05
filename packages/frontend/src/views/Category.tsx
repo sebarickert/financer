@@ -8,6 +8,7 @@ import {
 import { DetailsList } from '$blocks/details-list/details-list';
 import { DetailsItem } from '$blocks/details-list/details-list.item';
 import { IconName } from '$elements/Icon';
+import { LoaderSuspense } from '$elements/loader/loader-suspense';
 import { CategoryGraph } from '$features/category/CategoryGraph';
 import { TransactionListWithMonthlyPager } from '$features/transaction/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
 import { capitalize } from '$utils/capitalize';
@@ -38,6 +39,8 @@ export const Category: FC<CategoryProps> = ({
       type: 'conjunction',
     });
 
+    console.log(categoryVisibilityCapitalized);
+
     return [
       {
         icon: 'TagIcon' as IconName,
@@ -57,14 +60,18 @@ export const Category: FC<CategoryProps> = ({
             },
           ]
         : []),
-      {
-        icon: 'InformationCircleIcon',
-        label:
-          categoryVisibilityCapitalized.length > 1
-            ? 'Transaction Types'
-            : 'Transaction Type',
-        description: formatter.format(categoryVisibilityCapitalized),
-      },
+      ...(categoryVisibilityCapitalized.length > 0
+        ? [
+            {
+              icon: 'InformationCircleIcon' as IconName,
+              label:
+                categoryVisibilityCapitalized.length > 1
+                  ? 'Transaction Types'
+                  : 'Transaction Type',
+              description: formatter.format(categoryVisibilityCapitalized),
+            },
+          ]
+        : []),
     ];
   }, [
     categories,
@@ -78,11 +85,13 @@ export const Category: FC<CategoryProps> = ({
       <div className="p-6 theme-layer-color">
         <DetailsList items={categoryDetails} />
       </div>
-      <CategoryGraph
-        transactionsMonthlySummaries={transactionsMonthlySummaries}
-        category={category}
-        userTheme={userTheme}
-      />
+      <LoaderSuspense>
+        <CategoryGraph
+          transactionsMonthlySummaries={transactionsMonthlySummaries}
+          category={category}
+          userTheme={userTheme}
+        />
+      </LoaderSuspense>
       <TransactionListWithMonthlyPager
         filterOptions={{
           parentTransactionCategory: parentTransactionCategoryId,

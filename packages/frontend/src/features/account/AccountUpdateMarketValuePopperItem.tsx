@@ -49,7 +49,8 @@ export const AccountUpdateMarketValuePopperItem: FC<
         className={clsx(
           'flex w-full items-center gap-2 px-2 py-1.5 theme-focus theme-bg-color-with-hover',
         )}
-        popoverTarget={popperId}
+        // @ts-expect-error popovertarget is not a valid prop
+        popovertarget={popperId}
       >
         <Icon name={'ArrowTrendingUpIcon'} className="!w-5 !h-5" />
         <span className="inline-block pr-2">Update Market Value</span>
@@ -60,7 +61,12 @@ export const AccountUpdateMarketValuePopperItem: FC<
         heading={'Update Market Value'}
         testId="update-market-value"
       >
-        <Form methods={methods} action={action} submitLabel="Update">
+        <Form
+          methods={methods}
+          action={action}
+          submitLabel="Update"
+          testId="update-market-value-form"
+        >
           <div className="space-y-4">
             <Input id="currentMarketValue" type="number" isRequired>
               Current Market Value

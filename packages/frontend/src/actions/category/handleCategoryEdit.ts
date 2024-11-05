@@ -29,5 +29,5 @@ export const handleCategoryEdit: DefaultFormActionHandler<
     return { status: 'ERROR', errors: ['Something went wrong'] };
   }
 
-  redirect(settingsPaths.categories, RedirectType.push);
+  redirect(`${settingsPaths.categories}/${category.id}`, RedirectType.push);
 };

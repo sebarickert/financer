@@ -1,8 +1,29 @@
 import { Response } from '@playwright/test';
 
-import { getCategoryForAllTypes } from '$utils/entity-id-api-helper';
-import { test, expect } from '$utils/financer-page';
+import { TransactionCategoryDto } from '$types/generated/financer';
+import { test, expect, getBaseUrl } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
+
+export const getAllCategories = async () => {
+  const baseUrl = getBaseUrl();
+  return (await (
+    await fetch(`${baseUrl}/api/transaction-categories`)
+  ).json()) as TransactionCategoryDto[];
+};
+
+export const getCategoryForAllTypes =
+  async (): Promise<TransactionCategoryDto> => {
+    const categories = await getAllCategories();
+    const category = categories.find(
+      ({ name }) => name === 'Category for all types',
+    );
+
+    if (!category) {
+      throw new Error('Category for all types not found');
+    }
+
+    return category;
+  };
 
 test.describe('Transaction category analytics', () => {
   test.beforeEach(async () => {
