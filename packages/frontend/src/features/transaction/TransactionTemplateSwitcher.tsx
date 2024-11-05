@@ -53,12 +53,13 @@ export const TransactionTemplateSwitcher = ({
         popoverTarget={templateSwitcherId}
         size="small"
         isDisabled={!targetTemplates.length}
+        testId="use-template-button"
       >
         <Icon name="BoltIcon" />
         <span className="sr-only">Use Template</span>
       </Button>
       <Drawer id={templateSwitcherId} heading="Use Template" ref={popoverRef}>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} data-testid="transaction-templates-form">
           <section className="-mx-4">
             <RadioGroup>
               <Radio

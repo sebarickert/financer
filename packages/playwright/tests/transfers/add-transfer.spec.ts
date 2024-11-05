@@ -5,9 +5,13 @@ import { getAccountBalanceFromAccountListByName } from '$utils/account/getAccoun
 import { getEmptyListErrorMessageByBrowserName } from '$utils/common/getEmptyListErrorMessageByBrowserName';
 import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
+import { getTemplateFormValues } from '$utils/template/getTemplateFormValues';
 import { fillAndSubmitTransactionCategoryForm } from '$utils/transaction/fillAndSubmitTransactionCategoryForm';
+import { fillAndSubmitTransactionTemplateForm } from '$utils/transaction/fillAndSubmitTransactionTemplateForm';
 import { fillTransactionForm } from '$utils/transaction/fillTransactionForm';
+import { getAllAvailableTransactionTemplates } from '$utils/transaction/getAllAvailableTransactionTemplates';
 import { getTransactionDetails } from '$utils/transaction/getTransactionDetails';
+import { getTransactionFormValues } from '$utils/transaction/getTransactionFormValues';
 import { switchTransactionType } from '$utils/transaction/switchTransactionType';
 
 test.describe('Transfer Transactions', () => {
@@ -144,6 +148,61 @@ test.describe('Transfer Transactions', () => {
         'Invisible category > Transfer sub category',
       );
       await expect(categoryOptions.nth(3)).toHaveText('Transfer category');
+    });
+  });
+
+  test.describe('Templates', () => {
+    test('should select a template and confirm that fields are prefilled correctly', async ({
+      page,
+    }) => {
+      await page.goto('/settings/templates');
+
+      await page
+        .getByTestId('template-list-item')
+        .getByText('Dummy template for TRANSFER')
+        .click();
+
+      const templateDetails = await getTemplateFormValues(page);
+
+      await page.goto('/accounts');
+      await page.getByTestId('add-transaction').click();
+
+      await switchTransactionType(page, TransactionType.Transfer);
+
+      const initialFormValues = await getTransactionFormValues(page);
+
+      await page.getByTestId('use-template-button').click();
+
+      await fillAndSubmitTransactionTemplateForm(page, {
+        template: 'Dummy template for TRANSFER',
+      });
+
+      const updatedFormValues = await getTransactionFormValues(page);
+
+      expect(updatedFormValues).not.toEqual(initialFormValues);
+      expect(updatedFormValues).toMatchObject({
+        description: templateDetails.description,
+        amount: templateDetails.amount,
+        toAccount: templateDetails.toAccount,
+        fromAccount: templateDetails.fromAccount,
+      });
+    });
+
+    test('should only show transfer-visible templates during transaction creation', async ({
+      page,
+    }) => {
+      await page.goto('/accounts');
+      await page.getByTestId('add-transaction').click();
+
+      await switchTransactionType(page, TransactionType.Transfer);
+
+      await page.getByTestId('use-template-button').click();
+
+      const templates = await getAllAvailableTransactionTemplates(page);
+
+      expect(templates.includes('Dummy template for TRANSFER')).toBeTruthy();
+      expect(templates.includes('Dummy template for INCOME')).toBeFalsy();
+      expect(templates.includes('Dummy template for EXPENSE')).toBeFalsy();
     });
   });
 
