@@ -54,6 +54,7 @@ export const Popper: FC<PopperProps> = ({ className, items, children }) => {
           'starting:translate-x-0 starting:-translate-y-2',
           'translate-x-0 -translate-y-2',
           'supports-[anchor-name]:open:translate-x-0 open:translate-y-0 open:-translate-x-[calc(100%-44px)]',
+          'z-[100]', // Test for mobile_safari
           className,
         )}
         popover="auto"
