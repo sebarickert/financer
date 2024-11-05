@@ -36,7 +36,12 @@ export const TemplateList: FC<TemplateListProps> = ({ templates }) => {
   return (
     <section className="grid gap-8">
       {[...filteredTemplates.entries()].map(([label, items]) => (
-        <List label={getLabel(label)} key={label} columns={2}>
+        <List
+          label={getLabel(label)}
+          key={label}
+          columns={2}
+          testId="template-list"
+        >
           {items.map(({ templateName, id, templateType }) => (
             <ProminentLink
               icon={templateIconMapping[templateType[0]]}

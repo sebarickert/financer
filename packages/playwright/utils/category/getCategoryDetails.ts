@@ -27,10 +27,9 @@ const getTransactionTypeLocator = async (page: Page) => {
 export const getCategoryDetails = async (
   page: Page,
 ): Promise<AccountDetails> => {
-  await expect(page).toHaveURL(
-    /\/settings\/categories\/[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}/,
-    { timeout: 5000 },
-  );
+  await expect(page).toHaveURL(/\/settings\/categories\/[\da-fA-F-]{36}/i, {
+    timeout: 5000,
+  });
 
   const name =
     (await page

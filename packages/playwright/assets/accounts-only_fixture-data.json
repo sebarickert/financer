@@ -143,6 +143,40 @@
     }
   ],
   "transactionCategoryMappings": [],
+  "transactionTemplates": [
+    {
+      "createdAt": "2024-11-05T08:27:09.577Z",
+      "updatedAt": "2024-11-05T08:27:09.577Z",
+      "id": "b7ce1e5e-37a9-48ab-83d4-9dac055ec47e",
+      "templateName": "Manual template for test",
+      "templateType": ["MANUAL"],
+      "templateVisibility": "INCOME",
+      "amount": null,
+      "description": "manual template for test",
+      "dayOfMonth": null,
+      "dayOfMonthToCreate": null,
+      "userId": "61460d7354ea082ad0256749",
+      "fromAccount": null,
+      "toAccount": null,
+      "categories": []
+    },
+    {
+      "createdAt": "2024-11-05T08:27:41.932Z",
+      "updatedAt": "2024-11-05T08:27:41.932Z",
+      "id": "e76d61a3-2d0a-418f-82ef-a2fc510727ea",
+      "templateName": "automatic template for test",
+      "templateType": ["AUTO"],
+      "templateVisibility": "EXPENSE",
+      "amount": "100",
+      "description": "automatic template for test",
+      "dayOfMonth": 1,
+      "dayOfMonthToCreate": 1,
+      "userId": "61460d7354ea082ad0256749",
+      "fromAccount": "1bf01459-ca01-4285-9d9c-425d405ccf93",
+      "toAccount": null,
+      "categories": []
+    }
+  ],
   "userPreferences": [
     {
       "id": "625f084041b9bbf9ccf4851d",

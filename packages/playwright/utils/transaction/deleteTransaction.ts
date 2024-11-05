@@ -1,11 +1,8 @@
+import { clickPopperItem } from '$utils/common/clickPopperItem';
 import { Page } from '$utils/financer-page';
 
 export const deleteTransaction = async (page: Page) => {
-  await page.getByTestId('popper-button').click();
-  await page
-    .getByTestId('popper-container')
-    .getByRole('button', { name: 'Delete' })
-    .click();
+  await clickPopperItem(page, 'Delete');
 
   await page
     .getByTestId('drawer')

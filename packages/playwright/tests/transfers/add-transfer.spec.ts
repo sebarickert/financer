@@ -91,7 +91,7 @@ test.describe('Transfer Transactions', () => {
         description: transactionDescription,
       });
 
-      await page.getByTestId('add-category-button').click();
+      await page.getByTestId('add-category').click();
 
       await fillAndSubmitTransactionCategoryForm(page, {
         category: 'Category for all types',
@@ -128,7 +128,7 @@ test.describe('Transfer Transactions', () => {
       await switchTransactionType(page, TransactionType.Transfer);
 
       await fillTransactionForm(page, { amount: new Decimal(100) });
-      await page.getByTestId('add-category-button').click();
+      await page.getByTestId('add-category').click();
 
       const categoryOptions = page
         .getByLabel('Category')
