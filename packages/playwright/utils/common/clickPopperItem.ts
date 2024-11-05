@@ -12,9 +12,6 @@ export const clickPopperItem = async (page: Page, name: string) => {
   const popperContainer = page.getByTestId('popper-container');
   await expect(popperContainer).toBeVisible({ timeout: 5000 });
 
-  // eslint-disable-next-line playwright/no-wait-for-timeout
-  await page.waitForTimeout(100);
-
   const popperItem = popperContainer.locator('li').filter({ hasText: name });
   await expect(popperItem).toBeVisible({ timeout: 5000 });
   await popperItem.click();
