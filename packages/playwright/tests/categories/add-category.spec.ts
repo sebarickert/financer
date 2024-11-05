@@ -23,7 +23,7 @@ test.describe('Add Category', () => {
     test('should add category without visibility settings and parent, and verify details', async ({
       page,
     }) => {
-      await page.getByTestId('add-category').click();
+      await page.getByRole('link', { name: 'Add Category' }).click();
 
       await fillCategoryForm(page, {
         name: 'New Test category',
@@ -56,7 +56,7 @@ test.describe('Add Category', () => {
       }) => {
         const categoryName = `New Test ${types.join(', ')} category`;
 
-        await page.getByTestId('add-category').click();
+        await page.getByRole('link', { name: 'Add Category' }).click();
 
         await fillCategoryForm(page, {
           name: categoryName,
@@ -78,7 +78,7 @@ test.describe('Add Category', () => {
     test('should add category with parent and verify details', async ({
       page,
     }) => {
-      await page.getByTestId('add-category').click();
+      await page.getByRole('link', { name: 'Add Category' }).click();
 
       await fillCategoryForm(page, {
         name: 'New Test category with parent',
@@ -99,7 +99,7 @@ test.describe('Add Category', () => {
     test('should add category without visibility settings and with parent, and verify details', async ({
       page,
     }) => {
-      await page.getByTestId('add-category').click();
+      await page.getByRole('link', { name: 'Add Category' }).click();
 
       await fillCategoryForm(page, {
         name: 'New Test category with parent and without visibility',
