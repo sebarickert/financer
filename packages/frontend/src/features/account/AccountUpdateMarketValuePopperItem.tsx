@@ -68,7 +68,7 @@ export const AccountUpdateMarketValuePopperItem: FC<
           testId="update-market-value-form"
         >
           <div className="space-y-4">
-            <Input id="currentMarketValue" type="number" isRequired>
+            <Input id="currentMarketValue" type="number" step={0.01} isRequired>
               Current Market Value
             </Input>
             <Input id="date" type="datetime-local">

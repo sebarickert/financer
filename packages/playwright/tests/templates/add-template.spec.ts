@@ -4,8 +4,8 @@ import {
   TransactionTemplateType,
   TransactionType,
 } from '$types/generated/financer';
+import { applyFixture } from '$utils/applyFixture';
 import { test, expect, Page } from '$utils/financer-page';
-import { applyFixture } from '$utils/load-fixtures';
 import { fillTemplateForm } from '$utils/template/fillTemplateForm';
 import { getTemplateDataFromTemplateList } from '$utils/template/getTemplateDataFromTemplateList';
 import { getTemplateFormValues } from '$utils/template/getTemplateFormValues';
@@ -55,7 +55,7 @@ const templateData = ({
 
 test.describe('Add Template', () => {
   test.beforeEach(async ({ page }) => {
-    await applyFixture('accounts-only');
+    await applyFixture();
     await page.goto('/settings/templates');
   });
 

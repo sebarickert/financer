@@ -1,11 +1,11 @@
 import { getAccountDataFromAccountList } from '$utils/account/getAccountDataFromAccountList';
+import { applyFixture } from '$utils/applyFixture';
 import { clickPopperItem } from '$utils/common/clickPopperItem';
 import { test, expect } from '$utils/financer-page';
-import { applyFixture } from '$utils/load-fixtures';
 
 test.describe('Delete Account', () => {
   test.beforeEach(async ({ page }) => {
-    await applyFixture('accounts-only');
+    await applyFixture();
     await page.goto('/accounts');
   });
 

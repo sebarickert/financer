@@ -1,11 +1,11 @@
+import { applyFixture } from '$utils/applyFixture';
 import { test, expect } from '$utils/financer-page';
-import { applyFixture } from '$utils/load-fixtures';
 import { deleteTemplate } from '$utils/template/deleteTemplate';
 import { getTemplateDataFromTemplateList } from '$utils/template/getTemplateDataFromTemplateList';
 
 test.describe('Delete Template', () => {
   test.beforeEach(async ({ page }) => {
-    await applyFixture('accounts-only');
+    await applyFixture();
     await page.goto('/settings/templates');
   });
 

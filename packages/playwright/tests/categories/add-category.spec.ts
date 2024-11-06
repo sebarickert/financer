@@ -1,12 +1,12 @@
 import { TransactionType } from '$types/generated/financer';
+import { applyFixture } from '$utils/applyFixture';
 import { fillCategoryForm } from '$utils/category/fillCategoryForm';
 import { getCategoryDetails } from '$utils/category/getCategoryDetails';
 import { test, expect } from '$utils/financer-page';
-import { applyFixture } from '$utils/load-fixtures';
 
 test.describe('Add Category', () => {
   test.beforeEach(async ({ page }) => {
-    await applyFixture('accounts-only');
+    await applyFixture();
     await page.goto('/settings/categories');
   });
 

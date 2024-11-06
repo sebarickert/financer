@@ -4,15 +4,15 @@ import { TransactionType } from '$types/generated/financer';
 import { fillAccountForm } from '$utils/account/fillAccountForm';
 import { fillUpdateMarketValueForm } from '$utils/account/fillUpdateMarketValueForm';
 import { getAccountDetails } from '$utils/account/getAccountDetails';
+import { applyFixture } from '$utils/applyFixture';
 import { clickPopperItem } from '$utils/common/clickPopperItem';
 import { accountTypes } from '$utils/constants';
 import { test, expect } from '$utils/financer-page';
-import { applyFixture } from '$utils/load-fixtures';
 import { getTransactionDataFromTransactionList } from '$utils/transaction/getTransactionDataFromTransactionList';
 
 test.describe('Edit Account', () => {
   test.beforeEach(async ({ page }) => {
-    await applyFixture('accounts-only');
+    await applyFixture();
     await page.goto('/accounts');
   });
 
@@ -70,7 +70,7 @@ test.describe('Edit Account', () => {
         .getByText('Investment account')
         .click();
 
-      const { balance: initialBalance } = await getAccountDetails(page);
+      const { id, balance: initialBalance } = await getAccountDetails(page);
 
       await clickPopperItem(page, 'Update Market Value');
 
@@ -83,9 +83,8 @@ test.describe('Edit Account', () => {
         .getByRole('button', { name: 'Update' })
         .click();
 
-      // Double reloading to get the correct balance
-      await page.reload({ waitUntil: 'domcontentloaded' });
-      await page.reload({ waitUntil: 'domcontentloaded' });
+      await page.goto('/accounts');
+      await page.goto(`/accounts/${id}`);
 
       const { balance: updatedBalance } = await getAccountDetails(page);
       const transactionItems =
@@ -109,7 +108,7 @@ test.describe('Edit Account', () => {
         .getByText('Investment account')
         .click();
 
-      const { balance: initialBalance } = await getAccountDetails(page);
+      const { id, balance: initialBalance } = await getAccountDetails(page);
 
       await clickPopperItem(page, 'Update Market Value');
 
@@ -122,9 +121,8 @@ test.describe('Edit Account', () => {
         .getByRole('button', { name: 'Update' })
         .click();
 
-      // Double reloading to get the correct balance
-      await page.reload({ waitUntil: 'domcontentloaded' });
-      await page.reload({ waitUntil: 'domcontentloaded' });
+      await page.goto('/accounts');
+      await page.goto(`/accounts/${id}`);
 
       const { balance: updatedBalance } = await getAccountDetails(page);
       const transactionItems =

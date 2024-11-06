@@ -1,23 +1,23 @@
 import Decimal from 'decimal.js';
 
 import { getAccountBalanceFromAccountListByName } from '$utils/account/getAccountBalanceFromAccountListByName';
+import { applyFixture } from '$utils/applyFixture';
 import { clickPopperItem } from '$utils/common/clickPopperItem';
 import { test, expect } from '$utils/financer-page';
-import { applyFixture } from '$utils/load-fixtures';
 import { fillAndSubmitTransactionCategoryForm } from '$utils/transaction/fillAndSubmitTransactionCategoryForm';
 import { fillTransactionForm } from '$utils/transaction/fillTransactionForm';
 import { getTransactionDetails } from '$utils/transaction/getTransactionDetails';
 
 test.describe('Transfer Transactions', () => {
   test.beforeEach(async () => {
-    await applyFixture('large');
+    await applyFixture();
   });
 
   test.describe('Edit Transfer', () => {
     test('should edit transfer and verify account balance and transfer list', async ({
       page,
     }) => {
-      await page.goto('/statistics/transfers/?date=2022-1');
+      await page.goto('/statistics/transfers');
 
       await page.getByTestId('transaction-list-item').first().click();
 
@@ -84,14 +84,14 @@ test.describe('Transfer Transactions', () => {
         initialToAccountBalance.minus(initialAndNewAmountDifference),
       );
 
-      await page.goto('/statistics/transfers/?date=2022-1');
+      await page.goto('/statistics/transfers');
       await expect(page.getByTestId(id)).toContainText(updatedDescription);
     });
 
     test('should edit transfer account fields and verify balance updates', async ({
       page,
     }) => {
-      await page.goto('/statistics/transfers/?date=2022-1');
+      await page.goto('/statistics/transfers');
 
       await page.getByTestId('transaction-list-item').first().click();
 
@@ -113,7 +113,7 @@ test.describe('Transfer Transactions', () => {
         await getAccountBalanceFromAccountListByName(page, toAccount as string);
 
       const initialBalanceForNewToAccount =
-        await getAccountBalanceFromAccountListByName(page, 'Big money');
+        await getAccountBalanceFromAccountListByName(page, 'Saving account 1');
 
       await page.goto(`/statistics/transfers/${id}`);
       await clickPopperItem(page, 'Edit');
@@ -122,7 +122,7 @@ test.describe('Transfer Transactions', () => {
         page,
         {
           fromAccount: 'Long-term SAVINGS',
-          toAccount: 'Big money',
+          toAccount: 'Saving account 1',
         },
         'page',
       );
@@ -134,7 +134,7 @@ test.describe('Transfer Transactions', () => {
         .click();
 
       // TODO Have to go to another page and come back to get the updated balance (cache issue)
-      await page.goto('/statistics/transfers/?date=2022-1');
+      await page.goto('/statistics/transfers');
       await page.goto('/accounts');
 
       const updatedBalanceForPreviousFromAccount =
@@ -150,26 +150,36 @@ test.describe('Transfer Transactions', () => {
         await getAccountBalanceFromAccountListByName(page, toAccount as string);
 
       const updatedBalanceForNewToAccount =
-        await getAccountBalanceFromAccountListByName(page, 'Big money');
+        await getAccountBalanceFromAccountListByName(page, 'Saving account 1');
 
-      // Verify that the balance for the previous "from" account has been updated correctly
+      console.log(
+        amount,
+        updatedBalanceForPreviousFromAccount,
+        updatedBalanceForNewFromAccount,
+        updatedBalanceForPreviousToAccount,
+        updatedBalanceForNewToAccount,
+      );
+
+      const expectedBalanceForPreviousFromAccount =
+        initialBalanceForPreviousFromAccount.plus(amount);
+      const expectedBalanceForNewFromAccount =
+        initialBalanceForNewFromAccount.minus(amount);
+      const expectedBalanceForPreviousToAccount =
+        initialBalanceForPreviousToAccount.minus(amount);
+      const expectedBalanceForNewToAccount =
+        initialBalanceForNewToAccount.plus(amount);
+
       expect(updatedBalanceForPreviousFromAccount).toEqual(
-        initialBalanceForPreviousFromAccount.plus(amount),
+        expectedBalanceForPreviousFromAccount,
       );
-
-      // Verify that the balance for the previous "to" account has been updated correctly
-      expect(updatedBalanceForPreviousToAccount).toEqual(
-        initialBalanceForPreviousToAccount.minus(amount),
-      );
-
-      // Verify that the balance for the new "from" account has been updated correctly
       expect(updatedBalanceForNewFromAccount).toEqual(
-        initialBalanceForNewFromAccount.minus(amount),
+        expectedBalanceForNewFromAccount,
       );
-
-      // Verify that the balance for the new "to" account has been updated correctly
+      expect(updatedBalanceForPreviousToAccount).toEqual(
+        expectedBalanceForPreviousToAccount,
+      );
       expect(updatedBalanceForNewToAccount).toEqual(
-        initialBalanceForNewToAccount.plus(amount),
+        expectedBalanceForNewToAccount,
       );
     });
   });
@@ -178,11 +188,13 @@ test.describe('Transfer Transactions', () => {
     test('should edit transfer with category and verify it updates values in transaction details', async ({
       page,
     }) => {
-      await page.goto('/statistics/transfers/?date=2022-3');
+      await page.goto('/statistics/transfers');
 
       await page
         .getByTestId('transaction-list-item')
-        .getByText('TRANSFER WITH CATEGORY', { exact: true })
+        .getByText('Dummy TRANSFER from Big money to Investment account', {
+          exact: true,
+        })
         .click();
 
       const { categories: initialCategories } =
@@ -195,8 +207,8 @@ test.describe('Transfer Transactions', () => {
       await fillAndSubmitTransactionCategoryForm(
         page,
         {
-          category: 'Transfer category',
-          amount: new Decimal(200),
+          category: 'Category for all types',
+          amount: new Decimal(500),
         },
         true,
       );
@@ -217,18 +229,25 @@ test.describe('Transfer Transactions', () => {
         initialCategories[0].amount,
       );
 
-      expect(updatedCategories[0].category).toEqual('Transfer category');
-      expect(updatedCategories[0].amount).toEqual(new Decimal(200));
+      expect(updatedCategories[0].category).toEqual('Category for all types');
+      expect(updatedCategories[0].amount).toEqual(new Decimal(500));
     });
 
     test('should edit transfer with multiple categories and remove one of the categories and verify it updates values in transaction details', async ({
       page,
     }) => {
-      await page.goto('/statistics/transfers/?date=2022-3');
+      await page.goto('/statistics/transfers');
+
+      await page.getByRole('button', { name: 'Previous page' }).click();
 
       await page
         .getByTestId('transaction-list-item')
-        .getByText('TRANSFER WITH MULTIPLE CATEGORIES', { exact: true })
+        .getByText(
+          'Dummy TRANSFER from Saving account 2 to Investment account',
+          {
+            exact: true,
+          },
+        )
         .click();
 
       const { id, categories: initialCategories } =
@@ -237,7 +256,7 @@ test.describe('Transfer Transactions', () => {
       await clickPopperItem(page, 'Edit');
 
       await expect(page.getByTestId('transaction-categories-item')).toHaveCount(
-        2,
+        3,
       );
 
       await page.getByRole('button', { name: 'Edit category' }).first().click();
@@ -249,7 +268,7 @@ test.describe('Transfer Transactions', () => {
         .click();
 
       await expect(page.getByTestId('transaction-categories-item')).toHaveCount(
-        1,
+        2,
       );
 
       await page
@@ -259,7 +278,7 @@ test.describe('Transfer Transactions', () => {
         .click();
 
       // TODO Have to go to another page and come back to get the updated data (cache issue)
-      await page.goto('/statistics/transfers/?date=2022-3');
+      await page.goto('/statistics/transfers');
       await page.goto(`/statistics/transfers/${id}`);
 
       const { categories: updatedCategories } =
@@ -272,11 +291,18 @@ test.describe('Transfer Transactions', () => {
     test('should edit transfer with multiple categories and remove all of the categories and verify it updates values in transaction details', async ({
       page,
     }) => {
-      await page.goto('/statistics/transfers/?date=2022-3');
+      await page.goto('/statistics/transfers');
+
+      await page.getByRole('button', { name: 'Previous page' }).click();
 
       await page
         .getByTestId('transaction-list-item')
-        .getByText('TRANSFER WITH MULTIPLE CATEGORIES', { exact: true })
+        .getByText(
+          'Dummy TRANSFER from Saving account 2 to Investment account',
+          {
+            exact: true,
+          },
+        )
         .click();
 
       const { id, categories: initialCategories } =
@@ -285,8 +311,16 @@ test.describe('Transfer Transactions', () => {
       await clickPopperItem(page, 'Edit');
 
       await expect(page.getByTestId('transaction-categories-item')).toHaveCount(
-        2,
+        3,
       );
+
+      await page.getByRole('button', { name: 'Edit category' }).first().click();
+
+      await page
+        .getByTestId('drawer')
+        .getByTestId('transaction-categories-form')
+        .getByRole('button', { name: 'Delete', exact: true })
+        .click();
 
       await page.getByRole('button', { name: 'Edit category' }).first().click();
 
@@ -315,7 +349,7 @@ test.describe('Transfer Transactions', () => {
         .click();
 
       // TODO Have to go to another page and come back to get the updated data (cache issue)
-      await page.goto('/statistics/transfers/?date=2022-1');
+      await page.goto('/statistics/transfers');
       await page.goto(`/statistics/transfers/${id}`);
 
       const { categories: updatedCategories } =

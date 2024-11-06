@@ -2,9 +2,9 @@ import Decimal from 'decimal.js';
 
 import { TransactionType } from '$types/generated/financer';
 import { getAccountBalanceFromAccountListByName } from '$utils/account/getAccountBalanceFromAccountListByName';
+import { applyFixture } from '$utils/applyFixture';
 import { getEmptyListErrorMessageByBrowserName } from '$utils/common/getEmptyListErrorMessageByBrowserName';
 import { test, expect } from '$utils/financer-page';
-import { applyFixture } from '$utils/load-fixtures';
 import { getTemplateFormValues } from '$utils/template/getTemplateFormValues';
 import { fillAndSubmitTransactionCategoryForm } from '$utils/transaction/fillAndSubmitTransactionCategoryForm';
 import { fillAndSubmitTransactionTemplateForm } from '$utils/transaction/fillAndSubmitTransactionTemplateForm';
@@ -16,7 +16,7 @@ import { switchTransactionType } from '$utils/transaction/switchTransactionType'
 
 test.describe('Income Transactions', () => {
   test.beforeEach(async () => {
-    await applyFixture('large');
+    await applyFixture();
   });
 
   test.describe('Add Income', () => {
