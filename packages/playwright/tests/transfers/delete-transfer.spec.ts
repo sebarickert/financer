@@ -12,7 +12,7 @@ test.describe('Delete Transfer', () => {
   test('should delete an transfer and verify account balances and that the transaction does not exist anymore', async ({
     page,
   }) => {
-    await page.goto('/statistics/transfers/?date=2022-1');
+    await page.goto('/statistics/transfers');
 
     await page.getByTestId('transaction-list-item').first().click();
 
@@ -31,7 +31,7 @@ test.describe('Delete Transfer', () => {
     await deleteTransaction(page);
     await expect(page).not.toHaveURL(`/statistics/transfers/${id}`);
 
-    await page.goto('/statistics/transfers/?date=2022-1');
+    await page.goto('/statistics/transfers');
 
     await expect(
       page.getByTestId('transaction-list-item').getByTestId(id),

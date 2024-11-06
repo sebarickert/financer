@@ -17,8 +17,7 @@ test.describe('Expense Transactions', () => {
     test('should edit expense and verify account balance and expense list', async ({
       page,
     }) => {
-      await page.goto('/statistics/expenses/?date=2022-1');
-
+      await page.goto('/statistics/expenses');
       await page.getByTestId('transaction-list-item').first().click();
 
       const {
@@ -76,14 +75,14 @@ test.describe('Expense Transactions', () => {
         initialAccountBalance.minus(initialAndNewAmountDifference),
       );
 
-      await page.goto('/statistics/expenses/?date=2022-1');
+      await page.goto('/statistics/expenses');
       await expect(page.getByTestId(id)).toContainText(updatedDescription);
     });
 
     test('should edit expense account field and verify balance updates', async ({
       page,
     }) => {
-      await page.goto('/statistics/expenses/?date=2022-1');
+      await page.goto('/statistics/expenses');
 
       await page.getByTestId('transaction-list-item').first().click();
 
@@ -118,7 +117,7 @@ test.describe('Expense Transactions', () => {
         .click();
 
       // TODO Have to go to another page and come back to get the updated balance (cache issue)
-      await page.goto('/statistics/expenses/?date=2022-1');
+      await page.goto('/statistics/expenses');
       await page.goto('/accounts');
 
       const updatedBalanceForPreviousAccount =
@@ -144,11 +143,11 @@ test.describe('Expense Transactions', () => {
     test('should edit expense with category and verify it updates values in transaction details', async ({
       page,
     }) => {
-      await page.goto('/statistics/expenses/?date=2022-1');
+      await page.goto('/statistics/expenses');
 
       await page
         .getByTestId('transaction-list-item')
-        .getByText('Dummy EXPENSE 99', { exact: true })
+        .getByText('Dummy EXPENSE 1', { exact: true })
         .click();
 
       const { categories: initialCategories } =
@@ -161,7 +160,7 @@ test.describe('Expense Transactions', () => {
       await fillAndSubmitTransactionCategoryForm(
         page,
         {
-          category: 'Expense category',
+          category: 'Category for all types',
           amount: new Decimal(200),
         },
         true,
@@ -183,18 +182,18 @@ test.describe('Expense Transactions', () => {
         initialCategories[0].amount,
       );
 
-      expect(updatedCategories[0].category).toEqual('Expense category');
+      expect(updatedCategories[0].category).toEqual('Category for all types');
       expect(updatedCategories[0].amount).toEqual(new Decimal(200));
     });
 
     test('should edit expense with multiple categories and remove one of the categories and verify it updates values in transaction details', async ({
       page,
     }) => {
-      await page.goto('/statistics/expenses/?date=2022-1');
+      await page.goto('/statistics/expenses');
 
       await page
         .getByTestId('transaction-list-item')
-        .getByText('Dummy EXPENSE 80', { exact: true })
+        .getByText('Dummy EXPENSE 2', { exact: true })
         .click();
 
       const { id, categories: initialCategories } =
@@ -203,7 +202,7 @@ test.describe('Expense Transactions', () => {
       await clickPopperItem(page, 'Edit');
 
       await expect(page.getByTestId('transaction-categories-item')).toHaveCount(
-        2,
+        3,
       );
 
       await page.getByRole('button', { name: 'Edit category' }).first().click();
@@ -215,7 +214,7 @@ test.describe('Expense Transactions', () => {
         .click();
 
       await expect(page.getByTestId('transaction-categories-item')).toHaveCount(
-        1,
+        2,
       );
 
       await page
@@ -225,7 +224,7 @@ test.describe('Expense Transactions', () => {
         .click();
 
       // TODO Have to go to another page and come back to get the updated data (cache issue)
-      await page.goto('/statistics/expenses/?date=2022-1');
+      await page.goto('/statistics/expenses');
       await page.goto(`/statistics/expenses/${id}`);
 
       const { categories: updatedCategories } =
@@ -238,11 +237,11 @@ test.describe('Expense Transactions', () => {
     test('should edit expense with multiple categories and remove all of the categories and verify it updates values in transaction details', async ({
       page,
     }) => {
-      await page.goto('/statistics/expenses/?date=2022-1');
+      await page.goto('/statistics/expenses');
 
       await page
         .getByTestId('transaction-list-item')
-        .getByText('Dummy EXPENSE 80', { exact: true })
+        .getByText('Dummy EXPENSE 2', { exact: true })
         .click();
 
       const { id, categories: initialCategories } =
@@ -251,8 +250,16 @@ test.describe('Expense Transactions', () => {
       await clickPopperItem(page, 'Edit');
 
       await expect(page.getByTestId('transaction-categories-item')).toHaveCount(
-        2,
+        3,
       );
+
+      await page.getByRole('button', { name: 'Edit category' }).first().click();
+
+      await page
+        .getByTestId('drawer')
+        .getByTestId('transaction-categories-form')
+        .getByRole('button', { name: 'Delete', exact: true })
+        .click();
 
       await page.getByRole('button', { name: 'Edit category' }).first().click();
 
@@ -281,7 +288,7 @@ test.describe('Expense Transactions', () => {
         .click();
 
       // TODO Have to go to another page and come back to get the updated data (cache issue)
-      await page.goto('/statistics/expenses/?date=2022-1');
+      await page.goto('/statistics/expenses');
       await page.goto(`/statistics/expenses/${id}`);
 
       const { categories: updatedCategories } =

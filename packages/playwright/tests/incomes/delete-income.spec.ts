@@ -12,7 +12,7 @@ test.describe('Delete Income', () => {
   test('should delete an income and verify account balance and that the transaction does not exist anymore', async ({
     page,
   }) => {
-    await page.goto('/statistics/incomes/?date=2022-1');
+    await page.goto('/statistics/incomes');
 
     await page.getByTestId('transaction-list-item').first().click();
 
@@ -30,7 +30,7 @@ test.describe('Delete Income', () => {
     await deleteTransaction(page);
     await expect(page).not.toHaveURL(`/statistics/incomes/${id}`);
 
-    await page.goto('/statistics/incomes/?date=2022-1');
+    await page.goto('/statistics/incomes');
 
     await expect(
       page.getByTestId('transaction-list-item').getByTestId(id),
