@@ -1,3 +1,5 @@
+import { expect } from '@playwright/test';
+
 import { Page } from '$utils/financer-page';
 
 type TransactionTemplatesFormFields = {
@@ -20,4 +22,6 @@ export const fillAndSubmitTransactionTemplateForm = async (
   await transactionTemplatesForm
     .getByRole('button', { name: 'Switch', exact: true })
     .click();
+
+  await expect(transactionTemplatesForm).toBeHidden({ timeout: 5000 });
 };
