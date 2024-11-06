@@ -22,6 +22,7 @@ export const TemplateListingContainer: FC = async () => {
             'theme-layer-color-with-hover theme-focus rounded-md',
             'inline-flex items-center justify-center h-11 w-11',
           )}
+          testId="add-template"
         >
           <span className="sr-only">Add template</span>
           <Icon name="PlusIcon" />

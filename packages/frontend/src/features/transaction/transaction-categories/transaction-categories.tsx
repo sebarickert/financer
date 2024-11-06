@@ -100,7 +100,7 @@ export const TransactionCategories = ({
         onClick={addNewCategory}
         accentColor="secondary"
         isDisabled={!transactionAmount || transactionAmount < 0}
-        testId="add-category-button"
+        testId="add-category"
         popoverTarget={formId}
         haptic="light"
       >

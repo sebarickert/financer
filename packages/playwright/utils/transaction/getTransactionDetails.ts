@@ -74,7 +74,7 @@ export const getTransactionDetails = async (
   page: Page,
 ): Promise<TransactionDetails> => {
   await expect(page).toHaveURL(
-    /\/statistics\/(?:incomes|expenses|transfers)\/[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}/i,
+    /\/statistics\/(?:incomes|expenses|transfers)\/[\da-fA-F-]{36}/i,
     { timeout: 5000 },
   );
 

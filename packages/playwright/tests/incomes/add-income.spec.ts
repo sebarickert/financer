@@ -5,9 +5,13 @@ import { getAccountBalanceFromAccountListByName } from '$utils/account/getAccoun
 import { getEmptyListErrorMessageByBrowserName } from '$utils/common/getEmptyListErrorMessageByBrowserName';
 import { test, expect } from '$utils/financer-page';
 import { applyFixture } from '$utils/load-fixtures';
+import { getTemplateFormValues } from '$utils/template/getTemplateFormValues';
 import { fillAndSubmitTransactionCategoryForm } from '$utils/transaction/fillAndSubmitTransactionCategoryForm';
+import { fillAndSubmitTransactionTemplateForm } from '$utils/transaction/fillAndSubmitTransactionTemplateForm';
 import { fillTransactionForm } from '$utils/transaction/fillTransactionForm';
+import { getAllAvailableTransactionTemplates } from '$utils/transaction/getAllAvailableTransactionTemplates';
 import { getTransactionDetails } from '$utils/transaction/getTransactionDetails';
+import { getTransactionFormValues } from '$utils/transaction/getTransactionFormValues';
 import { switchTransactionType } from '$utils/transaction/switchTransactionType';
 
 test.describe('Income Transactions', () => {
@@ -80,7 +84,7 @@ test.describe('Income Transactions', () => {
         description: transactionDescription,
       });
 
-      await page.getByTestId('add-category-button').click();
+      await page.getByTestId('add-category').click();
 
       await fillAndSubmitTransactionCategoryForm(page, {
         category: 'Category for all types',
@@ -117,7 +121,7 @@ test.describe('Income Transactions', () => {
       await switchTransactionType(page, TransactionType.Income);
 
       await fillTransactionForm(page, { amount: new Decimal(100) });
-      await page.getByTestId('add-category-button').click();
+      await page.getByTestId('add-category').click();
 
       const categoryOptions = page
         .getByLabel('Category')
@@ -133,6 +137,60 @@ test.describe('Income Transactions', () => {
       await expect(categoryOptions.nth(3)).toHaveText(
         'Invisible category > Sub category for all types',
       );
+    });
+  });
+
+  test.describe('Templates', () => {
+    test('should select a template and confirm that fields are prefilled correctly', async ({
+      page,
+    }) => {
+      await page.goto('/settings/templates');
+
+      await page
+        .getByTestId('template-list-item')
+        .getByText('Dummy template for INCOME')
+        .click();
+
+      const templateDetails = await getTemplateFormValues(page);
+
+      await page.goto('/accounts');
+      await page.getByTestId('add-transaction').click();
+
+      await switchTransactionType(page, TransactionType.Income);
+
+      const initialFormValues = await getTransactionFormValues(page);
+
+      await page.getByTestId('use-template-button').click();
+
+      await fillAndSubmitTransactionTemplateForm(page, {
+        template: 'Dummy template for INCOME',
+      });
+
+      const updatedFormValues = await getTransactionFormValues(page);
+
+      expect(updatedFormValues).not.toEqual(initialFormValues);
+      expect(updatedFormValues).toMatchObject({
+        description: templateDetails.description,
+        amount: templateDetails.amount,
+        toAccount: templateDetails.toAccount,
+      });
+    });
+
+    test('should only show income-visible templates during transaction creation', async ({
+      page,
+    }) => {
+      await page.goto('/accounts');
+      await page.getByTestId('add-transaction').click();
+
+      await switchTransactionType(page, TransactionType.Income);
+
+      await page.getByTestId('use-template-button').click();
+
+      const templates = await getAllAvailableTransactionTemplates(page);
+
+      expect(templates.includes('Dummy template for INCOME')).toBeTruthy();
+      expect(templates.includes('Dummy template for EXPENSE')).toBeFalsy();
+      expect(templates.includes('Dummy template for TRANSFER')).toBeFalsy();
     });
   });
 

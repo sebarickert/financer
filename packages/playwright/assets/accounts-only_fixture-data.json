@@ -1,155 +1,224 @@
 {
+  "user": {
+    "roles": ["TEST_USER"],
+    "id": "61460d7354ea082ad0256749",
+    "name": "Dummy Test User",
+    "auth0Id": "",
+    "githubId": "",
+    "nickname": "",
+    "profileImageUrl": "",
+    "theme": "AUTO"
+  },
   "accounts": [
     {
-      "id": "61460d8554ea082ad0256759",
-      "balance": -200,
+      "createdAt": "2024-11-05T13:28:16.827Z",
+      "updatedAt": "2024-11-05T13:28:16.827Z",
+      "id": "7e024811-a041-4e81-8426-2266611f8796",
       "name": "Saving account 1",
       "type": "SAVINGS",
+      "balance": "-200",
       "userId": "61460d7354ea082ad0256749",
-      "v": 0
+      "isDeleted": false
     },
     {
-      "id": "61460d9454ea082ad0256762",
-      "balance": 51000,
+      "createdAt": "2024-11-05T13:28:16.827Z",
+      "updatedAt": "2024-11-05T13:28:16.827Z",
+      "id": "a977e8ac-6de7-4a54-b2ab-180d437336b2",
       "name": "Saving account 2",
       "type": "SAVINGS",
+      "balance": "51000",
       "userId": "61460d7354ea082ad0256749",
-      "v": 0
+      "isDeleted": false
     },
     {
-      "id": "61460da354ea082ad025676b",
-      "balance": 4350,
+      "createdAt": "2024-11-05T13:28:16.827Z",
+      "updatedAt": "2024-11-05T13:28:16.827Z",
+      "id": "2b810658-613c-4b4d-9c07-c7ce6784b2c1",
       "name": "Cash account",
       "type": "CASH",
+      "balance": "4350",
       "userId": "61460d7354ea082ad0256749",
-      "v": 0
+      "isDeleted": false
     },
     {
-      "id": "61460db554ea082ad0256774",
-      "balance": 0,
+      "createdAt": "2024-11-05T13:28:16.827Z",
+      "updatedAt": "2024-11-05T13:28:16.827Z",
+      "id": "0335420e-514c-4803-8a1e-93fe9581ea2d",
       "name": "Investment account",
       "type": "INVESTMENT",
+      "balance": "0",
       "userId": "61460d7354ea082ad0256749",
-      "v": 0
+      "isDeleted": false
     },
     {
-      "id": "61460dd554ea082ad025677d",
-      "balance": -950,
+      "createdAt": "2024-11-05T13:28:16.827Z",
+      "updatedAt": "2024-11-05T13:28:16.827Z",
+      "id": "031203d5-b94d-4d00-8bcf-86e090ee8ddd",
       "name": "Credit account",
       "type": "CREDIT",
+      "balance": "-950",
       "userId": "61460d7354ea082ad0256749",
-      "v": 0
+      "isDeleted": false
     },
     {
-      "id": "61460de154ea082ad0256786",
-      "balance": -5000,
+      "createdAt": "2024-11-05T13:28:16.827Z",
+      "updatedAt": "2024-11-05T13:28:16.827Z",
+      "id": "c0dbc26a-4aa2-4609-a9b2-fb42e5896059",
       "name": "Loan account",
       "type": "LOAN",
+      "balance": "-5000",
       "userId": "61460d7354ea082ad0256749",
-      "v": 0
+      "isDeleted": false
     }
   ],
+  "accountBalanceChanges": [],
   "transactions": [],
   "transactionCategories": [
     {
-      "id": "623b58ada3deba9879422fbf",
+      "createdAt": "2024-11-05T13:28:16.827Z",
+      "updatedAt": "2024-11-05T13:28:16.827Z",
+      "id": "a695332d-7bc4-4660-9b52-d928d819bb5b",
       "userId": "61460d7354ea082ad0256749",
       "name": "Category for all types",
       "visibility": ["INCOME", "EXPENSE", "TRANSFER"],
-      "parentCategoryId": null,
       "deleted": false,
-      "v": 0
+      "parentCategoryId": null
     },
     {
-      "id": "623b58b8a3deba9879422fc2",
+      "createdAt": "2024-11-05T13:28:16.827Z",
+      "updatedAt": "2024-11-05T13:28:16.827Z",
+      "id": "6ca9ecb0-3936-4eb9-aedf-032dc49ce30c",
       "userId": "61460d7354ea082ad0256749",
       "name": "Invisible category",
       "visibility": [],
-      "parentCategoryId": null,
       "deleted": false,
-      "v": 0
+      "parentCategoryId": null
     },
     {
-      "id": "623b58bfa3deba9879422fc5",
+      "createdAt": "2024-11-05T13:28:16.827Z",
+      "updatedAt": "2024-11-05T13:28:16.827Z",
+      "id": "d86fbd06-61be-4fe5-a134-93e3069da6fd",
       "userId": "61460d7354ea082ad0256749",
       "name": "Expense category",
       "visibility": ["EXPENSE"],
-      "parentCategoryId": null,
       "deleted": false,
-      "v": 0
+      "parentCategoryId": null
     },
     {
-      "id": "623b58c5a3deba9879422fc8",
+      "createdAt": "2024-11-05T13:28:16.827Z",
+      "updatedAt": "2024-11-05T13:28:16.827Z",
+      "id": "2ea8a757-25b1-429c-8e49-f1049bb6ea9f",
       "userId": "61460d7354ea082ad0256749",
       "name": "Income category",
       "visibility": ["INCOME"],
-      "parentCategoryId": null,
       "deleted": false,
-      "v": 0
+      "parentCategoryId": null
     },
     {
-      "id": "623b6b17a3deba9879422fcd",
+      "createdAt": "2024-11-05T13:28:16.827Z",
+      "updatedAt": "2024-11-05T13:28:16.827Z",
+      "id": "4a88f0e4-1985-42f4-9ca2-0a655f6f76f5",
       "userId": "61460d7354ea082ad0256749",
       "name": "Transfer category",
       "visibility": ["TRANSFER"],
-      "parentCategoryId": null,
       "deleted": false,
-      "v": 0
+      "parentCategoryId": null
     },
     {
-      "id": "623b6b36a3deba9879422fd1",
+      "createdAt": "2024-11-05T13:28:16.827Z",
+      "updatedAt": "2024-11-05T13:28:16.827Z",
+      "id": "4055eb76-5603-4eee-bbad-d05cd16f8067",
       "userId": "61460d7354ea082ad0256749",
       "name": "Transfer sub category",
       "visibility": ["TRANSFER"],
-      "parentCategoryId": "623b58b8a3deba9879422fc2",
       "deleted": false,
-      "v": 0
+      "parentCategoryId": "6ca9ecb0-3936-4eb9-aedf-032dc49ce30c"
     },
     {
-      "id": "623b6b51a3deba9879422fd5",
+      "createdAt": "2024-11-05T13:28:16.827Z",
+      "updatedAt": "2024-11-05T13:28:16.827Z",
+      "id": "643f205c-20bc-48a4-8810-b9992076f88b",
       "userId": "61460d7354ea082ad0256749",
       "name": "Income sub category",
       "visibility": ["INCOME"],
-      "parentCategoryId": "623b58b8a3deba9879422fc2",
       "deleted": false,
-      "v": 0
+      "parentCategoryId": "6ca9ecb0-3936-4eb9-aedf-032dc49ce30c"
     },
     {
-      "id": "623b6b64a3deba9879422fd9",
+      "createdAt": "2024-11-05T13:28:16.827Z",
+      "updatedAt": "2024-11-05T13:28:16.827Z",
+      "id": "3a0ae6fd-53e2-4d3e-ac9f-1a0d59dec9db",
       "userId": "61460d7354ea082ad0256749",
       "name": "Expense sub category",
       "visibility": ["EXPENSE"],
-      "parentCategoryId": "623b58b8a3deba9879422fc2",
       "deleted": false,
-      "v": 0
+      "parentCategoryId": "6ca9ecb0-3936-4eb9-aedf-032dc49ce30c"
     },
     {
-      "id": "623b6b84a3deba9879422fdd",
+      "createdAt": "2024-11-05T13:28:16.827Z",
+      "updatedAt": "2024-11-05T13:28:16.827Z",
+      "id": "b1775af4-f8eb-4e58-867b-7a867e481887",
       "userId": "61460d7354ea082ad0256749",
       "name": "Invisible sub category",
       "visibility": [],
-      "parentCategoryId": "623b58ada3deba9879422fbf",
       "deleted": false,
-      "v": 0
+      "parentCategoryId": "a695332d-7bc4-4660-9b52-d928d819bb5b"
     },
     {
-      "id": "623b6b91a3deba9879422fe1",
+      "createdAt": "2024-11-05T13:28:16.827Z",
+      "updatedAt": "2024-11-05T13:28:16.827Z",
+      "id": "5083887a-bc0e-4611-b832-86b65c7f5537",
       "userId": "61460d7354ea082ad0256749",
       "name": "Sub category for all types",
       "visibility": ["INCOME", "EXPENSE", "TRANSFER"],
-      "parentCategoryId": "623b58b8a3deba9879422fc2",
       "deleted": false,
-      "v": 0
+      "parentCategoryId": "6ca9ecb0-3936-4eb9-aedf-032dc49ce30c"
     }
   ],
   "transactionCategoryMappings": [],
   "userPreferences": [
     {
-      "id": "625f084041b9bbf9ccf4851d",
-      "key": "TRANSACTION_LIST_CHUNK_SIZE",
-      "value": "500",
+      "createdAt": "2024-11-05T13:28:16.827Z",
+      "updatedAt": "2024-11-05T13:28:16.827Z",
+      "id": "a6242fac-dfca-4f8a-8d6e-947f9d0d8f47",
       "userId": "61460d7354ea082ad0256749",
-      "v": 0
+      "key": "TRANSACTION_LIST_CHUNK_SIZE",
+      "value": "500"
     }
-  ]
+  ],
+  "transactionTemplates": [
+    {
+      "createdAt": "2024-11-05T08:27:09.577Z",
+      "updatedAt": "2024-11-05T13:28:41.125Z",
+      "id": "4dd1793d-d36a-4c1c-ac31-93fe792e4995",
+      "templateName": "Manual template for test",
+      "templateType": ["MANUAL"],
+      "templateVisibility": "INCOME",
+      "amount": null,
+      "description": "manual template for test",
+      "dayOfMonth": null,
+      "dayOfMonthToCreate": null,
+      "userId": "61460d7354ea082ad0256749",
+      "fromAccount": null,
+      "toAccount": "031203d5-b94d-4d00-8bcf-86e090ee8ddd",
+      "categories": []
+    },
+    {
+      "createdAt": "2024-11-05T08:27:41.932Z",
+      "updatedAt": "2024-11-05T13:28:47.770Z",
+      "id": "553adb6b-5bed-4837-a379-f632b4f541e3",
+      "templateName": "automatic template for test",
+      "templateType": ["AUTO"],
+      "templateVisibility": "EXPENSE",
+      "amount": "100",
+      "description": "automatic template for test",
+      "dayOfMonth": 1,
+      "dayOfMonthToCreate": 1,
+      "userId": "61460d7354ea082ad0256749",
+      "fromAccount": "7e024811-a041-4e81-8426-2266611f8796",
+      "toAccount": null,
+      "categories": []
+    }
+  ],
+  "transactionTemplateLogs": []
 }

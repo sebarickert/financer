@@ -14,10 +14,9 @@ type AccountDetails = {
 export const getAccountDetails = async (
   page: Page,
 ): Promise<AccountDetails> => {
-  await expect(page).toHaveURL(
-    /\/accounts\/[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}/i,
-    { timeout: 5000 },
-  );
+  await expect(page).toHaveURL(/\/accounts\/[\da-fA-F-]{36}/i, {
+    timeout: 5000,
+  });
 
   await expect(page.getByTestId('account-balance')).toBeVisible({
     timeout: 5000,

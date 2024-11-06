@@ -143,6 +143,7 @@ export const TemplateForm: FC<TemplateFormProps> = ({
       submitLabel={submitLabel}
       formFooterBackLink="/"
       optionalFooterComponent={optionalFooterComponent}
+      testId="template-form"
     >
       <section>
         <div className="grid gap-4 sm:grid-cols-2">
