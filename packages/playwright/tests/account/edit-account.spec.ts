@@ -4,15 +4,15 @@ import { TransactionType } from '$types/generated/financer';
 import { fillAccountForm } from '$utils/account/fillAccountForm';
 import { fillUpdateMarketValueForm } from '$utils/account/fillUpdateMarketValueForm';
 import { getAccountDetails } from '$utils/account/getAccountDetails';
+import { applyFixture } from '$utils/applyFixture';
 import { clickPopperItem } from '$utils/common/clickPopperItem';
 import { accountTypes } from '$utils/constants';
 import { test, expect } from '$utils/financer-page';
-import { applyFixture } from '$utils/load-fixtures';
 import { getTransactionDataFromTransactionList } from '$utils/transaction/getTransactionDataFromTransactionList';
 
 test.describe('Edit Account', () => {
   test.beforeEach(async ({ page }) => {
-    await applyFixture('accounts-only');
+    await applyFixture();
     await page.goto('/accounts');
   });
 

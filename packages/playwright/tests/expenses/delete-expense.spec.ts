@@ -1,12 +1,12 @@
 import { getAccountBalanceFromAccountListByName } from '$utils/account/getAccountBalanceFromAccountListByName';
+import { applyFixture } from '$utils/applyFixture';
 import { test, expect } from '$utils/financer-page';
-import { applyFixture } from '$utils/load-fixtures';
 import { deleteTransaction } from '$utils/transaction/deleteTransaction';
 import { getTransactionDetails } from '$utils/transaction/getTransactionDetails';
 
 test.describe('Expense Transactions', () => {
   test.beforeEach(async () => {
-    await applyFixture('large');
+    await applyFixture();
   });
 
   test('should delete an expense and verify account balance and that the transaction does not exist anymore', async ({

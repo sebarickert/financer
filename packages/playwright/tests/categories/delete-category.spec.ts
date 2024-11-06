@@ -1,11 +1,11 @@
+import { applyFixture } from '$utils/applyFixture';
 import { getCategoryDataFromCategoryList } from '$utils/category/getCategoryDataFromCategoryList';
 import { clickPopperItem } from '$utils/common/clickPopperItem';
 import { test, expect } from '$utils/financer-page';
-import { applyFixture } from '$utils/load-fixtures';
 
 test.describe('Delete Category', () => {
   test.beforeEach(async ({ page }) => {
-    await applyFixture('accounts-only');
+    await applyFixture();
     await page.goto('/settings/categories');
   });
 

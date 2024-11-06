@@ -1,16 +1,16 @@
 import Decimal from 'decimal.js';
 
 import { getAccountBalanceFromAccountListByName } from '$utils/account/getAccountBalanceFromAccountListByName';
+import { applyFixture } from '$utils/applyFixture';
 import { clickPopperItem } from '$utils/common/clickPopperItem';
 import { test, expect } from '$utils/financer-page';
-import { applyFixture } from '$utils/load-fixtures';
 import { fillAndSubmitTransactionCategoryForm } from '$utils/transaction/fillAndSubmitTransactionCategoryForm';
 import { fillTransactionForm } from '$utils/transaction/fillTransactionForm';
 import { getTransactionDetails } from '$utils/transaction/getTransactionDetails';
 
 test.describe('Expense Transactions', () => {
   test.beforeEach(async () => {
-    await applyFixture('large');
+    await applyFixture();
   });
 
   test.describe('Edit Expense', () => {

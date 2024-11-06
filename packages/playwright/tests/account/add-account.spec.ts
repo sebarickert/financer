@@ -3,13 +3,13 @@ import Decimal from 'decimal.js';
 import { fillAccountForm } from '$utils/account/fillAccountForm';
 import { getAccountDataFromAccountList } from '$utils/account/getAccountDataFromAccountList';
 import { getAccountDetails } from '$utils/account/getAccountDetails';
+import { applyFixture } from '$utils/applyFixture';
 import { accountTypes } from '$utils/constants';
 import { test, expect } from '$utils/financer-page';
-import { applyFixture } from '$utils/load-fixtures';
 
 test.describe.parallel('Add Account', () => {
   test.beforeEach(async ({ page }) => {
-    await applyFixture('accounts-only');
+    await applyFixture();
     await page.goto('/accounts');
   });
 

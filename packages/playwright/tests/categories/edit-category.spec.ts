@@ -1,13 +1,13 @@
 import { TransactionType } from '$types/generated/financer';
+import { applyFixture } from '$utils/applyFixture';
 import { fillCategoryForm } from '$utils/category/fillCategoryForm';
 import { getCategoryDetails } from '$utils/category/getCategoryDetails';
 import { clickPopperItem } from '$utils/common/clickPopperItem';
 import { test, expect } from '$utils/financer-page';
-import { applyFixture } from '$utils/load-fixtures';
 
 test.describe('Edit Category', () => {
   test.beforeEach(async ({ page }) => {
-    await applyFixture('accounts-only');
+    await applyFixture();
     await page.goto('/settings/categories');
   });
 

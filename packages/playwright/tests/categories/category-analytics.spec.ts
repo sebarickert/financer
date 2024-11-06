@@ -1,8 +1,8 @@
 import { Response } from '@playwright/test';
 
 import { TransactionCategoryDto } from '$types/generated/financer';
+import { applyFixture } from '$utils/applyFixture';
 import { test, expect, getBaseUrl } from '$utils/financer-page';
-import { applyFixture } from '$utils/load-fixtures';
 
 export const getAllCategories = async () => {
   const baseUrl = getBaseUrl();
@@ -27,7 +27,7 @@ export const getCategoryForAllTypes =
 
 test.describe('Transaction category analytics', () => {
   test.beforeEach(async () => {
-    await applyFixture('large');
+    await applyFixture();
   });
 
   const roundToTwoDecimals = (value: number) => Math.round(value * 100) / 100;

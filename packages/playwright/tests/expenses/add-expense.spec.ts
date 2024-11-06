@@ -1,9 +1,9 @@
 import Decimal from 'decimal.js';
 
 import { getAccountBalanceFromAccountListByName } from '$utils/account/getAccountBalanceFromAccountListByName';
+import { applyFixture } from '$utils/applyFixture';
 import { getEmptyListErrorMessageByBrowserName } from '$utils/common/getEmptyListErrorMessageByBrowserName';
 import { test, expect } from '$utils/financer-page';
-import { applyFixture } from '$utils/load-fixtures';
 import { getTemplateFormValues } from '$utils/template/getTemplateFormValues';
 import { fillAndSubmitTransactionCategoryForm } from '$utils/transaction/fillAndSubmitTransactionCategoryForm';
 import { fillAndSubmitTransactionTemplateForm } from '$utils/transaction/fillAndSubmitTransactionTemplateForm';
@@ -14,10 +14,14 @@ import { getTransactionFormValues } from '$utils/transaction/getTransactionFormV
 
 test.describe('Expense Transactions', () => {
   test.beforeEach(async () => {
-    await applyFixture('large');
+    await applyFixture();
   });
 
   test.describe('Add Expense', () => {
+    test('do nothing', async ({ page }) => {
+      expect(true).toBeTruthy();
+    });
+
     test('should add new expense and verify account balance and expense list', async ({
       page,
     }) => {
