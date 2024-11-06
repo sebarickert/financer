@@ -17,22 +17,23 @@ type TransactionItem = {
 const updateTransactionDates = (
   transactionItems: TransactionItem[],
 ): TransactionItem[] => {
-  // Parse dates and find the newest date
+  if (transactionItems.length === 0) return transactionItems;
+
+  // Parse the dates only once, and find the newest date
   const dates = transactionItems.map((item) => new Date(item.date));
   const newestDate = new Date(Math.max(...dates.map((date) => date.getTime())));
 
-  // Calculate the offset in days
+  // Calculate the day offset from the newest date to today
   const currentDate = new Date();
   const dayOffset = Math.floor(
     (currentDate.getTime() - newestDate.getTime()) / (1000 * 60 * 60 * 24),
   );
 
-  // Update each transaction date
+  // Update transaction dates by adding the offset to each date
   return transactionItems.map((item) => {
-    const originalDate = new Date(item.date);
-    const updatedDate = new Date(originalDate);
-    updatedDate.setDate(originalDate.getDate() + dayOffset);
-    return { ...item, date: updatedDate.toISOString() };
+    const originalDate = new Date(item.date); // Copy the original date to avoid mutating the input
+    originalDate.setDate(originalDate.getDate() + dayOffset); // Adjust the date with the offset
+    return { ...item, date: originalDate.toISOString() }; // Return the updated item with the new date
   });
 };
 
