@@ -19,21 +19,21 @@ const updateTransactionDates = (
 ): TransactionItem[] => {
   if (transactionItems.length === 0) return transactionItems;
 
-  // Parse the dates only once, and find the newest date
+  // Find the newest date in the array
   const dates = transactionItems.map((item) => new Date(item.date));
   const newestDate = new Date(Math.max(...dates.map((date) => date.getTime())));
 
-  // Calculate the day offset from the newest date to today
+  // Calculate the day offset to make the newest date equal to today's date
   const currentDate = new Date();
-  const dayOffset = Math.floor(
+  const dayOffset = Math.ceil(
     (currentDate.getTime() - newestDate.getTime()) / (1000 * 60 * 60 * 24),
   );
 
-  // Update transaction dates by adding the offset to each date
+  // Apply the offset to each transaction date
   return transactionItems.map((item) => {
-    const originalDate = new Date(item.date); // Copy the original date to avoid mutating the input
-    originalDate.setDate(originalDate.getDate() + dayOffset); // Adjust the date with the offset
-    return { ...item, date: originalDate.toISOString() }; // Return the updated item with the new date
+    const originalDate = new Date(item.date);
+    originalDate.setDate(originalDate.getDate() + dayOffset); // Shift by the calculated offset
+    return { ...item, date: originalDate.toISOString() }; // Return updated item
   });
 };
 
@@ -46,6 +46,8 @@ export const applyFixture = async () => {
   };
 
   const baseUrl = getBaseUrl();
+
+  console.log(data.transactions[0], updatedData.transactions[0]);
 
   return fetch(`${baseUrl}/api/users/my-user/my-data`, {
     method: 'POST',
