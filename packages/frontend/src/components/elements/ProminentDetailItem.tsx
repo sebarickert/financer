@@ -23,6 +23,7 @@ export const ProminentDetailItem: FC<ProminentDetailItemProps> = ({
         'py-5 px-4',
         'flex items-center gap-4',
       )}
+      data-testid="prominent-detail-item"
     >
       <div
         className={clsx(

@@ -65,6 +65,7 @@ export const UserDefaultAccountSettingsForm: FC<
       action={action}
       submitLabel="Save"
       formFooterBackLink={settingsPaths.userPreferences}
+      testId="default-account-settings-form"
     >
       <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
         <Select

@@ -1,6 +1,4 @@
-import { expect } from '@playwright/test';
-
-import { Page } from '$utils/financer-page';
+import { Page, expect } from '$utils/financer-page';
 
 type TransactionTemplatesFormFields = {
   template: string;

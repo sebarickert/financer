@@ -61,7 +61,7 @@ export const TransactionListWithMonthlySummary: FC<
   );
 
   return (
-    <List columns={3}>
+    <List columns={3} testId="transaction-list-monthly-summary">
       {monthlyDetails.map(({ label, description, transactionType }) => {
         const icon = transactionType
           ? transactionTypeThemeMapping[transactionType].icon

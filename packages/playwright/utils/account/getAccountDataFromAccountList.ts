@@ -1,8 +1,7 @@
-import { expect } from '@playwright/test';
 import Decimal from 'decimal.js';
 
 import { parseCurrency } from '$utils/api-helper';
-import { Page } from '$utils/financer-page';
+import { Page, expect } from '$utils/financer-page';
 
 type AccountRow = {
   name: string;

@@ -45,6 +45,7 @@ export const UserDashboardSettingsForm: FC<UserDashboardSettingsFormProps> = ({
       action={action}
       submitLabel="Save"
       formFooterBackLink={settingsPaths.userPreferences}
+      testId="dashboard-settings-form"
     >
       <section className="mb-4">
         <Heading>Account types</Heading>

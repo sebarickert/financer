@@ -1,7 +1,5 @@
-import { expect } from '@playwright/test';
-
 import { TransactionType } from '$types/generated/financer';
-import { Page } from '$utils/financer-page';
+import { Page, expect } from '$utils/financer-page';
 
 type AccountDetails = {
   id: string;
