@@ -1,13 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { AccountType, TransactionType } from '@prisma/client';
 
-import { PaginationDto } from '../../types/pagination.dto';
 import { UserId } from '../../types/user-id';
+import { TransactionListGroupDto } from '../transactions/dto/transaction-list-group.dto';
 import { TransactionsService } from '../transactions/transactions.service';
 
 import { CreateIncomeDto } from './dto/create-income.dto';
 import { IncomeDetailsDto } from './dto/income-details.dto';
-import { IncomeListItemDto } from './dto/income-list-item.dto';
 import { UpdateIncomeDto } from './dto/update-income.dto';
 
 @Injectable()
@@ -22,11 +21,10 @@ export class IncomesService {
     month: number,
     accountTypes: AccountType[],
     accountId?: string,
-  ): Promise<PaginationDto<IncomeListItemDto[]>> {
+  ): Promise<TransactionListGroupDto[]> {
     return this.transactionService.findAllByUser(
       userId,
       TransactionType.INCOME,
-      page || undefined,
       limit || undefined,
       year || undefined,
       month || undefined,

@@ -90,8 +90,7 @@ describe('TransfersService', () => {
       orderBy: {
         date: 'desc',
       },
-      skip: 0,
-      take: 112,
+      take: 10000,
       where: {
         fromAccount: {
           not: null,
@@ -172,8 +171,7 @@ describe('TransfersService', () => {
       orderBy: {
         date: 'desc',
       },
-      skip: 0,
-      take: 100,
+      take: 10000,
       where: {
         OR: [
           {

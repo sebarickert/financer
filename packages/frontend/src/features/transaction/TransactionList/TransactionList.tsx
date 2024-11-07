@@ -29,14 +29,10 @@ export const TransactionList: FC<TransactionListProps> = async ({
   },
   className,
   type = null,
-  onPageChange,
 }) => {
   const transactionData = await TransactionService.getAllByType(type as null, {
     ...filterOptions,
-    page: PagerService.getCurrentPage(),
   });
-
-  onPageChange?.(transactionData.currentPage ?? 1);
 
   const rows = await Promise.all(
     transactionData.data.map(parseRowFromTransaction),

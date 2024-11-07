@@ -45,10 +45,6 @@ export class TransactionsController {
     required: false,
   })
   @ApiQuery({
-    name: 'page',
-    required: false,
-  })
-  @ApiQuery({
     name: 'limit',
     required: false,
   })
@@ -75,7 +71,6 @@ export class TransactionsController {
     @UserIdDecorator() userId: UserId,
     @Query('month') month?: number,
     @Query('year') year?: number,
-    @Query('page') page?: number,
     @Query('limit') limit?: number,
     @Query(
       'accountTypes',
@@ -95,7 +90,6 @@ export class TransactionsController {
     return this.transactionsService.findAllByUser(
       userId,
       null,
-      page || undefined,
       limit || undefined,
       year || undefined,
       month || undefined,

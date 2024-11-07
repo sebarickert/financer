@@ -90,7 +90,6 @@ describe('IncomesService', () => {
       orderBy: {
         date: 'desc',
       },
-      skip: 0,
       take: 113,
       where: {
         fromAccount: {
@@ -172,8 +171,7 @@ describe('IncomesService', () => {
       orderBy: {
         date: 'desc',
       },
-      skip: 0,
-      take: 100,
+      take: 10000,
       where: {
         OR: [
           {

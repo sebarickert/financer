@@ -31,7 +31,6 @@ export class IncomeService extends BaseApi {
     const data = await this.getAll({
       ...options,
       limit: 1,
-      page: 1,
       sortOrder: SortOrder.Asc,
     });
 

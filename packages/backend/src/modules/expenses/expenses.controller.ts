@@ -51,10 +51,6 @@ export class ExpensesController {
     required: false,
   })
   @ApiQuery({
-    name: 'page',
-    required: false,
-  })
-  @ApiQuery({
     name: 'limit',
     required: false,
   })
@@ -70,7 +66,6 @@ export class ExpensesController {
     @UserIdDecorator() userId: UserId,
     @Query('month') month: number,
     @Query('year') year: number,
-    @Query('page') page: number,
     @Query('limit') limit: number,
     @Query(
       'accountTypes',
@@ -81,7 +76,6 @@ export class ExpensesController {
   ) {
     return this.expensesService.findAllByUser(
       userId,
-      page,
       limit,
       year,
       month,

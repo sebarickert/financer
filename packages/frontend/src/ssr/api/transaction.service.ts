@@ -23,7 +23,7 @@ export type TransactionListOptions = TransactionsFindAllByUserApiArg;
 
 export type FirstTransactionByTypeOptions = Omit<
   TransactionListOptions,
-  'limit' | 'page' | 'sortOrder'
+  'limit' | 'sortOrder'
 >;
 
 export class TransactionService extends BaseApi {
@@ -87,7 +87,6 @@ export class TransactionService extends BaseApi {
     const data = await this.getAllByType(type as null, {
       ...options,
       limit: 1,
-      page: 1,
       sortOrder: SortOrder.Asc,
     });
 
@@ -123,7 +122,6 @@ export class TransactionService extends BaseApi {
     const data = await this.getAllByType(type as null, {
       ...options,
       limit: 1,
-      page: 1,
       sortOrder: SortOrder.Desc,
     });
 

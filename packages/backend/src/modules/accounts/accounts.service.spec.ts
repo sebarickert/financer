@@ -150,7 +150,6 @@ describe('AccountsService', () => {
       orderBy: {
         date: 'desc',
       },
-      skip: 0,
       take: undefined,
       where: {
         OR: [

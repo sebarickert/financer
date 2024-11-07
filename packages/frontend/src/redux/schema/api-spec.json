@@ -404,7 +404,7 @@
             "schema": { "type": "string" }
           }
         ],
-        "responses": { "200": { "description": "" } },
+        "responses": { "204": { "description": "" } },
         "tags": ["Accounts"]
       }
     },
@@ -449,12 +449,6 @@
           },
           {
             "name": "year",
-            "required": false,
-            "in": "query",
-            "schema": { "type": "number" }
-          },
-          {
-            "name": "page",
             "required": false,
             "in": "query",
             "schema": { "type": "number" }
@@ -720,7 +714,7 @@
             "schema": { "type": "string" }
           }
         ],
-        "responses": { "200": { "description": "" } },
+        "responses": { "204": { "description": "" } },
         "tags": ["Transaction categories"]
       }
     },
@@ -972,7 +966,7 @@
             "schema": { "type": "string" }
           }
         ],
-        "responses": { "200": { "description": "" } },
+        "responses": { "204": { "description": "" } },
         "tags": ["Transaction templates"]
       }
     },
@@ -988,12 +982,6 @@
           },
           {
             "name": "year",
-            "required": false,
-            "in": "query",
-            "schema": { "type": "number" }
-          },
-          {
-            "name": "page",
             "required": false,
             "in": "query",
             "schema": { "type": "number" }
@@ -1131,7 +1119,7 @@
             "schema": { "type": "string" }
           }
         ],
-        "responses": { "200": { "description": "" } },
+        "responses": { "204": { "description": "" } },
         "tags": ["Expenses"]
       }
     },
@@ -1290,7 +1278,7 @@
             "schema": { "type": "string" }
           }
         ],
-        "responses": { "200": { "description": "" } },
+        "responses": { "204": { "description": "" } },
         "tags": ["Incomes"]
       }
     },
@@ -1449,7 +1437,7 @@
             "schema": { "type": "string" }
           }
         ],
-        "responses": { "200": { "description": "" } },
+        "responses": { "204": { "description": "" } },
         "tags": ["Transfers"]
       }
     },

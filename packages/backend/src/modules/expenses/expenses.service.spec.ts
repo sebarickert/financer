@@ -62,7 +62,6 @@ describe('ExpensesService', () => {
     const expenses = await service.findAllByUser(
       DUMMY_TEST_USER.id,
       NaN,
-      10000,
       NaN,
       NaN,
       [],
@@ -90,7 +89,6 @@ describe('ExpensesService', () => {
       orderBy: {
         date: 'desc',
       },
-      skip: 0,
       take: 100,
       where: {
         fromAccount: {
@@ -139,7 +137,6 @@ describe('ExpensesService', () => {
     const expenses = await service.findAllByUser(
       DUMMY_TEST_USER.id,
       NaN,
-      10000,
       NaN,
       NaN,
       [
@@ -172,7 +169,6 @@ describe('ExpensesService', () => {
       orderBy: {
         date: 'desc',
       },
-      skip: 0,
       take: 100,
       where: {
         OR: [

@@ -171,13 +171,15 @@ export class AccountsService {
         undefined,
         undefined,
         undefined,
-        undefined,
         accountId,
       )
-    ).data.map(({ amount, date, toAccount }) => ({
-      date,
-      amount: accountId === toAccount ? amount : amount.negated(),
-    }));
+    )
+      .map(({ data }) => data)
+      .flat()
+      .map(({ amount, date, toAccount }) => ({
+        date,
+        amount: accountId === toAccount ? amount : amount.negated(),
+      }));
 
     const allBalanceChanges = accountBalanceChanges.concat(accountTransactions);
 
