@@ -1,7 +1,13 @@
 import clsx from 'clsx';
 import { FC } from 'react';
 
-import { TransactionType } from '$api/generated/financerApi';
+import {
+  ExpenseListItemDto,
+  IncomeListItemDto,
+  TransactionListItemDto,
+  TransactionType,
+  TransferListItemDto,
+} from '$api/generated/financerApi';
 import { transactionTypeIconMapping } from '$constants/transaction/transactionTypeIconMapping';
 import { transactionTypeThemeMapping } from '$constants/transaction/transactionTypeMapping';
 import { Icon } from '$elements/Icon';
@@ -20,20 +26,18 @@ export type TransactionListItemProps = {
   isRecurring: boolean;
 };
 
-export const TransactionListItem: FC<TransactionListItemProps> = ({
-  transactionCategories,
-  amount,
-  date,
-  description,
-  url,
-  transactionType,
-  id,
-  isRecurring,
-}) => {
-  const isIncome = transactionType === TransactionType.Income;
-  const isExpense = transactionType === TransactionType.Expense;
-  const { color: transactionTypeColor } =
-    transactionTypeThemeMapping[transactionType];
+export const TransactionListItem: FC<
+  | TransactionListItemDto
+  | ExpenseListItemDto
+  | IncomeListItemDto
+  | TransferListItemDto
+> = ({ amount, date, description, id, isRecurring, categories, type }) => {
+  const isIncome = type === TransactionType.Income;
+  const isExpense = type === TransactionType.Expense;
+  const { color: transactionTypeColor } = transactionTypeThemeMapping[type];
+
+  const url = `/statistics/${type.toLowerCase()}s/${id}`;
+  const formattedCategories = categories.map(({ name }) => name).join(', ');
 
   return (
     <Link
@@ -50,9 +54,7 @@ export const TransactionListItem: FC<TransactionListItemProps> = ({
       <div className={clsx('inline-flex items-center justify-center shrink-0')}>
         <Icon
           name={
-            isRecurring
-              ? 'ArrowPathIcon'
-              : transactionTypeIconMapping[transactionType]
+            isRecurring ? 'ArrowPathIcon' : transactionTypeIconMapping[type]
           }
         />
       </div>
@@ -65,12 +67,12 @@ export const TransactionListItem: FC<TransactionListItemProps> = ({
             <time dateTime={date} data-testid="transaction-date">
               {formatDate(new Date(date))}
             </time>
-            {transactionCategories && (
+            {formattedCategories && (
               <>
                 {' - '}
                 <span data-testid="transaction-categories">
                   <span className="sr-only">Categories: </span>
-                  {transactionCategories}
+                  {formattedCategories}
                 </span>
               </>
             )}
@@ -83,10 +85,10 @@ export const TransactionListItem: FC<TransactionListItemProps> = ({
               { 'py-2 px-2 rounded-md': isIncome || isExpense },
             )}
             data-testid="transaction-amount"
-            data-transaction-type={transactionType}
+            data-transaction-type={type}
           >
-            {transactionType === 'INCOME' && '+ '}
-            {transactionType === 'EXPENSE' && '- '}
+            {isIncome && '+ '}
+            {isExpense && '- '}
             {formatCurrency(amount)}
           </span>
         </span>

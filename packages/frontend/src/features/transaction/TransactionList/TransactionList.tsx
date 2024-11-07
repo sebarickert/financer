@@ -1,7 +1,10 @@
 import clsx from 'clsx';
 import { FC } from 'react';
 
+import { TransactionListItem } from './TransactionListItem';
+
 import { TransactionType } from '$api/generated/financerApi';
+import { List } from '$blocks/List';
 import {
   TransactionListOptions,
   TransactionService,
@@ -25,30 +28,26 @@ export const TransactionList: FC<TransactionListProps> = async ({
     ...filterOptions,
   });
 
-  console.log('asdasasd', transactionData);
-
-  // const rows = await Promise.all(
-  //   transactionData.data.map(parseRowFromTransaction),
-  // );
-
-  // if (rows.length === 0) {
-  //   return (
-  //     <div className={clsx(className)}>
-  //       <p className="text-center theme-text-primary">
-  //         Your transactions will appear here. <br />
-  //         Add one to get started.
-  //       </p>
-  //     </div>
-  //   );
-  // }
+  if (transactionData.length === 0) {
+    return (
+      <div className={clsx(className)}>
+        <p className="text-center theme-text-primary">
+          Your transactions will appear here. <br />
+          Add one to get started.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <section className={clsx(className)}>
-      {/* <List testId="transaction-list">
-        {rows.map((row) => (
-          <TransactionListItem key={row.id} {...row} />
-        ))}
-      </List> */}
+      {transactionData.map((group) => (
+        <List key={group.date} label={group.date}>
+          {group.data.map((row) => (
+            <TransactionListItem key={row.id} {...row} />
+          ))}
+        </List>
+      ))}
     </section>
   );
 };
