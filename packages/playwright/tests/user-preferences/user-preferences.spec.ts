@@ -104,7 +104,7 @@ test.describe('Configuring User Preferences', () => {
   });
 
   test.describe(`Default Account Settings`, () => {
-    test('should be able to configure defaulta account settings', async ({
+    test('should be able to configure default account settings', async ({
       page,
     }) => {
       await page.goto('/');

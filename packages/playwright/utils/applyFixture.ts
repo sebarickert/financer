@@ -47,8 +47,6 @@ export const applyFixture = async () => {
 
   const baseUrl = getBaseUrl();
 
-  console.log(data.transactions[0], updatedData.transactions[0]);
-
   return fetch(`${baseUrl}/api/users/my-user/my-data`, {
     method: 'POST',
     headers: {
