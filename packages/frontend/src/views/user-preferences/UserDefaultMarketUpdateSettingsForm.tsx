@@ -44,6 +44,7 @@ export const UserDefaultMarketUpdateSettingsForm: FC<
       action={action}
       submitLabel="Save"
       formFooterBackLink={settingsPaths.userPreferences}
+      testId="market-update-settings-form"
     >
       <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
         <Input id="transactionDescription" isRequired>

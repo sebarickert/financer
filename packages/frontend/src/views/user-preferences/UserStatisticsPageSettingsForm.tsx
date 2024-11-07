@@ -44,6 +44,7 @@ export const UserStatisticsPageSettingsForm: FC<
       action={action}
       submitLabel="Save"
       formFooterBackLink={settingsPaths.userPreferences}
+      testId="statistics-page-settings-form"
     >
       <section className="mb-4">
         <Heading>Account types</Heading>

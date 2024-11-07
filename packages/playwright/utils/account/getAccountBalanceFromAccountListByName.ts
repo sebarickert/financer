@@ -1,7 +1,5 @@
-import { expect } from '@playwright/test';
-
 import { parseCurrency } from '$utils/api-helper';
-import { Page } from '$utils/financer-page';
+import { Page, expect } from '$utils/financer-page';
 
 export const getAccountBalanceFromAccountListByName = async (
   page: Page,

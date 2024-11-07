@@ -1,9 +1,8 @@
-import { expect } from '@playwright/test';
 import Decimal from 'decimal.js';
 
 import { TransactionType } from '$types/generated/financer';
 import { parseCurrency } from '$utils/api-helper';
-import { Page } from '$utils/financer-page';
+import { Page, expect } from '$utils/financer-page';
 
 type TransactionDetails = {
   id: string;

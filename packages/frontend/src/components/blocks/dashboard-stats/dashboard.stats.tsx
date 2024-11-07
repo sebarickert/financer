@@ -68,10 +68,12 @@ export const DashboardStats: FC = async () => {
   ];
 
   return (
-    <section className={clsx('@container')}>
+    <section className={clsx('@container')} data-testid="dashboard-stats">
       <div className={clsx('grid @2xl:grid-cols-2 gap-2')}>
         <div className="grid gap-8 p-6 py-8 theme-layer-color">
-          <BalanceDisplay amount={balance}>Balance</BalanceDisplay>
+          <BalanceDisplay amount={balance} testId={'dashboard-balance'}>
+            Balance
+          </BalanceDisplay>
         </div>
         <div className="p-6 theme-layer-color">
           <DetailsList
