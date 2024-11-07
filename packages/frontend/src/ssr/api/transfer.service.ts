@@ -16,7 +16,7 @@ import {
 } from '$api/generated/financerApi';
 import { ValidationException } from '$exceptions/validation.exception';
 import { isValidationErrorResponse } from '$utils/apiHelper';
-import { GenericPaginationDto } from 'src/types/pagination.dto';
+import { GenericTransactionListGroupDto } from 'src/types/transaction-list-group';
 
 export class TransferService extends BaseApi {
   // TODO temporary solution to clear cache while migration
@@ -34,12 +34,12 @@ export class TransferService extends BaseApi {
       sortOrder: SortOrder.Asc,
     });
 
-    return data.data[0];
+    return data[0].data[0];
   }
 
   public static async getAll(
     options: TransactionListOptions,
-  ): Promise<GenericPaginationDto<TransferListItemDto>> {
+  ): Promise<GenericTransactionListGroupDto<TransferListItemDto>[]> {
     const { data, error } = await this.client.GET('/api/transfers', {
       params: {
         query: options,
@@ -58,7 +58,7 @@ export class TransferService extends BaseApi {
       throw new Error('Failed to fetch transfers', error);
     }
 
-    return data as GenericPaginationDto<TransferListItemDto>;
+    return data as unknown as GenericTransactionListGroupDto<TransferListItemDto>[];
   }
 
   public static async getById(id: string): Promise<TransferDetailsDto> {

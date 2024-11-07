@@ -17,7 +17,7 @@ import {
   TransactionType,
   TransferListItemDto,
 } from '$api/generated/financerApi';
-import { GenericPaginationDto } from 'src/types/pagination.dto';
+import { GenericTransactionListGroupDto } from 'src/types/transaction-list-group';
 
 export type TransactionListOptions = TransactionsFindAllByUserApiArg;
 
@@ -90,7 +90,7 @@ export class TransactionService extends BaseApi {
       sortOrder: SortOrder.Asc,
     });
 
-    return data.data[0];
+    return data[0].data[0];
   }
 
   public static async getLatestByType(
@@ -125,33 +125,33 @@ export class TransactionService extends BaseApi {
       sortOrder: SortOrder.Desc,
     });
 
-    return data.data[0];
+    return data[0].data[0];
   }
 
   public static async getAllByType(
     type: TransactionType.Expense,
     options?: TransactionListOptions,
-  ): Promise<GenericPaginationDto<ExpenseListItemDto>>;
+  ): Promise<GenericTransactionListGroupDto<ExpenseListItemDto>[]>;
   public static async getAllByType(
     type: TransactionType.Income,
     options?: TransactionListOptions,
-  ): Promise<GenericPaginationDto<IncomeListItemDto>>;
+  ): Promise<GenericTransactionListGroupDto<IncomeListItemDto>[]>;
   public static async getAllByType(
     type: TransactionType.Transfer,
     options?: TransactionListOptions,
-  ): Promise<GenericPaginationDto<TransferListItemDto>>;
+  ): Promise<GenericTransactionListGroupDto<TransferListItemDto>[]>;
   public static async getAllByType(
     type: null,
     options?: TransactionListOptions,
-  ): Promise<GenericPaginationDto<TransactionListItemDto>>;
+  ): Promise<GenericTransactionListGroupDto<TransactionListItemDto>[]>;
   public static async getAllByType(
     type: TransactionType | null,
     options: TransactionListOptions = {},
   ): Promise<
-    | GenericPaginationDto<TransactionListItemDto>
-    | GenericPaginationDto<ExpenseListItemDto>
-    | GenericPaginationDto<IncomeListItemDto>
-    | GenericPaginationDto<TransferListItemDto>
+    | GenericTransactionListGroupDto<TransactionListItemDto>[]
+    | GenericTransactionListGroupDto<ExpenseListItemDto>[]
+    | GenericTransactionListGroupDto<IncomeListItemDto>[]
+    | GenericTransactionListGroupDto<TransferListItemDto>[]
   > {
     if (type === TransactionType.Expense) {
       return ExpenseService.getAll(options);
@@ -166,7 +166,7 @@ export class TransactionService extends BaseApi {
 
   private static async getAll(
     options: TransactionListOptions,
-  ): Promise<GenericPaginationDto<TransactionListItemDto>> {
+  ): Promise<GenericTransactionListGroupDto<TransactionListItemDto>[]> {
     const { data, error } = await this.client.GET('/api/transactions', {
       params: {
         query: options,
@@ -189,7 +189,7 @@ export class TransactionService extends BaseApi {
       throw new Error('Failed to fetch transactions', error);
     }
 
-    return data as GenericPaginationDto<TransactionListItemDto>;
+    return data as unknown as GenericTransactionListGroupDto<TransactionListItemDto>[];
   }
 
   public static async getById(id: string): Promise<TransactionDetailsDto> {

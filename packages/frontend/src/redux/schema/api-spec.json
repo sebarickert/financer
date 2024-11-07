@@ -491,7 +491,7 @@
               "application/json": {
                 "schema": {
                   "allOf": [
-                    { "$ref": "#/components/schemas/PaginationDto" },
+                    { "$ref": "#/components/schemas/TransactionListGroupDto" },
                     {
                       "properties": {
                         "data": {
@@ -1012,7 +1012,7 @@
               "application/json": {
                 "schema": {
                   "allOf": [
-                    { "$ref": "#/components/schemas/PaginationDto" },
+                    { "$ref": "#/components/schemas/TransactionListGroupDto" },
                     {
                       "properties": {
                         "data": {
@@ -1171,7 +1171,7 @@
               "application/json": {
                 "schema": {
                   "allOf": [
-                    { "$ref": "#/components/schemas/PaginationDto" },
+                    { "$ref": "#/components/schemas/TransactionListGroupDto" },
                     {
                       "properties": {
                         "data": {
@@ -1330,7 +1330,7 @@
               "application/json": {
                 "schema": {
                   "allOf": [
-                    { "$ref": "#/components/schemas/PaginationDto" },
+                    { "$ref": "#/components/schemas/TransactionListGroupDto" },
                     {
                       "properties": {
                         "data": {
@@ -1984,6 +1984,11 @@
           "expenseAmount",
           "transferAmount"
         ]
+      },
+      "TransactionListGroupDto": {
+        "type": "object",
+        "properties": { "date": { "format": "date-time", "type": "string" } },
+        "required": ["date"]
       },
       "SortOrder": { "type": "string", "enum": ["asc", "desc"] },
       "TransactionDetailCategoryDto": {

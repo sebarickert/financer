@@ -22,7 +22,7 @@ import {
 import { AccountType } from '@prisma/client';
 
 import { UserId } from '../../types/user-id';
-import { ApiPaginatedDto } from '../../utils/pagination.decorator';
+import { ApiTransactionListGroupDto } from '../../utils/transaction-list-group.decorator';
 import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
 import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
 import { UserIdDecorator } from '../users/users.decorators';
@@ -41,7 +41,7 @@ export class IncomesController {
   constructor(private readonly incomesService: IncomesService) {}
 
   @Get()
-  @ApiPaginatedDto(IncomeListItemDto)
+  @ApiTransactionListGroupDto(IncomeListItemDto)
   @ApiQuery({
     name: 'month',
     required: false,

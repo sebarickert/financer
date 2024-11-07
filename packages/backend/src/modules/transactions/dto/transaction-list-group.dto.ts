@@ -1,14 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDate, ValidateNested } from 'class-validator';
+import { Allow, IsDate, ValidateNested } from 'class-validator';
 
-import { TransactionListItemDto } from './transaction-list-item.dto';
+import { TransactionListItem } from './transaction-list-item.dto';
 
-export class TransactionListGroupDto {
+export class TransactionListGroupDto<DataType = TransactionListItem> {
   @ApiProperty()
   @IsDate()
   date: Date;
 
-  @ApiProperty()
   @ValidateNested({ each: true })
-  data: TransactionListItemDto[];
+  @Allow()
+  data: DataType[];
 }

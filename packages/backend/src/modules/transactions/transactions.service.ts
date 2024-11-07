@@ -154,7 +154,7 @@ export class TransactionsService {
     sortOrder: Prisma.SortOrder = Prisma.SortOrder.desc,
     transactionCategories?: string[],
     parentTransactionCategory?: string,
-  ): Promise<TransactionListGroupDto[]> {
+  ): Promise<TransactionListGroupDto<TransactionListItem>[]> {
     const targetCategoryIds =
       transactionCategories ||
       (await this.findChildrenCategoryIds(parentTransactionCategory));

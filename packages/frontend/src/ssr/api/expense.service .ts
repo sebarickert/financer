@@ -16,7 +16,7 @@ import {
 } from '$api/generated/financerApi';
 import { ValidationException } from '$exceptions/validation.exception';
 import { isValidationErrorResponse } from '$utils/apiHelper';
-import { GenericPaginationDto } from 'src/types/pagination.dto';
+import { GenericTransactionListGroupDto } from 'src/types/transaction-list-group';
 
 export class ExpenseService extends BaseApi {
   // TODO temporary solution to clear cache while migration
@@ -34,12 +34,12 @@ export class ExpenseService extends BaseApi {
       sortOrder: SortOrder.Asc,
     });
 
-    return data.data[0];
+    return data[0].data[0];
   }
 
   public static async getAll(
     options: TransactionListOptions,
-  ): Promise<GenericPaginationDto<ExpenseListItemDto>> {
+  ): Promise<GenericTransactionListGroupDto<ExpenseListItemDto>[]> {
     const { data, error } = await this.client.GET('/api/expenses', {
       params: {
         query: options,
@@ -58,7 +58,7 @@ export class ExpenseService extends BaseApi {
       throw new Error('Failed to fetch expenses', error);
     }
 
-    return data as GenericPaginationDto<ExpenseListItemDto>;
+    return data as unknown as GenericTransactionListGroupDto<ExpenseListItemDto>[];
   }
 
   public static async getById(id: string): Promise<ExpenseDetailsDto> {

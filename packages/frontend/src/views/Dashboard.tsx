@@ -14,7 +14,7 @@ export const Dashboard: FC = () => {
         <Heading cta={{ label: 'See All', url: '/statistics' }}>
           Recent Activity
         </Heading>
-        <TransactionList isPagerHidden filterOptions={{ limit: 8 }} />
+        <TransactionList filterOptions={{ limit: 8 }} />
       </section>
     </section>
   );
