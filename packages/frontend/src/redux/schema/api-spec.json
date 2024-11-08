@@ -404,7 +404,7 @@
             "schema": { "type": "string" }
           }
         ],
-        "responses": { "200": { "description": "" } },
+        "responses": { "204": { "description": "" } },
         "tags": ["Accounts"]
       }
     },
@@ -454,12 +454,6 @@
             "schema": { "type": "number" }
           },
           {
-            "name": "page",
-            "required": false,
-            "in": "query",
-            "schema": { "type": "number" }
-          },
-          {
             "name": "limit",
             "required": false,
             "in": "query",
@@ -496,20 +490,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    { "$ref": "#/components/schemas/PaginationDto" },
-                    {
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/TransactionListItemDto"
-                          }
-                        }
-                      },
-                      "required": ["data"]
-                    }
-                  ]
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TransactionListItemDto"
+                  }
                 }
               }
             }
@@ -720,7 +704,7 @@
             "schema": { "type": "string" }
           }
         ],
-        "responses": { "200": { "description": "" } },
+        "responses": { "204": { "description": "" } },
         "tags": ["Transaction categories"]
       }
     },
@@ -972,7 +956,7 @@
             "schema": { "type": "string" }
           }
         ],
-        "responses": { "200": { "description": "" } },
+        "responses": { "204": { "description": "" } },
         "tags": ["Transaction templates"]
       }
     },
@@ -988,12 +972,6 @@
           },
           {
             "name": "year",
-            "required": false,
-            "in": "query",
-            "schema": { "type": "number" }
-          },
-          {
-            "name": "page",
             "required": false,
             "in": "query",
             "schema": { "type": "number" }
@@ -1023,20 +1001,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    { "$ref": "#/components/schemas/PaginationDto" },
-                    {
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/ExpenseListItemDto"
-                          }
-                        }
-                      },
-                      "required": ["data"]
-                    }
-                  ]
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/ExpenseListItemDto" }
                 }
               }
             }
@@ -1131,7 +1097,7 @@
             "schema": { "type": "string" }
           }
         ],
-        "responses": { "200": { "description": "" } },
+        "responses": { "204": { "description": "" } },
         "tags": ["Expenses"]
       }
     },
@@ -1182,20 +1148,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    { "$ref": "#/components/schemas/PaginationDto" },
-                    {
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/IncomeListItemDto"
-                          }
-                        }
-                      },
-                      "required": ["data"]
-                    }
-                  ]
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/IncomeListItemDto" }
                 }
               }
             }
@@ -1290,7 +1244,7 @@
             "schema": { "type": "string" }
           }
         ],
-        "responses": { "200": { "description": "" } },
+        "responses": { "204": { "description": "" } },
         "tags": ["Incomes"]
       }
     },
@@ -1341,20 +1295,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    { "$ref": "#/components/schemas/PaginationDto" },
-                    {
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/TransferListItemDto"
-                          }
-                        }
-                      },
-                      "required": ["data"]
-                    }
-                  ]
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TransferListItemDto"
+                  }
                 }
               }
             }
@@ -1449,7 +1393,7 @@
             "schema": { "type": "string" }
           }
         ],
-        "responses": { "200": { "description": "" } },
+        "responses": { "204": { "description": "" } },
         "tags": ["Transfers"]
       }
     },

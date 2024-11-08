@@ -150,8 +150,7 @@ financerApi.enhanceEndpoints({
         ApiTag.TRANSACTION,
         { type: ApiTag.TRANSACTION, id: 'LIST' },
         { type: ApiTag.TRANSACTION, id: 'EXPENSE-LIST' },
-        { type: ApiTag.TRANSACTION, id: `PAGE-${res?.currentPage}` },
-        ...(res?.data.map(({ id }) => ({
+        ...(res?.map(({ id }) => ({
           type: ApiTag.TRANSACTION,
           id,
         })) ?? []),
@@ -196,8 +195,7 @@ financerApi.enhanceEndpoints({
         ApiTag.TRANSACTION,
         { type: ApiTag.TRANSACTION, id: 'LIST' },
         { type: ApiTag.TRANSACTION, id: 'INCOME-LIST' },
-        { type: ApiTag.TRANSACTION, id: `PAGE-${res?.currentPage}` },
-        ...(res?.data.map(({ id }) => ({
+        ...(res?.map(({ id }) => ({
           type: ApiTag.TRANSACTION,
           id,
         })) ?? []),
@@ -242,8 +240,7 @@ financerApi.enhanceEndpoints({
         ApiTag.TRANSACTION,
         { type: ApiTag.TRANSACTION, id: 'LIST' },
         { type: ApiTag.TRANSACTION, id: 'TRANSFER-LIST' },
-        { type: ApiTag.TRANSACTION, id: `PAGE-${res?.currentPage}` },
-        ...(res?.data.map(({ id }) => ({
+        ...(res?.map(({ id }) => ({
           type: ApiTag.TRANSACTION,
           id,
         })) ?? []),
@@ -290,8 +287,7 @@ financerApi.enhanceEndpoints({
       providesTags: (res) => [
         ApiTag.TRANSACTION,
         { type: ApiTag.TRANSACTION, id: 'LIST' },
-        { type: ApiTag.TRANSACTION, id: `PAGE-${res?.currentPage}` },
-        ...(res?.data.map(({ id }) => ({
+        ...(res?.map(({ id }) => ({
           type: ApiTag.TRANSACTION,
           id,
         })) ?? []),

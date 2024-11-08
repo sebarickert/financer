@@ -1,49 +1,24 @@
 import { FC } from 'react';
 
+import { TransactionType } from '$api/generated/financerApi';
+import { DetailsList } from '$blocks/details-list/details-list';
+import { DetailsItem } from '$blocks/details-list/details-list.item';
+import { monthNames } from '$constants/months';
 import {
-  TransactionMonthSummaryDto,
-  TransactionType,
-} from '$api/generated/financerApi';
-import { List } from '$blocks/List';
-import { transactionTypeThemeMapping } from '$constants/transaction/transactionTypeMapping';
-import { ProminentDetailItem } from '$elements/ProminentDetailItem';
+  transactionTypeLabelMapping,
+  transactionTypeThemeMapping,
+} from '$constants/transaction/transactionTypeMapping';
 import {
   TransactionListOptions,
   TransactionService,
 } from '$ssr/api/transaction.service';
 import { UserPreferenceService } from '$ssr/api/user-preference.service';
+import { capitalize } from '$utils/capitalize';
 import { formatCurrency } from '$utils/formatCurrency';
 
 type TransactionListWithMonthlySummaryProps = {
   filterOptions: TransactionListOptions;
 };
-
-const emptySummary = {
-  totalAmount: NaN,
-  expenseAmount: NaN,
-  incomeAmount: NaN,
-} as TransactionMonthSummaryDto;
-
-const getSummaryDetails = ({
-  totalAmount,
-  expenseAmount,
-  incomeAmount,
-}: TransactionMonthSummaryDto) => [
-  {
-    label: 'Incomes',
-    description: formatCurrency(incomeAmount) ?? '-',
-    transactionType: TransactionType.Income,
-  },
-  {
-    label: 'Expenses',
-    description: formatCurrency(expenseAmount) ?? '-',
-    transactionType: TransactionType.Expense,
-  },
-  {
-    label: 'Balance',
-    description: formatCurrency(totalAmount) ?? '-',
-  },
-];
 
 export const TransactionListWithMonthlySummary: FC<
   TransactionListWithMonthlySummaryProps
@@ -51,37 +26,48 @@ export const TransactionListWithMonthlySummary: FC<
   const statisticsSettings =
     await UserPreferenceService.getStatisticsSettings();
 
-  const monthlySummary = await TransactionService.getMonthlySummary({
-    ...filterOptions,
-    accountTypes: statisticsSettings?.accountTypes,
-  });
+  const monthlySummary = (
+    await TransactionService.getMonthlySummary({
+      ...filterOptions,
+      accountTypes: statisticsSettings?.accountTypes,
+    })
+  ).at(-1);
 
-  const monthlyDetails = getSummaryDetails(
-    monthlySummary.at(-1) ?? emptySummary,
-  );
+  if (!monthlySummary) {
+    return null;
+  }
+
+  const monthlyDetails: DetailsItem[] = [
+    {
+      icon: transactionTypeThemeMapping[TransactionType.Income].icon,
+      label: capitalize(
+        transactionTypeLabelMapping[TransactionType.Income].plural,
+      ),
+      description: formatCurrency(monthlySummary.incomeAmount) ?? '-',
+    },
+    {
+      icon: transactionTypeThemeMapping[TransactionType.Expense].icon,
+      label: capitalize(
+        transactionTypeLabelMapping[TransactionType.Expense].plural,
+      ),
+      description: formatCurrency(monthlySummary.expenseAmount) ?? '-',
+    },
+    {
+      icon: 'EqualsIcon',
+      label: 'Balance',
+      description: formatCurrency(monthlySummary.totalAmount) ?? '-',
+    },
+  ];
+
+  const { year, month } = monthlySummary.id;
+  const heading = `${monthNames[month - 1]} ${year}`;
 
   return (
-    <List columns={3} testId="transaction-list-monthly-summary">
-      {monthlyDetails.map(({ label, description, transactionType }) => {
-        const icon = transactionType
-          ? transactionTypeThemeMapping[transactionType].icon
-          : 'EqualsIcon';
-
-        return (
-          <ProminentDetailItem
-            icon={icon}
-            label={label}
-            key={label}
-            highlightColor={
-              transactionType
-                ? transactionTypeThemeMapping[transactionType].color
-                : undefined
-            }
-          >
-            {description}
-          </ProminentDetailItem>
-        );
-      })}
-    </List>
+    <div
+      className="p-6 theme-layer-color"
+      data-testid="transaction-list-monthly-summary"
+    >
+      <DetailsList heading={heading} items={monthlyDetails} />
+    </div>
   );
 };

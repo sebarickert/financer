@@ -22,7 +22,6 @@ import {
 import { AccountType } from '@prisma/client';
 
 import { UserId } from '../../types/user-id';
-import { ApiPaginatedDto } from '../../utils/pagination.decorator';
 import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
 import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
 import { UserIdDecorator } from '../users/users.decorators';
@@ -41,7 +40,7 @@ export class TransfersController {
   constructor(private readonly transfersService: TransfersService) {}
 
   @Get()
-  @ApiPaginatedDto(TransferListItemDto)
+  @ApiOkResponse({ type: TransferListItemDto, isArray: true })
   @ApiQuery({
     name: 'month',
     required: false,

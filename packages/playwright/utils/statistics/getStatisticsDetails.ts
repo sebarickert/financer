@@ -23,21 +23,24 @@ export const getStatisticsDetails = async (
 
   const incomes =
     (await statisticsMonthlySummary
-      .getByTestId('prominent-detail-item')
+      .getByTestId('details-list-item')
       .getByText('Incomes')
-      .evaluate((el) => el?.nextElementSibling?.textContent)) ?? '';
+      .evaluate((el) => el?.parentElement?.nextElementSibling?.textContent)) ??
+    '';
 
   const expenses =
     (await statisticsMonthlySummary
-      .getByTestId('prominent-detail-item')
+      .getByTestId('details-list-item')
       .getByText('Expenses')
-      .evaluate((el) => el?.nextElementSibling?.textContent)) ?? '';
+      .evaluate((el) => el?.parentElement?.nextElementSibling?.textContent)) ??
+    '';
 
   const balance =
     (await statisticsMonthlySummary
-      .getByTestId('prominent-detail-item')
+      .getByTestId('details-list-item')
       .getByText('Balance')
-      .evaluate((el) => el?.nextElementSibling?.textContent)) ?? '';
+      .evaluate((el) => el?.parentElement?.nextElementSibling?.textContent)) ??
+    '';
 
   return {
     incomes: parseCurrency(incomes),

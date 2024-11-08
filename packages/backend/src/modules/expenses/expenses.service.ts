@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { AccountType, TransactionType } from '@prisma/client';
 
-import { PaginationDto } from '../../types/pagination.dto';
 import { UserId } from '../../types/user-id';
 import { TransactionsService } from '../transactions/transactions.service';
 
@@ -16,17 +15,15 @@ export class ExpensesService {
 
   async findAllByUser(
     userId: UserId,
-    page: number,
     limit: number,
     year: number,
     month: number,
     accountTypes: AccountType[],
     accountId?: string,
-  ): Promise<PaginationDto<ExpenseListItemDto[]>> {
+  ): Promise<ExpenseListItemDto[]> {
     return this.transactionService.findAllByUser(
       userId,
       TransactionType.EXPENSE,
-      page || undefined,
       limit || undefined,
       year || undefined,
       month || undefined,

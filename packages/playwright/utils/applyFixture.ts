@@ -25,7 +25,7 @@ const updateTransactionDates = (
 
   // Calculate the day offset to make the newest date equal to today's date
   const currentDate = new Date();
-  const dayOffset = Math.ceil(
+  const dayOffset = Math.floor(
     (currentDate.getTime() - newestDate.getTime()) / (1000 * 60 * 60 * 24),
   );
 

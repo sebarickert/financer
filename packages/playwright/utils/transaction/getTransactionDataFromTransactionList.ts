@@ -14,7 +14,7 @@ type TransactionRow = {
 export const getTransactionDataFromTransactionList = async (
   page: Page,
 ): Promise<TransactionRow[]> => {
-  await expect(page.getByTestId('transaction-list').first()).toBeVisible();
+  await expect(page.getByTestId('transaction-list-item').first()).toBeVisible();
 
   const transactionRows = (
     await page.getByTestId('transaction-list-item').evaluateAll((element) => {
@@ -26,8 +26,9 @@ export const getTransactionDataFromTransactionList = async (
           child.querySelector('[data-testid="transaction-amount"]')
             ?.textContent ?? '';
         const date =
-          child.querySelector('[data-testid="transaction-date"]')
-            ?.textContent ?? '';
+          child
+            .querySelector('[data-testid="transaction-date"]')
+            ?.getAttribute('datetime') ?? '';
         const type = child
           .querySelector('[data-testid="transaction-amount"]')
           ?.getAttribute('data-transaction-type') as TransactionType;

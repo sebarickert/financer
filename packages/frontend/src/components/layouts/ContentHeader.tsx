@@ -23,8 +23,8 @@ export const ContentHeader: FC<ContentHeaderProps> = ({
       className={clsx(
         'max-lg:theme-layer-color text-primary-color max-lg:border-b max-lg:theme-border-primary',
         'max-lg:fixed max-lg:inset-x-0 max-lg:top-0',
-        'max-lg:text-center max-lg:px-4 max-lg:h-16',
-        'grid items-center grid-cols-[44px,1fr,44px] z-10',
+        'max-lg:text-center max-lg:px-2 max-lg:h-16',
+        'grid items-center grid-cols-[44px,1fr,44px] z-20',
         'lg:flex lg:gap-4 lg:mb-6',
       )}
     >

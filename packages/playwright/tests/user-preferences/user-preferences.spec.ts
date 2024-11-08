@@ -177,7 +177,7 @@ test.describe('Configuring User Preferences', () => {
 
       await page.getByRole('link', { name: 'Investment account' }).click();
 
-      const { id, balance: initialBalance } = await getAccountDetails(page);
+      const { balance: initialBalance, name } = await getAccountDetails(page);
 
       await clickPopperItem(page, 'Update Market Value');
 
@@ -190,23 +190,27 @@ test.describe('Configuring User Preferences', () => {
         .getByRole('button', { name: 'Update' })
         .click();
 
-      await page.goto('/accounts');
-      await page.goto(`/accounts/${id}`);
+      await page.getByRole('button', { name: 'Close drawer' }).click();
+
+      await page.getByRole('link', { name: 'Accounts' }).click();
+      await page.getByRole('link', { name }).click();
 
       const initialTransactions =
         await getTransactionDataFromTransactionList(page);
 
-      expect(
-        initialTransactions.some(
-          ({ description }) => description === 'Market value change',
-        ),
-      ).toEqual(true);
-      expect(
-        initialTransactions.some(
-          ({ description }) =>
-            description !== 'dummy update text for market update',
-        ),
-      ).toEqual(true);
+      expect(initialTransactions).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({ description: 'Market value change' }),
+        ]),
+      );
+
+      expect(initialTransactions).not.toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            description: 'dummy update text for market update',
+          }),
+        ]),
+      );
 
       await page.getByRole('link', { name: 'Settings' }).click();
       await page.getByRole('link', { name: 'User Preferences' }).click();
@@ -225,7 +229,14 @@ test.describe('Configuring User Preferences', () => {
         .getByRole('button', { name: 'Save', exact: true })
         .click();
 
-      await page.goto(`/accounts/${id}`);
+      await page.getByRole('link', { name: 'Market Update Settings' }).click();
+
+      await expect(page.getByLabel('Transaction description')).toHaveValue(
+        'dummy update text for market update',
+      );
+
+      await page.getByRole('link', { name: 'Accounts' }).click();
+      await page.getByRole('link', { name }).click();
 
       const { balance: updatedBalance } = await getAccountDetails(page);
 
@@ -240,18 +251,21 @@ test.describe('Configuring User Preferences', () => {
         .getByRole('button', { name: 'Update' })
         .click();
 
-      await page.goto('/accounts');
-      await page.goto(`/accounts/${id}`);
+      await page.getByRole('button', { name: 'Close drawer' }).click();
+
+      await page.getByRole('link', { name: 'Accounts' }).click();
+      await page.getByRole('link', { name }).click();
 
       const updatedTransactions =
         await getTransactionDataFromTransactionList(page);
 
-      expect(
-        updatedTransactions.some(
-          ({ description }) =>
-            description === 'dummy update text for market update',
-        ),
-      ).toEqual(true);
+      expect(updatedTransactions).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            description: 'dummy update text for market update',
+          }),
+        ]),
+      );
     });
   });
 });

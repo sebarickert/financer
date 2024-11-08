@@ -171,10 +171,9 @@ export class AccountsService {
         undefined,
         undefined,
         undefined,
-        undefined,
         accountId,
       )
-    ).data.map(({ amount, date, toAccount }) => ({
+    ).map(({ amount, date, toAccount }) => ({
       date,
       amount: accountId === toAccount ? amount : amount.negated(),
     }));

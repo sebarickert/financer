@@ -1,48 +1,56 @@
 import clsx from 'clsx';
+import { endOfToday, isToday, isYesterday } from 'date-fns';
 import { FC } from 'react';
 
 import { TransactionListItem } from './TransactionListItem';
 
 import { TransactionType } from '$api/generated/financerApi';
 import { List } from '$blocks/List';
-import { Pager } from '$blocks/pager/pager';
-import { PagerService } from '$blocks/pager/pager.service';
 import {
   TransactionListOptions,
   TransactionService,
 } from '$ssr/api/transaction.service';
-import { parseRowFromTransaction } from '$utils/transaction/parseRowFromTransaction';
+import { DateFormat, formatDate } from '$utils/formatDate';
 
 type TransactionListProps = {
-  isPagerHidden?: boolean;
   className?: string;
   filterOptions?: TransactionListOptions;
   type?: TransactionType | null;
-  onPageChange?: (page: number) => void;
+  hasStickyHeader?: boolean;
 };
 
+const getGroupLabel = (groupLabel: string) => {
+  if (groupLabel === 'Upcoming') {
+    return groupLabel;
+  }
+
+  if (isToday(new Date(groupLabel))) {
+    return 'Today';
+  }
+
+  if (isYesterday(new Date(groupLabel))) {
+    return 'Yesterday';
+  }
+
+  return formatDate(new Date(groupLabel), DateFormat.monthWithDateShort);
+};
+
+const endOfTodayDate = endOfToday();
+
 export const TransactionList: FC<TransactionListProps> = async ({
-  isPagerHidden,
   filterOptions = {
     year: new Date().getFullYear(),
     month: new Date().getMonth() + 1,
   },
   className,
   type = null,
-  onPageChange,
+  hasStickyHeader,
 }) => {
-  const transactionData = await TransactionService.getAllByType(type as null, {
+  const transactions = await TransactionService.getAllByType(type as null, {
     ...filterOptions,
-    page: PagerService.getCurrentPage(),
   });
 
-  onPageChange?.(transactionData.currentPage ?? 1);
-
-  const rows = await Promise.all(
-    transactionData.data.map(parseRowFromTransaction),
-  );
-
-  if (rows.length === 0) {
+  if (transactions.length === 0) {
     return (
       <div className={clsx(className)}>
         <p className="text-center theme-text-primary">
@@ -53,20 +61,30 @@ export const TransactionList: FC<TransactionListProps> = async ({
     );
   }
 
-  const pagerOptions = PagerService.getPagerOptions(transactionData);
+  const groupedTransactions = Object.entries(
+    Object.groupBy(transactions, ({ date }) => {
+      if (new Date(date) > endOfTodayDate) {
+        return 'Upcoming';
+      }
+
+      return new Date(date).toISOString().split('T')[0];
+    }),
+  ).map(([date, data]) => ({ date, data: data || [] }));
 
   return (
-    <section className={clsx(className)}>
-      <List testId="transaction-list">
-        {rows.map((row) => (
-          <TransactionListItem key={row.id} {...row} />
-        ))}
-      </List>
-      {pagerOptions.pageCount &&
-        pagerOptions.pageCount > 1 &&
-        !isPagerHidden && (
-          <Pager className="mt-4" pagerOptions={pagerOptions} />
-        )}
+    <section className={clsx('grid gap-8', className)}>
+      {groupedTransactions.map((group) => (
+        <List
+          key={group.date}
+          label={getGroupLabel(group.date)}
+          hasStickyHeader={hasStickyHeader}
+          testId="transaction-list"
+        >
+          {group.data.map((row) => (
+            <TransactionListItem key={row.id} {...row} />
+          ))}
+        </List>
+      ))}
     </section>
   );
 };

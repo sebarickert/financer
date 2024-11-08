@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { AccountType, TransactionType } from '@prisma/client';
 
-import { PaginationDto } from '../../types/pagination.dto';
 import { UserId } from '../../types/user-id';
 import { TransactionsService } from '../transactions/transactions.service';
 
@@ -22,11 +21,10 @@ export class TransfersService {
     month: number,
     accountTypes: AccountType[],
     accountId?: string,
-  ): Promise<PaginationDto<TransferListItemDto[]>> {
+  ): Promise<TransferListItemDto[]> {
     return this.transactionService.findAllByUser(
       userId,
       TransactionType.TRANSFER,
-      page || undefined,
       limit || undefined,
       year || undefined,
       month || undefined,

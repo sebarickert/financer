@@ -15,7 +15,6 @@ import { Decimal } from '@prisma/client/runtime/library';
 
 import { TransactionRepo } from '../../database/repos/transaction.repo';
 import { ForceMutable } from '../../types/force-mutable';
-import { PaginationDto } from '../../types/pagination.dto';
 import { UserId } from '../../types/user-id';
 import { DateService } from '../../utils/date.service';
 import { AccountsService } from '../accounts/accounts.service';
@@ -146,8 +145,7 @@ export class TransactionsService {
   async findAllByUser(
     userId: UserId,
     transactionType: TransactionType | null,
-    page?: number,
-    limit = 10,
+    limit?: number,
     year?: number,
     month?: number,
     linkedAccount?: string,
@@ -155,7 +153,7 @@ export class TransactionsService {
     sortOrder: Prisma.SortOrder = Prisma.SortOrder.desc,
     transactionCategories?: string[],
     parentTransactionCategory?: string,
-  ): Promise<PaginationDto<TransactionListItemDto[]>> {
+  ): Promise<TransactionListItemDto[]> {
     const targetCategoryIds =
       transactionCategories ||
       (await this.findChildrenCategoryIds(parentTransactionCategory));
@@ -173,19 +171,10 @@ export class TransactionsService {
       where: transactionWhere,
     });
 
-    const lastPage = page ? Math.ceil(totalCount / limit) : 1;
-
-    if (page && (page < 1 || page > lastPage) && page !== 1) {
-      throw new NotFoundException(
-        `Page "${page}" not found. First page is "1" and last page is "${lastPage}"`,
-      );
-    }
-
-    const transactions = await this.transactionRepo.findMany({
+    const fetchedTransactions = await this.transactionRepo.findMany({
       where: transactionWhere,
       orderBy: { date: sortOrder },
-      skip: page ? (page - 1) * limit : 0,
-      take: page ? limit : totalCount,
+      take: limit || totalCount,
       include: {
         categories: {
           select: {
@@ -205,26 +194,18 @@ export class TransactionsService {
       },
     });
 
-    return new PaginationDto({
-      data: TransactionListItemDto.createFromPlain(
-        transactions.map<TransactionListItem>(
-          ({ categories, transactionTemplateLog, ...transaction }) => ({
-            ...transaction,
-            isRecurring: transactionTemplateLog.length > 0,
-            categories: categories.map(({ categoryId, category }) => ({
-              name: category.name,
-              id: categoryId,
-            })),
-          }),
-        ),
+    return TransactionListItemDto.createFromPlain(
+      fetchedTransactions.map<TransactionListItem>(
+        ({ categories, transactionTemplateLog, ...transaction }) => ({
+          ...transaction,
+          isRecurring: transactionTemplateLog.length > 0,
+          categories: categories.map(({ categoryId, category }) => ({
+            name: category.name,
+            id: categoryId,
+          })),
+        }),
       ),
-      currentPage: page ?? 1,
-      limit: page ? limit : totalCount,
-      totalPageCount: lastPage,
-      hasNextPage: (page ?? 1) < lastPage,
-      hasPreviousPage: (page ?? 1) > 1,
-      totalRowCount: totalCount,
-    });
+    );
   }
 
   async findAllByUserForExport(userId: UserId): Promise<TransactionDto[]> {

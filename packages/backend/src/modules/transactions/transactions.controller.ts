@@ -17,7 +17,6 @@ import {
 import { AccountType, Prisma } from '@prisma/client';
 
 import { UserId } from '../../types/user-id';
-import { ApiPaginatedDto } from '../../utils/pagination.decorator';
 import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
 import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
 import { UserIdDecorator } from '../users/users.decorators';
@@ -35,17 +34,13 @@ export class TransactionsController {
   constructor(private readonly transactionsService: TransactionsService) {}
 
   @Get()
-  @ApiPaginatedDto(TransactionListItemDto)
+  @ApiOkResponse({ type: TransactionListItemDto, isArray: true })
   @ApiQuery({
     name: 'month',
     required: false,
   })
   @ApiQuery({
     name: 'year',
-    required: false,
-  })
-  @ApiQuery({
-    name: 'page',
     required: false,
   })
   @ApiQuery({
@@ -75,7 +70,6 @@ export class TransactionsController {
     @UserIdDecorator() userId: UserId,
     @Query('month') month?: number,
     @Query('year') year?: number,
-    @Query('page') page?: number,
     @Query('limit') limit?: number,
     @Query(
       'accountTypes',
@@ -95,7 +89,6 @@ export class TransactionsController {
     return this.transactionsService.findAllByUser(
       userId,
       null,
-      page || undefined,
       limit || undefined,
       year || undefined,
       month || undefined,

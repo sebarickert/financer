@@ -22,7 +22,6 @@ import {
 import { AccountType } from '@prisma/client';
 
 import { UserId } from '../../types/user-id';
-import { ApiPaginatedDto } from '../../utils/pagination.decorator';
 import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
 import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
 import { UserIdDecorator } from '../users/users.decorators';
@@ -41,17 +40,13 @@ export class ExpensesController {
   constructor(private readonly expensesService: ExpensesService) {}
 
   @Get()
-  @ApiPaginatedDto(ExpenseListItemDto)
+  @ApiOkResponse({ type: ExpenseListItemDto, isArray: true })
   @ApiQuery({
     name: 'month',
     required: false,
   })
   @ApiQuery({
     name: 'year',
-    required: false,
-  })
-  @ApiQuery({
-    name: 'page',
     required: false,
   })
   @ApiQuery({
@@ -70,7 +65,6 @@ export class ExpensesController {
     @UserIdDecorator() userId: UserId,
     @Query('month') month: number,
     @Query('year') year: number,
-    @Query('page') page: number,
     @Query('limit') limit: number,
     @Query(
       'accountTypes',
@@ -81,7 +75,6 @@ export class ExpensesController {
   ) {
     return this.expensesService.findAllByUser(
       userId,
-      page,
       limit,
       year,
       month,

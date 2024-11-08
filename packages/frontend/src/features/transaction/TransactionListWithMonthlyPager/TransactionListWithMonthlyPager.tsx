@@ -47,14 +47,23 @@ export const TransactionListWithMonthlyPager: FC<
   const pagerLabel = `${pageVisibleMonth} ${pageVisibleYear}`;
 
   return (
-    <section className={clsx('grid gap-4', className)}>
-      <Pager pagerOptions={pagerOptions} isStatusHidden>
+    <section className={clsx('flex flex-col', className)}>
+      <Pager
+        pagerOptions={pagerOptions}
+        className="justify-end mb-4"
+        isStatusHidden
+      >
         {pagerLabel}
       </Pager>
       {isSummaryVisible && (
         <TransactionListWithMonthlySummary filterOptions={filterOptions} />
       )}
-      <TransactionList filterOptions={filterOptions} type={type} />
+      <TransactionList
+        filterOptions={filterOptions}
+        type={type}
+        className={clsx({ ['mt-8']: isSummaryVisible })}
+        hasStickyHeader
+      />
     </section>
   );
 };

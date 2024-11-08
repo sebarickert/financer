@@ -13,7 +13,7 @@ type ErrorProps = {
 export const Error = ({ errorPageType }: ErrorProps) => {
   if (errorPageType === 'full-app') {
     return (
-      <Container>
+      <Container className="theme-text-primary">
         <div className="px-8 py-12">
           <Logo className="mb-8" />
           <Heading variant="h1" noMargin className="mb-6">

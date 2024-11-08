@@ -60,7 +60,6 @@ describe('TransactionsService', () => {
       DUMMY_TEST_USER.id,
       null,
       NaN,
-      10000,
       NaN,
       NaN,
     );
@@ -87,7 +86,6 @@ describe('TransactionsService', () => {
       orderBy: {
         date: 'desc',
       },
-      skip: 0,
       take: 325,
       where: {
         userId: '61460d7354ea082ad0256749',
@@ -123,7 +121,6 @@ describe('TransactionsService', () => {
       DUMMY_TEST_USER.id,
       null,
       NaN,
-      10000,
       NaN,
       NaN,
       undefined,
@@ -157,7 +154,6 @@ describe('TransactionsService', () => {
       orderBy: {
         date: 'desc',
       },
-      skip: 0,
       take: 100,
       where: {
         OR: [
