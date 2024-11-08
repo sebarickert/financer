@@ -59,6 +59,10 @@ test.describe('Add Template', () => {
     await page.goto('/settings/templates');
   });
 
+  test('should render the add template button', async ({ page }) => {
+    expect(page.getByTestId('add-template')).not.toBeNull();
+  });
+
   test.describe(`Manual Template`, () => {
     const templateType = TransactionTemplateType.Manual;
 
