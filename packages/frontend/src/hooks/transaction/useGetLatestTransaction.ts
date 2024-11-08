@@ -12,5 +12,5 @@ export const useGetLatestTransaction = (
     page: 1,
   });
 
-  return { ...transactionData, data: transactionData.data?.data[0] };
+  return { ...transactionData, data: transactionData.data?.[0] };
 };
