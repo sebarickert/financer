@@ -19,7 +19,6 @@ const appName = 'Financer';
 export const metadata: Metadata = {
   title: { template: `%s | ${appName}`, default: appName },
   icons: faviconList,
-
   appleWebApp: {
     title: appName,
     statusBarStyle: 'default',

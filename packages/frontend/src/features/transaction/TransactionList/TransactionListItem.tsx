@@ -13,18 +13,7 @@ import { transactionTypeThemeMapping } from '$constants/transaction/transactionT
 import { Icon } from '$elements/Icon';
 import { Link } from '$elements/Link';
 import { formatCurrency } from '$utils/formatCurrency';
-import { formatDate } from '$utils/formatDate';
-
-export type TransactionListItemProps = {
-  transactionCategories?: string;
-  url: string;
-  transactionType: TransactionType;
-  description: string;
-  date: string;
-  amount: number;
-  id: string;
-  isRecurring: boolean;
-};
+import { DateFormat, formatDate } from '$utils/formatDate';
 
 export const TransactionListItem: FC<
   | TransactionListItemDto
@@ -63,9 +52,9 @@ export const TransactionListItem: FC<
       >
         <div className="inline-flex flex-col truncate">
           <span data-testid="transaction-description">{description}</span>
-          <div className="text-sm">
+          <div className="text-sm theme-text-secondary">
             <time dateTime={date} data-testid="transaction-date">
-              {formatDate(new Date(date))}
+              {formatDate(new Date(date), DateFormat.timeOnly)}
             </time>
             {formattedCategories && (
               <>

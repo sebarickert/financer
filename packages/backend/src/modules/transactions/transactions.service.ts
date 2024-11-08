@@ -205,7 +205,7 @@ export class TransactionsService {
       return {
         ...group,
         data: TransactionListItemDto.createFromPlain(
-          fetchedTransactions.map<TransactionListItem>(
+          group.data.map<TransactionListItem>(
             ({ categories, transactionTemplateLog, ...transaction }) => ({
               ...transaction,
               isRecurring: transactionTemplateLog.length > 0,

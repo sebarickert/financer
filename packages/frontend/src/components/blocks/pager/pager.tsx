@@ -5,14 +5,14 @@ import { FC } from 'react';
 
 import { PagerOptions } from './pager.service';
 
-import { Heading } from '$elements/Heading';
 import { Icon } from '$elements/Icon';
+import { Paragraph } from '$elements/paragraph/paragraph';
 
 type PagerProps = {
   className?: string;
   pagerOptions: PagerOptions;
-  children?: string;
   isStatusHidden?: boolean;
+  children?: string;
 };
 
 type PagerButtonProps = {
@@ -53,47 +53,36 @@ const PagerButton: FC<PagerButtonProps> = ({
 export const Pager: FC<PagerProps> = ({
   className = '',
   pagerOptions,
-  children,
   isStatusHidden,
+  children,
 }) => {
   const { nextPage, previousPage, pageCount, currentPage } = pagerOptions;
   return (
-    <div
-      className={clsx('flex items-end', className, {
-        'justify-between': children,
-        'justify-center': !children,
-      })}
-    >
-      {children && (
-        <Heading className="text-center" noMargin>
-          {children}
-        </Heading>
+    <div className={clsx('inline-flex items-center gap-2', className)}>
+      {children && <Paragraph>{children}</Paragraph>}
+      <PagerButton
+        handleClick={previousPage.load}
+        isDisabled={!previousPage.isAvailable}
+      >
+        Previous page
+      </PagerButton>
+      {!isStatusHidden && currentPage && pageCount && (
+        <p className="mx-4 font-medium theme-text-primary">
+          <span className="sr-only">
+            Current page: {currentPage} of {pageCount}
+          </span>
+          <span aria-hidden="true">
+            {currentPage} / {pageCount}
+          </span>
+        </p>
       )}
-      <div className={clsx('inline-flex justify-center items-center gap-2')}>
-        <PagerButton
-          handleClick={previousPage.load}
-          isDisabled={!previousPage.isAvailable}
-        >
-          Previous page
-        </PagerButton>
-        {!isStatusHidden && currentPage && pageCount && (
-          <p className="mx-4 font-medium theme-text-primary">
-            <span className="sr-only">
-              Current page: {currentPage} of {pageCount}
-            </span>
-            <span aria-hidden="true">
-              {currentPage} / {pageCount}
-            </span>
-          </p>
-        )}
-        <PagerButton
-          isDisabled={!nextPage.isAvailable}
-          handleClick={nextPage.load}
-          isNext
-        >
-          Next page
-        </PagerButton>
-      </div>
+      <PagerButton
+        isDisabled={!nextPage.isAvailable}
+        handleClick={nextPage.load}
+        isNext
+      >
+        Next page
+      </PagerButton>
     </div>
   );
 };

@@ -10,6 +10,7 @@ type ListProps = {
   testId?: string;
   columns?: 1 | 2 | 3;
   hasItemRoundness?: boolean;
+  hasStickyHeader?: boolean;
 };
 
 export const List: FC<ListProps> = ({
@@ -19,12 +20,24 @@ export const List: FC<ListProps> = ({
   testId: rawTestId,
   columns = 1,
   hasItemRoundness,
+  hasStickyHeader,
 }) => {
   const testId = rawTestId ?? 'list';
 
   return (
     <section className={clsx(className)} data-testid={testId}>
-      {label && <Heading testId={`${testId}-heading`}>{label}</Heading>}
+      <div
+        className={clsx({
+          ['sticky max-lg:top-[64px] lg:top-[83px] theme-bg-color z-10 py-4 -mt-4']:
+            hasStickyHeader,
+        })}
+      >
+        {label && (
+          <Heading testId={`${testId}-heading`} noMargin={!!hasStickyHeader}>
+            {label}
+          </Heading>
+        )}
+      </div>
       <ul
         className={clsx('grid gap-1', {
           'lg:grid-cols-2': columns === 2,
