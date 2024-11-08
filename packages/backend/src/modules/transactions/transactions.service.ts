@@ -25,7 +25,6 @@ import { TransactionCategoryMappingsService } from '../transaction-category-mapp
 
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { TransactionDetailsDto } from './dto/transaction-details.dto';
-import { TransactionListGroupDto } from './dto/transaction-list-group.dto';
 import {
   TransactionListItem,
   TransactionListItemDto,
@@ -154,7 +153,7 @@ export class TransactionsService {
     sortOrder: Prisma.SortOrder = Prisma.SortOrder.desc,
     transactionCategories?: string[],
     parentTransactionCategory?: string,
-  ): Promise<TransactionListGroupDto<TransactionListItem>[]> {
+  ): Promise<TransactionListItemDto[]> {
     const targetCategoryIds =
       transactionCategories ||
       (await this.findChildrenCategoryIds(parentTransactionCategory));
@@ -195,29 +194,18 @@ export class TransactionsService {
       },
     });
 
-    const groupedTransactions = Object.entries(
-      Object.groupBy(fetchedTransactions, ({ date }) => {
-        return new Date(date).toISOString().split('T')[0];
-      }),
-    ).map(([date, data]) => ({ date: new Date(date), data }));
-
-    return groupedTransactions.map((group) => {
-      return {
-        ...group,
-        data: TransactionListItemDto.createFromPlain(
-          group.data.map<TransactionListItem>(
-            ({ categories, transactionTemplateLog, ...transaction }) => ({
-              ...transaction,
-              isRecurring: transactionTemplateLog.length > 0,
-              categories: categories.map(({ categoryId, category }) => ({
-                name: category.name,
-                id: categoryId,
-              })),
-            }),
-          ),
-        ),
-      };
-    });
+    return TransactionListItemDto.createFromPlain(
+      fetchedTransactions.map<TransactionListItem>(
+        ({ categories, transactionTemplateLog, ...transaction }) => ({
+          ...transaction,
+          isRecurring: transactionTemplateLog.length > 0,
+          categories: categories.map(({ categoryId, category }) => ({
+            name: category.name,
+            id: categoryId,
+          })),
+        }),
+      ),
+    );
   }
 
   async findAllByUserForExport(userId: UserId): Promise<TransactionDto[]> {

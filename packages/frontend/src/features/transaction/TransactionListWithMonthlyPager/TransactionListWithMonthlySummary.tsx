@@ -63,7 +63,10 @@ export const TransactionListWithMonthlySummary: FC<
   const heading = `${monthNames[month - 1]} ${year}`;
 
   return (
-    <div className="p-6 theme-layer-color">
+    <div
+      className="p-6 theme-layer-color"
+      data-testid="transaction-list-monthly-summary"
+    >
       <DetailsList heading={heading} items={monthlyDetails} />
     </div>
   );

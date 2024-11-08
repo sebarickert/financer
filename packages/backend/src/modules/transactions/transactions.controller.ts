@@ -17,7 +17,6 @@ import {
 import { AccountType, Prisma } from '@prisma/client';
 
 import { UserId } from '../../types/user-id';
-import { ApiTransactionListGroupDto } from '../../utils/transaction-list-group.decorator';
 import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
 import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
 import { UserIdDecorator } from '../users/users.decorators';
@@ -35,7 +34,7 @@ export class TransactionsController {
   constructor(private readonly transactionsService: TransactionsService) {}
 
   @Get()
-  @ApiTransactionListGroupDto(TransactionListItemDto)
+  @ApiOkResponse({ type: TransactionListItemDto, isArray: true })
   @ApiQuery({
     name: 'month',
     required: false,

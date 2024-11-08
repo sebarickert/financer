@@ -490,20 +490,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    { "$ref": "#/components/schemas/TransactionListGroupDto" },
-                    {
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/TransactionListItemDto"
-                          }
-                        }
-                      },
-                      "required": ["data"]
-                    }
-                  ]
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TransactionListItemDto"
+                  }
                 }
               }
             }
@@ -1011,20 +1001,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    { "$ref": "#/components/schemas/TransactionListGroupDto" },
-                    {
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/ExpenseListItemDto"
-                          }
-                        }
-                      },
-                      "required": ["data"]
-                    }
-                  ]
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/ExpenseListItemDto" }
                 }
               }
             }
@@ -1170,20 +1148,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    { "$ref": "#/components/schemas/TransactionListGroupDto" },
-                    {
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/IncomeListItemDto"
-                          }
-                        }
-                      },
-                      "required": ["data"]
-                    }
-                  ]
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/IncomeListItemDto" }
                 }
               }
             }
@@ -1329,20 +1295,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    { "$ref": "#/components/schemas/TransactionListGroupDto" },
-                    {
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/TransferListItemDto"
-                          }
-                        }
-                      },
-                      "required": ["data"]
-                    }
-                  ]
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TransferListItemDto"
+                  }
                 }
               }
             }
@@ -1984,11 +1940,6 @@
           "expenseAmount",
           "transferAmount"
         ]
-      },
-      "TransactionListGroupDto": {
-        "type": "object",
-        "properties": { "date": { "format": "date-time", "type": "string" } },
-        "required": ["date"]
       },
       "SortOrder": { "type": "string", "enum": ["asc", "desc"] },
       "TransactionDetailCategoryDto": {

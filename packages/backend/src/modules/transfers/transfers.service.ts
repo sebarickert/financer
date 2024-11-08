@@ -2,11 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { AccountType, TransactionType } from '@prisma/client';
 
 import { UserId } from '../../types/user-id';
-import { TransactionListGroupDto } from '../transactions/dto/transaction-list-group.dto';
 import { TransactionsService } from '../transactions/transactions.service';
 
 import { CreateTransferDto } from './dto/create-transfer.dto';
 import { TransferDetailsDto } from './dto/transfer-details.dto';
+import { TransferListItemDto } from './dto/transfer-list-item.dto';
 import { UpdateTransferDto } from './dto/update-transfer.dto';
 
 @Injectable()
@@ -21,7 +21,7 @@ export class TransfersService {
     month: number,
     accountTypes: AccountType[],
     accountId?: string,
-  ): Promise<TransactionListGroupDto[]> {
+  ): Promise<TransferListItemDto[]> {
     return this.transactionService.findAllByUser(
       userId,
       TransactionType.TRANSFER,

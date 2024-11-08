@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { isToday, isYesterday } from 'date-fns';
+import { endOfToday, isToday, isYesterday } from 'date-fns';
 import { FC } from 'react';
 
 import { TransactionListItem } from './TransactionListItem';
@@ -19,17 +19,23 @@ type TransactionListProps = {
   hasStickyHeader?: boolean;
 };
 
-const getGroupLabel = (date: Date) => {
-  if (isToday(date)) {
+const getGroupLabel = (groupLabel: string) => {
+  if (groupLabel === 'Upcoming') {
+    return groupLabel;
+  }
+
+  if (isToday(new Date(groupLabel))) {
     return 'Today';
   }
 
-  if (isYesterday(date)) {
+  if (isYesterday(new Date(groupLabel))) {
     return 'Yesterday';
   }
 
-  return formatDate(date, DateFormat.monthWithDateShort);
+  return formatDate(new Date(groupLabel), DateFormat.monthWithDateShort);
 };
+
+const endOfTodayDate = endOfToday();
 
 export const TransactionList: FC<TransactionListProps> = async ({
   filterOptions = {
@@ -40,11 +46,11 @@ export const TransactionList: FC<TransactionListProps> = async ({
   type = null,
   hasStickyHeader,
 }) => {
-  const transactionData = await TransactionService.getAllByType(type as null, {
+  const transactions = await TransactionService.getAllByType(type as null, {
     ...filterOptions,
   });
 
-  if (transactionData.length === 0) {
+  if (transactions.length === 0) {
     return (
       <div className={clsx(className)}>
         <p className="text-center theme-text-primary">
@@ -55,13 +61,24 @@ export const TransactionList: FC<TransactionListProps> = async ({
     );
   }
 
+  const groupedTransactions = Object.entries(
+    Object.groupBy(transactions, ({ date }) => {
+      if (new Date(date) > endOfTodayDate) {
+        return 'Upcoming';
+      }
+
+      return new Date(date).toISOString().split('T')[0];
+    }),
+  ).map(([date, data]) => ({ date, data: data || [] }));
+
   return (
     <section className={clsx('grid gap-8', className)}>
-      {transactionData.map((group) => (
+      {groupedTransactions.map((group) => (
         <List
           key={group.date}
-          label={getGroupLabel(group.date as unknown as Date)}
+          label={getGroupLabel(group.date)}
           hasStickyHeader={hasStickyHeader}
+          testId="transaction-list"
         >
           {group.data.map((row) => (
             <TransactionListItem key={row.id} {...row} />
