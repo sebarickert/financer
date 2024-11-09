@@ -22,10 +22,25 @@ runs:
 
         cd -
 
+    - name: Parse artifact name
+      id: parse_artifact_name
+      shell: "bash"
+      run: |
+        # Set the artifact name based on PACKAGE_ROOT
+        # If PACKAGE_ROOT is ".", set artifact_name to "coverage"
+        # Otherwise, replace "/" with "-" in PACKAGE_ROOT and set artifact_name to "coverage-PACKAGE_ROOT"
+        if [ "${{ inputs.PACKAGE_ROOT }}" == "." ]; then
+          echo "artifact_name=coverage" >> $GITHUB_ENV
+        else
+          sanitized_package_root="${{ inputs.PACKAGE_ROOT }}"
+          sanitized_package_root="${sanitized_package_root//\//-}"
+          echo "artifact_name=coverage-${sanitized_package_root}" >> $GITHUB_ENV
+        fi
+
     - name: Store coverage to artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: ${{ inputs.PACKAGE_ROOT == '.' && 'coverage' || format('coverage-{0}', inputs.PACKAGE_ROOT.replace(/\//g, '-')) }}
+        name: ${{ env.artifact_name }}
         path: |
           ${{ inputs.PACKAGE_ROOT }}/report.json
           ${{ inputs.PACKAGE_ROOT }}/coverage-summary.json
