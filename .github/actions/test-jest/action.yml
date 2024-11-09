@@ -25,7 +25,7 @@ runs:
     - name: Store coverage to artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: ${{ inputs.PACKAGE_ROOT == '.' && 'coverage' || format('coverage-{0}', inputs.PACKAGE_ROOT) }}
+        name: ${{ inputs.PACKAGE_ROOT == '.' && 'coverage' || format('coverage-{0}', inputs.PACKAGE_ROOT.replace(/\//g, '-')) }}
         path: |
           ${{ inputs.PACKAGE_ROOT }}/report.json
           ${{ inputs.PACKAGE_ROOT }}/coverage-summary.json
