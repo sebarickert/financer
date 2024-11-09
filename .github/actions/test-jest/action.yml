@@ -1,0 +1,32 @@
+name: "Run Jest Tests and Collect Coverage"
+description: "Run Jest tests for the project and collect coverage reports"
+
+inputs:
+  PACKAGE_ROOT:
+    description: "The root directory of the application. This is for monorepos where the package.json is not in the root directory."
+    required: false
+    default: "."
+
+runs:
+  using: "composite"
+  steps:
+    - name: Run unit tests
+      shell: "bash"
+      run: |
+        cd ${{ inputs.PACKAGE_ROOT }}
+
+        npm run test -- --json --coverage --testLocationInResults --outputFile=report.json --coverageReporters=json-summary --coverageReporters=lcov
+
+        mv coverage/coverage-summary.json coverage-summary.json
+        mv coverage/lcov.info lcov.info
+
+        cd -
+
+    - name: Store coverage to artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ inputs.PACKAGE_ROOT == '.' && 'coverage' || format('coverage-{0}', inputs.PACKAGE_ROOT) }}
+        path: |
+          ${{ inputs.PACKAGE_ROOT }}/report.json
+          ${{ inputs.PACKAGE_ROOT }}/coverage-summary.json
+          ${{ inputs.PACKAGE_ROOT }}/lcov.info

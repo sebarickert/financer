@@ -55,5 +55,18 @@
         "semi": true,
       },
     ],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": [
+          "jest.config.ts",
+          "**/*.test.ts",
+          "**/*.spec.ts",
+          "**/*.test.tsx",
+          "**/*.spec.tsx",
+          "**/setup-tests.tsx",
+        ],
+      },
+    ],
   },
 }
