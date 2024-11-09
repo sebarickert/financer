@@ -39,12 +39,12 @@ export async function generateViewport(): Promise<Viewport> {
       themeColor = '#f4f4f4';
       break;
     case Theme.Dark:
-      themeColor = '#262626';
+      themeColor = '#171717';
       break;
     default:
       themeColor = [
         { media: '(prefers-color-scheme: light)', color: '#f4f4f4' },
-        { media: '(prefers-color-scheme: dark)', color: '#262626' },
+        { media: '(prefers-color-scheme: dark)', color: '#171717' },
       ];
   }
 
