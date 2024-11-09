@@ -7,13 +7,13 @@ describe('Button component', () => {
     render(<Button>Click me</Button>);
     const button = screen.getByRole('button', { name: /click me/i });
     expect(button).toBeInTheDocument();
-    expect(button).toHaveClass('bg-charcoal text-white');
+    expect(button).toHaveClass('theme-button-primary');
   });
 
   it('renders correctly with a custom accent color', () => {
-    render(<Button accentColor="blue">Click me</Button>);
+    render(<Button accentColor="danger">Click me</Button>);
     const button = screen.getByRole('button', { name: /click me/i });
-    expect(button).toHaveClass('bg-blue text-white');
+    expect(button).toHaveClass('theme-button-danger');
   });
 
   it('renders as a link when href is provided', () => {

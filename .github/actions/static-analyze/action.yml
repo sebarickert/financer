@@ -26,8 +26,8 @@ runs:
       uses: actions/download-artifact@v4
       if: github.event_name == 'pull_request'
       with:
-        name: ${{ inputs.PACKAGE_ROOT == '.' && 'coverage' || format('coverage-{0}', inputs.PACKAGE_ROOT) }}
-        path: .
+        name: ${{ inputs.PACKAGE_ROOT == '.' && 'coverage' || format('coverage-{0}', inputs.PACKAGE_ROOT.replace(/\//g, '-')) }}
+        path: ${{ inputs.PACKAGE_ROOT }}
 
     - name: SonarCloud Scan
       uses: SonarSource/sonarcloud-github-action@v2
