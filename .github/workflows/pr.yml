@@ -33,21 +33,25 @@ jobs:
       - name: Lint TS types
         run: npm run check-types
 
-  unit-test-frontend:
+  test-frontend:
     runs-on: ubuntu-latest
     needs: install
     steps:
       - uses: sebarickert/financer/.github/actions/prepare-node-job@main
 
-      - uses: sebarickert/financer/.github/actions/test-frontend@main
+      - uses: sebarickert/financer/.github/actions/test-jest@main
+        with:
+          PACKAGE_ROOT: "packages/frontend"
 
-  unit-test-backend:
+  test-backend:
     runs-on: ubuntu-latest
     needs: install
     steps:
       - uses: sebarickert/financer/.github/actions/prepare-node-job@main
 
-      - uses: sebarickert/financer/.github/actions/test-backend@main
+      - uses: sebarickert/financer/.github/actions/test-jest@main
+        with:
+          PACKAGE_ROOT: "packages/backend"
 
   build:
     runs-on: ubuntu-latest
@@ -124,3 +128,53 @@ jobs:
           name: playwright-html-report--attempt-${{ github.run_attempt }}
           path: playwright-report
           retention-days: 14
+
+  static-analyze-frontend:
+    needs:
+      - test-frontend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: sebarickert/financer/.github/actions/static-analyze@main
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          PACKAGE_ROOT: "packages/frontend"
+
+  static-analyze-backend:
+    needs:
+      - test-backend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: sebarickert/financer/.github/actions/static-analyze@main
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          PACKAGE_ROOT: "packages/backend"
+
+  static-analyze-root:
+    name: Analyze root
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  static-analyze-playwright:
+    name: Analyze playwright
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          projectBaseDir: packages/playwright

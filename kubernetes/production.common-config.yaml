@@ -13,11 +13,11 @@ type: Opaque
 stringData:
   GITHUB_CLIENT_ID: ""
   GITHUB_CLIENT_SECRET: ""
-  AUTH0_DOMAIN: ""
-  AUTH0_CLIENT_ID: ""
-  AUTH0_CLIENT_SECRET: ""
+  AUTH0_DOMAIN: silte.us.auth0.com
+  AUTH0_CLIENT_ID: RBXAAizZXZl3nSRMWH8fek2kvYkfSGzr
+  AUTH0_CLIENT_SECRET: aa_XRZmeJcL8SQXQCVW3QKNQI_WK9980OmApPcFzNR0Sjql7xKAtSEi_P70zjcia
   DB_USER: admin
-  DB_PASSWORD: change-me
+  DB_PASSWORD: XrLgyouvdbQF3RXZr2P2QjFUxTZdu88P7kF3bmsrhKpz8rrPmQGG3HdxrBVrSxv
   DB_NAME: financer
   DB_HOST: postgres:5432
 
@@ -41,4 +41,4 @@ type: Opaque
 stringData:
   POSTGRES_DB: financer
   POSTGRES_USER: admin
-  POSTGRES_PASSWORD: change-me
+  POSTGRES_PASSWORD: XrLgyouvdbQF3RXZr2P2QjFUxTZdu88P7kF3bmsrhKpz8rrPmQGG3HdxrBVrSxv
