@@ -109,8 +109,8 @@ jobs:
       # - docker-build
       - lint
       - lint-type
-      - unit-test-frontend
-      - unit-test-backend
+      - test-frontend
+      - test-backend
       - run-e2e-tests
     runs-on: ubuntu-latest
     steps:
