@@ -1,6 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
+import { usePathname } from 'next/navigation';
 import {
   Link as TransitionLink,
   useTransitionRouter,
@@ -36,7 +37,10 @@ export const Link = ({
   haptic = 'none',
   ...props
 }: LinkProps): JSX.Element => {
+  const pathname = usePathname();
   const router = useTransitionRouter();
+
+  const isCurrentPage = pathname === href;
 
   const linkClasses = clsx('theme-focus theme-text-primary', className);
   const linkContent = (
@@ -78,6 +82,7 @@ export const Link = ({
         href={href}
         className={linkClasses}
         data-testid={testId}
+        aria-current={isCurrentPage ? 'page' : undefined}
       >
         {linkContent}
       </a>
@@ -94,6 +99,7 @@ export const Link = ({
         hapticRunner(haptic);
         props.onClick?.();
       }}
+      aria-current={isCurrentPage ? 'page' : undefined}
     >
       {linkContent}
     </TransitionLink>

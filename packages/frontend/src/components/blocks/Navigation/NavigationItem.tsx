@@ -32,19 +32,22 @@ export const NavigationItem: FC<NavigationItemProps> = ({
         className={clsx(
           'items-center justify-center theme-focus',
           'max-lg:flex max-lg:flex-col max-lg:h-14',
-          'lg:inline-flex lg:gap-2 lg:py-3 lg:px-4 lg:rounded-md lg:font-medium',
-          'lg:hover:theme-border-primary lg:hover:theme-layer-secondary-color',
+          'lg:inline-flex lg:gap-2 lg:py-5 lg:px-4 lg:font-medium',
+          '[&:not([aria-current=page])]:lg:group-hover/navigation:theme-text-tertiary',
+          'group/navigation-item',
           {
-            [`lg:theme-layer-secondary-color lg:theme-border-primary`]:
-              isActive,
-          },
-          {
-            [`lg:border-transparent`]: !isActive,
+            ['lg:shadow-[inset_0_-2px] lg:shadow-blue-600']: isActive,
           },
         )}
       >
-        <Icon name={iconName} isSolid={isActive} />
-        <span className="max-lg:sr-only">{label}</span>
+        <span
+          className={clsx(
+            'contents lg:group-hover/navigation-item:theme-text-primary lg:transition-colors lg:duration-300',
+          )}
+        >
+          <Icon name={iconName} isSolid={isActive} />
+          <span className="max-lg:sr-only">{label}</span>
+        </span>
       </Link>
     </li>
   );

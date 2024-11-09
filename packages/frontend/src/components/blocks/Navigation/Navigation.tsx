@@ -8,15 +8,15 @@ const navigationItems: Record<string, NavigationItemProps> = {
   home: { label: 'Home', url: '/', iconName: 'HomeIcon', isExact: true },
   statistics: {
     label: 'Statistics',
-    url: '/statistics',
+    url: '/statistics/',
     iconName: 'ChartBarIcon',
   },
   accounts: {
     label: 'Accounts',
-    url: '/accounts',
+    url: '/accounts/',
     iconName: 'Squares2X2Icon',
   },
-  settings: { label: 'Settings', url: '/settings', iconName: 'Cog8ToothIcon' },
+  settings: { label: 'Settings', url: '/settings/', iconName: 'Cog8ToothIcon' },
 };
 
 export const Navigation: FC = () => {
@@ -26,6 +26,7 @@ export const Navigation: FC = () => {
         className={clsx(
           'max-lg:grid max-lg:grid-cols-5',
           'lg:flex lg:gap-4 lg:items-center lg:justify-end',
+          'group/navigation',
         )}
       >
         <NavigationItem {...navigationItems.home} />

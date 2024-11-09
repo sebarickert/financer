@@ -28,8 +28,7 @@ export const List: FC<ListProps> = ({
     <section className={clsx(className)} data-testid={testId}>
       <div
         className={clsx({
-          ['sticky max-lg:top-[64px] lg:top-[83px] theme-bg-color z-10 py-4 -mt-4']:
-            hasStickyHeader,
+          ['sticky top-[64px] theme-bg-color z-10 py-4 -mt-4']: hasStickyHeader, // 64px is the height of the header
         })}
       >
         {label && (
