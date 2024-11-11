@@ -32,9 +32,9 @@ const lightModeColors = {
 
 const darkModeColors = {
   xTicksColor: `#c6c6c6`, // theme-text-secondary
-  yGridColor: `#171717`, // theme-layer-color
+  yGridColor: `#1b1b1b`, // theme-layer-color
   yTicksColor: `#c6c6c6`, // theme-text-secondary
-  tooltipBackgroundColor: `#171717`, // theme-layer-color
+  tooltipBackgroundColor: `#1b1b1b`, // theme-layer-color
   tooltipTitleColor: '#f4f4f4', // theme-text-primary
   tooltipBodyColor: '#f4f4f4', // theme-text-primary
   tooltipFooterColor: '#f4f4f4', // theme-text-primary
