@@ -36,11 +36,11 @@
   }
 
   .theme-layer-color {
-    @apply bg-gray-100 dark:bg-[#171717];
+    @apply bg-gray-100 dark:bg-[#1b1b1b];
   }
 
   .theme-layer-color-with-hover {
-    @apply theme-layer-color hover:bg-gray-100/50 dark:hover:bg-[#171717]/50;
+    @apply theme-layer-color hover:bg-gray-100/50 dark:hover:bg-[#1b1b1b]/50;
   }
 
   .theme-layer-secondary-color {

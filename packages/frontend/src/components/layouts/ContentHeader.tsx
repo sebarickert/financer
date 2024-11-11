@@ -1,5 +1,3 @@
-'use client';
-
 import clsx from 'clsx';
 import { FC } from 'react';
 
@@ -23,7 +21,7 @@ export const ContentHeader: FC<ContentHeaderProps> = ({
       className={clsx(
         'max-lg:theme-layer-color text-primary-color max-lg:border-b max-lg:theme-border-primary',
         'max-lg:fixed max-lg:inset-x-0 max-lg:top-0',
-        'max-lg:text-center max-lg:px-2 max-lg:h-16',
+        'max-lg:text-center max-lg:px-2 max-lg:h-12',
         'grid items-center grid-cols-[44px,1fr,44px] z-20',
         'lg:flex lg:gap-4 lg:mb-6',
       )}
@@ -51,16 +49,6 @@ export const ContentHeader: FC<ContentHeaderProps> = ({
         {title ?? '-'}
       </Heading>
       {headerAction}
-      {/* {headerAction &&
-        isValidElement(headerAction) &&
-        cloneElement(headerAction, {
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          className: clsx(
-            'theme-layer-color-with-hover theme-focus rounded-md',
-            'inline-flex items-center justify-center h-11 w-11',
-          ),
-        })} */}
     </header>
   );
 };
