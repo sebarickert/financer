@@ -1,6 +1,6 @@
 import { useFormContext } from 'react-hook-form';
 
-import { FieldArrayFields } from './transaction-categories';
+import { FieldArrayFields } from './TransactionCategories';
 
 import { Icon } from '$elements/Icon';
 import { hapticRunner } from '$utils/haptic.helper';

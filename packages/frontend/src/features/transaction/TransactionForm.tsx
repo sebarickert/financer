@@ -4,8 +4,8 @@ import clsx from 'clsx';
 import { FC, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { TransactionCategories } from './transaction-categories/transaction-categories';
 import { CategoriesFormFullFields } from './transaction-categories/transaction-categories.types';
+import { TransactionCategories } from './transaction-categories/TransactionCategories';
 
 import {
   VisibilityType,
@@ -170,8 +170,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
         </div>
       </section>
       {transactionCategories.length > 0 && (
-        <section className="mt-8">
-          <h2 className="sr-only">Categories</h2>
+        <section className="mt-4">
           <TransactionCategories
             transactionCategories={transactionCategories}
           />

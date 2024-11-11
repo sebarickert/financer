@@ -92,6 +92,6 @@
   }
 
   .theme-field {
-    @apply border-none appearance-none theme-focus theme-layer-color-with-hover theme-text-primary;
+    @apply border-none appearance-none theme-focus theme-layer-color-with-hover theme-text-primary disabled:pointer-events-none disabled:opacity-50;
   }
 }

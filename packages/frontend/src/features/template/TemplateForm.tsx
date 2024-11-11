@@ -12,7 +12,7 @@ import {
 import { Form } from '$blocks/form/form';
 import { Input } from '$elements/input/input';
 import { Select, Option } from '$elements/select/select';
-import { TransactionCategories } from '$features/transaction/transaction-categories/transaction-categories';
+import { TransactionCategories } from '$features/transaction/transaction-categories/TransactionCategories';
 import { CategoriesFormOnlyCategory } from '$features/transaction/transaction-categories/transaction-categories.types';
 import { useGetAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useGetAllTransactionCategoriesWithCategoryTree';
 import {

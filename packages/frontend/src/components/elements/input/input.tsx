@@ -38,7 +38,7 @@ export const Input = ({
 
   return (
     <div className="theme-text-primary">
-      <label htmlFor={id} className="block">
+      <label htmlFor={id} className="block sr-only">
         {children}
       </label>
       <input
@@ -48,9 +48,10 @@ export const Input = ({
         min={min}
         max={max}
         step={step}
-        className={clsx('theme-field', 'block w-full p-3 rounded-md mt-1')}
+        className={clsx('theme-field', 'block w-full p-3 rounded-md')}
         required={isRequired}
         data-testid={testId}
+        placeholder={children as string}
         {...register(id, {
           min,
           max,

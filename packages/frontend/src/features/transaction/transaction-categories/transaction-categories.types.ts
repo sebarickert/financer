@@ -2,6 +2,7 @@ import { Formatter } from '$utils/parseArrayFromFormData';
 
 export interface CategoriesFormOnlyCategory {
   categoryId: string;
+  categoryLabel: string;
 }
 
 export const isCategoriesFormOnlyCategory = (
