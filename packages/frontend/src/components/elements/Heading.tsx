@@ -40,14 +40,11 @@ export const Heading: FC<HeadingProps> = ({
       })}
     >
       <HeadingType
-        className={clsx(
-          'theme-text-primary text-lg font-medium',
-          titleClassName,
-          {
-            ['lg:text-2xl']: variant !== 'h1' && !disableResponsiveSizing,
-            ['lg:text-3xl lg:font-semibold']: variant === 'h1',
-          },
-        )}
+        className={clsx('theme-text-primary font-medium', titleClassName, {
+          'text-lg': variant !== 'h1',
+          'lg:text-2xl': variant !== 'h1' && !disableResponsiveSizing,
+          'lg:text-3xl lg:font-semibold': variant === 'h1',
+        })}
         data-testid={testId}
       >
         {children}
