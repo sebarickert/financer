@@ -62,6 +62,7 @@ export const TransactionCategories = ({
 
             append({ categoryId, amount: transactionAmount, description: '' });
           }}
+          testId="select-first-category"
         >
           Category
         </Select>
@@ -84,6 +85,7 @@ export const TransactionCategories = ({
                 'absolute right-0 top-0',
               )}
               onClick={() => remove(index)}
+              testId="remove-category"
             >
               <Icon name={'XMarkIcon'} />
               <span className="sr-only">Remove</span>
@@ -93,6 +95,7 @@ export const TransactionCategories = ({
       </ul>
       {fields.length > 0 && (
         <button
+          data-testid="add-category"
           type="button"
           className={clsx(
             'theme-focus w-full text-left',

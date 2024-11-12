@@ -6,12 +6,12 @@ import { applyFixture } from '$utils/applyFixture';
 import { getEmptyListErrorMessageByBrowserName } from '$utils/common/getEmptyListErrorMessageByBrowserName';
 import { test, expect } from '$utils/financer-page';
 import { getTemplateFormValues } from '$utils/template/getTemplateFormValues';
-import { fillAndSubmitTransactionCategoryForm } from '$utils/transaction/fillAndSubmitTransactionCategoryForm';
 import { fillAndSubmitTransactionTemplateForm } from '$utils/transaction/fillAndSubmitTransactionTemplateForm';
 import { fillTransactionForm } from '$utils/transaction/fillTransactionForm';
 import { getAllAvailableTransactionTemplates } from '$utils/transaction/getAllAvailableTransactionTemplates';
 import { getTransactionDetails } from '$utils/transaction/getTransactionDetails';
 import { getTransactionFormValues } from '$utils/transaction/getTransactionFormValues';
+import { setCategories } from '$utils/transaction/setCategories';
 import { switchTransactionType } from '$utils/transaction/switchTransactionType';
 
 test.describe('Transfer Transactions', () => {
@@ -95,19 +95,9 @@ test.describe('Transfer Transactions', () => {
         description: transactionDescription,
       });
 
-      await page.getByTestId('add-category').click();
-
-      await fillAndSubmitTransactionCategoryForm(page, {
-        category: 'Category for all types',
-        amount: new Decimal(15.5),
-      });
-
-      await expect(
-        page.getByTestId('transaction-categories-item'),
-      ).toContainText('Category for all types');
-      await expect(
-        page.getByTestId('transaction-categories-item'),
-      ).toContainText('15.5 €');
+      await setCategories(page, [
+        { category: 'Category for all types', amount: new Decimal(15.5) },
+      ]);
 
       await page
         .getByTestId('transaction-form')
@@ -132,7 +122,6 @@ test.describe('Transfer Transactions', () => {
       await switchTransactionType(page, TransactionType.Transfer);
 
       await fillTransactionForm(page, { amount: new Decimal(100) });
-      await page.getByTestId('add-category').click();
 
       const categoryOptions = page
         .getByLabel('Category')
@@ -185,6 +174,7 @@ test.describe('Transfer Transactions', () => {
         amount: templateDetails.amount,
         toAccount: templateDetails.toAccount,
         fromAccount: templateDetails.fromAccount,
+        categories: expect.arrayContaining(['Transfer category']),
       });
     });
 

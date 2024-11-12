@@ -38,7 +38,11 @@ export const TransactionCategoriesItem: FC<TransactionCategoriesItemProps> = ({
   )?.label;
 
   return (
-    <details name="transaction-categories" className="group">
+    <details
+      name="transaction-categories-item"
+      className="group"
+      data-testid="transaction-categories-item"
+    >
       <summary
         className={clsx(
           'grid grid-cols-[auto,1fr,auto] gap-2',
@@ -46,13 +50,16 @@ export const TransactionCategoriesItem: FC<TransactionCategoriesItemProps> = ({
           'hover:cursor-pointer theme-focus',
           'mr-[52px]',
         )}
+        data-testid="transaction-categories-item-summary"
       >
         <Icon
           name="ChevronRightIcon"
           className="group-open:rotate-90 shrink-0"
         />
-        <span className="truncate">{categoryLabel || '-'}</span>
-        <span className="shrink-0">
+        <span className="truncate" data-testid="category-label">
+          {categoryLabel || '-'}
+        </span>
+        <span className="shrink-0" data-testid="amount">
           {formatCurrency(categoryWatch.amount || 0)}
         </span>
       </summary>
