@@ -16,6 +16,7 @@ type SelectProps = {
   testId?: string;
   placeholder?: string;
   shouldUnregister?: boolean;
+  isLabelHidden?: boolean;
 };
 
 export type Option = {
@@ -78,6 +79,7 @@ export const Select = ({
   placeholder = 'Select option',
   handleOnChange = () => {},
   shouldUnregister,
+  isLabelHidden,
 }: SelectProps): JSX.Element => {
   const { register } = useFormContext();
 
@@ -91,7 +93,10 @@ export const Select = ({
 
   return (
     <div className={clsx('theme-text-primary', className)}>
-      <label htmlFor={id} className="block sr-only">
+      <label
+        htmlFor={id}
+        className={clsx('block mb-1', { 'sr-only': isLabelHidden })}
+      >
         {children}
       </label>
       <select

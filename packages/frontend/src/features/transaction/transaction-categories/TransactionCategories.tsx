@@ -54,6 +54,7 @@ export const TransactionCategories = ({
           id={`setFirstCategorySelect`}
           options={transactionCategories}
           placeholder="Select category"
+          isLabelHidden
           isDisabled={
             !categorySelectOnly && (!transactionAmount || transactionAmount < 0)
           }

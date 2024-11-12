@@ -143,6 +143,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
                 options={accountOptions}
                 isRequired
                 placeholder="Select Account"
+                isLabelHidden
               >
                 From Account
               </Select>
@@ -153,18 +154,26 @@ export const TransactionForm: FC<TransactionFormProps> = ({
                 options={accountOptions}
                 isRequired
                 placeholder="Select Account"
+                isLabelHidden
               >
                 To Account
               </Select>
             )}
           </div>
-          <Input id="amount" type="number" min={0.01} step={0.01} isRequired>
+          <Input
+            id="amount"
+            type="number"
+            min={0.01}
+            step={0.01}
+            isRequired
+            isLabelHidden
+          >
             Amount
           </Input>
-          <Input id="description" isRequired>
+          <Input id="description" isRequired isLabelHidden>
             Description
           </Input>
-          <Input id="date" type="datetime-local">
+          <Input id="date" type="datetime-local" isLabelHidden>
             Date
           </Input>
         </div>

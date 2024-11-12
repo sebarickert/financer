@@ -72,6 +72,7 @@ export const TransactionCategoriesItem: FC<TransactionCategoriesItemProps> = ({
           id={`${namePrefix}.categoryId`}
           options={categories}
           placeholder="Select category"
+          isLabelHidden
         >
           Category
         </Select>
@@ -81,6 +82,7 @@ export const TransactionCategoriesItem: FC<TransactionCategoriesItemProps> = ({
           min={0.01}
           step={0.01}
           isRequired={!categorySelectOnly}
+          isLabelHidden
         >
           Amount
         </Input>
@@ -95,7 +97,9 @@ export const TransactionCategoriesItem: FC<TransactionCategoriesItemProps> = ({
           <span className="sr-only">Remove</span>
         </Button>
         <div className="col-span-full">
-          <Input id={`${namePrefix}.description`}>Description</Input>
+          <Input id={`${namePrefix}.description`} isLabelHidden>
+            Description
+          </Input>
         </div>
       </div>
     </details>
