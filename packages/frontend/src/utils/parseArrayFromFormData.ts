@@ -11,7 +11,7 @@ export const parseArrayFromFormData = <T>(
   formatter?: Formatter<T>,
 ): T[] => {
   const result: unknown[] = [];
-  const regex = new RegExp(`^${arrayRootName}\\[(\\d+)\\]\\[(\\w+)\\]$`);
+  const regex = new RegExp(`^${arrayRootName}\\.(\\d+)\\.(\\w+)$`);
 
   for (const [key, value] of formData.entries()) {
     const match = regex.exec(key);
