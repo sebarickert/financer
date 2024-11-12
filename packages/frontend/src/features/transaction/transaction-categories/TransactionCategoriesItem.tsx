@@ -14,6 +14,7 @@ type TransactionCategoriesItemProps = {
   setUnallocatedAmount(index: number): void;
   categoryId: string;
   amount: number;
+  categorySelectOnly?: boolean;
 };
 
 export const TransactionCategoriesItem: FC<TransactionCategoriesItemProps> = ({
@@ -22,6 +23,7 @@ export const TransactionCategoriesItem: FC<TransactionCategoriesItemProps> = ({
   setUnallocatedAmount,
   categoryId,
   amount,
+  categorySelectOnly,
 }) => {
   const namePrefix = `categories.${index}` as const;
   const { setValue } = useFormContext();
@@ -71,7 +73,7 @@ export const TransactionCategoriesItem: FC<TransactionCategoriesItemProps> = ({
           type="number"
           min={0.01}
           step={0.01}
-          isRequired
+          isRequired={!categorySelectOnly}
         >
           Amount
         </Input>

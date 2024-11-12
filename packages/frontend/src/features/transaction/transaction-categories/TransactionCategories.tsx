@@ -54,7 +54,9 @@ export const TransactionCategories = ({
           id={`setFirstCategorySelect`}
           options={transactionCategories}
           placeholder="Select category"
-          isDisabled={!transactionAmount || transactionAmount < 0}
+          isDisabled={
+            !categorySelectOnly && (!transactionAmount || transactionAmount < 0)
+          }
           handleOnChange={(event) => {
             const categoryId = event.target.value;
 
@@ -73,6 +75,7 @@ export const TransactionCategories = ({
               setUnallocatedAmount={setUnallocatedAmount}
               amount={category.amount}
               categoryId={category.categoryId}
+              categorySelectOnly={categorySelectOnly}
             />
             <Button
               accentColor="secondary"
