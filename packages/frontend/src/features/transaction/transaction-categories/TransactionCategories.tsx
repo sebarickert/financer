@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { useEffect } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 
 import { CategoriesFormFullFields } from './transaction-categories.types';
@@ -9,21 +10,22 @@ import { Heading } from '$elements/Heading';
 import { Icon } from '$elements/Icon';
 import { Option, Select } from '$elements/select/select';
 
-interface TransactionCategoriesProps {
+type TransactionCategoriesProps = {
   transactionCategories: Option[];
   testId?: string;
   categorySelectOnly?: boolean;
-}
+};
 
-export interface FieldArrayFields {
+export type FieldArrayFields = {
+  setFirstCategorySelect: string;
   categories: CategoriesFormFullFields[];
-}
+};
 
 export const TransactionCategories = ({
   transactionCategories,
   categorySelectOnly,
 }: TransactionCategoriesProps): JSX.Element => {
-  const { setValue } = useFormContext<FieldArrayFields>();
+  const { setValue, resetField } = useFormContext<FieldArrayFields>();
   const { fields, remove, append } = useFieldArray<FieldArrayFields>({
     name: 'categories',
   });
@@ -40,21 +42,23 @@ export const TransactionCategories = ({
     setValue(`categories.${index}.amount`, unallocatedAmount);
   };
 
+  useEffect(() => {
+    resetField('setFirstCategorySelect');
+  }, [fields, resetField]);
+
   return (
     <>
       <Heading disableResponsiveSizing>Categories</Heading>
       {fields.length === 0 && (
         <Select
-          id={`${'123'}.categoryId`}
+          id={`setFirstCategorySelect`}
           options={transactionCategories}
           placeholder="Select category"
           isDisabled={!transactionAmount || transactionAmount < 0}
           handleOnChange={(event) => {
             const categoryId = event.target.value;
-            const categoryLabel =
-              event.target.options[event.target.selectedIndex].text;
 
-            append({ categoryId, amount: transactionAmount, categoryLabel });
+            append({ categoryId, amount: transactionAmount, description: '' });
           }}
         >
           Category
@@ -67,6 +71,8 @@ export const TransactionCategories = ({
               categories={transactionCategories}
               index={index}
               setUnallocatedAmount={setUnallocatedAmount}
+              amount={category.amount}
+              categoryId={category.categoryId}
             />
             <Button
               accentColor="secondary"
@@ -92,7 +98,7 @@ export const TransactionCategories = ({
             { 'border-t theme-border-primary mt-4 pt-2': !!fields.length },
           )}
           onClick={() =>
-            append({ categoryId: '', amount: NaN, categoryLabel: '' })
+            append({ categoryId: '', amount: NaN, description: '' })
           }
         >
           <p className="pl-2">Add Category</p>

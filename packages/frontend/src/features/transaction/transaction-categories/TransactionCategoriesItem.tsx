@@ -1,6 +1,6 @@
 import clsx from 'clsx';
-import { FC } from 'react';
-import { useWatch } from 'react-hook-form';
+import { FC, useEffect } from 'react';
+import { useFormContext, useWatch } from 'react-hook-form';
 
 import { Button } from '$elements/button/button';
 import { Icon } from '$elements/Icon';
@@ -12,15 +12,28 @@ type TransactionCategoriesItemProps = {
   index: number;
   categories: Option[];
   setUnallocatedAmount(index: number): void;
+  categoryId: string;
+  amount: number;
 };
 
 export const TransactionCategoriesItem: FC<TransactionCategoriesItemProps> = ({
   index,
   categories,
   setUnallocatedAmount,
+  categoryId,
+  amount,
 }) => {
   const namePrefix = `categories.${index}` as const;
-  const { categoryLabel, amount } = useWatch({ name: namePrefix });
+  const { setValue } = useFormContext();
+  const categoryWatch = useWatch({ name: namePrefix });
+
+  useEffect(() => {
+    setValue(namePrefix, { categoryId, amount });
+  }, [amount, categoryId, namePrefix, setValue]);
+
+  const categoryLabel = categories.find(
+    (category) => category.value === categoryWatch.categoryId,
+  )?.label;
 
   return (
     <details name="transaction-categories" className="group">
@@ -37,7 +50,9 @@ export const TransactionCategoriesItem: FC<TransactionCategoriesItemProps> = ({
           className="group-open:rotate-90 shrink-0"
         />
         <span className="truncate">{categoryLabel || '-'}</span>
-        <span className="shrink-0">{formatCurrency(amount || 0)}</span>
+        <span className="shrink-0">
+          {formatCurrency(categoryWatch.amount || 0)}
+        </span>
       </summary>
       <div
         className={clsx(
