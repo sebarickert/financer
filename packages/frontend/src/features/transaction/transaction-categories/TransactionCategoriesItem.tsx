@@ -40,7 +40,7 @@ export const TransactionCategoriesItem: FC<TransactionCategoriesItemProps> = ({
       <summary
         className={clsx(
           'grid grid-cols-[auto,1fr,auto] gap-2',
-          'p-3 rounded-md theme-layer-color-with-hover',
+          'p-3 rounded-md theme-layer-color-with-hover theme-text-primary',
           'hover:cursor-pointer theme-focus',
           'mr-[52px]',
         )}
