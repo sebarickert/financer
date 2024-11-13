@@ -29,16 +29,6 @@ interface ButtonProps
   haptic?: HapticType;
 }
 
-export const buttonStyles = {
-  base: clsx(
-    'theme-focus ring-offset-2 dark:ring-offset-0 rounded-md text-center whitespace-nowrap',
-    'inline-flex items-center justify-center gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0',
-    'disabled:pointer-events-none disabled:opacity-50',
-  ),
-  default: clsx('py-2.5 h-11 px-[18px] text-base'),
-  icon: clsx('h-11 w-11'),
-};
-
 export const Button = ({
   accentColor = 'primary',
   children,
@@ -56,6 +46,16 @@ export const Button = ({
   haptic = 'none',
   ...props
 }: ButtonProps): JSX.Element => {
+  const buttonStyles = {
+    base: clsx(
+      'theme-focus ring-offset-2 dark:ring-offset-0 rounded-md text-center whitespace-nowrap',
+      'inline-flex items-center justify-center gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0',
+      'disabled:pointer-events-none disabled:opacity-50',
+    ),
+    default: clsx('py-2.5 h-11 px-[18px] text-base'),
+    icon: clsx('h-11 w-11'),
+  };
+
   const buttonClasses = clsx(className, {
     [buttonStyles.base]: applyBaseStyles,
     [buttonStyles.default]: size === 'default' && accentColor !== 'unstyled',
