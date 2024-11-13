@@ -46,9 +46,9 @@ export const TransactionCategoriesItem: FC<TransactionCategoriesItemProps> = ({
       <summary
         className={clsx(
           'grid grid-cols-[auto,1fr,auto] gap-2',
-          'p-3 rounded-md theme-layer-color-with-hover theme-text-primary',
+          'p-2.5 px-3 h-11 rounded-md theme-layer-color-with-hover theme-text-primary',
           'hover:cursor-pointer theme-focus',
-          'mr-[56px]',
+          'mr-[52px]',
           '[&::-webkit-details-marker]:hidden',
         )}
         data-testid="transaction-categories-item-summary"
@@ -89,7 +89,6 @@ export const TransactionCategoriesItem: FC<TransactionCategoriesItemProps> = ({
         </Input>
         <Button
           accentColor="secondary"
-          className={clsx('!h-12 !w-12')}
           size="icon"
           onClick={() => setUnallocatedAmount(index)}
         >

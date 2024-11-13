@@ -102,7 +102,7 @@ export const Select = ({
       <select
         data-testid={testId}
         id={id}
-        className={clsx('theme-field', 'block w-full p-3 rounded-md')}
+        className={clsx('theme-field', 'block w-full py-2.5 h-11 rounded-md')}
         required={isRequired}
         disabled={isDisabled}
         {...register(id, {

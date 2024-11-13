@@ -81,7 +81,7 @@ export const TransactionCategories = ({
             />
             <Button
               accentColor="secondary"
-              className={clsx('!h-12 !w-12', 'absolute right-0 top-0')}
+              className={clsx('absolute right-0 top-0')}
               size="icon"
               onClick={() => remove(index)}
               testId="remove-category"
