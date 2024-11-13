@@ -48,7 +48,7 @@ export const TransactionCategoriesItem: FC<TransactionCategoriesItemProps> = ({
           'grid grid-cols-[auto,1fr,auto] gap-2',
           'p-3 rounded-md theme-layer-color-with-hover theme-text-primary',
           'hover:cursor-pointer theme-focus',
-          'mr-[52px]',
+          'mr-[56px]',
           '[&::-webkit-details-marker]:hidden',
         )}
         data-testid="transaction-categories-item-summary"
@@ -89,9 +89,8 @@ export const TransactionCategoriesItem: FC<TransactionCategoriesItemProps> = ({
         </Input>
         <Button
           accentColor="secondary"
-          className={clsx(
-            '!h-12 !w-11 !p-0 inline-flex justify-center items-center',
-          )}
+          className={clsx('!h-12 !w-12')}
+          size="icon"
           onClick={() => setUnallocatedAmount(index)}
         >
           <Icon name={'PlusCircleIcon'} />

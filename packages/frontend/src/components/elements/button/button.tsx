@@ -24,19 +24,19 @@ interface ButtonProps
   testId?: string;
   isDisabled?: boolean;
   applyBaseStyles?: boolean;
-  size?: 'small' | 'default' | 'icon';
+  size?: 'default' | 'icon';
   /** defaults to `none` */
   haptic?: HapticType;
 }
 
 export const buttonStyles = {
   base: clsx(
-    'theme-focus ring-offset-2 dark:ring-offset-0 rounded-md w-full text-center sm:w-fit whitespace-nowrap',
+    'theme-focus ring-offset-2 dark:ring-offset-0 rounded-md text-center whitespace-nowrap',
     'inline-flex items-center justify-center gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0',
     'disabled:pointer-events-none disabled:opacity-50',
   ),
   default: clsx('py-2.5 h-11 px-[18px] text-base'),
-  icon: clsx('size-11'),
+  icon: clsx('h-11 w-11'),
 };
 
 export const Button = ({
@@ -60,7 +60,6 @@ export const Button = ({
     [buttonStyles.base]: applyBaseStyles,
     [buttonStyles.default]: size === 'default' && accentColor !== 'unstyled',
     [buttonStyles.icon]: size === 'icon' && accentColor !== 'unstyled',
-    ['py-2.5 px-4 text-sm']: size === 'small' && accentColor !== 'unstyled',
     ['theme-button-primary']: accentColor === 'primary',
     ['theme-button-secondary']: accentColor === 'secondary',
     ['theme-button-danger']: accentColor === 'danger',

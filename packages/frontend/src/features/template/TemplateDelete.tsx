@@ -1,6 +1,5 @@
 'use client';
 
-import clsx from 'clsx';
 import { useId } from 'react';
 
 import { handleTemplateDelete } from '$actions/template/handleTemplateDelete';
@@ -20,13 +19,7 @@ export const TemplateDelete = ({ id }: TemplateDeleteProps) => {
 
   return (
     <>
-      <Button
-        accentColor="secondary"
-        className={clsx(
-          '!h-11 !w-11 !p-0 inline-flex justify-center items-center',
-        )}
-        popoverTarget={popoverId}
-      >
+      <Button accentColor="secondary" size="icon" popoverTarget={popoverId}>
         <Icon name={'TrashIcon'} />
         <span className="sr-only">Delete</span>
       </Button>

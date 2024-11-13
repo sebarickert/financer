@@ -31,15 +31,13 @@ export const Popper: FC<PopperProps> = ({ className, items, children }) => {
       <Button
         popoverTarget={popperId}
         accentColor="secondary"
-        className={clsx(
-          '!h-11 !w-11 !p-0 inline-flex justify-center items-center',
-          'anchor-name-[popover-anchor]',
-        )}
+        size="icon"
+        className={clsx('anchor-name-[popover-anchor]')}
         id="popover-anchor"
         testId="popper-button"
       >
         <Icon name="EllipsisVerticalIcon" />
-        {/* TODO Add screen reader text  */}
+        <span className="sr-only">More options</span>
       </Button>
       <div
         className={clsx(
