@@ -9,7 +9,7 @@ import { test, expect, Page } from '$utils/financer-page';
 import { fillTemplateForm } from '$utils/template/fillTemplateForm';
 import { getTemplateDataFromTemplateList } from '$utils/template/getTemplateDataFromTemplateList';
 import { getTemplateFormValues } from '$utils/template/getTemplateFormValues';
-import { fillAndSubmitTransactionCategoryForm } from '$utils/transaction/fillAndSubmitTransactionCategoryForm';
+import { setCategories } from '$utils/transaction/setCategories';
 
 const transactionTypes = [
   TransactionType.Income,
@@ -81,15 +81,7 @@ test.describe('Add Template', () => {
           );
 
           if (category) {
-            await page
-              .getByTestId('template-form')
-              .getByTestId('add-category')
-              .click();
-            await fillAndSubmitTransactionCategoryForm(
-              page,
-              { category },
-              true,
-            );
+            await setCategories(page, [{ category }], 'page');
           }
 
           await page.getByTestId('template-form').getByTestId('submit').click();
@@ -204,15 +196,7 @@ test.describe('Add Template', () => {
           );
 
           if (category) {
-            await page
-              .getByTestId('template-form')
-              .getByTestId('add-category')
-              .click();
-            await fillAndSubmitTransactionCategoryForm(
-              page,
-              { category },
-              true,
-            );
+            await setCategories(page, [{ category }], 'page');
           }
 
           await page.getByTestId('template-form').getByTestId('submit').click();

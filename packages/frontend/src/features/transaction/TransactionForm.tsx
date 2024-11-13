@@ -4,8 +4,8 @@ import clsx from 'clsx';
 import { FC, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { TransactionCategories } from './transaction-categories/transaction-categories';
 import { CategoriesFormFullFields } from './transaction-categories/transaction-categories.types';
+import { TransactionCategories } from './transaction-categories/TransactionCategories';
 
 import {
   VisibilityType,
@@ -143,6 +143,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
                 options={accountOptions}
                 isRequired
                 placeholder="Select Account"
+                isLabelHidden
               >
                 From Account
               </Select>
@@ -153,25 +154,32 @@ export const TransactionForm: FC<TransactionFormProps> = ({
                 options={accountOptions}
                 isRequired
                 placeholder="Select Account"
+                isLabelHidden
               >
                 To Account
               </Select>
             )}
           </div>
-          <Input id="amount" type="number" min={0.01} step={0.01} isRequired>
+          <Input
+            id="amount"
+            type="number"
+            min={0.01}
+            step={0.01}
+            isRequired
+            isLabelHidden
+          >
             Amount
           </Input>
-          <Input id="description" isRequired>
+          <Input id="description" isRequired isLabelHidden>
             Description
           </Input>
-          <Input id="date" type="datetime-local">
+          <Input id="date" type="datetime-local" isLabelHidden>
             Date
           </Input>
         </div>
       </section>
       {transactionCategories.length > 0 && (
-        <section className="mt-8">
-          <h2 className="sr-only">Categories</h2>
+        <section className="mt-4">
           <TransactionCategories
             transactionCategories={transactionCategories}
           />

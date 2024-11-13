@@ -28,17 +28,18 @@ const templateIconMapping: Record<string, IconName> = {
 };
 
 export const TemplateList: FC<TemplateListProps> = ({ templates }) => {
-  const filteredTemplates = Map.groupBy(
-    templates,
-    ({ templateType }: TransactionTemplateDto) => templateType[0],
-  ) as Map<TransactionTemplateType, TransactionTemplateDto[]>;
+  const groupedTemplates = Object.entries(
+    Object.groupBy(templates, ({ templateType }) => templateType[0]),
+  )
+    .map(([type, items]) => ({ type, items }))
+    .sort((a) => (a.type === 'MANUAL' ? -1 : 1)); // MANUAL templates should be first
 
   return (
     <section className="grid gap-8">
-      {[...filteredTemplates.entries()].map(([label, items]) => (
+      {groupedTemplates.map(({ type, items }) => (
         <List
-          label={getLabel(label)}
-          key={label}
+          label={getLabel(type as TransactionTemplateType)}
+          key={type}
           columns={2}
           testId="template-list"
         >

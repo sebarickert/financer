@@ -18,10 +18,10 @@ const formatter: Formatter<TestType> = {
 describe('parseArrayFromFormData', () => {
   it('should parse valid form data', () => {
     const formData = new FormData();
-    formData.append('items[0][name]', 'Alice');
-    formData.append('items[0][age]', '30');
-    formData.append('items[1][name]', 'Bob');
-    formData.append('items[1][age]', '25');
+    formData.append('items.0.name', 'Alice');
+    formData.append('items.0.age', '30');
+    formData.append('items.1.name', 'Bob');
+    formData.append('items.1.age', '25');
 
     const result = parseArrayFromFormData<TestType>(
       formData,
@@ -38,10 +38,10 @@ describe('parseArrayFromFormData', () => {
 
   it('should filter out invalid items', () => {
     const formData = new FormData();
-    formData.append('items[0][name]', 'Alice');
-    formData.append('items[0][age]', '30');
-    formData.append('items[1][name]', 'Bob');
-    formData.append('items[1][age]', 'invalid');
+    formData.append('items.0.name', 'Alice');
+    formData.append('items.0.age', '30');
+    formData.append('items.1.name', 'Bob');
+    formData.append('items.1.age', 'invalid');
 
     const result = parseArrayFromFormData<TestType>(
       formData,
@@ -55,12 +55,12 @@ describe('parseArrayFromFormData', () => {
 
   it('should handle mixed valid and invalid data', () => {
     const formData = new FormData();
-    formData.append('items[0][name]', 'Alice');
-    formData.append('items[0][age]', '30');
-    formData.append('items[1][name]', 'Bob');
-    formData.append('items[1][age]', '25');
-    formData.append('items[2][name]', 'Charlie');
-    formData.append('items[2][age]', 'invalid');
+    formData.append('items.0.name', 'Alice');
+    formData.append('items.0.age', '30');
+    formData.append('items.1.name', 'Bob');
+    formData.append('items.1.age', '25');
+    formData.append('items.2.name', 'Charlie');
+    formData.append('items.2.age', 'invalid');
 
     const result = parseArrayFromFormData<TestType>(
       formData,

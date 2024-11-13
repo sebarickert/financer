@@ -4242,7 +4242,7 @@
       "userId": "61460d7354ea082ad0256749",
       "fromAccount": null,
       "toAccount": "22490f9e-b02b-4b0f-891d-997005424dfe",
-      "categories": []
+      "categories": ["75cdcac9-7eff-4f72-8e18-c9c78b020904"]
     },
     {
       "createdAt": "2024-11-05T12:22:11.818Z",
@@ -4258,7 +4258,7 @@
       "userId": "61460d7354ea082ad0256749",
       "fromAccount": "ecef04a8-2625-4f54-ac51-d95ee9cfe075",
       "toAccount": null,
-      "categories": []
+      "categories": ["5e0c24e2-5499-449c-b210-bb7bce21db42"]
     },
     {
       "createdAt": "2024-11-05T12:22:31.665Z",
@@ -4274,7 +4274,7 @@
       "userId": "61460d7354ea082ad0256749",
       "fromAccount": "22490f9e-b02b-4b0f-891d-997005424dfe",
       "toAccount": "781ae8d6-f7e4-4176-82cd-cb9de856b524",
-      "categories": []
+      "categories": ["96f05750-659f-45d4-9c22-248961f8e5dc"]
     }
   ],
   "transactionTemplateLogs": []

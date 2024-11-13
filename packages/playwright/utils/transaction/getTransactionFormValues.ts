@@ -26,6 +26,7 @@ type TransactionFormFields = {
   amount?: Decimal;
   fromAccount?: string;
   toAccount?: string;
+  categories?: string[];
 };
 
 export const getTransactionFormValues = async (
@@ -51,11 +52,33 @@ export const getTransactionFormValues = async (
     transactionForm.locator('#fromAccount'),
   );
 
+  const hasCategories = await page
+    .getByTestId('transaction-categories-item-summary')
+    .first()
+    .isVisible();
+
+  const categories: string[] = [];
+
+  if (hasCategories) {
+    const categoryElements = await page
+      .getByTestId('transaction-categories-item-summary')
+      .evaluateAll((elements) =>
+        elements.map(
+          (element) =>
+            element.querySelector('[data-testid="category-label"]')
+              ?.textContent || '',
+        ),
+      );
+
+    categories.push(...categoryElements);
+  }
+
   return {
     date,
     description,
     amount: amount ? new Decimal(amount) : undefined,
     toAccount,
     fromAccount,
+    categories,
   };
 };

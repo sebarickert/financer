@@ -4,9 +4,9 @@ import { getAccountBalanceFromAccountListByName } from '$utils/account/getAccoun
 import { applyFixture } from '$utils/applyFixture';
 import { clickPopperItem } from '$utils/common/clickPopperItem';
 import { test, expect } from '$utils/financer-page';
-import { fillAndSubmitTransactionCategoryForm } from '$utils/transaction/fillAndSubmitTransactionCategoryForm';
 import { fillTransactionForm } from '$utils/transaction/fillTransactionForm';
 import { getTransactionDetails } from '$utils/transaction/getTransactionDetails';
+import { setCategories } from '$utils/transaction/setCategories';
 
 test.describe('Expense Transactions', () => {
   test.beforeEach(async () => {
@@ -116,9 +116,7 @@ test.describe('Expense Transactions', () => {
         .getByRole('button', { name: 'Submit' })
         .click();
 
-      // TODO Have to go to another page and come back to get the updated balance (cache issue)
-      await page.goto('/statistics/expenses');
-      await page.goto('/accounts');
+      await page.getByRole('link', { name: 'Accounts' }).click();
 
       const updatedBalanceForPreviousAccount =
         await getAccountBalanceFromAccountListByName(
@@ -155,15 +153,10 @@ test.describe('Expense Transactions', () => {
 
       await clickPopperItem(page, 'Edit');
 
-      await page.getByRole('button', { name: 'Edit category' }).click();
-
-      await fillAndSubmitTransactionCategoryForm(
+      await setCategories(
         page,
-        {
-          category: 'Category for all types',
-          amount: new Decimal(200),
-        },
-        true,
+        [{ category: 'Category for all types', amount: new Decimal(200) }],
+        'page',
       );
 
       await page
@@ -196,7 +189,7 @@ test.describe('Expense Transactions', () => {
         .getByText('Dummy EXPENSE 2', { exact: true })
         .click();
 
-      const { id, categories: initialCategories } =
+      const { categories: initialCategories } =
         await getTransactionDetails(page);
 
       await clickPopperItem(page, 'Edit');
@@ -205,13 +198,7 @@ test.describe('Expense Transactions', () => {
         3,
       );
 
-      await page.getByRole('button', { name: 'Edit category' }).first().click();
-
-      await page
-        .getByTestId('drawer')
-        .getByTestId('transaction-categories-form')
-        .getByRole('button', { name: 'Delete', exact: true })
-        .click();
+      await page.getByTestId('remove-category').first().click();
 
       await expect(page.getByTestId('transaction-categories-item')).toHaveCount(
         2,
@@ -222,10 +209,6 @@ test.describe('Expense Transactions', () => {
         .getByTestId('transaction-form')
         .getByRole('button', { name: 'Submit' })
         .click();
-
-      // TODO Have to go to another page and come back to get the updated data (cache issue)
-      await page.goto('/statistics/expenses');
-      await page.goto(`/statistics/expenses/${id}`);
 
       const { categories: updatedCategories } =
         await getTransactionDetails(page);
@@ -244,7 +227,7 @@ test.describe('Expense Transactions', () => {
         .getByText('Dummy EXPENSE 2', { exact: true })
         .click();
 
-      const { id, categories: initialCategories } =
+      const { categories: initialCategories } =
         await getTransactionDetails(page);
 
       await clickPopperItem(page, 'Edit');
@@ -253,29 +236,9 @@ test.describe('Expense Transactions', () => {
         3,
       );
 
-      await page.getByRole('button', { name: 'Edit category' }).first().click();
-
-      await page
-        .getByTestId('drawer')
-        .getByTestId('transaction-categories-form')
-        .getByRole('button', { name: 'Delete', exact: true })
-        .click();
-
-      await page.getByRole('button', { name: 'Edit category' }).first().click();
-
-      await page
-        .getByTestId('drawer')
-        .getByTestId('transaction-categories-form')
-        .getByRole('button', { name: 'Delete', exact: true })
-        .click();
-
-      await page.getByRole('button', { name: 'Edit category' }).first().click();
-
-      await page
-        .getByTestId('drawer')
-        .getByTestId('transaction-categories-form')
-        .getByRole('button', { name: 'Delete', exact: true })
-        .click();
+      await page.getByTestId('remove-category').first().click();
+      await page.getByTestId('remove-category').first().click();
+      await page.getByTestId('remove-category').first().click();
 
       await expect(page.getByTestId('transaction-categories-item')).toHaveCount(
         0,
@@ -286,10 +249,6 @@ test.describe('Expense Transactions', () => {
         .getByTestId('transaction-form')
         .getByRole('button', { name: 'Submit' })
         .click();
-
-      // TODO Have to go to another page and come back to get the updated data (cache issue)
-      await page.goto('/statistics/expenses');
-      await page.goto(`/statistics/expenses/${id}`);
 
       const { categories: updatedCategories } =
         await getTransactionDetails(page);

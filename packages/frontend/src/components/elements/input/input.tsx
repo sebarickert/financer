@@ -15,6 +15,7 @@ type InputProps = {
   ref?: React.MutableRefObject<null>;
   onChange?(event: ChangeEvent<HTMLInputElement>): void;
   testId?: string;
+  isLabelHidden?: boolean;
 };
 
 const getValueParsingOptions = (type: InputProps['type']) => {
@@ -33,12 +34,16 @@ export const Input = ({
   max,
   step,
   testId,
+  isLabelHidden,
 }: InputProps): JSX.Element => {
   const { register } = useFormContext();
 
   return (
     <div className="theme-text-primary">
-      <label htmlFor={id} className="block">
+      <label
+        htmlFor={id}
+        className={clsx('block mb-1', { 'sr-only': isLabelHidden })}
+      >
         {children}
       </label>
       <input
@@ -48,9 +53,10 @@ export const Input = ({
         min={min}
         max={max}
         step={step}
-        className={clsx('theme-field', 'block w-full p-3 rounded-md mt-1')}
+        className={clsx('theme-field', 'block w-full p-3 rounded-md')}
         required={isRequired}
         data-testid={testId}
+        placeholder={isLabelHidden ? (children as string) : undefined}
         {...register(id, {
           min,
           max,

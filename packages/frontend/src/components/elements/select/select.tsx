@@ -16,6 +16,7 @@ type SelectProps = {
   testId?: string;
   placeholder?: string;
   shouldUnregister?: boolean;
+  isLabelHidden?: boolean;
 };
 
 export type Option = {
@@ -78,6 +79,7 @@ export const Select = ({
   placeholder = 'Select option',
   handleOnChange = () => {},
   shouldUnregister,
+  isLabelHidden,
 }: SelectProps): JSX.Element => {
   const { register } = useFormContext();
 
@@ -91,43 +93,46 @@ export const Select = ({
 
   return (
     <div className={clsx('theme-text-primary', className)}>
-      <label htmlFor={id} className="block">
+      <label
+        htmlFor={id}
+        className={clsx('block mb-1', { 'sr-only': isLabelHidden })}
+      >
         {children}
-        <select
-          data-testid={testId}
-          id={id}
-          className={clsx('theme-field', 'block w-full p-3 rounded-md mt-1')}
-          required={isRequired}
-          disabled={isDisabled}
-          {...register(id, {
-            disabled: isDisabled,
-            onChange: handleChange,
-            required: isRequired,
-            shouldUnregister,
-          })}
-        >
-          <button type="button" className="after:absolute after:inset-0">
-            <SelectedOption />
-          </button>
-          <OptionElement
-            isDisabled
-            value=""
-            hasIconPlaceholder={hasSomeOptionIcon}
-          >
-            {placeholder}
-          </OptionElement>
-          {options.map(({ label, ...rest }, index) => (
-            <OptionElement
-              key={rest.value}
-              {...rest}
-              hasIconPlaceholder={!rest.icon && hasSomeOptionIcon}
-              isLast={index === options.length - 1}
-            >
-              {label}
-            </OptionElement>
-          ))}
-        </select>
       </label>
+      <select
+        data-testid={testId}
+        id={id}
+        className={clsx('theme-field', 'block w-full p-3 rounded-md')}
+        required={isRequired}
+        disabled={isDisabled}
+        {...register(id, {
+          disabled: isDisabled,
+          onChange: handleChange,
+          required: isRequired,
+          shouldUnregister,
+        })}
+      >
+        <button type="button" className="after:absolute after:inset-0">
+          <SelectedOption />
+        </button>
+        <OptionElement
+          isDisabled
+          value=""
+          hasIconPlaceholder={hasSomeOptionIcon}
+        >
+          {placeholder}
+        </OptionElement>
+        {options.map(({ label, ...rest }, index) => (
+          <OptionElement
+            key={rest.value}
+            {...rest}
+            hasIconPlaceholder={!rest.icon && hasSomeOptionIcon}
+            isLast={index === options.length - 1}
+          >
+            {label}
+          </OptionElement>
+        ))}
+      </select>
     </div>
   );
 };
