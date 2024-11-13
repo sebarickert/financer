@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 import { Logo } from '$blocks/Logo';
 import { Button } from '$elements/Button/Button';
-import { ButtonGroup } from '$elements/Button/button.group';
+import { ButtonGroup } from '$elements/Button/ButtonGroup';
 import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { Paragraph } from '$elements/paragraph/paragraph';
 
@@ -41,7 +41,7 @@ export const Login = (): JSX.Element => {
             <Paragraph className="mb-8">
               Log in to take control of your finances.
             </Paragraph>
-            <ButtonGroup isReverse>
+            <ButtonGroup>
               {checkIsEnabled(NEXT_PUBLIC_IS_GITHUB_OAUTH_ENABLED) && (
                 <Button href="/auth/github" onClick={startAuthLoading}>
                   Log In to Financer

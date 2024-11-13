@@ -6,7 +6,7 @@ import { FC, useId } from 'react';
 import { handleCategoryDelete } from '$actions/category/handleCategoryDelete';
 import { Drawer } from '$blocks/drawer/drawer';
 import { Button } from '$elements/Button/Button';
-import { ButtonGroup } from '$elements/Button/button.group';
+import { ButtonGroup } from '$elements/Button/ButtonGroup';
 import { Icon } from '$elements/Icon';
 
 type CategoryDeletePopperItemProps = {
@@ -39,9 +39,9 @@ export const CategoryDeletePopperItem: FC<CategoryDeletePopperItemProps> = ({
           'Are you sure you want to permanently delete this category?'
         }
       >
-        <ButtonGroup isReverse isHorizontal>
+        <ButtonGroup>
           <Button haptic="heavy" accentColor={'danger'} onClick={handleClick}>
-            {'Delete'}
+            Delete
           </Button>
           <Button
             haptic="light"

@@ -5,7 +5,7 @@ import { FC, useId } from 'react';
 
 import { Drawer } from '$blocks/drawer/drawer';
 import { Button } from '$elements/Button/Button';
-import { ButtonGroup } from '$elements/Button/button.group';
+import { ButtonGroup } from '$elements/Button/ButtonGroup';
 import { Icon } from '$elements/Icon';
 import { handleAccountDelete } from 'src/actions/account/handleAccountDelete';
 
@@ -39,7 +39,7 @@ export const AccountDeletePopperItem: FC<AccountDeletePopperItemProps> = ({
           'Are you sure you want to permanently delete this account?'
         }
       >
-        <ButtonGroup isReverse isHorizontal>
+        <ButtonGroup>
           <Button haptic="heavy" accentColor={'danger'} onClick={handleClick}>
             Delete
           </Button>

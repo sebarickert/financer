@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { useFormStatus } from 'react-dom';
 
 import { ButtonAccentColor, Button } from '../../elements/Button/Button';
-import { ButtonGroup } from '../../elements/Button/button.group';
+import { ButtonGroup } from '../../elements/Button/ButtonGroup';
 
 import { Loader } from '$elements/loader/loader';
 import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
@@ -27,7 +27,7 @@ export const FormFooter: FC<FormFooterProps> = ({
   return (
     <>
       <div className="mt-12">
-        <ButtonGroup isReverse isHorizontal>
+        <ButtonGroup>
           <Button
             accentColor={accentColor}
             type="submit"
