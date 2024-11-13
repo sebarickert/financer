@@ -17,7 +17,7 @@ import '$assets/tailwind.css';
 const appName = 'Financer';
 
 export const metadata: Metadata = {
-  title: { template: `%s | ${appName}`, default: appName },
+  title: { template: `%s — ${appName}`, default: appName },
   icons: faviconList,
   appleWebApp: {
     title: appName,
@@ -49,10 +49,13 @@ export async function generateViewport(): Promise<Viewport> {
   }
 
   return {
-    width: 'device-width',
-    initialScale: 1.0,
-    viewportFit: 'cover',
     themeColor,
+    width: 'device-width',
+    viewportFit: 'cover',
+    initialScale: 1.0,
+    minimumScale: 1.0,
+    maximumScale: 1.0,
+    userScalable: false,
   };
 }
 

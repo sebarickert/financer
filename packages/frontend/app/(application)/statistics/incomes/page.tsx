@@ -4,7 +4,7 @@ import { FC } from 'react';
 import { IncomeListingContainer } from '$container/incomes/IncomeListingContainer';
 
 export const metadata: Metadata = {
-  title: 'Incomes',
+  title: 'Incomes / Statistics',
 };
 
 const IncomesPage: FC = () => {

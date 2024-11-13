@@ -2,15 +2,21 @@ import { Metadata } from 'next';
 import { FC } from 'react';
 
 import { TemplateEditContainer } from '$container/templates/TemplateEditContainer';
-
-// TODO change to dynamic title
-export const metadata: Metadata = {
-  title: 'Edit Template',
-};
+import { TransactionTemplateService } from '$ssr/api/transaction-template.service';
 
 type EditTemplatePageProps = {
   params: {
     templateId: string;
+  };
+};
+
+export const generateMetadata = async ({
+  params: { templateId },
+}: EditTemplatePageProps): Promise<Metadata> => {
+  const template = await TransactionTemplateService.getById(templateId);
+
+  return {
+    title: `Edit ${template.templateName} / Templates`,
   };
 };
 
