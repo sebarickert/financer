@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Button } from '$elements/Button1/Button';
+import { Button } from '$elements/Button/Button';
 import { IconName, Icon } from '$elements/Icon';
 import { removeToastMessage } from '$reducer/notifications.reducer';
 

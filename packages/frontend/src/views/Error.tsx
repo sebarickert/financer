@@ -1,7 +1,7 @@
 'use client';
 
 import { Logo } from '$blocks/Logo';
-import { Button } from '$elements/Button1/Button';
+import { Button } from '$elements/Button/Button';
 import { Heading } from '$elements/Heading';
 import { Link } from '$elements/Link';
 import { Container } from '$layouts/Container';

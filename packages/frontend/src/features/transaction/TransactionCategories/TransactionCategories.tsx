@@ -5,7 +5,7 @@ import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { CategoriesFormFullFields } from './transaction-categories.types';
 import { TransactionCategoriesItem } from './TransactionCategoriesItem';
 
-import { Button } from '$elements/Button1/Button';
+import { Button } from '$elements/Button/Button';
 import { Heading } from '$elements/Heading';
 import { Icon } from '$elements/Icon';
 import { Option, Select } from '$elements/select/select';

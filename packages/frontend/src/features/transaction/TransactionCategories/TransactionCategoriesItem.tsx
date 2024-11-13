@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { FC, useEffect } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 
-import { Button } from '$elements/Button1/Button';
+import { Button } from '$elements/Button/Button';
 import { Icon } from '$elements/Icon';
 import { Input } from '$elements/input/input';
 import { Select, Option } from '$elements/select/select';

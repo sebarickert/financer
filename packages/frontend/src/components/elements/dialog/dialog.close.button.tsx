@@ -1,4 +1,4 @@
-import { Button } from '$elements/Button1/Button';
+import { Button } from '$elements/Button/Button';
 import { Icon } from '$elements/Icon';
 
 interface DialogCloseButtonProps {

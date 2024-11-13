@@ -4,8 +4,8 @@ import { useId } from 'react';
 
 import { handleTemplateDelete } from '$actions/template/handleTemplateDelete';
 import { Drawer } from '$blocks/drawer/drawer';
-import { Button } from '$elements/Button1/Button';
-import { ButtonGroup } from '$elements/Button1/ButtonGroup';
+import { Button } from '$elements/Button/Button';
+import { ButtonGroup } from '$elements/Button/ButtonGroup';
 import { Icon } from '$elements/Icon';
 
 type TemplateDeleteProps = {
