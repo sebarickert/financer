@@ -49,6 +49,7 @@ export const TransactionCategoriesItem: FC<TransactionCategoriesItemProps> = ({
           'p-3 rounded-md theme-layer-color-with-hover theme-text-primary',
           'hover:cursor-pointer theme-focus',
           'mr-[52px]',
+          '[&::-webkit-details-marker]:hidden',
         )}
         data-testid="transaction-categories-item-summary"
       >
