@@ -7,7 +7,7 @@ import {
 
 import { FormFooter } from './form.footer';
 
-import { ButtonAccentColor } from '$elements/Button/Button';
+import { ButtonAccentColor } from '$elements/Button1/Button';
 
 type FormProps<FormValues extends FieldValues> = {
   children: React.ReactNode;

@@ -3,7 +3,7 @@
 import clsx from 'clsx';
 import { FC } from 'react';
 
-import { Button } from '$elements/Button/Button';
+import { Button } from '$elements/Button1/Button';
 import { Heading } from '$elements/Heading';
 import { Icon } from '$elements/Icon';
 import { Paragraph } from '$elements/paragraph/paragraph';

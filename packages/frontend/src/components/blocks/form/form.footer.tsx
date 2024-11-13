@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { useFormStatus } from 'react-dom';
 
-import { ButtonAccentColor, Button } from '../../elements/Button/Button';
-import { ButtonGroup } from '../../elements/Button/ButtonGroup';
+import { ButtonAccentColor, Button } from '../../elements/Button1/Button';
+import { ButtonGroup } from '../../elements/Button1/ButtonGroup';
 
 import { Loader } from '$elements/loader/loader';
 import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';

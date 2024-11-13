@@ -5,7 +5,7 @@ import { FC } from 'react';
 
 import { PagerOptions } from './pager.service';
 
-import { Button } from '$elements/Button/Button';
+import { Button } from '$elements/Button1/Button';
 import { Icon } from '$elements/Icon';
 import { Paragraph } from '$elements/paragraph/paragraph';
 

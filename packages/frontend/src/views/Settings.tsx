@@ -6,7 +6,7 @@ import { List } from '$blocks/List';
 import { ProminentLink } from '$blocks/ProminentLink';
 import { ThemeSwitcher } from '$blocks/ThemeSwitcher/ThemeSwitcher';
 import { settingsPaths } from '$constants/settings-paths';
-import { Button } from '$elements/Button/Button';
+import { Button } from '$elements/Button1/Button';
 import { Heading } from '$elements/Heading';
 import { IconName } from '$elements/Icon';
 

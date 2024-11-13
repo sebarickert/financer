@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '$elements/Button/Button';
+import { Button } from '$elements/Button1/Button';
 import { clearAllCaches } from '$ssr/api/clear-cache';
 
 export const HardRefreshButton = () => {

@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { FC, useId } from 'react';
 
 import { Drawer } from '$blocks/drawer/drawer';
-import { Button } from '$elements/Button/Button';
+import { Button } from '$elements/Button1/Button';
 import { Icon } from '$elements/Icon';
 import { TransactionFormSwitcher } from '$features/transaction/TransactionFormSwitcher';
 import { UserPreferenceService } from '$ssr/api/user-preference.service';

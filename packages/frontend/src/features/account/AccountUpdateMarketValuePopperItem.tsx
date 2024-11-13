@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { AccountDto } from '$api/generated/financerApi';
 import { Drawer } from '$blocks/drawer/drawer';
 import { Form } from '$blocks/form/form';
-import { Button } from '$elements/Button/Button';
+import { Button } from '$elements/Button1/Button';
 import { Icon } from '$elements/Icon';
 import { Input } from '$elements/input/input';
 import { useFinancerFormState } from '$hooks/useFinancerFormState';
