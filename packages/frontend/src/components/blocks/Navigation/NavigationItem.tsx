@@ -36,7 +36,8 @@ export const NavigationItem: FC<NavigationItemProps> = ({
           '[&:not([aria-current=page])]:lg:group-hover/navigation:theme-text-tertiary',
           'group/navigation-item',
           {
-            ['lg:shadow-[inset_0_-2px] lg:shadow-blue-600']: isActive,
+            ['max-lg:shadow-[inset_0_2px] lg:shadow-[inset_0_-2px] !shadow-blue-600']:
+              isActive,
           },
         )}
       >
