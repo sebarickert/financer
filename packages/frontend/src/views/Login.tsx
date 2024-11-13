@@ -4,8 +4,8 @@ import clsx from 'clsx';
 import { useState } from 'react';
 
 import { Logo } from '$blocks/Logo';
-import { Button } from '$elements/button/button';
-import { ButtonGroup } from '$elements/button/button.group';
+import { Button } from '$elements/Button/Button';
+import { ButtonGroup } from '$elements/Button/button.group';
 import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
 import { Paragraph } from '$elements/paragraph/paragraph';
 

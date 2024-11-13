@@ -4,8 +4,8 @@ import clsx from 'clsx';
 import { FC, useId } from 'react';
 
 import { Drawer } from '$blocks/drawer/drawer';
-import { Button } from '$elements/button/button';
-import { ButtonGroup } from '$elements/button/button.group';
+import { Button } from '$elements/Button/Button';
+import { ButtonGroup } from '$elements/Button/button.group';
 import { Icon } from '$elements/Icon';
 import { handleAccountDelete } from 'src/actions/account/handleAccountDelete';
 

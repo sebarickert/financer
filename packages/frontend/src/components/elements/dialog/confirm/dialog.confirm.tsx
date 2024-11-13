@@ -1,5 +1,5 @@
-import { Button } from '../../button/button';
-import { ButtonGroup } from '../../button/button.group';
+import { Button } from '../../Button/Button';
+import { ButtonGroup } from '../../Button/button.group';
 import { DialogText } from '../dialog.text';
 
 import { IconName } from '$elements/Icon';

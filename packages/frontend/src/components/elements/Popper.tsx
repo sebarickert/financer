@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { FC, useId } from 'react';
 
-import { Button } from './button/button';
+import { Button } from './Button/Button';
 import { Icon, IconName } from './Icon';
 import { Link } from './Link';
 

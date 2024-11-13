@@ -5,8 +5,8 @@ import { FC, useId } from 'react';
 
 import { TransactionType } from '$api/generated/financerApi';
 import { Drawer } from '$blocks/drawer/drawer';
-import { Button } from '$elements/button/button';
-import { ButtonGroup } from '$elements/button/button.group';
+import { Button } from '$elements/Button/Button';
+import { ButtonGroup } from '$elements/Button/button.group';
 import { Icon } from '$elements/Icon';
 import { handleTransactionDelete } from 'src/actions/transaction/handleTransactionDelete';
 

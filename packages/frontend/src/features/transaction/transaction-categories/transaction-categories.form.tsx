@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
-import { Button } from '$elements/button/button';
-import { ButtonGroup } from '$elements/button/button.group';
+import { Button } from '$elements/Button/Button';
+import { ButtonGroup } from '$elements/Button/button.group';
 import { Divider } from '$elements/divider/divider';
 import { Icon } from '$elements/Icon';
 import { Input } from '$elements/input/input';
