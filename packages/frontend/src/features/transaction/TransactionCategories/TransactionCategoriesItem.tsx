@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { FC, useEffect } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 
-import { Button } from '$elements/button/button';
+import { Button } from '$elements/Button/Button';
 import { Icon } from '$elements/Icon';
 import { Input } from '$elements/input/input';
 import { Select, Option } from '$elements/select/select';
@@ -46,7 +46,7 @@ export const TransactionCategoriesItem: FC<TransactionCategoriesItemProps> = ({
       <summary
         className={clsx(
           'grid grid-cols-[auto,1fr,auto] gap-2',
-          'p-3 rounded-md theme-layer-color-with-hover theme-text-primary',
+          'p-2.5 px-3 h-11 rounded-md theme-layer-color-with-hover theme-text-primary',
           'hover:cursor-pointer theme-focus',
           'mr-[52px]',
           '[&::-webkit-details-marker]:hidden',
@@ -89,9 +89,7 @@ export const TransactionCategoriesItem: FC<TransactionCategoriesItemProps> = ({
         </Input>
         <Button
           accentColor="secondary"
-          className={clsx(
-            '!h-12 !w-11 !p-0 inline-flex justify-center items-center',
-          )}
+          size="icon"
           onClick={() => setUnallocatedAmount(index)}
         >
           <Icon name={'PlusCircleIcon'} />

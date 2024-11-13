@@ -6,7 +6,7 @@ import { ValidationException } from '$exceptions/validation.exception';
 import {
   isCategoriesFormFullFields,
   parseCategoriesFormFullFields,
-} from '$features/transaction/transaction-categories/transaction-categories.types';
+} from '$features/transaction/TransactionCategories/transaction-categories.types';
 import { TransactionForm } from '$features/transaction/TransactionForm';
 import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
 import { Layout } from '$layouts/Layout';

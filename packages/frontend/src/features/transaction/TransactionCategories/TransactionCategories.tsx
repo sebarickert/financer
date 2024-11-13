@@ -5,7 +5,7 @@ import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { CategoriesFormFullFields } from './transaction-categories.types';
 import { TransactionCategoriesItem } from './TransactionCategoriesItem';
 
-import { Button } from '$elements/button/button';
+import { Button } from '$elements/Button/Button';
 import { Heading } from '$elements/Heading';
 import { Icon } from '$elements/Icon';
 import { Option, Select } from '$elements/select/select';
@@ -81,10 +81,8 @@ export const TransactionCategories = ({
             />
             <Button
               accentColor="secondary"
-              className={clsx(
-                '!h-12 !w-11 !p-0 inline-flex justify-center items-center',
-                'absolute right-0 top-0',
-              )}
+              className={clsx('absolute right-0 top-0')}
+              size="icon"
               onClick={() => remove(index)}
               testId="remove-category"
             >

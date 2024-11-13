@@ -7,8 +7,8 @@ import {
   useTransactionTemplatesFindAllManualTypeByUserQuery,
 } from '$api/generated/financerApi';
 import { Drawer } from '$blocks/drawer/drawer';
-import { Button } from '$elements/button/button';
-import { ButtonGroup } from '$elements/button/button.group';
+import { Button } from '$elements/Button/Button';
+import { ButtonGroup } from '$elements/Button/ButtonGroup';
 import { Icon } from '$elements/Icon';
 import { Radio } from '$elements/radio/radio';
 import { RadioGroup } from '$elements/radio/radio.group';
@@ -49,9 +49,9 @@ export const TransactionTemplateSwitcher = ({
     <>
       <Button
         accentColor="secondary"
-        className="!w-[50px] !p-0 inline-flex justify-center items-center"
+        className="!h-[50px] !w-[50px]"
+        size="icon"
         popoverTarget={templateSwitcherId}
-        size="small"
         isDisabled={!targetTemplates.length}
         testId="use-template-button"
       >
@@ -81,7 +81,7 @@ export const TransactionTemplateSwitcher = ({
               ))}
             </RadioGroup>
           </section>
-          <ButtonGroup className="mt-12" isReverse isHorizontal>
+          <ButtonGroup className="mt-12">
             <Button type="submit">Switch</Button>
             <Button
               popoverTargetAction="hide"

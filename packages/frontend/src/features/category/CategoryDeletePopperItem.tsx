@@ -5,8 +5,8 @@ import { FC, useId } from 'react';
 
 import { handleCategoryDelete } from '$actions/category/handleCategoryDelete';
 import { Drawer } from '$blocks/drawer/drawer';
-import { Button } from '$elements/button/button';
-import { ButtonGroup } from '$elements/button/button.group';
+import { Button } from '$elements/Button/Button';
+import { ButtonGroup } from '$elements/Button/ButtonGroup';
 import { Icon } from '$elements/Icon';
 
 type CategoryDeletePopperItemProps = {
@@ -22,16 +22,18 @@ export const CategoryDeletePopperItem: FC<CategoryDeletePopperItemProps> = ({
 
   return (
     <>
-      <button
+      <Button
+        accentColor="unstyled"
+        popoverTarget={popperId}
         className={clsx(
-          'flex w-full items-center gap-2 px-2 py-1.5 theme-focus theme-bg-color-with-hover',
+          'py-2.5 h-11 px-[18px] text-base',
+          'w-full !justify-start theme-bg-color-with-hover',
+          '!pl-2',
         )}
-        // @ts-expect-error popovertarget is not a valid prop
-        popovertarget={popperId}
       >
-        <Icon name={'TrashIcon'} className="!w-5 !h-5" />
-        <span className="inline-block pr-2">{'Delete'}</span>
-      </button>
+        <Icon name={'TrashIcon'} />
+        <span className="inline-block pr-2">Delete</span>
+      </Button>
       <Drawer
         id={popperId}
         heading={'Delete Category'}
@@ -39,9 +41,9 @@ export const CategoryDeletePopperItem: FC<CategoryDeletePopperItemProps> = ({
           'Are you sure you want to permanently delete this category?'
         }
       >
-        <ButtonGroup isReverse isHorizontal>
+        <ButtonGroup>
           <Button haptic="heavy" accentColor={'danger'} onClick={handleClick}>
-            {'Delete'}
+            Delete
           </Button>
           <Button
             haptic="light"

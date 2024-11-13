@@ -12,7 +12,7 @@ export type ButtonAccentColor = 'unstyled' | 'primary' | 'secondary' | 'danger';
 interface ButtonProps
   extends Pick<
     HTMLAttributes<unknown>,
-    'popoverTarget' | 'popoverTargetAction' | 'id'
+    'popoverTarget' | 'popoverTargetAction' | 'id' | 'title'
   > {
   accentColor?: ButtonAccentColor;
   children: React.ReactNode;
@@ -24,7 +24,7 @@ interface ButtonProps
   testId?: string;
   isDisabled?: boolean;
   applyBaseStyles?: boolean;
-  size?: 'small' | 'default';
+  size?: 'default' | 'icon';
   /** defaults to `none` */
   haptic?: HapticType;
 }
@@ -46,11 +46,20 @@ export const Button = ({
   haptic = 'none',
   ...props
 }: ButtonProps): JSX.Element => {
+  const buttonStyles = {
+    base: clsx(
+      'theme-focus ring-offset-2 dark:ring-offset-0 rounded-md text-center whitespace-nowrap',
+      'inline-flex items-center justify-center gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0',
+      'disabled:pointer-events-none disabled:opacity-50',
+    ),
+    default: clsx('py-2.5 h-11 px-[18px] text-base'),
+    icon: clsx('h-11 w-11'),
+  };
+
   const buttonClasses = clsx(className, {
-    ['theme-focus ring-offset-2 dark:ring-offset-0 rounded-md inline-block w-full text-center sm:w-fit']:
-      applyBaseStyles,
-    ['py-3 px-6 text-base']: size === 'default' && accentColor !== 'unstyled',
-    ['py-2.5 px-4 text-sm']: size === 'small' && accentColor !== 'unstyled',
+    [buttonStyles.base]: applyBaseStyles,
+    [buttonStyles.default]: size === 'default' && accentColor !== 'unstyled',
+    [buttonStyles.icon]: size === 'icon' && accentColor !== 'unstyled',
     ['theme-button-primary']: accentColor === 'primary',
     ['theme-button-secondary']: accentColor === 'secondary',
     ['theme-button-danger']: accentColor === 'danger',
@@ -95,10 +104,7 @@ export const Button = ({
     <button
       type={type}
       onClick={() => onClickWithHaptic()}
-      className={clsx(
-        buttonClasses,
-        'disabled:pointer-events-none disabled:opacity-25',
-      )}
+      className={buttonClasses}
       data-testid={testId}
       disabled={isDisabled}
       // @ts-expect-error popovertarget is not a valid prop

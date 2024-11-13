@@ -4,8 +4,8 @@ import clsx from 'clsx';
 import { FC, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { CategoriesFormFullFields } from './transaction-categories/transaction-categories.types';
-import { TransactionCategories } from './transaction-categories/TransactionCategories';
+import { CategoriesFormFullFields } from './TransactionCategories/transaction-categories.types';
+import { TransactionCategories } from './TransactionCategories/TransactionCategories';
 
 import {
   VisibilityType,

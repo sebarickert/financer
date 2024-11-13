@@ -1,5 +1,5 @@
-import { Button } from '../../button/button';
-import { ButtonGroup } from '../../button/button.group';
+import { Button } from '../../Button/Button';
+import { ButtonGroup } from '../../Button/ButtonGroup';
 import { DialogText } from '../dialog.text';
 
 import { IconName } from '$elements/Icon';
@@ -28,7 +28,7 @@ export const DialogConfirm = ({
       <DialogText label={label} iconName={iconName} className="mb-8">
         {children}
       </DialogText>
-      <ButtonGroup isReverse>
+      <ButtonGroup>
         <Button onClick={onConfirm} testId={`${testId}_confirm-button`}>
           {submitButtonLabel}
         </Button>

@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
+import { Button } from '$elements/Button/Button';
 import { IconName, Icon } from '$elements/Icon';
 import { removeToastMessage } from '$reducer/notifications.reducer';
 
@@ -87,15 +88,16 @@ export const Toast = ({
         {additionalInformation && additionalInformationContent}
       </div>
       {id && (
-        <button
-          type="button"
-          className="col-[3] row-span-full inline-flex items-center justify-center h-11 w-11 rounded-md theme-focus hover:opacity-50"
+        <Button
           onClick={handleRemove}
-          data-testid="toast-remove"
+          testId="toast-remove"
+          size="icon"
+          accentColor="secondary"
+          className="col-[3] row-span-full"
         >
           <Icon name="XMarkIcon" />
           <span className="sr-only">Close</span>
-        </button>
+        </Button>
       )}
     </div>
   );

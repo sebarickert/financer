@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { FC, useId } from 'react';
 
 import { Drawer } from '$blocks/drawer/drawer';
-import { Button } from '$elements/button/button';
+import { Button } from '$elements/Button/Button';
 import { Icon } from '$elements/Icon';
 import { TransactionFormSwitcher } from '$features/transaction/TransactionFormSwitcher';
 import { UserPreferenceService } from '$ssr/api/user-preference.service';
@@ -44,16 +44,16 @@ export const NavigationCreateTransactionButton: FC<
         aria-label="Add Transaction"
         className={clsx(
           'items-center justify-center theme-focus theme-text-primary',
-          'max-lg:flex max-lg:flex-col max-lg:h-full max-lg:!w-full',
-          'lg:inline-flex lg:gap-2 lg:py-3 lg:px-4 lg:rounded-md lg:border lg:border-transparent',
-          'lg:theme-button-primary',
+          'max-lg:flex max-lg:flex-col max-lg:h-full max-lg:!w-full max-lg:rounded-none',
+          'lg:theme-button-primary lg:py-2.5 lg:h-11 lg:px-[18px] lg:text-base',
         )}
         popoverTarget={id}
         data-testid="add-transaction"
       >
         <Icon name="PlusIcon" />
-        <span className="sr-only">Add</span>
-        <span className="max-lg:hidden">Transaction</span>
+        <span className="max-lg:hidden">
+          <span className="sr-only">Add</span> Transaction
+        </span>
       </Button>
     </li>
   );

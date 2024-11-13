@@ -1,7 +1,8 @@
 import clsx from 'clsx';
 import { FC, useId } from 'react';
 
-import { Button } from './button/button';
+import { Button } from './Button/Button';
+import { Heading } from './Heading';
 import { Icon, IconName } from './Icon';
 import { Link } from './Link';
 
@@ -23,7 +24,9 @@ export const Popper: FC<PopperProps> = ({ className, items, children }) => {
   const popperId = useId();
 
   const popperItemClasses = clsx(
-    'flex items-center gap-2 px-2 py-1.5 theme-bg-color-with-hover',
+    'flex items-center gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0 theme-bg-color-with-hover',
+    'rounded-md text-center whitespace-nowrap',
+    'py-2.5 h-11 pl-2 pr-[18px] text-base',
   );
 
   return (
@@ -31,15 +34,13 @@ export const Popper: FC<PopperProps> = ({ className, items, children }) => {
       <Button
         popoverTarget={popperId}
         accentColor="secondary"
-        className={clsx(
-          '!h-11 !w-11 !p-0 inline-flex justify-center items-center',
-          'anchor-name-[popover-anchor]',
-        )}
+        size="icon"
+        className={clsx('anchor-name-[popover-anchor]')}
         id="popover-anchor"
         testId="popper-button"
       >
         <Icon name="EllipsisVerticalIcon" />
-        {/* TODO Add screen reader text  */}
+        <span className="sr-only">More options</span>
       </Button>
       <div
         className={clsx(
@@ -54,18 +55,20 @@ export const Popper: FC<PopperProps> = ({ className, items, children }) => {
           'starting:translate-x-0 starting:-translate-y-2',
           'translate-x-0 -translate-y-2',
           'supports-[anchor-name]:open:translate-x-0 open:translate-y-0 open:-translate-x-[calc(100%-44px)]',
-          'z-[100]', // Test for mobile_safari
           className,
         )}
         popover="auto"
         id={popperId}
         data-testid="popper-container"
       >
+        <Heading disableResponsiveSizing variant="h2" className="sr-only">
+          Options
+        </Heading>
         <List hasItemRoundness>
           {items.map(({ icon, label, href }, index) => {
             return (
               <Link key={index} href={href} className={popperItemClasses}>
-                <Icon name={icon} className="!w-5 !h-5" />
+                <Icon name={icon} />
                 <span className="inline-block pr-2">{label}</span>
               </Link>
             );

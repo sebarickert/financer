@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { AccountDto } from '$api/generated/financerApi';
 import { Drawer } from '$blocks/drawer/drawer';
 import { Form } from '$blocks/form/form';
+import { Button } from '$elements/Button/Button';
 import { Icon } from '$elements/Icon';
 import { Input } from '$elements/input/input';
 import { useFinancerFormState } from '$hooks/useFinancerFormState';
@@ -45,16 +46,18 @@ export const AccountUpdateMarketValuePopperItem: FC<
 
   return (
     <>
-      <button
+      <Button
+        accentColor="unstyled"
+        popoverTarget={popperId}
         className={clsx(
-          'flex w-full items-center gap-2 px-2 py-1.5 theme-focus theme-bg-color-with-hover',
+          'py-2.5 h-11 px-[18px] text-base',
+          'w-full !justify-start theme-bg-color-with-hover',
+          '!pl-2',
         )}
-        // @ts-expect-error popovertarget is not a valid prop
-        popovertarget={popperId}
       >
-        <Icon name={'ArrowTrendingUpIcon'} className="!w-5 !h-5" />
+        <Icon name={'ArrowTrendingUpIcon'} />
         <span className="inline-block pr-2">Update Market Value</span>
-      </button>
+      </Button>
       {/* TODO Drawer should close after submission */}
       <Drawer
         id={popperId}
