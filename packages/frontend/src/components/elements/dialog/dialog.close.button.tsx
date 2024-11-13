@@ -1,3 +1,4 @@
+import { Button } from '$elements/Button/Button';
 import { Icon } from '$elements/Icon';
 
 interface DialogCloseButtonProps {
@@ -10,13 +11,13 @@ export const DialogCloseButton = ({
   isDialogOpen,
 }: DialogCloseButtonProps) => {
   return (
-    <button
-      type="button"
-      className="inline-flex items-center justify-center rounded-full h-11 w-11 bg-gray hover:bg-gray-dark"
+    <Button
       onClick={() => setIsDialogOpen(!isDialogOpen)}
+      accentColor="secondary"
+      size="icon"
     >
       <span className="sr-only">Close dialog</span>
-      <Icon name="PlusIcon" className="rotate-45 stroke-gray-darkest" />
-    </button>
+      <Icon name="XMarkIcon" />
+    </Button>
   );
 };

@@ -5,6 +5,7 @@ import { FC } from 'react';
 
 import { PagerOptions } from './pager.service';
 
+import { Button } from '$elements/Button/Button';
 import { Icon } from '$elements/Icon';
 import { Paragraph } from '$elements/paragraph/paragraph';
 
@@ -31,22 +32,18 @@ const PagerButton: FC<PagerButtonProps> = ({
   isDisabled,
 }) => {
   return (
-    <button
+    <Button
       type="button"
-      className={clsx(
-        'h-11 w-11 rounded-md',
-        'theme-focus theme-layer-color-with-hover theme-text-primary',
-        'inline-flex justify-center items-center',
-        'disabled:pointer-events-none disabled:opacity-50',
-        className,
-      )}
+      size="icon"
+      className={className}
       onClick={() => handleClick()}
-      disabled={isDisabled}
+      isDisabled={isDisabled}
       title={children}
+      accentColor="secondary"
     >
       <span className="sr-only">{children}</span>
       <Icon name={isNext ? 'ChevronRightIcon' : 'ChevronLeftIcon'} />
-    </button>
+    </Button>
   );
 };
 

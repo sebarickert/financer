@@ -12,7 +12,7 @@ export type ButtonAccentColor = 'unstyled' | 'primary' | 'secondary' | 'danger';
 interface ButtonProps
   extends Pick<
     HTMLAttributes<unknown>,
-    'popoverTarget' | 'popoverTargetAction' | 'id'
+    'popoverTarget' | 'popoverTargetAction' | 'id' | 'title'
   > {
   accentColor?: ButtonAccentColor;
   children: React.ReactNode;

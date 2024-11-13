@@ -3,6 +3,7 @@
 import clsx from 'clsx';
 import { FC } from 'react';
 
+import { Button } from '$elements/Button/Button';
 import { Heading } from '$elements/Heading';
 import { Icon } from '$elements/Icon';
 import { Paragraph } from '$elements/paragraph/paragraph';
@@ -35,23 +36,20 @@ export const DrawerHeader: FC<DrawerHeaderProps> = ({
           )}
         </>
       )}
-      <button
-        type="button"
-        className={clsx(
-          'theme-layer-color-with-hover theme-focus rounded-md',
-          'col-[2] overflow-hidden inline-flex items-center justify-center h-11 w-11 -my-2',
-        )}
+      <Button
+        size="icon"
         onClick={() => {
           hapticRunner('light');
           onClose?.();
         }}
-        // @ts-expect-error popovertarget is not a valid prop
-        popovertarget={id}
-        popovertargetaction="hide"
+        accentColor="secondary"
+        popoverTarget={id}
+        popoverTargetAction="hide"
+        className="col-[2] -my-2"
       >
-        <Icon name="PlusIcon" className="w-6 h-6 rotate-45" />
+        <Icon name="XMarkIcon" />
         <span className="sr-only">Close drawer</span>
-      </button>
+      </Button>
     </div>
   );
 };
