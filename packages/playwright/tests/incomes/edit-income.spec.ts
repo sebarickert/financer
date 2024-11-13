@@ -142,9 +142,11 @@ test.describe('Income Transactions', () => {
 
       await clickPopperItem(page, 'Edit');
 
-      await setCategories(page, [
-        { category: 'Category for all types', amount: new Decimal(200) },
-      ]);
+      await setCategories(
+        page,
+        [{ category: 'Category for all types', amount: new Decimal(200) }],
+        'page',
+      );
 
       await page
         .getByTestId('layout-root')
@@ -170,8 +172,6 @@ test.describe('Income Transactions', () => {
       page,
     }) => {
       await page.goto('/statistics/incomes');
-
-      await page.getByRole('button', { name: 'Previous page' }).click();
 
       await page
         .getByTestId('transaction-list-item')
@@ -210,8 +210,6 @@ test.describe('Income Transactions', () => {
       page,
     }) => {
       await page.goto('/statistics/incomes');
-
-      await page.getByRole('button', { name: 'Previous page' }).click();
 
       await page
         .getByTestId('transaction-list-item')

@@ -153,9 +153,11 @@ test.describe('Expense Transactions', () => {
 
       await clickPopperItem(page, 'Edit');
 
-      await setCategories(page, [
-        { category: 'Category for all types', amount: new Decimal(200) },
-      ]);
+      await setCategories(
+        page,
+        [{ category: 'Category for all types', amount: new Decimal(200) }],
+        'page',
+      );
 
       await page
         .getByTestId('layout-root')
