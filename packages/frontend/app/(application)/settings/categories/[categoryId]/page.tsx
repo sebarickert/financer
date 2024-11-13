@@ -2,15 +2,21 @@ import { Metadata } from 'next';
 import { FC } from 'react';
 
 import { CategoryContainer } from '$container/categories/CategoryContainer';
-
-// TODO change to dynamic title
-export const metadata: Metadata = {
-  title: 'Category Details',
-};
+import { CategoryService } from '$ssr/api/category.service';
 
 type CategoryPageProps = {
   params: {
     categoryId: string;
+  };
+};
+
+export const generateMetadata = async ({
+  params: { categoryId },
+}: CategoryPageProps): Promise<Metadata> => {
+  const category = await CategoryService.getById(categoryId);
+
+  return {
+    title: `${category.name} / Categories`,
   };
 };
 

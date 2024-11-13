@@ -2,15 +2,21 @@ import { Metadata } from 'next';
 import { FC } from 'react';
 
 import { TransferContainer } from '$container/transfers/TransferContainer';
-
-// TODO change to dynamic title
-export const metadata: Metadata = {
-  title: 'Transfer Details',
-};
+import { TransferService } from '$ssr/api/transfer.service';
 
 type TransferPageProps = {
   params: {
     transferId: string;
+  };
+};
+
+export const generateMetadata = async ({
+  params: { transferId },
+}: TransferPageProps): Promise<Metadata> => {
+  const transfer = await TransferService.getById(transferId);
+
+  return {
+    title: `${transfer.description} / Transfers / Statistics`,
   };
 };
 

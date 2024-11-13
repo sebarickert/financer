@@ -2,15 +2,21 @@ import { Metadata } from 'next';
 import { FC } from 'react';
 
 import { ExpenseContainer } from '$container/expenses/ExpenseContainer';
-
-// TODO change to dynamic title
-export const metadata: Metadata = {
-  title: 'Expense Details',
-};
+import { ExpenseService } from '$ssr/api/expense.service ';
 
 type ExpensePageProps = {
   params: {
     expenseId: string;
+  };
+};
+
+export const generateMetadata = async ({
+  params: { expenseId },
+}: ExpensePageProps): Promise<Metadata> => {
+  const expense = await ExpenseService.getById(expenseId);
+
+  return {
+    title: `${expense.description} / Expenses / Statistics`,
   };
 };
 
