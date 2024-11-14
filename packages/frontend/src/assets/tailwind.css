@@ -22,6 +22,10 @@
     pointer-events: none;
   }
 
+  [data-body-no-pointer-events="on"]:popover-open {
+    pointer-events: auto;
+  }
+
   select,
   ::picker(select) {
     appearance: base-select !important;
