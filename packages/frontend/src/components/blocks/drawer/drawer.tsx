@@ -46,6 +46,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
         data-testid={testId ?? 'drawer'}
         ref={ref}
         data-body-scroll-lock="on"
+        data-body-no-pointer-events="on"
       >
         <DrawerHeader
           onClose={onClose}
