@@ -2,12 +2,7 @@
 
 set -e
 
-npm -w backend run build
 npm -w frontend run build
-
-rm -rf build
-mkdir build/
-cp -r packages/backend/dist/ build/backend
 
 cp -r packages/frontend/.next/standalone build/frontend
 mv build/frontend/packages/frontend/* build/frontend/
