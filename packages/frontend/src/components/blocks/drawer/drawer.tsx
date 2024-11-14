@@ -20,9 +20,9 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
   ) => {
     const drawerBaseClasses = clsx(
       // Backdrop
-      'backdrop:bg-[#212830]/0 backdrop:ease-in backdrop:transition-all backdrop:!transition-allow-discrete',
-      'backdrop:open:bg-[#212830]/40 backdrop:open:ease-out backdrop:open:transition-all backdrop:open:!transition-allow-discrete',
-      'starting:open:backdrop:bg-[#212830]/0',
+      'backdrop:backdrop-blur-none backdrop:ease-in backdrop:transition-all backdrop:!transition-allow-discrete',
+      'backdrop:open:backdrop-blur-sm backdrop:open:ease-out backdrop:open:transition-all backdrop:open:!transition-allow-discrete',
+      'starting:open:backdrop-blur-none',
       // Drawer animation
       'max-lg:translate-y-full lg:translate-x-full !transition-allow-discrete transition-all duration-100',
       'open:max-lg:translate-y-0 open:ease-out open:lg:translate-x-0 open:!transition-allow-discrete open:transition-all open:duration-200',
