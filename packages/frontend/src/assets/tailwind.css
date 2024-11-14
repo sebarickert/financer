@@ -14,6 +14,10 @@
 }
 
 @layer base {
+  body:has([data-body-scroll-lock="on"]:popover-open) {
+    overflow: hidden;
+  }
+
   select,
   ::picker(select) {
     appearance: base-select !important;
