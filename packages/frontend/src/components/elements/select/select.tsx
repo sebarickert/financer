@@ -26,9 +26,6 @@ export type Option = {
   description?: string;
 };
 
-// @ts-expect-error - New experimental feature that is not yet supported by the TypeScript compiler
-const SelectedOption: FC = () => <selectedoption></selectedoption>;
-
 type OptionElementProps = Omit<Option, 'label'> & {
   isLast?: boolean;
   hasIconPlaceholder?: boolean;
@@ -41,30 +38,30 @@ const OptionElement: FC<OptionElementProps> = ({
   children,
   icon,
   description,
-  isLast = false,
   hasIconPlaceholder = false,
   isDisabled,
 }) => (
   <option
     value={value}
     key={value}
-    className={clsx('before:hidden px-2', {
-      'mb-2': !isLast,
-    })}
+    className={clsx(
+      'theme-bg-color-with-hover theme-focus focus-visible:z-10 focus-visible:relative theme-text-primary rounded-md hover:cursor-pointer',
+      'disabled:pointer-events-none disabled:opacity-50',
+      'before:hidden py-2.5 px-3 flex gap-2',
+    )}
     disabled={isDisabled}
   >
-    <div className="flex flex-row items-center gap-4">
-      {icon && <Icon name={icon} className="text-gray-darkest" />}
-      {!icon && hasIconPlaceholder && <span className="w-6" />}
-      <div className="flex flex-col gap-1">
-        <span
-          className="option-label-after-from-data contents after:text-xs after:text-gray-darkest"
-          data-description={description}
-        >
-          {children}
-        </span>
-      </div>
-    </div>
+    {icon && <Icon name={icon} />}
+    {!icon && hasIconPlaceholder && <span className="w-6" />}
+    <span
+      className={clsx(
+        'grid text-base text-left',
+        'after:content-[attr(data-description)] after:text-sm after:theme-text-secondary',
+      )}
+      data-description={description}
+    >
+      {children}
+    </span>
   </option>
 );
 
@@ -102,7 +99,13 @@ export const Select = ({
       <select
         data-testid={testId}
         id={id}
-        className={clsx('theme-field', 'block w-full py-2.5 h-11 rounded-md')}
+        className={clsx(
+          'theme-field',
+          'block w-full rounded-md',
+          'py-2.5 h-11',
+          'supports-[selector(::picker(select))]:p-0',
+          'supports-[selector(::picker(select))]:[&:has(button:focus-visible)]:theme-focus-without-prefix',
+        )}
         required={isRequired}
         disabled={isDisabled}
         {...register(id, {
@@ -112,8 +115,14 @@ export const Select = ({
           shouldUnregister,
         })}
       >
-        <button type="button" className="after:absolute after:inset-0">
-          <SelectedOption />
+        <button type="button" className="block w-full px-3">
+          {/* @ts-expect-error - New experimental feature that is not yet supported by the TypeScript compiler */}
+          <selectedoption
+            className={clsx(
+              '[&>span]:after:hidden',
+              'py-2.5 flex gap-2 w-full',
+            )}
+          />
         </button>
         <OptionElement
           isDisabled
@@ -122,12 +131,11 @@ export const Select = ({
         >
           {placeholder}
         </OptionElement>
-        {options.map(({ label, ...rest }, index) => (
+        {options.map(({ label, ...rest }) => (
           <OptionElement
             key={rest.value}
             {...rest}
             hasIconPlaceholder={!rest.icon && hasSomeOptionIcon}
-            isLast={index === options.length - 1}
           >
             {label}
           </OptionElement>
