@@ -10,11 +10,9 @@ inputs:
     required: true
 
 runs:
-  using: "composite"
+  image: docker://mcr.microsoft.com/playwright:v1.48.2
+  using: "docker"
   steps:
-    - name: Install Playwright Browsers
-      shell: bash
-      run: npx playwright install --with-deps
     - name: Run Playwright tests
       shell: bash
       run: npm run e2e:test -- --shard ${{ inputs.SHARD }}/${{ inputs.SHARD_COUNT }}
