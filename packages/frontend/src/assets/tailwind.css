@@ -16,15 +16,11 @@
 @layer base {
   select,
   ::picker(select) {
-    appearance: base-select;
+    appearance: base-select !important;
   }
 
-  selectedoption .option-label-after-from-data::after {
-    @apply hidden;
-  }
-
-  .option-label-after-from-data::after {
-    content: attr(data-description) !important;
+  ::picker(select) {
+    @apply p-2 border rounded-md shadow-none theme-bg-color lg:mt-2 theme-border-primary;
   }
 
   .theme-bg-color {
