@@ -109,7 +109,7 @@ jobs:
       - uses: sebarickert/financer/.github/actions/build-app@main
 
       - name: Run end-to-end tests
-        uses: sebarickert/financer/.github/actions/test-playwright@main
+        uses: sebarickert/financer/.github/actions/test-playwright@update-select-stuff
         with:
           SHARD: ${{ matrix.shard }}
           SHARD_COUNT: 20
