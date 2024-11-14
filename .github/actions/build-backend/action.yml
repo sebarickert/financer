@@ -14,5 +14,6 @@ runs:
       if: steps.restore-cache.outputs.cache-hit != 'true'
       shell: bash
       run: |
+        mkdir -p ./build
         rm -rf ./build/backend
         npm run build:backend

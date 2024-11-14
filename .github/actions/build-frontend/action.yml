@@ -15,4 +15,5 @@ runs:
       shell: bash
       run: |
         rm -rf ./build/frontend
+        mkdir -p ./build
         npm run build:frontend
