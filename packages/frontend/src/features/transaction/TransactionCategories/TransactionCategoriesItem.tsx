@@ -5,7 +5,7 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import { Button } from '$elements/Button/Button';
 import { Icon } from '$elements/Icon';
 import { Input } from '$elements/input/input';
-import { Select, Option } from '$elements/select/select';
+import { Select, Option } from '$elements/Select';
 import { formatCurrency } from '$utils/formatCurrency';
 
 type TransactionCategoriesItemProps = {

@@ -8,7 +8,7 @@ import { TransactionCategoriesItem } from './TransactionCategoriesItem';
 import { Button } from '$elements/Button/Button';
 import { Heading } from '$elements/Heading';
 import { Icon } from '$elements/Icon';
-import { Option, Select } from '$elements/select/select';
+import { Option, Select } from '$elements/Select';
 
 type TransactionCategoriesProps = {
   transactionCategories: Option[];

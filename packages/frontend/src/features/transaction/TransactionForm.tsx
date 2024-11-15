@@ -14,7 +14,7 @@ import {
 import { Form } from '$blocks/form/form';
 import { accountTypeIconMapping } from '$constants/account/accountTypeMapping';
 import { Input } from '$elements/input/input';
-import { Option, Select } from '$elements/select/select';
+import { Option, Select } from '$elements/Select';
 import { useGetAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useGetAllTransactionCategoriesWithCategoryTree';
 import {
   DefaultFormActionHandler,
