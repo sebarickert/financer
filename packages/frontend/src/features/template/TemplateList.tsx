@@ -42,6 +42,8 @@ export const TemplateList: FC<TemplateListProps> = ({ templates }) => {
           key={type}
           columns={2}
           testId="template-list"
+          hasItemRoundness
+          hasStickyHeader
         >
           {items.map(({ templateName, id, templateType }) => (
             <ProminentLink

@@ -34,6 +34,8 @@ export const AccountList: FC<AccountListProps> = ({
       className={clsx(className)}
       testId="account-list"
       columns={2}
+      hasItemRoundness
+      hasStickyHeader
     >
       {accounts.map(({ id, balance, name, type }) => {
         return (
@@ -43,7 +45,7 @@ export const AccountList: FC<AccountListProps> = ({
             key={id}
             className={clsx(
               'theme-layer-color-with-hover',
-              'py-5 px-4',
+              'p-4',
               'flex items-center gap-4',
             )}
             transition="slideInFromRight"

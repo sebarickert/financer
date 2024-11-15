@@ -33,8 +33,14 @@ export const Account: FC<AccountProps> = ({ account, userTheme }) => {
 
   return (
     <section className="grid gap-8">
+      <LoaderSuspense>
+        <AccountBalanceHistoryChart
+          accountId={account.id}
+          userTheme={userTheme}
+        />
+      </LoaderSuspense>
       <div className={clsx('grid gap-2')}>
-        <div className="grid gap-8 p-6 py-8 theme-layer-color">
+        <div className="grid gap-8 p-6 py-8 rounded-md theme-layer-color">
           <BalanceDisplay
             amount={account.balance}
             iconName={accountTypeIconMapping[account.type]}
@@ -44,16 +50,10 @@ export const Account: FC<AccountProps> = ({ account, userTheme }) => {
             {account.name}
           </BalanceDisplay>
         </div>
-        <div className="p-6 theme-layer-color">
+        <div className="p-6 rounded-md theme-layer-color">
           <DetailsList testId="account-details" items={accountDetails} />
         </div>
       </div>
-      <LoaderSuspense>
-        <AccountBalanceHistoryChart
-          accountId={account.id}
-          userTheme={userTheme}
-        />
-      </LoaderSuspense>
       <TransactionListWithMonthlyPager
         filterOptions={{ accountId: account.id }}
       />

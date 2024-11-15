@@ -26,20 +26,20 @@ export const List: FC<ListProps> = ({
 
   return (
     <section className={clsx(className)} data-testid={testId}>
-      <div
-        className={clsx({
-          ['sticky top-[48px] lg:top-[64px] bg-white/75 dark:bg-[#080808]/75 backdrop-blur-sm z-10 py-4 -mt-4']:
-            hasStickyHeader, // 48/64px is the height of the header
-        })}
-      >
-        {label && (
+      {label && (
+        <div
+          className={clsx({
+            ['sticky top-[48px] lg:top-[64px] bg-white/75 dark:bg-[#080808]/75 backdrop-blur-sm z-10 py-4 px-4 -mx-4 -mt-4']:
+              hasStickyHeader, // 48/64px is the height of the header
+          })}
+        >
           <Heading testId={`${testId}-heading`} noMargin={!!hasStickyHeader}>
             {label}
           </Heading>
-        )}
-      </div>
+        </div>
+      )}
       <ul
-        className={clsx('grid gap-1', {
+        className={clsx('grid gap-1 isolate', {
           'lg:grid-cols-2': columns === 2,
           'lg:grid-cols-3': columns === 3,
         })}

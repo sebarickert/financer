@@ -64,7 +64,7 @@ export const Settings: FC<SettingsProps> = ({ roles }) => {
     <section>
       <div className="grid gap-8">
         {urls.map(({ label, items }) => (
-          <List key={label} label={label}>
+          <List key={label} label={label} hasItemRoundness>
             {items.map((item) => (
               <ProminentLink key={item.link} {...item} />
             ))}

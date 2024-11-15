@@ -79,6 +79,10 @@
     @apply border-gray-200 dark:border-[#2b2b2b];
   }
 
+  .theme-divide-primary {
+    @apply divide-gray-200 dark:divide-[#2b2b2b];
+  }
+
   .theme-button-primary {
     @apply text-white bg-blue-600 hover:bg-blue-700 active:bg-blue-900;
   }
