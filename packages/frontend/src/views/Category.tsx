@@ -82,9 +82,6 @@ export const Category: FC<CategoryProps> = ({
 
   return (
     <section className="grid gap-8">
-      <div className="p-6 theme-layer-color">
-        <DetailsList items={categoryDetails} />
-      </div>
       <LoaderSuspense>
         <CategoryGraph
           transactionsMonthlySummaries={transactionsMonthlySummaries}
@@ -92,6 +89,9 @@ export const Category: FC<CategoryProps> = ({
           userTheme={userTheme}
         />
       </LoaderSuspense>
+      <div className="p-6 rounded-md theme-layer-color">
+        <DetailsList items={categoryDetails} />
+      </div>
       <TransactionListWithMonthlyPager
         filterOptions={{
           parentTransactionCategory: parentTransactionCategoryId,

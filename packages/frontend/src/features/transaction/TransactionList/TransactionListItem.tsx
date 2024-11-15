@@ -40,7 +40,7 @@ export const TransactionListItem: FC<
       testId={id}
       className={clsx(
         'theme-layer-color-with-hover',
-        'py-5 px-4 relative',
+        'p-4 relative',
         'flex items-center gap-4',
       )}
       transition="slideInFromRight"

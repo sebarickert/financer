@@ -79,6 +79,7 @@ export const TransactionList: FC<TransactionListProps> = async ({
           label={getGroupLabel(group.date)}
           hasStickyHeader={hasStickyHeader}
           testId="transaction-list"
+          hasItemRoundness
         >
           {group.data.map((row) => (
             <TransactionListItem key={row.id} {...row} />

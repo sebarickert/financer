@@ -102,30 +102,31 @@ export const Transaction: FC<TransactionProps> = async ({
   );
 
   return (
-    <section className={clsx('@container')} data-testid="transaction-details">
-      <div
-        className={clsx(
-          'theme-layer-color rounded-md',
-          'pt-8 pb-4 px-4',
-          'grid gap-y-8 gap-x-4',
-          '@3xl:pt-4 @3xl:grid-cols-[1fr,1.5fr]',
-        )}
+    <div
+      className={clsx(
+        'theme-layer-color rounded-md',
+        'pt-12 pb-10 px-6',
+        'grid gap-12',
+        'max-w-md mx-auto',
+      )}
+      data-testid="transaction-details"
+    >
+      <BalanceDisplay
+        type={type}
+        amount={amount}
+        testId="transaction-amount"
+        childTestId="transaction-description"
       >
-        <BalanceDisplay
-          type={type}
-          amount={amount}
-          testId="transaction-amount"
-          childTestId="transaction-description"
-        >
-          {`${description}`}
-        </BalanceDisplay>
-        <div className="grid gap-8 p-6 border rounded-md theme-layer-secondary-color theme-border-primary">
-          <DetailsList items={transactionDetails} />
-          {categoryDetails.length > 0 && (
-            <div data-testid="transaction-categories">
-              <Heading disableResponsiveSizing noMargin className="mb-4">
-                Categories
-              </Heading>
+        {`${description}`}
+      </BalanceDisplay>
+      <div className={clsx('grid gap-8', '')}>
+        <DetailsList items={transactionDetails} />
+        {categoryDetails.length > 0 && (
+          <div data-testid="transaction-categories">
+            <Heading disableResponsiveSizing noMargin className="mb-4">
+              Categories
+            </Heading>
+            <div className="divide-y theme-divide-primary [&>div:not(:first-child)]:pt-4 [&>div:not(:last-child)]:pb-4">
               {categoryDetails.map((category) => (
                 <DetailsList
                   testId="category-details"
@@ -134,9 +135,9 @@ export const Transaction: FC<TransactionProps> = async ({
                 />
               ))}
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
-    </section>
+    </div>
   );
 };

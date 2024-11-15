@@ -102,6 +102,8 @@ export const CategoryListingContainer: FC = async () => {
             label={parentLabel}
             testId="category-list"
             columns={2}
+            hasItemRoundness
+            hasStickyHeader
           >
             {parentLink && (
               <ProminentLink link={parentLink} icon={'TagIcon'}>
