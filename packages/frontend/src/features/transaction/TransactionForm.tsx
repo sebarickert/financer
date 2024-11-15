@@ -113,10 +113,10 @@ export const TransactionForm: FC<TransactionFormProps> = ({
   useEffect(() => {
     if (!initialValues) return;
 
-    reset((previousValues) => ({
-      ...previousValues,
+    reset({
       ...defaultValues,
-    }));
+      categories: defaultValues.categories || [], // Have to reset categories separately for some odd reason
+    });
   }, [defaultValues, initialValues, reset]);
 
   if (!accounts) return null;

@@ -27,7 +27,6 @@ export type Option = {
 };
 
 type OptionElementProps = Omit<Option, 'label'> & {
-  isLast?: boolean;
   hasIconPlaceholder?: boolean;
   children: string;
   isDisabled?: boolean;

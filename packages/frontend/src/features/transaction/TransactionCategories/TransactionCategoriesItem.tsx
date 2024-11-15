@@ -27,14 +27,18 @@ export const TransactionCategoriesItem: FC<TransactionCategoriesItemProps> = ({
 }) => {
   const namePrefix = `categories.${index}` as const;
   const { setValue } = useFormContext();
-  const categoryWatch = useWatch({ name: namePrefix });
+  const categoryWatch: {
+    description?: string;
+    amount?: number;
+    categoryId?: string;
+  } = useWatch({ name: namePrefix });
 
   useEffect(() => {
     setValue(namePrefix, { categoryId, amount });
   }, [amount, categoryId, namePrefix, setValue]);
 
   const categoryLabel = categories.find(
-    (category) => category.value === categoryWatch.categoryId,
+    (category) => category.value === categoryWatch?.categoryId,
   )?.label;
 
   return (
@@ -61,7 +65,7 @@ export const TransactionCategoriesItem: FC<TransactionCategoriesItemProps> = ({
           {categoryLabel || '-'}
         </span>
         <span className="shrink-0" data-testid="amount">
-          {formatCurrency(categoryWatch.amount || 0)}
+          {formatCurrency(categoryWatch?.amount || 0)}
         </span>
       </summary>
       <div

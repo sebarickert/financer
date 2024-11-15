@@ -131,7 +131,6 @@ export const TransactionFormSwitcher: FC<TransactionFormSwitcherProps> = ({
         />
       </div>
       <TransactionForm
-        key={transactionType}
         onSubmit={createTransaction}
         initialValues={templateFormValues}
         {...formPropsMapping[transactionType]}
