@@ -14,7 +14,7 @@ import {
 import { Form } from '$blocks/form/form';
 import { accountTypeIconMapping } from '$constants/account/accountTypeMapping';
 import { Input } from '$elements/input/input';
-import { Option, Select } from '$elements/select/select';
+import { Option, Select } from '$elements/Select';
 import { useGetAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useGetAllTransactionCategoriesWithCategoryTree';
 import {
   DefaultFormActionHandler,
@@ -113,10 +113,10 @@ export const TransactionForm: FC<TransactionFormProps> = ({
   useEffect(() => {
     if (!initialValues) return;
 
-    reset((previousValues) => ({
-      ...previousValues,
+    reset({
       ...defaultValues,
-    }));
+      categories: defaultValues.categories || [], // Have to reset categories separately for some odd reason
+    });
   }, [defaultValues, initialValues, reset]);
 
   if (!accounts) return null;

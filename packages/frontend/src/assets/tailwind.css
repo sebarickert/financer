@@ -32,7 +32,15 @@
   }
 
   ::picker(select) {
-    @apply p-2 border rounded-md shadow-none theme-bg-color lg:mt-2 theme-border-primary;
+    @apply p-2 border rounded-md shadow-none lg:mt-2 theme-border-primary theme-bg-color;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body:not(.light *) {
+      ::picker(select) {
+        @apply border-[#2b2b2b] bg-[#080808];
+      }
+    }
   }
 
   .theme-bg-color {

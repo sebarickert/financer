@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { AccountType } from '$api/generated/financerApi';
 import { Form } from '$blocks/form/form';
 import { Input } from '$elements/input/input';
-import { Select, Option } from '$elements/select/select';
+import { Select, Option } from '$elements/Select';
 import {
   DefaultFormActionHandler,
   useFinancerFormState,

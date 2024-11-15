@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { Form } from '$blocks/form/form';
 import { settingsPaths } from '$constants/settings-paths';
 import { Input } from '$elements/input/input';
-import { Select } from '$elements/select/select';
+import { Select } from '$elements/Select';
 import { TransactionCategoryDtoWithCategoryTree } from '$hooks/transactionCategories/useGetAllTransactionCategoriesWithCategoryTree';
 import {
   DefaultFormActionHandler,

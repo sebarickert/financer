@@ -77,29 +77,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shard:
-          [
-            1,
-            2,
-            3,
-            4,
-            5,
-            6,
-            7,
-            8,
-            9,
-            10,
-            11,
-            12,
-            13,
-            14,
-            15,
-            16,
-            17,
-            18,
-            19,
-            20,
-          ]
+        shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
     services:
       postgres:
         image: postgres
@@ -124,7 +102,7 @@ jobs:
         uses: sebarickert/financer/.github/actions/test-playwright@main
         with:
           SHARD: ${{ matrix.shard }}
-          SHARD_COUNT: 20
+          SHARD_COUNT: 15
         env:
           INITIALIZE_SCHEMA_AND_TEST_USER: true
           DB_USER: postgres

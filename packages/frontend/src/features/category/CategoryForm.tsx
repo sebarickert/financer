@@ -11,7 +11,7 @@ import { settingsPaths } from '$constants/settings-paths';
 import { Checkbox } from '$elements/checkbox/checkbox';
 import { CheckboxGroup } from '$elements/checkbox/checkbox.group';
 import { Input } from '$elements/input/input';
-import { Select, Option } from '$elements/select/select';
+import { Select, Option } from '$elements/Select';
 import { useGetAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useGetAllTransactionCategoriesWithCategoryTree';
 import {
   DefaultFormActionHandler,
