@@ -17,6 +17,7 @@ type SelectProps = {
   placeholder?: string;
   shouldUnregister?: boolean;
   isLabelHidden?: boolean;
+  isBleedingEdge?: boolean;
 };
 
 export type Option = {
@@ -76,6 +77,7 @@ export const Select = ({
   handleOnChange = () => {},
   shouldUnregister,
   isLabelHidden,
+  isBleedingEdge = true,
 }: SelectProps): JSX.Element => {
   const { register } = useFormContext();
 
@@ -97,13 +99,16 @@ export const Select = ({
       </label>
       <select
         data-testid={testId}
+        data-bleeding-edge={isBleedingEdge ? 'on' : 'off'}
         id={id}
         className={clsx(
           'theme-field',
           'block w-full rounded-md',
           'py-3 h-12',
-          'supports-[selector(::picker(select))]:p-0',
           'supports-[selector(::picker(select))]:[&:has(button:focus-visible)]:theme-focus-without-prefix',
+          {
+            'supports-[selector(::picker(select))]:p-0': isBleedingEdge,
+          },
         )}
         required={isRequired}
         disabled={isDisabled}

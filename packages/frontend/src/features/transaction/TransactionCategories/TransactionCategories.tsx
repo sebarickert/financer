@@ -46,6 +46,8 @@ export const TransactionCategories = ({
     resetField('setFirstCategorySelect');
   }, [fields, resetField]);
 
+  const isSelectDisabled =
+    !categorySelectOnly && (!transactionAmount || transactionAmount < 0);
   return (
     <>
       <Heading disableResponsiveSizing>Categories</Heading>
@@ -55,9 +57,8 @@ export const TransactionCategories = ({
           options={transactionCategories}
           placeholder="Select category"
           isLabelHidden
-          isDisabled={
-            !categorySelectOnly && (!transactionAmount || transactionAmount < 0)
-          }
+          isDisabled={isSelectDisabled}
+          isBleedingEdge={false}
           handleOnChange={(event) => {
             const categoryId = event.target.value;
 
