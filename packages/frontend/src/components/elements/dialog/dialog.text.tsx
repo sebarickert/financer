@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 
 import { Heading } from '../Heading';
-import { Paragraph } from '../paragraph/paragraph';
+import { Paragraph } from '../Paragraph';
 
 import { Icon, IconName } from '$elements/Icon';
 

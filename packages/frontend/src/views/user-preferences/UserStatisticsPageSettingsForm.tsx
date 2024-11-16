@@ -10,7 +10,7 @@ import { settingsPaths } from '$constants/settings-paths';
 import { Checkbox } from '$elements/checkbox/checkbox';
 import { CheckboxGroup } from '$elements/checkbox/checkbox.group';
 import { Heading } from '$elements/Heading';
-import { Paragraph } from '$elements/paragraph/paragraph';
+import { Paragraph } from '$elements/Paragraph';
 import {
   DefaultFormActionHandler,
   useFinancerFormState,
