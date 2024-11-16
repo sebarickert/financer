@@ -28,12 +28,12 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       'open:max-lg:translate-y-0 open:ease-out open:lg:translate-x-0 open:!transition-allow-discrete open:transition-all open:duration-200',
       'starting:open:max-lg:translate-y-full starting:open:lg:translate-x-full',
       // Drawer
-      'theme-bg-color theme-text-primary fixed text-left max-lg:border-t lg:border-l theme-border-primary',
+      'theme-bg-color theme-text-primary fixed text-left',
+      'max-lg:border-t lg:border-l theme-border-primary',
       'px-6 lg:px-8 pt-0 pb-[calc(env(safe-area-inset-bottom)+48px)]',
       'max-lg:inset-x-0 max-lg:top-auto max-lg:w-full max-lg:rounded-t-2xl',
       'lg:inset-y-0 lg:overflow-y-auto lg:max-w-[600px] lg:w-3/4 lg:left-auto lg:h-full',
       'bottom-0 m-0',
-      'min-[1440px]:max-w-[552px] min-[1440px]:box-content min-[1440px]:pr-[100vw] min-[1440px]:mr-[-100vw] min-[1440px]:right-[calc(calc(100vw-1440px)/2+1.5rem)]',
       'max-h-dvh',
       className,
     );

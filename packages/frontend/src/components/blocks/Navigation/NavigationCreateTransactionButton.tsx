@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { FC, useId } from 'react';
 
-import { Drawer } from '$blocks/drawer/drawer';
+import { Drawer } from '$blocks/drawer123/drawer';
 import { Button } from '$elements/Button/Button';
 import { Icon } from '$elements/Icon';
 import { TransactionFormSwitcher } from '$features/transaction/TransactionFormSwitcher';

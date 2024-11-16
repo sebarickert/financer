@@ -3,7 +3,7 @@
 import { useId } from 'react';
 
 import { handleTemplateDelete } from '$actions/template/handleTemplateDelete';
-import { Drawer } from '$blocks/drawer/drawer';
+import { Drawer } from '$blocks/drawer123/drawer';
 import { Button } from '$elements/Button/Button';
 import { ButtonGroup } from '$elements/Button/ButtonGroup';
 import { Icon } from '$elements/Icon';
