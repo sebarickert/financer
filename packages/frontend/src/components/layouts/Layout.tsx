@@ -1,4 +1,4 @@
-import { Container } from './Container';
+import clsx from 'clsx';
 
 import { ToastContainer } from '$blocks/toast/toast.container';
 import { ContentHeader } from '$layouts/ContentHeader';
@@ -18,24 +18,24 @@ export const Layout = ({
   headerAction,
 }: LayoutProps): JSX.Element => {
   return (
-    <div>
+    <>
       <Header />
-      <Container>
-        <main className="max-lg:min-h-screen-safe pb-safe">
-          <div
-            className="px-4 mt-[56px] lg:mt-[64px] max-lg:pt-6 max-lg:pb-24 lg:px-8 lg:py-12" // 56/64px is the height of the header
-            data-testid="layout-root"
-          >
-            <ContentHeader
-              title={title}
-              backLink={backLink}
-              headerAction={headerAction}
-            />
-            <ToastContainer className="mb-8 -mt-2" />
-            {children}
-          </div>
-        </main>
-      </Container>
-    </div>
+      <main
+        className={clsx(
+          'mt-[56px] lg:mt-[64px]', // 56/64px is the height of the header
+          'pt-12 pb-safe-offset-12 px-4 lg:px-8',
+          'mx-auto max-w-screen-xl',
+        )}
+        data-testid="layout-root"
+      >
+        <ContentHeader
+          title={title}
+          backLink={backLink}
+          headerAction={headerAction}
+        />
+        <ToastContainer className="mb-8 -mt-2" />
+        {children}
+      </main>
+    </>
   );
 };
