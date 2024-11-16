@@ -14,6 +14,22 @@
 }
 
 @layer base {
+  :root {
+    --header-height: 56px;
+    --content-header-height: 56px;
+    --gutter-top: var(--content-header-height);
+    --gutter-bottom: var(--header-height);
+  }
+
+  @media (min-width: theme("screens.lg")) {
+    :root {
+      --header-height: 64px;
+      --content-header-height: minmax(36px, 48px);
+      --gutter-top: var(--header-height);
+      --gutter-bottom: auto;
+    }
+  }
+
   body:has([data-body-scroll-lock="on"]:popover-open) {
     overflow: hidden;
   }
