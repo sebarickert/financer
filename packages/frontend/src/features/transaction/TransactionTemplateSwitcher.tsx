@@ -6,7 +6,7 @@ import {
   TransactionType,
   useTransactionTemplatesFindAllManualTypeByUserQuery,
 } from '$api/generated/financerApi';
-import { Drawer } from '$blocks/drawer123/drawer';
+import { Drawer } from '$blocks/Drawer';
 import { Button } from '$elements/Button/Button';
 import { ButtonGroup } from '$elements/Button/ButtonGroup';
 import { Icon } from '$elements/Icon';

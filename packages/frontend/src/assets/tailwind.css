@@ -111,6 +111,10 @@
     @apply text-white bg-red-600 hover:bg-red-700 active:bg-red-800;
   }
 
+  .theme-button-ghost {
+    @apply theme-text-primary hover:theme-layer-color;
+  }
+
   .theme-focus {
     @apply focus-visible:theme-focus-without-prefix;
   }
