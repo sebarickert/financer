@@ -45,7 +45,7 @@ export const NavigationCreateTransactionButton: FC<
         className={clsx(
           'items-center justify-center theme-focus theme-text-primary',
           'max-lg:flex max-lg:flex-col max-lg:h-full max-lg:!w-full max-lg:rounded-none',
-          'lg:theme-button-primary lg:py-2.5 lg:h-11 lg:px-[18px] lg:text-base',
+          'lg:theme-button-primary lg:py-3 lg:h-12 lg:px-[18px] lg:text-base',
         )}
         popoverTarget={id}
         data-testid="add-transaction"

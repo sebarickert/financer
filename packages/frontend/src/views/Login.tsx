@@ -7,7 +7,7 @@ import { Logo } from '$blocks/Logo';
 import { Button } from '$elements/Button/Button';
 import { ButtonGroup } from '$elements/Button/ButtonGroup';
 import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
-import { Paragraph } from '$elements/paragraph/paragraph';
+import { Paragraph } from '$elements/Paragraph';
 
 const NEXT_PUBLIC_IS_GITHUB_OAUTH_ENABLED =
   process.env.NEXT_PUBLIC_IS_GITHUB_OAUTH_ENABLED;

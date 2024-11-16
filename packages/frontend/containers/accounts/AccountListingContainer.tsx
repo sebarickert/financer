@@ -1,9 +1,8 @@
-import clsx from 'clsx';
 import { FC } from 'react';
 
 import { AccountType } from '$api/generated/financerApi';
+import { Button } from '$elements/Button/Button';
 import { Icon } from '$elements/Icon';
-import { Link } from '$elements/Link';
 import { AccountList } from '$features/account/AccountList';
 import { Layout } from '$layouts/Layout';
 import { AccountService } from '$ssr/api/account.service';
@@ -33,18 +32,16 @@ export const AccountListingContainer: FC = async () => {
     <Layout
       title="Accounts"
       headerAction={
-        <Link
+        <Button
           href="/accounts/add"
-          className={clsx(
-            'theme-layer-color-with-hover theme-focus rounded-md',
-            'inline-flex items-center justify-center h-11 w-11',
-          )}
+          accentColor="secondary"
+          size="icon"
           testId="add-account"
           transition="slideInFromRight"
         >
           <span className="sr-only">Add account</span>
           <Icon name="PlusIcon" />
-        </Link>
+        </Button>
       }
     >
       <section className="grid gap-8">

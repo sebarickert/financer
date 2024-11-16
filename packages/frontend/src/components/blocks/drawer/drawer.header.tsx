@@ -6,7 +6,7 @@ import { FC } from 'react';
 import { Button } from '$elements/Button/Button';
 import { Heading } from '$elements/Heading';
 import { Icon } from '$elements/Icon';
-import { Paragraph } from '$elements/paragraph/paragraph';
+import { Paragraph } from '$elements/Paragraph';
 import { hapticRunner } from '$utils/haptic.helper';
 
 type DrawerHeaderProps = {
@@ -25,7 +25,12 @@ export const DrawerHeader: FC<DrawerHeaderProps> = ({
   id,
 }) => {
   return (
-    <div className={clsx('grid grid-cols-[1fr,44px] gap-y-4', className)}>
+    <div
+      className={clsx(
+        'grid grid-cols-[1fr,48px] items-center gap-y-4',
+        className,
+      )}
+    >
       {heading && (
         <>
           <Heading className="col-[1]" noMargin disableResponsiveSizing>

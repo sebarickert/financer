@@ -13,7 +13,7 @@ import {
 } from '$api/generated/financerApi';
 import { Form } from '$blocks/form/form';
 import { accountTypeIconMapping } from '$constants/account/accountTypeMapping';
-import { Input } from '$elements/input/input';
+import { Input } from '$elements/Input';
 import { Option, Select } from '$elements/Select';
 import { useGetAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useGetAllTransactionCategoriesWithCategoryTree';
 import {
