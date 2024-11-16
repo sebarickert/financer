@@ -42,7 +42,7 @@
     pointer-events: auto;
   }
 
-  select,
+  select[data-bleeding-edge="on"],
   ::picker(select) {
     appearance: base-select !important;
   }
