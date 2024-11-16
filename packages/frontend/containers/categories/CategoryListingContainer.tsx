@@ -1,11 +1,10 @@
-import clsx from 'clsx';
 import { FC } from 'react';
 
 import { List } from '$blocks/List';
 import { ProminentLink } from '$blocks/ProminentLink';
 import { settingsPaths } from '$constants/settings-paths';
+import { Button } from '$elements/Button/Button';
 import { Icon } from '$elements/Icon';
-import { Link } from '$elements/Link';
 import { Layout } from '$layouts/Layout';
 import { CategoryService } from '$ssr/api/category.service';
 
@@ -83,16 +82,14 @@ export const CategoryListingContainer: FC = async () => {
       title="Categories"
       backLink={settingsPaths.default}
       headerAction={
-        <Link
+        <Button
           href={`${settingsPaths.categories}/add`}
-          className={clsx(
-            'theme-layer-color-with-hover theme-focus rounded-md',
-            'inline-flex items-center justify-center h-11 w-11',
-          )}
+          accentColor="secondary"
+          size="icon"
         >
           <span className="sr-only">Add category</span>
           <Icon name="PlusIcon" />
-        </Link>
+        </Button>
       }
     >
       <section className="grid gap-8">

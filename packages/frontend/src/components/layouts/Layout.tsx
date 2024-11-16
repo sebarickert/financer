@@ -23,7 +23,7 @@ export const Layout = ({
       <Container>
         <main className="max-lg:min-h-screen-safe pb-safe">
           <div
-            className="px-4 mt-[48px] lg:mt-[64px] max-lg:pt-6 max-lg:pb-24 lg:px-8 lg:py-12" // 48/64px is the height of the header
+            className="px-4 mt-[56px] lg:mt-[64px] max-lg:pt-6 max-lg:pb-24 lg:px-8 lg:py-12" // 56/64px is the height of the header
             data-testid="layout-root"
           >
             <ContentHeader

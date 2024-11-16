@@ -52,8 +52,8 @@ export const Button = ({
       'inline-flex items-center justify-center gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0',
       'disabled:pointer-events-none disabled:opacity-50',
     ),
-    default: clsx('py-2.5 h-11 px-[18px] text-base'),
-    icon: clsx('h-11 w-11'),
+    default: clsx('py-3 h-12 px-5 text-base'),
+    icon: clsx('h-12 w-12'),
   };
 
   const buttonClasses = clsx(className, {

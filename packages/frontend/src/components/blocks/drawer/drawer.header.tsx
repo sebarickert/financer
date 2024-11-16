@@ -25,7 +25,12 @@ export const DrawerHeader: FC<DrawerHeaderProps> = ({
   id,
 }) => {
   return (
-    <div className={clsx('grid grid-cols-[1fr,44px] gap-y-4', className)}>
+    <div
+      className={clsx(
+        'grid grid-cols-[1fr,48px] items-center gap-y-4',
+        className,
+      )}
+    >
       {heading && (
         <>
           <Heading className="col-[1]" noMargin disableResponsiveSizing>
