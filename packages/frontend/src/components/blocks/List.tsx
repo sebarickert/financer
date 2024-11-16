@@ -25,7 +25,7 @@ export const List: FC<ListProps> = ({
   const testId = rawTestId ?? 'list';
 
   const stickyHeaderStyles = clsx(
-    'sticky top-[56px] lg:top-[64px] z-10', // 56/64px is the height of the header
+    'sticky top-[--gutter-top] z-10',
     'bg-white/75 dark:bg-[#080808]/75 backdrop-blur-sm',
     'px-4 -mx-4',
     'max-lg:py-1 max-lg:-mt-1',

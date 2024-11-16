@@ -8,7 +8,12 @@ import { hapticRunner, HapticType } from '$utils/haptic.helper';
 import { isExternalLink } from '$utils/isExternalLink';
 import { TransitionType } from '$utils/transitionAnimations';
 
-export type ButtonAccentColor = 'unstyled' | 'primary' | 'secondary' | 'danger';
+export type ButtonAccentColor =
+  | 'unstyled'
+  | 'primary'
+  | 'secondary'
+  | 'danger'
+  | 'ghost';
 interface ButtonProps
   extends Pick<
     HTMLAttributes<unknown>,
@@ -63,6 +68,7 @@ export const Button = ({
     ['theme-button-primary']: accentColor === 'primary',
     ['theme-button-secondary']: accentColor === 'secondary',
     ['theme-button-danger']: accentColor === 'danger',
+    ['theme-button-ghost']: accentColor === 'ghost',
     ['']: accentColor === 'unstyled',
   });
 

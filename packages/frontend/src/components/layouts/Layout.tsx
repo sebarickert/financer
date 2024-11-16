@@ -22,7 +22,7 @@ export const Layout = ({
       <Header />
       <main
         className={clsx(
-          'mt-[56px] lg:mt-[64px]', // 56/64px is the height of the header
+          'mt-[--gutter-top]',
           'pt-12 pb-safe-offset-12 px-4 lg:px-8',
           'mx-auto max-w-screen-xl',
         )}

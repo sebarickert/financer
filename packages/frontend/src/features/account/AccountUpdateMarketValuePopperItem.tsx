@@ -5,7 +5,7 @@ import { FC, useId } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { AccountDto } from '$api/generated/financerApi';
-import { Drawer } from '$blocks/drawer/drawer';
+import { Drawer } from '$blocks/Drawer';
 import { Form } from '$blocks/form/form';
 import { Button } from '$elements/Button/Button';
 import { Icon } from '$elements/Icon';

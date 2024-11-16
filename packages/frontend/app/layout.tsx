@@ -102,7 +102,7 @@ const RootLayout: FC<ChildrenProp> = async ({ children }) => {
       <head>
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
       </head>
-      <body className="max-lg:min-h-[calc(100dvh-56px] max-lg:pb-[56px] theme-bg-color">
+      <body className="max-lg:min-h-[calc(100dvh-var(--gutter-top))] max-lg:pb-[--gutter-bottom] theme-bg-color">
         <RootProviderContainer
           shouldShowOnboarding={!authenticationStatus?.hasAccounts}
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
