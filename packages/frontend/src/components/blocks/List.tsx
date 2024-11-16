@@ -27,7 +27,7 @@ export const List: FC<ListProps> = ({
   const stickyHeaderStyles = clsx(
     'sticky top-[56px] lg:top-[64px] z-10', // 56/64px is the height of the header
     'bg-white/75 dark:bg-[#080808]/75 backdrop-blur-sm',
-    'px-4 -mx-4 mb-1',
+    'px-4 -mx-4',
     'max-lg:py-1 max-lg:-mt-1',
     'lg:py-2 lg:-mt-2',
   );
@@ -49,6 +49,7 @@ export const List: FC<ListProps> = ({
         className={clsx('grid gap-1 isolate', {
           'lg:grid-cols-2': columns === 2,
           'lg:grid-cols-3': columns === 3,
+          'max-lg:pt-3 lg:pt-2': hasStickyHeader,
         })}
       >
         {Children.map(children, (child) => {
