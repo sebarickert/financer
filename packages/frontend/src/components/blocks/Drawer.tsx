@@ -70,7 +70,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
             popoverTarget={id}
             popoverTargetAction="hide"
             accentColor="ghost"
-            className='translate-x-1/4'
+            className="translate-x-1/4"
           >
             <Icon name="XMarkIcon" />
             <span className="sr-only">Close Drawer</span>
