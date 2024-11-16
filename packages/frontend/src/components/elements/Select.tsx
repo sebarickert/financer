@@ -46,7 +46,7 @@ const OptionElement: FC<OptionElementProps> = ({
     className={clsx(
       'theme-bg-color-with-hover theme-focus focus-visible:z-10 focus-visible:relative theme-text-primary rounded-md hover:cursor-pointer',
       'disabled:pointer-events-none disabled:opacity-50',
-      'before:hidden py-2.5 px-3 flex gap-2',
+      'before:hidden p-3 flex gap-2',
     )}
     disabled={isDisabled}
   >
@@ -101,7 +101,7 @@ export const Select = ({
         className={clsx(
           'theme-field',
           'block w-full rounded-md',
-          'py-2.5 h-11',
+          'py-3 h-12',
           'supports-[selector(::picker(select))]:p-0',
           'supports-[selector(::picker(select))]:[&:has(button:focus-visible)]:theme-focus-without-prefix',
         )}
@@ -117,10 +117,7 @@ export const Select = ({
         <button type="button" className="block w-full px-3">
           {/* @ts-expect-error - New experimental feature that is not yet supported by the TypeScript compiler */}
           <selectedoption
-            className={clsx(
-              '[&>span]:after:hidden',
-              'py-2.5 flex gap-2 w-full',
-            )}
+            className={clsx('[&>span]:after:hidden', 'py-3 flex gap-2 w-full')}
           />
         </button>
         <OptionElement

@@ -10,7 +10,7 @@ import {
   VisibilityType,
 } from '$api/generated/financerApi';
 import { Form } from '$blocks/form/form';
-import { Input } from '$elements/input/input';
+import { Input } from '$elements/Input';
 import { Select, Option } from '$elements/Select';
 import { CategoriesFormOnlyCategory } from '$features/transaction/TransactionCategories/transaction-categories.types';
 import { TransactionCategories } from '$features/transaction/TransactionCategories/TransactionCategories';

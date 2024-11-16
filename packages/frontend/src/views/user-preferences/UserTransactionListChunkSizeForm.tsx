@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 
 import { Form } from '$blocks/form/form';
 import { settingsPaths } from '$constants/settings-paths';
-import { Input } from '$elements/input/input';
+import { Input } from '$elements/Input';
 import {
   DefaultFormActionHandler,
   useFinancerFormState,

@@ -109,7 +109,7 @@ export const TransactionCategories = ({
           <p className="pl-2">Add Category</p>
           <span
             className={clsx(
-              '!h-11 !w-11 !p-0 inline-flex justify-center items-center theme-button-secondary rounded-md',
+              '!h-12 !w-12 !p-0 inline-flex justify-center items-center theme-button-secondary rounded-md',
             )}
           >
             <Icon name={'PlusIcon'} />

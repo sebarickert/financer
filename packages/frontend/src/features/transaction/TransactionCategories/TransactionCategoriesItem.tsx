@@ -4,7 +4,7 @@ import { useFormContext, useWatch } from 'react-hook-form';
 
 import { Button } from '$elements/Button/Button';
 import { Icon } from '$elements/Icon';
-import { Input } from '$elements/input/input';
+import { Input } from '$elements/Input';
 import { Select, Option } from '$elements/Select';
 import { formatCurrency } from '$utils/formatCurrency';
 
@@ -50,9 +50,9 @@ export const TransactionCategoriesItem: FC<TransactionCategoriesItemProps> = ({
       <summary
         className={clsx(
           'grid grid-cols-[auto,1fr,auto] gap-2',
-          'p-2.5 px-3 h-11 rounded-md theme-layer-color-with-hover theme-text-primary',
+          'p-3 h-12 rounded-md theme-layer-color-with-hover theme-text-primary',
           'hover:cursor-pointer theme-focus',
-          'mr-[52px]',
+          'mr-[56px]',
           '[&::-webkit-details-marker]:hidden',
         )}
         data-testid="transaction-categories-item-summary"
