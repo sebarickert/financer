@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { Metadata, Viewport } from 'next';
-import { cookies, headers } from 'next/headers';
+import { headers } from 'next/headers';
 import { redirect, RedirectType } from 'next/navigation';
 import { FC } from 'react';
 
@@ -59,13 +59,10 @@ export async function generateViewport(): Promise<Viewport> {
   };
 }
 
-const REDIRECT_COOKIE_NAME = 'onboardingRedirect';
-
 const PUBLIC_ROUTES = ['/privacy-policy/', '/issues-with-login/', '/login/'];
 
 const RootLayout: FC<ChildrenProp> = async ({ children }) => {
   const headersList = headers();
-  const cookiesStore = cookies();
 
   const authenticationStatus = await AuthenticationService.getStatus();
   const pathname = headersList.get(CustomHeader.PATHNAME) ?? '';
@@ -76,15 +73,6 @@ const RootLayout: FC<ChildrenProp> = async ({ children }) => {
     redirect('/login', RedirectType.replace);
   } else if (pathname === '/login/' && isLoggedIn) {
     redirect('/', RedirectType.replace);
-  } else if (
-    isLoggedIn &&
-    !cookiesStore.get(REDIRECT_COOKIE_NAME) &&
-    !authenticationStatus.hasAccounts &&
-    pathname !== '/accounts/add/'
-  ) {
-    // TODO This causes error because we can set cookies only from server actions
-    // cookiesStore.set(REDIRECT_COOKIE_NAME, 'true', { maxAge: 60 * 10 }); // 10 minutes
-    redirect('/accounts/add', RedirectType.replace);
   }
 
   const theme = isLoggedIn ? await UserService.getOwnUserTheme() : Theme.Auto;

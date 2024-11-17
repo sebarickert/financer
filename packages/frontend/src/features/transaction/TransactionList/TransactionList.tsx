@@ -55,7 +55,7 @@ export const TransactionList: FC<TransactionListProps> = async ({
       <div className={clsx(className)}>
         <p className="text-center theme-text-primary">
           Your transactions will appear here. <br />
-          Add one to get started.
+          Add one to begin tracking.
         </p>
       </div>
     );

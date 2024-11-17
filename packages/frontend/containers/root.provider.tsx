@@ -7,7 +7,9 @@ import { useDispatch } from 'react-redux';
 import { StoreProvider } from './store.provider';
 
 import { ScrollToTop } from '$blocks/ScrollToTop';
-import { ToastMessageTypes } from '$blocks/toast/toast';
+import { ToastMessageTypes } from '$blocks/toast/Toast';
+import { Icon } from '$elements/Icon';
+import { Link } from '$elements/Link';
 import {
   addToastMessage,
   removeToastMessage,
@@ -43,9 +45,14 @@ const App: FC<RootProviderContainerProps> = ({
       addToastMessage({
         id: 'welcomeToFinancer',
         type: ToastMessageTypes.GENERAL,
-        message: 'Welcome to Financer!',
+        message: "We're excited to have you on board with Financer!",
         additionalInformation:
-          'You must add your first account before you start tracking finances with Financer',
+          'Add your first account to start tracking expenses, income, savings, and investments in one place.',
+        action: (
+          <Link href="/accounts/add" className="inline-flex items-center gap-2">
+            Add Account <Icon name="ArrowRightIcon" />
+          </Link>
+        ),
       }),
     );
   }, [dispatch, hasShownOnboarding, shouldShowOnboarding]);

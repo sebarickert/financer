@@ -42,7 +42,10 @@ export const Link = ({
 
   const isCurrentPage = pathname === href;
 
-  const linkClasses = clsx('theme-focus theme-text-primary', className);
+  const linkClasses = clsx(
+    'theme-focus theme-text-primary hover:theme-text-secondary',
+    className,
+  );
   const linkContent = (
     <>
       {isAbsolute && <span className="absolute inset-0" aria-hidden="true" />}

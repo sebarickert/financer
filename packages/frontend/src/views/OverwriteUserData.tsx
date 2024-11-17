@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 
 import { UserDataImportDto } from '$api/generated/financerApi';
 import { DetailsList } from '$blocks/details-list/details-list';
-import { ToastMessageTypes } from '$blocks/toast/toast';
+import { ToastMessageTypes } from '$blocks/toast/Toast';
 import { Button } from '$elements/Button/Button';
 import { Heading } from '$elements/Heading';
 import { IconName } from '$elements/Icon';

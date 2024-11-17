@@ -1,0 +1,20 @@
+{
+  "user": {
+    "roles": ["TEST_USER"],
+    "id": "61460d7354ea082ad0256749",
+    "name": "Dummy Test User",
+    "auth0Id": "",
+    "githubId": "",
+    "nickname": "",
+    "profileImageUrl": "",
+    "theme": "AUTO"
+  },
+  "accounts": [],
+  "accountBalanceChanges": [],
+  "transactions": [],
+  "transactionCategories": [],
+  "transactionCategoryMappings": [],
+  "userPreferences": [],
+  "transactionTemplates": [],
+  "transactionTemplateLogs": []
+}
