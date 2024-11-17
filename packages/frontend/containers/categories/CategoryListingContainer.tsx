@@ -94,7 +94,7 @@ export const CategoryListingContainer: FC = async () => {
       }
     >
       <section className="grid gap-8">
-        {!!categoryRows && (
+        {!categoryRows.length && (
           <EmptyContentBlock
             title="No Categories Added"
             icon="TagIcon"

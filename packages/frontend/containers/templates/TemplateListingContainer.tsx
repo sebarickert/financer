@@ -27,7 +27,7 @@ export const TemplateListingContainer: FC = async () => {
         </Button>
       }
     >
-      {!!templates && (
+      {!templates.length && (
         <EmptyContentBlock
           title="No Templates Added"
           icon="BoltIcon"

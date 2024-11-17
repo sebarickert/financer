@@ -45,7 +45,7 @@ export const AccountListingContainer: FC = async () => {
         </Button>
       }
     >
-      {!!groupedAccounts && (
+      {!accounts.length && (
         <EmptyContentBlock
           title="No Accounts Added"
           icon="Squares2X2Icon"
