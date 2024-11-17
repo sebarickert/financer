@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { ToastMessage } from '$blocks/toast/toast';
+import { ToastMessage } from '$blocks/Toast/Toast';
 
 interface NotificationState {
   toastMessages: ToastMessage[];

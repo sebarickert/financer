@@ -1,5 +1,6 @@
 import { FC } from 'react';
 
+import { EmptyContentBlock } from '$blocks/EmptyContentBlock';
 import { List } from '$blocks/List';
 import { ProminentLink } from '$blocks/ProminentLink';
 import { settingsPaths } from '$constants/settings-paths';
@@ -73,7 +74,7 @@ export const CategoryListingContainer: FC = async () => {
   };
 
   const categoryRows: CategoryParentItem[] = [
-    generalCategoryGroup,
+    ...(!!generalCategoryGroup.items.length ? [generalCategoryGroup] : []),
     ...categoriesWithChildren,
   ];
 
@@ -93,6 +94,21 @@ export const CategoryListingContainer: FC = async () => {
       }
     >
       <section className="grid gap-8">
+        {!categoryRows.length && (
+          <EmptyContentBlock
+            title="No Categories Added"
+            icon="TagIcon"
+            action={
+              <Button href={`${settingsPaths.categories}/add`}>
+                Add Category
+              </Button>
+            }
+          >
+            It seems you haven&apos;t added any categories yet. Start by adding
+            your first category to begin organizing and tracking your finances
+            more effectively.
+          </EmptyContentBlock>
+        )}
         {categoryRows.map(({ label: parentLabel, items, link: parentLink }) => (
           <List
             key={parentLabel}

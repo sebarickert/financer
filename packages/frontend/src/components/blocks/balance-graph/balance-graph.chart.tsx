@@ -103,7 +103,7 @@ export const BalanceGraphChart: FC<BalanceGraphChartProps> = ({
     [balanceHistory],
   );
 
-  if (balanceHistory.length === 1) {
+  if (balanceHistory.length < 3) {
     return null;
   }
 

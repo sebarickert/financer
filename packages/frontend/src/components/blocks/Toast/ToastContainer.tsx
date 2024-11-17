@@ -3,7 +3,7 @@
 import clsx from 'clsx';
 import { memo } from 'react';
 
-import { Toast } from './toast';
+import { Toast } from './Toast';
 
 import { useAppSelector } from '$store';
 
@@ -15,18 +15,18 @@ export const ToastContainer = memo(
   ({ className = '' }: ToastContainerProps): JSX.Element | null => {
     const { toastMessages } = useAppSelector((state) => state.notification);
 
-    if (toastMessages.length === 0) return null;
-
     return (
-      <div className={clsx('', { [className]: true })} data-testid="toast">
-        <ul className="space-y-4" aria-live="polite">
-          {toastMessages.map((toast) => (
-            <li key={toast.id}>
-              <Toast {...toast} />
-            </li>
-          ))}
-        </ul>
-      </div>
+      <ul
+        aria-live="polite"
+        className={clsx({ [className]: toastMessages.length > 0 })}
+        data-testid="toast-container"
+      >
+        {toastMessages.map((toast) => (
+          <li key={toast.id}>
+            <Toast {...toast} />
+          </li>
+        ))}
+      </ul>
     );
   },
 );

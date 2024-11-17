@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useFormState } from 'react-dom';
 import { useDispatch } from 'react-redux';
 
-import { ToastMessageTypes } from '$blocks/toast/toast';
+import { ToastMessageTypes } from '$blocks/Toast/Toast';
 import {
   addToastMessage,
   removeToastMessage,

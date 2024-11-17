@@ -41,8 +41,7 @@ export const ContentHeader: FC<ContentHeaderProps> = ({
       )}
       <Heading
         variant="h1"
-        className="max-lg:justify-center max-lg:col-[2] lg:grow"
-        titleClassName={clsx('truncate')}
+        className="max-lg:justify-center max-lg:col-[2] lg:grow truncate"
         testId="page-main-heading"
       >
         {title ?? '-'}

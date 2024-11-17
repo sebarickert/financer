@@ -92,7 +92,7 @@ test.describe('Edit Category', () => {
 
       await page.getByTestId('category-form').getByTestId('submit').click();
 
-      const formErrors = page.getByTestId('toast-item');
+      const formErrors = page.getByTestId('toast');
       await expect(formErrors).toContainText('Submission failed');
       await expect(formErrors).toContainText(
         'Parent category cannot be child category of current item.',

@@ -1,10 +1,7 @@
 'use client';
 
-import { Logo } from '$blocks/Logo';
 import { Button } from '$elements/Button/Button';
-import { Heading } from '$elements/Heading';
 import { Link } from '$elements/Link';
-import { Container } from '$layouts/Container';
 
 type ErrorProps = {
   errorPageType: 'full-app' | 'in-app';
@@ -13,48 +10,34 @@ type ErrorProps = {
 export const Error = ({ errorPageType }: ErrorProps) => {
   if (errorPageType === 'full-app') {
     return (
-      <Container className="theme-text-primary">
-        <div className="px-8 py-12">
-          <Logo className="mb-8" />
-          <Heading variant="h1" noMargin className="mb-6">
-            Error
-          </Heading>
-          <p className="max-w-xl mb-4 text-lg">
-            Oops... Something went horribly wrong. We are not sure what
-            happened, but we are trying to fix the issue as we speak.
-            <br />
-            <br />
-            We are very sorry.
-            <br />
-            <br />
-            Best regards,
-            <br />
-            The Financer team.
-          </p>
-          <ul>
-            <li>
-              <a
-                href="https://github.com/sebarickert"
-                className="text-blue-financer"
-                target={'_blank'}
-              >
-                @sebarickert
-                <span className="sr-only">(Link opens in a new tab)</span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://github.com/silte"
-                className="text-blue-financer"
-                target={'_blank'}
-              >
-                @silte
-                <span className="sr-only">(Link opens in a new tab)</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </Container>
+      <>
+        <p className="max-w-xl mb-4 text-lg">
+          Oops... Something went horribly wrong. We are not sure what happened,
+          but we are trying to fix the issue as we speak.
+          <br />
+          <br />
+          We are very sorry.
+          <br />
+          <br />
+          Best regards,
+          <br />
+          The Financer team.
+        </p>
+        <ul>
+          <li>
+            <Link href="https://github.com/sebarickert" target="_blank">
+              @sebarickert
+              <span className="sr-only">(Link opens in a new tab)</span>
+            </Link>
+          </li>
+          <li>
+            <Link href="https://github.com/silte" target="_blank">
+              @silte
+              <span className="sr-only">(Link opens in a new tab)</span>
+            </Link>
+          </li>
+        </ul>
+      </>
     );
   }
 
@@ -67,7 +50,7 @@ export const Error = ({ errorPageType }: ErrorProps) => {
       <div className="flex items-center gap-2">
         <Button onClick={() => window.location.reload()}>Fix error</Button>
         <span> or </span>
-        <Link href={'/'} className="font-medium underline ">
+        <Link href={'/'} className="font-medium underline">
           return to homepage
         </Link>
       </div>

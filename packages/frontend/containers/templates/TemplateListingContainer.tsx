@@ -1,5 +1,6 @@
 import { FC } from 'react';
 
+import { EmptyContentBlock } from '$blocks/EmptyContentBlock';
 import { settingsPaths } from '$constants/settings-paths';
 import { Button } from '$elements/Button/Button';
 import { Icon } from '$elements/Icon';
@@ -26,6 +27,21 @@ export const TemplateListingContainer: FC = async () => {
         </Button>
       }
     >
+      {!templates.length && (
+        <EmptyContentBlock
+          title="No Templates Added"
+          icon="BoltIcon"
+          action={
+            <Button href={`${settingsPaths.templates}/add`}>
+              Add Template
+            </Button>
+          }
+        >
+          It seems you haven&apos;t added any templates yet. Create your first
+          template to predefine values or automate common transactions, making
+          it easier to track recurring expenses and income.
+        </EmptyContentBlock>
+      )}
       <TemplateList templates={templates} />
     </Layout>
   );

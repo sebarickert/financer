@@ -25,6 +25,7 @@ interface LinkProps
   /** defaults to `none` */
   haptic?: HapticType;
   onClick?: () => void;
+  hasHoverEffect?: boolean;
 }
 
 export const Link = ({
@@ -35,6 +36,7 @@ export const Link = ({
   href,
   transition,
   haptic = 'none',
+  hasHoverEffect = true,
   ...props
 }: LinkProps): JSX.Element => {
   const pathname = usePathname();
@@ -42,7 +44,9 @@ export const Link = ({
 
   const isCurrentPage = pathname === href;
 
-  const linkClasses = clsx('theme-focus theme-text-primary', className);
+  const linkClasses = clsx('theme-focus theme-text-primary', className, {
+    'hover:theme-text-secondary': hasHoverEffect,
+  });
   const linkContent = (
     <>
       {isAbsolute && <span className="absolute inset-0" aria-hidden="true" />}

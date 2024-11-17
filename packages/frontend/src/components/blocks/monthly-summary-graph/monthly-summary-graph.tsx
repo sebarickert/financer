@@ -166,7 +166,7 @@ export const MonthlySummaryGraph = ({
     [labels, monthlySummaryHistory],
   );
 
-  if (monthlySummaryHistory.length === 1) {
+  if (monthlySummaryHistory.length < 2) {
     return null;
   }
 

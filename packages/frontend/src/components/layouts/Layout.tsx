@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 
-import { ToastContainer } from '$blocks/toast/toast.container';
+import { ToastContainer } from '$blocks/Toast/ToastContainer';
 import { ContentHeader } from '$layouts/ContentHeader';
 import { Header } from '$layouts/Header';
 
