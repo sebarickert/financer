@@ -100,6 +100,7 @@ export const Button = ({
         haptic={haptic}
         testId={testId}
         transition={transition}
+        hasHoverEffect={false}
       >
         {children}
       </Link>

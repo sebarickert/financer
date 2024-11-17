@@ -1,21 +1,13 @@
 import { clsx } from 'clsx';
 import { FC, ReactNode } from 'react';
 
-import { Link } from '$elements/Link';
-
 type HeadingVariants = 'h1' | 'h2' | 'h3' | 'h4';
 
 type HeadingProps = {
   variant?: HeadingVariants;
   children: ReactNode;
-  titleClassName?: string;
   className?: string;
   testId?: string;
-  cta?: {
-    label: string;
-    url: string;
-    entityTitle?: string;
-  };
   noMargin?: boolean;
   disableResponsiveSizing?: boolean;
 };
@@ -23,42 +15,24 @@ type HeadingProps = {
 export const Heading: FC<HeadingProps> = ({
   variant = 'h2',
   children,
-  titleClassName = '',
   className = '',
   testId,
-  cta,
   noMargin,
   disableResponsiveSizing,
 }) => {
   const HeadingType = variant;
 
   return (
-    <div
-      className={clsx('flex', className, {
-        ['justify-between items-end']: cta,
+    <HeadingType
+      className={clsx('theme-text-primary font-medium', className, {
+        'text-lg': variant !== 'h1',
+        'lg:text-2xl': variant !== 'h1' && !disableResponsiveSizing,
+        'lg:text-3xl lg:font-semibold': variant === 'h1',
         ['mb-4']: variant !== 'h1' && !noMargin,
       })}
+      data-testid={testId}
     >
-      <HeadingType
-        className={clsx('theme-text-primary font-medium', titleClassName, {
-          'text-lg': variant !== 'h1',
-          'lg:text-2xl': variant !== 'h1' && !disableResponsiveSizing,
-          'lg:text-3xl lg:font-semibold': variant === 'h1',
-        })}
-        data-testid={testId}
-      >
-        {children}
-      </HeadingType>
-      {cta && cta.url && cta.label && (
-        <Link
-          href={cta.url}
-          className={clsx('theme-link')}
-          data-entity-title={cta.entityTitle ?? undefined}
-          transition="slideInFromRight"
-        >
-          {cta.label}
-        </Link>
-      )}
-    </div>
+      {children}
+    </HeadingType>
   );
 };

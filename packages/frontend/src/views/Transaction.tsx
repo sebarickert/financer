@@ -123,9 +123,7 @@ export const Transaction: FC<TransactionProps> = async ({
         <DetailsList items={transactionDetails} />
         {categoryDetails.length > 0 && (
           <div data-testid="transaction-categories">
-            <Heading disableResponsiveSizing noMargin className="mb-4">
-              Categories
-            </Heading>
+            <Heading disableResponsiveSizing>Categories</Heading>
             <div className="divide-y theme-divide-primary [&>div:not(:first-child)]:pt-4 [&>div:not(:last-child)]:pb-4">
               {categoryDetails.map((category) => (
                 <DetailsList
