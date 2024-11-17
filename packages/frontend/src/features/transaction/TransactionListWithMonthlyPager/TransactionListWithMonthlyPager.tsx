@@ -62,7 +62,7 @@ export const TransactionListWithMonthlyPager: FC<
       >
         <div
           className={clsx('', {
-            ['self-baseline lg:sticky lg:top-[calc(var(--gutter-top)+theme(spacing.4))] relative']:
+            ['self-baseline lg:sticky lg:top-[calc(var(--gutter-top)+theme(spacing.4))] relative isolate']:
               hasSummaryVisible,
             'mb-4': !hasSummaryVisible,
           })}
@@ -71,7 +71,7 @@ export const TransactionListWithMonthlyPager: FC<
             pagerOptions={pagerOptions}
             isStatusHidden
             className={clsx({
-              ['absolute top-6 right-6 translate-x-[16px] -translate-y-[12px] gap-0']:
+              ['absolute top-6 right-6 translate-x-[16px] -translate-y-[12px] gap-0 z-10']:
                 hasSummaryVisible,
             })}
           >
