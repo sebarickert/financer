@@ -1,13 +1,16 @@
+import clsx from 'clsx';
 import { FC } from 'react';
 
 import { TransactionType } from '$api/generated/financerApi';
 import { DetailsList } from '$blocks/details-list/details-list';
 import { DetailsItem } from '$blocks/details-list/details-list.item';
+import { RadialStackedChart } from '$blocks/RadialStackedChart';
 import { monthNames } from '$constants/months';
 import {
   transactionTypeLabelMapping,
   transactionTypeThemeMapping,
 } from '$constants/transaction/transactionTypeMapping';
+import { Heading } from '$elements/Heading';
 import {
   TransactionListOptions,
   TransactionService,
@@ -52,22 +55,47 @@ export const TransactionListWithMonthlySummary: FC<
       ),
       description: formatCurrency(monthlySummary.expenseAmount) ?? '-',
     },
-    {
-      icon: 'EqualsIcon',
-      label: 'Balance',
-      description: formatCurrency(monthlySummary.totalAmount) ?? '-',
-    },
   ];
 
   const { year, month } = monthlySummary.id;
   const heading = `${monthNames[month - 1]} ${year}`;
 
+  const chartData = {
+    key1: {
+      key: 'expense',
+      fill: transactionTypeThemeMapping[TransactionType.Expense].hex as string,
+      value: monthlySummary.expenseAmount,
+    },
+    key2: {
+      key: 'income',
+      fill: transactionTypeThemeMapping[TransactionType.Income].hex as string,
+      value: monthlySummary.incomeAmount,
+    },
+  };
+
+  const chartLabel = {
+    main: formatCurrency(monthlySummary.totalAmount),
+    sub: 'Balance',
+  };
+
   return (
     <div
-      className="p-6 rounded-md theme-layer-color"
+      className={clsx(
+        'p-6 rounded-md theme-layer-color',
+        'ring-2 ring-gray-400/50 dark:ring-gray-600/50',
+        '@container',
+      )}
       data-testid="transaction-list-monthly-summary"
     >
-      <DetailsList heading={heading} items={monthlyDetails} />
+      <Heading disableResponsiveSizing>{heading}</Heading>
+      <div className="@lg:grid @lg:grid-cols-[auto,1fr] @lg:gap-8">
+        <RadialStackedChart
+          chartData={chartData}
+          label={chartLabel}
+          className="max-w-[200px] -mb-14 mx-auto @lg:-mb-20 pointer-events-none"
+        />
+        <DetailsList items={monthlyDetails} className="@lg:self-center" />
+      </div>
     </div>
   );
 };
