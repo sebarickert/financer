@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { StoreProvider } from './store.provider';
 
 import { ScrollToTop } from '$blocks/ScrollToTop';
-import { ToastMessageTypes } from '$blocks/toast123/Toast';
+import { ToastMessageTypes } from '$blocks/Toast/Toast';
 import { Icon } from '$elements/Icon';
 import { Link } from '$elements/Link';
 import {

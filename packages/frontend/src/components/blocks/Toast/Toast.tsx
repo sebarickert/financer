@@ -12,17 +12,17 @@ export enum ToastMessageTypes {
   GENERAL,
 }
 
-export interface ToastMessage {
+export type ToastMessage = {
   type: ToastMessageTypes;
   message: string;
   additionalInformation?: string | string[];
   action?: React.ReactNode;
   id?: string;
-}
+};
 
-interface ToastProps extends ToastMessage {
+type ToastProps = ToastMessage & {
   className?: string;
-}
+};
 
 export const Toast = ({
   className = '',
@@ -64,7 +64,7 @@ export const Toast = ({
         className,
       )}
       role="status"
-      data-testid="toast-item"
+      data-testid="toast"
       data-toast-type={type}
     >
       <div className="grow">
