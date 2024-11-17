@@ -37,10 +37,8 @@ export const getStatisticsDetails = async (
 
   const balance =
     (await statisticsMonthlySummary
-      .getByTestId('details-list-item')
-      .getByText('Balance')
-      .evaluate((el) => el?.parentElement?.nextElementSibling?.textContent)) ??
-    '';
+      .getByTestId('radial-stacked-chart-label-main')
+      .textContent()) ?? '';
 
   return {
     incomes: parseCurrency(incomes),

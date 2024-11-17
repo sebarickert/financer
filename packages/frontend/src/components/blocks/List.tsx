@@ -29,7 +29,7 @@ export const List: FC<ListProps> = ({
     'bg-white/75 dark:bg-[#080808]/75 backdrop-blur-sm',
     'px-4 -mx-4',
     'max-lg:py-1 max-lg:-mt-1',
-    'lg:py-2 lg:-mt-2',
+    'lg:pt-4 lg:pb-2 lg:-mt-4',
   );
 
   return (

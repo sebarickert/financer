@@ -67,7 +67,12 @@ export const Popper: FC<PopperProps> = ({ className, items, children }) => {
         <List hasItemRoundness>
           {items.map(({ icon, label, href }, index) => {
             return (
-              <Link key={index} href={href} className={popperItemClasses}>
+              <Link
+                key={index}
+                href={href}
+                className={popperItemClasses}
+                hasHoverEffect={false}
+              >
                 <Icon name={icon} />
                 <span className="inline-block pr-2">{label}</span>
               </Link>

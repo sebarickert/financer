@@ -49,6 +49,7 @@ export const AccountList: FC<AccountListProps> = ({
               'flex items-center gap-4',
             )}
             transition="slideInFromRight"
+            hasHoverEffect={false}
           >
             <div
               className={clsx(

@@ -44,6 +44,7 @@ export const TransactionListItem: FC<
         'flex items-center gap-4',
       )}
       transition="slideInFromRight"
+      hasHoverEffect={false}
     >
       <div className={clsx('inline-flex items-center justify-center shrink-0')}>
         <Icon

@@ -56,7 +56,6 @@ export const Pager: FC<PagerProps> = ({
   const { nextPage, previousPage, pageCount, currentPage } = pagerOptions;
   return (
     <div className={clsx('inline-flex items-center gap-2', className)}>
-      {children && <Paragraph>{children}</Paragraph>}
       <PagerButton
         handleClick={previousPage.load}
         isDisabled={!previousPage.isAvailable}
@@ -80,6 +79,7 @@ export const Pager: FC<PagerProps> = ({
       >
         Next page
       </PagerButton>
+      {children && <Paragraph>{children}</Paragraph>}
     </div>
   );
 };

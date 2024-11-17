@@ -42,28 +42,51 @@ export const TransactionListWithMonthlyPager: FC<
     month: PagerService.getCurrentDateFilter().getMonth() + 1,
   };
 
+  const transactions = await TransactionService.getAllByType(type as null, {
+    ...filterOptions,
+  });
+
   const pageVisibleYear = filterOptions.year;
   const pageVisibleMonth = monthNames[filterOptions.month - 1];
   const pagerLabel = `${pageVisibleMonth} ${pageVisibleYear}`;
 
+  const hasSummaryVisible = isSummaryVisible && transactions.length > 0;
+
   return (
     <section className={clsx('flex flex-col', className)}>
-      <Pager
-        pagerOptions={pagerOptions}
-        className="justify-end mb-4"
-        isStatusHidden
+      <div
+        className={clsx('', {
+          ['grid lg:grid-cols-[minmax(350px,auto),1fr] gap-6']:
+            hasSummaryVisible,
+        })}
       >
-        {pagerLabel}
-      </Pager>
-      {isSummaryVisible && (
-        <TransactionListWithMonthlySummary filterOptions={filterOptions} />
-      )}
-      <TransactionList
-        filterOptions={filterOptions}
-        type={type}
-        className={clsx({ ['mt-8']: isSummaryVisible })}
-        hasStickyHeader
-      />
+        <div
+          className={clsx('', {
+            ['self-baseline lg:sticky lg:top-[calc(var(--gutter-top)+theme(spacing.4))] relative']:
+              hasSummaryVisible,
+            'mb-4': !hasSummaryVisible,
+          })}
+        >
+          <Pager
+            pagerOptions={pagerOptions}
+            isStatusHidden
+            className={clsx({
+              ['absolute top-6 right-6 translate-x-[16px] -translate-y-[12px] gap-0']:
+                hasSummaryVisible,
+            })}
+          >
+            {!hasSummaryVisible ? pagerLabel : undefined}
+          </Pager>
+          {hasSummaryVisible && (
+            <TransactionListWithMonthlySummary filterOptions={filterOptions} />
+          )}
+        </div>
+        <TransactionList
+          filterOptions={filterOptions}
+          type={type}
+          hasStickyHeader
+        />
+      </div>
     </section>
   );
 };
