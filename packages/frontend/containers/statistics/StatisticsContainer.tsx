@@ -27,7 +27,7 @@ export const StatisticsContainer: FC = async () => {
       )}
       {!!accounts.length && (
         <>
-          <MonthlySummaryGraph className="mb-8" userTheme={theme} />
+          <MonthlySummaryGraph className="mb-6" userTheme={theme} />
           <TransactionListWithMonthlyPager isSummaryVisible />
         </>
       )}

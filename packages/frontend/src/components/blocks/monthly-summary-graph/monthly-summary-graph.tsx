@@ -1,14 +1,15 @@
 'use client';
 
 import { ChartData, ChartOptions } from 'chart.js';
+import clsx from 'clsx';
 import { useMemo } from 'react';
 
 import {
   Theme,
   useTransactionsFindMonthlySummariesByUserQuery,
 } from '$api/generated/financerApi';
+import { AreaStackedChart } from '$blocks/AreaStackedChart';
 import { baseChartOptions } from '$constants/graph/graph.settings';
-import { ChartWrapperDynamic } from '$elements/chart/chart-wrapper.dynamic';
 import { useUserStatisticsSettings } from '$hooks/settings/user-preference/useStatisticsSettings';
 import { formatCurrency } from '$utils/formatCurrency';
 import { DateFormat, formatDate } from '$utils/formatDate';
@@ -171,14 +172,26 @@ export const MonthlySummaryGraph = ({
   }
 
   return (
-    <section className={`${className}`}>
-      <ChartWrapperDynamic
-        isLoading={!monthlySummaryHistory?.length}
-        type="line"
-        data={chartData}
-        options={chartOptions}
-        userTheme={userTheme}
-      />
-    </section>
+    <div
+      className={clsx(
+        className,
+        'p-6 rounded-md theme-layer-color',
+        'ring-2 ring-gray-400/50 dark:ring-gray-600/50',
+      )}
+    >
+      <AreaStackedChart />
+    </div>
   );
+
+  // return (
+  //   <section className={`${className}`}>
+  //     <ChartWrapperDynamic
+  //       isLoading={!monthlySummaryHistory?.length}
+  //       type="line"
+  //       data={chartData}
+  //       options={chartOptions}
+  //       userTheme={userTheme}
+  //     />
+  //   </section>
+  // );
 };
