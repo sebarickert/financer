@@ -39,8 +39,6 @@ export const Category: FC<CategoryProps> = ({
       type: 'conjunction',
     });
 
-    console.log(categoryVisibilityCapitalized);
-
     return [
       {
         icon: 'TagIcon' as IconName,

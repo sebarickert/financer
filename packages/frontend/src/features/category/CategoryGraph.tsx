@@ -99,7 +99,7 @@ export const CategoryGraph: FC<CategoryGraphProps> = ({
     [categoryHistory, labels],
   );
 
-  if (categoryHistory.length === 1) {
+  if (categoryHistory.length < 3) {
     return null;
   }
 

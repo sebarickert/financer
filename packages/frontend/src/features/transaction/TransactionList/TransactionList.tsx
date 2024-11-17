@@ -5,6 +5,7 @@ import { FC } from 'react';
 import { TransactionListItem } from './TransactionListItem';
 
 import { TransactionType } from '$api/generated/financerApi';
+import { EmptyContentBlock } from '$blocks/EmptyContentBlock';
 import { List } from '$blocks/List';
 import {
   TransactionListOptions,
@@ -52,12 +53,10 @@ export const TransactionList: FC<TransactionListProps> = async ({
 
   if (transactions.length === 0) {
     return (
-      <div className={clsx(className)}>
-        <p className="text-center theme-text-primary">
-          Your transactions will appear here. <br />
-          Add one to begin tracking.
-        </p>
-      </div>
+      <EmptyContentBlock title="No Transactions Added" icon="PlusIcon">
+        Your transactions will appear here. <br />
+        Add one to begin tracking.
+      </EmptyContentBlock>
     );
   }
 

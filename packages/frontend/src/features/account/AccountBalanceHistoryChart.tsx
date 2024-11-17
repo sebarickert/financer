@@ -103,7 +103,7 @@ export const AccountBalanceHistoryChart: FC<
     [accountBalanceHistory, labels],
   );
 
-  if (accountBalanceHistory.length === 1) {
+  if (accountBalanceHistory.length < 3) {
     return null;
   }
 
