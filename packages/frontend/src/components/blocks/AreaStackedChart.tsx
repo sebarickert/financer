@@ -7,93 +7,97 @@ import {
   AreaChart,
   CartesianGrid,
   ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  Tooltip,
+  TooltipProps,
 } from 'recharts';
-
-import { TransactionType } from '$api/generated/financerApi';
-import { transactionTypeThemeMapping } from '$constants/transaction/transactionTypeMapping';
+import {
+  NameType,
+  ValueType,
+} from 'recharts/types/component/DefaultTooltipContent';
 
 type AreaStackedChartProps = {
-  // chartData: {
-  //   key1: { key: string; fill: string; value: number };
-  //   key2: { key: string; fill: string; value: number };
-  // };
-  // label: {
-  //   main: string;
-  //   sub: string;
-  // };
+  chartData: {
+    dataKey: string;
+    key1: { key: string; fill: string; value: number };
+    key2: { key: string; fill: string; value: number };
+  }[];
+  colors: {
+    key1: string;
+    key2: string;
+  };
   className?: string;
+  yaxisTickFormatter?(value: unknown, index: number): string;
+  xaxisTickFormatter?(value: unknown, index: number): string;
+  customTooltip?(props: TooltipProps<ValueType, NameType>): JSX.Element;
 };
 
 export const AreaStackedChart: FC<AreaStackedChartProps> = ({
-  // chartData,
-  // label,
+  chartData,
+  colors,
   className,
+  yaxisTickFormatter,
+  xaxisTickFormatter,
+  customTooltip,
 }) => {
-  // const parsedChartData = [
-  //   {
-  //     [chartData.key1.key]: chartData.key1.value,
-  //     [chartData.key2.key]: chartData.key2.value,
-  //   },
-  // ];
-
-  const pålaa = [
-    { month: 'January', desktop: 186, mobile: 80 },
-    { month: 'February', desktop: 305, mobile: 200 },
-    { month: 'March', desktop: 237, mobile: 120 },
-    { month: 'April', desktop: 73, mobile: 190 },
-    { month: 'May', desktop: 209, mobile: 130 },
-    { month: 'June', desktop: 214, mobile: 140 },
-  ];
-
-  const color1 = transactionTypeThemeMapping[TransactionType.Expense]
-    .hex as string;
-  const color2 = transactionTypeThemeMapping[TransactionType.Income]
-    .hex as string;
+  const parsedChartData = chartData.map(({ dataKey, key1, key2 }) => ({
+    dataKey,
+    [key1.key]: key1.value,
+    [key2.key]: key2.value,
+  }));
 
   return (
-    <div className={clsx(className, 'aspect-video')}>
+    <div
+      className={clsx(
+        className,
+        'aspect-video text-xs theme-text-secondary',
+        '[&_.recharts-cartesian-axis-tick_text]:fill-gray-700 dark:[&_.recharts-cartesian-axis-tick_text]:fill-gray-300',
+        '[&_.recharts-cartesian-grid_line[stroke="#ccc"]]:stroke-gray-100 dark:[&_.recharts-cartesian-grid_line[stroke="#ccc"]]:stroke-[#1b1b1b]',
+        '[&_.recharts-dot[stroke="#fff"]]:stroke-transparent',
+      )}
+    >
       <ResponsiveContainer>
-        <AreaChart
-          data={pålaa}
-          margin={{
-            left: -20,
-            right: 12,
-          }}
-        >
+        <AreaChart data={parsedChartData}>
+          <defs>
+            <linearGradient id="fillKey1" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor={colors.key1} stopOpacity={0.8} />
+              <stop offset="95%" stopColor={colors.key1} stopOpacity={0.1} />
+            </linearGradient>
+            <linearGradient id="fillKey2" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor={colors.key2} stopOpacity={0.8} />
+              <stop offset="95%" stopColor={colors.key2} stopOpacity={0.1} />
+            </linearGradient>
+          </defs>
           <CartesianGrid vertical={false} />
-          <XAxis
-            dataKey="month"
-            tickLine={false}
-            axisLine={false}
-            tickMargin={8}
-            tickFormatter={(value) => value.slice(0, 3)}
-          />
           <YAxis
             tickLine={false}
             axisLine={false}
+            mirror
+            tickFormatter={yaxisTickFormatter}
+          />
+          <XAxis
+            dataKey={'dataKey'}
+            tickLine={false}
+            axisLine={false}
             tickMargin={8}
-            tickCount={3}
+            tickFormatter={xaxisTickFormatter}
           />
           <Area
-            dataKey="mobile"
-            type="natural"
-            fill={color1}
+            dataKey={chartData[0].key1.key}
+            type="monotone"
+            fill="url(#fillKey1)"
             fillOpacity={0.4}
-            stroke={color1}
-            stackId="a"
+            stroke={colors.key1}
           />
           <Area
-            dataKey="desktop"
-            type="natural"
-            fill={color2}
+            dataKey={chartData[0].key2.key}
+            type="monotone"
+            fill="url(#fillKey2)"
             fillOpacity={0.4}
-            stroke={color2}
-            stackId="a"
+            stroke={colors.key2}
           />
-          <Tooltip />
+          <Tooltip cursor={false} content={customTooltip} />
         </AreaChart>
       </ResponsiveContainer>
     </div>

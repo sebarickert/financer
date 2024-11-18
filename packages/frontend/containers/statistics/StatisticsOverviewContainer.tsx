@@ -1,15 +1,41 @@
 import { FC } from 'react';
 
-import { MonthlySummaryGraph } from '$blocks/monthly-summary-graph/monthly-summary-graph';
 import { StatisticsLayout } from '$features/statistics/StatisticsLayout';
-import { UserService } from '$ssr/api/user.service';
+import { StatisticsOverviewData } from '$features/statistics/StatisticsOverviewData';
+import { TransactionService } from '$ssr/api/transaction.service';
+import { UserPreferenceService } from '$ssr/api/user-preference.service';
+import { generateDateFromYearAndMonth } from '$utils/generateDateFromYearAndMonth';
+
+const yearAgoFilterOptions = {
+  year: new Date().getFullYear() - 1,
+  month: new Date().getMonth(),
+};
 
 export const StatisticsOverviewContainer: FC = async () => {
-  const theme = await UserService.getOwnUserTheme();
+  const statisticsSettings =
+    await UserPreferenceService.getStatisticsSettings();
+
+  const accountTypeFilter = { accountTypes: statisticsSettings?.accountTypes };
+
+  const transactionMonthSummaries = await TransactionService.getMonthlySummary({
+    ...yearAgoFilterOptions,
+    ...accountTypeFilter,
+  });
+
+  const monthlySummaryHistory = transactionMonthSummaries
+    .map(({ id: { year: targetYear, month: targetMonth }, ...rest }) => {
+      return {
+        ...rest,
+        year: targetYear,
+        month: targetMonth,
+        date: generateDateFromYearAndMonth(targetYear, targetMonth),
+      };
+    })
+    .sort((a, b) => a.date.getTime() - b.date.getTime());
 
   return (
     <StatisticsLayout title="Overview">
-      <MonthlySummaryGraph className="mb-6" userTheme={theme} />
+      <StatisticsOverviewData data={monthlySummaryHistory} />
     </StatisticsLayout>
   );
 };
