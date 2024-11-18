@@ -1,5 +1,9 @@
 import clsx from 'clsx';
 
+import {
+  ContextualNavigation,
+  ContextualNavigationItem,
+} from '$blocks/ContextualNavigation';
 import { ToastContainer } from '$blocks/Toast/ToastContainer';
 import { ContentHeader } from '$layouts/ContentHeader';
 import { Header } from '$layouts/Header';
@@ -9,6 +13,7 @@ type LayoutProps = {
   children: React.ReactNode;
   backLink?: string;
   headerAction?: React.ReactNode;
+  contextualNavigationItems?: ContextualNavigationItem[];
 };
 
 export const Layout = ({
@@ -16,18 +21,26 @@ export const Layout = ({
   title,
   backLink,
   headerAction,
+  contextualNavigationItems,
 }: LayoutProps): JSX.Element => {
   return (
     <>
       <Header />
       <main
         className={clsx(
-          'mt-[--gutter-top]',
           'pt-12 pb-safe-offset-12 px-4 lg:px-8',
           'mx-auto max-w-screen-xl',
+          {
+            'mt-[calc(var(--gutter-top)+var(--contextual-navigation-height))]':
+              !!contextualNavigationItems?.length,
+            'mt-[--gutter-top]': !contextualNavigationItems?.length,
+          },
         )}
         data-testid="layout-root"
       >
+        {!!contextualNavigationItems?.length && (
+          <ContextualNavigation items={contextualNavigationItems} />
+        )}
         <ContentHeader
           title={title}
           backLink={backLink}

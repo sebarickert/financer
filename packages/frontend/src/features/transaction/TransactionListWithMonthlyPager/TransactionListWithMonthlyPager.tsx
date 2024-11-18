@@ -66,6 +66,7 @@ export const TransactionListWithMonthlyPager: FC<
               hasSummaryVisible,
             'mb-4': !hasSummaryVisible,
           })}
+          data-slot="transaction-list-summary"
         >
           <Pager
             pagerOptions={pagerOptions}

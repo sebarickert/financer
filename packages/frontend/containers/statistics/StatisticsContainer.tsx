@@ -1,19 +1,22 @@
 import { FC } from 'react';
 
 import { EmptyContentBlock } from '$blocks/EmptyContentBlock';
-import { MonthlySummaryGraph } from '$blocks/monthly-summary-graph/monthly-summary-graph';
 import { Button } from '$elements/Button/Button';
 import { TransactionListWithMonthlyPager } from '$features/transaction/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
 import { Layout } from '$layouts/Layout';
 import { AccountService } from '$ssr/api/account.service';
-import { UserService } from '$ssr/api/user.service';
 
 export const StatisticsContainer: FC = async () => {
-  const theme = await UserService.getOwnUserTheme();
+  // const theme = await UserService.getOwnUserTheme();
   const { data: accounts } = await AccountService.getAll();
 
   return (
-    <Layout title="Statistics">
+    <Layout
+      title="Transactions"
+      contextualNavigationItems={[
+        { label: 'Transactions', url: '/statistics/' },
+      ]}
+    >
       {!accounts.length && (
         <EmptyContentBlock
           title="No Accounts Added"
@@ -27,7 +30,7 @@ export const StatisticsContainer: FC = async () => {
       )}
       {!!accounts.length && (
         <>
-          <MonthlySummaryGraph className="mb-6" userTheme={theme} />
+          {/* <MonthlySummaryGraph className="mb-6" userTheme={theme} /> */}
           <TransactionListWithMonthlyPager isSummaryVisible />
         </>
       )}

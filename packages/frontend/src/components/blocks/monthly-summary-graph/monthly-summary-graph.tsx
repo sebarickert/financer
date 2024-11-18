@@ -172,13 +172,7 @@ export const MonthlySummaryGraph = ({
   }
 
   return (
-    <div
-      className={clsx(
-        className,
-        'p-6 rounded-md theme-layer-color',
-        'ring-2 ring-gray-400/50 dark:ring-gray-600/50',
-      )}
-    >
+    <div className={clsx(className, 'p-6 rounded-md theme-layer-color')}>
       <AreaStackedChart />
     </div>
   );
