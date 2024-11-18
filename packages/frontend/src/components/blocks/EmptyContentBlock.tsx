@@ -21,8 +21,8 @@ export const EmptyContentBlock: FC<EmptyContentBlockProps> = ({
     <div
       className={clsx(
         'theme-layer-color theme-text-primary',
-        'px-6 pt-8 pb-10 rounded-md',
-        'ring-2 ring-gray-400/50 dark:ring-gray-600/50 text-center',
+        'px-6 pt-8 pb-10 rounded-md text-center',
+        'text-center',
       )}
     >
       {icon && (

@@ -1,13 +1,13 @@
 import { FC } from 'react';
 
 import { TransactionType } from '$api/generated/financerApi';
+import { StatisticsLayout } from '$features/statistics/StatisticsLayout';
 import { TransactionListWithMonthlyPager } from '$features/transaction/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
-import { Layout } from '$layouts/Layout';
 
 export const TransferListingContainer: FC = () => {
   return (
-    <Layout title="Transfers" backLink="/statistics">
+    <StatisticsLayout title="Transfers">
       <TransactionListWithMonthlyPager type={TransactionType.Transfer} />
-    </Layout>
+    </StatisticsLayout>
   );
 };
