@@ -4,7 +4,7 @@ import { FC } from 'react';
 import { ExpenseListingContainer } from '$container/expenses/ExpenseListingContainer';
 
 export const metadata: Metadata = {
-  title: 'Expenses / Statistics',
+  title: 'Expenses',
 };
 
 const ExpensesPage: FC = () => {

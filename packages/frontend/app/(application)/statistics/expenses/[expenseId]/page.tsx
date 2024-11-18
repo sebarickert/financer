@@ -16,7 +16,7 @@ export const generateMetadata = async ({
   const expense = await ExpenseService.getById(expenseId);
 
   return {
-    title: `${expense.description} / Expenses / Statistics`,
+    title: `${expense.description} / Expenses`,
   };
 };
 

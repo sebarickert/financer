@@ -4,7 +4,7 @@ import { FC } from 'react';
 import { TransferListingContainer } from '$container/transfers/TransferListingContainer';
 
 export const metadata: Metadata = {
-  title: 'Transfers / Statistics',
+  title: 'Transfers',
 };
 
 const TransfersPage: FC = () => {

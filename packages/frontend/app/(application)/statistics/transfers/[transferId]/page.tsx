@@ -16,7 +16,7 @@ export const generateMetadata = async ({
   const transfer = await TransferService.getById(transferId);
 
   return {
-    title: `${transfer.description} / Transfers / Statistics`,
+    title: `${transfer.description} / Transfers`,
   };
 };
 

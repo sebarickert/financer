@@ -20,6 +20,7 @@ export const ContextualNavigation: FC<ContextualNavigationProps> = ({
     <nav
       data-slot="contextual-navigation"
       className={clsx(
+        'vt-name-[contextual-navigation]',
         'z-[100] focus-within:z-[101]',
         'fixed left-0 right-0 top-[--gutter-top]',
         'bg-gray-100/75 dark:bg-[#1b1b1b]/75 backdrop-blur-sm',
