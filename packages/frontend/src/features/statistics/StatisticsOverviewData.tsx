@@ -217,7 +217,7 @@ export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
   ): DetailsItem[] => {
     return [
       {
-        icon: 'EqualsIcon',
+        icon: 'DivideIcon',
         label: 'Average',
         description: formatCurrency(average[type]) ?? '-',
       },
