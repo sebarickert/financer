@@ -39,6 +39,7 @@ export const List: FC<ListProps> = ({
           className={clsx({
             [stickyHeaderStyles]: hasStickyHeader,
           })}
+          data-slot={hasStickyHeader ? 'list-sticky-header' : undefined}
         >
           <Heading testId={`${testId}-heading`} noMargin={!!hasStickyHeader}>
             {label}

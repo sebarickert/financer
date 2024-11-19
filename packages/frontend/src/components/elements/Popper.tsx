@@ -16,7 +16,7 @@ type PopperItem = {
 
 type PopperProps = {
   className?: string;
-  items: PopperItem[];
+  items?: PopperItem[];
   children?: React.ReactNode | React.ReactNode[];
 };
 
@@ -46,7 +46,7 @@ export const Popper: FC<PopperProps> = ({ className, items, children }) => {
         className={clsx(
           'theme-bg-color theme-text-primary',
           'min-w-48 shadow',
-          'p-2 rounded-md max-lg:mr-1 lg:mt-2',
+          'p-2 rounded-md lg:mt-2',
           'border theme-border-primary',
           'fixed lg:absolute inset-[unset]',
           'supports-[anchor-name]:right-anchor-[popover-anchor] supports-[anchor-name]:top-anchor-[popover-anchor,bottom]',
@@ -65,7 +65,7 @@ export const Popper: FC<PopperProps> = ({ className, items, children }) => {
           Options
         </Heading>
         <List hasItemRoundness>
-          {items.map(({ icon, label, href }, index) => {
+          {items?.map(({ icon, label, href }, index) => {
             return (
               <Link
                 key={index}

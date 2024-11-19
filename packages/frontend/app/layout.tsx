@@ -90,7 +90,13 @@ const RootLayout: FC<ChildrenProp> = async ({ children }) => {
       <head>
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
       </head>
-      <body className="max-lg:min-h-[calc(100dvh-var(--gutter-top))] max-lg:pb-[--gutter-bottom] theme-bg-color">
+      <body
+        className={clsx(
+          'max-lg:pb-[--gutter-bottom] theme-bg-color',
+          '[&:has([data-slot="contextual-navigation"])_[data-slot="list-sticky-header"]]:top-[calc(var(--gutter-top)+var(--contextual-navigation-height))]',
+          '[&:has([data-slot="contextual-navigation"])_[data-slot="transaction-list-summary"]]:lg:top-[calc(var(--gutter-top)+var(--contextual-navigation-height)+theme(spacing.4))]',
+        )}
+      >
         <RootProviderContainer
           shouldShowOnboarding={!authenticationStatus?.hasAccounts}
           // eslint-disable-next-line @typescript-eslint/no-explicit-any

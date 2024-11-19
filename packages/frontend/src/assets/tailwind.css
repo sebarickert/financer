@@ -17,6 +17,7 @@
   :root {
     --header-height: 56px;
     --content-header-height: 56px;
+    --contextual-navigation-height: 50px;
     --gutter-top: var(--content-header-height);
     --gutter-bottom: var(--header-height);
   }
@@ -133,5 +134,9 @@
 
   .theme-field {
     @apply border-none appearance-none theme-focus theme-layer-color-with-hover theme-text-primary disabled:pointer-events-none disabled:opacity-50;
+  }
+
+  .theme-field-inverse {
+    @apply border-none appearance-none theme-focus theme-bg-color-with-hover theme-text-primary disabled:pointer-events-none disabled:opacity-50;
   }
 }

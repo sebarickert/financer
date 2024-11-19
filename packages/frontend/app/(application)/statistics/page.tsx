@@ -4,7 +4,7 @@ import { FC } from 'react';
 import { StatisticsContainer } from '$container/statistics/StatisticsContainer';
 
 export const metadata: Metadata = {
-  title: 'Statistics',
+  title: 'Transactions',
 };
 
 const StatisticsPage: FC = () => {

@@ -4,7 +4,7 @@ import { FC } from 'react';
 import { TransactionType } from '$api/generated/financerApi';
 import { DetailsList } from '$blocks/details-list/details-list';
 import { DetailsItem } from '$blocks/details-list/details-list.item';
-import { RadialStackedChart } from '$blocks/RadialStackedChart';
+import { RadialStackedChart } from '$charts/RadialStackedChart';
 import { monthNames } from '$constants/months';
 import {
   transactionTypeLabelMapping,
@@ -80,11 +80,7 @@ export const TransactionListWithMonthlySummary: FC<
 
   return (
     <div
-      className={clsx(
-        'p-6 rounded-md theme-layer-color',
-        'ring-2 ring-gray-400/50 dark:ring-gray-600/50',
-        '@container',
-      )}
+      className={clsx('p-6 rounded-md theme-layer-color', '@container')}
       data-testid="transaction-list-monthly-summary"
     >
       <Heading disableResponsiveSizing>{heading}</Heading>
