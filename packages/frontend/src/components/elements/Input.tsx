@@ -39,7 +39,7 @@ export const Input = ({
   const { register } = useFormContext();
 
   return (
-    <div className="theme-text-primary">
+    <div>
       <label
         htmlFor={id}
         className={clsx('block mb-1', { 'sr-only': isLabelHidden })}

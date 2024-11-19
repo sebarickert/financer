@@ -31,7 +31,7 @@ export const TransactionTypeSwitcherItem: FC<
       <span
         className={clsx(
           'flex items-center justify-center rounded-md py-2',
-          'peer-checked:theme-layer-secondary-color peer-checked:border peer-checked:theme-border-primary',
+          'peer-checked:theme-layer-secondary-color peer-checked:border peer-checked:',
           'peer-focus-visible:theme-focus-without-prefix peer-hover:cursor-pointer',
         )}
       >

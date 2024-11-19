@@ -23,8 +23,8 @@ export const ContextualNavigation: FC<ContextualNavigationProps> = ({
         'vt-name-[contextual-navigation]',
         'z-[100] focus-within:z-[101]',
         'fixed left-0 right-0 top-[--gutter-top]',
-        'bg-gray-100/75 dark:bg-[#1b1b1b]/75 backdrop-blur-sm',
-        'shadow-[inset_0_-1px] shadow-gray-200 dark:shadow-[#2b2b2b]',
+        'bg-layer/75 backdrop-blur-sm',
+        'shadow-[inset_0_-1px] shadow-border-primary',
       )}
     >
       <Container className={clsx('')}>
@@ -42,7 +42,7 @@ export const ContextualNavigation: FC<ContextualNavigationProps> = ({
                 className={clsx(
                   'inline-block text-sm py-3 relative',
                   'after:hidden aria-[current=page]:after:block',
-                  'after:absolute after:h-0.5 after:-bottom-[3px] after:left-0a after:right-0 after:w-full after:bg-blue-600',
+                  'after:absolute after:h-0.5 after:-bottom-[3px] after:left-0a after:right-0 after:w-full after:bg-blue',
                 )}
               >
                 {item.label}

@@ -17,10 +17,10 @@ const PrivacyPolicy = (): JSX.Element => {
         Go back
       </Link>
       <h1>
-        <span className="block text-base font-semibold tracking-wide text-blue-600 uppercase">
+        <span className="block text-base font-semibold tracking-wide text-blue uppercase">
           Privacy policy
         </span>
-        <span className="block mt-2 text-3xl font-extrabold leading-8 tracking-tight text-gray-900 sm:text-4xl">
+        <span className="block mt-2 text-3xl font-extrabold leading-8 tracking-tight text-text-primary sm:text-4xl">
           Financer
         </span>
       </h1>
@@ -37,14 +37,14 @@ const PrivacyPolicy = (): JSX.Element => {
         the help of the{' '}
         <a
           href="https://www.privacypolicytemplate.net"
-          className="text-blue-600 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4"
+          className="text-blue rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4"
         >
           Privacy Policy Template
         </a>{' '}
         and the{' '}
         <a
           href="https://www.generateprivacypolicy.com"
-          className="text-blue-600 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4"
+          className="text-blue rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4"
         >
           Privacy Policy Generator
         </a>
@@ -97,7 +97,7 @@ const PrivacyPolicy = (): JSX.Element => {
         For more general information on cookies, please read{' '}
         <a
           href="https://www.cookieconsent.com/what-are-cookies/"
-          className="text-blue-600 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4"
+          className="text-blue rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4"
         >
           &quot;What Are Cookies&quot;
         </a>

@@ -131,7 +131,7 @@ export const OverwriteUserData = ({
 
   return (
     <section>
-      <div className="mb-8 theme-text-primary">
+      <div className="mb-8 ">
         <label
           htmlFor="selectFiles"
           className={clsx(
@@ -153,7 +153,7 @@ export const OverwriteUserData = ({
       </div>
       <section>
         <Heading>Overwrite Data Details</Heading>
-        <div className="p-6 theme-layer-color">
+        <div className="p-6 bg-layer">
           <DetailsList items={overrideDetails} />
         </div>
       </section>

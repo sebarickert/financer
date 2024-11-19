@@ -29,7 +29,7 @@ const CustomTooltip = ({
 }: TooltipProps<ValueType, NameType>) => {
   if (active && payload && payload.length) {
     return (
-      <div className="p-4 text-sm border rounded-md theme-layer-color theme-text-primary theme-border-primary">
+      <div className="p-4 text-sm border rounded-md bg-layer ">
         <p className="mb-2 font-medium">{payload[0].payload.dataKey}</p>
         {payload.map((entry) => (
           <p
@@ -259,7 +259,7 @@ export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
 
   return (
     <div className="grid gap-4">
-      <div className="overflow-hidden rounded-md theme-layer-color">
+      <div className="overflow-hidden rounded-md bg-layer">
         <div className="flex justify-end p-6">
           <select
             className={clsx(
@@ -279,22 +279,25 @@ export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
         </div>
         <AreaStackedChart
           chartData={filteredChartData}
-          colors={{ key1: '#198038', key2: '#da1e28' }}
+          colors={{
+            key1: 'hsl(var(--color-green))',
+            key2: 'hsl(var(--color-red))',
+          }}
           yaxisTickFormatter={yaxisTickFormatter}
           customTooltip={CustomTooltip}
         />
       </div>
-      <div className="p-6 rounded-md theme-layer-color">
+      <div className="p-6 rounded-md bg-layer">
         <DetailsList heading="Summary" items={summaryDetails} />
       </div>
       <div className="grid gap-4 lg:grid-cols-2">
-        <div className="p-6 rounded-md theme-layer-color">
+        <div className="p-6 rounded-md bg-layer">
           <DetailsList
             heading="Incomes"
             items={generateTransactionsDetailsItem('incomes')}
           />
         </div>
-        <div className="p-6 rounded-md theme-layer-color">
+        <div className="p-6 rounded-md bg-layer">
           <DetailsList
             heading="Expenses"
             items={generateTransactionsDetailsItem('expenses')}

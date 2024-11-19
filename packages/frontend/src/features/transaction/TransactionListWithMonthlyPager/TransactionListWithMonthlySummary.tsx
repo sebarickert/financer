@@ -63,12 +63,12 @@ export const TransactionListWithMonthlySummary: FC<
   const chartData = {
     key1: {
       key: 'expense',
-      fill: transactionTypeThemeMapping[TransactionType.Expense].hex as string,
+      fill: transactionTypeThemeMapping[TransactionType.Expense].hsl as string,
       value: monthlySummary.expenseAmount,
     },
     key2: {
       key: 'income',
-      fill: transactionTypeThemeMapping[TransactionType.Income].hex as string,
+      fill: transactionTypeThemeMapping[TransactionType.Income].hsl as string,
       value: monthlySummary.incomeAmount,
     },
   };
@@ -80,7 +80,7 @@ export const TransactionListWithMonthlySummary: FC<
 
   return (
     <div
-      className={clsx('p-6 rounded-md theme-layer-color', '@container')}
+      className={clsx('p-6 rounded-md bg-layer', '@container')}
       data-testid="transaction-list-monthly-summary"
     >
       <Heading disableResponsiveSizing>{heading}</Heading>

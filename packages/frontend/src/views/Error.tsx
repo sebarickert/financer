@@ -43,7 +43,7 @@ export const Error = ({ errorPageType }: ErrorProps) => {
 
   return (
     <>
-      <p className="max-w-xl mb-4 text-lg theme-text-primary">
+      <p className="max-w-xl mb-4 text-lg ">
         Oops... Something went wrong. We are not sure what happened. Click the
         button below to try to fix the error.
       </p>

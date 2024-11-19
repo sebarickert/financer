@@ -13,20 +13,20 @@ export const transactionTypeLabelMapping: {
 
 export const transactionTypeThemeMapping: Record<
   TransactionType,
-  { color: string; icon: IconName; hex?: string }
+  { color: string; icon: IconName; hsl?: string }
 > = {
   [TransactionType.Income]: {
-    color: 'bg-green-400/15',
-    hex: '#10B981',
+    color: 'bg-green/15',
+    hsl: 'hsl(var(--color-green))',
     icon: transactionTypeIconMapping[TransactionType.Income],
   },
   [TransactionType.Expense]: {
-    color: 'bg-red-400/15',
-    hex: '#EF4444',
+    color: 'bg-red/15',
+    hsl: 'hsl(var(--color-red))',
     icon: transactionTypeIconMapping[TransactionType.Expense],
   },
   [TransactionType.Transfer]: {
-    color: 'bg-gray-400/15',
+    color: 'bg-border-primary',
     icon: transactionTypeIconMapping[TransactionType.Transfer],
   },
 };

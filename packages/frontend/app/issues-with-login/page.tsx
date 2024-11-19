@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 
+import { Heading } from '$elements/Heading';
 import { Link } from '$elements/Link';
 
 export const metadata: Metadata = {
@@ -33,13 +34,8 @@ const ResolveAuth0Issues = (): JSX.Element => {
         might not work because there is still an active session running.
       </p>
       <p>
-        <a
-          href="/auth/logout/auth0"
-          className="mb-12 text-blue-600 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4"
-        >
-          Click here
-        </a>{' '}
-        to reset the session and then the login (should in theory) work.
+        <a href="/auth/logout/auth0">Click here</a> to reset the session and
+        then the login (should in theory) work.
       </p>
     </>
   );
@@ -47,18 +43,9 @@ const ResolveAuth0Issues = (): JSX.Element => {
 
 const IssuesWithLogin = (): JSX.Element => {
   return (
-    <div className="py-16 mx-auto prose max-w-prose ">
-      <Link
-        href="/"
-        className="inline-block mb-12 text-base font-semibold tracking-wide text-blue-600 uppercase rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4"
-      >
-        Go back
-      </Link>
-      <h1>
-        <span className="block mt-2 text-3xl font-extrabold leading-8 tracking-tight text-gray-900 sm:text-4xl">
-          Login issues to Financer
-        </span>
-      </h1>
+    <div className="py-16 mx-auto prose max-w-prose">
+      <Link href="/">Go back</Link>
+      <Heading variant="h1">Login issues to Financer</Heading>
       {checkIsEnabled(NEXT_PUBLIC_IS_GITHUB_OAUTH_ENABLED) && (
         <ResolveGithubIssues />
       )}

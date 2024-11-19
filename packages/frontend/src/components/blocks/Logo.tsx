@@ -19,11 +19,7 @@ export const Logo = ({ className }: LogoProps): JSX.Element => {
   return (
     <div className={clsx('inline-flex items-center gap-2', className)}>
       <LogoIcon />
-      <h2
-        className={clsx(
-          'text-xl font-semibold tracking-tight theme-text-primary',
-        )}
-      >
+      <h2 className={clsx('text-xl font-semibold tracking-tight ')}>
         Financer
       </h2>
     </div>

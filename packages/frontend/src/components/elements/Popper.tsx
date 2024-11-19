@@ -44,10 +44,10 @@ export const Popper: FC<PopperProps> = ({ className, items, children }) => {
       </Button>
       <div
         className={clsx(
-          'theme-bg-color theme-text-primary',
+          'bg-background ',
           'min-w-48 shadow',
           'p-2 rounded-md lg:mt-2',
-          'border theme-border-primary',
+          'border',
           'fixed lg:absolute inset-[unset]',
           'supports-[anchor-name]:right-anchor-[popover-anchor] supports-[anchor-name]:top-anchor-[popover-anchor,bottom]',
           'transition-all !transition-allow-discrete duration-100 ease-in open:ease-out',
