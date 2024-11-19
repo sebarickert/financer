@@ -1,6 +1,7 @@
 'use client';
 
-import { FC } from 'react';
+import clsx from 'clsx';
+import { ChangeEvent, FC, useState } from 'react';
 import { TooltipProps } from 'recharts';
 import {
   NameType,
@@ -26,7 +27,7 @@ const CustomTooltip = ({
 }: TooltipProps<ValueType, NameType>) => {
   if (active && payload && payload.length) {
     return (
-      <div className="p-4 text-sm rounded-md theme-layer-color theme-text-primary">
+      <div className="p-4 text-sm border rounded-md theme-layer-color theme-text-primary theme-border-primary">
         <p className="mb-2 font-medium">{payload[0].payload.dataKey}</p>
         {payload.map((entry) => (
           <p
@@ -50,6 +51,21 @@ const yaxisTickFormatter = (value: number) => {
   return formatCurrencyAbbreviation(value);
 };
 
+const filterOptions = {
+  THREE_MONTHS: {
+    label: 'Last 3 Months',
+    value: 3,
+  },
+  SIX_MONTHS: {
+    label: 'Last 6 Months',
+    value: 6,
+  },
+  YEAR: {
+    label: 'Last 12 Months',
+    value: 12,
+  },
+} as const;
+
 export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
   data,
 }) => {
@@ -67,6 +83,26 @@ export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
     },
   }));
 
+  const defaultFilterValue =
+    chartData.length <= 3
+      ? filterOptions.THREE_MONTHS.value
+      : chartData.length <= 6
+        ? filterOptions.SIX_MONTHS.value
+        : filterOptions.YEAR.value;
+
+  const [selectedFilter, setSelectedFilter] =
+    useState<(typeof filterOptions)[keyof typeof filterOptions]['value']>(
+      defaultFilterValue,
+    );
+
+  const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    const value = Number(
+      event.target.value,
+    ) as (typeof filterOptions)[keyof typeof filterOptions]['value'];
+
+    setSelectedFilter(value);
+  };
+
   if (chartData.length < 3) {
     return (
       <EmptyContentBlock title="Not Enough Data Yet" icon="RectangleGroupIcon">
@@ -77,12 +113,47 @@ export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
     );
   }
 
+  const filteredChartData = chartData.slice(-selectedFilter);
+
+  const filteredOptions = Object.values(filterOptions).filter(({ value }) => {
+    const { THREE_MONTHS, SIX_MONTHS } = filterOptions;
+
+    if (chartData.length <= 3) {
+      return value === THREE_MONTHS.value;
+    }
+
+    if (chartData.length <= 6) {
+      return value === THREE_MONTHS.value || value === SIX_MONTHS.value;
+    }
+
+    return true;
+  });
+
   return (
-    <AreaStackedChart
-      chartData={chartData.slice(-12)}
-      colors={{ key1: '#198038', key2: '#da1e28' }}
-      yaxisTickFormatter={yaxisTickFormatter}
-      customTooltip={CustomTooltip}
-    />
+    <div className="overflow-hidden rounded-md theme-layer-color">
+      <div className="flex justify-end p-6">
+        <select
+          className={clsx(
+            'theme-field-inverse',
+            'block rounded-md',
+            'py-3 h-12',
+          )}
+          defaultValue={selectedFilter}
+          onChange={handleChange}
+        >
+          {filteredOptions.map(({ label, value }) => (
+            <option key={value} value={value}>
+              {label}
+            </option>
+          ))}
+        </select>
+      </div>
+      <AreaStackedChart
+        chartData={filteredChartData}
+        colors={{ key1: '#198038', key2: '#da1e28' }}
+        yaxisTickFormatter={yaxisTickFormatter}
+        customTooltip={CustomTooltip}
+      />
+    </div>
   );
 };

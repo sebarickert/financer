@@ -16,7 +16,7 @@ type PopperItem = {
 
 type PopperProps = {
   className?: string;
-  items: PopperItem[];
+  items?: PopperItem[];
   children?: React.ReactNode | React.ReactNode[];
 };
 
@@ -65,7 +65,7 @@ export const Popper: FC<PopperProps> = ({ className, items, children }) => {
           Options
         </Heading>
         <List hasItemRoundness>
-          {items.map(({ icon, label, href }, index) => {
+          {items?.map(({ icon, label, href }, index) => {
             return (
               <Link
                 key={index}

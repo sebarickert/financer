@@ -8,9 +8,9 @@ import {
   CartesianGrid,
   ResponsiveContainer,
   Tooltip,
-  XAxis,
   YAxis,
   TooltipProps,
+  XAxis,
 } from 'recharts';
 import {
   NameType,
@@ -58,7 +58,7 @@ export const AreaStackedChart: FC<AreaStackedChartProps> = ({
       )}
     >
       <ResponsiveContainer>
-        <AreaChart data={parsedChartData}>
+        <AreaChart data={parsedChartData} margin={{}}>
           <defs>
             <linearGradient id="fillKey1" x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor={colors.key1} stopOpacity={0.8} />
@@ -80,21 +80,21 @@ export const AreaStackedChart: FC<AreaStackedChartProps> = ({
             dataKey={'dataKey'}
             tickLine={false}
             axisLine={false}
-            tickMargin={8}
             tickFormatter={xaxisTickFormatter}
+            mirror
           />
           <Area
             dataKey={chartData[0].key1.key}
             type="monotone"
             fill="url(#fillKey1)"
-            fillOpacity={0.4}
+            fillOpacity={0.5}
             stroke={colors.key1}
           />
           <Area
             dataKey={chartData[0].key2.key}
             type="monotone"
             fill="url(#fillKey2)"
-            fillOpacity={0.4}
+            fillOpacity={0.5}
             stroke={colors.key2}
           />
           <Tooltip cursor={false} content={customTooltip} />
