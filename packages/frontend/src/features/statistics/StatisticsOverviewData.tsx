@@ -9,8 +9,8 @@ import {
 } from 'recharts/types/component/DefaultTooltipContent';
 
 import { TransactionMonthSummaryDto } from '$api/generated/financerApi';
-import { AreaStackedChart } from '$blocks/AreaStackedChart';
 import { EmptyContentBlock } from '$blocks/EmptyContentBlock';
+import { AreaStackedChart } from '$charts/AreaStackedChart';
 import {
   formatCurrency,
   formatCurrencyAbbreviation,

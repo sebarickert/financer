@@ -7,6 +7,7 @@
       "$store": ["./src/redux/store"],
       "$blocks/*": ["./src/components/blocks/*"],
       "$elements/*": ["./src/components/elements/*"],
+      "$charts/*": ["./src/components/charts/*"],
       "$layouts/*": ["./src/components/layouts/*"],
       "$features/*": ["./src/features/*"],
       "$views/*": ["./src/views/*"],
