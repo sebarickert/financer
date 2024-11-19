@@ -53,7 +53,7 @@ export const Button = ({
 }: ButtonProps): JSX.Element => {
   const buttonStyles = {
     base: clsx(
-      'theme-focus ring-offset-2 dark:ring-offset-0 rounded-md text-center whitespace-nowrap text-text-primary',
+      'theme-focus ring-offset-2 dark:ring-offset-0 rounded-md text-center whitespace-nowrap',
       'inline-flex items-center justify-center gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0',
       'disabled:pointer-events-none disabled:opacity-50',
     ),

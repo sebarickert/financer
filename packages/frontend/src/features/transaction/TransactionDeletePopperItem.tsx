@@ -28,7 +28,7 @@ export const TransactionDeletePopperItem: FC<
         accentColor="unstyled"
         popoverTarget={popperId}
         className={clsx(
-          'py-2.5 h-11 px-[18px] text-base',
+          'py-2.5 h-11 px-[18px] text-base text-text-primary',
           'w-full !justify-start theme-bg-color-with-hover',
           '!pl-2',
         )}
