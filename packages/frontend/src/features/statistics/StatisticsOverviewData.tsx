@@ -62,9 +62,17 @@ const filterOptions = {
     label: 'Last 6 Months',
     value: 6,
   },
-  YEAR: {
+  TWELVE_MONTHS: {
     label: 'Last 12 Months',
     value: 12,
+  },
+  TWENTYFOUR_MONTHS: {
+    label: 'Last 24 Months',
+    value: 24,
+  },
+  ALL: {
+    label: 'Full History',
+    value: 0,
   },
 } as const;
 
@@ -86,11 +94,13 @@ export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
   }));
 
   const defaultFilterValue =
-    chartData.length <= 3
+    chartData.length < 6
       ? filterOptions.THREE_MONTHS.value
-      : chartData.length <= 6
+      : chartData.length === 6
         ? filterOptions.SIX_MONTHS.value
-        : filterOptions.YEAR.value;
+        : chartData.length < 12
+          ? filterOptions.ALL.value
+          : filterOptions.TWELVE_MONTHS.value;
 
   const [selectedFilter, setSelectedFilter] =
     useState<(typeof filterOptions)[keyof typeof filterOptions]['value']>(
@@ -118,14 +128,53 @@ export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
   const filteredChartData = chartData.slice(-selectedFilter);
 
   const filteredOptions = Object.values(filterOptions).filter(({ value }) => {
-    const { THREE_MONTHS, SIX_MONTHS } = filterOptions;
+    const { THREE_MONTHS, SIX_MONTHS, TWENTYFOUR_MONTHS, TWELVE_MONTHS, ALL } =
+      filterOptions;
 
     if (chartData.length <= 3) {
       return value === THREE_MONTHS.value;
     }
 
-    if (chartData.length <= 6) {
+    if (chartData.length < 6) {
+      return value === THREE_MONTHS.value || value === ALL.value;
+    }
+
+    if (chartData.length === 6) {
       return value === THREE_MONTHS.value || value === SIX_MONTHS.value;
+    }
+
+    if (chartData.length < 12) {
+      return (
+        value === THREE_MONTHS.value ||
+        value === SIX_MONTHS.value ||
+        value === ALL.value
+      );
+    }
+
+    if (chartData.length === 12) {
+      return (
+        value === THREE_MONTHS.value ||
+        value === SIX_MONTHS.value ||
+        value === TWELVE_MONTHS.value
+      );
+    }
+
+    if (chartData.length < 24) {
+      return (
+        value === THREE_MONTHS.value ||
+        value === SIX_MONTHS.value ||
+        value === TWELVE_MONTHS.value ||
+        value === ALL.value
+      );
+    }
+
+    if (chartData.length === 24) {
+      return (
+        value === THREE_MONTHS.value ||
+        value === SIX_MONTHS.value ||
+        value === TWELVE_MONTHS.value ||
+        value === TWENTYFOUR_MONTHS.value
+      );
     }
 
     return true;
