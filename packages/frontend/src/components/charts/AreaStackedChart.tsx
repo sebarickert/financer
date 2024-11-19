@@ -85,14 +85,12 @@ export const AreaStackedChart: FC<AreaStackedChartProps> = ({
           />
           <Area
             dataKey={chartData[0].key1.key}
-            type="monotone"
             fill="url(#fillKey1)"
             fillOpacity={0.5}
             stroke={colors.key1}
           />
           <Area
             dataKey={chartData[0].key2.key}
-            type="monotone"
             fill="url(#fillKey2)"
             fillOpacity={0.5}
             stroke={colors.key2}
