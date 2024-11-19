@@ -104,7 +104,7 @@ export const Transaction: FC<TransactionProps> = async ({
   return (
     <div
       className={clsx(
-        'theme-layer-color rounded-md',
+        'bg-[--color-layer] rounded-md',
         'pt-12 pb-10 px-6',
         'grid gap-12',
         'max-w-md mx-auto',
@@ -124,7 +124,7 @@ export const Transaction: FC<TransactionProps> = async ({
         {categoryDetails.length > 0 && (
           <div data-testid="transaction-categories">
             <Heading disableResponsiveSizing>Categories</Heading>
-            <div className="divide-y theme-divide-primary [&>div:not(:first-child)]:pt-4 [&>div:not(:last-child)]:pb-4">
+            <div className="divide-y border-[--color-border-primary] [&>div:not(:first-child)]:pt-4 [&>div:not(:last-child)]:pb-4">
               {categoryDetails.map((category) => (
                 <DetailsList
                   testId="category-details"

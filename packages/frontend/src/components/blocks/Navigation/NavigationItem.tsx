@@ -33,7 +33,7 @@ export const NavigationItem: FC<NavigationItemProps> = ({
           'items-center justify-center theme-focus',
           'max-lg:flex max-lg:flex-col max-lg:h-14',
           'lg:inline-flex lg:gap-2 lg:py-5 lg:px-4 lg:font-medium',
-          '[&:not([aria-current=page])]:lg:group-hover/navigation:theme-text-tertiary',
+          '[&:not([aria-current=page])]:lg:group-hover/navigation:text-[--color-text-tertiary]',
           'group/navigation-item',
           {
             ['max-lg:shadow-[inset_0_2px] lg:shadow-[inset_0_-2px] !shadow-blue-600']:

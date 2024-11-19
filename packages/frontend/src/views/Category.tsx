@@ -87,7 +87,7 @@ export const Category: FC<CategoryProps> = ({
           userTheme={userTheme}
         />
       </LoaderSuspense>
-      <div className="p-6 rounded-md theme-layer-color">
+      <div className="p-6 rounded-md bg-[--color-layer]">
         <DetailsList items={categoryDetails} />
       </div>
       <TransactionListWithMonthlyPager

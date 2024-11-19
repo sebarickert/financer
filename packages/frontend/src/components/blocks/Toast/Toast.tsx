@@ -58,7 +58,7 @@ export const Toast = ({
   return (
     <div
       className={clsx(
-        'theme-layer-color text-[--color-text-primary] rounded-md',
+        'bg-[--color-layer] text-[--color-text-primary] rounded-md',
         'p-6 relative',
         'flex gap-4',
         toastStyles,

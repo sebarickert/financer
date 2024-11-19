@@ -31,10 +31,10 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       'open:max-lg:translate-y-0 open:ease-out open:lg:translate-x-0 open:!transition-allow-discrete open:transition-all open:duration-200',
       'starting:open:max-lg:translate-y-full starting:open:lg:translate-x-full',
       // Drawer
-      'theme-bg-color text-[--color-text-primary] fixed text-left',
+      'bg-[--color-background] text-[--color-text-primary] fixed text-left',
       'max-lg:bottom-0 max-lg:inset-x-0 max-lg:top-auto max-lg:w-full',
       'lg:max-w-[600px] lg:w-full lg:left-auto lg:h-full',
-      'max-lg:border-t lg:border-l theme-border-primary',
+      'max-lg:border-t lg:border-l border-[--color-border-primary]',
       'pt-0 pb-safe-offset-12 px-6 lg:px-8',
       'max-h-dvh',
       className,
@@ -53,11 +53,11 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
         <div
           className={clsx(
             'flex justify-between items-center',
-            'theme-bg-color z-10',
+            'bg-[--color-background] z-10',
             'sticky top-0',
             'pt-2 pb-2 mb-8',
             'px-6 lg:px-8 -mx-6 lg:-mx-8',
-            'border-b theme-border-primary',
+            'border-b border-[--color-border-primary]',
           )}
         >
           <Heading noMargin disableResponsiveSizing>

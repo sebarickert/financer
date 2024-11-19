@@ -92,7 +92,7 @@ const RootLayout: FC<ChildrenProp> = async ({ children }) => {
       </head>
       <body
         className={clsx(
-          'max-lg:pb-[--gutter-bottom] theme-bg-color',
+          'max-lg:pb-[--gutter-bottom] bg-[--color-background]',
           '[&:has([data-slot="contextual-navigation"])_[data-slot="list-sticky-header"]]:top-[calc(var(--gutter-top)+var(--contextual-navigation-height))]',
           '[&:has([data-slot="contextual-navigation"])_[data-slot="transaction-list-summary"]]:lg:top-[calc(var(--gutter-top)+var(--contextual-navigation-height)+theme(spacing.4))]',
         )}

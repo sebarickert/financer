@@ -153,7 +153,7 @@ export const OverwriteUserData = ({
       </div>
       <section>
         <Heading>Overwrite Data Details</Heading>
-        <div className="p-6 theme-layer-color">
+        <div className="p-6 bg-[--color-layer]">
           <DetailsList items={overrideDetails} />
         </div>
       </section>

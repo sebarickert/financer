@@ -19,7 +19,7 @@ export const ProminentDetailItem: FC<ProminentDetailItemProps> = ({
   return (
     <div
       className={clsx(
-        'theme-layer-color text-[--color-text-primary]',
+        'bg-[--color-layer] text-[--color-text-primary]',
         'py-5 px-4',
         'flex items-center gap-4',
       )}

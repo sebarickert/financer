@@ -101,7 +101,10 @@ export const TransactionCategories = ({
             'theme-focus w-full text-left',
             'grid grid-cols-[1fr,auto] gap-2 items-center',
             'text-[--color-text-primary] hover:text-[--color-text-secondary]',
-            { 'border-t theme-border-primary mt-4 pt-2': !!fields.length },
+            {
+              'border-t border-[--color-border-primary] mt-4 pt-2':
+                !!fields.length,
+            },
           )}
           onClick={() =>
             append({ categoryId: '', amount: NaN, description: '' })

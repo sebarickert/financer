@@ -29,7 +29,7 @@ const CustomTooltip = ({
 }: TooltipProps<ValueType, NameType>) => {
   if (active && payload && payload.length) {
     return (
-      <div className="p-4 text-sm border rounded-md theme-layer-color text-[--color-text-primary] theme-border-primary">
+      <div className="p-4 text-sm border rounded-md bg-[--color-layer] text-[--color-text-primary] border-[--color-border-primary]">
         <p className="mb-2 font-medium">{payload[0].payload.dataKey}</p>
         {payload.map((entry) => (
           <p
@@ -259,7 +259,7 @@ export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
 
   return (
     <div className="grid gap-4">
-      <div className="overflow-hidden rounded-md theme-layer-color">
+      <div className="overflow-hidden rounded-md bg-[--color-layer]">
         <div className="flex justify-end p-6">
           <select
             className={clsx(
@@ -284,17 +284,17 @@ export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
           customTooltip={CustomTooltip}
         />
       </div>
-      <div className="p-6 rounded-md theme-layer-color">
+      <div className="p-6 rounded-md bg-[--color-layer]">
         <DetailsList heading="Summary" items={summaryDetails} />
       </div>
       <div className="grid gap-4 lg:grid-cols-2">
-        <div className="p-6 rounded-md theme-layer-color">
+        <div className="p-6 rounded-md bg-[--color-layer]">
           <DetailsList
             heading="Incomes"
             items={generateTransactionsDetailsItem('incomes')}
           />
         </div>
-        <div className="p-6 rounded-md theme-layer-color">
+        <div className="p-6 rounded-md bg-[--color-layer]">
           <DetailsList
             heading="Expenses"
             items={generateTransactionsDetailsItem('expenses')}

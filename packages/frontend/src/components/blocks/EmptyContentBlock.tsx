@@ -20,7 +20,7 @@ export const EmptyContentBlock: FC<EmptyContentBlockProps> = ({
   return (
     <div
       className={clsx(
-        'theme-layer-color text-[--color-text-primary]',
+        'bg-[--color-layer] text-[--color-text-primary]',
         'px-6 pt-8 pb-10 rounded-md text-center',
         'text-center',
       )}

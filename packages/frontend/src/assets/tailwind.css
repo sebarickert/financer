@@ -24,12 +24,20 @@
     /* Colors */
     --color-text-primary: #161616;
     --color-text-secondary: #525252;
+    --color-text-tertiary: #a8a8a8;
+    --color-background: #ffffff;
+    --color-layer: ##f4f4f4;
+    --color-border-primary: #e0e0e0;
   }
 
   @media (prefers-color-scheme: dark) {
     body:not(.light *) {
       --color-text-primary: #f4f4f4;
       --color-text-secondary: #c6c6c6;
+      --color-text-tertiary: #6f6f6f;
+      --color-background: #080808;
+      --color-layer: #1b1b1b;
+      --color-border-primary: #2b2b2b;
 
       ::picker(select) {
         @apply border-[#2b2b2b] bg-[#080808];
@@ -64,39 +72,19 @@
   }
 
   ::picker(select) {
-    @apply p-2 border rounded-md shadow-none lg:mt-2 theme-border-primary theme-bg-color;
-  }
-
-  .theme-bg-color {
-    @apply bg-white dark:bg-[#080808];
+    @apply p-2 border rounded-md shadow-none lg:mt-2 border-[--color-border-primary] bg-[--color-background];
   }
 
   .theme-bg-color-with-hover {
-    @apply theme-bg-color hover:bg-gray-500/[0.12] dark:hover:bg-gray-500/[0.16];
-  }
-
-  .theme-layer-color {
-    @apply bg-gray-100 dark:bg-[#1b1b1b];
+    @apply bg-[--color-background] hover:bg-gray-500/[0.12] dark:hover:bg-gray-500/[0.16];
   }
 
   .theme-layer-color-with-hover {
-    @apply theme-layer-color hover:bg-gray-100/50 dark:hover:bg-[#1b1b1b]/50;
+    @apply bg-[--color-layer] hover:bg-gray-100/50 dark:hover:bg-[#1b1b1b]/50;
   }
 
   .theme-layer-secondary-color {
     @apply bg-white dark:bg-gray-800;
-  }
-
-  .theme-text-tertiary {
-    @apply text-gray-400 dark:text-gray-600;
-  }
-
-  .theme-border-primary {
-    @apply border-gray-200 dark:border-[#2b2b2b];
-  }
-
-  .theme-divide-primary {
-    @apply divide-gray-200 dark:divide-[#2b2b2b];
   }
 
   .theme-button-primary {
@@ -112,7 +100,7 @@
   }
 
   .theme-button-ghost {
-    @apply text-[--color-text-primary] hover:theme-layer-color;
+    @apply text-[--color-text-primary] hover:bg-[--color-layer];
   }
 
   .theme-focus {

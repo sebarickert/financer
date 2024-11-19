@@ -80,7 +80,7 @@ export const TransactionListWithMonthlySummary: FC<
 
   return (
     <div
-      className={clsx('p-6 rounded-md theme-layer-color', '@container')}
+      className={clsx('p-6 rounded-md bg-[--color-layer]', '@container')}
       data-testid="transaction-list-monthly-summary"
     >
       <Heading disableResponsiveSizing>{heading}</Heading>

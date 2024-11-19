@@ -30,7 +30,7 @@ export const Radio = ({
         value={value}
         className={clsx(
           'w-6 h-6 peer appearance-none',
-          'theme-layer-color-with-hover border theme-border-primary text-blue-600',
+          'theme-layer-color-with-hover border border-[--color-border-primary] text-blue-600',
         )}
         defaultChecked={isChecked}
       />
