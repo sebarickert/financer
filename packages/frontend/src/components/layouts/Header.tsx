@@ -11,9 +11,9 @@ export const Header: FC = () => {
   return (
     <header
       className={clsx(
-        'bg-gray-100/75 dark:bg-[#1b1b1b]/75 backdrop-blur-sm',
+        'bg-layer/75 backdrop-blur-sm',
         'vt-name-[navigation] z-[100] focus-within:z-[101] pb-safe',
-        'border-[--color-border-primary] max-lg:border-t lg:border-none lg:shadow-[inset_0_-1px] lg:shadow-gray-200 lg:dark:shadow-[#2b2b2b]',
+        'max-lg:border-t lg:border-none lg:shadow-[inset_0_-1px] lg:shadow-border-primary',
         'fixed left-0 right-0 max-lg:bottom-0 lg:top-0',
       )}
     >

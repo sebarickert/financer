@@ -60,7 +60,7 @@ export const FormFooter: FC<FormFooterProps> = ({
         )}
       </div>
       {optionalComponent && (
-        <div className="py-4 mt-8 border-t border-gray-dark lg:mt-0 sm:flex sm:flex-row-reverse">
+        <div className="py-4 mt-8 border-t lg:mt-0 sm:flex sm:flex-row-reverse">
           {optionalComponent}
         </div>
       )}

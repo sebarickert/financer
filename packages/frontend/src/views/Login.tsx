@@ -30,10 +30,8 @@ export const Login = (): JSX.Element => {
       >
         <div className="grid w-full max-w-xl gap-8">
           <Logo />
-          <div className="p-6 rounded-md bg-[--color-layer]">
-            <h1 className="mb-4 text-2xl font-medium text-[--color-text-primary]">
-              Welcome to Financer!
-            </h1>
+          <div className="p-6 rounded-md bg-layer">
+            <h1 className="mb-4 text-2xl font-medium ">Welcome to Financer!</h1>
             <Paragraph className="max-w-md mb-6">
               Financer is your simple financial tracker for expenses, income,
               savings, and investments.

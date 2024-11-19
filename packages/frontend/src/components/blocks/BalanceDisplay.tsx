@@ -59,7 +59,7 @@ export const BalanceDisplay: FC<BalanceDisplayProps> = ({
     <div
       className={clsx(
         'flex flex-col items-center justify-center text-center gap-4',
-        `text-[--color-text-primary]`,
+        ``,
         className,
       )}
     >
@@ -68,7 +68,7 @@ export const BalanceDisplay: FC<BalanceDisplayProps> = ({
           className={clsx(
             'relative rounded-xl h-11 w-11',
             'inline-flex items-center justify-center shrink-0',
-            { 'bg-gray-400/15': !color },
+            { 'bg-border-primary': !color },
             { [color]: color },
           )}
         >

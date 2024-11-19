@@ -35,7 +35,7 @@ export const ThemeSwitcherClient: FC<ThemeSwitcherClientProps> = ({
 
   return (
     <div className={clsx(className)} data-testid="themeSwitcher">
-      <ul className="grid items-center justify-center grid-cols-3 gap-0.5 p-1 rounded-lg bg-[--color-layer]">
+      <ul className="grid items-center justify-center grid-cols-3 gap-0.5 p-1 rounded-lg bg-layer">
         {Object.values(Theme).map((switcherItem) => (
           <li key={switcherItem}>
             <ThemeSwitcherItem

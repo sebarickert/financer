@@ -20,7 +20,7 @@ export const EmptyContentBlock: FC<EmptyContentBlockProps> = ({
   return (
     <div
       className={clsx(
-        'bg-[--color-layer] text-[--color-text-primary]',
+        'bg-layer ',
         'px-6 pt-8 pb-10 rounded-md text-center',
         'text-center',
       )}
@@ -29,7 +29,7 @@ export const EmptyContentBlock: FC<EmptyContentBlockProps> = ({
         <div
           className={clsx(
             'mb-6 relative rounded-full h-20 w-20',
-            'inline-flex items-center justify-center shrink-0 bg-gray-400/15',
+            'inline-flex items-center justify-center shrink-0 bg-border-primary',
           )}
         >
           <Icon name={icon} className="!w-10 !h-10" />
@@ -38,7 +38,7 @@ export const EmptyContentBlock: FC<EmptyContentBlockProps> = ({
       <Heading disableResponsiveSizing noMargin className="mb-2">
         {title}
       </Heading>
-      <p className="max-w-lg mx-auto [&:has(+*)]:mb-6 text-[--color-text-secondary]">
+      <p className="max-w-lg mx-auto [&:has(+*)]:mb-6 text-text-secondary">
         {children}
       </p>
       {action}

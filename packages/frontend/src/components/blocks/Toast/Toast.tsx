@@ -39,10 +39,9 @@ export const Toast = ({
   }, [dispatch, id]);
 
   const toastStyles = clsx('ring-2', {
-    ['ring-red-600/50']: type === ToastMessageTypes.ERROR,
-    ['ring-gray-400/50 dark:ring-gray-600/50']:
-      type === ToastMessageTypes.GENERAL,
-    ['ring-green-600/50']: type === ToastMessageTypes.SUCCESS,
+    ['ring-red']: type === ToastMessageTypes.ERROR,
+    ['ring-border-primary']: type === ToastMessageTypes.GENERAL,
+    ['ring-green']: type === ToastMessageTypes.SUCCESS,
   });
 
   const additionalInformationContent = Array.isArray(additionalInformation) ? (
@@ -58,7 +57,7 @@ export const Toast = ({
   return (
     <div
       className={clsx(
-        'bg-[--color-layer] text-[--color-text-primary] rounded-md',
+        'bg-layer  rounded-md',
         'p-6 relative',
         'flex gap-4',
         toastStyles,
@@ -71,7 +70,7 @@ export const Toast = ({
       <div className="grow">
         <p className="pr-10 font-medium">{message}</p>
         {additionalInformation && (
-          <div className="max-w-lg mt-2 text-[--color-text-secondary]">
+          <div className="max-w-lg mt-2 text-text-secondary">
             {additionalInformation && additionalInformationContent}
           </div>
         )}

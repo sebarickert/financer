@@ -1,21 +1,6 @@
 /** @type {import('tailwindcss').Config} */
-const { colors } = require("@carbon/colors");
 const defaultTheme = require("tailwindcss/defaultTheme");
 const plugin = require("tailwindcss/plugin");
-
-const carbonColors = Object.keys(colors).reduce((acc, color) => {
-  if (Object.keys(colors[color]).length === 1) {
-    return { ...acc, [color]: Object.values(colors[color])[0] };
-  }
-
-  const palette = Object.keys(colors[color]).reduce((paletteAcc, stop) => {
-    const stopNumber = Number(`${stop}0`);
-    paletteAcc[stopNumber] = colors[color][stop];
-    return paletteAcc;
-  }, {});
-
-  return { ...acc, [color]: palette };
-}, {});
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -28,12 +13,24 @@ module.exports = {
     ],
   ],
   theme: {
+    colors: {
+      transparent: "transparent",
+      current: "currentColor",
+      white: "hsl(var(--color-white))",
+      blue: "hsl(var(--color-blue))",
+      green: "hsl(var(--color-green))",
+      red: "hsl(var(--color-red))",
+      background: "hsl(var(--color-background))",
+      layer: "hsl(var(--color-layer))",
+      ["text-primary"]: "hsl(var(--color-text-primary))",
+      ["text-secondary"]: "hsl(var(--color-text-secondary))",
+      ["text-tertiary"]: "hsl(var(--color-text-tertiary))",
+      ["border-primary"]: "hsl(var(--color-border-primary))",
+      ["border-secondary"]: "hsl(var(--color-border-secondary))",
+    },
     extend: {
       fontFamily: {
         sans: ["InterVariable", ...defaultTheme.fontFamily.sans],
-      },
-      colors: {
-        ...carbonColors,
       },
     },
   },

@@ -33,17 +33,17 @@ export const NavigationItem: FC<NavigationItemProps> = ({
           'items-center justify-center theme-focus',
           'max-lg:flex max-lg:flex-col max-lg:h-14',
           'lg:inline-flex lg:gap-2 lg:py-5 lg:px-4 lg:font-medium',
-          '[&:not([aria-current=page])]:lg:group-hover/navigation:text-[--color-text-tertiary]',
+          '[&:not([aria-current=page])]:lg:group-hover/navigation:text-text-tertiary',
           'group/navigation-item',
           {
-            ['max-lg:shadow-[inset_0_2px] lg:shadow-[inset_0_-2px] !shadow-blue-600']:
+            ['max-lg:shadow-[inset_0_2px] lg:shadow-[inset_0_-2px] !shadow-blue']:
               isActive,
           },
         )}
       >
         <span
           className={clsx(
-            'contents lg:group-hover/navigation-item:text-[--color-text-primary] lg:transition-colors lg:duration-300',
+            'contents lg:group-hover/navigation-item:text-text-primary lg:transition-colors lg:duration-300',
           )}
         >
           <Icon name={iconName} isSolid={isActive} />

@@ -40,7 +40,7 @@ export const Account: FC<AccountProps> = ({ account, userTheme }) => {
         />
       </LoaderSuspense>
       <div className={clsx('grid gap-2')}>
-        <div className="grid gap-8 p-6 py-8 rounded-md bg-[--color-layer]">
+        <div className="grid gap-8 p-6 py-8 rounded-md bg-layer">
           <BalanceDisplay
             amount={account.balance}
             iconName={accountTypeIconMapping[account.type]}
@@ -50,7 +50,7 @@ export const Account: FC<AccountProps> = ({ account, userTheme }) => {
             {account.name}
           </BalanceDisplay>
         </div>
-        <div className="p-6 rounded-md bg-[--color-layer]">
+        <div className="p-6 rounded-md bg-layer">
           <DetailsList testId="account-details" items={accountDetails} />
         </div>
       </div>
