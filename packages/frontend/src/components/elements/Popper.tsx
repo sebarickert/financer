@@ -44,7 +44,7 @@ export const Popper: FC<PopperProps> = ({ className, items, children }) => {
       </Button>
       <div
         className={clsx(
-          'theme-bg-color theme-text-primary',
+          'theme-bg-color text-[--color-text-primary]',
           'min-w-48 shadow',
           'p-2 rounded-md lg:mt-2',
           'border theme-border-primary',

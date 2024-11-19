@@ -59,7 +59,7 @@ export const BalanceDisplay: FC<BalanceDisplayProps> = ({
     <div
       className={clsx(
         'flex flex-col items-center justify-center text-center gap-4',
-        `theme-text-primary`,
+        `text-[--color-text-primary]`,
         className,
       )}
     >

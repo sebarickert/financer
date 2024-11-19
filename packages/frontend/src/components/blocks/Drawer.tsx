@@ -31,7 +31,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       'open:max-lg:translate-y-0 open:ease-out open:lg:translate-x-0 open:!transition-allow-discrete open:transition-all open:duration-200',
       'starting:open:max-lg:translate-y-full starting:open:lg:translate-x-full',
       // Drawer
-      'theme-bg-color theme-text-primary fixed text-left',
+      'theme-bg-color text-[--color-text-primary] fixed text-left',
       'max-lg:bottom-0 max-lg:inset-x-0 max-lg:top-auto max-lg:w-full',
       'lg:max-w-[600px] lg:w-full lg:left-auto lg:h-full',
       'max-lg:border-t lg:border-l theme-border-primary',

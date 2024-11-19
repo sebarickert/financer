@@ -20,7 +20,7 @@ export const EmptyContentBlock: FC<EmptyContentBlockProps> = ({
   return (
     <div
       className={clsx(
-        'theme-layer-color theme-text-primary',
+        'theme-layer-color text-[--color-text-primary]',
         'px-6 pt-8 pb-10 rounded-md text-center',
         'text-center',
       )}
@@ -38,7 +38,7 @@ export const EmptyContentBlock: FC<EmptyContentBlockProps> = ({
       <Heading disableResponsiveSizing noMargin className="mb-2">
         {title}
       </Heading>
-      <p className="max-w-lg mx-auto [&:has(+*)]:mb-6 theme-text-secondary">
+      <p className="max-w-lg mx-auto [&:has(+*)]:mb-6 text-[--color-text-secondary]">
         {children}
       </p>
       {action}

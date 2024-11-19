@@ -29,7 +29,7 @@ const CustomTooltip = ({
 }: TooltipProps<ValueType, NameType>) => {
   if (active && payload && payload.length) {
     return (
-      <div className="p-4 text-sm border rounded-md theme-layer-color theme-text-primary theme-border-primary">
+      <div className="p-4 text-sm border rounded-md theme-layer-color text-[--color-text-primary] theme-border-primary">
         <p className="mb-2 font-medium">{payload[0].payload.dataKey}</p>
         {payload.map((entry) => (
           <p

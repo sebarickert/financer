@@ -131,7 +131,7 @@ export const OverwriteUserData = ({
 
   return (
     <section>
-      <div className="mb-8 theme-text-primary">
+      <div className="mb-8 text-[--color-text-primary]">
         <label
           htmlFor="selectFiles"
           className={clsx(

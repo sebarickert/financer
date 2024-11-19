@@ -19,7 +19,7 @@ export const Checkbox = ({
   return (
     <label
       className={clsx(
-        'flex items-center p-4 gap-4 rounded-md theme-bg-color-with-hover hover:cursor-pointer theme-text-primary',
+        'flex items-center p-4 gap-4 rounded-md theme-bg-color-with-hover hover:cursor-pointer text-[--color-text-primary]',
       )}
       htmlFor={id}
     >

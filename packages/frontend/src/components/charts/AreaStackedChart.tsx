@@ -51,7 +51,7 @@ export const AreaStackedChart: FC<AreaStackedChartProps> = ({
     <div
       className={clsx(
         className,
-        'aspect-video text-xs theme-text-secondary',
+        'aspect-video text-xs text-[--color-text-secondary]',
         '[&_.recharts-cartesian-axis-tick_text]:fill-gray-700 dark:[&_.recharts-cartesian-axis-tick_text]:fill-gray-300',
         '[&_.recharts-cartesian-grid_line[stroke="#ccc"]]:stroke-gray-100 dark:[&_.recharts-cartesian-grid_line[stroke="#ccc"]]:stroke-[#1b1b1b]',
         '[&_.recharts-dot[stroke="#fff"]]:stroke-transparent',

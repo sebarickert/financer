@@ -63,7 +63,7 @@ export const Pager: FC<PagerProps> = ({
         Previous page
       </PagerButton>
       {!isStatusHidden && currentPage && pageCount && (
-        <p className="mx-4 font-medium theme-text-primary">
+        <p className="mx-4 font-medium text-[--color-text-primary]">
           <span className="sr-only">
             Current page: {currentPage} of {pageCount}
           </span>

@@ -58,7 +58,7 @@ export const Toast = ({
   return (
     <div
       className={clsx(
-        'theme-layer-color theme-text-primary rounded-md',
+        'theme-layer-color text-[--color-text-primary] rounded-md',
         'p-6 relative',
         'flex gap-4',
         toastStyles,
@@ -71,7 +71,7 @@ export const Toast = ({
       <div className="grow">
         <p className="pr-10 font-medium">{message}</p>
         {additionalInformation && (
-          <div className="max-w-lg mt-2 theme-text-secondary">
+          <div className="max-w-lg mt-2 text-[--color-text-secondary]">
             {additionalInformation && additionalInformationContent}
           </div>
         )}

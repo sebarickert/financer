@@ -43,7 +43,7 @@ export const NavigationItem: FC<NavigationItemProps> = ({
       >
         <span
           className={clsx(
-            'contents lg:group-hover/navigation-item:theme-text-primary lg:transition-colors lg:duration-300',
+            'contents lg:group-hover/navigation-item:text-[--color-text-primary] lg:transition-colors lg:duration-300',
           )}
         >
           <Icon name={iconName} isSolid={isActive} />

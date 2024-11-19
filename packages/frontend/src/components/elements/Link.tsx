@@ -44,9 +44,13 @@ export const Link = ({
 
   const isCurrentPage = pathname === href;
 
-  const linkClasses = clsx('theme-focus theme-text-primary', className, {
-    'hover:theme-text-secondary': hasHoverEffect,
-  });
+  const linkClasses = clsx(
+    'theme-focus text-[--color-text-primary]',
+    className,
+    {
+      'hover:text-[--color-text-secondary]': hasHoverEffect,
+    },
+  );
   const linkContent = (
     <>
       {isAbsolute && <span className="absolute inset-0" aria-hidden="true" />}

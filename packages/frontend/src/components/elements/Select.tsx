@@ -45,7 +45,7 @@ const OptionElement: FC<OptionElementProps> = ({
     value={value}
     key={value}
     className={clsx(
-      'theme-bg-color-with-hover theme-focus focus-visible:z-10 focus-visible:relative theme-text-primary rounded-md hover:cursor-pointer',
+      'theme-bg-color-with-hover theme-focus focus-visible:z-10 focus-visible:relative text-[--color-text-primary] rounded-md hover:cursor-pointer',
       'disabled:pointer-events-none disabled:opacity-50',
       'before:hidden p-3 flex gap-2',
     )}
@@ -56,7 +56,7 @@ const OptionElement: FC<OptionElementProps> = ({
     <span
       className={clsx(
         'grid text-base text-left',
-        'after:content-[attr(data-description)] after:text-sm after:theme-text-secondary',
+        'after:content-[attr(data-description)] after:text-sm after:text-[--color-text-secondary]',
       )}
       data-description={description}
     >
@@ -90,7 +90,7 @@ export const Select = ({
   const hasSomeOptionIcon = options.some((option) => option.icon);
 
   return (
-    <div className={clsx('theme-text-primary', className)}>
+    <div className={clsx('text-[--color-text-primary]', className)}>
       <label
         htmlFor={id}
         className={clsx('block mb-1', { 'sr-only': isLabelHidden })}

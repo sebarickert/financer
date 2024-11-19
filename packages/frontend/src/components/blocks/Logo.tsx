@@ -21,7 +21,7 @@ export const Logo = ({ className }: LogoProps): JSX.Element => {
       <LogoIcon />
       <h2
         className={clsx(
-          'text-xl font-semibold tracking-tight theme-text-primary',
+          'text-xl font-semibold tracking-tight text-[--color-text-primary]',
         )}
       >
         Financer

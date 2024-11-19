@@ -58,7 +58,7 @@ export const TransactionListItem: FC<
       >
         <div className="inline-flex flex-col truncate">
           <span data-testid="transaction-description">{description}</span>
-          <div className="text-sm theme-text-secondary">
+          <div className="text-sm text-[--color-text-secondary]">
             <time dateTime={date} data-testid="transaction-date">
               {formatDate(
                 new Date(date),

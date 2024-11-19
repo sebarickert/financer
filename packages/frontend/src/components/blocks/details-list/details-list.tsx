@@ -21,7 +21,7 @@ export const DetailsList: FC<DetailsListProps> = ({
   const testId = rawTestId ?? 'details-list';
 
   return (
-    <div className={clsx('grid gap-3 theme-text-primary', className)}>
+    <div className={clsx('grid gap-3 text-[--color-text-primary]', className)}>
       {heading && (
         <h2 className="inline-flex items-center gap-2 font-medium">
           <Icon name="InformationCircleIcon" />

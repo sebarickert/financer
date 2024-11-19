@@ -20,6 +20,21 @@
     --contextual-navigation-height: 50px;
     --gutter-top: var(--content-header-height);
     --gutter-bottom: var(--header-height);
+
+    /* Colors */
+    --color-text-primary: #161616;
+    --color-text-secondary: #525252;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body:not(.light *) {
+      --color-text-primary: #f4f4f4;
+      --color-text-secondary: #c6c6c6;
+
+      ::picker(select) {
+        @apply border-[#2b2b2b] bg-[#080808];
+      }
+    }
   }
 
   @media (min-width: theme("screens.lg")) {
@@ -52,14 +67,6 @@
     @apply p-2 border rounded-md shadow-none lg:mt-2 theme-border-primary theme-bg-color;
   }
 
-  @media (prefers-color-scheme: dark) {
-    body:not(.light *) {
-      ::picker(select) {
-        @apply border-[#2b2b2b] bg-[#080808];
-      }
-    }
-  }
-
   .theme-bg-color {
     @apply bg-white dark:bg-[#080808];
   }
@@ -80,14 +87,6 @@
     @apply bg-white dark:bg-gray-800;
   }
 
-  .theme-text-primary {
-    @apply text-gray-1000 dark:text-gray-100;
-  }
-
-  .theme-text-secondary {
-    @apply text-gray-700 dark:text-gray-300;
-  }
-
   .theme-text-tertiary {
     @apply text-gray-400 dark:text-gray-600;
   }
@@ -105,7 +104,7 @@
   }
 
   .theme-button-secondary {
-    @apply theme-layer-color-with-hover theme-text-primary;
+    @apply theme-layer-color-with-hover text-[--color-text-primary];
   }
 
   .theme-button-danger {
@@ -113,7 +112,7 @@
   }
 
   .theme-button-ghost {
-    @apply theme-text-primary hover:theme-layer-color;
+    @apply text-[--color-text-primary] hover:theme-layer-color;
   }
 
   .theme-focus {
@@ -133,10 +132,10 @@
   }
 
   .theme-field {
-    @apply border-none appearance-none theme-focus theme-layer-color-with-hover theme-text-primary disabled:pointer-events-none disabled:opacity-50;
+    @apply border-none appearance-none theme-focus theme-layer-color-with-hover text-[--color-text-primary] disabled:pointer-events-none disabled:opacity-50;
   }
 
   .theme-field-inverse {
-    @apply border-none appearance-none theme-focus theme-bg-color-with-hover theme-text-primary disabled:pointer-events-none disabled:opacity-50;
+    @apply border-none appearance-none theme-focus theme-bg-color-with-hover text-[--color-text-primary] disabled:pointer-events-none disabled:opacity-50;
   }
 }
