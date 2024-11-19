@@ -14,6 +14,18 @@
 }
 
 @layer base {
+  @define-mixin dark-mode-styles {
+    --color-text-primary: 0 0% 96%;
+    --color-text-secondary: 0 0% 78%;
+    --color-text-tertiary: 0 0% 44%;
+    --color-background: 0 0% 3%;
+    --color-background-hover: 0 0% 5%;
+    --color-layer: 0 0% 11%;
+    --color-layer-hover: 0 0% 14%;
+    --color-border-primary: 0 0% 17%;
+    --color-border-secondary: 0 0% 15%;
+  }
+
   :root {
     --header-height: 56px;
     --content-header-height: 56px;
@@ -45,17 +57,17 @@
     --button-danger-active: 357 76% 26%;
   }
 
+  :root.dark {
+    @mixin dark-mode-styles;
+
+    ::picker(select) {
+      @apply border-border-primary bg-background;
+    }
+  }
+
   @media (prefers-color-scheme: dark) {
-    body:not(.light *) {
-      --color-text-primary: 0 0% 96%;
-      --color-text-secondary: 0 0% 78%;
-      --color-text-tertiary: 0 0% 44%;
-      --color-background: 0 0% 3%;
-      --color-background-hover: 0 0% 5%;
-      --color-layer: 0 0% 11%;
-      --color-layer-hover: 0 0% 14%;
-      --color-border-primary: 0 0% 17%;
-      --color-border-secondary: 0 0% 15%;
+    :root:not(.light) {
+      @mixin dark-mode-styles;
 
       ::picker(select) {
         @apply border-border-primary bg-background;

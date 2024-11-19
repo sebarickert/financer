@@ -44,7 +44,7 @@ export const Link = ({
 
   const isCurrentPage = pathname === href;
 
-  const linkClasses = clsx('theme-focus ', className, {
+  const linkClasses = clsx('theme-focus text-text-primary', className, {
     'hover:text-text-secondary': hasHoverEffect,
   });
   const linkContent = (
