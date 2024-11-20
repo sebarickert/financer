@@ -50,11 +50,11 @@ export const Popper: FC<PopperProps> = ({ className, items, children }) => {
           'border',
           'fixed lg:absolute inset-[unset]',
           'supports-[anchor-name]:right-anchor-[popover-anchor] supports-[anchor-name]:top-anchor-[popover-anchor,bottom]',
-          'transition-all !transition-allow-discrete duration-100 ease-in open:ease-out',
-          'opacity-0 starting:opacity-0 open:opacity-100',
-          'starting:translate-x-0 starting:-translate-y-2',
+          'ease-in-out duration-200 !transition-allow-discrete',
           'translate-x-0 -translate-y-2',
-          'supports-[anchor-name]:open:translate-x-0 open:translate-y-0 open:-translate-x-[calc(100%-48px)]',
+          'starting:translate-x-0 starting:-translate-y-2',
+          'opacity-0 starting:opacity-0 open:opacity-100',
+          'supports-[anchor-name]:open:translate-x-0 open:translate-y-0 open:-translate-x-[calc(100%-theme(spacing.12))]',
           className,
         )}
         popover="auto"
