@@ -39,7 +39,7 @@ export const TransactionListItem: FC<
       href={url}
       testId={id}
       className={clsx(
-        'theme-layer-color-with-hover',
+        'bg-layer hover:bg-accent',
         'p-4 relative',
         'flex items-center gap-4',
       )}
@@ -58,7 +58,7 @@ export const TransactionListItem: FC<
       >
         <div className="inline-flex flex-col truncate">
           <span data-testid="transaction-description">{description}</span>
-          <div className="text-sm text-text-secondary">
+          <div className="text-sm text-muted-foreground">
             <time dateTime={date} data-testid="transaction-date">
               {formatDate(
                 new Date(date),

@@ -3,7 +3,6 @@
 import clsx from 'clsx';
 import { FC } from 'react';
 import {
-  Area,
   AreaChart,
   CartesianGrid,
   ResponsiveContainer,
@@ -11,6 +10,7 @@ import {
   YAxis,
   TooltipProps,
   XAxis,
+  Area,
 } from 'recharts';
 import {
   NameType,
@@ -20,13 +20,8 @@ import {
 type AreaStackedChartProps = {
   chartData: {
     dataKey: string;
-    key1: { key: string; fill: string; value: number };
-    key2: { key: string; fill: string; value: number };
+    data: { key: string; color: string; value: number }[];
   }[];
-  colors: {
-    key1: string;
-    key2: string;
-  };
   className?: string;
   yaxisTickFormatter?(value: unknown, index: number): string;
   xaxisTickFormatter?(value: unknown, index: number): string;
@@ -35,39 +30,42 @@ type AreaStackedChartProps = {
 
 export const AreaStackedChart: FC<AreaStackedChartProps> = ({
   chartData,
-  colors,
   className,
   yaxisTickFormatter,
   xaxisTickFormatter,
   customTooltip,
 }) => {
-  const parsedChartData = chartData.map(({ dataKey, key1, key2 }) => ({
+  const parsedChartData = chartData.map(({ dataKey, data }) => ({
     dataKey,
-    [key1.key]: key1.value,
-    [key2.key]: key2.value,
+    ...data.reduce((acc, { key, value }) => ({ ...acc, [key]: value }), {}),
   }));
 
   return (
     <div
       className={clsx(
         className,
-        'aspect-video text-xs text-text-secondary',
-        '[&_.recharts-cartesian-axis-tick_text]:fill-text-secondary',
-        '[&_.recharts-cartesian-grid_line[stroke="#ccc"]]:stroke-border-secondary',
+        'aspect-video text-xs text-muted-foreground',
+        '[&_.recharts-cartesian-axis-tick_text]:fill-muted-foreground',
+        '[&_.recharts-cartesian-grid_line[stroke="#ccc"]]:stroke-accent',
         '[&_.recharts-dot[stroke="#fff"]]:stroke-transparent',
       )}
     >
       <ResponsiveContainer>
         <AreaChart data={parsedChartData} margin={{}}>
           <defs>
-            <linearGradient id="fillKey1" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor={colors.key1} stopOpacity={0.8} />
-              <stop offset="95%" stopColor={colors.key1} stopOpacity={0.1} />
-            </linearGradient>
-            <linearGradient id="fillKey2" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor={colors.key2} stopOpacity={0.8} />
-              <stop offset="95%" stopColor={colors.key2} stopOpacity={0.1} />
-            </linearGradient>
+            {chartData[0].data.map(({ key, color }) => (
+              <linearGradient
+                id={`fill${key}`}
+                x1="0"
+                y1="0"
+                x2="0"
+                y2="1"
+                key={key}
+              >
+                <stop offset="5%" stopColor={color} stopOpacity={0.8} />
+                <stop offset="95%" stopColor={color} stopOpacity={0.1} />
+              </linearGradient>
+            ))}
           </defs>
           <CartesianGrid vertical={false} />
           <YAxis
@@ -83,18 +81,14 @@ export const AreaStackedChart: FC<AreaStackedChartProps> = ({
             tickFormatter={xaxisTickFormatter}
             mirror
           />
-          <Area
-            dataKey={chartData[0].key1.key}
-            fill="url(#fillKey1)"
-            fillOpacity={0.5}
-            stroke={colors.key1}
-          />
-          <Area
-            dataKey={chartData[0].key2.key}
-            fill="url(#fillKey2)"
-            fillOpacity={0.5}
-            stroke={colors.key2}
-          />
+          {chartData[0].data.map(({ key, color }) => (
+            <Area
+              key={key}
+              dataKey={key}
+              fill={`url(#fill${key})`}
+              stroke={color}
+            />
+          ))}
           <Tooltip cursor={false} content={customTooltip} />
         </AreaChart>
       </ResponsiveContainer>

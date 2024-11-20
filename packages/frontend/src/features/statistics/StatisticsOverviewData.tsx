@@ -29,19 +29,30 @@ const CustomTooltip = ({
 }: TooltipProps<ValueType, NameType>) => {
   if (active && payload && payload.length) {
     return (
-      <div className="p-4 text-sm border rounded-md bg-layer ">
-        <p className="mb-2 font-medium">{payload[0].payload.dataKey}</p>
-        {payload.map((entry) => (
-          <p
-            key={entry.dataKey}
-            className="grid gap-4 grid-cols-[1fr,auto] uppercase"
-          >
-            <span>{entry.dataKey}</span>
-            <span className="text-right">
-              {formatCurrency(entry.value as number)}
-            </span>
-          </p>
-        ))}
+      <div className="grid gap-1 p-2 text-xs border rounded-lg bg-layer">
+        <p className="font-medium text-foreground">
+          {payload[0].payload.dataKey}
+        </p>
+        <ul className="space-y-1">
+          {payload.map((entry) => (
+            <li key={entry.dataKey}>
+              <p className="grid grid-cols-[auto,1fr] gap-4 items-center">
+                <span className="inline-flex items-center gap-2 text-muted-foreground">
+                  <span
+                    className={clsx('inline-block w-2.5 h-2.5 rounded-sm', {
+                      'bg-green': entry.dataKey === 'incomes',
+                      'bg-red': entry.dataKey === 'expenses',
+                    })}
+                  />
+                  {entry.dataKey === 'incomes' ? 'Incomes' : 'Expenses'}
+                </span>
+                <span className="text-right text-foreground">
+                  {formatCurrency(entry.value as number)}
+                </span>
+              </p>
+            </li>
+          ))}
+        </ul>
       </div>
     );
   }
@@ -81,16 +92,18 @@ export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
 }) => {
   const chartData = data.map(({ date, incomeAmount, expenseAmount }) => ({
     dataKey: formatDate(date, DateFormat.monthShort),
-    key1: {
-      key: 'incomes',
-      fill: '#198038',
-      value: incomeAmount,
-    },
-    key2: {
-      key: 'expenses',
-      fill: '#da1e28',
-      value: expenseAmount,
-    },
+    data: [
+      {
+        key: 'incomes',
+        color: 'hsl(var(--color-green))',
+        value: incomeAmount,
+      },
+      {
+        key: 'expenses',
+        color: 'hsl(var(--color-red))',
+        value: expenseAmount,
+      },
+    ],
   }));
 
   const defaultFilterValue =
@@ -180,36 +193,35 @@ export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
     return true;
   });
 
-  const numbers = filteredChartData.reduce(
-    (acc, { key1, key2 }) => {
-      acc.incomes.push(key1.value);
-      acc.expenses.push(key2.value);
+  const { incomes, expenses } = filteredChartData.reduce(
+    (acc, month) => {
+      month.data.forEach((entry) => {
+        if (entry.key === 'incomes') {
+          acc.incomes.push(entry.value);
+        } else if (entry.key === 'expenses') {
+          acc.expenses.push(entry.value);
+        }
+      });
       return acc;
     },
     { incomes: [] as number[], expenses: [] as number[] },
   );
 
   const average = {
-    incomes:
-      numbers.incomes.reduce((sum, num) => sum + num, 0) /
-      numbers.incomes.length,
-    expenses:
-      numbers.expenses.reduce((sum, num) => sum + num, 0) /
-      numbers.expenses.length,
+    incomes: incomes.reduce((sum, num) => sum + num, 0) / incomes.length,
+    expenses: expenses.reduce((sum, num) => sum + num, 0) / expenses.length,
   };
 
-  const summaries = numbers.incomes.map(
-    (income, index) => income - numbers.expenses[index],
-  );
+  const summaries = incomes.map((income, index) => income - expenses[index]);
 
   const highest = {
-    incomes: Math.max(...numbers.incomes),
-    expenses: Math.max(...numbers.expenses),
+    incomes: Math.max(...incomes),
+    expenses: Math.max(...expenses),
   };
 
   const lowest = {
-    incomes: Math.min(...numbers.incomes),
-    expenses: Math.min(...numbers.expenses),
+    incomes: Math.min(...incomes),
+    expenses: Math.min(...expenses),
   };
 
   const generateTransactionsDetailsItem = (
@@ -241,9 +253,7 @@ export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
       icon: 'EqualsIcon',
       label: 'Balance',
       description:
-        formatCurrency(
-          sumArray(numbers.incomes) - sumArray(numbers.expenses),
-        ) ?? '-',
+        formatCurrency(sumArray(incomes) - sumArray(expenses)) ?? '-',
     },
     {
       icon: 'ArrowUpIcon',
@@ -260,7 +270,7 @@ export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
   return (
     <div className="grid gap-4">
       <div className="overflow-hidden rounded-md bg-layer">
-        <div className="flex justify-end p-6">
+        <div className="flex justify-end p-4 lg:p-6">
           <select
             className={clsx(
               'theme-field-inverse',
@@ -279,10 +289,6 @@ export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
         </div>
         <AreaStackedChart
           chartData={filteredChartData}
-          colors={{
-            key1: 'hsl(var(--color-green))',
-            key2: 'hsl(var(--color-red))',
-          }}
           yaxisTickFormatter={yaxisTickFormatter}
           customTooltip={CustomTooltip}
         />

@@ -26,7 +26,7 @@ export const transactionTypeThemeMapping: Record<
     icon: transactionTypeIconMapping[TransactionType.Expense],
   },
   [TransactionType.Transfer]: {
-    color: 'bg-border-primary',
+    color: 'bg-accent',
     icon: transactionTypeIconMapping[TransactionType.Transfer],
   },
 };

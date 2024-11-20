@@ -9,7 +9,7 @@ const LoaderIcon = () => (
   <div role="status">
     <svg
       aria-hidden="true"
-      className="w-12 h-12 animate-spin fill-text-primary text-text-tertiary"
+      className="w-12 h-12 animate-spin fill-foreground text-muted-foreground"
       viewBox="0 0 100 101"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

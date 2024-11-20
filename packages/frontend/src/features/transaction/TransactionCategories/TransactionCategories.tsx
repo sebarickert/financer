@@ -98,9 +98,9 @@ export const TransactionCategories = ({
           data-testid="add-category"
           type="button"
           className={clsx(
-            'theme-focus w-full text-left',
+            'focus-visible:focus-highlight w-full text-left',
             'grid grid-cols-[1fr,auto] gap-2 items-center',
-            'text-text-primary hover:text-text-secondary',
+            'text-foreground hover:text-muted-foreground',
             {
               'border-t  mt-4 pt-2': !!fields.length,
             },
@@ -112,7 +112,7 @@ export const TransactionCategories = ({
           <p className="pl-2">Add Category</p>
           <span
             className={clsx(
-              '!h-12 !w-12 !p-0 inline-flex justify-center items-center theme-button-secondary rounded-md',
+              '!h-12 !w-12 !p-0 inline-flex justify-center items-center button-secondary rounded-md',
             )}
           >
             <Icon name={'PlusIcon'} />

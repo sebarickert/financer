@@ -30,25 +30,20 @@ export const NavigationItem: FC<NavigationItemProps> = ({
         haptic="heavy"
         href={url}
         className={clsx(
-          'items-center justify-center theme-focus',
+          'items-center justify-center',
           'max-lg:flex max-lg:flex-col max-lg:h-14',
           'lg:inline-flex lg:gap-2 lg:py-5 lg:px-4 lg:font-medium',
-          '[&:not([aria-current=page])]:lg:group-hover/navigation:text-text-tertiary',
-          'group/navigation-item',
+          'lg:hover:text-foreground lg:transition-colors',
           {
             ['max-lg:shadow-[inset_0_2px] lg:shadow-[inset_0_-2px] !shadow-blue']:
               isActive,
+            'lg:text-muted-foreground': !isActive,
           },
         )}
+        hasHoverEffect={false}
       >
-        <span
-          className={clsx(
-            'contents lg:group-hover/navigation-item:text-text-primary lg:transition-colors lg:duration-300',
-          )}
-        >
-          <Icon name={iconName} isSolid={isActive} />
-          <span className="max-lg:sr-only">{label}</span>
-        </span>
+        <Icon name={iconName} isSolid={isActive} />
+        <span className="max-lg:sr-only">{label}</span>
       </Link>
     </li>
   );

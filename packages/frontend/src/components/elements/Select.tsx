@@ -45,7 +45,7 @@ const OptionElement: FC<OptionElementProps> = ({
     value={value}
     key={value}
     className={clsx(
-      'theme-bg-color-with-hover theme-focus focus-visible:z-10 focus-visible:relative text-text-primary rounded-md hover:cursor-pointer',
+      'focus-visible:focus-highlight focus-visible:z-10 focus-visible:relative text-foreground rounded-md hover:cursor-pointer hover:bg-accent',
       'disabled:pointer-events-none disabled:opacity-50',
       'before:hidden p-3 flex gap-2',
     )}
@@ -56,7 +56,7 @@ const OptionElement: FC<OptionElementProps> = ({
     <span
       className={clsx(
         'grid text-base text-left',
-        'after:content-[attr(data-description)] after:text-sm after:text-text-secondary',
+        'after:content-[attr(data-description)] after:text-sm after:text-muted-foreground',
       )}
       data-description={description}
     >
@@ -90,7 +90,7 @@ export const Select = ({
   const hasSomeOptionIcon = options.some((option) => option.icon);
 
   return (
-    <div className={clsx('text-text-primary', className)}>
+    <div className={clsx('text-foreground', className)}>
       <label
         htmlFor={id}
         className={clsx('block mb-1', { 'sr-only': isLabelHidden })}
@@ -105,7 +105,7 @@ export const Select = ({
           'theme-field',
           'block w-full rounded-md',
           'py-3 h-12',
-          'supports-[selector(::picker(select))]:[&:has(button:focus-visible)]:theme-focus-without-prefix',
+          'supports-[selector(::picker(select))]:[&:has(button:focus-visible)]:focus-highlight',
           {
             'supports-[selector(::picker(select))]:p-0': isBleedingEdge,
           },

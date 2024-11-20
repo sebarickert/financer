@@ -28,7 +28,6 @@ interface ButtonProps
   type?: 'button' | 'submit' | 'reset';
   testId?: string;
   isDisabled?: boolean;
-  applyBaseStyles?: boolean;
   size?: 'default' | 'icon';
   /** defaults to `none` */
   haptic?: HapticType;
@@ -44,7 +43,6 @@ export const Button = ({
   type = 'button',
   testId,
   isDisabled,
-  applyBaseStyles = true,
   popoverTarget,
   popoverTargetAction,
   size = 'default',
@@ -53,7 +51,7 @@ export const Button = ({
 }: ButtonProps): JSX.Element => {
   const buttonStyles = {
     base: clsx(
-      'theme-focus ring-offset-2 dark:ring-offset-0 rounded-md text-center whitespace-nowrap',
+      'focus-visible:focus-highlight ring-offset-2 dark:ring-offset-0 rounded-md text-center whitespace-nowrap',
       'inline-flex items-center justify-center gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0',
       'disabled:pointer-events-none disabled:opacity-50',
     ),
@@ -61,14 +59,13 @@ export const Button = ({
     icon: clsx('h-12 w-12'),
   };
 
-  const buttonClasses = clsx(className, {
-    [buttonStyles.base]: applyBaseStyles,
+  const buttonClasses = clsx(className, buttonStyles.base, {
     [buttonStyles.default]: size === 'default' && accentColor !== 'unstyled',
     [buttonStyles.icon]: size === 'icon' && accentColor !== 'unstyled',
-    ['theme-button-primary']: accentColor === 'primary',
-    ['theme-button-secondary']: accentColor === 'secondary',
-    ['theme-button-danger']: accentColor === 'danger',
-    ['theme-button-ghost']: accentColor === 'ghost',
+    ['button-primary']: accentColor === 'primary',
+    ['button-secondary']: accentColor === 'secondary',
+    ['button-danger']: accentColor === 'danger',
+    ['button-ghost']: accentColor === 'ghost',
     ['']: accentColor === 'unstyled',
   });
 

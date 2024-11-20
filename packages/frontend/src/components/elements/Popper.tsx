@@ -24,7 +24,7 @@ export const Popper: FC<PopperProps> = ({ className, items, children }) => {
   const popperId = useId();
 
   const popperItemClasses = clsx(
-    'flex items-center gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0 theme-bg-color-with-hover',
+    'flex items-center gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0 hover:bg-accent',
     'rounded-md text-center whitespace-nowrap',
     'py-2.5 h-11 pl-2 pr-[18px] text-base',
   );
@@ -45,16 +45,16 @@ export const Popper: FC<PopperProps> = ({ className, items, children }) => {
       <div
         className={clsx(
           'bg-background ',
-          'min-w-48 shadow',
+          'min-w-48',
           'p-2 rounded-md lg:mt-2',
           'border',
           'fixed lg:absolute inset-[unset]',
           'supports-[anchor-name]:right-anchor-[popover-anchor] supports-[anchor-name]:top-anchor-[popover-anchor,bottom]',
-          'transition-all !transition-allow-discrete duration-100 ease-in open:ease-out',
-          'opacity-0 starting:opacity-0 open:opacity-100',
-          'starting:translate-x-0 starting:-translate-y-2',
+          'ease-in-out duration-200 !transition-allow-discrete',
           'translate-x-0 -translate-y-2',
-          'supports-[anchor-name]:open:translate-x-0 open:translate-y-0 open:-translate-x-[calc(100%-48px)]',
+          'starting:translate-x-0 starting:-translate-y-2',
+          'opacity-0 starting:opacity-0 open:opacity-100',
+          'supports-[anchor-name]:open:translate-x-0 open:translate-y-0 open:-translate-x-[calc(100%-theme(spacing.12))]',
           className,
         )}
         popover="auto"

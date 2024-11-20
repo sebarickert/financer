@@ -40,7 +40,7 @@ export const Toast = ({
 
   const toastStyles = clsx('ring-2', {
     ['ring-red']: type === ToastMessageTypes.ERROR,
-    ['ring-border-primary']: type === ToastMessageTypes.GENERAL,
+    ['ring-accent']: type === ToastMessageTypes.GENERAL,
     ['ring-green']: type === ToastMessageTypes.SUCCESS,
   });
 
@@ -70,7 +70,7 @@ export const Toast = ({
       <div className="grow">
         <p className="pr-10 font-medium">{message}</p>
         {additionalInformation && (
-          <div className="max-w-lg mt-2 text-text-secondary">
+          <div className="max-w-lg mt-2 text-muted-foreground">
             {additionalInformation && additionalInformationContent}
           </div>
         )}

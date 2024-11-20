@@ -15,15 +15,11 @@
 
 @layer base {
   @define-mixin dark-mode-styles {
-    --color-text-primary: 0 0% 96%;
-    --color-text-secondary: 0 0% 78%;
-    --color-text-tertiary: 0 0% 44%;
-    --color-background: 0 0% 3%;
-    --color-background-hover: 0 0% 5%;
-    --color-layer: 0 0% 11%;
-    --color-layer-hover: 0 0% 14%;
-    --color-border-primary: 0 0% 17%;
-    --color-border-secondary: 0 0% 15%;
+    --foreground: 0 0% 96%;
+    --muted-foreground: 0 0% 65%;
+    --background: 0 0% 3%;
+    --layer: 0 0% 11%;
+    --accent: 0 0% 16%;
   }
 
   :root {
@@ -33,18 +29,12 @@
     --gutter-top: var(--content-header-height);
     --gutter-bottom: var(--header-height);
 
-    /* Colors */
-    --color-text-primary: 0 0% 9%;
-    --color-text-secondary: 0 0% 32%;
-    --color-text-tertiary: 0 0% 66%;
-    --color-background: 0 0% 100%;
-    --color-background-hover: 0 0% 98%;
-    --color-layer: 0 0% 96%;
-    --color-layer-hover: 0 0% 93%;
-    --color-border-primary: 0 0% 88%;
-    --color-border-secondary: 0 0% 90%;
+    --foreground: 0 0% 9%;
+    --muted-foreground: 0 0% 36%;
+    --background: 0 0% 100%;
+    --layer: 0 0% 96%;
+    --accent: 0 0% 91%;
 
-    --color-white: 0 0% 100%;
     --color-blue: 219 99% 53%;
     --color-red: 357 76% 49%;
     --color-green: 138 67% 30%;
@@ -61,7 +51,7 @@
     @mixin dark-mode-styles;
 
     ::picker(select) {
-      @apply border-border-primary bg-background;
+      @apply border-accent bg-background;
     }
   }
 
@@ -70,7 +60,7 @@
       @mixin dark-mode-styles;
 
       ::picker(select) {
-        @apply border-border-primary bg-background;
+        @apply border-accent bg-background;
       }
     }
   }
@@ -85,7 +75,7 @@
   }
 
   * {
-    @apply border-border-primary;
+    @apply border-accent;
   }
 
   h1,
@@ -94,11 +84,11 @@
   h4,
   h5,
   h6 {
-    @apply text-text-primary;
+    @apply text-foreground;
   }
 
   body {
-    @apply text-text-primary bg-background;
+    @apply text-foreground bg-background;
   }
 
   body:has([data-body-scroll-lock="on"]:popover-open) {
@@ -122,47 +112,35 @@
     @apply p-2 border rounded-md shadow-none lg:mt-2 bg-background;
   }
 
-  .theme-bg-color-with-hover {
-    @apply bg-background hover:bg-[hsl(var(--color-layer-hover))];
+  .button-primary {
+    @apply !text-white bg-[hsl(var(--button-primary))] hover:bg-[hsl(var(--button-primary-hover))] active:bg-[hsl(var(--button-primary-active))];
   }
 
-  .theme-layer-color-with-hover {
-    @apply bg-layer hover:bg-[hsl(var(--color-layer-hover))];
+  .button-secondary {
+    @apply bg-layer hover:bg-accent !text-foreground;
+  }
+
+  .button-danger {
+    @apply !text-white bg-[hsl(var(--button-danger))] hover:bg-[hsl(var(--button-danger-hover))] active:bg-[hsl(var(--button-danger-active))];
+  }
+
+  .button-ghost {
+    @apply !text-foreground hover:bg-accent;
+  }
+
+  .focus-highlight {
+    @apply outline-none ring ring-blue dark:ring-white;
   }
 
   .theme-layer-secondary-color {
     @apply bg-background;
   }
 
-  .theme-button-primary {
-    @apply text-white bg-[hsl(var(--button-primary))] hover:bg-[hsl(var(--button-primary-hover))] active:bg-[hsl(var(--button-primary-active))];
-  }
-
-  .theme-button-secondary {
-    @apply theme-layer-color-with-hover text-text-primary;
-  }
-
-  .theme-button-danger {
-    @apply text-white bg-[hsl(var(--button-danger))] hover:bg-[hsl(var(--button-danger-hover))] active:bg-[hsl(var(--button-danger-active))];
-  }
-
-  .theme-button-ghost {
-    @apply text-text-primary hover:bg-[hsl(var(--color-layer-hover))];
-  }
-
-  .theme-focus {
-    @apply focus-visible:theme-focus-without-prefix;
-  }
-
-  .theme-focus-without-prefix {
-    @apply outline-none ring ring-blue dark:ring-white;
-  }
-
   .theme-field {
-    @apply border-none appearance-none theme-focus theme-layer-color-with-hover text-text-primary disabled:pointer-events-none disabled:opacity-50 [&::placeholder]:text-text-tertiary;
+    @apply border-none appearance-none focus-visible:focus-highlight bg-layer hover:bg-accent text-foreground disabled:pointer-events-none disabled:opacity-50 [&::placeholder]:text-muted-foreground autofill:text-foreground autofill:bg-layer;
   }
 
   .theme-field-inverse {
-    @apply border-none appearance-none theme-focus theme-bg-color-with-hover text-text-primary disabled:pointer-events-none disabled:opacity-50 [&::placeholder]:text-text-tertiary;
+    @apply border-none bg-background appearance-none focus-visible:focus-highlight hover:bg-accent text-foreground disabled:pointer-events-none disabled:opacity-50 [&::placeholder]:text-muted-foreground autofill:text-foreground autofill:bg-background;
   }
 }

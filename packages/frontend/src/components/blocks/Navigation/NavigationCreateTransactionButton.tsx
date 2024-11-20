@@ -43,9 +43,9 @@ export const NavigationCreateTransactionButton: FC<
         type="button"
         aria-label="Add Transaction"
         className={clsx(
-          'items-center justify-center theme-focus ',
+          'items-center justify-center',
           'max-lg:flex max-lg:flex-col max-lg:h-full max-lg:!w-full max-lg:rounded-none',
-          'lg:theme-button-primary lg:py-3 lg:h-12 lg:px-[18px] lg:text-base',
+          'lg:button-primary lg:py-3 lg:h-12 lg:px-[18px] lg:text-base',
         )}
         popoverTarget={id}
         data-testid="add-transaction"

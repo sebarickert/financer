@@ -26,8 +26,8 @@ export const AccountDeletePopperItem: FC<AccountDeletePopperItemProps> = ({
         accentColor="unstyled"
         popoverTarget={popperId}
         className={clsx(
-          'py-2.5 h-11 px-[18px] text-base text-text-primary',
-          'w-full !justify-start theme-bg-color-with-hover',
+          'py-2.5 h-11 px-[18px] text-base text-foreground',
+          'w-full !justify-start hover:bg-accent',
           '!pl-2',
         )}
       >
