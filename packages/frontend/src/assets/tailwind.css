@@ -137,10 +137,10 @@
   }
 
   .theme-field {
-    @apply border-none appearance-none focus-visible:focus-highlight bg-layer hover:bg-accent text-foreground disabled:pointer-events-none disabled:opacity-50 [&::placeholder]:text-muted-foreground;
+    @apply border-none appearance-none focus-visible:focus-highlight bg-layer hover:bg-accent text-foreground disabled:pointer-events-none disabled:opacity-50 [&::placeholder]:text-muted-foreground autofill:text-foreground autofill:bg-layer;
   }
 
   .theme-field-inverse {
-    @apply border-none bg-background appearance-none focus-visible:focus-highlight hover:bg-accent text-foreground disabled:pointer-events-none disabled:opacity-50 [&::placeholder]:text-muted-foreground;
+    @apply border-none bg-background appearance-none focus-visible:focus-highlight hover:bg-accent text-foreground disabled:pointer-events-none disabled:opacity-50 [&::placeholder]:text-muted-foreground autofill:text-foreground autofill:bg-background;
   }
 }
