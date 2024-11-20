@@ -98,7 +98,7 @@ export const TransactionCategories = ({
           data-testid="add-category"
           type="button"
           className={clsx(
-            'theme-focus w-full text-left',
+            'focus-visible:focus-highlight w-full text-left',
             'grid grid-cols-[1fr,auto] gap-2 items-center',
             'text-foreground hover:text-muted-foreground',
             {

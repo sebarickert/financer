@@ -30,7 +30,7 @@ export const NavigationItem: FC<NavigationItemProps> = ({
         haptic="heavy"
         href={url}
         className={clsx(
-          'items-center justify-center theme-focus',
+          'items-center justify-center',
           'max-lg:flex max-lg:flex-col max-lg:h-14',
           'lg:inline-flex lg:gap-2 lg:py-5 lg:px-4 lg:font-medium',
           'lg:hover:text-foreground lg:transition-colors',

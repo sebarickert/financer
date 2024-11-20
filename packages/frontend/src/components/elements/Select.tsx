@@ -45,7 +45,7 @@ const OptionElement: FC<OptionElementProps> = ({
     value={value}
     key={value}
     className={clsx(
-      'theme-focus focus-visible:z-10 focus-visible:relative text-foreground rounded-md hover:cursor-pointer hover:bg-accent',
+      'focus-visible:focus-highlight focus-visible:z-10 focus-visible:relative text-foreground rounded-md hover:cursor-pointer hover:bg-accent',
       'disabled:pointer-events-none disabled:opacity-50',
       'before:hidden p-3 flex gap-2',
     )}
@@ -105,7 +105,7 @@ export const Select = ({
           'theme-field',
           'block w-full rounded-md',
           'py-3 h-12',
-          'supports-[selector(::picker(select))]:[&:has(button:focus-visible)]:theme-focus-without-prefix',
+          'supports-[selector(::picker(select))]:[&:has(button:focus-visible)]:focus-highlight',
           {
             'supports-[selector(::picker(select))]:p-0': isBleedingEdge,
           },

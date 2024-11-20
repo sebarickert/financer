@@ -129,23 +129,19 @@
     @apply text-foreground hover:bg-accent;
   }
 
+  .focus-highlight {
+    @apply outline-none ring ring-blue dark:ring-white;
+  }
+
   .theme-layer-secondary-color {
     @apply bg-background;
   }
 
-  .theme-focus {
-    @apply focus-visible:theme-focus-without-prefix;
-  }
-
-  .theme-focus-without-prefix {
-    @apply outline-none ring ring-blue dark:ring-white;
-  }
-
   .theme-field {
-    @apply border-none appearance-none theme-focus bg-layer hover:bg-accent text-foreground disabled:pointer-events-none disabled:opacity-50 [&::placeholder]:text-muted-foreground;
+    @apply border-none appearance-none focus-visible:focus-highlight bg-layer hover:bg-accent text-foreground disabled:pointer-events-none disabled:opacity-50 [&::placeholder]:text-muted-foreground;
   }
 
   .theme-field-inverse {
-    @apply border-none appearance-none theme-focus hover:bg-accent text-foreground disabled:pointer-events-none disabled:opacity-50 [&::placeholder]:text-muted-foreground;
+    @apply border-none bg-background appearance-none focus-visible:focus-highlight hover:bg-accent text-foreground disabled:pointer-events-none disabled:opacity-50 [&::placeholder]:text-muted-foreground;
   }
 }

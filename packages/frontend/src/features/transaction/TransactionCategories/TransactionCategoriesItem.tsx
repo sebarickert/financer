@@ -51,7 +51,7 @@ export const TransactionCategoriesItem: FC<TransactionCategoriesItemProps> = ({
         className={clsx(
           'grid grid-cols-[auto,1fr,auto] gap-2',
           'p-3 h-12 rounded-md bg-layer hover:bg-accent text-foreground',
-          'hover:cursor-pointer theme-focus',
+          'hover:cursor-pointer focus-visible:focus-highlight',
           'mr-[56px]',
           '[&::-webkit-details-marker]:hidden',
         )}
