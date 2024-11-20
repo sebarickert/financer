@@ -44,7 +44,7 @@ export const AccountList: FC<AccountListProps> = ({
             testId="account-row"
             key={id}
             className={clsx(
-              'theme-layer-color-with-hover',
+              'bg-layer hover:bg-accent',
               'p-4',
               'flex items-center gap-4',
             )}
