@@ -17,6 +17,7 @@ module.exports = {
       transparent: "transparent",
       current: "currentColor",
       white: "hsl(var(--color-white))",
+      black: "hsl(var(--color-black))",
       blue: "hsl(var(--color-blue))",
       green: "hsl(var(--color-green))",
       red: "hsl(var(--color-red))",
