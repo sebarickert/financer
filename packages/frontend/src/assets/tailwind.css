@@ -15,13 +15,12 @@
 
 @layer base {
   @define-mixin dark-mode-styles {
-    --color-text-primary: 0 0% 96%;
-    --color-text-secondary: 0 0% 78%;
-    --color-text-tertiary: 0 0% 44%;
-    --color-background: 0 0% 3%;
-    --color-background-hover: 0 0% 5%;
-    --color-layer: 0 0% 11%;
-    --color-layer-hover: 0 0% 14%;
+    --foreground: 0 0% 96%;
+    --muted-foreground: 0 0% 65%;
+    --background: 0 0% 3%;
+    --background-hover: 0 0% 5%;
+    --layer: 0 0% 11%;
+    --layer-hover: 0 0% 14%;
     --color-border-primary: 0 0% 17%;
     --color-border-secondary: 0 0% 15%;
   }
@@ -33,14 +32,12 @@
     --gutter-top: var(--content-header-height);
     --gutter-bottom: var(--header-height);
 
-    /* Colors */
-    --color-text-primary: 0 0% 9%;
-    --color-text-secondary: 0 0% 32%;
-    --color-text-tertiary: 0 0% 66%;
-    --color-background: 0 0% 100%;
-    --color-background-hover: 0 0% 98%;
-    --color-layer: 0 0% 96%;
-    --color-layer-hover: 0 0% 93%;
+    --foreground: 0 0% 9%;
+    --muted-foreground: 0 0% 36%;
+    --background: 0 0% 100%;
+    --background-hover: 0 0% 98%;
+    --layer: 0 0% 96%;
+    --layer-hover: 0 0% 93%;
     --color-border-primary: 0 0% 88%;
     --color-border-secondary: 0 0% 90%;
 
@@ -94,11 +91,11 @@
   h4,
   h5,
   h6 {
-    @apply text-text-primary;
+    @apply text-foreground;
   }
 
   body {
-    @apply text-text-primary bg-background;
+    @apply text-foreground bg-background;
   }
 
   body:has([data-body-scroll-lock="on"]:popover-open) {
@@ -123,11 +120,11 @@
   }
 
   .theme-bg-color-with-hover {
-    @apply bg-background hover:bg-[hsl(var(--color-layer-hover))];
+    @apply bg-background hover:bg-[hsl(var(--layer-hover))];
   }
 
   .theme-layer-color-with-hover {
-    @apply bg-layer hover:bg-[hsl(var(--color-layer-hover))];
+    @apply bg-layer hover:bg-[hsl(var(--layer-hover))];
   }
 
   .theme-layer-secondary-color {
@@ -139,7 +136,7 @@
   }
 
   .theme-button-secondary {
-    @apply theme-layer-color-with-hover text-text-primary;
+    @apply theme-layer-color-with-hover text-foreground;
   }
 
   .theme-button-danger {
@@ -147,7 +144,7 @@
   }
 
   .theme-button-ghost {
-    @apply text-text-primary hover:bg-[hsl(var(--color-layer-hover))];
+    @apply text-foreground hover:bg-[hsl(var(--layer-hover))];
   }
 
   .theme-focus {
@@ -159,10 +156,10 @@
   }
 
   .theme-field {
-    @apply border-none appearance-none theme-focus theme-layer-color-with-hover text-text-primary disabled:pointer-events-none disabled:opacity-50 [&::placeholder]:text-text-tertiary;
+    @apply border-none appearance-none theme-focus theme-layer-color-with-hover text-foreground disabled:pointer-events-none disabled:opacity-50 [&::placeholder]:text-muted-foreground;
   }
 
   .theme-field-inverse {
-    @apply border-none appearance-none theme-focus theme-bg-color-with-hover text-text-primary disabled:pointer-events-none disabled:opacity-50 [&::placeholder]:text-text-tertiary;
+    @apply border-none appearance-none theme-focus theme-bg-color-with-hover text-foreground disabled:pointer-events-none disabled:opacity-50 [&::placeholder]:text-muted-foreground;
   }
 }

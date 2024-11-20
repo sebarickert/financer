@@ -21,23 +21,23 @@ Tooltip.positioners.topLeft = function () {
 };
 
 const lightModeColors = {
-  xTicksColor: `#525252`, // text-text-secondary
+  xTicksColor: `#525252`, // text-muted-foreground
   yGridColor: `#f4f4f4`, // theme-layer-color
-  yTicksColor: `#525252`, // text-text-secondary
+  yTicksColor: `#525252`, // text-muted-foreground
   tooltipBackgroundColor: `#f4f4f4`, // theme-layer-color
-  tooltipTitleColor: '#161616', // text-text-primary
-  tooltipBodyColor: '#161616', // text-text-primary
-  tooltipFooterColor: '#161616', // text-text-primary
+  tooltipTitleColor: '#161616', // text-foreground
+  tooltipBodyColor: '#161616', // text-foreground
+  tooltipFooterColor: '#161616', // text-foreground
 };
 
 const darkModeColors = {
-  xTicksColor: `#c6c6c6`, // text-text-secondary
+  xTicksColor: `#c6c6c6`, // text-muted-foreground
   yGridColor: `#1b1b1b`, // theme-layer-color
-  yTicksColor: `#c6c6c6`, // text-text-secondary
+  yTicksColor: `#c6c6c6`, // text-muted-foreground
   tooltipBackgroundColor: `#1b1b1b`, // theme-layer-color
-  tooltipTitleColor: '#f4f4f4', // text-text-primary
-  tooltipBodyColor: '#f4f4f4', // text-text-primary
-  tooltipFooterColor: '#f4f4f4', // text-text-primary
+  tooltipTitleColor: '#f4f4f4', // text-foreground
+  tooltipBodyColor: '#f4f4f4', // text-foreground
+  tooltipFooterColor: '#f4f4f4', // text-foreground
 };
 
 export const updateChartColors = (

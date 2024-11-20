@@ -70,7 +70,7 @@ export const Toast = ({
       <div className="grow">
         <p className="pr-10 font-medium">{message}</p>
         {additionalInformation && (
-          <div className="max-w-lg mt-2 text-text-secondary">
+          <div className="max-w-lg mt-2 text-muted-foreground">
             {additionalInformation && additionalInformationContent}
           </div>
         )}

@@ -52,7 +52,7 @@ export const RadialStackedChart: FC<RadialStackedChartProps> = ({
                       <tspan
                         x={viewBox.cx}
                         y={(viewBox.cy || 0) - 16}
-                        className="text-lg font-bold fill-text-primary"
+                        className="text-lg font-bold fill-foreground"
                         data-testid="radial-stacked-chart-label-main"
                       >
                         {label.main}
@@ -60,7 +60,7 @@ export const RadialStackedChart: FC<RadialStackedChartProps> = ({
                       <tspan
                         x={viewBox.cx}
                         y={(viewBox.cy || 0) + 4}
-                        className="text-base fill-text-secondary"
+                        className="text-base fill-muted-foreground"
                         data-testid="radial-stacked-chart-label-sub"
                       >
                         {label.sub}

@@ -26,7 +26,6 @@ export const Navigation: FC = () => {
         className={clsx(
           'max-lg:grid max-lg:grid-cols-5',
           'lg:flex lg:gap-4 lg:items-center lg:justify-end',
-          'group/navigation',
         )}
       >
         <NavigationItem {...navigationItems.home} />

@@ -20,7 +20,7 @@ const PrivacyPolicy = (): JSX.Element => {
         <span className="block text-base font-semibold tracking-wide text-blue uppercase">
           Privacy policy
         </span>
-        <span className="block mt-2 text-3xl font-extrabold leading-8 tracking-tight text-text-primary sm:text-4xl">
+        <span className="block mt-2 text-3xl font-extrabold leading-8 tracking-tight text-foreground sm:text-4xl">
           Financer
         </span>
       </h1>

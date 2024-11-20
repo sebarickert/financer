@@ -38,7 +38,7 @@ export const EmptyContentBlock: FC<EmptyContentBlockProps> = ({
       <Heading disableResponsiveSizing noMargin className="mb-2">
         {title}
       </Heading>
-      <p className="max-w-lg mx-auto [&:has(+*)]:mb-6 text-text-secondary">
+      <p className="max-w-lg mx-auto [&:has(+*)]:mb-6 text-muted-foreground">
         {children}
       </p>
       {action}

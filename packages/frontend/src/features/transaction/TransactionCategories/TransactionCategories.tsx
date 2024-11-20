@@ -100,7 +100,7 @@ export const TransactionCategories = ({
           className={clsx(
             'theme-focus w-full text-left',
             'grid grid-cols-[1fr,auto] gap-2 items-center',
-            'text-text-primary hover:text-text-secondary',
+            'text-foreground hover:text-muted-foreground',
             {
               'border-t  mt-4 pt-2': !!fields.length,
             },

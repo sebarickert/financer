@@ -260,7 +260,7 @@ export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
   return (
     <div className="grid gap-4">
       <div className="overflow-hidden rounded-md bg-layer">
-        <div className="flex justify-end p-6">
+        <div className="flex justify-end p-4 lg:p-6">
           <select
             className={clsx(
               'theme-field-inverse',

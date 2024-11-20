@@ -23,7 +23,7 @@ export const ContextualNavigation: FC<ContextualNavigationProps> = ({
         'vt-name-[contextual-navigation]',
         'z-[100] focus-within:z-[101]',
         'fixed left-0 right-0 top-[--gutter-top]',
-        'bg-layer/75 backdrop-blur-sm',
+        'bg-layer/85 backdrop-blur',
         'shadow-[inset_0_-1px] shadow-border-primary',
       )}
     >
@@ -41,9 +41,11 @@ export const ContextualNavigation: FC<ContextualNavigationProps> = ({
                 href={item.url}
                 className={clsx(
                   'inline-block text-sm py-3 relative',
+                  'text-muted-foreground hover:text-foreground aria-[current=page]:text-foreground transition-colors',
                   'after:hidden aria-[current=page]:after:block',
                   'after:absolute after:h-0.5 after:-bottom-[3px] after:left-0a after:right-0 after:w-full after:bg-blue',
                 )}
+                hasHoverEffect={false}
               >
                 {item.label}
               </Link>
