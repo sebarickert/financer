@@ -113,24 +113,24 @@
     @apply p-2 border rounded-md shadow-none lg:mt-2 bg-background;
   }
 
-  .theme-layer-secondary-color {
-    @apply bg-background;
-  }
-
-  .theme-button-primary {
+  .button-primary {
     @apply text-white bg-[hsl(var(--button-primary))] hover:bg-[hsl(var(--button-primary-hover))] active:bg-[hsl(var(--button-primary-active))];
   }
 
-  .theme-button-secondary {
+  .button-secondary {
     @apply bg-layer hover:bg-accent text-foreground;
   }
 
-  .theme-button-danger {
+  .button-danger {
     @apply text-white bg-[hsl(var(--button-danger))] hover:bg-[hsl(var(--button-danger-hover))] active:bg-[hsl(var(--button-danger-active))];
   }
 
-  .theme-button-ghost {
+  .button-ghost {
     @apply text-foreground hover:bg-accent;
+  }
+
+  .theme-layer-secondary-color {
+    @apply bg-background;
   }
 
   .theme-focus {

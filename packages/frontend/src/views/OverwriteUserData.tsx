@@ -135,7 +135,7 @@ export const OverwriteUserData = ({
         <label
           htmlFor="selectFiles"
           className={clsx(
-            'focus-within:theme-focus-without-prefix theme-button-secondary',
+            'focus-within:theme-focus-without-prefix button-secondary',
             'px-6 py-3 rounded-md',
             'inline-flex items-center justify-center w-full cursor-pointer sm:w-auto',
           )}

@@ -65,10 +65,10 @@ export const Button = ({
     [buttonStyles.base]: applyBaseStyles,
     [buttonStyles.default]: size === 'default' && accentColor !== 'unstyled',
     [buttonStyles.icon]: size === 'icon' && accentColor !== 'unstyled',
-    ['theme-button-primary']: accentColor === 'primary',
-    ['theme-button-secondary']: accentColor === 'secondary',
-    ['theme-button-danger']: accentColor === 'danger',
-    ['theme-button-ghost']: accentColor === 'ghost',
+    ['button-primary']: accentColor === 'primary',
+    ['button-secondary']: accentColor === 'secondary',
+    ['button-danger']: accentColor === 'danger',
+    ['button-ghost']: accentColor === 'ghost',
     ['']: accentColor === 'unstyled',
   });
 
