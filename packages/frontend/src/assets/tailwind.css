@@ -21,8 +21,7 @@
     --background-hover: 0 0% 5%;
     --layer: 0 0% 11%;
     --layer-hover: 0 0% 14%;
-    --color-border-primary: 0 0% 17%;
-    --color-border-secondary: 0 0% 15%;
+    --accent: 0 0% 16%;
   }
 
   :root {
@@ -38,8 +37,7 @@
     --background-hover: 0 0% 98%;
     --layer: 0 0% 96%;
     --layer-hover: 0 0% 93%;
-    --color-border-primary: 0 0% 88%;
-    --color-border-secondary: 0 0% 90%;
+    --accent: 0 0% 90%;
 
     --color-white: 0 0% 100%;
     --color-blue: 219 99% 53%;
@@ -58,7 +56,7 @@
     @mixin dark-mode-styles;
 
     ::picker(select) {
-      @apply border-border-primary bg-background;
+      @apply border-accent bg-background;
     }
   }
 
@@ -67,7 +65,7 @@
       @mixin dark-mode-styles;
 
       ::picker(select) {
-        @apply border-border-primary bg-background;
+        @apply border-accent bg-background;
       }
     }
   }
@@ -82,7 +80,7 @@
   }
 
   * {
-    @apply border-border-primary;
+    @apply border-accent;
   }
 
   h1,

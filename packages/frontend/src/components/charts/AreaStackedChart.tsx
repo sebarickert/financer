@@ -53,7 +53,7 @@ export const AreaStackedChart: FC<AreaStackedChartProps> = ({
         className,
         'aspect-video text-xs text-muted-foreground',
         '[&_.recharts-cartesian-axis-tick_text]:fill-muted-foreground',
-        '[&_.recharts-cartesian-grid_line[stroke="#ccc"]]:stroke-border-secondary',
+        '[&_.recharts-cartesian-grid_line[stroke="#ccc"]]:stroke-accent',
         '[&_.recharts-dot[stroke="#fff"]]:stroke-transparent',
       )}
     >

@@ -29,7 +29,7 @@ export const Checkbox = ({
         value={value}
         className={clsx(
           'w-6 h-6 peer rounded-sm',
-          'theme-layer-color-with-hover border border-border-primary text-blue',
+          'theme-layer-color-with-hover border border-accent text-blue',
         )}
         {...register(name)}
       />

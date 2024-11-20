@@ -24,7 +24,7 @@ export const ContextualNavigation: FC<ContextualNavigationProps> = ({
         'z-[100] focus-within:z-[101]',
         'fixed left-0 right-0 top-[--gutter-top]',
         'bg-layer/85 backdrop-blur',
-        'shadow-[inset_0_-1px] shadow-border-primary',
+        'shadow-[inset_0_-1px] shadow-accent',
       )}
     >
       <Container className={clsx('')}>

@@ -29,7 +29,7 @@ export const EmptyContentBlock: FC<EmptyContentBlockProps> = ({
         <div
           className={clsx(
             'mb-6 relative rounded-full h-20 w-20',
-            'inline-flex items-center justify-center shrink-0 bg-border-primary',
+            'inline-flex items-center justify-center shrink-0 bg-accent',
           )}
         >
           <Icon name={icon} className="!w-10 !h-10" />

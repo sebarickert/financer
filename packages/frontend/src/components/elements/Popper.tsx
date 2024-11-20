@@ -45,7 +45,7 @@ export const Popper: FC<PopperProps> = ({ className, items, children }) => {
       <div
         className={clsx(
           'bg-background ',
-          'min-w-48 shadow',
+          'min-w-48',
           'p-2 rounded-md lg:mt-2',
           'border',
           'fixed lg:absolute inset-[unset]',

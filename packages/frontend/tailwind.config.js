@@ -23,9 +23,8 @@ module.exports = {
       background: "hsl(var(--background))",
       layer: "hsl(var(--layer))",
       foreground: "hsl(var(--foreground))",
+      accent: "hsl(var(--accent))",
       ["muted-foreground"]: "hsl(var(--muted-foreground))",
-      ["border-primary"]: "hsl(var(--color-border-primary))",
-      ["border-secondary"]: "hsl(var(--color-border-secondary))",
     },
     extend: {
       fontFamily: {

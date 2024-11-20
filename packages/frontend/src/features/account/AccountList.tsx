@@ -53,7 +53,7 @@ export const AccountList: FC<AccountListProps> = ({
           >
             <div
               className={clsx(
-                'bg-border-primary rounded-xl h-11 w-11',
+                'bg-accent rounded-xl h-11 w-11',
                 'inline-flex items-center justify-center shrink-0',
               )}
             >

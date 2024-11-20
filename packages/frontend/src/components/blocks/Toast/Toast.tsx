@@ -40,7 +40,7 @@ export const Toast = ({
 
   const toastStyles = clsx('ring-2', {
     ['ring-red']: type === ToastMessageTypes.ERROR,
-    ['ring-border-primary']: type === ToastMessageTypes.GENERAL,
+    ['ring-accent']: type === ToastMessageTypes.GENERAL,
     ['ring-green']: type === ToastMessageTypes.SUCCESS,
   });
 
