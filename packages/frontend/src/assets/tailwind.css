@@ -115,19 +115,19 @@
   }
 
   .button-primary {
-    @apply text-white bg-[hsl(var(--button-primary))] hover:bg-[hsl(var(--button-primary-hover))] active:bg-[hsl(var(--button-primary-active))];
+    @apply !text-white bg-[hsl(var(--button-primary))] hover:bg-[hsl(var(--button-primary-hover))] active:bg-[hsl(var(--button-primary-active))];
   }
 
   .button-secondary {
-    @apply bg-layer hover:bg-accent text-foreground;
+    @apply bg-layer hover:bg-accent !text-foreground;
   }
 
   .button-danger {
-    @apply text-white bg-[hsl(var(--button-danger))] hover:bg-[hsl(var(--button-danger-hover))] active:bg-[hsl(var(--button-danger-active))];
+    @apply !text-white bg-[hsl(var(--button-danger))] hover:bg-[hsl(var(--button-danger-hover))] active:bg-[hsl(var(--button-danger-active))];
   }
 
   .button-ghost {
-    @apply text-foreground hover:bg-accent;
+    @apply !text-foreground hover:bg-accent;
   }
 
   .focus-highlight {
