@@ -51,7 +51,7 @@ export const AccountUpdateMarketValuePopperItem: FC<
         popoverTarget={popperId}
         className={clsx(
           'py-2.5 h-11 px-[18px] text-base text-foreground',
-          'w-full !justify-start theme-bg-color-with-hover',
+          'w-full !justify-start hover:bg-accent',
           '!pl-2',
         )}
       >

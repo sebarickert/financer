@@ -19,7 +19,7 @@ export const Checkbox = ({
   return (
     <label
       className={clsx(
-        'flex items-center p-4 gap-4 rounded-md theme-bg-color-with-hover hover:cursor-pointer text-foreground',
+        'flex items-center p-4 gap-4 rounded-md hover:bg-accent hover:cursor-pointer text-foreground',
       )}
       htmlFor={id}
     >
@@ -29,7 +29,7 @@ export const Checkbox = ({
         value={value}
         className={clsx(
           'w-6 h-6 peer rounded-sm',
-          'theme-layer-color-with-hover border border-accent text-blue',
+          'theme-layer-color-with-hover border text-blue',
         )}
         {...register(name)}
       />

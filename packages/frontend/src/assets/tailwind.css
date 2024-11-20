@@ -113,10 +113,6 @@
     @apply p-2 border rounded-md shadow-none lg:mt-2 bg-background;
   }
 
-  .theme-bg-color-with-hover {
-    @apply bg-background hover:bg-accent;
-  }
-
   .theme-layer-color-with-hover {
     @apply bg-layer hover:bg-accent;
   }
@@ -154,6 +150,6 @@
   }
 
   .theme-field-inverse {
-    @apply border-none appearance-none theme-focus theme-bg-color-with-hover text-foreground disabled:pointer-events-none disabled:opacity-50 [&::placeholder]:text-muted-foreground;
+    @apply border-none appearance-none theme-focus hover:bg-accent text-foreground disabled:pointer-events-none disabled:opacity-50 [&::placeholder]:text-muted-foreground;
   }
 }

@@ -45,7 +45,7 @@ const OptionElement: FC<OptionElementProps> = ({
     value={value}
     key={value}
     className={clsx(
-      'theme-bg-color-with-hover theme-focus focus-visible:z-10 focus-visible:relative text-foreground rounded-md hover:cursor-pointer',
+      'theme-focus focus-visible:z-10 focus-visible:relative text-foreground rounded-md hover:cursor-pointer hover:bg-accent',
       'disabled:pointer-events-none disabled:opacity-50',
       'before:hidden p-3 flex gap-2',
     )}

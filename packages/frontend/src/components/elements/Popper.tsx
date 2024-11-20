@@ -24,7 +24,7 @@ export const Popper: FC<PopperProps> = ({ className, items, children }) => {
   const popperId = useId();
 
   const popperItemClasses = clsx(
-    'flex items-center gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0 theme-bg-color-with-hover',
+    'flex items-center gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0 hover:bg-accent',
     'rounded-md text-center whitespace-nowrap',
     'py-2.5 h-11 pl-2 pr-[18px] text-base',
   );

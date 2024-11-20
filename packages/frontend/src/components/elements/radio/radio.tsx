@@ -18,7 +18,7 @@ export const Radio = ({
   return (
     <label
       className={clsx(
-        'flex items-center p-4 gap-4 rounded-md theme-bg-color-with-hover hover:cursor-pointer text-foreground',
+        'flex items-center p-4 gap-4 rounded-md hover:bg-accent hover:cursor-pointer text-foreground',
         { [className]: true },
       )}
       htmlFor={`${name}-${value}`}
