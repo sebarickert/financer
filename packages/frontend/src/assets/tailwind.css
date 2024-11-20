@@ -18,9 +18,7 @@
     --foreground: 0 0% 96%;
     --muted-foreground: 0 0% 65%;
     --background: 0 0% 3%;
-    --background-hover: 0 0% 5%;
     --layer: 0 0% 11%;
-    --layer-hover: 0 0% 14%;
     --accent: 0 0% 16%;
   }
 
@@ -34,10 +32,8 @@
     --foreground: 0 0% 9%;
     --muted-foreground: 0 0% 36%;
     --background: 0 0% 100%;
-    --background-hover: 0 0% 98%;
     --layer: 0 0% 96%;
-    --layer-hover: 0 0% 93%;
-    --accent: 0 0% 90%;
+    --accent: 0 0% 91%;
 
     --color-white: 0 0% 100%;
     --color-blue: 219 99% 53%;
@@ -118,11 +114,11 @@
   }
 
   .theme-bg-color-with-hover {
-    @apply bg-background hover:bg-[hsl(var(--layer-hover))];
+    @apply bg-background hover:bg-accent;
   }
 
   .theme-layer-color-with-hover {
-    @apply bg-layer hover:bg-[hsl(var(--layer-hover))];
+    @apply bg-layer hover:bg-accent;
   }
 
   .theme-layer-secondary-color {
@@ -142,7 +138,7 @@
   }
 
   .theme-button-ghost {
-    @apply text-foreground hover:bg-[hsl(var(--layer-hover))];
+    @apply text-foreground hover:bg-accent;
   }
 
   .theme-focus {
