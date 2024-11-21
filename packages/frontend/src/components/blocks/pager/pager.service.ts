@@ -1,7 +1,6 @@
 import { headers } from 'next/headers';
 import { redirect, RedirectType } from 'next/navigation';
 
-import { PaginationDto } from '$api/generated/financerApi';
 import { CustomHeader } from 'src/types/custom-headers';
 
 export type PagerOptions = {
@@ -20,15 +19,6 @@ export type PagerOptions = {
 // TODO rebuild pager concept and control flow to work better with new SSR approach
 
 export class PagerService {
-  public static getCurrentPage(): number {
-    const headersList = headers();
-    const searchParams = new URLSearchParams(
-      headersList.get(CustomHeader.QUERY) ?? '',
-    );
-
-    return Number(searchParams.get('page') ?? 1);
-  }
-
   public static getCurrentDateFilter(): Date {
     const headersList = headers();
     const searchParams = new URLSearchParams(
@@ -42,20 +32,6 @@ export class PagerService {
     }
 
     return new Date(date);
-  }
-
-  private static gotoPage(page: number): void {
-    const headersList = headers();
-    const searchParams = new URLSearchParams(
-      headersList.get(CustomHeader.QUERY) ?? '',
-    );
-    const pathname = headersList.get(CustomHeader.PATHNAME) ?? '';
-
-    searchParams.set('page', page.toString());
-
-    const url = `${pathname}?${searchParams.toString()}`;
-
-    redirect(url, RedirectType.push);
   }
 
   private static gotoYearMonthPage(date: Date): void {
@@ -78,37 +54,6 @@ export class PagerService {
     const url = `${pathname}?${searchParams.toString()}`;
 
     redirect(url, RedirectType.push);
-  }
-
-  public static getPagerOptions(pageData: PaginationDto): PagerOptions {
-    const currentPage = this.getCurrentPage();
-
-    return {
-      nextPage: {
-        load: async () => {
-          'use server';
-          const activePage = PagerService.getCurrentPage();
-
-          // if (pageData.hasNextPage) {
-          PagerService.gotoPage(activePage + 1);
-          // }
-        },
-        isAvailable: pageData.hasNextPage,
-      },
-      previousPage: {
-        load: async () => {
-          'use server';
-          const activePage = PagerService.getCurrentPage();
-
-          // if (pageData.hasPreviousPage) {
-          PagerService.gotoPage(activePage - 1);
-          // }
-        },
-        isAvailable: pageData.hasPreviousPage,
-      },
-      pageCount: pageData.totalPageCount,
-      currentPage,
-    };
   }
 
   public static getYearMonthPageOptions(
