@@ -1,55 +1,24 @@
 import clsx from 'clsx';
-import { endOfToday, isToday, isYesterday } from 'date-fns';
 import { FC } from 'react';
 
 import { TransactionListItem } from './TransactionListItem';
 
-import { TransactionType } from '$api/generated/financerApi';
+import { TransactionListItemDto } from '$api/generated/financerApi';
 import { EmptyContentBlock } from '$blocks/EmptyContentBlock';
 import { List } from '$blocks/List';
-import {
-  TransactionListOptions,
-  TransactionService,
-} from '$ssr/api/transaction.service';
-import { DateFormat, formatDate } from '$utils/formatDate';
 
 type TransactionListProps = {
+  items: TransactionListItemDto[];
   className?: string;
-  filterOptions?: TransactionListOptions;
-  type?: TransactionType | null;
+  label?: string;
 };
-
-const getGroupLabel = (groupLabel: string) => {
-  if (groupLabel === 'Upcoming') {
-    return groupLabel;
-  }
-
-  if (isToday(new Date(groupLabel))) {
-    return 'Today';
-  }
-
-  if (isYesterday(new Date(groupLabel))) {
-    return 'Yesterday';
-  }
-
-  return formatDate(new Date(groupLabel), DateFormat.monthWithDateShort);
-};
-
-const endOfTodayDate = endOfToday();
 
 export const TransactionList: FC<TransactionListProps> = async ({
-  filterOptions = {
-    year: new Date().getFullYear(),
-    month: new Date().getMonth() + 1,
-  },
+  label,
+  items,
   className,
-  type = null,
 }) => {
-  const transactions = await TransactionService.getAllByType(type as null, {
-    ...filterOptions,
-  });
-
-  if (transactions.length === 0) {
+  if (items.length === 0) {
     return (
       <EmptyContentBlock title="No Transactions Added" icon="PlusIcon">
         Your transactions will appear here. <br />
@@ -58,29 +27,11 @@ export const TransactionList: FC<TransactionListProps> = async ({
     );
   }
 
-  const groupedTransactions = Object.entries(
-    Object.groupBy(transactions, ({ date }) => {
-      if (new Date(date) > endOfTodayDate) {
-        return 'Upcoming';
-      }
-
-      return new Date(date).toISOString().split('T')[0];
-    }),
-  ).map(([date, data]) => ({ date, data: data || [] }));
-
   return (
-    <section className={clsx('grid gap-8', className)}>
-      {groupedTransactions.map((group) => (
-        <List
-          key={group.date}
-          label={getGroupLabel(group.date)}
-          testId="transaction-list"
-        >
-          {group.data.map((row) => (
-            <TransactionListItem {...row} key={row.id} />
-          ))}
-        </List>
+    <List label={label} testId="transaction-list" className={clsx(className)}>
+      {items.map((row) => (
+        <TransactionListItem {...row} key={row.id} />
       ))}
-    </section>
+    </List>
   );
 };

@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { FC } from 'react';
 
-import { TransactionList } from '../TransactionList/TransactionList';
+import { GroupedTransactionList } from '../TransactionList/GroupedTransactionList';
 
 import { TransactionListWithMonthlySummary } from './TransactionListWithMonthlySummary';
 
@@ -82,7 +82,7 @@ export const TransactionListWithMonthlyPager: FC<
             <TransactionListWithMonthlySummary filterOptions={filterOptions} />
           )}
         </div>
-        <TransactionList filterOptions={filterOptions} type={type} />
+        <GroupedTransactionList items={transactions} />
       </div>
     </section>
   );
