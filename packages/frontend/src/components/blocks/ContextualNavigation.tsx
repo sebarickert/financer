@@ -43,7 +43,7 @@ export const ContextualNavigation: FC<ContextualNavigationProps> = ({
                   'inline-block text-sm py-3 relative',
                   'text-muted-foreground hover:text-foreground aria-[current=page]:text-foreground transition-colors',
                   'after:hidden aria-[current=page]:after:block',
-                  'after:absolute after:h-0.5 after:-bottom-[3px] after:left-0a after:right-0 after:w-full after:bg-blue',
+                  'after:absolute after:h-0.5 after:-bottom-[3px] after:-left-2 after:-right-2 after:bg-blue',
                 )}
                 hasHoverEffect={false}
               >

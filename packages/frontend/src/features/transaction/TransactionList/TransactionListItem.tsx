@@ -1,5 +1,4 @@
 import clsx from 'clsx';
-import { endOfToday } from 'date-fns';
 import { FC } from 'react';
 
 import {
@@ -14,9 +13,7 @@ import { transactionTypeThemeMapping } from '$constants/transaction/transactionT
 import { Icon } from '$elements/Icon';
 import { Link } from '$elements/Link';
 import { formatCurrency } from '$utils/formatCurrency';
-import { DateFormat, formatDate } from '$utils/formatDate';
-
-const endOfTodayDate = endOfToday();
+import { formatDate } from '$utils/formatDate';
 
 export const TransactionListItem: FC<
   | TransactionListItemDto
@@ -27,8 +24,6 @@ export const TransactionListItem: FC<
   const isIncome = type === TransactionType.Income;
   const isExpense = type === TransactionType.Expense;
   const { color: transactionTypeColor } = transactionTypeThemeMapping[type];
-
-  const isUpcoming = new Date(date) > endOfTodayDate;
 
   const url = `/statistics/${type.toLowerCase()}s/${id}`;
   const formattedCategories = categories.map(({ name }) => name).join(', ');
@@ -60,10 +55,7 @@ export const TransactionListItem: FC<
           <span data-testid="transaction-description">{description}</span>
           <div className="text-sm text-muted-foreground">
             <time dateTime={date} data-testid="transaction-date">
-              {formatDate(
-                new Date(date),
-                isUpcoming ? undefined : DateFormat.timeOnly,
-              )}
+              {formatDate(new Date(date))}
             </time>
             {formattedCategories && (
               <>
