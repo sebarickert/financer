@@ -10,7 +10,6 @@ import {
 } from '$api/generated/financerApi';
 import { ValidationException } from '$exceptions/validation.exception';
 import { isValidationErrorResponse } from '$utils/apiHelper';
-import { GenericPaginationDto } from 'src/types/pagination.dto';
 
 export class AccountService extends BaseApi {
   // TODO temporary solution to clear cache while migration
@@ -20,7 +19,7 @@ export class AccountService extends BaseApi {
 
   public static async getAll(
     params: AccountsFindAllByUserApiArg = {},
-  ): Promise<GenericPaginationDto<AccountDto>> {
+  ): Promise<AccountDto[]> {
     const { data, error } = await this.client.GET('/api/accounts', {
       params: {
         query: params,
@@ -34,7 +33,7 @@ export class AccountService extends BaseApi {
       throw new Error('Failed to fetch accounts', error);
     }
 
-    return data as GenericPaginationDto<AccountDto>;
+    return data as AccountDto[];
   }
 
   public static async getById(id: string): Promise<AccountDto | null> {
@@ -63,8 +62,7 @@ export class AccountService extends BaseApi {
     });
 
     return (
-      accounts?.data.reduce((acc, { balance }) => acc + (balance ?? 0), 0) ??
-      NaN
+      accounts?.reduce((acc, { balance }) => acc + (balance ?? 0), 0) ?? NaN
     );
   }
 

@@ -42,6 +42,7 @@ export const AreaStackedChart: FC<AreaStackedChartProps> = ({
 
   return (
     <div
+      data-slot="chart"
       className={clsx(
         className,
         'aspect-video text-xs text-muted-foreground',
@@ -53,7 +54,11 @@ export const AreaStackedChart: FC<AreaStackedChartProps> = ({
       )}
     >
       <ResponsiveContainer>
-        <AreaChart data={parsedChartData} margin={{}} accessibilityLayer>
+        <AreaChart
+          data={parsedChartData}
+          margin={{ bottom: 0, left: 0, right: 0, top: 0 }}
+          accessibilityLayer
+        >
           <defs>
             {chartData[0].data.map(({ key, color }) => (
               <linearGradient

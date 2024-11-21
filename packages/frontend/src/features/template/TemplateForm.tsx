@@ -90,7 +90,7 @@ export const TemplateForm: FC<TemplateFormProps> = ({
 
   const accountOptions = useMemo(() => {
     if (!accounts) return [];
-    return accounts.data.map(({ id, name }) => ({
+    return accounts.map(({ id, name }) => ({
       value: id,
       label: name,
     }));

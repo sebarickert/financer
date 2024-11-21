@@ -297,18 +297,6 @@
         "operationId": "Accounts_findAllByUser",
         "parameters": [
           {
-            "name": "limit",
-            "required": false,
-            "in": "query",
-            "schema": { "type": "number" }
-          },
-          {
-            "name": "page",
-            "required": false,
-            "in": "query",
-            "schema": { "type": "number" }
-          },
-          {
             "name": "accountTypes",
             "required": false,
             "in": "query",
@@ -321,18 +309,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    { "$ref": "#/components/schemas/PaginationDto" },
-                    {
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": { "$ref": "#/components/schemas/AccountDto" }
-                        }
-                      },
-                      "required": ["data"]
-                    }
-                  ]
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/AccountDto" }
                 }
               }
             }
@@ -1833,25 +1811,6 @@
           "balance": { "type": "number" }
         },
         "required": ["name", "type", "balance"]
-      },
-      "PaginationDto": {
-        "type": "object",
-        "properties": {
-          "currentPage": { "type": "number" },
-          "totalPageCount": { "type": "number" },
-          "totalRowCount": { "type": "number" },
-          "limit": { "type": "number" },
-          "hasPreviousPage": { "type": "boolean" },
-          "hasNextPage": { "type": "boolean" }
-        },
-        "required": [
-          "currentPage",
-          "totalPageCount",
-          "totalRowCount",
-          "limit",
-          "hasPreviousPage",
-          "hasNextPage"
-        ]
       },
       "UpdateAccountDto": {
         "type": "object",

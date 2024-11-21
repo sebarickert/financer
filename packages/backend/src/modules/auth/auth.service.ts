@@ -3,7 +3,6 @@ import { User } from '@prisma/client';
 
 import { UserId } from '../../types/user-id';
 import { AccountsService } from '../accounts/accounts.service';
-import { AccountDto } from '../accounts/dto/account.dto';
 import { UsersService } from '../users/users.service';
 
 @Injectable()
@@ -16,11 +15,11 @@ export class AuthService {
   async getAuthenticationStatus(user?: User) {
     const accounts = user
       ? await this.accountsService.findAllByUser(user.id as UserId)
-      : { data: [] as AccountDto[] };
+      : [];
     return {
       authenticated: Boolean(user),
       payload: user,
-      hasAccounts: Boolean(accounts?.data?.length),
+      hasAccounts: Boolean(accounts?.length),
     };
   }
 

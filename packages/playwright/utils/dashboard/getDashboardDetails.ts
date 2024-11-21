@@ -15,13 +15,16 @@ export const getDashboardDetails = async (
   page: Page,
 ): Promise<DashboardDetails> => {
   await expect(page).toHaveURL('/', { timeout: 5000 });
-  await expect(page.getByTestId('dashboard-stats')).toBeVisible();
+  await expect(page.getByTestId('dashboard-balance-summary')).toBeVisible();
   await expect(page.getByTestId('transaction-list')).toBeVisible();
 
   const balance =
-    (await page.getByTestId('dashboard-balance').textContent()) ?? '';
+    (await page.getByTestId('dashboard-total-balance').textContent()) ?? '';
 
-  const dashboardStats = page.getByTestId('dashboard-stats');
+  const monthBalance =
+    (await page.getByTestId('dashboard-month-balance').textContent()) ?? '';
+
+  const dashboardStats = page.getByTestId('dashboard-balance-summary');
 
   const incomes =
     (await dashboardStats
@@ -37,13 +40,6 @@ export const getDashboardDetails = async (
       .evaluate((el) => el.parentElement?.nextElementSibling?.textContent)) ??
     '';
 
-  const monthBalanceSummary =
-    (await dashboardStats
-      .getByTestId('details-list-item')
-      .getByText('Balance')
-      .evaluate((el) => el.parentElement?.nextElementSibling?.textContent)) ??
-    '';
-
   const transactionListItemCount = await page
     .getByTestId('transaction-list')
     .getByTestId('transaction-list-item')
@@ -53,7 +49,7 @@ export const getDashboardDetails = async (
     balance: parseCurrency(balance),
     incomes: parseCurrency(incomes),
     expenses: parseCurrency(expenses),
-    monthBalanceSummary: parseCurrency(monthBalanceSummary),
+    monthBalanceSummary: parseCurrency(monthBalance),
     transactionListItemCount,
   };
 };

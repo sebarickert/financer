@@ -22,7 +22,6 @@ import {
 import { AccountType } from '@prisma/client';
 
 import { UserId } from '../../types/user-id';
-import { ApiPaginatedDto } from '../../utils/pagination.decorator';
 import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
 import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
 import { UserIdDecorator } from '../users/users.decorators';
@@ -51,35 +50,20 @@ export class AccountsController {
   }
 
   @Get()
-  @ApiPaginatedDto(AccountDto)
-  @ApiQuery({
-    name: 'limit',
-    required: false,
-  })
-  @ApiQuery({
-    name: 'page',
-    required: false,
-  })
+  @ApiOkResponse({ type: AccountDto, isArray: true })
   @ApiQuery({
     name: 'accountTypes',
     required: false,
   })
   async findAllByUser(
     @UserIdDecorator() userId: UserId,
-    @Query('limit') limit?: number,
-    @Query('page') page?: number,
     @Query(
       'accountTypes',
       new ParseArrayPipe({ separator: '|', optional: true }),
     )
     accountTypes?: AccountType[],
   ) {
-    return this.accountsService.findAllByUser(
-      userId,
-      accountTypes,
-      limit || undefined,
-      page || undefined,
-    );
+    return this.accountsService.findAllByUser(userId, accountTypes);
   }
 
   @Get(':id')

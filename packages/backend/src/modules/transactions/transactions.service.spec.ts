@@ -107,15 +107,9 @@ describe('TransactionsService', () => {
       .spyOn(transactionRepo, 'findMany')
       .mockResolvedValueOnce(transactionsRepoFindAllByTypeAndUserMockData.any);
     jest.spyOn(transactionRepo, 'getCount').mockResolvedValueOnce(100);
-    jest.spyOn(accountsService, 'findAllByUser').mockResolvedValueOnce({
-      data: accountsRepoFindAllMockData,
-      limit: 1,
-      currentPage: 1,
-      hasNextPage: false,
-      hasPreviousPage: false,
-      totalPageCount: 1,
-      totalRowCount: 1,
-    });
+    jest
+      .spyOn(accountsService, 'findAllByUser')
+      .mockResolvedValueOnce(accountsRepoFindAllMockData);
 
     const transactions = await service.findAllByUser(
       DUMMY_TEST_USER.id,
@@ -266,15 +260,9 @@ describe('TransactionsService', () => {
     jest
       .spyOn(transactionRepo, 'findMany')
       .mockResolvedValueOnce(transactionsRepoFindAllByTypeAndUserMockData.any);
-    jest.spyOn(accountsService, 'findAllByUser').mockResolvedValueOnce({
-      data: accountsRepoFindAllMockData,
-      limit: 1,
-      currentPage: 1,
-      hasNextPage: false,
-      hasPreviousPage: false,
-      totalPageCount: 1,
-      totalRowCount: 1,
-    });
+    jest
+      .spyOn(accountsService, 'findAllByUser')
+      .mockResolvedValueOnce(accountsRepoFindAllMockData);
 
     const summaries = await service.findMonthlySummariesByUser(
       DUMMY_TEST_USER.id,

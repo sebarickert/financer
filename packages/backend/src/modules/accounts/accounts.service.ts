@@ -8,7 +8,6 @@ import { Account, AccountType } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime/library';
 
 import { AccountRepo } from '../../database/repos/account.repo';
-import { PaginationDto } from '../../types/pagination.dto';
 import { UserId } from '../../types/user-id';
 import { sumArrayItems } from '../../utils/arrays';
 import { DateService } from '../../utils/date.service';
@@ -61,35 +60,15 @@ export class AccountsService {
   async findAllByUser(
     userId: UserId,
     accountTypes?: AccountType[],
-    limit = 20,
-    page = 1,
-  ): Promise<PaginationDto<AccountDto[]>> {
-    const skip = page * limit - limit;
-
+  ): Promise<AccountDto[]> {
     const type = accountTypes ? { type: { in: accountTypes } } : {};
     const whereQuery = { userId, isDeleted: false, ...type };
 
     const accounts = await this.accountRepo.findMany({
       where: whereQuery,
-      take: limit,
-      skip,
     });
 
-    const totalCount = await this.accountRepo.getCount({
-      where: whereQuery,
-    });
-
-    const lastPage = page ? Math.ceil(totalCount / limit) : 1;
-
-    return new PaginationDto({
-      data: AccountDto.createFromPlain(accounts),
-      currentPage: page ?? 1,
-      limit: page ? limit : totalCount,
-      totalPageCount: lastPage,
-      hasNextPage: (page ?? 1) < lastPage,
-      hasPreviousPage: (page ?? 1) > 1,
-      totalRowCount: totalCount,
-    });
+    return AccountDto.createFromPlain(accounts);
   }
 
   async findAllByUserForExport(userId: UserId): Promise<AccountDto[]> {

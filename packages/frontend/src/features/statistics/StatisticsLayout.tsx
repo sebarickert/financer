@@ -15,7 +15,7 @@ export const StatisticsLayout: FC<StatisticsLayoutProps> = async ({
   title,
   children,
 }) => {
-  const { data: accounts } = await AccountService.getAll();
+  const accounts = await AccountService.getAll();
 
   return (
     <Layout
