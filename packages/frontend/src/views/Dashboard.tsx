@@ -18,7 +18,7 @@ export const Dashboard: FC = async () => {
       </LoaderSuspense>
       <DashboardStats />
       <section className="grid gap-4">
-        <TransactionList filterOptions={{ limit: 8 }} hasStickyHeader />
+        <TransactionList filterOptions={{ limit: 8 }} />
         {!!transactions.length && (
           <Button
             href="/statistics"

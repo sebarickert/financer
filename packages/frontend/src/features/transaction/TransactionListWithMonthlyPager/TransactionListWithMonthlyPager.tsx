@@ -82,11 +82,7 @@ export const TransactionListWithMonthlyPager: FC<
             <TransactionListWithMonthlySummary filterOptions={filterOptions} />
           )}
         </div>
-        <TransactionList
-          filterOptions={filterOptions}
-          type={type}
-          hasStickyHeader
-        />
+        <TransactionList filterOptions={filterOptions} type={type} />
       </div>
     </section>
   );

@@ -64,7 +64,7 @@ export const Popper: FC<PopperProps> = ({ className, items, children }) => {
         <Heading disableResponsiveSizing variant="h2" className="sr-only">
           Options
         </Heading>
-        <List hasItemRoundness>
+        <List>
           {items?.map(({ icon, label, href }, index) => {
             return (
               <Link

@@ -17,7 +17,6 @@ type TransactionListProps = {
   className?: string;
   filterOptions?: TransactionListOptions;
   type?: TransactionType | null;
-  hasStickyHeader?: boolean;
 };
 
 const getGroupLabel = (groupLabel: string) => {
@@ -45,7 +44,6 @@ export const TransactionList: FC<TransactionListProps> = async ({
   },
   className,
   type = null,
-  hasStickyHeader,
 }) => {
   const transactions = await TransactionService.getAllByType(type as null, {
     ...filterOptions,
@@ -76,12 +74,10 @@ export const TransactionList: FC<TransactionListProps> = async ({
         <List
           key={group.date}
           label={getGroupLabel(group.date)}
-          hasStickyHeader={hasStickyHeader}
           testId="transaction-list"
-          hasItemRoundness
         >
           {group.data.map((row) => (
-            <TransactionListItem key={row.id} {...row} />
+            <TransactionListItem {...row} key={row.id} />
           ))}
         </List>
       ))}

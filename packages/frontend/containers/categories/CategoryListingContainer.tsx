@@ -110,14 +110,7 @@ export const CategoryListingContainer: FC = async () => {
           </EmptyContentBlock>
         )}
         {categoryRows.map(({ label: parentLabel, items, link: parentLink }) => (
-          <List
-            key={parentLabel}
-            label={parentLabel}
-            testId="category-list"
-            columns={2}
-            hasItemRoundness
-            hasStickyHeader
-          >
+          <List key={parentLabel} label={parentLabel} testId="category-list">
             {parentLink && (
               <ProminentLink link={parentLink} icon={'TagIcon'}>
                 {parentLabel}
