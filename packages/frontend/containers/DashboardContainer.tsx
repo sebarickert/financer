@@ -7,7 +7,7 @@ import { AccountService } from '$ssr/api/account.service';
 import { Dashboard } from '$views/Dashboard';
 
 export const DashboardContainer: FC = async () => {
-  const { data: accounts } = await AccountService.getAll();
+  const accounts = await AccountService.getAll();
 
   return (
     <Layout title="Dashboard">

@@ -21,8 +21,7 @@ financerApi.enhanceEndpoints({
       providesTags: (res) => [
         ApiTag.ACCOUNT,
         { type: ApiTag.ACCOUNT, id: 'LIST' },
-        { type: ApiTag.ACCOUNT, id: `PAGE-${res?.currentPage}` },
-        ...(res?.data.map(({ id }) => ({ type: ApiTag.ACCOUNT, id })) ?? []),
+        ...(res?.map(({ id }) => ({ type: ApiTag.ACCOUNT, id })) ?? []),
       ],
     },
     accountsFindOneById: {

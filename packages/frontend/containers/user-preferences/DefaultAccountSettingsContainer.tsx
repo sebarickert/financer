@@ -8,7 +8,7 @@ import { UserPreferenceService } from '$ssr/api/user-preference.service';
 import { UserDefaultAccountSettingsForm } from '$views/user-preferences/UserDefaultAccountSettingsForm';
 
 export const DefaultAccountSettingsContainer: FC = async () => {
-  const { data: accounts } = await AccountService.getAll();
+  const accounts = await AccountService.getAll();
 
   const defaultIncomeAccount =
     await UserPreferenceService.getDefaultIncomeAccount();

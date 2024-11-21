@@ -15,7 +15,7 @@ const accountCategories = {
 } as const;
 
 export const AccountListingContainer: FC = async () => {
-  const { data: accounts } = await AccountService.getAll();
+  const accounts = await AccountService.getAll();
 
   const groupedAccounts = Object.groupBy(accounts, ({ type }) => {
     if (type === AccountType.Loan || type === AccountType.Credit) {

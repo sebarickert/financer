@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { FC, useId } from 'react';
+import { FC } from 'react';
 
 import { Drawer } from '$blocks/Drawer';
 import { Button } from '$elements/Button/Button';
@@ -14,7 +14,7 @@ type NavigationCreateTransactionButtonProps = {
 export const NavigationCreateTransactionButton: FC<
   NavigationCreateTransactionButtonProps
 > = async ({ className }) => {
-  const id = useId();
+  const id = 'navigationCreateTransactionButton';
 
   const defaultExpenseAccountId =
     await UserPreferenceService.getDefaultExpenseAccount();

@@ -68,7 +68,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
 
   const accountOptions = useMemo(() => {
     if (!accounts) return [];
-    return accounts.data.map(({ id, name, type, balance }) => ({
+    return accounts.map(({ id, name, type, balance }) => ({
       value: id,
       label: name,
       icon: accountTypeIconMapping[type],
