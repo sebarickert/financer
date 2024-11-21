@@ -8,7 +8,7 @@ import { Layout } from '$layouts/Layout';
 export const UserPreferencesContainer: FC = () => {
   return (
     <Layout title="User Preferences" backLink={settingsPaths.default}>
-      <List hasItemRoundness>
+      <List>
         <ProminentLink
           link={`${settingsPaths.userPreferences}/dashboard-settings`}
           icon={'HomeIcon'}

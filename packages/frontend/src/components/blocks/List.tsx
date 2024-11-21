@@ -8,9 +8,6 @@ type ListProps = {
   children: React.ReactNode | React.ReactNode[];
   className?: string;
   testId?: string;
-  columns?: 1 | 2 | 3;
-  hasItemRoundness?: boolean;
-  hasStickyHeader?: boolean;
 };
 
 export const List: FC<ListProps> = ({
@@ -18,49 +15,23 @@ export const List: FC<ListProps> = ({
   children,
   className,
   testId: rawTestId,
-  columns = 1,
-  hasItemRoundness,
-  hasStickyHeader,
 }) => {
   const testId = rawTestId ?? 'list';
 
-  const stickyHeaderStyles = clsx(
-    'sticky top-[--gutter-top] z-10',
-    'bg-background/75 backdrop-blur-sm',
-    'px-4 -mx-4',
-    'max-lg:py-1 max-lg:-mt-1',
-    'lg:pt-4 lg:pb-2 lg:-mt-4',
-  );
-
   return (
     <section className={clsx(className)} data-testid={testId}>
-      {label && (
-        <div
-          className={clsx({
-            [stickyHeaderStyles]: hasStickyHeader,
-          })}
-          data-slot={hasStickyHeader ? 'list-sticky-header' : undefined}
-        >
-          <Heading testId={`${testId}-heading`} noMargin={!!hasStickyHeader}>
-            {label}
-          </Heading>
-        </div>
-      )}
-      <ul
-        className={clsx('grid gap-1 isolate', {
-          'lg:grid-cols-2': columns === 2,
-          'lg:grid-cols-3': columns === 3,
-          'max-lg:pt-3 lg:pt-2': hasStickyHeader,
-        })}
-      >
+      {label && <Heading testId={`${testId}-heading`}>{label}</Heading>}
+      <ul data-slot="list" className={clsx('grid divide-y', {})}>
         {Children.map(children, (child) => {
           return (
             child && (
               <li
+                data-slot="list-item"
                 data-testid={`${testId}-item`}
                 className={clsx(
-                  'focus-within:focus-highlight focus-within:z-10 focus-within:relative overflow-hidden',
-                  { 'rounded-md': hasItemRoundness },
+                  '[&>*:focus-visible]:z-10 [&>*:focus-visible]:relative',
+                  '[&:first-child>:first-child]:rounded-t-md',
+                  '[&:last-child>:first-child]:rounded-b-md',
                 )}
               >
                 {child}

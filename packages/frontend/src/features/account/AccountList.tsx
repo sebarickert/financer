@@ -29,14 +29,7 @@ export const AccountList: FC<AccountListProps> = ({
   if (accounts.length === 0) return null;
 
   return (
-    <List
-      label={label}
-      className={clsx(className)}
-      testId="account-list"
-      columns={2}
-      hasItemRoundness
-      hasStickyHeader
-    >
+    <List label={label} className={clsx(className)} testId="account-list">
       {accounts.map(({ id, balance, name, type }) => {
         return (
           <Link

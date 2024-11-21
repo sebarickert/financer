@@ -29,7 +29,7 @@ const CustomTooltip = ({
 }: TooltipProps<ValueType, NameType>) => {
   if (active && payload && payload.length) {
     return (
-      <div className="grid gap-1 p-2 text-xs border rounded-lg bg-layer">
+      <div className="grid gap-1 p-2 text-xs border rounded-md bg-layer">
         <p className="font-medium text-foreground">
           {payload[0].payload.dataKey}
         </p>
