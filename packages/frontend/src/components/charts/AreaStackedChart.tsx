@@ -48,10 +48,12 @@ export const AreaStackedChart: FC<AreaStackedChartProps> = ({
         '[&_.recharts-cartesian-axis-tick_text]:fill-muted-foreground',
         '[&_.recharts-cartesian-grid_line[stroke="#ccc"]]:stroke-accent',
         '[&_.recharts-dot[stroke="#fff"]]:stroke-transparent',
+        '[&_.recharts-curve[stroke="#ccc"]]:stroke-accent',
+        '[&_.recharts-sector[stroke="#fff"]]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none',
       )}
     >
       <ResponsiveContainer>
-        <AreaChart data={parsedChartData} margin={{}}>
+        <AreaChart data={parsedChartData} margin={{}} accessibilityLayer>
           <defs>
             {chartData[0].data.map(({ key, color }) => (
               <linearGradient
@@ -89,7 +91,7 @@ export const AreaStackedChart: FC<AreaStackedChartProps> = ({
               stroke={color}
             />
           ))}
-          <Tooltip cursor={false} content={customTooltip} />
+          <Tooltip content={customTooltip} active />
         </AreaChart>
       </ResponsiveContainer>
     </div>
