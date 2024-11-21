@@ -59,16 +59,6 @@ describe('AccountsService', () => {
 
     expect(accountRepo.findMany).toHaveBeenCalledTimes(1);
     expect(accountRepo.findMany).toHaveBeenCalledWith({
-      skip: 0,
-      take: 20,
-      where: {
-        isDeleted: false,
-        userId: '61460d7354ea082ad0256749',
-      },
-    });
-
-    expect(accountRepo.getCount).toHaveBeenCalledTimes(1);
-    expect(accountRepo.getCount).toHaveBeenCalledWith({
       where: {
         isDeleted: false,
         userId: '61460d7354ea082ad0256749',

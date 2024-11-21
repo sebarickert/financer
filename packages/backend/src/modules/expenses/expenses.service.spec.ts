@@ -124,15 +124,9 @@ describe('ExpensesService', () => {
         transactionsRepoFindAllByTypeAndUserMockData.expense,
       );
     jest.spyOn(transactionRepo, 'getCount').mockResolvedValueOnce(100);
-    jest.spyOn(accountsService, 'findAllByUser').mockResolvedValueOnce({
-      data: accountsRepoFindAllMockData,
-      limit: 1,
-      currentPage: 1,
-      hasNextPage: false,
-      hasPreviousPage: false,
-      totalPageCount: 1,
-      totalRowCount: 1,
-    });
+    jest
+      .spyOn(accountsService, 'findAllByUser')
+      .mockResolvedValueOnce(accountsRepoFindAllMockData);
 
     const expenses = await service.findAllByUser(
       DUMMY_TEST_USER.id,

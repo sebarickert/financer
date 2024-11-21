@@ -502,7 +502,7 @@ export class TransactionsService {
       accountTypes,
     );
 
-    return accounts.data.map(({ id }) => id);
+    return accounts.map(({ id }) => id);
   }
 
   private async filterTransactionsByAccountType(
