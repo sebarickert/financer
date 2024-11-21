@@ -37,6 +37,7 @@ export const UserTransactionListChunkSizeForm: FC<
       action={action}
       submitLabel="Save"
       formFooterBackLink={settingsPaths.userPreferences}
+      testId="dashboard-chunk-size-settings-form"
     >
       <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
         <Input

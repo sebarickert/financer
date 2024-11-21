@@ -8,6 +8,7 @@ type DashboardDetails = {
   incomes: Decimal;
   expenses: Decimal;
   monthBalanceSummary: Decimal;
+  transactionListItemCount: number;
 };
 
 export const getDashboardDetails = async (
@@ -15,6 +16,7 @@ export const getDashboardDetails = async (
 ): Promise<DashboardDetails> => {
   await expect(page).toHaveURL('/', { timeout: 5000 });
   await expect(page.getByTestId('dashboard-stats')).toBeVisible();
+  await expect(page.getByTestId('transaction-list')).toBeVisible();
 
   const balance =
     (await page.getByTestId('dashboard-balance').textContent()) ?? '';
@@ -42,10 +44,16 @@ export const getDashboardDetails = async (
       .evaluate((el) => el.parentElement?.nextElementSibling?.textContent)) ??
     '';
 
+  const transactionListItemCount = await page
+    .getByTestId('transaction-list')
+    .getByTestId('transaction-list-item')
+    .count();
+
   return {
     balance: parseCurrency(balance),
     incomes: parseCurrency(incomes),
     expenses: parseCurrency(expenses),
     monthBalanceSummary: parseCurrency(monthBalanceSummary),
+    transactionListItemCount,
   };
 };
