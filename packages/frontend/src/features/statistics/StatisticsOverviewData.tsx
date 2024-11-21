@@ -64,7 +64,7 @@ const yaxisTickFormatter = (value: number) => {
   return formatCurrencyAbbreviation(value);
 };
 
-const filterOptions = {
+export const filterOptions = {
   THREE_MONTHS: {
     label: 'Last 3 Months',
     value: 3,

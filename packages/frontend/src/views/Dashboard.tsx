@@ -1,10 +1,8 @@
 import { FC } from 'react';
 
-import { BalanceGraph } from '$blocks/balance-graph/balance-graph';
-import { DashboardStats } from '$blocks/dashboard-stats/dashboard.stats';
 import { Button } from '$elements/Button/Button';
 import { Icon } from '$elements/Icon';
-import { LoaderSuspense } from '$elements/loader/loader-suspense';
+import { DashboardBalanceHistory } from '$features/dashboard/DashboardBalanceHistory';
 import { TransactionList } from '$features/transaction/TransactionList/TransactionList';
 import { TransactionService } from '$ssr/api/transaction.service';
 import { UserPreferenceService } from '$ssr/api/user-preference.service';
@@ -19,10 +17,7 @@ export const Dashboard: FC = async () => {
 
   return (
     <section className="grid gap-8">
-      <LoaderSuspense>
-        <BalanceGraph />
-      </LoaderSuspense>
-      <DashboardStats />
+      <DashboardBalanceHistory />
       <section className="grid gap-4">
         <TransactionList label="Recent Activity" items={transactions} />
         {!!transactions.length && (
