@@ -1,5 +1,8 @@
 import { FC } from 'react';
 
+import { EmptyContentBlock } from '$blocks/EmptyContentBlock';
+import { List } from '$blocks/List';
+import { ProminentLink } from '$blocks/ProminentLink';
 import { Button } from '$elements/Button/Button';
 import { Icon } from '$elements/Icon';
 import { DashboardBalanceHistoryChart } from '$features/dashboard/DashboardBalanceHistoryChart';
@@ -64,21 +67,42 @@ export const Dashboard: FC = async () => {
 
   return (
     <section className="grid gap-6">
-      <DashboardBalanceSummary
-        className="self-baseline"
-        {...{
-          totalBalance,
-          totalExpenses,
-          totalIncomes,
-          previousMonthBalance,
-        }}
-      />
-      {balanceHistory.length >= 3 && (
-        <DashboardBalanceHistoryChart
-          data={balanceHistory}
-          className="self-baseline"
-        />
-      )}
+      <div className="grid lg:grid-cols-[1fr,2fr] gap-6">
+        <div className="grid gap-6 self-baseline">
+          <DashboardBalanceSummary
+            {...{
+              totalBalance,
+              totalExpenses,
+              totalIncomes,
+              previousMonthBalance,
+            }}
+          />
+          <List>
+            <ProminentLink link="/settings/categories" icon="TagIcon">
+              Categories
+            </ProminentLink>
+            <ProminentLink link="/settings/templates" icon="BoltIcon">
+              Templates
+            </ProminentLink>
+          </List>
+        </div>
+        {balanceHistory.length < 3 && (
+          <EmptyContentBlock
+            title="Not Enough Data Yet"
+            icon="RectangleGroupIcon"
+          >
+            There isn&apos;t enough data to generate a meaningful balance
+            history. Add more transactions to track your financial trends over
+            time.
+          </EmptyContentBlock>
+        )}
+        {balanceHistory.length >= 3 && (
+          <DashboardBalanceHistoryChart
+            data={balanceHistory}
+            className='lg:h-[375px] [&_[data-slot="chart"]]:lg:h-[279px] [&_[data-slot="chart"]]:lg:aspect-auto'
+          />
+        )}
+      </div>
       <div className="grid gap-4">
         <TransactionList label="Recent Activity" items={transactions} />
         {!!transactions.length && (

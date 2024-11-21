@@ -29,7 +29,7 @@ const getBalanceDifference = (
 
   const balanceDifference = totalBalance - previousMonthBalance;
   const percentageDifference = (balanceDifference / previousMonthBalance) * 100;
-  const formattedPercentageDifference = `${percentageDifference > 0 ? '+' : ''}${percentageDifference.toFixed(2)}%`;
+  const formattedPercentageDifference = `${percentageDifference > 0 ? '+' : ''}${Number.isInteger(percentageDifference) ? percentageDifference : percentageDifference.toFixed(2)}%`;
 
   return {
     balanceDifference,

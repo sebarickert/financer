@@ -42,6 +42,7 @@ export const AreaStackedChart: FC<AreaStackedChartProps> = ({
 
   return (
     <div
+      data-slot="chart"
       className={clsx(
         className,
         'aspect-video text-xs text-muted-foreground',

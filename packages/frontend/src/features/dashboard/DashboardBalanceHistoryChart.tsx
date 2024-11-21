@@ -154,7 +154,7 @@ export const DashboardBalanceHistoryChart: FC<
 
   return (
     <div className={clsx(className, 'bg-layer rounded-md overflow-hidden')}>
-      <div className="flex justify-end p-4 lg:p-6">
+      <div className="grid justify-end gap-2 p-4 lg:p-6">
         <select
           className={clsx(
             'theme-field-inverse',
