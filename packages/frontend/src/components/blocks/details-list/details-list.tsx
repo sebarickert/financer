@@ -3,8 +3,6 @@ import { FC } from 'react';
 
 import { DetailsItem, DetailsListItem } from './details-list.item';
 
-import { Icon } from '$elements/Icon';
-
 interface DetailsListProps {
   className?: string;
   items: DetailsItem[];
@@ -22,12 +20,7 @@ export const DetailsList: FC<DetailsListProps> = ({
 
   return (
     <div className={clsx('grid gap-3 ', className)}>
-      {heading && (
-        <h2 className="inline-flex items-center gap-2 font-medium">
-          <Icon name="InformationCircleIcon" />
-          {heading}
-        </h2>
-      )}
+      {heading && <h2 className="font-medium">{heading}</h2>}
       <dl className={clsx('grid gap-4')} data-testid={testId}>
         {items.map((item) => (
           <DetailsListItem
