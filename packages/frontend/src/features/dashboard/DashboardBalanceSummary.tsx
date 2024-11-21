@@ -65,16 +65,26 @@ export const DashboardBalanceSummary: FC<DashboardBalanceSummaryProps> = ({
   ];
 
   return (
-    <div className={clsx(className, 'grid gap-6 p-6 rounded-md bg-layer')}>
+    <div
+      className={clsx(className, 'grid gap-6 p-6 rounded-md bg-layer')}
+      data-testid="dashboard-balance-summary"
+    >
       <div>
-        <p className="text-muted-foreground">Balance</p>
-        <p className={clsx('text-4xl font-semibold break-all')}>
-          <span>{formatCurrency(totalBalance)}</span>
+        <p>
+          <span className="block text-muted-foreground">Balance</span>
+          <span
+            className="block text-4xl font-semibold break-all"
+            data-testid="dashboard-total-balance"
+          >
+            {formatCurrency(totalBalance)}
+          </span>
         </p>
         {balanceDifference && percentageDifference && (
           <p className="mt-0.5 text-sm text-muted-foreground">
-            {formatCurrency(balanceDifference, true)} ({percentageDifference})
-            from last month
+            <span data-testid="dashboard-month-balance">
+              {formatCurrency(balanceDifference, true)}
+            </span>
+            <span> ({percentageDifference}) from last month</span>
           </p>
         )}
       </div>
