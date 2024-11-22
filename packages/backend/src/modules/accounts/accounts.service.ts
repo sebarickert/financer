@@ -61,7 +61,7 @@ export class AccountsService {
     userId: UserId,
     accountTypes?: AccountType[],
   ): Promise<AccountDto[]> {
-    const type = accountTypes ? { type: { in: accountTypes } } : {};
+    const type = accountTypes?.length > 0 ? { type: { in: accountTypes } } : {};
     const whereQuery = { userId, isDeleted: false, ...type };
 
     const accounts = await this.accountRepo.findMany({

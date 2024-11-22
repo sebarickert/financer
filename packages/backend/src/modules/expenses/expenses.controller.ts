@@ -7,7 +7,6 @@ import {
   Patch,
   Delete,
   Query,
-  ParseArrayPipe,
   HttpCode,
   HttpStatus,
 } from '@nestjs/common';
@@ -22,7 +21,9 @@ import {
 import { AccountType } from '@prisma/client';
 
 import { UserId } from '../../types/user-id';
+import { ValidateArrayPipe } from '../../utils/validate-array.pipe';
 import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
+import { ValidateEnumPipe } from '../../utils/validate-enum.pipe';
 import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
 import { UserIdDecorator } from '../users/users.decorators';
 
@@ -68,7 +69,8 @@ export class ExpensesController {
     @Query('limit') limit: number,
     @Query(
       'accountTypes',
-      new ParseArrayPipe({ separator: '|', optional: true }),
+      new ValidateArrayPipe('|', true),
+      new ValidateEnumPipe(AccountType),
     )
     accountTypes?: AccountType[],
     @Query('accountId', ValidateEntityId) accountId?: string,
