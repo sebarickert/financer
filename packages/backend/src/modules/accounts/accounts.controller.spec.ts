@@ -1,5 +1,6 @@
 import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
+import { AccountType } from '@prisma/client';
 import supertest from 'supertest';
 
 import { createMockServiceProvider } from '../../../test/create-mock-service-provider';
@@ -246,6 +247,43 @@ describe('AccountsController', () => {
         })
         .then(() => {
           expect(service.create).not.toHaveBeenCalled();
+        });
+    });
+  });
+
+  describe('/GET get accounts', () => {
+    it('/GET get accounts with valid accountTypes', async () => {
+      jest
+        .spyOn(service, 'findAllByUser')
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .mockImplementation(() => Promise.resolve({} as any));
+
+      return supertest(app.getHttpServer())
+        .get('/api/accounts')
+        .query({ accountTypes: [AccountType.SAVINGS] })
+        .expect(200)
+        .then(() => {
+          expect(service.findAllByUser).toHaveBeenCalled();
+        });
+    });
+
+    it('/GET get accounts with invalid accountTypes', async () => {
+      jest
+        .spyOn(service, 'findAllByUser')
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .mockImplementation(() => Promise.resolve({} as any));
+
+      return supertest(app.getHttpServer())
+        .get('/api/accounts')
+        .query({ accountTypes: ['notValid'] })
+        .expect(400)
+        .expect({
+          statusCode: 400,
+          message: 'Invalid enum value provided!',
+          error: 'Bad Request',
+        })
+        .then(() => {
+          expect(service.findAllByUser).not.toHaveBeenCalled();
         });
     });
   });
