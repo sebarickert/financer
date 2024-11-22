@@ -3,11 +3,11 @@ import { FC } from 'react';
 import { List } from '$blocks/List';
 import { ProminentLink } from '$blocks/ProminentLink';
 import { settingsPaths } from '$constants/settings-paths';
-import { Layout } from '$layouts/Layout';
+import { SettingsLayout } from '$features/settings/SettingsLayout';
 
-export const UserPreferencesContainer: FC = () => {
+export const SettingsPreferencesContainer: FC = () => {
   return (
-    <Layout title="User Preferences" backLink={settingsPaths.default}>
+    <SettingsLayout title="Preferences">
       <List>
         <ProminentLink
           link={`${settingsPaths.userPreferences}/dashboard-settings`}
@@ -40,6 +40,6 @@ export const UserPreferencesContainer: FC = () => {
           Market Update Settings
         </ProminentLink>
       </List>
-    </Layout>
+    </SettingsLayout>
   );
 };
