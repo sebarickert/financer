@@ -2,6 +2,9 @@ import clsx from 'clsx';
 import React, { ChangeEvent } from 'react';
 import { useFormContext } from 'react-hook-form';
 
+import { FieldGroup } from './FieldGroup';
+import { Icon, IconName } from './Icon';
+
 type InputProps = {
   children: React.ReactNode;
   help?: string;
@@ -16,6 +19,7 @@ type InputProps = {
   onChange?(event: ChangeEvent<HTMLInputElement>): void;
   testId?: string;
   isLabelHidden?: boolean;
+  icon?: IconName;
 };
 
 const getValueParsingOptions = (type: InputProps['type']) => {
@@ -35,6 +39,7 @@ export const Input = ({
   step,
   testId,
   isLabelHidden,
+  icon,
 }: InputProps): JSX.Element => {
   const { register } = useFormContext();
 
@@ -46,24 +51,28 @@ export const Input = ({
       >
         {children}
       </label>
-      <input
-        id={id}
-        type={type}
-        inputMode={type === 'number' ? 'decimal' : undefined}
-        min={min}
-        max={max}
-        step={step}
-        className={clsx('theme-field', 'block w-full py-3 h-12 rounded-md')}
-        required={isRequired}
-        data-testid={testId}
-        placeholder={isLabelHidden ? (children as string) : undefined}
-        {...register(id, {
-          min,
-          max,
-          required: isRequired,
-          ...getValueParsingOptions(type),
-        })}
-      />
+      <FieldGroup>
+        {icon && <Icon name={icon} />}
+        <input
+          id={id}
+          data-slot="control"
+          type={type}
+          inputMode={type === 'number' ? 'decimal' : undefined}
+          min={min}
+          max={max}
+          step={step}
+          className={clsx('theme-field', 'block w-full py-3 h-12 rounded-md')}
+          required={isRequired}
+          data-testid={testId}
+          placeholder={isLabelHidden ? (children as string) : undefined}
+          {...register(id, {
+            min,
+            max,
+            required: isRequired,
+            ...getValueParsingOptions(type),
+          })}
+        />
+      </FieldGroup>
     </div>
   );
 };

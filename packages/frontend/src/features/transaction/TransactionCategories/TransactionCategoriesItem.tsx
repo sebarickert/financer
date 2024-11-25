@@ -96,7 +96,7 @@ export const TransactionCategoriesItem: FC<TransactionCategoriesItemProps> = ({
           size="icon"
           onClick={() => setUnallocatedAmount(index)}
         >
-          <Icon name={'PlusCircleIcon'} />
+          <Icon name={'CalculatorIcon'} />
           <span className="sr-only">Remove</span>
         </Button>
         <div className="col-span-full">
