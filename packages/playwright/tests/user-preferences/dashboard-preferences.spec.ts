@@ -19,7 +19,7 @@ test.describe('Dashboard Preferences', () => {
     const initialDashboardStats = await getDashboardDetails(page);
 
     await page.getByRole('link', { name: 'Settings' }).click();
-    await page.getByRole('link', { name: 'User Preferences' }).click();
+    await page.getByRole('link', { name: 'Preferences' }).click();
     await page.getByRole('link', { name: 'Dashboard Settings' }).click();
 
     await page.locator('#PRE_ASSIGNED_CASH').check();
@@ -58,7 +58,7 @@ test.describe('Dashboard Preferences', () => {
     const initialDashboardStats = await getDashboardDetails(page);
 
     await page.getByRole('link', { name: 'Settings' }).click();
-    await page.getByRole('link', { name: 'User Preferences' }).click();
+    await page.getByRole('link', { name: 'Preferences' }).click();
     await page
       .getByRole('link', { name: 'Maximum Items Per Page Settings' })
       .click();

@@ -30,7 +30,7 @@ test.describe('Default Account Preferences', () => {
     await page.getByRole('button', { name: 'Close drawer' }).click();
 
     await page.getByRole('link', { name: 'Settings' }).click();
-    await page.getByRole('link', { name: 'User Preferences' }).click();
+    await page.getByRole('link', { name: 'Preferences' }).click();
     await page.getByRole('link', { name: 'Default Account Settings' }).click();
 
     await page

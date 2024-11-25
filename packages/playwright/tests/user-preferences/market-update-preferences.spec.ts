@@ -55,7 +55,7 @@ test.describe('Market Update Preferences', () => {
     );
 
     await page.getByRole('link', { name: 'Settings' }).click();
-    await page.getByRole('link', { name: 'User Preferences' }).click();
+    await page.getByRole('link', { name: 'Preferences' }).click();
     await page.getByRole('link', { name: 'Market Update Settings' }).click();
 
     await page
