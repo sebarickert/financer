@@ -87,6 +87,7 @@ export const CategoryListingContainer: FC = async () => {
           href={`${settingsPaths.categories}/add`}
           accentColor="secondary"
           size="icon"
+          className="max-lg:button-ghost"
         >
           <span className="sr-only">Add category</span>
           <Icon name="PlusIcon" />

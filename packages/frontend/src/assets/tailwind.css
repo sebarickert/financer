@@ -129,7 +129,7 @@
   }
 
   .button-ghost {
-    @apply !text-foreground hover:bg-accent;
+    @apply !text-foreground bg-transparent hover:bg-accent;
   }
 
   .focus-highlight {

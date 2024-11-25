@@ -39,6 +39,7 @@ export const AccountListingContainer: FC = async () => {
           size="icon"
           testId="add-account"
           transition="slideInFromRight"
+          className="max-lg:button-ghost"
         >
           <span className="sr-only">Add account</span>
           <Icon name="PlusIcon" />
