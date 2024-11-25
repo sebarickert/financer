@@ -117,7 +117,7 @@ export const TransactionFormSwitcher: FC<TransactionFormSwitcherProps> = ({
 
   return (
     <div>
-      <div className="grid grid-cols-[1fr,auto] gap-4 mb-4">
+      <div className="grid grid-cols-[1fr,auto] gap-3 mb-4">
         <TransactionTypeSwitcher
           onChange={handleTypeChange}
           defaultChecked={transactionType}

@@ -42,7 +42,7 @@ export const ThemeSwitcherItem: FC<ThemeSwitcherItemProps> = ({
       />
       <span
         className={clsx(
-          'my-1 py-4',
+          'my-1 py-2',
           'flex items-center justify-center text-sm rounded-md',
           'peer-checked:bg-background peer-checked:hover:bg-background',
           'peer-focus-visible:focus-highlight peer-hover:cursor-pointer peer-hover:bg-accent',

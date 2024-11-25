@@ -135,7 +135,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
               id="fromAccount"
               options={accountOptions}
               isRequired
-              placeholder="Select Account"
+              placeholder="Select From Account"
               isLabelHidden
             >
               From Account
@@ -146,7 +146,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
               id="toAccount"
               options={accountOptions}
               isRequired
-              placeholder="Select Account"
+              placeholder="Select To Account"
               isLabelHidden
             >
               To Account
