@@ -44,13 +44,10 @@ test.describe('Income Transactions', () => {
         .getByRole('button', { name: 'Submit' })
         .click();
 
-      await expect(page.getByTestId('transaction-details')).toBeVisible();
-      await expect(page.getByTestId('transaction-amount')).toContainText(
-        '15,50',
-      );
-      await expect(page.getByTestId('transaction-description')).toContainText(
-        transactionDescription,
-      );
+      const { amount, description } = await getTransactionDetails(page);
+
+      expect(amount).toEqual(new Decimal(15.5));
+      expect(description).toEqual(transactionDescription);
 
       await page.goto('/accounts');
       const updatedAccountBalance =

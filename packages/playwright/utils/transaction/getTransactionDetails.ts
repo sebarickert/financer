@@ -86,7 +86,11 @@ export const getTransactionDetails = async (
   );
 
   const description =
-    (await page.getByTestId('transaction-description').textContent()) ?? '';
+    (await page
+      .getByTestId('details-list-item')
+      .getByText('Description')
+      .evaluate((el) => el.parentElement?.nextElementSibling?.textContent)) ??
+    '';
 
   const date =
     (await page
