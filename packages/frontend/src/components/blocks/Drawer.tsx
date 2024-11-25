@@ -26,7 +26,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       'backdrop:ease-in-out backdrop:duration-200',
       'backdrop:bg-black/0',
       'starting:backdrop:open:bg-black/0',
-      'backdrop:open:bg-black/80',
+      'backdrop:open:bg-black/80 dark:backdrop:open:bg-black/90',
       // Drawer animation
       'ease-in-out duration-200 !transition-allow-discrete',
       'max-lg:translate-y-full lg:translate-x-full',
@@ -34,10 +34,10 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       'open:max-lg:translate-y-0 open:lg:translate-x-0',
       // Drawer
       'bg-background text-foreground fixed text-left',
-      'max-lg:bottom-0 max-lg:inset-x-0 max-lg:top-auto max-lg:w-full max-lg:rounded-t-[10px] max-lg:border',
+      'max-lg:bottom-0 max-lg:inset-x-0 max-lg:top-auto max-lg:w-full max-lg:rounded-t-[10px]',
       'lg:max-w-[600px] lg:w-full lg:left-auto lg:h-full',
-      'max-lg:border-t lg:border-l ',
       'pt-0 pb-safe-offset-12 px-6 lg:px-8',
+      'max-lg:border lg:border-l',
       'max-h-dvh',
       className,
     );
@@ -59,7 +59,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
             'sticky top-0',
             'pt-2 pb-2 mb-8',
             'px-6 lg:px-8 -mx-6 lg:-mx-8',
-            'border-b ',
+            'border-b',
           )}
         >
           <Heading noMargin disableResponsiveSizing>

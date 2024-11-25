@@ -31,8 +31,8 @@ export const TransactionTypeSwitcherItem: FC<
       <span
         className={clsx(
           'flex items-center justify-center rounded-md py-2',
-          'peer-checked:theme-layer-secondary-color peer-checked:border peer-checked:',
-          'peer-focus-visible:focus-highlight peer-hover:cursor-pointer',
+          'peer-checked:bg-background peer-checked:hover:bg-background',
+          'peer-focus-visible:focus-highlight peer-hover:cursor-pointer peer-hover:bg-accent',
         )}
       >
         <Icon name={transactionTypeThemeMapping[value].icon} />

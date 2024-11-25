@@ -1,6 +1,6 @@
 export const settingsPaths = {
   default: '/settings',
-  userPreferences: `/settings/user-preferences`,
+  userPreferences: `/settings/preferences`,
   templates: '/settings/templates',
   categories: '/settings/categories',
   dataOverwrite: '/settings/overwrite-data',

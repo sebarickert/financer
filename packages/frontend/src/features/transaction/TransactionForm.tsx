@@ -1,6 +1,5 @@
 'use client';
 
-import clsx from 'clsx';
 import { FC, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -131,35 +130,28 @@ export const TransactionForm: FC<TransactionFormProps> = ({
     >
       <section>
         <div className="grid gap-4">
-          <div
-            className={clsx({
-              'max-sm:grid max-sm:grid-cols-2 max-sm:gap-x-4 sm:contents':
-                hasFromAccountField && hasToAccountField,
-            })}
-          >
-            {hasFromAccountField && (
-              <Select
-                id="fromAccount"
-                options={accountOptions}
-                isRequired
-                placeholder="Select Account"
-                isLabelHidden
-              >
-                From Account
-              </Select>
-            )}
-            {hasToAccountField && (
-              <Select
-                id="toAccount"
-                options={accountOptions}
-                isRequired
-                placeholder="Select Account"
-                isLabelHidden
-              >
-                To Account
-              </Select>
-            )}
-          </div>
+          {hasFromAccountField && (
+            <Select
+              id="fromAccount"
+              options={accountOptions}
+              isRequired
+              placeholder="Select From Account"
+              isLabelHidden
+            >
+              From Account
+            </Select>
+          )}
+          {hasToAccountField && (
+            <Select
+              id="toAccount"
+              options={accountOptions}
+              isRequired
+              placeholder="Select To Account"
+              isLabelHidden
+            >
+              To Account
+            </Select>
+          )}
           <Input
             id="amount"
             type="number"

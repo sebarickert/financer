@@ -1,15 +1,51 @@
 import { FC } from 'react';
 
-import { Layout } from '$layouts/Layout';
+import { Role } from '$api/generated/financerApi';
+import { HardRefreshButton } from '$blocks/HardRefreshButton';
+import { List } from '$blocks/List';
+import { ProminentLink } from '$blocks/ProminentLink';
+import { ThemeSwitcher } from '$blocks/ThemeSwitcher/ThemeSwitcher';
+import { settingsPaths } from '$constants/settings-paths';
+import { Button } from '$elements/Button/Button';
+import { Heading } from '$elements/Heading';
+import { SettingsLayout } from '$features/settings/SettingsLayout';
 import { UserService } from '$ssr/api/user.service';
-import { Settings } from '$views/Settings';
 
 export const SettingsContainer: FC = async () => {
   const userInfo = await UserService.getOwnUser();
 
   return (
-    <Layout title="Settings">
-      <Settings roles={userInfo.roles} />
-    </Layout>
+    <SettingsLayout title="General">
+      <div className="grid gap-8">
+        <List>
+          <ProminentLink link={settingsPaths.templates} icon={'BoltIcon'}>
+            Templates
+          </ProminentLink>
+          <ProminentLink link={settingsPaths.categories} icon={'TagIcon'}>
+            Categories
+          </ProminentLink>
+        </List>
+        <List>
+          {userInfo.roles.includes(Role.TestUser) && (
+            <ProminentLink
+              link={settingsPaths.dataOverwrite}
+              icon={'ExclamationTriangleIcon'}
+            >
+              Overwrite User Data
+            </ProminentLink>
+          )}
+        </List>
+        <div>
+          <Heading>Appearance</Heading>
+          <ThemeSwitcher />
+        </div>
+      </div>
+      <div className="flex flex-col gap-2 mt-12 sm:flex-row">
+        <HardRefreshButton />
+        <Button accentColor="secondary" href="/auth/logout">
+          Sign out
+        </Button>
+      </div>
+    </SettingsLayout>
   );
 };

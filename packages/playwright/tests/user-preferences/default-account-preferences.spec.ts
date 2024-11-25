@@ -22,15 +22,17 @@ test.describe('Default Account Preferences', () => {
     await switchTransactionType(page, TransactionType.Transfer);
     const initialTransferFormValues = await getTransactionFormValues(page);
 
-    expect(initialExpenseFormValues.fromAccount).toEqual('Select Account');
-    expect(initialIncomeFormValues.toAccount).toEqual('Select Account');
-    expect(initialTransferFormValues.fromAccount).toEqual('Select Account');
-    expect(initialTransferFormValues.toAccount).toEqual('Select Account');
+    expect(initialExpenseFormValues.fromAccount).toEqual('Select From Account');
+    expect(initialIncomeFormValues.toAccount).toEqual('Select To Account');
+    expect(initialTransferFormValues.fromAccount).toEqual(
+      'Select From Account',
+    );
+    expect(initialTransferFormValues.toAccount).toEqual('Select To Account');
 
     await page.getByRole('button', { name: 'Close drawer' }).click();
 
     await page.getByRole('link', { name: 'Settings' }).click();
-    await page.getByRole('link', { name: 'User Preferences' }).click();
+    await page.getByRole('link', { name: 'Preferences' }).click();
     await page.getByRole('link', { name: 'Default Account Settings' }).click();
 
     await page
@@ -51,7 +53,7 @@ test.describe('Default Account Preferences', () => {
       .getByRole('button', { name: 'Save', exact: true })
       .click();
 
-    await expect(page).toHaveURL('/settings/user-preferences/', {
+    await expect(page).toHaveURL('/settings/preferences/', {
       timeout: 5000,
     });
 

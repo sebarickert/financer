@@ -42,9 +42,10 @@ export const ThemeSwitcherItem: FC<ThemeSwitcherItemProps> = ({
       />
       <span
         className={clsx(
-          'flex items-center justify-center text-sm py-2.5 rounded-md',
-          'peer-checked:font-medium peer-checked:theme-layer-secondary-color peer-checked:border peer-checked:',
-          'peer-focus-visible:focus-highlight peer-hover:cursor-pointer',
+          'my-1 py-2',
+          'flex items-center justify-center text-sm rounded-md',
+          'peer-checked:bg-background peer-checked:hover:bg-background',
+          'peer-focus-visible:focus-highlight peer-hover:cursor-pointer peer-hover:bg-accent',
         )}
       >
         <Icon name={iconMapping[children as Theme]} isSolid={isChecked} />
