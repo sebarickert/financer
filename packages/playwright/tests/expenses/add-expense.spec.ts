@@ -40,13 +40,10 @@ test.describe('Expense Transactions', () => {
         .getByRole('button', { name: 'Submit' })
         .click();
 
-      await expect(page.getByTestId('transaction-details')).toBeVisible();
-      await expect(page.getByTestId('transaction-amount')).toContainText(
-        '15,50',
-      );
-      await expect(page.getByTestId('transaction-description')).toContainText(
-        transactionDescription,
-      );
+      const { amount, description } = await getTransactionDetails(page);
+
+      expect(amount).toEqual(new Decimal(15.5).negated());
+      expect(description).toEqual(transactionDescription);
 
       await page.goto('/accounts');
       const updatedAccountBalance =
@@ -54,7 +51,9 @@ test.describe('Expense Transactions', () => {
 
       expect(updatedAccountBalance).toEqual(initialAccountBalance.minus(15.5));
 
-      await page.goto('/statistics/expenses');
+      await page.getByRole('link', { name: 'Statistics' }).click();
+      await page.getByRole('link', { name: 'Expenses' }).click();
+
       await expect(
         page
           .getByTestId('transaction-list-item')

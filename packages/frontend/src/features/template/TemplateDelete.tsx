@@ -19,7 +19,12 @@ export const TemplateDelete = ({ id }: TemplateDeleteProps) => {
 
   return (
     <>
-      <Button accentColor="secondary" size="icon" popoverTarget={popoverId}>
+      <Button
+        accentColor="secondary"
+        size="icon"
+        popoverTarget={popoverId}
+        className="max-lg:button-ghost"
+      >
         <Icon name={'TrashIcon'} />
         <span className="sr-only">Delete</span>
       </Button>

@@ -21,6 +21,7 @@ export const TemplateListingContainer: FC = async () => {
           accentColor="secondary"
           size="icon"
           testId="add-template"
+          className="max-lg:button-ghost"
         >
           <span className="sr-only">Add template</span>
           <Icon name="PlusIcon" />

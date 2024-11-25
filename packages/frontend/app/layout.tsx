@@ -36,15 +36,15 @@ export async function generateViewport(): Promise<Viewport> {
 
   switch (theme) {
     case Theme.Light:
-      themeColor = '#f4f4f4';
+      themeColor = '#f6f6f6';
       break;
     case Theme.Dark:
-      themeColor = '#1b1b1b';
+      themeColor = 'hsl(0 0% 10%)';
       break;
     default:
       themeColor = [
-        { media: '(prefers-color-scheme: light)', color: '#f4f4f4' },
-        { media: '(prefers-color-scheme: dark)', color: '#1b1b1b' },
+        { media: '(prefers-color-scheme: light)', color: '#f6f6f6' },
+        { media: '(prefers-color-scheme: dark)', color: 'hsl(0 0% 10%)' },
       ];
   }
 
@@ -93,7 +93,6 @@ const RootLayout: FC<ChildrenProp> = async ({ children }) => {
       <body
         className={clsx(
           'max-lg:pb-[--gutter-bottom]',
-          '[&:has([data-slot="contextual-navigation"])_[data-slot="list-sticky-header"]]:top-[calc(var(--gutter-top)+var(--contextual-navigation-height))]',
           '[&:has([data-slot="contextual-navigation"])_[data-slot="transaction-list-summary"]]:lg:top-[calc(var(--gutter-top)+var(--contextual-navigation-height)+theme(spacing.4))]',
         )}
       >

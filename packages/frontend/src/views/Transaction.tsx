@@ -4,13 +4,15 @@ import { FC } from 'react';
 import {
   ExpenseDetailsDto,
   IncomeDetailsDto,
+  TransactionType,
   TransferDetailsDto,
 } from '$api/generated/financerApi';
-import { BalanceDisplay } from '$blocks/BalanceDisplay';
 import { DetailsList } from '$blocks/details-list/details-list';
 import { DetailsItem } from '$blocks/details-list/details-list.item';
+import { transactionTypeIconMapping } from '$constants/transaction/transactionTypeIconMapping';
+import { transactionTypeThemeMapping } from '$constants/transaction/transactionTypeMapping';
 import { Heading } from '$elements/Heading';
-import { IconName } from '$elements/Icon';
+import { Icon, IconName } from '$elements/Icon';
 import { CategoryService } from '$ssr/api/category.service';
 import { capitalize } from '$utils/capitalize';
 import { formatCurrency } from '$utils/formatCurrency';
@@ -28,11 +30,40 @@ export const Transaction: FC<TransactionProps> = async ({
   id,
   amount,
   description,
+  isRecurring,
   ...props
 }) => {
   const fromAccountName =
     'fromAccountName' in props ? props.fromAccountName : null;
   const toAccountName = 'toAccountName' in props ? props.toAccountName : null;
+
+  const formattedAmount = formatCurrency(amount);
+
+  const typeMapping = {
+    [TransactionType.Income]: {
+      amount: `+ ${formattedAmount}`,
+      ...transactionTypeThemeMapping[TransactionType.Income],
+      color: 'bg-green',
+    },
+    [TransactionType.Expense]: {
+      amount: `- ${formattedAmount}`,
+      ...transactionTypeThemeMapping[TransactionType.Expense],
+      color: 'bg-red',
+    },
+    [TransactionType.Transfer]: {
+      amount: formattedAmount,
+      ...transactionTypeThemeMapping[TransactionType.Transfer],
+      color: 'bg-accent',
+    },
+  };
+
+  const {
+    amount: typedAmount,
+    icon,
+    color = '',
+  } = {
+    ...(type ? typeMapping[type] : {}),
+  };
 
   const transactionCategories = await CategoryService.getAllWithTree();
 
@@ -44,7 +75,7 @@ export const Transaction: FC<TransactionProps> = async ({
     ...(fromAccountName
       ? [
           {
-            icon: 'Squares2X2Icon' as IconName,
+            icon: transactionTypeIconMapping.EXPENSE,
             label: 'From Account',
             description: fromAccountName,
           },
@@ -53,7 +84,7 @@ export const Transaction: FC<TransactionProps> = async ({
     ...(toAccountName
       ? [
           {
-            icon: 'Squares2X2Icon' as IconName,
+            icon: transactionTypeIconMapping.INCOME,
             label: 'To Account',
             description: toAccountName,
           },
@@ -68,6 +99,11 @@ export const Transaction: FC<TransactionProps> = async ({
       icon: 'InformationCircleIcon',
       label: 'Type',
       description: capitalize(type.toLowerCase()),
+    },
+    {
+      icon: 'ChatBubbleBottomCenterTextIcon',
+      label: 'Description',
+      description,
     },
   ];
 
@@ -103,38 +139,47 @@ export const Transaction: FC<TransactionProps> = async ({
 
   return (
     <div
-      className={clsx(
-        'bg-layer rounded-md',
-        'pt-12 pb-10 px-6',
-        'grid gap-12',
-        'max-w-md mx-auto',
-      )}
+      className={clsx('bg-layer rounded-md relative isolate', 'p-6')}
       data-testid="transaction-details"
     >
-      <BalanceDisplay
-        type={type}
-        amount={amount}
-        testId="transaction-amount"
-        childTestId="transaction-description"
-      >
-        {`${description}`}
-      </BalanceDisplay>
-      <div className={clsx('grid gap-8', '')}>
-        <DetailsList items={transactionDetails} />
-        {categoryDetails.length > 0 && (
-          <div data-testid="transaction-categories">
-            <Heading disableResponsiveSizing>Categories</Heading>
-            <div className="divide-y [&>div:not(:first-child)]:pt-4 [&>div:not(:last-child)]:pb-4">
-              {categoryDetails.map((category) => (
-                <DetailsList
-                  testId="category-details"
-                  key={category[0].label}
-                  items={category}
-                />
-              ))}
+      {icon && (
+        <div
+          className={clsx(
+            'absolute top-0 z-10 p-3 -translate-x-1/2 -translate-y-1/2 rounded-full left-1/2 bg-accent',
+            { 'bg-accent': !color },
+            { [color]: color },
+          )}
+        >
+          <Icon name={isRecurring ? 'ArrowPathIcon' : icon} />
+        </div>
+      )}
+      <div className="grid divide-y [&>:first-child]:pb-4 [&>:first-child+div]:pt-4">
+        <p>
+          <span className="block text-muted-foreground">Amount</span>
+          <span
+            className="block text-4xl font-semibold break-all"
+            data-testid="transaction-amount"
+          >
+            {typedAmount}
+          </span>
+        </p>
+        <div className={clsx('grid gap-8', '')}>
+          <DetailsList items={transactionDetails} />
+          {categoryDetails.length > 0 && (
+            <div data-testid="transaction-categories">
+              <Heading disableResponsiveSizing>Categories</Heading>
+              <div className="divide-y [&>div:not(:first-child)]:pt-4 [&>div:not(:last-child)]:pb-4">
+                {categoryDetails.map((category) => (
+                  <DetailsList
+                    testId="category-details"
+                    key={category[0].label}
+                    items={category}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

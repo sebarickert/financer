@@ -34,6 +34,7 @@ export const ContentHeader: FC<ContentHeaderProps> = ({
           haptic="light"
           testId="header-back-link"
           transition="slideInFromLeft"
+          className="max-lg:button-ghost"
         >
           <Icon name="ArrowLeftIcon" />
           <span className="sr-only">Go back</span>

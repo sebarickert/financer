@@ -12,6 +12,7 @@ import {
 } from '$api/generated/financerApi';
 import { Form } from '$blocks/form/form';
 import { accountTypeIconMapping } from '$constants/account/accountTypeMapping';
+import { transactionTypeIconMapping } from '$constants/transaction/transactionTypeIconMapping';
 import { Input } from '$elements/Input';
 import { Option, Select } from '$elements/Select';
 import { useGetAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useGetAllTransactionCategoriesWithCategoryTree';
@@ -135,8 +136,9 @@ export const TransactionForm: FC<TransactionFormProps> = ({
               id="fromAccount"
               options={accountOptions}
               isRequired
-              placeholder="Select From Account"
+              placeholder="Select Account"
               isLabelHidden
+              icon={transactionTypeIconMapping.EXPENSE}
             >
               From Account
             </Select>
@@ -146,8 +148,9 @@ export const TransactionForm: FC<TransactionFormProps> = ({
               id="toAccount"
               options={accountOptions}
               isRequired
-              placeholder="Select To Account"
+              placeholder="Select Account"
               isLabelHidden
+              icon={transactionTypeIconMapping.INCOME}
             >
               To Account
             </Select>

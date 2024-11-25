@@ -77,6 +77,7 @@ export const UserDefaultAccountSettingsForm: FC<
             })) ?? []
           }
           isRequired
+          icon="PlusCircleIcon"
         >
           Default income account
         </Select>
@@ -89,6 +90,7 @@ export const UserDefaultAccountSettingsForm: FC<
             })) ?? []
           }
           isRequired
+          icon="MinusCircleIcon"
         >
           Default expense account
         </Select>
@@ -101,6 +103,7 @@ export const UserDefaultAccountSettingsForm: FC<
             })) ?? []
           }
           isRequired
+          icon="MinusCircleIcon"
         >
           Default transfer source account
         </Select>
@@ -113,6 +116,7 @@ export const UserDefaultAccountSettingsForm: FC<
             })) ?? []
           }
           isRequired
+          icon="PlusCircleIcon"
         >
           Default transfer target account
         </Select>

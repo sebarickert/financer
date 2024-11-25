@@ -35,7 +35,7 @@ export const Popper: FC<PopperProps> = ({ className, items, children }) => {
         popoverTarget={popperId}
         accentColor="secondary"
         size="icon"
-        className={clsx('anchor-name-[popover-anchor]')}
+        className={clsx('anchor-name-[popover-anchor]', 'max-lg:button-ghost')}
         id="popover-anchor"
         testId="popper-button"
       >
