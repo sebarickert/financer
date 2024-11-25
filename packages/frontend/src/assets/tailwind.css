@@ -20,6 +20,8 @@
     --background: 0 0% 3%;
     --layer: 0 0% 11%;
     --accent: 0 0% 16%;
+
+    color-scheme: dark;
   }
 
   :root {
@@ -45,6 +47,8 @@
     --button-danger: 357 76% 49%;
     --button-danger-hover: 357 76% 37%;
     --button-danger-active: 357 76% 26%;
+
+    color-scheme: light;
   }
 
   :root.dark {
