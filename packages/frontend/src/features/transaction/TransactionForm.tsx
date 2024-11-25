@@ -12,6 +12,7 @@ import {
 } from '$api/generated/financerApi';
 import { Form } from '$blocks/form/form';
 import { accountTypeIconMapping } from '$constants/account/accountTypeMapping';
+import { transactionTypeIconMapping } from '$constants/transaction/transactionTypeIconMapping';
 import { Input } from '$elements/Input';
 import { Option, Select } from '$elements/Select';
 import { useGetAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useGetAllTransactionCategoriesWithCategoryTree';
@@ -137,7 +138,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
               isRequired
               placeholder="Select Account"
               isLabelHidden
-              icon="MinusCircleIcon"
+              icon={transactionTypeIconMapping.EXPENSE}
             >
               From Account
             </Select>
@@ -149,7 +150,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
               isRequired
               placeholder="Select Account"
               isLabelHidden
-              icon="PlusCircleIcon"
+              icon={transactionTypeIconMapping.INCOME}
             >
               To Account
             </Select>
