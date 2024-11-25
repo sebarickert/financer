@@ -49,7 +49,6 @@ export const TransactionTemplateSwitcher = ({
     <>
       <Button
         accentColor="secondary"
-        className="!h-[50px] !w-[50px]"
         size="icon"
         popoverTarget={templateSwitcherId}
         isDisabled={!targetTemplates.length}

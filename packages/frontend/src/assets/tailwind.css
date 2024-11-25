@@ -136,10 +136,6 @@
     @apply outline-none ring ring-blue dark:ring-white;
   }
 
-  .theme-layer-secondary-color {
-    @apply bg-background;
-  }
-
   .theme-field {
     @apply border-none appearance-none focus-visible:focus-highlight bg-layer hover:bg-accent text-foreground disabled:pointer-events-none disabled:opacity-50 [&::placeholder]:text-muted-foreground autofill:text-foreground autofill:bg-layer;
   }
