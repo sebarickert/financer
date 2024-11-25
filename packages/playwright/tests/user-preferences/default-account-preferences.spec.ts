@@ -22,10 +22,12 @@ test.describe('Default Account Preferences', () => {
     await switchTransactionType(page, TransactionType.Transfer);
     const initialTransferFormValues = await getTransactionFormValues(page);
 
-    expect(initialExpenseFormValues.fromAccount).toEqual('Select Account');
-    expect(initialIncomeFormValues.toAccount).toEqual('Select Account');
-    expect(initialTransferFormValues.fromAccount).toEqual('Select Account');
-    expect(initialTransferFormValues.toAccount).toEqual('Select Account');
+    expect(initialExpenseFormValues.fromAccount).toEqual('Select From Account');
+    expect(initialIncomeFormValues.toAccount).toEqual('Select To Account');
+    expect(initialTransferFormValues.fromAccount).toEqual(
+      'Select From Account',
+    );
+    expect(initialTransferFormValues.toAccount).toEqual('Select To Account');
 
     await page.getByRole('button', { name: 'Close drawer' }).click();
 

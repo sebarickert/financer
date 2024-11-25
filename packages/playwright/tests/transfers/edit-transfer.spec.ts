@@ -231,8 +231,6 @@ test.describe('Transfer Transactions', () => {
     }) => {
       await page.goto('/statistics/transfers');
 
-      await page.getByRole('button', { name: 'Previous page' }).click();
-
       await page
         .getByTestId('transaction-list-item')
         .getByText(
@@ -275,8 +273,6 @@ test.describe('Transfer Transactions', () => {
       page,
     }) => {
       await page.goto('/statistics/transfers');
-
-      await page.getByRole('button', { name: 'Previous page' }).click();
 
       await page
         .getByTestId('transaction-list-item')
