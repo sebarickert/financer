@@ -35,6 +35,7 @@ test.describe('Market Update Preferences', () => {
     await page.getByRole('button', { name: 'Close drawer' }).click();
 
     await page.getByRole('link', { name: 'Accounts' }).click();
+    await expect(page).toHaveURL(/\/accounts\/?$/);
     await page.getByRole('link', { name }).click();
 
     const initialTransactions =
@@ -78,6 +79,7 @@ test.describe('Market Update Preferences', () => {
     );
 
     await page.getByRole('link', { name: 'Accounts' }).click();
+    await expect(page).toHaveURL(/\/accounts\/?$/);
     await page.getByRole('link', { name }).click();
 
     const { balance: updatedBalance } = await getAccountDetails(page);
@@ -96,6 +98,7 @@ test.describe('Market Update Preferences', () => {
     await page.getByRole('button', { name: 'Close drawer' }).click();
 
     await page.getByRole('link', { name: 'Accounts' }).click();
+    await expect(page).toHaveURL(/\/accounts\/?$/);
     await page.getByRole('link', { name }).click();
 
     const updatedTransactions =

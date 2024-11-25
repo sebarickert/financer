@@ -53,7 +53,7 @@ test.describe('Default Account Preferences', () => {
       .getByRole('button', { name: 'Save', exact: true })
       .click();
 
-    await expect(page).toHaveURL('/settings/user-preferences/', {
+    await expect(page).toHaveURL('/settings/preferences/', {
       timeout: 5000,
     });
 
