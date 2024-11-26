@@ -190,7 +190,8 @@ export class AccountsService {
           amount,
           balance: newBalance,
         });
-      }, [] as AccountBalanceHistoryDto[]);
+      }, [] as AccountBalanceHistoryDto[])
+      .sort((a, b) => a.date.getTime() - b.date.getTime());
 
     return AccountBalanceHistoryDto.createFromPlain(summarizedBalanceChanges);
   }
