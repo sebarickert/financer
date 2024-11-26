@@ -1,18 +1,18 @@
 import { Metadata } from 'next';
-import { FC } from 'react';
 
 import { TemplateEditContainer } from '$container/templates/TemplateEditContainer';
 import { TransactionTemplateService } from '$ssr/api/transaction-template.service';
 
-type EditTemplatePageProps = {
-  params: {
-    templateId: string;
-  };
-};
+type Params = Promise<{
+  templateId: string;
+}>;
 
 export const generateMetadata = async ({
-  params: { templateId },
-}: EditTemplatePageProps): Promise<Metadata> => {
+  params,
+}: {
+  params: Params;
+}): Promise<Metadata> => {
+  const { templateId } = await params;
   const template = await TransactionTemplateService.getById(templateId);
 
   return {
@@ -20,9 +20,9 @@ export const generateMetadata = async ({
   };
 };
 
-const EditTemplatePage: FC<EditTemplatePageProps> = ({
-  params: { templateId },
-}) => {
+const EditTemplatePage = async ({ params }: { params: Params }) => {
+  const { templateId } = await params;
+
   return <TemplateEditContainer id={templateId} />;
 };
 

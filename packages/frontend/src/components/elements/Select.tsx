@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { ChangeEvent, FC } from 'react';
+import { ChangeEvent, FC, type JSX } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { FieldGroup } from './FieldGroup';

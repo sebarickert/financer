@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 interface CheckboxGroupProps {
   readonly children: React.ReactNode[];
   label?: string;

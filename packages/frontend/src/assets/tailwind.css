@@ -54,18 +54,19 @@
   :root.dark {
     @mixin dark-mode-styles;
 
-    ::picker(select) {
+    /* TODO fix this ::picker issue on build */
+    /* ::picker(select) {
       @apply border-accent bg-background;
-    }
+    } */
   }
 
   @media (prefers-color-scheme: dark) {
     :root:not(.light) {
       @mixin dark-mode-styles;
 
-      ::picker(select) {
+      /* ::picker(select) {
         @apply border-accent bg-background;
-      }
+      } */
     }
   }
 
@@ -108,13 +109,13 @@
   }
 
   select[data-bleeding-edge="on"],
-  ::picker(select) {
+  /* ::picker(select) {
     appearance: base-select !important;
-  }
+  } */
 
-  ::picker(select) {
+  /* ::picker(select) {
     @apply p-2 border rounded-md shadow-none lg:mt-2 bg-background;
-  }
+  } */
 
   .button-primary {
     @apply !text-white bg-[hsl(var(--button-primary))] hover:bg-[hsl(var(--button-primary-hover))] active:bg-[hsl(var(--button-primary-active))];

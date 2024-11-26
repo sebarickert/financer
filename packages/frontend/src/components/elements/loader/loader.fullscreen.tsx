@@ -1,3 +1,5 @@
+import type { JSX } from 'react';
+
 import { Loader } from './loader';
 
 export const LoaderFullScreen = (): JSX.Element => (
