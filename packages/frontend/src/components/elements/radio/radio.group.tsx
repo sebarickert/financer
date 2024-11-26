@@ -1,4 +1,4 @@
-import React, { Children } from 'react';
+import React, { Children, type JSX } from 'react';
 
 interface RadioProps {
   children: React.ReactNode | React.ReactNode[];

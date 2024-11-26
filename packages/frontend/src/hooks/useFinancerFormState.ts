@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { useFormState } from 'react-dom';
+import { useEffect, useActionState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { ToastMessageTypes } from '$blocks/Toast/Toast';
@@ -39,7 +38,7 @@ export const useFinancerFormState = (
   okHandler?: () => void,
 ) => {
   const dispatch = useDispatch();
-  const [state, action] = useFormState(submitHandler, {});
+  const [state, action] = useActionState(submitHandler, {});
 
   useEffect(() => {
     const errors = state.errors;

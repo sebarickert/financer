@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import { FC } from 'react';
+import { FC, type JSX } from 'react';
 import {
   AreaChart,
   CartesianGrid,

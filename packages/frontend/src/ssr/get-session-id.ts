@@ -4,7 +4,7 @@ export const getSessionId = async (): Promise<string | undefined> => {
   if (!isServerSide()) return undefined;
 
   const { cookies } = await import('next/headers');
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
 
   return cookieStore.get('connect.sid')?.value;
 };

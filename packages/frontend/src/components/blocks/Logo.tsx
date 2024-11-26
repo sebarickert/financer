@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import Image from 'next/image';
+import type { JSX } from 'react';
 
 type LogoProps = {
   className?: string;

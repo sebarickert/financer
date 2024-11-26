@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import { useState } from 'react';
+import { useState, type JSX } from 'react';
 
 import { Logo } from '$blocks/Logo';
 import { Button } from '$elements/Button/Button';

@@ -62,7 +62,7 @@ export async function generateViewport(): Promise<Viewport> {
 const PUBLIC_ROUTES = ['/privacy-policy/', '/issues-with-login/', '/login/'];
 
 const RootLayout: FC<ChildrenProp> = async ({ children }) => {
-  const headersList = headers();
+  const headersList = await headers();
 
   const authenticationStatus = await AuthenticationService.getStatus();
   const pathname = headersList.get(CustomHeader.PATHNAME) ?? '';

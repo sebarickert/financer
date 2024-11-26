@@ -1,4 +1,4 @@
-import { headers } from 'next/headers';
+import { headers, type UnsafeUnwrappedHeaders } from 'next/headers';
 import { redirect, RedirectType } from 'next/navigation';
 
 import { CustomHeader } from 'src/types/custom-headers';
@@ -20,7 +20,7 @@ export type PagerOptions = {
 
 export class PagerService {
   public static getCurrentDateFilter(): Date {
-    const headersList = headers();
+    const headersList = headers() as unknown as UnsafeUnwrappedHeaders;
     const searchParams = new URLSearchParams(
       headersList.get(CustomHeader.QUERY) ?? '',
     );
@@ -35,7 +35,7 @@ export class PagerService {
   }
 
   private static gotoYearMonthPage(date: Date): void {
-    const headersList = headers();
+    const headersList = headers() as unknown as UnsafeUnwrappedHeaders;
     const searchParams = new URLSearchParams(
       headersList.get(CustomHeader.QUERY) ?? '',
     );

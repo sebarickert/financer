@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { useEffect } from 'react';
+import { useEffect, type JSX } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 
 import { CategoriesFormFullFields } from './transaction-categories.types';

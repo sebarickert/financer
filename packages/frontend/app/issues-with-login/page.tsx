@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import type { JSX } from 'react';
 
 import { Heading } from '$elements/Heading';
 import { Link } from '$elements/Link';

@@ -1,3 +1,5 @@
+import type { JSX } from 'react';
+
 import { LoaderFullScreen } from './loader.fullscreen';
 
 type LoaderProps = {

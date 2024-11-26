@@ -1,6 +1,6 @@
 'use client';
 
-import { useId, useMemo, useRef } from 'react';
+import { useId, useMemo, useRef, type JSX } from 'react';
 
 import {
   TransactionType,

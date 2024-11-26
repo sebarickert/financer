@@ -3,7 +3,7 @@ import { RefObject, useEffect, useMemo } from 'react';
 type EventType = TouchEvent | MouseEvent;
 
 export const useOnClickOutside = (
-  ref: RefObject<HTMLElement> | RefObject<HTMLElement>[],
+  ref: RefObject<HTMLElement | null> | RefObject<HTMLElement | null>[],
   handler: (event: EventType) => void,
 ) => {
   const refArray = useMemo(() => (Array.isArray(ref) ? ref : [ref]), [ref]);
