@@ -27,7 +27,7 @@ export const AccountContainer: FC<AccountContainerProps> = async ({ id }) => {
 
   return (
     <Layout
-      title="Account Details"
+      title={account.name}
       backLink="/accounts"
       headerAction={
         <Popper

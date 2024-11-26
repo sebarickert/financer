@@ -1,19 +1,15 @@
 import clsx from 'clsx';
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
 
 import { TransactionType } from '$api/generated/financerApi';
-import { transactionTypeThemeMapping } from '$constants/transaction/transactionTypeMapping';
-import { Icon, IconName } from '$elements/Icon';
 import { formatCurrency } from '$utils/formatCurrency';
 
 type BalanceDisplayProps = {
   className?: string;
-  type?: TransactionType;
-  children?: string;
+  label: string;
   amount: number;
-  iconName?: IconName;
-  testId?: string;
-  childTestId?: string;
+  children?: ReactNode;
+  type?: TransactionType;
 };
 
 export const BalanceDisplay: FC<BalanceDisplayProps> = ({
@@ -21,72 +17,43 @@ export const BalanceDisplay: FC<BalanceDisplayProps> = ({
   type,
   children,
   amount,
-  iconName,
-  testId,
-  childTestId,
+  label,
 }) => {
   const formattedAmount = formatCurrency(amount);
 
   const defaultValues = {
     balance: formattedAmount,
-    icon: iconName,
   };
 
   const typeMapping = {
     [TransactionType.Income]: {
       balance: `+ ${formattedAmount}`,
-      ...transactionTypeThemeMapping[TransactionType.Income],
     },
     [TransactionType.Expense]: {
       balance: `- ${formattedAmount}`,
-      ...transactionTypeThemeMapping[TransactionType.Expense],
     },
-    [TransactionType.Transfer]: {
-      ...transactionTypeThemeMapping[TransactionType.Transfer],
-    },
+    [TransactionType.Transfer]: {},
   };
 
-  const {
-    balance,
-    icon,
-    color = '',
-  } = {
+  const { balance } = {
     ...defaultValues,
     ...(type ? typeMapping[type] : {}),
   };
 
   return (
-    <div
-      className={clsx(
-        'flex flex-col items-center justify-center text-center gap-4',
-        ``,
-        className,
-      )}
-    >
-      {icon && (
-        <div
-          className={clsx(
-            'relative rounded-xl h-11 w-11',
-            'inline-flex items-center justify-center shrink-0',
-            { 'bg-accent': !color },
-            { [color]: color },
-          )}
+    <div className={clsx(className)}>
+      <p>
+        <span className="block text-muted-foreground" data-slot="label">
+          {label}
+        </span>
+        <span
+          className="block text-4xl font-semibold break-all"
+          data-testid="balance-display-balance"
         >
-          <Icon name={icon} />
-        </div>
-      )}
-      <div>
-        <p className={clsx('text-4xl font-semibold break-all')}>
-          <span className="sr-only">Amount:</span>
-          <span data-testid={testId}>{balance}</span>
-        </p>
-        {children && (
-          <p className="text-lg">
-            <span className="sr-only">Description:</span>
-            <span data-testid={childTestId}>{children}</span>
-          </p>
-        )}
-      </div>
+          {balance}
+        </span>
+      </p>
+      {children}
     </div>
   );
 };

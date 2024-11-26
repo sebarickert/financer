@@ -7,6 +7,7 @@ import {
   TransactionType,
   TransferDetailsDto,
 } from '$api/generated/financerApi';
+import { BalanceDisplay } from '$blocks/BalanceDisplay';
 import { DetailsList } from '$blocks/details-list/details-list';
 import { DetailsItem } from '$blocks/details-list/details-list.item';
 import { transactionTypeIconMapping } from '$constants/transaction/transactionTypeIconMapping';
@@ -37,31 +38,22 @@ export const Transaction: FC<TransactionProps> = async ({
     'fromAccountName' in props ? props.fromAccountName : null;
   const toAccountName = 'toAccountName' in props ? props.toAccountName : null;
 
-  const formattedAmount = formatCurrency(amount);
-
   const typeMapping = {
     [TransactionType.Income]: {
-      amount: `+ ${formattedAmount}`,
       ...transactionTypeThemeMapping[TransactionType.Income],
       color: 'bg-green',
     },
     [TransactionType.Expense]: {
-      amount: `- ${formattedAmount}`,
       ...transactionTypeThemeMapping[TransactionType.Expense],
       color: 'bg-red',
     },
     [TransactionType.Transfer]: {
-      amount: formattedAmount,
       ...transactionTypeThemeMapping[TransactionType.Transfer],
       color: 'bg-accent',
     },
   };
 
-  const {
-    amount: typedAmount,
-    icon,
-    color = '',
-  } = {
+  const { icon, color = '' } = {
     ...(type ? typeMapping[type] : {}),
   };
 
@@ -155,15 +147,12 @@ export const Transaction: FC<TransactionProps> = async ({
               <Icon name={isRecurring ? 'ArrowPathIcon' : icon} />
             </span>
           )}
-          <p>
-            <span className="block sr-only text-muted-foreground">Amount</span>
-            <span
-              className="block text-4xl font-semibold break-all"
-              data-testid="transaction-amount"
-            >
-              {typedAmount}
-            </span>
-          </p>
+          <BalanceDisplay
+            label="Amount"
+            amount={amount}
+            className='[&_[data-slot="label"]]:sr-only'
+            type={type}
+          />
           {isRecurring && (
             <p className="max-w-xs mx-auto text-sm text-center text-muted-foreground">
               This transaction was automatically created based on your saved
