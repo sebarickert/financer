@@ -142,27 +142,35 @@ export const Transaction: FC<TransactionProps> = async ({
       className={clsx('bg-layer rounded-md relative isolate', 'p-6')}
       data-testid="transaction-details"
     >
-      {icon && (
-        <div
-          className={clsx(
-            'absolute top-0 z-10 p-3 -translate-x-1/2 -translate-y-1/2 rounded-full left-1/2 bg-accent',
-            { 'bg-accent': !color },
-            { [color]: color },
+      <div className="grid divide-y [&>:first-child]:pb-6 [&>:first-child+div]:pt-6">
+        <div className="flex flex-col items-center gap-4">
+          {icon && (
+            <span
+              className={clsx(
+                'p-3 rounded-full inline-block',
+                { 'bg-accent': !color },
+                { [color]: color },
+              )}
+            >
+              <Icon name={isRecurring ? 'ArrowPathIcon' : icon} />
+            </span>
           )}
-        >
-          <Icon name={isRecurring ? 'ArrowPathIcon' : icon} />
+          <p>
+            <span className="block sr-only text-muted-foreground">Amount</span>
+            <span
+              className="block text-4xl font-semibold break-all"
+              data-testid="transaction-amount"
+            >
+              {typedAmount}
+            </span>
+          </p>
+          {isRecurring && (
+            <p className="max-w-xs mx-auto text-sm text-center text-muted-foreground">
+              This transaction was automatically created based on your saved
+              template.
+            </p>
+          )}
         </div>
-      )}
-      <div className="grid divide-y [&>:first-child]:pb-4 [&>:first-child+div]:pt-4">
-        <p>
-          <span className="block text-muted-foreground">Amount</span>
-          <span
-            className="block text-4xl font-semibold break-all"
-            data-testid="transaction-amount"
-          >
-            {typedAmount}
-          </span>
-        </p>
         <div className={clsx('grid gap-8', '')}>
           <DetailsList items={transactionDetails} />
           {categoryDetails.length > 0 && (
