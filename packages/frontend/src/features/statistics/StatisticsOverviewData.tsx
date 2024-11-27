@@ -3,8 +3,7 @@
 import { FC, useMemo, useState } from 'react';
 
 import { TransactionMonthSummaryDto } from '$api/generated/financerApi';
-import { DetailsItem } from '$blocks/DetailList/details-list.item';
-import { DetailsList } from '$blocks/DetailsList';
+import { DetailsItem, DetailsList } from '$blocks/DetailsList';
 import { EmptyContentBlock } from '$blocks/EmptyContentBlock';
 import { AreaStackedChart, ChartConfig } from '$charts/AreaStackedChart';
 import {

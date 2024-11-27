@@ -8,8 +8,7 @@ import {
   TransferDetailsDto,
 } from '$api/generated/financerApi';
 import { BalanceDisplay } from '$blocks/BalanceDisplay';
-import { DetailsItem } from '$blocks/DetailList/details-list.item';
-import { DetailsList } from '$blocks/DetailsList';
+import { DetailsList, DetailsItem } from '$blocks/DetailsList';
 import { transactionTypeIconMapping } from '$constants/transaction/transactionTypeIconMapping';
 import { transactionTypeThemeMapping } from '$constants/transaction/transactionTypeMapping';
 import { Heading } from '$elements/Heading';

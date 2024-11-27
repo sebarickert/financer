@@ -2,8 +2,7 @@ import clsx from 'clsx';
 import { FC } from 'react';
 
 import { TransactionType } from '$api/generated/financerApi';
-import { DetailsItem } from '$blocks/DetailList/details-list.item';
-import { DetailsList } from '$blocks/DetailsList';
+import { DetailsList, DetailsItem } from '$blocks/DetailsList';
 import { RadialStackedChart } from '$charts/RadialStackedChart';
 import { monthNames } from '$constants/months';
 import {
