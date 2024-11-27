@@ -19,7 +19,7 @@ export const getDashboardDetails = async (
   await expect(page.getByTestId('transaction-list')).toBeVisible();
 
   const balance =
-    (await page.getByTestId('dashboard-total-balance').textContent()) ?? '';
+    (await page.getByTestId('balance-amount').textContent()) ?? '';
 
   const monthBalance =
     (await page.getByTestId('dashboard-month-balance').textContent()) ?? '';

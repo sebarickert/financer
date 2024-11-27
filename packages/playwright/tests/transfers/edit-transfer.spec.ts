@@ -9,16 +9,15 @@ import { getTransactionDetails } from '$utils/transaction/getTransactionDetails'
 import { setCategories } from '$utils/transaction/setCategories';
 
 test.describe('Transfer Transactions', () => {
-  test.beforeEach(async () => {
+  test.beforeEach(async ({ page }) => {
     await applyFixture();
+    await page.goto('/statistics/transfers');
   });
 
   test.describe('Edit Transfer', () => {
     test('should edit transfer and verify account balance and transfer list', async ({
       page,
     }) => {
-      await page.goto('/statistics/transfers');
-
       await page.getByTestId('transaction-list-item').first().click();
 
       const {
@@ -28,7 +27,7 @@ test.describe('Transfer Transactions', () => {
         amount: initialAmount,
       } = await getTransactionDetails(page);
 
-      await page.goto('/accounts');
+      await page.getByRole('link', { name: 'Accounts' }).click();
 
       const initialFromAccountBalance =
         await getAccountBalanceFromAccountListByName(
@@ -65,7 +64,7 @@ test.describe('Transfer Transactions', () => {
       expect(updatedAmount).toEqual(newAmount);
       expect(updatedDescription).toEqual(newDescription);
 
-      await page.goto('/accounts');
+      await page.getByRole('link', { name: 'Accounts' }).click();
 
       const updatedFromAccountBalance =
         await getAccountBalanceFromAccountListByName(
@@ -84,15 +83,14 @@ test.describe('Transfer Transactions', () => {
         initialToAccountBalance.minus(initialAndNewAmountDifference),
       );
 
-      await page.goto('/statistics/transfers');
+      await page.getByRole('link', { name: 'Statistics' }).click();
+      await page.getByRole('link', { name: 'Transfers' }).click();
       await expect(page.getByTestId(id)).toContainText(updatedDescription);
     });
 
     test('should edit transfer account fields and verify balance updates', async ({
       page,
     }) => {
-      await page.goto('/statistics/transfers');
-
       await page.getByTestId('transaction-list-item').first().click();
 
       const { id, toAccount, fromAccount, amount } =
@@ -186,8 +184,6 @@ test.describe('Transfer Transactions', () => {
     test('should edit transfer with category and verify it updates values in transaction details', async ({
       page,
     }) => {
-      await page.goto('/statistics/transfers');
-
       await page
         .getByTestId('transaction-list-item')
         .getByText('Dummy TRANSFER from Big money to Investment account', {
@@ -229,8 +225,6 @@ test.describe('Transfer Transactions', () => {
     test('should edit transfer with multiple categories and remove one of the categories and verify it updates values in transaction details', async ({
       page,
     }) => {
-      await page.goto('/statistics/transfers');
-
       await page
         .getByTestId('transaction-list-item')
         .getByText(
@@ -272,8 +266,6 @@ test.describe('Transfer Transactions', () => {
     test('should edit transfer with multiple categories and remove all of the categories and verify it updates values in transaction details', async ({
       page,
     }) => {
-      await page.goto('/statistics/transfers');
-
       await page
         .getByTestId('transaction-list-item')
         .getByText(

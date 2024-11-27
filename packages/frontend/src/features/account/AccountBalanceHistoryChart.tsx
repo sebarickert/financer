@@ -1,6 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
+import { parse } from 'date-fns';
 import { FC, useMemo, useState } from 'react';
 
 import { AccountBalanceHistoryDto } from '$api/generated/financerApi';
@@ -85,7 +86,8 @@ export const AccountBalanceHistoryChart: FC<
           return formatCurrencyAbbreviation(value);
         }}
         xaxisTickFormatter={(value: string) => {
-          return formatDate(new Date(value), DateFormat.monthWithDateShort);
+          const parsedDate = parse(value, 'LLLL yyyy', new Date());
+          return formatDate(parsedDate, DateFormat.monthWithDateShort);
         }}
       />
     </div>

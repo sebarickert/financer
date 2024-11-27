@@ -5,20 +5,19 @@ import { deleteTransaction } from '$utils/transaction/deleteTransaction';
 import { getTransactionDetails } from '$utils/transaction/getTransactionDetails';
 
 test.describe('Delete Income', () => {
-  test.beforeEach(async () => {
+  test.beforeEach(async ({ page }) => {
     await applyFixture();
+    await page.goto('/statistics/incomes');
   });
 
   test('should delete an income and verify account balance and that the transaction does not exist anymore', async ({
     page,
   }) => {
-    await page.goto('/statistics/incomes');
-
     await page.getByTestId('transaction-list-item').first().click();
 
     const { id, toAccount, amount } = await getTransactionDetails(page);
 
-    await page.goto('/accounts');
+    await page.getByRole('link', { name: 'Accounts' }).click();
 
     const initialAccountBalance = await getAccountBalanceFromAccountListByName(
       page,
@@ -30,13 +29,14 @@ test.describe('Delete Income', () => {
     await deleteTransaction(page);
     await expect(page).not.toHaveURL(`/statistics/incomes/${id}`);
 
-    await page.goto('/statistics/incomes');
+    await page.getByRole('link', { name: 'Statistics' }).click();
+    await page.getByRole('link', { name: 'Incomes' }).click();
 
     await expect(
       page.getByTestId('transaction-list-item').getByTestId(id),
     ).toBeHidden();
 
-    await page.goto('/accounts');
+    await page.getByRole('link', { name: 'Accounts' }).click();
 
     const updatedAccountBalance = await getAccountBalanceFromAccountListByName(
       page,

@@ -1,6 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
+import { parse } from 'date-fns';
 import { FC, useMemo, useState } from 'react';
 
 import { AreaStackedChart, ChartConfig } from '$charts/AreaStackedChart';
@@ -74,7 +75,8 @@ export const DashboardBalanceHistoryChart: FC<
           return formatCurrencyAbbreviation(value);
         }}
         xaxisTickFormatter={(value: string) => {
-          return formatDate(new Date(value), DateFormat.month);
+          const parsedDate = parse(value, 'LLLL yyyy', new Date());
+          return formatDate(parsedDate, DateFormat.month);
         }}
       />
     </div>

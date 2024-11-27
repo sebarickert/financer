@@ -77,12 +77,12 @@ export const getTransactionDetails = async (
     { timeout: 5000 },
   );
 
-  await expect(page.getByTestId('transaction-amount')).toBeVisible({
+  await expect(page.getByTestId('balance-amount')).toBeVisible({
     timeout: 5000,
   });
 
   const amount = parseCurrency(
-    (await page.getByTestId('transaction-amount').textContent()) ?? '',
+    (await page.getByTestId('balance-amount').textContent()) ?? '',
   );
 
   const description =

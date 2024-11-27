@@ -48,7 +48,7 @@ export const BalanceDisplay: FC<BalanceDisplayProps> = ({
         </span>
         <span
           className="block text-4xl font-semibold break-all"
-          data-testid="balance-display-balance"
+          data-testid="balance-amount"
         >
           {balance}
         </span>

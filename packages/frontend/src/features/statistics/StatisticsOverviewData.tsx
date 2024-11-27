@@ -1,5 +1,6 @@
 'use client';
 
+import { parse } from 'date-fns';
 import { FC, useMemo, useState } from 'react';
 
 import { TransactionMonthSummaryDto } from '$api/generated/financerApi';
@@ -155,7 +156,8 @@ export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
             return formatCurrencyAbbreviation(value);
           }}
           xaxisTickFormatter={(value: string) => {
-            return formatDate(new Date(value), DateFormat.month);
+            const parsedDate = parse(value, 'LLLL yyyy', new Date());
+            return formatDate(parsedDate, DateFormat.month);
           }}
         />
       </div>

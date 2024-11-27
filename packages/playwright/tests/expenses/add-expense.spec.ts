@@ -13,8 +13,9 @@ import { getTransactionFormValues } from '$utils/transaction/getTransactionFormV
 import { setCategories } from '$utils/transaction/setCategories';
 
 test.describe('Expense Transactions', () => {
-  test.beforeEach(async () => {
+  test.beforeEach(async ({ page }) => {
     await applyFixture();
+    await page.goto('/statistics/expenses');
   });
 
   test.describe('Add Expense', () => {
@@ -23,7 +24,7 @@ test.describe('Expense Transactions', () => {
     }) => {
       const transactionDescription = `dummy expense transaction created by test code ${Math.random()}`;
 
-      await page.goto('/accounts');
+      await page.getByRole('link', { name: 'Accounts' }).click();
       const initialAccountBalance =
         await getAccountBalanceFromAccountListByName(page, 'Credit account');
 
@@ -45,7 +46,7 @@ test.describe('Expense Transactions', () => {
       expect(amount).toEqual(new Decimal(15.5).negated());
       expect(description).toEqual(transactionDescription);
 
-      await page.goto('/accounts');
+      await page.getByRole('link', { name: 'Accounts' }).click();
       const updatedAccountBalance =
         await getAccountBalanceFromAccountListByName(page, 'Credit account');
 
@@ -68,7 +69,6 @@ test.describe('Expense Transactions', () => {
     }) => {
       const transactionDescription = `dummy expense transaction created by test code ${Math.random()}`;
 
-      await page.goto('/accounts');
       await page.getByTestId('add-transaction').click();
 
       await fillTransactionForm(page, {
@@ -98,7 +98,6 @@ test.describe('Expense Transactions', () => {
     test('should only show expense-visible categories in dropdown during transaction creation', async ({
       page,
     }) => {
-      await page.goto('/');
       await page.getByTestId('add-transaction').click();
 
       await fillTransactionForm(page, { amount: new Decimal(100) });
@@ -124,7 +123,8 @@ test.describe('Expense Transactions', () => {
     test('should select a template and confirm that fields are prefilled correctly', async ({
       page,
     }) => {
-      await page.goto('/settings/templates');
+      await page.getByRole('link', { name: 'Settings' }).click();
+      await page.getByRole('link', { name: 'Templates' }).click();
 
       await page
         .getByTestId('template-list-item')
@@ -133,7 +133,7 @@ test.describe('Expense Transactions', () => {
 
       const templateDetails = await getTemplateFormValues(page);
 
-      await page.goto('/accounts');
+      await page.getByRole('link', { name: 'Accounts' }).click();
       await page.getByTestId('add-transaction').click();
 
       const initialFormValues = await getTransactionFormValues(page);
@@ -158,7 +158,6 @@ test.describe('Expense Transactions', () => {
     test('should only show expense-visible templates during transaction creation', async ({
       page,
     }) => {
-      await page.goto('/accounts');
       await page.getByTestId('add-transaction').click();
 
       await page.getByTestId('use-template-button').click();
@@ -176,8 +175,6 @@ test.describe('Expense Transactions', () => {
       page,
       browserName,
     }) => {
-      await page.goto('/');
-
       await page.getByTestId('add-transaction').click();
 
       await page
