@@ -54,13 +54,13 @@ export const AreaStackedChart: FC<AreaStackedChartProps> = ({
         '[&_.recharts-sector[stroke="#fff"]]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none',
       )}
     >
-      <style>
-        {`[data-chart="${chartId}"] {`}
-        {Object.entries(chartConfig)
-          .map(([key, { color }]) => `--color-${key}: ${color};`)
-          .join('\n')}
-        {`}`}
-      </style>
+      <style jsx>{`
+        [data-chart='${chartId}'] {
+          ${Object.entries(chartConfig)
+            .map(([key, { color }]) => `--color-${key}: ${color};`)
+            .join('\n')}
+        }
+      `}</style>
       <ResponsiveContainer>
         <AreaChart
           data={chartData}
