@@ -1,23 +1,23 @@
-import clsx from 'clsx';
 import { FC, useMemo } from 'react';
 
-import { AccountDto, Theme } from '$api/generated/financerApi';
+import {
+  AccountBalanceHistoryDto,
+  AccountDto,
+} from '$api/generated/financerApi';
 import { BalanceDisplay } from '$blocks/BalanceDisplay';
-import { DetailsList } from '$blocks/details-list/details-list';
-import { DetailsItem } from '$blocks/details-list/details-list.item';
-import { accountTypeIconMapping } from '$constants/account/accountTypeMapping';
+import { DetailsList, DetailsItem } from '$blocks/DetailsList';
+import { EmptyContentBlock } from '$blocks/EmptyContentBlock';
 import { IconName } from '$elements/Icon';
-import { LoaderSuspense } from '$elements/loader/loader-suspense';
 import { AccountBalanceHistoryChart } from '$features/account/AccountBalanceHistoryChart';
 import { TransactionListWithMonthlyPager } from '$features/transaction/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
 import { capitalize } from '$utils/capitalize';
 
 type AccountProps = {
   account: AccountDto;
-  userTheme: Theme;
+  balanceHistory: AccountBalanceHistoryDto[];
 };
 
-export const Account: FC<AccountProps> = ({ account, userTheme }) => {
+export const Account: FC<AccountProps> = ({ account, balanceHistory }) => {
   const accountDetails: DetailsItem[] = useMemo(
     () => [
       {
@@ -32,28 +32,23 @@ export const Account: FC<AccountProps> = ({ account, userTheme }) => {
   );
 
   return (
-    <section className="grid gap-8">
-      <LoaderSuspense>
-        <AccountBalanceHistoryChart
-          accountId={account.id}
-          userTheme={userTheme}
-        />
-      </LoaderSuspense>
-      <div className={clsx('grid gap-2')}>
-        <div className="grid gap-8 p-6 py-8 rounded-md bg-layer">
-          <BalanceDisplay
-            amount={account.balance}
-            iconName={accountTypeIconMapping[account.type]}
-            testId={'account-balance'}
-            childTestId={'account-name'}
-          >
-            {account.name}
-          </BalanceDisplay>
-        </div>
-        <div className="p-6 rounded-md bg-layer">
-          <DetailsList testId="account-details" items={accountDetails} />
-        </div>
+    <section className="grid gap-6">
+      <div className="grid gap-6 p-6 rounded-md bg-layer">
+        <BalanceDisplay label="Balance" amount={account.balance} />
+        <DetailsList testId="account-details" items={accountDetails} />
       </div>
+      {balanceHistory.length < 3 && (
+        <EmptyContentBlock
+          title="Not Enough Data Yet"
+          icon="RectangleGroupIcon"
+        >
+          There isn&apos;t enough data to generate a meaningful balance history.
+          Add more transactions to track your financial trends over time.
+        </EmptyContentBlock>
+      )}
+      {balanceHistory.length >= 3 && (
+        <AccountBalanceHistoryChart data={balanceHistory} />
+      )}
       <TransactionListWithMonthlyPager
         filterOptions={{ accountId: account.id }}
       />

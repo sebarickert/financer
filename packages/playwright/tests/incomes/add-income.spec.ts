@@ -15,8 +15,9 @@ import { setCategories } from '$utils/transaction/setCategories';
 import { switchTransactionType } from '$utils/transaction/switchTransactionType';
 
 test.describe('Income Transactions', () => {
-  test.beforeEach(async () => {
+  test.beforeEach(async ({ page }) => {
     await applyFixture();
+    await page.goto('/statistics/incomes');
   });
 
   test.describe('Add Income', () => {
@@ -25,7 +26,7 @@ test.describe('Income Transactions', () => {
     }) => {
       const transactionDescription = `dummy income transaction created by test code ${Math.random()}`;
 
-      await page.goto('/accounts');
+      await page.getByRole('link', { name: 'Accounts' }).click();
       const initialAccountBalance =
         await getAccountBalanceFromAccountListByName(page, 'Credit account');
 
@@ -49,13 +50,15 @@ test.describe('Income Transactions', () => {
       expect(amount).toEqual(new Decimal(15.5));
       expect(description).toEqual(transactionDescription);
 
-      await page.goto('/accounts');
+      await page.getByRole('link', { name: 'Accounts' }).click();
       const updatedAccountBalance =
         await getAccountBalanceFromAccountListByName(page, 'Credit account');
 
       expect(updatedAccountBalance).toEqual(initialAccountBalance.plus(15.5));
 
-      await page.goto('/statistics/incomes');
+      await page.getByRole('link', { name: 'Statistics' }).click();
+      await page.getByRole('link', { name: 'Incomes' }).click();
+
       await expect(
         page
           .getByTestId('transaction-list-item')
@@ -70,7 +73,7 @@ test.describe('Income Transactions', () => {
     }) => {
       const transactionDescription = `dummy income transaction created by test code ${Math.random()}`;
 
-      await page.goto('/accounts');
+      await page.getByRole('link', { name: 'Accounts' }).click();
       await page.getByTestId('add-transaction').click();
 
       await switchTransactionType(page, TransactionType.Income);
@@ -102,7 +105,6 @@ test.describe('Income Transactions', () => {
     test('should only show income-visible categories in dropdown during transaction creation', async ({
       page,
     }) => {
-      await page.goto('/');
       await page.getByTestId('add-transaction').click();
 
       await switchTransactionType(page, TransactionType.Income);
@@ -130,7 +132,8 @@ test.describe('Income Transactions', () => {
     test('should select a template and confirm that fields are prefilled correctly', async ({
       page,
     }) => {
-      await page.goto('/settings/templates');
+      await page.getByRole('link', { name: 'Settings' }).click();
+      await page.getByRole('link', { name: 'Templates' }).click();
 
       await page
         .getByTestId('template-list-item')
@@ -139,7 +142,7 @@ test.describe('Income Transactions', () => {
 
       const templateDetails = await getTemplateFormValues(page);
 
-      await page.goto('/accounts');
+      await page.getByRole('link', { name: 'Accounts' }).click();
       await page.getByTestId('add-transaction').click();
 
       await switchTransactionType(page, TransactionType.Income);
@@ -166,7 +169,6 @@ test.describe('Income Transactions', () => {
     test('should only show income-visible templates during transaction creation', async ({
       page,
     }) => {
-      await page.goto('/accounts');
       await page.getByTestId('add-transaction').click();
 
       await switchTransactionType(page, TransactionType.Income);
@@ -186,8 +188,6 @@ test.describe('Income Transactions', () => {
       page,
       browserName,
     }) => {
-      await page.goto('/');
-
       await page.getByTestId('add-transaction').click();
 
       await switchTransactionType(page, TransactionType.Income);

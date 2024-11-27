@@ -9,16 +9,15 @@ import { getTransactionDetails } from '$utils/transaction/getTransactionDetails'
 import { setCategories } from '$utils/transaction/setCategories';
 
 test.describe('Income Transactions', () => {
-  test.beforeEach(async () => {
+  test.beforeEach(async ({ page }) => {
     await applyFixture();
+    await page.goto('/statistics/incomes');
   });
 
   test.describe('Edit Income', () => {
     test('should edit income and verify account balance and income list', async ({
       page,
     }) => {
-      await page.goto('/statistics/incomes');
-
       await page.getByTestId('transaction-list-item').first().click();
 
       const {
@@ -27,7 +26,7 @@ test.describe('Income Transactions', () => {
         amount: initialAmount,
       } = await getTransactionDetails(page);
 
-      await page.goto('/accounts');
+      await page.getByRole('link', { name: 'Accounts' }).click();
 
       const initialAccountBalance =
         await getAccountBalanceFromAccountListByName(page, toAccount as string);
@@ -59,7 +58,7 @@ test.describe('Income Transactions', () => {
       expect(updatedAmount).toEqual(newAmount);
       expect(updatedDescription).toEqual(newDescription);
 
-      await page.goto('/accounts');
+      await page.getByRole('link', { name: 'Accounts' }).click();
 
       const updatedAccountBalance =
         await getAccountBalanceFromAccountListByName(page, toAccount as string);
@@ -70,20 +69,19 @@ test.describe('Income Transactions', () => {
         initialAccountBalance.minus(initialAndNewAmountDifference),
       );
 
-      await page.goto('/statistics/incomes');
+      await page.getByRole('link', { name: 'Statistics' }).click();
+      await page.getByRole('link', { name: 'Incomes' }).click();
       await expect(page.getByTestId(id)).toContainText(updatedDescription);
     });
 
     test('should edit income account field and verify balance updates', async ({
       page,
     }) => {
-      await page.goto('/statistics/incomes');
-
       await page.getByTestId('transaction-list-item').first().click();
 
       const { id, toAccount, amount } = await getTransactionDetails(page);
 
-      await page.goto('/accounts');
+      await page.getByRole('link', { name: 'Accounts' }).click();
 
       const initialBalanceForPreviousAccount =
         await getAccountBalanceFromAccountListByName(page, toAccount as string);
@@ -130,8 +128,6 @@ test.describe('Income Transactions', () => {
     test('should edit income with category and verify it updates values in transaction details', async ({
       page,
     }) => {
-      await page.goto('/statistics/incomes');
-
       await page
         .getByTestId('transaction-list-item')
         .getByText('Dummy INCOME 1', { exact: true })
@@ -171,8 +167,6 @@ test.describe('Income Transactions', () => {
     test('should edit income with multiple categories and remove one of the categories and verify it updates values in transaction details', async ({
       page,
     }) => {
-      await page.goto('/statistics/incomes');
-
       await page
         .getByTestId('transaction-list-item')
         .getByText('Dummy INCOME 2', { exact: true })
@@ -209,8 +203,6 @@ test.describe('Income Transactions', () => {
     test('should edit income with multiple categories and remove all of the categories and verify it updates values in transaction details', async ({
       page,
     }) => {
-      await page.goto('/statistics/incomes');
-
       await page
         .getByTestId('transaction-list-item')
         .getByText('Dummy INCOME 2', { exact: true })

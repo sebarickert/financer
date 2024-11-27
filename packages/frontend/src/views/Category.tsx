@@ -1,33 +1,22 @@
 import { FC, useMemo } from 'react';
 
-import {
-  Theme,
-  TransactionCategoryDto,
-  TransactionMonthSummaryDto,
-} from '$api/generated/financerApi';
-import { DetailsList } from '$blocks/details-list/details-list';
-import { DetailsItem } from '$blocks/details-list/details-list.item';
+import { TransactionCategoryDto } from '$api/generated/financerApi';
+import { DetailsItem, DetailsList } from '$blocks/DetailsList';
 import { IconName } from '$elements/Icon';
-import { LoaderSuspense } from '$elements/loader/loader-suspense';
-import { CategoryGraph } from '$features/category/CategoryGraph';
 import { TransactionListWithMonthlyPager } from '$features/transaction/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
 import { capitalize } from '$utils/capitalize';
 import { parseParentCategoryPath } from 'src/services/TransactionCategoriesService';
 
 type CategoryProps = {
-  transactionsMonthlySummaries?: TransactionMonthSummaryDto[];
   category: TransactionCategoryDto;
   categories: TransactionCategoryDto[];
   parentTransactionCategoryId: string;
-  userTheme: Theme;
 };
 
 export const Category: FC<CategoryProps> = ({
-  transactionsMonthlySummaries,
   category,
   categories,
   parentTransactionCategoryId,
-  userTheme,
 }) => {
   const categoryDetails: DetailsItem[] = useMemo(() => {
     const categoryVisibilityCapitalized = category.visibility.map((item) =>
@@ -79,14 +68,7 @@ export const Category: FC<CategoryProps> = ({
   ]);
 
   return (
-    <section className="grid gap-8">
-      <LoaderSuspense>
-        <CategoryGraph
-          transactionsMonthlySummaries={transactionsMonthlySummaries}
-          category={category}
-          userTheme={userTheme}
-        />
-      </LoaderSuspense>
+    <section className="grid gap-6">
       <div className="p-6 rounded-md bg-layer">
         <DetailsList items={categoryDetails} />
       </div>

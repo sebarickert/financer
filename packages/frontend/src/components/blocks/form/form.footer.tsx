@@ -4,8 +4,7 @@ import { useFormStatus } from 'react-dom';
 import { ButtonAccentColor, Button } from '../../elements/Button/Button';
 import { ButtonGroup } from '../../elements/Button/ButtonGroup';
 
-import { Loader } from '$elements/loader/loader';
-import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
+import { Loader } from '$elements/Loader';
 
 type FormFooterProps = {
   submitLabel: string;
@@ -55,7 +54,7 @@ export const FormFooter: FC<FormFooterProps> = ({
         </ButtonGroup>
         {pending && (
           <div className="lg:hidden">
-            <LoaderFullScreen />
+            <Loader />
           </div>
         )}
       </div>

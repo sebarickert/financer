@@ -26,7 +26,7 @@ const getGroupLabel = (groupLabel: string) => {
     return 'Yesterday';
   }
 
-  return formatDate(new Date(groupLabel), DateFormat.monthWithDateShort);
+  return formatDate(new Date(groupLabel), DateFormat.monthWithDateLong);
 };
 
 const endOfTodayDate = endOfToday();

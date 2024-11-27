@@ -8,7 +8,6 @@ import { AccountUpdateMarketValuePopperItem } from '$features/account/AccountUpd
 import { Layout } from '$layouts/Layout';
 import { AccountService } from '$ssr/api/account.service';
 import { UserPreferenceService } from '$ssr/api/user-preference.service';
-import { UserService } from '$ssr/api/user.service';
 import { Account } from '$views/Account';
 
 type AccountContainerProps = {
@@ -17,7 +16,7 @@ type AccountContainerProps = {
 
 export const AccountContainer: FC<AccountContainerProps> = async ({ id }) => {
   const account = await AccountService.getById(id);
-  const theme = await UserService.getOwnUserTheme();
+  const balanceHistory = await AccountService.getAccountBalanceHistory(id);
   const marketSettings =
     await UserPreferenceService.getDefaultMarketUpdateSettings();
 
@@ -27,7 +26,7 @@ export const AccountContainer: FC<AccountContainerProps> = async ({ id }) => {
 
   return (
     <Layout
-      title="Account Details"
+      title={account.name}
       backLink="/accounts"
       headerAction={
         <Popper
@@ -49,7 +48,7 @@ export const AccountContainer: FC<AccountContainerProps> = async ({ id }) => {
         </Popper>
       }
     >
-      <Account account={account} userTheme={theme} />
+      <Account account={account} balanceHistory={balanceHistory} />
     </Layout>
   );
 };

@@ -70,7 +70,7 @@ test.describe('Edit Account', () => {
         .getByText('Investment account')
         .click();
 
-      const { id, balance: initialBalance } = await getAccountDetails(page);
+      const { balance: initialBalance } = await getAccountDetails(page);
 
       await clickPopperItem(page, 'Update Market Value');
 
@@ -82,9 +82,13 @@ test.describe('Edit Account', () => {
         .getByTestId('update-market-value-form')
         .getByRole('button', { name: 'Update' })
         .click();
+      await page.getByRole('button', { name: 'Close drawer' }).click();
 
-      await page.goto('/accounts');
-      await page.goto(`/accounts/${id}`);
+      await page.getByRole('link', { name: 'Accounts' }).click();
+      await page
+        .getByTestId('account-row')
+        .getByText('Investment account')
+        .click();
 
       const { balance: updatedBalance } = await getAccountDetails(page);
       const transactionItems =
@@ -108,7 +112,7 @@ test.describe('Edit Account', () => {
         .getByText('Investment account')
         .click();
 
-      const { id, balance: initialBalance } = await getAccountDetails(page);
+      const { balance: initialBalance } = await getAccountDetails(page);
 
       await clickPopperItem(page, 'Update Market Value');
 
@@ -120,9 +124,13 @@ test.describe('Edit Account', () => {
         .getByTestId('update-market-value-form')
         .getByRole('button', { name: 'Update' })
         .click();
+      await page.getByRole('button', { name: 'Close drawer' }).click();
 
-      await page.goto('/accounts');
-      await page.goto(`/accounts/${id}`);
+      await page.getByRole('link', { name: 'Accounts' }).click();
+      await page
+        .getByTestId('account-row')
+        .getByText('Investment account')
+        .click();
 
       const { balance: updatedBalance } = await getAccountDetails(page);
       const transactionItems =

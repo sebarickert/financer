@@ -5,7 +5,7 @@ import { ChangeEvent, useCallback, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { UserDataImportDto } from '$api/generated/financerApi';
-import { DetailsList } from '$blocks/details-list/details-list';
+import { DetailsList } from '$blocks/DetailsList';
 import { ToastMessageTypes } from '$blocks/Toast/Toast';
 import { Button } from '$elements/Button/Button';
 import { Heading } from '$elements/Heading';

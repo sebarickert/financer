@@ -15,8 +15,9 @@ import { setCategories } from '$utils/transaction/setCategories';
 import { switchTransactionType } from '$utils/transaction/switchTransactionType';
 
 test.describe('Transfer Transactions', () => {
-  test.beforeEach(async () => {
+  test.beforeEach(async ({ page }) => {
     await applyFixture();
+    await page.goto('/statistics/transfers');
   });
 
   test.describe('Add Transfer', () => {
@@ -25,7 +26,7 @@ test.describe('Transfer Transactions', () => {
     }) => {
       const transactionDescription = `dummy transfer transaction created by test code ${Math.random()}`;
 
-      await page.goto('/accounts');
+      await page.getByRole('link', { name: 'Accounts' }).click();
       const initialFromAccountBalance =
         await getAccountBalanceFromAccountListByName(page, 'Credit account');
       const initialToAccountBalance =
@@ -52,7 +53,7 @@ test.describe('Transfer Transactions', () => {
       expect(amount).toEqual(new Decimal(200.51));
       expect(description).toEqual(transactionDescription);
 
-      await page.goto('/accounts');
+      await page.getByRole('link', { name: 'Accounts' }).click();
       const updatedFromAccountBalance =
         await getAccountBalanceFromAccountListByName(page, 'Credit account');
       const updatedToAccountBalance =
@@ -65,7 +66,9 @@ test.describe('Transfer Transactions', () => {
         initialToAccountBalance.plus(200.51),
       );
 
-      await page.goto('/statistics/transfers');
+      await page.getByRole('link', { name: 'Statistics' }).click();
+      await page.getByRole('link', { name: 'Transfers' }).click();
+
       await expect(
         page
           .getByTestId('transaction-list-item')
@@ -80,7 +83,7 @@ test.describe('Transfer Transactions', () => {
     }) => {
       const transactionDescription = `dummy transfer transaction created by test code ${Math.random()}`;
 
-      await page.goto('/accounts');
+      await page.getByRole('link', { name: 'Accounts' }).click();
       await page.getByTestId('add-transaction').click();
 
       await switchTransactionType(page, TransactionType.Transfer);
@@ -113,7 +116,6 @@ test.describe('Transfer Transactions', () => {
     test('should only show transfer-visible categories in dropdown during transaction creation', async ({
       page,
     }) => {
-      await page.goto('/');
       await page.getByTestId('add-transaction').click();
 
       await switchTransactionType(page, TransactionType.Transfer);
@@ -141,7 +143,8 @@ test.describe('Transfer Transactions', () => {
     test('should select a template and confirm that fields are prefilled correctly', async ({
       page,
     }) => {
-      await page.goto('/settings/templates');
+      await page.getByRole('link', { name: 'Settings' }).click();
+      await page.getByRole('link', { name: 'Templates' }).click();
 
       await page
         .getByTestId('template-list-item')
@@ -150,7 +153,7 @@ test.describe('Transfer Transactions', () => {
 
       const templateDetails = await getTemplateFormValues(page);
 
-      await page.goto('/accounts');
+      await page.getByRole('link', { name: 'Accounts' }).click();
       await page.getByTestId('add-transaction').click();
 
       await switchTransactionType(page, TransactionType.Transfer);
@@ -178,7 +181,7 @@ test.describe('Transfer Transactions', () => {
     test('should only show transfer-visible templates during transaction creation', async ({
       page,
     }) => {
-      await page.goto('/accounts');
+      await page.getByRole('link', { name: 'Accounts' }).click();
       await page.getByTestId('add-transaction').click();
 
       await switchTransactionType(page, TransactionType.Transfer);
@@ -198,8 +201,6 @@ test.describe('Transfer Transactions', () => {
       page,
       browserName,
     }) => {
-      await page.goto('/');
-
       await page.getByTestId('add-transaction').click();
 
       await switchTransactionType(page, TransactionType.Transfer);

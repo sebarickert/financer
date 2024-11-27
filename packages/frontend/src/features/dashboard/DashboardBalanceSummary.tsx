@@ -2,8 +2,8 @@ import clsx from 'clsx';
 import { FC } from 'react';
 
 import { TransactionType } from '$api/generated/financerApi';
-import { DetailsList } from '$blocks/details-list/details-list';
-import { DetailsItem } from '$blocks/details-list/details-list.item';
+import { BalanceDisplay } from '$blocks/BalanceDisplay';
+import { DetailsItem, DetailsList } from '$blocks/DetailsList';
 import {
   transactionTypeLabelMapping,
   transactionTypeThemeMapping,
@@ -69,16 +69,7 @@ export const DashboardBalanceSummary: FC<DashboardBalanceSummaryProps> = ({
       className={clsx(className, 'grid gap-6 p-6 rounded-md bg-layer')}
       data-testid="dashboard-balance-summary"
     >
-      <div>
-        <p>
-          <span className="block text-muted-foreground">Balance</span>
-          <span
-            className="block text-4xl font-semibold break-all"
-            data-testid="dashboard-total-balance"
-          >
-            {formatCurrency(totalBalance)}
-          </span>
-        </p>
+      <BalanceDisplay label="Balance" amount={totalBalance}>
         {balanceDifference && percentageDifference && (
           <p className="mt-0.5 text-sm text-muted-foreground">
             <span data-testid="dashboard-month-balance">
@@ -87,7 +78,7 @@ export const DashboardBalanceSummary: FC<DashboardBalanceSummaryProps> = ({
             <span> ({percentageDifference}) from last month</span>
           </p>
         )}
-      </div>
+      </BalanceDisplay>
       <DetailsList items={monthlyDetails} />
     </div>
   );

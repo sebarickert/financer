@@ -5,8 +5,6 @@ import { Popper } from '$elements/Popper';
 import { CategoryDeletePopperItem } from '$features/category/CategoryDeletePopperItem';
 import { Layout } from '$layouts/Layout';
 import { CategoryService } from '$ssr/api/category.service';
-import { TransactionService } from '$ssr/api/transaction.service';
-import { UserService } from '$ssr/api/user.service';
 import { Category } from '$views/Category';
 
 type CategoryContainerProps = {
@@ -16,11 +14,6 @@ type CategoryContainerProps = {
 export const CategoryContainer: FC<CategoryContainerProps> = async ({ id }) => {
   const allCategories = await CategoryService.getAll();
   const category = await CategoryService.getById(id);
-  const theme = await UserService.getOwnUserTheme();
-  const transactionsMonthlySummaries =
-    await TransactionService.getMonthlySummary({
-      parentTransactionCategory: id,
-    });
 
   return (
     <Layout
@@ -41,11 +34,9 @@ export const CategoryContainer: FC<CategoryContainerProps> = async ({ id }) => {
       }
     >
       <Category
-        transactionsMonthlySummaries={transactionsMonthlySummaries}
         category={category}
         categories={allCategories}
         parentTransactionCategoryId={id}
-        userTheme={theme}
       />
     </Layout>
   );

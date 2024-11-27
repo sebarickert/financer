@@ -3,6 +3,7 @@ import { revalidateTag } from 'next/cache';
 import { BaseApi } from './base-api';
 
 import {
+  AccountBalanceHistoryDto,
   AccountDto,
   AccountsFindAllByUserApiArg,
   CreateAccountDto,
@@ -64,6 +65,27 @@ export class AccountService extends BaseApi {
     return (
       accounts?.reduce((acc, { balance }) => acc + (balance ?? 0), 0) ?? NaN
     );
+  }
+
+  public static async getAccountBalanceHistory(
+    id: string,
+  ): Promise<AccountBalanceHistoryDto[]> {
+    const { data } = await this.client.GET(
+      `/api/accounts/{id}/balance-history`,
+      {
+        params: {
+          path: { id },
+        },
+        next: {
+          tags: [
+            this.API_TAG.ACCOUNT,
+            this.getEntityTag(this.API_TAG.ACCOUNT, id),
+          ],
+        },
+      },
+    );
+
+    return data as AccountBalanceHistoryDto[];
   }
 
   public static async add(newAccount: CreateAccountDto): Promise<void> {

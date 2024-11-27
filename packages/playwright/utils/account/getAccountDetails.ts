@@ -17,15 +17,16 @@ export const getAccountDetails = async (
     timeout: 5000,
   });
 
-  await expect(page.getByTestId('account-balance')).toBeVisible({
+  await expect(page.getByTestId('balance-amount')).toBeVisible({
     timeout: 5000,
   });
 
   const balance = parseCurrency(
-    (await page.getByTestId('account-balance').textContent()) ?? '',
+    (await page.getByTestId('balance-amount').textContent()) ?? '',
   );
 
-  const name = (await page.getByTestId('account-name').textContent()) ?? '';
+  const name =
+    (await page.getByTestId('page-main-heading').textContent()) ?? '';
 
   const type =
     (await page

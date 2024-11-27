@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { Logo } from '$blocks/Logo';
 import { Button } from '$elements/Button/Button';
 import { ButtonGroup } from '$elements/Button/ButtonGroup';
-import { LoaderFullScreen } from '$elements/loader/loader.fullscreen';
+import { Loader } from '$elements/Loader';
 import { Paragraph } from '$elements/Paragraph';
 
 const NEXT_PUBLIC_IS_GITHUB_OAUTH_ENABLED =
@@ -24,7 +24,7 @@ export const Login = (): JSX.Element => {
 
   return (
     <>
-      {isLoadingOAuthPage && <LoaderFullScreen />}
+      {isLoadingOAuthPage && <Loader />}
       <section
         className={clsx('flex flex-col justify-center items-center h-dvh px-4')}
       >
