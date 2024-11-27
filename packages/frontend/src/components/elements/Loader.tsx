@@ -1,10 +1,3 @@
-import { LoaderFullScreen } from './loader.fullscreen';
-
-type LoaderProps = {
-  isLoading?: boolean;
-  children?: React.ReactNode;
-};
-
 const LoaderIcon = () => (
   <div role="status">
     <svg
@@ -27,15 +20,16 @@ const LoaderIcon = () => (
   </div>
 );
 
-export const Loader = ({
-  children = null,
-  isLoading = true,
-}: LoaderProps): JSX.Element => {
+export const Loader = (): JSX.Element => {
   return (
-    <>
-      {isLoading && <LoaderFullScreen />}
-      {children}
-    </>
+    <div className="fixed inset-0 z-50 flex items-center w-full h-full">
+      <div className="fixed inset-0 transition-opacity">
+        <div className="absolute inset-0 bg-background/80" />
+      </div>
+      <div className="flex items-center justify-center w-full">
+        <Loader.Icon />
+      </div>
+    </div>
   );
 };
 
