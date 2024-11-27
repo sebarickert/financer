@@ -5,8 +5,8 @@ import {
   AccountDto,
 } from '$api/generated/financerApi';
 import { BalanceDisplay } from '$blocks/BalanceDisplay';
-import { DetailsList } from '$blocks/details-list/details-list';
-import { DetailsItem } from '$blocks/details-list/details-list.item';
+import { DetailsItem } from '$blocks/DetailList/details-list.item';
+import { DetailsList } from '$blocks/DetailsList';
 import { EmptyContentBlock } from '$blocks/EmptyContentBlock';
 import { IconName } from '$elements/Icon';
 import { AccountBalanceHistoryChart } from '$features/account/AccountBalanceHistoryChart';

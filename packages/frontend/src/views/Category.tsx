@@ -1,8 +1,8 @@
 import { FC, useMemo } from 'react';
 
 import { TransactionCategoryDto } from '$api/generated/financerApi';
-import { DetailsList } from '$blocks/details-list/details-list';
-import { DetailsItem } from '$blocks/details-list/details-list.item';
+import { DetailsItem } from '$blocks/DetailList/details-list.item';
+import { DetailsList } from '$blocks/DetailsList';
 import { IconName } from '$elements/Icon';
 import { TransactionListWithMonthlyPager } from '$features/transaction/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
 import { capitalize } from '$utils/capitalize';

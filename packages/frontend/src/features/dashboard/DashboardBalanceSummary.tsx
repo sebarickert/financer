@@ -3,8 +3,8 @@ import { FC } from 'react';
 
 import { TransactionType } from '$api/generated/financerApi';
 import { BalanceDisplay } from '$blocks/BalanceDisplay';
-import { DetailsList } from '$blocks/details-list/details-list';
-import { DetailsItem } from '$blocks/details-list/details-list.item';
+import { DetailsItem } from '$blocks/DetailList/details-list.item';
+import { DetailsList } from '$blocks/DetailsList';
 import {
   transactionTypeLabelMapping,
   transactionTypeThemeMapping,
