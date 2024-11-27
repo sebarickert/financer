@@ -1,47 +1,48 @@
 'use client';
 
 import clsx from 'clsx';
-import { FC } from 'react';
+import { FC, useId } from 'react';
 import {
   AreaChart,
   CartesianGrid,
   ResponsiveContainer,
   Tooltip,
   YAxis,
-  TooltipProps,
   XAxis,
   Area,
 } from 'recharts';
-import {
-  NameType,
-  ValueType,
-} from 'recharts/types/component/DefaultTooltipContent';
+
+import { CustomTooltip } from './CustomTooltip';
+
+type ChartData = {
+  dataKey: string;
+  [key: string]: unknown;
+}[];
+export type ChartConfig = Record<
+  string,
+  { label: string; color: string; valueFormatter?(value: unknown): string }
+>;
 
 type AreaStackedChartProps = {
-  chartData: {
-    dataKey: string;
-    data: { key: string; color: string; value: number }[];
-  }[];
+  chartData: ChartData;
+  chartConfig: ChartConfig;
   className?: string;
   yaxisTickFormatter?(value: unknown, index: number): string;
   xaxisTickFormatter?(value: unknown, index: number): string;
-  customTooltip?(props: TooltipProps<ValueType, NameType>): JSX.Element;
 };
 
 export const AreaStackedChart: FC<AreaStackedChartProps> = ({
   chartData,
+  chartConfig,
   className,
   yaxisTickFormatter,
   xaxisTickFormatter,
-  customTooltip,
 }) => {
-  const parsedChartData = chartData.map(({ dataKey, data }) => ({
-    dataKey,
-    ...data.reduce((acc, { key, value }) => ({ ...acc, [key]: value }), {}),
-  }));
+  const chartId = `chart-${useId()}`;
 
   return (
     <div
+      data-chart={chartId}
       data-slot="chart"
       className={clsx(
         className,
@@ -53,14 +54,21 @@ export const AreaStackedChart: FC<AreaStackedChartProps> = ({
         '[&_.recharts-sector[stroke="#fff"]]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none',
       )}
     >
+      <style>
+        {`[data-chart="${chartId}"] {`}
+        {Object.entries(chartConfig)
+          .map(([key, { color }]) => `--color-${key}: ${color};`)
+          .join('\n')}
+        {`}`}
+      </style>
       <ResponsiveContainer>
         <AreaChart
-          data={parsedChartData}
+          data={chartData}
           margin={{ bottom: 0, left: 0, right: 0, top: 0 }}
           accessibilityLayer
         >
           <defs>
-            {chartData[0].data.map(({ key, color }) => (
+            {Object.entries(chartConfig).map(([key, { color }]) => (
               <linearGradient
                 id={`fill${key}`}
                 x1="0"
@@ -88,7 +96,7 @@ export const AreaStackedChart: FC<AreaStackedChartProps> = ({
             tickFormatter={xaxisTickFormatter}
             mirror
           />
-          {chartData[0].data.map(({ key, color }) => (
+          {Object.entries(chartConfig).map(([key, { color }]) => (
             <Area
               key={key}
               dataKey={key}
@@ -96,7 +104,7 @@ export const AreaStackedChart: FC<AreaStackedChartProps> = ({
               stroke={color}
             />
           ))}
-          <Tooltip content={customTooltip} active />
+          <Tooltip content={<CustomTooltip chartConfig={chartConfig} />} />
         </AreaChart>
       </ResponsiveContainer>
     </div>

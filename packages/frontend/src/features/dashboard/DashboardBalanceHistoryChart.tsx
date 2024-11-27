@@ -2,13 +2,8 @@
 
 import clsx from 'clsx';
 import { FC, useMemo, useState } from 'react';
-import { TooltipProps } from 'recharts';
-import {
-  NameType,
-  ValueType,
-} from 'recharts/types/component/DefaultTooltipContent';
 
-import { AreaStackedChart } from '$charts/AreaStackedChart';
+import { AreaStackedChart, ChartConfig } from '$charts/AreaStackedChart';
 import {
   ChartFilterByMonthsSelect,
   monthFilterOptions,
@@ -24,59 +19,25 @@ type DashboardBalanceHistoryChartProps = {
   className?: string;
 };
 
-const CustomTooltip = ({
-  active,
-  payload,
-}: TooltipProps<ValueType, NameType>) => {
-  if (active && payload && payload.length) {
-    return (
-      <div className="grid gap-1 p-2 text-xs border rounded-md bg-layer">
-        <p className="font-medium text-foreground">
-          {payload[0].payload.dataKey}
-        </p>
-        <ul className="space-y-1">
-          {payload.map((entry) => (
-            <li key={entry.dataKey}>
-              <p className="grid grid-cols-[auto,1fr] gap-4 items-center">
-                <span className="inline-flex items-center gap-2 text-muted-foreground">
-                  <span
-                    className={clsx(
-                      'inline-block w-2.5 h-2.5 rounded-sm bg-blue',
-                    )}
-                  />
-                  Balance
-                </span>
-                <span className="text-right text-foreground">
-                  {formatCurrency(entry.value as number)}
-                </span>
-              </p>
-            </li>
-          ))}
-        </ul>
-      </div>
-    );
-  }
-
-  return <div />;
-};
-
 export const DashboardBalanceHistoryChart: FC<
   DashboardBalanceHistoryChartProps
 > = ({ data, className }) => {
   const chartData = useMemo(
     () =>
       data.map(({ date, balance }) => ({
-        dataKey: formatDate(date, DateFormat.monthShort),
-        data: [
-          {
-            key: 'balance',
-            color: 'hsl(var(--color-blue))',
-            value: balance,
-          },
-        ],
+        dataKey: formatDate(date, DateFormat.monthLong),
+        balance,
       })),
     [data],
   );
+
+  const chartConfig = {
+    balance: {
+      label: 'Balance',
+      color: 'hsl(var(--color-blue))',
+      valueFormatter: formatCurrency,
+    },
+  } satisfies ChartConfig;
 
   const defaultFilterValue = useMemo(
     () =>
@@ -108,10 +69,13 @@ export const DashboardBalanceHistoryChart: FC<
       </div>
       <AreaStackedChart
         chartData={filteredChartData}
+        chartConfig={chartConfig}
         yaxisTickFormatter={(value: number) => {
           return formatCurrencyAbbreviation(value);
         }}
-        customTooltip={CustomTooltip}
+        xaxisTickFormatter={(value: string) => {
+          return formatDate(new Date(value), DateFormat.monthShort);
+        }}
       />
     </div>
   );

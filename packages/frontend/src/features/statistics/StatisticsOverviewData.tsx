@@ -1,18 +1,12 @@
 'use client';
 
-import clsx from 'clsx';
 import { FC, useMemo, useState } from 'react';
-import { TooltipProps } from 'recharts';
-import {
-  NameType,
-  ValueType,
-} from 'recharts/types/component/DefaultTooltipContent';
 
 import { TransactionMonthSummaryDto } from '$api/generated/financerApi';
 import { DetailsList } from '$blocks/details-list/details-list';
 import { DetailsItem } from '$blocks/details-list/details-list.item';
 import { EmptyContentBlock } from '$blocks/EmptyContentBlock';
-import { AreaStackedChart } from '$charts/AreaStackedChart';
+import { AreaStackedChart, ChartConfig } from '$charts/AreaStackedChart';
 import {
   ChartFilterByMonthsSelect,
   monthFilterOptions,
@@ -27,65 +21,31 @@ type StatisticsOverviewDataProps = {
   data: (Omit<TransactionMonthSummaryDto, 'id'> & { date: Date })[];
 };
 
-const CustomTooltip = ({
-  active,
-  payload,
-}: TooltipProps<ValueType, NameType>) => {
-  if (active && payload && payload.length) {
-    return (
-      <div className="grid gap-1 p-2 text-xs border rounded-md bg-layer">
-        <p className="font-medium text-foreground">
-          {payload[0].payload.dataKey}
-        </p>
-        <ul className="space-y-1">
-          {payload.map((entry) => (
-            <li key={entry.dataKey}>
-              <p className="grid grid-cols-[auto,1fr] gap-4 items-center">
-                <span className="inline-flex items-center gap-2 text-muted-foreground">
-                  <span
-                    className={clsx('inline-block w-2.5 h-2.5 rounded-sm', {
-                      'bg-green': entry.dataKey === 'incomes',
-                      'bg-red': entry.dataKey === 'expenses',
-                    })}
-                  />
-                  {entry.dataKey === 'incomes' ? 'Incomes' : 'Expenses'}
-                </span>
-                <span className="text-right text-foreground">
-                  {formatCurrency(entry.value as number)}
-                </span>
-              </p>
-            </li>
-          ))}
-        </ul>
-      </div>
-    );
-  }
-
-  return <div />;
-};
-
 export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
   data,
 }) => {
   const chartData = useMemo(
     () =>
       data.map(({ date, incomeAmount, expenseAmount }) => ({
-        dataKey: formatDate(date, DateFormat.monthShort),
-        data: [
-          {
-            key: 'incomes',
-            color: 'hsl(var(--color-green))',
-            value: incomeAmount,
-          },
-          {
-            key: 'expenses',
-            color: 'hsl(var(--color-red))',
-            value: expenseAmount,
-          },
-        ],
+        dataKey: formatDate(date, DateFormat.monthLong),
+        incomes: incomeAmount,
+        expenses: expenseAmount,
       })),
     [data],
   );
+
+  const chartConfig = {
+    incomes: {
+      label: 'Incomes',
+      color: 'hsl(var(--color-green))',
+      valueFormatter: formatCurrency,
+    },
+    expenses: {
+      label: 'Expenses',
+      color: 'hsl(var(--color-red))',
+      valueFormatter: formatCurrency,
+    },
+  } satisfies ChartConfig;
 
   const defaultFilterValue = useMemo(
     () =>
@@ -116,19 +76,8 @@ export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
 
   const filteredChartData = chartData.slice(-selectedFilter);
 
-  const { incomes, expenses } = filteredChartData.reduce(
-    (acc, month) => {
-      month.data.forEach((entry) => {
-        if (entry.key === 'incomes') {
-          acc.incomes.push(entry.value);
-        } else if (entry.key === 'expenses') {
-          acc.expenses.push(entry.value);
-        }
-      });
-      return acc;
-    },
-    { incomes: [] as number[], expenses: [] as number[] },
-  );
+  const incomes = filteredChartData.map((month) => month.incomes);
+  const expenses = filteredChartData.map((month) => month.expenses);
 
   const average = {
     incomes: incomes.reduce((sum, num) => sum + num, 0) / incomes.length,
@@ -202,10 +151,13 @@ export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
         </div>
         <AreaStackedChart
           chartData={filteredChartData}
+          chartConfig={chartConfig}
           yaxisTickFormatter={(value: number) => {
             return formatCurrencyAbbreviation(value);
           }}
-          customTooltip={CustomTooltip}
+          xaxisTickFormatter={(value: string) => {
+            return formatDate(new Date(value), DateFormat.monthShort);
+          }}
         />
       </div>
       <div className="p-6 rounded-md bg-layer">
