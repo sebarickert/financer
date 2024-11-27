@@ -14,7 +14,7 @@ import {
 
 import { CustomTooltip } from './CustomTooltip';
 
-type ChartData = {
+export type ChartData = {
   dataKey: string;
   [key: string]: unknown;
 }[];
