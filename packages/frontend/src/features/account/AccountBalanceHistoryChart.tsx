@@ -86,7 +86,11 @@ export const AccountBalanceHistoryChart: FC<
           return formatCurrencyAbbreviation(value);
         }}
         xaxisTickFormatter={(value: string) => {
-          const parsedDate = parse(value, 'LLLL yyyy', new Date());
+          const parsedDate = parse(
+            value,
+            DateFormat.monthWithDateShortWithYear,
+            new Date(),
+          );
           return formatDate(parsedDate, DateFormat.monthWithDateShort);
         }}
       />

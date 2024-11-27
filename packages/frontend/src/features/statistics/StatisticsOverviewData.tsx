@@ -156,7 +156,7 @@ export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
             return formatCurrencyAbbreviation(value);
           }}
           xaxisTickFormatter={(value: string) => {
-            const parsedDate = parse(value, 'LLLL yyyy', new Date());
+            const parsedDate = parse(value, DateFormat.monthLong, new Date());
             return formatDate(parsedDate, DateFormat.month);
           }}
         />
