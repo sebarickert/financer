@@ -34,6 +34,10 @@ export const Account: FC<AccountProps> = ({ account, balanceHistory }) => {
 
   return (
     <section className="grid gap-6">
+      <div className="grid gap-6 p-6 rounded-md bg-layer">
+        <BalanceDisplay label="Balance" amount={account.balance} />
+        <DetailsList testId="account-details" items={accountDetails} />
+      </div>
       {balanceHistory.length < 3 && (
         <EmptyContentBlock
           title="Not Enough Data Yet"
@@ -44,15 +48,8 @@ export const Account: FC<AccountProps> = ({ account, balanceHistory }) => {
         </EmptyContentBlock>
       )}
       {balanceHistory.length >= 3 && (
-        <AccountBalanceHistoryChart
-          data={balanceHistory}
-          // className='lg:h-[375px] [&_[data-slot="chart"]]:lg:h-[279px] [&_[data-slot="chart"]]:lg:aspect-auto'
-        />
+        <AccountBalanceHistoryChart data={balanceHistory} />
       )}
-      <div className="grid gap-6 p-6 rounded-md bg-layer">
-        <BalanceDisplay label="Balance" amount={account.balance} />
-        <DetailsList testId="account-details" items={accountDetails} />
-      </div>
       <TransactionListWithMonthlyPager
         filterOptions={{ accountId: account.id }}
       />
