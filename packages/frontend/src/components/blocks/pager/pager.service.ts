@@ -34,6 +34,14 @@ export class PagerService {
     return new Date(date);
   }
 
+  private static endOfMonth(date: Date): Date {
+    const newDate = new Date(date);
+    newDate.setMonth(newDate.getMonth() + 1);
+    newDate.setDate(0);
+
+    return newDate;
+  }
+
   private static gotoYearMonthPage(date: Date): void {
     const headersList = headers();
     const searchParams = new URLSearchParams(
@@ -58,6 +66,7 @@ export class PagerService {
 
   public static getYearMonthPageOptions(
     firstAvailableDate: Date,
+    lastAvailableDate: Date,
   ): PagerOptions {
     const selectedMonth = this.getCurrentDateFilter();
     const year = selectedMonth.getFullYear();
@@ -85,9 +94,7 @@ export class PagerService {
           newFilter.setMonth(newFilter.getMonth() + 1);
           PagerService.gotoYearMonthPage(newFilter);
         },
-        isAvailable: !(
-          year === now.getFullYear() && month === now.getMonth() + 1
-        ),
+        isAvailable: this.endOfMonth(selectedMonth) < lastAvailableDate,
       },
       previousPage: {
         load: async () => {
