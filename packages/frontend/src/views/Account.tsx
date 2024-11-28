@@ -6,7 +6,7 @@ import {
 } from '$api/generated/financerApi';
 import { BalanceDisplay } from '$blocks/BalanceDisplay';
 import { DetailsList, DetailsItem } from '$blocks/DetailsList';
-import { EmptyContentBlock } from '$blocks/EmptyContentBlock';
+import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
 import { IconName } from '$elements/Icon';
 import { AccountBalanceHistoryChart } from '$features/account/AccountBalanceHistoryChart';
 import { TransactionListWithMonthlyPager } from '$features/transaction/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
@@ -38,13 +38,10 @@ export const Account: FC<AccountProps> = ({ account, balanceHistory }) => {
         <DetailsList testId="account-details" items={accountDetails} />
       </div>
       {balanceHistory.length < 3 && (
-        <EmptyContentBlock
-          title="Not Enough Data Yet"
-          icon="RectangleGroupIcon"
-        >
+        <InfoMessageBlock title="Not Enough Data Yet" icon="RectangleGroupIcon">
           There isn&apos;t enough data to generate a meaningful balance history.
           Add more transactions to track your financial trends over time.
-        </EmptyContentBlock>
+        </InfoMessageBlock>
       )}
       {balanceHistory.length >= 3 && (
         <AccountBalanceHistoryChart data={balanceHistory} />

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { EmptyContentBlock } from '$blocks/EmptyContentBlock';
+import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
 import { settingsPaths } from '$constants/settings-paths';
 import { Button } from '$elements/Button/Button';
 import { Icon } from '$elements/Icon';
@@ -29,7 +29,7 @@ export const TemplateListingContainer: FC = async () => {
       }
     >
       {!templates.length && (
-        <EmptyContentBlock
+        <InfoMessageBlock
           title="No Templates Added"
           icon="BoltIcon"
           action={
@@ -41,7 +41,7 @@ export const TemplateListingContainer: FC = async () => {
           It seems you haven&apos;t added any templates yet. Create your first
           template to predefine values or automate common transactions, making
           it easier to track recurring expenses and income.
-        </EmptyContentBlock>
+        </InfoMessageBlock>
       )}
       <TemplateList templates={templates} />
     </Layout>

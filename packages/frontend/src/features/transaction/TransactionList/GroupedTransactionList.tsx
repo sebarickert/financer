@@ -5,7 +5,7 @@ import { FC } from 'react';
 import { TransactionList } from './TransactionList';
 
 import { TransactionListItemDto } from '$api/generated/financerApi';
-import { EmptyContentBlock } from '$blocks/EmptyContentBlock';
+import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
 import { DateFormat, formatDate } from '$utils/formatDate';
 
 type GroupedTransactionListProps = {
@@ -47,10 +47,10 @@ export const GroupedTransactionList: FC<GroupedTransactionListProps> = async ({
 
   if (groupedTransactions.length === 0) {
     return (
-      <EmptyContentBlock title="No Transactions Added" icon="PlusIcon">
+      <InfoMessageBlock title="No Transactions Added" icon="PlusIcon">
         Your transactions will appear here. <br />
         Add one to begin tracking.
-      </EmptyContentBlock>
+      </InfoMessageBlock>
     );
   }
 

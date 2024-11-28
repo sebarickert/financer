@@ -1,179 +1,140 @@
+import clsx from 'clsx';
 import { Metadata } from 'next';
 
-import { Link } from '$elements/Link';
+import { Button } from '$elements/Button/Button';
+import { Heading } from '$elements/Heading';
+import { Icon } from '$elements/Icon';
+import { AuthenticationService } from '$ssr/api/authentication.service';
 
 export const metadata: Metadata = {
-  title: 'Privacy policy',
-  description: 'Financer privacy policy',
+  title: 'Privacy Policy',
 };
 
-const PrivacyPolicy = (): JSX.Element => {
+const PrivacyPolicy = async () => {
+  const authenticationStatus = await AuthenticationService.getStatus();
+  const isLoggedIn = !!authenticationStatus?.authenticated;
+
   return (
-    <div className="py-16 mx-auto prose max-w-prose ">
-      <Link
-        href="/"
-        className="inline-block mb-12 text-base font-semibold tracking-tight uppercase"
+    <main className="grid max-w-screen-lg gap-6 px-4 pt-6 mx-auto lg:pt-12 pb-safe-offset-12 lg:px-8">
+      <div className={clsx('flex gap-4 items-center')}>
+        <Button
+          href={isLoggedIn ? '/' : '/login'}
+          accentColor="secondary"
+          size="icon"
+          haptic="light"
+          testId="header-back-link"
+          className="max-lg:button-ghost shrink-0"
+        >
+          <Icon name="ArrowLeftIcon" />
+          <span className="sr-only">Go back</span>
+        </Button>
+        <Heading variant="h1">Privacy Policy for Financer</Heading>
+      </div>
+      <div
+        className={clsx(
+          'prose',
+          'prose-headings:text-foreground prose-p:text-foreground prose-strong:text-foreground',
+          'prose-ol:text-foreground prose-ul:text-foreground marker:text-muted-foreground',
+          'prose-a:text-foreground focus-visible:prose-a:focus-highlight hover:prose-a:text-muted-foreground',
+        )}
       >
-        Go back
-      </Link>
-      <h1>
-        <span className="block text-base font-semibold tracking-wide text-blue uppercase">
-          Privacy policy
-        </span>
-        <span className="block mt-2 text-3xl font-extrabold leading-8 tracking-tight text-foreground sm:text-4xl">
-          Financer
-        </span>
-      </h1>
-      <p>
-        Financer operates the https://financer.silte.fi website, which provides
-        the SERVICE.
-      </p>
-      <p>
-        If you choose to use our Service, then you agree to the collection and
-        use of information in relation with this policy. The Personal
-        Information that we collect are used for providing and improving the
-        Service. We will not use or share your information with anyone except as
-        described in this Privacy Policy. Our Privacy Policy was created with
-        the help of the{' '}
-        <a
-          href="https://www.privacypolicytemplate.net"
-          className="text-blue rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4"
-        >
-          Privacy Policy Template
-        </a>{' '}
-        and the{' '}
-        <a
-          href="https://www.generateprivacypolicy.com"
-          className="text-blue rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4"
-        >
-          Privacy Policy Generator
-        </a>
-        .
-      </p>
-
-      <p>
-        The terms used in this Privacy Policy have the same meanings as in our
-        Terms and Conditions, which is accessible at https://financer.silte.fi,
-        unless otherwise defined in this Privacy Policy.
-      </p>
-
-      <h2>Information Collection and Use</h2>
-
-      <p>
-        For a better experience while using our Service, we may require you to
-        provide us with certain personally identifiable information, including
-        but not limited to your name, phone number, and postal address. The
-        information that we collect will be used to contact or identify you.
-      </p>
-
-      <h2>Log Data</h2>
-
-      <p>
-        We want to inform you that whenever you visit our Service, we collect
-        information that your browser sends to us that is called Log Data. This
-        Log Data may include information such as your computer’s Internet
-        Protocol (&quot;IP&quot;) address, browser version, pages of our Service
-        that you visit, the time and date of your visit, the time spent on those
-        pages, and other statistics.
-      </p>
-
-      <h2>Cookies</h2>
-
-      <p>
-        Cookies are files with small amount of data that is commonly used an
-        anonymous unique identifier. These are sent to your browser from the
-        website that you visit and are stored on your computer’s hard drive.
-      </p>
-
-      <p>
-        Our website uses these &quot;cookies&quot; to collection information and
-        to improve our Service. You have the option to either accept or refuse
-        these cookies, and know when a cookie is being sent to your computer. If
-        you choose to refuse our cookies, you may not be able to use some
-        portions of our Service.
-      </p>
-
-      <p>
-        For more general information on cookies, please read{' '}
-        <a
-          href="https://www.cookieconsent.com/what-are-cookies/"
-          className="text-blue rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4"
-        >
-          &quot;What Are Cookies&quot;
-        </a>
-        .
-      </p>
-
-      <h2>Service Providers</h2>
-
-      <p>
-        We may employ third-party companies and individuals due to the following
-        reasons:
-      </p>
-
-      <ul>
-        <li>To facilitate our Service;</li>
-        <li>To provide the Service on our behalf;</li>
-        <li>To perform Service-related services; or</li>
-        <li>To assist us in analyzing how our Service is used.</li>
-      </ul>
-
-      <p>
-        We want to inform our Service users that these third parties have access
-        to your Personal Information. The reason is to perform the tasks
-        assigned to them on our behalf. However, they are obligated not to
-        disclose or use the information for any other purpose.
-      </p>
-
-      <h2>Security</h2>
-
-      <p>
-        We value your trust in providing us your Personal Information, thus we
-        are striving to use commercially acceptable means of protecting it. But
-        remember that no method of transmission over the internet, or method of
-        electronic storage is 100% secure and reliable, and we cannot guarantee
-        its absolute security.
-      </p>
-
-      <h2>Links to Other Sites</h2>
-
-      <p>
-        Our Service may contain links to other sites. If you click on a
-        third-party link, you will be directed to that site. Note that these
-        external sites are not operated by us. Therefore, we strongly advise you
-        to review the Privacy Policy of these websites. We have no control over,
-        and assume no responsibility for the content, privacy policies, or
-        practices of any third-party sites or services.
-      </p>
-
-      <p>Children&apos;s Privacy</p>
-
-      <p>
-        Our Services do not address anyone under the age of 13. We do not
-        knowingly collect personal identifiable information from children under
-        13. In the case we discover that a child under 13 has provided us with
-        personal information, we immediately delete this from our servers. If
-        you are a parent or guardian and you are aware that your child has
-        provided us with personal information, please contact us so that we will
-        be able to do necessary actions.
-      </p>
-
-      <h2>Changes to This Privacy Policy</h2>
-
-      <p>
-        We may update our Privacy Policy from time to time. Thus, we advise you
-        to review this page periodically for any changes. We will notify you of
-        any changes by posting the new Privacy Policy on this page. These
-        changes are effective immediately, after they are posted on this page.
-      </p>
-
-      <h2>Contact Us</h2>
-
-      <p>
-        If you have any questions or suggestions about our Privacy Policy, do
-        not hesitate to contact us.
-      </p>
-    </div>
+        <p>
+          <em>Last updated: 28.11.2024</em>
+        </p>
+        <p>
+          At <strong>Financer</strong>, we are committed to protecting your
+          privacy and being transparent about how we handle your data. This
+          policy explains the information we collect, how it’s used, and your
+          rights.
+        </p>
+        <h2>Information We Collect</h2>
+        <ol>
+          <li>
+            <strong>Registration Data:</strong>
+            <p>
+              Your registration data, including your email, is managed securely
+              by our authentication provider, <strong>Auth0</strong>. While your
+              email address is accessible from our server, we do not actively
+              use it within the app unless required for support or compliance
+              purposes.
+            </p>
+          </li>
+          <li>
+            <strong>App Data:</strong>
+            <p>
+              The only personal data we collect and process within the app is
+              the information you manually input, such as:
+            </p>
+            <ul>
+              <li>Transactions, budgets, and other financial details.</li>
+            </ul>
+          </li>
+        </ol>
+        <h2>How We Use Your Data</h2>
+        <p>Your data is used solely to:</p>
+        <ul>
+          <li>Provide and enhance the app’s functionality.</li>
+          <li>Enable you to track and manage your finances effectively.</li>
+        </ul>
+        <p>
+          We do not use your email or registration data for any purpose within
+          the app unless explicitly authorized.
+        </p>
+        <h2>Your Rights</h2>
+        <ul>
+          <li>
+            <strong>Download Your Data:</strong>
+            <p>You can export your financial data directly from the app.</p>
+          </li>
+          <li>
+            <strong>Data Deletion:</strong>
+            <p>
+              To delete your account and all associated data, you must contact
+              us directly on GitHub:
+            </p>
+            <ul>
+              <li>
+                <a href="https://github.com/sebarickert">@sebarickert</a>
+              </li>
+              <li>
+                <a href="https://github.com/silte">@silte</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Auth0 Account Management:</strong>
+            <p>
+              For issues related to your registration data (e.g., email
+              changes), contact our support team or manage your account through
+              Auth0.
+            </p>
+          </li>
+        </ul>
+        <h2>Data Sharing and Security</h2>
+        <p>
+          We never sell your data or share it with third parties beyond what is
+          necessary for authentication (via Auth0). All data is protected using
+          industry-standard encryption and security measures.
+        </p>
+        <h2>Contact Us</h2>
+        <p>
+          For questions, data requests, or account deletion, contact us on
+          GitHub:
+        </p>
+        <ul>
+          <li>
+            <a href="https://github.com/sebarickert">@sebarickert</a>
+          </li>
+          <li>
+            <a href="https://github.com/silte">@silte</a>
+          </li>
+        </ul>
+        <p>
+          This policy is subject to updates. Significant changes will be
+          communicated through the app or GitHub.
+        </p>
+      </div>
+    </main>
   );
 };
 

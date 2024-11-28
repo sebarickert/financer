@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { Logo } from '$blocks/Logo';
 import { Button } from '$elements/Button/Button';
 import { ButtonGroup } from '$elements/Button/ButtonGroup';
+import { Link } from '$elements/Link';
 import { Loader } from '$elements/Loader';
 import { Paragraph } from '$elements/Paragraph';
 
@@ -28,7 +29,7 @@ export const Login = (): JSX.Element => {
       <section
         className={clsx('flex flex-col justify-center items-center h-dvh px-4')}
       >
-        <div className="grid w-full max-w-xl gap-8">
+        <div className="grid w-full max-w-xl gap-6">
           <Logo />
           <div className="p-6 rounded-md bg-layer">
             <h1 className="mb-4 text-2xl font-medium ">Welcome to Financer!</h1>
@@ -51,6 +52,10 @@ export const Login = (): JSX.Element => {
                 </Button>
               )}
             </ButtonGroup>
+          </div>
+          <div className="grid gap-1 text-sm [&>*]:[justify-self:baseline]">
+            <Link href="/issues-with-login">Troubleshooting Login Issues</Link>
+            <Link href="/privacy-policy">Privacy Policy</Link>
           </div>
         </div>
       </section>
