@@ -29,11 +29,18 @@ export const TransactionListWithMonthlyPager: FC<
   filterOptions: additionalFilterOptions,
   type = null,
 }) => {
-  const transaction = await TransactionService.getFirstByType();
+  const firstTransaction = await TransactionService.getFirstByType();
+  const lastTransaction = await TransactionService.getLatestByType();
 
-  const firstAvailableTransaction = new Date(transaction?.date ?? new Date());
+  const firstAvailableTransaction = new Date(
+    firstTransaction?.date ?? new Date(),
+  );
+  const lastAvailableTransaction = new Date(
+    lastTransaction?.date ?? new Date(),
+  );
   const pagerOptions = PagerService.getYearMonthPageOptions(
     firstAvailableTransaction,
+    lastAvailableTransaction,
   );
 
   const filterOptions = {
