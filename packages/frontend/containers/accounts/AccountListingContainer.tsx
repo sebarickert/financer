@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import { AccountType } from '$api/generated/financerApi';
-import { EmptyContentBlock } from '$blocks/EmptyContentBlock';
+import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
 import { Button } from '$elements/Button/Button';
 import { Icon } from '$elements/Icon';
 import { AccountList } from '$features/account/AccountList';
@@ -47,7 +47,7 @@ export const AccountListingContainer: FC = async () => {
       }
     >
       {!accounts.length && (
-        <EmptyContentBlock
+        <InfoMessageBlock
           title="No Accounts Added"
           icon="Squares2X2Icon"
           action={<Button href="/accounts/add">Add Account</Button>}
@@ -55,7 +55,7 @@ export const AccountListingContainer: FC = async () => {
           It seems you haven&apos;t added any accounts yet. Get started by
           adding your first account to begin organizing and tracking your
           finances.
-        </EmptyContentBlock>
+        </InfoMessageBlock>
       )}
       <section className="grid gap-8">
         <AccountList label="Savings" accounts={groupedAccounts.savings} />

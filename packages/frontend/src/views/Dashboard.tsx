@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { EmptyContentBlock } from '$blocks/EmptyContentBlock';
+import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
 import { List } from '$blocks/List';
 import { ProminentLink } from '$blocks/ProminentLink';
 import { Button } from '$elements/Button/Button';
@@ -87,14 +87,14 @@ export const Dashboard: FC = async () => {
           </List>
         </div>
         {balanceHistory.length < 3 && (
-          <EmptyContentBlock
+          <InfoMessageBlock
             title="Not Enough Data Yet"
             icon="RectangleGroupIcon"
           >
             There isn&apos;t enough data to generate a meaningful balance
             history. Add more transactions to track your financial trends over
             time.
-          </EmptyContentBlock>
+          </InfoMessageBlock>
         )}
         {balanceHistory.length >= 3 && (
           <DashboardBalanceHistoryChart

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { EmptyContentBlock } from '$blocks/EmptyContentBlock';
+import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
 import { List } from '$blocks/List';
 import { ProminentLink } from '$blocks/ProminentLink';
 import { settingsPaths } from '$constants/settings-paths';
@@ -96,7 +96,7 @@ export const CategoryListingContainer: FC = async () => {
     >
       <section className="grid gap-8">
         {!categoryRows.length && (
-          <EmptyContentBlock
+          <InfoMessageBlock
             title="No Categories Added"
             icon="TagIcon"
             action={
@@ -108,7 +108,7 @@ export const CategoryListingContainer: FC = async () => {
             It seems you haven&apos;t added any categories yet. Start by adding
             your first category to begin organizing and tracking your finances
             more effectively.
-          </EmptyContentBlock>
+          </InfoMessageBlock>
         )}
         {categoryRows.map(({ label: parentLabel, items, link: parentLink }) => (
           <List key={parentLabel} label={parentLabel} testId="category-list">

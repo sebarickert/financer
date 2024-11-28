@@ -5,7 +5,7 @@ import { FC, useMemo, useState } from 'react';
 
 import { TransactionMonthSummaryDto } from '$api/generated/financerApi';
 import { DetailsItem, DetailsList } from '$blocks/DetailsList';
-import { EmptyContentBlock } from '$blocks/EmptyContentBlock';
+import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
 import { AreaStackedChart, ChartConfig } from '$charts/AreaStackedChart';
 import {
   ChartFilterByMonthsSelect,
@@ -66,11 +66,11 @@ export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
 
   if (chartData.length < 3) {
     return (
-      <EmptyContentBlock title="Not Enough Data Yet" icon="RectangleGroupIcon">
+      <InfoMessageBlock title="Not Enough Data Yet" icon="RectangleGroupIcon">
         It seems there isn&apos;t enough data to generate a meaningful summary.
         Start by adding more transactions to see an overview of your monthly
         activity.
-      </EmptyContentBlock>
+      </InfoMessageBlock>
     );
   }
 

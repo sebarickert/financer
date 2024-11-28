@@ -4,14 +4,14 @@ import { FC } from 'react';
 import { Heading } from '$elements/Heading';
 import { Icon, IconName } from '$elements/Icon';
 
-type EmptyContentBlockProps = {
+type InfoMessageBlockProps = {
   title: string;
   children: React.ReactNode;
   icon?: IconName;
   action?: React.ReactNode;
 };
 
-export const EmptyContentBlock: FC<EmptyContentBlockProps> = ({
+export const InfoMessageBlock: FC<InfoMessageBlockProps> = ({
   icon,
   title,
   children,

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { EmptyContentBlock } from '$blocks/EmptyContentBlock';
+import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
 import { Button } from '$elements/Button/Button';
 import { Layout } from '$layouts/Layout';
 import { AccountService } from '$ssr/api/account.service';
@@ -12,7 +12,7 @@ export const DashboardContainer: FC = async () => {
   return (
     <Layout title="Dashboard">
       {!accounts.length && (
-        <EmptyContentBlock
+        <InfoMessageBlock
           title="No Accounts Added"
           icon="Squares2X2Icon"
           action={<Button href="/accounts/add">Add Account</Button>}
@@ -20,7 +20,7 @@ export const DashboardContainer: FC = async () => {
           It seems you haven&apos;t added any accounts yet. Get started by
           adding your first account to begin organizing and tracking your
           finances.
-        </EmptyContentBlock>
+        </InfoMessageBlock>
       )}
       {!!accounts.length && <Dashboard />}
     </Layout>
