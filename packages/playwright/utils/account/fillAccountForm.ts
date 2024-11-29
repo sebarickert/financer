@@ -14,18 +14,20 @@ export const fillAccountForm = async (
 ) => {
   const { name, balance, type } = fields;
 
+  const accountForm = page.getByTestId('account-form');
+
   const formFields = {
     '#name': name,
     '#balance': balance?.toNumber(),
-    '#type': type ? { label: type } : undefined,
+    '#type': type
+      ? accountForm.getByLabel(type, { exact: true }).check()
+      : undefined,
   };
-
-  const accountForm = page.getByTestId('account-form');
 
   for (const [selector, value] of Object.entries(formFields)) {
     if (value) {
       if (selector === '#type') {
-        await accountForm.locator(selector).selectOption(value as string);
+        await value;
       } else {
         await accountForm.locator(selector).fill(value.toString());
       }
