@@ -25,7 +25,7 @@ export const AccountEditContainer: FC<AccountEditContainerProps> = async ({
     <Layout title="Edit Account" backLink={`/accounts/${account.id}`}>
       <AccountForm
         onSubmit={handleSubmit}
-        submitLabel="Update"
+        submitLabel="Save Changes"
         initialValues={account}
       />
     </Layout>

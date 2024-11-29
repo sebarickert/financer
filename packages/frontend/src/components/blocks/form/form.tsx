@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import {
   FieldValues,
   FormProvider,
@@ -18,6 +19,7 @@ type FormProps<FormValues extends FieldValues> = {
   testId?: string;
   optionalFooterComponent?: React.ReactNode;
   hasCancelButton?: boolean;
+  className?: string;
 } & (
   | {
       onSubmit: SubmitHandler<FormValues>;
@@ -40,6 +42,7 @@ export const Form = <T extends FieldValues>({
   methods,
   action,
   hasCancelButton,
+  className,
 }: FormProps<T>): JSX.Element => {
   const { handleSubmit } = methods;
 
@@ -49,6 +52,7 @@ export const Form = <T extends FieldValues>({
         action={action}
         onSubmit={onSubmit ? handleSubmit(onSubmit) : undefined}
         data-testid={testId}
+        className={clsx(className)}
       >
         {children}
         <FormFooter

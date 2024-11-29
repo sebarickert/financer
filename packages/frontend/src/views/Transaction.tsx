@@ -138,7 +138,7 @@ export const Transaction: FC<TransactionProps> = async ({
           {icon && (
             <span
               className={clsx(
-                'p-3 rounded-full inline-block',
+                'p-3 rounded-full inline-block text-white',
                 { 'bg-accent': !color },
                 { [color]: color },
               )}

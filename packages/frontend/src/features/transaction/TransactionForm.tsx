@@ -11,7 +11,7 @@ import {
   useAccountsFindAllByUserQuery,
 } from '$api/generated/financerApi';
 import { Form } from '$blocks/form/form';
-import { accountTypeIconMapping } from '$constants/account/accountTypeMapping';
+import { accountTypeMapping } from '$constants/account/accountTypeMapping';
 import { transactionTypeIconMapping } from '$constants/transaction/transactionTypeIconMapping';
 import { Input } from '$elements/Input';
 import { Option, Select } from '$elements/Select';
@@ -71,7 +71,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
     return accounts.map(({ id, name, type, balance }) => ({
       value: id,
       label: name,
-      icon: accountTypeIconMapping[type],
+      icon: accountTypeMapping[type].icon,
       description: `Balance ${formatCurrency(balance)}`,
     }));
   }, [accounts]);

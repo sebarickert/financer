@@ -7,10 +7,10 @@ import {
 import { BalanceDisplay } from '$blocks/BalanceDisplay';
 import { DetailsList, DetailsItem } from '$blocks/DetailsList';
 import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
+import { accountTypeMapping } from '$constants/account/accountTypeMapping';
 import { IconName } from '$elements/Icon';
 import { AccountBalanceHistoryChart } from '$features/account/AccountBalanceHistoryChart';
 import { TransactionListWithMonthlyPager } from '$features/transaction/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
-import { capitalize } from '$utils/capitalize';
 
 type AccountProps = {
   account: AccountDto;
@@ -23,9 +23,7 @@ export const Account: FC<AccountProps> = ({ account, balanceHistory }) => {
       {
         icon: 'InformationCircleIcon' as IconName,
         label: 'Account Type',
-        description: capitalize(
-          account.type.replaceAll('_', ' ').toLowerCase(),
-        ),
+        description: accountTypeMapping[account.type].label,
       },
     ],
     [account.type],

@@ -3,7 +3,7 @@ import { FC } from 'react';
 
 import { AccountDto } from '$api/generated/financerApi';
 import { List } from '$blocks/List';
-import { accountTypeIconMapping } from '$constants/account/accountTypeMapping';
+import { accountTypeMapping } from '$constants/account/accountTypeMapping';
 import { Icon } from '$elements/Icon';
 import { Link } from '$elements/Link';
 import { formatCurrency } from '$utils/formatCurrency';
@@ -50,7 +50,7 @@ export const AccountList: FC<AccountListProps> = ({
                 'inline-flex items-center justify-center shrink-0',
               )}
             >
-              <Icon name={accountTypeIconMapping[type]} />
+              <Icon name={accountTypeMapping[type].icon} />
             </div>
             <div
               className={clsx(
