@@ -10,8 +10,7 @@ import { Drawer } from '$blocks/Drawer';
 import { Button } from '$elements/Button/Button';
 import { ButtonGroup } from '$elements/Button/ButtonGroup';
 import { Icon } from '$elements/Icon';
-import { Radio } from '$elements/radio/radio';
-import { RadioGroup } from '$elements/radio/radio.group';
+import { InputOption } from '$elements/InputOption';
 
 interface TransactionTemplateSwitcherProps {
   selectedTemplate?: string;
@@ -59,27 +58,28 @@ export const TransactionTemplateSwitcher = ({
       </Button>
       <Drawer id={templateSwitcherId} heading="Use Template" ref={popoverRef}>
         <form onSubmit={handleSubmit} data-testid="transaction-templates-form">
-          <section className="-mx-4">
-            <RadioGroup>
-              <Radio
-                name={name ?? 'templateSwitcher'}
-                value={''}
-                isChecked={!selectedTemplate}
+          <fieldset className="grid gap-2">
+            <legend className="sr-only">Choose Template</legend>
+            <InputOption
+              id={name ?? 'templateSwitcher'}
+              value={''}
+              defaultChecked={!selectedTemplate}
+              type="radio"
+            >
+              Empty
+            </InputOption>
+            {targetTemplates.map(({ id, templateName }) => (
+              <InputOption
+                id={name ?? 'templateSwitcher'}
+                value={id}
+                key={id}
+                defaultChecked={id === selectedTemplate}
+                type="radio"
               >
-                Empty
-              </Radio>
-              {targetTemplates.map(({ id, templateName }) => (
-                <Radio
-                  name={name ?? 'templateSwitcher'}
-                  value={id}
-                  key={id}
-                  isChecked={id === selectedTemplate}
-                >
-                  {templateName}
-                </Radio>
-              ))}
-            </RadioGroup>
-          </section>
+                {templateName}
+              </InputOption>
+            ))}
+          </fieldset>
           <ButtonGroup className="mt-12">
             <Button type="submit">Switch</Button>
             <Button

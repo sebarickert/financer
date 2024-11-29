@@ -19,7 +19,7 @@ test.describe('Statistics PagePreferences', () => {
 
     await page.getByRole('link', { name: 'Settings' }).click();
     await page.getByRole('link', { name: 'Preferences' }).click();
-    await page.getByRole('link', { name: 'Statistics Page Settings' }).click();
+    await page.getByRole('link', { name: 'Statistics Settings' }).click();
 
     await page.locator('#PRE_ASSIGNED_CASH').check();
 

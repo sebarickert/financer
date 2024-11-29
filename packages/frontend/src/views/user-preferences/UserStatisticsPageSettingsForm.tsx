@@ -7,10 +7,7 @@ import { AccountType } from '$api/generated/financerApi';
 import { Form } from '$blocks/form/form';
 import { accountTypeMapping } from '$constants/account/accountTypeMapping';
 import { settingsPaths } from '$constants/settings-paths';
-import { Checkbox } from '$elements/checkbox/checkbox';
-import { CheckboxGroup } from '$elements/checkbox/checkbox.group';
-import { Heading } from '$elements/Heading';
-import { Paragraph } from '$elements/Paragraph';
+import { InputOption } from '$elements/InputOption';
 import {
   DefaultFormActionHandler,
   useFinancerFormState,
@@ -41,28 +38,25 @@ export const UserStatisticsPageSettingsForm: FC<
     <Form
       methods={methods}
       action={action}
-      submitLabel="Save"
+      submitLabel="Save Changes"
       formFooterBackLink={settingsPaths.userPreferences}
       testId="statistics-page-settings-form"
+      className="@container"
     >
-      <section className="mb-4">
-        <Heading>Account types</Heading>
-        <Paragraph>
-          Selected types will be calculated into statistics and graphs on the
-          statistics page.
-        </Paragraph>
-      </section>
-      <CheckboxGroup testId="statistics-account-checkboxes" className="-mx-4">
+      <fieldset className={'grid gap-2 @[600px]:grid-cols-2'}>
         {allAccountTypes.map((type) => (
-          <Checkbox
+          <InputOption
             key={type}
-            id={type}
-            label={accountTypeMapping[type].label}
+            id={'accountTypes'}
             value={type}
-            name="accountTypes"
-          />
+            type="checkbox"
+            icon={accountTypeMapping[type].icon}
+            register={methods.register('accountTypes')}
+          >
+            {accountTypeMapping[type].label}
+          </InputOption>
         ))}
-      </CheckboxGroup>
+      </fieldset>
     </Form>
   );
 };
