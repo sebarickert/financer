@@ -120,7 +120,6 @@ export const CategoryForm: FC<CategoryFormProps> = ({
           Name
         </Input>
         <fieldset
-          data-testid="visibility-checkboxes"
           className={'grid gap-2 @[600px]:grid-cols-2 @[900px]:grid-cols-3'}
         >
           <legend className="mb-2">Visibility</legend>

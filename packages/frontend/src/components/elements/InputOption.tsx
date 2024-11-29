@@ -20,8 +20,14 @@ export const InputOption = ({
   type,
   ...attributes
 }: RadioProps): JSX.Element => {
+  const labelId = `${id}-${value}-label`;
+
   return (
-    <label className={clsx('relative')} htmlFor={`${id}-${value}`}>
+    <label
+      className={clsx('relative')}
+      htmlFor={`${id}-${value}`}
+      aria-labelledby={labelId}
+    >
       <input
         id={`${id}-${value}`}
         type={type}
@@ -42,7 +48,9 @@ export const InputOption = ({
         )}
       >
         {icon && <Icon name={icon} className="w-7 h-7 shrink-0" />}
-        <span className="font-medium grow">{children}</span>
+        <p className="font-medium grow" id={labelId}>
+          {children}
+        </p>
         <span
           aria-hidden="true"
           data-slot="indicator"

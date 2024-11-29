@@ -5,7 +5,7 @@ import { test, expect } from '$utils/financer-page';
 import { getStatisticsDetails } from '$utils/statistics/getStatisticsDetails';
 import { getTransactionDataFromTransactionList } from '$utils/transaction/getTransactionDataFromTransactionList';
 
-test.describe('Statistics PagePreferences', () => {
+test.describe('Statistics Preferences', () => {
   test.beforeEach(async () => {
     await applyFixture();
   });
@@ -21,11 +21,14 @@ test.describe('Statistics PagePreferences', () => {
     await page.getByRole('link', { name: 'Preferences' }).click();
     await page.getByRole('link', { name: 'Statistics Settings' }).click();
 
-    await page.locator('#PRE_ASSIGNED_CASH').check();
+    await page
+      .locator('label')
+      .filter({ hasText: 'Pre-assigned Cash' })
+      .check();
 
     await page
       .getByTestId('statistics-page-settings-form')
-      .getByRole('button', { name: 'Save', exact: true })
+      .getByRole('button', { name: 'Save Changes', exact: true })
       .click();
 
     await page.getByRole('link', { name: 'Accounts' }).click();

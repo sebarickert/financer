@@ -15,7 +15,10 @@ export const fillAndSubmitTransactionTemplateForm = async (
       : page.getByTestId('transaction-drawer')
   ).getByTestId('transaction-templates-form');
 
-  await transactionTemplatesForm.getByLabel(fields.template).check();
+  await transactionTemplatesForm
+    .locator('label')
+    .filter({ hasText: fields.template })
+    .check();
 
   await transactionTemplatesForm
     .getByRole('button', { name: 'Switch', exact: true })
