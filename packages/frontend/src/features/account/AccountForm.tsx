@@ -1,17 +1,18 @@
 'use client';
 
+import clsx from 'clsx';
 import { FC, useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
+
+import { AccountTypeRadio } from './AccountTypeRadio';
 
 import { AccountType } from '$api/generated/financerApi';
 import { Form } from '$blocks/form/form';
 import { Input } from '$elements/Input';
-import { Select, Option } from '$elements/Select';
 import {
   DefaultFormActionHandler,
   useFinancerFormState,
 } from '$hooks/useFinancerFormState';
-import { capitalize } from '$utils/capitalize';
 
 type AccountFormProps = {
   onSubmit: DefaultFormActionHandler;
@@ -33,7 +34,7 @@ export const AccountForm: FC<AccountFormProps> = ({
   const action = useFinancerFormState('account-form', onSubmit);
 
   const defaultValues = useMemo(() => {
-    return { type: AccountType.Savings, ...initialValues };
+    return { ...initialValues };
   }, [initialValues]);
 
   const methods = useForm<AccountFormFields>({
@@ -41,11 +42,6 @@ export const AccountForm: FC<AccountFormProps> = ({
   });
 
   const { reset } = methods;
-
-  const accountTypes: Option[] = Object.values(AccountType).map((value) => ({
-    value,
-    label: capitalize(value.replaceAll('_', ' ').toLowerCase()),
-  }));
 
   useEffect(() => {
     if (!initialValues) return;
@@ -63,20 +59,30 @@ export const AccountForm: FC<AccountFormProps> = ({
       action={action}
       formFooterBackLink="/accounts"
       testId="account-form"
+      className="@container/account-form"
     >
-      <section>
-        <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
-          <Input id="name" isRequired>
-            Account
-          </Input>
-          <Input id="balance" type="number" step={0.01} isRequired>
-            Balance
-          </Input>
-          <Select id="type" options={accountTypes} isRequired>
-            Type
-          </Select>
-        </div>
-      </section>
+      <div className="grid gap-6">
+        <Input id="name" isRequired>
+          Name
+        </Input>
+        <Input id="balance" type="number" step={0.01} isRequired>
+          Balance
+        </Input>
+        <fieldset>
+          <legend className="mb-2">Type</legend>
+          <div
+            className={clsx(
+              'grid gap-2',
+              '@[700px]/account-form:grid-cols-2 @[700px]/account-form:[&>label]:min-h-[102px]',
+              '@[1050px]/account-form:grid-cols-3',
+            )}
+          >
+            {Object.values(AccountType).map((type) => (
+              <AccountTypeRadio key={type} id="type" value={type} />
+            ))}
+          </div>
+        </fieldset>
+      </div>
     </Form>
   );
 };

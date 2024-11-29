@@ -5,17 +5,13 @@ import { useForm } from 'react-hook-form';
 
 import { AccountType } from '$api/generated/financerApi';
 import { Form } from '$blocks/form/form';
-import { accountTypeLabelMapping } from '$constants/account/accountTypeMapping';
+import { accountTypeMapping } from '$constants/account/accountTypeMapping';
 import { settingsPaths } from '$constants/settings-paths';
-import { Checkbox } from '$elements/checkbox/checkbox';
-import { CheckboxGroup } from '$elements/checkbox/checkbox.group';
-import { Heading } from '$elements/Heading';
-import { Paragraph } from '$elements/Paragraph';
+import { InputOption } from '$elements/InputOption';
 import {
   DefaultFormActionHandler,
   useFinancerFormState,
 } from '$hooks/useFinancerFormState';
-import { capitalize } from '$utils/capitalize';
 
 const allAccountTypes = Object.values(AccountType);
 
@@ -43,28 +39,26 @@ export const UserDashboardSettingsForm: FC<UserDashboardSettingsFormProps> = ({
     <Form
       methods={methods}
       action={action}
-      submitLabel="Save"
+      submitLabel="Save Changes"
       formFooterBackLink={settingsPaths.userPreferences}
       testId="dashboard-settings-form"
+      className="@container"
     >
-      <section className="mb-4">
-        <Heading>Account types</Heading>
-        <Paragraph>
-          Selected types will be calculated into statistics and graphs on the
-          dashboard.
-        </Paragraph>
-      </section>
-      <CheckboxGroup testId="dashboard-account-checkboxes" className="-mx-4">
+      <fieldset className={'grid gap-2 @[600px]:grid-cols-2'}>
+        <legend className="sr-only">Select Account Types</legend>
         {allAccountTypes.map((type) => (
-          <Checkbox
+          <InputOption
             key={type}
-            id={type}
+            id={'accountTypes'}
+            type="checkbox"
             value={type}
-            label={capitalize(accountTypeLabelMapping[type])}
-            name={'accountTypes'}
-          />
+            icon={accountTypeMapping[type].icon}
+            register={methods.register('accountTypes')}
+          >
+            {accountTypeMapping[type].label}
+          </InputOption>
         ))}
-      </CheckboxGroup>
+      </fieldset>
     </Form>
   );
 };

@@ -19,7 +19,7 @@ test.describe.parallel('Add Account', () => {
       balance: new Decimal(parseFloat((Math.random() * 1000).toFixed(2))),
     }))
     .forEach(({ type, balance }) => {
-      test(`should add ${type.toLowerCase()} account and verify it appears in account list and is correct type`, async ({
+      test(`should add "${type}" account and verify it appears in account list and is correct type`, async ({
         page,
       }) => {
         const initialAccounts = await getAccountDataFromAccountList(page);

@@ -13,32 +13,55 @@ export const fillCategoryForm = async (
 ) => {
   const { name, parentCategory, visibility } = fields;
 
+  const categoryForm = page.getByTestId('category-form');
+
   const formFields = {
     '#name': name,
     '#parentCategoryId': parentCategory ? { label: parentCategory } : null,
-    '#incomeVisible': visibility?.includes(TransactionType.Income),
-    '#expenseVisible': visibility?.includes(TransactionType.Expense),
-    '#transferVisible': visibility?.includes(TransactionType.Transfer),
   };
 
-  const categoryForm = page.getByTestId('category-form');
-
   if (visibility?.length) {
-    await categoryForm.locator('#incomeVisible').setChecked(false);
-    await categoryForm.locator('#expenseVisible').setChecked(false);
-    await categoryForm.locator('#transferVisible').setChecked(false);
+    await categoryForm
+      .locator('label')
+      .filter({ hasText: 'Income' })
+      .setChecked(false);
+    await categoryForm
+      .locator('label')
+      .filter({ hasText: 'Expense' })
+      .setChecked(false);
+    await categoryForm
+      .locator('label')
+      .filter({ hasText: 'Transfer' })
+      .setChecked(false);
+
+    for (const type of visibility) {
+      if (type === TransactionType.Income) {
+        await categoryForm
+          .locator('label')
+          .filter({ hasText: 'Income' })
+          .check();
+      }
+
+      if (type === TransactionType.Expense) {
+        await categoryForm
+          .locator('label')
+          .filter({ hasText: 'Expense' })
+          .check();
+      }
+
+      if (type === TransactionType.Transfer) {
+        await categoryForm
+          .locator('label')
+          .filter({ hasText: 'Transfer' })
+          .check();
+      }
+    }
   }
 
   for (const [selector, value] of Object.entries(formFields)) {
     if (value) {
       if (selector === '#parentCategoryId') {
         await categoryForm.locator(selector).selectOption(value as string);
-      } else if (
-        selector === '#incomeVisible' ||
-        selector === '#expenseVisible' ||
-        selector === '#transferVisible'
-      ) {
-        await categoryForm.locator(selector).check();
       } else {
         await categoryForm.locator(selector).fill(value.toString());
       }

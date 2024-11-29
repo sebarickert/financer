@@ -22,11 +22,14 @@ test.describe('Dashboard Preferences', () => {
     await page.getByRole('link', { name: 'Preferences' }).click();
     await page.getByRole('link', { name: 'Dashboard Settings' }).click();
 
-    await page.locator('#PRE_ASSIGNED_CASH').check();
+    await page
+      .locator('label')
+      .filter({ hasText: 'Pre-assigned Cash' })
+      .check();
 
     await page
       .getByTestId('dashboard-settings-form')
-      .getByRole('button', { name: 'Save', exact: true })
+      .getByRole('button', { name: 'Save Changes', exact: true })
       .click();
 
     await page.getByRole('link', { name: 'Accounts' }).click();

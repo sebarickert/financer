@@ -93,7 +93,7 @@ export const Select = ({
     <div className={clsx('text-foreground', className)}>
       <label
         htmlFor={id}
-        className={clsx('block mb-1', { 'sr-only': isLabelHidden })}
+        className={clsx('block mb-2', { 'sr-only': isLabelHidden })}
       >
         {children}
       </label>

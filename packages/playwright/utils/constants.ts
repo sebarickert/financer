@@ -4,6 +4,6 @@ export const accountTypes = [
   'Investment',
   'Credit',
   'Loan',
-  'Long term savings',
-  'Pre assigned cash',
+  'Long-term Savings',
+  'Pre-assigned Cash',
 ];
