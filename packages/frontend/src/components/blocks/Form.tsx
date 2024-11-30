@@ -1,4 +1,7 @@
+'use client';
+
 import clsx from 'clsx';
+import { useFormStatus } from 'react-dom';
 import {
   FieldValues,
   FormProvider,
@@ -6,19 +9,12 @@ import {
   UseFormReturn,
 } from 'react-hook-form';
 
-import { FormFooter } from './form.footer';
-
-import { ButtonAccentColor } from '$elements/Button/Button';
+import { Loader } from '$elements/Loader';
 
 type FormProps<FormValues extends FieldValues> = {
   children: React.ReactNode;
-  submitLabel: string;
-  accentColor?: ButtonAccentColor;
-  formFooterBackLink?: string;
   methods: UseFormReturn<FormValues>;
   testId?: string;
-  optionalFooterComponent?: React.ReactNode;
-  hasCancelButton?: boolean;
   className?: string;
 } & (
   | {
@@ -33,15 +29,10 @@ type FormProps<FormValues extends FieldValues> = {
 
 export const Form = <T extends FieldValues>({
   children,
-  submitLabel,
   onSubmit,
-  accentColor,
-  formFooterBackLink,
-  optionalFooterComponent,
   testId,
   methods,
   action,
-  hasCancelButton,
   className,
 }: FormProps<T>): JSX.Element => {
   const { handleSubmit } = methods;
@@ -55,14 +46,26 @@ export const Form = <T extends FieldValues>({
         className={clsx(className)}
       >
         {children}
-        <FormFooter
-          submitLabel={submitLabel}
-          accentColor={accentColor}
-          formFooterBackLink={formFooterBackLink}
-          optionalComponent={optionalFooterComponent}
-          hasCancelButton={hasCancelButton}
-        />
       </form>
     </FormProvider>
   );
 };
+
+const FormFooter = ({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => {
+  const { pending } = useFormStatus();
+
+  return (
+    <div className={clsx(className, 'flex items-center gap-8 mt-12')}>
+      {children}
+      {pending && <Loader.Icon />}
+    </div>
+  );
+};
+
+Form.Footer = FormFooter;

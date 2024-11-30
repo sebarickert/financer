@@ -4,9 +4,9 @@ import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { AccountType } from '$api/generated/financerApi';
-import { Form } from '$blocks/form/form';
+import { Form } from '$blocks/Form';
 import { accountTypeMapping } from '$constants/account/accountTypeMapping';
-import { settingsPaths } from '$constants/settings-paths';
+import { Button } from '$elements/Button/Button';
 import { InputOption } from '$elements/InputOption';
 import {
   DefaultFormActionHandler,
@@ -39,8 +39,6 @@ export const UserDashboardSettingsForm: FC<UserDashboardSettingsFormProps> = ({
     <Form
       methods={methods}
       action={action}
-      submitLabel="Save Changes"
-      formFooterBackLink={settingsPaths.userPreferences}
       testId="dashboard-settings-form"
       className="@container"
     >
@@ -59,6 +57,9 @@ export const UserDashboardSettingsForm: FC<UserDashboardSettingsFormProps> = ({
           </InputOption>
         ))}
       </fieldset>
+      <Form.Footer>
+        <Button type="submit">Save Changes</Button>
+      </Form.Footer>
     </Form>
   );
 };

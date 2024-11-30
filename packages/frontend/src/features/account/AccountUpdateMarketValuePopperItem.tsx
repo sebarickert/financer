@@ -1,12 +1,12 @@
 'use client';
 
 import clsx from 'clsx';
-import { FC, useId } from 'react';
+import { FC, useId, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { AccountDto } from '$api/generated/financerApi';
 import { Drawer } from '$blocks/Drawer';
-import { Form } from '$blocks/form/form';
+import { Form } from '$blocks/Form';
 import { Button } from '$elements/Button/Button';
 import { Icon } from '$elements/Icon';
 import { Input } from '$elements/Input';
@@ -29,6 +29,7 @@ export const AccountUpdateMarketValuePopperItem: FC<
   AccountUpdateMarketValuePopperItemProps
 > = ({ account, marketSettings }) => {
   const popperId = useId();
+  const popperRef = useRef<HTMLDivElement>(null);
 
   const methods = useForm<AccountUpdateMarketValueFormFields>({
     defaultValues: {
@@ -42,7 +43,13 @@ export const AccountUpdateMarketValuePopperItem: FC<
     marketSettings,
   });
 
-  const action = useFinancerFormState('update-market-value', handleUpdate);
+  const action = useFinancerFormState(
+    'update-market-value',
+    handleUpdate,
+    () => {
+      popperRef?.current?.hidePopover();
+    },
+  );
 
   return (
     <>
@@ -58,16 +65,15 @@ export const AccountUpdateMarketValuePopperItem: FC<
         <Icon name={'ArrowTrendingUpIcon'} />
         <span className="inline-block pr-2">Update Market Value</span>
       </Button>
-      {/* TODO Drawer should close after submission */}
       <Drawer
         id={popperId}
         heading={'Update Market Value'}
         testId="update-market-value"
+        ref={popperRef}
       >
         <Form
           methods={methods}
           action={action}
-          submitLabel="Update"
           testId="update-market-value-form"
         >
           <div className="space-y-4">
@@ -78,6 +84,9 @@ export const AccountUpdateMarketValuePopperItem: FC<
               Date
             </Input>
           </div>
+          <Form.Footer>
+            <Button type="submit">Update</Button>
+          </Form.Footer>
         </Form>
       </Drawer>
     </>
