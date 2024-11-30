@@ -9,7 +9,8 @@ import {
   useAccountsFindAllByUserQuery,
   VisibilityType,
 } from '$api/generated/financerApi';
-import { Form } from '$blocks/form/form';
+import { Form } from '$blocks/Form';
+import { Button } from '$elements/Button/Button';
 import { Input } from '$elements/Input';
 import { Select, Option } from '$elements/Select';
 import { CategoriesFormOnlyCategory } from '$features/transaction/TransactionCategories/transaction-categories.types';
@@ -24,7 +25,6 @@ import { capitalize } from '$utils/capitalize';
 type TemplateFormProps = {
   onSubmit: DefaultFormActionHandler;
   submitLabel: string;
-  optionalFooterComponent?: React.ReactNode;
   initialValues?: Partial<TemplateFormFields>;
 };
 
@@ -73,7 +73,6 @@ const TransactionCategoriesFormWrapper: FC<
 export const TemplateForm: FC<TemplateFormProps> = ({
   onSubmit,
   submitLabel,
-  optionalFooterComponent,
   initialValues,
 }) => {
   const action = useFinancerFormState('add-template', onSubmit);
@@ -137,14 +136,7 @@ export const TemplateForm: FC<TemplateFormProps> = ({
   }));
 
   return (
-    <Form
-      methods={methods}
-      action={handleSubmit}
-      submitLabel={submitLabel}
-      formFooterBackLink="/"
-      optionalFooterComponent={optionalFooterComponent}
-      testId="template-form"
-    >
+    <Form methods={methods} action={handleSubmit} testId="template-form">
       <section>
         <div className="grid gap-4 sm:grid-cols-2">
           <Select id="templateType" options={templateTypes} isRequired>
@@ -198,6 +190,9 @@ export const TemplateForm: FC<TemplateFormProps> = ({
         <h2 className="sr-only">Categories</h2>
         <TransactionCategoriesFormWrapper type={selectedTransactionType} />
       </section>
+      <Form.Footer>
+        <Button type="submit">{submitLabel}</Button>
+      </Form.Footer>
     </Form>
   );
 };

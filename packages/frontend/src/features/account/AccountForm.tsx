@@ -7,7 +7,8 @@ import { useForm } from 'react-hook-form';
 import { AccountTypeRadio } from './AccountTypeRadio';
 
 import { AccountType } from '$api/generated/financerApi';
-import { Form } from '$blocks/form/form';
+import { Form } from '$blocks/Form';
+import { Button } from '$elements/Button/Button';
 import { Input } from '$elements/Input';
 import {
   DefaultFormActionHandler,
@@ -55,9 +56,7 @@ export const AccountForm: FC<AccountFormProps> = ({
   return (
     <Form
       methods={methods}
-      submitLabel={submitLabel}
       action={action}
-      formFooterBackLink="/accounts"
       testId="account-form"
       className="@container/account-form"
     >
@@ -83,6 +82,9 @@ export const AccountForm: FC<AccountFormProps> = ({
           </div>
         </fieldset>
       </div>
+      <Form.Footer>
+        <Button type="submit">{submitLabel}</Button>
+      </Form.Footer>
     </Form>
   );
 };

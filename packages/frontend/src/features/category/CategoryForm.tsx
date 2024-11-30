@@ -6,9 +6,9 @@ import { useForm } from 'react-hook-form';
 import { getAllChildCategoryIds } from '../../services/TransactionCategoriesService';
 
 import { TransactionType, VisibilityType } from '$api/generated/financerApi';
-import { Form } from '$blocks/form/form';
-import { settingsPaths } from '$constants/settings-paths';
+import { Form } from '$blocks/Form';
 import { transactionTypeIconMapping } from '$constants/transaction/transactionTypeIconMapping';
+import { Button } from '$elements/Button/Button';
 import { Input } from '$elements/Input';
 import { InputOption } from '$elements/InputOption';
 import { Select, Option } from '$elements/Select';
@@ -21,7 +21,6 @@ import {
 type CategoryFormProps = {
   onSubmit: DefaultFormActionHandler;
   submitLabel: string;
-  optionalFooterComponent?: React.ReactNode;
   currentCategoryId?: string;
   initialValues?: Partial<TransactionCategoryFormFields>;
 };
@@ -50,7 +49,6 @@ const visibilityTypeMapping = {
 export const CategoryForm: FC<CategoryFormProps> = ({
   onSubmit,
   submitLabel,
-  optionalFooterComponent,
   currentCategoryId,
   initialValues,
 }) => {
@@ -108,10 +106,7 @@ export const CategoryForm: FC<CategoryFormProps> = ({
   return (
     <Form
       methods={methods}
-      submitLabel={submitLabel}
       action={action}
-      formFooterBackLink={settingsPaths.categories}
-      optionalFooterComponent={optionalFooterComponent}
       testId="category-form"
       className="@container"
     >
@@ -150,6 +145,9 @@ export const CategoryForm: FC<CategoryFormProps> = ({
           Parent transaction category
         </Select>
       </div>
+      <Form.Footer>
+        <Button type="submit">{submitLabel}</Button>
+      </Form.Footer>
     </Form>
   );
 };

@@ -29,7 +29,10 @@ test.describe('Add Category', () => {
         name: 'New Test category',
       });
 
-      await page.getByTestId('category-form').getByTestId('submit').click();
+      await page
+        .getByTestId('category-form')
+        .locator('button[type=submit]')
+        .click();
       await page.getByRole('link', { name: 'New Test category' }).click();
 
       const { name, visibility, parentCategory } =
@@ -63,7 +66,10 @@ test.describe('Add Category', () => {
           visibility: types,
         });
 
-        await page.getByTestId('category-form').getByTestId('submit').click();
+        await page
+          .getByTestId('category-form')
+          .locator('button[type=submit]')
+          .click();
         await page.getByRole('link', { name: categoryName }).click();
 
         const { name, visibility } = await getCategoryDetails(page);
@@ -85,7 +91,10 @@ test.describe('Add Category', () => {
         parentCategory: 'Category for all types',
       });
 
-      await page.getByTestId('category-form').getByTestId('submit').click();
+      await page
+        .getByTestId('category-form')
+        .locator('button[type=submit]')
+        .click();
       await page
         .getByRole('link', { name: 'New Test category with parent' })
         .click();
@@ -106,7 +115,10 @@ test.describe('Add Category', () => {
         parentCategory: 'Category for all types',
       });
 
-      await page.getByTestId('category-form').getByTestId('submit').click();
+      await page
+        .getByTestId('category-form')
+        .locator('button[type=submit]')
+        .click();
       await page
         .getByRole('link', {
           name: 'New Test category with parent and without visibility',

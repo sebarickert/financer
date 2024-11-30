@@ -40,15 +40,15 @@ export const Transaction: FC<TransactionProps> = async ({
   const typeMapping = {
     [TransactionType.Income]: {
       ...transactionTypeThemeMapping[TransactionType.Income],
-      color: 'bg-green',
+      color: 'bg-green text-white',
     },
     [TransactionType.Expense]: {
       ...transactionTypeThemeMapping[TransactionType.Expense],
-      color: 'bg-red',
+      color: 'bg-red text-white',
     },
     [TransactionType.Transfer]: {
       ...transactionTypeThemeMapping[TransactionType.Transfer],
-      color: 'bg-accent',
+      color: 'bg-accent text-foreground',
     },
   };
 
@@ -138,9 +138,9 @@ export const Transaction: FC<TransactionProps> = async ({
           {icon && (
             <span
               className={clsx(
-                'p-3 rounded-full inline-block text-white',
-                { 'bg-accent': !color },
-                { [color]: color },
+                'p-3 rounded-full inline-block',
+                color,
+                !color && 'bg-accent',
               )}
             >
               <Icon name={isRecurring ? 'ArrowPathIcon' : icon} />

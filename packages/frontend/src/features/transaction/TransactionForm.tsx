@@ -10,9 +10,10 @@ import {
   VisibilityType,
   useAccountsFindAllByUserQuery,
 } from '$api/generated/financerApi';
-import { Form } from '$blocks/form/form';
+import { Form } from '$blocks/Form';
 import { accountTypeMapping } from '$constants/account/accountTypeMapping';
 import { transactionTypeIconMapping } from '$constants/transaction/transactionTypeIconMapping';
+import { Button } from '$elements/Button/Button';
 import { Input } from '$elements/Input';
 import { Option, Select } from '$elements/Select';
 import { useGetAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useGetAllTransactionCategoriesWithCategoryTree';
@@ -125,8 +126,6 @@ export const TransactionForm: FC<TransactionFormProps> = ({
     <Form
       methods={methods}
       action={action}
-      submitLabel={'Submit'}
-      formFooterBackLink="/"
       testId={testId ?? 'transaction-form'}
     >
       <section>
@@ -180,6 +179,9 @@ export const TransactionForm: FC<TransactionFormProps> = ({
           />
         </section>
       )}
+      <Form.Footer>
+        <Button type="submit">Submit</Button>
+      </Form.Footer>
     </Form>
   );
 };

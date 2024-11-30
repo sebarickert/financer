@@ -3,8 +3,8 @@
 import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { Form } from '$blocks/form/form';
-import { settingsPaths } from '$constants/settings-paths';
+import { Form } from '$blocks/Form';
+import { Button } from '$elements/Button/Button';
 import { Input } from '$elements/Input';
 import { Select } from '$elements/Select';
 import { TransactionCategoryDtoWithCategoryTree } from '$hooks/transactionCategories/useGetAllTransactionCategoriesWithCategoryTree';
@@ -42,8 +42,6 @@ export const UserDefaultMarketUpdateSettingsForm: FC<
     <Form
       methods={methods}
       action={action}
-      submitLabel="Save"
-      formFooterBackLink={settingsPaths.userPreferences}
       testId="market-update-settings-form"
     >
       <div className="grid gap-y-4 gap-x-4 sm:grid-cols-2">
@@ -63,6 +61,9 @@ export const UserDefaultMarketUpdateSettingsForm: FC<
           Category
         </Select>
       </div>
+      <Form.Footer>
+        <Button type="submit">Save</Button>
+      </Form.Footer>
     </Form>
   );
 };

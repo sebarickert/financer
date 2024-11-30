@@ -34,7 +34,10 @@ test.describe('Edit Category', () => {
         parentCategory: 'Income category',
       });
 
-      await page.getByTestId('category-form').getByTestId('submit').click();
+      await page
+        .getByTestId('category-form')
+        .locator('button[type=submit]')
+        .click();
 
       const {
         name: updatedName,
@@ -90,7 +93,10 @@ test.describe('Edit Category', () => {
         parentCategory: childCategoryName,
       });
 
-      await page.getByTestId('category-form').getByTestId('submit').click();
+      await page
+        .getByTestId('category-form')
+        .locator('button[type=submit]')
+        .click();
 
       const formErrors = page.getByTestId('toast');
       await expect(formErrors).toContainText('Submission failed');

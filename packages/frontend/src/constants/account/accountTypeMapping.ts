@@ -19,7 +19,8 @@ export const accountTypeMapping: Record<
   [AccountType.Cash]: {
     icon: 'WalletIcon',
     label: 'Cash',
-    description: 'Physical money on hand for daily transactions.',
+    description:
+      'Cash on hand, easily accessible for daily transactions and expenses.',
   },
   [AccountType.PreAssignedCash]: {
     icon: 'LockClosedIcon',

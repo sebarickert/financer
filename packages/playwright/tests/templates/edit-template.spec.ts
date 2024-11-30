@@ -32,7 +32,10 @@ test.describe('Edit Template', () => {
 
     await fillTemplateForm(page, updatedValues);
 
-    await page.getByTestId('template-form').getByTestId('submit').click();
+    await page
+      .getByTestId('template-form')
+      .locator('button[type=submit]')
+      .click();
 
     const updatedTemplates = await getTemplateDataFromTemplateList(page);
 
