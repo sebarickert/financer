@@ -32,8 +32,6 @@ test.describe('Market Update Preferences', () => {
       .getByRole('button', { name: 'Update' })
       .click();
 
-    await page.getByRole('button', { name: 'Close drawer' }).click();
-
     await page.getByRole('link', { name: 'Accounts' }).click();
     await expect(page).toHaveURL(/\/accounts\/?$/);
     await page.getByRole('link', { name }).click();
@@ -94,8 +92,6 @@ test.describe('Market Update Preferences', () => {
       .getByTestId('update-market-value-form')
       .getByRole('button', { name: 'Update' })
       .click();
-
-    await page.getByRole('button', { name: 'Close drawer' }).click();
 
     await page.getByRole('link', { name: 'Accounts' }).click();
     await expect(page).toHaveURL(/\/accounts\/?$/);

@@ -85,7 +85,6 @@ test.describe('Edit Account', () => {
         .getByTestId('update-market-value-form')
         .getByRole('button', { name: 'Update' })
         .click();
-      await page.getByRole('button', { name: 'Close drawer' }).click();
 
       await page.getByRole('link', { name: 'Accounts' }).click();
       await page
@@ -127,7 +126,6 @@ test.describe('Edit Account', () => {
         .getByTestId('update-market-value-form')
         .getByRole('button', { name: 'Update' })
         .click();
-      await page.getByRole('button', { name: 'Close drawer' }).click();
 
       await page.getByRole('link', { name: 'Accounts' }).click();
       await page
