@@ -37,7 +37,10 @@ test.describe.parallel('Add Account', () => {
           type,
         });
 
-        await page.getByTestId('account-form').getByTestId('submit').click();
+        await page
+          .getByTestId('account-form')
+          .locator('button[type=submit]')
+          .click();
 
         await expect(page).toHaveURL(/\/accounts\/?$/);
 

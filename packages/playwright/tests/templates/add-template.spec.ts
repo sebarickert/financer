@@ -84,7 +84,10 @@ test.describe('Add Template', () => {
             await setCategories(page, [{ category }], 'page');
           }
 
-          await page.getByTestId('template-form').getByTestId('submit').click();
+          await page
+            .getByTestId('template-form')
+            .locator('button[type=submit]')
+            .click();
 
           const updatedTemplates = await getTemplateDataFromTemplateList(page);
           expect(updatedTemplates).toHaveLength(initialTemplates.length + 1);
@@ -199,7 +202,10 @@ test.describe('Add Template', () => {
             await setCategories(page, [{ category }], 'page');
           }
 
-          await page.getByTestId('template-form').getByTestId('submit').click();
+          await page
+            .getByTestId('template-form')
+            .locator('button[type=submit]')
+            .click();
 
           const updatedTemplates = await getTemplateDataFromTemplateList(page);
           expect(updatedTemplates).toHaveLength(initialTemplates.length + 1);
