@@ -61,9 +61,9 @@ const FormFooter = ({
   const { pending } = useFormStatus();
 
   return (
-    <div className={clsx(className, 'flex items-center gap-8 mt-12')}>
+    <div className={clsx(className, 'flex max-lg:flex-col gap-2 mt-12')}>
       {children}
-      {pending && <Loader.Icon />}
+      {pending && <Loader />}
     </div>
   );
 };
