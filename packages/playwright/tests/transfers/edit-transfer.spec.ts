@@ -225,6 +225,8 @@ test.describe('Transfer Transactions', () => {
     test('should edit transfer with multiple categories and remove one of the categories and verify it updates values in transaction details', async ({
       page,
     }) => {
+      await page.getByRole('button', { name: 'Previous page' }).click();
+
       await page
         .getByTestId('transaction-list-item')
         .getByText(
@@ -266,6 +268,8 @@ test.describe('Transfer Transactions', () => {
     test('should edit transfer with multiple categories and remove all of the categories and verify it updates values in transaction details', async ({
       page,
     }) => {
+      await page.getByRole('button', { name: 'Previous page' }).click();
+
       await page
         .getByTestId('transaction-list-item')
         .getByText(
