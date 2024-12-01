@@ -23,17 +23,24 @@ const updateTransactionDates = (
   const dates = transactionItems.map((item) => new Date(item.date));
   const newestDate = new Date(Math.max(...dates.map((date) => date.getTime())));
 
-  // Calculate the day offset to make the newest date equal to today's date
+  // Get the current date and compute month/year difference
   const currentDate = new Date();
-  const dayOffset = Math.ceil(
-    (currentDate.getTime() - newestDate.getTime()) / (1000 * 60 * 60 * 24),
-  );
+  const monthDiff =
+    (currentDate.getFullYear() - newestDate.getFullYear()) * 12 +
+    (currentDate.getMonth() - newestDate.getMonth());
 
-  // Apply the offset to each transaction date
+  // Apply the month offset to each transaction date
   return transactionItems.map((item) => {
     const originalDate = new Date(item.date);
-    originalDate.setDate(originalDate.getDate() + dayOffset); // Shift by the calculated offset
-    return { ...item, date: originalDate.toISOString() }; // Return updated item
+    // Preserve the day but adjust the month/year based on the offset
+    originalDate.setMonth(originalDate.getMonth() + monthDiff);
+
+    // Ensure the date is valid after the adjustment (e.g., handle Feb 31 -> Mar 3)
+    if (originalDate.getDate() !== new Date(item.date).getDate()) {
+      originalDate.setDate(0); // Roll back to the last valid day of the month
+    }
+
+    return { ...item, date: originalDate.toISOString() };
   });
 };
 
