@@ -6,11 +6,12 @@ import { FC, useMemo, useState } from 'react';
 import { TransactionMonthSummaryDto } from '$api/generated/financerApi';
 import { DetailsItem, DetailsList } from '$blocks/DetailsList';
 import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
-import { AreaStackedChart, ChartConfig } from '$charts/AreaStackedChart';
+import { AreaStackedChart } from '$charts/AreaStackedChart';
 import {
   ChartFilterByMonthsSelect,
   monthFilterOptions,
 } from '$charts/ChartFilterByMonthsSelect';
+import { ChartConfig } from '$types/ChartConfig';
 import {
   formatCurrency,
   formatCurrencyAbbreviation,
@@ -150,8 +151,8 @@ export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
           />
         </div>
         <AreaStackedChart
-          chartData={filteredChartData}
-          chartConfig={chartConfig}
+          data={filteredChartData}
+          config={chartConfig}
           yaxisTickFormatter={(value: number) => {
             return formatCurrencyAbbreviation(value);
           }}

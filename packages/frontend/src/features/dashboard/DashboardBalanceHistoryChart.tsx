@@ -4,11 +4,12 @@ import clsx from 'clsx';
 import { parse } from 'date-fns';
 import { FC, useMemo, useState } from 'react';
 
-import { AreaStackedChart, ChartConfig } from '$charts/AreaStackedChart';
+import { AreaStackedChart } from '$charts/AreaStackedChart';
 import {
   ChartFilterByMonthsSelect,
   monthFilterOptions,
 } from '$charts/ChartFilterByMonthsSelect';
+import { ChartConfig } from '$types/ChartConfig';
 import {
   formatCurrency,
   formatCurrencyAbbreviation,
@@ -69,8 +70,8 @@ export const DashboardBalanceHistoryChart: FC<
         />
       </div>
       <AreaStackedChart
-        chartData={filteredChartData}
-        chartConfig={chartConfig}
+        data={filteredChartData}
+        config={chartConfig}
         yaxisTickFormatter={(value: number) => {
           return formatCurrencyAbbreviation(value);
         }}

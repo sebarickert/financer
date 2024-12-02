@@ -6,16 +6,16 @@ import {
   ValueType,
 } from 'recharts/types/component/DefaultTooltipContent';
 
-import { ChartConfig } from './AreaStackedChart';
+import { ChartConfig } from '$types/ChartConfig';
 
 type CustomTooltipProps = TooltipProps<ValueType, NameType> & {
-  chartConfig: ChartConfig;
+  config: ChartConfig;
 };
 
 export const CustomTooltip: FC<CustomTooltipProps> = ({
   active,
   payload,
-  chartConfig,
+  config,
 }) => {
   if (active && payload && payload.length) {
     return (
@@ -24,36 +24,32 @@ export const CustomTooltip: FC<CustomTooltipProps> = ({
           {payload[0].payload.dataKey}
         </p>
         <ul className="space-y-1">
-          {Object.entries(chartConfig).map(
-            ([key, { label, valueFormatter }]) => {
-              const tooltipStyle = {
-                '--color-bg': `var(--color-${key})`,
-              } as React.CSSProperties;
+          {Object.entries(config).map(([key, { label, valueFormatter }]) => {
+            const tooltipStyle = {
+              '--color-bg': `var(--color-${key})`,
+            } as React.CSSProperties;
 
-              const value = payload.find(
-                (entry) => entry.dataKey === key,
-              )?.value;
+            const value = payload.find((entry) => entry.dataKey === key)?.value;
 
-              return (
-                <li key={key}>
-                  <p className="grid grid-cols-[auto,1fr] gap-4 items-center">
-                    <span className="inline-flex items-center gap-2 text-muted-foreground">
-                      <span
-                        style={tooltipStyle}
-                        className={clsx(
-                          `inline-block w-2.5 h-2.5 rounded-sm bg-[--color-bg]`,
-                        )}
-                      />
-                      {label}
-                    </span>
-                    <span className="font-medium text-right text-foreground">
-                      {valueFormatter ? valueFormatter(value) : value}
-                    </span>
-                  </p>
-                </li>
-              );
-            },
-          )}
+            return (
+              <li key={key}>
+                <p className="grid grid-cols-[auto,1fr] gap-4 items-center">
+                  <span className="inline-flex items-center gap-2 text-muted-foreground">
+                    <span
+                      style={tooltipStyle}
+                      className={clsx(
+                        `inline-block w-2.5 h-2.5 rounded-sm bg-[--color-bg]`,
+                      )}
+                    />
+                    {label}
+                  </span>
+                  <span className="font-medium text-right text-foreground">
+                    {valueFormatter ? valueFormatter(value) : value}
+                  </span>
+                </p>
+              </li>
+            );
+          })}
         </ul>
       </div>
     );

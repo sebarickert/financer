@@ -5,15 +5,13 @@ import { parse } from 'date-fns';
 import { FC, useMemo, useState } from 'react';
 
 import { AccountBalanceHistoryDto } from '$api/generated/financerApi';
-import {
-  AreaStackedChart,
-  ChartConfig,
-  ChartData,
-} from '$charts/AreaStackedChart';
+import { AreaStackedChart } from '$charts/AreaStackedChart';
 import {
   ChartFilterByMonthsSelect,
   monthFilterOptions,
 } from '$charts/ChartFilterByMonthsSelect';
+import { ChartConfig } from '$types/ChartConfig';
+import { ChartData } from '$types/ChartData';
 import {
   formatCurrency,
   formatCurrencyAbbreviation,
@@ -80,8 +78,8 @@ export const AccountBalanceHistoryChart: FC<
         />
       </div>
       <AreaStackedChart
-        chartData={filteredChartData}
-        chartConfig={chartConfig}
+        data={filteredChartData}
+        config={chartConfig}
         yaxisTickFormatter={(value: number) => {
           return formatCurrencyAbbreviation(value);
         }}
