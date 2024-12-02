@@ -2,9 +2,10 @@ import { notFound } from 'next/navigation';
 import { FC } from 'react';
 
 import { AccountType } from '$api/generated/financerApi';
+import { IconName } from '$elements/Icon';
 import { Popper } from '$elements/Popper';
-import { AccountDeletePopperItem } from '$features/account/AccountDeletePopperItem';
-import { AccountUpdateMarketValuePopperItem } from '$features/account/AccountUpdateMarketValuePopperItem';
+import { AccountDeleteDrawer } from '$features/account/AccountDeleteDrawer';
+import { AccountUpdateMarketValueDrawer } from '$features/account/AccountUpdateMarketValueDrawer';
 import { Layout } from '$layouts/Layout';
 import { AccountService } from '$ssr/api/account.service';
 import { UserPreferenceService } from '$ssr/api/user-preference.service';
@@ -19,6 +20,7 @@ export const AccountContainer: FC<AccountContainerProps> = async ({ id }) => {
   const balanceHistory = await AccountService.getAccountBalanceHistory(id);
   const marketSettings =
     await UserPreferenceService.getDefaultMarketUpdateSettings();
+  const accountDrawerPopperId = `account-market-value-drawer-${crypto.randomUUID()}`;
 
   if (!account) {
     notFound();
@@ -36,19 +38,33 @@ export const AccountContainer: FC<AccountContainerProps> = async ({ id }) => {
               label: 'Edit',
               icon: 'PencilIcon',
             },
+            {
+              popperId: account.id,
+              label: 'Delete',
+              icon: 'TrashIcon',
+            },
+            ...(account.type === AccountType.Investment
+              ? [
+                  {
+                    popperId: accountDrawerPopperId,
+                    label: 'Update Market Value',
+                    icon: 'ArrowTrendingUpIcon' as IconName,
+                  },
+                ]
+              : []),
           ]}
-        >
-          <AccountDeletePopperItem id={account.id} />
-          {account.type === AccountType.Investment && (
-            <AccountUpdateMarketValuePopperItem
-              account={account}
-              marketSettings={marketSettings}
-            />
-          )}
-        </Popper>
+        />
       }
     >
       <Account account={account} balanceHistory={balanceHistory} />
+      <AccountDeleteDrawer id={account.id} />
+      {account.type === AccountType.Investment && (
+        <AccountUpdateMarketValueDrawer
+          popperId={accountDrawerPopperId}
+          account={account}
+          marketSettings={marketSettings}
+        />
+      )}
     </Layout>
   );
 };

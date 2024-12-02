@@ -43,6 +43,7 @@ export const NavigationCreateTransactionButton: FC<
         type="button"
         aria-label="Add Transaction"
         className={clsx(
+          'text-base rounded-md text-center',
           'items-center justify-center',
           'max-lg:flex max-lg:flex-col max-lg:h-full max-lg:!w-full max-lg:rounded-none',
           'lg:button-primary lg:py-3 lg:h-12 lg:px-[18px] lg:text-base',

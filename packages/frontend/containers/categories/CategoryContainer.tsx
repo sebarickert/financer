@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { settingsPaths } from '$constants/settings-paths';
 import { Popper } from '$elements/Popper';
-import { CategoryDeletePopperItem } from '$features/category/CategoryDeletePopperItem';
+import { CategoryDeleteDrawer } from '$features/category/CategoryDeleteDrawer';
 import { Layout } from '$layouts/Layout';
 import { CategoryService } from '$ssr/api/category.service';
 import { Category } from '$views/Category';
@@ -27,10 +27,13 @@ export const CategoryContainer: FC<CategoryContainerProps> = async ({ id }) => {
               href: `${settingsPaths.categories}/${category.id}/edit`,
               icon: 'PencilIcon',
             },
+            {
+              label: 'Delete',
+              popperId: category.id,
+              icon: 'TrashIcon',
+            },
           ]}
-        >
-          <CategoryDeletePopperItem id={category.id} />
-        </Popper>
+        />
       }
     >
       <Category
@@ -38,6 +41,7 @@ export const CategoryContainer: FC<CategoryContainerProps> = async ({ id }) => {
         categories={allCategories}
         parentTransactionCategoryId={id}
       />
+      <CategoryDeleteDrawer id={category.id} />
     </Layout>
   );
 };

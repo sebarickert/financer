@@ -51,15 +51,17 @@ export const Button = ({
 }: ButtonProps): JSX.Element => {
   const buttonStyles = {
     base: clsx(
-      'focus-visible:focus-highlight ring-offset-2 dark:ring-offset-0 rounded-md text-center whitespace-nowrap',
-      'inline-flex items-center justify-center gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0',
+      'focus-visible:focus-highlight ring-offset-2 dark:ring-offset-0 whitespace-nowrap',
+      'inline-flex items-center justify-center [&:has(svg)]:gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0',
       'disabled:pointer-events-none disabled:opacity-50',
     ),
-    default: clsx('py-3 h-12 px-5 text-base'),
+    default: clsx('py-3 h-12 px-5'),
     icon: clsx('h-12 w-12'),
   };
 
   const buttonClasses = clsx(className, buttonStyles.base, {
+    ['text-base rounded-md text-center']:
+      (size === 'icon' || size === 'default') && accentColor !== 'unstyled',
     [buttonStyles.default]: size === 'default' && accentColor !== 'unstyled',
     [buttonStyles.icon]: size === 'icon' && accentColor !== 'unstyled',
     ['button-primary']: accentColor === 'primary',
