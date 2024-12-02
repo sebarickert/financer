@@ -1,11 +1,13 @@
 'use client';
 
 import { FC } from 'react';
+import { useForm } from 'react-hook-form';
 
 import { TransactionType } from '$api/generated/financerApi';
 import { Drawer } from '$blocks/Drawer';
+import { Form } from '$blocks/Form';
 import { Button } from '$elements/Button/Button';
-import { ButtonGroup } from '$elements/Button/ButtonGroup';
+import { useFinancerFormState } from '$hooks/useFinancerFormState';
 import { handleTransactionDelete } from 'src/actions/transaction/handleTransactionDelete';
 
 type TransactionDeleteDrawerProps = {
@@ -17,7 +19,9 @@ export const TransactionDeleteDrawer: FC<TransactionDeleteDrawerProps> = ({
   type,
   id,
 }) => {
-  const handleClick = () => handleTransactionDelete(id, type);
+  const onSubmit = handleTransactionDelete.bind(null, { id, type });
+  const action = useFinancerFormState('transaction-delete-form', onSubmit);
+  const methods = useForm();
 
   return (
     <Drawer
@@ -27,19 +31,20 @@ export const TransactionDeleteDrawer: FC<TransactionDeleteDrawerProps> = ({
         'Are you sure you want to permanently delete this transaction?'
       }
     >
-      <ButtonGroup>
-        <Button haptic="heavy" accentColor={'danger'} onClick={handleClick}>
-          {'Delete'}
-        </Button>
-        <Button
-          haptic="light"
-          accentColor="secondary"
-          popoverTargetAction="hide"
-          popoverTarget={id}
-        >
-          Cancel
-        </Button>
-      </ButtonGroup>
+      <Form methods={methods} action={action}>
+        <Form.Footer>
+          <Button type="submit" accentColor="danger">
+            Delete
+          </Button>
+          <Button
+            accentColor="secondary"
+            popoverTargetAction="hide"
+            popoverTarget={id}
+          >
+            Cancel
+          </Button>
+        </Form.Footer>
+      </Form>
     </Drawer>
   );
 };
