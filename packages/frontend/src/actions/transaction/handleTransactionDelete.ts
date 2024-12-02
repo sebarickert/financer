@@ -3,17 +3,17 @@
 import { redirect, RedirectType } from 'next/navigation';
 
 import { TransactionType } from '$api/generated/financerApi';
+import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
 import { ExpenseService } from '$ssr/api/expense.service ';
 import { IncomeService } from '$ssr/api/income.service';
 import { TransferService } from '$ssr/api/transfer.service';
 
-export const handleTransactionDelete = async (
-  id: string,
-  type: TransactionType,
-) => {
+export const handleTransactionDelete: DefaultFormActionHandler<{
+  id: string;
+  type: TransactionType;
+}> = async ({ id, type }) => {
   if (!id) {
-    console.error('Failed to delete transaction: no id');
-    return;
+    return { status: 'ERROR', errors: ['Failed to delete transaction: no id'] };
   }
 
   const serviceMapping = {

@@ -1,12 +1,14 @@
 'use client';
 
 import { useId } from 'react';
+import { useForm } from 'react-hook-form';
 
 import { handleTemplateDelete } from '$actions/template/handleTemplateDelete';
 import { Drawer } from '$blocks/Drawer';
+import { Form } from '$blocks/Form';
 import { Button } from '$elements/Button/Button';
-import { ButtonGroup } from '$elements/Button/ButtonGroup';
 import { Icon } from '$elements/Icon';
+import { useFinancerFormState } from '$hooks/useFinancerFormState';
 
 type TemplateDeleteProps = {
   id: string;
@@ -15,7 +17,9 @@ type TemplateDeleteProps = {
 export const TemplateDelete = ({ id }: TemplateDeleteProps) => {
   const popoverId = useId();
 
-  const handleDelete = () => handleTemplateDelete(id);
+  const onSubmit = handleTemplateDelete.bind(null, { id });
+  const action = useFinancerFormState('category-delete-form', onSubmit);
+  const methods = useForm();
 
   return (
     <>
@@ -35,19 +39,20 @@ export const TemplateDelete = ({ id }: TemplateDeleteProps) => {
           'Are you sure you want to permanently delete this template?'
         }
       >
-        <ButtonGroup>
-          <Button haptic="heavy" accentColor={'danger'} onClick={handleDelete}>
-            Delete
-          </Button>
-          <Button
-            haptic="light"
-            accentColor="secondary"
-            popoverTargetAction="hide"
-            popoverTarget={popoverId}
-          >
-            Cancel
-          </Button>
-        </ButtonGroup>
+        <Form methods={methods} action={action}>
+          <Form.Footer>
+            <Button type="submit" accentColor="danger">
+              Delete
+            </Button>
+            <Button
+              accentColor="secondary"
+              popoverTargetAction="hide"
+              popoverTarget={id}
+            >
+              Cancel
+            </Button>
+          </Form.Footer>
+        </Form>
       </Drawer>
     </>
   );

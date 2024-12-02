@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { FC, useId } from 'react';
+import { FC } from 'react';
 
 import { Button } from './Button/Button';
 import { Heading } from './Heading';
@@ -8,25 +8,32 @@ import { Link } from './Link';
 
 import { List } from '$blocks/List';
 
-type PopperItem = {
-  icon: IconName;
-  label: string;
-  href: string;
-};
+type PopperItem =
+  | {
+      icon: IconName;
+      label: string;
+      href: string;
+      popperId?: never;
+    }
+  | {
+      icon: IconName;
+      label: string;
+      popperId: string;
+      href?: never;
+    };
 
 type PopperProps = {
   className?: string;
   items?: PopperItem[];
-  children?: React.ReactNode | React.ReactNode[];
 };
 
-export const Popper: FC<PopperProps> = ({ className, items, children }) => {
-  const popperId = useId();
+export const Popper: FC<PopperProps> = ({ className, items }) => {
+  const popperId = `popper-${crypto.randomUUID()}`;
 
   const popperItemClasses = clsx(
-    'flex items-center gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0 hover:bg-accent',
-    'rounded-md text-center whitespace-nowrap',
-    'py-2.5 h-11 pl-2 pr-[18px] text-base',
+    'pr-3 w-full !text-left',
+    'grid grid-cols-[40px,1fr] h-11 items-center text-left !gap-0',
+    'hover:bg-accent transition-colors focus-visible:ring-inset',
   );
 
   return (
@@ -44,9 +51,9 @@ export const Popper: FC<PopperProps> = ({ className, items, children }) => {
       </Button>
       <div
         className={clsx(
-          'bg-background ',
+          'bg-background',
           'min-w-48',
-          'p-2 rounded-md lg:mt-2',
+          'p-0 rounded-md lg:mt-2',
           'border',
           'fixed lg:absolute inset-[unset]',
           'supports-[anchor-name]:right-anchor-[popover-anchor] supports-[anchor-name]:top-anchor-[popover-anchor,bottom]',
@@ -64,21 +71,36 @@ export const Popper: FC<PopperProps> = ({ className, items, children }) => {
         <Heading disableResponsiveSizing variant="h2" className="sr-only">
           Options
         </Heading>
-        <List className='[&>[data-slot="list"]]:divide-none'>
-          {items?.map(({ icon, label, href }, index) => {
-            return (
-              <Link
-                key={index}
-                href={href}
-                className={popperItemClasses}
-                hasHoverEffect={false}
-              >
-                <Icon name={icon} />
-                <span className="inline-block pr-2">{label}</span>
-              </Link>
-            );
-          })}
-          {children}
+        <List>
+          {items?.map(
+            ({ icon, label, href, popperId: itemPopperId }, index) => {
+              if (href) {
+                return (
+                  <Link
+                    key={index}
+                    href={href}
+                    className={popperItemClasses}
+                    hasHoverEffect={false}
+                  >
+                    <Icon name={icon} className="!w-5 !h-5 place-self-center" />
+                    <span>{label}</span>
+                  </Link>
+                );
+              }
+
+              return (
+                <Button
+                  key={index}
+                  accentColor="unstyled"
+                  popoverTarget={itemPopperId}
+                  className={popperItemClasses}
+                >
+                  <Icon name={icon} className="!w-5 !h-5 place-self-center" />
+                  <span>{label}</span>
+                </Button>
+              );
+            },
+          )}
         </List>
       </div>
     </div>

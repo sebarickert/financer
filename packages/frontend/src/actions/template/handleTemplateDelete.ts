@@ -3,12 +3,14 @@
 import { redirect, RedirectType } from 'next/navigation';
 
 import { settingsPaths } from '$constants/settings-paths';
+import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
 import { TransactionTemplateService } from '$ssr/api/transaction-template.service';
 
-export const handleTemplateDelete = async (id: string) => {
+export const handleTemplateDelete: DefaultFormActionHandler<{
+  id: string;
+}> = async ({ id }) => {
   if (!id) {
-    console.error('Failed to delete template: no id');
-    return;
+    return { status: 'ERROR', errors: ['Failed to delete template: no id'] };
   }
 
   await TransactionTemplateService.delete(id);

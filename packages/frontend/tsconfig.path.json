@@ -19,7 +19,8 @@
       "$constants/*": ["./src/constants/*"],
       "$ssr/*": ["./src/ssr/*"],
       "$exceptions/*": ["./src/exceptions/*"],
-      "$container/*": ["./containers/*"]
+      "$container/*": ["./containers/*"],
+      "$types/*": ["./src/types/*"]
     }
   }
 }

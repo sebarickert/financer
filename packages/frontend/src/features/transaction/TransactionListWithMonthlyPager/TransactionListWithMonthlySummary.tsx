@@ -4,17 +4,17 @@ import { FC } from 'react';
 import { TransactionType } from '$api/generated/financerApi';
 import { DetailsList, DetailsItem } from '$blocks/DetailsList';
 import { RadialStackedChart } from '$charts/RadialStackedChart';
-import { monthNames } from '$constants/months';
 import {
   transactionTypeLabelMapping,
   transactionTypeThemeMapping,
 } from '$constants/transaction/transactionTypeMapping';
-import { Heading } from '$elements/Heading';
 import {
   TransactionListOptions,
   TransactionService,
 } from '$ssr/api/transaction.service';
 import { UserPreferenceService } from '$ssr/api/user-preference.service';
+import { ChartConfig } from '$types/ChartConfig';
+import { ChartData } from '$types/ChartData';
 import { capitalize } from '$utils/capitalize';
 import { formatCurrency } from '$utils/formatCurrency';
 
@@ -56,36 +56,39 @@ export const TransactionListWithMonthlySummary: FC<
     },
   ];
 
-  const { year, month } = monthlySummary.id;
-  const heading = `${monthNames[month - 1]} ${year}`;
+  const chartData = [
+    {
+      dataKey: 'summary',
+      expense: monthlySummary.expenseAmount,
+      income: monthlySummary.incomeAmount,
+    },
+  ] satisfies ChartData;
 
-  const chartData = {
-    key1: {
-      key: 'expense',
-      fill: transactionTypeThemeMapping[TransactionType.Expense].hsl as string,
-      value: monthlySummary.expenseAmount,
+  const chartConfig = {
+    income: {
+      label: 'Income',
+      color: 'hsl(var(--color-green))',
     },
-    key2: {
-      key: 'income',
-      fill: transactionTypeThemeMapping[TransactionType.Income].hsl as string,
-      value: monthlySummary.incomeAmount,
+    expense: {
+      label: 'Expense',
+      color: 'hsl(var(--color-red))',
     },
-  };
+  } satisfies ChartConfig;
 
   const chartLabel = {
-    main: formatCurrency(monthlySummary.totalAmount),
-    sub: 'Balance',
+    primary: formatCurrency(monthlySummary.totalAmount),
+    secondary: 'Balance',
   };
 
   return (
     <div
-      className={clsx('p-6 rounded-md bg-layer', '@container')}
+      className={clsx('@container')}
       data-testid="transaction-list-monthly-summary"
     >
-      <Heading disableResponsiveSizing>{heading}</Heading>
       <div className="@lg:grid @lg:grid-cols-[auto,1fr] @lg:gap-8">
         <RadialStackedChart
-          chartData={chartData}
+          data={chartData}
+          config={chartConfig}
           label={chartLabel}
           className="max-w-[200px] -mb-14 mx-auto @lg:-mb-20 pointer-events-none"
         />

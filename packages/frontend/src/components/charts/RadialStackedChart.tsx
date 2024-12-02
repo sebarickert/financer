@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import { FC } from 'react';
+import { FC, useId } from 'react';
 import {
   Label,
   PolarRadiusAxis,
@@ -10,35 +10,39 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
+import { ChartConfig } from '$types/ChartConfig';
+import { ChartData } from '$types/ChartData';
+
 type RadialStackedChartProps = {
-  chartData: {
-    key1: { key: string; fill: string; value: number };
-    key2: { key: string; fill: string; value: number };
-  };
+  data: ChartData;
+  config: ChartConfig;
   label: {
-    main: string;
-    sub: string;
+    primary: string;
+    secondary: string;
   };
   className?: string;
 };
 
 export const RadialStackedChart: FC<RadialStackedChartProps> = ({
-  chartData,
-  label,
+  data,
+  config,
   className,
+  label,
 }) => {
-  const parsedChartData = [
-    {
-      [chartData.key1.key]: chartData.key1.value,
-      [chartData.key2.key]: chartData.key2.value,
-    },
-  ];
+  const chartId = `chart-${useId()}`;
 
   return (
     <div className={clsx(className, 'aspect-square')}>
+      <style jsx>{`
+        [data-chart='${chartId}'] {
+          ${Object.entries(config)
+            .map(([key, { color }]) => `--color-${key}: ${color};`)
+            .join('\n')}
+        }
+      `}</style>
       <ResponsiveContainer>
         <RadialBarChart
-          data={parsedChartData}
+          data={data}
           endAngle={180}
           innerRadius={80}
           outerRadius={130}
@@ -55,7 +59,7 @@ export const RadialStackedChart: FC<RadialStackedChartProps> = ({
                         className="text-lg font-bold fill-foreground"
                         data-testid="radial-stacked-chart-label-main"
                       >
-                        {label.main}
+                        {label.primary}
                       </tspan>
                       <tspan
                         x={viewBox.cx}
@@ -63,7 +67,7 @@ export const RadialStackedChart: FC<RadialStackedChartProps> = ({
                         className="text-base fill-muted-foreground"
                         data-testid="radial-stacked-chart-label-sub"
                       >
-                        {label.sub}
+                        {label.secondary}
                       </tspan>
                     </text>
                   );
@@ -71,16 +75,9 @@ export const RadialStackedChart: FC<RadialStackedChartProps> = ({
               }}
             />
           </PolarRadiusAxis>
-          <RadialBar
-            dataKey={chartData.key1.key}
-            fill={chartData.key1.fill}
-            stackId="a"
-          />
-          <RadialBar
-            dataKey={chartData.key2.key}
-            fill={chartData.key2.fill}
-            stackId="a"
-          />
+          {Object.entries(config).map(([key, { color }]) => (
+            <RadialBar key={key} dataKey={key} fill={color} stackId="a" />
+          ))}
         </RadialBarChart>
       </ResponsiveContainer>
     </div>

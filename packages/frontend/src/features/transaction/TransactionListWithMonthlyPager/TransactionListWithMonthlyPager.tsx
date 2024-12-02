@@ -9,6 +9,7 @@ import { TransactionType } from '$api/generated/financerApi';
 import { Pager } from '$blocks/pager/pager';
 import { PagerService } from '$blocks/pager/pager.service';
 import { monthNames } from '$constants/months';
+import { Heading } from '$elements/Heading';
 import {
   TransactionListOptions,
   TransactionService,
@@ -61,33 +62,30 @@ export const TransactionListWithMonthlyPager: FC<
 
   return (
     <section className={clsx('flex flex-col', className)}>
-      <div
-        className={clsx('', {
-          ['grid lg:grid-cols-[minmax(350px,auto),1fr] gap-6']:
-            hasSummaryVisible,
-        })}
-      >
+      <div className={clsx('grid lg:grid-cols-[minmax(350px,auto),1fr] gap-6')}>
         <div
-          className={clsx('', {
-            ['self-baseline lg:sticky lg:top-[calc(var(--gutter-top)+theme(spacing.4))] relative isolate']:
-              hasSummaryVisible,
-            'mb-4': !hasSummaryVisible,
-          })}
+          className={clsx(
+            'self-baseline lg:sticky lg:top-[calc(var(--gutter-top)+theme(spacing.4))] relative isolate',
+          )}
           data-slot="transaction-list-summary"
         >
-          <Pager
-            pagerOptions={pagerOptions}
-            isStatusHidden
-            className={clsx({
-              ['absolute top-6 right-6 translate-x-[16px] -translate-y-[12px] gap-0 z-10']:
-                hasSummaryVisible,
-            })}
-          >
-            {!hasSummaryVisible ? pagerLabel : undefined}
-          </Pager>
-          {hasSummaryVisible && (
-            <TransactionListWithMonthlySummary filterOptions={filterOptions} />
-          )}
+          <div className={clsx('p-6 rounded-md bg-layer grid gap-4')}>
+            <div className="flex items-center justify-between gap-1 h-7">
+              <Heading disableResponsiveSizing noMargin>
+                {pagerLabel}
+              </Heading>
+              <Pager
+                pagerOptions={pagerOptions}
+                isStatusHidden
+                className="-mr-4"
+              />
+            </div>
+            {hasSummaryVisible && (
+              <TransactionListWithMonthlySummary
+                filterOptions={filterOptions}
+              />
+            )}
+          </div>
         </div>
         <GroupedTransactionList items={transactions} />
       </div>

@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { TransactionType } from '$api/generated/financerApi';
 import { Popper } from '$elements/Popper';
-import { TransactionDeletePopperItem } from '$features/transaction/TransactionDeletePopperItem';
+import { TransactionDeleteDrawer } from '$features/transaction/TransactionDeleteDrawer';
 import { Layout } from '$layouts/Layout';
 import { ExpenseService } from '$ssr/api/expense.service ';
 import { Transaction } from '$views/Transaction';
@@ -26,16 +26,17 @@ export const ExpenseContainer: FC<ExpenseContainerProps> = async ({ id }) => {
               icon: 'PencilIcon',
               label: 'Edit',
             },
+            {
+              icon: 'TrashIcon',
+              label: 'Delete',
+              popperId: expense.id,
+            },
           ]}
-        >
-          <TransactionDeletePopperItem
-            id={expense.id}
-            type={TransactionType.Expense}
-          />
-        </Popper>
+        />
       }
     >
       <Transaction {...expense} />
+      <TransactionDeleteDrawer id={expense.id} type={TransactionType.Expense} />
     </Layout>
   );
 };

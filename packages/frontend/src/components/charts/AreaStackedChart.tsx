@@ -14,26 +14,20 @@ import {
 
 import { CustomTooltip } from './CustomTooltip';
 
-export type ChartData = {
-  dataKey: string;
-  [key: string]: unknown;
-}[];
-export type ChartConfig = Record<
-  string,
-  { label: string; color: string; valueFormatter?(value: unknown): string }
->;
+import { ChartConfig } from '$types/ChartConfig';
+import { ChartData } from '$types/ChartData';
 
 type AreaStackedChartProps = {
-  chartData: ChartData;
-  chartConfig: ChartConfig;
+  data: ChartData;
+  config: ChartConfig;
   className?: string;
   yaxisTickFormatter?(value: unknown, index: number): string;
   xaxisTickFormatter?(value: unknown, index: number): string;
 };
 
 export const AreaStackedChart: FC<AreaStackedChartProps> = ({
-  chartData,
-  chartConfig,
+  data,
+  config,
   className,
   yaxisTickFormatter,
   xaxisTickFormatter,
@@ -56,19 +50,19 @@ export const AreaStackedChart: FC<AreaStackedChartProps> = ({
     >
       <style jsx>{`
         [data-chart='${chartId}'] {
-          ${Object.entries(chartConfig)
+          ${Object.entries(config)
             .map(([key, { color }]) => `--color-${key}: ${color};`)
             .join('\n')}
         }
       `}</style>
       <ResponsiveContainer>
         <AreaChart
-          data={chartData}
+          data={data}
           margin={{ bottom: 0, left: 0, right: 0, top: 0 }}
           accessibilityLayer
         >
           <defs>
-            {Object.entries(chartConfig).map(([key, { color }]) => (
+            {Object.entries(config).map(([key, { color }]) => (
               <linearGradient
                 id={`fill${key}`}
                 x1="0"
@@ -96,7 +90,7 @@ export const AreaStackedChart: FC<AreaStackedChartProps> = ({
             tickFormatter={xaxisTickFormatter}
             mirror
           />
-          {Object.entries(chartConfig).map(([key, { color }]) => (
+          {Object.entries(config).map(([key, { color }]) => (
             <Area
               key={key}
               dataKey={key}
@@ -104,7 +98,7 @@ export const AreaStackedChart: FC<AreaStackedChartProps> = ({
               stroke={color}
             />
           ))}
-          <Tooltip content={<CustomTooltip chartConfig={chartConfig} />} />
+          <Tooltip content={<CustomTooltip config={config} />} />
         </AreaChart>
       </ResponsiveContainer>
     </div>
