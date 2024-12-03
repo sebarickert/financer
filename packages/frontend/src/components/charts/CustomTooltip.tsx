@@ -1,3 +1,5 @@
+'use client';
+
 import clsx from 'clsx';
 import { FC } from 'react';
 import { TooltipProps } from 'recharts';
@@ -10,29 +12,32 @@ import { ChartConfig } from '$types/ChartConfig';
 
 type CustomTooltipProps = TooltipProps<ValueType, NameType> & {
   config: ChartConfig;
+  hideLabel?: boolean;
 };
 
 export const CustomTooltip: FC<CustomTooltipProps> = ({
   active,
   payload,
   config,
+  hideLabel,
 }) => {
   if (active && payload && payload.length) {
     return (
       <div className="grid gap-1 p-2 text-xs border rounded-md bg-layer">
-        <p className="font-medium text-foreground">
-          {payload[0].payload.dataKey}
-        </p>
+        {!hideLabel && (
+          <p className="font-medium text-foreground">
+            {payload[0].payload.dataKey}
+          </p>
+        )}
         <ul className="space-y-1">
-          {Object.entries(config).map(([key, { label, valueFormatter }]) => {
+          {payload.map(({ value, name }) => {
+            const { label, valueFormatter } = config?.[name as string] ?? {};
             const tooltipStyle = {
-              '--color-bg': `var(--color-${key})`,
+              '--color-bg': `var(--color-${name})`,
             } as React.CSSProperties;
 
-            const value = payload.find((entry) => entry.dataKey === key)?.value;
-
             return (
-              <li key={key}>
+              <li key={name}>
                 <p className="grid grid-cols-[auto,1fr] gap-4 items-center">
                   <span className="inline-flex items-center gap-2 text-muted-foreground">
                     <span

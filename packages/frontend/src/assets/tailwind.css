@@ -38,8 +38,11 @@
     --accent: 0 0% 91%;
 
     --color-blue: 219 99% 53%;
+    --color-dark-blue: 219 99% 25%;
     --color-red: 357 76% 49%;
     --color-green: 138 67% 30%;
+    --color-gold: 45 85% 45%;
+    --color-soft-gray: 0 0% 70%;
 
     --button-primary: 219 99% 53%;
     --button-primary-hover: 219 99% 40%;
