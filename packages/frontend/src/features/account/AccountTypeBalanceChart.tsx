@@ -93,10 +93,7 @@ export const AccountTypeBalanceChart: FC<AccountTypeBalanceChartProps> = ({
       };
     });
 
-  if (
-    chartData.length === 0 ||
-    (chartData.length === 1 && chartData.at(0)?.value === 0)
-  ) {
+  if (chartData.length === 0 || accountDetails.length === 0) {
     return null;
   }
 
