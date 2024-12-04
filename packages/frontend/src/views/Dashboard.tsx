@@ -1,10 +1,10 @@
+import { ArrowRight } from 'lucide-react';
 import { FC } from 'react';
 
 import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
 import { List } from '$blocks/List';
 import { ProminentLink } from '$blocks/ProminentLink';
 import { Button } from '$elements/Button/Button';
-import { Icon } from '$elements/Icon';
 import { DashboardBalanceHistoryChart } from '$features/dashboard/DashboardBalanceHistoryChart';
 import { DashboardBalanceSummary } from '$features/dashboard/DashboardBalanceSummary';
 import { TransactionList } from '$features/transaction/TransactionList/TransactionList';
@@ -112,7 +112,7 @@ export const Dashboard: FC = async () => {
             className="lg:ml-auto"
           >
             <span>See all</span>
-            <Icon name="ArrowRightIcon" />
+            <ArrowRight />
           </Button>
         )}
       </div>

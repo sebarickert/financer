@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { ChevronRight } from 'lucide-react';
 import { FC } from 'react';
 
 import { Icon, IconName } from '$elements/Icon';
@@ -40,7 +41,7 @@ export const ProminentLink: FC<ProminentLinkProps> = ({
     >
       {icon && <Icon name={icon} />}
       <span className={clsx('flex-1')}>{children}</span>
-      <Icon name="ChevronRightIcon" />
+      <ChevronRight />
     </Link>
   );
 };

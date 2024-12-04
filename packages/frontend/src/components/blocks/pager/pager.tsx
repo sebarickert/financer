@@ -1,12 +1,12 @@
 'use client';
 
 import clsx from 'clsx';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { FC } from 'react';
 
 import { PagerOptions } from './pager.service';
 
 import { Button } from '$elements/Button/Button';
-import { Icon } from '$elements/Icon';
 import { Paragraph } from '$elements/Paragraph';
 
 type PagerProps = {
@@ -42,7 +42,7 @@ const PagerButton: FC<PagerButtonProps> = ({
       accentColor="secondary"
     >
       <span className="sr-only">{children}</span>
-      <Icon name={isNext ? 'ChevronRightIcon' : 'ChevronLeftIcon'} />
+      {isNext ? <ChevronRight /> : <ChevronLeft />}
     </Button>
   );
 };

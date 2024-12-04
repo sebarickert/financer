@@ -1,5 +1,6 @@
 'use client';
 
+import { Layers } from 'lucide-react';
 import { useId, useMemo, useRef } from 'react';
 
 import {
@@ -9,7 +10,6 @@ import {
 import { Drawer } from '$blocks/Drawer';
 import { Button } from '$elements/Button/Button';
 import { ButtonGroup } from '$elements/Button/ButtonGroup';
-import { Icon } from '$elements/Icon';
 import { InputOption } from '$elements/InputOption';
 
 interface TransactionTemplateSwitcherProps {
@@ -53,7 +53,7 @@ export const TransactionTemplateSwitcher = ({
         isDisabled={!targetTemplates.length}
         testId="use-template-button"
       >
-        <Icon name="BoltIcon" />
+        <Layers />
         <span className="sr-only">Use Template</span>
       </Button>
       <Drawer id={templateSwitcherId} heading="Use Template" ref={popoverRef}>

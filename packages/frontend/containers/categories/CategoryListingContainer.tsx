@@ -1,3 +1,4 @@
+import { Plus } from 'lucide-react';
 import { FC } from 'react';
 
 import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
@@ -5,7 +6,6 @@ import { List } from '$blocks/List';
 import { ProminentLink } from '$blocks/ProminentLink';
 import { settingsPaths } from '$constants/settings-paths';
 import { Button } from '$elements/Button/Button';
-import { Icon } from '$elements/Icon';
 import { Layout } from '$layouts/Layout';
 import { CategoryService } from '$ssr/api/category.service';
 
@@ -90,7 +90,7 @@ export const CategoryListingContainer: FC = async () => {
           className="max-lg:button-ghost"
         >
           <span className="sr-only">Add category</span>
-          <Icon name="PlusIcon" />
+          <Plus />
         </Button>
       }
     >

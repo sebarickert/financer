@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { EllipsisVertical } from 'lucide-react';
 import { FC } from 'react';
 
 import { Button } from './Button/Button';
@@ -46,7 +47,7 @@ export const Popper: FC<PopperProps> = ({ className, items }) => {
         id="popover-anchor"
         testId="popper-button"
       >
-        <Icon name="EllipsisVerticalIcon" />
+        <EllipsisVertical />
         <span className="sr-only">More options</span>
       </Button>
       <div

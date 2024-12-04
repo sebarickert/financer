@@ -1,9 +1,9 @@
 import clsx from 'clsx';
+import { X } from 'lucide-react';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { Button } from '$elements/Button/Button';
-import { Icon } from '$elements/Icon';
 import { removeToastMessage } from '$reducer/notifications.reducer';
 
 export enum ToastMessageTypes {
@@ -88,7 +88,7 @@ export const Toast = ({
               additionalInformation,
           })}
         >
-          <Icon name="XMarkIcon" />
+          <X />
           <span className="sr-only">Close</span>
         </Button>
       )}

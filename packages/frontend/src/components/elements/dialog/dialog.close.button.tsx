@@ -1,5 +1,6 @@
+import { X } from 'lucide-react';
+
 import { Button } from '$elements/Button/Button';
-import { Icon } from '$elements/Icon';
 
 interface DialogCloseButtonProps {
   isDialogOpen?: boolean;
@@ -17,7 +18,7 @@ export const DialogCloseButton = ({
       size="icon"
     >
       <span className="sr-only">Close dialog</span>
-      <Icon name="XMarkIcon" />
+      <X />
     </Button>
   );
 };
