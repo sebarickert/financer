@@ -1,9 +1,9 @@
 import clsx from 'clsx';
+import { LucideIcon } from 'lucide-react';
 import React, { ChangeEvent } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { FieldGroup } from './FieldGroup';
-import { Icon, IconName } from './Icon';
 
 type InputProps = {
   children: React.ReactNode;
@@ -19,7 +19,7 @@ type InputProps = {
   onChange?(event: ChangeEvent<HTMLInputElement>): void;
   testId?: string;
   isLabelHidden?: boolean;
-  icon?: IconName;
+  Icon?: LucideIcon;
 };
 
 const getValueParsingOptions = (type: InputProps['type']) => {
@@ -39,7 +39,7 @@ export const Input = ({
   step,
   testId,
   isLabelHidden,
-  icon,
+  Icon,
 }: InputProps): JSX.Element => {
   const { register } = useFormContext();
 
@@ -52,7 +52,7 @@ export const Input = ({
         {children}
       </label>
       <FieldGroup>
-        {icon && <Icon name={icon} />}
+        {Icon && <Icon />}
         <input
           id={id}
           data-slot="control"

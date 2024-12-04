@@ -2,10 +2,7 @@ import clsx from 'clsx';
 import { LucideIcon } from 'lucide-react';
 import { FC } from 'react';
 
-import { IconName } from '$elements/Icon';
-
 export type DetailsItem = {
-  icon?: IconName;
   Icon?: LucideIcon;
   label: string;
   description: string | React.ReactNode;

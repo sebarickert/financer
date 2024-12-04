@@ -1,10 +1,10 @@
 import clsx from 'clsx';
+import { ArrowLeft, LogOut, MessageSquareText } from 'lucide-react';
 import { Metadata } from 'next';
 
 import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
 import { Button } from '$elements/Button/Button';
 import { Heading } from '$elements/Heading';
-import { Icon } from '$elements/Icon';
 import { AuthenticationService } from '$ssr/api/authentication.service';
 
 export const metadata: Metadata = {
@@ -21,7 +21,7 @@ const checkIsEnabled = (stringBoolean: string | undefined) =>
 
 const ResolveGithubIssues = (): JSX.Element => {
   return (
-    <InfoMessageBlock title="Github" icon="ChatBubbleLeftEllipsisIcon">
+    <InfoMessageBlock title="Github" Icon={MessageSquareText}>
       GitHub login is working as expected. If you experience any issues, please
       try again or contact support.
     </InfoMessageBlock>
@@ -32,7 +32,7 @@ const ResolveAuth0Issues = (): JSX.Element => {
   return (
     <InfoMessageBlock
       title="Auth0"
-      icon="ArrowLeftOnRectangleIcon"
+      Icon={LogOut}
       action={
         <Button href="/auth/logout/auth0">Reset Session and Retry Login</Button>
       }
@@ -59,7 +59,7 @@ const IssuesWithLogin = async () => {
           testId="header-back-link"
           className="max-lg:button-ghost shrink-0"
         >
-          <Icon name="ArrowLeftIcon" />
+          <ArrowLeft />
           <span className="sr-only">Go back</span>
         </Button>
         <Heading variant="h1">Troubleshooting Login Issues</Heading>

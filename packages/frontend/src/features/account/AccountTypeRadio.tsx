@@ -5,8 +5,7 @@ import { FC, useId } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { AccountType } from '$api/generated/financerApi';
-import { accountTypeMapping } from '$constants/account/accountTypeMapping';
-import { Icon } from '$elements/Icon';
+import { ACCOUNT_TYPE_MAPPING } from '$constants/account/ACCOUNT_TYPE_MAPPING';
 
 type AccountTypeRadioProps = {
   id: string;
@@ -17,6 +16,8 @@ export const AccountTypeRadio: FC<AccountTypeRadioProps> = ({ id, value }) => {
   const labelId = `label_${useId()}`;
   const descriptionId = `description_${useId()}`;
   const { register } = useFormContext();
+
+  const Icon = ACCOUNT_TYPE_MAPPING[value].Icon;
 
   return (
     <label
@@ -43,13 +44,13 @@ export const AccountTypeRadio: FC<AccountTypeRadioProps> = ({ id, value }) => {
           'peer-checked:bg-blue/15 peer-checked:border-blue peer-checked:hover:bg-blue/15 peer-checked:after:block peer-checked:before:border-blue',
         )}
       >
-        <Icon name={accountTypeMapping[value].icon} className="w-7 h-7" />
+        <Icon />
         <div>
           <p className="pr-6 font-medium" id={labelId}>
-            {accountTypeMapping[value].label}
+            {ACCOUNT_TYPE_MAPPING[value].label}
           </p>
           <p className="mt-1 text-sm text-muted-foreground" id={descriptionId}>
-            {accountTypeMapping[value].description}
+            {ACCOUNT_TYPE_MAPPING[value].description}
           </p>
         </div>
       </div>

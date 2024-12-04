@@ -1,8 +1,8 @@
+import { Info, Tag } from 'lucide-react';
 import { FC, useMemo } from 'react';
 
 import { TransactionCategoryDto } from '$api/generated/financerApi';
 import { DetailsItem, DetailsList } from '$blocks/DetailsList';
-import { IconName } from '$elements/Icon';
 import { TransactionListWithMonthlyPager } from '$features/transaction/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
 import { capitalize } from '$utils/capitalize';
 import { parseParentCategoryPath } from 'src/services/TransactionCategoriesService';
@@ -30,14 +30,14 @@ export const Category: FC<CategoryProps> = ({
 
     return [
       {
-        icon: 'TagIcon' as IconName,
+        Icon: Tag,
         label: 'Name',
         description: category.name,
       },
       ...(category.parentCategoryId
         ? [
             {
-              icon: 'TagIcon' as IconName,
+              Icon: Tag,
               label: 'Parent Category',
               description:
                 parseParentCategoryPath(
@@ -50,7 +50,7 @@ export const Category: FC<CategoryProps> = ({
       ...(categoryVisibilityCapitalized.length > 0
         ? [
             {
-              icon: 'InformationCircleIcon' as IconName,
+              Icon: Info,
               label:
                 categoryVisibilityCapitalized.length > 1
                   ? 'Transaction Types'

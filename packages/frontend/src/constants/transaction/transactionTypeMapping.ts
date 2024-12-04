@@ -1,7 +1,4 @@
-import { transactionTypeIconMapping } from './transactionTypeIconMapping';
-
 import { TransactionType } from '$api/generated/financerApi';
-import { IconName } from '$elements/Icon';
 
 export const transactionTypeLabelMapping: {
   [key in TransactionType]: { default: string; plural: string };
@@ -13,20 +10,17 @@ export const transactionTypeLabelMapping: {
 
 export const transactionTypeThemeMapping: Record<
   TransactionType,
-  { color: string; icon: IconName; hsl?: string }
+  { color: string; hsl?: string }
 > = {
   [TransactionType.Income]: {
     color: 'bg-green/15',
     hsl: 'hsl(var(--color-green))',
-    icon: transactionTypeIconMapping[TransactionType.Income],
   },
   [TransactionType.Expense]: {
     color: 'bg-red/15',
     hsl: 'hsl(var(--color-red))',
-    icon: transactionTypeIconMapping[TransactionType.Expense],
   },
   [TransactionType.Transfer]: {
     color: 'bg-accent',
-    icon: transactionTypeIconMapping[TransactionType.Transfer],
   },
 };

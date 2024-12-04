@@ -1,16 +1,16 @@
 'use client';
 
 import clsx from 'clsx';
+import { LucideIcon } from 'lucide-react';
 import { FC } from 'react';
 
-import { Icon, IconName } from '$elements/Icon';
 import { Link } from '$elements/Link';
 import { useIsActiveLink } from '$hooks/useIsActiveLink';
 
 export type NavigationItemProps = {
   url: string;
   label: string;
-  iconName: IconName;
+  Icon: LucideIcon;
   isExact?: boolean;
   className?: string;
 };
@@ -18,7 +18,7 @@ export type NavigationItemProps = {
 export const NavigationItem: FC<NavigationItemProps> = ({
   url,
   label,
-  iconName,
+  Icon,
   isExact,
   className,
 }) => {
@@ -42,7 +42,7 @@ export const NavigationItem: FC<NavigationItemProps> = ({
         )}
         hasHoverEffect={false}
       >
-        <Icon name={iconName} isSolid={isActive} />
+        <Icon />
         <span className="max-lg:sr-only">{label}</span>
       </Link>
     </li>

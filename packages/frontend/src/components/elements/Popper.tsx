@@ -1,23 +1,22 @@
 import clsx from 'clsx';
-import { EllipsisVertical } from 'lucide-react';
+import { EllipsisVertical, LucideIcon } from 'lucide-react';
 import { FC } from 'react';
 
 import { Button } from './Button/Button';
 import { Heading } from './Heading';
-import { Icon, IconName } from './Icon';
 import { Link } from './Link';
 
 import { List } from '$blocks/List';
 
 type PopperItem =
   | {
-      icon: IconName;
+      Icon: LucideIcon;
       label: string;
       href: string;
       popperId?: never;
     }
   | {
-      icon: IconName;
+      Icon: LucideIcon;
       label: string;
       popperId: string;
       href?: never;
@@ -74,7 +73,7 @@ export const Popper: FC<PopperProps> = ({ className, items }) => {
         </Heading>
         <List>
           {items?.map(
-            ({ icon, label, href, popperId: itemPopperId }, index) => {
+            ({ Icon, label, href, popperId: itemPopperId }, index) => {
               if (href) {
                 return (
                   <Link
@@ -83,7 +82,7 @@ export const Popper: FC<PopperProps> = ({ className, items }) => {
                     className={popperItemClasses}
                     hasHoverEffect={false}
                   >
-                    <Icon name={icon} className="!w-5 !h-5 place-self-center" />
+                    <Icon className="w-5 h-5 place-self-center" />
                     <span>{label}</span>
                   </Link>
                 );
@@ -96,7 +95,7 @@ export const Popper: FC<PopperProps> = ({ className, items }) => {
                   popoverTarget={itemPopperId}
                   className={popperItemClasses}
                 >
-                  <Icon name={icon} className="!w-5 !h-5 place-self-center" />
+                  <Icon className="w-5 h-5 place-self-center" />
                   <span>{label}</span>
                 </Button>
               );

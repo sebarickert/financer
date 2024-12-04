@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 
 import { AccountType } from '$api/generated/financerApi';
 import { Form } from '$blocks/Form';
-import { accountTypeMapping } from '$constants/account/accountTypeMapping';
+import { ACCOUNT_TYPE_MAPPING } from '$constants/account/ACCOUNT_TYPE_MAPPING';
 import { Button } from '$elements/Button/Button';
 import { InputOption } from '$elements/InputOption';
 import {
@@ -50,10 +50,10 @@ export const UserDashboardSettingsForm: FC<UserDashboardSettingsFormProps> = ({
             id={'accountTypes'}
             type="checkbox"
             value={type}
-            icon={accountTypeMapping[type].icon}
+            icon={ACCOUNT_TYPE_MAPPING[type].icon}
             register={methods.register('accountTypes')}
           >
-            {accountTypeMapping[type].label}
+            {ACCOUNT_TYPE_MAPPING[type].label}
           </InputOption>
         ))}
       </fieldset>

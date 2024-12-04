@@ -12,7 +12,7 @@ import {
   useAccountsFindAllByUserQuery,
 } from '$api/generated/financerApi';
 import { Form } from '$blocks/Form';
-import { accountTypeMapping } from '$constants/account/accountTypeMapping';
+import { ACCOUNT_TYPE_MAPPING } from '$constants/account/ACCOUNT_TYPE_MAPPING';
 import { Button } from '$elements/Button/Button';
 import { Input } from '$elements/Input';
 import { Option, Select } from '$elements/Select';
@@ -72,7 +72,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
     return accounts.map(({ id, name, type, balance }) => ({
       value: id,
       label: name,
-      icon: accountTypeMapping[type].icon,
+      icon: ACCOUNT_TYPE_MAPPING[type].icon,
       description: `Balance ${formatCurrency(balance)}`,
     }));
   }, [accounts]);

@@ -1,8 +1,8 @@
+import { ChartNoAxesCombined, Pencil, Trash } from 'lucide-react';
 import { notFound } from 'next/navigation';
 import { FC } from 'react';
 
 import { AccountType } from '$api/generated/financerApi';
-import { IconName } from '$elements/Icon';
 import { Popper } from '$elements/Popper';
 import { AccountDeleteDrawer } from '$features/account/AccountDeleteDrawer';
 import { AccountUpdateMarketValueDrawer } from '$features/account/AccountUpdateMarketValueDrawer';
@@ -36,19 +36,19 @@ export const AccountContainer: FC<AccountContainerProps> = async ({ id }) => {
             {
               href: `/accounts/${account.id}/edit`,
               label: 'Edit',
-              icon: 'PencilIcon',
+              Icon: Pencil,
             },
             {
               popperId: account.id,
               label: 'Delete',
-              icon: 'TrashIcon',
+              Icon: Trash,
             },
             ...(account.type === AccountType.Investment
               ? [
                   {
                     popperId: accountDrawerPopperId,
                     label: 'Update Market Value',
-                    icon: 'ArrowTrendingUpIcon' as IconName,
+                    Icon: ChartNoAxesCombined,
                   },
                 ]
               : []),

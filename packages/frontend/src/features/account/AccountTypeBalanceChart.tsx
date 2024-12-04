@@ -6,7 +6,7 @@ import { FC } from 'react';
 import { AccountDto, AccountType } from '$api/generated/financerApi';
 import { DetailsItem, DetailsList } from '$blocks/DetailsList';
 import { PieChartDonut } from '$charts/PieChartDonut';
-import { accountTypeMapping } from '$constants/account/accountTypeMapping';
+import { ACCOUNT_TYPE_MAPPING } from '$constants/account/ACCOUNT_TYPE_MAPPING';
 import { ChartConfig } from '$types/ChartConfig';
 import { ChartData } from '$types/ChartData';
 import { formatCurrency } from '$utils/formatCurrency';
@@ -56,27 +56,27 @@ export const AccountTypeBalanceChart: FC<AccountTypeBalanceChartProps> = ({
 
   const chartConfig = {
     [AccountType.Savings]: {
-      label: accountTypeMapping[AccountType.Savings].label,
+      label: ACCOUNT_TYPE_MAPPING[AccountType.Savings].label,
       color: 'hsl(var(--color-blue))',
       valueFormatter: formatCurrency,
     },
     [AccountType.Cash]: {
-      label: accountTypeMapping[AccountType.Cash].label,
+      label: ACCOUNT_TYPE_MAPPING[AccountType.Cash].label,
       color: 'hsl(var(--color-gold))',
       valueFormatter: formatCurrency,
     },
     [AccountType.LongTermSavings]: {
-      label: accountTypeMapping[AccountType.LongTermSavings].label,
+      label: ACCOUNT_TYPE_MAPPING[AccountType.LongTermSavings].label,
       color: 'hsl(var(--color-dark-blue))',
       valueFormatter: formatCurrency,
     },
     [AccountType.PreAssignedCash]: {
-      label: accountTypeMapping[AccountType.PreAssignedCash].label,
+      label: ACCOUNT_TYPE_MAPPING[AccountType.PreAssignedCash].label,
       color: 'hsl(var(--color-soft-gray))',
       valueFormatter: formatCurrency,
     },
     [AccountType.Investment]: {
-      label: accountTypeMapping[AccountType.Investment].label,
+      label: ACCOUNT_TYPE_MAPPING[AccountType.Investment].label,
       color: 'hsl(var(--color-green))',
       valueFormatter: formatCurrency,
     },
@@ -87,8 +87,8 @@ export const AccountTypeBalanceChart: FC<AccountTypeBalanceChartProps> = ({
     .sort(([, a], [, b]) => b - a)
     .map(([key, balance]) => {
       return {
-        icon: accountTypeMapping[key as AccountType].icon,
-        label: accountTypeMapping[key as AccountType].label,
+        icon: ACCOUNT_TYPE_MAPPING[key as AccountType].icon,
+        label: ACCOUNT_TYPE_MAPPING[key as AccountType].label,
         description: formatCurrency(balance),
       };
     });

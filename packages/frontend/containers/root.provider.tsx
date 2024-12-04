@@ -1,5 +1,6 @@
 'use client';
 
+import { ArrowRight } from 'lucide-react';
 import { ViewTransitions } from 'next-view-transitions';
 import { FC, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -8,7 +9,6 @@ import { StoreProvider } from './store.provider';
 
 import { ScrollToTop } from '$blocks/ScrollToTop';
 import { ToastMessageTypes } from '$blocks/Toast/Toast';
-import { Icon } from '$elements/Icon';
 import { Link } from '$elements/Link';
 import {
   addToastMessage,
@@ -50,7 +50,7 @@ const App: FC<RootProviderContainerProps> = ({
           'Add your first account to start tracking expenses, income, savings, and investments in one place.',
         action: (
           <Link href="/accounts/add" className="inline-flex items-center gap-2">
-            Add Account <Icon name="ArrowRightIcon" />
+            Add Account <ArrowRight />
           </Link>
         ),
       }),

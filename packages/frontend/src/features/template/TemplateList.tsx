@@ -1,3 +1,4 @@
+import { CalendarSync, Layers, LucideIcon } from 'lucide-react';
 import { FC } from 'react';
 
 import {
@@ -7,7 +8,6 @@ import {
 import { List } from '$blocks/List';
 import { ProminentLink } from '$blocks/ProminentLink';
 import { settingsPaths } from '$constants/settings-paths';
-import { IconName } from '$elements/Icon';
 
 type TemplateListProps = {
   templates: TransactionTemplateDto[];
@@ -22,9 +22,9 @@ const getLabel = (templateType: TransactionTemplateType): string => {
   }
 };
 
-const templateIconMapping: Record<string, IconName> = {
-  [TransactionTemplateType.Manual]: 'BoltIcon',
-  [TransactionTemplateType.Auto]: 'ArrowPathIcon',
+const TEMPLATE_ICON_MAPPING: Record<string, LucideIcon> = {
+  [TransactionTemplateType.Manual]: Layers,
+  [TransactionTemplateType.Auto]: CalendarSync,
 };
 
 export const TemplateList: FC<TemplateListProps> = ({ templates }) => {
@@ -44,7 +44,7 @@ export const TemplateList: FC<TemplateListProps> = ({ templates }) => {
         >
           {items.map(({ templateName, id, templateType }) => (
             <ProminentLink
-              icon={templateIconMapping[templateType[0]]}
+              Icon={TEMPLATE_ICON_MAPPING[templateType[0]]}
               key={id}
               link={`${settingsPaths.templates}/${id}/edit`}
             >

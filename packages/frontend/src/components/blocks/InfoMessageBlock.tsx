@@ -1,8 +1,8 @@
 import clsx from 'clsx';
+import { LucideIcon } from 'lucide-react';
 import { FC } from 'react';
 
 import { Heading } from '$elements/Heading';
-import { Icon, IconName } from '$elements/Icon';
 
 type InfoMessageBlockBaseProps = {
   title: string;
@@ -12,7 +12,7 @@ type InfoMessageBlockBaseProps = {
 };
 
 type InfoMessageBlockDefaultProps = InfoMessageBlockBaseProps & {
-  icon?: IconName;
+  Icon?: LucideIcon;
   variant?: 'default';
 };
 
@@ -46,7 +46,7 @@ export const InfoMessageBlock: FC<InfoMessageBlockProps> = ({
     );
   }
 
-  const { icon } = props as InfoMessageBlockDefaultProps;
+  const { Icon } = props as InfoMessageBlockDefaultProps;
 
   return (
     <div
@@ -56,14 +56,14 @@ export const InfoMessageBlock: FC<InfoMessageBlockProps> = ({
         'px-6 pt-8 pb-10 rounded-md text-center',
       )}
     >
-      {icon && (
+      {Icon && (
         <div
           className={clsx(
             'mb-6 relative rounded-full h-20 w-20',
             'inline-flex items-center justify-center shrink-0 bg-accent',
           )}
         >
-          <Icon name={icon} className="!w-10 !h-10" />
+          <Icon className="w-10 h-10" />
         </div>
       )}
       <Heading disableResponsiveSizing noMargin className="mb-2">
