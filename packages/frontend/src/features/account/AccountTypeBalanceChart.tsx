@@ -43,6 +43,11 @@ export const AccountTypeBalanceChart: FC<AccountTypeBalanceChartProps> = ({
     ),
   );
 
+  const totalBalance = Object.values(accountTypeBalances).reduce(
+    (acc, curr) => acc + curr,
+    0,
+  );
+
   const chartData = Object.entries(accountTypeBalances).map(([key, value]) => {
     return {
       dataKey: key,
@@ -54,31 +59,36 @@ export const AccountTypeBalanceChart: FC<AccountTypeBalanceChartProps> = ({
     fill: string;
   }>;
 
+  const calculateBalancePercentage = (value: number) => {
+    const percentage = (value / totalBalance) * 100;
+    return `${percentage.toFixed(2)}%`;
+  };
+
   const chartConfig = {
     [AccountType.Savings]: {
       label: ACCOUNT_TYPE_MAPPING[AccountType.Savings].label,
       color: 'hsl(var(--color-blue))',
-      valueFormatter: formatCurrency,
+      valueFormatter: calculateBalancePercentage,
     },
     [AccountType.Cash]: {
       label: ACCOUNT_TYPE_MAPPING[AccountType.Cash].label,
       color: 'hsl(var(--color-gold))',
-      valueFormatter: formatCurrency,
+      valueFormatter: calculateBalancePercentage,
     },
     [AccountType.LongTermSavings]: {
       label: ACCOUNT_TYPE_MAPPING[AccountType.LongTermSavings].label,
       color: 'hsl(var(--color-dark-blue))',
-      valueFormatter: formatCurrency,
+      valueFormatter: calculateBalancePercentage,
     },
     [AccountType.PreAssignedCash]: {
       label: ACCOUNT_TYPE_MAPPING[AccountType.PreAssignedCash].label,
       color: 'hsl(var(--color-soft-gray))',
-      valueFormatter: formatCurrency,
+      valueFormatter: calculateBalancePercentage,
     },
     [AccountType.Investment]: {
       label: ACCOUNT_TYPE_MAPPING[AccountType.Investment].label,
       color: 'hsl(var(--color-green))',
-      valueFormatter: formatCurrency,
+      valueFormatter: calculateBalancePercentage,
     },
   } satisfies ChartConfig;
 
