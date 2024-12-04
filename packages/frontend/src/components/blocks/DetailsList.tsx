@@ -1,10 +1,12 @@
 import clsx from 'clsx';
+import { LucideIcon } from 'lucide-react';
 import { FC } from 'react';
 
-import { Icon, IconName } from '$elements/Icon';
+import { IconName } from '$elements/Icon';
 
 export type DetailsItem = {
-  icon: IconName;
+  icon?: IconName;
+  Icon?: LucideIcon;
   label: string;
   description: string | React.ReactNode;
   testId?: string;
@@ -36,7 +38,7 @@ export const DetailsList: FC<DetailsListProps> = ({
             data-testid={`${item.testId ?? testId}-item`}
           >
             <dt className="inline-flex items-center gap-2">
-              <Icon name={item.icon} />
+              {item.Icon && <item.Icon />}
               <span data-testid={`${testId}-item-label`}>{item.label}</span>
             </dt>
             <dd className="font-medium text-right truncate">

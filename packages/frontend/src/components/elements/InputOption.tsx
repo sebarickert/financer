@@ -1,11 +1,10 @@
 import clsx from 'clsx';
+import { LucideIcon } from 'lucide-react';
 import { InputHTMLAttributes } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
-import { Icon, IconName } from '$elements/Icon';
-
 type RadioProps = InputHTMLAttributes<HTMLInputElement> & {
-  icon?: IconName;
+  Icon?: LucideIcon;
   children: string;
   register?: UseFormRegisterReturn;
   type: 'radio' | 'checkbox';
@@ -15,7 +14,7 @@ export const InputOption = ({
   id,
   children,
   value,
-  icon,
+  Icon,
   register,
   type,
   ...attributes
@@ -47,7 +46,7 @@ export const InputOption = ({
           type === 'checkbox' && 'peer-checked:hover:bg-blue/25',
         )}
       >
-        {icon && <Icon name={icon} className="w-7 h-7 shrink-0" />}
+        {Icon && <Icon className="w-7 h-7 shrink-0" />}
         <p className="font-medium grow" id={labelId}>
           {children}
         </p>

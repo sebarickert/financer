@@ -11,10 +11,10 @@ export const FieldGroup: FC<FieldGroupProps> = ({ children }) => {
     <div
       className={clsx(
         'grid grid-cols-[theme(spacing.12),1fr] isolate',
-        '[&>[data-slot="icon"]]:z-10 [&>[data-slot="icon"]]:row-start-1 [&>[data-slot="icon"]]:col-start-1 [&>[data-slot="icon"]]:place-self-center [&>[data-slot="icon"]]:text-muted-foreground',
+        '[&>svg]:z-10 [&>svg]:row-start-1 [&>svg]:col-start-1 [&>svg]:place-self-center [&>svg]:text-muted-foreground',
         '[&>[data-slot="control"]]:col-span-2 [&>[data-slot="control"]]:row-start-1 [&>[data-slot="control"]]:col-start-1',
-        '[&>[data-slot="icon"]+[data-slot="control"]]:pl-12',
-        '[&>[data-slot="icon"]+[data-slot="control"]>[data-slot="custom-select-button"]]:pl-0',
+        '[&>svg+[data-slot="control"]]:pl-12',
+        '[&>svg+[data-slot="control"]>[data-slot="custom-select-button"]]:pl-0',
       )}
     >
       {children}

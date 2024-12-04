@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { Calendar, Info, MessageSquareText, Tag } from 'lucide-react';
 import { FC } from 'react';
 
 import {
@@ -9,10 +10,12 @@ import {
 } from '$api/generated/financerApi';
 import { BalanceDisplay } from '$blocks/BalanceDisplay';
 import { DetailsList, DetailsItem } from '$blocks/DetailsList';
-import { transactionTypeIconMapping } from '$constants/transaction/transactionTypeIconMapping';
 import { transactionTypeThemeMapping } from '$constants/transaction/transactionTypeMapping';
 import { Heading } from '$elements/Heading';
-import { Icon, IconName } from '$elements/Icon';
+import {
+  TRANSACTION_TYPE_ICON_MAPPING,
+  TransactionTypeIcon,
+} from '$features/transaction/TransactionTypeIcon';
 import { CategoryService } from '$ssr/api/category.service';
 import { capitalize } from '$utils/capitalize';
 import { formatCurrency } from '$utils/formatCurrency';
@@ -52,7 +55,7 @@ export const Transaction: FC<TransactionProps> = async ({
     },
   };
 
-  const { icon, color = '' } = {
+  const { color = '' } = {
     ...(type ? typeMapping[type] : {}),
   };
 
@@ -66,7 +69,8 @@ export const Transaction: FC<TransactionProps> = async ({
     ...(fromAccountName
       ? [
           {
-            icon: transactionTypeIconMapping.EXPENSE,
+            // icon: transactionTypeIconMapping.EXPENSE,
+            Icon: TRANSACTION_TYPE_ICON_MAPPING.EXPENSE,
             label: 'From Account',
             description: fromAccountName,
           },
@@ -75,24 +79,25 @@ export const Transaction: FC<TransactionProps> = async ({
     ...(toAccountName
       ? [
           {
-            icon: transactionTypeIconMapping.INCOME,
+            // icon: transactionTypeIconMapping.INCOME,
+            Icon: TRANSACTION_TYPE_ICON_MAPPING.INCOME,
             label: 'To Account',
             description: toAccountName,
           },
         ]
       : []),
     {
-      icon: 'CalendarIcon',
+      Icon: Calendar,
       label: 'Date',
       description: formatDate(new Date(date), DateFormat.long),
     },
     {
-      icon: 'InformationCircleIcon',
+      Icon: Info,
       label: 'Type',
       description: capitalize(type.toLowerCase()),
     },
     {
-      icon: 'ChatBubbleBottomCenterTextIcon',
+      Icon: MessageSquareText,
       label: 'Description',
       description,
     },
@@ -106,19 +111,19 @@ export const Transaction: FC<TransactionProps> = async ({
     }) => {
       return [
         {
-          icon: 'TagIcon',
+          Icon: Tag,
           label: 'Category',
           description: getCategoryNameById(categoryId as unknown as string),
         },
         {
-          icon: 'InformationCircleIcon',
+          Icon: Info,
           label: 'Amount',
           description: formatCurrency(categoryAmount),
         },
         ...(categoryDescription
           ? [
               {
-                icon: 'ChatBubbleBottomCenterTextIcon' as IconName,
+                Icon: MessageSquareText,
                 label: 'Description',
                 description: categoryDescription,
               },
@@ -135,17 +140,15 @@ export const Transaction: FC<TransactionProps> = async ({
     >
       <div className="grid divide-y [&>:first-child]:pb-6 [&>:first-child+div]:pt-6">
         <div className="flex flex-col items-center gap-4">
-          {icon && (
-            <span
-              className={clsx(
-                'p-3 rounded-full inline-block',
-                color,
-                !color && 'bg-accent',
-              )}
-            >
-              <Icon name={isRecurring ? 'ArrowPathIcon' : icon} />
-            </span>
-          )}
+          <span
+            className={clsx(
+              'p-3 rounded-full inline-block',
+              color,
+              !color && 'bg-accent',
+            )}
+          >
+            <TransactionTypeIcon type={type} isRecurring={isRecurring} />
+          </span>
           <BalanceDisplay
             label="Amount"
             amount={amount}

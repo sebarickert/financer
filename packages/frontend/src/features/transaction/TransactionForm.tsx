@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 
 import { CategoriesFormFullFields } from './TransactionCategories/transaction-categories.types';
 import { TransactionCategories } from './TransactionCategories/TransactionCategories';
+import { TRANSACTION_TYPE_ICON_MAPPING } from './TransactionTypeIcon';
 
 import {
   VisibilityType,
@@ -12,7 +13,6 @@ import {
 } from '$api/generated/financerApi';
 import { Form } from '$blocks/Form';
 import { accountTypeMapping } from '$constants/account/accountTypeMapping';
-import { transactionTypeIconMapping } from '$constants/transaction/transactionTypeIconMapping';
 import { Button } from '$elements/Button/Button';
 import { Input } from '$elements/Input';
 import { Option, Select } from '$elements/Select';
@@ -137,7 +137,10 @@ export const TransactionForm: FC<TransactionFormProps> = ({
               isRequired
               placeholder="Select Account"
               isLabelHidden
-              icon={transactionTypeIconMapping.EXPENSE}
+              // Icon={ArrowUp}
+              Icon={TRANSACTION_TYPE_ICON_MAPPING.EXPENSE}
+              // Icon={<TransactionTypeIcon type={TransactionType.Expense} />}
+              // icon={transactionTypeIconMapping.EXPENSE}
             >
               From Account
             </Select>
@@ -149,7 +152,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
               isRequired
               placeholder="Select Account"
               isLabelHidden
-              icon={transactionTypeIconMapping.INCOME}
+              // icon={transactionTypeIconMapping.INCOME}
             >
               To Account
             </Select>
