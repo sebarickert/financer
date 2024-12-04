@@ -43,6 +43,7 @@ export const Link = ({
   const router = useTransitionRouter();
 
   const isCurrentPage = pathname === href;
+  const hasActiveSubPage = href !== '/' && pathname?.startsWith(href);
 
   const linkClasses = clsx(
     'focus-visible:focus-highlight text-foreground',
@@ -108,6 +109,7 @@ export const Link = ({
         props.onClick?.();
       }}
       aria-current={isCurrentPage ? 'page' : undefined}
+      data-active-sub-page={hasActiveSubPage}
     >
       {linkContent}
     </TransitionLink>

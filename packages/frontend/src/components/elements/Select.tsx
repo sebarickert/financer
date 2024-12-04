@@ -48,7 +48,7 @@ const OptionElement: FC<OptionElementProps> = ({
       'focus-visible:focus-highlight focus-visible:z-10 focus-visible:relative text-foreground rounded-md hover:cursor-pointer hover:bg-accent',
       'disabled:pointer-events-none disabled:opacity-50',
       'before:hidden p-3 flex gap-4',
-      '[&>[data-slot="icon"]]:text-muted-foreground',
+      '[&>svg]:text-muted-foreground',
     )}
     disabled={isDisabled}
   >
@@ -130,7 +130,7 @@ export const Select = ({
             <selectedoption
               className={clsx(
                 '[&>span]:after:hidden',
-                '[&>[data-slot="icon"]]:hidden',
+                '[&>svg]:hidden',
                 'py-3 flex gap-2 w-full',
               )}
             />

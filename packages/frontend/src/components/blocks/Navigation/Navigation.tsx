@@ -1,24 +1,10 @@
 import clsx from 'clsx';
-import { Activity, Grid2X2, Home, UserCog } from 'lucide-react';
 import { FC } from 'react';
 
 import { NavigationCreateTransactionButton } from './NavigationCreateTransactionButton';
-import { NavigationItem, NavigationItemProps } from './NavigationItem';
+import { NavigationItem } from './NavigationItem';
 
-const navigationItems: Record<string, NavigationItemProps> = {
-  home: { label: 'Home', url: '/', Icon: Home, isExact: true },
-  statistics: {
-    label: 'Statistics',
-    url: '/statistics/',
-    Icon: Activity,
-  },
-  accounts: {
-    label: 'Accounts',
-    url: '/accounts/',
-    Icon: Grid2X2,
-  },
-  settings: { label: 'Settings', url: '/settings/', Icon: UserCog },
-};
+import { NAVIGATION_ITEMS } from '$constants/NAVIGATION_ITEMS';
 
 export const Navigation: FC = () => {
   return (
@@ -29,14 +15,14 @@ export const Navigation: FC = () => {
           'lg:flex lg:gap-4 lg:items-center lg:justify-end',
         )}
       >
-        <NavigationItem {...navigationItems.home} />
-        <NavigationItem {...navigationItems.statistics} />
+        <NavigationItem {...NAVIGATION_ITEMS.home} />
+        <NavigationItem {...NAVIGATION_ITEMS.statistics} />
         <NavigationItem
-          {...navigationItems.accounts}
+          {...NAVIGATION_ITEMS.accounts}
           className="max-lg:order-4"
         />
         <NavigationItem
-          {...navigationItems.settings}
+          {...NAVIGATION_ITEMS.settings}
           className="max-lg:order-5"
         />
         <NavigationCreateTransactionButton className="max-lg:order-3" />

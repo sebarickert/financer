@@ -1,4 +1,4 @@
-import { Plus, Tag } from 'lucide-react';
+import { Layers, Plus } from 'lucide-react';
 import { FC } from 'react';
 
 import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
@@ -31,7 +31,7 @@ export const TemplateListingContainer: FC = async () => {
       {!templates.length && (
         <InfoMessageBlock
           title="No Templates Added"
-          Icon={Tag}
+          Icon={Layers}
           action={
             <Button href={`${settingsPaths.templates}/add`}>
               Add Template

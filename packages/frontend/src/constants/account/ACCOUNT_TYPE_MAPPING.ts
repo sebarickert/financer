@@ -1,9 +1,9 @@
 import {
-  Banknote,
   ChartNoAxesCombined,
   ClipboardCheck,
   CreditCard,
   Landmark,
+  Lock,
   LucideIcon,
   PiggyBank,
   Wallet,
@@ -16,18 +16,18 @@ export const ACCOUNT_TYPE_MAPPING: Record<
   { Icon: LucideIcon; label: string; description: string }
 > = {
   [AccountType.Savings]: {
-    Icon: Wallet,
+    Icon: PiggyBank,
     label: 'Savings',
     description: 'Funds set aside for short-term goals or unexpected expenses.',
   },
   [AccountType.LongTermSavings]: {
-    Icon: PiggyBank,
+    Icon: Lock,
     label: 'Long-term Savings',
     description:
       'Money reserved for future needs, such as retirement or major purchases.',
   },
   [AccountType.Cash]: {
-    Icon: Banknote,
+    Icon: Wallet,
     label: 'Cash',
     description:
       'Cash on hand, easily accessible for daily transactions and expenses.',
