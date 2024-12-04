@@ -1,3 +1,4 @@
+import { Grid2X2 } from 'lucide-react';
 import { FC } from 'react';
 
 import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
@@ -25,7 +26,7 @@ export const StatisticsLayout: FC<StatisticsLayoutProps> = async ({
       {!accounts.length && (
         <InfoMessageBlock
           title="No Accounts Added"
-          icon="Squares2X2Icon"
+          Icon={Grid2X2}
           action={<Button href="/accounts/add">Add Account</Button>}
         >
           It seems you haven&apos;t added any accounts yet. Get started by

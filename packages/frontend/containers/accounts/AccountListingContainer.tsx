@@ -1,4 +1,4 @@
-import { Plus } from 'lucide-react';
+import { Grid2x2, Plus } from 'lucide-react';
 import { FC } from 'react';
 
 import { AccountType } from '$api/generated/financerApi';
@@ -50,7 +50,7 @@ export const AccountListingContainer: FC = async () => {
       {!accounts.length && (
         <InfoMessageBlock
           title="No Accounts Added"
-          icon="Squares2X2Icon"
+          Icon={Grid2x2}
           action={<Button href="/accounts/add">Add Account</Button>}
         >
           It seems you haven&apos;t added any accounts yet. Get started by

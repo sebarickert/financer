@@ -87,7 +87,7 @@ export const AccountTypeBalanceChart: FC<AccountTypeBalanceChartProps> = ({
     .sort(([, a], [, b]) => b - a)
     .map(([key, balance]) => {
       return {
-        icon: ACCOUNT_TYPE_MAPPING[key as AccountType].icon,
+        Icon: ACCOUNT_TYPE_MAPPING[key as AccountType].Icon,
         label: ACCOUNT_TYPE_MAPPING[key as AccountType].label,
         description: formatCurrency(balance),
       };

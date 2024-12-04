@@ -1,13 +1,12 @@
 import clsx from 'clsx';
 import { FC } from 'react';
 
+import { TRANSACTION_TYPE_ICON_MAPPING } from '../TransactionTypeIcon';
+
 import { TransactionType } from '$api/generated/financerApi';
 import { DetailsList, DetailsItem } from '$blocks/DetailsList';
 import { RadialStackedChart } from '$charts/RadialStackedChart';
-import {
-  transactionTypeLabelMapping,
-  transactionTypeThemeMapping,
-} from '$constants/transaction/transactionTypeMapping';
+import { transactionTypeLabelMapping } from '$constants/transaction/transactionTypeMapping';
 import {
   TransactionListOptions,
   TransactionService,
@@ -41,14 +40,14 @@ export const TransactionListWithMonthlySummary: FC<
 
   const monthlyDetails: DetailsItem[] = [
     {
-      icon: transactionTypeThemeMapping[TransactionType.Income].icon,
+      Icon: TRANSACTION_TYPE_ICON_MAPPING[TransactionType.Income],
       label: capitalize(
         transactionTypeLabelMapping[TransactionType.Income].plural,
       ),
       description: formatCurrency(monthlySummary.incomeAmount) ?? '-',
     },
     {
-      icon: transactionTypeThemeMapping[TransactionType.Expense].icon,
+      Icon: TRANSACTION_TYPE_ICON_MAPPING[TransactionType.Expense],
       label: capitalize(
         transactionTypeLabelMapping[TransactionType.Expense].plural,
       ),

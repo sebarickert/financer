@@ -48,7 +48,7 @@ export const UserStatisticsPageSettingsForm: FC<
             id={'accountTypes'}
             value={type}
             type="checkbox"
-            icon={ACCOUNT_TYPE_MAPPING[type].icon}
+            Icon={ACCOUNT_TYPE_MAPPING[type].Icon}
             register={methods.register('accountTypes')}
           >
             {ACCOUNT_TYPE_MAPPING[type].label}

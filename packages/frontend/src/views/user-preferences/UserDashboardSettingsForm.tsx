@@ -50,7 +50,7 @@ export const UserDashboardSettingsForm: FC<UserDashboardSettingsFormProps> = ({
             id={'accountTypes'}
             type="checkbox"
             value={type}
-            icon={ACCOUNT_TYPE_MAPPING[type].icon}
+            Icon={ACCOUNT_TYPE_MAPPING[type].Icon}
             register={methods.register('accountTypes')}
           >
             {ACCOUNT_TYPE_MAPPING[type].label}

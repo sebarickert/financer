@@ -1,4 +1,4 @@
-import { Plus } from 'lucide-react';
+import { Plus, Tag } from 'lucide-react';
 import { FC } from 'react';
 
 import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
@@ -98,7 +98,7 @@ export const CategoryListingContainer: FC = async () => {
         {!categoryRows.length && (
           <InfoMessageBlock
             title="No Categories Added"
-            icon="TagIcon"
+            Icon={Tag}
             action={
               <Button href={`${settingsPaths.categories}/add`}>
                 Add Category
@@ -113,12 +113,12 @@ export const CategoryListingContainer: FC = async () => {
         {categoryRows.map(({ label: parentLabel, items, link: parentLink }) => (
           <List key={parentLabel} label={parentLabel} testId="category-list">
             {parentLink && (
-              <ProminentLink link={parentLink} icon={'TagIcon'}>
+              <ProminentLink link={parentLink} Icon={Tag}>
                 {parentLabel}
               </ProminentLink>
             )}
             {items.map(({ id, link, label }) => (
-              <ProminentLink key={id} link={link} icon={'TagIcon'}>
+              <ProminentLink key={id} link={link} Icon={Tag}>
                 {label}
               </ProminentLink>
             ))}

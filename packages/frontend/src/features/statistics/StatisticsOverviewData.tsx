@@ -1,6 +1,7 @@
 'use client';
 
 import { parse } from 'date-fns';
+import { ArrowDown, ArrowUp, ChartLine, Divide, Equal } from 'lucide-react';
 import { FC, useMemo, useState } from 'react';
 
 import { TransactionMonthSummaryDto } from '$api/generated/financerApi';
@@ -67,7 +68,7 @@ export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
 
   if (chartData.length < 3) {
     return (
-      <InfoMessageBlock title="Not Enough Data Yet" icon="RectangleGroupIcon">
+      <InfoMessageBlock title="Not Enough Data Yet" Icon={ChartLine}>
         It seems there isn&apos;t enough data to generate a meaningful summary.
         Start by adding more transactions to see an overview of your monthly
         activity.
@@ -102,17 +103,17 @@ export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
   ): DetailsItem[] => {
     return [
       {
-        icon: 'DivideIcon',
+        Icon: Divide,
         label: 'Average',
         description: formatCurrency(average[type]) ?? '-',
       },
       {
-        icon: 'ArrowUpIcon',
+        Icon: ArrowUp,
         label: 'Highest',
         description: formatCurrency(highest[type]) ?? '-',
       },
       {
-        icon: 'ArrowDownIcon',
+        Icon: ArrowDown,
         label: 'Lowest',
         description: formatCurrency(lowest[type]) ?? '-',
       },
@@ -123,18 +124,18 @@ export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
 
   const summaryDetails: DetailsItem[] = [
     {
-      icon: 'EqualsIcon',
+      Icon: Equal,
       label: 'Balance',
       description:
         formatCurrency(sumArray(incomes) - sumArray(expenses)) ?? '-',
     },
     {
-      icon: 'ArrowUpIcon',
+      Icon: ArrowUp,
       label: 'Best Month',
       description: formatCurrency(Math.max(...summaries)) ?? '-',
     },
     {
-      icon: 'ArrowDownIcon',
+      Icon: ArrowDown,
       label: 'Worst Month',
       description: formatCurrency(Math.min(...summaries)) ?? '-',
     },

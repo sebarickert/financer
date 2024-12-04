@@ -1,22 +1,23 @@
 import clsx from 'clsx';
+import { Activity, Grid2X2, Home, UserCog } from 'lucide-react';
 import { FC } from 'react';
 
 import { NavigationCreateTransactionButton } from './NavigationCreateTransactionButton';
 import { NavigationItem, NavigationItemProps } from './NavigationItem';
 
 const navigationItems: Record<string, NavigationItemProps> = {
-  home: { label: 'Home', url: '/', iconName: 'HomeIcon', isExact: true },
+  home: { label: 'Home', url: '/', Icon: Home, isExact: true },
   statistics: {
     label: 'Statistics',
     url: '/statistics/',
-    iconName: 'ChartBarIcon',
+    Icon: Activity,
   },
   accounts: {
     label: 'Accounts',
     url: '/accounts/',
-    iconName: 'Squares2X2Icon',
+    Icon: Grid2X2,
   },
-  settings: { label: 'Settings', url: '/settings/', iconName: 'Cog8ToothIcon' },
+  settings: { label: 'Settings', url: '/settings/', Icon: UserCog },
 };
 
 export const Navigation: FC = () => {

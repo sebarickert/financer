@@ -1,3 +1,4 @@
+import { Layers, Tag, TriangleAlert } from 'lucide-react';
 import { FC } from 'react';
 
 import { Role } from '$api/generated/financerApi';
@@ -18,10 +19,10 @@ export const SettingsContainer: FC = async () => {
     <SettingsLayout title="General">
       <div className="grid gap-8">
         <List>
-          <ProminentLink link={settingsPaths.templates} icon={'BoltIcon'}>
+          <ProminentLink link={settingsPaths.templates} Icon={Layers}>
             Templates
           </ProminentLink>
-          <ProminentLink link={settingsPaths.categories} icon={'TagIcon'}>
+          <ProminentLink link={settingsPaths.categories} Icon={Tag}>
             Categories
           </ProminentLink>
         </List>
@@ -29,7 +30,7 @@ export const SettingsContainer: FC = async () => {
           {userInfo.roles.includes(Role.TestUser) && (
             <ProminentLink
               link={settingsPaths.dataOverwrite}
-              icon={'ExclamationTriangleIcon'}
+              Icon={TriangleAlert}
             >
               Overwrite User Data
             </ProminentLink>

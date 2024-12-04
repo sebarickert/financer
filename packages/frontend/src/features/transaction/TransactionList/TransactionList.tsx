@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { ListPlus } from 'lucide-react';
 import { FC } from 'react';
 
 import { TransactionListItem } from './TransactionListItem';
@@ -20,7 +21,7 @@ export const TransactionList: FC<TransactionListProps> = async ({
 }) => {
   if (items.length === 0) {
     return (
-      <InfoMessageBlock title="No Transactions Added" icon="PlusIcon">
+      <InfoMessageBlock title="No Transactions Added" Icon={ListPlus}>
         Your transactions will appear here. <br />
         Add one to begin tracking.
       </InfoMessageBlock>

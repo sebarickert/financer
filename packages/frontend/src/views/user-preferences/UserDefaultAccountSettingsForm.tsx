@@ -7,6 +7,7 @@ import { AccountDto } from '$api/generated/financerApi';
 import { Form } from '$blocks/Form';
 import { Button } from '$elements/Button/Button';
 import { Select } from '$elements/Select';
+import { TRANSACTION_TYPE_ICON_MAPPING } from '$features/transaction/TransactionTypeIcon';
 import {
   DefaultFormActionHandler,
   useFinancerFormState,
@@ -75,7 +76,7 @@ export const UserDefaultAccountSettingsForm: FC<
             })) ?? []
           }
           isRequired
-          icon="PlusCircleIcon"
+          Icon={TRANSACTION_TYPE_ICON_MAPPING.INCOME}
         >
           Default income account
         </Select>
@@ -88,7 +89,7 @@ export const UserDefaultAccountSettingsForm: FC<
             })) ?? []
           }
           isRequired
-          icon="MinusCircleIcon"
+          Icon={TRANSACTION_TYPE_ICON_MAPPING.EXPENSE}
         >
           Default expense account
         </Select>
@@ -101,7 +102,7 @@ export const UserDefaultAccountSettingsForm: FC<
             })) ?? []
           }
           isRequired
-          icon="MinusCircleIcon"
+          Icon={TRANSACTION_TYPE_ICON_MAPPING.EXPENSE}
         >
           Default transfer source account
         </Select>
@@ -114,7 +115,7 @@ export const UserDefaultAccountSettingsForm: FC<
             })) ?? []
           }
           isRequired
-          icon="PlusCircleIcon"
+          Icon={TRANSACTION_TYPE_ICON_MAPPING.INCOME}
         >
           Default transfer target account
         </Select>

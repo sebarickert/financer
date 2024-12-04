@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import { endOfToday, isToday, isYesterday } from 'date-fns';
+import { ListPlus } from 'lucide-react';
 import { FC } from 'react';
 
 import { TransactionList } from './TransactionList';
@@ -47,7 +48,7 @@ export const GroupedTransactionList: FC<GroupedTransactionListProps> = async ({
 
   if (groupedTransactions.length === 0) {
     return (
-      <InfoMessageBlock title="No Transactions Added" icon="PlusIcon">
+      <InfoMessageBlock title="No Transactions Added" Icon={ListPlus}>
         Your transactions will appear here. <br />
         Add one to begin tracking.
       </InfoMessageBlock>

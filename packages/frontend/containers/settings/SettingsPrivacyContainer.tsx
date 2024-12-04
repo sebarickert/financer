@@ -1,3 +1,4 @@
+import { Download } from 'lucide-react';
 import { FC } from 'react';
 
 import { List } from '$blocks/List';
@@ -9,7 +10,7 @@ export const SettingsPrivacyContainer: FC = async () => {
   return (
     <SettingsLayout title="Privacy">
       <List>
-        <ProminentLink link={settingsPaths.dataDownload} icon={'BoltIcon'}>
+        <ProminentLink link={settingsPaths.dataDownload} Icon={Download}>
           Download My Data
         </ProminentLink>
       </List>

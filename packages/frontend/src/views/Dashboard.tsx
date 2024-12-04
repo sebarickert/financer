@@ -1,4 +1,4 @@
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ChartLine, Layers, Tag } from 'lucide-react';
 import { FC } from 'react';
 
 import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
@@ -78,19 +78,16 @@ export const Dashboard: FC = async () => {
             }}
           />
           <List>
-            <ProminentLink link="/settings/categories" icon="TagIcon">
+            <ProminentLink link="/settings/categories" Icon={Tag}>
               Categories
             </ProminentLink>
-            <ProminentLink link="/settings/templates" icon="BoltIcon">
+            <ProminentLink link="/settings/templates" Icon={Layers}>
               Templates
             </ProminentLink>
           </List>
         </div>
         {balanceHistory.length < 3 && (
-          <InfoMessageBlock
-            title="Not Enough Data Yet"
-            icon="RectangleGroupIcon"
-          >
+          <InfoMessageBlock title="Not Enough Data Yet" Icon={ChartLine}>
             There isn&apos;t enough data to generate a meaningful balance
             history. Add more transactions to track your financial trends over
             time.

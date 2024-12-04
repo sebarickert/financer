@@ -72,7 +72,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
     return accounts.map(({ id, name, type, balance }) => ({
       value: id,
       label: name,
-      icon: ACCOUNT_TYPE_MAPPING[type].icon,
+      Icon: ACCOUNT_TYPE_MAPPING[type].Icon,
       description: `Balance ${formatCurrency(balance)}`,
     }));
   }, [accounts]);
