@@ -1,10 +1,9 @@
 import clsx from 'clsx';
+import { LucideIcon } from 'lucide-react';
 import { ChangeEvent, FC } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { FieldGroup } from './FieldGroup';
-
-import { Icon, IconName } from '$elements/Icon';
 
 type SelectProps = {
   children: React.ReactNode;
@@ -20,13 +19,13 @@ type SelectProps = {
   shouldUnregister?: boolean;
   isLabelHidden?: boolean;
   isBleedingEdge?: boolean;
-  icon?: IconName;
+  Icon?: LucideIcon;
 };
 
 export type Option = {
   value: string;
   label: string;
-  icon?: IconName;
+  Icon?: LucideIcon;
   description?: string;
 };
 
@@ -38,7 +37,7 @@ type OptionElementProps = Omit<Option, 'label'> & {
 const OptionElement: FC<OptionElementProps> = ({
   value,
   children,
-  icon,
+  Icon,
   description,
   isDisabled,
 }) => (
@@ -49,11 +48,11 @@ const OptionElement: FC<OptionElementProps> = ({
       'focus-visible:focus-highlight focus-visible:z-10 focus-visible:relative text-foreground rounded-md hover:cursor-pointer hover:bg-accent',
       'disabled:pointer-events-none disabled:opacity-50',
       'before:hidden p-3 flex gap-4',
-      '[&>[data-slot="icon"]]:text-muted-foreground',
+      '[&>svg]:text-muted-foreground',
     )}
     disabled={isDisabled}
   >
-    {icon && <Icon name={icon} />}
+    {Icon && <Icon />}
     <span
       className={clsx(
         'grid text-base text-left',
@@ -79,7 +78,7 @@ export const Select = ({
   shouldUnregister,
   isLabelHidden,
   isBleedingEdge = true,
-  icon,
+  Icon,
 }: SelectProps): JSX.Element => {
   const { register } = useFormContext();
 
@@ -98,7 +97,7 @@ export const Select = ({
         {children}
       </label>
       <FieldGroup>
-        {icon && <Icon name={icon} />}
+        {Icon && <Icon />}
         <select
           data-testid={testId}
           data-bleeding-edge={isBleedingEdge ? 'on' : 'off'}
@@ -131,7 +130,7 @@ export const Select = ({
             <selectedoption
               className={clsx(
                 '[&>span]:after:hidden',
-                '[&>[data-slot="icon"]]:hidden',
+                '[&>svg]:hidden',
                 'py-3 flex gap-2 w-full',
               )}
             />

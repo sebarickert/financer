@@ -7,11 +7,11 @@ import { getAllChildCategoryIds } from '../../services/TransactionCategoriesServ
 
 import { TransactionType, VisibilityType } from '$api/generated/financerApi';
 import { Form } from '$blocks/Form';
-import { transactionTypeIconMapping } from '$constants/transaction/transactionTypeIconMapping';
 import { Button } from '$elements/Button/Button';
 import { Input } from '$elements/Input';
 import { InputOption } from '$elements/InputOption';
 import { Select, Option } from '$elements/Select';
+import { TRANSACTION_TYPE_ICON_MAPPING } from '$features/transaction/TransactionTypeIcon';
 import { useGetAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useGetAllTransactionCategoriesWithCategoryTree';
 import {
   DefaultFormActionHandler,
@@ -34,15 +34,15 @@ export type TransactionCategoryFormFields = {
 const visibilityTypeMapping = {
   [VisibilityType.Income]: {
     label: 'Income',
-    icon: transactionTypeIconMapping.INCOME,
+    icon: TRANSACTION_TYPE_ICON_MAPPING.INCOME,
   },
   [VisibilityType.Expense]: {
     label: 'Expense',
-    icon: transactionTypeIconMapping.EXPENSE,
+    icon: TRANSACTION_TYPE_ICON_MAPPING.EXPENSE,
   },
   [VisibilityType.Transfer]: {
     label: 'Transfer',
-    icon: transactionTypeIconMapping.TRANSFER,
+    icon: TRANSACTION_TYPE_ICON_MAPPING.TRANSFER,
   },
 };
 
@@ -129,7 +129,7 @@ export const CategoryForm: FC<CategoryFormProps> = ({
                   value={visibilityType}
                   register={methods.register(id)}
                   type="checkbox"
-                  icon={icon}
+                  Icon={icon}
                 >
                   {label}
                 </InputOption>

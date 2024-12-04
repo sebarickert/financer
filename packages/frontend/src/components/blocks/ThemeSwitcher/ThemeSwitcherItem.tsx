@@ -1,8 +1,8 @@
 import clsx from 'clsx';
+import { LucideIcon, Moon, Settings2, Sun } from 'lucide-react';
 import { FC } from 'react';
 
 import { Theme } from '$api/generated/financerApi';
-import { Icon, IconName } from '$elements/Icon';
 import { hapticRunner } from '$utils/haptic.helper';
 
 type ThemeSwitcherItemProps = {
@@ -14,10 +14,10 @@ type ThemeSwitcherItemProps = {
   onChange(event: React.ChangeEvent<HTMLInputElement>): void;
 };
 
-const iconMapping: Record<Theme, IconName> = {
-  [Theme.Light]: 'SunIcon',
-  [Theme.Dark]: 'MoonIcon',
-  [Theme.Auto]: 'SparklesIcon',
+const THEME_SWITCHER_ICON_MAPPING: Record<Theme, LucideIcon> = {
+  [Theme.Light]: Sun,
+  [Theme.Dark]: Moon,
+  [Theme.Auto]: Settings2,
 };
 
 export const ThemeSwitcherItem: FC<ThemeSwitcherItemProps> = ({
@@ -28,6 +28,8 @@ export const ThemeSwitcherItem: FC<ThemeSwitcherItemProps> = ({
   isChecked,
   onChange,
 }) => {
+  const Icon = THEME_SWITCHER_ICON_MAPPING[children as Theme];
+
   return (
     <label className={clsx('', className)} htmlFor={`${name}-${value}`}>
       <input
@@ -48,7 +50,7 @@ export const ThemeSwitcherItem: FC<ThemeSwitcherItemProps> = ({
           'peer-focus-visible:focus-highlight peer-hover:cursor-pointer peer-hover:bg-accent',
         )}
       >
-        <Icon name={iconMapping[children as Theme]} isSolid={isChecked} />
+        <Icon />
         <span className="sr-only">{children}</span>
       </span>
     </label>

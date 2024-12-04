@@ -1,6 +1,8 @@
 import clsx from 'clsx';
 import { FC } from 'react';
 
+import { TransactionTypeIcon } from '../TransactionTypeIcon';
+
 import {
   ExpenseListItemDto,
   IncomeListItemDto,
@@ -8,9 +10,7 @@ import {
   TransactionType,
   TransferListItemDto,
 } from '$api/generated/financerApi';
-import { transactionTypeIconMapping } from '$constants/transaction/transactionTypeIconMapping';
 import { transactionTypeThemeMapping } from '$constants/transaction/transactionTypeMapping';
-import { Icon } from '$elements/Icon';
 import { Link } from '$elements/Link';
 import { formatCurrency } from '$utils/formatCurrency';
 import { formatDate } from '$utils/formatDate';
@@ -42,11 +42,7 @@ export const TransactionListItem: FC<
       hasHoverEffect={false}
     >
       <div className={clsx('inline-flex items-center justify-center shrink-0')}>
-        <Icon
-          name={
-            isRecurring ? 'ArrowPathIcon' : transactionTypeIconMapping[type]
-          }
-        />
+        <TransactionTypeIcon type={type} isRecurring={isRecurring} />
       </div>
       <div
         className={clsx('grid grid-cols-[auto,1fr] items-center gap-2 grow')}

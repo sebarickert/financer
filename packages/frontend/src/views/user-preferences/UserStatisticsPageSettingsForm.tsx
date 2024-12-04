@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 
 import { AccountType } from '$api/generated/financerApi';
 import { Form } from '$blocks/Form';
-import { accountTypeMapping } from '$constants/account/accountTypeMapping';
+import { ACCOUNT_TYPE_MAPPING } from '$constants/account/ACCOUNT_TYPE_MAPPING';
 import { Button } from '$elements/Button/Button';
 import { InputOption } from '$elements/InputOption';
 import {
@@ -48,10 +48,10 @@ export const UserStatisticsPageSettingsForm: FC<
             id={'accountTypes'}
             value={type}
             type="checkbox"
-            icon={accountTypeMapping[type].icon}
+            Icon={ACCOUNT_TYPE_MAPPING[type].Icon}
             register={methods.register('accountTypes')}
           >
-            {accountTypeMapping[type].label}
+            {ACCOUNT_TYPE_MAPPING[type].label}
           </InputOption>
         ))}
       </fieldset>

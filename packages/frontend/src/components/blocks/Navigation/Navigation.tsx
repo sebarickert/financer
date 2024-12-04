@@ -2,22 +2,9 @@ import clsx from 'clsx';
 import { FC } from 'react';
 
 import { NavigationCreateTransactionButton } from './NavigationCreateTransactionButton';
-import { NavigationItem, NavigationItemProps } from './NavigationItem';
+import { NavigationItem } from './NavigationItem';
 
-const navigationItems: Record<string, NavigationItemProps> = {
-  home: { label: 'Home', url: '/', iconName: 'HomeIcon', isExact: true },
-  statistics: {
-    label: 'Statistics',
-    url: '/statistics/',
-    iconName: 'ChartBarIcon',
-  },
-  accounts: {
-    label: 'Accounts',
-    url: '/accounts/',
-    iconName: 'Squares2X2Icon',
-  },
-  settings: { label: 'Settings', url: '/settings/', iconName: 'Cog8ToothIcon' },
-};
+import { NAVIGATION_ITEMS } from '$constants/NAVIGATION_ITEMS';
 
 export const Navigation: FC = () => {
   return (
@@ -28,14 +15,14 @@ export const Navigation: FC = () => {
           'lg:flex lg:gap-4 lg:items-center lg:justify-end',
         )}
       >
-        <NavigationItem {...navigationItems.home} />
-        <NavigationItem {...navigationItems.statistics} />
+        <NavigationItem {...NAVIGATION_ITEMS.home} />
+        <NavigationItem {...NAVIGATION_ITEMS.statistics} />
         <NavigationItem
-          {...navigationItems.accounts}
+          {...NAVIGATION_ITEMS.accounts}
           className="max-lg:order-4"
         />
         <NavigationItem
-          {...navigationItems.settings}
+          {...NAVIGATION_ITEMS.settings}
           className="max-lg:order-5"
         />
         <NavigationCreateTransactionButton className="max-lg:order-3" />

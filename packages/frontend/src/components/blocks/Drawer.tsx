@@ -1,9 +1,9 @@
 import clsx from 'clsx';
+import { X } from 'lucide-react';
 import { forwardRef } from 'react';
 
 import { Button } from '$elements/Button/Button';
 import { Heading } from '$elements/Heading';
-import { Icon } from '$elements/Icon';
 import { Paragraph } from '$elements/Paragraph';
 
 interface DrawerProps {
@@ -74,7 +74,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
             accentColor="ghost"
             className="translate-x-1/4"
           >
-            <Icon name="XMarkIcon" />
+            <X />
             <span className="sr-only">Close Drawer</span>
           </Button>
         </div>

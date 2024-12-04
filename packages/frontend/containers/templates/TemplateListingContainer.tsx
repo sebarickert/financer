@@ -1,9 +1,9 @@
+import { Layers, Plus } from 'lucide-react';
 import { FC } from 'react';
 
 import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
 import { settingsPaths } from '$constants/settings-paths';
 import { Button } from '$elements/Button/Button';
-import { Icon } from '$elements/Icon';
 import { TemplateList } from '$features/template/TemplateList';
 import { Layout } from '$layouts/Layout';
 import { TransactionTemplateService } from '$ssr/api/transaction-template.service';
@@ -24,14 +24,14 @@ export const TemplateListingContainer: FC = async () => {
           className="max-lg:button-ghost"
         >
           <span className="sr-only">Add template</span>
-          <Icon name="PlusIcon" />
+          <Plus />
         </Button>
       }
     >
       {!templates.length && (
         <InfoMessageBlock
           title="No Templates Added"
-          icon="BoltIcon"
+          Icon={Layers}
           action={
             <Button href={`${settingsPaths.templates}/add`}>
               Add Template

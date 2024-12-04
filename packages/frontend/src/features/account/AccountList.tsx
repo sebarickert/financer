@@ -3,8 +3,7 @@ import { FC } from 'react';
 
 import { AccountDto } from '$api/generated/financerApi';
 import { List } from '$blocks/List';
-import { accountTypeMapping } from '$constants/account/accountTypeMapping';
-import { Icon } from '$elements/Icon';
+import { ACCOUNT_TYPE_MAPPING } from '$constants/account/ACCOUNT_TYPE_MAPPING';
 import { Link } from '$elements/Link';
 import { formatCurrency } from '$utils/formatCurrency';
 
@@ -31,6 +30,8 @@ export const AccountList: FC<AccountListProps> = ({
   return (
     <List label={label} className={clsx(className)} testId="account-list">
       {accounts.map(({ id, balance, name, type }) => {
+        const Icon = ACCOUNT_TYPE_MAPPING[type].Icon;
+
         return (
           <Link
             href={`/accounts/${id}`}
@@ -50,7 +51,7 @@ export const AccountList: FC<AccountListProps> = ({
                 'inline-flex items-center justify-center shrink-0',
               )}
             >
-              <Icon name={accountTypeMapping[type].icon} />
+              <Icon />
             </div>
             <div
               className={clsx(

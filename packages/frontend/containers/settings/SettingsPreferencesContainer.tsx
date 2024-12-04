@@ -1,3 +1,4 @@
+import { Activity, ChartNoAxesCombined, Grid2X2, Home } from 'lucide-react';
 import { FC } from 'react';
 
 import { List } from '$blocks/List';
@@ -11,31 +12,31 @@ export const SettingsPreferencesContainer: FC = () => {
       <List>
         <ProminentLink
           link={`${settingsPaths.userPreferences}/dashboard-settings`}
-          icon={'HomeIcon'}
+          Icon={Home}
         >
           Dashboard Settings
         </ProminentLink>
         <ProminentLink
           link={`${settingsPaths.userPreferences}/statistics-settings`}
-          icon={'ChartBarIcon'}
+          Icon={Activity}
         >
           Statistics Settings
         </ProminentLink>
         <ProminentLink
           link={`${settingsPaths.userPreferences}/default-account-settings`}
-          icon={'Squares2X2Icon'}
+          Icon={Grid2X2}
         >
           Default Account Settings
         </ProminentLink>
         <ProminentLink
           link={`${settingsPaths.userPreferences}/maximum-items-per-page`}
-          icon={'RectangleStackIcon'}
+          Icon={Home}
         >
           Maximum Items Per Page Settings
         </ProminentLink>
         <ProminentLink
           link={`${settingsPaths.userPreferences}/market-update-settings`}
-          icon={'ArrowTrendingUpIcon'}
+          Icon={ChartNoAxesCombined}
         >
           Market Update Settings
         </ProminentLink>

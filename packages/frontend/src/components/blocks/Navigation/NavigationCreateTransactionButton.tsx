@@ -1,9 +1,9 @@
 import clsx from 'clsx';
+import { Plus } from 'lucide-react';
 import { FC } from 'react';
 
 import { Drawer } from '$blocks/Drawer';
 import { Button } from '$elements/Button/Button';
-import { Icon } from '$elements/Icon';
 import { TransactionFormSwitcher } from '$features/transaction/TransactionFormSwitcher';
 import { UserPreferenceService } from '$ssr/api/user-preference.service';
 
@@ -51,7 +51,7 @@ export const NavigationCreateTransactionButton: FC<
         popoverTarget={id}
         data-testid="add-transaction"
       >
-        <Icon name="PlusIcon" />
+        <Plus />
         <span className="max-lg:hidden">
           <span className="sr-only">Add</span> Transaction
         </span>

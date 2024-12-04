@@ -1,3 +1,4 @@
+import { ChartLine, Info } from 'lucide-react';
 import { FC, useMemo } from 'react';
 
 import {
@@ -7,8 +8,7 @@ import {
 import { BalanceDisplay } from '$blocks/BalanceDisplay';
 import { DetailsList, DetailsItem } from '$blocks/DetailsList';
 import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
-import { accountTypeMapping } from '$constants/account/accountTypeMapping';
-import { IconName } from '$elements/Icon';
+import { ACCOUNT_TYPE_MAPPING } from '$constants/account/ACCOUNT_TYPE_MAPPING';
 import { AccountBalanceHistoryChart } from '$features/account/AccountBalanceHistoryChart';
 import { TransactionListWithMonthlyPager } from '$features/transaction/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
 
@@ -21,9 +21,9 @@ export const Account: FC<AccountProps> = ({ account, balanceHistory }) => {
   const accountDetails: DetailsItem[] = useMemo(
     () => [
       {
-        icon: 'InformationCircleIcon' as IconName,
+        Icon: Info,
         label: 'Account Type',
-        description: accountTypeMapping[account.type].label,
+        description: ACCOUNT_TYPE_MAPPING[account.type].label,
       },
     ],
     [account.type],
@@ -36,7 +36,7 @@ export const Account: FC<AccountProps> = ({ account, balanceHistory }) => {
         <DetailsList testId="account-details" items={accountDetails} />
       </div>
       {balanceHistory.length < 3 && (
-        <InfoMessageBlock title="Not Enough Data Yet" icon="RectangleGroupIcon">
+        <InfoMessageBlock title="Not Enough Data Yet" Icon={ChartLine}>
           There isn&apos;t enough data to generate a meaningful balance history.
           Add more transactions to track your financial trends over time.
         </InfoMessageBlock>

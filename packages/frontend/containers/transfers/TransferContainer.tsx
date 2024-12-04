@@ -1,3 +1,4 @@
+import { Pencil, Trash } from 'lucide-react';
 import { FC } from 'react';
 
 import { TransactionType } from '$api/generated/financerApi';
@@ -23,11 +24,11 @@ export const TransferContainer: FC<TransferContainerProps> = async ({ id }) => {
           items={[
             {
               href: `/statistics/${transfer.type.toLowerCase()}s/${id}/edit`,
-              icon: 'PencilIcon',
+              Icon: Pencil,
               label: 'Edit',
             },
             {
-              icon: 'TrashIcon',
+              Icon: Trash,
               label: 'Delete',
               popperId: transfer.id,
             },

@@ -1,46 +1,56 @@
-import { AccountType } from '$api/generated/financerApi';
-import { IconName } from '$elements/Icon';
+import {
+  ChartNoAxesCombined,
+  ClipboardCheck,
+  CreditCard,
+  Landmark,
+  Lock,
+  LucideIcon,
+  PiggyBank,
+  Wallet,
+} from 'lucide-react';
 
-export const accountTypeMapping: Record<
+import { AccountType } from '$api/generated/financerApi';
+
+export const ACCOUNT_TYPE_MAPPING: Record<
   AccountType,
-  { icon: IconName; label: string; description: string }
+  { Icon: LucideIcon; label: string; description: string }
 > = {
   [AccountType.Savings]: {
-    icon: 'BanknotesIcon',
+    Icon: PiggyBank,
     label: 'Savings',
     description: 'Funds set aside for short-term goals or unexpected expenses.',
   },
   [AccountType.LongTermSavings]: {
-    icon: 'BanknotesIcon',
+    Icon: Lock,
     label: 'Long-term Savings',
     description:
       'Money reserved for future needs, such as retirement or major purchases.',
   },
   [AccountType.Cash]: {
-    icon: 'WalletIcon',
+    Icon: Wallet,
     label: 'Cash',
     description:
       'Cash on hand, easily accessible for daily transactions and expenses.',
   },
   [AccountType.PreAssignedCash]: {
-    icon: 'LockClosedIcon',
+    Icon: ClipboardCheck,
     label: 'Pre-assigned Cash',
     description: 'Money allocated for specific expenses or budgets in advance.',
   },
   [AccountType.Credit]: {
-    icon: 'CreditCardIcon',
+    Icon: CreditCard,
     label: 'Credit',
     description:
       'Borrowed funds with a repayment obligation, like credit card balances.',
   },
   [AccountType.Investment]: {
-    icon: 'ArrowTrendingUpIcon',
+    Icon: ChartNoAxesCombined,
     label: 'Investment',
     description:
       'Assets allocated to stocks, bonds, or other ventures for growth potential.',
   },
   [AccountType.Loan]: {
-    icon: 'BuildingLibraryIcon',
+    Icon: Landmark,
     label: 'Loan',
     description:
       'Debt obtained for specific purposes, to be repaid over time with interest.',

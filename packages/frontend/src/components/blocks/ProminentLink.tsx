@@ -1,11 +1,11 @@
 import clsx from 'clsx';
+import { ChevronRight, LucideIcon } from 'lucide-react';
 import { FC } from 'react';
 
-import { Icon, IconName } from '$elements/Icon';
 import { Link } from '$elements/Link';
 
 type ProminentLinkProps = {
-  icon?: IconName;
+  Icon?: LucideIcon;
   children: React.ReactNode;
   link: string;
   testId?: string;
@@ -14,7 +14,7 @@ type ProminentLinkProps = {
 };
 
 export const ProminentLink: FC<ProminentLinkProps> = ({
-  icon,
+  Icon,
   link,
   children,
   testId,
@@ -38,9 +38,9 @@ export const ProminentLink: FC<ProminentLinkProps> = ({
       transition="slideInFromRight"
       hasHoverEffect={false}
     >
-      {icon && <Icon name={icon} />}
+      {Icon && <Icon />}
       <span className={clsx('flex-1')}>{children}</span>
-      <Icon name="ChevronRightIcon" />
+      <ChevronRight />
     </Link>
   );
 };

@@ -1,3 +1,4 @@
+import { Pencil, Trash } from 'lucide-react';
 import { FC } from 'react';
 
 import { settingsPaths } from '$constants/settings-paths';
@@ -25,12 +26,12 @@ export const CategoryContainer: FC<CategoryContainerProps> = async ({ id }) => {
             {
               label: 'Edit',
               href: `${settingsPaths.categories}/${category.id}/edit`,
-              icon: 'PencilIcon',
+              Icon: Pencil,
             },
             {
               label: 'Delete',
               popperId: category.id,
-              icon: 'TrashIcon',
+              Icon: Trash,
             },
           ]}
         />

@@ -5,14 +5,14 @@ import { useForm } from 'react-hook-form';
 
 import { CategoriesFormFullFields } from './TransactionCategories/transaction-categories.types';
 import { TransactionCategories } from './TransactionCategories/TransactionCategories';
+import { TRANSACTION_TYPE_ICON_MAPPING } from './TransactionTypeIcon';
 
 import {
   VisibilityType,
   useAccountsFindAllByUserQuery,
 } from '$api/generated/financerApi';
 import { Form } from '$blocks/Form';
-import { accountTypeMapping } from '$constants/account/accountTypeMapping';
-import { transactionTypeIconMapping } from '$constants/transaction/transactionTypeIconMapping';
+import { ACCOUNT_TYPE_MAPPING } from '$constants/account/ACCOUNT_TYPE_MAPPING';
 import { Button } from '$elements/Button/Button';
 import { Input } from '$elements/Input';
 import { Option, Select } from '$elements/Select';
@@ -72,7 +72,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
     return accounts.map(({ id, name, type, balance }) => ({
       value: id,
       label: name,
-      icon: accountTypeMapping[type].icon,
+      Icon: ACCOUNT_TYPE_MAPPING[type].Icon,
       description: `Balance ${formatCurrency(balance)}`,
     }));
   }, [accounts]);
@@ -137,7 +137,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
               isRequired
               placeholder="Select Account"
               isLabelHidden
-              icon={transactionTypeIconMapping.EXPENSE}
+              Icon={TRANSACTION_TYPE_ICON_MAPPING.EXPENSE}
             >
               From Account
             </Select>
@@ -149,7 +149,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
               isRequired
               placeholder="Select Account"
               isLabelHidden
-              icon={transactionTypeIconMapping.INCOME}
+              Icon={TRANSACTION_TYPE_ICON_MAPPING.INCOME}
             >
               To Account
             </Select>

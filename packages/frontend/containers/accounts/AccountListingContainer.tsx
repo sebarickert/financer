@@ -1,9 +1,9 @@
+import { Grid2x2, Plus } from 'lucide-react';
 import { FC } from 'react';
 
 import { AccountType } from '$api/generated/financerApi';
 import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
 import { Button } from '$elements/Button/Button';
-import { Icon } from '$elements/Icon';
 import { AccountList } from '$features/account/AccountList';
 import { AccountTypeBalanceChart } from '$features/account/AccountTypeBalanceChart';
 import { Layout } from '$layouts/Layout';
@@ -43,14 +43,14 @@ export const AccountListingContainer: FC = async () => {
           className="max-lg:button-ghost"
         >
           <span className="sr-only">Add account</span>
-          <Icon name="PlusIcon" />
+          <Plus />
         </Button>
       }
     >
       {!accounts.length && (
         <InfoMessageBlock
           title="No Accounts Added"
-          icon="Squares2X2Icon"
+          Icon={Grid2x2}
           action={<Button href="/accounts/add">Add Account</Button>}
         >
           It seems you haven&apos;t added any accounts yet. Get started by

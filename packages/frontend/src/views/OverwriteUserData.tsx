@@ -1,6 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
+import { Info } from 'lucide-react';
 import { ChangeEvent, useCallback, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -9,7 +10,6 @@ import { DetailsList } from '$blocks/DetailsList';
 import { ToastMessageTypes } from '$blocks/Toast/Toast';
 import { Button } from '$elements/Button/Button';
 import { Heading } from '$elements/Heading';
-import { IconName } from '$elements/Icon';
 import {
   DefaultFormActionHandler,
   useFinancerFormState,
@@ -114,12 +114,12 @@ export const OverwriteUserData = ({
 
     return [
       {
-        icon: 'InformationCircleIcon' as IconName,
+        Icon: Info,
         label: 'Account Count',
         description: overrideAccountCount ?? '-',
       },
       {
-        icon: 'InformationCircleIcon' as IconName,
+        Icon: Info,
         label: 'Transaction Count',
         description: overrideTransactionCount ?? '-',
       },

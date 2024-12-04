@@ -1,9 +1,9 @@
 import clsx from 'clsx';
+import { Calculator, ChevronRight } from 'lucide-react';
 import { FC, useEffect } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 
 import { Button } from '$elements/Button/Button';
-import { Icon } from '$elements/Icon';
 import { Input } from '$elements/Input';
 import { Select, Option } from '$elements/Select';
 import { formatCurrency } from '$utils/formatCurrency';
@@ -57,10 +57,7 @@ export const TransactionCategoriesItem: FC<TransactionCategoriesItemProps> = ({
         )}
         data-testid="transaction-categories-item-summary"
       >
-        <Icon
-          name="ChevronRightIcon"
-          className="group-open:rotate-90 shrink-0"
-        />
+        <ChevronRight className="group-open:rotate-90 shrink-0" />
         <span className="truncate" data-testid="category-label">
           {categoryLabel || '-'}
         </span>
@@ -96,8 +93,8 @@ export const TransactionCategoriesItem: FC<TransactionCategoriesItemProps> = ({
           size="icon"
           onClick={() => setUnallocatedAmount(index)}
         >
-          <Icon name={'CalculatorIcon'} />
-          <span className="sr-only">Remove</span>
+          <Calculator />
+          <span className="sr-only">Set Unallocated Amount</span>
         </Button>
         <div className="col-span-full">
           <Input id={`${namePrefix}.description`} isLabelHidden>

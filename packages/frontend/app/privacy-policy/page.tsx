@@ -1,9 +1,9 @@
 import clsx from 'clsx';
+import { ArrowLeft } from 'lucide-react';
 import { Metadata } from 'next';
 
 import { Button } from '$elements/Button/Button';
 import { Heading } from '$elements/Heading';
-import { Icon } from '$elements/Icon';
 import { AuthenticationService } from '$ssr/api/authentication.service';
 
 export const metadata: Metadata = {
@@ -25,7 +25,7 @@ const PrivacyPolicy = async () => {
           testId="header-back-link"
           className="max-lg:button-ghost shrink-0"
         >
-          <Icon name="ArrowLeftIcon" />
+          <ArrowLeft />
           <span className="sr-only">Go back</span>
         </Button>
         <Heading variant="h1">Privacy Policy for Financer</Heading>

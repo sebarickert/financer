@@ -1,5 +1,6 @@
 'use client';
 
+import { Trash } from 'lucide-react';
 import { useId } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -7,7 +8,6 @@ import { handleTemplateDelete } from '$actions/template/handleTemplateDelete';
 import { Drawer } from '$blocks/Drawer';
 import { Form } from '$blocks/Form';
 import { Button } from '$elements/Button/Button';
-import { Icon } from '$elements/Icon';
 import { useFinancerFormState } from '$hooks/useFinancerFormState';
 
 type TemplateDeleteProps = {
@@ -29,7 +29,7 @@ export const TemplateDelete = ({ id }: TemplateDeleteProps) => {
         popoverTarget={popoverId}
         className="max-lg:button-ghost"
       >
-        <Icon name={'TrashIcon'} />
+        <Trash />
         <span className="sr-only">Delete</span>
       </Button>
       <Drawer

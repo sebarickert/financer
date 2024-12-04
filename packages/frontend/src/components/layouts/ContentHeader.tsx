@@ -1,9 +1,9 @@
 import clsx from 'clsx';
+import { ArrowLeft } from 'lucide-react';
 import { FC } from 'react';
 
 import { Button } from '$elements/Button/Button';
 import { Heading } from '$elements/Heading';
-import { Icon } from '$elements/Icon';
 
 type ContentHeaderProps = {
   title?: string;
@@ -36,7 +36,7 @@ export const ContentHeader: FC<ContentHeaderProps> = ({
           transition="slideInFromLeft"
           className="max-lg:button-ghost"
         >
-          <Icon name="ArrowLeftIcon" />
+          <ArrowLeft />
           <span className="sr-only">Go back</span>
         </Button>
       )}
