@@ -38,18 +38,19 @@
     --accent: 0 0% 91%;
 
     --color-blue: 219 99% 53%;
-    --color-dark-blue: 219 99% 25%;
+    --color-dark-blue: 219 99% 40%;
+    --color-orange: 30 100% 60%;
     --color-red: 357 76% 49%;
     --color-green: 138 67% 30%;
-    --color-gold: 45 85% 45%;
-    --color-soft-gray: 0 0% 70%;
+    --color-yellow: 45 85% 55%;
+    --color-pink: 340 75% 55%;
 
     --account-SAVINGS: var(--color-blue);
     --account-LONG-TERM-SAVINGS: var(--color-dark-blue);
-    --account-CASH: var(--color-gold);
+    --account-CASH: var(--color-yellow);
     --account-INVESTMENT: var(--color-green);
-    --account-PRE-ASSIGNED-CASH: var(--color-soft-gray);
-    --account-CREDIT: var(--color-red);
+    --account-PRE-ASSIGNED-CASH: var(--color-orange);
+    --account-CREDIT: var(--color-pink);
     --account-LOAN: var(--color-red);
 
     --button-primary: 219 99% 53%;
