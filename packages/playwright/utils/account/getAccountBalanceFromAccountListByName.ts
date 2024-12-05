@@ -11,9 +11,11 @@ export const getAccountBalanceFromAccountListByName = async (
   });
 
   const accountBalance = await page
-    .getByTestId('account-name')
-    .getByText(accountName)
-    .evaluate((el) => el.nextElementSibling?.textContent);
+    .getByTestId('account-list-item')
+    .filter({ hasText: accountName })
+    .first()
+    .getByTestId('balance-amount')
+    .textContent();
 
   if (!accountBalance) {
     throw new Error(`Account balance not found for account ${accountName}`);
