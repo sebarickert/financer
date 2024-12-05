@@ -49,6 +49,7 @@ export const BalanceDisplay: FC<BalanceDisplayProps> = ({
         <span
           className="block text-4xl font-semibold break-all"
           data-testid="balance-amount"
+          data-slot="balance"
         >
           {balance}
         </span>
