@@ -37,7 +37,9 @@ export const AccountTypeBalanceChart: FC<AccountTypeBalanceChartProps> = ({
       ([key, value]) => [
         key as AccountType,
         value
-          .map(({ balance }) => balance)
+          .map(
+            ({ balance, currentDateBalance }) => currentDateBalance ?? balance,
+          )
           .reduce((acc, curr) => acc + curr, 0),
       ],
     ),

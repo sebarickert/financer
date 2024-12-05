@@ -29,7 +29,7 @@ export const AccountList: FC<AccountListProps> = ({
 
   return (
     <List label={label} className={clsx(className)} testId="account-list">
-      {accounts.map(({ id, balance, name, type }) => {
+      {accounts.map(({ id, balance, name, type, currentDateBalance }) => {
         const Icon = ACCOUNT_TYPE_MAPPING[type].Icon;
 
         return (
@@ -65,7 +65,7 @@ export const AccountList: FC<AccountListProps> = ({
                 className="text-lg font-medium text-right whitespace-nowrap"
                 data-testid="account-balance"
               >
-                {formatCurrency(balance)}
+                {formatCurrency(currentDateBalance ?? balance)}
               </span>
             </div>
           </Link>
