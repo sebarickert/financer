@@ -33,6 +33,7 @@ test.describe('Edit Account', () => {
         const {
           name: initialName,
           balance: initialBalance,
+          upcomingBalance: initialUpcomingBalance,
           type: initialType,
         } = await getAccountDetails(page);
 
@@ -40,7 +41,9 @@ test.describe('Edit Account', () => {
 
         await fillAccountForm(page, {
           name: `${initialName} updated`,
-          balance: initialBalance.plus(100),
+          balance: initialUpcomingBalance
+            ? initialUpcomingBalance.plus(100)
+            : initialBalance.plus(100),
           type: accountTypes.find((type) => type !== initialType),
         });
 
@@ -52,11 +55,18 @@ test.describe('Edit Account', () => {
         const {
           name: updatedName,
           balance: updatedBalance,
+          upcomingBalance: updatedUpcomingBalance,
           type: updatedType,
         } = await getAccountDetails(page);
 
         expect(updatedName).toEqual(`${initialName} updated`);
-        expect(updatedBalance).toEqual(initialBalance.plus(100));
+        expect(
+          updatedUpcomingBalance ? updatedUpcomingBalance : updatedBalance,
+        ).toEqual(
+          initialUpcomingBalance
+            ? initialUpcomingBalance.plus(100)
+            : initialBalance.plus(100),
+        );
         expect(updatedType).toEqual(
           accountTypes.find((type) => type !== initialType),
         );
@@ -73,12 +83,17 @@ test.describe('Edit Account', () => {
         .getByText('Investment account')
         .click();
 
-      const { balance: initialBalance } = await getAccountDetails(page);
+      const {
+        balance: initialBalance,
+        upcomingBalance: initialUpcomingBalance,
+      } = await getAccountDetails(page);
 
       await clickPopperItem(page, 'Update Market Value');
 
       await fillUpdateMarketValueForm(page, {
-        currentMarketValue: initialBalance.plus(100),
+        currentMarketValue: initialUpcomingBalance
+          ? initialUpcomingBalance.plus(100)
+          : initialBalance.plus(100),
       });
 
       await page
@@ -92,7 +107,10 @@ test.describe('Edit Account', () => {
         .getByText('Investment account')
         .click();
 
-      const { balance: updatedBalance } = await getAccountDetails(page);
+      const {
+        balance: updatedBalance,
+        upcomingBalance: updatedUpcomingBalance,
+      } = await getAccountDetails(page);
       const transactionItems =
         await getTransactionDataFromTransactionList(page);
 
@@ -100,7 +118,13 @@ test.describe('Edit Account', () => {
         (transaction) => transaction.description === 'Market value change',
       );
 
-      expect(updatedBalance).toEqual(initialBalance.plus(100));
+      expect(
+        updatedUpcomingBalance ? updatedUpcomingBalance : updatedBalance,
+      ).toEqual(
+        initialUpcomingBalance
+          ? initialUpcomingBalance.plus(100)
+          : initialBalance.plus(100),
+      );
       expect(createdTransaction).toBeTruthy();
       expect(createdTransaction?.amount).toEqual(new Decimal(100));
       expect(createdTransaction?.type).toEqual(TransactionType.Income);
@@ -114,12 +138,17 @@ test.describe('Edit Account', () => {
         .getByText('Investment account')
         .click();
 
-      const { balance: initialBalance } = await getAccountDetails(page);
+      const {
+        balance: initialBalance,
+        upcomingBalance: initialUpcomingBalance,
+      } = await getAccountDetails(page);
 
       await clickPopperItem(page, 'Update Market Value');
 
       await fillUpdateMarketValueForm(page, {
-        currentMarketValue: initialBalance.minus(100),
+        currentMarketValue: initialUpcomingBalance
+          ? initialUpcomingBalance.minus(100)
+          : initialBalance.minus(100),
       });
 
       await page
@@ -133,7 +162,10 @@ test.describe('Edit Account', () => {
         .getByText('Investment account')
         .click();
 
-      const { balance: updatedBalance } = await getAccountDetails(page);
+      const {
+        balance: updatedBalance,
+        upcomingBalance: updatedUpcomingBalance,
+      } = await getAccountDetails(page);
       const transactionItems =
         await getTransactionDataFromTransactionList(page);
 
@@ -141,7 +173,13 @@ test.describe('Edit Account', () => {
         (transaction) => transaction.description === 'Market value change',
       );
 
-      expect(updatedBalance).toEqual(initialBalance.minus(100));
+      expect(
+        updatedUpcomingBalance ? updatedUpcomingBalance : updatedBalance,
+      ).toEqual(
+        initialUpcomingBalance
+          ? initialUpcomingBalance.minus(100)
+          : initialBalance.minus(100),
+      );
       expect(createdTransaction).toBeTruthy();
       expect(createdTransaction?.amount).toEqual(new Decimal(100).negated());
       expect(createdTransaction?.type).toEqual(TransactionType.Expense);

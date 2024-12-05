@@ -43,7 +43,9 @@ export const Account: FC<AccountProps> = ({ account, balanceHistory }) => {
             account.currentDateBalance !== account.balance && (
               <p className="mt-0.5 text-sm text-muted-foreground">
                 <span>Upcoming Balance: </span>
-                <span>{formatCurrency(account.balance)}</span>
+                <span data-testid="upcoming-balance">
+                  {formatCurrency(account.balance)}
+                </span>
               </p>
             )}
         </BalanceDisplay>

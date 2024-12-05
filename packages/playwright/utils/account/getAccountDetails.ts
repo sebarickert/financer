@@ -6,6 +6,7 @@ import { Page, expect } from '$utils/financer-page';
 type AccountDetails = {
   id: string;
   balance: Decimal;
+  upcomingBalance?: Decimal;
   name: string;
   type: string;
 };
@@ -25,6 +26,11 @@ export const getAccountDetails = async (
     (await page.getByTestId('balance-amount').textContent()) ?? '',
   );
 
+  const upcomingBalanceElement = page.getByTestId('upcoming-balance');
+  const upcomingBalance = (await upcomingBalanceElement.isVisible())
+    ? parseCurrency((await upcomingBalanceElement.textContent()) ?? '')
+    : undefined;
+
   const name =
     (await page.getByTestId('page-main-heading').textContent()) ?? '';
 
@@ -42,6 +48,7 @@ export const getAccountDetails = async (
     id,
     name,
     balance,
+    upcomingBalance,
     type,
   };
 };
