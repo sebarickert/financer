@@ -4,17 +4,16 @@ import { FC } from 'react';
 import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
 import { statisticsContextualNavigationItems } from '$constants/statisticsContextualNavigationItems';
 import { Button } from '$elements/Button/Button';
-import { Layout } from '$layouts/Layout';
+import { Layout, LayoutProps } from '$layouts/Layout';
 import { AccountService } from '$ssr/api/account.service';
 
-type StatisticsLayoutProps = {
-  title: string;
-  children: React.ReactNode;
-};
+type StatisticsLayoutProps = Omit<LayoutProps, 'contextualNavigationItems'>;
 
 export const StatisticsLayout: FC<StatisticsLayoutProps> = async ({
   title,
   children,
+  backLink,
+  headerAction,
 }) => {
   const accounts = await AccountService.getAll();
 
@@ -22,6 +21,8 @@ export const StatisticsLayout: FC<StatisticsLayoutProps> = async ({
     <Layout
       title={title}
       contextualNavigationItems={statisticsContextualNavigationItems}
+      backLink={backLink}
+      headerAction={headerAction}
     >
       {!accounts.length && (
         <InfoMessageBlock
