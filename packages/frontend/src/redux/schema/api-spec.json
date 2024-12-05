@@ -1810,18 +1810,16 @@
         "properties": {
           "name": { "type": "string" },
           "type": { "$ref": "#/components/schemas/AccountType" },
-          "balance": { "type": "number" },
-          "currentDateBalance": { "type": "number" }
+          "balance": { "type": "number" }
         },
-        "required": ["name", "type", "balance", "currentDateBalance"]
+        "required": ["name", "type", "balance"]
       },
       "UpdateAccountDto": {
         "type": "object",
         "properties": {
           "name": { "type": "string" },
           "type": { "$ref": "#/components/schemas/AccountType" },
-          "balance": { "type": "number" },
-          "currentDateBalance": { "type": "number" }
+          "balance": { "type": "number" }
         }
       },
       "AccountBalanceHistoryDto": {

@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { Decimal } from '@prisma/client/runtime/library';
 
 import { createMockServiceProvider } from '../../../test/create-mock-service-provider';
 import { DUMMY_TEST_USER } from '../../config/mockAuthenticationMiddleware';
@@ -22,6 +23,8 @@ describe('AccountsService', () => {
   let accountRepo: jest.Mocked<AccountRepo>;
   let accountBalanceChangeRepo: jest.Mocked<AccountBalanceChangeRepo>;
   let transactionRepo: jest.Mocked<TransactionRepo>;
+  let accountBalanceChangesService: AccountBalanceChangesService;
+  let transactionsService: TransactionsService;
 
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -43,6 +46,10 @@ describe('AccountsService', () => {
       jest.Mocked<AccountBalanceChangeRepo>
     >(AccountBalanceChangeRepo);
     transactionRepo = module.get<jest.Mocked<TransactionRepo>>(TransactionRepo);
+    accountBalanceChangesService = module.get<AccountBalanceChangesService>(
+      AccountBalanceChangesService,
+    );
+    transactionsService = module.get<TransactionsService>(TransactionsService);
   });
 
   beforeEach(() => {
@@ -53,6 +60,19 @@ describe('AccountsService', () => {
     jest
       .spyOn(accountRepo, 'findMany')
       .mockResolvedValueOnce(accountsRepoFindAllMockData);
+    // TODO: Clean this mess up, have to figure out a better way to get current date balance
+    jest
+      .spyOn(service, 'getCurrentDateAccountBalance')
+      .mockResolvedValueOnce(new Decimal(0))
+      .mockResolvedValueOnce(new Decimal(0))
+      .mockResolvedValueOnce(new Decimal(0))
+      .mockResolvedValueOnce(new Decimal(0))
+      .mockResolvedValueOnce(new Decimal(0))
+      .mockResolvedValueOnce(new Decimal(0))
+      .mockResolvedValueOnce(new Decimal(0))
+      .mockResolvedValueOnce(new Decimal(0))
+      .mockResolvedValueOnce(new Decimal(0));
+
     jest.spyOn(accountRepo, 'getCount').mockResolvedValueOnce(9);
 
     const accounts = await service.findAllByUser(DUMMY_TEST_USER.id);
@@ -70,10 +90,16 @@ describe('AccountsService', () => {
 
   it('should return an account from findOne', async () => {
     const id = '61460d8554ea082ad0256759';
-
+    // TODO: Clean this mess up, have to figure out a better way to get current date balance
     jest
       .spyOn(accountRepo, 'findOne')
       .mockResolvedValueOnce(accountsRepoFindById[id]);
+
+    jest
+      .spyOn(accountBalanceChangesService, 'findAllByUserAndAccount')
+      .mockResolvedValueOnce([]);
+
+    jest.spyOn(transactionsService, 'findAllByUser').mockResolvedValueOnce([]);
 
     const account = await service.findOne(DUMMY_TEST_USER.id, id);
 
@@ -92,6 +118,13 @@ describe('AccountsService', () => {
     jest
       .spyOn(accountRepo, 'findOne')
       .mockResolvedValueOnce(accountsRepoFindById[id]);
+
+    // TODO: Clean this mess up, have to figure out a better way to get current date balance
+    jest
+      .spyOn(accountBalanceChangesService, 'findAllByUserAndAccount')
+      .mockResolvedValueOnce([]);
+
+    jest.spyOn(transactionsService, 'findAllByUser').mockResolvedValueOnce([]);
 
     jest.spyOn(accountBalanceChangeRepo, 'findMany').mockResolvedValueOnce([]);
 
