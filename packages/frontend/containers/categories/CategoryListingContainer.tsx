@@ -6,7 +6,7 @@ import { List } from '$blocks/List';
 import { ProminentLink } from '$blocks/ProminentLink';
 import { settingsPaths } from '$constants/settings-paths';
 import { Button } from '$elements/Button/Button';
-import { Layout } from '$layouts/Layout';
+import { SettingsLayout } from '$features/settings/SettingsLayout';
 import { CategoryService } from '$ssr/api/category.service';
 
 const generateCategoryGroupChild = (
@@ -79,9 +79,8 @@ export const CategoryListingContainer: FC = async () => {
   ];
 
   return (
-    <Layout
+    <SettingsLayout
       title="Categories"
-      backLink={settingsPaths.default}
       headerAction={
         <Button
           href={`${settingsPaths.categories}/add`}
@@ -125,6 +124,6 @@ export const CategoryListingContainer: FC = async () => {
           </List>
         ))}
       </section>
-    </Layout>
+    </SettingsLayout>
   );
 };

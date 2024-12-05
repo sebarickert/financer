@@ -3,9 +3,9 @@ import { FC } from 'react';
 
 import { handleTemplateEdit } from '$actions/template/handleTemplateEdit';
 import { settingsPaths } from '$constants/settings-paths';
+import { SettingsLayout } from '$features/settings/SettingsLayout';
 import { TemplateDelete } from '$features/template/TemplateDelete';
 import { TemplateForm } from '$features/template/TemplateForm';
-import { Layout } from '$layouts/Layout';
 import { TransactionTemplateService } from '$ssr/api/transaction-template.service';
 
 type TemplateEditContainerProps = {
@@ -33,7 +33,7 @@ export const TemplateEditContainer: FC<TemplateEditContainerProps> = async ({
   const handleSubmit = handleTemplateEdit.bind(null, template);
 
   return (
-    <Layout
+    <SettingsLayout
       title="Edit Template"
       backLink={settingsPaths.templates}
       headerAction={<TemplateDelete id={template.id} />}
@@ -43,6 +43,6 @@ export const TemplateEditContainer: FC<TemplateEditContainerProps> = async ({
         submitLabel="Update"
         initialValues={initialValues}
       />
-    </Layout>
+    </SettingsLayout>
   );
 };

@@ -4,7 +4,7 @@ import { FC } from 'react';
 import { settingsPaths } from '$constants/settings-paths';
 import { Popper } from '$elements/Popper';
 import { CategoryDeleteDrawer } from '$features/category/CategoryDeleteDrawer';
-import { Layout } from '$layouts/Layout';
+import { SettingsLayout } from '$features/settings/SettingsLayout';
 import { CategoryService } from '$ssr/api/category.service';
 import { Category } from '$views/Category';
 
@@ -17,7 +17,7 @@ export const CategoryContainer: FC<CategoryContainerProps> = async ({ id }) => {
   const category = await CategoryService.getById(id);
 
   return (
-    <Layout
+    <SettingsLayout
       title="Category Details"
       backLink={settingsPaths.categories}
       headerAction={
@@ -43,6 +43,6 @@ export const CategoryContainer: FC<CategoryContainerProps> = async ({ id }) => {
         parentTransactionCategoryId={id}
       />
       <CategoryDeleteDrawer id={category.id} />
-    </Layout>
+    </SettingsLayout>
   );
 };

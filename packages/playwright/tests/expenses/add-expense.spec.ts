@@ -124,7 +124,7 @@ test.describe('Expense Transactions', () => {
       page,
     }) => {
       await page.getByRole('link', { name: 'Settings' }).click();
-      await page.getByRole('link', { name: 'Templates' }).click();
+      await page.getByRole('link', { name: 'Templates' }).first().click();
 
       await page
         .getByTestId('template-list-item')

@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { handleAccountSettingsUpdate } from '$actions/settings/handleAccountSettingsUpdate';
 import { settingsPaths } from '$constants/settings-paths';
-import { Layout } from '$layouts/Layout';
+import { SettingsLayout } from '$features/settings/SettingsLayout';
 import { AccountService } from '$ssr/api/account.service';
 import { UserPreferenceService } from '$ssr/api/user-preference.service';
 import { UserDefaultAccountSettingsForm } from '$views/user-preferences/UserDefaultAccountSettingsForm';
@@ -20,7 +20,7 @@ export const DefaultAccountSettingsContainer: FC = async () => {
     await UserPreferenceService.getDefaultTransferTargetAccount();
 
   return (
-    <Layout
+    <SettingsLayout
       title="Default Account Settings"
       backLink={settingsPaths.userPreferences}
     >
@@ -32,6 +32,6 @@ export const DefaultAccountSettingsContainer: FC = async () => {
         defaultTransferTargetAccount={defaultTransferTargetAccount}
         onSave={handleAccountSettingsUpdate}
       />
-    </Layout>
+    </SettingsLayout>
   );
 };

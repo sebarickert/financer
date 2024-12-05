@@ -62,15 +62,13 @@ test.describe('Dashboard Preferences', () => {
 
     await page.getByRole('link', { name: 'Settings' }).click();
     await page.getByRole('link', { name: 'Preferences' }).click();
-    await page
-      .getByRole('link', { name: 'Maximum Items Per Page Settings' })
-      .click();
+    await page.getByRole('link', { name: 'Dashboard Settings' }).click();
 
     await page.locator('#chunkSize').fill('10');
 
     await page
-      .getByTestId('dashboard-chunk-size-settings-form')
-      .getByRole('button', { name: 'Save', exact: true })
+      .getByTestId('dashboard-settings-form')
+      .getByRole('button', { name: 'Save Changes', exact: true })
       .click();
 
     await page.getByRole('link', { name: 'Home' }).click();

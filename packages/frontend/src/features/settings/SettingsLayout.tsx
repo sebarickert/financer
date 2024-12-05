@@ -1,21 +1,22 @@
 import { FC } from 'react';
 
 import { settingsContextualNavigationItems } from '$constants/settingsContextualNavigationItems';
-import { Layout } from '$layouts/Layout';
+import { Layout, LayoutProps } from '$layouts/Layout';
 
-type SettingsLayoutProps = {
-  title: string;
-  children: React.ReactNode;
-};
+type SettingsLayoutProps = Omit<LayoutProps, 'contextualNavigationItems'>;
 
 export const SettingsLayout: FC<SettingsLayoutProps> = async ({
   title,
   children,
+  backLink,
+  headerAction,
 }) => {
   return (
     <Layout
       title={title}
       contextualNavigationItems={settingsContextualNavigationItems}
+      backLink={backLink}
+      headerAction={headerAction}
     >
       {children}
     </Layout>

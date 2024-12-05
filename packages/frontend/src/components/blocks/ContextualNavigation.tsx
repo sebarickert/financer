@@ -7,6 +7,7 @@ import { Container } from '$layouts/Container';
 export type ContextualNavigationItem = {
   label: string;
   url: string;
+  isExact?: boolean;
 };
 
 type ContextualNavigationProps = {
@@ -24,6 +25,7 @@ export const ContextualNavigation: FC<ContextualNavigationProps> = ({
         'fixed left-0 right-0 top-[--gutter-top]',
         'bg-layer/85 backdrop-blur',
         'shadow-[inset_0_-1px] shadow-accent',
+        'vt-name-[contextual-navigation]',
       )}
     >
       <Container className={clsx('')}>
@@ -43,6 +45,8 @@ export const ContextualNavigation: FC<ContextualNavigationProps> = ({
                   'text-muted-foreground hover:text-foreground aria-[current=page]:text-foreground transition-colors',
                   'after:hidden aria-[current=page]:after:block',
                   'after:absolute after:h-0.5 after:-bottom-[3px] after:-left-2 after:-right-2 after:bg-blue',
+                  !item.isExact &&
+                    '[&[data-active-sub-page="true"]]:text-foreground [&[data-active-sub-page="true"]]:after:block',
                 )}
                 hasHoverEffect={false}
               >

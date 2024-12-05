@@ -8,7 +8,7 @@ import { ToastContainer } from '$blocks/Toast/ToastContainer';
 import { ContentHeader } from '$layouts/ContentHeader';
 import { Header } from '$layouts/Header';
 
-type LayoutProps = {
+export type LayoutProps = {
   title: string;
   children: React.ReactNode;
   backLink?: string;
