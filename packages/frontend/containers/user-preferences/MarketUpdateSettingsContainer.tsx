@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { handleMarketSettingsUpdate } from '$actions/settings/handleMarketSettingsUpdate';
 import { settingsPaths } from '$constants/settings-paths';
-import { Layout } from '$layouts/Layout';
+import { SettingsLayout } from '$features/settings/SettingsLayout';
 import { CategoryService } from '$ssr/api/category.service';
 import { UserPreferenceService } from '$ssr/api/user-preference.service';
 import { UserDefaultMarketUpdateSettingsForm } from '$views/user-preferences/UserDefaultMarketUpdateSettingsForm';
@@ -14,7 +14,7 @@ export const MarketUpdateSettingsContainer: FC = async () => {
   const categories = await CategoryService.getAllWithTree();
 
   return (
-    <Layout
+    <SettingsLayout
       title="Market Update Settings"
       backLink={settingsPaths.userPreferences}
     >
@@ -23,6 +23,6 @@ export const MarketUpdateSettingsContainer: FC = async () => {
         categories={categories}
         onSave={handleMarketSettingsUpdate}
       />
-    </Layout>
+    </SettingsLayout>
   );
 };

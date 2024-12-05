@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { handleDashboardSettingsUpdate } from '$actions/settings/handleDashboardSettingsUpdate';
 import { settingsPaths } from '$constants/settings-paths';
-import { Layout } from '$layouts/Layout';
+import { SettingsLayout } from '$features/settings/SettingsLayout';
 import { UserPreferenceService } from '$ssr/api/user-preference.service';
 import { UserDashboardSettingsForm } from '$views/user-preferences/UserDashboardSettingsForm';
 
@@ -17,11 +17,14 @@ export const DashboardSettingsContainer: FC = async () => {
   };
 
   return (
-    <Layout title="Dashboard Settings" backLink={settingsPaths.userPreferences}>
+    <SettingsLayout
+      title="Dashboard Settings"
+      backLink={settingsPaths.userPreferences}
+    >
       <UserDashboardSettingsForm
         data={data}
         onSave={handleDashboardSettingsUpdate}
       />
-    </Layout>
+    </SettingsLayout>
   );
 };

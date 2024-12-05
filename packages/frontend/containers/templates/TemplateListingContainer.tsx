@@ -4,17 +4,16 @@ import { FC } from 'react';
 import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
 import { settingsPaths } from '$constants/settings-paths';
 import { Button } from '$elements/Button/Button';
+import { SettingsLayout } from '$features/settings/SettingsLayout';
 import { TemplateList } from '$features/template/TemplateList';
-import { Layout } from '$layouts/Layout';
 import { TransactionTemplateService } from '$ssr/api/transaction-template.service';
 
 export const TemplateListingContainer: FC = async () => {
   const templates = await TransactionTemplateService.getAll();
 
   return (
-    <Layout
+    <SettingsLayout
       title="Templates"
-      backLink={settingsPaths.default}
       headerAction={
         <Button
           href={`${settingsPaths.templates}/add`}
@@ -44,6 +43,6 @@ export const TemplateListingContainer: FC = async () => {
         </InfoMessageBlock>
       )}
       <TemplateList templates={templates} />
-    </Layout>
+    </SettingsLayout>
   );
 };

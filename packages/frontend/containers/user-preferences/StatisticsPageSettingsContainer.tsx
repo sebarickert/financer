@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { handleStatisticsPageSettingsUpdate } from '$actions/settings/handleStatisticsPageSettingsUpdate';
 import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
 import { settingsPaths } from '$constants/settings-paths';
-import { Layout } from '$layouts/Layout';
+import { SettingsLayout } from '$features/settings/SettingsLayout';
 import { UserPreferenceService } from '$ssr/api/user-preference.service';
 import { UserStatisticsPageSettingsForm } from '$views/user-preferences/UserStatisticsPageSettingsForm';
 
@@ -12,7 +12,7 @@ export const StatisticsPageSettingsContainer: FC = async () => {
     await UserPreferenceService.getStatisticsSettings();
 
   return (
-    <Layout
+    <SettingsLayout
       title="Statistics Settings"
       backLink={settingsPaths.userPreferences}
     >
@@ -28,6 +28,6 @@ export const StatisticsPageSettingsContainer: FC = async () => {
         data={statisticsSettings}
         onSave={handleStatisticsPageSettingsUpdate}
       />
-    </Layout>
+    </SettingsLayout>
   );
 };
