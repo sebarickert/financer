@@ -60,7 +60,6 @@ export class AccountsController {
     @UserIdDecorator() userId: UserId,
     @Query(
       'accountTypes',
-      // new ValidateArrayPipe('|', true),
       new ValidateArrayPipe('|', true),
       new ValidateEnumPipe(AccountType),
     )

@@ -1,6 +1,6 @@
 import {
+  Banknote,
   ChartNoAxesCombined,
-  ClipboardCheck,
   CreditCard,
   Landmark,
   Lock,
@@ -16,43 +16,44 @@ export const ACCOUNT_TYPE_MAPPING: Record<
   { Icon: LucideIcon; label: string; description: string }
 > = {
   [AccountType.Savings]: {
-    Icon: PiggyBank,
+    Icon: Wallet,
     label: 'Savings',
-    description: 'Funds set aside for short-term goals or unexpected expenses.',
+    description:
+      'Your main bank account, where most of your everyday transactions occur.',
   },
   [AccountType.LongTermSavings]: {
-    Icon: Lock,
+    Icon: PiggyBank,
     label: 'Long-term Savings',
     description:
-      'Money reserved for future needs, such as retirement or major purchases.',
+      'A separate savings account, typically offering a higher interest rate for funds saved over a longer period.',
   },
   [AccountType.Cash]: {
-    Icon: Wallet,
+    Icon: Banknote,
     label: 'Cash',
     description:
-      'Cash on hand, easily accessible for daily transactions and expenses.',
+      'Physical money you have on hand, not stored in a bank account or digital form.',
   },
   [AccountType.PreAssignedCash]: {
-    Icon: ClipboardCheck,
+    Icon: Lock,
     label: 'Pre-assigned Cash',
-    description: 'Money allocated for specific expenses or budgets in advance.',
+    description: 'Money set aside in advance for specific expenses.',
   },
   [AccountType.Credit]: {
     Icon: CreditCard,
     label: 'Credit',
     description:
-      'Borrowed funds with a repayment obligation, like credit card balances.',
+      'A basic credit card account, used for borrowing money that must be repaid later.',
   },
   [AccountType.Investment]: {
     Icon: ChartNoAxesCombined,
     label: 'Investment',
     description:
-      'Assets allocated to stocks, bonds, or other ventures for growth potential.',
+      'Money invested in assets like stocks, bonds, or other ventures, aimed at growing your wealth over time.',
   },
   [AccountType.Loan]: {
     Icon: Landmark,
     label: 'Loan',
     description:
-      'Debt obtained for specific purposes, to be repaid over time with interest.',
+      'A loan for larger debts, such as a mortgage or other major financing obligations.',
   },
 };

@@ -11,13 +11,29 @@ export const getAccountBalanceFromAccountListByName = async (
   });
 
   const accountBalance = await page
-    .getByTestId('account-name')
-    .getByText(accountName)
-    .evaluate((el) => el.nextElementSibling?.textContent);
+    .getByTestId('account-list-item')
+    .filter({ hasText: accountName })
+    .first()
+    .getByTestId('balance-amount')
+    .textContent();
+
+  const accountUpcomingBalance = (await page
+    .getByTestId('account-list-item')
+    .filter({ hasText: accountName })
+    .first()
+    .getByTestId('upcoming-balance')
+    .isVisible())
+    ? await page
+        .getByTestId('account-list-item')
+        .filter({ hasText: accountName })
+        .first()
+        .getByTestId('upcoming-balance')
+        .textContent()
+    : undefined;
 
   if (!accountBalance) {
     throw new Error(`Account balance not found for account ${accountName}`);
   }
 
-  return parseCurrency(accountBalance);
+  return parseCurrency(accountUpcomingBalance ?? accountBalance);
 };

@@ -11,6 +11,7 @@ import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
 import { ACCOUNT_TYPE_MAPPING } from '$constants/account/ACCOUNT_TYPE_MAPPING';
 import { AccountBalanceHistoryChart } from '$features/account/AccountBalanceHistoryChart';
 import { TransactionListWithMonthlyPager } from '$features/transaction/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
+import { formatCurrency } from '$utils/formatCurrency';
 
 type AccountProps = {
   account: AccountDto;
@@ -29,10 +30,25 @@ export const Account: FC<AccountProps> = ({ account, balanceHistory }) => {
     [account.type],
   );
 
+  console.log(account.balance, account.currentDateBalance);
+
   return (
     <section className="grid gap-6">
       <div className="grid gap-6 p-6 rounded-md bg-layer">
-        <BalanceDisplay label="Balance" amount={account.balance} />
+        <BalanceDisplay
+          label="Balance"
+          amount={account.currentDateBalance ?? account.balance}
+        >
+          {!!account.currentDateBalance &&
+            account.currentDateBalance !== account.balance && (
+              <p className="mt-0.5 text-sm text-muted-foreground">
+                <span>Upcoming Balance: </span>
+                <span data-testid="upcoming-balance">
+                  {formatCurrency(account.balance)}
+                </span>
+              </p>
+            )}
+        </BalanceDisplay>
         <DetailsList testId="account-details" items={accountDetails} />
       </div>
       {balanceHistory.length < 3 && (

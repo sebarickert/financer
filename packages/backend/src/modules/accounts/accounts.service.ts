@@ -47,6 +47,7 @@ export class AccountsService {
     );
   }
 
+  // TODO: Clean this mess up, have to figure out a better way to get current date balance
   async findOne(userId: UserId, id: string): Promise<Account> {
     const account = await this.accountRepo.findOne({ id, userId });
 
@@ -54,7 +55,79 @@ export class AccountsService {
       throw new NotFoundException('Account not found.');
     }
 
-    return AccountDto.createFromPlain(account);
+    const accountBalanceChanges = (
+      await this.accountBalanceChangeService.findAllByUserAndAccount(
+        userId,
+        account.id,
+      )
+    ).map(({ amount, date }) => ({ amount, date }));
+
+    const accountTransactions = (
+      await this.transactionsService.findAllByUser(
+        userId,
+        null,
+        undefined,
+        undefined,
+        undefined,
+        account.id,
+      )
+    ).map(({ amount, date, toAccount }) => ({
+      date,
+      amount: account.id === toAccount ? amount : amount.negated(),
+    }));
+
+    const allBalanceChanges = accountBalanceChanges.concat(accountTransactions);
+
+    const summarizedBalanceChanges = allBalanceChanges
+      .reduce(
+        (previous, { date }) =>
+          previous.some((d) => d.getTime() === date.getTime())
+            ? previous
+            : previous.concat(date),
+        [] as Date[],
+      )
+      .sort((a, b) => b.getTime() - a.getTime())
+      .map((date) => {
+        const balanceChangeAmounts = allBalanceChanges
+          .filter(({ date: itemDate }) => itemDate.getTime() === date.getTime())
+          .map(({ amount }) => amount);
+
+        return {
+          date,
+          amount: sumArrayItems(balanceChangeAmounts),
+        };
+      })
+      .reduce((previous, { date, amount }) => {
+        const previousBalance = previous.at(-1)?.balance ?? account.balance;
+
+        const previousAmount = previous.at(-1)?.amount ?? 0;
+
+        const newBalance = previousBalance.minus(previousAmount);
+
+        return previous.concat({
+          date,
+          amount,
+          balance: newBalance,
+        });
+      }, [] as AccountBalanceHistoryDto[])
+      .sort((a, b) => a.date.getTime() - b.date.getTime());
+
+    const pastTransactions = summarizedBalanceChanges.filter(
+      (transaction) => new Date(transaction.date) <= new Date(),
+    );
+
+    const latestTransaction = pastTransactions.reduce((latest, transaction) => {
+      return new Date(transaction.date) > new Date(latest.date)
+        ? transaction
+        : latest;
+    }, pastTransactions[0]);
+
+    const refinedAccount = {
+      ...account,
+      currentDateBalance: latestTransaction?.balance,
+    };
+
+    return AccountDto.createFromPlain(refinedAccount);
   }
 
   async findAllByUser(
@@ -68,7 +141,28 @@ export class AccountsService {
       where: whereQuery,
     });
 
-    return AccountDto.createFromPlain(accounts);
+    const currentDateBalances = await Promise.all(
+      accounts.map(async ({ id }) => {
+        const currentDateBalance = await this.getCurrentDateAccountBalance(
+          userId,
+          id,
+        );
+
+        return { id, currentDateBalance };
+      }),
+    );
+
+    const refinedAccounts = accounts.map((account) => {
+      const currentBalance = currentDateBalances.find(
+        (balance) => balance.id === account.id,
+      );
+      return {
+        ...account,
+        ...currentBalance,
+      };
+    });
+
+    return AccountDto.createFromPlain(refinedAccounts);
   }
 
   async findAllByUserForExport(userId: UserId): Promise<AccountDto[]> {
@@ -128,6 +222,28 @@ export class AccountsService {
 
   removeAllByUser(userId: UserId) {
     return this.accountRepo.deleteMany({ userId });
+  }
+
+  async getCurrentDateAccountBalance(
+    userId: UserId,
+    accountId: string,
+  ): Promise<Decimal> {
+    const currentDateBalance = await this.getAccountBalanceHistory(
+      userId,
+      accountId,
+    );
+
+    const pastTransactions = currentDateBalance.filter(
+      (transaction) => new Date(transaction.date) <= new Date(),
+    );
+
+    const latestTransaction = pastTransactions.reduce((latest, transaction) => {
+      return new Date(transaction.date) > new Date(latest.date)
+        ? transaction
+        : latest;
+    }, pastTransactions[0]);
+
+    return latestTransaction?.balance;
   }
 
   async getAccountBalanceHistory(

@@ -8,6 +8,7 @@ type ListProps = {
   children: React.ReactNode | React.ReactNode[];
   className?: string;
   testId?: string;
+  itemRoundness?: boolean;
 };
 
 export const List: FC<ListProps> = ({
@@ -15,6 +16,7 @@ export const List: FC<ListProps> = ({
   children,
   className,
   testId: rawTestId,
+  itemRoundness = true,
 }) => {
   const testId = rawTestId ?? 'list';
 
@@ -30,8 +32,8 @@ export const List: FC<ListProps> = ({
                 data-testid={`${testId}-item`}
                 className={clsx(
                   '[&>*:focus-visible]:z-10 [&>*:focus-visible]:relative',
-                  '[&:first-child>:first-child]:rounded-t-md',
-                  '[&:last-child>:first-child]:rounded-b-md',
+                  itemRoundness && '[&:first-child>:first-child]:rounded-t-md',
+                  itemRoundness && '[&:last-child>:first-child]:rounded-b-md',
                 )}
               >
                 {child}

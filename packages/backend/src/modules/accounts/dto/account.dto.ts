@@ -5,6 +5,7 @@ import {
   IsBoolean,
   IsEnum,
   IsNotEmpty,
+  IsOptional,
   IsString,
   IsUUID,
 } from 'class-validator';
@@ -50,6 +51,14 @@ export class AccountDto implements Account {
   @IsDecimal({ message: 'Balance must be a decimal number, with 2 decimals.' })
   readonly balance: Decimal;
 
+  @ApiProperty({ type: Number })
+  @TransformDecimal()
+  @IsDecimal({
+    message: 'Current Date Balance must be a decimal number, with 2 decimals.',
+  })
+  @IsOptional()
+  readonly currentDateBalance?: Decimal;
+
   @ApiProperty({ type: String })
   @IsUUID()
   readonly userId: UserId;
@@ -67,11 +76,24 @@ export class AccountDto implements Account {
       return account.map((a) => AccountDto.createFromPlain(a));
     }
 
-    return new AccountDto({
+    const accountDto = {
       ...account,
       createdAt: new Date(account.createdAt),
       updatedAt: new Date(account.updatedAt),
       balance: new Decimal(account.balance),
-    });
+    };
+
+    // TODO: Add to Prisma model
+    // Conditionally add currentDateBalance if it exists
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    if ((account as any)?.currentDateBalance !== undefined) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (accountDto as any).currentDateBalance = new Decimal(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (account as any).currentDateBalance,
+      );
+    }
+
+    return new AccountDto(accountDto);
   }
 }

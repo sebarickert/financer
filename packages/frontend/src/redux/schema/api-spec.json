@@ -1542,6 +1542,7 @@
           "name": { "type": "string" },
           "type": { "$ref": "#/components/schemas/AccountType" },
           "balance": { "type": "number" },
+          "currentDateBalance": { "type": "number" },
           "userId": { "type": "string" },
           "isDeleted": { "type": "boolean" }
         },
@@ -1552,6 +1553,7 @@
           "name",
           "type",
           "balance",
+          "currentDateBalance",
           "userId",
           "isDeleted"
         ]

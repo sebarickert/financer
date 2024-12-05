@@ -23,7 +23,7 @@ export const getAccountDataFromAccountList = async (
           child.querySelector('[data-testid="account-name"]')?.textContent ??
           '';
         const balance =
-          child.querySelector('[data-testid="account-balance"]')?.textContent ??
+          child.querySelector('[data-testid="balance-amount"]')?.textContent ??
           '';
 
         return { name, balance };

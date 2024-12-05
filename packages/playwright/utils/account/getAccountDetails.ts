@@ -25,6 +25,11 @@ export const getAccountDetails = async (
     (await page.getByTestId('balance-amount').textContent()) ?? '',
   );
 
+  const upcomingBalanceElement = page.getByTestId('upcoming-balance');
+  const upcomingBalance = (await upcomingBalanceElement.isVisible())
+    ? parseCurrency((await upcomingBalanceElement.textContent()) ?? '')
+    : undefined;
+
   const name =
     (await page.getByTestId('page-main-heading').textContent()) ?? '';
 
@@ -41,7 +46,7 @@ export const getAccountDetails = async (
   return {
     id,
     name,
-    balance,
+    balance: upcomingBalance ?? balance,
     type,
   };
 };
