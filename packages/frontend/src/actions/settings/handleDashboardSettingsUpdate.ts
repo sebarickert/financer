@@ -15,5 +15,9 @@ export const handleDashboardSettingsUpdate: DefaultFormActionHandler = async (
     accountTypes: formData.getAll('accountTypes') as AccountType[],
   });
 
+  await UserPreferenceService.updateTransactionListChunkSize(
+    parseInt(formData.get('chunkSize') as string),
+  );
+
   redirect(settingsPaths.userPreferences, RedirectType.push);
 };

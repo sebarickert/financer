@@ -29,12 +29,6 @@ export const SettingsPreferencesContainer: FC = () => {
           Default Account Settings
         </ProminentLink>
         <ProminentLink
-          link={`${settingsPaths.userPreferences}/maximum-items-per-page`}
-          Icon={Home}
-        >
-          Maximum Items Per Page Settings
-        </ProminentLink>
-        <ProminentLink
           link={`${settingsPaths.userPreferences}/market-update-settings`}
           Icon={ChartNoAxesCombined}
         >
