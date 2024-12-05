@@ -6,7 +6,6 @@ import { Page, expect } from '$utils/financer-page';
 type AccountDetails = {
   id: string;
   balance: Decimal;
-  upcomingBalance?: Decimal;
   name: string;
   type: string;
 };
@@ -47,8 +46,7 @@ export const getAccountDetails = async (
   return {
     id,
     name,
-    balance,
-    upcomingBalance,
+    balance: upcomingBalance ?? balance,
     type,
   };
 };

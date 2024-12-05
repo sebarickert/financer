@@ -99,7 +99,9 @@ export const AccountList: FC<AccountListProps> = ({
               {!!currentDateBalance && currentDateBalance !== balance && (
                 <p className="mt-0.5 text-sm text-muted-foreground truncate">
                   <span>Upcoming Balance: </span>
-                  <span>{formatCurrency(balance)}</span>
+                  <span data-testid="upcoming-balance">
+                    {formatCurrency(balance)}
+                  </span>
                 </p>
               )}
             </div>
