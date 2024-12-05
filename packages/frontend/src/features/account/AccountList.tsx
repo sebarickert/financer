@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { FC } from 'react';
 
-import { AccountDto } from '$api/generated/financerApi';
+import { AccountDto, AccountType } from '$api/generated/financerApi';
 import { BalanceDisplay } from '$blocks/BalanceDisplay';
 import { List } from '$blocks/List';
 import { ACCOUNT_TYPE_MAPPING } from '$constants/account/ACCOUNT_TYPE_MAPPING';
@@ -45,6 +45,7 @@ export const AccountList: FC<AccountListProps> = ({
 
         return (
           <Link
+            id={id}
             href={`/accounts/${id}`}
             testId="account-row"
             key={id}
@@ -66,7 +67,26 @@ export const AccountList: FC<AccountListProps> = ({
               >
                 {name}
               </Heading>
-              <span className="inline-block px-3 py-1 text-sm rounded-md bg-green/20 shrink-0">
+              <span
+                className={clsx(
+                  'inline-flex items-center gap-2 text-sm shrink-0 relative text-muted-foreground',
+                  'after:w-3 after:h-3 after:rounded-full after:block',
+                  type === AccountType.Savings &&
+                    'after:bg-[hsl(var(--account-SAVINGS))]',
+                  type === AccountType.Cash &&
+                    'after:bg-[hsl(var(--account-CASH))]',
+                  type === AccountType.LongTermSavings &&
+                    'after:bg-[hsl(var(--account-LONG-TERM-SAVINGS))]',
+                  type === AccountType.PreAssignedCash &&
+                    'after:bg-[hsl(var(--account-PRE-ASSIGNED-CASH))]',
+                  type === AccountType.Investment &&
+                    'after:bg-[hsl(var(--account-INVESTMENT))]',
+                  type === AccountType.Credit &&
+                    'after:bg-[hsl(var(--account-CREDIT))]',
+                  type === AccountType.Loan &&
+                    'after:bg-[hsl(var(--account-LOAN))]',
+                )}
+              >
                 {ACCOUNT_TYPE_MAPPING[type].label}
               </span>
             </div>

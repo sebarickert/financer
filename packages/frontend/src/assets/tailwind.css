@@ -44,6 +44,14 @@
     --color-gold: 45 85% 45%;
     --color-soft-gray: 0 0% 70%;
 
+    --account-SAVINGS: var(--color-blue);
+    --account-LONG-TERM-SAVINGS: var(--color-dark-blue);
+    --account-CASH: var(--color-gold);
+    --account-INVESTMENT: var(--color-green);
+    --account-PRE-ASSIGNED-CASH: var(--color-soft-gray);
+    --account-CREDIT: var(--color-red);
+    --account-LOAN: var(--color-red);
+
     --button-primary: 219 99% 53%;
     --button-primary-hover: 219 99% 40%;
     --button-primary-active: 219 99% 22%;

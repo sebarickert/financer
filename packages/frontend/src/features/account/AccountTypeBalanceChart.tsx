@@ -69,27 +69,27 @@ export const AccountTypeBalanceChart: FC<AccountTypeBalanceChartProps> = ({
   const chartConfig = {
     [AccountType.Savings]: {
       label: ACCOUNT_TYPE_MAPPING[AccountType.Savings].label,
-      color: 'hsl(var(--color-blue))',
+      color: 'hsl(var(--account-SAVINGS))',
       valueFormatter: calculateBalancePercentage,
     },
     [AccountType.Cash]: {
       label: ACCOUNT_TYPE_MAPPING[AccountType.Cash].label,
-      color: 'hsl(var(--color-gold))',
+      color: 'hsl(var(--account-CASH))',
       valueFormatter: calculateBalancePercentage,
     },
     [AccountType.LongTermSavings]: {
       label: ACCOUNT_TYPE_MAPPING[AccountType.LongTermSavings].label,
-      color: 'hsl(var(--color-dark-blue))',
+      color: 'hsl(var(--account-LONG-TERM-SAVINGS))',
       valueFormatter: calculateBalancePercentage,
     },
     [AccountType.PreAssignedCash]: {
       label: ACCOUNT_TYPE_MAPPING[AccountType.PreAssignedCash].label,
-      color: 'hsl(var(--color-soft-gray))',
+      color: 'hsl(var(--account-PRE-ASSIGNED-CASH))',
       valueFormatter: calculateBalancePercentage,
     },
     [AccountType.Investment]: {
       label: ACCOUNT_TYPE_MAPPING[AccountType.Investment].label,
-      color: 'hsl(var(--color-green))',
+      color: 'hsl(var(--account-INVESTMENT))',
       valueFormatter: calculateBalancePercentage,
     },
   } satisfies ChartConfig;
