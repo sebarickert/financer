@@ -55,7 +55,12 @@ export const PieChartDonut: FC<PieChartDonutProps> = ({
           accessibilityLayer
         >
           <Tooltip content={<CustomTooltip config={config} hideLabel />} />
-          <Pie data={data} dataKey="value" nameKey="dataKey" innerRadius={60} />
+          <Pie
+            data={data}
+            dataKey="value"
+            nameKey="dataKey"
+            innerRadius={'35%'}
+          />
         </PieChart>
       </ResponsiveContainer>
     </div>
