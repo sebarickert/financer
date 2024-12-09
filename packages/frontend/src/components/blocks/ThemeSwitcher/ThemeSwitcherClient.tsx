@@ -5,11 +5,11 @@ import { FC } from 'react';
 
 import { ThemeSwitcherItem } from './ThemeSwitcherItem';
 
+import { revalidateUserCache } from '$actions/user/revalidateUserCache';
 import {
   Theme,
   useUsersUpdateOwnUserMutation,
 } from '$api/generated/financerApi';
-import { clearUserCache } from '$ssr/api/clear-cache';
 
 type ThemeSwitcherClientProps = {
   className?: string;
@@ -29,7 +29,7 @@ export const ThemeSwitcherClient: FC<ThemeSwitcherClientProps> = ({
       },
     }).unwrap();
 
-    await clearUserCache();
+    await revalidateUserCache();
     window.location.reload();
   };
 

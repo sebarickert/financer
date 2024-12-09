@@ -1,3 +1,5 @@
+import { revalidateTag } from 'next/cache';
+
 import { BaseApi } from './BaseApi';
 
 import { Theme, UserDataImportDto, UserDto } from '$api/generated/financerApi';
@@ -5,6 +7,15 @@ import { ValidationException } from '$exceptions/validation.exception';
 import { isValidationErrorResponse } from '$utils/apiHelper';
 
 export class UserService extends BaseApi {
+  public static async revalidateCache(id?: string): Promise<void> {
+    if (id) {
+      revalidateTag(this.getEntityTag(this.API_TAG.USER, id));
+      return;
+    }
+
+    revalidateTag(this.API_TAG.USER);
+  }
+
   private static readonly OWN_USER_ID = 'my-user';
 
   public static async getOwnUserTheme(): Promise<Theme> {

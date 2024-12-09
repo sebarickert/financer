@@ -2,7 +2,6 @@ import { Layers, Tag, TriangleAlert } from 'lucide-react';
 import { FC } from 'react';
 
 import { Role } from '$api/generated/financerApi';
-import { HardRefreshButton } from '$blocks/HardRefreshButton';
 import { List } from '$blocks/List';
 import { ProminentLink } from '$blocks/ProminentLink';
 import { ThemeSwitcher } from '$blocks/ThemeSwitcher/ThemeSwitcher';
@@ -42,7 +41,6 @@ export const SettingsContainer: FC = async () => {
         </div>
       </div>
       <div className="flex flex-col gap-2 mt-12 sm:flex-row">
-        <HardRefreshButton />
         <Button accentColor="secondary" href="/auth/logout">
           Sign out
         </Button>
