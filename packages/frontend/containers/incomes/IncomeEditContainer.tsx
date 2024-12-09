@@ -1,7 +1,7 @@
 import { notFound, redirect, RedirectType } from 'next/navigation';
 import { FC } from 'react';
 
-import { IncomeDetailsDto } from '$api/generated/financerApi';
+import { IncomeDetailsDto, VisibilityType } from '$api/generated/financerApi';
 import { ValidationException } from '$exceptions/validation.exception';
 import {
   isCategoriesFormFullFields,
@@ -10,6 +10,7 @@ import {
 import { TransactionForm } from '$features/transaction/TransactionForm';
 import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
 import { Layout } from '$layouts/Layout';
+import { CategoryService } from '$ssr/api/CategoryService';
 import { IncomeService } from '$ssr/api/IncomeService';
 import { DateFormat, formatDate } from '$utils/formatDate';
 import { parseArrayFromFormData } from '$utils/parseArrayFromFormData';
@@ -74,12 +75,17 @@ export const IncomeEditContainer: FC<IncomeEditContainerProps> = async ({
     date: formatDate(new Date(income.date), DateFormat.input),
   };
 
+  const categories = await CategoryService.getAllWithTree({
+    visibilityType: VisibilityType.Income,
+  });
+
   return (
     <Layout title="Edit Income" backLink={`/statistics/incomes/${id}`}>
       <TransactionForm
         initialValues={initialValues}
         onSubmit={handleSubmit}
         hasToAccountField
+        transactionCategoriesWithCategoryTree={categories}
       />
     </Layout>
   );
