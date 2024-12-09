@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { FC } from 'react';
 
 import { TemplateEditContainer } from '$container/templates/TemplateEditContainer';
-import { TransactionTemplateService } from '$ssr/api/transaction-template.service';
+import { TransactionTemplateService } from '$ssr/api/TransactionTemplateService';
 
 type EditTemplatePageProps = {
   params: {

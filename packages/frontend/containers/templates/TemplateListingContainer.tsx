@@ -6,7 +6,7 @@ import { settingsPaths } from '$constants/settings-paths';
 import { Button } from '$elements/Button/Button';
 import { SettingsLayout } from '$features/settings/SettingsLayout';
 import { TemplateList } from '$features/template/TemplateList';
-import { TransactionTemplateService } from '$ssr/api/transaction-template.service';
+import { TransactionTemplateService } from '$ssr/api/TransactionTemplateService';
 
 export const TemplateListingContainer: FC = async () => {
   const templates = await TransactionTemplateService.getAll();

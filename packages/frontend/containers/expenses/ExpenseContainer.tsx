@@ -5,7 +5,7 @@ import { TransactionType } from '$api/generated/financerApi';
 import { Popper } from '$elements/Popper';
 import { TransactionDeleteDrawer } from '$features/transaction/TransactionDeleteDrawer';
 import { Layout } from '$layouts/Layout';
-import { ExpenseService } from '$ssr/api/expense.service ';
+import { ExpenseService } from '$ssr/api/ExpenseService';
 import { Transaction } from '$views/Transaction';
 
 type ExpenseContainerProps = {

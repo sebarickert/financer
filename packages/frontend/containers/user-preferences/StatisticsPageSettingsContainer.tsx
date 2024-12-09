@@ -4,7 +4,7 @@ import { handleStatisticsPageSettingsUpdate } from '$actions/settings/handleStat
 import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
 import { settingsPaths } from '$constants/settings-paths';
 import { SettingsLayout } from '$features/settings/SettingsLayout';
-import { UserPreferenceService } from '$ssr/api/user-preference.service';
+import { UserPreferenceService } from '$ssr/api/UserPreferenceService';
 import { UserStatisticsPageSettingsForm } from '$views/user-preferences/UserStatisticsPageSettingsForm';
 
 export const StatisticsPageSettingsContainer: FC = async () => {

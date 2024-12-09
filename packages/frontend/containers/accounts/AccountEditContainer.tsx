@@ -4,7 +4,7 @@ import { FC } from 'react';
 import { handleAccountEdit } from '$actions/account/handleAccountEdit';
 import { AccountForm } from '$features/account/AccountForm';
 import { Layout } from '$layouts/Layout';
-import { AccountService } from '$ssr/api/account.service';
+import { AccountService } from '$ssr/api/AccountService';
 
 type AccountEditContainerProps = {
   id: string;

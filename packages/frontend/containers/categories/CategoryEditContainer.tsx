@@ -5,7 +5,7 @@ import { handleCategoryEdit } from '$actions/category/handleCategoryEdit';
 import { settingsPaths } from '$constants/settings-paths';
 import { CategoryForm } from '$features/category/CategoryForm';
 import { SettingsLayout } from '$features/settings/SettingsLayout';
-import { CategoryService } from '$ssr/api/category.service';
+import { CategoryService } from '$ssr/api/CategoryService';
 
 type CategoryEditContainerProps = {
   id: string;
@@ -21,6 +21,7 @@ export const CategoryEditContainer: FC<CategoryEditContainerProps> = async ({
   }
 
   const handleSubmit = handleCategoryEdit.bind(null, category);
+  const categories = await CategoryService.getAllWithTree();
 
   return (
     <SettingsLayout
@@ -32,6 +33,7 @@ export const CategoryEditContainer: FC<CategoryEditContainerProps> = async ({
         submitLabel="Update"
         currentCategoryId={category.id}
         initialValues={category}
+        transactionCategoriesWithCategoryTree={categories}
       />
     </SettingsLayout>
   );

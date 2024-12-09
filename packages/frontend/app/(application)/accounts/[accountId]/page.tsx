@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { FC } from 'react';
 
 import { AccountContainer } from '$container/accounts/AccountContainer';
-import { AccountService } from '$ssr/api/account.service';
+import { AccountService } from '$ssr/api/AccountService';
 
 type AccountPageProps = {
   params: {

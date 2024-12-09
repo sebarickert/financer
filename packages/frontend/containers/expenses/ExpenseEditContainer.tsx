@@ -1,7 +1,7 @@
 import { notFound, redirect, RedirectType } from 'next/navigation';
 import { FC } from 'react';
 
-import { ExpenseDetailsDto } from '$api/generated/financerApi';
+import { ExpenseDetailsDto, VisibilityType } from '$api/generated/financerApi';
 import { ValidationException } from '$exceptions/validation.exception';
 import {
   isCategoriesFormFullFields,
@@ -10,7 +10,8 @@ import {
 import { TransactionForm } from '$features/transaction/TransactionForm';
 import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
 import { Layout } from '$layouts/Layout';
-import { ExpenseService } from '$ssr/api/expense.service ';
+import { CategoryService } from '$ssr/api/CategoryService';
+import { ExpenseService } from '$ssr/api/ExpenseService';
 import { DateFormat, formatDate } from '$utils/formatDate';
 import { parseArrayFromFormData } from '$utils/parseArrayFromFormData';
 
@@ -74,12 +75,17 @@ export const EditExpenseContainer: FC<EditExpenseContainerProps> = async ({
     date: formatDate(new Date(expense.date), DateFormat.input),
   };
 
+  const categories = await CategoryService.getAllWithTree({
+    visibilityType: VisibilityType.Expense,
+  });
+
   return (
     <Layout title="Edit Expense" backLink={`/statistics/expenses/${id}`}>
       <TransactionForm
         initialValues={initialValues}
         onSubmit={handleSubmit}
         hasFromAccountField
+        transactionCategoriesWithCategoryTree={categories}
       />
     </Layout>
   );

@@ -18,7 +18,7 @@ export const ToastContainer = memo(
     return (
       <ul
         aria-live="polite"
-        className={clsx({ [className]: toastMessages.length > 0 })}
+        className={clsx('space-y-4', { [className]: toastMessages.length > 0 })}
         data-testid="toast-container"
       >
         {toastMessages.map((toast) => (

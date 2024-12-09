@@ -1,11 +1,10 @@
 import { revalidateTag } from 'next/cache';
 
-import { AccountService } from './account.service';
-import { BaseApi } from './base-api';
+import { BaseApi } from './BaseApi';
 import type {
   FirstTransactionByTypeOptions,
   TransactionListOptions,
-} from './transaction.service';
+} from './TransactionService';
 
 import {
   CreateIncomeDto,
@@ -18,9 +17,12 @@ import { ValidationException } from '$exceptions/validation.exception';
 import { isValidationErrorResponse } from '$utils/apiHelper';
 
 export class IncomeService extends BaseApi {
-  // TODO temporary solution to clear cache while migration
-  public static async clearCache(): Promise<void> {
-    'use server';
+  public static async revalidateCache(id?: string): Promise<void> {
+    if (id) {
+      revalidateTag(this.getEntityTag(this.API_TAG.INCOME, id));
+      return;
+    }
+
     revalidateTag(this.API_TAG.INCOME);
   }
 
@@ -44,12 +46,7 @@ export class IncomeService extends BaseApi {
         query: options,
       },
       next: {
-        tags: [
-          this.API_TAG.INCOME,
-          this.API_TAG.TRANSACTION,
-          this.getListTag(this.API_TAG.INCOME),
-          this.getListTag(this.API_TAG.TRANSACTION),
-        ],
+        tags: [this.API_TAG.INCOME],
       },
     });
 
@@ -68,12 +65,7 @@ export class IncomeService extends BaseApi {
         },
       },
       next: {
-        tags: [
-          this.API_TAG.TRANSACTION,
-          this.API_TAG.INCOME,
-          this.getEntityTag(this.API_TAG.TRANSACTION, id),
-          this.getEntityTag(this.API_TAG.INCOME, id),
-        ],
+        tags: [this.getEntityTag(this.API_TAG.INCOME, id)],
       },
     });
 
@@ -105,8 +97,7 @@ export class IncomeService extends BaseApi {
       throw new Error('Failed to add income', error);
     }
 
-    await this.clearCache();
-    await AccountService.clearCache();
+    await this.revalidateCache();
 
     return data as IncomeDetailsDto;
   }
@@ -136,8 +127,8 @@ export class IncomeService extends BaseApi {
       throw new Error('Failed to add income', error);
     }
 
-    await this.clearCache();
-    await AccountService.clearCache();
+    await this.revalidateCache(id);
+    await this.revalidateCache();
 
     return data as IncomeDetailsDto;
   }
@@ -153,7 +144,6 @@ export class IncomeService extends BaseApi {
       throw new Error('Failed to delete income', error);
     }
 
-    await this.clearCache();
-    await AccountService.clearCache();
+    await this.revalidateCache();
   }
 }

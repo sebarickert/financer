@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { FC } from 'react';
 
 import { ExpenseContainer } from '$container/expenses/ExpenseContainer';
-import { ExpenseService } from '$ssr/api/expense.service ';
+import { ExpenseService } from '$ssr/api/ExpenseService';
 
 type ExpensePageProps = {
   params: {

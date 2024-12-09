@@ -1,11 +1,10 @@
 import { revalidateTag } from 'next/cache';
 
-import { AccountService } from './account.service';
-import { BaseApi } from './base-api';
+import { BaseApi } from './BaseApi';
 import type {
   FirstTransactionByTypeOptions,
   TransactionListOptions,
-} from './transaction.service';
+} from './TransactionService';
 
 import {
   SortOrder,
@@ -18,9 +17,12 @@ import { ValidationException } from '$exceptions/validation.exception';
 import { isValidationErrorResponse } from '$utils/apiHelper';
 
 export class TransferService extends BaseApi {
-  // TODO temporary solution to clear cache while migration
-  public static async clearCache(): Promise<void> {
-    'use server';
+  public static async revalidateCache(id?: string): Promise<void> {
+    if (id) {
+      revalidateTag(this.getEntityTag(this.API_TAG.TRANSFER, id));
+      return;
+    }
+
     revalidateTag(this.API_TAG.TRANSFER);
   }
 
@@ -44,12 +46,7 @@ export class TransferService extends BaseApi {
         query: options,
       },
       next: {
-        tags: [
-          this.API_TAG.TRANSFER,
-          this.API_TAG.TRANSACTION,
-          this.getListTag(this.API_TAG.TRANSFER),
-          this.getListTag(this.API_TAG.TRANSACTION),
-        ],
+        tags: [this.API_TAG.TRANSFER],
       },
     });
 
@@ -68,12 +65,7 @@ export class TransferService extends BaseApi {
         },
       },
       next: {
-        tags: [
-          this.API_TAG.TRANSACTION,
-          this.API_TAG.TRANSFER,
-          this.getEntityTag(this.API_TAG.TRANSACTION, id),
-          this.getEntityTag(this.API_TAG.TRANSFER, id),
-        ],
+        tags: [this.getEntityTag(this.API_TAG.TRANSFER, id)],
       },
     });
 
@@ -105,8 +97,7 @@ export class TransferService extends BaseApi {
       throw new Error('Failed to add transfer', error);
     }
 
-    await this.clearCache();
-    await AccountService.clearCache();
+    await this.revalidateCache();
 
     return data as TransferDetailsDto;
   }
@@ -136,8 +127,8 @@ export class TransferService extends BaseApi {
       throw new Error('Failed to update transfer', error);
     }
 
-    await this.clearCache();
-    await AccountService.clearCache();
+    await this.revalidateCache(id);
+    await this.revalidateCache();
 
     return data as TransferDetailsDto;
   }
@@ -153,7 +144,6 @@ export class TransferService extends BaseApi {
       throw new Error('Failed to delete transfer', error);
     }
 
-    await this.clearCache();
-    await AccountService.clearCache();
+    await this.revalidateCache();
   }
 }

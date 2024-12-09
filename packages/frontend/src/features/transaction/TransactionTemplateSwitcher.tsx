@@ -4,38 +4,41 @@ import { Layers } from 'lucide-react';
 import { useId, useMemo, useRef } from 'react';
 
 import {
+  TransactionTemplateDto,
+  TransactionTemplateType,
   TransactionType,
-  useTransactionTemplatesFindAllManualTypeByUserQuery,
 } from '$api/generated/financerApi';
 import { Drawer } from '$blocks/Drawer';
 import { Button } from '$elements/Button/Button';
 import { ButtonGroup } from '$elements/Button/ButtonGroup';
 import { InputOption } from '$elements/InputOption';
 
-interface TransactionTemplateSwitcherProps {
-  selectedTemplate?: string;
-  templateType: TransactionType;
+type TransactionTemplateSwitcherProps = {
+  selectedTemplateId?: string;
+  transactionType: TransactionType;
   onChange(event: React.ChangeEvent<HTMLFormElement>): void;
   name?: string;
-}
+  transactionTemplates?: TransactionTemplateDto[];
+};
 
 export const TransactionTemplateSwitcher = ({
-  selectedTemplate,
-  templateType,
+  selectedTemplateId,
+  transactionType,
   onChange,
   name,
+  transactionTemplates = [],
 }: TransactionTemplateSwitcherProps): JSX.Element | null => {
   const popoverRef = useRef<HTMLDivElement>(null);
   const templateSwitcherId = useId();
-  const { currentData: transactionTemplates = [] } =
-    useTransactionTemplatesFindAllManualTypeByUserQuery();
 
   const targetTemplates = useMemo(
     () =>
       transactionTemplates.filter(
-        ({ templateVisibility }) => templateVisibility === templateType,
+        ({ templateVisibility, templateType }) =>
+          templateVisibility === transactionType &&
+          templateType[0] === TransactionTemplateType.Manual,
       ),
-    [templateType, transactionTemplates],
+    [transactionType, transactionTemplates],
   );
 
   const handleSubmit = async (event: React.ChangeEvent<HTMLFormElement>) => {
@@ -63,7 +66,7 @@ export const TransactionTemplateSwitcher = ({
             <InputOption
               id={name ?? 'templateSwitcher'}
               value={''}
-              defaultChecked={!selectedTemplate}
+              defaultChecked={!selectedTemplateId}
               type="radio"
             >
               Empty
@@ -73,7 +76,7 @@ export const TransactionTemplateSwitcher = ({
                 id={name ?? 'templateSwitcher'}
                 value={id}
                 key={id}
-                defaultChecked={id === selectedTemplate}
+                defaultChecked={id === selectedTemplateId}
                 type="radio"
               >
                 {templateName}

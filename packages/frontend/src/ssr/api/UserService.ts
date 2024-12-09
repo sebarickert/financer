@@ -1,19 +1,22 @@
 import { revalidateTag } from 'next/cache';
 
-import { BaseApi } from './base-api';
+import { BaseApi } from './BaseApi';
 
 import { Theme, UserDataImportDto, UserDto } from '$api/generated/financerApi';
 import { ValidationException } from '$exceptions/validation.exception';
 import { isValidationErrorResponse } from '$utils/apiHelper';
 
 export class UserService extends BaseApi {
-  private static readonly OWN_USER_ID = 'my-user';
+  public static async revalidateCache(id?: string): Promise<void> {
+    if (id) {
+      revalidateTag(this.getEntityTag(this.API_TAG.USER, id));
+      return;
+    }
 
-  // TODO temporary solution to clear cache while migration
-  public static clearCache(): void {
-    'use server';
     revalidateTag(this.API_TAG.USER);
   }
+
+  private static readonly OWN_USER_ID = 'my-user';
 
   public static async getOwnUserTheme(): Promise<Theme> {
     try {
@@ -64,6 +67,8 @@ export class UserService extends BaseApi {
 
       throw new Error('Failed to override user data', error);
     }
+
+    BaseApi.revalidateFullAppCache();
 
     return data.payload;
   }

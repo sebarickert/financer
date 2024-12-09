@@ -7,12 +7,12 @@ import { Form } from '$blocks/Form';
 import { Button } from '$elements/Button/Button';
 import { Input } from '$elements/Input';
 import { Select } from '$elements/Select';
-import { TransactionCategoryDtoWithCategoryTree } from '$hooks/transactionCategories/useGetAllTransactionCategoriesWithCategoryTree';
 import {
   DefaultFormActionHandler,
   useFinancerFormState,
 } from '$hooks/useFinancerFormState';
-import { UserDefaultMarketUpdateSettings as UserDefaultMarketUpdateSettingsType } from '$ssr/api/user-preference.service';
+import { UserDefaultMarketUpdateSettings as UserDefaultMarketUpdateSettingsType } from '$ssr/api/UserPreferenceService';
+import { TransactionCategoryDtoWithCategoryTree } from '$types/TransactionCategoryDtoWithCategoryTree';
 
 export type UserDefaultMarketUpdateSettingsFormFields = {
   transactionDescription: string;

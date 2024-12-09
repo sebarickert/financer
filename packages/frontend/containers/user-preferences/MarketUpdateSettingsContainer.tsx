@@ -3,8 +3,8 @@ import { FC } from 'react';
 import { handleMarketSettingsUpdate } from '$actions/settings/handleMarketSettingsUpdate';
 import { settingsPaths } from '$constants/settings-paths';
 import { SettingsLayout } from '$features/settings/SettingsLayout';
-import { CategoryService } from '$ssr/api/category.service';
-import { UserPreferenceService } from '$ssr/api/user-preference.service';
+import { CategoryService } from '$ssr/api/CategoryService';
+import { UserPreferenceService } from '$ssr/api/UserPreferenceService';
 import { UserDefaultMarketUpdateSettingsForm } from '$views/user-preferences/UserDefaultMarketUpdateSettingsForm';
 
 export const MarketUpdateSettingsContainer: FC = async () => {

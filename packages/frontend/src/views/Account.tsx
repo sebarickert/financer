@@ -30,8 +30,6 @@ export const Account: FC<AccountProps> = ({ account, balanceHistory }) => {
     [account.type],
   );
 
-  console.log(account.balance, account.currentDateBalance);
-
   return (
     <section className="grid gap-6">
       <div className="grid gap-6 p-6 rounded-md bg-layer">

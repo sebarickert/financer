@@ -1,9 +1,9 @@
 import { revalidateTag } from 'next/cache';
 
-import { BaseApi } from './base-api';
-import { ExpenseService } from './expense.service ';
-import { IncomeService } from './income.service';
-import { TransferService } from './transfer.service';
+import { BaseApi } from './BaseApi';
+import { ExpenseService } from './ExpenseService';
+import { IncomeService } from './IncomeService';
+import { TransferService } from './TransferService';
 
 import {
   ExpenseListItemDto,
@@ -26,9 +26,12 @@ export type FirstTransactionByTypeOptions = Omit<
 >;
 
 export class TransactionService extends BaseApi {
-  // TODO temporary solution to clear cache while migration
-  public static async clearCache(): Promise<void> {
-    'use server';
+  public static async revalidateCache(id?: string): Promise<void> {
+    if (id) {
+      revalidateTag(this.getEntityTag(this.API_TAG.TRANSACTION, id));
+      return;
+    }
+
     revalidateTag(this.API_TAG.TRANSACTION);
   }
 
@@ -44,7 +47,9 @@ export class TransactionService extends BaseApi {
         next: {
           tags: [
             this.API_TAG.TRANSACTION,
-            this.getSummaryTag(this.API_TAG.TRANSACTION),
+            this.API_TAG.EXPENSE,
+            this.API_TAG.INCOME,
+            this.API_TAG.TRANSFER,
           ],
         },
       },
@@ -173,13 +178,9 @@ export class TransactionService extends BaseApi {
       next: {
         tags: [
           this.API_TAG.TRANSACTION,
-          this.getListTag(this.API_TAG.TRANSACTION),
           this.API_TAG.EXPENSE,
-          this.getListTag(this.API_TAG.EXPENSE),
           this.API_TAG.INCOME,
-          this.getListTag(this.API_TAG.INCOME),
           this.API_TAG.TRANSFER,
-          this.getListTag(this.API_TAG.TRANSFER),
         ],
       },
     });
@@ -200,10 +201,6 @@ export class TransactionService extends BaseApi {
       },
       next: {
         tags: [
-          this.API_TAG.TRANSACTION,
-          this.API_TAG.EXPENSE,
-          this.API_TAG.INCOME,
-          this.API_TAG.TRANSFER,
           this.getEntityTag(this.API_TAG.TRANSACTION, id),
           this.getEntityTag(this.API_TAG.EXPENSE, id),
           this.getEntityTag(this.API_TAG.INCOME, id),

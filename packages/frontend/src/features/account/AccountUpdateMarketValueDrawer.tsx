@@ -9,7 +9,7 @@ import { Form } from '$blocks/Form';
 import { Button } from '$elements/Button/Button';
 import { Input } from '$elements/Input';
 import { useFinancerFormState } from '$hooks/useFinancerFormState';
-import { UserDefaultMarketUpdateSettings } from '$ssr/api/user-preference.service';
+import { UserDefaultMarketUpdateSettings } from '$ssr/api/UserPreferenceService';
 import { DateFormat, formatDate } from '$utils/formatDate';
 import { handleAccountMarketValueUpdate } from 'src/actions/account/handleAccountMarketValueUpdate';
 

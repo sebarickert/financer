@@ -5,7 +5,7 @@ import { redirect, RedirectType } from 'next/navigation';
 import { AccountDto, AccountType } from '$api/generated/financerApi';
 import { ValidationException } from '$exceptions/validation.exception';
 import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
-import { AccountService } from '$ssr/api/account.service';
+import { AccountService } from '$ssr/api/AccountService';
 
 export const handleAccountEdit: DefaultFormActionHandler<AccountDto> = async (
   account,

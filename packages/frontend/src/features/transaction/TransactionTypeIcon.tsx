@@ -2,8 +2,8 @@ import clsx from 'clsx';
 import {
   ArrowDownToLine,
   ArrowUpFromLine,
+  CalendarSync,
   LucideIcon,
-  RefreshCw,
   Repeat,
 } from 'lucide-react';
 import { FC } from 'react';
@@ -31,7 +31,7 @@ export const TransactionTypeIcon: FC<TransactionTypeIconProps> = ({
   isRecurring,
 }) => {
   if (isRecurring) {
-    return <RefreshCw className={clsx(className)} />;
+    return <CalendarSync className={clsx(className)} />;
   }
 
   const Icon = TRANSACTION_TYPE_ICON_MAPPING[type];

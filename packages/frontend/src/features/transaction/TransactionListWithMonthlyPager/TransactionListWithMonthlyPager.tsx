@@ -13,7 +13,7 @@ import { Heading } from '$elements/Heading';
 import {
   TransactionListOptions,
   TransactionService,
-} from '$ssr/api/transaction.service';
+} from '$ssr/api/TransactionService';
 
 type TransactionListingWithMonthlyPagerProps = {
   className?: string;

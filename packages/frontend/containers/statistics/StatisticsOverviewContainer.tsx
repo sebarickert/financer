@@ -2,8 +2,8 @@ import { FC } from 'react';
 
 import { StatisticsLayout } from '$features/statistics/StatisticsLayout';
 import { StatisticsOverviewData } from '$features/statistics/StatisticsOverviewData';
-import { TransactionService } from '$ssr/api/transaction.service';
-import { UserPreferenceService } from '$ssr/api/user-preference.service';
+import { TransactionService } from '$ssr/api/TransactionService';
+import { UserPreferenceService } from '$ssr/api/UserPreferenceService';
 import { generateDateFromYearAndMonth } from '$utils/generateDateFromYearAndMonth';
 
 export const StatisticsOverviewContainer: FC = async () => {

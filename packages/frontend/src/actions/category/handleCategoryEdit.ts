@@ -9,7 +9,7 @@ import {
 import { settingsPaths } from '$constants/settings-paths';
 import { ValidationException } from '$exceptions/validation.exception';
 import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
-import { CategoryService } from '$ssr/api/category.service';
+import { CategoryService } from '$ssr/api/CategoryService';
 
 export const handleCategoryEdit: DefaultFormActionHandler<
   TransactionCategoryDto

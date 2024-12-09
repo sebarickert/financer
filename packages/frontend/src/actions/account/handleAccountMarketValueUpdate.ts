@@ -6,9 +6,9 @@ import {
 } from '$api/generated/financerApi';
 import { ValidationException } from '$exceptions/validation.exception';
 import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
-import { ExpenseService } from '$ssr/api/expense.service ';
-import { IncomeService } from '$ssr/api/income.service';
-import { UserDefaultMarketUpdateSettings } from '$ssr/api/user-preference.service';
+import { ExpenseService } from '$ssr/api/ExpenseService';
+import { IncomeService } from '$ssr/api/IncomeService';
+import { UserDefaultMarketUpdateSettings } from '$ssr/api/UserPreferenceService';
 
 export const handleAccountMarketValueUpdate: DefaultFormActionHandler<{
   account: AccountDto;

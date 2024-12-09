@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server';
 
-import { clearAllCaches } from '$ssr/api/clear-cache';
+import { revalidateFullAppCache } from '$actions/revalidateFullAppCache';
 
 // eslint-disable-next-line import/prefer-default-export
 export async function POST() {
   try {
-    await clearAllCaches();
+    await revalidateFullAppCache();
 
     return NextResponse.json({ message: 'Cache revalidated' });
   } catch (error) {

@@ -1,7 +1,7 @@
 import { notFound, redirect, RedirectType } from 'next/navigation';
 import { FC } from 'react';
 
-import { TransferDetailsDto } from '$api/generated/financerApi';
+import { TransferDetailsDto, VisibilityType } from '$api/generated/financerApi';
 import { ValidationException } from '$exceptions/validation.exception';
 import {
   isCategoriesFormFullFields,
@@ -10,7 +10,8 @@ import {
 import { TransactionForm } from '$features/transaction/TransactionForm';
 import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
 import { Layout } from '$layouts/Layout';
-import { TransferService } from '$ssr/api/transfer.service';
+import { CategoryService } from '$ssr/api/CategoryService';
+import { TransferService } from '$ssr/api/TransferService';
 import { DateFormat, formatDate } from '$utils/formatDate';
 import { parseArrayFromFormData } from '$utils/parseArrayFromFormData';
 
@@ -75,6 +76,10 @@ export const TransferEditContainer: FC<TransferEditContainerProps> = async ({
     date: formatDate(new Date(transfer.date), DateFormat.input),
   };
 
+  const categories = await CategoryService.getAllWithTree({
+    visibilityType: VisibilityType.Transfer,
+  });
+
   return (
     <Layout title="Edit Transfer" backLink={`/statistics/transfers/${id}`}>
       <TransactionForm
@@ -82,6 +87,7 @@ export const TransferEditContainer: FC<TransferEditContainerProps> = async ({
         onSubmit={handleSubmit}
         hasToAccountField
         hasFromAccountField
+        transactionCategoriesWithCategoryTree={categories}
       />
     </Layout>
   );
