@@ -53,7 +53,10 @@ export class AccountService extends BaseApi {
         path: { id },
       },
       next: {
-        tags: [this.getEntityTag(this.API_TAG.ACCOUNT, id)],
+        tags: [
+          this.API_TAG.ACCOUNT,
+          this.getEntityTag(this.API_TAG.ACCOUNT, id),
+        ],
       },
     });
 

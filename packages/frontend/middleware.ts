@@ -33,6 +33,15 @@ export async function middleware(request: NextRequest) {
   }
 
   if (isApiRequest(request)) {
+    if (
+      request.method === 'POST' &&
+      request.nextUrl.pathname === '/api/users/my-user/my-data/'
+    ) {
+      await fetch(new URL('/api/revalidate-cache', request.url).toString(), {
+        method: 'POST',
+      });
+    }
+
     return NextResponse.rewrite(
       new URL(
         `${getInternalApiRootAddress()}${request.nextUrl.pathname}${request.nextUrl.search}`,
