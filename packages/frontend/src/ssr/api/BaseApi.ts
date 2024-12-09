@@ -9,7 +9,6 @@ export abstract class BaseApi {
   public static readonly API_TAG = {
     APP: 'app',
     ACCOUNT: 'account',
-    ACCOUNT_BALANCE: 'account-balance',
     AUTHENTICATION: 'authentication',
     USER: 'user',
     USER_PREFERENCE: 'user-preference',

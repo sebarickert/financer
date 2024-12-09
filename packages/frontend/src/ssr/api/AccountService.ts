@@ -30,7 +30,13 @@ export class AccountService extends BaseApi {
         query: params,
       },
       next: {
-        tags: [this.API_TAG.ACCOUNT],
+        tags: [
+          this.API_TAG.ACCOUNT,
+          this.API_TAG.TRANSACTION,
+          this.API_TAG.INCOME,
+          this.API_TAG.EXPENSE,
+          this.API_TAG.TRANSFER,
+        ],
       },
     });
 
@@ -47,10 +53,7 @@ export class AccountService extends BaseApi {
         path: { id },
       },
       next: {
-        tags: [
-          this.API_TAG.ACCOUNT,
-          this.getEntityTag(this.API_TAG.ACCOUNT, id),
-        ],
+        tags: [this.getEntityTag(this.API_TAG.ACCOUNT, id)],
       },
     });
 
