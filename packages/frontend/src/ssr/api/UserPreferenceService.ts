@@ -21,9 +21,14 @@ export type UserDefaultMarketUpdateSettings = {
 };
 
 export class UserPreferenceService extends BaseApi {
-  // TODO temporary solution to clear cache while migration
-  public static async clearCache(): Promise<void> {
-    'use server';
+  public static async revalidateCache(
+    id?: UserPreferenceProperty,
+  ): Promise<void> {
+    if (id) {
+      revalidateTag(this.getEntityTag(this.API_TAG.USER_PREFERENCE, id));
+      return;
+    }
+
     revalidateTag(this.API_TAG.USER_PREFERENCE);
   }
 
@@ -40,7 +45,6 @@ export class UserPreferenceService extends BaseApi {
         },
         next: {
           tags: [
-            this.API_TAG.USER_PREFERENCE,
             this.getEntityTag(
               this.API_TAG.USER_PREFERENCE,
               UserPreferenceProperty.DashboardSettings,
@@ -65,7 +69,7 @@ export class UserPreferenceService extends BaseApi {
       },
     });
 
-    await this.clearCache();
+    await this.revalidateCache(UserPreferenceProperty.DashboardSettings);
   }
 
   public static async getStatisticsSettings(): Promise<
@@ -81,7 +85,6 @@ export class UserPreferenceService extends BaseApi {
         },
         next: {
           tags: [
-            this.API_TAG.USER_PREFERENCE,
             this.getEntityTag(
               this.API_TAG.USER_PREFERENCE,
               UserPreferenceProperty.StatisticsSettings,
@@ -106,7 +109,7 @@ export class UserPreferenceService extends BaseApi {
       },
     });
 
-    await this.clearCache();
+    await this.revalidateCache(UserPreferenceProperty.StatisticsSettings);
   }
 
   public static async getDefaultExpenseAccount(): Promise<string | undefined> {
@@ -121,7 +124,6 @@ export class UserPreferenceService extends BaseApi {
         },
         next: {
           tags: [
-            this.API_TAG.USER_PREFERENCE,
             this.getEntityTag(
               this.API_TAG.USER_PREFERENCE,
               UserPreferenceProperty.DefaultExpenseAccount,
@@ -144,7 +146,7 @@ export class UserPreferenceService extends BaseApi {
       },
     });
 
-    await this.clearCache();
+    await this.revalidateCache(UserPreferenceProperty.DefaultExpenseAccount);
   }
 
   public static async getDefaultIncomeAccount(): Promise<string | undefined> {
@@ -158,7 +160,6 @@ export class UserPreferenceService extends BaseApi {
         },
         next: {
           tags: [
-            this.API_TAG.USER_PREFERENCE,
             this.getEntityTag(
               this.API_TAG.USER_PREFERENCE,
               UserPreferenceProperty.DefaultIncomeAccount,
@@ -181,7 +182,7 @@ export class UserPreferenceService extends BaseApi {
       },
     });
 
-    await this.clearCache();
+    await this.revalidateCache(UserPreferenceProperty.DefaultIncomeAccount);
   }
 
   public static async getDefaultTransferTargetAccount(): Promise<
@@ -198,7 +199,6 @@ export class UserPreferenceService extends BaseApi {
         },
         next: {
           tags: [
-            this.API_TAG.USER_PREFERENCE,
             this.getEntityTag(
               this.API_TAG.USER_PREFERENCE,
               UserPreferenceProperty.DefaultTransferTargetAccount,
@@ -221,7 +221,9 @@ export class UserPreferenceService extends BaseApi {
       },
     });
 
-    await this.clearCache();
+    await this.revalidateCache(
+      UserPreferenceProperty.DefaultTransferTargetAccount,
+    );
   }
 
   public static async getDefaultTransferSourceAccount(): Promise<
@@ -238,7 +240,6 @@ export class UserPreferenceService extends BaseApi {
         },
         next: {
           tags: [
-            this.API_TAG.USER_PREFERENCE,
             this.getEntityTag(
               this.API_TAG.USER_PREFERENCE,
               UserPreferenceProperty.DefaultTransferSourceAccount,
@@ -261,7 +262,9 @@ export class UserPreferenceService extends BaseApi {
       },
     });
 
-    await this.clearCache();
+    await this.revalidateCache(
+      UserPreferenceProperty.DefaultTransferSourceAccount,
+    );
   }
 
   public static async getDefaultMarketUpdateSettings(): Promise<
@@ -278,7 +281,6 @@ export class UserPreferenceService extends BaseApi {
         },
         next: {
           tags: [
-            this.API_TAG.USER_PREFERENCE,
             this.getEntityTag(
               this.API_TAG.USER_PREFERENCE,
               UserPreferenceProperty.UpdateInvestmentMarketValue,
@@ -303,7 +305,9 @@ export class UserPreferenceService extends BaseApi {
       },
     });
 
-    await this.clearCache();
+    await this.revalidateCache(
+      UserPreferenceProperty.UpdateInvestmentMarketValue,
+    );
   }
 
   public static async getTransactionListChunkSize(): Promise<number> {
@@ -318,7 +322,6 @@ export class UserPreferenceService extends BaseApi {
         },
         next: {
           tags: [
-            this.API_TAG.USER_PREFERENCE,
             this.getEntityTag(
               this.API_TAG.USER_PREFERENCE,
               UserPreferenceProperty.TransactionListChunkSize,
@@ -341,6 +344,6 @@ export class UserPreferenceService extends BaseApi {
       },
     });
 
-    await this.clearCache();
+    await this.revalidateCache(UserPreferenceProperty.TransactionListChunkSize);
   }
 }

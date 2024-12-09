@@ -1,9 +1,9 @@
 import { revalidateTag } from 'next/cache';
 
 import { BaseApi } from './BaseApi';
-import type {
-  FirstTransactionByTypeOptions,
-  TransactionListOptions,
+import {
+  type FirstTransactionByTypeOptions,
+  type TransactionListOptions,
 } from './TransactionService';
 
 import {
@@ -17,7 +17,12 @@ import { ValidationException } from '$exceptions/validation.exception';
 import { isValidationErrorResponse } from '$utils/apiHelper';
 
 export class ExpenseService extends BaseApi {
-  public static async clearCache(): Promise<void> {
+  public static async revalidateCache(id?: string): Promise<void> {
+    if (id) {
+      revalidateTag(this.getEntityTag(this.API_TAG.EXPENSE, id));
+      return;
+    }
+
     revalidateTag(this.API_TAG.EXPENSE);
   }
 
@@ -41,12 +46,7 @@ export class ExpenseService extends BaseApi {
         query: options,
       },
       next: {
-        tags: [
-          this.API_TAG.EXPENSE,
-          this.API_TAG.TRANSACTION,
-          this.getListTag(this.API_TAG.EXPENSE),
-          this.getListTag(this.API_TAG.TRANSACTION),
-        ],
+        tags: [this.API_TAG.EXPENSE],
       },
     });
 
@@ -65,12 +65,7 @@ export class ExpenseService extends BaseApi {
         },
       },
       next: {
-        tags: [
-          this.API_TAG.TRANSACTION,
-          this.API_TAG.EXPENSE,
-          this.getEntityTag(this.API_TAG.TRANSACTION, id),
-          this.getEntityTag(this.API_TAG.EXPENSE, id),
-        ],
+        tags: [this.getEntityTag(this.API_TAG.EXPENSE, id)],
       },
     });
 
@@ -102,7 +97,7 @@ export class ExpenseService extends BaseApi {
       throw new Error('Failed to add expense', error);
     }
 
-    await this.clearCache();
+    await this.revalidateCache();
 
     return data as ExpenseDetailsDto;
   }
@@ -132,8 +127,8 @@ export class ExpenseService extends BaseApi {
       throw new Error('Failed to add expense', error);
     }
 
-    revalidateTag(this.getEntityTag(this.API_TAG.TRANSACTION, id));
-    revalidateTag(this.getEntityTag(this.API_TAG.EXPENSE, id));
+    await this.revalidateCache(id);
+    await this.revalidateCache();
 
     return data as ExpenseDetailsDto;
   }
@@ -149,6 +144,6 @@ export class ExpenseService extends BaseApi {
       throw new Error('Failed to delete expense', error);
     }
 
-    await this.clearCache();
+    await this.revalidateCache();
   }
 }

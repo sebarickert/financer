@@ -1,5 +1,3 @@
-import { revalidateTag } from 'next/cache';
-
 import { BaseApi } from './BaseApi';
 
 import { Theme, UserDataImportDto, UserDto } from '$api/generated/financerApi';
@@ -8,12 +6,6 @@ import { isValidationErrorResponse } from '$utils/apiHelper';
 
 export class UserService extends BaseApi {
   private static readonly OWN_USER_ID = 'my-user';
-
-  // TODO temporary solution to clear cache while migration
-  public static clearCache(): void {
-    'use server';
-    revalidateTag(this.API_TAG.USER);
-  }
 
   public static async getOwnUserTheme(): Promise<Theme> {
     try {
@@ -64,6 +56,8 @@ export class UserService extends BaseApi {
 
       throw new Error('Failed to override user data', error);
     }
+
+    BaseApi.revalidateFullAppCache();
 
     return data.payload;
   }

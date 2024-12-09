@@ -17,7 +17,12 @@ import { ValidationException } from '$exceptions/validation.exception';
 import { isValidationErrorResponse } from '$utils/apiHelper';
 
 export class IncomeService extends BaseApi {
-  public static async clearCache(): Promise<void> {
+  public static async revalidateCache(id?: string): Promise<void> {
+    if (id) {
+      revalidateTag(this.getEntityTag(this.API_TAG.INCOME, id));
+      return;
+    }
+
     revalidateTag(this.API_TAG.INCOME);
   }
 
@@ -41,12 +46,7 @@ export class IncomeService extends BaseApi {
         query: options,
       },
       next: {
-        tags: [
-          this.API_TAG.INCOME,
-          this.API_TAG.TRANSACTION,
-          this.getListTag(this.API_TAG.INCOME),
-          this.getListTag(this.API_TAG.TRANSACTION),
-        ],
+        tags: [this.API_TAG.INCOME],
       },
     });
 
@@ -65,12 +65,7 @@ export class IncomeService extends BaseApi {
         },
       },
       next: {
-        tags: [
-          this.API_TAG.TRANSACTION,
-          this.API_TAG.INCOME,
-          this.getEntityTag(this.API_TAG.TRANSACTION, id),
-          this.getEntityTag(this.API_TAG.INCOME, id),
-        ],
+        tags: [this.getEntityTag(this.API_TAG.INCOME, id)],
       },
     });
 
@@ -102,7 +97,7 @@ export class IncomeService extends BaseApi {
       throw new Error('Failed to add income', error);
     }
 
-    await this.clearCache();
+    await this.revalidateCache();
 
     return data as IncomeDetailsDto;
   }
@@ -132,8 +127,8 @@ export class IncomeService extends BaseApi {
       throw new Error('Failed to add income', error);
     }
 
-    revalidateTag(this.getEntityTag(this.API_TAG.TRANSACTION, id));
-    revalidateTag(this.getEntityTag(this.API_TAG.INCOME, id));
+    await this.revalidateCache(id);
+    await this.revalidateCache();
 
     return data as IncomeDetailsDto;
   }
@@ -149,6 +144,6 @@ export class IncomeService extends BaseApi {
       throw new Error('Failed to delete income', error);
     }
 
-    await this.clearCache();
+    await this.revalidateCache();
   }
 }

@@ -14,7 +14,12 @@ import { isValidationErrorResponse } from '$utils/apiHelper';
 import { parseParentCategoryPath } from 'src/services/TransactionCategoriesService';
 
 export class CategoryService extends BaseApi {
-  public static async clearCache(): Promise<void> {
+  public static async revalidateCache(id?: string): Promise<void> {
+    if (id) {
+      revalidateTag(this.getEntityTag(this.API_TAG.CATEGORY, id));
+      return;
+    }
+
     revalidateTag(this.API_TAG.CATEGORY);
   }
 
@@ -34,7 +39,7 @@ export class CategoryService extends BaseApi {
           query: options,
         },
         next: {
-          tags: [this.API_TAG.CATEGORY, this.getListTag(this.API_TAG.CATEGORY)],
+          tags: [this.API_TAG.CATEGORY],
         },
       },
     );
@@ -72,10 +77,7 @@ export class CategoryService extends BaseApi {
           },
         },
         next: {
-          tags: [
-            this.API_TAG.CATEGORY,
-            this.getEntityTag(this.API_TAG.CATEGORY, id),
-          ],
+          tags: [this.getEntityTag(this.API_TAG.CATEGORY, id)],
         },
       },
     );
@@ -108,7 +110,7 @@ export class CategoryService extends BaseApi {
       throw new Error('Failed to add account', error);
     }
 
-    await this.clearCache();
+    await this.revalidateCache();
   }
 
   public static async update(
@@ -139,7 +141,8 @@ export class CategoryService extends BaseApi {
       throw new Error('Failed to add account', error);
     }
 
-    await this.clearCache();
+    await this.revalidateCache(id);
+    await this.revalidateCache();
   }
 
   public static async delete(id: string): Promise<void> {
@@ -156,6 +159,6 @@ export class CategoryService extends BaseApi {
       throw new Error('Failed to delete category', error);
     }
 
-    await this.clearCache();
+    await this.revalidateCache();
   }
 }

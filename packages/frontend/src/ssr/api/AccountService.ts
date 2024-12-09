@@ -13,7 +13,12 @@ import { ValidationException } from '$exceptions/validation.exception';
 import { isValidationErrorResponse } from '$utils/apiHelper';
 
 export class AccountService extends BaseApi {
-  public static async clearCache(): Promise<void> {
+  public static async revalidateCache(id?: string): Promise<void> {
+    if (id) {
+      revalidateTag(this.getEntityTag(this.API_TAG.ACCOUNT, id));
+      return;
+    }
+
     revalidateTag(this.API_TAG.ACCOUNT);
   }
 
@@ -25,7 +30,7 @@ export class AccountService extends BaseApi {
         query: params,
       },
       next: {
-        tags: [this.API_TAG.ACCOUNT, this.getListTag(this.API_TAG.ACCOUNT)],
+        tags: [this.API_TAG.ACCOUNT],
       },
     });
 
@@ -80,10 +85,7 @@ export class AccountService extends BaseApi {
           path: { id },
         },
         next: {
-          tags: [
-            this.API_TAG.ACCOUNT,
-            this.getEntityTag(this.API_TAG.ACCOUNT, id),
-          ],
+          tags: [this.getEntityTag(this.API_TAG.ACCOUNT, id)],
         },
       },
     );
@@ -110,7 +112,7 @@ export class AccountService extends BaseApi {
       throw new Error('Failed to add account', error);
     }
 
-    await this.clearCache();
+    await this.revalidateCache();
   }
 
   public static async update(
@@ -138,7 +140,8 @@ export class AccountService extends BaseApi {
       throw new Error('Failed to add account', error);
     }
 
-    await this.clearCache();
+    await this.revalidateCache(id);
+    await this.revalidateCache();
   }
 
   public static async delete(id: string): Promise<void> {
@@ -152,6 +155,6 @@ export class AccountService extends BaseApi {
       throw new Error('Failed to delete account', error);
     }
 
-    await this.clearCache();
+    await this.revalidateCache();
   }
 }

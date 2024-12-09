@@ -1,3 +1,4 @@
+import { revalidateTag } from 'next/cache';
 import createClient from 'openapi-fetch';
 
 import { paths } from '$api/generated/ssr-financer-api';
@@ -20,10 +21,8 @@ export abstract class BaseApi {
     CATEGORY: 'category',
   } as const;
 
-  protected static getListTag(
-    tag: (typeof BaseApi.API_TAG)[keyof typeof BaseApi.API_TAG],
-  ): string {
-    return `${tag}:list`;
+  public static async revalidateFullAppCache(): Promise<void> {
+    revalidateTag(this.API_TAG.APP);
   }
 
   protected static getEntityTag(
@@ -31,12 +30,6 @@ export abstract class BaseApi {
     id: string,
   ): string {
     return `${tag}:id:${id}`;
-  }
-
-  protected static getSummaryTag(
-    tag: (typeof BaseApi.API_TAG)[keyof typeof BaseApi.API_TAG],
-  ): string {
-    return `${tag}:summary`;
   }
 
   private static async getNextOptions(

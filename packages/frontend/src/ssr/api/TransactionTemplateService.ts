@@ -11,7 +11,12 @@ import { ValidationException } from '$exceptions/validation.exception';
 import { isValidationErrorResponse } from '$utils/apiHelper';
 
 export class TransactionTemplateService extends BaseApi {
-  public static async clearCache(): Promise<void> {
+  public static async revalidateCache(id?: string): Promise<void> {
+    if (id) {
+      revalidateTag(this.getEntityTag(this.API_TAG.TRANSACTION_TEMPLATE, id));
+      return;
+    }
+
     revalidateTag(this.API_TAG.TRANSACTION_TEMPLATE);
   }
 
@@ -20,10 +25,7 @@ export class TransactionTemplateService extends BaseApi {
       '/api/transaction-templates',
       {
         next: {
-          tags: [
-            this.API_TAG.TRANSACTION_TEMPLATE,
-            this.getListTag(this.API_TAG.TRANSACTION_TEMPLATE),
-          ],
+          tags: [this.API_TAG.TRANSACTION_TEMPLATE],
         },
       },
     );
@@ -45,10 +47,7 @@ export class TransactionTemplateService extends BaseApi {
           },
         },
         next: {
-          tags: [
-            this.API_TAG.TRANSACTION_TEMPLATE,
-            this.getEntityTag(this.API_TAG.TRANSACTION_TEMPLATE, id),
-          ],
+          tags: [this.getEntityTag(this.API_TAG.TRANSACTION_TEMPLATE, id)],
         },
       },
     );
@@ -81,7 +80,7 @@ export class TransactionTemplateService extends BaseApi {
       throw new Error('Failed to add transaction template', error);
     }
 
-    await this.clearCache();
+    await this.revalidateCache();
   }
 
   public static async update(
@@ -112,7 +111,8 @@ export class TransactionTemplateService extends BaseApi {
       throw new Error('Failed to update transaction template', error);
     }
 
-    revalidateTag(this.getEntityTag(this.API_TAG.TRANSACTION_TEMPLATE, id));
+    this.revalidateCache(id);
+    this.revalidateCache();
   }
 
   public static async delete(id: string): Promise<void> {
@@ -129,6 +129,6 @@ export class TransactionTemplateService extends BaseApi {
       throw new Error('Failed to delete transaction template', error);
     }
 
-    await this.clearCache();
+    await this.revalidateCache();
   }
 }
