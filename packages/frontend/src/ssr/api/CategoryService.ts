@@ -9,7 +9,7 @@ import {
   UpdateTransactionCategoryDto,
 } from '$api/generated/financerApi';
 import { ValidationException } from '$exceptions/validation.exception';
-import { TransactionCategoryDtoWithCategoryTree } from '$hooks/transactionCategories/useGetAllTransactionCategoriesWithCategoryTree';
+import { TransactionCategoryDtoWithCategoryTree } from '$types/TransactionCategoryDtoWithCategoryTree';
 import { isValidationErrorResponse } from '$utils/apiHelper';
 import { parseParentCategoryPath } from 'src/services/TransactionCategoriesService';
 

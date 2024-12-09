@@ -21,6 +21,7 @@ export const CategoryEditContainer: FC<CategoryEditContainerProps> = async ({
   }
 
   const handleSubmit = handleCategoryEdit.bind(null, category);
+  const categories = await CategoryService.getAllWithTree();
 
   return (
     <SettingsLayout
@@ -32,6 +33,7 @@ export const CategoryEditContainer: FC<CategoryEditContainerProps> = async ({
         submitLabel="Update"
         currentCategoryId={category.id}
         initialValues={category}
+        transactionCategoriesWithCategoryTree={categories}
       />
     </SettingsLayout>
   );

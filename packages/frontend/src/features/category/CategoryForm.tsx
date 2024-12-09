@@ -1,6 +1,6 @@
 'use client';
 
-import React, { FC, useEffect, useMemo, useState } from 'react';
+import React, { FC, useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { getAllChildCategoryIds } from '../../services/TransactionCategoriesService';
@@ -10,19 +10,20 @@ import { Form } from '$blocks/Form';
 import { Button } from '$elements/Button/Button';
 import { Input } from '$elements/Input';
 import { InputOption } from '$elements/InputOption';
-import { Select, Option } from '$elements/Select';
+import { Select } from '$elements/Select';
 import { TRANSACTION_TYPE_ICON_MAPPING } from '$features/transaction/TransactionTypeIcon';
-import { useGetAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useGetAllTransactionCategoriesWithCategoryTree';
 import {
   DefaultFormActionHandler,
   useFinancerFormState,
 } from '$hooks/useFinancerFormState';
+import { TransactionCategoryDtoWithCategoryTree } from '$types/TransactionCategoryDtoWithCategoryTree';
 
 type CategoryFormProps = {
   onSubmit: DefaultFormActionHandler;
   submitLabel: string;
   currentCategoryId?: string;
   initialValues?: Partial<TransactionCategoryFormFields>;
+  transactionCategoriesWithCategoryTree?: TransactionCategoryDtoWithCategoryTree[];
 };
 
 export type TransactionCategoryFormFields = {
@@ -51,6 +52,7 @@ export const CategoryForm: FC<CategoryFormProps> = ({
   submitLabel,
   currentCategoryId,
   initialValues,
+  transactionCategoriesWithCategoryTree,
 }) => {
   const action = useFinancerFormState('category-form', onSubmit);
 
@@ -67,30 +69,25 @@ export const CategoryForm: FC<CategoryFormProps> = ({
 
   const { reset } = methods;
 
-  const { data: transactionCategoriesRaw } =
-    useGetAllTransactionCategoriesWithCategoryTree();
-  const [transactionCategories, setTransactionCategories] =
-    useState<Option[]>();
-
-  useEffect(() => {
-    if (!transactionCategoriesRaw) return;
+  const filteredTransactionCategories = useMemo(() => {
+    if (!transactionCategoriesWithCategoryTree) return;
 
     const forbiddenIds = currentCategoryId
       ? getAllChildCategoryIds(
           currentCategoryId,
-          transactionCategoriesRaw,
+          transactionCategoriesWithCategoryTree,
         ).concat(currentCategoryId)
       : [];
 
-    setTransactionCategories([
-      ...transactionCategoriesRaw
+    return [
+      ...transactionCategoriesWithCategoryTree
         .filter(({ id }) => !forbiddenIds.includes(id))
         .map(({ id, categoryTree: transactionCategoryName }) => ({
           value: id,
           label: transactionCategoryName,
         })),
-    ]);
-  }, [currentCategoryId, transactionCategoriesRaw]);
+    ];
+  }, [currentCategoryId, transactionCategoriesWithCategoryTree]);
 
   useEffect(() => {
     if (!initialValues) return;
@@ -101,7 +98,7 @@ export const CategoryForm: FC<CategoryFormProps> = ({
     }));
   }, [defaultValues, initialValues, reset]);
 
-  if (!transactionCategories) return null;
+  if (!filteredTransactionCategories) return null;
 
   return (
     <Form
@@ -139,7 +136,7 @@ export const CategoryForm: FC<CategoryFormProps> = ({
         </fieldset>
         <Select
           id="parentCategoryId"
-          options={transactionCategories}
+          options={filteredTransactionCategories}
           placeholder="None"
         >
           Parent transaction category

@@ -11,6 +11,7 @@ import {
   TransactionType,
   useTransactionTemplatesFindOneQuery,
 } from '$api/generated/financerApi';
+import { TransactionCategoryDtoWithCategoryTree } from '$types/TransactionCategoryDtoWithCategoryTree';
 
 const emptyFormValues = {
   amount: null as never,
@@ -23,11 +24,13 @@ const emptyFormValues = {
 type TransactionFormSwitcherProps = {
   typeSwitcherName?: string;
   templateSwitcherName?: string;
-
   defaultExpenseAccountId: string | undefined;
   defaultIncomeAccountId: string | undefined;
   defaultTransferToAccountId: string | undefined;
   defaultTransferFromAccountId: string | undefined;
+  transactionCategoriesWithCategoryTree:
+    | TransactionCategoryDtoWithCategoryTree[]
+    | undefined;
 };
 
 const formPropsMapping = {
@@ -46,6 +49,7 @@ export const TransactionFormSwitcher: FC<TransactionFormSwitcherProps> = ({
   defaultIncomeAccountId,
   defaultTransferToAccountId,
   defaultTransferFromAccountId,
+  transactionCategoriesWithCategoryTree,
 }) => {
   const [transactionType, setTransactionType] = useState<TransactionType>(
     TransactionType.Expense,
@@ -115,6 +119,11 @@ export const TransactionFormSwitcher: FC<TransactionFormSwitcherProps> = ({
     );
   };
 
+  const filteredTransactionCategories =
+    transactionCategoriesWithCategoryTree?.filter(({ visibility }) =>
+      visibility.includes(transactionType),
+    );
+
   return (
     <div>
       <div className="grid grid-cols-[1fr,auto] gap-3 mb-4">
@@ -133,6 +142,7 @@ export const TransactionFormSwitcher: FC<TransactionFormSwitcherProps> = ({
       <TransactionForm
         onSubmit={handleTransactionCreate}
         initialValues={templateFormValues}
+        transactionCategoriesWithCategoryTree={filteredTransactionCategories}
         {...formPropsMapping[transactionType]}
       />
     </div>

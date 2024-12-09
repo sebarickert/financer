@@ -7,25 +7,25 @@ import {
   TransactionTemplateType,
   TransactionType,
   useAccountsFindAllByUserQuery,
-  VisibilityType,
 } from '$api/generated/financerApi';
 import { Form } from '$blocks/Form';
 import { Button } from '$elements/Button/Button';
 import { Input } from '$elements/Input';
-import { Select, Option } from '$elements/Select';
+import { Select } from '$elements/Select';
 import { CategoriesFormOnlyCategory } from '$features/transaction/TransactionCategories/transaction-categories.types';
 import { TransactionCategories } from '$features/transaction/TransactionCategories/TransactionCategories';
-import { useGetAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useGetAllTransactionCategoriesWithCategoryTree';
 import {
   DefaultFormActionHandler,
   useFinancerFormState,
 } from '$hooks/useFinancerFormState';
+import { TransactionCategoryDtoWithCategoryTree } from '$types/TransactionCategoryDtoWithCategoryTree';
 import { capitalize } from '$utils/capitalize';
 
 type TemplateFormProps = {
   onSubmit: DefaultFormActionHandler;
   submitLabel: string;
   initialValues?: Partial<TemplateFormFields>;
+  transactionCategoriesWithCategoryTree?: TransactionCategoryDtoWithCategoryTree[];
 };
 
 export type TemplateFormFields = {
@@ -41,39 +41,11 @@ export type TemplateFormFields = {
   categories: CategoriesFormOnlyCategory[];
 };
 
-type TransactionCategoriesFormWrapperProps = {
-  type: VisibilityType;
-};
-
-const TransactionCategoriesFormWrapper: FC<
-  TransactionCategoriesFormWrapperProps
-> = ({ type }) => {
-  const { data: transactionCategoriesRaw } =
-    useGetAllTransactionCategoriesWithCategoryTree({
-      visibilityType: type as unknown as VisibilityType,
-    });
-
-  const transactionCategories: Option[] = useMemo(() => {
-    if (!transactionCategoriesRaw) return [];
-
-    return transactionCategoriesRaw.map(({ id, categoryTree }) => ({
-      value: id,
-      label: categoryTree,
-    }));
-  }, [transactionCategoriesRaw]);
-
-  return (
-    <TransactionCategories
-      categorySelectOnly
-      transactionCategories={transactionCategories}
-    />
-  );
-};
-
 export const TemplateForm: FC<TemplateFormProps> = ({
   onSubmit,
   submitLabel,
   initialValues,
+  transactionCategoriesWithCategoryTree,
 }) => {
   const action = useFinancerFormState('add-template', onSubmit);
   const methods = useForm<TemplateFormFields>({
@@ -110,15 +82,6 @@ export const TemplateForm: FC<TemplateFormProps> = ({
     action(data);
   };
 
-  const selectedTransactionType = useMemo(() => {
-    if (templateVisibility === TransactionType.Income)
-      return VisibilityType.Income;
-    if (templateVisibility === TransactionType.Expense)
-      return VisibilityType.Expense;
-
-    return VisibilityType.Transfer;
-  }, [templateVisibility]);
-
   const templateTypes = (
     Object.keys(
       TransactionTemplateType,
@@ -134,6 +97,20 @@ export const TemplateForm: FC<TemplateFormProps> = ({
     value: TransactionType[type],
     label: capitalize(TransactionType[type]),
   }));
+
+  const filteredTransactionCategories =
+    transactionCategoriesWithCategoryTree?.filter(({ visibility }) =>
+      visibility.includes(templateVisibility),
+    );
+
+  const transactionCategories = useMemo(() => {
+    if (!filteredTransactionCategories) return [];
+
+    return filteredTransactionCategories.map(({ id, categoryTree }) => ({
+      value: id,
+      label: categoryTree,
+    }));
+  }, [filteredTransactionCategories]);
 
   return (
     <Form methods={methods} action={handleSubmit} testId="template-form">
@@ -188,7 +165,10 @@ export const TemplateForm: FC<TemplateFormProps> = ({
       </section>
       <section className="mt-8">
         <h2 className="sr-only">Categories</h2>
-        <TransactionCategoriesFormWrapper type={selectedTransactionType} />
+        <TransactionCategories
+          categorySelectOnly
+          transactionCategories={transactionCategories}
+        />
       </section>
       <Form.Footer>
         <Button type="submit">{submitLabel}</Button>

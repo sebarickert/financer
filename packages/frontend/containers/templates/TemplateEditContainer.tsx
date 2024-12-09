@@ -6,6 +6,7 @@ import { settingsPaths } from '$constants/settings-paths';
 import { SettingsLayout } from '$features/settings/SettingsLayout';
 import { TemplateDelete } from '$features/template/TemplateDelete';
 import { TemplateForm } from '$features/template/TemplateForm';
+import { CategoryService } from '$ssr/api/CategoryService';
 import { TransactionTemplateService } from '$ssr/api/TransactionTemplateService';
 
 type TemplateEditContainerProps = {
@@ -30,6 +31,8 @@ export const TemplateEditContainer: FC<TemplateEditContainerProps> = async ({
     })),
   };
 
+  const categories = await CategoryService.getAllWithTree();
+
   const handleSubmit = handleTemplateEdit.bind(null, template);
 
   return (
@@ -42,6 +45,7 @@ export const TemplateEditContainer: FC<TemplateEditContainerProps> = async ({
         onSubmit={handleSubmit}
         submitLabel="Update"
         initialValues={initialValues}
+        transactionCategoriesWithCategoryTree={categories}
       />
     </SettingsLayout>
   );

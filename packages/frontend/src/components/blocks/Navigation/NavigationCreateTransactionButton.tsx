@@ -5,6 +5,7 @@ import { FC } from 'react';
 import { Drawer } from '$blocks/Drawer';
 import { Button } from '$elements/Button/Button';
 import { TransactionFormSwitcher } from '$features/transaction/TransactionFormSwitcher';
+import { CategoryService } from '$ssr/api/CategoryService';
 import { UserPreferenceService } from '$ssr/api/UserPreferenceService';
 
 type NavigationCreateTransactionButtonProps = {
@@ -25,6 +26,8 @@ export const NavigationCreateTransactionButton: FC<
   const defaultTransferFromAccountId =
     await UserPreferenceService.getDefaultTransferSourceAccount();
 
+  const categories = await CategoryService.getAllWithTree();
+
   return (
     <li className={clsx(className)}>
       <Drawer heading="Add Transaction" id={id} testId="transaction-drawer">
@@ -35,6 +38,7 @@ export const NavigationCreateTransactionButton: FC<
           defaultIncomeAccountId={defaultIncomeAccountId}
           defaultTransferToAccountId={defaultTransferToAccountId}
           defaultTransferFromAccountId={defaultTransferFromAccountId}
+          transactionCategoriesWithCategoryTree={categories}
         />
       </Drawer>
       <Button

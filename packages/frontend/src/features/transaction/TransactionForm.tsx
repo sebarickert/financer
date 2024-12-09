@@ -1,26 +1,23 @@
 'use client';
 
-import { FC, useEffect, useMemo, useState } from 'react';
+import { FC, useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { CategoriesFormFullFields } from './TransactionCategories/transaction-categories.types';
 import { TransactionCategories } from './TransactionCategories/TransactionCategories';
 import { TRANSACTION_TYPE_ICON_MAPPING } from './TransactionTypeIcon';
 
-import {
-  VisibilityType,
-  useAccountsFindAllByUserQuery,
-} from '$api/generated/financerApi';
+import { useAccountsFindAllByUserQuery } from '$api/generated/financerApi';
 import { Form } from '$blocks/Form';
 import { ACCOUNT_TYPE_MAPPING } from '$constants/account/ACCOUNT_TYPE_MAPPING';
 import { Button } from '$elements/Button/Button';
 import { Input } from '$elements/Input';
-import { Option, Select } from '$elements/Select';
-import { useGetAllTransactionCategoriesWithCategoryTree } from '$hooks/transactionCategories/useGetAllTransactionCategoriesWithCategoryTree';
+import { Select } from '$elements/Select';
 import {
   DefaultFormActionHandler,
   useFinancerFormState,
 } from '$hooks/useFinancerFormState';
+import { TransactionCategoryDtoWithCategoryTree } from '$types/TransactionCategoryDtoWithCategoryTree';
 import { formatCurrency } from '$utils/formatCurrency';
 import { DateFormat, formatDate } from '$utils/formatDate';
 
@@ -29,6 +26,7 @@ interface TransactionFormProps {
   hasToAccountField?: boolean;
   initialValues?: Partial<TransactionFormFields>;
   onSubmit: DefaultFormActionHandler;
+  transactionCategoriesWithCategoryTree?: TransactionCategoryDtoWithCategoryTree[];
   testId?: string;
 }
 export interface TransactionFormFields {
@@ -46,6 +44,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
   initialValues,
   onSubmit,
   testId,
+  transactionCategoriesWithCategoryTree,
 }) => {
   const action = useFinancerFormState('transaction-form', onSubmit);
 
@@ -77,39 +76,16 @@ export const TransactionForm: FC<TransactionFormProps> = ({
     }));
   }, [accounts]);
 
-  const visibilityType = useMemo(() => {
-    if (hasToAccountField && hasFromAccountField) {
-      return VisibilityType.Transfer;
-    }
+  const transactionCategories = useMemo(() => {
+    if (!transactionCategoriesWithCategoryTree) return [];
 
-    if (hasToAccountField && !hasFromAccountField) {
-      return VisibilityType.Income;
-    }
-
-    if (hasFromAccountField && !hasToAccountField) {
-      return VisibilityType.Expense;
-    }
-  }, [hasFromAccountField, hasToAccountField]) as unknown as VisibilityType;
-
-  const { data: transactionCategoriesRaw } =
-    useGetAllTransactionCategoriesWithCategoryTree({
-      visibilityType,
-    });
-
-  const [transactionCategories, setTransactionCategories] = useState<Option[]>(
-    [],
-  );
-
-  useEffect(() => {
-    if (!transactionCategoriesRaw) return;
-
-    setTransactionCategories(
-      transactionCategoriesRaw.map(({ id, categoryTree }) => ({
+    return transactionCategoriesWithCategoryTree.map(
+      ({ id, categoryTree }) => ({
         value: id,
         label: categoryTree,
-      })),
+      }),
     );
-  }, [transactionCategoriesRaw]);
+  }, [transactionCategoriesWithCategoryTree]);
 
   useEffect(() => {
     if (!initialValues) return;
