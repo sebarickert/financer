@@ -39,10 +39,14 @@ test.describe('Edit Template', () => {
 
     const updatedTemplates = await getTemplateDataFromTemplateList(page);
 
-    expect(updatedTemplates.includes('Edited Template')).toBe(true);
-    expect(updatedTemplates.includes(initialTemplates[0])).toBe(false);
+    expect(updatedTemplates).toEqual(
+      expect.arrayContaining(['Edited Template']),
+    );
+    expect(updatedTemplates).not.toEqual(
+      expect.arrayContaining([initialTemplates[0]]),
+    );
 
-    await page.getByText(updatedValues.name).click();
+    await page.getByRole('link', { name: updatedValues.name }).click();
 
     const updatedTemplateDetails = await getTemplateFormValues(page);
 
