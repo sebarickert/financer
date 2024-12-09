@@ -6,6 +6,7 @@ import { Drawer } from '$blocks/Drawer';
 import { Button } from '$elements/Button/Button';
 import { TransactionFormSwitcher } from '$features/transaction/TransactionFormSwitcher';
 import { CategoryService } from '$ssr/api/CategoryService';
+import { TransactionTemplateService } from '$ssr/api/TransactionTemplateService';
 import { UserPreferenceService } from '$ssr/api/UserPreferenceService';
 
 type NavigationCreateTransactionButtonProps = {
@@ -27,6 +28,7 @@ export const NavigationCreateTransactionButton: FC<
     await UserPreferenceService.getDefaultTransferSourceAccount();
 
   const categories = await CategoryService.getAllWithTree();
+  const templates = await TransactionTemplateService.getAll();
 
   return (
     <li className={clsx(className)}>
@@ -39,6 +41,7 @@ export const NavigationCreateTransactionButton: FC<
           defaultTransferToAccountId={defaultTransferToAccountId}
           defaultTransferFromAccountId={defaultTransferFromAccountId}
           transactionCategoriesWithCategoryTree={categories}
+          transactionTemplates={templates}
         />
       </Drawer>
       <Button

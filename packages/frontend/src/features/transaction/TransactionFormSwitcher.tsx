@@ -8,8 +8,8 @@ import { TransactionTypeSwitcher } from './TransactionTypeSwitcher/TransactionTy
 
 import { handleTransactionCreate } from '$actions/transaction/handleTransactionCreate';
 import {
+  TransactionTemplateDto,
   TransactionType,
-  useTransactionTemplatesFindOneQuery,
 } from '$api/generated/financerApi';
 import { TransactionCategoryDtoWithCategoryTree } from '$types/TransactionCategoryDtoWithCategoryTree';
 
@@ -31,6 +31,7 @@ type TransactionFormSwitcherProps = {
   transactionCategoriesWithCategoryTree:
     | TransactionCategoryDtoWithCategoryTree[]
     | undefined;
+  transactionTemplates: TransactionTemplateDto[] | undefined;
 };
 
 const formPropsMapping = {
@@ -50,6 +51,7 @@ export const TransactionFormSwitcher: FC<TransactionFormSwitcherProps> = ({
   defaultTransferToAccountId,
   defaultTransferFromAccountId,
   transactionCategoriesWithCategoryTree,
+  transactionTemplates,
 }) => {
   const [transactionType, setTransactionType] = useState<TransactionType>(
     TransactionType.Expense,
@@ -57,16 +59,14 @@ export const TransactionFormSwitcher: FC<TransactionFormSwitcherProps> = ({
 
   const [templateId, setTemplateId] = useState<string | undefined>();
 
-  const { currentData } = useTransactionTemplatesFindOneQuery(
-    {
-      id: templateId ?? '',
-    },
-    { skip: !templateId },
+  const selectedTemplate = useMemo(
+    () => transactionTemplates?.find(({ id }) => id === templateId),
+    [templateId, transactionTemplates],
   );
 
   const templateFormValues: Partial<TransactionFormFields> | undefined =
     useMemo(() => {
-      if (!currentData) {
+      if (!selectedTemplate) {
         switch (transactionType) {
           case TransactionType.Income:
             return {
@@ -90,21 +90,21 @@ export const TransactionFormSwitcher: FC<TransactionFormSwitcherProps> = ({
       }
 
       return {
-        amount: currentData?.amount,
-        toAccount: currentData?.toAccount ?? undefined,
-        fromAccount: currentData?.fromAccount ?? undefined,
-        description: currentData?.description,
-        categories: currentData?.categories?.map((categoryId) => ({
+        amount: selectedTemplate?.amount,
+        toAccount: selectedTemplate?.toAccount ?? undefined,
+        fromAccount: selectedTemplate?.fromAccount ?? undefined,
+        description: selectedTemplate?.description,
+        categories: selectedTemplate?.categories?.map((categoryId) => ({
           categoryId,
           amount: NaN,
         })),
       };
     }, [
-      currentData,
       defaultExpenseAccountId,
       defaultIncomeAccountId,
       defaultTransferFromAccountId,
       defaultTransferToAccountId,
+      selectedTemplate,
       transactionType,
     ]);
 
@@ -133,8 +133,9 @@ export const TransactionFormSwitcher: FC<TransactionFormSwitcherProps> = ({
           name={typeSwitcherName}
         />
         <TransactionTemplateSwitcher
-          selectedTemplate={templateId}
-          templateType={transactionType}
+          transactionTemplates={transactionTemplates}
+          selectedTemplateId={templateId}
+          transactionType={transactionType}
           onChange={handleTemplateChange}
           name={templateSwitcherName}
         />

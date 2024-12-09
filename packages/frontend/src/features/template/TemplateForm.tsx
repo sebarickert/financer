@@ -4,9 +4,9 @@ import { FC, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 
 import {
+  AccountDto,
   TransactionTemplateType,
   TransactionType,
-  useAccountsFindAllByUserQuery,
 } from '$api/generated/financerApi';
 import { Form } from '$blocks/Form';
 import { Button } from '$elements/Button/Button';
@@ -26,6 +26,7 @@ type TemplateFormProps = {
   submitLabel: string;
   initialValues?: Partial<TemplateFormFields>;
   transactionCategoriesWithCategoryTree?: TransactionCategoryDtoWithCategoryTree[];
+  accounts?: AccountDto[];
 };
 
 export type TemplateFormFields = {
@@ -46,6 +47,7 @@ export const TemplateForm: FC<TemplateFormProps> = ({
   submitLabel,
   initialValues,
   transactionCategoriesWithCategoryTree,
+  accounts,
 }) => {
   const action = useFinancerFormState('add-template', onSubmit);
   const methods = useForm<TemplateFormFields>({
@@ -56,8 +58,6 @@ export const TemplateForm: FC<TemplateFormProps> = ({
 
   const templateType = watch('templateType');
   const templateVisibility = watch('templateVisibility');
-
-  const { data: accounts } = useAccountsFindAllByUserQuery({});
 
   const accountOptions = useMemo(() => {
     if (!accounts) return [];
