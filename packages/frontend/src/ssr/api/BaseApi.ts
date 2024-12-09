@@ -2,7 +2,7 @@ import { revalidateTag } from 'next/cache';
 import createClient from 'openapi-fetch';
 
 import { paths } from '$api/generated/ssr-financer-api';
-import { getSessionId } from '$ssr/get-session-id';
+import { getSessionId } from '$ssr/getSessionId';
 import { getInternalApiRootAddress } from '$utils/address.helper';
 
 export abstract class BaseApi {

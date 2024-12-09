@@ -6,11 +6,11 @@ import { TransactionForm, TransactionFormFields } from './TransactionForm';
 import { TransactionTemplateSwitcher } from './TransactionTemplateSwitcher';
 import { TransactionTypeSwitcher } from './TransactionTypeSwitcher/TransactionTypeSwitcher';
 
+import { handleTransactionCreate } from '$actions/transaction/handleTransactionCreate';
 import {
   TransactionType,
   useTransactionTemplatesFindOneQuery,
 } from '$api/generated/financerApi';
-import { createTransaction } from '$ssr/createTransaction';
 
 const emptyFormValues = {
   amount: null as never,
@@ -131,7 +131,7 @@ export const TransactionFormSwitcher: FC<TransactionFormSwitcherProps> = ({
         />
       </div>
       <TransactionForm
-        onSubmit={createTransaction}
+        onSubmit={handleTransactionCreate}
         initialValues={templateFormValues}
         {...formPropsMapping[transactionType]}
       />

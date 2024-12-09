@@ -2,10 +2,6 @@
 
 import { redirect, RedirectType } from 'next/navigation';
 
-import { ExpenseService } from './api/ExpenseService';
-import { IncomeService } from './api/IncomeService';
-import { TransferService } from './api/TransferService';
-
 import {
   ExpenseDetailsDto,
   IncomeDetailsDto,
@@ -18,9 +14,12 @@ import {
   parseCategoriesFormFullFields,
 } from '$features/transaction/TransactionCategories/transaction-categories.types';
 import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
+import { ExpenseService } from '$ssr/api/ExpenseService';
+import { IncomeService } from '$ssr/api/IncomeService';
+import { TransferService } from '$ssr/api/TransferService';
 import { parseArrayFromFormData } from '$utils/parseArrayFromFormData';
 
-export const createTransaction: DefaultFormActionHandler = async (
+export const handleTransactionCreate: DefaultFormActionHandler = async (
   prevState,
   formData,
 ) => {
