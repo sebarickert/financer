@@ -16,7 +16,7 @@ import {
   TRANSACTION_TYPE_ICON_MAPPING,
   TransactionTypeIcon,
 } from '$features/transaction/TransactionTypeIcon';
-import { CategoryService } from '$ssr/api/category.service';
+import { CategoryService } from '$ssr/api/CategoryService';
 import { capitalize } from '$utils/capitalize';
 import { formatCurrency } from '$utils/formatCurrency';
 import { DateFormat, formatDate } from '$utils/formatDate';

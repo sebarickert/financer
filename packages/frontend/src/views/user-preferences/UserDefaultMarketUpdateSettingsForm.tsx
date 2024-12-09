@@ -12,7 +12,7 @@ import {
   DefaultFormActionHandler,
   useFinancerFormState,
 } from '$hooks/useFinancerFormState';
-import { UserDefaultMarketUpdateSettings as UserDefaultMarketUpdateSettingsType } from '$ssr/api/user-preference.service';
+import { UserDefaultMarketUpdateSettings as UserDefaultMarketUpdateSettingsType } from '$ssr/api/UserPreferenceService';
 
 export type UserDefaultMarketUpdateSettingsFormFields = {
   transactionDescription: string;

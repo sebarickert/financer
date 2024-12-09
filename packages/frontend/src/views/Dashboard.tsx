@@ -8,9 +8,9 @@ import { Button } from '$elements/Button/Button';
 import { DashboardBalanceHistoryChart } from '$features/dashboard/DashboardBalanceHistoryChart';
 import { DashboardBalanceSummary } from '$features/dashboard/DashboardBalanceSummary';
 import { TransactionList } from '$features/transaction/TransactionList/TransactionList';
-import { AccountService } from '$ssr/api/account.service';
-import { TransactionService } from '$ssr/api/transaction.service';
-import { UserPreferenceService } from '$ssr/api/user-preference.service';
+import { AccountService } from '$ssr/api/AccountService';
+import { TransactionService } from '$ssr/api/TransactionService';
+import { UserPreferenceService } from '$ssr/api/UserPreferenceService';
 import { generateDateFromYearAndMonth } from '$utils/generateDateFromYearAndMonth';
 
 const currentMonthFilterOptions = {

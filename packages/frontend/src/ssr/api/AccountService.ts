@@ -1,6 +1,6 @@
 import { revalidateTag } from 'next/cache';
 
-import { BaseApi } from './base-api';
+import { BaseApi } from './BaseApi';
 
 import {
   AccountBalanceHistoryDto,
@@ -13,7 +13,6 @@ import { ValidationException } from '$exceptions/validation.exception';
 import { isValidationErrorResponse } from '$utils/apiHelper';
 
 export class AccountService extends BaseApi {
-  // TODO temporary solution to clear cache while migration
   public static async clearCache(): Promise<void> {
     revalidateTag(this.API_TAG.ACCOUNT);
   }

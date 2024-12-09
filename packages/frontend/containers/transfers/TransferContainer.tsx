@@ -5,7 +5,7 @@ import { TransactionType } from '$api/generated/financerApi';
 import { Popper } from '$elements/Popper';
 import { TransactionDeleteDrawer } from '$features/transaction/TransactionDeleteDrawer';
 import { Layout } from '$layouts/Layout';
-import { TransferService } from '$ssr/api/transfer.service';
+import { TransferService } from '$ssr/api/TransferService';
 import { Transaction } from '$views/Transaction';
 
 type TransferContainerProps = {

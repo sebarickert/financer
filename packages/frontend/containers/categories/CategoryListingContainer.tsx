@@ -7,7 +7,7 @@ import { ProminentLink } from '$blocks/ProminentLink';
 import { settingsPaths } from '$constants/settings-paths';
 import { Button } from '$elements/Button/Button';
 import { SettingsLayout } from '$features/settings/SettingsLayout';
-import { CategoryService } from '$ssr/api/category.service';
+import { CategoryService } from '$ssr/api/CategoryService';
 
 const generateCategoryGroupChild = (
   childName: CategoryItem['label'],

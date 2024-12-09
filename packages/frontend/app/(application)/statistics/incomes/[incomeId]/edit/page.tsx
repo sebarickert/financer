@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { FC } from 'react';
 
 import { IncomeEditContainer } from '$container/incomes/IncomeEditContainer';
-import { IncomeService } from '$ssr/api/income.service';
+import { IncomeService } from '$ssr/api/IncomeService';
 
 type EditIncomePageProps = {
   params: {

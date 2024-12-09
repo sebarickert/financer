@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { handleDashboardSettingsUpdate } from '$actions/settings/handleDashboardSettingsUpdate';
 import { settingsPaths } from '$constants/settings-paths';
 import { SettingsLayout } from '$features/settings/SettingsLayout';
-import { UserPreferenceService } from '$ssr/api/user-preference.service';
+import { UserPreferenceService } from '$ssr/api/UserPreferenceService';
 import { UserDashboardSettingsForm } from '$views/user-preferences/UserDashboardSettingsForm';
 
 export const DashboardSettingsContainer: FC = async () => {

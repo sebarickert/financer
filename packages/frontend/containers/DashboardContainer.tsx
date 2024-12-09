@@ -4,7 +4,7 @@ import { FC } from 'react';
 import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
 import { Button } from '$elements/Button/Button';
 import { Layout } from '$layouts/Layout';
-import { AccountService } from '$ssr/api/account.service';
+import { AccountService } from '$ssr/api/AccountService';
 import { Dashboard } from '$views/Dashboard';
 
 export const DashboardContainer: FC = async () => {

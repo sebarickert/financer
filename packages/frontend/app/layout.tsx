@@ -7,8 +7,8 @@ import { FC } from 'react';
 import { Theme } from '$api/generated/financerApi';
 import { faviconList } from '$assets/favicon-list';
 import { RootProviderContainer } from '$container/root.provider';
-import { AuthenticationService } from '$ssr/api/authentication.service';
-import { UserService } from '$ssr/api/user.service';
+import { AuthenticationService } from '$ssr/api/AuthenticationService';
+import { UserService } from '$ssr/api/UserService';
 import { ChildrenProp } from 'src/types/children-prop';
 import { CustomHeader } from 'src/types/custom-headers';
 

@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { FC } from 'react';
 
 import { CategoryEditContainer } from '$container/categories/CategoryEditContainer';
-import { CategoryService } from '$ssr/api/category.service';
+import { CategoryService } from '$ssr/api/CategoryService';
 
 type CategoryEditPageProps = {
   params: {

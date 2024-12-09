@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { ThemeSwitcherClient } from './ThemeSwitcherClient';
 
-import { UserService } from '$ssr/api/user.service';
+import { UserService } from '$ssr/api/UserService';
 
 type ThemeSwitcherProps = {
   className?: string;

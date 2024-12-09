@@ -5,7 +5,7 @@ import { settingsPaths } from '$constants/settings-paths';
 import { Popper } from '$elements/Popper';
 import { CategoryDeleteDrawer } from '$features/category/CategoryDeleteDrawer';
 import { SettingsLayout } from '$features/settings/SettingsLayout';
-import { CategoryService } from '$ssr/api/category.service';
+import { CategoryService } from '$ssr/api/CategoryService';
 import { Category } from '$views/Category';
 
 type CategoryContainerProps = {

@@ -7,8 +7,8 @@ import { Popper } from '$elements/Popper';
 import { AccountDeleteDrawer } from '$features/account/AccountDeleteDrawer';
 import { AccountUpdateMarketValueDrawer } from '$features/account/AccountUpdateMarketValueDrawer';
 import { Layout } from '$layouts/Layout';
-import { AccountService } from '$ssr/api/account.service';
-import { UserPreferenceService } from '$ssr/api/user-preference.service';
+import { AccountService } from '$ssr/api/AccountService';
+import { UserPreferenceService } from '$ssr/api/UserPreferenceService';
 import { Account } from '$views/Account';
 
 type AccountContainerProps = {

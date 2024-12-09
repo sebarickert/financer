@@ -4,7 +4,7 @@ import { redirect, RedirectType } from 'next/navigation';
 
 import { settingsPaths } from '$constants/settings-paths';
 import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
-import { CategoryService } from '$ssr/api/category.service';
+import { CategoryService } from '$ssr/api/CategoryService';
 
 export const handleCategoryDelete: DefaultFormActionHandler<{
   id: string;

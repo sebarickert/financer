@@ -5,7 +5,7 @@ import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
 import { statisticsContextualNavigationItems } from '$constants/statisticsContextualNavigationItems';
 import { Button } from '$elements/Button/Button';
 import { Layout, LayoutProps } from '$layouts/Layout';
-import { AccountService } from '$ssr/api/account.service';
+import { AccountService } from '$ssr/api/AccountService';
 
 type StatisticsLayoutProps = Omit<LayoutProps, 'contextualNavigationItems'>;
 

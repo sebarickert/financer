@@ -10,8 +10,8 @@ import { transactionTypeLabelMapping } from '$constants/transaction/transactionT
 import {
   TransactionListOptions,
   TransactionService,
-} from '$ssr/api/transaction.service';
-import { UserPreferenceService } from '$ssr/api/user-preference.service';
+} from '$ssr/api/TransactionService';
+import { UserPreferenceService } from '$ssr/api/UserPreferenceService';
 import { ChartConfig } from '$types/ChartConfig';
 import { ChartData } from '$types/ChartData';
 import { capitalize } from '$utils/capitalize';

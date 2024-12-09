@@ -10,7 +10,7 @@ import { settingsPaths } from '$constants/settings-paths';
 import { Button } from '$elements/Button/Button';
 import { Heading } from '$elements/Heading';
 import { SettingsLayout } from '$features/settings/SettingsLayout';
-import { UserService } from '$ssr/api/user.service';
+import { UserService } from '$ssr/api/UserService';
 
 export const SettingsContainer: FC = async () => {
   const userInfo = await UserService.getOwnUser();

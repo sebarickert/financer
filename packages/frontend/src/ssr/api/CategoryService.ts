@@ -1,6 +1,6 @@
 import { revalidateTag } from 'next/cache';
 
-import { BaseApi } from './base-api';
+import { BaseApi } from './BaseApi';
 
 import {
   CreateTransactionCategoryDto,
@@ -14,9 +14,7 @@ import { isValidationErrorResponse } from '$utils/apiHelper';
 import { parseParentCategoryPath } from 'src/services/TransactionCategoriesService';
 
 export class CategoryService extends BaseApi {
-  // TODO temporary solution to clear cache while migration
   public static async clearCache(): Promise<void> {
-    'use server';
     revalidateTag(this.API_TAG.CATEGORY);
   }
 

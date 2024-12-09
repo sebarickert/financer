@@ -1,6 +1,6 @@
 import { revalidateTag } from 'next/cache';
 
-import { BaseApi } from './base-api';
+import { BaseApi } from './BaseApi';
 
 import { Theme, UserDataImportDto, UserDto } from '$api/generated/financerApi';
 import { ValidationException } from '$exceptions/validation.exception';

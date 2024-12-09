@@ -4,9 +4,9 @@ import { redirect, RedirectType } from 'next/navigation';
 
 import { TransactionType } from '$api/generated/financerApi';
 import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
-import { ExpenseService } from '$ssr/api/expense.service ';
-import { IncomeService } from '$ssr/api/income.service';
-import { TransferService } from '$ssr/api/transfer.service';
+import { ExpenseService } from '$ssr/api/ExpenseService';
+import { IncomeService } from '$ssr/api/IncomeService';
+import { TransferService } from '$ssr/api/TransferService';
 
 export const handleTransactionDelete: DefaultFormActionHandler<{
   id: string;

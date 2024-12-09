@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { FC } from 'react';
 
 import { TransferEditContainer } from '$container/transfers/TransferEditContainer';
-import { TransferService } from '$ssr/api/transfer.service';
+import { TransferService } from '$ssr/api/TransferService';
 
 type EditTransferPageProps = {
   params: {

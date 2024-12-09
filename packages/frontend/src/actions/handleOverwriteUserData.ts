@@ -12,7 +12,7 @@ import {
 } from '$api/generated/financerApi';
 import { ValidationException } from '$exceptions/validation.exception';
 import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
-import { UserService } from '$ssr/api/user.service';
+import { UserService } from '$ssr/api/UserService';
 
 export const handleOverwriteUserData: DefaultFormActionHandler = async (
   prev,

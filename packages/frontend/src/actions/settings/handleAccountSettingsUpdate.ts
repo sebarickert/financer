@@ -2,7 +2,7 @@ import { redirect, RedirectType } from 'next/navigation';
 
 import { settingsPaths } from '$constants/settings-paths';
 import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
-import { UserPreferenceService } from '$ssr/api/user-preference.service';
+import { UserPreferenceService } from '$ssr/api/UserPreferenceService';
 
 export const handleAccountSettingsUpdate: DefaultFormActionHandler = async (
   prev,

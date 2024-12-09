@@ -1,32 +1,29 @@
 import { revalidateTag } from 'next/cache';
 
-import { AccountService } from './account.service';
-import { BaseApi } from './base-api';
+import { BaseApi } from './BaseApi';
 import type {
   FirstTransactionByTypeOptions,
   TransactionListOptions,
-} from './transaction.service';
+} from './TransactionService';
 
 import {
+  CreateIncomeDto,
+  IncomeDetailsDto,
+  IncomeListItemDto,
   SortOrder,
-  CreateTransferDto,
-  UpdateTransferDto,
-  TransferDetailsDto,
-  TransferListItemDto,
+  UpdateIncomeDto,
 } from '$api/generated/financerApi';
 import { ValidationException } from '$exceptions/validation.exception';
 import { isValidationErrorResponse } from '$utils/apiHelper';
 
-export class TransferService extends BaseApi {
-  // TODO temporary solution to clear cache while migration
+export class IncomeService extends BaseApi {
   public static async clearCache(): Promise<void> {
-    'use server';
-    revalidateTag(this.API_TAG.TRANSFER);
+    revalidateTag(this.API_TAG.INCOME);
   }
 
   public static async getFirst(
     options?: FirstTransactionByTypeOptions,
-  ): Promise<TransferListItemDto> {
+  ): Promise<IncomeListItemDto> {
     const data = await this.getAll({
       ...options,
       limit: 1,
@@ -38,30 +35,30 @@ export class TransferService extends BaseApi {
 
   public static async getAll(
     options: TransactionListOptions,
-  ): Promise<TransferListItemDto[]> {
-    const { data, error } = await this.client.GET('/api/transfers', {
+  ): Promise<IncomeDetailsDto[]> {
+    const { data, error } = await this.client.GET('/api/incomes', {
       params: {
         query: options,
       },
       next: {
         tags: [
-          this.API_TAG.TRANSFER,
+          this.API_TAG.INCOME,
           this.API_TAG.TRANSACTION,
-          this.getListTag(this.API_TAG.TRANSFER),
+          this.getListTag(this.API_TAG.INCOME),
           this.getListTag(this.API_TAG.TRANSACTION),
         ],
       },
     });
 
     if (error) {
-      throw new Error('Failed to fetch transfers', error);
+      throw new Error('Failed to fetch incomes', error);
     }
 
-    return data as TransferListItemDto[];
+    return data as IncomeDetailsDto[];
   }
 
-  public static async getById(id: string): Promise<TransferDetailsDto> {
-    const { data, error } = await this.client.GET(`/api/transfers/{id}`, {
+  public static async getById(id: string): Promise<IncomeDetailsDto> {
+    const { data, error } = await this.client.GET(`/api/incomes/{id}`, {
       params: {
         path: {
           id,
@@ -70,25 +67,25 @@ export class TransferService extends BaseApi {
       next: {
         tags: [
           this.API_TAG.TRANSACTION,
-          this.API_TAG.TRANSFER,
+          this.API_TAG.INCOME,
           this.getEntityTag(this.API_TAG.TRANSACTION, id),
-          this.getEntityTag(this.API_TAG.TRANSFER, id),
+          this.getEntityTag(this.API_TAG.INCOME, id),
         ],
       },
     });
 
     if (error) {
-      throw new Error('Failed to fetch transfer', error);
+      throw new Error('Failed to fetch income', error);
     }
 
-    return data as TransferDetailsDto;
+    return data as IncomeDetailsDto;
   }
 
   public static async add(
-    newTransfer: CreateTransferDto,
-  ): Promise<TransferDetailsDto> {
-    const { error, data } = await this.client.POST('/api/transfers', {
-      body: newTransfer,
+    newIncome: CreateIncomeDto,
+  ): Promise<IncomeDetailsDto> {
+    const { error, data } = await this.client.POST('/api/incomes', {
+      body: newIncome,
     });
 
     if (error) {
@@ -97,29 +94,28 @@ export class TransferService extends BaseApi {
 
       if (isValidationErrorResponse(unknownError)) {
         throw new ValidationException(
-          'Failed to add transfer',
+          'Failed to add income',
           unknownError.message,
         );
       }
 
-      throw new Error('Failed to add transfer', error);
+      throw new Error('Failed to add income', error);
     }
 
     await this.clearCache();
-    await AccountService.clearCache();
 
-    return data as TransferDetailsDto;
+    return data as IncomeDetailsDto;
   }
 
   public static async update(
     id: string,
-    updatedTransfer: UpdateTransferDto,
-  ): Promise<TransferDetailsDto> {
-    const { error, data } = await this.client.PATCH(`/api/transfers/{id}`, {
+    updatedIncome: UpdateIncomeDto,
+  ): Promise<IncomeDetailsDto> {
+    const { error, data } = await this.client.PATCH(`/api/incomes/{id}`, {
       params: {
         path: { id },
       },
-      body: updatedTransfer,
+      body: updatedIncome,
     });
 
     if (error) {
@@ -128,32 +124,31 @@ export class TransferService extends BaseApi {
 
       if (isValidationErrorResponse(unknownError)) {
         throw new ValidationException(
-          'Failed to update transfer',
+          'Failed to add income',
           unknownError.message,
         );
       }
 
-      throw new Error('Failed to update transfer', error);
+      throw new Error('Failed to add income', error);
     }
 
-    await this.clearCache();
-    await AccountService.clearCache();
+    revalidateTag(this.getEntityTag(this.API_TAG.TRANSACTION, id));
+    revalidateTag(this.getEntityTag(this.API_TAG.INCOME, id));
 
-    return data as TransferDetailsDto;
+    return data as IncomeDetailsDto;
   }
 
   public static async delete(id: string): Promise<void> {
-    const { error } = await this.client.DELETE(`/api/transfers/{id}`, {
+    const { error } = await this.client.DELETE(`/api/incomes/{id}`, {
       params: {
         path: { id },
       },
     });
 
     if (error) {
-      throw new Error('Failed to delete transfer', error);
+      throw new Error('Failed to delete income', error);
     }
 
     await this.clearCache();
-    await AccountService.clearCache();
   }
 }

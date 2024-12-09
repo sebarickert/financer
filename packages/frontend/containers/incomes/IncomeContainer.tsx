@@ -5,7 +5,7 @@ import { TransactionType } from '$api/generated/financerApi';
 import { Popper } from '$elements/Popper';
 import { TransactionDeleteDrawer } from '$features/transaction/TransactionDeleteDrawer';
 import { Layout } from '$layouts/Layout';
-import { IncomeService } from '$ssr/api/income.service';
+import { IncomeService } from '$ssr/api/IncomeService';
 import { Transaction } from '$views/Transaction';
 
 type IncomeContainerProps = {

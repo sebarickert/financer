@@ -5,7 +5,7 @@ import { FC } from 'react';
 import { Drawer } from '$blocks/Drawer';
 import { Button } from '$elements/Button/Button';
 import { TransactionFormSwitcher } from '$features/transaction/TransactionFormSwitcher';
-import { UserPreferenceService } from '$ssr/api/user-preference.service';
+import { UserPreferenceService } from '$ssr/api/UserPreferenceService';
 
 type NavigationCreateTransactionButtonProps = {
   className?: string;

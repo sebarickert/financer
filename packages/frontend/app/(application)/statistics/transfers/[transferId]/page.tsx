@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { FC } from 'react';
 
 import { TransferContainer } from '$container/transfers/TransferContainer';
-import { TransferService } from '$ssr/api/transfer.service';
+import { TransferService } from '$ssr/api/TransferService';
 
 type TransferPageProps = {
   params: {

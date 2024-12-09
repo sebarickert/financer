@@ -1,9 +1,9 @@
 import { revalidateTag } from 'next/cache';
 
-import { BaseApi } from './base-api';
-import { ExpenseService } from './expense.service ';
-import { IncomeService } from './income.service';
-import { TransferService } from './transfer.service';
+import { BaseApi } from './BaseApi';
+import { ExpenseService } from './ExpenseService';
+import { IncomeService } from './IncomeService';
+import { TransferService } from './TransferService';
 
 import {
   ExpenseListItemDto,
@@ -26,9 +26,7 @@ export type FirstTransactionByTypeOptions = Omit<
 >;
 
 export class TransactionService extends BaseApi {
-  // TODO temporary solution to clear cache while migration
   public static async clearCache(): Promise<void> {
-    'use server';
     revalidateTag(this.API_TAG.TRANSACTION);
   }
 

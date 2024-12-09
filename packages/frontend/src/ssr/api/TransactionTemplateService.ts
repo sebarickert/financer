@@ -1,6 +1,6 @@
 import { revalidateTag } from 'next/cache';
 
-import { BaseApi } from './base-api';
+import { BaseApi } from './BaseApi';
 
 import {
   CreateTransactionTemplateDto,
@@ -11,7 +11,6 @@ import { ValidationException } from '$exceptions/validation.exception';
 import { isValidationErrorResponse } from '$utils/apiHelper';
 
 export class TransactionTemplateService extends BaseApi {
-  // TODO temporary solution to clear cache while migration
   public static async clearCache(): Promise<void> {
     revalidateTag(this.API_TAG.TRANSACTION_TEMPLATE);
   }
@@ -113,7 +112,7 @@ export class TransactionTemplateService extends BaseApi {
       throw new Error('Failed to update transaction template', error);
     }
 
-    await this.clearCache();
+    revalidateTag(this.getEntityTag(this.API_TAG.TRANSACTION_TEMPLATE, id));
   }
 
   public static async delete(id: string): Promise<void> {

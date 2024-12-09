@@ -6,7 +6,7 @@ import { settingsPaths } from '$constants/settings-paths';
 import { SettingsLayout } from '$features/settings/SettingsLayout';
 import { TemplateDelete } from '$features/template/TemplateDelete';
 import { TemplateForm } from '$features/template/TemplateForm';
-import { TransactionTemplateService } from '$ssr/api/transaction-template.service';
+import { TransactionTemplateService } from '$ssr/api/TransactionTemplateService';
 
 type TemplateEditContainerProps = {
   id: string;

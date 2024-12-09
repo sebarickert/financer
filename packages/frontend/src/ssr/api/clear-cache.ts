@@ -2,7 +2,7 @@
 
 import { revalidateTag } from 'next/cache';
 
-import { BaseApi } from './base-api';
+import { BaseApi } from './BaseApi';
 
 // TODO temporary solution to clear cache while migration
 

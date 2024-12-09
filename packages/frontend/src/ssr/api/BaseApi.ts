@@ -6,6 +6,7 @@ import { getInternalApiRootAddress } from '$utils/address.helper';
 
 export abstract class BaseApi {
   public static readonly API_TAG = {
+    APP: 'app',
     ACCOUNT: 'account',
     ACCOUNT_BALANCE: 'account-balance',
     AUTHENTICATION: 'authentication',
@@ -44,7 +45,7 @@ export abstract class BaseApi {
   ): Promise<NextFetchRequestConfig> {
     const baseOptions = {
       revalidate: method === 'GET' ? 900 : undefined, // 15 minutes for GET requests
-      tags: [(await getSessionId()) ?? ''],
+      tags: [(await getSessionId()) ?? '', this.API_TAG.APP],
     };
 
     if (!requestOptions) {

@@ -7,7 +7,7 @@ import { Button } from '$elements/Button/Button';
 import { AccountList } from '$features/account/AccountList';
 import { AccountTypeBalanceChart } from '$features/account/AccountTypeBalanceChart';
 import { Layout } from '$layouts/Layout';
-import { AccountService } from '$ssr/api/account.service';
+import { AccountService } from '$ssr/api/AccountService';
 
 const accountCategories = {
   savings: 'savings',

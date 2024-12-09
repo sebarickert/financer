@@ -5,7 +5,7 @@ import { Metadata } from 'next';
 import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
 import { Button } from '$elements/Button/Button';
 import { Heading } from '$elements/Heading';
-import { AuthenticationService } from '$ssr/api/authentication.service';
+import { AuthenticationService } from '$ssr/api/AuthenticationService';
 
 export const metadata: Metadata = {
   title: 'Troubleshooting Login Issues',

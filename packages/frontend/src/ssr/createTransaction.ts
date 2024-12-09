@@ -2,9 +2,9 @@
 
 import { redirect, RedirectType } from 'next/navigation';
 
-import { ExpenseService } from './api/expense.service ';
-import { IncomeService } from './api/income.service';
-import { TransferService } from './api/transfer.service';
+import { ExpenseService } from './api/ExpenseService';
+import { IncomeService } from './api/IncomeService';
+import { TransferService } from './api/TransferService';
 
 import {
   ExpenseDetailsDto,
