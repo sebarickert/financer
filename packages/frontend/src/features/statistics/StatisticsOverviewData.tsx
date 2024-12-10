@@ -1,7 +1,7 @@
 'use client';
 
 import { parse } from 'date-fns';
-import { ArrowDown, ArrowUp, ChartLine, Divide, Equal } from 'lucide-react';
+import { ChartLine, Equal, LineChart, Percent, PieChart } from 'lucide-react';
 import { FC, useMemo, useState } from 'react';
 
 import { TransactionMonthSummaryDto } from '$api/generated/financerApi';
@@ -86,41 +86,26 @@ export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
     expenses: expenses.reduce((sum, num) => sum + num, 0) / expenses.length,
   };
 
-  const summaries = incomes.map((income, index) => income - expenses[index]);
-
-  const highest = {
-    incomes: Math.max(...incomes),
-    expenses: Math.max(...expenses),
-  };
-
-  const lowest = {
-    incomes: Math.min(...incomes),
-    expenses: Math.min(...expenses),
-  };
+  const sumArray = (arr: number[]) => arr.reduce((acc, curr) => acc + curr, 0);
 
   const generateTransactionsDetailsItem = (
     type: 'incomes' | 'expenses',
   ): DetailsItem[] => {
     return [
       {
-        Icon: Divide,
+        Icon: LineChart,
         label: 'Average',
         description: formatCurrency(average[type]) ?? '-',
       },
       {
-        Icon: ArrowUp,
-        label: 'Highest',
-        description: formatCurrency(highest[type]) ?? '-',
-      },
-      {
-        Icon: ArrowDown,
-        label: 'Lowest',
-        description: formatCurrency(lowest[type]) ?? '-',
+        Icon: PieChart,
+        label: 'Total',
+        description:
+          formatCurrency(sumArray(type === 'incomes' ? incomes : expenses)) ??
+          '-',
       },
     ];
   };
-
-  const sumArray = (arr: number[]) => arr.reduce((acc, curr) => acc + curr, 0);
 
   const summaryDetails: DetailsItem[] = [
     {
@@ -130,14 +115,12 @@ export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
         formatCurrency(sumArray(incomes) - sumArray(expenses)) ?? '-',
     },
     {
-      Icon: ArrowUp,
-      label: 'Best Month',
-      description: formatCurrency(Math.max(...summaries)) ?? '-',
-    },
-    {
-      Icon: ArrowDown,
-      label: 'Worst Month',
-      description: formatCurrency(Math.min(...summaries)) ?? '-',
+      Icon: Percent,
+      label: 'Savings Rate',
+      description: `${(
+        ((sumArray(incomes) - sumArray(expenses)) / sumArray(incomes)) *
+        100
+      ).toFixed(2)}%`,
     },
   ];
 
