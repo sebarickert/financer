@@ -83,7 +83,7 @@ export const UserDashboardSettingsForm: FC<UserDashboardSettingsFormProps> = ({
           Amount
         </Input>
       </div>
-      <Form.Footer className="mt-0">
+      <Form.Footer className="!mt-0">
         <Button type="submit">Save Changes</Button>
       </Form.Footer>
     </Form>
