@@ -2,7 +2,7 @@
 
 import clsx from 'clsx';
 import { Info } from 'lucide-react';
-import { ChangeEvent, useCallback, useMemo, useState } from 'react';
+import { ChangeEvent, useCallback, useMemo, useState, type JSX } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { UserDataImportDto } from '$api/generated/financerApi';

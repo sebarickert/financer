@@ -1,11 +1,11 @@
 'use client';
-
 import clsx from 'clsx';
 import { usePathname } from 'next/navigation';
 import {
   Link as TransitionLink,
   useTransitionRouter,
 } from 'next-view-transitions';
+import type { JSX } from 'react';
 
 import { hapticRunner, HapticType } from '$utils/haptic.helper';
 import { isExternalLink } from '$utils/isExternalLink';

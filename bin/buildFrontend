@@ -2,13 +2,24 @@
 
 set -e
 
+# Run the build command for the frontend workspace
 npm -w frontend run build
 
+# Copy the standalone build output
 cp -r packages/frontend/.next/standalone build/frontend
-mv build/frontend/packages/frontend/* build/frontend/
-mv build/frontend/packages/frontend/.next build/frontend/
-mv build/frontend/packages/frontend/.env* build/frontend/
+
+# Sync the contents of the frontend package to the build directory
+rsync -a build/frontend/packages/frontend/ build/frontend/
+rsync -a build/frontend/packages/frontend/.next/ build/frontend/.next/
+
+# Check if any .env* files exist before attempting to copy them
+if find build/frontend/packages/frontend/ -name ".env*" | read; then
+  rsync -a build/frontend/packages/frontend/.env* build/frontend/
+fi
+
+# Remove the now-empty frontend package directory
 rm -rf build/frontend/packages
 
+# Copy the public directory and static assets
 cp -r packages/frontend/public build/frontend/public
 cp -r packages/frontend/.next/static/ build/frontend/.next/

@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { LucideIcon } from 'lucide-react';
-import { InputHTMLAttributes } from 'react';
+import { InputHTMLAttributes, type JSX } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
 type RadioProps = InputHTMLAttributes<HTMLInputElement> & {

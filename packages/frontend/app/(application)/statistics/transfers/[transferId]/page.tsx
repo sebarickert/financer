@@ -1,18 +1,18 @@
 import { Metadata } from 'next';
-import { FC } from 'react';
 
 import { TransferContainer } from '$container/transfers/TransferContainer';
 import { TransferService } from '$ssr/api/TransferService';
 
-type TransferPageProps = {
-  params: {
-    transferId: string;
-  };
-};
+type Params = Promise<{
+  transferId: string;
+}>;
 
 export const generateMetadata = async ({
-  params: { transferId },
-}: TransferPageProps): Promise<Metadata> => {
+  params,
+}: {
+  params: Params;
+}): Promise<Metadata> => {
+  const { transferId } = await params;
   const transfer = await TransferService.getById(transferId);
 
   return {
@@ -20,7 +20,9 @@ export const generateMetadata = async ({
   };
 };
 
-const TransferPage: FC<TransferPageProps> = ({ params: { transferId } }) => {
+const TransferPage = async ({ params }: { params: Params }) => {
+  const { transferId } = await params;
+
   return <TransferContainer id={transferId} />;
 };
 

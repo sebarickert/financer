@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import { ArrowLeft, LogOut, MessageSquareText } from 'lucide-react';
 import { Metadata } from 'next';
+import type { JSX } from 'react';
 
 import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
 import { Button } from '$elements/Button/Button';

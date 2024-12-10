@@ -1,6 +1,6 @@
 'use client';
-
 import clsx from 'clsx';
+import type { JSX } from 'react';
 import { useFormStatus } from 'react-dom';
 import {
   FieldValues,

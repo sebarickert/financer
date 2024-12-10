@@ -1,18 +1,18 @@
 import { Metadata } from 'next';
-import { FC } from 'react';
 
 import { EditExpenseContainer } from '$container/expenses/ExpenseEditContainer';
 import { ExpenseService } from '$ssr/api/ExpenseService';
 
-type EditExpensePageProps = {
-  params: {
-    expenseId: string;
-  };
-};
+type Params = Promise<{
+  expenseId: string;
+}>;
 
 export const generateMetadata = async ({
-  params: { expenseId },
-}: EditExpensePageProps): Promise<Metadata> => {
+  params,
+}: {
+  params: Params;
+}): Promise<Metadata> => {
+  const { expenseId } = await params;
   const expense = await ExpenseService.getById(expenseId);
 
   return {
@@ -20,9 +20,9 @@ export const generateMetadata = async ({
   };
 };
 
-const EditExpensePage: FC<EditExpensePageProps> = ({
-  params: { expenseId },
-}) => {
+const EditExpensePage = async ({ params }: { params: Params }) => {
+  const { expenseId } = await params;
+
   return <EditExpenseContainer id={expenseId} />;
 };
 

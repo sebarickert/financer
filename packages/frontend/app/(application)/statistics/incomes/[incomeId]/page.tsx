@@ -1,18 +1,18 @@
 import { Metadata } from 'next';
-import { FC } from 'react';
 
 import { IncomeContainer } from '$container/incomes/IncomeContainer';
 import { IncomeService } from '$ssr/api/IncomeService';
 
-type IncomePageProps = {
-  params: {
-    incomeId: string;
-  };
-};
+type Params = Promise<{
+  incomeId: string;
+}>;
 
 export const generateMetadata = async ({
-  params: { incomeId },
-}: IncomePageProps): Promise<Metadata> => {
+  params,
+}: {
+  params: Params;
+}): Promise<Metadata> => {
+  const { incomeId } = await params;
   const income = await IncomeService.getById(incomeId);
 
   return {
@@ -20,7 +20,9 @@ export const generateMetadata = async ({
   };
 };
 
-const IncomePage: FC<IncomePageProps> = ({ params: { incomeId } }) => {
+const IncomePage = async ({ params }: { params: Params }) => {
+  const { incomeId } = await params;
+
   return <IncomeContainer id={incomeId} />;
 };
 

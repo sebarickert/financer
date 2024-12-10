@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import { HTMLAttributes, useCallback } from 'react';
+import { FC, HTMLAttributes, useCallback, type JSX } from 'react';
 
 import { Link } from '$elements/Link';
 import { hapticRunner, HapticType } from '$utils/haptic.helper';
@@ -33,7 +33,7 @@ interface ButtonProps
   haptic?: HapticType;
 }
 
-export const Button = ({
+export const Button: FC<ButtonProps> = ({
   accentColor = 'primary',
   children,
   className,
@@ -48,7 +48,7 @@ export const Button = ({
   size = 'default',
   haptic = 'none',
   ...props
-}: ButtonProps): JSX.Element => {
+}): JSX.Element => {
   const buttonStyles = {
     base: clsx(
       'focus-visible:focus-highlight ring-offset-2 dark:ring-offset-0 whitespace-nowrap',
@@ -113,9 +113,8 @@ export const Button = ({
       className={buttonClasses}
       data-testid={testId}
       disabled={isDisabled}
-      // @ts-expect-error popovertarget is not a valid prop
-      popovertarget={popoverTarget}
-      popovertargetaction={popoverTargetAction}
+      popoverTarget={popoverTarget}
+      popoverTargetAction={popoverTargetAction}
       {...props}
     >
       {children}
