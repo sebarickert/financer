@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import { HTMLAttributes, useCallback } from 'react';
+import { HTMLAttributes, useCallback, type JSX } from 'react';
 
 import { Link } from '$elements/Link';
 import { hapticRunner, HapticType } from '$utils/haptic.helper';
@@ -113,9 +113,8 @@ export const Button = ({
       className={buttonClasses}
       data-testid={testId}
       disabled={isDisabled}
-      // @ts-expect-error popovertarget is not a valid prop
-      popovertarget={popoverTarget}
-      popovertargetaction={popoverTargetAction}
+      popoverTarget={popoverTarget}
+      popoverTargetAction={popoverTargetAction}
       {...props}
     >
       {children}

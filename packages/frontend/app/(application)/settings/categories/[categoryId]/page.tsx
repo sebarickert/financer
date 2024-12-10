@@ -1,18 +1,18 @@
 import { Metadata } from 'next';
-import { FC } from 'react';
 
 import { CategoryContainer } from '$container/categories/CategoryContainer';
 import { CategoryService } from '$ssr/api/CategoryService';
 
-type CategoryPageProps = {
-  params: {
-    categoryId: string;
-  };
-};
+type Params = Promise<{
+  categoryId: string;
+}>;
 
 export const generateMetadata = async ({
-  params: { categoryId },
-}: CategoryPageProps): Promise<Metadata> => {
+  params,
+}: {
+  params: Params;
+}): Promise<Metadata> => {
+  const { categoryId } = await params;
   const category = await CategoryService.getById(categoryId);
 
   return {
@@ -20,7 +20,9 @@ export const generateMetadata = async ({
   };
 };
 
-const CategoryPage: FC<CategoryPageProps> = ({ params: { categoryId } }) => {
+const CategoryPage = async ({ params }: { params: Params }) => {
+  const { categoryId } = await params;
+
   return <CategoryContainer id={categoryId} />;
 };
 
