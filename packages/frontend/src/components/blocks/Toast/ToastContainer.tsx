@@ -16,9 +16,13 @@ export const ToastContainer = memo(
     const { toastMessages } = useAppSelector((state) => state.notification);
 
     return (
-      <ul
+      <ol
         aria-live="polite"
-        className={clsx('space-y-4', { [className]: toastMessages.length > 0 })}
+        className={clsx(
+          'fixed w-full top-0 left-0 max-h-screen flex-col-reverse flex p-4 z-[100] gap-4',
+          'sm:bottom-0 sm:right-0 sm:top-auto sm:left-auto sm:flex-col md:max-w-[500px]',
+          className && toastMessages.length > 0,
+        )}
         data-testid="toast-container"
       >
         {toastMessages.map((toast) => (
@@ -26,7 +30,7 @@ export const ToastContainer = memo(
             <Toast {...toast} />
           </li>
         ))}
-      </ul>
+      </ol>
     );
   },
 );

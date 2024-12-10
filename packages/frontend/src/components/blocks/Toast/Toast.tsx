@@ -38,12 +38,6 @@ export const Toast = ({
     dispatch(removeToastMessage(id));
   }, [dispatch, id]);
 
-  const toastStyles = clsx('ring-2', {
-    ['ring-red']: type === ToastMessageTypes.ERROR,
-    ['ring-accent']: type === ToastMessageTypes.GENERAL,
-    ['ring-green']: type === ToastMessageTypes.SUCCESS,
-  });
-
   const additionalInformationContent = Array.isArray(additionalInformation) ? (
     <ul className="pl-5 space-y-2 list-disc">
       {additionalInformation.map((information) => (
@@ -57,10 +51,10 @@ export const Toast = ({
   return (
     <div
       className={clsx(
-        'bg-layer  rounded-md',
+        'bg-layer rounded-md',
         'p-6 relative',
         'flex gap-4',
-        toastStyles,
+        'ring-2 ring-accent',
         className,
       )}
       role="status"
@@ -68,7 +62,7 @@ export const Toast = ({
       data-toast-type={type}
     >
       <div className="grow">
-        <p className="pr-10 font-medium">{message}</p>
+        <p className="pr-10">{message}</p>
         {additionalInformation && (
           <div className="max-w-lg mt-2 text-muted-foreground">
             {additionalInformation && additionalInformationContent}
