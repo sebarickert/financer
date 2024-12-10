@@ -30,7 +30,6 @@ export const Transaction: FC<TransactionProps> = async ({
   type,
   date,
   categories,
-  id,
   amount,
   description,
   isRecurring,
