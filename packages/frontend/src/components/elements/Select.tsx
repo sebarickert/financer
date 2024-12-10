@@ -37,8 +37,8 @@ type OptionElementProps = Omit<Option, 'label'> & {
 const OptionElement: FC<OptionElementProps> = ({
   value,
   children,
-  Icon,
-  description,
+  // Icon,
+  // description,
   isDisabled,
 }) => (
   <option
@@ -52,16 +52,16 @@ const OptionElement: FC<OptionElementProps> = ({
     )}
     disabled={isDisabled}
   >
-    {Icon && <Icon />}
+    {/* {Icon && <Icon />}
     <span
       className={clsx(
         'grid text-base text-left',
         'after:content-[attr(data-description)] after:text-sm after:text-muted-foreground',
       )}
       data-description={description}
-    >
-      {children}
-    </span>
+    > */}
+    {children}
+    {/* </span> */}
   </option>
 );
 
@@ -77,7 +77,7 @@ export const Select = ({
   handleOnChange = () => {},
   shouldUnregister,
   isLabelHidden,
-  isBleedingEdge = true,
+  // isBleedingEdge = true,
   Icon,
 }: SelectProps): JSX.Element => {
   const { register } = useFormContext();
@@ -100,17 +100,17 @@ export const Select = ({
         {Icon && <Icon />}
         <select
           data-testid={testId}
-          data-bleeding-edge={isBleedingEdge ? 'on' : 'off'}
+          // data-bleeding-edge={isBleedingEdge ? 'on' : 'off'}
           id={id}
           data-slot="control"
           className={clsx(
             'theme-field',
             'block w-full rounded-md',
             'py-3 h-12',
-            'supports-[selector(::picker(select))]:[&:has(button:focus-visible)]:focus-highlight',
-            {
-              'supports-[selector(::picker(select))]:p-0': isBleedingEdge,
-            },
+            // 'supports-[selector(::picker(select))]:[&:has(button:focus-visible)]:focus-highlight',
+            // {
+            //   'supports-[selector(::picker(select))]:p-0': isBleedingEdge,
+            // },
           )}
           required={isRequired}
           disabled={isDisabled}
@@ -121,12 +121,12 @@ export const Select = ({
             shouldUnregister,
           })}
         >
-          <button
+          {/* Commented out experimental select. */}
+          {/* <button
             type="button"
             className="block w-full pl-3 pr-10 focus-visible:outline-none"
             data-slot="custom-select-button"
           >
-            {/* @ts-expect-error - New experimental feature that is not yet supported by the TypeScript compiler */}
             <selectedoption
               className={clsx(
                 '[&>span]:after:hidden',
@@ -134,7 +134,7 @@ export const Select = ({
                 'py-3 flex gap-2 w-full',
               )}
             />
-          </button>
+          </button> */}
           <OptionElement isDisabled value="">
             {placeholder}
           </OptionElement>
