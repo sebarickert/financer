@@ -20,7 +20,10 @@
       "$ssr/*": ["./src/ssr/*"],
       "$exceptions/*": ["./src/exceptions/*"],
       "$container/*": ["./containers/*"],
-      "$types/*": ["./src/types/*"]
+      "$types/*": ["./src/types/*"],
+      // https://github.com/lucide-icons/lucide/issues/2488
+      // Weird JSX component issue, so this fixed it
+      "react": ["./node_modules/@types/react"]
     }
   }
 }

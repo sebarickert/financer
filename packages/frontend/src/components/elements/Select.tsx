@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { LucideIcon } from 'lucide-react';
-import { ChangeEvent, FC } from 'react';
+import { ChangeEvent, FC, type JSX } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { FieldGroup } from './FieldGroup';

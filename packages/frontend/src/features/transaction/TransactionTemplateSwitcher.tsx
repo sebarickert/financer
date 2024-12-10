@@ -1,7 +1,7 @@
 'use client';
 
 import { Layers } from 'lucide-react';
-import { useId, useMemo, useRef } from 'react';
+import { useId, useMemo, useRef, type JSX } from 'react';
 
 import {
   TransactionTemplateDto,
