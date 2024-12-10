@@ -14,7 +14,9 @@ const customJestConfig: JestConfigWithTsJest = {
   testEnvironment: 'jest-environment-jsdom',
   resetMocks: false,
   moduleDirectories: ['<rootDir>', 'node_modules'],
-  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }),
+  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
+    prefix: '<rootDir>/',
+  }),
   prettierPath: null,
   testMatch: ['<rootDir>/src/**//**/*.{test,spec}.{js,jsx,ts,tsx}'],
   collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}', '!**/node_modules/**'],
