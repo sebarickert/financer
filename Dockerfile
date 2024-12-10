@@ -9,6 +9,9 @@
 # https://github.com/vercel/next.js/issues/69263
 FROM node:22.6-alpine AS development
 
+# Install rsync
+RUN apk update && apk add --no-cache rsync
+
 # Run application with user 'node'.
 # It is not recommended to run applications with 'root' even within
 # the containers.
@@ -26,7 +29,6 @@ WORKDIR /home/node/app
 COPY --chown=node:node package*.json ./
 COPY --chown=node:node packages/backend/package.json ./packages/backend/
 COPY --chown=node:node packages/frontend/package.json ./packages/frontend/
-
 
 # Install dependencies and ensure sub node_modules folders exists otherwise later
 # COPY commands could fail.
@@ -47,6 +49,9 @@ COPY --chown=node:node . .
 # Do not use the latest tag for the base image due to build issues with Terser.
 # https://github.com/vercel/next.js/issues/69263
 FROM node:22.6-alpine AS build
+
+# Install rsync
+RUN apk update && apk add --no-cache rsync
 
 # Run application with user 'node'.
 # It is not recommended to run applications with 'root' even within
@@ -80,7 +85,6 @@ COPY --chown=node:node  \
 COPY --chown=node:node  \
      --from=development \
      /home/node/app/packages/frontend/node_modules ./packages/frontend/node_modules
-
 
 # Copy application sources.
 COPY --chown=node:node . .
@@ -132,8 +136,6 @@ WORKDIR /home/node/app
 # Copy the bundled code from the build stage to the production image.
 COPY --chown=node:node --from=build /home/node/app/build ./
 COPY --chown=node:node --from=build /home/node/app/node_modules ./node_modules
-
-
 
 # Set Tini as an entrypoint to avoid running node process as PID 1.
 # https://github.com/nodejs/docker-node/blob/main/docs/BestPractices.md#handling-kernel-signals
