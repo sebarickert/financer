@@ -30,6 +30,7 @@ import {
   TransactionListItemDto,
 } from './dto/transaction-list-item.dto';
 import { TransactionMonthSummaryDto } from './dto/transaction-month-summary.dto';
+import { TransactionSummaryDto } from './dto/transaction-summary.dto';
 import { TransactionDto } from './dto/transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 
@@ -215,6 +216,29 @@ export class TransactionsService {
       },
     });
     return TransactionDto.createFromPlain(transactions);
+  }
+
+  async findTransactionSummariesByUserAccount(
+    userId: UserId,
+    accountId: string,
+    includePastTransactions = true,
+  ): Promise<TransactionSummaryDto[]> {
+    const transactions = await this.transactionRepo.findMany({
+      select: {
+        id: true,
+        amount: true,
+        date: true,
+        fromAccount: true,
+        toAccount: true,
+      },
+      where: {
+        userId,
+        ...TransactionRepo.filterByAccount(accountId),
+        date: includePastTransactions ? undefined : { gte: new Date() },
+      },
+    });
+
+    return TransactionSummaryDto.createFromPlain(transactions);
   }
 
   findMonthlySummariesByUser = async (

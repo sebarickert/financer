@@ -58,9 +58,14 @@ export class AccountBalanceChangesService {
   async findAllByUserAndAccount(
     userId: UserId,
     accountId: string,
+    includePastBalanceChanges = true,
   ): Promise<AccountBalanceChange[]> {
     return this.accountBalanceChangeRepo.findMany({
-      where: { userId, accountId },
+      where: {
+        userId,
+        accountId,
+        date: includePastBalanceChanges ? undefined : { gte: new Date() },
+      },
     });
   }
 

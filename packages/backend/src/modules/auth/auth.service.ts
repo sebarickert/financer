@@ -13,13 +13,14 @@ export class AuthService {
   ) {}
 
   async getAuthenticationStatus(user?: User) {
-    const accounts = user
-      ? await this.accountsService.findAllByUser(user.id as UserId)
-      : [];
+    const hasAccounts = user
+      ? await this.accountsService.hasAccounts(user.id as UserId)
+      : false;
+
     return {
       authenticated: Boolean(user),
       payload: user,
-      hasAccounts: Boolean(accounts?.length),
+      hasAccounts,
     };
   }
 

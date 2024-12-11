@@ -63,15 +63,7 @@ describe('AccountsService', () => {
     // TODO: Clean this mess up, have to figure out a better way to get current date balance
     jest
       .spyOn(service, 'getCurrentDateAccountBalance')
-      .mockResolvedValueOnce(new Decimal(0))
-      .mockResolvedValueOnce(new Decimal(0))
-      .mockResolvedValueOnce(new Decimal(0))
-      .mockResolvedValueOnce(new Decimal(0))
-      .mockResolvedValueOnce(new Decimal(0))
-      .mockResolvedValueOnce(new Decimal(0))
-      .mockResolvedValueOnce(new Decimal(0))
-      .mockResolvedValueOnce(new Decimal(0))
-      .mockResolvedValueOnce(new Decimal(0));
+      .mockResolvedValue(new Decimal(0));
 
     jest.spyOn(accountRepo, 'getCount').mockResolvedValueOnce(9);
 
@@ -119,11 +111,6 @@ describe('AccountsService', () => {
       .spyOn(accountRepo, 'findOne')
       .mockResolvedValueOnce(accountsRepoFindById[id]);
 
-    // TODO: Clean this mess up, have to figure out a better way to get current date balance
-    jest
-      .spyOn(accountBalanceChangesService, 'findAllByUserAndAccount')
-      .mockResolvedValueOnce([]);
-
     jest.spyOn(transactionsService, 'findAllByUser').mockResolvedValueOnce([]);
 
     jest.spyOn(accountBalanceChangeRepo, 'findMany').mockResolvedValueOnce([]);
@@ -153,27 +140,13 @@ describe('AccountsService', () => {
 
     expect(transactionRepo.findMany).toHaveBeenCalledTimes(1);
     expect(transactionRepo.findMany).toHaveBeenCalledWith({
-      include: {
-        categories: {
-          select: {
-            category: {
-              select: {
-                name: true,
-              },
-            },
-            categoryId: true,
-          },
-        },
-        transactionTemplateLog: {
-          select: {
-            id: true,
-          },
-        },
+      select: {
+        amount: true,
+        date: true,
+        fromAccount: true,
+        id: true,
+        toAccount: true,
       },
-      orderBy: {
-        date: 'desc',
-      },
-      take: undefined,
       where: {
         OR: [
           {
@@ -183,6 +156,7 @@ describe('AccountsService', () => {
             fromAccount: '61460d8554ea082ad0256759',
           },
         ],
+        date: undefined,
         userId: '61460d7354ea082ad0256749',
       },
     });

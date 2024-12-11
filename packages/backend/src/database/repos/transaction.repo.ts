@@ -22,7 +22,12 @@ export class TransactionRepo {
 
   async findMany<T extends Prisma.TransactionFindManyArgs>(
     params: T,
-  ): Promise<Prisma.TransactionGetPayload<{ include: T['include'] }>[]> {
+  ): Promise<
+    Prisma.TransactionGetPayload<{
+      include: T['include'];
+      select: T['select'];
+    }>[]
+  > {
     // @ts-expect-error - Prisma is not able to infer the correct type for include
     return this.prisma.transaction.findMany(params);
   }
