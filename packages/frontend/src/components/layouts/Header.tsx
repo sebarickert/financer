@@ -7,7 +7,11 @@ import { Logo } from '$blocks/Logo';
 import { Navigation } from '$blocks/Navigation/Navigation';
 import { Link } from '$elements/Link';
 
-export const Header: FC = () => {
+type HeaderProps = {
+  isLoading?: boolean;
+};
+
+export const Header: FC<HeaderProps> = ({ isLoading }) => {
   return (
     <header
       className={clsx(
@@ -27,7 +31,7 @@ export const Header: FC = () => {
         >
           <Logo />
         </Link>
-        <Navigation />
+        <Navigation isLoading={isLoading} />
       </Container>
     </header>
   );

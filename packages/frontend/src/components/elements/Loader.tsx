@@ -1,4 +1,6 @@
-import type { JSX } from 'react';
+import clsx from 'clsx';
+import { FC } from 'react';
+
 const LoaderIcon = () => (
   <div role="status">
     <svg
@@ -21,17 +23,26 @@ const LoaderIcon = () => (
   </div>
 );
 
-export const Loader = (): JSX.Element => {
+type LoaderProps = {
+  className?: string;
+};
+
+export const Loader: FC<LoaderProps> = ({ className }) => {
   return (
-    <div className="fixed inset-0 z-50 flex items-center w-full h-full">
+    <div
+      className={clsx(
+        'fixed inset-0 z-50 flex items-center w-full h-full',
+        className,
+      )}
+      data-testid="loader"
+      data-slot="loader"
+    >
       <div className="fixed inset-0 transition-opacity">
         <div className="absolute inset-0 bg-background/80" />
       </div>
       <div className="flex items-center justify-center w-full">
-        <Loader.Icon />
+        <LoaderIcon />
       </div>
     </div>
   );
 };
-
-Loader.Icon = LoaderIcon;
