@@ -68,7 +68,6 @@ export const Transaction: FC<TransactionProps> = async ({
     ...(fromAccountName
       ? [
           {
-            // icon: transactionTypeIconMapping.EXPENSE,
             Icon: TRANSACTION_TYPE_ICON_MAPPING.EXPENSE,
             label: 'From Account',
             description: fromAccountName,
@@ -78,7 +77,6 @@ export const Transaction: FC<TransactionProps> = async ({
     ...(toAccountName
       ? [
           {
-            // icon: transactionTypeIconMapping.INCOME,
             Icon: TRANSACTION_TYPE_ICON_MAPPING.INCOME,
             label: 'To Account',
             description: toAccountName,
@@ -167,10 +165,10 @@ export const Transaction: FC<TransactionProps> = async ({
             <div data-testid="transaction-categories">
               <Heading disableResponsiveSizing>Categories</Heading>
               <div className="divide-y [&>div:not(:first-child)]:pt-4 [&>div:not(:last-child)]:pb-4">
-                {categoryDetails.map((category) => (
+                {categoryDetails.map((category, index) => (
                   <DetailsList
                     testId="category-details"
-                    key={category[0].label}
+                    key={category[0].label + index}
                     items={category}
                   />
                 ))}
