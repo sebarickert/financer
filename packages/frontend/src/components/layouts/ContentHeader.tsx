@@ -19,10 +19,11 @@ export const ContentHeader: FC<ContentHeaderProps> = ({
   return (
     <header
       className={clsx(
+        'vt-name-[content-header]',
         'max-lg:bg-layer/85 max-lg:backdrop-blur max-lg:border-b',
-        'max-lg:fixed max-lg:inset-x-0 max-lg:top-0',
+        'max-lg:fixed max-lg:inset-x-0 max-lg:top-0 z-[100]',
         'max-lg:text-center max-lg:px-1 max-lg:h-14',
-        'grid items-center grid-cols-[48px,1fr,48px] z-[100] relative',
+        'grid items-center grid-cols-[48px,1fr,48px]',
         'lg:flex lg:gap-4 lg:mb-6',
       )}
     >
