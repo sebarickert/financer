@@ -15,6 +15,7 @@ export type LayoutProps = {
   backLink?: string;
   headerAction?: React.ReactNode;
   contextualNavigationItems?: ContextualNavigationItem[];
+  isLoading?: boolean;
 };
 
 export const Layout = ({
@@ -23,10 +24,11 @@ export const Layout = ({
   backLink,
   headerAction,
   contextualNavigationItems,
+  isLoading,
 }: LayoutProps): JSX.Element => {
   return (
     <>
-      <Header />
+      <Header isLoading={isLoading} />
       <main
         className={clsx(
           'pt-12 pb-safe-offset-12 px-4 lg:px-8',

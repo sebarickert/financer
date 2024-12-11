@@ -153,7 +153,6 @@ test.describe('Transfer Transactions', () => {
 
       const templateDetails = await getTemplateFormValues(page);
 
-      await page.getByRole('link', { name: 'Accounts' }).click();
       await page.getByTestId('add-transaction').click();
 
       await switchTransactionType(page, TransactionType.Transfer);

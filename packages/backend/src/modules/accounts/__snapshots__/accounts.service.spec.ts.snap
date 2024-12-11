@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AccountsService should return an account from findOne 1`] = `
+exports[`AccountsService should return an account from findOneWithCurrentBalance 1`] = `
 AccountDto {
   "balance": "5728.67",
   "createdAt": 2024-05-10T10:21:18.333Z,

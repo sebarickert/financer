@@ -10,19 +10,15 @@ import { AccountService } from '$ssr/api/AccountService';
 type StatisticsLayoutProps = Omit<LayoutProps, 'contextualNavigationItems'>;
 
 export const StatisticsLayout: FC<StatisticsLayoutProps> = async ({
-  title,
   children,
-  backLink,
-  headerAction,
+  ...rest
 }) => {
   const accounts = await AccountService.getAll();
 
   return (
     <Layout
-      title={title}
       contextualNavigationItems={statisticsContextualNavigationItems}
-      backLink={backLink}
-      headerAction={headerAction}
+      {...rest}
     >
       {!accounts.length && (
         <InfoMessageBlock

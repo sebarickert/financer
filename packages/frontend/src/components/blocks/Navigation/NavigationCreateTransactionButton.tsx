@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { Plus } from 'lucide-react';
-import { FC } from 'react';
+import { FC, Suspense } from 'react';
 
 import { Drawer } from '$blocks/Drawer';
 import { Button } from '$elements/Button/Button';
@@ -9,11 +9,63 @@ import { CategoryService } from '$ssr/api/CategoryService';
 import { TransactionTemplateService } from '$ssr/api/TransactionTemplateService';
 import { UserPreferenceService } from '$ssr/api/UserPreferenceService';
 
+type CreateTransactionButtonProps = {
+  id?: string;
+  isDisabled?: boolean;
+};
+
+const CreateTransactionButton: FC<CreateTransactionButtonProps> = ({
+  id,
+  isDisabled,
+}) => {
+  return (
+    <Button
+      accentColor="unstyled"
+      haptic="heavy"
+      type="button"
+      aria-label="Add Transaction"
+      className={clsx(
+        'text-base rounded-md text-center',
+        'items-center justify-center',
+        'max-lg:flex max-lg:flex-col max-lg:h-full max-lg:!w-full max-lg:rounded-none',
+        'lg:button-primary lg:py-3 lg:h-12 lg:px-[18px] lg:text-base',
+      )}
+      popoverTarget={id}
+      data-testid="add-transaction"
+      isDisabled={isDisabled}
+    >
+      <Plus />
+      <span className="max-lg:hidden">
+        <span className="sr-only">Add</span> Transaction
+      </span>
+    </Button>
+  );
+};
+
+type NavigationCreateTransactionButtonSuspenseProps = {
+  className?: string;
+  isLoading?: boolean;
+};
+
+export const NavigationCreateTransactionButtonSuspense: FC<
+  NavigationCreateTransactionButtonSuspenseProps
+> = ({ isLoading, className }) => {
+  if (isLoading) {
+    return <CreateTransactionButton isDisabled />;
+  }
+
+  return (
+    <Suspense fallback={<CreateTransactionButton isDisabled />}>
+      <NavigationCreateTransactionButton className={className} />
+    </Suspense>
+  );
+};
+
 type NavigationCreateTransactionButtonProps = {
   className?: string;
 };
 
-export const NavigationCreateTransactionButton: FC<
+const NavigationCreateTransactionButton: FC<
   NavigationCreateTransactionButtonProps
 > = async ({ className }) => {
   const id = 'navigationCreateTransactionButton';
@@ -44,25 +96,7 @@ export const NavigationCreateTransactionButton: FC<
           transactionTemplates={templates}
         />
       </Drawer>
-      <Button
-        accentColor="unstyled"
-        haptic="heavy"
-        type="button"
-        aria-label="Add Transaction"
-        className={clsx(
-          'text-base rounded-md text-center',
-          'items-center justify-center',
-          'max-lg:flex max-lg:flex-col max-lg:h-full max-lg:!w-full max-lg:rounded-none',
-          'lg:button-primary lg:py-3 lg:h-12 lg:px-[18px] lg:text-base',
-        )}
-        popoverTarget={id}
-        data-testid="add-transaction"
-      >
-        <Plus />
-        <span className="max-lg:hidden">
-          <span className="sr-only">Add</span> Transaction
-        </span>
-      </Button>
+      <CreateTransactionButton id={id} />
     </li>
   );
 };

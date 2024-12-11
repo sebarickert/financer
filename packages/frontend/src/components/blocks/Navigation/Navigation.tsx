@@ -1,12 +1,16 @@
 import clsx from 'clsx';
 import { FC } from 'react';
 
-import { NavigationCreateTransactionButton } from './NavigationCreateTransactionButton';
+import { NavigationCreateTransactionButtonSuspense } from './NavigationCreateTransactionButton';
 import { NavigationItem } from './NavigationItem';
 
 import { NAVIGATION_ITEMS } from '$constants/NAVIGATION_ITEMS';
 
-export const Navigation: FC = () => {
+type NavigationProps = {
+  isLoading?: boolean;
+};
+
+export const Navigation: FC<NavigationProps> = ({ isLoading }) => {
   return (
     <nav className="grow">
       <ul
@@ -25,7 +29,11 @@ export const Navigation: FC = () => {
           {...NAVIGATION_ITEMS.settings}
           className="max-lg:order-5"
         />
-        <NavigationCreateTransactionButton className="max-lg:order-3" />
+
+        <NavigationCreateTransactionButtonSuspense
+          className="max-lg:order-3"
+          isLoading={isLoading}
+        />
       </ul>
     </nav>
   );

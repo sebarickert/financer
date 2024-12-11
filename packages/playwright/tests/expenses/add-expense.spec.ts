@@ -133,7 +133,6 @@ test.describe('Expense Transactions', () => {
 
       const templateDetails = await getTemplateFormValues(page);
 
-      await page.getByRole('link', { name: 'Accounts' }).click();
       await page.getByTestId('add-transaction').click();
 
       const initialFormValues = await getTransactionFormValues(page);

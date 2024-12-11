@@ -15,6 +15,12 @@ export class AccountRepo {
     });
   }
 
+  async count(where: Prisma.AccountWhereInput): Promise<number> {
+    return this.prisma.account.count({
+      where,
+    });
+  }
+
   async findMany(params: {
     skip?: number;
     take?: number;

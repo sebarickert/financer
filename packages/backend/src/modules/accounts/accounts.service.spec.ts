@@ -26,7 +26,9 @@ describe('AccountsService', () => {
   let accountBalanceChangesService: AccountBalanceChangesService;
   let transactionsService: TransactionsService;
 
-  beforeAll(async () => {
+  beforeEach(async () => {
+    jest.resetAllMocks();
+
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         AccountsService,
@@ -52,26 +54,18 @@ describe('AccountsService', () => {
     transactionsService = module.get<TransactionsService>(TransactionsService);
   });
 
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
+  // beforeEach(() => {
+  //   jest.clearAllMocks();
+  // });
 
   it('should return an array of accounts from findAllByUser', async () => {
     jest
       .spyOn(accountRepo, 'findMany')
       .mockResolvedValueOnce(accountsRepoFindAllMockData);
-    // TODO: Clean this mess up, have to figure out a better way to get current date balance
+
     jest
       .spyOn(service, 'getCurrentDateAccountBalance')
-      .mockResolvedValueOnce(new Decimal(0))
-      .mockResolvedValueOnce(new Decimal(0))
-      .mockResolvedValueOnce(new Decimal(0))
-      .mockResolvedValueOnce(new Decimal(0))
-      .mockResolvedValueOnce(new Decimal(0))
-      .mockResolvedValueOnce(new Decimal(0))
-      .mockResolvedValueOnce(new Decimal(0))
-      .mockResolvedValueOnce(new Decimal(0))
-      .mockResolvedValueOnce(new Decimal(0));
+      .mockResolvedValue(new Decimal(0));
 
     jest.spyOn(accountRepo, 'getCount').mockResolvedValueOnce(9);
 
@@ -88,9 +82,9 @@ describe('AccountsService', () => {
     expect(accounts).toMatchSnapshot();
   });
 
-  it('should return an account from findOne', async () => {
+  it('should return an account from findOneWithCurrentBalance', async () => {
     const id = '61460d8554ea082ad0256759';
-    // TODO: Clean this mess up, have to figure out a better way to get current date balance
+
     jest
       .spyOn(accountRepo, 'findOne')
       .mockResolvedValueOnce(accountsRepoFindById[id]);
@@ -99,9 +93,14 @@ describe('AccountsService', () => {
       .spyOn(accountBalanceChangesService, 'findAllByUserAndAccount')
       .mockResolvedValueOnce([]);
 
-    jest.spyOn(transactionsService, 'findAllByUser').mockResolvedValueOnce([]);
+    jest
+      .spyOn(transactionsService, 'findTransactionSummariesByUserAccount')
+      .mockResolvedValueOnce([]);
 
-    const account = await service.findOne(DUMMY_TEST_USER.id, id);
+    const account = await service.findOneWithCurrentBalance(
+      DUMMY_TEST_USER.id,
+      id,
+    );
 
     expect(accountRepo.findOne).toHaveBeenCalledTimes(1);
     expect(accountRepo.findOne).toHaveBeenCalledWith({
@@ -115,15 +114,6 @@ describe('AccountsService', () => {
   it('should return an array of account balance history from getAccountBalanceHistory', async () => {
     const id = '61460d8554ea082ad0256759';
 
-    jest
-      .spyOn(accountRepo, 'findOne')
-      .mockResolvedValueOnce(accountsRepoFindById[id]);
-
-    // TODO: Clean this mess up, have to figure out a better way to get current date balance
-    jest
-      .spyOn(accountBalanceChangesService, 'findAllByUserAndAccount')
-      .mockResolvedValueOnce([]);
-
     jest.spyOn(transactionsService, 'findAllByUser').mockResolvedValueOnce([]);
 
     jest.spyOn(accountBalanceChangeRepo, 'findMany').mockResolvedValueOnce([]);
@@ -134,14 +124,8 @@ describe('AccountsService', () => {
 
     const accountBalanceHistory = await service.getAccountBalanceHistory(
       DUMMY_TEST_USER.id,
-      id,
+      accountsRepoFindById[id],
     );
-
-    expect(accountRepo.findOne).toHaveBeenCalledTimes(1);
-    expect(accountRepo.findOne).toHaveBeenCalledWith({
-      id: '61460d8554ea082ad0256759',
-      userId: '61460d7354ea082ad0256749',
-    });
 
     expect(accountBalanceChangeRepo.findMany).toHaveBeenCalledTimes(1);
     expect(accountBalanceChangeRepo.findMany).toHaveBeenCalledWith({
@@ -153,27 +137,13 @@ describe('AccountsService', () => {
 
     expect(transactionRepo.findMany).toHaveBeenCalledTimes(1);
     expect(transactionRepo.findMany).toHaveBeenCalledWith({
-      include: {
-        categories: {
-          select: {
-            category: {
-              select: {
-                name: true,
-              },
-            },
-            categoryId: true,
-          },
-        },
-        transactionTemplateLog: {
-          select: {
-            id: true,
-          },
-        },
+      select: {
+        amount: true,
+        date: true,
+        fromAccount: true,
+        id: true,
+        toAccount: true,
       },
-      orderBy: {
-        date: 'desc',
-      },
-      take: undefined,
       where: {
         OR: [
           {
@@ -183,6 +153,7 @@ describe('AccountsService', () => {
             fromAccount: '61460d8554ea082ad0256759',
           },
         ],
+        date: undefined,
         userId: '61460d7354ea082ad0256749',
       },
     });
