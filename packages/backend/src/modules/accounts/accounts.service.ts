@@ -61,7 +61,7 @@ export class AccountsService {
 
     const currentDateBalance = await this.getCurrentDateAccountBalance(
       userId,
-      id,
+      account,
     );
 
     const refinedAccount = {
@@ -94,13 +94,13 @@ export class AccountsService {
     });
 
     const currentDateBalances = await Promise.all(
-      accounts.map(async ({ id }) => {
+      accounts.map(async (account) => {
         const currentDateBalance = await this.getCurrentDateAccountBalance(
           userId,
-          id,
+          account,
         );
 
-        return { id, currentDateBalance };
+        return { id: account.id, currentDateBalance };
       }),
     );
 
@@ -178,11 +178,11 @@ export class AccountsService {
 
   async getCurrentDateAccountBalance(
     userId: UserId,
-    accountId: string,
+    account: Account,
   ): Promise<Decimal> {
     const upcomingBalanceChanges = await this.getAccountBalanceHistory(
       userId,
-      accountId,
+      account,
       false,
     );
 
@@ -193,15 +193,13 @@ export class AccountsService {
 
   async getAccountBalanceHistory(
     userId: UserId,
-    accountId: string,
+    account: Account,
     includePastBalanceChanges = true,
   ): Promise<AccountBalanceHistoryDto[]> {
-    const account = await this.findOne(userId, accountId);
-
     const accountBalanceChanges = (
       await this.accountBalanceChangeService.findAllByUserAndAccount(
         userId,
-        accountId,
+        account.id,
         includePastBalanceChanges,
       )
     ).map(({ amount, date }) => ({ amount, date }));
@@ -209,12 +207,12 @@ export class AccountsService {
     const accountTransactions = (
       await this.transactionsService.findTransactionSummariesByUserAccount(
         userId,
-        accountId,
+        account.id,
         includePastBalanceChanges,
       )
     ).map(({ amount, date, toAccount }) => ({
       date,
-      amount: accountId === toAccount ? amount : amount.negated(),
+      amount: account.id === toAccount ? amount : amount.negated(),
     }));
 
     const allBalanceChanges = accountBalanceChanges.concat(accountTransactions);

@@ -123,6 +123,7 @@ export class AccountsController {
     @UserIdDecorator() userId: UserId,
     @Param('id', ValidateEntityId) id: string,
   ) {
-    return this.accountsService.getAccountBalanceHistory(userId, id);
+    const account = await this.accountsService.findOne(userId, id);
+    return this.accountsService.getAccountBalanceHistory(userId, account);
   }
 }
