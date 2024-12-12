@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-@variant dark (&:where(.dark, .dark *));
+@variant dark (&:is(.dark *));
 
 @plugin "@tailwindcss/typography";
 @plugin "@tailwindcss/forms";
