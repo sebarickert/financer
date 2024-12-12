@@ -48,7 +48,7 @@ export const AreaStackedChart: FC<AreaStackedChartProps> = ({
         '[&_.recharts-sector[stroke="#fff"]]:stroke-transparent [&_.recharts-sector]:outline-hidden [&_.recharts-surface]:outline-hidden',
       )}
     >
-      <style jsx>{`
+      <style>{`
         [data-chart='${chartId}'] {
           ${Object.entries(config)
             .map(([key, { color }]) => `--color-${key}: ${color};`)
