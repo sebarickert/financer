@@ -31,7 +31,7 @@ export const DetailsList: FC<DetailsListProps> = ({
         {items.map((item) => (
           <div
             key={item.label}
-            className="grid grid-cols-[auto,1fr] gap-2 items-center"
+            className="grid grid-cols-[auto_1fr] gap-2 items-center"
             data-testid={`${item.testId ?? testId}-item`}
           >
             <dt className="inline-flex items-center gap-2">

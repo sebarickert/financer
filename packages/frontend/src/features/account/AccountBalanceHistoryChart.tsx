@@ -42,7 +42,7 @@ export const AccountBalanceHistoryChart: FC<
   const chartConfig = {
     balance: {
       label: 'Balance',
-      color: 'hsl(var(--color-blue))',
+      color: 'var(--color-blue)',
       valueFormatter: formatCurrency,
     },
   } satisfies ChartConfig;

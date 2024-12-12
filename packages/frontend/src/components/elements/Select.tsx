@@ -124,7 +124,7 @@ export const Select = ({
           {/* Commented out experimental select. */}
           {/* <button
             type="button"
-            className="block w-full pl-3 pr-10 focus-visible:outline-none"
+            className="block w-full pl-3 pr-10 focus-visible:outline-hidden"
             data-slot="custom-select-button"
           >
             <selectedoption

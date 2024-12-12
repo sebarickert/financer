@@ -33,7 +33,7 @@ export const RadialStackedChart: FC<RadialStackedChartProps> = ({
 
   return (
     <div className={clsx(className, 'aspect-square')}>
-      <style jsx>{`
+      <style>{`
         [data-chart='${chartId}'] {
           ${Object.entries(config)
             .map(([key, { color }]) => `--color-${key}: ${color};`)

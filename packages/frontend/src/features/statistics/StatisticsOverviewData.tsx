@@ -39,12 +39,12 @@ export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
   const chartConfig = {
     incomes: {
       label: 'Incomes',
-      color: 'hsl(var(--color-green))',
+      color: 'var(--color-green)',
       valueFormatter: formatCurrency,
     },
     expenses: {
       label: 'Expenses',
-      color: 'hsl(var(--color-red))',
+      color: 'var(--color-red)',
       valueFormatter: formatCurrency,
     },
   } satisfies ChartConfig;

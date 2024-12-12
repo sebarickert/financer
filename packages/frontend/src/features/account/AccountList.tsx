@@ -57,7 +57,7 @@ export const AccountList: FC<AccountListProps> = ({
             transition="slideInFromRight"
             hasHoverEffect={false}
           >
-            <div className="grid grid-cols-[auto,1fr,auto] gap-4 items-center">
+            <div className="grid grid-cols-[auto_1fr_auto] gap-4 items-center">
               <Icon />
               <Heading
                 noMargin
@@ -72,19 +72,16 @@ export const AccountList: FC<AccountListProps> = ({
                   'inline-flex items-center gap-2 text-sm shrink-0 relative text-muted-foreground',
                   'after:w-3 after:h-3 after:rounded-full after:block',
                   type === AccountType.Savings &&
-                    'after:bg-[hsl(var(--account-SAVINGS))]',
-                  type === AccountType.Cash &&
-                    'after:bg-[hsl(var(--account-CASH))]',
+                    'after:bg-(--account-SAVINGS)',
+                  type === AccountType.Cash && 'after:bg-(--account-CASH)',
                   type === AccountType.LongTermSavings &&
-                    'after:bg-[hsl(var(--account-LONG-TERM-SAVINGS))]',
+                    'after:bg-(--account-LONG-TERM-SAVINGS)',
                   type === AccountType.PreAssignedCash &&
-                    'after:bg-[hsl(var(--account-PRE-ASSIGNED-CASH))]',
+                    'after:bg-(--account-PRE-ASSIGNED-CASH)',
                   type === AccountType.Investment &&
-                    'after:bg-[hsl(var(--account-INVESTMENT))]',
-                  type === AccountType.Credit &&
-                    'after:bg-[hsl(var(--account-CREDIT))]',
-                  type === AccountType.Loan &&
-                    'after:bg-[hsl(var(--account-LOAN))]',
+                    'after:bg-(--account-INVESTMENT)',
+                  type === AccountType.Credit && 'after:bg-(--account-CREDIT)',
+                  type === AccountType.Loan && 'after:bg-(--account-LOAN)',
                 )}
               >
                 {ACCOUNT_TYPE_MAPPING[type].label}
@@ -92,7 +89,7 @@ export const AccountList: FC<AccountListProps> = ({
             </div>
             <div className="flex items-end justify-between gap-4">
               <BalanceDisplay
-                className="[&_[data-slot='label']]:sr-only [&_[data-slot='balance']]:text-xl flex-shrink-0"
+                className="[&_[data-slot='label']]:sr-only [&_[data-slot='balance']]:text-xl shrink-0"
                 label="Account Balance"
                 amount={currentDateBalance ?? balance}
               />

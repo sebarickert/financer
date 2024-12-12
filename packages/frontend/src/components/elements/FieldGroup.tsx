@@ -10,7 +10,7 @@ export const FieldGroup: FC<FieldGroupProps> = ({ children }) => {
   return (
     <div
       className={clsx(
-        'grid grid-cols-[theme(spacing.12),1fr] isolate',
+        'grid grid-cols-[calc(var(--spacing)*12)_1fr] isolate',
         '[&>svg]:z-10 [&>svg]:row-start-1 [&>svg]:col-start-1 [&>svg]:place-self-center [&>svg]:text-muted-foreground',
         '[&>[data-slot="control"]]:col-span-2 [&>[data-slot="control"]]:row-start-1 [&>[data-slot="control"]]:col-start-1',
         '[&>svg+[data-slot="control"]]:pl-12',

@@ -38,12 +38,12 @@ export const CustomTooltip: FC<CustomTooltipProps> = ({
 
             return (
               <li key={name}>
-                <p className="grid grid-cols-[auto,1fr] gap-4 items-center">
+                <p className="grid grid-cols-[auto_1fr] gap-4 items-center">
                   <span className="inline-flex items-center gap-2 text-muted-foreground">
                     <span
                       style={tooltipStyle}
                       className={clsx(
-                        `inline-block w-2.5 h-2.5 rounded-sm bg-[--color-bg]`,
+                        `inline-block w-2.5 h-2.5 rounded-xs bg-(--color-bg)`,
                       )}
                     />
                     {label}

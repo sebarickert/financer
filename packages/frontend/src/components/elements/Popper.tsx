@@ -31,8 +31,8 @@ export const Popper: FC<PopperProps> = ({ className, items }) => {
   const popperId = `popper-${crypto.randomUUID()}`;
 
   const popperItemClasses = clsx(
-    'pr-3 w-full !text-left',
-    'grid grid-cols-[40px,1fr] h-11 items-center text-left !gap-0',
+    'pr-3 w-full text-left!',
+    'grid! grid-cols-[40px_1fr] h-11 items-center text-left gap-0!',
     'hover:bg-accent transition-colors focus-visible:ring-inset',
   );
 
@@ -42,7 +42,10 @@ export const Popper: FC<PopperProps> = ({ className, items }) => {
         popoverTarget={popperId}
         accentColor="secondary"
         size="icon"
-        className={clsx('anchor-name-[popover-anchor]', 'max-lg:button-ghost')}
+        className={clsx(
+          '[anchor-name:--popover-anchor]',
+          'max-lg:button-ghost',
+        )}
         id="popover-anchor"
         testId="popper-button"
       >
@@ -56,12 +59,13 @@ export const Popper: FC<PopperProps> = ({ className, items }) => {
           'p-0 rounded-md lg:mt-2',
           'border',
           'fixed lg:absolute inset-[unset]',
-          'supports-[anchor-name]:right-anchor-[popover-anchor] supports-[anchor-name]:top-anchor-[popover-anchor,bottom]',
-          'ease-in-out duration-200 !transition-allow-discrete',
+          'supports-anchor-name:right-[anchor(--popover-anchor_right)] supports-anchor-name:top-[anchor(--popover-anchor_bottom)]',
+          'ease-in-out duration-200 transition-discrete',
+          'opacity-0 open:starting:opacity-0 open:opacity-100',
           'translate-x-0 -translate-y-2',
-          'starting:translate-x-0 starting:-translate-y-2',
-          'opacity-0 starting:opacity-0 open:opacity-100',
-          'supports-[anchor-name]:open:translate-x-0 open:translate-y-0 open:-translate-x-[calc(100%-theme(spacing.12))]',
+          'open:starting:translate-x-0 open:starting:-translate-y-2',
+          'open:translate-y-0',
+          'supports-anchor-name:open:translate-x-0 not-supports-[anchor-name]:open:-translate-x-[calc(100%-calc(var(--spacing)*12))]',
           className,
         )}
         popover="auto"

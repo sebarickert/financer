@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { Plus, X } from 'lucide-react';
+import { Plus, Tag, X } from 'lucide-react';
 import { useEffect, type JSX } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 
@@ -50,7 +50,9 @@ export const TransactionCategories = ({
     !categorySelectOnly && (!transactionAmount || transactionAmount < 0);
   return (
     <>
-      <Heading disableResponsiveSizing>Categories</Heading>
+      <Heading disableResponsiveSizing className="sr-only">
+        Categories
+      </Heading>
       {fields.length === 0 && (
         <Select
           id={`setFirstCategorySelect`}
@@ -59,6 +61,7 @@ export const TransactionCategories = ({
           isLabelHidden
           isDisabled={isSelectDisabled}
           isBleedingEdge={false}
+          Icon={Tag}
           handleOnChange={(event) => {
             const categoryId = event.target.value;
 
@@ -99,7 +102,7 @@ export const TransactionCategories = ({
           type="button"
           className={clsx(
             'focus-visible:focus-highlight w-full text-left',
-            'grid grid-cols-[1fr,auto] gap-2 items-center',
+            'grid grid-cols-[1fr_auto] gap-2 items-center',
             'text-foreground hover:text-muted-foreground',
             {
               'border-t  mt-4 pt-2': !!fields.length,

@@ -69,27 +69,27 @@ export const AccountTypeBalanceChart: FC<AccountTypeBalanceChartProps> = ({
   const chartConfig = {
     [AccountType.Savings]: {
       label: ACCOUNT_TYPE_MAPPING[AccountType.Savings].label,
-      color: 'hsl(var(--account-SAVINGS))',
+      color: 'var(--account-SAVINGS)',
       valueFormatter: calculateBalancePercentage,
     },
     [AccountType.Cash]: {
       label: ACCOUNT_TYPE_MAPPING[AccountType.Cash].label,
-      color: 'hsl(var(--account-CASH))',
+      color: 'var(--account-CASH)',
       valueFormatter: calculateBalancePercentage,
     },
     [AccountType.LongTermSavings]: {
       label: ACCOUNT_TYPE_MAPPING[AccountType.LongTermSavings].label,
-      color: 'hsl(var(--account-LONG-TERM-SAVINGS))',
+      color: 'var(--account-LONG-TERM-SAVINGS)',
       valueFormatter: calculateBalancePercentage,
     },
     [AccountType.PreAssignedCash]: {
       label: ACCOUNT_TYPE_MAPPING[AccountType.PreAssignedCash].label,
-      color: 'hsl(var(--account-PRE-ASSIGNED-CASH))',
+      color: 'var(--account-PRE-ASSIGNED-CASH)',
       valueFormatter: calculateBalancePercentage,
     },
     [AccountType.Investment]: {
       label: ACCOUNT_TYPE_MAPPING[AccountType.Investment].label,
-      color: 'hsl(var(--account-INVESTMENT))',
+      color: 'var(--account-INVESTMENT)',
       valueFormatter: calculateBalancePercentage,
     },
   } satisfies ChartConfig;
@@ -111,13 +111,13 @@ export const AccountTypeBalanceChart: FC<AccountTypeBalanceChartProps> = ({
 
   return (
     <div className={clsx(className, 'bg-layer rounded-md p-6 @container')}>
-      <div className="grid @[645px]:grid-cols-[300px,1fr] lg:@[645px]:grid-cols-[350px,1fr] @[645px]:gap-4 items-center">
+      <div className="grid @[645px]:grid-cols-[300px_1fr] lg:@[645px]:grid-cols-[350px_1fr] @[645px]:gap-4 items-center">
         <PieChartDonut
           config={chartConfig}
           data={chartData}
           className={clsx(
-            'max-w-[300px] w-full place-self-center -mt-8',
-            '@[645px]:max-w-none @[645px]:-my-6',
+            '@max-w-[645px]:max-w-[300px] w-full place-self-center -mt-8',
+            '@[645px]:-my-6',
           )}
         />
         <DetailsList items={accountDetails} />

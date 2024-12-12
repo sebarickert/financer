@@ -22,7 +22,7 @@ export const ContextualNavigation: FC<ContextualNavigationProps> = ({
       data-slot="contextual-navigation"
       className={clsx(
         'z-[100] focus-within:z-[101]',
-        'fixed left-0 right-0 top-[--gutter-top]',
+        'fixed left-0 right-0 top-(--gutter-top)',
         'bg-layer/85 backdrop-blur',
         'shadow-[inset_0_-1px] shadow-accent',
         'vt-name-[contextual-navigation]',
@@ -31,7 +31,7 @@ export const ContextualNavigation: FC<ContextualNavigationProps> = ({
       <Container className={clsx('')}>
         <ul
           className={clsx(
-            'h-[--contextual-navigation-height] px-4 lg:px-8',
+            'h-(--contextual-navigation-height) px-4 lg:px-8',
             'flex items-center gap-6',
             'overflow-y-scroll scroll-smooth [scrollbar-width:none]',
           )}
