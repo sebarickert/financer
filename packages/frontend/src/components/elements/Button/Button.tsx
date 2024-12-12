@@ -59,17 +59,21 @@ export const Button: FC<ButtonProps> = ({
     icon: clsx('h-12 w-12'),
   };
 
-  const buttonClasses = clsx(className, buttonStyles.base, {
-    ['text-base rounded-md text-center']:
-      (size === 'icon' || size === 'default') && accentColor !== 'unstyled',
-    [buttonStyles.default]: size === 'default' && accentColor !== 'unstyled',
-    [buttonStyles.icon]: size === 'icon' && accentColor !== 'unstyled',
-    ['button-primary']: accentColor === 'primary',
-    ['button-secondary']: accentColor === 'secondary',
-    ['button-danger']: accentColor === 'danger',
-    ['button-ghost']: accentColor === 'ghost',
-    ['']: accentColor === 'unstyled',
-  });
+  const buttonClasses = clsx(
+    buttonStyles.base,
+    {
+      ['text-base rounded-md text-center']:
+        (size === 'icon' || size === 'default') && accentColor !== 'unstyled',
+      [buttonStyles.default]: size === 'default' && accentColor !== 'unstyled',
+      [buttonStyles.icon]: size === 'icon' && accentColor !== 'unstyled',
+      ['button-primary']: accentColor === 'primary',
+      ['button-secondary']: accentColor === 'secondary',
+      ['button-danger']: accentColor === 'danger',
+      ['button-ghost']: accentColor === 'ghost',
+      ['']: accentColor === 'unstyled',
+    },
+    className,
+  );
 
   const onClickWithHaptic = useCallback(() => {
     hapticRunner(haptic);
