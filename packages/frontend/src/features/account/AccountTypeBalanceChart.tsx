@@ -111,13 +111,13 @@ export const AccountTypeBalanceChart: FC<AccountTypeBalanceChartProps> = ({
 
   return (
     <div className={clsx(className, 'bg-layer rounded-md p-6 @container')}>
-      <div className="grid @[645px]:grid-cols-[300px,1fr] lg:@[645px]:grid-cols-[350px,1fr] @[645px]:gap-4 items-center">
+      <div className="grid @[645px]:grid-cols-[300px_1fr] @[645px]:grid-cols-[350px_1fr] @[645px]:gap-4 items-center">
         <PieChartDonut
           config={chartConfig}
           data={chartData}
           className={clsx(
-            'max-w-[300px] w-full place-self-center -mt-8',
-            '@[645px]:max-w-none @[645px]:-my-6',
+            '@max-w-[645px]:max-w-[300px] w-full place-self-center -mt-8',
+            '@[645px]:-my-6',
           )}
         />
         <DetailsList items={accountDetails} />

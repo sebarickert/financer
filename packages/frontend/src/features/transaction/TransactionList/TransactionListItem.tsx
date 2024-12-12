@@ -45,7 +45,7 @@ export const TransactionListItem: FC<
         <TransactionTypeIcon type={type} isRecurring={isRecurring} />
       </div>
       <div
-        className={clsx('grid grid-cols-[auto,1fr] items-center gap-2 grow')}
+        className={clsx('grid grid-cols-[auto_1fr] items-center gap-2 grow')}
       >
         <div className="inline-flex flex-col truncate">
           <span data-testid="transaction-description">{description}</span>

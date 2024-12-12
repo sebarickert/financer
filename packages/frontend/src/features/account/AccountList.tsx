@@ -57,7 +57,7 @@ export const AccountList: FC<AccountListProps> = ({
             transition="slideInFromRight"
             hasHoverEffect={false}
           >
-            <div className="grid grid-cols-[auto,1fr,auto] gap-4 items-center">
+            <div className="grid grid-cols-[auto_1fr_auto] gap-4 items-center">
               <Icon />
               <Heading
                 noMargin

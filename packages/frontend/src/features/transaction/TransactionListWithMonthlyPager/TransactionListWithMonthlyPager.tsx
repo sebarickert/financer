@@ -62,7 +62,7 @@ export const TransactionListWithMonthlyPager: FC<
 
   return (
     <section className={clsx('flex flex-col', className)}>
-      <div className={clsx('grid lg:grid-cols-[minmax(350px,auto),1fr] gap-6')}>
+      <div className={clsx('grid lg:grid-cols-[minmax(350px,auto)_1fr] gap-6')}>
         <div
           className={clsx(
             'self-baseline lg:sticky lg:top-[calc(var(--gutter-top)+theme(spacing.4))] relative isolate',

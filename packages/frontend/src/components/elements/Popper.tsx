@@ -32,7 +32,7 @@ export const Popper: FC<PopperProps> = ({ className, items }) => {
 
   const popperItemClasses = clsx(
     'pr-3 w-full !text-left',
-    'grid grid-cols-[40px,1fr] h-11 items-center text-left !gap-0',
+    'grid grid-cols-[40px_1fr] h-11 items-center text-left !gap-0',
     'hover:bg-accent transition-colors focus-visible:ring-inset',
   );
 

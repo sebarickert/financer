@@ -84,7 +84,7 @@ export const TransactionListWithMonthlySummary: FC<
       className={clsx('@container')}
       data-testid="transaction-list-monthly-summary"
     >
-      <div className="@lg:grid @lg:grid-cols-[auto,1fr] @lg:gap-8">
+      <div className="@lg:grid @lg:grid-cols-[auto_1fr] @lg:gap-8">
         <RadialStackedChart
           data={chartData}
           config={chartConfig}

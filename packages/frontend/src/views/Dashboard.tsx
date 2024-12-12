@@ -67,7 +67,7 @@ export const Dashboard: FC = async () => {
 
   return (
     <section className="grid gap-6">
-      <div className="grid lg:grid-cols-[1fr,2fr] gap-6">
+      <div className="grid lg:grid-cols-[1fr_2fr] gap-6">
         <div className="grid gap-6 self-baseline">
           <DashboardBalanceSummary
             {...{

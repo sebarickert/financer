@@ -49,7 +49,7 @@ export const TransactionCategoriesItem: FC<TransactionCategoriesItemProps> = ({
     >
       <summary
         className={clsx(
-          'grid grid-cols-[auto,1fr,auto] gap-2',
+          'grid grid-cols-[auto_1fr_auto] gap-2',
           'p-3 h-12 rounded-md bg-layer hover:bg-accent text-foreground',
           'hover:cursor-pointer focus-visible:focus-highlight',
           'mr-[56px]',
@@ -67,7 +67,7 @@ export const TransactionCategoriesItem: FC<TransactionCategoriesItemProps> = ({
       </summary>
       <div
         className={clsx(
-          'grid gap-2 items-center grid-cols-[1fr,.5fr,auto] mt-2',
+          'grid gap-2 items-center grid-cols-[1fr_.5fr_auto] mt-2',
         )}
       >
         <Select

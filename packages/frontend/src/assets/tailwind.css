@@ -121,34 +121,50 @@
   ::picker(select) {
     @apply p-2 border rounded-md shadow-none lg:mt-2 bg-background;
   } */
+}
 
-  .button-primary {
-    @apply text-white! bg-[hsl(var(--button-primary))] hover:bg-[hsl(var(--button-primary-hover))] active:bg-[hsl(var(--button-primary-active))];
-  }
+@utility theme-field {
+  @apply border-none appearance-none focus-visible:focus-highlight bg-layer hover:bg-accent text-foreground disabled:pointer-events-none disabled:opacity-50 [&::placeholder]:text-muted-foreground autofill:text-foreground autofill:bg-layer;
+}
 
-  .button-secondary {
-    @apply bg-layer hover:bg-accent text-foreground!;
-  }
+@utility theme-field-inverse {
+  @apply border-none bg-background appearance-none focus-visible:focus-highlight hover:bg-accent text-foreground disabled:pointer-events-none disabled:opacity-50 [&::placeholder]:text-muted-foreground autofill:text-foreground autofill:bg-background;
+}
 
-  .button-danger {
-    @apply text-white! bg-[hsl(var(--button-danger))] hover:bg-[hsl(var(--button-danger-hover))] active:bg-[hsl(var(--button-danger-active))];
-  }
+@utility focus-highlight {
+  @apply outline-hidden ring-3 ring-blue dark:ring-white;
 
-  .button-ghost {
-    @apply text-foreground! bg-transparent hover:bg-accent;
+  @media (prefers-color-scheme: dark) {
+    :root:not(.light) & {
+      @apply ring-white;
+    }
   }
+}
 
-  .focus-highlight {
-    @apply outline-hidden ring-3 ring-blue dark:ring-white;
-  }
+@utility button-primary {
+  @apply text-white! bg-(--button-primary) hover:bg-(--button-primary-hover) active:bg-(--button-primary-active) ring-offset-2 dark:ring-offset-0;
 
-  .theme-field {
-    @apply border-none appearance-none bg-layer hover:bg-accent text-foreground disabled:pointer-events-none disabled:opacity-50 [&::placeholder]:text-muted-foreground autofill:text-foreground autofill:bg-layer;
-    /* @apply border-none appearance-none focus-visible:focus-highlight bg-layer hover:bg-accent text-foreground disabled:pointer-events-none disabled:opacity-50 [&::placeholder]:text-muted-foreground autofill:text-foreground autofill:bg-layer; */
+  @media (prefers-color-scheme: dark) {
+    :root:not(.light) & {
+      @apply ring-offset-0;
+    }
   }
+}
 
-  .theme-field-inverse {
-    @apply border-none bg-background appearance-none hover:bg-accent text-foreground disabled:pointer-events-none disabled:opacity-50 [&::placeholder]:text-muted-foreground autofill:text-foreground autofill:bg-background;
-    /* @apply border-none bg-background appearance-none focus-visible:focus-highlight hover:bg-accent text-foreground disabled:pointer-events-none disabled:opacity-50 [&::placeholder]:text-muted-foreground autofill:text-foreground autofill:bg-background; */
+@utility button-secondary {
+  @apply bg-layer hover:bg-accent text-foreground!;
+}
+
+@utility button-danger {
+  @apply text-white! bg-(--button-danger) hover:bg-(--button-danger-hover) active:bg-(--button-danger-active) ring-offset-2 dark:ring-offset-0;
+
+  @media (prefers-color-scheme: dark) {
+    :root:not(.light) & {
+      @apply ring-offset-0;
+    }
   }
+}
+
+@utility button-ghost {
+  @apply text-foreground! bg-transparent hover:bg-accent;
 }

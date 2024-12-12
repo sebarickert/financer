@@ -51,7 +51,7 @@ export const Button: FC<ButtonProps> = ({
 }): JSX.Element => {
   const buttonStyles = {
     base: clsx(
-      'focus-visible:focus-highlight ring-offset-2 dark:ring-offset-0 whitespace-nowrap',
+      'focus-visible:focus-highlight whitespace-nowrap cursor-pointer',
       'inline-flex items-center justify-center [&:has(svg)]:gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0',
       'disabled:pointer-events-none disabled:opacity-50',
     ),

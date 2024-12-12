@@ -36,7 +36,7 @@ export const AccountTypeRadio: FC<AccountTypeRadioProps> = ({ id, value }) => {
       />
       <div
         className={clsx(
-          'grid grid-cols-[auto,1fr] gap-4 bg-layer h-full',
+          'grid grid-cols-[auto_1fr] gap-4 bg-layer h-full',
           'p-4 rounded-md border relative',
           'peer-focus-visible:focus-highlight peer-hover:bg-accent',
           'before:w-4 before:h-4 before:rounded-full before:bg-background before:absolute before:right-5 before:border before:border-accent before:top-5 before:-translate-y-1/2 before:translate-x-1/2',
