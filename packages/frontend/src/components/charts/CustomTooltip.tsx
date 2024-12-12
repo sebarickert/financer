@@ -43,7 +43,7 @@ export const CustomTooltip: FC<CustomTooltipProps> = ({
                     <span
                       style={tooltipStyle}
                       className={clsx(
-                        `inline-block w-2.5 h-2.5 rounded-sm bg-[--color-bg]`,
+                        `inline-block w-2.5 h-2.5 rounded-sm bg-(--color-bg)`,
                       )}
                     />
                     {label}

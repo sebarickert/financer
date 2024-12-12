@@ -36,7 +36,7 @@ export const Layout = ({
           {
             'mt-[calc(var(--gutter-top)+var(--contextual-navigation-height))]':
               !!contextualNavigationItems?.length,
-            'mt-[--gutter-top]': !contextualNavigationItems?.length,
+            'mt-(--gutter-top)': !contextualNavigationItems?.length,
           },
         )}
         data-testid="layout-root"

@@ -1,66 +1,60 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@variant dark (&:where(.dark, .dark *));
 
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 0.4;
-  }
+@plugin "@tailwindcss/typography";
+@plugin "@tailwindcss/forms";
 
-  50% {
-    opacity: 0.1;
-  }
+@plugin "tailwindcss-safe-area";
+@plugin "tailwindcss-view-transitions";
+
+@theme {
+  --font-*: initial;
+  --font-display: "InterVariable", "sans-serif";
+
+  --color-*: initial;
+  --color-white: hsl(0 0% 100%);
+  --color-blue: hsl(219 99% 53%);
+  --color-dark-blue: hsl(219 99% 40%);
+  --color-orange: hsl(30 100% 60%);
+  --color-red: hsl(357 76% 49%);
+  --color-green: hsl(138 67% 30%);
+  --color-yellow: hsl(45 85% 55%);
+  --color-pink: hsl(340 75% 55%);
+  --color-foreground: hsl(0 0% 9%);
+  --color-muted-foreground: hsl(0 0% 36%);
+  --color-background: hsl(0 0% 100%);
+  --color-layer: hsl(0 0% 96%);
+  --color-accent: hsl(0 0% 91%);
+
+  --header-height: 56px;
+  --content-header-height: 56px;
+  --contextual-navigation-height: 50px;
+  --gutter-top: var(--content-header-height);
+  --gutter-bottom: var(--header-height);
+
+  --account-SAVINGS: var(--color-blue);
+  --account-LONG-TERM-SAVINGS: var(--color-dark-blue);
+  --account-CASH: var(--color-yellow);
+  --account-INVESTMENT: var(--color-green);
+  --account-PRE-ASSIGNED-CASH: var(--color-orange);
+  --account-CREDIT: var(--color-pink);
+  --account-LOAN: var(--color-red);
+
+  --button-primary: hsl(219 99% 53%);
+  --button-primary-hover: hsl(219 99% 40%);
+  --button-primary-active: hsl(219 99% 22%);
+  --button-danger: hsl(357 76% 49%);
+  --button-danger-hover: hsl(357 76% 37%);
+  --button-danger-active: hsl(357 76% 26%);
 }
 
 @layer base {
   @define-mixin dark-mode-styles {
-    --foreground: 0 0% 96%;
-    --muted-foreground: 0 0% 65%;
-    --background: 0 0% 3%;
-    --layer: 0 0% 11%;
-    --accent: 0 0% 16%;
-
-    color-scheme: dark;
-  }
-
-  :root {
-    --header-height: 56px;
-    --content-header-height: 56px;
-    --contextual-navigation-height: 50px;
-    --gutter-top: var(--content-header-height);
-    --gutter-bottom: var(--header-height);
-
-    --foreground: 0 0% 9%;
-    --muted-foreground: 0 0% 36%;
-    --background: 0 0% 100%;
-    --layer: 0 0% 96%;
-    --accent: 0 0% 91%;
-
-    --color-blue: 219 99% 53%;
-    --color-dark-blue: 219 99% 40%;
-    --color-orange: 30 100% 60%;
-    --color-red: 357 76% 49%;
-    --color-green: 138 67% 30%;
-    --color-yellow: 45 85% 55%;
-    --color-pink: 340 75% 55%;
-
-    --account-SAVINGS: var(--color-blue);
-    --account-LONG-TERM-SAVINGS: var(--color-dark-blue);
-    --account-CASH: var(--color-yellow);
-    --account-INVESTMENT: var(--color-green);
-    --account-PRE-ASSIGNED-CASH: var(--color-orange);
-    --account-CREDIT: var(--color-pink);
-    --account-LOAN: var(--color-red);
-
-    --button-primary: 219 99% 53%;
-    --button-primary-hover: 219 99% 40%;
-    --button-primary-active: 219 99% 22%;
-    --button-danger: 357 76% 49%;
-    --button-danger-hover: 357 76% 37%;
-    --button-danger-active: 357 76% 26%;
-
-    color-scheme: light;
+    --color-foreground: hsl(0 0% 96%);
+    --color-muted-foreground: hsl(0 0% 65%);
+    --color-background: hsl(0 0% 3%);
+    --color-layer: hsl(0 0% 11%);
+    --color-accent: hsl(0 0% 16%);
   }
 
   :root.dark {
@@ -81,7 +75,7 @@
     }
   }
 
-  @media (min-width: theme("screens.lg")) {
+  @media (min-width: theme(--breakpoint-lg)) {
     :root {
       --header-height: 64px;
       --content-header-height: minmax(36px, 48px);
@@ -104,7 +98,7 @@
   }
 
   body {
-    @apply text-foreground bg-background;
+    @apply text-foreground bg-background scheme-light dark:scheme-dark;
   }
 
   body:has([data-body-scroll-lock="on"]:popover-open) {
@@ -129,30 +123,32 @@
   } */
 
   .button-primary {
-    @apply !text-white bg-[hsl(var(--button-primary))] hover:bg-[hsl(var(--button-primary-hover))] active:bg-[hsl(var(--button-primary-active))];
+    @apply text-white! bg-[hsl(var(--button-primary))] hover:bg-[hsl(var(--button-primary-hover))] active:bg-[hsl(var(--button-primary-active))];
   }
 
   .button-secondary {
-    @apply bg-layer hover:bg-accent !text-foreground;
+    @apply bg-layer hover:bg-accent text-foreground!;
   }
 
   .button-danger {
-    @apply !text-white bg-[hsl(var(--button-danger))] hover:bg-[hsl(var(--button-danger-hover))] active:bg-[hsl(var(--button-danger-active))];
+    @apply text-white! bg-[hsl(var(--button-danger))] hover:bg-[hsl(var(--button-danger-hover))] active:bg-[hsl(var(--button-danger-active))];
   }
 
   .button-ghost {
-    @apply !text-foreground bg-transparent hover:bg-accent;
+    @apply text-foreground! bg-transparent hover:bg-accent;
   }
 
   .focus-highlight {
-    @apply outline-none ring ring-blue dark:ring-white;
+    @apply outline-hidden ring-3 ring-blue dark:ring-white;
   }
 
   .theme-field {
-    @apply border-none appearance-none focus-visible:focus-highlight bg-layer hover:bg-accent text-foreground disabled:pointer-events-none disabled:opacity-50 [&::placeholder]:text-muted-foreground autofill:text-foreground autofill:bg-layer;
+    @apply border-none appearance-none bg-layer hover:bg-accent text-foreground disabled:pointer-events-none disabled:opacity-50 [&::placeholder]:text-muted-foreground autofill:text-foreground autofill:bg-layer;
+    /* @apply border-none appearance-none focus-visible:focus-highlight bg-layer hover:bg-accent text-foreground disabled:pointer-events-none disabled:opacity-50 [&::placeholder]:text-muted-foreground autofill:text-foreground autofill:bg-layer; */
   }
 
   .theme-field-inverse {
-    @apply border-none bg-background appearance-none focus-visible:focus-highlight hover:bg-accent text-foreground disabled:pointer-events-none disabled:opacity-50 [&::placeholder]:text-muted-foreground autofill:text-foreground autofill:bg-background;
+    @apply border-none bg-background appearance-none hover:bg-accent text-foreground disabled:pointer-events-none disabled:opacity-50 [&::placeholder]:text-muted-foreground autofill:text-foreground autofill:bg-background;
+    /* @apply border-none bg-background appearance-none focus-visible:focus-highlight hover:bg-accent text-foreground disabled:pointer-events-none disabled:opacity-50 [&::placeholder]:text-muted-foreground autofill:text-foreground autofill:bg-background; */
   }
 }

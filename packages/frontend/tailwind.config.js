@@ -5,39 +5,39 @@ const plugin = require("tailwindcss/plugin");
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./(src|app|containers)/**/*.{js,ts,jsx,tsx}"],
-  darkMode: [
-    "variant",
-    [
-      "@media (prefers-color-scheme: dark) { &:not(.light *) }",
-      "&:is(.dark *)",
-    ],
-  ],
+  // darkMode: [
+  //   "variant",
+  //   [
+  //     "@media (prefers-color-scheme: dark) { &:not(.light *) }",
+  //     "&:is(.dark *)",
+  //   ],
+  // ],
   theme: {
-    colors: {
-      transparent: "transparent",
-      current: "currentColor",
-      white: "#ffffff",
-      black: "#000000",
-      blue: "hsl(var(--color-blue))",
-      green: "hsl(var(--color-green))",
-      red: "hsl(var(--color-red))",
-      background: "hsl(var(--background))",
-      layer: "hsl(var(--layer))",
-      foreground: "hsl(var(--foreground))",
-      accent: "hsl(var(--accent))",
-      ["muted-foreground"]: "hsl(var(--muted-foreground))",
-    },
-    extend: {
-      fontFamily: {
-        sans: ["InterVariable", ...defaultTheme.fontFamily.sans],
-      },
-    },
+    // colors: {
+    //   transparent: "transparent",
+    //   current: "currentColor",
+    //   white: "#ffffff",
+    //   black: "#000000",
+    //   blue: "hsl(var(--color-blue))",
+    //   green: "hsl(var(--color-green))",
+    //   red: "hsl(var(--color-red))",
+    //   background: "hsl(var(--background))",
+    //   layer: "hsl(var(--layer))",
+    //   foreground: "hsl(var(--foreground))",
+    //   accent: "hsl(var(--accent))",
+    //   ["muted-foreground"]: "hsl(var(--muted-foreground))",
+    // },
+    // extend: {
+    //   fontFamily: {
+    //     sans: ["InterVariable", ...defaultTheme.fontFamily.sans],
+    //   },
+    // },
   },
   plugins: [
-    require("@tailwindcss/forms"),
-    require("tailwindcss-safe-area"),
-    require("@tailwindcss/typography"),
-    require("tailwindcss-view-transitions"),
+    // require("@tailwindcss/forms"),
+    // require("tailwindcss-safe-area"),
+    // require("@tailwindcss/typography"),
+    // require("tailwindcss-view-transitions"),
     require("@tailwindcss/container-queries"),
     plugin(function ({ addVariant, addUtilities }) {
       addVariant("starting", "@starting-style");

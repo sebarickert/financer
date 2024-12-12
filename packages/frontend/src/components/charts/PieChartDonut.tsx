@@ -35,8 +35,8 @@ export const PieChartDonut: FC<PieChartDonutProps> = ({
         '[&_.recharts-dot[stroke="#fff"]]:stroke-transparent',
         '[&_.recharts-curve[stroke="#ccc"]]:stroke-accent',
         '[&_.recharts-sector[stroke="#fff"]]:stroke-transparent',
-        '[&_.recharts-layer]:outline-none',
-        '[&_.recharts-sector[stroke="#fff"]]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none',
+        '[&_.recharts-layer]:outline-hidden',
+        '[&_.recharts-sector[stroke="#fff"]]:stroke-transparent [&_.recharts-sector]:outline-hidden [&_.recharts-surface]:outline-hidden',
       )}
     >
       <style jsx>{`

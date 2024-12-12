@@ -45,7 +45,7 @@ export const AreaStackedChart: FC<AreaStackedChartProps> = ({
         '[&_.recharts-cartesian-grid_line[stroke="#ccc"]]:stroke-accent',
         '[&_.recharts-dot[stroke="#fff"]]:stroke-transparent',
         '[&_.recharts-curve[stroke="#ccc"]]:stroke-accent',
-        '[&_.recharts-sector[stroke="#fff"]]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none',
+        '[&_.recharts-sector[stroke="#fff"]]:stroke-transparent [&_.recharts-sector]:outline-hidden [&_.recharts-surface]:outline-hidden',
       )}
     >
       <style jsx>{`

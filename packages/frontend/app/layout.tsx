@@ -92,8 +92,8 @@ const RootLayout: FC<ChildrenProp> = async ({ children }) => {
       </head>
       <body
         className={clsx(
-          'max-lg:pb-[--gutter-bottom]',
-          '[&:has([data-slot="contextual-navigation"])_[data-slot="transaction-list-summary"]]:lg:top-[calc(var(--gutter-top)+var(--contextual-navigation-height)+theme(spacing.4))]',
+          'max-lg:pb-(--gutter-bottom)',
+          '[&:has([data-slot="contextual-navigation"])_[data-slot="transaction-list-summary"]]:lg:top-[calc(var(--gutter-top)+var(--contextual-navigation-height)+calc(var(--spacing)*4))]',
         )}
       >
         <RootProviderContainer

@@ -92,7 +92,7 @@ export const AccountList: FC<AccountListProps> = ({
             </div>
             <div className="flex items-end justify-between gap-4">
               <BalanceDisplay
-                className="[&_[data-slot='label']]:sr-only [&_[data-slot='balance']]:text-xl flex-shrink-0"
+                className="[&_[data-slot='label']]:sr-only [&_[data-slot='balance']]:text-xl shrink-0"
                 label="Account Balance"
                 amount={currentDateBalance ?? balance}
               />
