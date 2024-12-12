@@ -48,17 +48,13 @@
   --button-danger-active: hsl(357 76% 26%);
 }
 
-@layer base {
-  @define-mixin dark-mode-styles {
+@layer theme {
+  :root.dark {
     --color-foreground: hsl(0 0% 96%);
     --color-muted-foreground: hsl(0 0% 65%);
     --color-background: hsl(0 0% 3%);
     --color-layer: hsl(0 0% 11%);
     --color-accent: hsl(0 0% 16%);
-  }
-
-  :root.dark {
-    @mixin dark-mode-styles;
 
     /* ::picker(select) {
       @apply border-accent bg-background;
@@ -67,14 +63,20 @@
 
   @media (prefers-color-scheme: dark) {
     :root:not(.light) {
-      @mixin dark-mode-styles;
+      --color-foreground: hsl(0 0% 96%);
+      --color-muted-foreground: hsl(0 0% 65%);
+      --color-background: hsl(0 0% 3%);
+      --color-layer: hsl(0 0% 11%);
+      --color-accent: hsl(0 0% 16%);
 
       /* ::picker(select) {
         @apply border-accent bg-background;
       } */
     }
   }
+}
 
+@layer base {
   @media (min-width: theme(--breakpoint-lg)) {
     :root {
       --header-height: 64px;
