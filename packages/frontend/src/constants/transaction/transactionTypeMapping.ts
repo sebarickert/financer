@@ -14,11 +14,11 @@ export const transactionTypeThemeMapping: Record<
 > = {
   [TransactionType.Income]: {
     color: 'bg-green/15',
-    hsl: 'hsl(var(--color-green))',
+    hsl: 'var(--color-green)',
   },
   [TransactionType.Expense]: {
     color: 'bg-red/15',
-    hsl: 'hsl(var(--color-red))',
+    hsl: 'var(--color-red)',
   },
   [TransactionType.Transfer]: {
     color: 'bg-accent',

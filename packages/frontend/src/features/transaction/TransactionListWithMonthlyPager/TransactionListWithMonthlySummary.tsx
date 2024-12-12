@@ -66,11 +66,11 @@ export const TransactionListWithMonthlySummary: FC<
   const chartConfig = {
     income: {
       label: 'Income',
-      color: 'hsl(var(--color-green))',
+      color: 'var(--color-green)',
     },
     expense: {
       label: 'Expense',
-      color: 'hsl(var(--color-red))',
+      color: 'var(--color-red)',
     },
   } satisfies ChartConfig;
 
