@@ -19,6 +19,7 @@ export const StatisticsLayout: FC<StatisticsLayoutProps> = async ({
     <Layout
       contextualNavigationItems={statisticsContextualNavigationItems}
       {...rest}
+      title="Statistics"
     >
       {!accounts.length && (
         <InfoMessageBlock

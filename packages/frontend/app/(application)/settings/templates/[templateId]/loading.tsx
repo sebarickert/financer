@@ -1,10 +1,10 @@
 import { Loader } from '$elements/Loader';
-import { SettingsLayout } from '$features/settings/SettingsLayout';
+import { Layout } from '$layouts/Layout';
 
 export default function Loading() {
   return (
-    <SettingsLayout title="" isLoading>
+    <Layout title="" isLoading>
       <Loader />
-    </SettingsLayout>
+    </Layout>
   );
 }

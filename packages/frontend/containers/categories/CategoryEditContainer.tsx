@@ -4,7 +4,7 @@ import { FC } from 'react';
 import { handleCategoryEdit } from '$actions/category/handleCategoryEdit';
 import { settingsPaths } from '$constants/settings-paths';
 import { CategoryForm } from '$features/category/CategoryForm';
-import { SettingsLayout } from '$features/settings/SettingsLayout';
+import { Layout } from '$layouts/Layout';
 import { CategoryService } from '$ssr/api/CategoryService';
 
 type CategoryEditContainerProps = {
@@ -24,7 +24,7 @@ export const CategoryEditContainer: FC<CategoryEditContainerProps> = async ({
   const categories = await CategoryService.getAllWithTree();
 
   return (
-    <SettingsLayout
+    <Layout
       title="Edit Category"
       backLink={`${settingsPaths.categories}/${category.id}`}
     >
@@ -35,6 +35,6 @@ export const CategoryEditContainer: FC<CategoryEditContainerProps> = async ({
         initialValues={category}
         transactionCategoriesWithCategoryTree={categories}
       />
-    </SettingsLayout>
+    </Layout>
   );
 };

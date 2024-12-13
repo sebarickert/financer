@@ -31,17 +31,9 @@ export const Layout = ({
           'pt-12 pb-safe-offset-12 px-4 lg:px-8',
           'mx-auto max-w-screen-xl',
           'mt-(--gutter-top)',
-          // {
-          //   'mt-[calc(var(--gutter-top)+var(--contextual-navigation-height))]':
-          //     !!contextualNavigationItems?.length,
-          //   'mt-(--gutter-top)': !contextualNavigationItems?.length,
-          // },
         )}
         data-testid="layout-root"
       >
-        {/* {!!contextualNavigationItems?.length && (
-          <ContextualNavigation items={contextualNavigationItems} />
-        )} */}
         <ContentHeader
           title={title}
           backLink={backLink}
