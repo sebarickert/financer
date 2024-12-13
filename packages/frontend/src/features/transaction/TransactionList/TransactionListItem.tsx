@@ -34,7 +34,7 @@ export const TransactionListItem: FC<
       href={url}
       testId={id}
       className={clsx(
-        'bg-layer hover:bg-accent',
+        'bg-layer hover:bg-accent active:bg-accent',
         'p-4 relative',
         'flex items-center gap-4',
       )}

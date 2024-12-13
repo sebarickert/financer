@@ -49,7 +49,8 @@ export const Link = ({
     'focus-visible:focus-highlight text-foreground',
     className,
     {
-      'hover:text-muted-foreground': hasHoverEffect,
+      'hover:text-muted-foreground active:text-muted-foreground':
+        hasHoverEffect,
     },
   );
   const linkContent = (

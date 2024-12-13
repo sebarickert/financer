@@ -29,7 +29,7 @@ export const ContextualNavigation: FC<ContextualNavigationProps> = ({
                 href={item.url}
                 className={clsx(
                   'inline-block text-sm py-3 relative',
-                  'text-muted-foreground hover:text-foreground aria-[current=page]:text-foreground transition-colors',
+                  'text-muted-foreground hover:text-foreground active:text-foreground aria-[current=page]:text-foreground transition-colors',
                   'after:hidden aria-[current=page]:after:block',
                   'after:absolute after:h-0.5 after:bottom-0 after:left-0 after:right-0 after:bg-blue',
                   !item.isExact &&

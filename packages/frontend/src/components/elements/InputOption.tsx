@@ -40,10 +40,12 @@ export const InputOption = ({
         className={clsx(
           'flex items-center gap-4',
           'p-4 rounded-md border relative bg-layer h-full',
-          'peer-focus-visible:focus-highlight peer-hover:bg-accent',
+          'peer-focus-visible:focus-highlight peer-hover:bg-accent peer-active:bg-accent',
           'peer-checked:bg-blue/15 peer-checked:border-blue peer-checked:[&_[data-slot="indicator"]]:after:block peer-checked:[&_[data-slot="indicator"]]:border-blue',
-          type === 'radio' && 'peer-checked:hover:bg-blue/15',
-          type === 'checkbox' && 'peer-checked:hover:bg-blue/25',
+          type === 'radio' &&
+            'peer-checked:hover:bg-blue/15 peer-checked:active:bg-blue/15',
+          type === 'checkbox' &&
+            'peer-checked:hover:bg-blue/25 peer-checked:active:bg-blue/25',
         )}
       >
         {Icon && <Icon className="w-7 h-7 shrink-0" />}
