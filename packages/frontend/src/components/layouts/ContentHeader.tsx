@@ -97,7 +97,7 @@ export const ContentHeader: FC<ContentHeaderProps> = ({
                     'flex w-full py-3 px-3 h-12 rounded-md',
                     'items-center justify-between',
                     'transition-colors',
-                    'text-muted-foreground hover:text-foreground',
+                    'text-muted-foreground hover:text-foreground active:text-foreground',
                     'aria-[current=page]:text-foreground aria-[current=page]:bg-accent aria-[current=page]:[&_svg]:hidden',
                     !item.isExact &&
                       '[&[data-active-sub-page="true"]]:text-foreground',

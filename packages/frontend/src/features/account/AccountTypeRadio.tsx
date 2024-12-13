@@ -38,10 +38,10 @@ export const AccountTypeRadio: FC<AccountTypeRadioProps> = ({ id, value }) => {
         className={clsx(
           'grid grid-cols-[auto_1fr] gap-4 bg-layer h-full',
           'p-4 rounded-md border relative',
-          'peer-focus-visible:focus-highlight peer-hover:bg-accent',
+          'peer-focus-visible:focus-highlight peer-hover:bg-accent peer-active:bg-accent',
           'before:w-4 before:h-4 before:rounded-full before:bg-background before:absolute before:right-5 before:border before:border-accent before:top-5 before:-translate-y-1/2 before:translate-x-1/2',
           'after:hidden after:w-2 after:h-2 after:rounded-full after:bg-blue after:absolute after:right-5 after:top-5 after:-translate-y-1/2 after:translate-x-1/2',
-          'peer-checked:bg-blue/15 peer-checked:border-blue peer-checked:hover:bg-blue/15 peer-checked:after:block peer-checked:before:border-blue',
+          'peer-checked:bg-blue/15 peer-checked:border-blue peer-checked:hover:bg-blue/15 peer-checked:active:bg-blue/15 peer-checked:after:block peer-checked:before:border-blue',
         )}
       >
         <Icon />

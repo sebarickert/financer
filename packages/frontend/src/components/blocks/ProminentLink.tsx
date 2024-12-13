@@ -28,7 +28,7 @@ export const ProminentLink: FC<ProminentLinkProps> = ({
       className={clsx(
         'relative pl-4 pr-3 py-5',
         'flex gap-4 items-center',
-        'bg-layer hover:bg-accent',
+        'bg-layer hover:bg-accent active:bg-accent',
         {
           [className]: true,
         },

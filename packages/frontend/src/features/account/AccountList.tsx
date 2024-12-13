@@ -50,7 +50,7 @@ export const AccountList: FC<AccountListProps> = ({
             testId="account-row"
             key={id}
             className={clsx(
-              'bg-layer hover:bg-accent',
+              'bg-layer hover:bg-accent active:bg-accent',
               'p-4 rounded-md',
               'grid gap-4',
             )}

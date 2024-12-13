@@ -46,8 +46,8 @@ export const ThemeSwitcherItem: FC<ThemeSwitcherItemProps> = ({
         className={clsx(
           'my-1 py-2',
           'flex items-center justify-center text-sm rounded-md',
-          'peer-checked:bg-background peer-checked:hover:bg-background',
-          'peer-focus-visible:focus-highlight peer-hover:cursor-pointer peer-hover:bg-accent',
+          'peer-checked:bg-background peer-checked:hover:bg-background peer-checked:active:bg-background',
+          'peer-focus-visible:focus-highlight peer-hover:cursor-pointer peer-hover:bg-accent peer-active:cursor-pointer peer-active::bg-accent',
         )}
       >
         <Icon />

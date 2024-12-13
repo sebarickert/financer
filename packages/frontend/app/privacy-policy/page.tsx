@@ -35,7 +35,7 @@ const PrivacyPolicy = async () => {
           'prose',
           'prose-headings:text-foreground prose-p:text-foreground prose-strong:text-foreground',
           'prose-ol:text-foreground prose-ul:text-foreground marker:text-muted-foreground',
-          'prose-a:text-foreground focus-visible:prose-a:focus-highlight hover:prose-a:text-muted-foreground',
+          'prose-a:text-foreground focus-visible:prose-a:focus-highlight hover:prose-a:text-muted-foreground active:prose-a:text-muted-foreground',
         )}
       >
         <p>
