@@ -1,6 +1,7 @@
 import { fillUpdateMarketValueForm } from '$utils/account/fillUpdateMarketValueForm';
 import { getAccountDetails } from '$utils/account/getAccountDetails';
 import { applyFixture } from '$utils/applyFixture';
+import { clickContextualNavigationItem } from '$utils/common/clickContextualNavigationItem';
 import { clickPopperItem } from '$utils/common/clickPopperItem';
 import { test, expect } from '$utils/financer-page';
 import { getTransactionDataFromTransactionList } from '$utils/transaction/getTransactionDataFromTransactionList';
@@ -54,7 +55,7 @@ test.describe('Market Update Preferences', () => {
     );
 
     await page.getByRole('link', { name: 'Settings' }).click();
-    await page.getByRole('link', { name: 'Preferences' }).click();
+    await clickContextualNavigationItem(page, 'Preferences');
     await page.getByRole('link', { name: 'Market Update Settings' }).click();
 
     await page

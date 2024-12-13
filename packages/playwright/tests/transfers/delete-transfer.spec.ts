@@ -1,5 +1,6 @@
 import { getAccountBalanceFromAccountListByName } from '$utils/account/getAccountBalanceFromAccountListByName';
 import { applyFixture } from '$utils/applyFixture';
+import { clickContextualNavigationItem } from '$utils/common/clickContextualNavigationItem';
 import { test, expect } from '$utils/financer-page';
 import { deleteTransaction } from '$utils/transaction/deleteTransaction';
 import { getTransactionDetails } from '$utils/transaction/getTransactionDetails';
@@ -31,7 +32,7 @@ test.describe('Delete Transfer', () => {
     await expect(page).not.toHaveURL(`/statistics/transfers/${id}`);
 
     await page.getByRole('link', { name: 'Statistics' }).click();
-    await page.getByRole('link', { name: 'Transfers' }).click();
+    await clickContextualNavigationItem(page, 'Transfers');
 
     await expect(
       page.getByTestId('transaction-list-item').getByTestId(id),

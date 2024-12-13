@@ -3,7 +3,7 @@ import { Layout } from '$layouts/Layout';
 
 export default function Loading() {
   return (
-    <Layout title="" isLoading>
+    <Layout title="Market Update Settings" isLoading>
       <Loader />
     </Layout>
   );

@@ -28,7 +28,6 @@
 
   --header-height: 56px;
   --content-header-height: 56px;
-  --contextual-navigation-height: 50px;
   --gutter-top: var(--content-header-height);
   --gutter-bottom: var(--header-height);
 

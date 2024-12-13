@@ -2,6 +2,7 @@ import Decimal from 'decimal.js';
 
 import { getAccountBalanceFromAccountListByName } from '$utils/account/getAccountBalanceFromAccountListByName';
 import { applyFixture } from '$utils/applyFixture';
+import { clickContextualNavigationItem } from '$utils/common/clickContextualNavigationItem';
 import { clickPopperItem } from '$utils/common/clickPopperItem';
 import { test, expect } from '$utils/financer-page';
 import { fillTransactionForm } from '$utils/transaction/fillTransactionForm';
@@ -70,7 +71,7 @@ test.describe('Income Transactions', () => {
       );
 
       await page.getByRole('link', { name: 'Statistics' }).click();
-      await page.getByRole('link', { name: 'Incomes' }).click();
+      await clickContextualNavigationItem(page, 'Incomes');
       await expect(page.getByTestId(id)).toContainText(updatedDescription);
     });
 
