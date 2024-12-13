@@ -20,17 +20,7 @@ export const ContextualNavigation: FC<ContextualNavigationProps> = ({
   className,
 }) => {
   return (
-    <nav
-      data-slot="contextual-navigation"
-      className={
-        clsx(className)
-        // 'z-[100] focus-within:z-[101]',
-        // 'fixed left-0 right-0 top-(--gutter-top)',
-        // 'bg-layer/85 backdrop-blur',
-        // 'shadow-[inset_0_-1px] shadow-accent',
-        // 'vt-name-[contextual-navigation]',
-      }
-    >
+    <nav data-slot="contextual-navigation" className={clsx(className)}>
       <Container className={clsx('')}>
         <ul className={clsx('flex items-center gap-6')}>
           {items.map((item) => (

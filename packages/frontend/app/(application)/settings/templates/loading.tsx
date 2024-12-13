@@ -3,7 +3,7 @@ import { SettingsLayout } from '$features/settings/SettingsLayout';
 
 export default function Loading() {
   return (
-    <SettingsLayout title="" isLoading>
+    <SettingsLayout title="Templates" isLoading>
       <Loader />
     </SettingsLayout>
   );
