@@ -2,6 +2,12 @@
   "jest.runMode": { "type": "on-demand", "revealOutput": "on-run" },
   "tailwindCSS.experimental.configFile": "./packages/frontend/src/assets/tailwind.css",
   "tailwindCSS.experimental.classRegex": [["clsx\\(([^)]*)\\)", "'([^']*)'"]],
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
   "eslint.workingDirectories": [
     {
       "directory": "./packages/frontend",

@@ -47,7 +47,6 @@
   --button-danger-hover: hsl(357 76% 37%);
   --button-danger-active: hsl(357 76% 26%);
 }
-
 @layer theme {
   :root.dark {
     --color-foreground: hsl(0 0% 96%);
@@ -55,10 +54,21 @@
     --color-background: hsl(0 0% 3%);
     --color-layer: hsl(0 0% 11%);
     --color-accent: hsl(0 0% 16%);
+    @apply scheme-dark;
 
     /* ::picker(select) {
       @apply border-accent bg-background;
     } */
+  }
+
+  :root.light {
+    @apply scheme-light;
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root:not(.dark) {
+      @apply scheme-light;
+    }
   }
 
   @media (prefers-color-scheme: dark) {
@@ -68,6 +78,7 @@
       --color-background: hsl(0 0% 3%);
       --color-layer: hsl(0 0% 11%);
       --color-accent: hsl(0 0% 16%);
+      @apply scheme-dark;
 
       /* ::picker(select) {
         @apply border-accent bg-background;
@@ -100,7 +111,7 @@
   }
 
   body {
-    @apply text-foreground bg-background scheme-light dark:scheme-dark;
+    @apply text-foreground bg-background;
   }
 
   body:has([data-body-scroll-lock="on"]:popover-open) {
