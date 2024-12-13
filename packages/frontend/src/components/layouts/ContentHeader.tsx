@@ -61,8 +61,9 @@ export const ContentHeader: FC<ContentHeaderProps> = ({
             <Button
               className="lg:hidden focus-visible:ring-inset gap-1!"
               accentColor="ghost"
-              popoverTarget="plaa"
+              popoverTarget="mobile-contextual-navigation"
               popoverTargetAction="show"
+              testId="contextual-navigation-button"
             >
               {title}
               <ChevronDown />
@@ -85,7 +86,7 @@ export const ContentHeader: FC<ContentHeaderProps> = ({
         )}
       </header>
       {!!contextualNavigationItems?.length && (
-        <Drawer id="plaa" heading="Explore">
+        <Drawer id="mobile-contextual-navigation" heading="Explore">
           <ul className={clsx('grid gap-1')}>
             {contextualNavigationItems.map((item) => (
               <li key={item.url}>

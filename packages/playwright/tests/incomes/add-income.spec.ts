@@ -3,6 +3,7 @@ import Decimal from 'decimal.js';
 import { TransactionType } from '$types/generated/financer';
 import { getAccountBalanceFromAccountListByName } from '$utils/account/getAccountBalanceFromAccountListByName';
 import { applyFixture } from '$utils/applyFixture';
+import { clickContextualNavigationItem } from '$utils/common/clickContextualNavigationItem';
 import { getEmptyListErrorMessageByBrowserName } from '$utils/common/getEmptyListErrorMessageByBrowserName';
 import { test, expect } from '$utils/financer-page';
 import { getTemplateFormValues } from '$utils/template/getTemplateFormValues';
@@ -57,7 +58,7 @@ test.describe('Income Transactions', () => {
       expect(updatedAccountBalance).toEqual(initialAccountBalance.plus(15.5));
 
       await page.getByRole('link', { name: 'Statistics' }).click();
-      await page.getByRole('link', { name: 'Incomes' }).click();
+      await clickContextualNavigationItem(page, 'Incomes');
 
       await expect(
         page

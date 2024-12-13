@@ -3,6 +3,7 @@ import Decimal from 'decimal.js';
 import { TransactionType } from '$types/generated/financer';
 import { getAccountBalanceFromAccountListByName } from '$utils/account/getAccountBalanceFromAccountListByName';
 import { applyFixture } from '$utils/applyFixture';
+import { clickContextualNavigationItem } from '$utils/common/clickContextualNavigationItem';
 import { getEmptyListErrorMessageByBrowserName } from '$utils/common/getEmptyListErrorMessageByBrowserName';
 import { test, expect } from '$utils/financer-page';
 import { getTemplateFormValues } from '$utils/template/getTemplateFormValues';
@@ -67,7 +68,7 @@ test.describe('Transfer Transactions', () => {
       );
 
       await page.getByRole('link', { name: 'Statistics' }).click();
-      await page.getByRole('link', { name: 'Transfers' }).click();
+      await clickContextualNavigationItem(page, 'Transfers');
 
       await expect(
         page

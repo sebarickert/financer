@@ -1,5 +1,6 @@
 import { TransactionType } from '$types/generated/financer';
 import { applyFixture } from '$utils/applyFixture';
+import { clickContextualNavigationItem } from '$utils/common/clickContextualNavigationItem';
 import { test, expect } from '$utils/financer-page';
 import { getTransactionFormValues } from '$utils/transaction/getTransactionFormValues';
 import { switchTransactionType } from '$utils/transaction/switchTransactionType';
@@ -30,7 +31,7 @@ test.describe('Default Account Preferences', () => {
     await page.getByRole('button', { name: 'Close drawer' }).click();
 
     await page.getByRole('link', { name: 'Settings' }).click();
-    await page.getByRole('link', { name: 'Preferences' }).click();
+    await clickContextualNavigationItem(page, 'Preferences');
     await page.getByRole('link', { name: 'Default Account Settings' }).click();
 
     await page
