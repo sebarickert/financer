@@ -159,11 +159,11 @@ export const Transaction: FC<TransactionProps> = async ({
             </p>
           )}
         </div>
-        <div className={clsx('grid gap-8', '')}>
+        <div className={clsx('grid gap-6', '')}>
           <DetailsList items={transactionDetails} />
           {categoryDetails.length > 0 && (
             <div data-testid="transaction-categories">
-              <Heading disableResponsiveSizing>Categories</Heading>
+              <Heading>Categories</Heading>
               <div className="divide-y [&>div:not(:first-child)]:pt-4 [&>div:not(:last-child)]:pb-4">
                 {categoryDetails.map((category, index) => (
                   <DetailsList

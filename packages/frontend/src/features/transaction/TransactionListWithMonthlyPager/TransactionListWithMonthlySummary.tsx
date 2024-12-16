@@ -1,19 +1,16 @@
-import clsx from 'clsx';
 import { FC } from 'react';
 
 import { TRANSACTION_TYPE_ICON_MAPPING } from '../TransactionTypeIcon';
 
 import { TransactionType } from '$api/generated/financerApi';
+import { BalanceDisplay } from '$blocks/BalanceDisplay';
 import { DetailsList, DetailsItem } from '$blocks/DetailsList';
-import { RadialStackedChart } from '$charts/RadialStackedChart';
 import { transactionTypeLabelMapping } from '$constants/transaction/transactionTypeMapping';
 import {
   TransactionListOptions,
   TransactionService,
 } from '$ssr/api/TransactionService';
 import { UserPreferenceService } from '$ssr/api/UserPreferenceService';
-import { ChartConfig } from '$types/ChartConfig';
-import { ChartData } from '$types/ChartData';
 import { capitalize } from '$utils/capitalize';
 import { formatCurrency } from '$utils/formatCurrency';
 
@@ -55,44 +52,13 @@ export const TransactionListWithMonthlySummary: FC<
     },
   ];
 
-  const chartData = [
-    {
-      dataKey: 'summary',
-      expense: monthlySummary.expenseAmount,
-      income: monthlySummary.incomeAmount,
-    },
-  ] satisfies ChartData;
-
-  const chartConfig = {
-    income: {
-      label: 'Income',
-      color: 'var(--color-green)',
-    },
-    expense: {
-      label: 'Expense',
-      color: 'var(--color-red)',
-    },
-  } satisfies ChartConfig;
-
-  const chartLabel = {
-    primary: formatCurrency(monthlySummary.totalAmount),
-    secondary: 'Balance',
-  };
+  const calculatedBalance =
+    monthlySummary.incomeAmount - monthlySummary.expenseAmount;
 
   return (
-    <div
-      className={clsx('@container')}
-      data-testid="transaction-list-monthly-summary"
-    >
-      <div className="@lg:grid @lg:grid-cols-[auto_1fr] @lg:gap-8">
-        <RadialStackedChart
-          data={chartData}
-          config={chartConfig}
-          label={chartLabel}
-          className="max-w-[200px] -mb-14 mx-auto @lg:-mb-20 pointer-events-none"
-        />
-        <DetailsList items={monthlyDetails} className="@lg:self-center" />
-      </div>
+    <div data-testid="transaction-list-monthly-summary" className="grid gap-6">
+      <BalanceDisplay label="Balance" amount={calculatedBalance} />
+      <DetailsList items={monthlyDetails} />
     </div>
   );
 };

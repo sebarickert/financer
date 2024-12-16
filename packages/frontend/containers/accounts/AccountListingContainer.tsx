@@ -60,7 +60,7 @@ export const AccountListingContainer: FC = async () => {
       )}
       <div className="grid gap-6">
         <AccountTypeBalanceChart data={accounts} className="self-baseline" />
-        <div className="grid gap-8">
+        <div className="grid gap-6">
           <AccountList label="Savings" accounts={groupedAccounts.savings} />
           <AccountList
             label="Investments"

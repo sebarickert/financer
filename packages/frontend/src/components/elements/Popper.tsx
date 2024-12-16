@@ -72,9 +72,7 @@ export const Popper: FC<PopperProps> = ({ className, items }) => {
         id={popperId}
         data-testid="popper-container"
       >
-        <Heading disableResponsiveSizing variant="h2" className="sr-only">
-          Options
-        </Heading>
+        <Heading className="sr-only">Options</Heading>
         <List>
           {items?.map(
             ({ Icon, label, href, popperId: itemPopperId }, index) => {

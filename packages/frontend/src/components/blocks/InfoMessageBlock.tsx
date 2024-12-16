@@ -35,7 +35,7 @@ export const InfoMessageBlock: FC<InfoMessageBlockProps> = ({
   if (variant === 'barebone') {
     return (
       <div className={clsx(className)}>
-        <Heading disableResponsiveSizing noMargin className="mb-2">
+        <Heading noMargin className="mb-2">
           {title}
         </Heading>
         <p className="max-w-lg [&:has(+*)]:mb-6 text-muted-foreground">
@@ -66,9 +66,7 @@ export const InfoMessageBlock: FC<InfoMessageBlockProps> = ({
           <Icon className="w-10 h-10" />
         </div>
       )}
-      <Heading disableResponsiveSizing noMargin className="mb-2">
-        {title}
-      </Heading>
+      <Heading>{title}</Heading>
       <p className="max-w-lg mx-auto [&:has(+*)]:mb-6 text-muted-foreground">
         {children}
       </p>

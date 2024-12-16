@@ -92,7 +92,7 @@ export const CategoryListingContainer: FC = async () => {
         </Button>
       }
     >
-      <section className="grid gap-8">
+      <section className="grid gap-6">
         {!categoryRows.length && (
           <InfoMessageBlock
             title="No Categories Added"

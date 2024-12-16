@@ -9,7 +9,6 @@ type HeadingProps = {
   className?: string;
   testId?: string;
   noMargin?: boolean;
-  disableResponsiveSizing?: boolean;
 };
 
 export const Heading: FC<HeadingProps> = ({
@@ -18,7 +17,6 @@ export const Heading: FC<HeadingProps> = ({
   className = '',
   testId,
   noMargin,
-  disableResponsiveSizing,
 }) => {
   const HeadingType = variant;
 
@@ -26,9 +24,8 @@ export const Heading: FC<HeadingProps> = ({
     <HeadingType
       className={clsx('font-medium', className, {
         'text-lg': variant !== 'h1',
-        'lg:text-2xl': variant !== 'h1' && !disableResponsiveSizing,
         'lg:text-3xl lg:font-semibold': variant === 'h1',
-        ['mb-4']: variant !== 'h1' && !noMargin,
+        ['mb-2']: variant !== 'h1' && !noMargin,
       })}
       data-testid={testId}
       data-slot="heading"
