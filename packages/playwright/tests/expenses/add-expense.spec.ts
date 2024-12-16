@@ -124,7 +124,7 @@ test.describe('Expense Transactions', () => {
     test('should select a template and confirm that fields are prefilled correctly', async ({
       page,
     }) => {
-      await page.getByRole('link', { name: 'Settings' }).click();
+      await page.getByRole('link', { name: 'Dashboard' }).click();
       await page.getByRole('link', { name: 'Templates' }).first().click();
 
       await page
