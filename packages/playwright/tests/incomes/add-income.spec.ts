@@ -94,7 +94,7 @@ test.describe('Income Transactions', () => {
         .getByRole('button', { name: 'Submit' })
         .click();
 
-      await expect(page).toHaveURL(/\/statistics\/incomes\//);
+      await expect(page).toHaveURL(/\/transactions\/incomes\//);
 
       const { categories } = await getTransactionDetails(page);
 

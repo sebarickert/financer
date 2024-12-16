@@ -41,7 +41,7 @@ type TemplateFormFields = {
 export const getTemplateFormValues = async (
   page: Page,
 ): Promise<TemplateFormFields> => {
-  await expect(page).toHaveURL(/\/settings\/templates\/[\da-fA-F-]{36}/i, {
+  await expect(page).toHaveURL(/templates\/[\da-fA-F-]{36}/i, {
     timeout: 5000,
   });
   await expect(page.getByTestId('template-form')).toBeVisible({
