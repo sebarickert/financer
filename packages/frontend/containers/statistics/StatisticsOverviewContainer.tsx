@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
-import { StatisticsLayout } from '$features/statistics/StatisticsLayout';
 import { StatisticsOverviewData } from '$features/statistics/StatisticsOverviewData';
+import { TransactionsLayout } from '$features/transactions/TransactionsLayout';
 import { TransactionService } from '$ssr/api/TransactionService';
 import { UserPreferenceService } from '$ssr/api/UserPreferenceService';
 import { generateDateFromYearAndMonth } from '$utils/generateDateFromYearAndMonth';
@@ -28,8 +28,8 @@ export const StatisticsOverviewContainer: FC = async () => {
     .sort((a, b) => a.date.getTime() - b.date.getTime());
 
   return (
-    <StatisticsLayout title="Overview">
+    <TransactionsLayout title="Statistics">
       <StatisticsOverviewData data={monthlySummaryHistory} />
-    </StatisticsLayout>
+    </TransactionsLayout>
   );
 };

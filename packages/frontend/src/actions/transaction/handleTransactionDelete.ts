@@ -24,5 +24,5 @@ export const handleTransactionDelete: DefaultFormActionHandler<{
 
   await serviceMapping[type].delete(id);
 
-  redirect('/statistics', RedirectType.push);
+  redirect('/transactions', RedirectType.push);
 };

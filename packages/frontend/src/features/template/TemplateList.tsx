@@ -7,7 +7,6 @@ import {
 } from '$api/generated/financerApi';
 import { List } from '$blocks/List';
 import { ProminentLink } from '$blocks/ProminentLink';
-import { settingsPaths } from '$constants/settings-paths';
 
 type TemplateListProps = {
   templates: TransactionTemplateDto[];
@@ -46,7 +45,7 @@ export const TemplateList: FC<TemplateListProps> = ({ templates }) => {
             <ProminentLink
               Icon={TEMPLATE_ICON_MAPPING[templateType[0]]}
               key={id}
-              link={`${settingsPaths.templates}/${id}/edit`}
+              link={`/templates/${id}/edit`}
             >
               {templateName}
             </ProminentLink>

@@ -1,14 +1,14 @@
 import { Metadata } from 'next';
 import { FC } from 'react';
 
-import { StatisticsContainer } from '$container/statistics/StatisticsContainer';
+import { StatisticsOverviewContainer } from '$container/statistics/StatisticsOverviewContainer';
 
 export const metadata: Metadata = {
-  title: 'Transactions',
+  title: 'Statistics',
 };
 
-const StatisticsPage: FC = () => {
-  return <StatisticsContainer />;
+const StatisticsOverviewPage: FC = () => {
+  return <StatisticsOverviewContainer />;
 };
 
-export default StatisticsPage;
+export default StatisticsOverviewPage;

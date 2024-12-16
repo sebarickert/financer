@@ -12,7 +12,7 @@ import { setCategories } from '$utils/transaction/setCategories';
 test.describe('Expense Transactions', () => {
   test.beforeEach(async ({ page }) => {
     await applyFixture();
-    await page.goto('/statistics/expenses');
+    await page.goto('/transactions/expenses');
   });
 
   test.describe('Edit Expense', () => {
@@ -35,7 +35,7 @@ test.describe('Expense Transactions', () => {
           fromAccount as string,
         );
 
-      await page.goto(`/statistics/expenses/${id}`);
+      await page.goto(`/transactions/expenses/${id}`);
       await clickPopperItem(page, 'Edit');
 
       const newAmount = new Decimal(249.99);
@@ -76,7 +76,7 @@ test.describe('Expense Transactions', () => {
         initialAccountBalance.minus(initialAndNewAmountDifference),
       );
 
-      await page.getByRole('link', { name: 'Statistics' }).click();
+      await page.getByRole('link', { name: 'Transactions' }).click();
       await clickContextualNavigationItem(page, 'Expenses');
       await expect(page.getByTestId(id)).toContainText(updatedDescription);
     });
@@ -99,7 +99,7 @@ test.describe('Expense Transactions', () => {
       const initialBalanceForNewAccount =
         await getAccountBalanceFromAccountListByName(page, 'Cash account');
 
-      await page.goto(`/statistics/expenses/${id}`);
+      await page.goto(`/transactions/expenses/${id}`);
       await clickPopperItem(page, 'Edit');
 
       await fillTransactionForm(

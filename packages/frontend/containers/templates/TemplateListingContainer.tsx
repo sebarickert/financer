@@ -2,21 +2,20 @@ import { Layers, Plus } from 'lucide-react';
 import { FC } from 'react';
 
 import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
-import { settingsPaths } from '$constants/settings-paths';
 import { Button } from '$elements/Button/Button';
-import { SettingsLayout } from '$features/settings/SettingsLayout';
 import { TemplateList } from '$features/template/TemplateList';
+import { Layout } from '$layouts/Layout';
 import { TransactionTemplateService } from '$ssr/api/TransactionTemplateService';
 
 export const TemplateListingContainer: FC = async () => {
   const templates = await TransactionTemplateService.getAll();
 
   return (
-    <SettingsLayout
+    <Layout
       title="Templates"
       headerAction={
         <Button
-          href={`${settingsPaths.templates}/add`}
+          href={`/templates/add`}
           accentColor="secondary"
           size="icon"
           testId="add-template"
@@ -31,11 +30,7 @@ export const TemplateListingContainer: FC = async () => {
         <InfoMessageBlock
           title="No Templates Added"
           Icon={Layers}
-          action={
-            <Button href={`${settingsPaths.templates}/add`}>
-              Add Template
-            </Button>
-          }
+          action={<Button href={`/templates/add`}>Add Template</Button>}
         >
           It seems you haven&apos;t added any templates yet. Create your first
           template to predefine values or automate common transactions, making
@@ -43,6 +38,6 @@ export const TemplateListingContainer: FC = async () => {
         </InfoMessageBlock>
       )}
       <TemplateList templates={templates} />
-    </SettingsLayout>
+    </Layout>
   );
 };

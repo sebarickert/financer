@@ -1,4 +1,4 @@
-import { Layers, Tag, TriangleAlert } from 'lucide-react';
+import { TriangleAlert } from 'lucide-react';
 import { FC } from 'react';
 
 import { Role } from '$api/generated/financerApi';
@@ -17,14 +17,6 @@ export const SettingsContainer: FC = async () => {
   return (
     <SettingsLayout title="General">
       <div className="grid gap-8">
-        <List>
-          <ProminentLink link={settingsPaths.templates} Icon={Layers}>
-            Templates
-          </ProminentLink>
-          <ProminentLink link={settingsPaths.categories} Icon={Tag}>
-            Categories
-          </ProminentLink>
-        </List>
         <List>
           {userInfo.roles.includes(Role.TestUser) && (
             <ProminentLink

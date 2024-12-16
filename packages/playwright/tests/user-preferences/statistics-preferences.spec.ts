@@ -3,10 +3,10 @@ import Decimal from 'decimal.js';
 import { applyFixture } from '$utils/applyFixture';
 import { clickContextualNavigationItem } from '$utils/common/clickContextualNavigationItem';
 import { test, expect } from '$utils/financer-page';
-import { getStatisticsDetails } from '$utils/statistics/getStatisticsDetails';
 import { getTransactionDataFromTransactionList } from '$utils/transaction/getTransactionDataFromTransactionList';
+import { getTransactionsDetails } from '$utils/transactions/getTransactionsDetails';
 
-test.describe('Statistics Preferences', () => {
+test.describe('Transactions & Statistics Preferences', () => {
   test.beforeEach(async () => {
     await applyFixture();
   });
@@ -14,13 +14,15 @@ test.describe('Statistics Preferences', () => {
   test('should be able to configure the statistics stats settings', async ({
     page,
   }) => {
-    await page.goto('/statistics');
+    await page.goto('/transactions');
 
-    const initialStatisticsStats = await getStatisticsDetails(page);
+    const initialTransactionsStats = await getTransactionsDetails(page);
 
     await page.getByRole('link', { name: 'Settings' }).click();
     await clickContextualNavigationItem(page, 'Preferences');
-    await page.getByRole('link', { name: 'Statistics Settings' }).click();
+    await page
+      .getByRole('link', { name: 'Transactions & Statistics Settings' })
+      .click();
 
     await page
       .locator('label')
@@ -40,16 +42,16 @@ test.describe('Statistics Preferences', () => {
       await getTransactionDataFromTransactionList(page)
     )[0].amount;
 
-    await page.getByRole('link', { name: 'Statistics' }).click();
+    await page.getByRole('link', { name: 'Transactions' }).click();
 
-    const updatedStatisticsStats = await getStatisticsDetails(page);
+    const updatedTransactionsStats = await getTransactionsDetails(page);
 
-    expect(updatedStatisticsStats.incomes).toEqual(new Decimal(0));
-    expect(updatedStatisticsStats.expenses).toEqual(
+    expect(updatedTransactionsStats.incomes).toEqual(new Decimal(0));
+    expect(updatedTransactionsStats.expenses).toEqual(
       transactionAmount.negated(),
     );
-    expect(updatedStatisticsStats.balance).not.toEqual(
-      initialStatisticsStats.balance,
+    expect(updatedTransactionsStats.balance).not.toEqual(
+      initialTransactionsStats.balance,
     );
   });
 });

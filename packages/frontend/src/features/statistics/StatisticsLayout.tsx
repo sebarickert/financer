@@ -2,7 +2,6 @@ import { Grid2X2 } from 'lucide-react';
 import { FC } from 'react';
 
 import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
-import { statisticsContextualNavigationItems } from '$constants/statisticsContextualNavigationItems';
 import { Button } from '$elements/Button/Button';
 import { Layout, LayoutProps } from '$layouts/Layout';
 import { AccountService } from '$ssr/api/AccountService';
@@ -16,11 +15,7 @@ export const StatisticsLayout: FC<StatisticsLayoutProps> = async ({
   const accounts = await AccountService.getAll();
 
   return (
-    <Layout
-      contextualNavigationItems={statisticsContextualNavigationItems}
-      {...rest}
-      title="Statistics"
-    >
+    <Layout {...rest}>
       {!accounts.length && (
         <InfoMessageBlock
           title="No Accounts Added"

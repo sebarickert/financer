@@ -25,7 +25,7 @@ export const TransactionListItem: FC<
   const isExpense = type === TransactionType.Expense;
   const { color: transactionTypeColor } = transactionTypeThemeMapping[type];
 
-  const url = `/statistics/${type.toLowerCase()}s/${id}`;
+  const url = `/transactions/${type.toLowerCase()}s/${id}`;
   const formattedCategories = categories.map(({ name }) => name).join(', ');
 
   return (

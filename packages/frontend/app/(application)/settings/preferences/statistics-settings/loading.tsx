@@ -3,7 +3,7 @@ import { Layout } from '$layouts/Layout';
 
 export default function Loading() {
   return (
-    <Layout title="Statistics Settings" isLoading>
+    <Layout title="Transactions & Statistics Settings" isLoading>
       <Loader />
     </Layout>
   );

@@ -16,7 +16,7 @@ import { setCategories } from '$utils/transaction/setCategories';
 test.describe('Expense Transactions', () => {
   test.beforeEach(async ({ page }) => {
     await applyFixture();
-    await page.goto('/statistics/expenses');
+    await page.goto('/transactions/expenses');
   });
 
   test.describe('Add Expense', () => {
@@ -53,7 +53,7 @@ test.describe('Expense Transactions', () => {
 
       expect(updatedAccountBalance).toEqual(initialAccountBalance.minus(15.5));
 
-      await page.getByRole('link', { name: 'Statistics' }).click();
+      await page.getByRole('link', { name: 'Transactions' }).click();
       await clickContextualNavigationItem(page, 'Expenses');
 
       await expect(
@@ -87,7 +87,7 @@ test.describe('Expense Transactions', () => {
         .getByRole('button', { name: 'Submit' })
         .click();
 
-      await expect(page).toHaveURL(/\/statistics\/expenses\//);
+      await expect(page).toHaveURL(/\/transactions\/expenses\//);
 
       const { categories } = await getTransactionDetails(page);
 
@@ -124,7 +124,7 @@ test.describe('Expense Transactions', () => {
     test('should select a template and confirm that fields are prefilled correctly', async ({
       page,
     }) => {
-      await page.getByRole('link', { name: 'Settings' }).click();
+      await page.getByRole('link', { name: 'Home' }).click();
       await page.getByRole('link', { name: 'Templates' }).first().click();
 
       await page

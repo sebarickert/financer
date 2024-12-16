@@ -1,12 +1,12 @@
 import { FC } from 'react';
 
-import { StatisticsLayout } from '$features/statistics/StatisticsLayout';
 import { TransactionListWithMonthlyPager } from '$features/transaction/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
+import { TransactionsLayout } from '$features/transactions/TransactionsLayout';
 
-export const StatisticsContainer: FC = () => {
+export const TransactionsContainer: FC = () => {
   return (
-    <StatisticsLayout title="Transactions">
+    <TransactionsLayout title="Transactions">
       <TransactionListWithMonthlyPager isSummaryVisible />
-    </StatisticsLayout>
+    </TransactionsLayout>
   );
 };

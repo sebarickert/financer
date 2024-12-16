@@ -1,7 +1,6 @@
 import { Pencil, Trash } from 'lucide-react';
 import { FC } from 'react';
 
-import { settingsPaths } from '$constants/settings-paths';
 import { Popper } from '$elements/Popper';
 import { CategoryDeleteDrawer } from '$features/category/CategoryDeleteDrawer';
 import { Layout } from '$layouts/Layout';
@@ -19,13 +18,13 @@ export const CategoryContainer: FC<CategoryContainerProps> = async ({ id }) => {
   return (
     <Layout
       title="Category Details"
-      backLink={settingsPaths.categories}
+      backLink={'/categories'}
       headerAction={
         <Popper
           items={[
             {
               label: 'Edit',
-              href: `${settingsPaths.categories}/${category.id}/edit`,
+              href: `/categories/${category.id}/edit`,
               Icon: Pencil,
             },
             {

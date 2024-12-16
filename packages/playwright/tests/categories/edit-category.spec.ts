@@ -8,7 +8,7 @@ import { test, expect } from '$utils/financer-page';
 test.describe('Edit Category', () => {
   test.beforeEach(async ({ page }) => {
     await applyFixture();
-    await page.goto('/settings/categories');
+    await page.goto('/categories');
   });
 
   test.describe('Edit Category Details', () => {

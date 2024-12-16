@@ -44,15 +44,15 @@ export const handleTransactionCreate: DefaultFormActionHandler = async (
   const TransactionDataMapping = {
     [TransactionType.Income]: {
       service: IncomeService,
-      url: '/statistics/incomes',
+      url: '/transactions/incomes',
     },
     [TransactionType.Expense]: {
       service: ExpenseService,
-      url: '/statistics/expenses',
+      url: '/transactions/expenses',
     },
     [TransactionType.Transfer]: {
       service: TransferService,
-      url: '/statistics/transfers',
+      url: '/transactions/transfers',
     },
   };
 

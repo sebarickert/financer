@@ -1,10 +1,10 @@
 import { Loader } from '$elements/Loader';
-import { StatisticsLayout } from '$features/statistics/StatisticsLayout';
+import { TransactionsLayout } from '$features/transactions/TransactionsLayout';
 
 export default function Loading() {
   return (
-    <StatisticsLayout title="" isLoading>
+    <TransactionsLayout title="Statistics" isLoading>
       <Loader />
-    </StatisticsLayout>
+    </TransactionsLayout>
   );
 }

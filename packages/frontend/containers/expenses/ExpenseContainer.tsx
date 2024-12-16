@@ -18,12 +18,12 @@ export const ExpenseContainer: FC<ExpenseContainerProps> = async ({ id }) => {
   return (
     <Layout
       title="Expense Details"
-      backLink="/statistics"
+      backLink="/transactions"
       headerAction={
         <Popper
           items={[
             {
-              href: `/statistics/${expense.type.toLowerCase()}s/${id}/edit`,
+              href: `/transactions/${expense.type.toLowerCase()}s/${id}/edit`,
               Icon: Pencil,
               label: 'Edit',
             },

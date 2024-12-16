@@ -8,9 +8,9 @@ export type NavigationItem = {
 
 export const NAVIGATION_ITEMS: Record<string, NavigationItem> = {
   home: { label: 'Home', url: '/', Icon: Home },
-  statistics: {
-    label: 'Statistics',
-    url: '/statistics/',
+  transactions: {
+    label: 'Transactions',
+    url: '/transactions/',
     Icon: Activity,
   },
   accounts: {

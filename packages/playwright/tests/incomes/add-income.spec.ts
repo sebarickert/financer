@@ -18,7 +18,7 @@ import { switchTransactionType } from '$utils/transaction/switchTransactionType'
 test.describe('Income Transactions', () => {
   test.beforeEach(async ({ page }) => {
     await applyFixture();
-    await page.goto('/statistics/incomes');
+    await page.goto('/transactions/incomes');
   });
 
   test.describe('Add Income', () => {
@@ -57,7 +57,7 @@ test.describe('Income Transactions', () => {
 
       expect(updatedAccountBalance).toEqual(initialAccountBalance.plus(15.5));
 
-      await page.getByRole('link', { name: 'Statistics' }).click();
+      await page.getByRole('link', { name: 'Transactions' }).click();
       await clickContextualNavigationItem(page, 'Incomes');
 
       await expect(
@@ -94,7 +94,7 @@ test.describe('Income Transactions', () => {
         .getByRole('button', { name: 'Submit' })
         .click();
 
-      await expect(page).toHaveURL(/\/statistics\/incomes\//);
+      await expect(page).toHaveURL(/\/transactions\/incomes\//);
 
       const { categories } = await getTransactionDetails(page);
 
@@ -133,7 +133,7 @@ test.describe('Income Transactions', () => {
     test('should select a template and confirm that fields are prefilled correctly', async ({
       page,
     }) => {
-      await page.getByRole('link', { name: 'Settings' }).click();
+      await page.getByRole('link', { name: 'Home' }).click();
       await page.getByRole('link', { name: 'Templates' }).first().click();
 
       await page

@@ -6,7 +6,6 @@ import {
   TransactionCategoryDto,
   TransactionType,
 } from '$api/generated/financerApi';
-import { settingsPaths } from '$constants/settings-paths';
 import { ValidationException } from '$exceptions/validation.exception';
 import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
 import { CategoryService } from '$ssr/api/CategoryService';
@@ -29,5 +28,5 @@ export const handleCategoryEdit: DefaultFormActionHandler<
     return { status: 'ERROR', errors: ['Something went wrong'] };
   }
 
-  redirect(`${settingsPaths.categories}/${category.id}`, RedirectType.push);
+  redirect(`/categories/${category.id}`, RedirectType.push);
 };
