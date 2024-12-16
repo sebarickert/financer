@@ -13,11 +13,6 @@ export const NAVIGATION_ITEMS: Record<string, NavigationItem> = {
     url: '/transactions/',
     Icon: Activity,
   },
-  statistics: {
-    label: 'Statistics',
-    url: '/statistics/',
-    Icon: Activity,
-  },
   accounts: {
     label: 'Accounts',
     url: '/accounts/',
