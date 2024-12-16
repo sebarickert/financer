@@ -20,7 +20,7 @@ export const SettingsPreferencesContainer: FC = () => {
           link={`${settingsPaths.userPreferences}/statistics-settings`}
           Icon={Activity}
         >
-          Statistics Settings
+          Transactions & Statistics Settings
         </ProminentLink>
         <ProminentLink
           link={`${settingsPaths.userPreferences}/default-account-settings`}

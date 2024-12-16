@@ -8,6 +8,11 @@ export type NavigationItem = {
 
 export const NAVIGATION_ITEMS: Record<string, NavigationItem> = {
   home: { label: 'Home', url: '/', Icon: Home },
+  transactions: {
+    label: 'Transactions',
+    url: '/transactions/',
+    Icon: Activity,
+  },
   statistics: {
     label: 'Statistics',
     url: '/statistics/',

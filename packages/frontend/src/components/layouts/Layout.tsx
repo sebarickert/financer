@@ -28,7 +28,7 @@ export const Layout = ({
       <Header isLoading={isLoading} />
       <main
         className={clsx(
-          'pt-12 pb-safe-offset-12 px-4 lg:px-8',
+          'pt-4 lg:pt-12 pb-safe-offset-12 px-4 lg:px-8',
           'mx-auto max-w-screen-xl',
           'mt-(--gutter-top)',
         )}

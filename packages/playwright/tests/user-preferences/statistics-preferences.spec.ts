@@ -20,7 +20,9 @@ test.describe('Statistics Preferences', () => {
 
     await page.getByRole('link', { name: 'Settings' }).click();
     await clickContextualNavigationItem(page, 'Preferences');
-    await page.getByRole('link', { name: 'Statistics Settings' }).click();
+    await page
+      .getByRole('link', { name: 'Transactions & Statistics Settings' })
+      .click();
 
     await page
       .locator('label')

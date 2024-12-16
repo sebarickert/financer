@@ -20,7 +20,8 @@ export const Navigation: FC<NavigationProps> = ({ isLoading }) => {
         )}
       >
         <NavigationItem {...NAVIGATION_ITEMS.home} />
-        <NavigationItem {...NAVIGATION_ITEMS.statistics} />
+        <NavigationItem {...NAVIGATION_ITEMS.transactions} />
+        {/* <NavigationItem {...NAVIGATION_ITEMS.statistics} /> */}
         <NavigationItem
           {...NAVIGATION_ITEMS.accounts}
           className="max-lg:order-4"

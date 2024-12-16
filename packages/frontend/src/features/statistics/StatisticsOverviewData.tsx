@@ -12,6 +12,8 @@ import {
   ChartFilterByMonthsSelect,
   monthFilterOptions,
 } from '$charts/ChartFilterByMonthsSelect';
+import { settingsPaths } from '$constants/settings-paths';
+import { Link } from '$elements/Link';
 import { ChartConfig } from '$types/ChartConfig';
 import {
   formatCurrency,
@@ -125,44 +127,58 @@ export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
   ];
 
   return (
-    <div className="grid gap-4">
-      <div className="overflow-hidden rounded-md bg-layer">
-        <div className="flex justify-end p-4 lg:p-6">
-          <ChartFilterByMonthsSelect
-            dataCount={chartData.length}
-            defaultValue={selectedFilter}
-            onFilterSelect={setSelectedFilter}
+    <>
+      <InfoMessageBlock
+        title="Monthly Summaries"
+        className="mb-6"
+        variant="barebone"
+      >
+        View monthly income and expense summaries, along with calculations based
+        on the account types you&apos;ve selected in your{' '}
+        <Link className="underline" href={settingsPaths.userPreferences}>
+          preferences
+        </Link>
+        .
+      </InfoMessageBlock>
+      <div className="grid gap-4">
+        <div className="overflow-hidden rounded-md bg-layer">
+          <div className="flex justify-end p-4 lg:p-6">
+            <ChartFilterByMonthsSelect
+              dataCount={chartData.length}
+              defaultValue={selectedFilter}
+              onFilterSelect={setSelectedFilter}
+            />
+          </div>
+          <AreaStackedChart
+            data={filteredChartData}
+            config={chartConfig}
+            yaxisTickFormatter={(value: number) => {
+              return formatCurrencyAbbreviation(value);
+            }}
+            xaxisTickFormatter={(value: string) => {
+              const parsedDate = parse(value, DateFormat.monthLong, new Date());
+              return formatDate(parsedDate, DateFormat.month);
+            }}
           />
         </div>
-        <AreaStackedChart
-          data={filteredChartData}
-          config={chartConfig}
-          yaxisTickFormatter={(value: number) => {
-            return formatCurrencyAbbreviation(value);
-          }}
-          xaxisTickFormatter={(value: string) => {
-            const parsedDate = parse(value, DateFormat.monthLong, new Date());
-            return formatDate(parsedDate, DateFormat.month);
-          }}
-        />
-      </div>
-      <div className="p-6 rounded-md bg-layer">
-        <DetailsList heading="Summary" items={summaryDetails} />
-      </div>
-      <div className="grid gap-4 lg:grid-cols-2">
         <div className="p-6 rounded-md bg-layer">
-          <DetailsList
-            heading="Incomes"
-            items={generateTransactionsDetailsItem('incomes')}
-          />
+          <DetailsList heading="Summary" items={summaryDetails} />
         </div>
-        <div className="p-6 rounded-md bg-layer">
-          <DetailsList
-            heading="Expenses"
-            items={generateTransactionsDetailsItem('expenses')}
-          />
+        <div className="grid gap-4 lg:grid-cols-2">
+          <div className="p-6 rounded-md bg-layer">
+            <DetailsList
+              heading="Incomes"
+              items={generateTransactionsDetailsItem('incomes')}
+            />
+          </div>
+          <div className="p-6 rounded-md bg-layer">
+            <DetailsList
+              heading="Expenses"
+              items={generateTransactionsDetailsItem('expenses')}
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };

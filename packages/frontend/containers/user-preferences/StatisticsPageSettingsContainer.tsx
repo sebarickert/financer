@@ -13,7 +13,7 @@ export const StatisticsPageSettingsContainer: FC = async () => {
 
   return (
     <Layout
-      title="Statistics Settings"
+      title="Transactions & Statistics Settings"
       backLink={settingsPaths.userPreferences}
     >
       <InfoMessageBlock
@@ -22,7 +22,7 @@ export const StatisticsPageSettingsContainer: FC = async () => {
         variant="barebone"
       >
         The selected account types will determine the calculated numbers and
-        charts on your statistics pages.
+        charts on your transactions and statistics pages.
       </InfoMessageBlock>
       <UserStatisticsPageSettingsForm
         data={statisticsSettings}
