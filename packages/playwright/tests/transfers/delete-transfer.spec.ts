@@ -31,7 +31,7 @@ test.describe('Delete Transfer', () => {
     await deleteTransaction(page);
     await expect(page).not.toHaveURL(`/transactions/transfers/${id}`);
 
-    await page.getByRole('link', { name: 'Statistics' }).click();
+    await page.getByRole('link', { name: 'Transactions' }).click();
     await clickContextualNavigationItem(page, 'Transfers');
 
     await expect(

@@ -57,7 +57,7 @@ test.describe('Income Transactions', () => {
 
       expect(updatedAccountBalance).toEqual(initialAccountBalance.plus(15.5));
 
-      await page.getByRole('link', { name: 'Statistics' }).click();
+      await page.getByRole('link', { name: 'Transactions' }).click();
       await clickContextualNavigationItem(page, 'Incomes');
 
       await expect(

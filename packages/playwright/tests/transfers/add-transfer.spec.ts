@@ -67,7 +67,7 @@ test.describe('Transfer Transactions', () => {
         initialToAccountBalance.plus(200.51),
       );
 
-      await page.getByRole('link', { name: 'Statistics' }).click();
+      await page.getByRole('link', { name: 'Transactions' }).click();
       await clickContextualNavigationItem(page, 'Transfers');
 
       await expect(

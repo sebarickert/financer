@@ -70,7 +70,7 @@ test.describe('Income Transactions', () => {
         initialAccountBalance.minus(initialAndNewAmountDifference),
       );
 
-      await page.getByRole('link', { name: 'Statistics' }).click();
+      await page.getByRole('link', { name: 'Transactions' }).click();
       await clickContextualNavigationItem(page, 'Incomes');
       await expect(page.getByTestId(id)).toContainText(updatedDescription);
     });
