@@ -59,12 +59,7 @@ export const AccountList: FC<AccountListProps> = ({
           >
             <div className="grid grid-cols-[auto_1fr_auto] gap-4 items-center">
               <Icon />
-              <Heading
-                noMargin
-                disableResponsiveSizing
-                className="truncate"
-                testId="account-name"
-              >
+              <Heading noMargin className="truncate" testId="account-name">
                 {name}
               </Heading>
               <span

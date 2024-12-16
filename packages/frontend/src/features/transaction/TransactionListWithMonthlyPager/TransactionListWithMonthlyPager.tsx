@@ -62,18 +62,11 @@ export const TransactionListWithMonthlyPager: FC<
 
   return (
     <section className={clsx('flex flex-col', className)}>
-      <div className={clsx('grid lg:grid-cols-[minmax(350px,auto)_1fr] gap-6')}>
-        <div
-          className={clsx(
-            'self-baseline lg:sticky lg:top-[calc(var(--gutter-top)+theme(spacing.4))] relative isolate',
-          )}
-          data-slot="transaction-list-summary"
-        >
+      <div className={clsx('grid gap-6')}>
+        <div data-slot="transaction-list-summary">
           <div className={clsx('p-6 rounded-md bg-layer grid gap-4')}>
             <div className="flex items-center justify-between gap-1 h-7">
-              <Heading disableResponsiveSizing noMargin>
-                {pagerLabel}
-              </Heading>
+              <Heading noMargin>{pagerLabel}</Heading>
               <Pager
                 pagerOptions={pagerOptions}
                 isStatusHidden

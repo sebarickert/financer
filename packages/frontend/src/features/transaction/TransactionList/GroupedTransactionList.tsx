@@ -56,7 +56,7 @@ export const GroupedTransactionList: FC<GroupedTransactionListProps> = async ({
   }
 
   return (
-    <section className={clsx('grid gap-8', className)}>
+    <section className={clsx('grid gap-6', className)}>
       {groupedTransactions.map((group) => (
         <TransactionList
           key={group.date}

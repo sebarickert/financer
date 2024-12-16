@@ -16,7 +16,7 @@ export const SettingsContainer: FC = async () => {
 
   return (
     <SettingsLayout title="General">
-      <div className="grid gap-8">
+      <div className="grid gap-6">
         <List>
           {userInfo.roles.includes(Role.TestUser) && (
             <ProminentLink

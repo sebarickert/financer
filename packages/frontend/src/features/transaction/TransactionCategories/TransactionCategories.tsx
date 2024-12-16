@@ -50,9 +50,7 @@ export const TransactionCategories = ({
     !categorySelectOnly && (!transactionAmount || transactionAmount < 0);
   return (
     <>
-      <Heading disableResponsiveSizing className="sr-only">
-        Categories
-      </Heading>
+      <Heading className="sr-only">Categories</Heading>
       {fields.length === 0 && (
         <Select
           id={`setFirstCategorySelect`}

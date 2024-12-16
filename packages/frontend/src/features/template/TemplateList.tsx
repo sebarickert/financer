@@ -34,7 +34,7 @@ export const TemplateList: FC<TemplateListProps> = ({ templates }) => {
     .sort((a) => (a.type === 'MANUAL' ? -1 : 1)); // MANUAL templates should be first
 
   return (
-    <section className="grid gap-8">
+    <section className="grid gap-6">
       {groupedTemplates.map(({ type, items }) => (
         <List
           label={getLabel(type as TransactionTemplateType)}

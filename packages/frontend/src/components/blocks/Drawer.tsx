@@ -62,9 +62,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
             'border-b',
           )}
         >
-          <Heading noMargin disableResponsiveSizing>
-            {heading}
-          </Heading>
+          <Heading noMargin>{heading}</Heading>
           <Button
             size="icon"
             onClick={onClose}
