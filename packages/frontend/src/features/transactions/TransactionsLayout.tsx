@@ -2,20 +2,24 @@ import { Grid2X2 } from 'lucide-react';
 import { FC } from 'react';
 
 import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
+import { transactionsContextualNavigationItems } from '$constants/transactionsContextualNavigationItems';
 import { Button } from '$elements/Button/Button';
 import { Layout, LayoutProps } from '$layouts/Layout';
 import { AccountService } from '$ssr/api/AccountService';
 
-type StatisticsLayoutProps = Omit<LayoutProps, 'contextualNavigationItems'>;
+type TransactionsLayoutProps = Omit<LayoutProps, 'contextualNavigationItems'>;
 
-export const StatisticsLayout: FC<StatisticsLayoutProps> = async ({
+export const TransactionsLayout: FC<TransactionsLayoutProps> = async ({
   children,
   ...rest
 }) => {
   const accounts = await AccountService.getAll();
 
   return (
-    <Layout {...rest}>
+    <Layout
+      {...rest}
+      contextualNavigationItems={transactionsContextualNavigationItems}
+    >
       {!accounts.length && (
         <InfoMessageBlock
           title="No Accounts Added"

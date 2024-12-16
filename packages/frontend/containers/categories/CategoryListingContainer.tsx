@@ -6,7 +6,7 @@ import { List } from '$blocks/List';
 import { ProminentLink } from '$blocks/ProminentLink';
 import { settingsPaths } from '$constants/settings-paths';
 import { Button } from '$elements/Button/Button';
-import { SettingsLayout } from '$features/settings/SettingsLayout';
+import { Layout } from '$layouts/Layout';
 import { CategoryService } from '$ssr/api/CategoryService';
 
 const generateCategoryGroupChild = (
@@ -79,7 +79,7 @@ export const CategoryListingContainer: FC = async () => {
   ];
 
   return (
-    <SettingsLayout
+    <Layout
       title="Categories"
       headerAction={
         <Button
@@ -124,6 +124,6 @@ export const CategoryListingContainer: FC = async () => {
           </List>
         ))}
       </section>
-    </SettingsLayout>
+    </Layout>
   );
 };

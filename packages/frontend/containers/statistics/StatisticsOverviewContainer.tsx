@@ -28,7 +28,7 @@ export const StatisticsOverviewContainer: FC = async () => {
     .sort((a, b) => a.date.getTime() - b.date.getTime());
 
   return (
-    <StatisticsLayout title="Overview">
+    <StatisticsLayout title="Statistics">
       <StatisticsOverviewData data={monthlySummaryHistory} />
     </StatisticsLayout>
   );

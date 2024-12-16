@@ -4,15 +4,15 @@ import { FC } from 'react';
 import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
 import { settingsPaths } from '$constants/settings-paths';
 import { Button } from '$elements/Button/Button';
-import { SettingsLayout } from '$features/settings/SettingsLayout';
 import { TemplateList } from '$features/template/TemplateList';
+import { Layout } from '$layouts/Layout';
 import { TransactionTemplateService } from '$ssr/api/TransactionTemplateService';
 
 export const TemplateListingContainer: FC = async () => {
   const templates = await TransactionTemplateService.getAll();
 
   return (
-    <SettingsLayout
+    <Layout
       title="Templates"
       headerAction={
         <Button
@@ -43,6 +43,6 @@ export const TemplateListingContainer: FC = async () => {
         </InfoMessageBlock>
       )}
       <TemplateList templates={templates} />
-    </SettingsLayout>
+    </Layout>
   );
 };
