@@ -61,7 +61,7 @@ export const TransferEditContainer: FC<TransferEditContainerProps> = async ({
       return { status: 'ERROR', errors: ['Something went wrong'] };
     }
 
-    redirect(`/statistics/transfers/${data.id}`, RedirectType.push);
+    redirect(`/transactions/transfers/${data.id}`, RedirectType.push);
   };
 
   const initialValues = {
@@ -81,7 +81,7 @@ export const TransferEditContainer: FC<TransferEditContainerProps> = async ({
   });
 
   return (
-    <Layout title="Edit Transfer" backLink={`/statistics/transfers/${id}`}>
+    <Layout title="Edit Transfer" backLink={`/transactions/transfers/${id}`}>
       <TransactionForm
         initialValues={initialValues}
         onSubmit={handleSubmit}

@@ -12,7 +12,7 @@ import { setCategories } from '$utils/transaction/setCategories';
 test.describe('Transfer Transactions', () => {
   test.beforeEach(async ({ page }) => {
     await applyFixture();
-    await page.goto('/statistics/transfers');
+    await page.goto('/transactions/transfers');
   });
 
   test.describe('Edit Transfer', () => {
@@ -38,7 +38,7 @@ test.describe('Transfer Transactions', () => {
       const initialToAccountBalance =
         await getAccountBalanceFromAccountListByName(page, toAccount as string);
 
-      await page.goto(`/statistics/transfers/${id}`);
+      await page.goto(`/transactions/transfers/${id}`);
       await clickPopperItem(page, 'Edit');
 
       const newAmount = new Decimal(249.99);
@@ -114,7 +114,7 @@ test.describe('Transfer Transactions', () => {
       const initialBalanceForNewToAccount =
         await getAccountBalanceFromAccountListByName(page, 'Saving account 1');
 
-      await page.goto(`/statistics/transfers/${id}`);
+      await page.goto(`/transactions/transfers/${id}`);
       await clickPopperItem(page, 'Edit');
 
       await fillTransactionForm(

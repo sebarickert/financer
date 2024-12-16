@@ -16,7 +16,7 @@ import { setCategories } from '$utils/transaction/setCategories';
 test.describe('Expense Transactions', () => {
   test.beforeEach(async ({ page }) => {
     await applyFixture();
-    await page.goto('/statistics/expenses');
+    await page.goto('/transactions/expenses');
   });
 
   test.describe('Add Expense', () => {

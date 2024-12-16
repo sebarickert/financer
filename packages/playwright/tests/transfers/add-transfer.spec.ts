@@ -18,7 +18,7 @@ import { switchTransactionType } from '$utils/transaction/switchTransactionType'
 test.describe('Transfer Transactions', () => {
   test.beforeEach(async ({ page }) => {
     await applyFixture();
-    await page.goto('/statistics/transfers');
+    await page.goto('/transactions/transfers');
   });
 
   test.describe('Add Transfer', () => {

@@ -60,7 +60,7 @@ export const EditExpenseContainer: FC<EditExpenseContainerProps> = async ({
       return { status: 'ERROR', errors: ['Something went wrong'] };
     }
 
-    redirect(`/statistics/expenses/${data.id}`, RedirectType.push);
+    redirect(`/transactions/expenses/${data.id}`, RedirectType.push);
   };
 
   const initialValues = {
@@ -80,7 +80,7 @@ export const EditExpenseContainer: FC<EditExpenseContainerProps> = async ({
   });
 
   return (
-    <Layout title="Edit Expense" backLink={`/statistics/expenses/${id}`}>
+    <Layout title="Edit Expense" backLink={`/transactions/expenses/${id}`}>
       <TransactionForm
         initialValues={initialValues}
         onSubmit={handleSubmit}

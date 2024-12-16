@@ -18,12 +18,12 @@ export const TransferContainer: FC<TransferContainerProps> = async ({ id }) => {
   return (
     <Layout
       title="Transfer Details"
-      backLink="/statistics"
+      backLink="/transactions"
       headerAction={
         <Popper
           items={[
             {
-              href: `/statistics/${transfer.type.toLowerCase()}s/${id}/edit`,
+              href: `/transactions/${transfer.type.toLowerCase()}s/${id}/edit`,
               Icon: Pencil,
               label: 'Edit',
             },
