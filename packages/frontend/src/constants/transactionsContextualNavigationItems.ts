@@ -6,4 +6,5 @@ export const transactionsContextualNavigationItems: ContextualNavigationItem[] =
     { label: 'Incomes', url: '/transactions/incomes' },
     { label: 'Expenses', url: '/transactions/expenses' },
     { label: 'Transfers', url: '/transactions/transfers' },
+    { label: 'Statistics', url: '/statistics' },
   ];

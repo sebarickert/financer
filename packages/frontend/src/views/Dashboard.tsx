@@ -84,9 +84,6 @@ export const Dashboard: FC = async () => {
             <ProminentLink link="/templates" Icon={Layers}>
               Templates
             </ProminentLink>
-            <ProminentLink link="/statistics" Icon={ChartLine}>
-              Statistics
-            </ProminentLink>
           </List>
         </div>
         {balanceHistory.length < 3 && (
@@ -99,7 +96,7 @@ export const Dashboard: FC = async () => {
         {balanceHistory.length >= 3 && (
           <DashboardBalanceHistoryChart
             data={balanceHistory}
-            className='lg:h-[440px] [&_[data-slot="chart"]]:lg:h-[440px] [&_[data-slot="chart"]]:lg:aspect-auto'
+            className='lg:h-[375px] [&_[data-slot="chart"]]:lg:h-[279px] [&_[data-slot="chart"]]:lg:aspect-auto'
           />
         )}
       </div>
