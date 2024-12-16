@@ -1,7 +1,6 @@
 import { redirect, RedirectType } from 'next/navigation';
 
 import { TransactionType } from '$api/generated/financerApi';
-import { settingsPaths } from '$constants/settings-paths';
 import { ValidationException } from '$exceptions/validation.exception';
 import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
 import { CategoryService } from '$ssr/api/CategoryService';
@@ -27,5 +26,5 @@ export const handleCategoryAdd: DefaultFormActionHandler = async (
     return { status: 'ERROR', errors: ['Something went wrong'] };
   }
 
-  redirect(settingsPaths.categories, RedirectType.push);
+  redirect('/categories', RedirectType.push);
 };

@@ -4,7 +4,6 @@ import { FC } from 'react';
 import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
 import { List } from '$blocks/List';
 import { ProminentLink } from '$blocks/ProminentLink';
-import { settingsPaths } from '$constants/settings-paths';
 import { Button } from '$elements/Button/Button';
 import { Layout } from '$layouts/Layout';
 import { CategoryService } from '$ssr/api/CategoryService';
@@ -18,7 +17,7 @@ const generateCategoryGroupChild = (
   id: childId,
   label: childName,
   tree: showTree ? tree : '',
-  link: `${settingsPaths.categories}/${childId}`,
+  link: `/categories/${childId}`,
 });
 
 type CategoryParentItem = {
@@ -83,7 +82,7 @@ export const CategoryListingContainer: FC = async () => {
       title="Categories"
       headerAction={
         <Button
-          href={`${settingsPaths.categories}/add`}
+          href={`/categories/add`}
           accentColor="secondary"
           size="icon"
           className="max-lg:button-ghost"
@@ -98,11 +97,7 @@ export const CategoryListingContainer: FC = async () => {
           <InfoMessageBlock
             title="No Categories Added"
             Icon={Tag}
-            action={
-              <Button href={`${settingsPaths.categories}/add`}>
-                Add Category
-              </Button>
-            }
+            action={<Button href={`/categories/add`}>Add Category</Button>}
           >
             It seems you haven&apos;t added any categories yet. Start by adding
             your first category to begin organizing and tracking your finances

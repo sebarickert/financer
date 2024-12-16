@@ -2,7 +2,6 @@ import { notFound } from 'next/navigation';
 import { FC } from 'react';
 
 import { handleCategoryEdit } from '$actions/category/handleCategoryEdit';
-import { settingsPaths } from '$constants/settings-paths';
 import { CategoryForm } from '$features/category/CategoryForm';
 import { Layout } from '$layouts/Layout';
 import { CategoryService } from '$ssr/api/CategoryService';
@@ -24,10 +23,7 @@ export const CategoryEditContainer: FC<CategoryEditContainerProps> = async ({
   const categories = await CategoryService.getAllWithTree();
 
   return (
-    <Layout
-      title="Edit Category"
-      backLink={`${settingsPaths.categories}/${category.id}`}
-    >
+    <Layout title="Edit Category" backLink={`/categories/${category.id}`}>
       <CategoryForm
         onSubmit={handleSubmit}
         submitLabel="Update"
