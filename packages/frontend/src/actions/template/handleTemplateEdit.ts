@@ -7,7 +7,6 @@ import {
   TransactionTemplateType,
   TransactionType,
 } from '$api/generated/financerApi';
-import { settingsPaths } from '$constants/settings-paths';
 import { ValidationException } from '$exceptions/validation.exception';
 import { isCategoriesFormOnlyCategory } from '$features/transaction/TransactionCategories/transaction-categories.types';
 import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
@@ -52,5 +51,5 @@ export const handleTemplateEdit: DefaultFormActionHandler<
     return { status: 'ERROR', errors: ['Something went wrong'] };
   }
 
-  redirect(settingsPaths.templates, RedirectType.push);
+  redirect('/templates', RedirectType.push);
 };

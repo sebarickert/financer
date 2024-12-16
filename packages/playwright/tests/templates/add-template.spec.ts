@@ -56,7 +56,7 @@ const templateData = ({
 test.describe('Add Template', () => {
   test.beforeEach(async ({ page }) => {
     await applyFixture();
-    await page.goto('/settings/templates');
+    await page.goto('/templates');
   });
 
   test('should render the add template button', async ({ page }) => {

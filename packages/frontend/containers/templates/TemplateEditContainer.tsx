@@ -2,7 +2,6 @@ import { notFound } from 'next/navigation';
 import { FC } from 'react';
 
 import { handleTemplateEdit } from '$actions/template/handleTemplateEdit';
-import { settingsPaths } from '$constants/settings-paths';
 import { TemplateDelete } from '$features/template/TemplateDelete';
 import { TemplateForm } from '$features/template/TemplateForm';
 import { Layout } from '$layouts/Layout';
@@ -40,7 +39,7 @@ export const TemplateEditContainer: FC<TemplateEditContainerProps> = async ({
   return (
     <Layout
       title="Edit Template"
-      backLink={settingsPaths.templates}
+      backLink={'/templates'}
       headerAction={<TemplateDelete id={template.id} />}
     >
       <TemplateForm

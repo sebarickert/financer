@@ -6,7 +6,7 @@ import { test, expect } from '$utils/financer-page';
 test.describe('Delete Category', () => {
   test.beforeEach(async ({ page }) => {
     await applyFixture();
-    await page.goto('/settings/categories');
+    await page.goto('/categories');
   });
 
   ['Income category', 'Income sub category', 'Category for all types'].forEach(

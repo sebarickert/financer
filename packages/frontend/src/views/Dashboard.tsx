@@ -78,10 +78,10 @@ export const Dashboard: FC = async () => {
             }}
           />
           <List>
-            <ProminentLink link="/settings/categories" Icon={Tag}>
+            <ProminentLink link="/categories" Icon={Tag}>
               Categories
             </ProminentLink>
-            <ProminentLink link="/settings/templates" Icon={Layers}>
+            <ProminentLink link="/templates" Icon={Layers}>
               Templates
             </ProminentLink>
           </List>

@@ -10,7 +10,7 @@ import { getTemplateFormValues } from '$utils/template/getTemplateFormValues';
 test.describe('Edit Template', () => {
   test.beforeEach(async ({ page }) => {
     await applyFixture();
-    await page.goto('/settings/templates');
+    await page.goto('/templates');
   });
 
   test('should edit template details and verify changes are saved', async ({

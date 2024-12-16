@@ -2,7 +2,6 @@
 
 import { redirect, RedirectType } from 'next/navigation';
 
-import { settingsPaths } from '$constants/settings-paths';
 import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
 import { TransactionTemplateService } from '$ssr/api/TransactionTemplateService';
 
@@ -14,5 +13,5 @@ export const handleTemplateDelete: DefaultFormActionHandler<{
   }
 
   await TransactionTemplateService.delete(id);
-  redirect(settingsPaths.templates, RedirectType.push);
+  redirect('/templates', RedirectType.push);
 };

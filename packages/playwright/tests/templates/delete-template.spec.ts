@@ -6,7 +6,7 @@ import { getTemplateDataFromTemplateList } from '$utils/template/getTemplateData
 test.describe('Delete Template', () => {
   test.beforeEach(async ({ page }) => {
     await applyFixture();
-    await page.goto('/settings/templates');
+    await page.goto('/templates');
   });
 
   test('should delete template and verify it is removed from the list', async ({
