@@ -37,7 +37,7 @@ export const getTransactionsDetails = async (
 
   const balance =
     (await transactionsMonthlySummary
-      .getByTestId('radial-stacked-chart-label-main')
+      .getByTestId('balance-amount')
       .textContent()) ?? '';
 
   return {
