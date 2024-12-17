@@ -1,14 +1,22 @@
 import { Metadata } from 'next';
-import { FC } from 'react';
 
-import { TransactionsContainer } from '$container/transactions/TransactionsContainer';
+import { TransactionListWithMonthlyPager } from '$features/transaction/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
+import { TransactionsLayout } from '$features/transactions/TransactionsLayout';
 
 export const metadata: Metadata = {
   title: 'Transactions',
 };
 
-const TransactionsPage: FC = () => {
-  return <TransactionsContainer />;
-};
+export default async function TransactionsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const queryDate = (await searchParams).date as string | undefined;
 
-export default TransactionsPage;
+  return (
+    <TransactionsLayout title="Transactions">
+      <TransactionListWithMonthlyPager isSummaryVisible queryDate={queryDate} />
+    </TransactionsLayout>
+  );
+}

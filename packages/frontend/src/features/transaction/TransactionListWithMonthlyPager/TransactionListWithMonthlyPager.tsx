@@ -6,20 +6,29 @@ import { GroupedTransactionList } from '../TransactionList/GroupedTransactionLis
 import { TransactionListWithMonthlySummary } from './TransactionListWithMonthlySummary';
 
 import { TransactionType } from '$api/generated/financerApi';
-import { Pager } from '$blocks/pager/pager';
-import { PagerService } from '$blocks/pager/pager.service';
+import { Pager } from '$blocks/Pager';
 import { monthNames } from '$constants/months';
 import { Heading } from '$elements/Heading';
 import {
   TransactionListOptions,
   TransactionService,
 } from '$ssr/api/TransactionService';
+import {
+  getNextMonth,
+  getPreviousMonth,
+  isValidYearMonth,
+} from '$utils/formatDate';
+
+const currentDate = new Date();
+const currentYear = currentDate.getFullYear();
+const currentMonth = currentDate.getMonth() + 1;
 
 type TransactionListingWithMonthlyPagerProps = {
   className?: string;
   isSummaryVisible?: boolean;
   filterOptions?: TransactionListOptions;
   type?: TransactionType | null;
+  queryDate?: string;
 };
 
 export const TransactionListWithMonthlyPager: FC<
@@ -29,30 +38,56 @@ export const TransactionListWithMonthlyPager: FC<
   isSummaryVisible,
   filterOptions: additionalFilterOptions,
   type = null,
+  queryDate,
 }) => {
-  const firstTransaction = await TransactionService.getFirstByType();
-  const lastTransaction = await TransactionService.getLatestByType();
+  const validQueryDate = isValidYearMonth(queryDate)
+    ? queryDate
+    : `${currentYear}-${String(currentMonth).padStart(2, '0')}`;
 
-  const firstAvailableTransaction = new Date(
-    firstTransaction?.date ?? new Date(),
-  );
-  const lastAvailableTransaction = new Date(
-    lastTransaction?.date ?? new Date(),
-  );
-  const pagerOptions = PagerService.getYearMonthPageOptions(
-    firstAvailableTransaction,
-    lastAvailableTransaction,
-  );
+  const year = parseInt(validQueryDate.split('-')[0]);
+  const month = parseInt(validQueryDate.split('-')[1]);
 
   const filterOptions = {
     ...additionalFilterOptions,
-    year: PagerService.getCurrentDateFilter().getFullYear(),
-    month: PagerService.getCurrentDateFilter().getMonth() + 1,
+    year,
+    month,
   };
 
   const transactions = await TransactionService.getAllByType(type as null, {
     ...filterOptions,
   });
+
+  const previousMonth = getPreviousMonth(year, month);
+  const nextMonth = getNextMonth(year, month);
+
+  const previousMonthTransactions = await TransactionService.getAllByType(
+    type as null,
+    {
+      ...additionalFilterOptions,
+      year: previousMonth.year,
+      month: previousMonth.month,
+    },
+  );
+
+  const nextMonthTransactions = await TransactionService.getAllByType(
+    type as null,
+    {
+      ...additionalFilterOptions,
+      year: nextMonth.year,
+      month: nextMonth.month,
+    },
+  );
+
+  const hasPreviousMonth = previousMonthTransactions.length > 0;
+  const hasNextMonth = nextMonthTransactions.length > 0;
+
+  const previousHref = hasPreviousMonth
+    ? `?date=${previousMonth.year}-${String(previousMonth.month).padStart(2, '0')}`
+    : undefined;
+
+  const nextHref = hasNextMonth
+    ? `?date=${nextMonth.year}-${String(nextMonth.month).padStart(2, '0')}`
+    : undefined;
 
   const pageVisibleYear = filterOptions.year;
   const pageVisibleMonth = monthNames[filterOptions.month - 1];
@@ -68,9 +103,9 @@ export const TransactionListWithMonthlyPager: FC<
             <div className="flex items-center justify-between gap-1 h-7">
               <Heading noMargin>{pagerLabel}</Heading>
               <Pager
-                pagerOptions={pagerOptions}
-                isStatusHidden
                 className="-mr-4"
+                nextHref={nextHref}
+                previousHref={previousHref}
               />
             </div>
             {hasSummaryVisible && (
