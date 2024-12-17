@@ -53,10 +53,10 @@ export const TransactionListWithMonthlyPager: FC<
     additionalFilterOptions,
   );
 
-  const firstAvailableTransaction = new Date(
-    firstTransaction?.date ?? new Date(),
-  );
-  // Default to current date if no transactions are available or the last transaction is in the past
+  const firstTransactionDate = new Date(firstTransaction?.date ?? new Date());
+  const firstAvailableTransaction =
+    firstTransactionDate > currentDate ? currentDate : firstTransactionDate;
+
   const lastTransactionDate = new Date(lastTransaction?.date ?? new Date());
   const lastAvailableTransaction =
     lastTransactionDate < currentDate ? currentDate : lastTransactionDate;
