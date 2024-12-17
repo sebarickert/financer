@@ -1,5 +1,6 @@
 import clsx from 'clsx';
-import { Calendar } from 'lucide-react';
+import { parse } from 'date-fns';
+import { redirect, RedirectType } from 'next/navigation';
 import { FC } from 'react';
 
 import { GroupedTransactionList } from '../TransactionList/GroupedTransactionList';
@@ -9,7 +10,6 @@ import { TransactionListWithMonthlySummary } from './TransactionListWithMonthlyS
 import { TransactionType } from '$api/generated/financerApi';
 import { Pager } from '$blocks/Pager';
 import { monthNames } from '$constants/months';
-import { Button } from '$elements/Button/Button';
 import { Heading } from '$elements/Heading';
 import {
   TransactionListOptions,
@@ -40,13 +40,33 @@ export const TransactionListWithMonthlyPager: FC<
   isSummaryVisible,
   filterOptions: additionalFilterOptions,
   type = null,
-  queryDate,
+  queryDate = `${currentYear}-${String(currentMonth).padStart(2, '0')}`,
 }) => {
-  const validQueryDate = isValidYearMonth(queryDate)
-    ? queryDate
-    : `${currentYear}-${String(currentMonth).padStart(2, '0')}`;
+  const firstTransaction = await TransactionService.getFirstByType(
+    type as null,
+    additionalFilterOptions,
+  );
+  const lastTransaction = await TransactionService.getLatestByType(
+    type as null,
+    additionalFilterOptions,
+  );
 
-  const [year, month] = validQueryDate.split('-').map(Number);
+  const firstAvailableTransaction = new Date(
+    firstTransaction?.date ?? new Date(),
+  );
+  // Default to current date if no transactions are available or the last transaction is in the past
+  const lastTransactionDate = new Date(lastTransaction?.date ?? new Date());
+  const lastAvailableTransaction =
+    lastTransactionDate < currentDate ? currentDate : lastTransactionDate;
+
+  if (!isValidYearMonth(queryDate)) {
+    redirect(
+      `?date=${currentYear}-${String(currentMonth).padStart(2, '0')}`,
+      RedirectType.replace,
+    );
+  }
+
+  const [year, month] = queryDate.split('-').map(Number);
 
   const filterOptions = {
     ...additionalFilterOptions,
@@ -62,23 +82,27 @@ export const TransactionListWithMonthlyPager: FC<
   const previousMonth = getPreviousMonth(year, month);
   const nextMonth = getNextMonth(year, month);
 
-  const [previousMonthTransactions, nextMonthTransactions] = await Promise.all([
-    TransactionService.getAllByType(type as null, {
-      ...additionalFilterOptions,
-      year: previousMonth.year,
-      month: previousMonth.month,
-    }),
-    TransactionService.getAllByType(type as null, {
-      ...additionalFilterOptions,
-      year: nextMonth.year,
-      month: nextMonth.month,
-    }),
-  ]);
+  const parsedQueryDate = parse(queryDate, 'yyyy-MM', new Date());
 
-  const hasPreviousMonth = previousMonthTransactions.length > 0;
-  const hasNextMonth = nextMonthTransactions.length > 0;
+  const hasValidMonth =
+    (parsedQueryDate >= firstAvailableTransaction &&
+      parsedQueryDate <= lastAvailableTransaction) ||
+    (parsedQueryDate.getMonth() === firstAvailableTransaction.getMonth() &&
+      parsedQueryDate.getFullYear() ===
+        firstAvailableTransaction.getFullYear() &&
+      parsedQueryDate.getMonth() === lastAvailableTransaction.getMonth() &&
+      parsedQueryDate.getFullYear() === lastAvailableTransaction.getFullYear());
 
-  const currentHref = `?date=${currentYear}-${String(currentMonth).padStart(2, '0')}`;
+  if (!hasValidMonth) {
+    redirect(
+      `?date=${currentYear}-${String(currentMonth).padStart(2, '0')}`,
+      RedirectType.replace,
+    );
+  }
+
+  const hasPreviousMonth = previousMonth.date >= firstAvailableTransaction;
+  const hasNextMonth = nextMonth.date <= lastAvailableTransaction;
+
   const previousHref = hasPreviousMonth
     ? `?date=${previousMonth.year}-${String(previousMonth.month).padStart(2, '0')}`
     : undefined;
@@ -88,10 +112,6 @@ export const TransactionListWithMonthlyPager: FC<
 
   const pagerLabel = `${monthNames[month - 1]} ${year}`;
   const hasSummaryVisible = isSummaryVisible && transactions.length > 0;
-  const isValidButInTheFutureOrPast =
-    !hasPreviousMonth &&
-    !hasNextMonth &&
-    !(year === currentYear && month === currentMonth);
 
   return (
     <div className={clsx('flex flex-col', className)}>
@@ -100,18 +120,11 @@ export const TransactionListWithMonthlyPager: FC<
           <div className={clsx('p-6 rounded-md bg-layer grid gap-4')}>
             <div className="flex items-center justify-between gap-1 h-7">
               <Heading noMargin>{pagerLabel}</Heading>
-              {isValidButInTheFutureOrPast ? (
-                <Button accentColor="primary" href={currentHref}>
-                  <Calendar />
-                  Back to Current Month
-                </Button>
-              ) : (
-                <Pager
-                  className="-mr-4"
-                  nextHref={nextHref}
-                  previousHref={previousHref}
-                />
-              )}
+              <Pager
+                className="-mr-4"
+                nextHref={nextHref}
+                previousHref={previousHref}
+              />
             </div>
             {hasSummaryVisible && (
               <TransactionListWithMonthlySummary

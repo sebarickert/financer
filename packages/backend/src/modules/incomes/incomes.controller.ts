@@ -18,7 +18,7 @@ import {
   ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
-import { AccountType } from '@prisma/client';
+import { AccountType, Prisma } from '@prisma/client';
 
 import { UserId } from '../../types/user-id';
 import { ValidateArrayPipe } from '../../utils/validate-array.pipe';
@@ -66,12 +66,17 @@ export class IncomesController {
     name: 'accountId',
     required: false,
   })
+  @ApiQuery({
+    name: 'sortOrder',
+    required: false,
+  })
   async findAllByUser(
     @UserIdDecorator() userId: UserId,
     @Query('month') month: number,
     @Query('year') year: number,
     @Query('page') page: number,
     @Query('limit') limit: number,
+    @Query('sortOrder') sortOrder: Prisma.SortOrder,
     @Query(
       'accountTypes',
       new ValidateArrayPipe('|', true),
@@ -88,6 +93,7 @@ export class IncomesController {
       month,
       accountTypes,
       accountId,
+      sortOrder,
     );
   }
 

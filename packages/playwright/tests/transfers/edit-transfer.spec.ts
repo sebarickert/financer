@@ -149,14 +149,6 @@ test.describe('Transfer Transactions', () => {
       const updatedBalanceForNewToAccount =
         await getAccountBalanceFromAccountListByName(page, 'Saving account 1');
 
-      console.log(
-        amount,
-        updatedBalanceForPreviousFromAccount,
-        updatedBalanceForNewFromAccount,
-        updatedBalanceForPreviousToAccount,
-        updatedBalanceForNewToAccount,
-      );
-
       const expectedBalanceForPreviousFromAccount =
         initialBalanceForPreviousFromAccount.plus(amount);
       const expectedBalanceForNewFromAccount =

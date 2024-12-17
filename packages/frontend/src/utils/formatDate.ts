@@ -29,6 +29,7 @@ export const getPreviousMonth = (year: number, month: number) => {
   return {
     year: previousMonthDate.getFullYear(),
     month: previousMonthDate.getMonth() + 1, // month is 0-indexed in Date
+    date: previousMonthDate,
   };
 };
 
@@ -38,5 +39,6 @@ export const getNextMonth = (year: number, month: number) => {
   return {
     year: nextMonthDate.getFullYear(),
     month: nextMonthDate.getMonth() + 1, // month is 0-indexed in Date
+    date: nextMonthDate,
   };
 };
