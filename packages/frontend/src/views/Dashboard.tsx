@@ -104,7 +104,7 @@ export const Dashboard: FC = async () => {
         <TransactionList label="Recent Activity" items={transactions} />
         {!!transactions.length && (
           <Button
-            href="/statistics"
+            href="/transactions"
             accentColor="secondary"
             className="lg:ml-auto"
           >
