@@ -16,9 +16,14 @@ import { formatCurrency } from '$utils/formatCurrency';
 type AccountProps = {
   account: AccountDto;
   balanceHistory: AccountBalanceHistoryDto[];
+  queryDate?: string;
 };
 
-export const Account: FC<AccountProps> = ({ account, balanceHistory }) => {
+export const Account: FC<AccountProps> = ({
+  account,
+  balanceHistory,
+  queryDate,
+}) => {
   const accountDetails: DetailsItem[] = useMemo(
     () => [
       {
@@ -59,6 +64,7 @@ export const Account: FC<AccountProps> = ({ account, balanceHistory }) => {
         <AccountBalanceHistoryChart data={balanceHistory} />
       )}
       <TransactionListWithMonthlyPager
+        queryDate={queryDate}
         filterOptions={{ accountId: account.id }}
       />
     </section>

@@ -13,9 +13,13 @@ import { Account } from '$views/Account';
 
 type AccountContainerProps = {
   id: string;
+  queryDate?: string;
 };
 
-export const AccountContainer: FC<AccountContainerProps> = async ({ id }) => {
+export const AccountContainer: FC<AccountContainerProps> = async ({
+  id,
+  queryDate,
+}) => {
   const account = await AccountService.getById(id);
   const balanceHistory = await AccountService.getAccountBalanceHistory(id);
   const marketSettings =
@@ -56,7 +60,11 @@ export const AccountContainer: FC<AccountContainerProps> = async ({ id }) => {
         />
       }
     >
-      <Account account={account} balanceHistory={balanceHistory} />
+      <Account
+        account={account}
+        balanceHistory={balanceHistory}
+        queryDate={queryDate}
+      />
       <AccountDeleteDrawer id={account.id} />
       {account.type === AccountType.Investment && (
         <AccountUpdateMarketValueDrawer

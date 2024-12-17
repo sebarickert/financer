@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { addMonths, format } from 'date-fns';
 
 export enum DateFormat {
   default = 'dd.MM.yyyy', // 19.12.2023
@@ -11,8 +11,35 @@ export enum DateFormat {
   monthWithDateShort = 'LLL d', // DEC 1, 2, ...
   monthWithDateShortWithYear = 'LLL d, yyyy', // DEC 1, 2024
   timeOnly = 'HH:mm', // 10:54
+  yearMonth = 'yyyy-MM', // 2023-12
 }
 
 export const formatDate = (date: Date, dateFormat?: DateFormat) => {
   return format(date, dateFormat ?? DateFormat.default);
+};
+
+export const isValidYearMonth = (date: string | undefined): date is string => {
+  if (typeof date !== 'string') return false;
+  const [year, month] = date.split('-').map(Number);
+  return !isNaN(year) && !isNaN(month) && year > 0 && month > 0 && month <= 12;
+};
+
+export const getPreviousMonth = (year: number, month: number) => {
+  const date = new Date(year, month - 1); // month is 0-indexed in Date
+  const previousMonthDate = addMonths(date, -1);
+  return {
+    year: previousMonthDate.getFullYear(),
+    month: previousMonthDate.getMonth() + 1, // month is 0-indexed in Date
+    date: previousMonthDate,
+  };
+};
+
+export const getNextMonth = (year: number, month: number) => {
+  const date = new Date(year, month - 1); // month is 0-indexed in Date
+  const nextMonthDate = addMonths(date, 1);
+  return {
+    year: nextMonthDate.getFullYear(),
+    month: nextMonthDate.getMonth() + 1, // month is 0-indexed in Date
+    date: nextMonthDate,
+  };
 };

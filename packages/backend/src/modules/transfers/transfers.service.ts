@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { AccountType, TransactionType } from '@prisma/client';
+import { AccountType, Prisma, TransactionType } from '@prisma/client';
 
 import { UserId } from '../../types/user-id';
 import { TransactionsService } from '../transactions/transactions.service';
@@ -21,6 +21,7 @@ export class TransfersService {
     month: number,
     accountTypes: AccountType[],
     accountId?: string,
+    sortOrder?: Prisma.SortOrder,
   ): Promise<TransferListItemDto[]> {
     return this.transactionService.findAllByUser(
       userId,
@@ -30,6 +31,7 @@ export class TransfersService {
       month || undefined,
       accountId,
       accountTypes || undefined,
+      sortOrder || undefined,
     );
   }
 

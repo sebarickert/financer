@@ -11,11 +11,13 @@ type CategoryProps = {
   category: TransactionCategoryDto;
   categories: TransactionCategoryDto[];
   parentTransactionCategoryId: string;
+  queryDate?: string;
 };
 
 export const Category: FC<CategoryProps> = ({
   category,
   categories,
+  queryDate,
   parentTransactionCategoryId,
 }) => {
   const categoryDetails: DetailsItem[] = useMemo(() => {
@@ -76,6 +78,7 @@ export const Category: FC<CategoryProps> = ({
         filterOptions={{
           parentTransactionCategory: parentTransactionCategoryId,
         }}
+        queryDate={queryDate}
       />
     </section>
   );

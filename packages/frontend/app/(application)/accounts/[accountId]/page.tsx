@@ -7,6 +7,8 @@ type Params = Promise<{
   accountId: string;
 }>;
 
+type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
+
 export const generateMetadata = async ({
   params,
 }: {
@@ -20,10 +22,15 @@ export const generateMetadata = async ({
   };
 };
 
-const AccountPage = async ({ params }: { params: Params }) => {
+export default async function AccountPage({
+  params,
+  searchParams,
+}: {
+  params: Params;
+  searchParams: SearchParams;
+}) {
   const { accountId } = await params;
+  const queryDate = (await searchParams).date as string | undefined;
 
-  return <AccountContainer id={accountId} />;
-};
-
-export default AccountPage;
+  return <AccountContainer id={accountId} queryDate={queryDate} />;
+}

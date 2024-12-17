@@ -149,14 +149,6 @@ test.describe('Transfer Transactions', () => {
       const updatedBalanceForNewToAccount =
         await getAccountBalanceFromAccountListByName(page, 'Saving account 1');
 
-      console.log(
-        amount,
-        updatedBalanceForPreviousFromAccount,
-        updatedBalanceForNewFromAccount,
-        updatedBalanceForPreviousToAccount,
-        updatedBalanceForNewToAccount,
-      );
-
       const expectedBalanceForPreviousFromAccount =
         initialBalanceForPreviousFromAccount.plus(amount);
       const expectedBalanceForNewFromAccount =
@@ -226,7 +218,7 @@ test.describe('Transfer Transactions', () => {
     test('should edit transfer with multiple categories and remove one of the categories and verify it updates values in transaction details', async ({
       page,
     }) => {
-      await page.getByRole('button', { name: 'Previous page' }).click();
+      await page.getByRole('link', { name: 'Previous page' }).click();
 
       await page
         .getByTestId('transaction-list-item')
@@ -269,7 +261,7 @@ test.describe('Transfer Transactions', () => {
     test('should edit transfer with multiple categories and remove all of the categories and verify it updates values in transaction details', async ({
       page,
     }) => {
-      await page.getByRole('button', { name: 'Previous page' }).click();
+      await page.getByRole('link', { name: 'Previous page' }).click();
 
       await page
         .getByTestId('transaction-list-item')

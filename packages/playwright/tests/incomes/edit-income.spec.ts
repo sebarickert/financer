@@ -168,7 +168,7 @@ test.describe('Income Transactions', () => {
     test('should edit income with multiple categories and remove one of the categories and verify it updates values in transaction details', async ({
       page,
     }) => {
-      await page.getByRole('button', { name: 'Previous page' }).click();
+      await page.getByRole('link', { name: 'Previous page' }).click();
 
       await page
         .getByTestId('transaction-list-item')
@@ -206,7 +206,7 @@ test.describe('Income Transactions', () => {
     test('should edit income with multiple categories and remove all of the categories and verify it updates values in transaction details', async ({
       page,
     }) => {
-      await page.getByRole('button', { name: 'Previous page' }).click();
+      await page.getByRole('link', { name: 'Previous page' }).click();
 
       await page
         .getByTestId('transaction-list-item')

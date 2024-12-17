@@ -8,7 +8,6 @@ import { TransferService } from './TransferService';
 import {
   ExpenseListItemDto,
   IncomeListItemDto,
-  SortOrder,
   TransactionDetailsDto,
   TransactionListItemDto,
   TransactionMonthSummaryDto,
@@ -18,7 +17,12 @@ import {
   TransferListItemDto,
 } from '$api/generated/financerApi';
 
-export type TransactionListOptions = TransactionsFindAllByUserApiArg;
+export type TransactionListOptions = Omit<
+  TransactionsFindAllByUserApiArg,
+  'sortOrder'
+> & {
+  sortOrder?: 'asc' | 'desc';
+};
 
 export type FirstTransactionByTypeOptions = Omit<
   TransactionListOptions,
@@ -91,7 +95,7 @@ export class TransactionService extends BaseApi {
     const data = await this.getAllByType(type as null, {
       ...options,
       limit: 1,
-      sortOrder: SortOrder.Asc,
+      sortOrder: 'asc',
     });
 
     return data[0];
@@ -126,7 +130,7 @@ export class TransactionService extends BaseApi {
     const data = await this.getAllByType(type as null, {
       ...options,
       limit: 1,
-      sortOrder: SortOrder.Desc,
+      sortOrder: 'desc',
     });
 
     return data[0];
