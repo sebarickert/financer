@@ -9,9 +9,13 @@ import { Category } from '$views/Category';
 
 type CategoryContainerProps = {
   id: string;
+  queryDate?: string;
 };
 
-export const CategoryContainer: FC<CategoryContainerProps> = async ({ id }) => {
+export const CategoryContainer: FC<CategoryContainerProps> = async ({
+  id,
+  queryDate,
+}) => {
   const allCategories = await CategoryService.getAll();
   const category = await CategoryService.getById(id);
 
@@ -40,6 +44,7 @@ export const CategoryContainer: FC<CategoryContainerProps> = async ({ id }) => {
         category={category}
         categories={allCategories}
         parentTransactionCategoryId={id}
+        queryDate={queryDate}
       />
       <CategoryDeleteDrawer id={category.id} />
     </Layout>
