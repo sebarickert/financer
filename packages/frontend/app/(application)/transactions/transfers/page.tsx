@@ -1,14 +1,26 @@
 import { Metadata } from 'next';
-import { FC } from 'react';
 
-import { TransferListingContainer } from '$container/transfers/TransferListingContainer';
+import { TransactionType } from '$api/generated/financerApi';
+import { TransactionListWithMonthlyPager } from '$features/transaction/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
+import { TransactionsLayout } from '$features/transactions/TransactionsLayout';
 
 export const metadata: Metadata = {
   title: 'Transfers',
 };
 
-const TransfersPage: FC = () => {
-  return <TransferListingContainer />;
-};
+export default async function TransfersPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const queryDate = (await searchParams).date as string | undefined;
 
-export default TransfersPage;
+  return (
+    <TransactionsLayout title="Transfers">
+      <TransactionListWithMonthlyPager
+        type={TransactionType.Transfer}
+        queryDate={queryDate}
+      />
+    </TransactionsLayout>
+  );
+}
