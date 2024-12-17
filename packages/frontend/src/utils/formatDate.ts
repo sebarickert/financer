@@ -11,6 +11,7 @@ export enum DateFormat {
   monthWithDateShort = 'LLL d', // DEC 1, 2, ...
   monthWithDateShortWithYear = 'LLL d, yyyy', // DEC 1, 2024
   timeOnly = 'HH:mm', // 10:54
+  yearMonth = 'yyyy-MM', // 2023-12
 }
 
 export const formatDate = (date: Date, dateFormat?: DateFormat) => {

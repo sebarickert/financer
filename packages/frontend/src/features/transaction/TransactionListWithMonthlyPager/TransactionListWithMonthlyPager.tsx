@@ -16,6 +16,8 @@ import {
   TransactionService,
 } from '$ssr/api/TransactionService';
 import {
+  DateFormat,
+  formatDate,
   getNextMonth,
   getPreviousMonth,
   isValidYearMonth,
@@ -84,14 +86,15 @@ export const TransactionListWithMonthlyPager: FC<
 
   const parsedQueryDate = parse(queryDate, 'yyyy-MM', new Date());
 
+  const parsedFirstAvailableTransaction = parse(
+    formatDate(firstAvailableTransaction, DateFormat.yearMonth),
+    'yyyy-MM',
+    new Date(),
+  );
+
   const hasValidMonth =
-    (parsedQueryDate >= firstAvailableTransaction &&
-      parsedQueryDate <= lastAvailableTransaction) ||
-    (parsedQueryDate.getMonth() === firstAvailableTransaction.getMonth() &&
-      parsedQueryDate.getFullYear() ===
-        firstAvailableTransaction.getFullYear() &&
-      parsedQueryDate.getMonth() === lastAvailableTransaction.getMonth() &&
-      parsedQueryDate.getFullYear() === lastAvailableTransaction.getFullYear());
+    parsedQueryDate >= parsedFirstAvailableTransaction &&
+    parsedQueryDate <= lastAvailableTransaction;
 
   if (!hasValidMonth) {
     redirect(
@@ -100,7 +103,8 @@ export const TransactionListWithMonthlyPager: FC<
     );
   }
 
-  const hasPreviousMonth = previousMonth.date >= firstAvailableTransaction;
+  const hasPreviousMonth =
+    previousMonth.date >= parsedFirstAvailableTransaction;
   const hasNextMonth = nextMonth.date <= lastAvailableTransaction;
 
   const previousHref = hasPreviousMonth
