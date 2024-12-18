@@ -17,7 +17,7 @@ import {
   DefaultFormActionHandler,
   useFinancerFormState,
 } from '$hooks/useFinancerFormState';
-import { DateService } from '$services/DateService';
+import { DATE_FORMAT, DateService } from '$services/DateService';
 import { TransactionCategoryDtoWithCategoryTree } from '$types/TransactionCategoryDtoWithCategoryTree';
 import { formatCurrency } from '$utils/formatCurrency';
 
@@ -50,7 +50,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
 
   const defaultValues = useMemo(
     () => ({
-      date: new DateService().format(DateService.DATE_FORMAT.INPUT),
+      date: new DateService().format(DATE_FORMAT.INPUT),
       ...initialValues,
       toAccount: initialValues?.toAccount || '',
       fromAccount: initialValues?.fromAccount || '',

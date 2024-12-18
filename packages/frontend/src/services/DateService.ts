@@ -1,23 +1,27 @@
 import { DateTime } from 'luxon';
 
-export class DateService {
-  static readonly DATE_FORMAT = {
-    DEFAULT: 'dd.MM.yyyy',
-    LONG: 'dd.MM.yyyy, HH:mm',
-    INPUT: "yyyy-MM-dd'T'HH:mm",
-    MONTH: 'LLL',
-    MONTH_LONG: 'LLLL yyyy',
-    MONTH_WITH_DATE_LONG: 'LLLL d',
-    MONTH_WITH_DATE_SHORT: 'LLL d',
-    MONTH_WITH_DATE_SHORT_WITH_YEAR: 'LLL d, yyyy',
-    YEAR_MONTH: 'yyyy-MM',
-  } as const;
+export const DATE_FORMAT = {
+  DEFAULT: 'dd.MM.yyyy',
+  LONG: 'dd.MM.yyyy, HH:mm',
+  INPUT: "yyyy-MM-dd'T'HH:mm",
+  MONTH: 'LLL',
+  MONTH_LONG: 'LLLL yyyy',
+  MONTH_WITH_DATE_LONG: 'LLLL d',
+  MONTH_WITH_DATE_SHORT: 'LLL d',
+  MONTH_WITH_DATE_SHORT_WITH_YEAR: 'LLL d, yyyy',
+  YEAR_MONTH: 'yyyy-MM',
+} as const;
 
+export class DateService {
   private date: DateTime;
 
   constructor(date: Date | string | DateTime = DateTime.now()) {
     this.date =
       date instanceof DateTime ? date : DateTime.fromJSDate(new Date(date));
+  }
+
+  getDate(): DateTime {
+    return this.date;
   }
 
   isToday(): boolean {
@@ -37,8 +41,7 @@ export class DateService {
   }
 
   format(
-    format: (typeof DateService.DATE_FORMAT)[keyof typeof DateService.DATE_FORMAT] = DateService
-      .DATE_FORMAT.DEFAULT,
+    format: (typeof DATE_FORMAT)[keyof typeof DATE_FORMAT] = DATE_FORMAT.DEFAULT,
   ): string {
     return this.date.toFormat(format);
   }

@@ -6,7 +6,7 @@ import { TransactionList } from './TransactionList';
 
 import { TransactionListItemDto } from '$api/generated/financerApi';
 import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
-import { DateService } from '$services/DateService';
+import { DATE_FORMAT, DateService } from '$services/DateService';
 
 type GroupedTransactionListProps = {
   items: TransactionListItemDto[];
@@ -28,7 +28,7 @@ const getGroupLabel = (groupLabel: string) => {
     return 'Yesterday';
   }
 
-  return dt.format(DateService.DATE_FORMAT.MONTH_WITH_DATE_LONG);
+  return dt.format(DATE_FORMAT.MONTH_WITH_DATE_LONG);
 };
 
 const endOfTodayDate = DateService.now().endOf('day');

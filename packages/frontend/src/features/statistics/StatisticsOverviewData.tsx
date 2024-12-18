@@ -14,7 +14,7 @@ import {
 } from '$charts/ChartFilterByMonthsSelect';
 import { settingsPaths } from '$constants/settings-paths';
 import { Link } from '$elements/Link';
-import { DateService } from '$services/DateService';
+import { DATE_FORMAT, DateService } from '$services/DateService';
 import { ChartConfig } from '$types/ChartConfig';
 import {
   formatCurrency,
@@ -31,9 +31,7 @@ export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
   const chartData = useMemo(
     () =>
       data.map(({ date, incomeAmount, expenseAmount }) => ({
-        dataKey: new DateService(date).format(
-          DateService.DATE_FORMAT.MONTH_LONG,
-        ),
+        dataKey: new DateService(date).format(DATE_FORMAT.MONTH_LONG),
         incomes: incomeAmount,
         expenses: expenseAmount,
       })),
@@ -158,10 +156,9 @@ export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
               return formatCurrencyAbbreviation(value);
             }}
             xaxisTickFormatter={(value: string) =>
-              DateService.parseFormat(
-                value,
-                DateService.DATE_FORMAT.MONTH_LONG,
-              ).toFormat(DateService.DATE_FORMAT.MONTH)
+              DateService.parseFormat(value, DATE_FORMAT.MONTH_LONG).toFormat(
+                DATE_FORMAT.MONTH,
+              )
             }
           />
         </div>

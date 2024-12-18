@@ -8,7 +8,7 @@ import {
   ChartFilterByMonthsSelect,
   monthFilterOptions,
 } from '$charts/ChartFilterByMonthsSelect';
-import { DateService } from '$services/DateService';
+import { DATE_FORMAT, DateService } from '$services/DateService';
 import { ChartConfig } from '$types/ChartConfig';
 import {
   formatCurrency,
@@ -26,9 +26,7 @@ export const DashboardBalanceHistoryChart: FC<
   const chartData = useMemo(
     () =>
       data.map(({ date, balance }) => ({
-        dataKey: new DateService(date).format(
-          DateService.DATE_FORMAT.MONTH_LONG,
-        ),
+        dataKey: new DateService(date).format(DATE_FORMAT.MONTH_LONG),
         balance,
       })),
     [data],
@@ -77,10 +75,9 @@ export const DashboardBalanceHistoryChart: FC<
           return formatCurrencyAbbreviation(value);
         }}
         xaxisTickFormatter={(value: string) =>
-          DateService.parseFormat(
-            value,
-            DateService.DATE_FORMAT.MONTH_LONG,
-          ).toFormat(DateService.DATE_FORMAT.MONTH)
+          DateService.parseFormat(value, DATE_FORMAT.MONTH_LONG).toFormat(
+            DATE_FORMAT.MONTH,
+          )
         }
       />
     </div>

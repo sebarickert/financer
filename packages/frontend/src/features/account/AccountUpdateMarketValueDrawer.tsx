@@ -9,7 +9,7 @@ import { Form } from '$blocks/Form';
 import { Button } from '$elements/Button/Button';
 import { Input } from '$elements/Input';
 import { useFinancerFormState } from '$hooks/useFinancerFormState';
-import { DateService } from '$services/DateService';
+import { DATE_FORMAT, DateService } from '$services/DateService';
 import { UserDefaultMarketUpdateSettings } from '$ssr/api/UserPreferenceService';
 import { handleAccountMarketValueUpdate } from 'src/actions/account/handleAccountMarketValueUpdate';
 
@@ -32,7 +32,7 @@ export const AccountUpdateMarketValueDrawer: FC<
   const methods = useForm<AccountUpdateMarketValueFormFields>({
     defaultValues: {
       currentMarketValue: account.balance,
-      date: new DateService().format(DateService.DATE_FORMAT.INPUT),
+      date: new DateService().format(DATE_FORMAT.INPUT),
     },
   });
 

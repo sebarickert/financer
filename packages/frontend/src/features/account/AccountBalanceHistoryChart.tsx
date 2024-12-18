@@ -9,7 +9,7 @@ import {
   ChartFilterByMonthsSelect,
   monthFilterOptions,
 } from '$charts/ChartFilterByMonthsSelect';
-import { DateService } from '$services/DateService';
+import { DATE_FORMAT, DateService } from '$services/DateService';
 import { ChartConfig } from '$types/ChartConfig';
 import { ChartData } from '$types/ChartData';
 import {
@@ -27,7 +27,7 @@ export const AccountBalanceHistoryChart: FC<
 > = ({ data, className }) => {
   const chartData = data.map(({ date, balance }) => ({
     dataKey: new DateService(date).format(
-      DateService.DATE_FORMAT.MONTH_WITH_DATE_SHORT_WITH_YEAR,
+      DATE_FORMAT.MONTH_WITH_DATE_SHORT_WITH_YEAR,
     ),
     balance,
   }));
@@ -36,10 +36,10 @@ export const AccountBalanceHistoryChart: FC<
     Object.groupBy(chartData, ({ dataKey }) => {
       const dt = DateService.parseFormat(
         dataKey,
-        DateService.DATE_FORMAT.MONTH_WITH_DATE_SHORT_WITH_YEAR,
+        DATE_FORMAT.MONTH_WITH_DATE_SHORT_WITH_YEAR,
       );
 
-      return dt.toFormat(DateService.DATE_FORMAT.YEAR_MONTH);
+      return dt.toFormat(DATE_FORMAT.YEAR_MONTH);
     }),
   );
 
@@ -90,8 +90,8 @@ export const AccountBalanceHistoryChart: FC<
         xaxisTickFormatter={(value: string) =>
           DateService.parseFormat(
             value,
-            DateService.DATE_FORMAT.MONTH_WITH_DATE_SHORT_WITH_YEAR,
-          ).toFormat(DateService.DATE_FORMAT.MONTH_WITH_DATE_SHORT)
+            DATE_FORMAT.MONTH_WITH_DATE_SHORT_WITH_YEAR,
+          ).toFormat(DATE_FORMAT.MONTH_WITH_DATE_SHORT)
         }
       />
     </div>

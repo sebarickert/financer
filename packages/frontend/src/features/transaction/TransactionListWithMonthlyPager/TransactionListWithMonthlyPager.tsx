@@ -10,7 +10,7 @@ import { TransactionType } from '$api/generated/financerApi';
 import { Pager } from '$blocks/Pager';
 import { monthNames } from '$constants/months';
 import { Heading } from '$elements/Heading';
-import { DateService } from '$services/DateService';
+import { DATE_FORMAT, DateService } from '$services/DateService';
 import {
   TransactionListOptions,
   TransactionService,
@@ -49,12 +49,12 @@ export const TransactionListWithMonthlyPager: FC<
   const firstTransactionDate = new DateService(firstTransaction?.date);
   const firstAvailableTransaction = firstTransactionDate.isAfter(currentDate)
     ? currentDate
-    : firstTransactionDate.date;
+    : firstTransactionDate.getDate();
 
   const lastTransactionDate = new DateService(lastTransaction?.date);
   const lastAvailableTransaction = lastTransactionDate.isBefore(currentDate)
     ? currentDate
-    : lastTransactionDate.date;
+    : lastTransactionDate.getDate();
 
   if (!DateService.isValidYearMonth(queryDate)) {
     redirect(
@@ -85,7 +85,7 @@ export const TransactionListWithMonthlyPager: FC<
 
   const parsedQueryDate = DateService.parseFormat(
     queryDate,
-    DateService.DATE_FORMAT.YEAR_MONTH,
+    DATE_FORMAT.YEAR_MONTH,
   );
 
   const hasValidMonth =
