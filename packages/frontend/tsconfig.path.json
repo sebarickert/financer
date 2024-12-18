@@ -20,7 +20,8 @@
       "$ssr/*": ["./src/ssr/*"],
       "$exceptions/*": ["./src/exceptions/*"],
       "$container/*": ["./containers/*"],
-      "$types/*": ["./src/types/*"]
+      "$types/*": ["./src/types/*"],
+      "$services/*": ["./src/services/*"]
     }
   }
 }

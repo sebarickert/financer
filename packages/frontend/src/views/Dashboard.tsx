@@ -8,14 +8,14 @@ import { Button } from '$elements/Button/Button';
 import { DashboardBalanceHistoryChart } from '$features/dashboard/DashboardBalanceHistoryChart';
 import { DashboardBalanceSummary } from '$features/dashboard/DashboardBalanceSummary';
 import { TransactionList } from '$features/transaction/TransactionList/TransactionList';
+import { DateService } from '$services/DateService';
 import { AccountService } from '$ssr/api/AccountService';
 import { TransactionService } from '$ssr/api/TransactionService';
 import { UserPreferenceService } from '$ssr/api/UserPreferenceService';
-import { generateDateFromYearAndMonth } from '$utils/generateDateFromYearAndMonth';
 
 const currentMonthFilterOptions = {
-  year: new Date().getFullYear(),
-  month: new Date().getMonth() + 1,
+  year: DateService.now().year,
+  month: DateService.now().month,
 };
 
 export const Dashboard: FC = async () => {
@@ -36,23 +36,26 @@ export const Dashboard: FC = async () => {
     ...accountTypeFilter,
   });
 
-  const latestTransactionTimestamp = new Date(
-    latestTransaction?.date ?? new Date(),
+  const latestTransactionTimestamp = DateService.parseDate(
+    latestTransaction?.date,
   );
 
   const balanceHistory = transactionMonthSummary
     .map(({ id: { month, year }, totalAmount }) => ({
-      date: generateDateFromYearAndMonth(year, month),
+      date: DateService.createFromYearAndMonth(year, month),
       amount: totalAmount,
     }))
-    .sort((a, b) => b.date.getTime() - a.date.getTime())
+    .sort((a, b) => b.date.toMillis() - a.date.toMillis())
     .reduce(
       (previousBalance, { date, amount }) => {
         const { balance: latestBalance } = previousBalance[0];
-        const currentBalance = { date, balance: latestBalance - amount };
+        const currentBalance = {
+          date: date.toJSDate(),
+          balance: latestBalance - amount,
+        };
         return [currentBalance, ...previousBalance];
       },
-      [{ date: latestTransactionTimestamp, balance: totalBalance }],
+      [{ date: latestTransactionTimestamp.toJSDate(), balance: totalBalance }],
     );
 
   const previousMonthBalance =

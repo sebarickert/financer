@@ -1,7 +1,6 @@
 'use client';
 
 import clsx from 'clsx';
-import { parse } from 'date-fns';
 import { FC, useMemo, useState } from 'react';
 
 import { AreaStackedChart } from '$charts/AreaStackedChart';
@@ -9,12 +8,12 @@ import {
   ChartFilterByMonthsSelect,
   monthFilterOptions,
 } from '$charts/ChartFilterByMonthsSelect';
+import { DateService } from '$services/DateService';
 import { ChartConfig } from '$types/ChartConfig';
 import {
   formatCurrency,
   formatCurrencyAbbreviation,
 } from '$utils/formatCurrency';
-import { DateFormat, formatDate } from '$utils/formatDate';
 
 type DashboardBalanceHistoryChartProps = {
   data: { date: Date; balance: number }[];
@@ -27,7 +26,10 @@ export const DashboardBalanceHistoryChart: FC<
   const chartData = useMemo(
     () =>
       data.map(({ date, balance }) => ({
-        dataKey: formatDate(date, DateFormat.monthLong),
+        dataKey: DateService.format({
+          date,
+          format: DateService.DATE_FORMAT.MONTH_LONG,
+        }),
         balance,
       })),
     [data],
@@ -75,10 +77,12 @@ export const DashboardBalanceHistoryChart: FC<
         yaxisTickFormatter={(value: number) => {
           return formatCurrencyAbbreviation(value);
         }}
-        xaxisTickFormatter={(value: string) => {
-          const parsedDate = parse(value, DateFormat.monthLong, new Date());
-          return formatDate(parsedDate, DateFormat.month);
-        }}
+        xaxisTickFormatter={(value: string) =>
+          DateService.parseFormat(
+            value,
+            DateService.DATE_FORMAT.MONTH_LONG,
+          ).toFormat(DateService.DATE_FORMAT.MONTH)
+        }
       />
     </div>
   );
