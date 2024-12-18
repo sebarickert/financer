@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import { handleAccountSettingsUpdate } from '$actions/settings/handleAccountSettingsUpdate';
-import { settingsPaths } from '$constants/settings-paths';
+import { settingsPaths } from '$constants/settingsPaths';
 import { Layout } from '$layouts/Layout';
 import { AccountService } from '$ssr/api/AccountService';
 import { UserPreferenceService } from '$ssr/api/UserPreferenceService';

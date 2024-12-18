@@ -1,5 +1,4 @@
 import clsx from 'clsx';
-import { parse } from 'date-fns';
 import { redirect, RedirectType } from 'next/navigation';
 import { FC } from 'react';
 
@@ -9,23 +8,16 @@ import { TransactionListWithMonthlySummary } from './TransactionListWithMonthlyS
 
 import { TransactionType } from '$api/generated/financerApi';
 import { Pager } from '$blocks/Pager';
-import { monthNames } from '$constants/months';
 import { Heading } from '$elements/Heading';
+import { DATE_FORMAT, DateService } from '$services/DateService';
 import {
   TransactionListOptions,
   TransactionService,
 } from '$ssr/api/TransactionService';
-import {
-  DateFormat,
-  formatDate,
-  getNextMonth,
-  getPreviousMonth,
-  isValidYearMonth,
-} from '$utils/formatDate';
 
-const currentDate = new Date();
-const currentYear = currentDate.getFullYear();
-const currentMonth = currentDate.getMonth() + 1;
+const currentDate = new DateService().getDate();
+const currentYear = currentDate.year;
+const currentMonth = currentDate.month;
 
 type TransactionListingWithMonthlyPagerProps = {
   className?: string;
@@ -53,15 +45,17 @@ export const TransactionListWithMonthlyPager: FC<
     additionalFilterOptions,
   );
 
-  const firstTransactionDate = new Date(firstTransaction?.date ?? new Date());
-  const firstAvailableTransaction =
-    firstTransactionDate > currentDate ? currentDate : firstTransactionDate;
+  const firstTransactionDate = new DateService(firstTransaction?.date);
+  const firstAvailableTransaction = firstTransactionDate.isAfter(currentDate)
+    ? currentDate
+    : firstTransactionDate.getDate();
 
-  const lastTransactionDate = new Date(lastTransaction?.date ?? new Date());
-  const lastAvailableTransaction =
-    lastTransactionDate < currentDate ? currentDate : lastTransactionDate;
+  const lastTransactionDate = new DateService(lastTransaction?.date);
+  const lastAvailableTransaction = lastTransactionDate.isBefore(currentDate)
+    ? currentDate
+    : lastTransactionDate.getDate();
 
-  if (!isValidYearMonth(queryDate)) {
+  if (!DateService.isValidYearMonth(queryDate)) {
     redirect(
       `?date=${currentYear}-${String(currentMonth).padStart(2, '0')}`,
       RedirectType.replace,
@@ -81,22 +75,23 @@ export const TransactionListWithMonthlyPager: FC<
     filterOptions,
   );
 
-  const previousMonth = getPreviousMonth(year, month);
-  const nextMonth = getNextMonth(year, month);
+  const previousMonth = new DateService(
+    DateService.createFromYearAndMonth(year, month),
+  ).getPreviousMonth();
+  const nextMonth = new DateService(
+    DateService.createFromYearAndMonth(year, month),
+  ).getNextMonth();
 
-  const parsedQueryDate = parse(queryDate, 'yyyy-MM', new Date());
-
-  const parsedFirstAvailableTransaction = parse(
-    formatDate(firstAvailableTransaction, DateFormat.yearMonth),
-    'yyyy-MM',
-    new Date(),
+  const parsedQueryDate = DateService.parseFormat(
+    queryDate,
+    DATE_FORMAT.YEAR_MONTH,
   );
 
-  const hasValidMonth =
-    parsedQueryDate >= parsedFirstAvailableTransaction &&
-    parsedQueryDate <= lastAvailableTransaction;
+  const isQueryDateWithinTransactionRange =
+    parsedQueryDate >= firstAvailableTransaction.startOf('month') &&
+    parsedQueryDate <= lastAvailableTransaction.endOf('month');
 
-  if (!hasValidMonth) {
+  if (!isQueryDateWithinTransactionRange) {
     redirect(
       `?date=${currentYear}-${String(currentMonth).padStart(2, '0')}`,
       RedirectType.replace,
@@ -104,8 +99,9 @@ export const TransactionListWithMonthlyPager: FC<
   }
 
   const hasPreviousMonth =
-    previousMonth.date >= parsedFirstAvailableTransaction;
-  const hasNextMonth = nextMonth.date <= lastAvailableTransaction;
+    previousMonth.date >= firstAvailableTransaction.startOf('month');
+  const hasNextMonth =
+    nextMonth.date <= lastAvailableTransaction.endOf('month');
 
   const previousHref = hasPreviousMonth
     ? `?date=${previousMonth.year}-${String(previousMonth.month).padStart(2, '0')}`
@@ -114,7 +110,9 @@ export const TransactionListWithMonthlyPager: FC<
     ? `?date=${nextMonth.year}-${String(nextMonth.month).padStart(2, '0')}`
     : undefined;
 
-  const pagerLabel = `${monthNames[month - 1]} ${year}`;
+  const pagerLabel = new DateService(
+    DateService.createFromYearAndMonth(year, month),
+  ).format(DATE_FORMAT.MONTH_WITH_YEAR_LONG);
   const hasSummaryVisible = isSummaryVisible && transactions.length > 0;
 
   return (

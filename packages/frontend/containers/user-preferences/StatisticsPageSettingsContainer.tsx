@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { handleStatisticsPageSettingsUpdate } from '$actions/settings/handleStatisticsPageSettingsUpdate';
 import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
-import { settingsPaths } from '$constants/settings-paths';
+import { settingsPaths } from '$constants/settingsPaths';
 import { Layout } from '$layouts/Layout';
 import { UserPreferenceService } from '$ssr/api/UserPreferenceService';
 import { UserStatisticsPageSettingsForm } from '$views/user-preferences/UserStatisticsPageSettingsForm';

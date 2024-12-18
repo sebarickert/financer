@@ -10,9 +10,9 @@ import {
 import { TransactionForm } from '$features/transaction/TransactionForm';
 import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
 import { Layout } from '$layouts/Layout';
+import { DATE_FORMAT, DateService } from '$services/DateService';
 import { CategoryService } from '$ssr/api/CategoryService';
 import { ExpenseService } from '$ssr/api/ExpenseService';
-import { DateFormat, formatDate } from '$utils/formatDate';
 import { parseArrayFromFormData } from '$utils/parseArrayFromFormData';
 
 type EditExpenseContainerProps = {
@@ -72,7 +72,7 @@ export const EditExpenseContainer: FC<EditExpenseContainerProps> = async ({
         description,
       }),
     ),
-    date: formatDate(new Date(expense.date), DateFormat.input),
+    date: new DateService(expense.date).format(DATE_FORMAT.INPUT),
   };
 
   const categories = await CategoryService.getAllWithTree({

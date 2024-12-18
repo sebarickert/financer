@@ -1,6 +1,5 @@
 'use client';
 
-import { parse } from 'date-fns';
 import { ChartLine, Equal, LineChart, Percent, PieChart } from 'lucide-react';
 import { FC, useMemo, useState } from 'react';
 
@@ -12,17 +11,17 @@ import {
   ChartFilterByMonthsSelect,
   monthFilterOptions,
 } from '$charts/ChartFilterByMonthsSelect';
-import { settingsPaths } from '$constants/settings-paths';
+import { settingsPaths } from '$constants/settingsPaths';
 import { Link } from '$elements/Link';
+import { DATE_FORMAT, DateService } from '$services/DateService';
 import { ChartConfig } from '$types/ChartConfig';
 import {
   formatCurrency,
   formatCurrencyAbbreviation,
 } from '$utils/formatCurrency';
-import { DateFormat, formatDate } from '$utils/formatDate';
 
 type StatisticsOverviewDataProps = {
-  data: (Omit<TransactionMonthSummaryDto, 'id'> & { date: Date })[];
+  data: (Omit<TransactionMonthSummaryDto, 'id'> & { date: string })[];
 };
 
 export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
@@ -31,7 +30,7 @@ export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
   const chartData = useMemo(
     () =>
       data.map(({ date, incomeAmount, expenseAmount }) => ({
-        dataKey: formatDate(date, DateFormat.monthLong),
+        dataKey: new DateService(date).format(DATE_FORMAT.MONTH_LONG),
         incomes: incomeAmount,
         expenses: expenseAmount,
       })),
@@ -155,10 +154,11 @@ export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
             yaxisTickFormatter={(value: number) => {
               return formatCurrencyAbbreviation(value);
             }}
-            xaxisTickFormatter={(value: string) => {
-              const parsedDate = parse(value, DateFormat.monthLong, new Date());
-              return formatDate(parsedDate, DateFormat.month);
-            }}
+            xaxisTickFormatter={(value: string) =>
+              DateService.parseFormat(value, DATE_FORMAT.MONTH_LONG).toFormat(
+                DATE_FORMAT.MONTH,
+              )
+            }
           />
         </div>
         <div className="p-6 rounded-md bg-layer">

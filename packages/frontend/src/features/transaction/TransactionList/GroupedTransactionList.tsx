@@ -1,5 +1,4 @@
 import clsx from 'clsx';
-import { endOfToday, isToday, isYesterday } from 'date-fns';
 import { ListPlus } from 'lucide-react';
 import { FC } from 'react';
 
@@ -7,7 +6,7 @@ import { TransactionList } from './TransactionList';
 
 import { TransactionListItemDto } from '$api/generated/financerApi';
 import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
-import { DateFormat, formatDate } from '$utils/formatDate';
+import { DATE_FORMAT, DateService } from '$services/DateService';
 
 type GroupedTransactionListProps = {
   items: TransactionListItemDto[];
@@ -19,18 +18,20 @@ const getGroupLabel = (groupLabel: string) => {
     return groupLabel;
   }
 
-  if (isToday(new Date(groupLabel))) {
+  const dt = new DateService(groupLabel);
+
+  if (dt.isToday()) {
     return 'Today';
   }
 
-  if (isYesterday(new Date(groupLabel))) {
+  if (dt.isYesterday()) {
     return 'Yesterday';
   }
 
-  return formatDate(new Date(groupLabel), DateFormat.monthWithDateLong);
+  return dt.format(DATE_FORMAT.MONTH_WITH_DATE_LONG);
 };
 
-const endOfTodayDate = endOfToday();
+const endOfTodayDate = new DateService().getDate().endOf('day');
 
 export const GroupedTransactionList: FC<GroupedTransactionListProps> = async ({
   items,
@@ -38,11 +39,13 @@ export const GroupedTransactionList: FC<GroupedTransactionListProps> = async ({
 }) => {
   const groupedTransactions = Object.entries(
     Object.groupBy(items, ({ date }) => {
-      if (new Date(date) > endOfTodayDate) {
+      const dt = new DateService(date).getDate();
+
+      if (dt > endOfTodayDate) {
         return 'Upcoming';
       }
 
-      return new Date(date).toISOString().split('T')[0];
+      return dt.toISODate() as string;
     }),
   ).map(([date, data]) => ({ date, data: data || [] }));
 

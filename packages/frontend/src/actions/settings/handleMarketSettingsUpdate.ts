@@ -2,7 +2,7 @@
 
 import { redirect, RedirectType } from 'next/navigation';
 
-import { settingsPaths } from '$constants/settings-paths';
+import { settingsPaths } from '$constants/settingsPaths';
 import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
 import { UserPreferenceService } from '$ssr/api/UserPreferenceService';
 

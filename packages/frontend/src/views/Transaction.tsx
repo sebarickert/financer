@@ -16,10 +16,10 @@ import {
   TRANSACTION_TYPE_ICON_MAPPING,
   TransactionTypeIcon,
 } from '$features/transaction/TransactionTypeIcon';
+import { DATE_FORMAT, DateService } from '$services/DateService';
 import { CategoryService } from '$ssr/api/CategoryService';
 import { capitalize } from '$utils/capitalize';
 import { formatCurrency } from '$utils/formatCurrency';
-import { DateFormat, formatDate } from '$utils/formatDate';
 
 type TransactionProps =
   | IncomeDetailsDto
@@ -86,7 +86,7 @@ export const Transaction: FC<TransactionProps> = async ({
     {
       Icon: Calendar,
       label: 'Date',
-      description: formatDate(new Date(date), DateFormat.long),
+      description: new DateService(date).format(DATE_FORMAT.LONG),
     },
     {
       Icon: Info,

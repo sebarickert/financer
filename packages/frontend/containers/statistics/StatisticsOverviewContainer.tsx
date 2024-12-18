@@ -2,9 +2,9 @@ import { FC } from 'react';
 
 import { StatisticsOverviewData } from '$features/statistics/StatisticsOverviewData';
 import { TransactionsLayout } from '$features/transactions/TransactionsLayout';
+import { DateService } from '$services/DateService';
 import { TransactionService } from '$ssr/api/TransactionService';
 import { UserPreferenceService } from '$ssr/api/UserPreferenceService';
-import { generateDateFromYearAndMonth } from '$utils/generateDateFromYearAndMonth';
 
 export const StatisticsOverviewContainer: FC = async () => {
   const statisticsSettings =
@@ -22,10 +22,11 @@ export const StatisticsOverviewContainer: FC = async () => {
         ...rest,
         year: targetYear,
         month: targetMonth,
-        date: generateDateFromYearAndMonth(targetYear, targetMonth),
+        date: DateService.createFromYearAndMonth(targetYear, targetMonth),
       };
     })
-    .sort((a, b) => a.date.getTime() - b.date.getTime());
+    .sort((a, b) => a.date.toMillis() - b.date.toMillis())
+    .map((item) => ({ ...item, date: item.date.toISO() as string }));
 
   return (
     <TransactionsLayout title="Statistics">

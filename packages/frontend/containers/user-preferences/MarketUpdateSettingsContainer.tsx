@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import { handleMarketSettingsUpdate } from '$actions/settings/handleMarketSettingsUpdate';
-import { settingsPaths } from '$constants/settings-paths';
+import { settingsPaths } from '$constants/settingsPaths';
 import { Layout } from '$layouts/Layout';
 import { CategoryService } from '$ssr/api/CategoryService';
 import { UserPreferenceService } from '$ssr/api/UserPreferenceService';

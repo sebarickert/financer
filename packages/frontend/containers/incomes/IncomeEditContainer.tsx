@@ -10,9 +10,9 @@ import {
 import { TransactionForm } from '$features/transaction/TransactionForm';
 import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
 import { Layout } from '$layouts/Layout';
+import { DATE_FORMAT, DateService } from '$services/DateService';
 import { CategoryService } from '$ssr/api/CategoryService';
 import { IncomeService } from '$ssr/api/IncomeService';
-import { DateFormat, formatDate } from '$utils/formatDate';
 import { parseArrayFromFormData } from '$utils/parseArrayFromFormData';
 
 interface IncomeEditContainerProps {
@@ -72,7 +72,7 @@ export const IncomeEditContainer: FC<IncomeEditContainerProps> = async ({
         description,
       }),
     ),
-    date: formatDate(new Date(income.date), DateFormat.input),
+    date: new DateService(income.date).format(DATE_FORMAT.INPUT),
   };
 
   const categories = await CategoryService.getAllWithTree({
