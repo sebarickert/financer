@@ -5,9 +5,9 @@ import { useForm } from 'react-hook-form';
 
 import { AccountDto } from '$api/generated/financerApi';
 import { Form } from '$blocks/Form';
+import { TRANSACTION_TYPE_MAPPING } from '$constants/transaction/TRANSACTION_TYPE_MAPPING';
 import { Button } from '$elements/Button/Button';
 import { Select } from '$elements/Select';
-import { TRANSACTION_TYPE_ICON_MAPPING } from '$features/transaction/TransactionTypeIcon';
 import {
   DefaultFormActionHandler,
   useFinancerFormState,
@@ -76,7 +76,7 @@ export const UserDefaultAccountSettingsForm: FC<
             })) ?? []
           }
           isRequired
-          Icon={TRANSACTION_TYPE_ICON_MAPPING.INCOME}
+          Icon={TRANSACTION_TYPE_MAPPING.INCOME.icon}
         >
           Default income account
         </Select>
@@ -89,7 +89,7 @@ export const UserDefaultAccountSettingsForm: FC<
             })) ?? []
           }
           isRequired
-          Icon={TRANSACTION_TYPE_ICON_MAPPING.EXPENSE}
+          Icon={TRANSACTION_TYPE_MAPPING.EXPENSE.icon}
         >
           Default expense account
         </Select>
@@ -102,7 +102,7 @@ export const UserDefaultAccountSettingsForm: FC<
             })) ?? []
           }
           isRequired
-          Icon={TRANSACTION_TYPE_ICON_MAPPING.EXPENSE}
+          Icon={TRANSACTION_TYPE_MAPPING.EXPENSE.icon}
         >
           Default transfer source account
         </Select>
@@ -115,7 +115,7 @@ export const UserDefaultAccountSettingsForm: FC<
             })) ?? []
           }
           isRequired
-          Icon={TRANSACTION_TYPE_ICON_MAPPING.INCOME}
+          Icon={TRANSACTION_TYPE_MAPPING.INCOME.icon}
         >
           Default transfer target account
         </Select>

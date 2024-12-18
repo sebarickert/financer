@@ -10,12 +10,10 @@ import {
 } from '$api/generated/financerApi';
 import { BalanceDisplay } from '$blocks/BalanceDisplay';
 import { DetailsList, DetailsItem } from '$blocks/DetailsList';
+import { TRANSACTION_TYPE_MAPPING } from '$constants/transaction/TRANSACTION_TYPE_MAPPING';
 import { transactionTypeThemeMapping } from '$constants/transaction/transactionTypeMapping';
 import { Heading } from '$elements/Heading';
-import {
-  TRANSACTION_TYPE_ICON_MAPPING,
-  TransactionTypeIcon,
-} from '$features/transaction/TransactionTypeIcon';
+import { TransactionTypeIcon } from '$features/transaction/TransactionTypeIcon';
 import { DATE_FORMAT, DateService } from '$services/DateService';
 import { CategoryService } from '$ssr/api/CategoryService';
 import { capitalize } from '$utils/capitalize';
@@ -68,7 +66,7 @@ export const Transaction: FC<TransactionProps> = async ({
     ...(fromAccountName
       ? [
           {
-            Icon: TRANSACTION_TYPE_ICON_MAPPING.EXPENSE,
+            Icon: TRANSACTION_TYPE_MAPPING.EXPENSE.icon,
             label: 'From Account',
             description: fromAccountName,
           },
@@ -77,7 +75,7 @@ export const Transaction: FC<TransactionProps> = async ({
     ...(toAccountName
       ? [
           {
-            Icon: TRANSACTION_TYPE_ICON_MAPPING.INCOME,
+            Icon: TRANSACTION_TYPE_MAPPING.INCOME.icon,
             label: 'To Account',
             description: toAccountName,
           },

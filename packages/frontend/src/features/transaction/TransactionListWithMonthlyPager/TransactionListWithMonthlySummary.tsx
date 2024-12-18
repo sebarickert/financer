@@ -1,7 +1,5 @@
 import { FC } from 'react';
 
-import { TRANSACTION_TYPE_ICON_MAPPING } from '../TransactionTypeIcon';
-
 import { TransactionType } from '$api/generated/financerApi';
 import { BalanceDisplay } from '$blocks/BalanceDisplay';
 import { DetailsList, DetailsItem } from '$blocks/DetailsList';
@@ -11,7 +9,6 @@ import {
   TransactionService,
 } from '$ssr/api/TransactionService';
 import { UserPreferenceService } from '$ssr/api/UserPreferenceService';
-import { capitalize } from '$utils/capitalize';
 import { formatCurrency } from '$utils/formatCurrency';
 
 type TransactionListWithMonthlySummaryProps = {
@@ -37,17 +34,15 @@ export const TransactionListWithMonthlySummary: FC<
 
   const monthlyDetails: DetailsItem[] = [
     {
-      Icon: TRANSACTION_TYPE_ICON_MAPPING[TransactionType.Income],
-      label: capitalize(
-        TRANSACTION_TYPE_MAPPING[TransactionType.Income].label.plural,
-      ),
+      Icon: TRANSACTION_TYPE_MAPPING[TransactionType.Income].icon,
+      label: TRANSACTION_TYPE_MAPPING[TransactionType.Income].label.plural,
+
       description: formatCurrency(monthlySummary.incomeAmount) ?? '-',
     },
     {
-      Icon: TRANSACTION_TYPE_ICON_MAPPING[TransactionType.Expense],
-      label: capitalize(
-        TRANSACTION_TYPE_MAPPING[TransactionType.Expense].label.plural,
-      ),
+      Icon: TRANSACTION_TYPE_MAPPING[TransactionType.Expense].icon,
+      label: TRANSACTION_TYPE_MAPPING[TransactionType.Expense].label.plural,
+
       description: formatCurrency(monthlySummary.expenseAmount) ?? '-',
     },
   ];
