@@ -72,10 +72,7 @@ export const EditExpenseContainer: FC<EditExpenseContainerProps> = async ({
         description,
       }),
     ),
-    date: DateService.format({
-      date: expense.date,
-      format: DateService.DATE_FORMAT.INPUT,
-    }),
+    date: new DateService(expense.date).format(DateService.DATE_FORMAT.INPUT),
   };
 
   const categories = await CategoryService.getAllWithTree({

@@ -26,10 +26,9 @@ export const AccountBalanceHistoryChart: FC<
   AccountBalanceHistoryChartProps
 > = ({ data, className }) => {
   const chartData = data.map(({ date, balance }) => ({
-    dataKey: DateService.format({
-      date,
-      format: DateService.DATE_FORMAT.MONTH_WITH_DATE_SHORT_WITH_YEAR,
-    }),
+    dataKey: new DateService(date).format(
+      DateService.DATE_FORMAT.MONTH_WITH_DATE_SHORT_WITH_YEAR,
+    ),
     balance,
   }));
 

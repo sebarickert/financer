@@ -31,10 +31,9 @@ export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
   const chartData = useMemo(
     () =>
       data.map(({ date, incomeAmount, expenseAmount }) => ({
-        dataKey: DateService.format({
-          date,
-          format: DateService.DATE_FORMAT.MONTH_LONG,
-        }),
+        dataKey: new DateService(date).format(
+          DateService.DATE_FORMAT.MONTH_LONG,
+        ),
         incomes: incomeAmount,
         expenses: expenseAmount,
       })),

@@ -32,7 +32,7 @@ export const AccountUpdateMarketValueDrawer: FC<
   const methods = useForm<AccountUpdateMarketValueFormFields>({
     defaultValues: {
       currentMarketValue: account.balance,
-      date: DateService.format({ format: DateService.DATE_FORMAT.INPUT }),
+      date: new DateService().format(DateService.DATE_FORMAT.INPUT),
     },
   });
 

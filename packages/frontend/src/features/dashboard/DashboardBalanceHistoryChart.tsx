@@ -26,10 +26,9 @@ export const DashboardBalanceHistoryChart: FC<
   const chartData = useMemo(
     () =>
       data.map(({ date, balance }) => ({
-        dataKey: DateService.format({
-          date,
-          format: DateService.DATE_FORMAT.MONTH_LONG,
-        }),
+        dataKey: new DateService(date).format(
+          DateService.DATE_FORMAT.MONTH_LONG,
+        ),
         balance,
       })),
     [data],

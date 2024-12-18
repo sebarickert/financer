@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon';
 
 export class DateService {
-  public static readonly DATE_FORMAT = {
+  static readonly DATE_FORMAT = {
     DEFAULT: 'dd.MM.yyyy',
     LONG: 'dd.MM.yyyy, HH:mm',
     INPUT: "yyyy-MM-dd'T'HH:mm",
@@ -20,13 +20,6 @@ export class DateService {
       date instanceof DateTime ? date : DateTime.fromJSDate(new Date(date));
   }
 
-  static isValidYearMonth(date: string): boolean {
-    const [year, month] = date.split('-').map(Number);
-    return (
-      !isNaN(year) && !isNaN(month) && year > 0 && month > 0 && month <= 12
-    );
-  }
-
   isToday(): boolean {
     return this.date.hasSame(DateTime.local(), 'day');
   }
@@ -41,6 +34,20 @@ export class DateService {
 
   isBefore(date: DateTime): boolean {
     return this.date < date;
+  }
+
+  format(
+    format: (typeof DateService.DATE_FORMAT)[keyof typeof DateService.DATE_FORMAT] = DateService
+      .DATE_FORMAT.DEFAULT,
+  ): string {
+    return this.date.toFormat(format);
+  }
+
+  static isValidYearMonth(date: string): boolean {
+    const [year, month] = date.split('-').map(Number);
+    return (
+      !isNaN(year) && !isNaN(month) && year > 0 && month > 0 && month <= 12
+    );
   }
 
   static getPreviousMonth(date: DateTime): {
@@ -69,13 +76,6 @@ export class DateService {
     };
   }
 
-  format(
-    format: (typeof DateService.DATE_FORMAT)[keyof typeof DateService.DATE_FORMAT] = DateService
-      .DATE_FORMAT.DEFAULT,
-  ): string {
-    return this.date.toFormat(format);
-  }
-
   static parseDate(date: string | Date): DateTime {
     return DateTime.fromJSDate(new Date(date));
   }
@@ -86,19 +86,6 @@ export class DateService {
 
   static now(): DateTime {
     return DateTime.now();
-  }
-
-  static format({
-    date = DateService.now(),
-    format = DateService.DATE_FORMAT.DEFAULT,
-  }: {
-    date?: DateTime | Date | string;
-    format?: (typeof DateService.DATE_FORMAT)[keyof typeof DateService.DATE_FORMAT];
-  }): string {
-    if (date instanceof Date || typeof date === 'string') {
-      date = DateService.parseDate(date);
-    }
-    return date.toFormat(format);
   }
 
   static createFromYearAndMonth(year: number, month: number): DateTime {

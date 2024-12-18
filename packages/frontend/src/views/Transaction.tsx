@@ -86,10 +86,7 @@ export const Transaction: FC<TransactionProps> = async ({
     {
       Icon: Calendar,
       label: 'Date',
-      description: DateService.format({
-        date,
-        format: DateService.DATE_FORMAT.LONG,
-      }),
+      description: new DateService(date).format(DateService.DATE_FORMAT.LONG),
     },
     {
       Icon: Info,

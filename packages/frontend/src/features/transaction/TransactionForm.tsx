@@ -50,7 +50,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
 
   const defaultValues = useMemo(
     () => ({
-      date: DateService.format({ format: DateService.DATE_FORMAT.INPUT }),
+      date: new DateService().format(DateService.DATE_FORMAT.INPUT),
       ...initialValues,
       toAccount: initialValues?.toAccount || '',
       fromAccount: initialValues?.fromAccount || '',

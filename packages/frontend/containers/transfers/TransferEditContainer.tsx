@@ -73,10 +73,7 @@ export const TransferEditContainer: FC<TransferEditContainerProps> = async ({
         description,
       }),
     ),
-    date: DateService.format({
-      date: transfer.date,
-      format: DateService.DATE_FORMAT.INPUT,
-    }),
+    date: new DateService(transfer.date).format(DateService.DATE_FORMAT.INPUT),
   };
 
   const categories = await CategoryService.getAllWithTree({

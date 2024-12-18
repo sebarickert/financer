@@ -72,10 +72,7 @@ export const IncomeEditContainer: FC<IncomeEditContainerProps> = async ({
         description,
       }),
     ),
-    date: DateService.format({
-      date: income.date,
-      format: DateService.DATE_FORMAT.INPUT,
-    }),
+    date: new DateService(income.date).format(DateService.DATE_FORMAT.INPUT),
   };
 
   const categories = await CategoryService.getAllWithTree({
