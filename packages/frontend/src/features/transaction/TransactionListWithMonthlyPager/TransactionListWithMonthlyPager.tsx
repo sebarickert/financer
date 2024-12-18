@@ -1,5 +1,4 @@
 import clsx from 'clsx';
-import { parse } from 'date-fns';
 import { redirect, RedirectType } from 'next/navigation';
 import { FC } from 'react';
 
@@ -11,21 +10,15 @@ import { TransactionType } from '$api/generated/financerApi';
 import { Pager } from '$blocks/Pager';
 import { monthNames } from '$constants/months';
 import { Heading } from '$elements/Heading';
+import { DateService } from '$services/DateService';
 import {
   TransactionListOptions,
   TransactionService,
 } from '$ssr/api/TransactionService';
-import {
-  DateFormat,
-  formatDate,
-  getNextMonth,
-  getPreviousMonth,
-  isValidYearMonth,
-} from '$utils/formatDate';
 
-const currentDate = new Date();
-const currentYear = currentDate.getFullYear();
-const currentMonth = currentDate.getMonth() + 1;
+const currentDate = DateService.now();
+const currentYear = currentDate.year;
+const currentMonth = currentDate.month;
 
 type TransactionListingWithMonthlyPagerProps = {
   className?: string;
@@ -53,15 +46,17 @@ export const TransactionListWithMonthlyPager: FC<
     additionalFilterOptions,
   );
 
-  const firstTransactionDate = new Date(firstTransaction?.date ?? new Date());
-  const firstAvailableTransaction =
-    firstTransactionDate > currentDate ? currentDate : firstTransactionDate;
+  const firstTransactionDate = new DateService(firstTransaction?.date);
+  const firstAvailableTransaction = firstTransactionDate.isAfter(currentDate)
+    ? currentDate
+    : firstTransactionDate.date;
 
-  const lastTransactionDate = new Date(lastTransaction?.date ?? new Date());
-  const lastAvailableTransaction =
-    lastTransactionDate < currentDate ? currentDate : lastTransactionDate;
+  const lastTransactionDate = new DateService(lastTransaction?.date);
+  const lastAvailableTransaction = lastTransactionDate.isBefore(currentDate)
+    ? currentDate
+    : lastTransactionDate.date;
 
-  if (!isValidYearMonth(queryDate)) {
+  if (!DateService.isValidYearMonth(queryDate)) {
     redirect(
       `?date=${currentYear}-${String(currentMonth).padStart(2, '0')}`,
       RedirectType.replace,
@@ -81,19 +76,20 @@ export const TransactionListWithMonthlyPager: FC<
     filterOptions,
   );
 
-  const previousMonth = getPreviousMonth(year, month);
-  const nextMonth = getNextMonth(year, month);
+  const previousMonth = DateService.getPreviousMonth(
+    DateService.createFromYearAndMonth(year, month),
+  );
+  const nextMonth = DateService.getNextMonth(
+    DateService.createFromYearAndMonth(year, month),
+  );
 
-  const parsedQueryDate = parse(queryDate, 'yyyy-MM', new Date());
-
-  const parsedFirstAvailableTransaction = parse(
-    formatDate(firstAvailableTransaction, DateFormat.yearMonth),
-    'yyyy-MM',
-    new Date(),
+  const parsedQueryDate = DateService.parseFormat(
+    queryDate,
+    DateService.DATE_FORMAT.YEAR_MONTH,
   );
 
   const hasValidMonth =
-    parsedQueryDate >= parsedFirstAvailableTransaction &&
+    parsedQueryDate >= firstAvailableTransaction &&
     parsedQueryDate <= lastAvailableTransaction;
 
   if (!hasValidMonth) {
@@ -103,8 +99,7 @@ export const TransactionListWithMonthlyPager: FC<
     );
   }
 
-  const hasPreviousMonth =
-    previousMonth.date >= parsedFirstAvailableTransaction;
+  const hasPreviousMonth = previousMonth.date >= firstAvailableTransaction;
   const hasNextMonth = nextMonth.date <= lastAvailableTransaction;
 
   const previousHref = hasPreviousMonth

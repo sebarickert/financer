@@ -1,7 +1,6 @@
 'use client';
 
 import clsx from 'clsx';
-import { parse } from 'date-fns';
 import { FC, useMemo, useState } from 'react';
 
 import { AccountBalanceHistoryDto } from '$api/generated/financerApi';
@@ -10,13 +9,13 @@ import {
   ChartFilterByMonthsSelect,
   monthFilterOptions,
 } from '$charts/ChartFilterByMonthsSelect';
+import { DateService } from '$services/DateService';
 import { ChartConfig } from '$types/ChartConfig';
 import { ChartData } from '$types/ChartData';
 import {
   formatCurrency,
   formatCurrencyAbbreviation,
 } from '$utils/formatCurrency';
-import { DateFormat, formatDate } from '$utils/formatDate';
 
 type AccountBalanceHistoryChartProps = {
   data: AccountBalanceHistoryDto[];
@@ -27,15 +26,21 @@ export const AccountBalanceHistoryChart: FC<
   AccountBalanceHistoryChartProps
 > = ({ data, className }) => {
   const chartData = data.map(({ date, balance }) => ({
-    dataKey: formatDate(new Date(date), DateFormat.monthWithDateShortWithYear),
+    dataKey: DateService.format({
+      date,
+      format: DateService.DATE_FORMAT.MONTH_WITH_DATE_SHORT_WITH_YEAR,
+    }),
     balance,
   }));
 
   const groupedChartData = Object.values(
     Object.groupBy(chartData, ({ dataKey }) => {
-      const date = new Date(dataKey);
+      const dt = DateService.parseFormat(
+        dataKey,
+        DateService.DATE_FORMAT.MONTH_WITH_DATE_SHORT_WITH_YEAR,
+      );
 
-      return `${date.getFullYear()}-${date.getMonth() + 1}`;
+      return dt.toFormat(DateService.DATE_FORMAT.YEAR_MONTH);
     }),
   );
 
@@ -83,14 +88,12 @@ export const AccountBalanceHistoryChart: FC<
         yaxisTickFormatter={(value: number) => {
           return formatCurrencyAbbreviation(value);
         }}
-        xaxisTickFormatter={(value: string) => {
-          const parsedDate = parse(
+        xaxisTickFormatter={(value: string) =>
+          DateService.parseFormat(
             value,
-            DateFormat.monthWithDateShortWithYear,
-            new Date(),
-          );
-          return formatDate(parsedDate, DateFormat.monthWithDateShort);
-        }}
+            DateService.DATE_FORMAT.MONTH_WITH_DATE_SHORT_WITH_YEAR,
+          ).toFormat(DateService.DATE_FORMAT.MONTH_WITH_DATE_SHORT)
+        }
       />
     </div>
   );

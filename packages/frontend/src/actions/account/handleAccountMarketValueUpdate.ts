@@ -6,6 +6,7 @@ import {
 } from '$api/generated/financerApi';
 import { ValidationException } from '$exceptions/validation.exception';
 import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
+import { DateService } from '$services/DateService';
 import { ExpenseService } from '$ssr/api/ExpenseService';
 import { IncomeService } from '$ssr/api/IncomeService';
 import { UserDefaultMarketUpdateSettings } from '$ssr/api/UserPreferenceService';
@@ -17,7 +18,8 @@ export const handleAccountMarketValueUpdate: DefaultFormActionHandler<{
   const currentMarketValue = parseFloat(
     formData.get('currentMarketValue') as string,
   );
-  const date = new Date(formData.get('date') as string);
+
+  const date = DateService.parseDate(formData.get('date') as string);
 
   const transactionDescription =
     marketSettings?.transactionDescription ?? 'Market value change';
@@ -45,7 +47,7 @@ export const handleAccountMarketValueUpdate: DefaultFormActionHandler<{
   const transactionBaseFields = {
     amount: Math.abs(marketValueChangeAmount),
     description: transactionDescription,
-    date: date?.toISOString() ?? new Date().toISOString(),
+    date: date.toISO() as string,
     categories,
   };
 

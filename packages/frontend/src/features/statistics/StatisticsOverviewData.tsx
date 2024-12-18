@@ -1,7 +1,7 @@
 'use client';
 
-import { parse } from 'date-fns';
 import { ChartLine, Equal, LineChart, Percent, PieChart } from 'lucide-react';
+import { DateTime } from 'luxon';
 import { FC, useMemo, useState } from 'react';
 
 import { TransactionMonthSummaryDto } from '$api/generated/financerApi';
@@ -14,15 +14,15 @@ import {
 } from '$charts/ChartFilterByMonthsSelect';
 import { settingsPaths } from '$constants/settings-paths';
 import { Link } from '$elements/Link';
+import { DateService } from '$services/DateService';
 import { ChartConfig } from '$types/ChartConfig';
 import {
   formatCurrency,
   formatCurrencyAbbreviation,
 } from '$utils/formatCurrency';
-import { DateFormat, formatDate } from '$utils/formatDate';
 
 type StatisticsOverviewDataProps = {
-  data: (Omit<TransactionMonthSummaryDto, 'id'> & { date: Date })[];
+  data: (Omit<TransactionMonthSummaryDto, 'id'> & { date: DateTime })[];
 };
 
 export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
@@ -31,7 +31,10 @@ export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
   const chartData = useMemo(
     () =>
       data.map(({ date, incomeAmount, expenseAmount }) => ({
-        dataKey: formatDate(date, DateFormat.monthLong),
+        dataKey: DateService.format({
+          date,
+          format: DateService.DATE_FORMAT.MONTH_LONG,
+        }),
         incomes: incomeAmount,
         expenses: expenseAmount,
       })),
@@ -155,10 +158,12 @@ export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
             yaxisTickFormatter={(value: number) => {
               return formatCurrencyAbbreviation(value);
             }}
-            xaxisTickFormatter={(value: string) => {
-              const parsedDate = parse(value, DateFormat.monthLong, new Date());
-              return formatDate(parsedDate, DateFormat.month);
-            }}
+            xaxisTickFormatter={(value: string) =>
+              DateService.parseFormat(
+                value,
+                DateService.DATE_FORMAT.MONTH_LONG,
+              ).toFormat(DateService.DATE_FORMAT.MONTH)
+            }
           />
         </div>
         <div className="p-6 rounded-md bg-layer">

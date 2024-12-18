@@ -19,6 +19,8 @@ const currentMonthFilterOptions = {
 };
 
 export const Dashboard: FC = async () => {
+  console.log('asd', DateService.now().toISO());
+
   const listChunkSizeSettings =
     await UserPreferenceService.getTransactionListChunkSize();
 

@@ -12,8 +12,8 @@ import {
 } from '$api/generated/financerApi';
 import { transactionTypeThemeMapping } from '$constants/transaction/transactionTypeMapping';
 import { Link } from '$elements/Link';
+import { DateService } from '$services/DateService';
 import { formatCurrency } from '$utils/formatCurrency';
-import { formatDate } from '$utils/formatDate';
 
 export const TransactionListItem: FC<
   | TransactionListItemDto
@@ -51,7 +51,7 @@ export const TransactionListItem: FC<
           <span data-testid="transaction-description">{description}</span>
           <div className="text-sm text-muted-foreground">
             <time dateTime={date} data-testid="transaction-date">
-              {formatDate(new Date(date))}
+              {new DateService(date).format()}
             </time>
             {formattedCategories && (
               <>
