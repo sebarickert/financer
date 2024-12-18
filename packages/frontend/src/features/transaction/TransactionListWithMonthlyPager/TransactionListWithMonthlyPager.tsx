@@ -87,19 +87,21 @@ export const TransactionListWithMonthlyPager: FC<
     DATE_FORMAT.YEAR_MONTH,
   );
 
-  const hasValidMonth =
-    parsedQueryDate >= firstAvailableTransaction &&
-    parsedQueryDate <= lastAvailableTransaction;
+  const isQueryDateWithinTransactionRange =
+    parsedQueryDate >= firstAvailableTransaction.startOf('month') &&
+    parsedQueryDate <= lastAvailableTransaction.endOf('month');
 
-  if (!hasValidMonth) {
+  if (!isQueryDateWithinTransactionRange) {
     redirect(
       `?date=${currentYear}-${String(currentMonth).padStart(2, '0')}`,
       RedirectType.replace,
     );
   }
 
-  const hasPreviousMonth = previousMonth.date >= firstAvailableTransaction;
-  const hasNextMonth = nextMonth.date <= lastAvailableTransaction;
+  const hasPreviousMonth =
+    previousMonth.date >= firstAvailableTransaction.startOf('month');
+  const hasNextMonth =
+    nextMonth.date <= lastAvailableTransaction.endOf('month');
 
   const previousHref = hasPreviousMonth
     ? `?date=${previousMonth.year}-${String(previousMonth.month).padStart(2, '0')}`
