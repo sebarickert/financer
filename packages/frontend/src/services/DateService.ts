@@ -13,86 +13,95 @@ export class DateService {
     YEAR_MONTH: 'yyyy-MM',
   } as const;
 
-  date: DateTime;
+  private date: DateTime;
 
-  constructor(date?: Date | string) {
-    this.date = date ? DateTime.fromJSDate(new Date(date)) : DateTime.now();
+  constructor(date: Date | string | DateTime = DateTime.now()) {
+    this.date =
+      date instanceof DateTime ? date : DateTime.fromJSDate(new Date(date));
   }
 
-  static isValidYearMonth(date: string): date is string {
-    if (typeof date !== 'string') return false;
+  static isValidYearMonth(date: string): boolean {
     const [year, month] = date.split('-').map(Number);
     return (
       !isNaN(year) && !isNaN(month) && year > 0 && month > 0 && month <= 12
     );
   }
 
-  isToday() {
+  isToday(): boolean {
     return this.date.hasSame(DateTime.local(), 'day');
   }
 
-  isYesterday() {
+  isYesterday(): boolean {
     return this.date.hasSame(DateTime.local().minus({ days: 1 }), 'day');
   }
 
-  isAfter(date: DateTime) {
+  isAfter(date: DateTime): boolean {
     return this.date > date;
   }
 
-  isBefore(date: DateTime) {
+  isBefore(date: DateTime): boolean {
     return this.date < date;
   }
 
-  static getPreviousMonth(date: DateTime) {
+  static getPreviousMonth(date: DateTime): {
+    year: number;
+    month: number;
+    date: DateTime;
+  } {
+    const previousMonth = date.minus({ months: 1 });
     return {
-      year: date.minus({ months: 1 }).year,
-      month: date.minus({ months: 1 }).month,
-      date: date.minus({ months: 1 }),
+      year: previousMonth.year,
+      month: previousMonth.month,
+      date: previousMonth,
     };
   }
 
-  static getNextMonth(date: DateTime) {
+  static getNextMonth(date: DateTime): {
+    year: number;
+    month: number;
+    date: DateTime;
+  } {
+    const nextMonth = date.plus({ months: 1 });
     return {
-      year: date.plus({ months: 1 }).year,
-      month: date.plus({ months: 1 }).month,
-      date: date.plus({ months: 1 }),
+      year: nextMonth.year,
+      month: nextMonth.month,
+      date: nextMonth,
     };
   }
 
   format(
     format: (typeof DateService.DATE_FORMAT)[keyof typeof DateService.DATE_FORMAT] = DateService
       .DATE_FORMAT.DEFAULT,
-  ) {
+  ): string {
     return this.date.toFormat(format);
   }
 
-  static parseDate(date: string | Date) {
+  static parseDate(date: string | Date): DateTime {
     return DateTime.fromJSDate(new Date(date));
   }
 
-  static parseFormat(date: string, format: string) {
+  static parseFormat(date: string, format: string): DateTime {
     return DateTime.fromFormat(date, format);
   }
 
-  static now() {
+  static now(): DateTime {
     return DateTime.now();
   }
 
   static format({
-    date = this.now(),
+    date = DateService.now(),
     format = DateService.DATE_FORMAT.DEFAULT,
   }: {
     date?: DateTime | Date | string;
     format?: (typeof DateService.DATE_FORMAT)[keyof typeof DateService.DATE_FORMAT];
-  }) {
+  }): string {
     if (date instanceof Date || typeof date === 'string') {
-      date = this.parseDate(date);
+      date = DateService.parseDate(date);
     }
-
     return date.toFormat(format);
   }
 
-  static createFromYearAndMonth(year: number, month: number) {
+  static createFromYearAndMonth(year: number, month: number): DateTime {
     return DateTime.fromObject({ year, month });
   }
 }
