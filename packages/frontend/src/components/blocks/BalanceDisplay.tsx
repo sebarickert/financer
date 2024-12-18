@@ -27,10 +27,10 @@ export const BalanceDisplay: FC<BalanceDisplayProps> = ({
 
   const typeMapping = {
     [TransactionType.Income]: {
-      balance: `+ ${formattedAmount}`,
+      balance: `+${formattedAmount}`,
     },
     [TransactionType.Expense]: {
-      balance: `- ${formattedAmount}`,
+      balance: `-${formattedAmount}`,
     },
     [TransactionType.Transfer]: {},
   };

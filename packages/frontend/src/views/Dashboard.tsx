@@ -1,10 +1,13 @@
 import { ArrowRight, ChartLine, Layers, Tag } from 'lucide-react';
 import { FC } from 'react';
 
+import { Card } from '$blocks/Card/Card';
+import { CardHeader } from '$blocks/Card/CardHeader';
 import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
 import { List } from '$blocks/List';
 import { ProminentLink } from '$blocks/ProminentLink';
-import { Button } from '$elements/Button/Button';
+import { Heading } from '$elements/Heading';
+import { Link } from '$elements/Link';
 import { DashboardBalanceHistoryChart } from '$features/dashboard/DashboardBalanceHistoryChart';
 import { DashboardBalanceSummary } from '$features/dashboard/DashboardBalanceSummary';
 import { TransactionList } from '$features/transaction/TransactionList/TransactionList';
@@ -69,9 +72,9 @@ export const Dashboard: FC = async () => {
     ) ?? {};
 
   return (
-    <section className="grid gap-6">
-      <div className="grid lg:grid-cols-[1fr_2fr] gap-6">
-        <div className="grid gap-6 self-baseline">
+    <section className="grid gap-4">
+      <div className="grid lg:grid-cols-[1fr_2fr] gap-4">
+        <div className="grid gap-4 self-baseline">
           <DashboardBalanceSummary
             {...{
               totalBalance,
@@ -99,22 +102,30 @@ export const Dashboard: FC = async () => {
         {balanceHistory.length >= 3 && (
           <DashboardBalanceHistoryChart
             data={balanceHistory}
-            className='lg:h-[375px] [&_[data-slot="chart"]]:lg:h-[279px] [&_[data-slot="chart"]]:lg:aspect-auto'
+            className='lg:h-[367px] [&_[data-slot="chart"]]:lg:h-[271px] [&_[data-slot="chart"]]:lg:aspect-auto'
           />
         )}
       </div>
       <div className="grid gap-4">
-        <TransactionList label="Recent Activity" items={transactions} />
-        {!!transactions.length && (
-          <Button
-            href="/transactions"
-            accentColor="secondary"
-            className="lg:ml-auto"
-          >
-            <span>See all</span>
-            <ArrowRight />
-          </Button>
-        )}
+        <Card className="pb-1!">
+          {!!transactions.length && (
+            <CardHeader className="border-b flex justify-between items-center">
+              <Heading noMargin>Recent Activity</Heading>
+              <Link
+                href="/transactions"
+                className="inline-flex items-center gap-2"
+              >
+                <span>See all</span>
+                <ArrowRight />
+              </Link>
+            </CardHeader>
+          )}
+          <TransactionList
+            items={transactions}
+            className="-mx-6"
+            itemRoundness={false}
+          />
+        </Card>
       </div>
     </section>
   );

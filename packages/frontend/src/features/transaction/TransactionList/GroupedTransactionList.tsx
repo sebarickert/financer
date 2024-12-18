@@ -4,9 +4,16 @@ import { FC } from 'react';
 
 import { TransactionList } from './TransactionList';
 
-import { TransactionListItemDto } from '$api/generated/financerApi';
+import {
+  TransactionListItemDto,
+  TransactionType,
+} from '$api/generated/financerApi';
+import { Card } from '$blocks/Card/Card';
+import { CardHeader } from '$blocks/Card/CardHeader';
 import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
+import { Heading } from '$elements/Heading';
 import { DATE_FORMAT, DateService } from '$services/DateService';
+import { formatCurrency } from '$utils/formatCurrency';
 
 type GroupedTransactionListProps = {
   items: TransactionListItemDto[];
@@ -59,14 +66,35 @@ export const GroupedTransactionList: FC<GroupedTransactionListProps> = async ({
   }
 
   return (
-    <section className={clsx('grid gap-6', className)}>
-      {groupedTransactions.map((group) => (
-        <TransactionList
-          key={group.date}
-          label={getGroupLabel(group.date)}
-          items={group.data}
-        />
-      ))}
-    </section>
+    <div className={clsx('grid gap-4', className)}>
+      {groupedTransactions.map((group) => {
+        const groupAmount = group.data
+          .filter(
+            ({ type }) =>
+              type === TransactionType.Income ||
+              type === TransactionType.Expense,
+          )
+          .map(({ type, amount }) =>
+            type === TransactionType.Expense ? -amount : amount,
+          )
+          .reduce((acc, curr) => acc + curr, 0);
+
+        return (
+          <Card key={group.date} className="pb-1!">
+            <CardHeader className="border-b flex justify-between items-center">
+              <Heading noMargin>{getGroupLabel(group.date)}</Heading>
+              <p className="text-muted-foreground text-sm">
+                {formatCurrency(groupAmount, true)}
+              </p>
+            </CardHeader>
+            <TransactionList
+              items={group.data}
+              className="-mx-6"
+              itemRoundness={false}
+            />
+          </Card>
+        );
+      })}
+    </div>
   );
 };

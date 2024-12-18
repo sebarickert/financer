@@ -53,7 +53,7 @@ export const InfoMessageBlock: FC<InfoMessageBlockProps> = ({
       className={clsx(
         className,
         'bg-layer flex flex-col items-center justify-center',
-        'px-6 pt-8 pb-10 rounded-md text-center',
+        'px-6 py-12 rounded-md text-center',
       )}
     >
       {Icon && (
