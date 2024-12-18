@@ -5,7 +5,7 @@ import { TRANSACTION_TYPE_ICON_MAPPING } from '../TransactionTypeIcon';
 import { TransactionType } from '$api/generated/financerApi';
 import { BalanceDisplay } from '$blocks/BalanceDisplay';
 import { DetailsList, DetailsItem } from '$blocks/DetailsList';
-import { transactionTypeLabelMapping } from '$constants/transaction/transactionTypeMapping';
+import { TRANSACTION_TYPE_MAPPING } from '$constants/transaction/TRANSACTION_TYPE_MAPPING';
 import {
   TransactionListOptions,
   TransactionService,
@@ -39,14 +39,14 @@ export const TransactionListWithMonthlySummary: FC<
     {
       Icon: TRANSACTION_TYPE_ICON_MAPPING[TransactionType.Income],
       label: capitalize(
-        transactionTypeLabelMapping[TransactionType.Income].plural,
+        TRANSACTION_TYPE_MAPPING[TransactionType.Income].label.plural,
       ),
       description: formatCurrency(monthlySummary.incomeAmount) ?? '-',
     },
     {
       Icon: TRANSACTION_TYPE_ICON_MAPPING[TransactionType.Expense],
       label: capitalize(
-        transactionTypeLabelMapping[TransactionType.Expense].plural,
+        TRANSACTION_TYPE_MAPPING[TransactionType.Expense].label.plural,
       ),
       description: formatCurrency(monthlySummary.expenseAmount) ?? '-',
     },
