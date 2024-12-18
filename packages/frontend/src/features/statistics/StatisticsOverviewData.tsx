@@ -1,7 +1,6 @@
 'use client';
 
 import { ChartLine, Equal, LineChart, Percent, PieChart } from 'lucide-react';
-import { DateTime } from 'luxon';
 import { FC, useMemo, useState } from 'react';
 
 import { TransactionMonthSummaryDto } from '$api/generated/financerApi';
@@ -22,7 +21,7 @@ import {
 } from '$utils/formatCurrency';
 
 type StatisticsOverviewDataProps = {
-  data: (Omit<TransactionMonthSummaryDto, 'id'> & { date: DateTime })[];
+  data: (Omit<TransactionMonthSummaryDto, 'id'> & { date: string })[];
 };
 
 export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({

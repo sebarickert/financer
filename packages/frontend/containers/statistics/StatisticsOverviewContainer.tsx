@@ -25,7 +25,8 @@ export const StatisticsOverviewContainer: FC = async () => {
         date: DateService.createFromYearAndMonth(targetYear, targetMonth),
       };
     })
-    .sort((a, b) => a.date.toMillis() - b.date.toMillis());
+    .sort((a, b) => a.date.toMillis() - b.date.toMillis())
+    .map((item) => ({ ...item, date: item.date.toISO() as string }));
 
   return (
     <TransactionsLayout title="Statistics">
