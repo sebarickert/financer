@@ -76,12 +76,12 @@ export const TransactionListWithMonthlyPager: FC<
     filterOptions,
   );
 
-  const previousMonth = DateService.getPreviousMonth(
+  const previousMonth = new DateService(
     DateService.createFromYearAndMonth(year, month),
-  );
-  const nextMonth = DateService.getNextMonth(
+  ).getPreviousMonth();
+  const nextMonth = new DateService(
     DateService.createFromYearAndMonth(year, month),
-  );
+  ).getNextMonth();
 
   const parsedQueryDate = DateService.parseFormat(
     queryDate,

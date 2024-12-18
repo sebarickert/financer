@@ -46,19 +46,12 @@ export class DateService {
     return this.date.toFormat(format);
   }
 
-  static isValidYearMonth(date: string): boolean {
-    const [year, month] = date.split('-').map(Number);
-    return (
-      !isNaN(year) && !isNaN(month) && year > 0 && month > 0 && month <= 12
-    );
-  }
-
-  static getPreviousMonth(date: DateTime): {
+  getPreviousMonth(): {
     year: number;
     month: number;
     date: DateTime;
   } {
-    const previousMonth = date.minus({ months: 1 });
+    const previousMonth = this.date.minus({ months: 1 });
     return {
       year: previousMonth.year,
       month: previousMonth.month,
@@ -66,17 +59,24 @@ export class DateService {
     };
   }
 
-  static getNextMonth(date: DateTime): {
+  getNextMonth(): {
     year: number;
     month: number;
     date: DateTime;
   } {
-    const nextMonth = date.plus({ months: 1 });
+    const nextMonth = this.date.plus({ months: 1 });
     return {
       year: nextMonth.year,
       month: nextMonth.month,
       date: nextMonth,
     };
+  }
+
+  static isValidYearMonth(date: string): boolean {
+    const [year, month] = date.split('-').map(Number);
+    return (
+      !isNaN(year) && !isNaN(month) && year > 0 && month > 0 && month <= 12
+    );
   }
 
   static parseFormat(date: string, format: string): DateTime {
