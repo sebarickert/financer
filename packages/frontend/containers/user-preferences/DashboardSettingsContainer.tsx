@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import { handleDashboardSettingsUpdate } from '$actions/settings/handleDashboardSettingsUpdate';
-import { settingsPaths } from '$constants/settings-paths';
+import { settingsPaths } from '$constants/settingsPaths';
 import { Layout } from '$layouts/Layout';
 import { UserPreferenceService } from '$ssr/api/UserPreferenceService';
 import { UserDashboardSettingsForm } from '$views/user-preferences/UserDashboardSettingsForm';

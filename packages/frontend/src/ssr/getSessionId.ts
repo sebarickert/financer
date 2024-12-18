@@ -1,4 +1,4 @@
-import { isServerSide } from '$utils/is-server-side';
+import { isServerSide } from '$utils/isServerSide';
 
 export const getSessionId = async (): Promise<string | undefined> => {
   if (!isServerSide()) return undefined;

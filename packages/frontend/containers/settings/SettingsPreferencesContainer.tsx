@@ -3,7 +3,7 @@ import { FC } from 'react';
 
 import { List } from '$blocks/List';
 import { ProminentLink } from '$blocks/ProminentLink';
-import { settingsPaths } from '$constants/settings-paths';
+import { settingsPaths } from '$constants/settingsPaths';
 import { SettingsLayout } from '$features/settings/SettingsLayout';
 
 export const SettingsPreferencesContainer: FC = () => {

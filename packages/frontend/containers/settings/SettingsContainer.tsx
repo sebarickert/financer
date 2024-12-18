@@ -5,7 +5,7 @@ import { Role } from '$api/generated/financerApi';
 import { List } from '$blocks/List';
 import { ProminentLink } from '$blocks/ProminentLink';
 import { ThemeSwitcher } from '$blocks/ThemeSwitcher/ThemeSwitcher';
-import { settingsPaths } from '$constants/settings-paths';
+import { settingsPaths } from '$constants/settingsPaths';
 import { Button } from '$elements/Button/Button';
 import { Heading } from '$elements/Heading';
 import { SettingsLayout } from '$features/settings/SettingsLayout';

@@ -11,7 +11,7 @@ import {
   ChartFilterByMonthsSelect,
   monthFilterOptions,
 } from '$charts/ChartFilterByMonthsSelect';
-import { settingsPaths } from '$constants/settings-paths';
+import { settingsPaths } from '$constants/settingsPaths';
 import { Link } from '$elements/Link';
 import { DATE_FORMAT, DateService } from '$services/DateService';
 import { ChartConfig } from '$types/ChartConfig';

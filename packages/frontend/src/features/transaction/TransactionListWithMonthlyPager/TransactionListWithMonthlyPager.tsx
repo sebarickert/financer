@@ -8,7 +8,6 @@ import { TransactionListWithMonthlySummary } from './TransactionListWithMonthlyS
 
 import { TransactionType } from '$api/generated/financerApi';
 import { Pager } from '$blocks/Pager';
-import { monthNames } from '$constants/months';
 import { Heading } from '$elements/Heading';
 import { DATE_FORMAT, DateService } from '$services/DateService';
 import {
@@ -109,7 +108,9 @@ export const TransactionListWithMonthlyPager: FC<
     ? `?date=${nextMonth.year}-${String(nextMonth.month).padStart(2, '0')}`
     : undefined;
 
-  const pagerLabel = `${monthNames[month - 1]} ${year}`;
+  const pagerLabel = new DateService(
+    DateService.createFromYearAndMonth(year, month),
+  ).format(DATE_FORMAT.MONTH_WITH_YEAR_LONG);
   const hasSummaryVisible = isSummaryVisible && transactions.length > 0;
 
   return (
