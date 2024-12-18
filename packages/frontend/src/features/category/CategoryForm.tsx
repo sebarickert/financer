@@ -7,11 +7,11 @@ import { getAllChildCategoryIds } from '../../services/TransactionCategoriesServ
 
 import { TransactionType, VisibilityType } from '$api/generated/financerApi';
 import { Form } from '$blocks/Form';
+import { TRANSACTION_TYPE_MAPPING } from '$constants/transaction/TRANSACTION_TYPE_MAPPING';
 import { Button } from '$elements/Button/Button';
 import { Input } from '$elements/Input';
 import { InputOption } from '$elements/InputOption';
 import { Select } from '$elements/Select';
-import { TRANSACTION_TYPE_ICON_MAPPING } from '$features/transaction/TransactionTypeIcon';
 import {
   DefaultFormActionHandler,
   useFinancerFormState,
@@ -35,15 +35,15 @@ export type TransactionCategoryFormFields = {
 const visibilityTypeMapping = {
   [VisibilityType.Income]: {
     label: 'Income',
-    icon: TRANSACTION_TYPE_ICON_MAPPING.INCOME,
+    icon: TRANSACTION_TYPE_MAPPING.INCOME.icon,
   },
   [VisibilityType.Expense]: {
     label: 'Expense',
-    icon: TRANSACTION_TYPE_ICON_MAPPING.EXPENSE,
+    icon: TRANSACTION_TYPE_MAPPING.EXPENSE.icon,
   },
   [VisibilityType.Transfer]: {
     label: 'Transfer',
-    icon: TRANSACTION_TYPE_ICON_MAPPING.TRANSFER,
+    icon: TRANSACTION_TYPE_MAPPING.TRANSFER.icon,
   },
 };
 

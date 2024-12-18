@@ -4,9 +4,7 @@ import { FC } from 'react';
 import { TransactionType } from '$api/generated/financerApi';
 import { BalanceDisplay } from '$blocks/BalanceDisplay';
 import { DetailsItem, DetailsList } from '$blocks/DetailsList';
-import { transactionTypeLabelMapping } from '$constants/transaction/transactionTypeMapping';
-import { TRANSACTION_TYPE_ICON_MAPPING } from '$features/transaction/TransactionTypeIcon';
-import { capitalize } from '$utils/capitalize';
+import { TRANSACTION_TYPE_MAPPING } from '$constants/transaction/TRANSACTION_TYPE_MAPPING';
 import { formatCurrency } from '$utils/formatCurrency';
 
 type DashboardBalanceSummaryProps = {
@@ -47,17 +45,13 @@ export const DashboardBalanceSummary: FC<DashboardBalanceSummaryProps> = ({
 
   const monthlyDetails: DetailsItem[] = [
     {
-      Icon: TRANSACTION_TYPE_ICON_MAPPING[TransactionType.Income],
-      label: capitalize(
-        transactionTypeLabelMapping[TransactionType.Income].plural,
-      ),
+      Icon: TRANSACTION_TYPE_MAPPING[TransactionType.Income].icon,
+      label: TRANSACTION_TYPE_MAPPING[TransactionType.Income].label.plural,
       description: formatCurrency(totalIncomes),
     },
     {
-      Icon: TRANSACTION_TYPE_ICON_MAPPING[TransactionType.Expense],
-      label: capitalize(
-        transactionTypeLabelMapping[TransactionType.Expense].plural,
-      ),
+      Icon: TRANSACTION_TYPE_MAPPING[TransactionType.Expense].icon,
+      label: TRANSACTION_TYPE_MAPPING[TransactionType.Expense].label.plural,
       description: formatCurrency(totalExpenses),
     },
   ];
