@@ -19,7 +19,7 @@ export const handleAccountMarketValueUpdate: DefaultFormActionHandler<{
     formData.get('currentMarketValue') as string,
   );
 
-  const date = DateService.parseDate(formData.get('date') as string);
+  const date = new DateService(formData.get('date') as string).getDate();
 
   const transactionDescription =
     marketSettings?.transactionDescription ?? 'Market value change';

@@ -36,9 +36,9 @@ export const Dashboard: FC = async () => {
     ...accountTypeFilter,
   });
 
-  const latestTransactionTimestamp = DateService.parseDate(
+  const latestTransactionTimestamp = new DateService(
     latestTransaction?.date,
-  );
+  ).getDate();
 
   const balanceHistory = transactionMonthSummary
     .map(({ id: { month, year }, totalAmount }) => ({

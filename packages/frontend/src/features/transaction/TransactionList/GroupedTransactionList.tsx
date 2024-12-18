@@ -39,7 +39,7 @@ export const GroupedTransactionList: FC<GroupedTransactionListProps> = async ({
 }) => {
   const groupedTransactions = Object.entries(
     Object.groupBy(items, ({ date }) => {
-      const dt = DateService.parseDate(date);
+      const dt = new DateService(date).getDate();
 
       if (dt > endOfTodayDate) {
         return 'Upcoming';

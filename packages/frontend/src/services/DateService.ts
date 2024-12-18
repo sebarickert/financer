@@ -79,10 +79,6 @@ export class DateService {
     };
   }
 
-  static parseDate(date: string | Date): DateTime {
-    return DateTime.fromJSDate(new Date(date));
-  }
-
   static parseFormat(date: string, format: string): DateTime {
     return DateTime.fromFormat(date, format);
   }
