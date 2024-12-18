@@ -73,8 +73,8 @@ export const TransactionListItem: FC<
             data-testid="transaction-amount"
             data-transaction-type={type}
           >
-            {isIncome && '+ '}
-            {isExpense && '- '}
+            {isIncome && '+'}
+            {isExpense && '-'}
             {formatCurrency(amount)}
           </span>
         </span>

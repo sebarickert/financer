@@ -117,7 +117,7 @@ export const TransactionListWithMonthlyPager: FC<
 
   return (
     <div className={clsx('flex flex-col', className)}>
-      <div className={clsx('grid gap-6')}>
+      <div className={clsx('grid gap-4')}>
         <div data-slot="transaction-list-summary">
           <div className={clsx('p-6 rounded-md bg-layer grid gap-4')}>
             <div className="flex items-center justify-between gap-1 h-7">
