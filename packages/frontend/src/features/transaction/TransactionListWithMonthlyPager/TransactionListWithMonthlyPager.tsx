@@ -16,7 +16,7 @@ import {
   TransactionService,
 } from '$ssr/api/TransactionService';
 
-const currentDate = DateService.now();
+const currentDate = new DateService().getDate();
 const currentYear = currentDate.year;
 const currentMonth = currentDate.month;
 

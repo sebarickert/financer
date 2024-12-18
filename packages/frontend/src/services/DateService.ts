@@ -87,10 +87,6 @@ export class DateService {
     return DateTime.fromFormat(date, format);
   }
 
-  static now(): DateTime {
-    return DateTime.now();
-  }
-
   static createFromYearAndMonth(year: number, month: number): DateTime {
     return DateTime.fromObject({ year, month });
   }

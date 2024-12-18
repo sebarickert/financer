@@ -14,13 +14,11 @@ import { TransactionService } from '$ssr/api/TransactionService';
 import { UserPreferenceService } from '$ssr/api/UserPreferenceService';
 
 const currentMonthFilterOptions = {
-  year: DateService.now().year,
-  month: DateService.now().month,
+  year: new DateService().getDate().year,
+  month: new DateService().getDate().month,
 };
 
 export const Dashboard: FC = async () => {
-  console.log('asd', DateService.now().toISO());
-
   const listChunkSizeSettings =
     await UserPreferenceService.getTransactionListChunkSize();
 
