@@ -80,17 +80,18 @@ export const GroupedTransactionList: FC<GroupedTransactionListProps> = async ({
           .reduce((acc, curr) => acc + curr, 0);
 
         return (
-          <Card key={group.date} className="pb-1!">
+          <Card key={group.date} className="pb-0!">
             <CardHeader className="border-b flex justify-between items-center">
-              <Heading noMargin>{getGroupLabel(group.date)}</Heading>
+              <Heading noMargin className="text-base!">
+                {getGroupLabel(group.date)}
+              </Heading>
               <p className="text-muted-foreground text-sm">
                 {formatCurrency(groupAmount, true)}
               </p>
             </CardHeader>
             <TransactionList
               items={group.data}
-              className="-mx-6"
-              itemRoundness={false}
+              className="-mx-6 [&_[data-slot='list-item']]:first:[&>:not(style)]:rounded-t-none"
             />
           </Card>
         );

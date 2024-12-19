@@ -107,10 +107,12 @@ export const Dashboard: FC = async () => {
         )}
       </div>
       <div className="grid gap-4">
-        <Card className="pb-1!">
+        <Card className="pb-0!">
           {!!transactions.length && (
             <CardHeader className="border-b flex justify-between items-center">
-              <Heading noMargin>Recent Activity</Heading>
+              <Heading noMargin className="text-base!">
+                Recent Activity
+              </Heading>
               <Link
                 href="/transactions"
                 className="inline-flex items-center gap-2"
@@ -122,8 +124,7 @@ export const Dashboard: FC = async () => {
           )}
           <TransactionList
             items={transactions}
-            className="-mx-6"
-            itemRoundness={false}
+            className="-mx-6 [&_[data-slot='list-item']]:first:[&>:not(style)]:rounded-t-none"
           />
         </Card>
       </div>

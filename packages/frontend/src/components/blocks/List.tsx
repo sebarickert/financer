@@ -32,8 +32,8 @@ export const List: FC<ListProps> = ({
                 data-testid={`${testId}-item`}
                 className={clsx(
                   '[&>*:focus-visible]:z-10 [&>*:focus-visible]:relative',
-                  itemRoundness && '[&:first-child>:first-child]:rounded-t-md',
-                  itemRoundness && '[&:last-child>:first-child]:rounded-b-md',
+                  itemRoundness && 'first:[&>:not(style)]:rounded-t-md',
+                  itemRoundness && 'last:[&>:not(style)]:rounded-b-md',
                 )}
               >
                 {child}
