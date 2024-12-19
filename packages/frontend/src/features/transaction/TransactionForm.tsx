@@ -113,7 +113,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
               isRequired
               placeholder="Select Account"
               isLabelHidden
-              Icon={TRANSACTION_TYPE_MAPPING.EXPENSE.icon}
+              Icon={TRANSACTION_TYPE_MAPPING.EXPENSE.Icon}
             >
               From Account
             </Select>
@@ -125,7 +125,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
               isRequired
               placeholder="Select Account"
               isLabelHidden
-              Icon={TRANSACTION_TYPE_MAPPING.INCOME.icon}
+              Icon={TRANSACTION_TYPE_MAPPING.INCOME.Icon}
             >
               To Account
             </Select>

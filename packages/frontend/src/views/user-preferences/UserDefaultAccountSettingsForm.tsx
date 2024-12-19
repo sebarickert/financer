@@ -76,7 +76,7 @@ export const UserDefaultAccountSettingsForm: FC<
             })) ?? []
           }
           isRequired
-          Icon={TRANSACTION_TYPE_MAPPING.INCOME.icon}
+          Icon={TRANSACTION_TYPE_MAPPING.INCOME.Icon}
         >
           Default income account
         </Select>
@@ -89,7 +89,7 @@ export const UserDefaultAccountSettingsForm: FC<
             })) ?? []
           }
           isRequired
-          Icon={TRANSACTION_TYPE_MAPPING.EXPENSE.icon}
+          Icon={TRANSACTION_TYPE_MAPPING.EXPENSE.Icon}
         >
           Default expense account
         </Select>
@@ -102,7 +102,7 @@ export const UserDefaultAccountSettingsForm: FC<
             })) ?? []
           }
           isRequired
-          Icon={TRANSACTION_TYPE_MAPPING.EXPENSE.icon}
+          Icon={TRANSACTION_TYPE_MAPPING.EXPENSE.Icon}
         >
           Default transfer source account
         </Select>
@@ -115,7 +115,7 @@ export const UserDefaultAccountSettingsForm: FC<
             })) ?? []
           }
           isRequired
-          Icon={TRANSACTION_TYPE_MAPPING.INCOME.icon}
+          Icon={TRANSACTION_TYPE_MAPPING.INCOME.Icon}
         >
           Default transfer target account
         </Select>

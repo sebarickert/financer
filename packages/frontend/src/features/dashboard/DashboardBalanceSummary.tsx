@@ -3,6 +3,7 @@ import { FC } from 'react';
 
 import { TransactionType } from '$api/generated/financerApi';
 import { BalanceDisplay } from '$blocks/BalanceDisplay';
+import { Card } from '$blocks/Card/Card';
 import { DetailsItem, DetailsList } from '$blocks/DetailsList';
 import { TRANSACTION_TYPE_MAPPING } from '$constants/transaction/TRANSACTION_TYPE_MAPPING';
 import { formatCurrency } from '$utils/formatCurrency';
@@ -45,21 +46,21 @@ export const DashboardBalanceSummary: FC<DashboardBalanceSummaryProps> = ({
 
   const monthlyDetails: DetailsItem[] = [
     {
-      Icon: TRANSACTION_TYPE_MAPPING[TransactionType.Income].icon,
+      Icon: TRANSACTION_TYPE_MAPPING[TransactionType.Income].Icon,
       label: TRANSACTION_TYPE_MAPPING[TransactionType.Income].label.plural,
       description: formatCurrency(totalIncomes),
     },
     {
-      Icon: TRANSACTION_TYPE_MAPPING[TransactionType.Expense].icon,
+      Icon: TRANSACTION_TYPE_MAPPING[TransactionType.Expense].Icon,
       label: TRANSACTION_TYPE_MAPPING[TransactionType.Expense].label.plural,
       description: formatCurrency(totalExpenses),
     },
   ];
 
   return (
-    <div
-      className={clsx(className, 'grid gap-6 p-6 rounded-md bg-layer')}
+    <Card
       data-testid="dashboard-balance-summary"
+      className={clsx(className, 'grid gap-6')}
     >
       <BalanceDisplay label="Balance" amount={totalBalance}>
         {balanceDifference && percentageDifference && (
@@ -72,6 +73,6 @@ export const DashboardBalanceSummary: FC<DashboardBalanceSummaryProps> = ({
         )}
       </BalanceDisplay>
       <DetailsList items={monthlyDetails} />
-    </div>
+    </Card>
   );
 };

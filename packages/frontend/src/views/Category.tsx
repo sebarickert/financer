@@ -2,6 +2,7 @@ import { Info, Tag } from 'lucide-react';
 import { FC, useMemo } from 'react';
 
 import { TransactionCategoryDto } from '$api/generated/financerApi';
+import { Card } from '$blocks/Card/Card';
 import { DetailsItem, DetailsList } from '$blocks/DetailsList';
 import { TransactionListWithMonthlyPager } from '$features/transaction/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
 import { capitalize } from '$utils/capitalize';
@@ -70,10 +71,10 @@ export const Category: FC<CategoryProps> = ({
   ]);
 
   return (
-    <section className="grid gap-6">
-      <div className="p-6 rounded-md bg-layer">
+    <section className="grid gap-4">
+      <Card>
         <DetailsList items={categoryDetails} />
-      </div>
+      </Card>
       <TransactionListWithMonthlyPager
         filterOptions={{
           parentTransactionCategory: parentTransactionCategoryId,

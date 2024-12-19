@@ -35,15 +35,15 @@ export type TransactionCategoryFormFields = {
 const visibilityTypeMapping = {
   [VisibilityType.Income]: {
     label: 'Income',
-    icon: TRANSACTION_TYPE_MAPPING.INCOME.icon,
+    icon: TRANSACTION_TYPE_MAPPING.INCOME.Icon,
   },
   [VisibilityType.Expense]: {
     label: 'Expense',
-    icon: TRANSACTION_TYPE_MAPPING.EXPENSE.icon,
+    icon: TRANSACTION_TYPE_MAPPING.EXPENSE.Icon,
   },
   [VisibilityType.Transfer]: {
     label: 'Transfer',
-    icon: TRANSACTION_TYPE_MAPPING.TRANSFER.icon,
+    icon: TRANSACTION_TYPE_MAPPING.TRANSFER.Icon,
   },
 };
 

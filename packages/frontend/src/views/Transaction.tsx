@@ -5,13 +5,13 @@ import { FC } from 'react';
 import {
   ExpenseDetailsDto,
   IncomeDetailsDto,
-  TransactionType,
   TransferDetailsDto,
 } from '$api/generated/financerApi';
 import { BalanceDisplay } from '$blocks/BalanceDisplay';
+import { Card } from '$blocks/Card/Card';
+import { CardHeader } from '$blocks/Card/CardHeader';
 import { DetailsList, DetailsItem } from '$blocks/DetailsList';
 import { TRANSACTION_TYPE_MAPPING } from '$constants/transaction/TRANSACTION_TYPE_MAPPING';
-import { transactionTypeThemeMapping } from '$constants/transaction/transactionTypeMapping';
 import { Heading } from '$elements/Heading';
 import { TransactionTypeIcon } from '$features/transaction/TransactionTypeIcon';
 import { DATE_FORMAT, DateService } from '$services/DateService';
@@ -31,30 +31,12 @@ export const Transaction: FC<TransactionProps> = async ({
   amount,
   description,
   isRecurring,
+  id,
   ...props
 }) => {
   const fromAccountName =
     'fromAccountName' in props ? props.fromAccountName : null;
   const toAccountName = 'toAccountName' in props ? props.toAccountName : null;
-
-  const typeMapping = {
-    [TransactionType.Income]: {
-      ...transactionTypeThemeMapping[TransactionType.Income],
-      color: 'bg-green text-white',
-    },
-    [TransactionType.Expense]: {
-      ...transactionTypeThemeMapping[TransactionType.Expense],
-      color: 'bg-red text-white',
-    },
-    [TransactionType.Transfer]: {
-      ...transactionTypeThemeMapping[TransactionType.Transfer],
-      color: 'bg-accent text-foreground',
-    },
-  };
-
-  const { color = '' } = {
-    ...(type ? typeMapping[type] : {}),
-  };
 
   const transactionCategories = await CategoryService.getAllWithTree();
 
@@ -66,7 +48,7 @@ export const Transaction: FC<TransactionProps> = async ({
     ...(fromAccountName
       ? [
           {
-            Icon: TRANSACTION_TYPE_MAPPING.EXPENSE.icon,
+            Icon: TRANSACTION_TYPE_MAPPING.EXPENSE.Icon,
             label: 'From Account',
             description: fromAccountName,
           },
@@ -75,7 +57,7 @@ export const Transaction: FC<TransactionProps> = async ({
     ...(toAccountName
       ? [
           {
-            Icon: TRANSACTION_TYPE_MAPPING.INCOME.icon,
+            Icon: TRANSACTION_TYPE_MAPPING.INCOME.Icon,
             label: 'To Account',
             description: toAccountName,
           },
@@ -90,11 +72,6 @@ export const Transaction: FC<TransactionProps> = async ({
       Icon: Info,
       label: 'Type',
       description: capitalize(type.toLowerCase()),
-    },
-    {
-      Icon: MessageSquareText,
-      label: 'Description',
-      description,
     },
   ];
 
@@ -129,17 +106,21 @@ export const Transaction: FC<TransactionProps> = async ({
   );
 
   return (
-    <div
-      className={clsx('bg-layer rounded-md relative isolate', 'p-6')}
-      data-testid="transaction-details"
-    >
-      <div className="grid divide-y [&>:first-child]:pb-6 [&>:first-child+div]:pt-6">
-        <div className="flex flex-col items-center gap-4">
+    <>
+      <style>{`
+        [data-transaction='${id}'] {
+         ${`--color-type: ${TRANSACTION_TYPE_MAPPING[type].color};`}
+        }
+      `}</style>
+      <div
+        className={clsx('relative isolate grid gap-4')}
+        data-testid="transaction-details"
+        data-transaction={id}
+      >
+        <Card className="flex flex-col items-center gap-4">
           <span
             className={clsx(
-              'p-3 rounded-full inline-block',
-              color,
-              !color && 'bg-accent',
+              'inline-flex size-12 rounded-full items-center justify-center bg-(--color-type)',
             )}
           >
             <TransactionTypeIcon type={type} isRecurring={isRecurring} />
@@ -147,34 +128,46 @@ export const Transaction: FC<TransactionProps> = async ({
           <BalanceDisplay
             label="Amount"
             amount={amount}
-            className='[&_[data-slot="label"]]:sr-only'
             type={type}
-          />
+            className='[&_[data-slot="label"]]:sr-only text-center'
+          >
+            <p
+              className="text-muted-foreground mt-1"
+              data-testid="transaction-description"
+            >
+              {description}
+            </p>
+          </BalanceDisplay>
           {isRecurring && (
             <p className="max-w-xs mx-auto text-sm text-center text-muted-foreground">
               This transaction was automatically created based on your saved
               template.
             </p>
           )}
-        </div>
-        <div className={clsx('grid gap-6', '')}>
+        </Card>
+        <Card>
+          <CardHeader>
+            <Heading noMargin>Details</Heading>
+          </CardHeader>
           <DetailsList items={transactionDetails} />
-          {categoryDetails.length > 0 && (
-            <div data-testid="transaction-categories">
-              <Heading>Categories</Heading>
-              <div className="divide-y [&>div:not(:first-child)]:pt-4 [&>div:not(:last-child)]:pb-4">
-                {categoryDetails.map((category, index) => (
-                  <DetailsList
-                    testId="category-details"
-                    key={category[0].label + index}
-                    items={category}
-                  />
-                ))}
-              </div>
+        </Card>
+        {!!categoryDetails?.length && (
+          <Card data-testid="transaction-categories">
+            <CardHeader>
+              <Heading noMargin>Categories</Heading>
+            </CardHeader>
+            <div className="divide-y [&>div:not(:first-child)]:pt-4 [&>div:not(:last-child)]:pb-4">
+              {categoryDetails.map((category, index) => (
+                <DetailsList
+                  testId="category-details"
+                  key={category[0].label + index}
+                  items={category}
+                />
+              ))}
             </div>
-          )}
-        </div>
+          </Card>
+        )}
       </div>
-    </div>
+    </>
   );
 };

@@ -12,14 +12,12 @@ type TransactionListProps = {
   items: TransactionListItemDto[];
   className?: string;
   label?: string;
-  itemRoundness?: boolean;
 };
 
 export const TransactionList: FC<TransactionListProps> = async ({
   label,
   items,
   className,
-  itemRoundness,
 }) => {
   if (items.length === 0) {
     return (
@@ -31,12 +29,7 @@ export const TransactionList: FC<TransactionListProps> = async ({
   }
 
   return (
-    <List
-      label={label}
-      testId="transaction-list"
-      className={clsx(className)}
-      itemRoundness={itemRoundness}
-    >
+    <List label={label} testId="transaction-list" className={clsx(className)}>
       {items.map((row) => (
         <TransactionListItem {...row} key={row.id} />
       ))}

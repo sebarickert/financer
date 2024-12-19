@@ -20,7 +20,7 @@ export const TransactionTypeIcon: FC<TransactionTypeIconProps> = ({
     return <RefreshCw className={clsx(className)} />;
   }
 
-  const Icon = TRANSACTION_TYPE_MAPPING[type].icon;
+  const Icon = TRANSACTION_TYPE_MAPPING[type].Icon;
 
   return <Icon className={clsx(className)} />;
 };
