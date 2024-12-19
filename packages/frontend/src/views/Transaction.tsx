@@ -151,20 +151,22 @@ export const Transaction: FC<TransactionProps> = async ({
           </CardHeader>
           <DetailsList items={transactionDetails} />
         </Card>
-        <Card data-testid="transaction-categories">
-          <CardHeader>
-            <Heading noMargin>Categories</Heading>
-          </CardHeader>
-          <div className="divide-y [&>div:not(:first-child)]:pt-4 [&>div:not(:last-child)]:pb-4">
-            {categoryDetails.map((category, index) => (
-              <DetailsList
-                testId="category-details"
-                key={category[0].label + index}
-                items={category}
-              />
-            ))}
-          </div>
-        </Card>
+        {!!categoryDetails?.length && (
+          <Card data-testid="transaction-categories">
+            <CardHeader>
+              <Heading noMargin>Categories</Heading>
+            </CardHeader>
+            <div className="divide-y [&>div:not(:first-child)]:pt-4 [&>div:not(:last-child)]:pb-4">
+              {categoryDetails.map((category, index) => (
+                <DetailsList
+                  testId="category-details"
+                  key={category[0].label + index}
+                  items={category}
+                />
+              ))}
+            </div>
+          </Card>
+        )}
       </div>
     </>
   );
