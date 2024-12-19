@@ -41,59 +41,57 @@ export const TransactionListItem: FC<
         testId={id}
         className={clsx(
           'bg-layer hover:bg-accent active:bg-accent',
-          'p-4 px-6 relative',
-          'flex items-center gap-4',
+          'py-4 px-6 relative',
+          'grid',
         )}
         transition="slideInFromRight"
         hasHoverEffect={false}
         aria-label={ariaLabel}
         data-transaction-item={id}
       >
-        <div className={clsx('grid w-full')}>
-          <div className="flex items-center gap-6 justify-between overflow-hidden">
-            <p
-              data-testid="transaction-description"
-              className="inline-flex items-center gap-2 truncate"
-            >
-              {isRecurring && (
-                <RefreshCw className="size-4 text-muted-foreground shrink-0" />
-              )}
-              <span className="truncate">{description}</span>
-            </p>
-            <p
-              className={clsx('text-right whitespace-nowrap')}
-              data-testid="transaction-amount"
-              data-transaction-type={type}
-            >
-              {isIncome && '+'}
-              {isExpense && '-'}
-              {formatCurrency(amount)}
-            </p>
+        <div className="flex items-center gap-6 justify-between overflow-hidden">
+          <p
+            data-testid="transaction-description"
+            className="inline-flex items-center gap-2 truncate"
+          >
+            {isRecurring && (
+              <RefreshCw className="size-4 text-muted-foreground shrink-0" />
+            )}
+            <span className="truncate">{description}</span>
+          </p>
+          <p
+            className={clsx('text-right whitespace-nowrap')}
+            data-testid="transaction-amount"
+            data-transaction-type={type}
+          >
+            {isIncome && '+'}
+            {isExpense && '-'}
+            {formatCurrency(amount)}
+          </p>
+        </div>
+        <div className="text-sm text-muted-foreground flex items-center gap-6 justify-between overflow-hidden">
+          <div className="truncate">
+            <time dateTime={date} data-testid="transaction-date">
+              {new DateService(date).format()}
+            </time>
+            {formattedCategories && (
+              <>
+                {' - '}
+                <span data-testid="transaction-categories">
+                  <span className="sr-only">Categories: </span>
+                  {formattedCategories}
+                </span>
+              </>
+            )}
           </div>
-          <div className="text-sm text-muted-foreground flex items-center gap-6 justify-between overflow-hidden">
-            <div className="truncate">
-              <time dateTime={date} data-testid="transaction-date">
-                {new DateService(date).format()}
-              </time>
-              {formattedCategories && (
-                <>
-                  {' - '}
-                  <span data-testid="transaction-categories">
-                    <span className="sr-only">Categories: </span>
-                    {formattedCategories}
-                  </span>
-                </>
+          <span className={clsx('inline-flex items-center gap-2')}>
+            {TRANSACTION_TYPE_MAPPING[type].label.default}
+            <span
+              className={clsx(
+                'size-3 rounded-full inline-block bg-(--color-type)',
               )}
-            </div>
-            <span className={clsx('inline-flex items-center gap-2')}>
-              {TRANSACTION_TYPE_MAPPING[type].label.default}
-              <span
-                className={clsx(
-                  'size-3 rounded-full inline-block bg-(--color-type)',
-                )}
-              />
-            </span>
-          </div>
+            />
+          </span>
         </div>
       </Link>
     </>

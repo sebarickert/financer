@@ -41,8 +41,6 @@ export const AccountList: FC<AccountListProps> = ({
       itemRoundness={false}
     >
       {accounts.map(({ id, balance, name, type, currentDateBalance }) => {
-        const Icon = ACCOUNT_TYPE_MAPPING[type].Icon;
-
         return (
           <Fragment key={id}>
             <style>{`
@@ -56,35 +54,36 @@ export const AccountList: FC<AccountListProps> = ({
               testId="account-row"
               className={clsx(
                 'bg-layer hover:bg-accent active:bg-accent',
-                'p-4 rounded-md',
-                'grid gap-4',
+                'py-4 px-6 rounded-md',
+                'grid',
               )}
               transition="slideInFromRight"
               hasHoverEffect={false}
               data-account-item={id}
             >
-              <div className="grid grid-cols-[auto_1fr_auto] gap-4 items-center">
-                <Icon />
-                <Heading noMargin className="truncate" testId="account-name">
+              <div className="flex items-center gap-6 justify-between overflow-hidden">
+                <Heading noMargin testId="account-name" className="truncate">
                   {name}
                 </Heading>
-                <span
-                  className={clsx(
-                    'inline-flex items-center gap-2 text-sm shrink-0 relative text-muted-foreground',
-                    'after:w-3 after:h-3 after:rounded-full after:block after:bg-(--color-account)',
-                  )}
-                >
-                  {ACCOUNT_TYPE_MAPPING[type].label}
-                </span>
-              </div>
-              <div className="flex items-end justify-between gap-4">
                 <BalanceDisplay
-                  className="[&_[data-slot='label']]:sr-only [&_[data-slot='balance']]:text-xl shrink-0"
+                  className="[&_[data-slot='label']]:sr-only [&_[data-slot='balance']]:text-xl text-right whitespace-nowrap"
                   label="Account Balance"
                   amount={currentDateBalance ?? balance}
                 />
+              </div>
+              <div className="text-sm text-muted-foreground flex items-center gap-6 justify-between overflow-hidden">
+                <span
+                  className={clsx(
+                    'inline-flex items-center gap-2 relative truncate',
+                    'before:w-3 before:h-3 before:rounded-full before:block before:bg-(--color-account) before:shrink-0',
+                  )}
+                >
+                  <span className="truncate">
+                    {ACCOUNT_TYPE_MAPPING[type].label}
+                  </span>
+                </span>
                 {!!currentDateBalance && currentDateBalance !== balance && (
-                  <p className="mt-0.5 text-sm text-muted-foreground truncate">
+                  <p className="">
                     <span className="sr-only">Upcoming Balance: </span>
                     <span data-testid="upcoming-balance">
                       {formatCurrency(balance)}
