@@ -131,7 +131,12 @@ export const Transaction: FC<TransactionProps> = async ({
             type={type}
             className='[&_[data-slot="label"]]:sr-only text-center'
           >
-            <p className="text-muted-foreground mt-1">{description}</p>
+            <p
+              className="text-muted-foreground mt-1"
+              data-testid="transaction-description"
+            >
+              {description}
+            </p>
           </BalanceDisplay>
           {isRecurring && (
             <p className="max-w-xs mx-auto text-sm text-center text-muted-foreground">
