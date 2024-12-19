@@ -45,12 +45,12 @@ export const DashboardBalanceSummary: FC<DashboardBalanceSummaryProps> = ({
 
   const monthlyDetails: DetailsItem[] = [
     {
-      Icon: TRANSACTION_TYPE_MAPPING[TransactionType.Income].icon,
+      Icon: TRANSACTION_TYPE_MAPPING[TransactionType.Income].Icon,
       label: TRANSACTION_TYPE_MAPPING[TransactionType.Income].label.plural,
       description: formatCurrency(totalIncomes),
     },
     {
-      Icon: TRANSACTION_TYPE_MAPPING[TransactionType.Expense].icon,
+      Icon: TRANSACTION_TYPE_MAPPING[TransactionType.Expense].Icon,
       label: TRANSACTION_TYPE_MAPPING[TransactionType.Expense].label.plural,
       description: formatCurrency(totalExpenses),
     },

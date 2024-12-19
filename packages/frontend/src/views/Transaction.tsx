@@ -66,7 +66,7 @@ export const Transaction: FC<TransactionProps> = async ({
     ...(fromAccountName
       ? [
           {
-            Icon: TRANSACTION_TYPE_MAPPING.EXPENSE.icon,
+            Icon: TRANSACTION_TYPE_MAPPING.EXPENSE.Icon,
             label: 'From Account',
             description: fromAccountName,
           },
@@ -75,7 +75,7 @@ export const Transaction: FC<TransactionProps> = async ({
     ...(toAccountName
       ? [
           {
-            Icon: TRANSACTION_TYPE_MAPPING.INCOME.icon,
+            Icon: TRANSACTION_TYPE_MAPPING.INCOME.Icon,
             label: 'To Account',
             description: toAccountName,
           },
