@@ -81,7 +81,7 @@ export const GroupedTransactionList: FC<GroupedTransactionListProps> = async ({
 
         return (
           <Card key={group.date} className="pb-0!">
-            <CardHeader className="border-b flex justify-between items-center">
+            <CardHeader className="border-b flex justify-between items-center py-4.5!">
               <Heading noMargin className="text-base!">
                 {getGroupLabel(group.date)}
               </Heading>

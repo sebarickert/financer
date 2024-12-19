@@ -7,6 +7,7 @@ import { GroupedTransactionList } from '../TransactionList/GroupedTransactionLis
 import { TransactionListWithMonthlySummary } from './TransactionListWithMonthlySummary';
 
 import { TransactionType } from '$api/generated/financerApi';
+import { Card } from '$blocks/Card/Card';
 import { Pager } from '$blocks/Pager';
 import { Heading } from '$elements/Heading';
 import { DATE_FORMAT, DateService } from '$services/DateService';
@@ -119,7 +120,7 @@ export const TransactionListWithMonthlyPager: FC<
     <div className={clsx('flex flex-col', className)}>
       <div className={clsx('grid gap-4')}>
         <div data-slot="transaction-list-summary">
-          <div className={clsx('p-6 rounded-md bg-layer grid gap-4')}>
+          <Card className={clsx('grid gap-4')}>
             <div className="flex items-center justify-between gap-1 h-7">
               <Heading noMargin>{pagerLabel}</Heading>
               <Pager
@@ -133,7 +134,7 @@ export const TransactionListWithMonthlyPager: FC<
                 filterOptions={filterOptions}
               />
             )}
-          </div>
+          </Card>
         </div>
         <GroupedTransactionList items={transactions} />
       </div>

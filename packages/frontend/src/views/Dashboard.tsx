@@ -109,7 +109,7 @@ export const Dashboard: FC = async () => {
       <div className="grid gap-4">
         <Card className="pb-0!">
           {!!transactions.length && (
-            <CardHeader className="border-b flex justify-between items-center">
+            <CardHeader className="border-b flex justify-between items-center py-4.5!">
               <Heading noMargin className="text-base!">
                 Recent Activity
               </Heading>

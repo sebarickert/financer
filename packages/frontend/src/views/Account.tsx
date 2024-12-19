@@ -6,6 +6,7 @@ import {
   AccountDto,
 } from '$api/generated/financerApi';
 import { BalanceDisplay } from '$blocks/BalanceDisplay';
+import { Card } from '$blocks/Card/Card';
 import { DetailsList, DetailsItem } from '$blocks/DetailsList';
 import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
 import { ACCOUNT_TYPE_MAPPING } from '$constants/account/ACCOUNT_TYPE_MAPPING';
@@ -36,8 +37,8 @@ export const Account: FC<AccountProps> = ({
   );
 
   return (
-    <section className="grid gap-6">
-      <div className="grid gap-6 p-6 rounded-md bg-layer">
+    <section className="grid gap-4">
+      <Card className="grid gap-6">
         <BalanceDisplay
           label="Balance"
           amount={account.currentDateBalance ?? account.balance}
@@ -53,7 +54,7 @@ export const Account: FC<AccountProps> = ({
             )}
         </BalanceDisplay>
         <DetailsList testId="account-details" items={accountDetails} />
-      </div>
+      </Card>
       {balanceHistory.length < 3 && (
         <InfoMessageBlock title="Not Enough Data Yet" Icon={ChartLine}>
           There isn&apos;t enough data to generate a meaningful balance history.

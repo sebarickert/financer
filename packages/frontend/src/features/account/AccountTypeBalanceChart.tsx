@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { FC } from 'react';
 
 import { AccountDto, AccountType } from '$api/generated/financerApi';
+import { Card } from '$blocks/Card/Card';
 import { DetailsItem, DetailsList } from '$blocks/DetailsList';
 import { PieChartDonut } from '$charts/PieChartDonut';
 import { ACCOUNT_TYPE_MAPPING } from '$constants/account/ACCOUNT_TYPE_MAPPING';
@@ -110,7 +111,7 @@ export const AccountTypeBalanceChart: FC<AccountTypeBalanceChartProps> = ({
   }
 
   return (
-    <div className={clsx(className, 'bg-layer rounded-md p-6 @container')}>
+    <Card className={clsx(className, '@container')}>
       <div className="grid @[645px]:grid-cols-[300px_1fr] lg:@[645px]:grid-cols-[350px_1fr] @[645px]:gap-4 items-center">
         <PieChartDonut
           config={chartConfig}
@@ -122,6 +123,6 @@ export const AccountTypeBalanceChart: FC<AccountTypeBalanceChartProps> = ({
         />
         <DetailsList items={accountDetails} />
       </div>
-    </div>
+    </Card>
   );
 };
