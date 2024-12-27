@@ -1,0 +1,10 @@
+apiVersion: v2
+appVersion: "1.0"
+description: Financer Helm chart
+name: financer
+version: 1.0.0
+dependencies:
+  - name: nodejs-multi-container
+    alias: application
+    version: v1.0.0
+    repository: https://charts.silte.fi

@@ -1,0 +1,13 @@
+{{- $namespace := printf "%s" .Values.namespace }}
+
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: {{ $namespace }}
+  name: postgres
+spec:
+  ports:
+    - port: 5432
+  selector:
+    app: postgres
+  clusterIP: None

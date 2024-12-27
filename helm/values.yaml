@@ -1,0 +1,106 @@
+# Also defined in the `application.namespace`
+namespace: financer
+
+# Cloud environment for the process.
+# Also defined in the `application.cloudEnv`
+cloudEnv: production
+
+database:
+  tag: 17-alpine
+  # Also defined in the application[backend].env.db
+  name: financer
+  user: admin
+  host: postgres:5432
+  passwordSecret:
+    name: database-credentials
+    key: DB_PASSWORD
+  backupSchedule: "0 3 * * *"
+
+scheduledTransactions:
+  schedule: "30 3 * * *"
+  # Backend container port
+  endpoint: http://financer:4000/api/tasks/generate-transactions
+
+application:
+  # Also defined in the `name`
+  name: financer
+  # Also defined in the `namespace`
+  namespace: financer
+
+  image:
+    registry: ghcr.io/sebarickert
+    repository: financer
+
+  ingress:
+    enabled: true
+    host: financer.silte.fi
+    blockedPaths:
+      - /api/tasks
+
+  # Node environment for the process.
+  nodeEnv: production
+
+  # Cloud environment for the process.
+  # Also defined in the `cloudEnv`
+  cloudEnv: production
+
+  # Log level for the logger.
+  logLevel: warn
+
+  containers:
+    - name: backend
+      image:
+        command: ["node", "backend/server.js"]
+
+      healthCheck:
+        path: /health-check/ping
+
+      ingress:
+        path:
+          - /api/
+          - /auth/
+        port: 4000
+
+      resources:
+        requests:
+          memory: 100Mi
+          cpu: 100m
+        limits:
+          memory: 500Mi
+          cpu: 1000m
+
+        env:
+          # Also defined in the `database`
+          db:
+            name: financer
+            host: postgres:5432
+            user: admin
+          publicUrl: https://financer.silte.fi
+          cookieKey: financer-production
+
+        secrets:
+          - database-credentials
+          - oauth2-credentials
+          - cookie-secret
+
+    - name: frontend
+      image:
+        command: ["node", "frontend/server.js"]
+
+      healthCheck:
+        path: /healthz/
+
+      ingress:
+        path: /
+        port: 3000
+
+      resources:
+        requests:
+          memory: 100Mi
+          cpu: 100m
+        limits:
+          memory: 500Mi
+          cpu: 1000m
+
+        env:
+          hostname: "0.0.0.0"

@@ -1,0 +1,40 @@
+{{- $namespace := printf "%s" .Values.namespace }}
+
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: postgres-backup
+  namespace: {{ $namespace }}
+spec:
+  schedule: {{ .Values.database.backupSchedule }}
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: postgres-backup
+              image: postgres:{{ .Values.database.tag }}
+              args:
+                - "/bin/sh"
+                - "-c"
+                - 'PGPASSWORD=$POSTGRES_PASSWORD pg_dump -U $POSTGRES_USER -h $POSTGRES_HOST -d $POSTGRES_DB -F c -b -v -f /backup/financer_$(date +"%Y-%m-%d_%H-%M").backup'
+              env:
+                - name: POSTGRES_DB
+                  value: {{ .Values.database.name }}
+                - name: POSTGRES_USER
+                  value: {{ .Values.database.user }}
+                - name: POSTGRES_HOST
+                  value: {{ .Values.database.host }}
+                - name: POSTGRES_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ .Values.database.passwordSecret.name }}
+                      key: {{ .Values.database.passwordSecret.key }}  
+              volumeMounts:
+                - name: backup-volume
+                  mountPath: /backup
+          restartPolicy: OnFailure
+          volumes:
+            - name: backup-volume
+              persistentVolumeClaim:
+                claimName: postgres-backup-volume
