@@ -1,0 +1,14 @@
+{{- $namespace := printf "%s" .Values.namespace }}
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-data-volume
+  namespace: {{ $namespace }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 2Gi
