@@ -50,7 +50,7 @@ application:
   containers:
     - name: backend
       image:
-        command: ["node", "backend/server.js"]
+        command: ["node", "backend/main.js"]
 
       healthCheck:
         path: /health-check/ping
@@ -69,19 +69,19 @@ application:
           memory: 500Mi
           cpu: 1000m
 
-        env:
-          # Also defined in the `database`
-          db:
-            name: financer
-            host: postgres:5432
-            user: admin
-          publicUrl: https://financer.silte.fi
-          cookieKey: financer-production
+      env:
+        # Also defined in the `database`
+        db:
+          name: financer
+          host: postgres:5432
+          user: admin
+        publicUrl: https://financer.silte.fi
+        cookieKey: financer-production
 
-        secrets:
-          - database-credentials
-          - oauth2-credentials
-          - cookie-secret
+      secrets:
+        - database-credentials
+        - oauth2-credentials
+        - cookie-secret
 
     - name: frontend
       image:
@@ -102,5 +102,5 @@ application:
           memory: 500Mi
           cpu: 1000m
 
-        env:
-          hostname: "0.0.0.0"
+      env:
+        hostname: "0.0.0.0"

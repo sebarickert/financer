@@ -1,6 +1,6 @@
 dependencies:
 - name: nodejs-multi-container
   repository: https://charts.silte.fi
-  version: 1.0.0
-digest: sha256:5cd26b69a929bcae23e80444341b7f01a59941fe7a688de158f91277a652159a
-generated: "2024-12-27T13:38:53.371152124+02:00"
+  version: 1.0.2
+digest: sha256:71f55b7e0d7c2e47b4b79c7714a42a27f168ebeaa54f3c0dc5f82edbcb2cf22e
+generated: "2024-12-27T16:04:56.808220217+02:00"
