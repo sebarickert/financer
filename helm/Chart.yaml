@@ -6,5 +6,5 @@ version: 1.0.0
 dependencies:
   - name: nodejs-multi-container
     alias: application
-    version: v1.0.0
+    version: v1.0.2
     repository: https://charts.silte.fi
