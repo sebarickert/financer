@@ -9,9 +9,6 @@
 # https://github.com/vercel/next.js/issues/69263
 FROM node:22.6-alpine AS development
 
-# Install rsync
-RUN apk update && apk add --no-cache rsync
-
 # Run application with user 'node'.
 # It is not recommended to run applications with 'root' even within
 # the containers.
@@ -41,11 +38,11 @@ COPY --chown=node:node . .
 
 ################################################################################
 #
-# Base image for building the production distibution.
+# Base image for building the production distribution.
 #
 ################################################################################
 
-# Base image for buiding the application.
+# Base image for building the application.
 # Do not use the latest tag for the base image due to build issues with Terser.
 # https://github.com/vercel/next.js/issues/69263
 FROM node:22.6-alpine AS build
@@ -91,23 +88,20 @@ COPY --chown=node:node . .
 
 # Set NODE_ENV to production before installing dependencies and building the
 # application production bundle.
-ENV NODE_ENV production
+ENV NODE_ENV=production
 
-# Run build command to generate production bundle.
-RUN npm run build
-
-# Install dependencies.
+# Run build command to generate production bundle and install dependencies.
 #
 # Running `npm ci` removes the existing node_modules directory and passing in
 # --omit=dev ensures that only the production dependencies are installed.
 # This ensures that the node_modules directory is as optimized as possible.
-RUN npm ci --omit=dev --ignore-scripts && \
-    npm cache clean --force            && \
+RUN npm run build && \
+    npm ci --omit=dev --ignore-scripts && \
+    npm cache clean --force && \
     npm run prisma:generate -w backend
-
 ################################################################################
 #
-# Base image for running the production distibution.
+# Base image for running the production distribution.
 #
 ################################################################################
 # Do not use the latest tag for the base image due to build issues with Terser.
@@ -115,7 +109,7 @@ RUN npm ci --omit=dev --ignore-scripts && \
 FROM node:22.6-alpine AS production
 
 # Set NODE_ENV to production for running the application.
-ENV NODE_ENV production
+ENV NODE_ENV=production
 
 # Install Tini to overcome node PID1 issues.
 #

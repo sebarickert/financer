@@ -42,6 +42,9 @@
     "NOSONAR",
     "openapi",
     "reduxjs",
+    "sebarickert",
+    "silte",
+    "sonarcloud",
     "testid"
   ],
   "sonarlint.connectedMode.project": {
