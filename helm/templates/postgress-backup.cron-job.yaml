@@ -17,19 +17,21 @@ spec:
               args:
                 - "/bin/sh"
                 - "-c"
-                - 'PGPASSWORD=$POSTGRES_PASSWORD pg_dump -U $POSTGRES_USER -h $POSTGRES_HOST -d $POSTGRES_DB -F c -b -v -f /backup/financer_$(date +"%Y-%m-%d_%H-%M").backup'
+                - 'PGPASSWORD=$POSTGRES_PASSWORD pg_dump -U $POSTGRES_USER -h $POSTGRES_HOST -p $POSTGRES_PORT -d $POSTGRES_DB -F c -b -v -f /backup/financer_$(date +"%Y-%m-%d_%H-%M").backup'
               env:
                 - name: POSTGRES_DB
-                  value: {{ .Values.database.name }}
+                  value: {{ .Values.database.name | quote }}
                 - name: POSTGRES_USER
-                  value: {{ .Values.database.user }}
+                  value: {{ .Values.database.user | quote }}
                 - name: POSTGRES_HOST
-                  value: {{ .Values.database.host }}
+                  value: {{ .Values.database.host | quote }}
+                - name: POSTGRES_PORT
+                  value: {{ .Values.database.port | quote }}
                 - name: POSTGRES_PASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: {{ .Values.database.passwordSecret.name }}
-                      key: {{ .Values.database.passwordSecret.key }}  
+                      name: {{ .Values.database.passwordSecret.name | quote }}
+                      key: {{ .Values.database.passwordSecret.key | quote }}  
               volumeMounts:
                 - name: backup-volume
                   mountPath: /backup

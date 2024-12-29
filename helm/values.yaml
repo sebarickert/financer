@@ -10,7 +10,8 @@ database:
   # Also defined in the application[backend].env.db
   name: financer
   user: admin
-  host: postgres:5432
+  host: postgres
+  port: 5432
   passwordSecret:
     name: database-credentials
     key: DB_PASSWORD

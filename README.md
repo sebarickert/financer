@@ -266,11 +266,31 @@ kubectl run -i --tty --rm postgres-restore --image=postgres:latest --restart=Nev
         \"image\": \"postgres:latest\",
         \"stdin\": true,
         \"tty\": true,
-        \"command\": [\"/bin/sh\", \"-c\", \"PGPASSWORD=\$DB_PASSWORD pg_restore -U \$DB_USER -h \$DB_HOST -d \$DB_NAME /backup/$BACKUP_NAME\"],
-        \"envFrom\": [
+        \"command\": [\"/bin/sh\", \"-c\", \"PGPASSWORD=\$POSTGRES_PASSWORD pg_restore -U \$POSTGRES_USER -h \$POSTGRES_HOST -p \$POSTGRES_PORT -d \$POSTGRES_DB /backup/$BACKUP_NAME\"],
+        \"env\": [
           {
-            \"secretRef\": {
-              \"name\": \"webapp-environment-secret\"
+            \"name\": \"POSTGRES_DB\",
+            \"value\": \"financer\"
+          },
+          {
+            \"name\": \"POSTGRES_USER\",
+            \"value\": \"admin\"
+          },
+          {
+            \"name\": \"POSTGRES_HOST\",
+            \"value\": \"postgres\"
+          },
+          {
+            \"name\": \"POSTGRES_PORT\",
+            \"value\": \"5432\"
+          },
+          {
+            \"name\": \"POSTGRES_PASSWORD\",
+            \"valueFrom\": {
+              \"secretKeyRef\": {
+                \"name\": \"database-credentials\",
+                \"key\": \"DB_PASSWORD\"
+              }
             }
           }
         ],
