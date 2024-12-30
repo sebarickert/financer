@@ -219,5 +219,6 @@ jobs:
       DOCKER_REPOSITORY: financer
       DOCKER_REGISTRY_USERNAME: ${{ github.repository_owner }}
       PUBLISH: false
+      BUILD_CACHE: false
     secrets:
       DOCKER_REGISTRY_PASSWORD: ${{ secrets.REGISTRY_TOKEN }}
