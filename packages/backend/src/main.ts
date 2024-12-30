@@ -1,3 +1,7 @@
+// IMPORTANT: instrument.ts must be imported before any other imports,
+// to ensure that the application is instrumented correctly.
+import './instrument';
+
 import fs from 'fs';
 
 import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';

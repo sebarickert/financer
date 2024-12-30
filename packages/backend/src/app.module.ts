@@ -1,5 +1,7 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { APP_FILTER } from '@nestjs/core';
+import { SentryGlobalFilter, SentryModule } from '@sentry/nestjs/setup';
 import ConnectPgSimple from 'connect-pg-simple';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
@@ -25,6 +27,7 @@ import { UsersModule } from './modules/users/users.module';
 
 @Module({
   imports: [
+    SentryModule.forRoot(),
     ConfigModule.forRoot({
       envFilePath: ['.env.local', '.env'],
       load: [configuration],
@@ -45,6 +48,12 @@ import { UsersModule } from './modules/users/users.module';
     UserPreferencesModule,
     TasksModule,
     SystemModule,
+  ],
+  providers: [
+    {
+      provide: APP_FILTER,
+      useClass: SentryGlobalFilter,
+    },
   ],
 })
 export class AppModule implements NestModule {
