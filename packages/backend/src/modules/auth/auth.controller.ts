@@ -14,7 +14,7 @@ import { NextFunction, Request, Response } from 'express';
 import passport from 'passport';
 
 import { AuthService } from './auth.service';
-import { AuthenticationStatusDto } from './dto/authtentication-status.dto';
+import { AuthenticationStatusDto } from './dto/authentication-status.dto';
 import { Auth0Guard } from './guards/auth0.guard';
 import { GithubGuard } from './guards/github.guard';
 
@@ -22,8 +22,8 @@ import { GithubGuard } from './guards/github.guard';
 @ApiTags('Authentication')
 export class AuthController {
   constructor(
-    private configService: ConfigService,
-    private authService: AuthService,
+    private readonly configService: ConfigService,
+    private readonly authService: AuthService,
   ) {}
 
   @Get('status')
@@ -41,14 +41,18 @@ export class AuthController {
     description: 'If github oauth enabled redirects to github login page',
   })
   @UseGuards(GithubGuard)
-  loginGithub() {}
+  loginGithub() {
+    // Guard will handle the redirection
+  }
 
   @Get('auth0')
   @ApiResponse({
     description: 'If auth0 oauth enabled redirects to auth0 login page',
   })
   @UseGuards(Auth0Guard)
-  loginAuth0() {}
+  loginAuth0() {
+    // Guard will handle the redirection
+  }
 
   @Get('github/redirect')
   @ApiResponse({
@@ -117,5 +121,11 @@ export class AuthController {
     res.redirect(
       `https://${auth0Keys.domain}/v2/logout?client_id=${auth0Keys.clientID}&returnTo=${publicUrl}/auth/logout`,
     );
+  }
+
+  // This is a test endpoint to check if error handling works
+  @Get('throw-error')
+  throwError() {
+    throw new Error('This is a test error');
   }
 }
