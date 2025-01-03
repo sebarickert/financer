@@ -38,12 +38,12 @@ const getGroupLabel = (groupLabel: string) => {
   return dt.format(DATE_FORMAT.MONTH_WITH_DATE_LONG);
 };
 
-const endOfTodayDate = new DateService().getDate().endOf('day');
-
 export const GroupedTransactionList: FC<GroupedTransactionListProps> = async ({
   items,
   className,
 }) => {
+  const endOfTodayDate = new DateService().getDate().endOf('day');
+
   const groupedTransactions = Object.entries(
     Object.groupBy(items, ({ date }) => {
       const dt = new DateService(date).getDate();

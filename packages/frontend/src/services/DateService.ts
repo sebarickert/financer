@@ -14,7 +14,7 @@ export const DATE_FORMAT = {
 } as const;
 
 export class DateService {
-  private date: DateTime;
+  private readonly date: DateTime;
 
   constructor(date: Date | string | DateTime = DateTime.now()) {
     this.date =
