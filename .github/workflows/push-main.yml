@@ -236,3 +236,23 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           projectBaseDir: packages/playwright
+
+  deploy:
+    needs:
+      - docker-publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Write KUBE_CONFIG to file
+        run: |
+          echo "${{ secrets.DEPLOY_CONFIG }}" > /home/runner/work/financer/financer/kube_config.yaml
+          echo "KUBE_CONFIG_PATH=/home/runner/work/financer/financer/kube_config.yaml" >> $GITHUB_ENV
+
+      - name: Deploy
+        uses: sebarickert/financer/.github/actions/deploy@main
+        with:
+          RELEASE_NAME: financer
+          KUBE_CONFIG: ${{ env.KUBE_CONFIG_PATH }}
+          TIMEOUT: 300
+
+      - name: Delete KUBE_CONFIG file
+        run: rm ${{ env.KUBE_CONFIG_PATH }}
