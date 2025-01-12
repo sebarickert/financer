@@ -1,0 +1,55 @@
+name: "Deploy Financer"
+description: "Deploy Financer"
+
+inputs:
+  RELEASE_NAME:
+    description: "The name of the Helm release"
+    required: true
+
+  KUBE_CONFIG:
+    description: "The path to Kubernetes configuration file"
+    required: true
+
+  TIMEOUT:
+    description: "The maximum time to wait for the deployment to be ready in seconds"
+    required: false
+    default: "300"
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up tags
+      id: image-tag
+      shell: bash
+      run: |
+        if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+          echo "TAG=${{ github.run_number }}" >> $GITHUB_OUTPUT
+        else
+          echo "TAG=dev-${{ github.run_number }}" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Deploy with Helm
+      shell: bash
+      run: |
+        # Prepare helm chart
+        cd helm && helm dependency update && cd ..
+
+        export KUBECONFIG=${{ inputs.KUBE_CONFIG }}
+
+        # The upgrade command will install the chart if it does not exist.
+        # The --atomic - roll back the installation if it fails.
+        # The --wait - wait for the K8S deployment to be ready.
+        # The --timeout - maximum time to wait for the deployment to be ready.
+        #
+        # If the deployment is not ready after the timeout, the action will
+        # fail and the deployment will be rolled back.
+        helm upgrade                        \
+          ${{ inputs.RELEASE_NAME }}        \
+          helm                              \
+          --install                         \
+          --atomic                          \
+          --wait                            \
+          --timeout ${{ inputs.TIMEOUT }}s  \
+          --set application.image.tag=${{ steps.image-tag.outputs.TAG }}
