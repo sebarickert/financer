@@ -161,6 +161,7 @@ jobs:
       PUBLISH: false
     secrets:
       DOCKER_REGISTRY_PASSWORD: ${{ secrets.REGISTRY_TOKEN }}
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
   docker-publish:
     needs:
@@ -177,6 +178,7 @@ jobs:
       DOCKER_REGISTRY_USERNAME: ${{ github.repository_owner }}
     secrets:
       DOCKER_REGISTRY_PASSWORD: ${{ secrets.REGISTRY_TOKEN }}
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
   merge-reports:
     if: always()

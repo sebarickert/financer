@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.7",
+    "@sentry/nextjs": "^8.52.1",
     "@types/luxon": "^3.4.2",
     "clsx": "^2.0.0",
     "http-proxy-middleware": "^2.0.6",

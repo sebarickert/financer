@@ -86,6 +86,12 @@ COPY --chown=node:node  \
 # Copy application sources.
 COPY --chown=node:node . .
 
+# Define build argument for Sentry auth token
+ARG SENTRY_AUTH_TOKEN
+
+# Set SENTRY_AUTH_TOKEN as an environment variable
+ENV SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN}
+
 # Set NODE_ENV to production before installing dependencies and building the
 # application production bundle.
 ENV NODE_ENV=production
