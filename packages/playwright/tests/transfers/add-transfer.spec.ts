@@ -84,7 +84,6 @@ test.describe('Transfer Transactions', () => {
     }) => {
       const transactionDescription = `dummy transfer transaction created by test code ${Math.random()}`;
 
-      await page.getByRole('link', { name: 'Accounts' }).click();
       await page.getByTestId('add-transaction').click();
 
       await switchTransactionType(page, TransactionType.Transfer);
@@ -181,7 +180,6 @@ test.describe('Transfer Transactions', () => {
     test('should only show transfer-visible templates during transaction creation', async ({
       page,
     }) => {
-      await page.getByRole('link', { name: 'Accounts' }).click();
       await page.getByTestId('add-transaction').click();
 
       await switchTransactionType(page, TransactionType.Transfer);

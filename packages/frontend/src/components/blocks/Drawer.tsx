@@ -29,6 +29,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       'open:backdrop:bg-black/80 dark:open:backdrop:bg-black/90',
       // Drawer animation
       'ease-in-out duration-200 transition-discrete',
+      // 'ease-in-out duration-200',
       'max-lg:translate-y-full lg:translate-x-full',
       'max-lg:open:starting:translate-y-full lg:open:starting:translate-x-full',
       'max-lg:open:translate-y-0 lg:open:translate-x-0',

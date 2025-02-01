@@ -106,7 +106,8 @@
     @apply text-foreground bg-background;
   }
 
-  body:has([data-body-scroll-lock="on"]:popover-open) {
+  /* FIXME These styles cause browser to crash... */
+  /* body:has([data-body-scroll-lock="on"]:popover-open) {
     overflow: hidden;
   }
 
@@ -116,7 +117,7 @@
 
   [data-body-no-pointer-events="on"]:popover-open {
     pointer-events: auto;
-  }
+  } */
 
   /* select[data-bleeding-edge="on"],
   ::picker(select) {

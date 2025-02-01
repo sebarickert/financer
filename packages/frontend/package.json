@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.7",
+    "@sentry/nextjs": "^8.52.1",
     "@types/luxon": "^3.4.2",
     "clsx": "^2.0.0",
     "http-proxy-middleware": "^2.0.6",
@@ -79,8 +80,8 @@
     "@types/node": "^22.5.4",
     "@types/react": "19.0.1",
     "@types/react-dom": "19.0.2",
-    "@typescript-eslint/eslint-plugin": "^6.15.0",
-    "@typescript-eslint/parser": "^6.15.0",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
     "eslint-config-next": "15.0.4",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.1",
