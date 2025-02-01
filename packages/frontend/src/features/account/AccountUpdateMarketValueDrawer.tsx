@@ -45,7 +45,10 @@ export const AccountUpdateMarketValueDrawer: FC<
     'update-market-value',
     handleUpdate,
     () => {
-      popperRef?.current?.hidePopover();
+      // FIXME: This is a workaround to close the drawer after the form is submitted.
+      // With `hidePopover()` chromium based browsers crashes with the following error: STATUS_ACCESS_VIOLATION
+      // popperRef?.current?.hidePopover();
+      window.location.reload();
     },
   );
 
