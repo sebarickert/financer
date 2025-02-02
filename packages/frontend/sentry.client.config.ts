@@ -24,5 +24,5 @@ Sentry.init({
   // Setting this option to true will print useful information to the console while you're setting up Sentry.
   debug: false,
 
-  enabled: process.env.NEXT_APP_SENTRY_ENABLED_FRONTEND_CSR === 'true',
+  enabled: process.env.NEXT_PUBLIC_SENTRY_ENABLED_FRONTEND_CSR === 'true',
 });
