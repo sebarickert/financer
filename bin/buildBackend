@@ -4,4 +4,9 @@ set -e
 
 npm -w backend run build
 
+if [ "$SENTRY_UPLOAD_SOURCEMAPS_BACKEND" = "true" ]; then
+    export SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN_BACKEND
+    npm -w backend run sentry:sourcemaps
+fi
+
 cp -r packages/backend/dist/ build/backend

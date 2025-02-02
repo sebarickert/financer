@@ -1,9 +1,20 @@
 const isDevelopment = process.env.NODE_ENV === "development";
 
+// Enable eslint and typescript validation by default
+const nextBuildIgnoreEslint = process.env.NEXT_BUILD_IGNORE_ESLINT === "true";
+const nextBuildIgnoreTypescript =
+  process.env.NEXT_BUILD_IGNORE_TYPESCRIPT === "true";
+
 /**
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
+  eslint: {
+    ignoreDuringBuilds: nextBuildIgnoreEslint,
+  },
+  typescript: {
+    ignoreBuildErrors: nextBuildIgnoreTypescript,
+  },
   reactStrictMode: true,
   trailingSlash: true,
   output: "standalone",
@@ -72,6 +83,10 @@ if (isDevelopment) {
 
     // Hides source maps from generated client bundles
     hideSourceMaps: true,
+
+    sourcemaps: {
+      disable: process.env.SENTRY_UPLOAD_SOURCEMAPS_FRONTEND !== "true",
+    },
 
     // Automatically tree-shake Sentry logger statements to reduce bundle size
     disableLogger: true,
