@@ -262,8 +262,9 @@ jobs:
     steps:
       - name: Write KUBE_CONFIG to file
         run: |
-          echo "${{ secrets.DEPLOY_CONFIG }}" | base64 -d > /home/runner/work/financer/financer/kube_config.yaml
-          echo "KUBE_CONFIG_PATH=/home/runner/work/financer/financer/kube_config.yaml" >> $GITHUB_ENV
+          export KUBE_CONFIG_PATH=$(dirname ${{ github.workspace }})/kube_config.yaml
+          echo "${{ secrets.DEPLOY_CONFIG }}" | base64 -d > $KUBE_CONFIG_PATH
+          echo "KUBE_CONFIG_PATH=$KUBE_CONFIG_PATH" >> $GITHUB_ENV
 
       - name: Deploy
         uses: sebarickert/financer/.github/actions/deploy@main
