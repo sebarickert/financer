@@ -23,7 +23,8 @@
     "check-types": "tsc --noEmit",
     "prisma:generate": "prisma generate",
     "prisma:format": "prisma format",
-    "prisma:push": "prisma db push"
+    "prisma:push": "prisma db push",
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org silte --project financer-backend ./dist && sentry-cli --url https://sentry.silte.fi/ sourcemaps upload --org silte --project financer-backend ./dist"
   },
   "dependencies": {
     "@nestjs/common": "^10.3.9",
@@ -35,6 +36,7 @@
     "@nestjs/serve-static": "^4.0.2",
     "@nestjs/swagger": "^7.3.1",
     "@prisma/client": "^5.16.1",
+    "@sentry/cli": "^2.41.1",
     "@sentry/nestjs": "^8.52.1",
     "@sentry/profiling-node": "^8.52.1",
     "class-transformer": "^0.5.1",

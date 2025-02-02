@@ -2,6 +2,8 @@
 
 set -e
 
+export SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN_FRONTEND
+
 # Run the build command for the frontend workspace
 npm -w frontend run build
 
