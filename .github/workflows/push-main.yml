@@ -159,10 +159,17 @@ jobs:
       DOCKER_REPOSITORY: financer
       DOCKER_REGISTRY_USERNAME: ${{ github.repository_owner }}
       PUBLISH: false
+      DOCKER_BUILD_ARGS: |
+        SENTRY_UPLOAD_SOURCEMAPS_FRONTEND=true
+        SENTRY_UPLOAD_SOURCEMAPS_BACKEND=true
+        NEXT_BUILD_IGNORE_ESLINT=true
+        NEXT_BUILD_IGNORE_TYPESCRIPT=true
+        NEXT_PUBLIC_SENTRY_ENABLED_FRONTEND_CSR=true
     secrets:
       DOCKER_REGISTRY_PASSWORD: ${{ secrets.REGISTRY_TOKEN }}
       DOCKER_BUILD_ARGS: |
-        SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
+        SENTRY_AUTH_TOKEN_FRONTEND=${{ secrets.SENTRY_AUTH_TOKEN_FRONTEND }}
+        SENTRY_AUTH_TOKEN_BACKEND=${{ secrets.SENTRY_AUTH_TOKEN_BACKEND }}
 
   docker-publish:
     needs:
@@ -177,10 +184,17 @@ jobs:
       DOCKER_REGISTRY: "ghcr.io/${{ github.repository_owner }}"
       DOCKER_REPOSITORY: financer
       DOCKER_REGISTRY_USERNAME: ${{ github.repository_owner }}
+      DOCKER_BUILD_ARGS: |
+        SENTRY_UPLOAD_SOURCEMAPS_FRONTEND=true
+        SENTRY_UPLOAD_SOURCEMAPS_BACKEND=true
+        NEXT_BUILD_IGNORE_ESLINT=true
+        NEXT_BUILD_IGNORE_TYPESCRIPT=true
+        NEXT_PUBLIC_SENTRY_ENABLED_FRONTEND_CSR=true
     secrets:
       DOCKER_REGISTRY_PASSWORD: ${{ secrets.REGISTRY_TOKEN }}
       DOCKER_BUILD_ARGS: |
-        SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
+        SENTRY_AUTH_TOKEN_FRONTEND=${{ secrets.SENTRY_AUTH_TOKEN_FRONTEND }}
+        SENTRY_AUTH_TOKEN_BACKEND=${{ secrets.SENTRY_AUTH_TOKEN_BACKEND }}
 
   merge-reports:
     if: always()

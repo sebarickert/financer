@@ -78,6 +78,7 @@ application:
           user: admin
         publicUrl: https://financer.silte.fi
         cookieKey: financer-production
+        sentryEnabledBackend: true
 
       secrets:
         - database-credentials
@@ -105,3 +106,4 @@ application:
 
       env:
         hostname: "0.0.0.0"
+        sentryEnabledFrontendSsr: true
