@@ -58,8 +58,8 @@ if (isDevelopment) {
     // https://github.com/getsentry/sentry-webpack-plugin#options
 
     org: "silte",
-    project: "frontend",
-    sentryUrl: "https://sentry.silte.fi/",
+    project: "financer-frontend",
+    sentryUrl: "https://sentry.silte.fi",
 
     // Only print logs for uploading source maps in CI
     silent: !process.env.CI,
