@@ -1,10 +1,10 @@
 import clsx from 'clsx';
 import { FC } from 'react';
 
-type ButtonGroupProps = {
+interface ButtonGroupProps {
   readonly children: React.ReactNode[];
   className?: string;
-};
+}
 
 export const ButtonGroup: FC<ButtonGroupProps> = ({
   children,

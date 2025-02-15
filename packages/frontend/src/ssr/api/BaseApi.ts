@@ -46,7 +46,7 @@ export abstract class BaseApi {
 
     return {
       revalidate: requestOptions.revalidate ?? baseOptions.revalidate,
-      tags: baseOptions.tags?.concat(requestOptions.tags ?? []),
+      tags: baseOptions.tags.concat(requestOptions.tags ?? []),
     };
   }
 

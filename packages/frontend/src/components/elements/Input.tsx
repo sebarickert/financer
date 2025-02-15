@@ -5,7 +5,7 @@ import { useFormContext } from 'react-hook-form';
 
 import { FieldGroup } from './FieldGroup';
 
-type InputProps = {
+interface InputProps {
   children: React.ReactNode;
   help?: string;
   id: string;
@@ -20,7 +20,7 @@ type InputProps = {
   testId?: string;
   isLabelHidden?: boolean;
   Icon?: LucideIcon;
-};
+}
 
 const getValueParsingOptions = (type: InputProps['type']) => {
   if (type === 'number') return { valueAsNumber: true };

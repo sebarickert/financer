@@ -3,12 +3,12 @@ import Decimal from 'decimal.js';
 import { parseCurrency } from '$utils/api-helper';
 import { Page, expect } from '$utils/financer-page';
 
-type AccountDetails = {
+interface AccountDetails {
   id: string;
   balance: Decimal;
   name: string;
   type: string;
-};
+}
 
 export const getAccountDetails = async (
   page: Page,

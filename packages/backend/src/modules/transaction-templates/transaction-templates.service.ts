@@ -4,17 +4,18 @@ import {
   TransactionTemplateType,
 } from '@prisma/client';
 
-import { TransactionTemplateLogRepo } from '../../database/repos/transaction-template-log.repo';
-import { TransactionTemplateRepo } from '../../database/repos/transaction-template.repo';
-import { UserId } from '../../types/user-id';
-import { DateService } from '../../utils/date.service';
-import { CreateTransactionDto } from '../transactions/dto/create-transaction.dto';
-
 import { CreateTransactionTemplateLogDto } from './dto/create-transaction-template-log.dto';
 import { CreateTransactionTemplateDto } from './dto/create-transaction-template.dto';
 import { TransactionTemplateLogDto } from './dto/transaction-template-log.dto';
 import { TransactionTemplateDto } from './dto/transaction-template.dto';
 import { UpdateTransactionTemplateDto } from './dto/update-transaction-template.dto';
+
+import { TransactionTemplateLogRepo } from '@/database/repos/transaction-template-log.repo';
+import { TransactionTemplateRepo } from '@/database/repos/transaction-template.repo';
+import { CreateTransactionDto } from '@/transactions/dto/create-transaction.dto';
+import { UserId } from '@/types/user-id';
+import { DateService } from '@/utils/date.service';
+import { Duration } from '@/utils/duration';
 
 @Injectable()
 export class TransactionTemplatesService {
@@ -40,8 +41,7 @@ export class TransactionTemplatesService {
     createTransactionTemplateDto: CreateTransactionTemplateDto[],
   ) {
     return this.transactionTemplateRepo.createMany(
-      // @ts-expect-error - remove legacy `v` from import data
-      createTransactionTemplateDto.map(({ v, ...template }) => ({
+      createTransactionTemplateDto.map((template) => ({
         ...template,
         userId,
       })),
@@ -56,8 +56,7 @@ export class TransactionTemplatesService {
     >[],
   ) {
     return this.transactionTemplateLogRepo.createMany(
-      // @ts-expect-error - remove legacy `v` from import data
-      createTransactionTemplateLogDto.map(({ v, ...template }) => ({
+      createTransactionTemplateLogDto.map((template) => ({
         ...template,
         userId,
       })),
@@ -158,10 +157,19 @@ export class TransactionTemplatesService {
     return this.transactionTemplateLogRepo.deleteMany({ userId });
   }
 
+  // eslint-disable-next-line max-statements
   getTransactionFromTemplate(
     template: TransactionTemplateDto,
   ): CreateTransactionDto {
     const date = DateService.toZonedTime();
+
+    if (
+      template.dayOfMonth === null ||
+      template.dayOfMonthToCreate === null ||
+      template.amount === null
+    ) {
+      throw new Error('Required argument is null');
+    }
 
     // Set the date to the first day of the month so when we add month it won't skip month e.g. 31.01 + 1 month = 03.03
     date.setDate(1);
@@ -211,8 +219,8 @@ export class TransactionTemplatesService {
         templateId: { in: templateIds },
         eventType: templateType,
         executed: {
-          gt: new Date(DateService.zonedNow() - 1000 * 60 * 60 * 60),
-        }, // 2 months
+          gt: new Date(DateService.zonedNow() - Duration.ofHours(60)),
+        },
       },
     });
   }

@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { createMockServiceProvider } from '../../../test/create-mock-service-provider';
-import { DUMMY_TEST_USER } from '../../config/mockAuthenticationMiddleware';
-import { UserRepo } from '../../database/repos/user.repo';
-
 import { UsersService } from './users.service';
+
+import { DUMMY_TEST_USER } from '@/config/mockAuthenticationMiddleware';
+import { UserRepo } from '@/database/repos/user.repo';
+import { createMockServiceProvider } from '@/test/create-mock-service-provider';
 
 describe('UsersService', () => {
   let service: UsersService;

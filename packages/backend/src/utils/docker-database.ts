@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { execSync } from 'child_process';
 
 import { Logger } from '@nestjs/common';
 
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class DockerDatabase {
   private static readonly logger = new Logger(DockerDatabase.name);
 
@@ -46,6 +48,7 @@ export class DockerDatabase {
     }
   }
 
+  // eslint-disable-next-line max-params
   public static async createContainer(
     name: string,
     username: string,
@@ -77,6 +80,7 @@ export class DockerDatabase {
     }
   }
 
+  // eslint-disable-next-line max-statements
   private static async waitForContainer(name: string): Promise<void> {
     let isRunning = false;
     const maxRetries = 60;
@@ -86,12 +90,14 @@ export class DockerDatabase {
       try {
         execSync(`docker exec ${name} pg_isready`);
         isRunning = true;
-      } catch (error) {
+      } catch {
+        // eslint-disable-next-line no-plusplus
         retries++;
         this.logger.log(
           `Waiting for the database to be ready... (${retries}/${maxRetries})`,
         );
 
+        // eslint-disable-next-line no-await-in-loop
         await this.sleep(1000);
       }
     }
@@ -104,6 +110,8 @@ export class DockerDatabase {
   }
 
   private static async sleep(ms: number): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, ms));
+    return new Promise((resolve) => {
+      setTimeout(resolve, ms);
+    });
   }
 }

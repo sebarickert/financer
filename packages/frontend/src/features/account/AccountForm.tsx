@@ -15,17 +15,17 @@ import {
   useFinancerFormState,
 } from '$hooks/useFinancerFormState';
 
-type AccountFormProps = {
+interface AccountFormProps {
   onSubmit: DefaultFormActionHandler;
   submitLabel: string;
   initialValues?: Partial<AccountFormFields>;
-};
+}
 
-export type AccountFormFields = {
+export interface AccountFormFields {
   name: string;
   balance: number;
   type: AccountType;
-};
+}
 
 export const AccountForm: FC<AccountFormProps> = ({
   onSubmit,

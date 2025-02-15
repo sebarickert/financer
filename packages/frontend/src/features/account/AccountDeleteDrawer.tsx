@@ -9,9 +9,9 @@ import { Button } from '$elements/Button/Button';
 import { useFinancerFormState } from '$hooks/useFinancerFormState';
 import { handleAccountDelete } from 'src/actions/account/handleAccountDelete';
 
-type AccountDeleteDrawerProps = {
+interface AccountDeleteDrawerProps {
   id: string;
-};
+}
 
 export const AccountDeleteDrawer: FC<AccountDeleteDrawerProps> = ({ id }) => {
   const onSubmit = handleAccountDelete.bind(null, { id });

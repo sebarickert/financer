@@ -1,10 +1,8 @@
+// eslint-disable-next-line max-classes-per-file
 import { ApiProperty } from '@nestjs/swagger';
 import { Decimal } from '@prisma/client/runtime/library';
 
-import {
-  IsDecimal,
-  TransformDecimal,
-} from '../../../utils/is-decimal.decorator';
+import { IsDecimal, TransformDecimal } from '@/utils/is-decimal.decorator';
 
 class TransactionMonthSummaryIdDto {
   constructor(values: TransactionMonthSummaryIdDto) {
@@ -12,10 +10,10 @@ class TransactionMonthSummaryIdDto {
   }
 
   @ApiProperty()
-  year: number;
+  year!: number;
 
   @ApiProperty()
-  month: number;
+  month!: number;
 }
 
 export class TransactionMonthSummaryDto {
@@ -24,39 +22,39 @@ export class TransactionMonthSummaryDto {
   }
 
   @ApiProperty({ type: TransactionMonthSummaryIdDto })
-  readonly id: TransactionMonthSummaryIdDto;
+  readonly id!: TransactionMonthSummaryIdDto;
 
   @ApiProperty()
-  readonly totalCount: number;
+  readonly totalCount!: number;
 
   @ApiProperty()
-  readonly incomesCount: number;
+  readonly incomesCount!: number;
 
   @ApiProperty()
-  readonly expensesCount: number;
+  readonly expensesCount!: number;
 
   @ApiProperty()
-  readonly transfersCount: number;
+  readonly transfersCount!: number;
 
   @ApiProperty({ type: Number })
   @TransformDecimal()
   @IsDecimal()
-  readonly totalAmount: Decimal;
+  readonly totalAmount!: Decimal;
 
   @ApiProperty({ type: Number })
   @TransformDecimal()
   @IsDecimal()
-  readonly incomeAmount: Decimal;
+  readonly incomeAmount!: Decimal;
 
   @ApiProperty({ type: Number })
   @TransformDecimal()
   @IsDecimal()
-  readonly expenseAmount: Decimal;
+  readonly expenseAmount!: Decimal;
 
   @ApiProperty({ type: Number })
   @TransformDecimal()
   @IsDecimal()
-  readonly transferAmount: Decimal;
+  readonly transferAmount!: Decimal;
 
   public static createFromPlain(
     data: TransactionMonthSummaryDto,

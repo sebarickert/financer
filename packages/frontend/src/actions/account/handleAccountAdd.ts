@@ -1,6 +1,6 @@
 'use server';
 
-import { redirect, RedirectType } from 'next/navigation';
+import { RedirectType, redirect } from 'next/navigation';
 
 import { AccountType } from '$api/generated/financerApi';
 import { ValidationException } from '$exceptions/validation.exception';

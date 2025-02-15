@@ -18,7 +18,7 @@ export const parseParentCategoryPath = (
     allCategories,
     targetCategory.parentCategoryId,
   );
-  return `${parentPath} > ${targetCategory?.name}`;
+  return `${parentPath} > ${targetCategory.name}`;
 };
 
 export const getAllChildCategoryIds = (

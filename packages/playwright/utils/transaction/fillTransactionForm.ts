@@ -3,13 +3,13 @@ import Decimal from 'decimal.js';
 import { formatDate } from '$utils/api-helper';
 import { Page } from '$utils/financer-page';
 
-type TransactionFormFields = {
+interface TransactionFormFields {
   fromAccount?: string;
   toAccount?: string;
   amount?: Decimal;
   date?: Date;
   description?: string;
-};
+}
 
 export const fillTransactionForm = async (
   page: Page,

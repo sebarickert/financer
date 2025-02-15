@@ -1,4 +1,4 @@
-import { useEffect, useActionState } from 'react';
+import { useActionState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { ToastMessageTypes } from '$blocks/Toast/Toast';
@@ -41,7 +41,7 @@ export const useFinancerFormState = (
   const [state, action] = useActionState(submitHandler, {});
 
   useEffect(() => {
-    const errors = state.errors;
+    const { errors } = state;
 
     if (state.status === 'OK' && okHandler) {
       okHandler();

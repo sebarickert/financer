@@ -1,21 +1,21 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Decimal } from '@prisma/client/runtime/library';
 
-import { createMockServiceProvider } from '../../../test/create-mock-service-provider';
-import { transactionTemplateAllByUserRepoMockData } from '../../database/repos/mocks/transaction-template-repo-mock';
-import { transactionsRepoFindAllByIdMockData } from '../../database/repos/mocks/transactions-repo-mock';
-import { SystemLogRepo } from '../../database/repos/system-log.repo';
-import { TransactionTemplateLogRepo } from '../../database/repos/transaction-template-log.repo';
-import { TransactionTemplateRepo } from '../../database/repos/transaction-template.repo';
-import { TransactionRepo } from '../../database/repos/transaction.repo';
-import { AccountsService } from '../accounts/accounts.service';
-import { SystemService } from '../system/system.service';
-import { TransactionCategoriesService } from '../transaction-categories/transaction-categories.service';
-import { TransactionCategoryMappingsService } from '../transaction-category-mappings/transaction-category-mappings.service';
-import { TransactionTemplatesService } from '../transaction-templates/transaction-templates.service';
-import { TransactionsService } from '../transactions/transactions.service';
-
 import { TasksService } from './tasks.service';
+
+import { AccountsService } from '@/accounts/accounts.service';
+import { transactionTemplateAllByUserRepoMockData } from '@/database/repos/mocks/transaction-template-repo-mock';
+import { transactionsRepoFindAllByIdMockData } from '@/database/repos/mocks/transactions-repo-mock';
+import { SystemLogRepo } from '@/database/repos/system-log.repo';
+import { TransactionTemplateLogRepo } from '@/database/repos/transaction-template-log.repo';
+import { TransactionTemplateRepo } from '@/database/repos/transaction-template.repo';
+import { TransactionRepo } from '@/database/repos/transaction.repo';
+import { SystemService } from '@/system/system.service';
+import { createMockServiceProvider } from '@/test/create-mock-service-provider';
+import { TransactionCategoriesService } from '@/transaction-categories/transaction-categories.service';
+import { TransactionCategoryMappingsService } from '@/transaction-category-mappings/transaction-category-mappings.service';
+import { TransactionTemplatesService } from '@/transaction-templates/transaction-templates.service';
+import { TransactionsService } from '@/transactions/transactions.service';
 
 const dummyUserId = '61460d7354ea082ad0256749';
 
@@ -34,10 +34,11 @@ describe('TasksService', () => {
     RealDate = Date;
     dateMock = new Date(2022, 8, 2, 12);
     jest.spyOn(global, 'Date').mockImplementation((...args) => {
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (args.length) {
         return new RealDate(...args);
       }
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-return
       return new RealDate(dateMock) as any;
     });
 
@@ -77,15 +78,7 @@ describe('TasksService', () => {
     >(TransactionTemplateLogRepo);
   });
 
-  afterEach(async () => {
-    // @TODO: Clear database with prisma
-    // const connection = await getMongoConnection();
-    // const collections = await connection.db.collections();
-    // await Promise.all(
-    //   collections.map((collection) => collection.deleteMany({})),
-    // );
-    // await connection.close();
-
+  afterEach(() => {
     global.Date = RealDate;
   });
 
@@ -105,11 +98,10 @@ describe('TasksService', () => {
     jest
       .spyOn(transactionTemplateLogRepo, 'findMany')
       .mockResolvedValueOnce([]);
-    jest
-      .spyOn(transactionRepo, 'create')
-      .mockResolvedValueOnce(
-        transactionsRepoFindAllByIdMockData['624befb66ba655edad8f824e'],
-      );
+    jest.spyOn(transactionRepo, 'create').mockResolvedValueOnce(
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      transactionsRepoFindAllByIdMockData['624befb66ba655edad8f824e'],
+    );
 
     await service.generateTransactions();
 
@@ -172,11 +164,10 @@ describe('TasksService', () => {
         updatedAt: new Date(),
       },
     ]);
-    jest
-      .spyOn(transactionRepo, 'create')
-      .mockResolvedValueOnce(
-        transactionsRepoFindAllByIdMockData['624befb66ba655edad8f824e'],
-      );
+    jest.spyOn(transactionRepo, 'create').mockResolvedValueOnce(
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      transactionsRepoFindAllByIdMockData['624befb66ba655edad8f824e'],
+    );
 
     await service.generateTransactions();
 
@@ -221,11 +212,10 @@ describe('TasksService', () => {
     jest
       .spyOn(transactionTemplateLogRepo, 'findMany')
       .mockResolvedValueOnce([]);
-    jest
-      .spyOn(transactionRepo, 'create')
-      .mockResolvedValueOnce(
-        transactionsRepoFindAllByIdMockData['624befb66ba655edad8f824e'],
-      );
+    jest.spyOn(transactionRepo, 'create').mockResolvedValueOnce(
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      transactionsRepoFindAllByIdMockData['624befb66ba655edad8f824e'],
+    );
 
     await service.generateTransactions();
 
@@ -281,11 +271,10 @@ describe('TasksService', () => {
     jest
       .spyOn(transactionTemplateLogRepo, 'findMany')
       .mockResolvedValueOnce([]);
-    jest
-      .spyOn(transactionRepo, 'create')
-      .mockResolvedValueOnce(
-        transactionsRepoFindAllByIdMockData['624befb66ba655edad8f824e'],
-      );
+    jest.spyOn(transactionRepo, 'create').mockResolvedValueOnce(
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      transactionsRepoFindAllByIdMockData['624befb66ba655edad8f824e'],
+    );
 
     await service.generateTransactions();
 
@@ -341,11 +330,10 @@ describe('TasksService', () => {
     jest
       .spyOn(transactionTemplateLogRepo, 'findMany')
       .mockResolvedValueOnce([]);
-    jest
-      .spyOn(transactionRepo, 'create')
-      .mockResolvedValueOnce(
-        transactionsRepoFindAllByIdMockData['624befb66ba655edad8f824e'],
-      );
+    jest.spyOn(transactionRepo, 'create').mockResolvedValueOnce(
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      transactionsRepoFindAllByIdMockData['624befb66ba655edad8f824e'],
+    );
 
     await service.generateTransactions();
 

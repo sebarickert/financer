@@ -77,7 +77,7 @@ export class AccountService extends BaseApi {
     });
 
     return (
-      accounts?.reduce(
+      accounts.reduce(
         (acc, { balance, currentDateBalance }) =>
           acc + (currentDateBalance ?? balance ?? 0),
         0,

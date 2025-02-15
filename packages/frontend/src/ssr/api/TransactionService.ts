@@ -11,9 +11,9 @@ import {
   TransactionDetailsDto,
   TransactionListItemDto,
   TransactionMonthSummaryDto,
+  TransactionType,
   TransactionsFindAllByUserApiArg,
   TransactionsFindMonthlySummariesByUserApiArg,
-  TransactionType,
   TransferListItemDto,
 } from '$api/generated/financerApi';
 
@@ -167,9 +167,8 @@ export class TransactionService extends BaseApi {
       return IncomeService.getAll(options);
     } else if (type === TransactionType.Transfer) {
       return TransferService.getAll(options);
-    } else {
-      return this.getAll(options);
     }
+    return this.getAll(options);
   }
 
   private static async getAll(

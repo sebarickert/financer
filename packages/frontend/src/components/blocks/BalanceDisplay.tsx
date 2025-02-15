@@ -4,13 +4,13 @@ import { FC, ReactNode } from 'react';
 import { TransactionType } from '$api/generated/financerApi';
 import { formatCurrency } from '$utils/formatCurrency';
 
-type BalanceDisplayProps = {
+interface BalanceDisplayProps {
   className?: string;
   label: string;
   amount: number;
   children?: ReactNode;
   type?: TransactionType;
-};
+}
 
 export const BalanceDisplay: FC<BalanceDisplayProps> = ({
   className,

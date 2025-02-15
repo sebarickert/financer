@@ -1,4 +1,4 @@
-import { redirect, RedirectType } from 'next/navigation';
+import { RedirectType, redirect } from 'next/navigation';
 
 import { AccountType } from '$api/generated/financerApi';
 import { settingsPaths } from '$constants/settingsPaths';

@@ -2,10 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Decimal } from '@prisma/client/runtime/library';
 import { Allow } from 'class-validator';
 
-import {
-  IsDecimal,
-  TransformDecimal,
-} from '../../../utils/is-decimal.decorator';
+import { IsDecimal, TransformDecimal } from '@/utils/is-decimal.decorator';
 
 export class CategoryMonthlySummaryDto {
   constructor(data: CategoryMonthlySummaryDto) {
@@ -14,42 +11,42 @@ export class CategoryMonthlySummaryDto {
 
   @ApiProperty()
   @Allow()
-  readonly id: {
+  readonly id!: {
     year: number;
     month: number;
   };
 
   @ApiProperty()
-  readonly totalCount: number;
+  readonly totalCount!: number;
 
   @ApiProperty()
-  readonly incomesCount: number;
+  readonly incomesCount!: number;
 
   @ApiProperty()
-  readonly expensesCount: number;
+  readonly expensesCount!: number;
 
   @ApiProperty()
-  readonly transfersCount: number;
+  readonly transfersCount!: number;
 
   @ApiProperty({ type: Number })
   @IsDecimal()
   @TransformDecimal()
-  readonly totalAmount: Decimal;
+  readonly totalAmount!: Decimal;
 
   @ApiProperty({ type: Number })
   @IsDecimal()
   @TransformDecimal()
-  readonly incomeAmount: Decimal;
+  readonly incomeAmount!: Decimal;
 
   @ApiProperty({ type: Number })
   @IsDecimal()
   @TransformDecimal()
-  readonly expenseAmount: Decimal;
+  readonly expenseAmount!: Decimal;
 
   @ApiProperty({ type: Number })
   @IsDecimal()
   @TransformDecimal()
-  readonly transferAmount: Decimal;
+  readonly transferAmount!: Decimal;
 
   public static createFromPlain(
     summaries: CategoryMonthlySummaryDto,

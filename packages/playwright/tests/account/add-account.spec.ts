@@ -5,7 +5,7 @@ import { getAccountDataFromAccountList } from '$utils/account/getAccountDataFrom
 import { getAccountDetails } from '$utils/account/getAccountDetails';
 import { applyFixture } from '$utils/applyFixture';
 import { accountTypes } from '$utils/constants';
-import { test, expect } from '$utils/financer-page';
+import { expect, test } from '$utils/financer-page';
 
 test.describe.parallel('Add Account', () => {
   test.beforeEach(async ({ page }) => {

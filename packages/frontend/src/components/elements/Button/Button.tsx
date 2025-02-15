@@ -1,10 +1,10 @@
 'use client';
 
 import clsx from 'clsx';
-import { FC, HTMLAttributes, useCallback, type JSX } from 'react';
+import { FC, HTMLAttributes, type JSX, useCallback } from 'react';
 
 import { Link } from '$elements/Link';
-import { hapticRunner, HapticType } from '$utils/haptic.helper';
+import { HapticType, hapticRunner } from '$utils/haptic.helper';
 import { isExternalLink } from '$utils/isExternalLink';
 import { TransitionType } from '$utils/transitionAnimations';
 
@@ -29,7 +29,7 @@ interface ButtonProps
   testId?: string;
   isDisabled?: boolean;
   size?: 'default' | 'icon';
-  /** defaults to `none` */
+  /** Defaults to `none` */
   haptic?: HapticType;
 }
 
@@ -62,15 +62,15 @@ export const Button: FC<ButtonProps> = ({
   const buttonClasses = clsx(
     buttonStyles.base,
     {
-      ['text-base rounded-md text-center']:
+      'text-base rounded-md text-center':
         (size === 'icon' || size === 'default') && accentColor !== 'unstyled',
       [buttonStyles.default]: size === 'default' && accentColor !== 'unstyled',
       [buttonStyles.icon]: size === 'icon' && accentColor !== 'unstyled',
-      ['button-primary']: accentColor === 'primary',
-      ['button-secondary']: accentColor === 'secondary',
-      ['button-danger']: accentColor === 'danger',
-      ['button-ghost']: accentColor === 'ghost',
-      ['']: accentColor === 'unstyled',
+      'button-primary': accentColor === 'primary',
+      'button-secondary': accentColor === 'secondary',
+      'button-danger': accentColor === 'danger',
+      'button-ghost': accentColor === 'ghost',
+      '': accentColor === 'unstyled',
     },
     className,
   );
@@ -87,7 +87,9 @@ export const Button: FC<ButtonProps> = ({
         <a
           href={href}
           className={buttonClasses}
-          onClick={() => onClickWithHaptic()}
+          onClick={() => {
+            onClickWithHaptic();
+          }}
           data-testid={testId}
         >
           {children}
@@ -113,7 +115,9 @@ export const Button: FC<ButtonProps> = ({
   return (
     <button
       type={type}
-      onClick={() => onClickWithHaptic()}
+      onClick={() => {
+        onClickWithHaptic();
+      }}
       className={buttonClasses}
       data-testid={testId}
       disabled={isDisabled}

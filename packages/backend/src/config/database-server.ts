@@ -4,14 +4,18 @@ import { Logger } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 import { Client } from 'pg';
 
-import { DockerDatabase } from '../utils/docker-database';
-
 import {
   shouldOnlyExportApiSpec,
   shouldUseInternalDevelopmentDockerDb,
 } from './configuration';
 import { DUMMY_TEST_USER } from './mockAuthenticationMiddleware';
 
+import { DockerDatabase } from '@/utils/docker-database';
+
+const DEVELOPMENT_DB_PORT = 5432;
+const TEST_DB_PORT = 39425;
+
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class DatabaseServer {
   private static readonly logger = new Logger(DatabaseServer.name);
 
@@ -30,7 +34,7 @@ export class DatabaseServer {
       await DockerDatabase.startContainer(name);
     }
 
-    return DockerDatabase.createContainer(
+    await DockerDatabase.createContainer(
       name,
       this.USERNAME,
       this.PASSWORD,
@@ -53,7 +57,7 @@ export class DatabaseServer {
     const uri = uriInput ?? this.getDbUri();
 
     await this.ensureDatabaseExists(uri);
-    await this.setupDatabaseSchema(uri);
+    this.setupDatabaseSchema(uri);
     await this.ensureTestUserExists(uri);
 
     return uri;
@@ -64,7 +68,7 @@ export class DatabaseServer {
       const uri = this.getDbUri();
 
       await this.ensureDatabaseExists(uri);
-      await this.setupDatabaseSchema(uri);
+      this.setupDatabaseSchema(uri);
 
       return uri;
     };
@@ -90,7 +94,7 @@ export class DatabaseServer {
   }
 
   private static getPort(): number {
-    return this.getIsDevelopment() ? 5432 : 39425;
+    return this.getIsDevelopment() ? DEVELOPMENT_DB_PORT : TEST_DB_PORT;
   }
 
   private static async ensureDatabaseExists(uriInput: string): Promise<void> {
@@ -126,12 +130,10 @@ export class DatabaseServer {
     await prisma.$disconnect();
   };
 
-  private static readonly setupDatabaseSchema = async (
-    rawUri: string,
-  ): Promise<void> => {
+  private static readonly setupDatabaseSchema = (rawUri: string): void => {
     execSync(`npx prisma db push --schema=$SCHEMA --skip-generate`, {
       // Uncomment to see command output
-      // stdio: 'inherit',
+      // Stdio: 'inherit',
       env: { ...process.env, DATABASE_URL: rawUri },
     });
   };

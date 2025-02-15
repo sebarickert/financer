@@ -1,14 +1,14 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
-  Query,
+  Get,
   HttpCode,
   HttpStatus,
+  Param,
+  Patch,
+  Post,
+  Query,
 } from '@nestjs/common';
 import {
   ApiBody,
@@ -20,18 +20,18 @@ import {
 } from '@nestjs/swagger';
 import { AccountType } from '@prisma/client';
 
-import { UserId } from '../../types/user-id';
-import { ValidateArrayPipe } from '../../utils/validate-array.pipe';
-import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
-import { ValidateEnumPipe } from '../../utils/validate-enum.pipe';
-import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
-import { UserIdDecorator } from '../users/users.decorators';
-
 import { AccountsService } from './accounts.service';
 import { AccountBalanceHistoryDto } from './dto/account-balance-history.dto';
 import { AccountDto } from './dto/account.dto';
 import { CreateAccountDto } from './dto/create-account.dto';
 import { UpdateAccountDto } from './dto/update-account.dto';
+
+import { LoggedIn } from '@/auth/decorators/logged-in.decorators';
+import { UserId } from '@/types/user-id';
+import { UserIdDecorator } from '@/users/users.decorators';
+import { ValidateArrayPipe } from '@/utils/validate-array.pipe';
+import { ValidateEntityId } from '@/utils/validate-entity-id.pipe';
+import { ValidateEnumPipe } from '@/utils/validate-enum.pipe';
 
 @Controller('api/accounts')
 @ApiTags('Accounts')

@@ -1,7 +1,7 @@
 import { getAccountDataFromAccountList } from '$utils/account/getAccountDataFromAccountList';
 import { applyFixture } from '$utils/applyFixture';
 import { clickPopperItem } from '$utils/common/clickPopperItem';
-import { test, expect } from '$utils/financer-page';
+import { expect, test } from '$utils/financer-page';
 
 test.describe('Delete Account', () => {
   test.beforeEach(async ({ page }) => {

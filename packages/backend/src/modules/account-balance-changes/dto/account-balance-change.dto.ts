@@ -4,11 +4,8 @@ import { Decimal } from '@prisma/client/runtime/library';
 import { Type } from 'class-transformer';
 import { IsDate, IsUUID } from 'class-validator';
 
-import { UserId } from '../../../types/user-id';
-import {
-  IsDecimal,
-  TransformDecimal,
-} from '../../../utils/is-decimal.decorator';
+import { UserId } from '@/types/user-id';
+import { IsDecimal, TransformDecimal } from '@/utils/is-decimal.decorator';
 
 export class AccountBalanceChangeDto implements AccountBalanceChange {
   constructor(partial: AccountBalanceChange) {
@@ -16,32 +13,32 @@ export class AccountBalanceChangeDto implements AccountBalanceChange {
   }
 
   @ApiProperty()
-  createdAt: Date;
+  createdAt!: Date;
 
   @ApiProperty()
-  updatedAt: Date;
+  updatedAt!: Date;
 
   @ApiProperty()
   @IsUUID()
-  readonly id: string;
+  readonly id!: string;
 
   @ApiProperty()
   @IsDate()
   @Type(() => Date)
-  readonly date: Date;
+  readonly date!: Date;
 
   @ApiProperty({ type: Number })
   @TransformDecimal()
   @IsDecimal({ message: 'Amount must be a decimal number.' })
-  readonly amount: Decimal;
+  readonly amount!: Decimal;
 
   @ApiProperty()
   @IsUUID()
-  readonly userId: UserId;
+  readonly userId!: UserId;
 
   @ApiProperty()
   @IsUUID()
-  readonly accountId: string;
+  readonly accountId!: string;
 
   public static createFromPlain(
     accountBalanceChange: AccountBalanceChange,

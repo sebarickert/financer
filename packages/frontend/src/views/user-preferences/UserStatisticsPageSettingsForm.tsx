@@ -15,14 +15,14 @@ import {
 
 const allAccountTypes = Object.values(AccountType);
 
-export type UserStatisticsPageSettingsFormFields = {
+export interface UserStatisticsPageSettingsFormFields {
   accountTypes: AccountType[];
-};
+}
 
-type UserStatisticsPageSettingsFormProps = {
+interface UserStatisticsPageSettingsFormProps {
   data?: UserStatisticsPageSettingsFormFields;
   onSave: DefaultFormActionHandler;
-};
+}
 
 export const UserStatisticsPageSettingsForm: FC<
   UserStatisticsPageSettingsFormProps

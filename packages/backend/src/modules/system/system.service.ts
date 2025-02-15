@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { SystemLog } from '@prisma/client';
 
-import { SystemLogRepo } from '../../database/repos/system-log.repo';
-
 import { CreateSystemLogDto } from './dto/create-system-log.dto';
+
+import { SystemLogRepo } from '@/database/repos/system-log.repo';
 
 @Injectable()
 export class SystemService {

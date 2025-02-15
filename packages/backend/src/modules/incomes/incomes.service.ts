@@ -1,25 +1,26 @@
 import { Injectable } from '@nestjs/common';
 import { AccountType, Prisma, TransactionType } from '@prisma/client';
 
-import { UserId } from '../../types/user-id';
-import { TransactionsService } from '../transactions/transactions.service';
-
 import { CreateIncomeDto } from './dto/create-income.dto';
 import { IncomeDetailsDto } from './dto/income-details.dto';
 import { IncomeListItemDto } from './dto/income-list-item.dto';
 import { UpdateIncomeDto } from './dto/update-income.dto';
 
+import { TransactionsService } from '@/transactions/transactions.service';
+import { UserId } from '@/types/user-id';
+
 @Injectable()
 export class IncomesService {
   constructor(private readonly transactionService: TransactionsService) {}
 
+  // eslint-disable-next-line max-params
   async findAllByUser(
     userId: UserId,
     page: number,
     limit: number,
     year: number,
     month: number,
-    accountTypes: AccountType[],
+    accountTypes?: AccountType[],
     accountId?: string,
     sortOrder?: Prisma.SortOrder,
   ): Promise<IncomeListItemDto[]> {
@@ -30,8 +31,8 @@ export class IncomesService {
       year || undefined,
       month || undefined,
       accountId,
-      accountTypes || undefined,
-      sortOrder || undefined,
+      accountTypes ?? undefined,
+      sortOrder ?? undefined,
     );
   }
 

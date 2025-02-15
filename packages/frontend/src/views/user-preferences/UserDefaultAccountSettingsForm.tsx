@@ -13,21 +13,21 @@ import {
   useFinancerFormState,
 } from '$hooks/useFinancerFormState';
 
-export type UserDefaultAccountSettingsFormFields = {
+export interface UserDefaultAccountSettingsFormFields {
   toAccountIncome: string;
   fromAccountExpense: string;
   fromAccountTransfer: string;
   toAccountTransfer: string;
-};
+}
 
-type UserDefaultAccountSettingsFormProps = {
+interface UserDefaultAccountSettingsFormProps {
   accounts?: AccountDto[];
   defaultExpenseAccount?: string;
   defaultTransferSourceAccount?: string;
   defaultIncomeAccount?: string;
   defaultTransferTargetAccount?: string;
   onSave: DefaultFormActionHandler;
-};
+}
 
 export const UserDefaultAccountSettingsForm: FC<
   UserDefaultAccountSettingsFormProps

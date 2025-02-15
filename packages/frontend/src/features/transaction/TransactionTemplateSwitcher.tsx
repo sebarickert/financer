@@ -1,7 +1,7 @@
 'use client';
 
 import { Layers } from 'lucide-react';
-import { useId, useMemo, useRef, type JSX } from 'react';
+import { type JSX, useId, useMemo, useRef } from 'react';
 
 import {
   TransactionTemplateDto,
@@ -13,13 +13,13 @@ import { Button } from '$elements/Button/Button';
 import { ButtonGroup } from '$elements/Button/ButtonGroup';
 import { InputOption } from '$elements/InputOption';
 
-type TransactionTemplateSwitcherProps = {
+interface TransactionTemplateSwitcherProps {
   selectedTemplateId?: string;
   transactionType: TransactionType;
   onChange(event: React.ChangeEvent<HTMLFormElement>): void;
   name?: string;
   transactionTemplates?: TransactionTemplateDto[];
-};
+}
 
 export const TransactionTemplateSwitcher = ({
   selectedTemplateId,
@@ -44,7 +44,7 @@ export const TransactionTemplateSwitcher = ({
   const handleSubmit = async (event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
     onChange(event);
-    popoverRef?.current?.hidePopover();
+    popoverRef.current?.hidePopover();
   };
 
   return (

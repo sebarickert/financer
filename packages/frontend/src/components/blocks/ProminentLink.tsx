@@ -4,14 +4,14 @@ import { FC } from 'react';
 
 import { Link } from '$elements/Link';
 
-type ProminentLinkProps = {
+interface ProminentLinkProps {
   Icon?: LucideIcon;
   children: React.ReactNode;
   link: string;
   testId?: string;
   entityTitle?: string;
   className?: string;
-};
+}
 
 export const ProminentLink: FC<ProminentLinkProps> = ({
   Icon,

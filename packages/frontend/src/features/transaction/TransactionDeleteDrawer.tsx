@@ -10,10 +10,10 @@ import { Button } from '$elements/Button/Button';
 import { useFinancerFormState } from '$hooks/useFinancerFormState';
 import { handleTransactionDelete } from 'src/actions/transaction/handleTransactionDelete';
 
-type TransactionDeleteDrawerProps = {
+interface TransactionDeleteDrawerProps {
   type: TransactionType;
   id: string;
-};
+}
 
 export const TransactionDeleteDrawer: FC<TransactionDeleteDrawerProps> = ({
   type,

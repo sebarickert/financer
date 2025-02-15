@@ -8,11 +8,11 @@ import { TransactionListItemDto } from '$api/generated/financerApi';
 import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
 import { List } from '$blocks/List';
 
-type TransactionListProps = {
+interface TransactionListProps {
   items: TransactionListItemDto[];
   className?: string;
   label?: string;
-};
+}
 
 export const TransactionList: FC<TransactionListProps> = async ({
   label,

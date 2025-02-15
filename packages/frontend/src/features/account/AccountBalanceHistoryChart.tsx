@@ -17,10 +17,10 @@ import {
   formatCurrencyAbbreviation,
 } from '$utils/formatCurrency';
 
-type AccountBalanceHistoryChartProps = {
+interface AccountBalanceHistoryChartProps {
   data: AccountBalanceHistoryDto[];
   className?: string;
-};
+}
 
 export const AccountBalanceHistoryChart: FC<
   AccountBalanceHistoryChartProps

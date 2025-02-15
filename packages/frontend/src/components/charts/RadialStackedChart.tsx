@@ -13,7 +13,7 @@ import {
 import { ChartConfig } from '$types/ChartConfig';
 import { ChartData } from '$types/ChartData';
 
-type RadialStackedChartProps = {
+interface RadialStackedChartProps {
   data: ChartData;
   config: ChartConfig;
   label: {
@@ -21,7 +21,7 @@ type RadialStackedChartProps = {
     secondary: string;
   };
   className?: string;
-};
+}
 
 export const RadialStackedChart: FC<RadialStackedChartProps> = ({
   data,

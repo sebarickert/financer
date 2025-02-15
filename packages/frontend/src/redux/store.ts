@@ -2,10 +2,10 @@ import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useSelector } from 'react-redux';
 
 import { emptyFinancerApi } from '$api/emptyFinancerApi';
-import { appSlicePath, appReducer } from '$reducer/app.reducer';
+import { appReducer, appSlicePath } from '$reducer/app.reducer';
 import {
-  notificationSlicePath,
   notificationReducer,
+  notificationSlicePath,
 } from '$reducer/notifications.reducer';
 
 import '$api/config/apiConfig';

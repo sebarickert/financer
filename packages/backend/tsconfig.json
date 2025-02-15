@@ -13,7 +13,7 @@
     "incremental": true,
     "strict": true,
     "skipLibCheck": true,
-    "strictNullChecks": false,
+    "strictNullChecks": true,
     "noImplicitAny": true,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
@@ -24,7 +24,8 @@
     // Set `sourceRoot` to  "/" to strip the build path prefix
     // from generated source code references.
     // This improves issue grouping in Sentry.
-    "sourceRoot": "/"
+    "sourceRoot": "/",
+    "baseUrl": "./"
   },
   "exclude": ["node_modules", "dist", "jest.config.ts"],
   "extends": "./tsconfig.path.json"

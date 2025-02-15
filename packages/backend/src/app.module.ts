@@ -24,6 +24,7 @@ import { TransfersModule } from './modules/transfers/transfers.module';
 import { UserDataModule } from './modules/user-data/user-data.module';
 import { UserPreferencesModule } from './modules/user-preferences/user-preferences.module';
 import { UsersModule } from './modules/users/users.module';
+import { Duration } from './utils/duration';
 
 @Module({
   imports: [
@@ -66,18 +67,19 @@ export class AppModule implements NestModule {
       .apply(
         HttpAccessLogMiddleware,
         session({
-          secret: this.configService.get<string>('cookieKey'),
+          secret: this.configService.get('cookieKey'),
           cookie: {
-            maxAge: 1000 * 60 * 60 * 24 * 30,
+            maxAge: Duration.ofDays(30),
           },
           saveUninitialized: false,
           resave: false,
           store: new AppModule.PgSession({
-            conString: this.configService.get<string>('dbConnectionString'),
+            conString: this.configService.get('dbConnectionString'),
           }),
         }),
         cookieParser(),
         passport.initialize(),
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         passport.session(),
       )
       .forRoutes('*');

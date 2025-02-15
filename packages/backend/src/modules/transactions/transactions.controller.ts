@@ -16,17 +16,17 @@ import {
 } from '@nestjs/swagger';
 import { AccountType, Prisma } from '@prisma/client';
 
-import { UserId } from '../../types/user-id';
-import { ValidateArrayPipe } from '../../utils/validate-array.pipe';
-import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
-import { ValidateEnumPipe } from '../../utils/validate-enum.pipe';
-import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
-import { UserIdDecorator } from '../users/users.decorators';
-
 import { TransactionDetailsDto } from './dto/transaction-details.dto';
 import { TransactionListItemDto } from './dto/transaction-list-item.dto';
 import { TransactionMonthSummaryDto } from './dto/transaction-month-summary.dto';
 import { TransactionsService } from './transactions.service';
+
+import { LoggedIn } from '@/auth/decorators/logged-in.decorators';
+import { UserId } from '@/types/user-id';
+import { UserIdDecorator } from '@/users/users.decorators';
+import { ValidateArrayPipe } from '@/utils/validate-array.pipe';
+import { ValidateEntityId } from '@/utils/validate-entity-id.pipe';
+import { ValidateEnumPipe } from '@/utils/validate-enum.pipe';
 
 @Controller('api/transactions')
 @ApiTags('Transactions')
@@ -35,6 +35,7 @@ import { TransactionsService } from './transactions.service';
 export class TransactionsController {
   constructor(private readonly transactionsService: TransactionsService) {}
 
+  // eslint-disable-next-line max-lines-per-function, max-params
   @Get()
   @ApiOkResponse({ type: TransactionListItemDto, isArray: true })
   @ApiQuery({
@@ -92,17 +93,18 @@ export class TransactionsController {
     return this.transactionsService.findAllByUser(
       userId,
       null,
-      limit || undefined,
-      year || undefined,
-      month || undefined,
+      limit ?? undefined,
+      year ?? undefined,
+      month ?? undefined,
       accountId,
-      accountTypes || undefined,
-      sortOrder || undefined,
+      accountTypes ?? undefined,
+      sortOrder ?? undefined,
       undefined,
       parentTransactionCategory,
     );
   }
 
+  // eslint-disable-next-line max-lines-per-function, max-params
   @Get('monthly-summaries')
   @ApiOkResponse({
     type: TransactionMonthSummaryDto,

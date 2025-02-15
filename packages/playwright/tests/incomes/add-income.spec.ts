@@ -5,7 +5,7 @@ import { getAccountBalanceFromAccountListByName } from '$utils/account/getAccoun
 import { applyFixture } from '$utils/applyFixture';
 import { clickContextualNavigationItem } from '$utils/common/clickContextualNavigationItem';
 import { getEmptyListErrorMessageByBrowserName } from '$utils/common/getEmptyListErrorMessageByBrowserName';
-import { test, expect } from '$utils/financer-page';
+import { expect, test } from '$utils/financer-page';
 import { getTemplateFormValues } from '$utils/template/getTemplateFormValues';
 import { fillAndSubmitTransactionTemplateForm } from '$utils/transaction/fillAndSubmitTransactionTemplateForm';
 import { fillTransactionForm } from '$utils/transaction/fillTransactionForm';

@@ -21,7 +21,7 @@ const emptyFormValues = {
   categories: undefined,
 };
 
-type TransactionFormSwitcherProps = {
+interface TransactionFormSwitcherProps {
   typeSwitcherName?: string;
   templateSwitcherName?: string;
   defaultExpenseAccountId: string | undefined;
@@ -32,7 +32,7 @@ type TransactionFormSwitcherProps = {
     | TransactionCategoryDtoWithCategoryTree[]
     | undefined;
   transactionTemplates: TransactionTemplateDto[] | undefined;
-};
+}
 
 const formPropsMapping = {
   [TransactionType.Income]: { hasToAccountField: true },
@@ -90,11 +90,11 @@ export const TransactionFormSwitcher: FC<TransactionFormSwitcherProps> = ({
       }
 
       return {
-        amount: selectedTemplate?.amount,
-        toAccount: selectedTemplate?.toAccount ?? undefined,
-        fromAccount: selectedTemplate?.fromAccount ?? undefined,
-        description: selectedTemplate?.description,
-        categories: selectedTemplate?.categories?.map((categoryId) => ({
+        amount: selectedTemplate.amount,
+        toAccount: selectedTemplate.toAccount ?? undefined,
+        fromAccount: selectedTemplate.fromAccount ?? undefined,
+        description: selectedTemplate.description,
+        categories: selectedTemplate.categories?.map((categoryId) => ({
           categoryId,
           amount: NaN,
         })),

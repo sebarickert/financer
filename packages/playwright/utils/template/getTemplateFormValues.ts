@@ -1,4 +1,4 @@
-import { expect, Locator } from '@playwright/test';
+import { Locator, expect } from '@playwright/test';
 import Decimal from 'decimal.js';
 
 import {
@@ -24,7 +24,7 @@ const getFieldValue = async (locator: Locator) => {
   return undefined;
 };
 
-type TemplateFormFields = {
+interface TemplateFormFields {
   id: string;
   templateType?: TransactionTemplateType;
   transactionType?: TransactionType;
@@ -36,7 +36,7 @@ type TemplateFormFields = {
   dayOfMonth?: Decimal;
   dayOfMonthToCreate?: Decimal;
   categoriesCount: number;
-};
+}
 
 export const getTemplateFormValues = async (
   page: Page,
@@ -71,7 +71,7 @@ export const getTemplateFormValues = async (
     .count();
 
   const url = new URL(page.url()).pathname;
-  const id = url.match(/[0-9a-fA-F-]{36}/)?.[0] ?? '';
+  const id = /[0-9a-fA-F-]{36}/.exec(url)?.[0] ?? '';
 
   return {
     id,

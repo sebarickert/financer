@@ -31,7 +31,7 @@ export const TransactionsLayout: FC<TransactionsLayoutProps> = async ({
           finances.
         </InfoMessageBlock>
       )}
-      {!!accounts.length && children}
+      {Boolean(accounts.length) && children}
     </Layout>
   );
 };

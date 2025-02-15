@@ -4,12 +4,12 @@ import { TransactionType } from '$types/generated/financer';
 import { parseCurrency } from '$utils/api-helper';
 import { Page, expect } from '$utils/financer-page';
 
-type TransactionRow = {
+interface TransactionRow {
   description: string;
   amount: Decimal;
   date: Date;
   type: TransactionType;
-};
+}
 
 export const getTransactionDataFromTransactionList = async (
   page: Page,

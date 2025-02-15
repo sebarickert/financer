@@ -1,6 +1,27 @@
 {
-    "compilerOptions": {
-      "paths": {
-      }
+  "compilerOptions": {
+    "paths": {
+      "@nestjs/config/dist/config.service": ["src/config/nest-config.d.ts"],
+      "@/test/*": ["test/*"],
+      "@/account-balance-changes/*": ["src/modules/account-balance-changes/*"],
+      "@/accounts/*": ["src/modules/accounts/*"],
+      "@/auth/*": ["src/modules/auth/*"],
+      "@/expenses/*": ["src/modules/expenses/*"],
+      "@/health-check/*": ["src/modules/health-check/*"],
+      "@/incomes/*": ["src/modules/incomes/*"],
+      "@/system/*": ["src/modules/system/*"],
+      "@/tasks/*": ["src/modules/tasks/*"],
+      "@/transaction-categories/*": ["src/modules/transaction-categories/*"],
+      "@/transaction-category-mappings/*": [
+        "src/modules/transaction-category-mappings/*"
+      ],
+      "@/transactions/*": ["src/modules/transactions/*"],
+      "@/transaction-templates/*": ["src/modules/transaction-templates/*"],
+      "@/transfers/*": ["src/modules/transfers/*"],
+      "@/user-data/*": ["src/modules/user-data/*"],
+      "@/user-preferences/*": ["src/modules/user-preferences/*"],
+      "@/users/*": ["src/modules/users/*"],
+      "@/*": ["src/*"]
     }
   }
+}

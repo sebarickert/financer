@@ -5,14 +5,14 @@ import { TransactionTypeIcon } from '../TransactionTypeIcon';
 
 import { TransactionType } from '$api/generated/financerApi';
 
-type TransactionTypeSwitcherItemProps = {
+interface TransactionTypeSwitcherItemProps {
   children: string;
   className?: string;
   value: TransactionType;
   name: string;
   isChecked?: boolean;
   onChange(event: React.ChangeEvent<HTMLInputElement>): void;
-};
+}
 
 export const TransactionTypeSwitcherItem: FC<
   TransactionTypeSwitcherItemProps

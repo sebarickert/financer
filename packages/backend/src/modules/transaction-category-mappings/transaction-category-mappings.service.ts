@@ -2,14 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { TransactionType } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime/library';
 
-import { TransactionCategoryMappingRepo } from '../../database/repos/transaction-category-mapping.repo';
-import { ForceMutable } from '../../types/force-mutable';
-import { UserId } from '../../types/user-id';
-import { DateService } from '../../utils/date.service';
-import { CategoryMonthlySummaryDto } from '../transaction-categories/dto/transaction-month-summary.dto';
-
 import { CreateTransactionCategoryMappingDto } from './dto/create-transaction-category-mapping.dto';
 import { TransactionCategoryMappingDto } from './dto/transaction-category-mapping.dto';
+
+import { TransactionCategoryMappingRepo } from '@/database/repos/transaction-category-mapping.repo';
+import { CategoryMonthlySummaryDto } from '@/transaction-categories/dto/transaction-month-summary.dto';
+import { ForceMutable } from '@/types/force-mutable';
+import { UserId } from '@/types/user-id';
+import { DateService } from '@/utils/date.service';
+import { sortDateDesc } from '@/utils/sort-helper';
 
 @Injectable()
 export class TransactionCategoryMappingsService {
@@ -22,8 +23,7 @@ export class TransactionCategoryMappingsService {
     createTransactionCategoryMappingDto: CreateTransactionCategoryMappingDto[],
   ) {
     return this.transactionCategoryMappingRepo.createMany(
-      // @ts-expect-error - remove legacy `v` from import data
-      createTransactionCategoryMappingDto.map(({ v, ...category }) => ({
+      createTransactionCategoryMappingDto.map((category) => ({
         ...category,
         userId,
       })),
@@ -84,6 +84,7 @@ export class TransactionCategoryMappingsService {
     return TransactionCategoryMappingDto.createFromPlain(mappings);
   }
 
+  // eslint-disable-next-line max-lines-per-function, max-params
   async findMonthlySummariesByUserAndId(
     userId: UserId,
     categoryIds: string[],
@@ -106,7 +107,9 @@ export class TransactionCategoryMappingsService {
       },
     });
 
-    const filterDate = DateService.fromZonedTime(year, month - 1 || 0, 1);
+    const actualMonth = month ? month - 1 : 0;
+    // @ts-expect-error - We are not using filter if year is empty
+    const filterDate = DateService.fromZonedTime(year, actualMonth, 1);
 
     const filteredMappings = allMappings.filter(
       (mapping) =>
@@ -120,16 +123,18 @@ export class TransactionCategoryMappingsService {
     >();
 
     Array.from(
+      // eslint-disable-next-line max-statements
       Map.groupBy(filteredMappings, (mapping) => {
         const zonedDate = DateService.toZonedTime(mapping.transaction.date);
 
         const transactionMonth = zonedDate.getMonth() + 1;
         const transactionYear = zonedDate.getFullYear();
 
+        // eslint-disable-next-line init-declarations
         let type: TransactionType;
 
-        const hasToAccount = !!mapping.transaction.toAccount;
-        const hasFromAccount = !!mapping.transaction.fromAccount;
+        const hasToAccount = Boolean(mapping.transaction.toAccount);
+        const hasFromAccount = Boolean(mapping.transaction.fromAccount);
 
         if (hasFromAccount && hasToAccount) {
           type = TransactionType.TRANSFER;
@@ -145,6 +150,7 @@ export class TransactionCategoryMappingsService {
           year: transactionYear,
         };
       }).entries(),
+      // eslint-disable-next-line max-statements
     ).forEach(([key, value]) => {
       const { type, month: transactionMonth, year: transactionYear } = key;
 
@@ -156,7 +162,7 @@ export class TransactionCategoryMappingsService {
 
       const summary = summaries.get(
         `${transactionYear}-${transactionMonth}`,
-      ) || {
+      ) ?? {
         id: { month: transactionMonth, year: transactionYear },
         totalCount: 0,
         incomesCount: 0,
@@ -189,18 +195,11 @@ export class TransactionCategoryMappingsService {
     });
 
     const monthlyData = Array.from(summaries.values())
-      .sort((a, b) => {
-        // Compare years first
-        if (a.id.year > b.id.year) return -1;
-        if (a.id.year < b.id.year) return 1;
-
-        // If years are equal, compare months
-        if (a.id.month > b.id.month) return -1;
-        if (a.id.month < b.id.month) return 1;
-
-        // If both year and month are equal, consider them equal in terms of sorting
-        return 0;
-      })
+      .map((summary) => ({
+        ...summary,
+        idDate: new Date(summary.id.year, summary.id.month - 1),
+      }))
+      .sort(sortDateDesc('idDate'))
       .map((summary) => ({
         ...summary,
         totalAmount: summary.totalAmount,

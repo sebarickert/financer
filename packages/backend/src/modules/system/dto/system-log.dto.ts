@@ -3,23 +3,23 @@ import { Allow, IsEnum, IsString, IsUUID } from 'class-validator';
 
 export class SystemLogDto implements SystemLog {
   @IsUUID()
-  readonly id: string;
+  readonly id!: string;
 
   @IsString()
-  readonly module: string;
+  readonly module!: string;
 
   @IsString()
-  readonly service: string;
+  readonly service!: string;
 
   @IsString()
-  readonly message: string;
+  readonly message!: string;
 
   @IsEnum(SystemLogLevel)
-  readonly level: SystemLogLevel;
+  readonly level!: SystemLogLevel;
 
   @Allow()
-  readonly createdAt: Date;
+  readonly createdAt!: Date;
 
   @Allow()
-  readonly updatedAt: Date;
+  readonly updatedAt!: Date;
 }

@@ -8,12 +8,12 @@ import { TransactionListWithMonthlyPager } from '$features/transaction/Transacti
 import { capitalize } from '$utils/capitalize';
 import { parseParentCategoryPath } from 'src/services/TransactionCategoriesService';
 
-type CategoryProps = {
+interface CategoryProps {
   category: TransactionCategoryDto;
   categories: TransactionCategoryDto[];
   parentTransactionCategoryId: string;
   queryDate?: string;
-};
+}
 
 export const Category: FC<CategoryProps> = ({
   category,

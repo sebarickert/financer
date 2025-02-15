@@ -1,6 +1,6 @@
 'use server';
 
-import { redirect, RedirectType } from 'next/navigation';
+import { RedirectType, redirect } from 'next/navigation';
 
 import {
   TransactionTemplateType,

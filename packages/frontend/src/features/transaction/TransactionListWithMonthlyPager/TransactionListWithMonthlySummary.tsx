@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { TransactionType } from '$api/generated/financerApi';
 import { BalanceDisplay } from '$blocks/BalanceDisplay';
-import { DetailsList, DetailsItem } from '$blocks/DetailsList';
+import { DetailsItem, DetailsList } from '$blocks/DetailsList';
 import { TRANSACTION_TYPE_MAPPING } from '$constants/transaction/TRANSACTION_TYPE_MAPPING';
 import {
   TransactionListOptions,
@@ -11,9 +11,9 @@ import {
 import { UserPreferenceService } from '$ssr/api/UserPreferenceService';
 import { formatCurrency } from '$utils/formatCurrency';
 
-type TransactionListWithMonthlySummaryProps = {
+interface TransactionListWithMonthlySummaryProps {
   filterOptions: TransactionListOptions;
-};
+}
 
 export const TransactionListWithMonthlySummary: FC<
   TransactionListWithMonthlySummaryProps

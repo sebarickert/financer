@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { test as setup } from '@playwright/test';
 
 import { getExternalTestServerUrl, parsePort } from './setup';

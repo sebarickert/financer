@@ -7,18 +7,18 @@ import {
 } from '$api/generated/financerApi';
 import { BalanceDisplay } from '$blocks/BalanceDisplay';
 import { Card } from '$blocks/Card/Card';
-import { DetailsList, DetailsItem } from '$blocks/DetailsList';
+import { DetailsItem, DetailsList } from '$blocks/DetailsList';
 import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
 import { ACCOUNT_TYPE_MAPPING } from '$constants/account/ACCOUNT_TYPE_MAPPING';
 import { AccountBalanceHistoryChart } from '$features/account/AccountBalanceHistoryChart';
 import { TransactionListWithMonthlyPager } from '$features/transaction/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
 import { formatCurrency } from '$utils/formatCurrency';
 
-type AccountProps = {
+interface AccountProps {
   account: AccountDto;
   balanceHistory: AccountBalanceHistoryDto[];
   queryDate?: string;
-};
+}
 
 export const Account: FC<AccountProps> = ({
   account,
@@ -43,7 +43,7 @@ export const Account: FC<AccountProps> = ({
           label="Balance"
           amount={account.currentDateBalance ?? account.balance}
         >
-          {!!account.currentDateBalance &&
+          {Boolean(account.currentDateBalance) &&
             account.currentDateBalance !== account.balance && (
               <p className="mt-0.5 text-sm text-muted-foreground">
                 <span>Upcoming Balance: </span>

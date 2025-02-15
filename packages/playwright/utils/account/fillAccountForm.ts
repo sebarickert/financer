@@ -2,11 +2,11 @@ import Decimal from 'decimal.js';
 
 import { Page } from '$utils/financer-page';
 
-type AccountFormFields = {
+interface AccountFormFields {
   name?: string;
   balance?: Decimal;
   type?: string;
-};
+}
 
 export const fillAccountForm = async (
   page: Page,

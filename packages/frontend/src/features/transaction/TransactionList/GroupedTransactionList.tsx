@@ -15,10 +15,10 @@ import { Heading } from '$elements/Heading';
 import { DATE_FORMAT, DateService } from '$services/DateService';
 import { formatCurrency } from '$utils/formatCurrency';
 
-type GroupedTransactionListProps = {
+interface GroupedTransactionListProps {
   items: TransactionListItemDto[];
   className?: string;
-};
+}
 
 const getGroupLabel = (groupLabel: string) => {
   if (groupLabel === 'Upcoming') {
@@ -52,7 +52,7 @@ export const GroupedTransactionList: FC<GroupedTransactionListProps> = async ({
         return 'Upcoming';
       }
 
-      return dt.toISODate() as string;
+      return dt.toISODate()!;
     }),
   ).map(([date, data]) => ({ date, data: data || [] }));
 

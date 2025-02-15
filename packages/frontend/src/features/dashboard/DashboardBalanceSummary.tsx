@@ -8,13 +8,13 @@ import { DetailsItem, DetailsList } from '$blocks/DetailsList';
 import { TRANSACTION_TYPE_MAPPING } from '$constants/transaction/TRANSACTION_TYPE_MAPPING';
 import { formatCurrency } from '$utils/formatCurrency';
 
-type DashboardBalanceSummaryProps = {
+interface DashboardBalanceSummaryProps {
   className?: string;
   totalBalance: number;
   previousMonthBalance?: number;
   totalIncomes: number;
   totalExpenses: number;
-};
+}
 
 const getBalanceDifference = (
   totalBalance: number,

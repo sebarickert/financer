@@ -1,4 +1,4 @@
-import { redirect, RedirectType } from 'next/navigation';
+import { RedirectType, redirect } from 'next/navigation';
 
 import { TransactionType } from '$api/generated/financerApi';
 import { ValidationException } from '$exceptions/validation.exception';

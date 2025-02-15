@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import { useState, type JSX } from 'react';
+import { type JSX, useState } from 'react';
 
 import { Logo } from '$blocks/Logo';
 import { Button } from '$elements/Button/Button';
@@ -10,10 +10,8 @@ import { Link } from '$elements/Link';
 import { Loader } from '$elements/Loader';
 import { Paragraph } from '$elements/Paragraph';
 
-const NEXT_PUBLIC_IS_GITHUB_OAUTH_ENABLED =
-  process.env.NEXT_PUBLIC_IS_GITHUB_OAUTH_ENABLED;
-const NEXT_PUBLIC_IS_AUTH0_OAUTH_ENABLED =
-  process.env.NEXT_PUBLIC_IS_AUTH0_OAUTH_ENABLED;
+const { NEXT_PUBLIC_IS_GITHUB_OAUTH_ENABLED } = process.env;
+const { NEXT_PUBLIC_IS_AUTH0_OAUTH_ENABLED } = process.env;
 
 const checkIsEnabled = (stringBoolean: string | undefined) =>
   stringBoolean && stringBoolean.toLocaleLowerCase() !== 'false';

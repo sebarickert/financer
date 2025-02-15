@@ -1,30 +1,31 @@
 import {
+  Body,
   Controller,
   Get,
-  Body,
-  Patch,
+  Inject,
   Param,
+  Patch,
   Post,
   Res,
   forwardRef,
-  Inject,
 } from '@nestjs/common';
 import { ApiBody, ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
 import { Role } from '@prisma/client';
 import { Response } from 'express';
 
-import { UserId } from '../../types/user-id';
-import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
-import { Auth } from '../auth/decorators/auht.decorator';
-import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
-import { UserDataExportDto } from '../user-data/dto/user-data-export.dto';
-import { UserDataImportDto } from '../user-data/dto/user-data-import.dto';
-import { UserDataService } from '../user-data/user-data.service';
-
-import { UpdateUserDto, UpdateUserOwnUserDto } from './dto/update-user.dto';
+import { UpdateUserOwnUserDto } from './dto/update-own-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDto } from './dto/user.dto';
 import { UserIdDecorator } from './users.decorators';
 import { UsersService } from './users.service';
+
+import { Auth } from '@/auth/decorators/auth.decorator';
+import { LoggedIn } from '@/auth/decorators/logged-in.decorators';
+import { UserId } from '@/types/user-id';
+import { UserDataExportDto } from '@/user-data/dto/user-data-export.dto';
+import { UserDataImportDto } from '@/user-data/dto/user-data-import.dto';
+import { UserDataService } from '@/user-data/user-data.service';
+import { ValidateEntityId } from '@/utils/validate-entity-id.pipe';
 
 @Controller('api/users')
 @LoggedIn()
@@ -45,7 +46,7 @@ export class UsersController {
   @Get('my-user/my-data')
   @ApiOkResponse({ type: UserDataExportDto })
   getAllOwnUserData(@UserIdDecorator() userId: UserId, @Res() res: Response) {
-    this.getAllOneUserData(userId, res);
+    return this.getAllOneUserData(userId, res);
   }
 
   @Post('my-user/my-data')

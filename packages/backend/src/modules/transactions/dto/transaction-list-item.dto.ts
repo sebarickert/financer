@@ -32,7 +32,7 @@ export class TransactionListItemDto
 
   @ApiProperty()
   @IsBoolean()
-  isRecurring: boolean;
+  isRecurring!: boolean;
 
   @ApiProperty({
     enum: TransactionType,
@@ -40,24 +40,23 @@ export class TransactionListItemDto
     description: 'Type of the transaction',
   })
   @IsEnum(TransactionType)
-  @Transform(({ obj }) => {
+  @Transform(({ obj }: Record<'obj', TransactionListItem>) => {
     if (obj.fromAccount !== null && obj.toAccount !== null) {
       return TransactionType.TRANSFER;
     } else if (obj.fromAccount !== null) {
       return TransactionType.EXPENSE;
-    } else {
-      return TransactionType.INCOME;
     }
+    return TransactionType.INCOME;
   })
-  type: TransactionType;
+  type!: TransactionType;
 
   @ApiHideProperty()
   @Exclude()
-  readonly fromAccount: string;
+  readonly fromAccount!: string;
 
   @ApiHideProperty()
   @Exclude()
-  readonly toAccount: string;
+  readonly toAccount!: string;
 
   @ApiProperty({
     type: TransactionListItemCategoryDto,
@@ -65,7 +64,7 @@ export class TransactionListItemDto
   })
   @ValidateNested({ each: true })
   @Type(() => TransactionListItemCategoryDto)
-  categories: TransactionListItemCategoryDto[];
+  categories!: TransactionListItemCategoryDto[];
 
   public static createFromPlain(
     transaction: TransactionListItem,
@@ -77,7 +76,9 @@ export class TransactionListItemDto
     transaction: TransactionListItem | TransactionListItem[],
   ): TransactionListItemDto | TransactionListItemDto[] {
     if (Array.isArray(transaction)) {
-      return transaction.map((a) => TransactionListItemDto.createFromPlain(a));
+      return transaction.map((item) =>
+        TransactionListItemDto.createFromPlain(item),
+      );
     }
 
     return new TransactionListItemDto({

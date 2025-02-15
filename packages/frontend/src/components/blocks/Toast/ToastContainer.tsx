@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import { memo, type JSX } from 'react';
+import { type JSX, memo } from 'react';
 
 import { Toast } from './Toast';
 

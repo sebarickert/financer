@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { redirect, RedirectType } from 'next/navigation';
+import { RedirectType, redirect } from 'next/navigation';
 import { FC } from 'react';
 
 import { GroupedTransactionList } from '../TransactionList/GroupedTransactionList';
@@ -20,13 +20,13 @@ const currentDate = new DateService().getDate();
 const currentYear = currentDate.year;
 const currentMonth = currentDate.month;
 
-type TransactionListingWithMonthlyPagerProps = {
+interface TransactionListingWithMonthlyPagerProps {
   className?: string;
   isSummaryVisible?: boolean;
   filterOptions?: TransactionListOptions;
   type?: TransactionType | null;
   queryDate?: string;
-};
+}
 
 export const TransactionListWithMonthlyPager: FC<
   TransactionListingWithMonthlyPagerProps
@@ -46,12 +46,12 @@ export const TransactionListWithMonthlyPager: FC<
     additionalFilterOptions,
   );
 
-  const firstTransactionDate = new DateService(firstTransaction?.date);
+  const firstTransactionDate = new DateService(firstTransaction.date);
   const firstAvailableTransaction = firstTransactionDate.isAfter(currentDate)
     ? currentDate
     : firstTransactionDate.getDate();
 
-  const lastTransactionDate = new DateService(lastTransaction?.date);
+  const lastTransactionDate = new DateService(lastTransaction.date);
   const lastAvailableTransaction = lastTransactionDate.isBefore(currentDate)
     ? currentDate
     : lastTransactionDate.getDate();

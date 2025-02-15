@@ -1,7 +1,7 @@
 import { TransactionType } from '$types/generated/financer';
 import { applyFixture } from '$utils/applyFixture';
 import { clickContextualNavigationItem } from '$utils/common/clickContextualNavigationItem';
-import { test, expect } from '$utils/financer-page';
+import { expect, test } from '$utils/financer-page';
 import { getTransactionFormValues } from '$utils/transaction/getTransactionFormValues';
 import { switchTransactionType } from '$utils/transaction/switchTransactionType';
 

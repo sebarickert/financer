@@ -5,7 +5,7 @@ import {
   TransactionType,
 } from '$types/generated/financer';
 import { applyFixture } from '$utils/applyFixture';
-import { test, expect, Page } from '$utils/financer-page';
+import { Page, expect, test } from '$utils/financer-page';
 import { fillTemplateForm } from '$utils/template/fillTemplateForm';
 import { getTemplateDataFromTemplateList } from '$utils/template/getTemplateDataFromTemplateList';
 import { getTemplateFormValues } from '$utils/template/getTemplateFormValues';

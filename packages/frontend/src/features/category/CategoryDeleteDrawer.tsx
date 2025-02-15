@@ -9,9 +9,9 @@ import { Form } from '$blocks/Form';
 import { Button } from '$elements/Button/Button';
 import { useFinancerFormState } from '$hooks/useFinancerFormState';
 
-type CategoryDeleteDrawerProps = {
+interface CategoryDeleteDrawerProps {
   id: string;
-};
+}
 
 export const CategoryDeleteDrawer: FC<CategoryDeleteDrawerProps> = ({ id }) => {
   const onSubmit = handleCategoryDelete.bind(null, { id });

@@ -3,7 +3,7 @@ import { getAccountDetails } from '$utils/account/getAccountDetails';
 import { applyFixture } from '$utils/applyFixture';
 import { clickContextualNavigationItem } from '$utils/common/clickContextualNavigationItem';
 import { clickPopperItem } from '$utils/common/clickPopperItem';
-import { test, expect } from '$utils/financer-page';
+import { expect, test } from '$utils/financer-page';
 import { getTransactionDataFromTransactionList } from '$utils/transaction/getTransactionDataFromTransactionList';
 
 test.describe('Market Update Preferences', () => {

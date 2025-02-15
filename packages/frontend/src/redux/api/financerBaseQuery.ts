@@ -16,7 +16,7 @@ export const financerBaseQuery = async (
     paramsSerializer: (params) => {
       const formattedParams = Object.fromEntries(
         Object.entries(params)
-          .filter(([, value]) => !!value)
+          .filter(([, value]) => Boolean(value))
           .map(([key, value]) => [
             key,
             Array.isArray(value)

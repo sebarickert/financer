@@ -15,10 +15,10 @@ import {
   formatCurrencyAbbreviation,
 } from '$utils/formatCurrency';
 
-type DashboardBalanceHistoryChartProps = {
+interface DashboardBalanceHistoryChartProps {
   data: { date: Date; balance: number }[];
   className?: string;
-};
+}
 
 export const DashboardBalanceHistoryChart: FC<
   DashboardBalanceHistoryChartProps

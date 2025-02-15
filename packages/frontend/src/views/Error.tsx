@@ -3,9 +3,9 @@
 import { Button } from '$elements/Button/Button';
 import { Link } from '$elements/Link';
 
-type ErrorProps = {
+interface ErrorProps {
   errorPageType: 'full-app' | 'in-app';
-};
+}
 
 export const Error = ({ errorPageType }: ErrorProps) => {
   if (errorPageType === 'full-app') {
@@ -48,7 +48,13 @@ export const Error = ({ errorPageType }: ErrorProps) => {
         button below to try to fix the error.
       </p>
       <div className="flex items-center gap-2">
-        <Button onClick={() => window.location.reload()}>Fix error</Button>
+        <Button
+          onClick={() => {
+            window.location.reload();
+          }}
+        >
+          Fix error
+        </Button>
         <span> or </span>
         <Link href={'/'} className="font-medium underline">
           return to homepage

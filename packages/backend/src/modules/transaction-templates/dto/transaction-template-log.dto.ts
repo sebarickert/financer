@@ -4,9 +4,9 @@ import {
   TransactionTemplateType,
 } from '@prisma/client';
 import { Type } from 'class-transformer';
-import { IsEnum, IsDate, IsUUID } from 'class-validator';
+import { IsDate, IsEnum, IsUUID } from 'class-validator';
 
-import { UserId } from '../../../types/user-id';
+import { UserId } from '@/types/user-id';
 
 export class TransactionTemplateLogDto implements TransactionTemplateLog {
   constructor(partial: TransactionTemplateLog) {
@@ -14,32 +14,32 @@ export class TransactionTemplateLogDto implements TransactionTemplateLog {
   }
 
   @IsUUID()
-  readonly id: string;
+  readonly id!: string;
 
   @IsUUID()
-  readonly userId: UserId;
+  readonly userId!: UserId;
 
   @IsEnum(TransactionTemplateType, {
     each: true,
     message: 'Type must defined.',
   })
-  readonly eventType: TransactionTemplateType;
+  readonly eventType!: TransactionTemplateType;
 
   @IsUUID()
-  readonly transactionId: string = null;
+  readonly transactionId!: string;
 
   @IsUUID()
-  readonly templateId: string = null;
+  readonly templateId!: string;
 
   @IsDate({ message: 'Date must not be empty.' })
   @Type(() => Date)
-  readonly executed: Date;
+  readonly executed!: Date;
 
   @ApiProperty()
-  createdAt: Date;
+  createdAt!: Date;
 
   @ApiProperty()
-  updatedAt: Date;
+  updatedAt!: Date;
 
   public static createFromPlain(
     transactionTemplateLog: TransactionTemplateLog,

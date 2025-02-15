@@ -27,7 +27,7 @@ export const StatisticsLayout: FC<StatisticsLayoutProps> = async ({
           finances.
         </InfoMessageBlock>
       )}
-      {!!accounts.length && children}
+      {Boolean(accounts.length) && children}
     </Layout>
   );
 };

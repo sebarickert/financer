@@ -7,8 +7,8 @@ import { TransactionDetailCategoryDto } from './transaction-detail-category.dto'
 import { TransactionDto } from './transaction.dto';
 
 export type TransactionDetails = Transaction & {
-  fromAccountName: string;
-  toAccountName: string;
+  fromAccountName: string | null;
+  toAccountName: string | null;
   isRecurring: boolean;
   categories: TransactionDetailCategoryDto[];
 };
@@ -24,15 +24,15 @@ export class TransactionDetailsDto
 
   @ApiProperty()
   @IsString()
-  fromAccountName: string;
+  fromAccountName!: string | null;
 
   @ApiProperty()
   @IsString()
-  toAccountName: string;
+  toAccountName!: string | null;
 
   @ApiProperty()
   @IsBoolean()
-  isRecurring: boolean;
+  isRecurring!: boolean;
 
   @ApiProperty({
     enum: TransactionType,
@@ -40,16 +40,15 @@ export class TransactionDetailsDto
     description: 'Type of the transaction',
   })
   @IsEnum(TransactionType)
-  @Transform(({ obj }) => {
+  @Transform(({ obj }: Record<'obj', TransactionDetailsDto>) => {
     if (obj.fromAccount !== null && obj.toAccount !== null) {
       return TransactionType.TRANSFER;
     } else if (obj.fromAccount !== null) {
       return TransactionType.EXPENSE;
-    } else {
-      return TransactionType.INCOME;
     }
+    return TransactionType.INCOME;
   })
-  type: TransactionType;
+  type!: TransactionType;
 
   @ApiProperty({
     type: TransactionDetailCategoryDto,
@@ -57,7 +56,7 @@ export class TransactionDetailsDto
   })
   @ValidateNested({ each: true })
   @Type(() => TransactionDetailCategoryDto)
-  categories: TransactionDetailCategoryDto[];
+  categories!: TransactionDetailCategoryDto[];
 
   public static createFromPlain(
     transaction: TransactionDetails,
@@ -69,7 +68,9 @@ export class TransactionDetailsDto
     transaction: TransactionDetails | TransactionDetails[],
   ): TransactionDetailsDto | TransactionDetailsDto[] {
     if (Array.isArray(transaction)) {
-      return transaction.map((a) => TransactionDetailsDto.createFromPlain(a));
+      return transaction.map((item) =>
+        TransactionDetailsDto.createFromPlain(item),
+      );
     }
 
     return new TransactionDetailsDto({

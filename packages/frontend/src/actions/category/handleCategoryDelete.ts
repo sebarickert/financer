@@ -1,6 +1,6 @@
 'use server';
 
-import { redirect, RedirectType } from 'next/navigation';
+import { RedirectType, redirect } from 'next/navigation';
 
 import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
 import { CategoryService } from '$ssr/api/CategoryService';

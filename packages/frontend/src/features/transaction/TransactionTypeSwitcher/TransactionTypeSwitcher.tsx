@@ -5,12 +5,12 @@ import { TransactionTypeSwitcherItem } from './TransactionTypeSwitcherItem';
 
 import { TransactionType } from '$api/generated/financerApi';
 
-type TransactionActionsProps = {
+interface TransactionActionsProps {
   className?: string;
   onChange(event: React.ChangeEvent<HTMLInputElement>): void;
   defaultChecked?: TransactionType;
   name?: string;
-};
+}
 
 const switcherItems = [
   {

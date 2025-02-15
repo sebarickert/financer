@@ -1,7 +1,7 @@
 import { getAccountBalanceFromAccountListByName } from '$utils/account/getAccountBalanceFromAccountListByName';
 import { applyFixture } from '$utils/applyFixture';
 import { clickContextualNavigationItem } from '$utils/common/clickContextualNavigationItem';
-import { test, expect } from '$utils/financer-page';
+import { expect, test } from '$utils/financer-page';
 import { deleteTransaction } from '$utils/transaction/deleteTransaction';
 import { getTransactionDetails } from '$utils/transaction/getTransactionDetails';
 
@@ -22,7 +22,7 @@ test.describe('Expense Transactions', () => {
 
     const initialAccountBalance = await getAccountBalanceFromAccountListByName(
       page,
-      fromAccount as string,
+      fromAccount!,
     );
 
     await page.goto(`/transactions/expenses/${id}`);
@@ -41,7 +41,7 @@ test.describe('Expense Transactions', () => {
 
     const updatedAccountBalance = await getAccountBalanceFromAccountListByName(
       page,
-      fromAccount as string,
+      fromAccount!,
     );
 
     expect(initialAccountBalance.minus(amount)).toEqual(updatedAccountBalance);

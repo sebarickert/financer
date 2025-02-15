@@ -1,9 +1,10 @@
+/* eslint-disable max-lines */
 import {
-  forwardRef,
   Inject,
   Injectable,
   Logger,
   NotFoundException,
+  forwardRef,
 } from '@nestjs/common';
 import {
   AccountType,
@@ -12,16 +13,6 @@ import {
   TransactionType,
 } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime/library';
-
-import { TransactionRepo } from '../../database/repos/transaction.repo';
-import { ForceMutable } from '../../types/force-mutable';
-import { UserId } from '../../types/user-id';
-import { DateService } from '../../utils/date.service';
-import { AccountsService } from '../accounts/accounts.service';
-import { TransactionCategoriesService } from '../transaction-categories/transaction-categories.service';
-import { CreateTransactionCategoryMappingDto } from '../transaction-category-mappings/dto/create-transaction-category-mapping.dto';
-import { UpdateTransactionCategoryMappingDto } from '../transaction-category-mappings/dto/update-transaction-category-mapping.dto';
-import { TransactionCategoryMappingsService } from '../transaction-category-mappings/transaction-category-mappings.service';
 
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { TransactionDetailsDto } from './dto/transaction-details.dto';
@@ -34,10 +25,22 @@ import { TransactionSummaryDto } from './dto/transaction-summary.dto';
 import { TransactionDto } from './dto/transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 
+import { AccountsService } from '@/accounts/accounts.service';
+import { TransactionRepo } from '@/database/repos/transaction.repo';
+import { TransactionCategoriesService } from '@/transaction-categories/transaction-categories.service';
+import { CreateTransactionCategoryMappingDto } from '@/transaction-category-mappings/dto/create-transaction-category-mapping.dto';
+import { UpdateTransactionCategoryMappingDto } from '@/transaction-category-mappings/dto/update-transaction-category-mapping.dto';
+import { TransactionCategoryMappingsService } from '@/transaction-category-mappings/transaction-category-mappings.service';
+import { ForceMutable } from '@/types/force-mutable';
+import { UserId } from '@/types/user-id';
+import { DateService } from '@/utils/date.service';
+import { sortDateDesc } from '@/utils/sort-helper';
+
 @Injectable()
 export class TransactionsService {
   private readonly logger = new Logger(TransactionsService.name);
 
+  // eslint-disable-next-line max-params
   constructor(
     private readonly transactionRepo: TransactionRepo,
     @Inject(forwardRef(() => AccountsService))
@@ -72,8 +75,7 @@ export class TransactionsService {
 
   createMany(userId: UserId, createTransactionDto: CreateTransactionDto[]) {
     return this.transactionRepo.createMany(
-      // @ts-expect-error - remove legacy `v` from import data
-      createTransactionDto.map(({ v, ...transaction }) => ({
+      createTransactionDto.map((transaction) => ({
         ...transaction,
         userId,
         categories: undefined,
@@ -81,6 +83,7 @@ export class TransactionsService {
     );
   }
 
+  // eslint-disable-next-line max-lines-per-function
   async findOne(userId: UserId, id: string): Promise<TransactionDetailsDto> {
     const transaction = await this.transactionRepo.findOne({
       where: { id, userId },
@@ -143,6 +146,7 @@ export class TransactionsService {
     });
   }
 
+  // eslint-disable-next-line max-lines-per-function, max-params
   async findAllByUser(
     userId: UserId,
     transactionType: TransactionType | null,
@@ -151,12 +155,13 @@ export class TransactionsService {
     month?: number,
     linkedAccount?: string,
     accountTypes?: AccountType[],
+    // eslint-disable-next-line default-param-last
     sortOrder: Prisma.SortOrder = Prisma.SortOrder.desc,
     transactionCategories?: string[],
     parentTransactionCategory?: string,
   ): Promise<TransactionListItemDto[]> {
     const targetCategoryIds =
-      transactionCategories ||
+      transactionCategories ??
       (await this.findChildrenCategoryIds(parentTransactionCategory));
 
     const transactionWhere: Prisma.TransactionWhereInput = {
@@ -175,7 +180,7 @@ export class TransactionsService {
     const fetchedTransactions = await this.transactionRepo.findMany({
       where: transactionWhere,
       orderBy: { date: sortOrder },
-      take: limit || totalCount,
+      take: limit ?? totalCount,
       include: {
         categories: {
           select: {
@@ -241,6 +246,7 @@ export class TransactionsService {
     return TransactionSummaryDto.createFromPlain(transactions);
   }
 
+  // eslint-disable-next-line max-params, max-lines-per-function
   findMonthlySummariesByUser = async (
     userId: UserId,
     year?: number,
@@ -250,7 +256,7 @@ export class TransactionsService {
     parentTransactionCategory?: string,
   ): Promise<TransactionMonthSummaryDto[]> => {
     const targetCategoryIds =
-      transactionCategories ||
+      transactionCategories ??
       (await this.findChildrenCategoryIds(parentTransactionCategory));
 
     const accountIds = new Set(
@@ -272,12 +278,14 @@ export class TransactionsService {
     >();
 
     Array.from(
+      // eslint-disable-next-line max-statements
       Map.groupBy(transactions, (transaction) => {
         const zonedDate = DateService.toZonedTime(transaction.date);
 
         const transactionMonth = zonedDate.getMonth() + 1;
         const transactionYear = zonedDate.getFullYear();
 
+        // eslint-disable-next-line init-declarations
         let type: TransactionType;
 
         const hasFromAccountWithWithinFilter =
@@ -302,6 +310,7 @@ export class TransactionsService {
           year: transactionYear,
         };
       }).entries(),
+      // eslint-disable-next-line max-statements
     ).forEach(([key, value]) => {
       const { type, month: transactionMonth, year: transactionYear } = key;
 
@@ -313,7 +322,7 @@ export class TransactionsService {
 
       const summary = summaries.get(
         `${transactionYear}-${transactionMonth}`,
-      ) || {
+      ) ?? {
         id: { month: transactionMonth, year: transactionYear },
         totalCount: 0,
         incomesCount: 0,
@@ -345,19 +354,14 @@ export class TransactionsService {
       summaries.set(`${transactionYear}-${transactionMonth}`, summary);
     });
 
-    const data = Array.from(summaries.values())
-      .sort((a, b) => {
-        // Compare years first
-        if (a.id.year > b.id.year) return -1;
-        if (a.id.year < b.id.year) return 1;
-
-        // If years are equal, compare months
-        if (a.id.month > b.id.month) return -1;
-        if (a.id.month < b.id.month) return 1;
-
-        // If both year and month are equal, consider them equal in terms of sorting
-        return 0;
-      })
+    const data = summaries
+      .values()
+      .toArray()
+      .map((summary) => ({
+        ...summary,
+        idDate: new Date(summary.id.year, summary.id.month - 1),
+      }))
+      .sort(sortDateDesc('idDate'))
       .map((summary) => ({
         ...summary,
         totalAmount: summary.totalAmount,
@@ -408,7 +412,7 @@ export class TransactionsService {
   }
 
   async remove(
-    transaction: Partial<TransactionDto>,
+    transaction: Pick<TransactionDto, 'amount'> & Partial<TransactionDto>,
     userId: UserId,
   ): Promise<void> {
     await this.updateRelatedAccountBalance(
@@ -425,6 +429,7 @@ export class TransactionsService {
     return this.transactionRepo.deleteMany({ userId });
   }
 
+  // eslint-disable-next-line max-params
   private async updateRelatedAccountBalance(
     userId: UserId,
     transaction: Partial<Transaction>,
@@ -471,7 +476,9 @@ export class TransactionsService {
     }
 
     await this.transactionCategoriesService.ensureCategoriesExist(
-      categories.map((category) => category.categoryId),
+      categories
+        .map((category) => category.categoryId)
+        .filter(Boolean) as string[],
     );
   }
 
@@ -499,7 +506,7 @@ export class TransactionsService {
 
   private async filterTransactionsByCategory(
     userId: UserId,
-    categoryIds?: string[],
+    categoryIds: string[] | null,
   ) {
     if (!categoryIds) {
       return {};
@@ -540,7 +547,7 @@ export class TransactionsService {
     return TransactionRepo.filterByAccount(accountIds);
   }
 
-  private async findChildrenCategoryIds(parentId: string) {
+  private async findChildrenCategoryIds(parentId: string | undefined) {
     if (!parentId) {
       return null;
     }

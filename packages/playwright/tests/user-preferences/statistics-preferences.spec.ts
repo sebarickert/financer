@@ -2,7 +2,7 @@ import Decimal from 'decimal.js';
 
 import { applyFixture } from '$utils/applyFixture';
 import { clickContextualNavigationItem } from '$utils/common/clickContextualNavigationItem';
-import { test, expect } from '$utils/financer-page';
+import { expect, test } from '$utils/financer-page';
 import { getTransactionDataFromTransactionList } from '$utils/transaction/getTransactionDataFromTransactionList';
 import { getTransactionsDetails } from '$utils/transactions/getTransactionsDetails';
 

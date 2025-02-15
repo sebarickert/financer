@@ -1,4 +1,4 @@
-import { expect, Locator } from '@playwright/test';
+import { Locator, expect } from '@playwright/test';
 import Decimal from 'decimal.js';
 
 import { Page } from '$utils/financer-page';
@@ -20,14 +20,14 @@ const getFieldValue = async (locator: Locator) => {
   return undefined;
 };
 
-type TransactionFormFields = {
+interface TransactionFormFields {
   date?: string;
   description?: string;
   amount?: Decimal;
   fromAccount?: string;
   toAccount?: string;
   categories?: string[];
-};
+}
 
 export const getTransactionFormValues = async (
   page: Page,

@@ -1,10 +1,10 @@
-import { PipeTransform, Injectable, BadRequestException } from '@nestjs/common';
+import { BadRequestException, Injectable, PipeTransform } from '@nestjs/common';
 
 @Injectable()
 export class ValidateArrayPipe implements PipeTransform {
   constructor(
-    private readonly separator: string = '|',
-    private readonly allowEmpty: boolean = false,
+    private readonly separator = '|',
+    private readonly allowEmpty = false,
   ) {}
 
   transform(value: string) {

@@ -1,6 +1,6 @@
 'use server';
 
-import { redirect, RedirectType } from 'next/navigation';
+import { RedirectType, redirect } from 'next/navigation';
 
 import { AccountDto, AccountType } from '$api/generated/financerApi';
 import { ValidationException } from '$exceptions/validation.exception';
@@ -12,7 +12,7 @@ export const handleAccountEdit: DefaultFormActionHandler<AccountDto> = async (
   prevState,
   formData,
 ) => {
-  if (!account?.id) {
+  if (!account.id) {
     return { status: 'ERROR', errors: ['Account not found'] };
   }
 

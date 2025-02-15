@@ -22,10 +22,10 @@ type PopperItem =
       href?: never;
     };
 
-type PopperProps = {
+interface PopperProps {
   className?: string;
   items?: PopperItem[];
-};
+}
 
 export const Popper: FC<PopperProps> = ({ className, items }) => {
   const popperId = `popper-${crypto.randomUUID()}`;

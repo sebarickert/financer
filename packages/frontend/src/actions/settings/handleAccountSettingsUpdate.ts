@@ -1,4 +1,4 @@
-import { redirect, RedirectType } from 'next/navigation';
+import { RedirectType, redirect } from 'next/navigation';
 
 import { settingsPaths } from '$constants/settingsPaths';
 import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';

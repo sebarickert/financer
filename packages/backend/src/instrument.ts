@@ -5,7 +5,8 @@ Sentry.init({
   dsn: 'https://51a65ebdc1eaad371ce3246c706e36b4@sentry.silte.fi/5',
   integrations: [nodeProfilingIntegration()],
   // Tracing
-  tracesSampleRate: 1.0, //  Capture 100% of the transactions
+  // Capture 100% of the transactions
+  tracesSampleRate: 1.0,
 
   // Set sampling rate for profiling - this is relative to tracesSampleRate
   profilesSampleRate: 1.0,

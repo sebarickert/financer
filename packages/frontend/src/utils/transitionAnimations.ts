@@ -7,7 +7,7 @@ const defaultKeyframeAnimationOptions: KeyframeAnimationOptions = {
 };
 
 const isDesktop = () => {
-  return window?.matchMedia('(min-width: 1024px)').matches ?? false;
+  return window.matchMedia('(min-width: 1024px)').matches ?? false;
 };
 
 const slideInFromLeft = () => {

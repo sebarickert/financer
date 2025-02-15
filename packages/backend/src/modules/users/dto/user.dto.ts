@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Role, User, Theme } from '@prisma/client';
-import { IsNotEmpty, IsOptional, IsEnum, IsUUID } from 'class-validator';
+import { Role, Theme, User } from '@prisma/client';
+import { IsEnum, IsNotEmpty, IsOptional, IsUUID } from 'class-validator';
 
-import { UserId } from '../../../types/user-id';
+import { UserId } from '@/types/user-id';
 
 export class UserDto implements User {
   constructor(data: User) {
@@ -11,36 +11,36 @@ export class UserDto implements User {
 
   @IsUUID()
   @ApiProperty({ type: 'string' })
-  id: UserId;
+  id!: UserId;
 
   @ApiProperty()
-  createdAt: Date;
+  createdAt!: Date;
 
   @ApiProperty()
-  updatedAt: Date;
-
-  @IsNotEmpty()
-  @ApiProperty()
-  name: string;
+  updatedAt!: Date;
 
   @IsNotEmpty()
   @ApiProperty()
-  nickname: string;
+  name!: string;
+
+  @IsNotEmpty()
+  @ApiProperty()
+  nickname!: string;
 
   @IsOptional()
   @IsNotEmpty()
   @ApiProperty()
-  githubId: string;
+  githubId!: string | null;
 
   @IsOptional()
   @IsNotEmpty()
   @ApiProperty()
-  auth0Id: string;
+  auth0Id!: string | null;
 
   @IsOptional()
   @IsNotEmpty()
   @ApiProperty()
-  profileImageUrl: string;
+  profileImageUrl!: string | null;
 
   @IsOptional()
   @IsEnum(Role, {
@@ -50,12 +50,12 @@ export class UserDto implements User {
     )}.`,
   })
   @ApiProperty({ enum: Role, enumName: 'Role', type: [Role] })
-  roles: Role[];
+  roles!: Role[];
 
   @IsOptional()
   @IsEnum(Theme)
   @ApiProperty({ enum: Theme, enumName: 'Theme', type: Theme })
-  theme: Theme;
+  theme!: Theme;
 
   public static createFromPlain(users: User): UserDto;
   public static createFromPlain(users: User[]): UserDto[];

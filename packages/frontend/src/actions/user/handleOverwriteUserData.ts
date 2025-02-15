@@ -7,8 +7,8 @@ import {
   TransactionCategoryMappingDto,
   TransactionDto,
   TransactionTemplateDto,
-  UserPreferenceDto,
   TransactionTemplateLogDto,
+  UserPreferenceDto,
 } from '$api/generated/financerApi';
 import { ValidationException } from '$exceptions/validation.exception';
 import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';

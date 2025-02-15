@@ -14,16 +14,16 @@ import {
 import { UserDefaultMarketUpdateSettings as UserDefaultMarketUpdateSettingsType } from '$ssr/api/UserPreferenceService';
 import { TransactionCategoryDtoWithCategoryTree } from '$types/TransactionCategoryDtoWithCategoryTree';
 
-export type UserDefaultMarketUpdateSettingsFormFields = {
+export interface UserDefaultMarketUpdateSettingsFormFields {
   transactionDescription: string;
   category: string;
-};
+}
 
-type UserDefaultMarketUpdateSettingsFormProps = {
+interface UserDefaultMarketUpdateSettingsFormProps {
   categories: TransactionCategoryDtoWithCategoryTree[];
   data?: UserDefaultMarketUpdateSettingsType;
   onSave: DefaultFormActionHandler;
-};
+}
 
 export const UserDefaultMarketUpdateSettingsForm: FC<
   UserDefaultMarketUpdateSettingsFormProps

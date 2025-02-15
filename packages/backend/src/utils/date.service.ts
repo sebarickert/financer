@@ -1,5 +1,6 @@
-import { toZonedTime, fromZonedTime } from 'date-fns-tz';
+import { fromZonedTime, toZonedTime } from 'date-fns-tz';
 
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class DateService {
   private static readonly TIMEZONE = 'Europe/Helsinki';
 
@@ -9,6 +10,7 @@ export class DateService {
 
   public static toZonedTime(): Date;
   public static toZonedTime(
+    // eslint-disable-next-line @typescript-eslint/unified-signatures
     ...dateString: ConstructorParameters<DateConstructor>
   ): Date;
   public static toZonedTime(
@@ -31,6 +33,7 @@ export class DateService {
 
   public static fromZonedTime(): Date;
   public static fromZonedTime(
+    // eslint-disable-next-line @typescript-eslint/unified-signatures
     ...dateString: ConstructorParameters<DateConstructor>
   ): Date;
   public static fromZonedTime(

@@ -10,7 +10,7 @@ import {
 import { BalanceDisplay } from '$blocks/BalanceDisplay';
 import { Card } from '$blocks/Card/Card';
 import { CardHeader } from '$blocks/Card/CardHeader';
-import { DetailsList, DetailsItem } from '$blocks/DetailsList';
+import { DetailsItem, DetailsList } from '$blocks/DetailsList';
 import { TRANSACTION_TYPE_MAPPING } from '$constants/transaction/TRANSACTION_TYPE_MAPPING';
 import { Heading } from '$elements/Heading';
 import { TransactionTypeIcon } from '$features/transaction/TransactionTypeIcon';
@@ -41,7 +41,7 @@ export const Transaction: FC<TransactionProps> = async ({
   const transactionCategories = await CategoryService.getAllWithTree();
 
   const getCategoryNameById = (categoryId: string) =>
-    transactionCategories?.find((category) => category.id === categoryId)
+    transactionCategories.find((category) => category.id === categoryId)
       ?.categoryTree || categoryId;
 
   const transactionDetails: DetailsItem[] = [
@@ -109,7 +109,7 @@ export const Transaction: FC<TransactionProps> = async ({
     <>
       <style>{`
         [data-transaction='${id}'] {
-         ${`--color-type: ${TRANSACTION_TYPE_MAPPING[type].color};`}
+         --color-type: ${TRANSACTION_TYPE_MAPPING[type].color};
         }
       `}</style>
       <div
@@ -151,7 +151,7 @@ export const Transaction: FC<TransactionProps> = async ({
           </CardHeader>
           <DetailsList items={transactionDetails} />
         </Card>
-        {!!categoryDetails?.length && (
+        {Boolean(categoryDetails.length) && (
           <Card data-testid="transaction-categories">
             <CardHeader>
               <Heading noMargin>Categories</Heading>

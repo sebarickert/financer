@@ -18,19 +18,19 @@ import {
 } from '$hooks/useFinancerFormState';
 import { TransactionCategoryDtoWithCategoryTree } from '$types/TransactionCategoryDtoWithCategoryTree';
 
-type CategoryFormProps = {
+interface CategoryFormProps {
   onSubmit: DefaultFormActionHandler;
   submitLabel: string;
   currentCategoryId?: string;
   initialValues?: Partial<TransactionCategoryFormFields>;
   transactionCategoriesWithCategoryTree?: TransactionCategoryDtoWithCategoryTree[];
-};
+}
 
-export type TransactionCategoryFormFields = {
+export interface TransactionCategoryFormFields {
   name: string;
   visibility: TransactionType[];
   parentCategoryId: string | null;
-};
+}
 
 const visibilityTypeMapping = {
   [VisibilityType.Income]: {

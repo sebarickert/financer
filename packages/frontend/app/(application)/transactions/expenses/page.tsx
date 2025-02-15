@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default async function ExpensesPage({
   searchParams,
 }: {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const queryDate = (await searchParams).date as string | undefined;
 

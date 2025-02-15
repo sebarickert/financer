@@ -25,7 +25,7 @@ export const parseArrayFromFormData = <T>(
       }
 
       const formattedValue =
-        formatter && formatter[property] ? formatter[property]!(value) : value;
+        formatter && formatter[property] ? formatter[property](value) : value;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (result[index] as any)[property] = formattedValue;
     }

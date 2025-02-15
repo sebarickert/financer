@@ -6,7 +6,7 @@ import {
 } from '$types/generated/financer';
 import { Page } from '$utils/financer-page';
 
-type TemplateFormFields = {
+interface TemplateFormFields {
   templateType?: TransactionTemplateType;
   transactionType?: TransactionType;
   name?: string;
@@ -16,7 +16,7 @@ type TemplateFormFields = {
   toAccount?: string;
   dayOfMonth?: Decimal;
   dayOfMonthToCreate?: Decimal;
-};
+}
 
 export const fillTemplateForm = async (
   page: Page,

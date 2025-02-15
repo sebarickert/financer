@@ -20,7 +20,7 @@ export class TransactionCategoryDetailsDto
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  path: string;
+  path!: string;
 
   public static createFromPlain(
     category: TransactionCategoryDetails,

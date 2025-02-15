@@ -8,9 +8,9 @@ import {
 import { List } from '$blocks/List';
 import { ProminentLink } from '$blocks/ProminentLink';
 
-type TemplateListProps = {
+interface TemplateListProps {
   templates: TransactionTemplateDto[];
-};
+}
 
 const getLabel = (templateType: TransactionTemplateType): string => {
   switch (templateType) {

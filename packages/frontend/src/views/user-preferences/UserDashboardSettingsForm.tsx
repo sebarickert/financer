@@ -17,15 +17,15 @@ import {
 
 const allAccountTypes = Object.values(AccountType);
 
-export type UserDashboardSettingsFormFields = {
+export interface UserDashboardSettingsFormFields {
   accountTypes?: AccountType[];
   chunkSize: number;
-};
+}
 
-type UserDashboardSettingsFormProps = {
+interface UserDashboardSettingsFormProps {
   data?: UserDashboardSettingsFormFields;
   onSave: DefaultFormActionHandler;
-};
+}
 
 export const UserDashboardSettingsForm: FC<UserDashboardSettingsFormProps> = ({
   data,

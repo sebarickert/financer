@@ -5,14 +5,14 @@ import { FC } from 'react';
 import { Theme } from '$api/generated/financerApi';
 import { hapticRunner } from '$utils/haptic.helper';
 
-type ThemeSwitcherItemProps = {
+interface ThemeSwitcherItemProps {
   children: string;
   className?: string;
   value: string;
   name: string;
   isChecked?: boolean;
   onChange(event: React.ChangeEvent<HTMLInputElement>): void;
-};
+}
 
 const THEME_SWITCHER_ICON_MAPPING: Record<Theme, LucideIcon> = {
   [Theme.Light]: Sun,
@@ -40,7 +40,9 @@ export const ThemeSwitcherItem: FC<ThemeSwitcherItemProps> = ({
         className={clsx('peer sr-only')}
         defaultChecked={isChecked}
         onChange={onChange}
-        onClick={() => hapticRunner('medium')}
+        onClick={() => {
+          hapticRunner('medium');
+        }}
       />
       <span
         className={clsx(

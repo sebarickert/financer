@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { createMockServiceProvider } from '../../../test/create-mock-service-provider';
-import { TransactionTemplateLogRepo } from '../../database/repos/transaction-template-log.repo';
-import { TransactionTemplateRepo } from '../../database/repos/transaction-template.repo';
-
 import { TransactionTemplatesService } from './transaction-templates.service';
+
+import { TransactionTemplateLogRepo } from '@/database/repos/transaction-template-log.repo';
+import { TransactionTemplateRepo } from '@/database/repos/transaction-template.repo';
+import { createMockServiceProvider } from '@/test/create-mock-service-provider';
 
 describe('TransactionTemplatesService', () => {
   let service: TransactionTemplatesService;

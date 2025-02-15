@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { UserPreferenceProperty, UserPreferences } from '@prisma/client';
 
-import { UserPreferencesRepo } from '../../database/repos/user-preferences.repo';
-import { UserId } from '../../types/user-id';
-
 import { CreateUserPreferenceDto } from './dto/create-user-preference.dto';
 import { UpdateUserPreferenceDto } from './dto/update-user-preference.dto';
 import { UserPreferenceDto } from './dto/user-preference.dto';
+
+import { UserPreferencesRepo } from '@/database/repos/user-preferences.repo';
+import { UserId } from '@/types/user-id';
 
 @Injectable()
 export class UserPreferencesService {
@@ -27,8 +27,7 @@ export class UserPreferencesService {
     createUserPreferenceDto: CreateUserPreferenceDto[],
   ) {
     return this.userPreferencesRepo.createMany(
-      // @ts-expect-error - remove legacy `v` from import data
-      createUserPreferenceDto.map(({ v, ...preference }) => ({
+      createUserPreferenceDto.map((preference) => ({
         ...preference,
         userId,
       })),
@@ -49,8 +48,9 @@ export class UserPreferencesService {
   async findOneByUserAndProperty(
     userPreferenceProperty: UserPreferenceProperty,
     userId: UserId,
-  ): Promise<UserPreferences> {
+  ): Promise<UserPreferences | null> {
     return this.userPreferencesRepo.findOne({
+      // eslint-disable-next-line camelcase
       userId_key: { userId, key: userPreferenceProperty },
     });
   }
@@ -70,6 +70,7 @@ export class UserPreferencesService {
 
     return this.userPreferencesRepo.update({
       where: {
+        // eslint-disable-next-line camelcase
         userId_key: { userId, key: userPreferenceInDb.key },
       },
       data: { value: updateUserPreferenceDto.value },

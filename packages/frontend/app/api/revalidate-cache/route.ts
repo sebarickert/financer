@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server';
 
 import { revalidateFullAppCache } from '$actions/revalidateFullAppCache';
 
-// eslint-disable-next-line import/prefer-default-export
 export async function POST() {
   try {
     await revalidateFullAppCache();

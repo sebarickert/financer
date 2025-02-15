@@ -2,7 +2,7 @@
 
 import clsx from 'clsx';
 import { Info } from 'lucide-react';
-import { ChangeEvent, useCallback, useMemo, useState, type JSX } from 'react';
+import { ChangeEvent, type JSX, useCallback, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { UserDataImportDto } from '$api/generated/financerApi';
@@ -16,9 +16,9 @@ import {
 } from '$hooks/useFinancerFormState';
 import { addToastMessage } from '$reducer/notifications.reducer';
 
-type OverwriteUserDataProps = {
+interface OverwriteUserDataProps {
   onOverwriteData: DefaultFormActionHandler;
-};
+}
 
 const formName = 'overwrite-user-data';
 
@@ -64,7 +64,7 @@ export const OverwriteUserData = ({
       formData.append(key, JSON.stringify(value));
     });
 
-    return action(formData);
+    action(formData);
   }, [action, dispatch, uploadedUserData]);
 
   const handleFileChange = (changeEvent: ChangeEvent<HTMLInputElement>) => {
@@ -88,8 +88,8 @@ export const OverwriteUserData = ({
     const fr = new FileReader();
     fr.onload = (readerEvent) => {
       if (
-        readerEvent?.target?.result &&
-        typeof readerEvent?.target?.result === 'string'
+        readerEvent.target?.result &&
+        typeof readerEvent.target.result === 'string'
       ) {
         const result = JSON.parse(readerEvent.target.result);
         setUploadedUserData(result);

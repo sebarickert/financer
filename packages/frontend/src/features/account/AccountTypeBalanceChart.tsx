@@ -12,10 +12,10 @@ import { ChartConfig } from '$types/ChartConfig';
 import { ChartData } from '$types/ChartData';
 import { formatCurrency } from '$utils/formatCurrency';
 
-type AccountTypeBalanceChartProps = {
+interface AccountTypeBalanceChartProps {
   data: AccountDto[];
   className?: string;
-};
+}
 
 const ALLOWED_ACCOUNT_TYPES = [
   AccountType.Savings,

@@ -32,7 +32,7 @@ export const TransactionListItem: FC<
     <>
       <style>{`
         [data-transaction-item='${id}'] {
-         ${`--color-type: ${TRANSACTION_TYPE_MAPPING[type].color};`}
+         --color-type: ${TRANSACTION_TYPE_MAPPING[type].color};
         }
       `}</style>
       <Link

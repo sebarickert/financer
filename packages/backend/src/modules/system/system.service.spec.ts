@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { createMockServiceProvider } from '../../../test/create-mock-service-provider';
-import { SystemLogRepo } from '../../database/repos/system-log.repo';
-
 import { SystemService } from './system.service';
+
+import { SystemLogRepo } from '@/database/repos/system-log.repo';
+import { createMockServiceProvider } from '@/test/create-mock-service-provider';
 
 describe('SystemService', () => {
   let service: SystemService;

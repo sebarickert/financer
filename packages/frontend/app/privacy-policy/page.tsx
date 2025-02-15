@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 const PrivacyPolicy = async () => {
   const authenticationStatus = await AuthenticationService.getStatus();
-  const isLoggedIn = !!authenticationStatus?.authenticated;
+  const isLoggedIn = Boolean(authenticationStatus?.authenticated);
 
   return (
     <main className="grid max-w-screen-lg gap-6 px-4 pt-6 mx-auto lg:pt-12 pb-safe-offset-12 lg:px-8">

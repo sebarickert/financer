@@ -2,10 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Decimal } from '@prisma/client/runtime/library';
 import { IsDate } from 'class-validator';
 
-import {
-  IsDecimal,
-  TransformDecimal,
-} from '../../../utils/is-decimal.decorator';
+import { IsDecimal, TransformDecimal } from '@/utils/is-decimal.decorator';
 
 export class AccountBalanceHistoryDto {
   constructor(values: AccountBalanceHistoryDto) {
@@ -14,17 +11,17 @@ export class AccountBalanceHistoryDto {
 
   @ApiProperty()
   @IsDate()
-  date: Date;
+  date!: Date;
 
   @ApiProperty({ type: Number })
   @TransformDecimal()
   @IsDecimal()
-  amount: Decimal;
+  amount!: Decimal;
 
   @ApiProperty({ type: Number })
   @TransformDecimal()
   @IsDecimal()
-  balance: Decimal;
+  balance!: Decimal;
 
   public static createFromPlain(
     data: AccountBalanceHistoryDto,

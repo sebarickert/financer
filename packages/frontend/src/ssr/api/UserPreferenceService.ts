@@ -7,18 +7,18 @@ import {
   UserPreferenceProperty,
 } from '$api/generated/financerApi';
 
-type UserDashboardSettings = {
+interface UserDashboardSettings {
   accountTypes: AccountType[];
-};
+}
 
-type UserStatisticsSettings = {
+interface UserStatisticsSettings {
   accountTypes: AccountType[];
-};
+}
 
-export type UserDefaultMarketUpdateSettings = {
+export interface UserDefaultMarketUpdateSettings {
   transactionDescription: string;
   category?: string;
-};
+}
 
 export class UserPreferenceService extends BaseApi {
   public static async revalidateCache(

@@ -1,5 +1,5 @@
 import { applyFixture } from '$utils/applyFixture';
-import { test, expect } from '$utils/financer-page';
+import { expect, test } from '$utils/financer-page';
 import { deleteTemplate } from '$utils/template/deleteTemplate';
 import { getTemplateDataFromTemplateList } from '$utils/template/getTemplateDataFromTemplateList';
 

@@ -4,11 +4,11 @@ import Decimal from 'decimal.js';
 import { parseCurrency } from '$utils/api-helper';
 import { Page, expect } from '$utils/financer-page';
 
-type CategoryItem = {
+interface CategoryItem {
   category?: string;
   amount?: Decimal;
   description?: string;
-};
+}
 
 const fillCategoryItemForm = async ({
   item,
@@ -59,7 +59,7 @@ export const setCategories = async (
   const hasCategories = !(await firstCategorySelect.isVisible());
 
   if (!hasCategories) {
-    await firstCategorySelect.selectOption(categories[0].category as string);
+    await firstCategorySelect.selectOption(categories[0].category!);
   }
 
   const transactionCategoriesItem = prefixLocator.getByTestId(
@@ -95,7 +95,7 @@ export const setCategories = async (
   for (let index = 0; index < categories.length; index++) {
     await expect(
       categorySummaryItem.nth(index).getByTestId('category-label'),
-    ).toContainText(categories[index].category as string);
+    ).toContainText(categories[index].category!);
 
     if (categories[index].amount) {
       const parsedAmount = parseCurrency(

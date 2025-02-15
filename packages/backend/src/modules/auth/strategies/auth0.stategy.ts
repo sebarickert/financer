@@ -8,8 +8,9 @@ import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { Profile, Strategy } from 'passport-auth0';
 
-import { UsersService } from '../../users/users.service';
 import { AuthService } from '../auth.service';
+
+import { UsersService } from '@/users/users.service';
 
 @Injectable()
 export class Auth0Strategy extends PassportStrategy(Strategy, 'auth0') {
@@ -18,19 +19,24 @@ export class Auth0Strategy extends PassportStrategy(Strategy, 'auth0') {
   constructor(
     private readonly authService: AuthService,
     private readonly userService: UsersService,
-    private readonly configService: ConfigService,
+    configService: ConfigService,
   ) {
     const auth0Keys = configService.get('auth0Keys');
     const publicUrl = configService.get('publicUrl');
+
+    if (!auth0Keys) {
+      throw new Error('Auth0 keys are not set');
+    }
+
     super({
       ...auth0Keys,
-      scope: 'openid email profile',
       callbackURL: `${publicUrl}/auth/auth0/redirect`,
     });
 
     this.logger.log('auth0 oauth enabled');
   }
 
+  // eslint-disable-next-line max-params
   async validate(
     _accessToken: never,
     _refreshToken: never,
@@ -51,7 +57,7 @@ export class Auth0Strategy extends PassportStrategy(Strategy, 'auth0') {
       return await this.userService.create({
         name: profile.displayName,
         nickname: profile.username ?? profile.displayName,
-        profileImageUrl: profile.photos?.slice().shift()?.value,
+        profileImageUrl: profile.photos?.slice().shift()?.value ?? null,
         githubId: null,
         auth0Id: profile.id,
         roles: [],

@@ -8,9 +8,8 @@ import {
 import { Type } from 'class-transformer';
 import { IsOptional, ValidateNested } from 'class-validator';
 
-import { CreateTransactionCategoryMappingWithoutTransactionDto } from '../../transaction-category-mappings/dto/create-transaction-category-mapping.dto';
-
-import { TransactionDto } from './transaction.dto';
+import { CreateTransactionCategoryMappingWithoutTransactionDto } from '@/transaction-category-mappings/dto/create-transaction-category-mapping-without-transaction.dto';
+import { TransactionDto } from '@/transactions/dto/transaction.dto';
 
 export class CreateTransactionDto extends IntersectionType(
   OmitType(TransactionDto, [

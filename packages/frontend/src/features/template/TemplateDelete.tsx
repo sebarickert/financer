@@ -10,9 +10,9 @@ import { Form } from '$blocks/Form';
 import { Button } from '$elements/Button/Button';
 import { useFinancerFormState } from '$hooks/useFinancerFormState';
 
-type TemplateDeleteProps = {
+interface TemplateDeleteProps {
   id: string;
-};
+}
 
 export const TemplateDelete = ({ id }: TemplateDeleteProps) => {
   const popoverId = useId();

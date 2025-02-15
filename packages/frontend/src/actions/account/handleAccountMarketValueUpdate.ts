@@ -47,7 +47,7 @@ export const handleAccountMarketValueUpdate: DefaultFormActionHandler<{
   const transactionBaseFields = {
     amount: Math.abs(marketValueChangeAmount),
     description: transactionDescription,
-    date: date.toISO() as string,
+    date: date.toISO()!,
     categories,
   };
 

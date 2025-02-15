@@ -1,11 +1,11 @@
 import { TransactionType } from '$types/generated/financer';
 import { Page } from '$utils/financer-page';
 
-type CategoryFormFields = {
+interface CategoryFormFields {
   parentCategory?: string;
   name?: string;
   visibility?: TransactionType[];
-};
+}
 
 export const fillCategoryForm = async (
   page: Page,

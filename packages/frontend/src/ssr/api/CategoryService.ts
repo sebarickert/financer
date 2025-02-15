@@ -60,7 +60,7 @@ export class CategoryService extends BaseApi {
     ]);
 
     return categories
-      ?.map((category) => ({
+      .map((category) => ({
         ...category,
         categoryTree: parseParentCategoryPath(allCategories, category.id),
       }))

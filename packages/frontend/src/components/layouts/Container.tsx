@@ -1,10 +1,10 @@
 import clsx from 'clsx';
 import { FC } from 'react';
 
-type ContainerProps = {
+interface ContainerProps {
   className?: string;
   children: React.ReactNode;
-};
+}
 
 export const Container: FC<ContainerProps> = ({ className, children }) => {
   return (

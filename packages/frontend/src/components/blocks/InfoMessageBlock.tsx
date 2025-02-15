@@ -4,12 +4,12 @@ import { FC } from 'react';
 
 import { Heading } from '$elements/Heading';
 
-type InfoMessageBlockBaseProps = {
+interface InfoMessageBlockBaseProps {
   title: string;
   children: React.ReactNode;
   action?: React.ReactNode;
   className?: string;
-};
+}
 
 type InfoMessageBlockDefaultProps = InfoMessageBlockBaseProps & {
   Icon?: LucideIcon;

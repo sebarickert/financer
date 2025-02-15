@@ -2,19 +2,19 @@ import clsx from 'clsx';
 import { LucideIcon } from 'lucide-react';
 import { FC } from 'react';
 
-export type DetailsItem = {
+export interface DetailsItem {
   Icon?: LucideIcon;
   label: string;
   description: string | React.ReactNode;
   testId?: string;
-};
+}
 
-type DetailsListProps = {
+interface DetailsListProps {
   className?: string;
   items: DetailsItem[];
   testId?: string;
   heading?: string;
-};
+}
 
 export const DetailsList: FC<DetailsListProps> = ({
   className,

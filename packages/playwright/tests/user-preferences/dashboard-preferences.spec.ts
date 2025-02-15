@@ -4,7 +4,7 @@ import { getAccountDetails } from '$utils/account/getAccountDetails';
 import { applyFixture } from '$utils/applyFixture';
 import { clickContextualNavigationItem } from '$utils/common/clickContextualNavigationItem';
 import { getDashboardDetails } from '$utils/dashboard/getDashboardDetails';
-import { test, expect } from '$utils/financer-page';
+import { expect, test } from '$utils/financer-page';
 import { getTransactionDataFromTransactionList } from '$utils/transaction/getTransactionDataFromTransactionList';
 
 test.describe('Dashboard Preferences', () => {

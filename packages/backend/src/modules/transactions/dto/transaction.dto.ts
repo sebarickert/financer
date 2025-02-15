@@ -4,12 +4,9 @@ import { Decimal } from '@prisma/client/runtime/library';
 import { Type } from 'class-transformer';
 import { IsDate, IsNotEmpty, IsString, IsUUID } from 'class-validator';
 
-import { UserId } from '../../../types/user-id';
-import {
-  IsDecimal,
-  TransformDecimal,
-} from '../../../utils/is-decimal.decorator';
-import { MinDecimal } from '../../../utils/min-decimal.decorator';
+import { UserId } from '@/types/user-id';
+import { IsDecimal, TransformDecimal } from '@/utils/is-decimal.decorator';
+import { MinDecimal } from '@/utils/min-decimal.decorator';
 
 export class TransactionDto implements Transaction {
   constructor(values: Transaction) {
@@ -17,14 +14,14 @@ export class TransactionDto implements Transaction {
   }
 
   @ApiProperty()
-  createdAt: Date;
+  createdAt!: Date;
 
   @ApiProperty()
-  updatedAt: Date;
+  updatedAt!: Date;
 
   @ApiProperty({ type: String })
   @IsUUID()
-  readonly id: string;
+  readonly id!: string;
 
   @ApiProperty({ type: Number })
   @MinDecimal(new Decimal(0.01), {
@@ -32,29 +29,29 @@ export class TransactionDto implements Transaction {
   })
   @TransformDecimal()
   @IsDecimal({ message: 'Amount must be a decimal number.' })
-  readonly amount: Decimal;
+  readonly amount!: Decimal;
 
   @ApiProperty()
   @IsNotEmpty({ message: 'Description must not be empty.' })
   @IsString()
-  readonly description: string;
+  readonly description!: string;
 
   @ApiProperty()
   @IsDate({ message: 'Date must not be empty.' })
   @Type(() => Date)
-  readonly date: Date;
+  readonly date!: Date;
 
   @ApiProperty({ type: String })
   @IsUUID()
-  readonly userId: UserId;
+  readonly userId!: UserId;
 
-  @ApiProperty({ type: String })
+  @ApiProperty({ type: String, nullable: true })
   @IsUUID('all', { message: 'fromAccount must not be empty.' })
-  readonly fromAccount: string;
+  readonly fromAccount!: string | null;
 
-  @ApiProperty({ type: String })
+  @ApiProperty({ type: String, nullable: true })
   @IsUUID('all', { message: 'toAccount must not be empty.' })
-  readonly toAccount: string;
+  readonly toAccount!: string | null;
 
   public static createFromPlain(transaction: Transaction): TransactionDto;
   public static createFromPlain(transaction: Transaction[]): TransactionDto[];
@@ -62,7 +59,7 @@ export class TransactionDto implements Transaction {
     transaction: Transaction | Transaction[],
   ): TransactionDto | TransactionDto[] {
     if (Array.isArray(transaction)) {
-      return transaction.map((a) => TransactionDto.createFromPlain(a));
+      return transaction.map((item) => TransactionDto.createFromPlain(item));
     }
 
     return new TransactionDto({

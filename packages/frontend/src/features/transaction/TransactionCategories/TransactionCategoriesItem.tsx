@@ -5,17 +5,17 @@ import { useFormContext, useWatch } from 'react-hook-form';
 
 import { Button } from '$elements/Button/Button';
 import { Input } from '$elements/Input';
-import { Select, Option } from '$elements/Select';
+import { Option, Select } from '$elements/Select';
 import { formatCurrency } from '$utils/formatCurrency';
 
-type TransactionCategoriesItemProps = {
+interface TransactionCategoriesItemProps {
   index: number;
   categories: Option[];
   setUnallocatedAmount(index: number): void;
   categoryId: string;
   amount: number;
   categorySelectOnly?: boolean;
-};
+}
 
 export const TransactionCategoriesItem: FC<TransactionCategoriesItemProps> = ({
   index,
@@ -38,7 +38,7 @@ export const TransactionCategoriesItem: FC<TransactionCategoriesItemProps> = ({
   }, [amount, categoryId, namePrefix, setValue]);
 
   const categoryLabel = categories.find(
-    (category) => category.value === categoryWatch?.categoryId,
+    (category) => category.value === categoryWatch.categoryId,
   )?.label;
 
   return (
@@ -62,7 +62,7 @@ export const TransactionCategoriesItem: FC<TransactionCategoriesItemProps> = ({
           {categoryLabel || '-'}
         </span>
         <span className="shrink-0" data-testid="amount">
-          {formatCurrency(categoryWatch?.amount || 0)}
+          {formatCurrency(categoryWatch.amount || 0)}
         </span>
       </summary>
       <div
@@ -91,7 +91,9 @@ export const TransactionCategoriesItem: FC<TransactionCategoriesItemProps> = ({
         <Button
           accentColor="secondary"
           size="icon"
-          onClick={() => setUnallocatedAmount(index)}
+          onClick={() => {
+            setUnallocatedAmount(index);
+          }}
         >
           <Calculator />
           <span className="sr-only">Set Unallocated Amount</span>

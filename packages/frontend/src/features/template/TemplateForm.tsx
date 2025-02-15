@@ -21,15 +21,15 @@ import {
 import { TransactionCategoryDtoWithCategoryTree } from '$types/TransactionCategoryDtoWithCategoryTree';
 import { capitalize } from '$utils/capitalize';
 
-type TemplateFormProps = {
+interface TemplateFormProps {
   onSubmit: DefaultFormActionHandler;
   submitLabel: string;
   initialValues?: Partial<TemplateFormFields>;
   transactionCategoriesWithCategoryTree?: TransactionCategoryDtoWithCategoryTree[];
   accounts?: AccountDto[];
-};
+}
 
-export type TemplateFormFields = {
+export interface TemplateFormFields {
   templateName: string;
   templateType: TransactionTemplateType;
   templateVisibility: TransactionType;
@@ -40,7 +40,7 @@ export type TemplateFormFields = {
   dayOfMonth?: number;
   dayOfMonthToCreate?: number;
   categories: CategoriesFormOnlyCategory[];
-};
+}
 
 export const TemplateForm: FC<TemplateFormProps> = ({
   onSubmit,

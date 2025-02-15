@@ -1,12 +1,12 @@
 import { TransactionType } from '$types/generated/financer';
 import { Page, expect } from '$utils/financer-page';
 
-type AccountDetails = {
+interface AccountDetails {
   id: string;
   name: string;
   parentCategory?: string;
   visibility: TransactionType[];
-};
+}
 
 const getTransactionTypeLocator = async (page: Page) => {
   const transactionTypeElement = page

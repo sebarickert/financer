@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { AccountBalanceChange } from '@prisma/client';
 
-import { AccountBalanceChangeRepo } from '../../database/repos/account-balance-change.repo';
-import { UserId } from '../../types/user-id';
-
 import { AccountBalanceChangeDto } from './dto/account-balance-change.dto';
 import { CreateAccountBalanceChangeDto } from './dto/create-account-balance-change.dto';
+
+import { AccountBalanceChangeRepo } from '@/database/repos/account-balance-change.repo';
+import { UserId } from '@/types/user-id';
 
 @Injectable()
 export class AccountBalanceChangesService {
@@ -18,8 +18,8 @@ export class AccountBalanceChangesService {
     { accountId, amount, date }: CreateAccountBalanceChangeDto,
   ): Promise<AccountBalanceChange> {
     return this.accountBalanceChangeRepo.create({
-      amount: amount,
-      date: date,
+      amount,
+      date,
       user: {
         connect: { id: userId },
       },
@@ -34,8 +34,7 @@ export class AccountBalanceChangesService {
     createAccountBalanceChanges: CreateAccountBalanceChangeDto[],
   ) {
     return this.accountBalanceChangeRepo.createMany(
-      // @ts-expect-error - remove legacy `v` from import data
-      createAccountBalanceChanges.map(({ v, ...change }) => ({
+      createAccountBalanceChanges.map((change) => ({
         ...change,
         userId,
       })),

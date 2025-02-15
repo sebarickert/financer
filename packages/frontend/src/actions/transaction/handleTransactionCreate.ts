@@ -1,6 +1,6 @@
 'use server';
 
-import { redirect, RedirectType } from 'next/navigation';
+import { RedirectType, redirect } from 'next/navigation';
 
 import {
   ExpenseDetailsDto,
@@ -31,9 +31,9 @@ export const handleTransactionCreate: DefaultFormActionHandler = async (
   );
 
   const isIncome =
-    Boolean(formData.get('toAccount')) && !Boolean(formData.get('fromAccount'));
+    Boolean(formData.get('toAccount')) && !formData.get('fromAccount');
   const isExpense =
-    !Boolean(formData.get('toAccount')) && Boolean(formData.get('fromAccount'));
+    !formData.get('toAccount') && Boolean(formData.get('fromAccount'));
 
   const type = isIncome
     ? TransactionType.Income
@@ -65,7 +65,7 @@ export const handleTransactionCreate: DefaultFormActionHandler = async (
       date: formData.get('date') as string,
       toAccount: formData.get('toAccount') as string,
       fromAccount: formData.get('fromAccount') as string,
-      categories: categories,
+      categories,
     });
   } catch (error) {
     if (error instanceof ValidationException) {

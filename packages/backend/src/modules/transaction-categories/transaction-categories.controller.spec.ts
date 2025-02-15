@@ -1,15 +1,15 @@
-import { INestApplication } from '@nestjs/common';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { Test, TestingModule } from '@nestjs/testing';
 import supertest from 'supertest';
-
-import { createMockServiceProvider } from '../../../test/create-mock-service-provider';
-import { setupTestNestApp } from '../../setup-test-nest-app';
 
 import { TransactionCategoriesController } from './transaction-categories.controller';
 import { TransactionCategoriesService } from './transaction-categories.service';
 
+import { setupTestNestApp } from '@/setup-test-nest-app';
+import { createMockServiceProvider } from '@/test/create-mock-service-provider';
+
 describe('TransactionCategoriesController', () => {
-  let app: INestApplication;
+  let app: NestExpressApplication;
   let service: TransactionCategoriesService;
 
   beforeAll(async () => {
@@ -56,7 +56,7 @@ describe('TransactionCategoriesController', () => {
           error: 'Bad Request',
         })
         .then(() => {
-          expect(service.create).not.toBeCalled();
+          expect(service.create).not.toHaveBeenCalled();
         });
     });
 
@@ -83,7 +83,7 @@ describe('TransactionCategoriesController', () => {
           error: 'Bad Request',
         })
         .then(() => {
-          expect(service.create).not.toBeCalled();
+          expect(service.create).not.toHaveBeenCalled();
         });
     });
 
@@ -104,7 +104,7 @@ describe('TransactionCategoriesController', () => {
         .expect(201)
         .expect({})
         .then(() => {
-          expect(service.create).toBeCalled();
+          expect(service.create).toHaveBeenCalled();
         });
     });
 
@@ -125,7 +125,7 @@ describe('TransactionCategoriesController', () => {
           error: 'Bad Request',
         })
         .then(() => {
-          expect(service.create).not.toBeCalled();
+          expect(service.create).not.toHaveBeenCalled();
         });
     });
   });

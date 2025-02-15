@@ -20,18 +20,18 @@ import {
 } from '@nestjs/swagger';
 import { AccountType, Prisma } from '@prisma/client';
 
-import { UserId } from '../../types/user-id';
-import { ValidateArrayPipe } from '../../utils/validate-array.pipe';
-import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
-import { ValidateEnumPipe } from '../../utils/validate-enum.pipe';
-import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
-import { UserIdDecorator } from '../users/users.decorators';
-
 import { CreateIncomeDto } from './dto/create-income.dto';
 import { IncomeDetailsDto } from './dto/income-details.dto';
 import { IncomeListItemDto } from './dto/income-list-item.dto';
 import { UpdateIncomeDto } from './dto/update-income.dto';
 import { IncomesService } from './incomes.service';
+
+import { LoggedIn } from '@/auth/decorators/logged-in.decorators';
+import { UserId } from '@/types/user-id';
+import { UserIdDecorator } from '@/users/users.decorators';
+import { ValidateArrayPipe } from '@/utils/validate-array.pipe';
+import { ValidateEntityId } from '@/utils/validate-entity-id.pipe';
+import { ValidateEnumPipe } from '@/utils/validate-enum.pipe';
 
 @Controller('api/incomes')
 @ApiTags('Incomes')
@@ -40,6 +40,7 @@ import { IncomesService } from './incomes.service';
 export class IncomesController {
   constructor(private readonly incomesService: IncomesService) {}
 
+  // eslint-disable-next-line max-lines-per-function, max-params
   @Get()
   @ApiOkResponse({ type: IncomeListItemDto, isArray: true })
   @ApiQuery({

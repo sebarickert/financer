@@ -2,19 +2,18 @@
 
 import clsx from 'clsx';
 import { FC, useId } from 'react';
-import { Pie, PieChart, Tooltip } from 'recharts';
-import { ResponsiveContainer } from 'recharts';
+import { Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 
 import { CustomTooltip } from './CustomTooltip';
 
 import { ChartConfig } from '$types/ChartConfig';
 import { ChartData } from '$types/ChartData';
 
-type PieChartDonutProps = {
+interface PieChartDonutProps {
   data: ChartData<{ value: number; fill: string }>;
   config: ChartConfig;
   className?: string;
-};
+}
 
 export const PieChartDonut: FC<PieChartDonutProps> = ({
   data,

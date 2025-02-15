@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { createMockServiceProvider } from '../../../test/create-mock-service-provider';
-import { AccountBalanceChangeRepo } from '../../database/repos/account-balance-change.repo';
-
 import { AccountBalanceChangesService } from './account-balance-changes.service';
+
+import { AccountBalanceChangeRepo } from '@/database/repos/account-balance-change.repo';
+import { createMockServiceProvider } from '@/test/create-mock-service-provider';
 
 describe('AccountBalanceChangesService', () => {
   let service: AccountBalanceChangesService;

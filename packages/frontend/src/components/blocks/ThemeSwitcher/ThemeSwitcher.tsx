@@ -4,9 +4,9 @@ import { ThemeSwitcherClient } from './ThemeSwitcherClient';
 
 import { UserService } from '$ssr/api/UserService';
 
-type ThemeSwitcherProps = {
+interface ThemeSwitcherProps {
   className?: string;
-};
+}
 
 export const ThemeSwitcher: FC<ThemeSwitcherProps> = async ({ className }) => {
   const theme = await UserService.getOwnUserTheme();

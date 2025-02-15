@@ -8,19 +8,21 @@ export const ROLES_KEY = 'roles';
 
 @Injectable()
 export class RolesGuard extends BaseGuard {
-  constructor(private reflector: Reflector) {
+  constructor(private readonly reflector: Reflector) {
     super();
   }
 
   canActivate(context: ExecutionContext): boolean {
-    const requiredRoles = this.reflector.getAllAndOverride<Role[]>(ROLES_KEY, [
-      context.getHandler(),
-      context.getClass(),
-    ]);
+    const requiredRoles = this.reflector.getAllAndOverride<Role[] | null>(
+      ROLES_KEY,
+      [context.getHandler(), context.getClass()],
+    );
+
     if (!requiredRoles) {
       return true;
     }
+
     const user = this.getRequestUser(context);
-    return requiredRoles.some((role) => user?.roles?.includes(role));
+    return requiredRoles.some((role) => user.roles.includes(role));
   }
 }

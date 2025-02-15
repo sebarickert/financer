@@ -1,23 +1,23 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AccountType } from '@prisma/client';
 
-import { createMockServiceProvider } from '../../../test/create-mock-service-provider';
-import { DUMMY_TEST_USER } from '../../config/mockAuthenticationMiddleware';
-import { accountsRepoFindAllMockData } from '../../database/repos/mocks/account-repo-mock';
-import { transactionCategoryRepoUserMockDataFindAllBy } from '../../database/repos/mocks/transaction-category-repo-mock';
+import { ExpensesService } from './expenses.service';
+
+import { AccountsService } from '@/accounts/accounts.service';
+import { DUMMY_TEST_USER } from '@/config/mockAuthenticationMiddleware';
+import { accountsRepoFindAllMockData } from '@/database/repos/mocks/account-repo-mock';
+import { transactionCategoryRepoUserMockDataFindAllBy } from '@/database/repos/mocks/transaction-category-repo-mock';
 import {
   transactionsRepoFindAllByIdMockData,
   transactionsRepoFindAllByTypeAndUserMockData,
-} from '../../database/repos/mocks/transactions-repo-mock';
-import { TransactionCategoryMappingRepo } from '../../database/repos/transaction-category-mapping.repo';
-import { TransactionCategoryRepo } from '../../database/repos/transaction-category.repo';
-import { TransactionRepo } from '../../database/repos/transaction.repo';
-import { AccountsService } from '../accounts/accounts.service';
-import { TransactionCategoriesService } from '../transaction-categories/transaction-categories.service';
-import { TransactionCategoryMappingsService } from '../transaction-category-mappings/transaction-category-mappings.service';
-import { TransactionsService } from '../transactions/transactions.service';
-
-import { ExpensesService } from './expenses.service';
+} from '@/database/repos/mocks/transactions-repo-mock';
+import { TransactionCategoryMappingRepo } from '@/database/repos/transaction-category-mapping.repo';
+import { TransactionCategoryRepo } from '@/database/repos/transaction-category.repo';
+import { TransactionRepo } from '@/database/repos/transaction.repo';
+import { createMockServiceProvider } from '@/test/create-mock-service-provider';
+import { TransactionCategoriesService } from '@/transaction-categories/transaction-categories.service';
+import { TransactionCategoryMappingsService } from '@/transaction-category-mappings/transaction-category-mappings.service';
+import { TransactionsService } from '@/transactions/transactions.service';
 
 describe('ExpensesService', () => {
   let service: ExpensesService;
@@ -266,6 +266,7 @@ describe('ExpensesService', () => {
 
     jest
       .spyOn(transactionRepo, 'findOne')
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       .mockResolvedValueOnce(transactionsRepoFindAllByIdMockData[id]);
 
     jest

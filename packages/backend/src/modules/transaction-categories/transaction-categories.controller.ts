@@ -1,14 +1,14 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
-  Query,
+  Get,
   HttpCode,
   HttpStatus,
+  Param,
+  Patch,
+  Post,
+  Query,
 } from '@nestjs/common';
 import {
   ApiBody,
@@ -20,17 +20,17 @@ import {
 } from '@nestjs/swagger';
 import { TransactionType } from '@prisma/client';
 
-import { UserId } from '../../types/user-id';
-import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
-import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
-import { UserIdDecorator } from '../users/users.decorators';
-
 import { CreateTransactionCategoryDto } from './dto/create-transaction-category.dto';
 import { TransactionCategoryDetailsDto } from './dto/transaction-category-details.dto';
 import { TransactionCategoryDto } from './dto/transaction-category.dto';
 import { CategoryMonthlySummaryDto } from './dto/transaction-month-summary.dto';
 import { UpdateTransactionCategoryDto } from './dto/update-transaction-category.dto';
 import { TransactionCategoriesService } from './transaction-categories.service';
+
+import { LoggedIn } from '@/auth/decorators/logged-in.decorators';
+import { UserId } from '@/types/user-id';
+import { UserIdDecorator } from '@/users/users.decorators';
+import { ValidateEntityId } from '@/utils/validate-entity-id.pipe';
 
 @Controller('api/transaction-categories')
 @ApiTags('Transaction categories')
@@ -90,6 +90,7 @@ export class TransactionCategoriesController {
     return this.transactionCategoriesService.findOne(userId, id);
   }
 
+  // eslint-disable-next-line max-params
   @Get(':id/summary')
   @ApiOkResponse({
     type: [CategoryMonthlySummaryDto],

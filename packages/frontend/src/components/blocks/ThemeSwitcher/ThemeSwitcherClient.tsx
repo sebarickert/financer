@@ -11,10 +11,10 @@ import {
   useUsersUpdateOwnUserMutation,
 } from '$api/generated/financerApi';
 
-type ThemeSwitcherClientProps = {
+interface ThemeSwitcherClientProps {
   className?: string;
   theme: Theme;
-};
+}
 
 export const ThemeSwitcherClient: FC<ThemeSwitcherClientProps> = ({
   theme = Theme.Auto,

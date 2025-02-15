@@ -6,8 +6,9 @@ import {
   TransactionType,
 } from '@prisma/client';
 
-import { DateService } from '../../utils/date.service';
 import { PrismaService } from '../prisma.service';
+
+import { DateService } from '@/utils/date.service';
 
 @Injectable()
 export class TransactionRepo {
@@ -15,7 +16,7 @@ export class TransactionRepo {
 
   async findOne<T extends Prisma.TransactionFindUniqueArgs>(
     transactionWhereUniqueInput: T,
-  ): Promise<Prisma.TransactionGetPayload<{ include: T['include'] }>> {
+  ): Promise<Prisma.TransactionGetPayload<{ include: T['include'] }> | null> {
     // @ts-expect-error - Prisma is not able to infer the correct type for include
     return this.prisma.transaction.findUnique(transactionWhereUniqueInput);
   }
@@ -54,7 +55,7 @@ export class TransactionRepo {
   ): Promise<Transaction> {
     return this.prisma.transaction.create({
       data: {
-        // e2e db does not set default values for these fields so we have to set them manually
+        // E2e db does not set default values for these fields so we have to set them manually
         toAccount: null,
         fromAccount: null,
         ...data,
@@ -117,10 +118,12 @@ export class TransactionRepo {
       case null:
         return {};
       default:
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         throw new Error(`Invalid transaction type: ${transactionType}`);
     }
   }
 
+  // eslint-disable-next-line max-statements
   static filterByYearAndMonth(
     year?: number,
     month?: number,
@@ -134,18 +137,27 @@ export class TransactionRepo {
       return {};
     }
 
+    if (!year) {
+      throw new BadRequestException('Year is required');
+    }
+
     if (filterMode === 'laterThan') {
+      const actualMonth = month ? month - 1 : 0;
+
       return {
         date: {
-          gte: DateService.fromZonedTime(year, month - 1 || 0, 1),
+          gte: DateService.fromZonedTime(year, actualMonth, 1),
         },
       };
     }
 
+    const actualStartMonth = month ? month - 1 : 0;
+    const actualEndMonth = month ?? 12;
+
     return {
       date: {
-        gte: DateService.fromZonedTime(year, month - 1 || 0, 1),
-        lt: DateService.fromZonedTime(year, month || 12, 1),
+        gte: DateService.fromZonedTime(year, actualStartMonth, 1),
+        lt: DateService.fromZonedTime(year, actualEndMonth, 1),
       },
     };
   }
@@ -187,7 +199,8 @@ export class TransactionRepo {
   }
 
   static filterById(ids?: string[]): Prisma.TransactionWhereInput {
-    const objectIds = ids?.map((id) => id);
+    const objectIds = ids?.map((id) => id) ?? [];
+
     return {
       id: {
         in: objectIds,

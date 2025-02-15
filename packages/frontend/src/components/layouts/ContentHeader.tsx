@@ -11,12 +11,12 @@ import { Button } from '$elements/Button/Button';
 import { Heading } from '$elements/Heading';
 import { Link } from '$elements/Link';
 
-type ContentHeaderProps = {
+interface ContentHeaderProps {
   title: string;
   backLink?: string;
   headerAction?: React.ReactNode;
   contextualNavigationItems?: ContextualNavigationItem[];
-};
+}
 
 export const ContentHeader: FC<ContentHeaderProps> = ({
   title,
@@ -57,7 +57,7 @@ export const ContentHeader: FC<ContentHeaderProps> = ({
           testId="page-main-heading"
           className="max-lg:justify-center max-lg:col-[2] lg:grow truncate"
         >
-          {!!contextualNavigationItems?.length && (
+          {Boolean(contextualNavigationItems?.length) && (
             <Button
               className="lg:hidden focus-visible:ring-inset gap-1!"
               accentColor="ghost"
@@ -71,21 +71,21 @@ export const ContentHeader: FC<ContentHeaderProps> = ({
           )}
           <span
             className={clsx(
-              !!contextualNavigationItems?.length && 'max-lg:hidden',
+              Boolean(contextualNavigationItems?.length) && 'max-lg:hidden',
             )}
           >
             {title}
           </span>
         </Heading>
         {headerAction}
-        {!!contextualNavigationItems?.length && (
+        {Boolean(contextualNavigationItems?.length) && (
           <ContextualNavigation
             items={contextualNavigationItems}
             className="max-lg:hidden lg:grid-rows-[2] lg:col-span-full"
           />
         )}
       </header>
-      {!!contextualNavigationItems?.length && (
+      {Boolean(contextualNavigationItems?.length) && (
         <Drawer id="mobile-contextual-navigation" heading="Explore">
           <ul className={clsx('grid gap-1')}>
             {contextualNavigationItems.map((item) => (

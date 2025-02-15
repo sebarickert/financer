@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { UserPreferenceProperty, UserPreferences } from '@prisma/client';
 import { IsEnum, IsNotEmpty, IsUUID } from 'class-validator';
 
-import { UserId } from '../../../types/user-id';
+import { UserId } from '@/types/user-id';
 
 export class UserPreferenceDto implements UserPreferences {
   constructor(userPreference: UserPreferences) {
@@ -10,18 +10,18 @@ export class UserPreferenceDto implements UserPreferences {
   }
 
   @ApiProperty()
-  createdAt: Date;
+  createdAt!: Date;
 
   @ApiProperty()
-  updatedAt: Date;
+  updatedAt!: Date;
 
   @IsUUID()
   @ApiProperty({ type: String })
-  readonly id: string;
+  readonly id!: string;
 
   @IsUUID()
   @ApiProperty({ type: String })
-  readonly userId: UserId;
+  readonly userId!: UserId;
 
   @IsEnum(UserPreferenceProperty, {
     message: `User preference property must be one of following: ${Object.values(
@@ -32,11 +32,11 @@ export class UserPreferenceDto implements UserPreferences {
     enum: UserPreferenceProperty,
     enumName: 'UserPreferenceProperty',
   })
-  readonly key: UserPreferenceProperty;
+  readonly key!: UserPreferenceProperty;
 
   @IsNotEmpty()
   @ApiProperty()
-  readonly value: string;
+  readonly value!: string;
 
   public static createFromPlain(
     userPreference: UserPreferences,

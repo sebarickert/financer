@@ -34,7 +34,9 @@ export class TransactionSummaryDto
     transaction: TransactionSummary | TransactionSummary[],
   ): TransactionSummaryDto | TransactionSummaryDto[] {
     if (Array.isArray(transaction)) {
-      return transaction.map((a) => TransactionSummaryDto.createFromPlain(a));
+      return transaction.map((item) =>
+        TransactionSummaryDto.createFromPlain(item),
+      );
     }
 
     return new TransactionSummaryDto({

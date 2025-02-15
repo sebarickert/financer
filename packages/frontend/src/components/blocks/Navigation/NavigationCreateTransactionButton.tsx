@@ -9,10 +9,10 @@ import { CategoryService } from '$ssr/api/CategoryService';
 import { TransactionTemplateService } from '$ssr/api/TransactionTemplateService';
 import { UserPreferenceService } from '$ssr/api/UserPreferenceService';
 
-type CreateTransactionButtonProps = {
+interface CreateTransactionButtonProps {
   id?: string;
   isDisabled?: boolean;
-};
+}
 
 const CreateTransactionButton: FC<CreateTransactionButtonProps> = ({
   id,
@@ -42,10 +42,10 @@ const CreateTransactionButton: FC<CreateTransactionButtonProps> = ({
   );
 };
 
-type NavigationCreateTransactionButtonSuspenseProps = {
+interface NavigationCreateTransactionButtonSuspenseProps {
   className?: string;
   isLoading?: boolean;
-};
+}
 
 export const NavigationCreateTransactionButtonSuspense: FC<
   NavigationCreateTransactionButtonSuspenseProps
@@ -61,9 +61,9 @@ export const NavigationCreateTransactionButtonSuspense: FC<
   );
 };
 
-type NavigationCreateTransactionButtonProps = {
+interface NavigationCreateTransactionButtonProps {
   className?: string;
-};
+}
 
 const NavigationCreateTransactionButton: FC<
   NavigationCreateTransactionButtonProps

@@ -20,9 +20,9 @@ import {
   formatCurrencyAbbreviation,
 } from '$utils/formatCurrency';
 
-type StatisticsOverviewDataProps = {
+interface StatisticsOverviewDataProps {
   data: (Omit<TransactionMonthSummaryDto, 'id'> & { date: string })[];
-};
+}
 
 export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
   data,

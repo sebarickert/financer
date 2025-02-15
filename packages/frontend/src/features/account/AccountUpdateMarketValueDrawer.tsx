@@ -13,16 +13,16 @@ import { DATE_FORMAT, DateService } from '$services/DateService';
 import { UserDefaultMarketUpdateSettings } from '$ssr/api/UserPreferenceService';
 import { handleAccountMarketValueUpdate } from 'src/actions/account/handleAccountMarketValueUpdate';
 
-type AccountUpdateMarketValueDrawerProps = {
+interface AccountUpdateMarketValueDrawerProps {
   account: AccountDto;
   marketSettings?: UserDefaultMarketUpdateSettings;
   popperId: string;
-};
+}
 
-type AccountUpdateMarketValueFormFields = {
+interface AccountUpdateMarketValueFormFields {
   currentMarketValue: number;
   date: string;
-};
+}
 
 export const AccountUpdateMarketValueDrawer: FC<
   AccountUpdateMarketValueDrawerProps
@@ -47,7 +47,7 @@ export const AccountUpdateMarketValueDrawer: FC<
     () => {
       // FIXME: This is a workaround to close the drawer after the form is submitted.
       // With `hidePopover()` chromium based browsers crashes with the following error: STATUS_ACCESS_VIOLATION
-      // popperRef?.current?.hidePopover();
+      // PopperRef?.current?.hidePopover();
       window.location.reload();
     },
   );

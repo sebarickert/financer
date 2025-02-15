@@ -4,9 +4,9 @@ import { IsString, IsUUID } from 'class-validator';
 export class TransactionListItemCategoryDto {
   @ApiProperty()
   @IsUUID()
-  id: string;
+  id!: string;
 
   @ApiProperty()
   @IsString()
-  name: string;
+  name!: string;
 }

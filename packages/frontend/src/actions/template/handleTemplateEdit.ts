@@ -1,6 +1,6 @@
 'use server';
 
-import { redirect, RedirectType } from 'next/navigation';
+import { RedirectType, redirect } from 'next/navigation';
 
 import {
   TransactionTemplateDto,
@@ -26,7 +26,7 @@ export const handleTemplateEdit: DefaultFormActionHandler<
   );
 
   try {
-    await TransactionTemplateService.update(template?.id, {
+    await TransactionTemplateService.update(template.id, {
       templateName: formData.get('templateName') as string,
       templateType: [
         formData.get('templateType') as unknown as TransactionTemplateType,

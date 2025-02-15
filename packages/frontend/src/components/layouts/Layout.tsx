@@ -6,14 +6,14 @@ import { ToastContainer } from '$blocks/Toast/ToastContainer';
 import { ContentHeader } from '$layouts/ContentHeader';
 import { Header } from '$layouts/Header';
 
-export type LayoutProps = {
+export interface LayoutProps {
   title: string;
   children: React.ReactNode;
   backLink?: string;
   headerAction?: React.ReactNode;
   contextualNavigationItems?: ContextualNavigationItem[];
   isLoading?: boolean;
-};
+}
 
 export const Layout = ({
   children,

@@ -1,9 +1,9 @@
 import { Controller, DefaultValuePipe, Get, Query } from '@nestjs/common';
 import { Role } from '@prisma/client';
 
-import { Auth } from '../auth/decorators/auht.decorator';
-
 import { SystemService } from './system.service';
+
+import { Auth } from '@/auth/decorators/auth.decorator';
 
 @Controller('api/system')
 @Auth(Role.ADMIN)
@@ -18,6 +18,7 @@ export class SystemController {
 
   @Get('logs')
   async getLogs(
+    // eslint-disable-next-line no-use-before-define
     @Query('start', new DefaultValuePipe(SystemController.getMonthAgo()))
     start: Date,
     @Query('end', new DefaultValuePipe(new Date())) end: Date,

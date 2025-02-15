@@ -4,7 +4,7 @@ import { BadRequestException, Injectable, PipeTransform } from '@nestjs/common';
 export class ValidateEnumPipe implements PipeTransform<string | string[]> {
   constructor(private readonly enumType: object) {}
 
-  async transform(value: string | string[]) {
+  transform(value: string | string[]) {
     if (!value) return null;
 
     const values = Array.isArray(value) ? value : [value];

@@ -8,7 +8,7 @@ import {
   IsUUID,
 } from 'class-validator';
 
-import { UserId } from '../../../types/user-id';
+import { UserId } from '@/types/user-id';
 
 export class TransactionCategoryDto implements TransactionCategory {
   constructor(transactionCategory: TransactionCategory) {
@@ -16,22 +16,22 @@ export class TransactionCategoryDto implements TransactionCategory {
   }
 
   @ApiProperty()
-  createdAt: Date;
+  createdAt!: Date;
 
   @ApiProperty()
-  updatedAt: Date;
+  updatedAt!: Date;
 
   @ApiProperty({ type: String })
   @IsUUID()
-  id: string;
+  id!: string;
 
   @ApiProperty({ type: String })
   @IsUUID()
-  userId: UserId;
+  userId!: UserId;
 
   @ApiProperty()
   @IsNotEmpty({ message: 'Name must not be empty.' })
-  name: string;
+  name!: string;
 
   @ApiProperty({
     enum: TransactionType,
@@ -44,17 +44,17 @@ export class TransactionCategoryDto implements TransactionCategory {
     each: true,
     message: `Visibility must be one of the following: ${Object.values(TransactionType).join(', ')}.`,
   })
-  visibility: TransactionType[];
+  visibility!: TransactionType[];
 
   @ApiProperty()
   @IsOptional()
   @IsBoolean()
-  deleted: boolean;
+  deleted!: boolean;
 
   @ApiProperty({ type: String, nullable: true })
   @IsOptional()
   @IsUUID('all', { message: 'parentCategoryId must not be empty.' })
-  parentCategoryId: string | null;
+  parentCategoryId!: string | null;
 
   public static createFromPlain(
     category: TransactionCategory,

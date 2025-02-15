@@ -20,18 +20,18 @@ import {
 } from '@nestjs/swagger';
 import { AccountType, Prisma } from '@prisma/client';
 
-import { UserId } from '../../types/user-id';
-import { ValidateArrayPipe } from '../../utils/validate-array.pipe';
-import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
-import { ValidateEnumPipe } from '../../utils/validate-enum.pipe';
-import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
-import { UserIdDecorator } from '../users/users.decorators';
-
 import { CreateTransferDto } from './dto/create-transfer.dto';
 import { TransferDetailsDto } from './dto/transfer-details.dto';
 import { TransferListItemDto } from './dto/transfer-list-item.dto';
 import { UpdateTransferDto } from './dto/update-transfer.dto';
 import { TransfersService } from './transfers.service';
+
+import { LoggedIn } from '@/auth/decorators/logged-in.decorators';
+import { UserId } from '@/types/user-id';
+import { UserIdDecorator } from '@/users/users.decorators';
+import { ValidateArrayPipe } from '@/utils/validate-array.pipe';
+import { ValidateEntityId } from '@/utils/validate-entity-id.pipe';
+import { ValidateEnumPipe } from '@/utils/validate-enum.pipe';
 
 @Controller('api/transfers')
 @ApiTags('Transfers')
@@ -40,6 +40,7 @@ import { TransfersService } from './transfers.service';
 export class TransfersController {
   constructor(private readonly transfersService: TransfersService) {}
 
+  // eslint-disable-next-line max-lines-per-function, max-params
   @Get()
   @ApiOkResponse({ type: TransferListItemDto, isArray: true })
   @ApiQuery({

@@ -4,7 +4,7 @@ import { getAccountBalanceFromAccountListByName } from '$utils/account/getAccoun
 import { applyFixture } from '$utils/applyFixture';
 import { clickContextualNavigationItem } from '$utils/common/clickContextualNavigationItem';
 import { clickPopperItem } from '$utils/common/clickPopperItem';
-import { test, expect } from '$utils/financer-page';
+import { expect, test } from '$utils/financer-page';
 import { fillTransactionForm } from '$utils/transaction/fillTransactionForm';
 import { getTransactionDetails } from '$utils/transaction/getTransactionDetails';
 import { setCategories } from '$utils/transaction/setCategories';
@@ -30,10 +30,7 @@ test.describe('Expense Transactions', () => {
       await page.getByRole('link', { name: 'Accounts' }).click();
 
       const initialAccountBalance =
-        await getAccountBalanceFromAccountListByName(
-          page,
-          fromAccount as string,
-        );
+        await getAccountBalanceFromAccountListByName(page, fromAccount!);
 
       await page.goto(`/transactions/expenses/${id}`);
       await clickPopperItem(page, 'Edit');
@@ -65,10 +62,7 @@ test.describe('Expense Transactions', () => {
       await page.getByRole('link', { name: 'Accounts' }).click();
 
       const updatedAccountBalance =
-        await getAccountBalanceFromAccountListByName(
-          page,
-          fromAccount as string,
-        );
+        await getAccountBalanceFromAccountListByName(page, fromAccount!);
 
       const initialAndNewAmountDifference = initialAmount.plus(newAmount);
 
@@ -91,10 +85,7 @@ test.describe('Expense Transactions', () => {
       await page.getByRole('link', { name: 'Accounts' }).click();
 
       const initialBalanceForPreviousAccount =
-        await getAccountBalanceFromAccountListByName(
-          page,
-          fromAccount as string,
-        );
+        await getAccountBalanceFromAccountListByName(page, fromAccount!);
 
       const initialBalanceForNewAccount =
         await getAccountBalanceFromAccountListByName(page, 'Cash account');
@@ -119,10 +110,7 @@ test.describe('Expense Transactions', () => {
       await page.getByRole('link', { name: 'Accounts' }).click();
 
       const updatedBalanceForPreviousAccount =
-        await getAccountBalanceFromAccountListByName(
-          page,
-          fromAccount as string,
-        );
+        await getAccountBalanceFromAccountListByName(page, fromAccount!);
 
       const updatedBalanceForNewAccount =
         await getAccountBalanceFromAccountListByName(page, 'Cash account');
@@ -209,7 +197,7 @@ test.describe('Expense Transactions', () => {
       const { categories: updatedCategories } =
         await getTransactionDetails(page);
 
-      expect(updatedCategories.length).not.toEqual(initialCategories?.length);
+      expect(updatedCategories.length).not.toEqual(initialCategories.length);
       expect(updatedCategories).not.toContain('Category for all types');
     });
 

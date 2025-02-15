@@ -7,7 +7,7 @@ type Params = Promise<{
   accountId: string;
 }>;
 
-type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
+type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 
 export const generateMetadata = async ({
   params,

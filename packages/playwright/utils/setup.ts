@@ -1,4 +1,4 @@
-import { spawn, ChildProcessWithoutNullStreams } from 'child_process';
+import { ChildProcessWithoutNullStreams, spawn } from 'child_process';
 import { cpus } from 'os';
 
 const BASE_FRONTEND_PORT = 3100;
@@ -12,7 +12,7 @@ const getWorkerCountByCpu = () => {
 
 export const getExternalTestServerUrl = () => process.env.TEST_SERVER_URL;
 
-const hasExternalServer = () => !!getExternalTestServerUrl();
+const hasExternalServer = () => Boolean(getExternalTestServerUrl());
 
 export const getWorkerCount = () =>
   process.env.CI || hasExternalServer() ? 1 : getWorkerCountByCpu();
@@ -41,7 +41,7 @@ export const startServer = async (
       PATH: process.env.PATH,
       SCHEMA: 'packages/backend/prisma/schema.prisma',
       // In CI, we have action service that runs the postgres container
-      // and we have to initialize the schema and test user
+      // And we have to initialize the schema and test user
       INITIALIZE_SCHEMA_AND_TEST_USER:
         process.env.INITIALIZE_SCHEMA_AND_TEST_USER,
       DB_USER: process.env.DB_USER,

@@ -23,9 +23,9 @@ const LoaderIcon = () => (
   </div>
 );
 
-type LoaderProps = {
+interface LoaderProps {
   className?: string;
-};
+}
 
 export const Loader: FC<LoaderProps> = ({ className }) => {
   return (

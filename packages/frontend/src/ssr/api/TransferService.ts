@@ -7,11 +7,11 @@ import type {
 } from './TransactionService';
 
 import {
-  SortOrder,
   CreateTransferDto,
-  UpdateTransferDto,
+  SortOrder,
   TransferDetailsDto,
   TransferListItemDto,
+  UpdateTransferDto,
 } from '$api/generated/financerApi';
 import { ValidationException } from '$exceptions/validation.exception';
 import { isValidationErrorResponse } from '$utils/apiHelper';

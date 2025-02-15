@@ -1,5 +1,5 @@
 import { TransactionType } from '$types/generated/financer';
-import { expect, Page } from '$utils/financer-page';
+import { Page, expect } from '$utils/financer-page';
 
 const capitalize = (string: string): string =>
   string.charAt(0).toUpperCase() + string.slice(1);

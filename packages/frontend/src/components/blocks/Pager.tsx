@@ -4,18 +4,18 @@ import { FC } from 'react';
 
 import { Button } from '$elements/Button/Button';
 
-type PagerProps = {
+interface PagerProps {
   className?: string;
   previousHref?: string;
   nextHref?: string;
-};
+}
 
-type PagerButtonProps = {
+interface PagerButtonProps {
   children: string;
   isNext?: boolean;
   className?: string;
   href?: string;
-};
+}
 
 const PagerButton: FC<PagerButtonProps> = ({
   children,

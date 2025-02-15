@@ -1,22 +1,22 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Decimal } from '@prisma/client/runtime/library';
 
-import { createMockServiceProvider } from '../../../test/create-mock-service-provider';
-import { DUMMY_TEST_USER } from '../../config/mockAuthenticationMiddleware';
-import { AccountBalanceChangeRepo } from '../../database/repos/account-balance-change.repo';
-import { AccountRepo } from '../../database/repos/account.repo';
+import { AccountsService } from './accounts.service';
+
+import { AccountBalanceChangesService } from '@/account-balance-changes/account-balance-changes.service';
+import { DUMMY_TEST_USER } from '@/config/mockAuthenticationMiddleware';
+import { AccountBalanceChangeRepo } from '@/database/repos/account-balance-change.repo';
+import { AccountRepo } from '@/database/repos/account.repo';
 import {
   accountsRepoFindAllMockData,
   accountsRepoFindById,
-} from '../../database/repos/mocks/account-repo-mock';
-import { transactionsRepoFindAllByAccountIdMockData } from '../../database/repos/mocks/transactions-repo-mock';
-import { TransactionRepo } from '../../database/repos/transaction.repo';
-import { AccountBalanceChangesService } from '../account-balance-changes/account-balance-changes.service';
-import { TransactionCategoriesService } from '../transaction-categories/transaction-categories.service';
-import { TransactionCategoryMappingsService } from '../transaction-category-mappings/transaction-category-mappings.service';
-import { TransactionsService } from '../transactions/transactions.service';
-
-import { AccountsService } from './accounts.service';
+} from '@/database/repos/mocks/account-repo-mock';
+import { transactionsRepoFindAllByAccountIdMockData } from '@/database/repos/mocks/transactions-repo-mock';
+import { TransactionRepo } from '@/database/repos/transaction.repo';
+import { createMockServiceProvider } from '@/test/create-mock-service-provider';
+import { TransactionCategoriesService } from '@/transaction-categories/transaction-categories.service';
+import { TransactionCategoryMappingsService } from '@/transaction-category-mappings/transaction-category-mappings.service';
+import { TransactionsService } from '@/transactions/transactions.service';
 
 describe('AccountsService', () => {
   let service: AccountsService;
@@ -27,7 +27,7 @@ describe('AccountsService', () => {
   let transactionsService: TransactionsService;
 
   beforeEach(async () => {
-    jest.resetAllMocks();
+    jest.clearAllMocks();
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -53,10 +53,6 @@ describe('AccountsService', () => {
     );
     transactionsService = module.get<TransactionsService>(TransactionsService);
   });
-
-  // beforeEach(() => {
-  //   jest.clearAllMocks();
-  // });
 
   it('should return an array of accounts from findAllByUser', async () => {
     jest

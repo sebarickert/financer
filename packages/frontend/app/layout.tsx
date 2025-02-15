@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { Metadata, Viewport } from 'next';
 import { headers } from 'next/headers';
-import { redirect, RedirectType } from 'next/navigation';
+import { RedirectType, redirect } from 'next/navigation';
 import { FC } from 'react';
 
 import { Theme } from '$api/generated/financerApi';
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
 
 export async function generateViewport(): Promise<Viewport> {
   const authenticationStatus = await AuthenticationService.getStatus();
-  const isLoggedIn = !!authenticationStatus?.authenticated;
+  const isLoggedIn = Boolean(authenticationStatus?.authenticated);
   const theme = isLoggedIn ? await UserService.getOwnUserTheme() : Theme.Auto;
 
   let themeColor: Viewport['themeColor'];
@@ -67,7 +67,7 @@ const RootLayout: FC<ChildrenProp> = async ({ children }) => {
   const authenticationStatus = await AuthenticationService.getStatus();
   const pathname = headersList.get(CustomHeader.PATHNAME) ?? '';
 
-  const isLoggedIn = !!authenticationStatus?.authenticated;
+  const isLoggedIn = Boolean(authenticationStatus?.authenticated);
 
   if (!isLoggedIn && !PUBLIC_ROUTES.includes(pathname)) {
     redirect('/login', RedirectType.replace);
@@ -83,8 +83,8 @@ const RootLayout: FC<ChildrenProp> = async ({ children }) => {
     <html
       lang="en"
       className={clsx({
-        ['dark']: theme === Theme.Dark,
-        ['light']: theme === Theme.Light,
+        dark: theme === Theme.Dark,
+        light: theme === Theme.Light,
       })}
     >
       <head>
