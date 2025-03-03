@@ -3,10 +3,10 @@ import { ArrowLeft, LogOut, MessageSquareText } from 'lucide-react';
 import { Metadata } from 'next';
 import type { JSX } from 'react';
 
-import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
-import { Button } from '$elements/Button/Button';
-import { Heading } from '$elements/Heading';
-import { AuthenticationService } from '$ssr/api/AuthenticationService';
+import { InfoMessageBlock } from '@/blocks/InfoMessageBlock';
+import { Button } from '@/elements/Button/Button';
+import { Heading } from '@/elements/Heading';
+import { AuthenticationService } from '@/ssr/api/AuthenticationService';
 
 export const metadata: Metadata = {
   title: 'Troubleshooting Login Issues',

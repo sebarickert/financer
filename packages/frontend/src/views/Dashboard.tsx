@@ -1,20 +1,20 @@
 import { ArrowRight, ChartLine, Layers, Tag } from 'lucide-react';
 import { FC } from 'react';
 
-import { Card } from '$blocks/Card/Card';
-import { CardHeader } from '$blocks/Card/CardHeader';
-import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
-import { List } from '$blocks/List';
-import { ProminentLink } from '$blocks/ProminentLink';
-import { Heading } from '$elements/Heading';
-import { Link } from '$elements/Link';
-import { DashboardBalanceHistoryChart } from '$features/dashboard/DashboardBalanceHistoryChart';
-import { DashboardBalanceSummary } from '$features/dashboard/DashboardBalanceSummary';
-import { TransactionList } from '$features/transaction/TransactionList/TransactionList';
-import { DateService } from '$services/DateService';
-import { AccountService } from '$ssr/api/AccountService';
-import { TransactionService } from '$ssr/api/TransactionService';
-import { UserPreferenceService } from '$ssr/api/UserPreferenceService';
+import { Card } from '@/blocks/Card/Card';
+import { CardHeader } from '@/blocks/Card/CardHeader';
+import { InfoMessageBlock } from '@/blocks/InfoMessageBlock';
+import { List } from '@/blocks/List';
+import { ProminentLink } from '@/blocks/ProminentLink';
+import { Heading } from '@/elements/Heading';
+import { Link } from '@/elements/Link';
+import { DashboardBalanceHistoryChart } from '@/features/dashboard/DashboardBalanceHistoryChart';
+import { DashboardBalanceSummary } from '@/features/dashboard/DashboardBalanceSummary';
+import { TransactionList } from '@/features/transaction/TransactionList/TransactionList';
+import { DateService } from '@/services/DateService';
+import { AccountService } from '@/ssr/api/AccountService';
+import { TransactionService } from '@/ssr/api/TransactionService';
+import { UserPreferenceService } from '@/ssr/api/UserPreferenceService';
 
 const currentMonthFilterOptions = {
   year: new DateService().getDate().year,

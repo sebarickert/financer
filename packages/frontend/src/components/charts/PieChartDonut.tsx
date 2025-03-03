@@ -6,8 +6,8 @@ import { Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 
 import { CustomTooltip } from './CustomTooltip';
 
-import { ChartConfig } from '$types/ChartConfig';
-import { ChartData } from '$types/ChartData';
+import { ChartConfig } from '@/types/ChartConfig';
+import { ChartData } from '@/types/ChartData';
 
 interface PieChartDonutProps {
   data: ChartData<{ value: number; fill: string }>;

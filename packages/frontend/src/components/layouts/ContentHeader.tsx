@@ -5,11 +5,11 @@ import { FC } from 'react';
 import {
   ContextualNavigation,
   ContextualNavigationItem,
-} from '$blocks/ContextualNavigation';
-import { Drawer } from '$blocks/Drawer';
-import { Button } from '$elements/Button/Button';
-import { Heading } from '$elements/Heading';
-import { Link } from '$elements/Link';
+} from '@/blocks/ContextualNavigation';
+import { Drawer } from '@/blocks/Drawer';
+import { Button } from '@/elements/Button/Button';
+import { Heading } from '@/elements/Heading';
+import { Link } from '@/elements/Link';
 
 interface ContentHeaderProps {
   title: string;
@@ -22,7 +22,7 @@ export const ContentHeader: FC<ContentHeaderProps> = ({
   title,
   backLink,
   headerAction,
-  contextualNavigationItems,
+  contextualNavigationItems = [],
 }) => {
   return (
     <>

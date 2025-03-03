@@ -2,8 +2,8 @@ import clsx from 'clsx';
 import { LucideIcon, Moon, Settings2, Sun } from 'lucide-react';
 import { FC } from 'react';
 
-import { Theme } from '$api/generated/financerApi';
-import { hapticRunner } from '$utils/haptic.helper';
+import { Theme } from '@/api/ssr-financer-api';
+import { hapticRunner } from '@/utils/haptic.helper';
 
 interface ThemeSwitcherItemProps {
   children: string;
@@ -11,13 +11,13 @@ interface ThemeSwitcherItemProps {
   value: string;
   name: string;
   isChecked?: boolean;
-  onChange(event: React.ChangeEvent<HTMLInputElement>): void;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const THEME_SWITCHER_ICON_MAPPING: Record<Theme, LucideIcon> = {
-  [Theme.Light]: Sun,
-  [Theme.Dark]: Moon,
-  [Theme.Auto]: Settings2,
+  [Theme.LIGHT]: Sun,
+  [Theme.DARK]: Moon,
+  [Theme.AUTO]: Settings2,
 };
 
 export const ThemeSwitcherItem: FC<ThemeSwitcherItemProps> = ({

@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { ChevronRight, LucideIcon } from 'lucide-react';
 import { FC } from 'react';
 
-import { Link } from '$elements/Link';
+import { Link } from '@/elements/Link';
 
 interface ProminentLinkProps {
   Icon?: LucideIcon;

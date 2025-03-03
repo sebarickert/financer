@@ -2,10 +2,7 @@ import { revalidateTag } from 'next/cache';
 
 import { BaseApi } from './BaseApi';
 
-import {
-  AccountType,
-  UserPreferenceProperty,
-} from '$api/generated/financerApi';
+import { AccountType, UserPreferenceProperty } from '@/api/ssr-financer-api';
 
 interface UserDashboardSettings {
   accountTypes: AccountType[];
@@ -21,9 +18,7 @@ export interface UserDefaultMarketUpdateSettings {
 }
 
 export class UserPreferenceService extends BaseApi {
-  public static async revalidateCache(
-    id?: UserPreferenceProperty,
-  ): Promise<void> {
+  public static revalidateCache(id?: UserPreferenceProperty): void {
     if (id) {
       revalidateTag(this.getEntityTag(this.API_TAG.USER_PREFERENCE, id));
       return;
@@ -40,14 +35,14 @@ export class UserPreferenceService extends BaseApi {
       {
         params: {
           path: {
-            userPreferenceProperty: UserPreferenceProperty.DashboardSettings,
+            userPreferenceProperty: UserPreferenceProperty.DASHBOARD_SETTINGS,
           },
         },
         next: {
           tags: [
             this.getEntityTag(
               this.API_TAG.USER_PREFERENCE,
-              UserPreferenceProperty.DashboardSettings,
+              UserPreferenceProperty.DASHBOARD_SETTINGS,
             ),
           ],
         },
@@ -64,12 +59,12 @@ export class UserPreferenceService extends BaseApi {
   ): Promise<void> {
     await this.client.PATCH('/api/user-preferences', {
       body: {
-        key: UserPreferenceProperty.DashboardSettings,
+        key: UserPreferenceProperty.DASHBOARD_SETTINGS,
         value: JSON.stringify(newValue),
       },
     });
 
-    await this.revalidateCache(UserPreferenceProperty.DashboardSettings);
+    this.revalidateCache(UserPreferenceProperty.DASHBOARD_SETTINGS);
   }
 
   public static async getStatisticsSettings(): Promise<
@@ -80,14 +75,14 @@ export class UserPreferenceService extends BaseApi {
       {
         params: {
           path: {
-            userPreferenceProperty: UserPreferenceProperty.StatisticsSettings,
+            userPreferenceProperty: UserPreferenceProperty.STATISTICS_SETTINGS,
           },
         },
         next: {
           tags: [
             this.getEntityTag(
               this.API_TAG.USER_PREFERENCE,
-              UserPreferenceProperty.StatisticsSettings,
+              UserPreferenceProperty.STATISTICS_SETTINGS,
             ),
           ],
         },
@@ -104,12 +99,12 @@ export class UserPreferenceService extends BaseApi {
   ): Promise<void> {
     await this.client.PATCH('/api/user-preferences', {
       body: {
-        key: UserPreferenceProperty.StatisticsSettings,
+        key: UserPreferenceProperty.STATISTICS_SETTINGS,
         value: JSON.stringify(newValue),
       },
     });
 
-    await this.revalidateCache(UserPreferenceProperty.StatisticsSettings);
+    this.revalidateCache(UserPreferenceProperty.STATISTICS_SETTINGS);
   }
 
   public static async getDefaultExpenseAccount(): Promise<string | undefined> {
@@ -119,14 +114,14 @@ export class UserPreferenceService extends BaseApi {
         params: {
           path: {
             userPreferenceProperty:
-              UserPreferenceProperty.DefaultExpenseAccount,
+              UserPreferenceProperty.DEFAULT_EXPENSE_ACCOUNT,
           },
         },
         next: {
           tags: [
             this.getEntityTag(
               this.API_TAG.USER_PREFERENCE,
-              UserPreferenceProperty.DefaultExpenseAccount,
+              UserPreferenceProperty.DEFAULT_EXPENSE_ACCOUNT,
             ),
           ],
         },
@@ -141,12 +136,12 @@ export class UserPreferenceService extends BaseApi {
   ): Promise<void> {
     await this.client.PATCH('/api/user-preferences', {
       body: {
-        key: UserPreferenceProperty.DefaultExpenseAccount,
+        key: UserPreferenceProperty.DEFAULT_EXPENSE_ACCOUNT,
         value: newValue,
       },
     });
 
-    await this.revalidateCache(UserPreferenceProperty.DefaultExpenseAccount);
+    this.revalidateCache(UserPreferenceProperty.DEFAULT_EXPENSE_ACCOUNT);
   }
 
   public static async getDefaultIncomeAccount(): Promise<string | undefined> {
@@ -155,14 +150,15 @@ export class UserPreferenceService extends BaseApi {
       {
         params: {
           path: {
-            userPreferenceProperty: UserPreferenceProperty.DefaultIncomeAccount,
+            userPreferenceProperty:
+              UserPreferenceProperty.DEFAULT_INCOME_ACCOUNT,
           },
         },
         next: {
           tags: [
             this.getEntityTag(
               this.API_TAG.USER_PREFERENCE,
-              UserPreferenceProperty.DefaultIncomeAccount,
+              UserPreferenceProperty.DEFAULT_INCOME_ACCOUNT,
             ),
           ],
         },
@@ -177,12 +173,12 @@ export class UserPreferenceService extends BaseApi {
   ): Promise<void> {
     await this.client.PATCH('/api/user-preferences', {
       body: {
-        key: UserPreferenceProperty.DefaultIncomeAccount,
+        key: UserPreferenceProperty.DEFAULT_INCOME_ACCOUNT,
         value: newValue,
       },
     });
 
-    await this.revalidateCache(UserPreferenceProperty.DefaultIncomeAccount);
+    this.revalidateCache(UserPreferenceProperty.DEFAULT_INCOME_ACCOUNT);
   }
 
   public static async getDefaultTransferTargetAccount(): Promise<
@@ -194,14 +190,14 @@ export class UserPreferenceService extends BaseApi {
         params: {
           path: {
             userPreferenceProperty:
-              UserPreferenceProperty.DefaultTransferTargetAccount,
+              UserPreferenceProperty.DEFAULT_TRANSFER_TARGET_ACCOUNT,
           },
         },
         next: {
           tags: [
             this.getEntityTag(
               this.API_TAG.USER_PREFERENCE,
-              UserPreferenceProperty.DefaultTransferTargetAccount,
+              UserPreferenceProperty.DEFAULT_TRANSFER_TARGET_ACCOUNT,
             ),
           ],
         },
@@ -216,13 +212,13 @@ export class UserPreferenceService extends BaseApi {
   ): Promise<void> {
     await this.client.PATCH('/api/user-preferences', {
       body: {
-        key: UserPreferenceProperty.DefaultTransferTargetAccount,
+        key: UserPreferenceProperty.DEFAULT_TRANSFER_TARGET_ACCOUNT,
         value: newValue,
       },
     });
 
-    await this.revalidateCache(
-      UserPreferenceProperty.DefaultTransferTargetAccount,
+    this.revalidateCache(
+      UserPreferenceProperty.DEFAULT_TRANSFER_TARGET_ACCOUNT,
     );
   }
 
@@ -235,14 +231,14 @@ export class UserPreferenceService extends BaseApi {
         params: {
           path: {
             userPreferenceProperty:
-              UserPreferenceProperty.DefaultTransferSourceAccount,
+              UserPreferenceProperty.DEFAULT_TRANSFER_SOURCE_ACCOUNT,
           },
         },
         next: {
           tags: [
             this.getEntityTag(
               this.API_TAG.USER_PREFERENCE,
-              UserPreferenceProperty.DefaultTransferSourceAccount,
+              UserPreferenceProperty.DEFAULT_TRANSFER_SOURCE_ACCOUNT,
             ),
           ],
         },
@@ -257,13 +253,13 @@ export class UserPreferenceService extends BaseApi {
   ): Promise<void> {
     await this.client.PATCH('/api/user-preferences', {
       body: {
-        key: UserPreferenceProperty.DefaultTransferSourceAccount,
+        key: UserPreferenceProperty.DEFAULT_TRANSFER_SOURCE_ACCOUNT,
         value: newValue,
       },
     });
 
-    await this.revalidateCache(
-      UserPreferenceProperty.DefaultTransferSourceAccount,
+    this.revalidateCache(
+      UserPreferenceProperty.DEFAULT_TRANSFER_SOURCE_ACCOUNT,
     );
   }
 
@@ -276,14 +272,14 @@ export class UserPreferenceService extends BaseApi {
         params: {
           path: {
             userPreferenceProperty:
-              UserPreferenceProperty.UpdateInvestmentMarketValue,
+              UserPreferenceProperty.UPDATE_INVESTMENT_MARKET_VALUE,
           },
         },
         next: {
           tags: [
             this.getEntityTag(
               this.API_TAG.USER_PREFERENCE,
-              UserPreferenceProperty.UpdateInvestmentMarketValue,
+              UserPreferenceProperty.UPDATE_INVESTMENT_MARKET_VALUE,
             ),
           ],
         },
@@ -300,14 +296,12 @@ export class UserPreferenceService extends BaseApi {
   ): Promise<void> {
     await this.client.PATCH('/api/user-preferences', {
       body: {
-        key: UserPreferenceProperty.UpdateInvestmentMarketValue,
+        key: UserPreferenceProperty.UPDATE_INVESTMENT_MARKET_VALUE,
         value: JSON.stringify(newValue),
       },
     });
 
-    await this.revalidateCache(
-      UserPreferenceProperty.UpdateInvestmentMarketValue,
-    );
+    this.revalidateCache(UserPreferenceProperty.UPDATE_INVESTMENT_MARKET_VALUE);
   }
 
   public static async getTransactionListChunkSize(): Promise<number> {
@@ -317,14 +311,14 @@ export class UserPreferenceService extends BaseApi {
         params: {
           path: {
             userPreferenceProperty:
-              UserPreferenceProperty.TransactionListChunkSize,
+              UserPreferenceProperty.TRANSACTION_LIST_CHUNK_SIZE,
           },
         },
         next: {
           tags: [
             this.getEntityTag(
               this.API_TAG.USER_PREFERENCE,
-              UserPreferenceProperty.TransactionListChunkSize,
+              UserPreferenceProperty.TRANSACTION_LIST_CHUNK_SIZE,
             ),
           ],
         },
@@ -339,11 +333,11 @@ export class UserPreferenceService extends BaseApi {
   ): Promise<void> {
     await this.client.PATCH('/api/user-preferences', {
       body: {
-        key: UserPreferenceProperty.TransactionListChunkSize,
+        key: UserPreferenceProperty.TRANSACTION_LIST_CHUNK_SIZE,
         value: newValue.toString(),
       },
     });
 
-    await this.revalidateCache(UserPreferenceProperty.TransactionListChunkSize);
+    this.revalidateCache(UserPreferenceProperty.TRANSACTION_LIST_CHUNK_SIZE);
   }
 }

@@ -5,7 +5,7 @@ import {
   Repeat,
 } from 'lucide-react';
 
-import { TransactionType } from '$api/generated/financerApi';
+import { TransactionType } from '@/api/ssr-financer-api';
 
 export const TRANSACTION_TYPE_MAPPING: Record<
   TransactionType,
@@ -18,17 +18,17 @@ export const TRANSACTION_TYPE_MAPPING: Record<
     Icon: LucideIcon;
   }
 > = {
-  [TransactionType.Income]: {
+  [TransactionType.INCOME]: {
     label: { default: 'Income', plural: 'Incomes' },
     color: 'var(--color-green)',
     Icon: ArrowDownToLine,
   },
-  [TransactionType.Expense]: {
+  [TransactionType.EXPENSE]: {
     label: { default: 'Expense', plural: 'Expenses' },
     color: 'var(--color-red)',
     Icon: ArrowUpFromLine,
   },
-  [TransactionType.Transfer]: {
+  [TransactionType.TRANSFER]: {
     label: { default: 'Transfer', plural: 'Transfers' },
     color: 'var(--color-blue)',
     Icon: Repeat,

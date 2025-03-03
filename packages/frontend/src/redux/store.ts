@@ -1,19 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useSelector } from 'react-redux';
 
-import { emptyFinancerApi } from '$api/emptyFinancerApi';
-import { appReducer, appSlicePath } from '$reducer/app.reducer';
+import { appReducer, appSlicePath } from '@/reducer/app.reducer';
 import {
   notificationReducer,
   notificationSlicePath,
-} from '$reducer/notifications.reducer';
+} from '@/reducer/notifications.reducer';
 
 import '$api/config/apiConfig';
 
 export const createStore = () =>
   configureStore({
     reducer: {
-      [emptyFinancerApi.reducerPath]: emptyFinancerApi.reducer,
       [appSlicePath]: appReducer,
       [notificationSlicePath]: notificationReducer,
     },
@@ -21,7 +19,7 @@ export const createStore = () =>
       getDefaultMiddleware({
         serializableCheck: false,
         immutableCheck: { warnAfter: 100 },
-      }).concat(emptyFinancerApi.middleware),
+      }),
   });
 
 export type AppStore = ReturnType<typeof createStore>;

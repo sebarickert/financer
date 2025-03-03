@@ -1,16 +1,16 @@
 import { Info, Tag } from 'lucide-react';
 import { FC, useMemo } from 'react';
 
-import { TransactionCategoryDto } from '$api/generated/financerApi';
-import { Card } from '$blocks/Card/Card';
-import { DetailsItem, DetailsList } from '$blocks/DetailsList';
-import { TransactionListWithMonthlyPager } from '$features/transaction/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
-import { capitalize } from '$utils/capitalize';
+import { SchemaTransactionCategoryDto } from '@/api/ssr-financer-api';
+import { Card } from '@/blocks/Card/Card';
+import { DetailsItem, DetailsList } from '@/blocks/DetailsList';
+import { TransactionListWithMonthlyPager } from '@/features/transaction/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
+import { capitalize } from '@/utils/capitalize';
 import { parseParentCategoryPath } from 'src/services/TransactionCategoriesService';
 
 interface CategoryProps {
-  category: TransactionCategoryDto;
-  categories: TransactionCategoryDto[];
+  category: SchemaTransactionCategoryDto;
+  categories: readonly SchemaTransactionCategoryDto[];
   parentTransactionCategoryId: string;
   queryDate?: string;
 }

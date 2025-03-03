@@ -6,13 +6,12 @@ import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { CategoriesFormFullFields } from './transaction-categories.types';
 import { TransactionCategoriesItem } from './TransactionCategoriesItem';
 
-import { Button } from '$elements/Button/Button';
-import { Heading } from '$elements/Heading';
-import { Option, Select } from '$elements/Select';
+import { Button } from '@/elements/Button/Button';
+import { Heading } from '@/elements/Heading';
+import { Option, Select } from '@/elements/Select';
 
 interface TransactionCategoriesProps {
   transactionCategories: Option[];
-  testId?: string;
   categorySelectOnly?: boolean;
 }
 
@@ -30,15 +29,14 @@ export const TransactionCategories = ({
     name: 'categories',
   });
 
-  const transactionAmount = useWatch({ name: 'amount' });
+  const transactionAmount = useWatch({ name: 'amount' }) as number;
 
   const totalAllocatedAmount = fields
     .map(({ amount }) => amount || 0)
     .reduce((current, previous) => current + previous, 0);
 
   const setUnallocatedAmount = (index: number) => {
-    const unallocatedAmount =
-      transactionAmount - totalAllocatedAmount + (0 || 0);
+    const unallocatedAmount = transactionAmount - totalAllocatedAmount;
     setValue(`categories.${index}.amount`, unallocatedAmount);
   };
 

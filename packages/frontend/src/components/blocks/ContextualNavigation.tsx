@@ -1,8 +1,8 @@
 import clsx from 'clsx';
 import { FC } from 'react';
 
-import { Link } from '$elements/Link';
-import { Container } from '$layouts/Container';
+import { Link } from '@/elements/Link';
+import { Container } from '@/layouts/Container';
 
 export interface ContextualNavigationItem {
   label: string;

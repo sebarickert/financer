@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
-import { TemplateEditContainer } from '$container/templates/TemplateEditContainer';
-import { TransactionTemplateService } from '$ssr/api/TransactionTemplateService';
+import { TemplateEditContainer } from '@/container/templates/TemplateEditContainer';
+import { TransactionTemplateService } from '@/ssr/api/TransactionTemplateService';
 
 type Params = Promise<{
   templateId: string;

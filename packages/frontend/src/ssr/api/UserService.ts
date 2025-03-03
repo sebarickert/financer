@@ -2,12 +2,16 @@ import { revalidateTag } from 'next/cache';
 
 import { BaseApi } from './BaseApi';
 
-import { Theme, UserDataImportDto, UserDto } from '$api/generated/financerApi';
-import { ValidationException } from '$exceptions/validation.exception';
-import { isValidationErrorResponse } from '$utils/apiHelper';
+import {
+  SchemaUserDataImportDto,
+  SchemaUserDto,
+  Theme,
+} from '@/api/ssr-financer-api';
+import { ValidationException } from '@/exceptions/validation.exception';
+import { isValidationErrorResponse } from '@/utils/apiHelper';
 
 export class UserService extends BaseApi {
-  public static async revalidateCache(id?: string): Promise<void> {
+  public static revalidateCache(id?: string): void {
     if (id) {
       revalidateTag(this.getEntityTag(this.API_TAG.USER, id));
       return;
@@ -23,11 +27,11 @@ export class UserService extends BaseApi {
       const user = await this.getOwnUser();
       return user.theme;
     } catch {
-      return Theme.Auto;
+      return Theme.AUTO;
     }
   }
 
-  public static async getOwnUser(): Promise<UserDto> {
+  public static async getOwnUser(): Promise<SchemaUserDto> {
     const { data, error } = await this.client.GET(`/api/users/my-user`, {
       next: {
         tags: [
@@ -41,11 +45,11 @@ export class UserService extends BaseApi {
       throw new Error('Failed to fetch own user data', error);
     }
 
-    return data as UserDto;
+    return data;
   }
 
   public static async DEBUG_overrideOwnUserData(
-    user: UserDataImportDto,
+    user: SchemaUserDataImportDto,
   ): Promise<string | undefined> {
     const { error, data } = await this.client.POST(
       `/api/users/my-user/my-data`,
@@ -71,5 +75,15 @@ export class UserService extends BaseApi {
     BaseApi.revalidateFullAppCache();
 
     return data.payload;
+  }
+
+  public static async updateTheme(theme: Theme): Promise<void> {
+    await this.client.PATCH('/api/users/my-user', {
+      body: {
+        theme,
+      },
+    });
+
+    this.revalidateCache();
   }
 }

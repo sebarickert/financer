@@ -1,8 +1,8 @@
-import { handleTemplateAdd } from '$actions/template/handleTemplateAdd';
-import { TemplateForm } from '$features/template/TemplateForm';
-import { Layout } from '$layouts/Layout';
-import { AccountService } from '$ssr/api/AccountService';
-import { CategoryService } from '$ssr/api/CategoryService';
+import { handleTemplateAdd } from '@/actions/template/handleTemplateAdd';
+import { TemplateForm } from '@/features/template/TemplateForm';
+import { Layout } from '@/layouts/Layout';
+import { AccountService } from '@/ssr/api/AccountService';
+import { CategoryService } from '@/ssr/api/CategoryService';
 
 export const TemplateAddContainer = async () => {
   const categories = await CategoryService.getAllWithTree();

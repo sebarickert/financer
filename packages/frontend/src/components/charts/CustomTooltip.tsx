@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 'use client';
 
 import clsx from 'clsx';
@@ -8,7 +9,7 @@ import {
   ValueType,
 } from 'recharts/types/component/DefaultTooltipContent';
 
-import { ChartConfig } from '$types/ChartConfig';
+import { ChartConfig } from '@/types/ChartConfig';
 
 type CustomTooltipProps = TooltipProps<ValueType, NameType> & {
   config: ChartConfig;

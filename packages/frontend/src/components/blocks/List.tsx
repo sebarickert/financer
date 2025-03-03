@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { Children, FC } from 'react';
 
-import { Heading } from '$elements/Heading';
+import { Heading } from '@/elements/Heading';
 
 interface ListProps {
   label?: string;

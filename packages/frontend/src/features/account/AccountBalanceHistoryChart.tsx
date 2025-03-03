@@ -3,22 +3,22 @@
 import clsx from 'clsx';
 import { FC, useMemo, useState } from 'react';
 
-import { AccountBalanceHistoryDto } from '$api/generated/financerApi';
-import { AreaStackedChart } from '$charts/AreaStackedChart';
+import { SchemaAccountBalanceHistoryDto } from '@/api/ssr-financer-api';
+import { AreaStackedChart } from '@/charts/AreaStackedChart';
 import {
   ChartFilterByMonthsSelect,
   monthFilterOptions,
-} from '$charts/ChartFilterByMonthsSelect';
-import { DATE_FORMAT, DateService } from '$services/DateService';
-import { ChartConfig } from '$types/ChartConfig';
-import { ChartData } from '$types/ChartData';
+} from '@/charts/ChartFilterByMonthsSelect';
+import { DATE_FORMAT, DateService } from '@/services/DateService';
+import { ChartConfig } from '@/types/ChartConfig';
+import { ChartData } from '@/types/ChartData';
 import {
   formatCurrency,
   formatCurrencyAbbreviation,
-} from '$utils/formatCurrency';
+} from '@/utils/formatCurrency';
 
 interface AccountBalanceHistoryChartProps {
-  data: AccountBalanceHistoryDto[];
+  data: SchemaAccountBalanceHistoryDto[];
   className?: string;
 }
 
@@ -47,7 +47,7 @@ export const AccountBalanceHistoryChart: FC<
     balance: {
       label: 'Balance',
       color: 'var(--color-blue)',
-      valueFormatter: formatCurrency,
+      valueFormatter: (value) => formatCurrency(value as number),
     },
   } satisfies ChartConfig;
 
@@ -84,12 +84,12 @@ export const AccountBalanceHistoryChart: FC<
       <AreaStackedChart
         data={filteredChartData}
         config={chartConfig}
-        yaxisTickFormatter={(value: number) => {
-          return formatCurrencyAbbreviation(value);
+        yaxisTickFormatter={(value) => {
+          return formatCurrencyAbbreviation(value as number);
         }}
-        xaxisTickFormatter={(value: string) =>
+        xaxisTickFormatter={(value) =>
           DateService.parseFormat(
-            value,
+            value as string,
             DATE_FORMAT.MONTH_WITH_DATE_SHORT_WITH_YEAR,
           ).toFormat(DATE_FORMAT.MONTH_WITH_DATE_SHORT)
         }

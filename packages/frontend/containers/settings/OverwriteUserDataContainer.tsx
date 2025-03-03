@@ -1,9 +1,9 @@
 import { FC } from 'react';
 
-import { handleOverwriteUserData } from '$actions/user/handleOverwriteUserData';
-import { settingsPaths } from '$constants/settingsPaths';
-import { Layout } from '$layouts/Layout';
-import { OverwriteUserData } from '$views/OverwriteUserData';
+import { handleOverwriteUserData } from '@/actions/user/handleOverwriteUserData';
+import { settingsPaths } from '@/constants/settingsPaths';
+import { Layout } from '@/layouts/Layout';
+import { OverwriteUserData } from '@/views/OverwriteUserData';
 
 export const OverwriteUserDataContainer: FC = () => {
   return (

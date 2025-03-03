@@ -5,16 +5,16 @@ import { Info } from 'lucide-react';
 import { ChangeEvent, type JSX, useCallback, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { UserDataImportDto } from '$api/generated/financerApi';
-import { DetailsList } from '$blocks/DetailsList';
-import { ToastMessageTypes } from '$blocks/Toast/Toast';
-import { Button } from '$elements/Button/Button';
-import { Heading } from '$elements/Heading';
+import { SchemaUserDataImportDto } from '@/api/ssr-financer-api';
+import { DetailsList } from '@/blocks/DetailsList';
+import { ToastMessageTypes } from '@/blocks/Toast/Toast';
+import { Button } from '@/elements/Button/Button';
+import { Heading } from '@/elements/Heading';
 import {
   DefaultFormActionHandler,
   useFinancerFormState,
-} from '$hooks/useFinancerFormState';
-import { addToastMessage } from '$reducer/notifications.reducer';
+} from '@/hooks/useFinancerFormState';
+import { addToastMessage } from '@/reducer/notifications.reducer';
 
 interface OverwriteUserDataProps {
   onOverwriteData: DefaultFormActionHandler;
@@ -44,10 +44,10 @@ export const OverwriteUserData = ({
   );
 
   const [uploadedUserData, setUploadedUserData] =
-    useState<UserDataImportDto | null>(null);
+    useState<SchemaUserDataImportDto | null>(null);
   const [overrideFilename, setOverrideFilename] = useState<string | null>(null);
 
-  const handleSubmit = useCallback(async () => {
+  const handleSubmit = useCallback(() => {
     if (!uploadedUserData) {
       dispatch(
         addToastMessage({
@@ -91,7 +91,9 @@ export const OverwriteUserData = ({
         readerEvent.target?.result &&
         typeof readerEvent.target.result === 'string'
       ) {
-        const result = JSON.parse(readerEvent.target.result);
+        const result = JSON.parse(
+          readerEvent.target.result,
+        ) as SchemaUserDataImportDto;
         setUploadedUserData(result);
         setOverrideFilename(targetFile.name);
       } else {

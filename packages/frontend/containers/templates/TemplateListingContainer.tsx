@@ -1,11 +1,11 @@
 import { Layers, Plus } from 'lucide-react';
 import { FC } from 'react';
 
-import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
-import { Button } from '$elements/Button/Button';
-import { TemplateList } from '$features/template/TemplateList';
-import { Layout } from '$layouts/Layout';
-import { TransactionTemplateService } from '$ssr/api/TransactionTemplateService';
+import { InfoMessageBlock } from '@/blocks/InfoMessageBlock';
+import { Button } from '@/elements/Button/Button';
+import { TemplateList } from '@/features/template/TemplateList';
+import { Layout } from '@/layouts/Layout';
+import { TransactionTemplateService } from '@/ssr/api/TransactionTemplateService';
 
 export const TemplateListingContainer: FC = async () => {
   const templates = await TransactionTemplateService.getAll();

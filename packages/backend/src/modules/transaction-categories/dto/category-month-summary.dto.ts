@@ -1,8 +1,21 @@
+/* eslint-disable max-classes-per-file */
 import { ApiProperty } from '@nestjs/swagger';
 import { Decimal } from '@prisma/client/runtime/library';
 import { Allow } from 'class-validator';
 
 import { IsDecimal, TransformDecimal } from '@/utils/is-decimal.decorator';
+
+class CategoryMonthlySummaryDtoId {
+  constructor(data: CategoryMonthlySummaryDtoId) {
+    Object.assign(this, data);
+  }
+
+  @ApiProperty()
+  readonly year!: number;
+
+  @ApiProperty()
+  readonly month!: number;
+}
 
 export class CategoryMonthlySummaryDto {
   constructor(data: CategoryMonthlySummaryDto) {
@@ -11,10 +24,7 @@ export class CategoryMonthlySummaryDto {
 
   @ApiProperty()
   @Allow()
-  readonly id!: {
-    year: number;
-    month: number;
-  };
+  readonly id!: CategoryMonthlySummaryDtoId;
 
   @ApiProperty()
   readonly totalCount!: number;

@@ -4,11 +4,11 @@ import { headers } from 'next/headers';
 import { RedirectType, redirect } from 'next/navigation';
 import { FC } from 'react';
 
-import { Theme } from '$api/generated/financerApi';
-import { faviconList } from '$assets/favicon-list';
-import { RootProviderContainer } from '$container/root.provider';
-import { AuthenticationService } from '$ssr/api/AuthenticationService';
-import { UserService } from '$ssr/api/UserService';
+import { Theme } from '@/api/ssr-financer-api';
+import { faviconList } from '@/assets/favicon-list';
+import { RootProviderContainer } from '@/container/root.provider';
+import { AuthenticationService } from '@/ssr/api/AuthenticationService';
+import { UserService } from '@/ssr/api/UserService';
 import { ChildrenProp } from 'src/types/children-prop';
 import { CustomHeader } from 'src/types/custom-headers';
 
@@ -27,18 +27,18 @@ export const metadata: Metadata = {
   manifest: '/manifest.json',
 };
 
-export async function generateViewport(): Promise<Viewport> {
+export const generateViewport = async (): Promise<Viewport> => {
   const authenticationStatus = await AuthenticationService.getStatus();
   const isLoggedIn = Boolean(authenticationStatus?.authenticated);
-  const theme = isLoggedIn ? await UserService.getOwnUserTheme() : Theme.Auto;
+  const theme = isLoggedIn ? await UserService.getOwnUserTheme() : Theme.AUTO;
 
   let themeColor: Viewport['themeColor'];
 
   switch (theme) {
-    case Theme.Light:
+    case Theme.LIGHT:
       themeColor = 'hsl(0 0% 96%)';
       break;
-    case Theme.Dark:
+    case Theme.DARK:
       themeColor = 'hsl(0 0% 11%)';
       break;
     default:
@@ -57,7 +57,7 @@ export async function generateViewport(): Promise<Viewport> {
     maximumScale: 1.0,
     userScalable: false,
   };
-}
+};
 
 const PUBLIC_ROUTES = ['/privacy-policy/', '/issues-with-login/', '/login/'];
 
@@ -75,7 +75,7 @@ const RootLayout: FC<ChildrenProp> = async ({ children }) => {
     redirect('/', RedirectType.replace);
   }
 
-  const theme = isLoggedIn ? await UserService.getOwnUserTheme() : Theme.Auto;
+  const theme = isLoggedIn ? await UserService.getOwnUserTheme() : Theme.AUTO;
 
   // We don't have to polyfill every feature by our self, since next js already does by default for many features
   // See the full list from here: https://nextjs.org/docs/architecture/supported-browsers
@@ -83,8 +83,8 @@ const RootLayout: FC<ChildrenProp> = async ({ children }) => {
     <html
       lang="en"
       className={clsx({
-        dark: theme === Theme.Dark,
-        light: theme === Theme.Light,
+        dark: theme === Theme.DARK,
+        light: theme === Theme.LIGHT,
       })}
     >
       <head>
@@ -93,7 +93,7 @@ const RootLayout: FC<ChildrenProp> = async ({ children }) => {
       <body className={clsx('max-lg:pb-(--gutter-bottom)')}>
         <RootProviderContainer
           shouldShowOnboarding={!authenticationStatus?.hasAccounts}
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          // eslint-disable-next-line  @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
           authenticationErrors={(authenticationStatus as any)?.errors}
         >
           {children}

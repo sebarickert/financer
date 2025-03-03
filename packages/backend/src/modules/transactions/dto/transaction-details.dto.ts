@@ -22,11 +22,17 @@ export class TransactionDetailsDto
     Object.assign(this, values);
   }
 
-  @ApiProperty()
+  @ApiProperty({
+    type: String,
+    nullable: true,
+  })
   @IsString()
   fromAccountName!: string | null;
 
-  @ApiProperty()
+  @ApiProperty({
+    type: String,
+    nullable: true,
+  })
   @IsString()
   toAccountName!: string | null;
 

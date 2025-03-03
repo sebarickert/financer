@@ -7,13 +7,13 @@ import { useDispatch } from 'react-redux';
 
 import { StoreProvider } from './store.provider';
 
-import { ScrollToTop } from '$blocks/ScrollToTop';
-import { ToastMessageTypes } from '$blocks/Toast/Toast';
-import { Link } from '$elements/Link';
+import { ScrollToTop } from '@/blocks/ScrollToTop';
+import { ToastMessageTypes } from '@/blocks/Toast/Toast';
+import { Link } from '@/elements/Link';
 import {
   addToastMessage,
   removeToastMessage,
-} from '$reducer/notifications.reducer';
+} from '@/reducer/notifications.reducer';
 
 type RootProviderContainerProps = {
   children: React.ReactNode;

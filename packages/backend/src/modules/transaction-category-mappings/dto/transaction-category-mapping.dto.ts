@@ -1,4 +1,4 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { TransactionCategoryMapping } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime/library';
 import { IsOptional, IsString, IsUUID } from 'class-validator';
@@ -28,7 +28,7 @@ export class TransactionCategoryMappingDto
   @IsUUID()
   userId!: UserId;
 
-  @ApiPropertyOptional()
+  @ApiProperty({ type: String, nullable: true })
   @IsOptional()
   @IsString()
   description: string | null = null;

@@ -5,18 +5,18 @@ import { useForm } from 'react-hook-form';
 
 import { getAllChildCategoryIds } from '../../services/TransactionCategoriesService';
 
-import { TransactionType, VisibilityType } from '$api/generated/financerApi';
-import { Form } from '$blocks/Form';
-import { TRANSACTION_TYPE_MAPPING } from '$constants/transaction/TRANSACTION_TYPE_MAPPING';
-import { Button } from '$elements/Button/Button';
-import { Input } from '$elements/Input';
-import { InputOption } from '$elements/InputOption';
-import { Select } from '$elements/Select';
+import { TransactionType, VisibilityType } from '@/api/ssr-financer-api';
+import { Form } from '@/blocks/Form';
+import { TRANSACTION_TYPE_MAPPING } from '@/constants/transaction/TRANSACTION_TYPE_MAPPING';
+import { Button } from '@/elements/Button/Button';
+import { Input } from '@/elements/Input';
+import { InputOption } from '@/elements/InputOption';
+import { Select } from '@/elements/Select';
 import {
   DefaultFormActionHandler,
   useFinancerFormState,
-} from '$hooks/useFinancerFormState';
-import { TransactionCategoryDtoWithCategoryTree } from '$types/TransactionCategoryDtoWithCategoryTree';
+} from '@/hooks/useFinancerFormState';
+import { TransactionCategoryDtoWithCategoryTree } from '@/types/TransactionCategoryDtoWithCategoryTree';
 
 interface CategoryFormProps {
   onSubmit: DefaultFormActionHandler;
@@ -28,20 +28,20 @@ interface CategoryFormProps {
 
 export interface TransactionCategoryFormFields {
   name: string;
-  visibility: TransactionType[];
+  visibility: readonly TransactionType[];
   parentCategoryId: string | null;
 }
 
 const visibilityTypeMapping = {
-  [VisibilityType.Income]: {
+  [VisibilityType.INCOME]: {
     label: 'Income',
     icon: TRANSACTION_TYPE_MAPPING.INCOME.Icon,
   },
-  [VisibilityType.Expense]: {
+  [VisibilityType.EXPENSE]: {
     label: 'Expense',
     icon: TRANSACTION_TYPE_MAPPING.EXPENSE.Icon,
   },
-  [VisibilityType.Transfer]: {
+  [VisibilityType.TRANSFER]: {
     label: 'Transfer',
     icon: TRANSACTION_TYPE_MAPPING.TRANSFER.Icon,
   },

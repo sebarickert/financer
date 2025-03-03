@@ -3,25 +3,25 @@ import { RefreshCw } from 'lucide-react';
 import { FC } from 'react';
 
 import {
-  ExpenseListItemDto,
-  IncomeListItemDto,
-  TransactionListItemDto,
+  SchemaExpenseListItemDto,
+  SchemaIncomeListItemDto,
+  SchemaTransactionListItemDto,
+  SchemaTransferListItemDto,
   TransactionType,
-  TransferListItemDto,
-} from '$api/generated/financerApi';
-import { TRANSACTION_TYPE_MAPPING } from '$constants/transaction/TRANSACTION_TYPE_MAPPING';
-import { Link } from '$elements/Link';
-import { DateService } from '$services/DateService';
-import { formatCurrency } from '$utils/formatCurrency';
+} from '@/api/ssr-financer-api';
+import { TRANSACTION_TYPE_MAPPING } from '@/constants/transaction/TRANSACTION_TYPE_MAPPING';
+import { Link } from '@/elements/Link';
+import { DateService } from '@/services/DateService';
+import { formatCurrency } from '@/utils/formatCurrency';
 
 export const TransactionListItem: FC<
-  | TransactionListItemDto
-  | ExpenseListItemDto
-  | IncomeListItemDto
-  | TransferListItemDto
+  | SchemaTransactionListItemDto
+  | SchemaExpenseListItemDto
+  | SchemaIncomeListItemDto
+  | SchemaTransferListItemDto
 > = ({ amount, date, description, id, isRecurring, categories, type }) => {
-  const isIncome = type === TransactionType.Income;
-  const isExpense = type === TransactionType.Expense;
+  const isIncome = type === TransactionType.INCOME;
+  const isExpense = type === TransactionType.EXPENSE;
 
   const url = `/transactions/${type.toLowerCase()}s/${id}`;
   const formattedCategories = categories.map(({ name }) => name).join(', ');

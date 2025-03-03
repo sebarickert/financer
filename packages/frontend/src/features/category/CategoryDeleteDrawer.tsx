@@ -3,11 +3,11 @@
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { handleCategoryDelete } from '$actions/category/handleCategoryDelete';
-import { Drawer } from '$blocks/Drawer';
-import { Form } from '$blocks/Form';
-import { Button } from '$elements/Button/Button';
-import { useFinancerFormState } from '$hooks/useFinancerFormState';
+import { handleCategoryDelete } from '@/actions/category/handleCategoryDelete';
+import { Drawer } from '@/blocks/Drawer';
+import { Form } from '@/blocks/Form';
+import { Button } from '@/elements/Button/Button';
+import { useFinancerFormState } from '@/hooks/useFinancerFormState';
 
 interface CategoryDeleteDrawerProps {
   id: string;

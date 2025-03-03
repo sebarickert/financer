@@ -1,7 +1,7 @@
 'use server';
 
-import { BaseApi } from '$ssr/api/BaseApi';
+import { BaseApi } from '@/ssr/api/BaseApi';
 
-export const revalidateFullAppCache = async () => {
+export const revalidateFullAppCache = () => {
   BaseApi.revalidateFullAppCache();
 };

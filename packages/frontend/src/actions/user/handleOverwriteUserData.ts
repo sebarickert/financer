@@ -1,18 +1,18 @@
 'use server';
 
 import {
-  AccountBalanceChangeDto,
-  AccountDto,
-  TransactionCategoryDto,
-  TransactionCategoryMappingDto,
-  TransactionDto,
-  TransactionTemplateDto,
-  TransactionTemplateLogDto,
-  UserPreferenceDto,
-} from '$api/generated/financerApi';
-import { ValidationException } from '$exceptions/validation.exception';
-import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
-import { UserService } from '$ssr/api/UserService';
+  SchemaAccountBalanceChangeDto,
+  SchemaAccountDto,
+  SchemaTransactionCategoryDto,
+  SchemaTransactionCategoryMappingDto,
+  SchemaTransactionDto,
+  SchemaTransactionTemplateDto,
+  SchemaTransactionTemplateLogDto,
+  SchemaUserPreferenceDto,
+} from '@/api/ssr-financer-api';
+import { ValidationException } from '@/exceptions/validation.exception';
+import { DefaultFormActionHandler } from '@/hooks/useFinancerFormState';
+import { UserService } from '@/ssr/api/UserService';
 
 export const handleOverwriteUserData: DefaultFormActionHandler = async (
   prev,
@@ -20,35 +20,35 @@ export const handleOverwriteUserData: DefaultFormActionHandler = async (
 ) => {
   const accountBalanceChanges = JSON.parse(
     formData.get('accountBalanceChanges') as string,
-  ) as AccountBalanceChangeDto[];
+  ) as SchemaAccountBalanceChangeDto[];
 
   const accounts = JSON.parse(
     formData.get('accounts') as string,
-  ) as AccountDto[];
+  ) as SchemaAccountDto[];
 
   const transactionCategories = JSON.parse(
     formData.get('transactionCategories') as string,
-  ) as TransactionCategoryDto[];
+  ) as SchemaTransactionCategoryDto[];
 
   const transactionCategoryMappings = JSON.parse(
     formData.get('transactionCategoryMappings') as string,
-  ) as TransactionCategoryMappingDto[];
+  ) as SchemaTransactionCategoryMappingDto[];
 
   const transactions = JSON.parse(
     formData.get('transactions') as string,
-  ) as TransactionDto[];
+  ) as SchemaTransactionDto[];
 
   const transactionTemplates = JSON.parse(
     formData.get('transactionTemplates') as string,
-  ) as TransactionTemplateDto[];
+  ) as SchemaTransactionTemplateDto[];
 
   const userPreferences = JSON.parse(
     formData.get('userPreferences') as string,
-  ) as UserPreferenceDto[];
+  ) as SchemaUserPreferenceDto[];
 
   const transactionTemplateLogs = JSON.parse(
     formData.get('transactionTemplateLogs') as string,
-  ) as TransactionTemplateLogDto[];
+  ) as SchemaTransactionTemplateLogDto[];
 
   try {
     await UserService.DEBUG_overrideOwnUserData({

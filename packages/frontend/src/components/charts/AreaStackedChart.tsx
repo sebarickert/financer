@@ -14,15 +14,15 @@ import {
 
 import { CustomTooltip } from './CustomTooltip';
 
-import { ChartConfig } from '$types/ChartConfig';
-import { ChartData } from '$types/ChartData';
+import { ChartConfig } from '@/types/ChartConfig';
+import { ChartData } from '@/types/ChartData';
 
 interface AreaStackedChartProps {
   data: ChartData;
   config: ChartConfig;
   className?: string;
-  yaxisTickFormatter?(value: unknown, index: number): string;
-  xaxisTickFormatter?(value: unknown, index: number): string;
+  yaxisTickFormatter?: (value: unknown, index: number) => string;
+  xaxisTickFormatter?: (value: unknown, index: number) => string;
 }
 
 export const AreaStackedChart: FC<AreaStackedChartProps> = ({

@@ -6,7 +6,7 @@ import { Button } from './Button/Button';
 import { Heading } from './Heading';
 import { Link } from './Link';
 
-import { List } from '$blocks/List';
+import { List } from '@/blocks/List';
 
 type PopperItem =
   | {

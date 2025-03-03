@@ -1,10 +1,10 @@
 import { FC } from 'react';
 
-import { StatisticsOverviewData } from '$features/statistics/StatisticsOverviewData';
-import { TransactionsLayout } from '$features/transactions/TransactionsLayout';
-import { DateService } from '$services/DateService';
-import { TransactionService } from '$ssr/api/TransactionService';
-import { UserPreferenceService } from '$ssr/api/UserPreferenceService';
+import { StatisticsOverviewData } from '@/features/statistics/StatisticsOverviewData';
+import { TransactionsLayout } from '@/features/transactions/TransactionsLayout';
+import { DateService } from '@/services/DateService';
+import { TransactionService } from '@/ssr/api/TransactionService';
+import { UserPreferenceService } from '@/ssr/api/UserPreferenceService';
 
 export const StatisticsOverviewContainer: FC = async () => {
   const statisticsSettings =

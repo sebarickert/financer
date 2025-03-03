@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
-import { CategoryContainer } from '$container/categories/CategoryContainer';
-import { CategoryService } from '$ssr/api/CategoryService';
+import { CategoryContainer } from '@/container/categories/CategoryContainer';
+import { CategoryService } from '@/ssr/api/CategoryService';
 
 type Params = Promise<{
   categoryId: string;

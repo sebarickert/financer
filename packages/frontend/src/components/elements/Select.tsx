@@ -13,7 +13,7 @@ interface SelectProps {
   options: Option[];
   defaultValue?: string;
   className?: string;
-  handleOnChange?(event: React.ChangeEvent<HTMLSelectElement>): void;
+  handleOnChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   testId?: string;
   placeholder?: string;
   shouldUnregister?: boolean;
@@ -74,6 +74,7 @@ export const Select = ({
   testId,
   isDisabled = false,
   placeholder = 'Select option',
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   handleOnChange = () => {},
   shouldUnregister,
   isLabelHidden,

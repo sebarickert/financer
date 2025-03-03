@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 
-import { DashboardContainer } from '$container/DashboardContainer';
+import { DashboardContainer } from '@/container/DashboardContainer';
 
 export const metadata: Metadata = {
   title: 'Dashboard',

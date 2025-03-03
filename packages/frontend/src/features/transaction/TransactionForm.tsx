@@ -6,29 +6,21 @@ import { useForm } from 'react-hook-form';
 import { CategoriesFormFullFields } from './TransactionCategories/transaction-categories.types';
 import { TransactionCategories } from './TransactionCategories/TransactionCategories';
 
-import { useAccountsFindAllByUserQuery } from '$api/generated/financerApi';
-import { Form } from '$blocks/Form';
-import { ACCOUNT_TYPE_MAPPING } from '$constants/account/ACCOUNT_TYPE_MAPPING';
-import { TRANSACTION_TYPE_MAPPING } from '$constants/transaction/TRANSACTION_TYPE_MAPPING';
-import { Button } from '$elements/Button/Button';
-import { Input } from '$elements/Input';
-import { Select } from '$elements/Select';
+import { SchemaAccountDto } from '@/api/ssr-financer-api';
+import { Form } from '@/blocks/Form';
+import { ACCOUNT_TYPE_MAPPING } from '@/constants/account/ACCOUNT_TYPE_MAPPING';
+import { TRANSACTION_TYPE_MAPPING } from '@/constants/transaction/TRANSACTION_TYPE_MAPPING';
+import { Button } from '@/elements/Button/Button';
+import { Input } from '@/elements/Input';
+import { Select } from '@/elements/Select';
 import {
   DefaultFormActionHandler,
   useFinancerFormState,
-} from '$hooks/useFinancerFormState';
-import { DATE_FORMAT, DateService } from '$services/DateService';
-import { TransactionCategoryDtoWithCategoryTree } from '$types/TransactionCategoryDtoWithCategoryTree';
-import { formatCurrency } from '$utils/formatCurrency';
+} from '@/hooks/useFinancerFormState';
+import { DATE_FORMAT, DateService } from '@/services/DateService';
+import { TransactionCategoryDtoWithCategoryTree } from '@/types/TransactionCategoryDtoWithCategoryTree';
+import { formatCurrency } from '@/utils/formatCurrency';
 
-interface TransactionFormProps {
-  hasFromAccountField?: boolean;
-  hasToAccountField?: boolean;
-  initialValues?: Partial<TransactionFormFields>;
-  onSubmit: DefaultFormActionHandler;
-  transactionCategoriesWithCategoryTree?: TransactionCategoryDtoWithCategoryTree[];
-  testId?: string;
-}
 export interface TransactionFormFields {
   amount: number;
   description: string;
@@ -36,6 +28,15 @@ export interface TransactionFormFields {
   categories: CategoriesFormFullFields[];
   toAccount: string;
   fromAccount: string;
+}
+interface TransactionFormProps {
+  accounts: SchemaAccountDto[];
+  hasFromAccountField?: boolean;
+  hasToAccountField?: boolean;
+  initialValues?: Partial<TransactionFormFields>;
+  onSubmit: DefaultFormActionHandler;
+  transactionCategoriesWithCategoryTree?: TransactionCategoryDtoWithCategoryTree[];
+  testId?: string;
 }
 
 export const TransactionForm: FC<TransactionFormProps> = ({
@@ -45,6 +46,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
   onSubmit,
   testId,
   transactionCategoriesWithCategoryTree,
+  accounts,
 }) => {
   const action = useFinancerFormState('transaction-form', onSubmit);
 
@@ -52,8 +54,8 @@ export const TransactionForm: FC<TransactionFormProps> = ({
     () => ({
       date: new DateService().format(DATE_FORMAT.INPUT),
       ...initialValues,
-      toAccount: initialValues?.toAccount || '',
-      fromAccount: initialValues?.fromAccount || '',
+      toAccount: initialValues?.toAccount ?? '',
+      fromAccount: initialValues?.fromAccount ?? '',
     }),
     [initialValues],
   );
@@ -64,10 +66,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
 
   const { reset } = methods;
 
-  const { data: accounts } = useAccountsFindAllByUserQuery({});
-
   const accountOptions = useMemo(() => {
-    if (!accounts) return [];
     return accounts.map(({ id, name, type, balance }) => ({
       value: id,
       label: name,
@@ -92,11 +91,10 @@ export const TransactionForm: FC<TransactionFormProps> = ({
 
     reset({
       ...defaultValues,
-      categories: defaultValues.categories || [], // Have to reset categories separately for some odd reason
+      // Have to reset categories separately for some odd reason
+      categories: defaultValues.categories ?? [],
     });
   }, [defaultValues, initialValues, reset]);
-
-  if (!accounts) return null;
 
   return (
     <Form

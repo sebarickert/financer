@@ -2,8 +2,8 @@ import clsx from 'clsx';
 import { RefreshCw } from 'lucide-react';
 import { FC } from 'react';
 
-import { TransactionType } from '$api/generated/financerApi';
-import { TRANSACTION_TYPE_MAPPING } from '$constants/transaction/TRANSACTION_TYPE_MAPPING';
+import { TransactionType } from '@/api/ssr-financer-api';
+import { TRANSACTION_TYPE_MAPPING } from '@/constants/transaction/TRANSACTION_TYPE_MAPPING';
 
 interface TransactionTypeIconProps {
   type: TransactionType;

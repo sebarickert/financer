@@ -9,7 +9,7 @@ import {
   UseFormReturn,
 } from 'react-hook-form';
 
-import { Loader } from '$elements/Loader';
+import { Loader } from '@/elements/Loader';
 
 type FormProps<FormValues extends FieldValues> = {
   children: React.ReactNode;
@@ -41,6 +41,7 @@ export const Form = <T extends FieldValues>({
     <FormProvider {...methods}>
       <form
         action={action}
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         onSubmit={onSubmit ? handleSubmit(onSubmit) : undefined}
         data-testid={testId}
         className={clsx(className)}

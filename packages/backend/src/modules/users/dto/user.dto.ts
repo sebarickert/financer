@@ -29,17 +29,17 @@ export class UserDto implements User {
 
   @IsOptional()
   @IsNotEmpty()
-  @ApiProperty()
+  @ApiProperty({ type: String, nullable: true })
   githubId!: string | null;
 
   @IsOptional()
   @IsNotEmpty()
-  @ApiProperty()
+  @ApiProperty({ type: String, nullable: true })
   auth0Id!: string | null;
 
   @IsOptional()
   @IsNotEmpty()
-  @ApiProperty()
+  @ApiProperty({ type: String, nullable: true })
   profileImageUrl!: string | null;
 
   @IsOptional()

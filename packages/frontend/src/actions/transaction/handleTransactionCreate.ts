@@ -3,21 +3,21 @@
 import { RedirectType, redirect } from 'next/navigation';
 
 import {
-  ExpenseDetailsDto,
-  IncomeDetailsDto,
+  SchemaExpenseDetailsDto,
+  SchemaIncomeDetailsDto,
+  SchemaTransferDetailsDto,
   TransactionType,
-  TransferDetailsDto,
-} from '$api/generated/financerApi';
-import { ValidationException } from '$exceptions/validation.exception';
+} from '@/api/ssr-financer-api';
+import { ValidationException } from '@/exceptions/validation.exception';
 import {
   isCategoriesFormFullFields,
   parseCategoriesFormFullFields,
-} from '$features/transaction/TransactionCategories/transaction-categories.types';
-import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
-import { ExpenseService } from '$ssr/api/ExpenseService';
-import { IncomeService } from '$ssr/api/IncomeService';
-import { TransferService } from '$ssr/api/TransferService';
-import { parseArrayFromFormData } from '$utils/parseArrayFromFormData';
+} from '@/features/transaction/TransactionCategories/transaction-categories.types';
+import { DefaultFormActionHandler } from '@/hooks/useFinancerFormState';
+import { ExpenseService } from '@/ssr/api/ExpenseService';
+import { IncomeService } from '@/ssr/api/IncomeService';
+import { TransferService } from '@/ssr/api/TransferService';
+import { parseArrayFromFormData } from '@/utils/parseArrayFromFormData';
 
 export const handleTransactionCreate: DefaultFormActionHandler = async (
   prevState,
@@ -28,7 +28,7 @@ export const handleTransactionCreate: DefaultFormActionHandler = async (
     'categories',
     isCategoriesFormFullFields,
     parseCategoriesFormFullFields,
-  );
+  ).map((item) => ({ ...item, description: item.description ?? null }));
 
   const isIncome =
     Boolean(formData.get('toAccount')) && !formData.get('fromAccount');
@@ -36,27 +36,30 @@ export const handleTransactionCreate: DefaultFormActionHandler = async (
     !formData.get('toAccount') && Boolean(formData.get('fromAccount'));
 
   const type = isIncome
-    ? TransactionType.Income
+    ? TransactionType.INCOME
     : isExpense
-      ? TransactionType.Expense
-      : TransactionType.Transfer;
+      ? TransactionType.EXPENSE
+      : TransactionType.TRANSFER;
 
   const TransactionDataMapping = {
-    [TransactionType.Income]: {
+    [TransactionType.INCOME]: {
       service: IncomeService,
       url: '/transactions/incomes',
     },
-    [TransactionType.Expense]: {
+    [TransactionType.EXPENSE]: {
       service: ExpenseService,
       url: '/transactions/expenses',
     },
-    [TransactionType.Transfer]: {
+    [TransactionType.TRANSFER]: {
       service: TransferService,
       url: '/transactions/transfers',
     },
   };
 
-  let data: IncomeDetailsDto | ExpenseDetailsDto | TransferDetailsDto;
+  let data:
+    | SchemaIncomeDetailsDto
+    | SchemaExpenseDetailsDto
+    | SchemaTransferDetailsDto;
 
   try {
     data = await TransactionDataMapping[type].service.add({

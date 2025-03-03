@@ -1,4 +1,4 @@
-import { ContextualNavigationItem } from '$blocks/ContextualNavigation';
+import { ContextualNavigationItem } from '@/blocks/ContextualNavigation';
 
 export const settingsContextualNavigationItems: ContextualNavigationItem[] = [
   { label: 'General', url: '/settings/', isExact: true },

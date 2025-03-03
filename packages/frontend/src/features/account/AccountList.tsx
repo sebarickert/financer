@@ -1,13 +1,13 @@
 import clsx from 'clsx';
 import { FC, Fragment } from 'react';
 
-import { AccountDto } from '$api/generated/financerApi';
-import { BalanceDisplay } from '$blocks/BalanceDisplay';
-import { List } from '$blocks/List';
-import { ACCOUNT_TYPE_MAPPING } from '$constants/account/ACCOUNT_TYPE_MAPPING';
-import { Heading } from '$elements/Heading';
-import { Link } from '$elements/Link';
-import { formatCurrency } from '$utils/formatCurrency';
+import { SchemaAccountDto } from '@/api/ssr-financer-api';
+import { BalanceDisplay } from '@/blocks/BalanceDisplay';
+import { List } from '@/blocks/List';
+import { ACCOUNT_TYPE_MAPPING } from '@/constants/account/ACCOUNT_TYPE_MAPPING';
+import { Heading } from '@/elements/Heading';
+import { Link } from '@/elements/Link';
+import { formatCurrency } from '@/utils/formatCurrency';
 
 export interface AccountListingItem {
   balanceAmount: string;
@@ -18,7 +18,7 @@ export interface AccountListingItem {
 
 interface AccountListProps {
   label?: string;
-  accounts: AccountDto[] | undefined;
+  accounts: SchemaAccountDto[] | undefined;
   className?: string;
 }
 

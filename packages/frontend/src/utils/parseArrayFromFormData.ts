@@ -9,7 +9,7 @@ export const parseArrayFromFormData = <T>(
   arrayRootName: string,
   typeGuard: TypeGuard<T>,
   formatter?: Formatter<T>,
-): T[] => {
+): readonly T[] => {
   const result: unknown[] = [];
   const regex = new RegExp(`^${arrayRootName}\\.(\\d+)\\.(\\w+)$`);
 
@@ -26,7 +26,7 @@ export const parseArrayFromFormData = <T>(
 
       const formattedValue =
         formatter && formatter[property] ? formatter[property](value) : value;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
       (result[index] as any)[property] = formattedValue;
     }
   }

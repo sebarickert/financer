@@ -1,7 +1,7 @@
 'use server';
 
-import { UserService } from '$ssr/api/UserService';
+import { UserService } from '@/ssr/api/UserService';
 
-export const revalidateUserCache = async () => {
+export const revalidateUserCache = () => {
   UserService.revalidateCache();
 };

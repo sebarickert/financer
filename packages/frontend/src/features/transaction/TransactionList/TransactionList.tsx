@@ -4,17 +4,17 @@ import { FC } from 'react';
 
 import { TransactionListItem } from './TransactionListItem';
 
-import { TransactionListItemDto } from '$api/generated/financerApi';
-import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
-import { List } from '$blocks/List';
+import { SchemaTransactionListItemDto } from '@/api/ssr-financer-api';
+import { InfoMessageBlock } from '@/blocks/InfoMessageBlock';
+import { List } from '@/blocks/List';
 
 interface TransactionListProps {
-  items: TransactionListItemDto[];
+  items: SchemaTransactionListItemDto[];
   className?: string;
   label?: string;
 }
 
-export const TransactionList: FC<TransactionListProps> = async ({
+export const TransactionList: FC<TransactionListProps> = ({
   label,
   items,
   className,

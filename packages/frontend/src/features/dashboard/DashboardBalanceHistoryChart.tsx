@@ -3,17 +3,17 @@
 import clsx from 'clsx';
 import { FC, useMemo, useState } from 'react';
 
-import { AreaStackedChart } from '$charts/AreaStackedChart';
+import { AreaStackedChart } from '@/charts/AreaStackedChart';
 import {
   ChartFilterByMonthsSelect,
   monthFilterOptions,
-} from '$charts/ChartFilterByMonthsSelect';
-import { DATE_FORMAT, DateService } from '$services/DateService';
-import { ChartConfig } from '$types/ChartConfig';
+} from '@/charts/ChartFilterByMonthsSelect';
+import { DATE_FORMAT, DateService } from '@/services/DateService';
+import { ChartConfig } from '@/types/ChartConfig';
 import {
   formatCurrency,
   formatCurrencyAbbreviation,
-} from '$utils/formatCurrency';
+} from '@/utils/formatCurrency';
 
 interface DashboardBalanceHistoryChartProps {
   data: { date: Date; balance: number }[];
@@ -36,7 +36,7 @@ export const DashboardBalanceHistoryChart: FC<
     balance: {
       label: 'Balance',
       color: 'var(--color-blue)',
-      valueFormatter: formatCurrency,
+      valueFormatter: (value) => formatCurrency(value as number),
     },
   } satisfies ChartConfig;
 
@@ -71,13 +71,14 @@ export const DashboardBalanceHistoryChart: FC<
       <AreaStackedChart
         data={filteredChartData}
         config={chartConfig}
-        yaxisTickFormatter={(value: number) => {
-          return formatCurrencyAbbreviation(value);
+        yaxisTickFormatter={(value) => {
+          return formatCurrencyAbbreviation(value as number);
         }}
-        xaxisTickFormatter={(value: string) =>
-          DateService.parseFormat(value, DATE_FORMAT.MONTH_LONG).toFormat(
-            DATE_FORMAT.MONTH,
-          )
+        xaxisTickFormatter={(value) =>
+          DateService.parseFormat(
+            value as string,
+            DATE_FORMAT.MONTH_LONG,
+          ).toFormat(DATE_FORMAT.MONTH)
         }
       />
     </div>

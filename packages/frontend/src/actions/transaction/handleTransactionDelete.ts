@@ -2,11 +2,11 @@
 
 import { RedirectType, redirect } from 'next/navigation';
 
-import { TransactionType } from '$api/generated/financerApi';
-import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
-import { ExpenseService } from '$ssr/api/ExpenseService';
-import { IncomeService } from '$ssr/api/IncomeService';
-import { TransferService } from '$ssr/api/TransferService';
+import { TransactionType } from '@/api/ssr-financer-api';
+import { DefaultFormActionHandler } from '@/hooks/useFinancerFormState';
+import { ExpenseService } from '@/ssr/api/ExpenseService';
+import { IncomeService } from '@/ssr/api/IncomeService';
+import { TransferService } from '@/ssr/api/TransferService';
 
 export const handleTransactionDelete: DefaultFormActionHandler<{
   id: string;
@@ -17,9 +17,9 @@ export const handleTransactionDelete: DefaultFormActionHandler<{
   }
 
   const serviceMapping = {
-    [TransactionType.Income]: IncomeService,
-    [TransactionType.Expense]: ExpenseService,
-    [TransactionType.Transfer]: TransferService,
+    [TransactionType.INCOME]: IncomeService,
+    [TransactionType.EXPENSE]: ExpenseService,
+    [TransactionType.TRANSFER]: TransferService,
   };
 
   await serviceMapping[type].delete(id);

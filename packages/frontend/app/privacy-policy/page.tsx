@@ -2,9 +2,9 @@ import clsx from 'clsx';
 import { ArrowLeft } from 'lucide-react';
 import { Metadata } from 'next';
 
-import { Button } from '$elements/Button/Button';
-import { Heading } from '$elements/Heading';
-import { AuthenticationService } from '$ssr/api/AuthenticationService';
+import { Button } from '@/elements/Button/Button';
+import { Heading } from '@/elements/Heading';
+import { AuthenticationService } from '@/ssr/api/AuthenticationService';
 
 export const metadata: Metadata = {
   title: 'Privacy Policy',

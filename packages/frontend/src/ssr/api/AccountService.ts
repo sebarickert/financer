@@ -3,17 +3,17 @@ import { revalidateTag } from 'next/cache';
 import { BaseApi } from './BaseApi';
 
 import {
-  AccountBalanceHistoryDto,
-  AccountDto,
-  AccountsFindAllByUserApiArg,
-  CreateAccountDto,
-  UpdateAccountDto,
-} from '$api/generated/financerApi';
-import { ValidationException } from '$exceptions/validation.exception';
-import { isValidationErrorResponse } from '$utils/apiHelper';
+  SchemaAccountBalanceHistoryDto,
+  SchemaAccountDto,
+  SchemaCreateAccountDto,
+  SchemaUpdateAccountDto,
+  operations,
+} from '@/api/ssr-financer-api';
+import { ValidationException } from '@/exceptions/validation.exception';
+import { isValidationErrorResponse } from '@/utils/apiHelper';
 
 export class AccountService extends BaseApi {
-  public static async revalidateCache(id?: string): Promise<void> {
+  public static revalidateCache(id?: string): void {
     if (id) {
       revalidateTag(this.getEntityTag(this.API_TAG.ACCOUNT, id));
       return;
@@ -23,11 +23,11 @@ export class AccountService extends BaseApi {
   }
 
   public static async getAll(
-    params: AccountsFindAllByUserApiArg = {},
-  ): Promise<AccountDto[]> {
+    options: operations['Accounts_findAllByUser']['parameters']['query'] = {},
+  ): Promise<SchemaAccountDto[]> {
     const { data, error } = await this.client.GET('/api/accounts', {
       params: {
-        query: params,
+        query: options,
       },
       next: {
         tags: [
@@ -44,10 +44,10 @@ export class AccountService extends BaseApi {
       throw new Error('Failed to fetch accounts', error);
     }
 
-    return data as AccountDto[];
+    return data as SchemaAccountDto[];
   }
 
-  public static async getById(id: string): Promise<AccountDto | null> {
+  public static async getById(id: string): Promise<SchemaAccountDto | null> {
     const { data } = await this.client.GET(`/api/accounts/{id}`, {
       params: {
         path: { id },
@@ -64,11 +64,11 @@ export class AccountService extends BaseApi {
       },
     });
 
-    return data as AccountDto;
+    return data ?? null;
   }
 
   public static async getTotalBalance(
-    dashboardSettings: Pick<AccountsFindAllByUserApiArg, 'accountTypes'> = {
+    dashboardSettings: operations['Accounts_findAllByUser']['parameters']['query'] = {
       accountTypes: undefined,
     },
   ): Promise<number> {
@@ -87,7 +87,7 @@ export class AccountService extends BaseApi {
 
   public static async getAccountBalanceHistory(
     id: string,
-  ): Promise<AccountBalanceHistoryDto[]> {
+  ): Promise<SchemaAccountBalanceHistoryDto[]> {
     const { data } = await this.client.GET(
       `/api/accounts/{id}/balance-history`,
       {
@@ -107,10 +107,10 @@ export class AccountService extends BaseApi {
       },
     );
 
-    return data as AccountBalanceHistoryDto[];
+    return data as SchemaAccountBalanceHistoryDto[];
   }
 
-  public static async add(newAccount: CreateAccountDto): Promise<void> {
+  public static async add(newAccount: SchemaCreateAccountDto): Promise<void> {
     const { error } = await this.client.POST('/api/accounts', {
       body: newAccount,
     });
@@ -129,12 +129,12 @@ export class AccountService extends BaseApi {
       throw new Error('Failed to add account', error);
     }
 
-    await this.revalidateCache();
+    this.revalidateCache();
   }
 
   public static async update(
     id: string,
-    updatedAccount: UpdateAccountDto,
+    updatedAccount: SchemaUpdateAccountDto,
   ): Promise<void> {
     const { error } = await this.client.PATCH(`/api/accounts/{id}`, {
       params: {
@@ -157,8 +157,8 @@ export class AccountService extends BaseApi {
       throw new Error('Failed to add account', error);
     }
 
-    await this.revalidateCache(id);
-    await this.revalidateCache();
+    this.revalidateCache(id);
+    this.revalidateCache();
   }
 
   public static async delete(id: string): Promise<void> {
@@ -172,6 +172,6 @@ export class AccountService extends BaseApi {
       throw new Error('Failed to delete account', error);
     }
 
-    await this.revalidateCache();
+    this.revalidateCache();
   }
 }

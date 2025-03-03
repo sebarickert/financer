@@ -2,8 +2,8 @@
 
 import { RedirectType, redirect } from 'next/navigation';
 
-import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
-import { CategoryService } from '$ssr/api/CategoryService';
+import { DefaultFormActionHandler } from '@/hooks/useFinancerFormState';
+import { CategoryService } from '@/ssr/api/CategoryService';
 
 export const handleCategoryDelete: DefaultFormActionHandler<{
   id: string;

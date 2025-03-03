@@ -1,16 +1,16 @@
 import { Pencil, Trash } from 'lucide-react';
 import { FC } from 'react';
 
-import { Popper } from '$elements/Popper';
-import { CategoryDeleteDrawer } from '$features/category/CategoryDeleteDrawer';
-import { Layout } from '$layouts/Layout';
-import { CategoryService } from '$ssr/api/CategoryService';
-import { Category } from '$views/Category';
+import { Popper } from '@/elements/Popper';
+import { CategoryDeleteDrawer } from '@/features/category/CategoryDeleteDrawer';
+import { Layout } from '@/layouts/Layout';
+import { CategoryService } from '@/ssr/api/CategoryService';
+import { Category } from '@/views/Category';
 
-type CategoryContainerProps = {
+interface CategoryContainerProps {
   id: string;
   queryDate?: string;
-};
+}
 
 export const CategoryContainer: FC<CategoryContainerProps> = async ({
   id,

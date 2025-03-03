@@ -3,26 +3,26 @@
 import clsx from 'clsx';
 import { FC } from 'react';
 
-import { AccountDto, AccountType } from '$api/generated/financerApi';
-import { Card } from '$blocks/Card/Card';
-import { DetailsItem, DetailsList } from '$blocks/DetailsList';
-import { PieChartDonut } from '$charts/PieChartDonut';
-import { ACCOUNT_TYPE_MAPPING } from '$constants/account/ACCOUNT_TYPE_MAPPING';
-import { ChartConfig } from '$types/ChartConfig';
-import { ChartData } from '$types/ChartData';
-import { formatCurrency } from '$utils/formatCurrency';
+import { AccountType, SchemaAccountDto } from '@/api/ssr-financer-api';
+import { Card } from '@/blocks/Card/Card';
+import { DetailsItem, DetailsList } from '@/blocks/DetailsList';
+import { PieChartDonut } from '@/charts/PieChartDonut';
+import { ACCOUNT_TYPE_MAPPING } from '@/constants/account/ACCOUNT_TYPE_MAPPING';
+import { ChartConfig } from '@/types/ChartConfig';
+import { ChartData } from '@/types/ChartData';
+import { formatCurrency } from '@/utils/formatCurrency';
 
 interface AccountTypeBalanceChartProps {
-  data: AccountDto[];
+  data: SchemaAccountDto[];
   className?: string;
 }
 
 const ALLOWED_ACCOUNT_TYPES = [
-  AccountType.Savings,
-  AccountType.Cash,
-  AccountType.LongTermSavings,
-  AccountType.PreAssignedCash,
-  AccountType.Investment,
+  AccountType.SAVINGS,
+  AccountType.CASH,
+  AccountType.LONG_TERM_SAVINGS,
+  AccountType.PRE_ASSIGNED_CASH,
+  AccountType.INVESTMENT,
 ];
 
 export const AccountTypeBalanceChart: FC<AccountTypeBalanceChartProps> = ({
@@ -68,30 +68,30 @@ export const AccountTypeBalanceChart: FC<AccountTypeBalanceChartProps> = ({
   };
 
   const chartConfig = {
-    [AccountType.Savings]: {
-      label: ACCOUNT_TYPE_MAPPING[AccountType.Savings].label,
+    [AccountType.SAVINGS]: {
+      label: ACCOUNT_TYPE_MAPPING[AccountType.SAVINGS].label,
       color: 'var(--account-SAVINGS)',
-      valueFormatter: calculateBalancePercentage,
+      valueFormatter: (value) => calculateBalancePercentage(value as number),
     },
-    [AccountType.Cash]: {
-      label: ACCOUNT_TYPE_MAPPING[AccountType.Cash].label,
+    [AccountType.CASH]: {
+      label: ACCOUNT_TYPE_MAPPING[AccountType.CASH].label,
       color: 'var(--account-CASH)',
-      valueFormatter: calculateBalancePercentage,
+      valueFormatter: (value) => calculateBalancePercentage(value as number),
     },
-    [AccountType.LongTermSavings]: {
-      label: ACCOUNT_TYPE_MAPPING[AccountType.LongTermSavings].label,
+    [AccountType.LONG_TERM_SAVINGS]: {
+      label: ACCOUNT_TYPE_MAPPING[AccountType.LONG_TERM_SAVINGS].label,
       color: 'var(--account-LONG-TERM-SAVINGS)',
-      valueFormatter: calculateBalancePercentage,
+      valueFormatter: (value) => calculateBalancePercentage(value as number),
     },
-    [AccountType.PreAssignedCash]: {
-      label: ACCOUNT_TYPE_MAPPING[AccountType.PreAssignedCash].label,
+    [AccountType.PRE_ASSIGNED_CASH]: {
+      label: ACCOUNT_TYPE_MAPPING[AccountType.PRE_ASSIGNED_CASH].label,
       color: 'var(--account-PRE-ASSIGNED-CASH)',
-      valueFormatter: calculateBalancePercentage,
+      valueFormatter: (value) => calculateBalancePercentage(value as number),
     },
-    [AccountType.Investment]: {
-      label: ACCOUNT_TYPE_MAPPING[AccountType.Investment].label,
+    [AccountType.INVESTMENT]: {
+      label: ACCOUNT_TYPE_MAPPING[AccountType.INVESTMENT].label,
       color: 'var(--account-INVESTMENT)',
-      valueFormatter: calculateBalancePercentage,
+      valueFormatter: (value) => calculateBalancePercentage(value as number),
     },
   } satisfies ChartConfig;
 

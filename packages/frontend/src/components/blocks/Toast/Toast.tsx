@@ -3,8 +3,8 @@ import { X } from 'lucide-react';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Button } from '$elements/Button/Button';
-import { removeToastMessage } from '$reducer/notifications.reducer';
+import { Button } from '@/elements/Button/Button';
+import { removeToastMessage } from '@/reducer/notifications.reducer';
 
 export enum ToastMessageTypes {
   ERROR,

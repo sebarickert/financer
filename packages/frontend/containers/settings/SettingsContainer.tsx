@@ -1,15 +1,15 @@
 import { TriangleAlert } from 'lucide-react';
 import { FC } from 'react';
 
-import { Role } from '$api/generated/financerApi';
-import { List } from '$blocks/List';
-import { ProminentLink } from '$blocks/ProminentLink';
-import { ThemeSwitcher } from '$blocks/ThemeSwitcher/ThemeSwitcher';
-import { settingsPaths } from '$constants/settingsPaths';
-import { Button } from '$elements/Button/Button';
-import { Heading } from '$elements/Heading';
-import { SettingsLayout } from '$features/settings/SettingsLayout';
-import { UserService } from '$ssr/api/UserService';
+import { Role } from '@/api/ssr-financer-api';
+import { List } from '@/blocks/List';
+import { ProminentLink } from '@/blocks/ProminentLink';
+import { ThemeSwitcher } from '@/blocks/ThemeSwitcher/ThemeSwitcher';
+import { settingsPaths } from '@/constants/settingsPaths';
+import { Button } from '@/elements/Button/Button';
+import { Heading } from '@/elements/Heading';
+import { SettingsLayout } from '@/features/settings/SettingsLayout';
+import { UserService } from '@/ssr/api/UserService';
 
 export const SettingsContainer: FC = async () => {
   const userInfo = await UserService.getOwnUser();
@@ -18,7 +18,7 @@ export const SettingsContainer: FC = async () => {
     <SettingsLayout title="General">
       <div className="grid gap-6">
         <List>
-          {userInfo.roles.includes(Role.TestUser) && (
+          {userInfo.roles.includes(Role.TEST_USER) && (
             <ProminentLink
               link={settingsPaths.dataOverwrite}
               Icon={TriangleAlert}

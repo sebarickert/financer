@@ -55,6 +55,9 @@ export class AccountsController {
   @ApiQuery({
     name: 'accountTypes',
     required: false,
+    enum: AccountType,
+    enumName: 'AccountType',
+    isArray: true,
   })
   async findAllByUser(
     @UserIdDecorator() userId: UserId,

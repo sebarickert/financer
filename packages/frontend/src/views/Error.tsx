@@ -1,7 +1,7 @@
 'use client';
 
-import { Button } from '$elements/Button/Button';
-import { Link } from '$elements/Link';
+import { Button } from '@/elements/Button/Button';
+import { Link } from '@/elements/Link';
 
 interface ErrorProps {
   errorPageType: 'full-app' | 'in-app';

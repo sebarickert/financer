@@ -2,12 +2,13 @@ import clsx from 'clsx';
 import { Plus } from 'lucide-react';
 import { FC, Suspense } from 'react';
 
-import { Drawer } from '$blocks/Drawer';
-import { Button } from '$elements/Button/Button';
-import { TransactionFormSwitcher } from '$features/transaction/TransactionFormSwitcher';
-import { CategoryService } from '$ssr/api/CategoryService';
-import { TransactionTemplateService } from '$ssr/api/TransactionTemplateService';
-import { UserPreferenceService } from '$ssr/api/UserPreferenceService';
+import { Drawer } from '@/blocks/Drawer';
+import { Button } from '@/elements/Button/Button';
+import { TransactionFormSwitcher } from '@/features/transaction/TransactionFormSwitcher';
+import { AccountService } from '@/ssr/api/AccountService';
+import { CategoryService } from '@/ssr/api/CategoryService';
+import { TransactionTemplateService } from '@/ssr/api/TransactionTemplateService';
+import { UserPreferenceService } from '@/ssr/api/UserPreferenceService';
 
 interface CreateTransactionButtonProps {
   id?: string;
@@ -81,6 +82,7 @@ const NavigationCreateTransactionButton: FC<
 
   const categories = await CategoryService.getAllWithTree();
   const templates = await TransactionTemplateService.getAll();
+  const accounts = await AccountService.getAll();
 
   return (
     <li className={clsx(className)}>
@@ -94,6 +96,7 @@ const NavigationCreateTransactionButton: FC<
           defaultTransferFromAccountId={defaultTransferFromAccountId}
           transactionCategoriesWithCategoryTree={categories}
           transactionTemplates={templates}
+          accounts={accounts}
         />
       </Drawer>
       <CreateTransactionButton id={id} />

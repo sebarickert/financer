@@ -2,8 +2,8 @@
 
 import { RedirectType, redirect } from 'next/navigation';
 
-import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
-import { TransactionTemplateService } from '$ssr/api/TransactionTemplateService';
+import { DefaultFormActionHandler } from '@/hooks/useFinancerFormState';
+import { TransactionTemplateService } from '@/ssr/api/TransactionTemplateService';
 
 export const handleTemplateDelete: DefaultFormActionHandler<{
   id: string;

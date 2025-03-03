@@ -1,11 +1,11 @@
 import { useActionState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { ToastMessageTypes } from '$blocks/Toast/Toast';
+import { ToastMessageTypes } from '@/blocks/Toast/Toast';
 import {
   addToastMessage,
   removeToastMessage,
-} from '$reducer/notifications.reducer';
+} from '@/reducer/notifications.reducer';
 
 export type DefaultFormActionHandler<T = undefined> = T extends undefined
   ? (

@@ -4,8 +4,8 @@ import clsx from 'clsx';
 import { FC, useId } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { AccountType } from '$api/generated/financerApi';
-import { ACCOUNT_TYPE_MAPPING } from '$constants/account/ACCOUNT_TYPE_MAPPING';
+import { AccountType } from '@/api/ssr-financer-api';
+import { ACCOUNT_TYPE_MAPPING } from '@/constants/account/ACCOUNT_TYPE_MAPPING';
 
 interface AccountTypeRadioProps {
   id: string;

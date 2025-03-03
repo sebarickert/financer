@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { FC } from 'react';
 
-import { Button } from '$elements/Button/Button';
+import { Button } from '@/elements/Button/Button';
 
 interface PagerProps {
   className?: string;

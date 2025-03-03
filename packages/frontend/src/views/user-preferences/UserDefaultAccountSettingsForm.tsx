@@ -3,15 +3,15 @@
 import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { AccountDto } from '$api/generated/financerApi';
-import { Form } from '$blocks/Form';
-import { TRANSACTION_TYPE_MAPPING } from '$constants/transaction/TRANSACTION_TYPE_MAPPING';
-import { Button } from '$elements/Button/Button';
-import { Select } from '$elements/Select';
+import { SchemaAccountDto } from '@/api/ssr-financer-api';
+import { Form } from '@/blocks/Form';
+import { TRANSACTION_TYPE_MAPPING } from '@/constants/transaction/TRANSACTION_TYPE_MAPPING';
+import { Button } from '@/elements/Button/Button';
+import { Select } from '@/elements/Select';
 import {
   DefaultFormActionHandler,
   useFinancerFormState,
-} from '$hooks/useFinancerFormState';
+} from '@/hooks/useFinancerFormState';
 
 export interface UserDefaultAccountSettingsFormFields {
   toAccountIncome: string;
@@ -21,7 +21,7 @@ export interface UserDefaultAccountSettingsFormFields {
 }
 
 interface UserDefaultAccountSettingsFormProps {
-  accounts?: AccountDto[];
+  accounts?: SchemaAccountDto[];
   defaultExpenseAccount?: string;
   defaultTransferSourceAccount?: string;
   defaultIncomeAccount?: string;
@@ -46,10 +46,10 @@ export const UserDefaultAccountSettingsForm: FC<
     const firstAccountId = accounts?.at(0)?.id;
 
     methods.reset({
-      fromAccountExpense: defaultExpenseAccount || firstAccountId,
-      fromAccountTransfer: defaultTransferSourceAccount || firstAccountId,
-      toAccountIncome: defaultIncomeAccount || firstAccountId,
-      toAccountTransfer: defaultTransferTargetAccount || firstAccountId,
+      fromAccountExpense: defaultExpenseAccount ?? firstAccountId,
+      fromAccountTransfer: defaultTransferSourceAccount ?? firstAccountId,
+      toAccountIncome: defaultIncomeAccount ?? firstAccountId,
+      toAccountTransfer: defaultTransferTargetAccount ?? firstAccountId,
     });
   }, [
     accounts,

@@ -76,13 +76,13 @@ export class TransactionTemplateDto implements TransactionTemplate {
   @IsString()
   readonly description!: string;
 
-  @ApiPropertyOptional({ nullable: true })
+  @ApiPropertyOptional({ nullable: true, type: Number })
   @IsOptional()
   @Min(1, { message: 'Day of month must be a positive number.' })
   @Max(31, { message: 'Day of month must not be greater than 31.' })
   readonly dayOfMonth: number | null = null;
 
-  @ApiPropertyOptional({ nullable: true })
+  @ApiPropertyOptional({ nullable: true, type: Number })
   @IsOptional()
   @Min(1, {
     message: 'Day of month to create transaction must be a positive number.',

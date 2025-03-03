@@ -1,13 +1,13 @@
 import { Grid2x2, Plus } from 'lucide-react';
 import { FC } from 'react';
 
-import { AccountType } from '$api/generated/financerApi';
-import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
-import { Button } from '$elements/Button/Button';
-import { AccountList } from '$features/account/AccountList';
-import { AccountTypeBalanceChart } from '$features/account/AccountTypeBalanceChart';
-import { Layout } from '$layouts/Layout';
-import { AccountService } from '$ssr/api/AccountService';
+import { AccountType } from '@/api/ssr-financer-api';
+import { InfoMessageBlock } from '@/blocks/InfoMessageBlock';
+import { Button } from '@/elements/Button/Button';
+import { AccountList } from '@/features/account/AccountList';
+import { AccountTypeBalanceChart } from '@/features/account/AccountTypeBalanceChart';
+import { Layout } from '@/layouts/Layout';
+import { AccountService } from '@/ssr/api/AccountService';
 
 const accountCategories = {
   savings: 'savings',
@@ -19,11 +19,11 @@ export const AccountListingContainer: FC = async () => {
   const accounts = await AccountService.getAll();
 
   const groupedAccounts = Object.groupBy(accounts, ({ type }) => {
-    if (type === AccountType.Loan || type === AccountType.Credit) {
+    if (type === AccountType.LOAN || type === AccountType.CREDIT) {
       return accountCategories.loans;
     }
 
-    if (type === AccountType.Investment) {
+    if (type === AccountType.INVESTMENT) {
       return accountCategories.investments;
     }
 

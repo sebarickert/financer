@@ -4,29 +4,29 @@ import { FC, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 
 import {
-  AccountDto,
+  SchemaAccountDto,
   TransactionTemplateType,
   TransactionType,
-} from '$api/generated/financerApi';
-import { Form } from '$blocks/Form';
-import { Button } from '$elements/Button/Button';
-import { Input } from '$elements/Input';
-import { Select } from '$elements/Select';
-import { CategoriesFormOnlyCategory } from '$features/transaction/TransactionCategories/transaction-categories.types';
-import { TransactionCategories } from '$features/transaction/TransactionCategories/TransactionCategories';
+} from '@/api/ssr-financer-api';
+import { Form } from '@/blocks/Form';
+import { Button } from '@/elements/Button/Button';
+import { Input } from '@/elements/Input';
+import { Select } from '@/elements/Select';
+import { CategoriesFormOnlyCategory } from '@/features/transaction/TransactionCategories/transaction-categories.types';
+import { TransactionCategories } from '@/features/transaction/TransactionCategories/TransactionCategories';
 import {
   DefaultFormActionHandler,
   useFinancerFormState,
-} from '$hooks/useFinancerFormState';
-import { TransactionCategoryDtoWithCategoryTree } from '$types/TransactionCategoryDtoWithCategoryTree';
-import { capitalize } from '$utils/capitalize';
+} from '@/hooks/useFinancerFormState';
+import { TransactionCategoryDtoWithCategoryTree } from '@/types/TransactionCategoryDtoWithCategoryTree';
+import { capitalize } from '@/utils/capitalize';
 
 interface TemplateFormProps {
   onSubmit: DefaultFormActionHandler;
   submitLabel: string;
   initialValues?: Partial<TemplateFormFields>;
   transactionCategoriesWithCategoryTree?: TransactionCategoryDtoWithCategoryTree[];
-  accounts?: AccountDto[];
+  accounts?: SchemaAccountDto[];
 }
 
 export interface TemplateFormFields {
@@ -67,11 +67,11 @@ export const TemplateForm: FC<TemplateFormProps> = ({
     }));
   }, [accounts]);
 
-  const handleSubmit = async (data: FormData) => {
+  const handleSubmit = (data: FormData) => {
     const submittedTemplateVisibility = data.get('templateVisibility');
 
-    const isExpense = submittedTemplateVisibility === TransactionType.Expense;
-    const isIncome = submittedTemplateVisibility === TransactionType.Income;
+    const isExpense = submittedTemplateVisibility === TransactionType.EXPENSE;
+    const isIncome = submittedTemplateVisibility === TransactionType.INCOME;
 
     if (isExpense) {
       data.delete('toAccount');
@@ -129,8 +129,8 @@ export const TemplateForm: FC<TemplateFormProps> = ({
           <Input id="amount" type="number" min={0.01} step={0.01}>
             Amount
           </Input>
-          {(templateVisibility === TransactionType.Expense ||
-            templateVisibility === TransactionType.Transfer) && (
+          {(templateVisibility === TransactionType.EXPENSE ||
+            templateVisibility === TransactionType.TRANSFER) && (
             <Select
               id="fromAccount"
               options={accountOptions}
@@ -140,8 +140,8 @@ export const TemplateForm: FC<TemplateFormProps> = ({
               From Account
             </Select>
           )}
-          {(templateVisibility === TransactionType.Income ||
-            templateVisibility === TransactionType.Transfer) && (
+          {(templateVisibility === TransactionType.INCOME ||
+            templateVisibility === TransactionType.TRANSFER) && (
             <Select
               id="toAccount"
               options={accountOptions}
@@ -151,7 +151,7 @@ export const TemplateForm: FC<TemplateFormProps> = ({
               To Account
             </Select>
           )}
-          {templateType === TransactionTemplateType.Auto && (
+          {templateType === TransactionTemplateType.AUTO && (
             <>
               <Input id="dayOfMonth" type="number" min={1} max={31}>
                 Day of month for transaction

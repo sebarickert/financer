@@ -19,16 +19,17 @@ export const InputOption = ({
   type,
   ...attributes
 }: RadioProps): JSX.Element => {
-  const labelId = `${id}-${value}-label`;
+  const inputId = `${id}-${value as string}`;
+  const labelId = `${inputId}-label`;
 
   return (
     <label
       className={clsx('relative')}
-      htmlFor={`${id}-${value}`}
+      htmlFor={inputId}
       aria-labelledby={labelId}
     >
       <input
-        id={`${id}-${value}`}
+        id={inputId}
         type={type}
         value={value}
         name={!register ? id : undefined}

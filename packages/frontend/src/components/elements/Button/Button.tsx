@@ -3,10 +3,10 @@
 import clsx from 'clsx';
 import { FC, HTMLAttributes, type JSX, useCallback } from 'react';
 
-import { Link } from '$elements/Link';
-import { HapticType, hapticRunner } from '$utils/haptic.helper';
-import { isExternalLink } from '$utils/isExternalLink';
-import { TransitionType } from '$utils/transitionAnimations';
+import { Link } from '@/elements/Link';
+import { HapticType, hapticRunner } from '@/utils/haptic.helper';
+import { isExternalLink } from '@/utils/isExternalLink';
+import { TransitionType } from '@/utils/transitionAnimations';
 
 export type ButtonAccentColor =
   | 'unstyled'
@@ -24,7 +24,7 @@ interface ButtonProps
   className?: string;
   href?: string;
   transition?: TransitionType;
-  onClick?(): void;
+  onClick?: () => void;
   type?: 'button' | 'submit' | 'reset';
   testId?: string;
   isDisabled?: boolean;

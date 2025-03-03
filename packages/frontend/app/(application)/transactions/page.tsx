@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
-import { TransactionListWithMonthlyPager } from '$features/transaction/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
-import { TransactionsLayout } from '$features/transactions/TransactionsLayout';
+import { TransactionListWithMonthlyPager } from '@/features/transaction/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
+import { TransactionsLayout } from '@/features/transactions/TransactionsLayout';
 
 export const metadata: Metadata = {
   title: 'Transactions',

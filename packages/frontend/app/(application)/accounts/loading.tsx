@@ -1,5 +1,5 @@
-import { Loader } from '$elements/Loader';
-import { Layout } from '$layouts/Layout';
+import { Loader } from '@/elements/Loader';
+import { Layout } from '@/layouts/Layout';
 
 export default function Loading() {
   return (

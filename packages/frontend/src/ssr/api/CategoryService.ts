@@ -3,18 +3,19 @@ import { revalidateTag } from 'next/cache';
 import { BaseApi } from './BaseApi';
 
 import {
-  CreateTransactionCategoryDto,
-  TransactionCategoriesFindAllByUserApiArg,
-  TransactionCategoryDto,
-  UpdateTransactionCategoryDto,
-} from '$api/generated/financerApi';
-import { ValidationException } from '$exceptions/validation.exception';
-import { TransactionCategoryDtoWithCategoryTree } from '$types/TransactionCategoryDtoWithCategoryTree';
-import { isValidationErrorResponse } from '$utils/apiHelper';
+  SchemaCreateTransactionCategoryDto,
+  SchemaTransactionCategoryDetailsDto,
+  SchemaTransactionCategoryDto,
+  SchemaUpdateTransactionCategoryDto,
+  operations,
+} from '@/api/ssr-financer-api';
+import { ValidationException } from '@/exceptions/validation.exception';
+import { TransactionCategoryDtoWithCategoryTree } from '@/types/TransactionCategoryDtoWithCategoryTree';
+import { isValidationErrorResponse } from '@/utils/apiHelper';
 import { parseParentCategoryPath } from 'src/services/TransactionCategoriesService';
 
 export class CategoryService extends BaseApi {
-  public static async revalidateCache(id?: string): Promise<void> {
+  public static revalidateCache(id?: string): void {
     if (id) {
       revalidateTag(this.getEntityTag(this.API_TAG.CATEGORY, id));
       return;
@@ -30,8 +31,8 @@ export class CategoryService extends BaseApi {
   }
 
   public static async getAll(
-    options: TransactionCategoriesFindAllByUserApiArg = {},
-  ): Promise<TransactionCategoryDto[]> {
+    options: operations['TransactionCategories_findAllByUser']['parameters']['query'] = {},
+  ): Promise<readonly SchemaTransactionCategoryDetailsDto[]> {
     const { data, error } = await this.client.GET(
       '/api/transaction-categories',
       {
@@ -48,11 +49,11 @@ export class CategoryService extends BaseApi {
       throw new Error('Failed to fetch categories', error);
     }
 
-    return data as TransactionCategoryDto[];
+    return data;
   }
 
   public static async getAllWithTree(
-    options: TransactionCategoriesFindAllByUserApiArg = {},
+    options: operations['TransactionCategories_findAllByUser']['parameters']['query'] = {},
   ): Promise<TransactionCategoryDtoWithCategoryTree[]> {
     const [categories, allCategories] = await Promise.all([
       this.getAll(options),
@@ -67,7 +68,9 @@ export class CategoryService extends BaseApi {
       .sort((a, b) => a.categoryTree.localeCompare(b.categoryTree));
   }
 
-  public static async getById(id: string): Promise<TransactionCategoryDto> {
+  public static async getById(
+    id: string,
+  ): Promise<SchemaTransactionCategoryDto> {
     const { data, error } = await this.client.GET(
       `/api/transaction-categories/{id}`,
       {
@@ -86,11 +89,11 @@ export class CategoryService extends BaseApi {
       throw new Error('Failed to fetch category', error);
     }
 
-    return data as TransactionCategoryDto;
+    return data as SchemaTransactionCategoryDto;
   }
 
   public static async add(
-    newCategory: CreateTransactionCategoryDto,
+    newCategory: SchemaCreateTransactionCategoryDto,
   ): Promise<void> {
     const { error } = await this.client.POST('/api/transaction-categories', {
       body: newCategory,
@@ -110,12 +113,12 @@ export class CategoryService extends BaseApi {
       throw new Error('Failed to add account', error);
     }
 
-    await this.revalidateCache();
+    this.revalidateCache();
   }
 
   public static async update(
     id: string,
-    updatedCategory: UpdateTransactionCategoryDto,
+    updatedCategory: SchemaUpdateTransactionCategoryDto,
   ): Promise<void> {
     const { error } = await this.client.PATCH(
       `/api/transaction-categories/{id}`,
@@ -141,8 +144,8 @@ export class CategoryService extends BaseApi {
       throw new Error('Failed to add account', error);
     }
 
-    await this.revalidateCache(id);
-    await this.revalidateCache();
+    this.revalidateCache(id);
+    this.revalidateCache();
   }
 
   public static async delete(id: string): Promise<void> {
@@ -159,6 +162,6 @@ export class CategoryService extends BaseApi {
       throw new Error('Failed to delete category', error);
     }
 
-    await this.revalidateCache();
+    this.revalidateCache();
   }
 }

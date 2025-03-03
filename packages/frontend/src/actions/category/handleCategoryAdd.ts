@@ -1,9 +1,9 @@
 import { RedirectType, redirect } from 'next/navigation';
 
-import { TransactionType } from '$api/generated/financerApi';
-import { ValidationException } from '$exceptions/validation.exception';
-import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
-import { CategoryService } from '$ssr/api/CategoryService';
+import { TransactionType } from '@/api/ssr-financer-api';
+import { ValidationException } from '@/exceptions/validation.exception';
+import { DefaultFormActionHandler } from '@/hooks/useFinancerFormState';
+import { CategoryService } from '@/ssr/api/CategoryService';
 
 export const handleCategoryAdd: DefaultFormActionHandler = async (
   prev,

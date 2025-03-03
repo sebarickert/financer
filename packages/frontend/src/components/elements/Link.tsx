@@ -7,12 +7,12 @@ import {
 } from 'next-view-transitions';
 import type { JSX } from 'react';
 
-import { HapticType, hapticRunner } from '$utils/haptic.helper';
-import { isExternalLink } from '$utils/isExternalLink';
+import { HapticType, hapticRunner } from '@/utils/haptic.helper';
+import { isExternalLink } from '@/utils/isExternalLink';
 import {
   TransitionType,
   transitionAnimations,
-} from '$utils/transitionAnimations';
+} from '@/utils/transitionAnimations';
 
 interface LinkProps
   extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'onClick'> {

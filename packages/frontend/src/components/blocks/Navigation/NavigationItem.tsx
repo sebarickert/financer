@@ -1,8 +1,8 @@
 import clsx from 'clsx';
 import { FC } from 'react';
 
-import { NavigationItem as NavigationItemType } from '$constants/NAVIGATION_ITEMS';
-import { Link } from '$elements/Link';
+import { NavigationItem as NavigationItemType } from '@/constants/NAVIGATION_ITEMS';
+import { Link } from '@/elements/Link';
 
 export type NavigationItemProps = NavigationItemType & {
   className?: string;

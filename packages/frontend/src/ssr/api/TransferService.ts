@@ -7,17 +7,17 @@ import type {
 } from './TransactionService';
 
 import {
-  CreateTransferDto,
+  SchemaCreateTransferDto,
+  SchemaTransferDetailsDto,
+  SchemaTransferListItemDto,
+  SchemaUpdateTransferDto,
   SortOrder,
-  TransferDetailsDto,
-  TransferListItemDto,
-  UpdateTransferDto,
-} from '$api/generated/financerApi';
-import { ValidationException } from '$exceptions/validation.exception';
-import { isValidationErrorResponse } from '$utils/apiHelper';
+} from '@/api/ssr-financer-api';
+import { ValidationException } from '@/exceptions/validation.exception';
+import { isValidationErrorResponse } from '@/utils/apiHelper';
 
 export class TransferService extends BaseApi {
-  public static async revalidateCache(id?: string): Promise<void> {
+  public static revalidateCache(id?: string): void {
     if (id) {
       revalidateTag(this.getEntityTag(this.API_TAG.TRANSFER, id));
       return;
@@ -28,11 +28,11 @@ export class TransferService extends BaseApi {
 
   public static async getFirst(
     options?: FirstTransactionByTypeOptions,
-  ): Promise<TransferListItemDto> {
+  ): Promise<SchemaTransferListItemDto> {
     const data = await this.getAll({
       ...options,
       limit: 1,
-      sortOrder: SortOrder.Asc,
+      sortOrder: SortOrder.asc,
     });
 
     return data[0];
@@ -40,7 +40,7 @@ export class TransferService extends BaseApi {
 
   public static async getAll(
     options: TransactionListOptions,
-  ): Promise<TransferListItemDto[]> {
+  ): Promise<SchemaTransferListItemDto[]> {
     const { data, error } = await this.client.GET('/api/transfers', {
       params: {
         query: options,
@@ -54,10 +54,10 @@ export class TransferService extends BaseApi {
       throw new Error('Failed to fetch transfers', error);
     }
 
-    return data as TransferListItemDto[];
+    return data as SchemaTransferListItemDto[];
   }
 
-  public static async getById(id: string): Promise<TransferDetailsDto> {
+  public static async getById(id: string): Promise<SchemaTransferDetailsDto> {
     const { data, error } = await this.client.GET(`/api/transfers/{id}`, {
       params: {
         path: {
@@ -73,12 +73,12 @@ export class TransferService extends BaseApi {
       throw new Error('Failed to fetch transfer', error);
     }
 
-    return data as TransferDetailsDto;
+    return data;
   }
 
   public static async add(
-    newTransfer: CreateTransferDto,
-  ): Promise<TransferDetailsDto> {
+    newTransfer: SchemaCreateTransferDto,
+  ): Promise<SchemaTransferDetailsDto> {
     const { error, data } = await this.client.POST('/api/transfers', {
       body: newTransfer,
     });
@@ -97,15 +97,15 @@ export class TransferService extends BaseApi {
       throw new Error('Failed to add transfer', error);
     }
 
-    await this.revalidateCache();
+    this.revalidateCache();
 
-    return data as TransferDetailsDto;
+    return data;
   }
 
   public static async update(
     id: string,
-    updatedTransfer: UpdateTransferDto,
-  ): Promise<TransferDetailsDto> {
+    updatedTransfer: SchemaUpdateTransferDto,
+  ): Promise<SchemaTransferDetailsDto> {
     const { error, data } = await this.client.PATCH(`/api/transfers/{id}`, {
       params: {
         path: { id },
@@ -127,10 +127,10 @@ export class TransferService extends BaseApi {
       throw new Error('Failed to update transfer', error);
     }
 
-    await this.revalidateCache(id);
-    await this.revalidateCache();
+    this.revalidateCache(id);
+    this.revalidateCache();
 
-    return data as TransferDetailsDto;
+    return data;
   }
 
   public static async delete(id: string): Promise<void> {
@@ -144,6 +144,6 @@ export class TransferService extends BaseApi {
       throw new Error('Failed to delete transfer', error);
     }
 
-    await this.revalidateCache();
+    this.revalidateCache();
   }
 }

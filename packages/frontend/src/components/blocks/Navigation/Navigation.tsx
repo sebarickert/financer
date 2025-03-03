@@ -4,7 +4,7 @@ import { FC } from 'react';
 import { NavigationCreateTransactionButtonSuspense } from './NavigationCreateTransactionButton';
 import { NavigationItem } from './NavigationItem';
 
-import { NAVIGATION_ITEMS } from '$constants/NAVIGATION_ITEMS';
+import { NAVIGATION_ITEMS } from '@/constants/NAVIGATION_ITEMS';
 
 interface NavigationProps {
   isLoading?: boolean;

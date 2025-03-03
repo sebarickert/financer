@@ -2,19 +2,19 @@ import { CalendarSync, Layers, LucideIcon } from 'lucide-react';
 import { FC } from 'react';
 
 import {
-  TransactionTemplateDto,
+  SchemaTransactionTemplateDto,
   TransactionTemplateType,
-} from '$api/generated/financerApi';
-import { List } from '$blocks/List';
-import { ProminentLink } from '$blocks/ProminentLink';
+} from '@/api/ssr-financer-api';
+import { List } from '@/blocks/List';
+import { ProminentLink } from '@/blocks/ProminentLink';
 
 interface TemplateListProps {
-  templates: TransactionTemplateDto[];
+  templates: SchemaTransactionTemplateDto[];
 }
 
 const getLabel = (templateType: TransactionTemplateType): string => {
   switch (templateType) {
-    case TransactionTemplateType.Auto:
+    case TransactionTemplateType.AUTO:
       return 'Recurring Templates';
     default:
       return '';
@@ -22,8 +22,8 @@ const getLabel = (templateType: TransactionTemplateType): string => {
 };
 
 const TEMPLATE_ICON_MAPPING: Record<string, LucideIcon> = {
-  [TransactionTemplateType.Manual]: Layers,
-  [TransactionTemplateType.Auto]: CalendarSync,
+  [TransactionTemplateType.MANUAL]: Layers,
+  [TransactionTemplateType.AUTO]: CalendarSync,
 };
 
 export const TemplateList: FC<TemplateListProps> = ({ templates }) => {

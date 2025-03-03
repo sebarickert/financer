@@ -9,7 +9,7 @@ export class TransactionDetailCategoryDto {
   @IsUUID()
   id!: string;
 
-  @ApiProperty({ nullable: true })
+  @ApiProperty({ nullable: true, type: String })
   @IsOptional()
   @IsString()
   description!: string | null;

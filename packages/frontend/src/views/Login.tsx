@@ -3,12 +3,12 @@
 import clsx from 'clsx';
 import { type JSX, useState } from 'react';
 
-import { Logo } from '$blocks/Logo';
-import { Button } from '$elements/Button/Button';
-import { ButtonGroup } from '$elements/Button/ButtonGroup';
-import { Link } from '$elements/Link';
-import { Loader } from '$elements/Loader';
-import { Paragraph } from '$elements/Paragraph';
+import { Logo } from '@/blocks/Logo';
+import { Button } from '@/elements/Button/Button';
+import { ButtonGroup } from '@/elements/Button/ButtonGroup';
+import { Link } from '@/elements/Link';
+import { Loader } from '@/elements/Loader';
+import { Paragraph } from '@/elements/Paragraph';
 
 const { NEXT_PUBLIC_IS_GITHUB_OAUTH_ENABLED } = process.env;
 const { NEXT_PUBLIC_IS_AUTH0_OAUTH_ENABLED } = process.env;

@@ -3,11 +3,11 @@ import { FC } from 'react';
 
 import { TransactionTypeSwitcherItem } from './TransactionTypeSwitcherItem';
 
-import { TransactionType } from '$api/generated/financerApi';
+import { TransactionType } from '@/api/ssr-financer-api';
 
 interface TransactionActionsProps {
   className?: string;
-  onChange(event: React.ChangeEvent<HTMLInputElement>): void;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   defaultChecked?: TransactionType;
   name?: string;
 }
@@ -15,22 +15,22 @@ interface TransactionActionsProps {
 const switcherItems = [
   {
     children: 'Income',
-    value: TransactionType.Income,
+    value: TransactionType.INCOME,
   },
   {
     children: 'Expense',
-    value: TransactionType.Expense,
+    value: TransactionType.EXPENSE,
   },
   {
     children: 'Transfer',
-    value: TransactionType.Transfer,
+    value: TransactionType.TRANSFER,
   },
 ];
 
 export const TransactionTypeSwitcher: FC<TransactionActionsProps> = ({
   className = '',
   onChange,
-  defaultChecked = TransactionType.Expense,
+  defaultChecked = TransactionType.EXPENSE,
   name,
 }) => {
   return (

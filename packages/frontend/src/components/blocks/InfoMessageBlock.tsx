@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { LucideIcon } from 'lucide-react';
 import { FC } from 'react';
 
-import { Heading } from '$elements/Heading';
+import { Heading } from '@/elements/Heading';
 
 interface InfoMessageBlockBaseProps {
   title: string;

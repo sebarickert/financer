@@ -2,26 +2,16 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "$api/*": ["./src/redux/api/*"],
-      "$reducer/*": ["./src/redux/reducer/*"],
-      "$store": ["./src/redux/store"],
-      "$blocks/*": ["./src/components/blocks/*"],
-      "$elements/*": ["./src/components/elements/*"],
-      "$charts/*": ["./src/components/charts/*"],
-      "$layouts/*": ["./src/components/layouts/*"],
-      "$features/*": ["./src/features/*"],
-      "$views/*": ["./src/views/*"],
-      "$pages/*": ["./src/components/pages/*"],
-      "$hooks/*": ["./src/hooks/*"],
-      "$assets/*": ["./src/assets/*"],
-      "$actions/*": ["./src/actions/*"],
-      "$utils/*": ["./src/utils/*"],
-      "$constants/*": ["./src/constants/*"],
-      "$ssr/*": ["./src/ssr/*"],
-      "$exceptions/*": ["./src/exceptions/*"],
-      "$container/*": ["./containers/*"],
-      "$types/*": ["./src/types/*"],
-      "$services/*": ["./src/services/*"]
+      "@/api/*": ["./src/redux/api/generated/*"],
+      "@/reducer/*": ["./src/redux/reducer/*"],
+      "@/store": ["./src/redux/store"],
+      "@/blocks/*": ["./src/components/blocks/*"],
+      "@/elements/*": ["./src/components/elements/*"],
+      "@/charts/*": ["./src/components/charts/*"],
+      "@/layouts/*": ["./src/components/layouts/*"],
+      "@/pages/*": ["./src/components/pages/*"],
+      "@/container/*": ["./containers/*"],
+      "@/*": ["./src/*"]
     }
   }
 }

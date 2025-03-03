@@ -2,21 +2,21 @@ import { ChartLine, Info } from 'lucide-react';
 import { FC, useMemo } from 'react';
 
 import {
-  AccountBalanceHistoryDto,
-  AccountDto,
-} from '$api/generated/financerApi';
-import { BalanceDisplay } from '$blocks/BalanceDisplay';
-import { Card } from '$blocks/Card/Card';
-import { DetailsItem, DetailsList } from '$blocks/DetailsList';
-import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
-import { ACCOUNT_TYPE_MAPPING } from '$constants/account/ACCOUNT_TYPE_MAPPING';
-import { AccountBalanceHistoryChart } from '$features/account/AccountBalanceHistoryChart';
-import { TransactionListWithMonthlyPager } from '$features/transaction/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
-import { formatCurrency } from '$utils/formatCurrency';
+  SchemaAccountBalanceHistoryDto,
+  SchemaAccountDto,
+} from '@/api/ssr-financer-api';
+import { BalanceDisplay } from '@/blocks/BalanceDisplay';
+import { Card } from '@/blocks/Card/Card';
+import { DetailsItem, DetailsList } from '@/blocks/DetailsList';
+import { InfoMessageBlock } from '@/blocks/InfoMessageBlock';
+import { ACCOUNT_TYPE_MAPPING } from '@/constants/account/ACCOUNT_TYPE_MAPPING';
+import { AccountBalanceHistoryChart } from '@/features/account/AccountBalanceHistoryChart';
+import { TransactionListWithMonthlyPager } from '@/features/transaction/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
+import { formatCurrency } from '@/utils/formatCurrency';
 
 interface AccountProps {
-  account: AccountDto;
-  balanceHistory: AccountBalanceHistoryDto[];
+  account: SchemaAccountDto;
+  balanceHistory: SchemaAccountBalanceHistoryDto[];
   queryDate?: string;
 }
 

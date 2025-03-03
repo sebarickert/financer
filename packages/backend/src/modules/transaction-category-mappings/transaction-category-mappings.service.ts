@@ -6,7 +6,7 @@ import { CreateTransactionCategoryMappingDto } from './dto/create-transaction-ca
 import { TransactionCategoryMappingDto } from './dto/transaction-category-mapping.dto';
 
 import { TransactionCategoryMappingRepo } from '@/database/repos/transaction-category-mapping.repo';
-import { CategoryMonthlySummaryDto } from '@/transaction-categories/dto/transaction-month-summary.dto';
+import { CategoryMonthlySummaryDto } from '@/transaction-categories/dto/category-month-summary.dto';
 import { ForceMutable } from '@/types/force-mutable';
 import { UserId } from '@/types/user-id';
 import { DateService } from '@/utils/date.service';

@@ -15,7 +15,7 @@ interface InputProps {
   min?: number;
   max?: number;
   step?: number;
-  ref?: React.MutableRefObject<null>;
+  ref?: React.RefObject<null>;
   onChange?(event: ChangeEvent<HTMLInputElement>): void;
   testId?: string;
   isLabelHidden?: boolean;

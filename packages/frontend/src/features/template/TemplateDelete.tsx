@@ -4,11 +4,11 @@ import { Trash } from 'lucide-react';
 import { useId } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { handleTemplateDelete } from '$actions/template/handleTemplateDelete';
-import { Drawer } from '$blocks/Drawer';
-import { Form } from '$blocks/Form';
-import { Button } from '$elements/Button/Button';
-import { useFinancerFormState } from '$hooks/useFinancerFormState';
+import { handleTemplateDelete } from '@/actions/template/handleTemplateDelete';
+import { Drawer } from '@/blocks/Drawer';
+import { Form } from '@/blocks/Form';
+import { Button } from '@/elements/Button/Button';
+import { useFinancerFormState } from '@/hooks/useFinancerFormState';
 
 interface TemplateDeleteProps {
   id: string;

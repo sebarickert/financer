@@ -1,18 +1,18 @@
 'use server';
 
 import {
-  AccountDto,
-  CreateTransactionCategoryMappingWithoutTransactionDto,
-} from '$api/generated/financerApi';
-import { ValidationException } from '$exceptions/validation.exception';
-import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
-import { DateService } from '$services/DateService';
-import { ExpenseService } from '$ssr/api/ExpenseService';
-import { IncomeService } from '$ssr/api/IncomeService';
-import { UserDefaultMarketUpdateSettings } from '$ssr/api/UserPreferenceService';
+  SchemaAccountDto,
+  SchemaCreateTransactionCategoryMappingWithoutTransactionDto,
+} from '@/api/ssr-financer-api';
+import { ValidationException } from '@/exceptions/validation.exception';
+import { DefaultFormActionHandler } from '@/hooks/useFinancerFormState';
+import { DateService } from '@/services/DateService';
+import { ExpenseService } from '@/ssr/api/ExpenseService';
+import { IncomeService } from '@/ssr/api/IncomeService';
+import { UserDefaultMarketUpdateSettings } from '@/ssr/api/UserPreferenceService';
 
 export const handleAccountMarketValueUpdate: DefaultFormActionHandler<{
-  account: AccountDto;
+  account: SchemaAccountDto;
   marketSettings?: UserDefaultMarketUpdateSettings;
 }> = async ({ account, marketSettings }, prevState, formData) => {
   const currentMarketValue = parseFloat(
@@ -33,7 +33,7 @@ export const handleAccountMarketValueUpdate: DefaultFormActionHandler<{
 
   const categoryId = marketSettings?.category;
 
-  const categories: CreateTransactionCategoryMappingWithoutTransactionDto[] =
+  const categories: SchemaCreateTransactionCategoryMappingWithoutTransactionDto[] =
     typeof categoryId === 'undefined'
       ? []
       : [
@@ -47,6 +47,7 @@ export const handleAccountMarketValueUpdate: DefaultFormActionHandler<{
   const transactionBaseFields = {
     amount: Math.abs(marketValueChangeAmount),
     description: transactionDescription,
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     date: date.toISO()!,
     categories,
   };

@@ -4,21 +4,21 @@ import { Layers } from 'lucide-react';
 import { type JSX, useId, useMemo, useRef } from 'react';
 
 import {
-  TransactionTemplateDto,
+  SchemaTransactionTemplateDto,
   TransactionTemplateType,
   TransactionType,
-} from '$api/generated/financerApi';
-import { Drawer } from '$blocks/Drawer';
-import { Button } from '$elements/Button/Button';
-import { ButtonGroup } from '$elements/Button/ButtonGroup';
-import { InputOption } from '$elements/InputOption';
+} from '@/api/ssr-financer-api';
+import { Drawer } from '@/blocks/Drawer';
+import { Button } from '@/elements/Button/Button';
+import { ButtonGroup } from '@/elements/Button/ButtonGroup';
+import { InputOption } from '@/elements/InputOption';
 
 interface TransactionTemplateSwitcherProps {
   selectedTemplateId?: string;
   transactionType: TransactionType;
-  onChange(event: React.ChangeEvent<HTMLFormElement>): void;
+  onChange: (event: React.ChangeEvent<HTMLFormElement>) => void;
   name?: string;
-  transactionTemplates?: TransactionTemplateDto[];
+  transactionTemplates?: SchemaTransactionTemplateDto[];
 }
 
 export const TransactionTemplateSwitcher = ({
@@ -36,12 +36,12 @@ export const TransactionTemplateSwitcher = ({
       transactionTemplates.filter(
         ({ templateVisibility, templateType }) =>
           templateVisibility === transactionType &&
-          templateType[0] === TransactionTemplateType.Manual,
+          templateType[0] === TransactionTemplateType.MANUAL,
       ),
     [transactionType, transactionTemplates],
   );
 
-  const handleSubmit = async (event: React.ChangeEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
     onChange(event);
     popoverRef.current?.hidePopover();

@@ -1,10 +1,10 @@
 import clsx from 'clsx';
 import type { JSX } from 'react';
 
-import { ContextualNavigationItem } from '$blocks/ContextualNavigation';
-import { ToastContainer } from '$blocks/Toast/ToastContainer';
-import { ContentHeader } from '$layouts/ContentHeader';
-import { Header } from '$layouts/Header';
+import { ContextualNavigationItem } from '@/blocks/ContextualNavigation';
+import { ToastContainer } from '@/blocks/Toast/ToastContainer';
+import { ContentHeader } from '@/layouts/ContentHeader';
+import { Header } from '@/layouts/Header';
 
 export interface LayoutProps {
   title: string;

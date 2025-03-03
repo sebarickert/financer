@@ -6,15 +6,15 @@ import { GroupedTransactionList } from '../TransactionList/GroupedTransactionLis
 
 import { TransactionListWithMonthlySummary } from './TransactionListWithMonthlySummary';
 
-import { TransactionType } from '$api/generated/financerApi';
-import { Card } from '$blocks/Card/Card';
-import { Pager } from '$blocks/Pager';
-import { Heading } from '$elements/Heading';
-import { DATE_FORMAT, DateService } from '$services/DateService';
+import { TransactionType } from '@/api/ssr-financer-api';
+import { Card } from '@/blocks/Card/Card';
+import { Pager } from '@/blocks/Pager';
+import { Heading } from '@/elements/Heading';
+import { DATE_FORMAT, DateService } from '@/services/DateService';
 import {
   TransactionListOptions,
   TransactionService,
-} from '$ssr/api/TransactionService';
+} from '@/ssr/api/TransactionService';
 
 const currentDate = new DateService().getDate();
 const currentYear = currentDate.year;

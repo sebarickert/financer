@@ -2,10 +2,10 @@
 
 import { RedirectType, redirect } from 'next/navigation';
 
-import { AccountType } from '$api/generated/financerApi';
-import { ValidationException } from '$exceptions/validation.exception';
-import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
-import { AccountService } from '$ssr/api/AccountService';
+import { AccountType } from '@/api/ssr-financer-api';
+import { ValidationException } from '@/exceptions/validation.exception';
+import { DefaultFormActionHandler } from '@/hooks/useFinancerFormState';
+import { AccountService } from '@/ssr/api/AccountService';
 
 export const handleAccountAdd: DefaultFormActionHandler = async (
   prevState,
