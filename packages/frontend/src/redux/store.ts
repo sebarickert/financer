@@ -7,8 +7,6 @@ import {
   notificationSlicePath,
 } from '@/reducer/notifications.reducer';
 
-import '$api/config/apiConfig';
-
 export const createStore = () =>
   configureStore({
     reducer: {

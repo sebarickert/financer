@@ -2,9 +2,9 @@ import { NextResponse } from 'next/server';
 
 import { revalidateFullAppCache } from '@/actions/revalidateFullAppCache';
 
-export function POST() {
+export async function POST() {
   try {
-    revalidateFullAppCache();
+    await revalidateFullAppCache();
 
     return NextResponse.json({ message: 'Cache revalidated' });
   } catch {

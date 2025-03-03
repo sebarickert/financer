@@ -2,6 +2,6 @@
 
 import { BaseApi } from '@/ssr/api/BaseApi';
 
-export const revalidateFullAppCache = () => {
+export const revalidateFullAppCache = async () => {
   BaseApi.revalidateFullAppCache();
 };

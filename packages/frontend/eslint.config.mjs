@@ -135,5 +135,11 @@ export default tseslint.config(
       // We should revisit this in the future.
       "@typescript-eslint/no-unnecessary-condition": "off",
     },
+  },
+  {
+    files: ["src/actions/**/*.ts"],
+    rules: {
+      "@typescript-eslint/require-await": "off",
+    },
   }
 );

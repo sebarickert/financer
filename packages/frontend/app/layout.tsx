@@ -12,7 +12,7 @@ import { UserService } from '@/ssr/api/UserService';
 import { ChildrenProp } from 'src/types/children-prop';
 import { CustomHeader } from 'src/types/custom-headers';
 
-import '$assets/tailwind.css';
+import '@/assets/tailwind.css';
 
 const appName = 'Financer';
 

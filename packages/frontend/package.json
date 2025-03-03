@@ -44,7 +44,7 @@
     "format": "next lint --fix",
     "lint": "next lint",
     "test": "jest",
-    "types:generate": "openapi-typescript src/redux/schema/api-spec.json -o src/redux/api/generated/ssr-financer-api.d.ts --alphabetize true --array-length true --enum true --root-types true --immutable true --generate-path-params true && eslint src/redux/api/generated/*.ts --fix",
+    "types:generate": "openapi-typescript src/redux/schema/api-spec.json -o src/redux/api/generated/ssr-financer-api.ts --alphabetize true --array-length true --enum true --root-types true --immutable true --generate-path-params true && eslint src/redux/api/generated/*.ts --fix",
     "check-types": "tsc --noEmit"
   },
   "eslintConfig": {
