@@ -26,6 +26,7 @@ const patchedConfig = compatConfig.map((entry) => {
   const plugins = entry.plugins;
   for (const key in plugins) {
     if (plugins.hasOwnProperty(key) && pluginsToPatch.includes(key)) {
+      // @ts-expect-error - We know that the key exists in the plugins object.
       plugins[key] = fixupPluginRules(plugins[key]);
     }
   }
@@ -64,11 +65,10 @@ export default tseslint.config(
       },
     },
   },
+
+  // Common rules
   {
     rules: {
-      // TS seems to infer types incorrectly from our API client so we need to disable this rule.
-      // We should revisit this in the future.
-      "@typescript-eslint/no-unnecessary-condition": "off",
       "unused-imports/no-unused-imports": "error",
       "linebreak-style": "off",
       "prefer-template": "error",
@@ -118,11 +118,22 @@ export default tseslint.config(
       ],
     },
   },
+
+  // Next.js specific rules
   {
     files: ["app/**/*.tsx"],
     rules: {
       "import/prefer-default-export": "error",
       "import/no-default-export": "off",
+    },
+  },
+
+  // Project specific rules
+  {
+    rules: {
+      // TS seems to infer types incorrectly from our API client so we need to disable this rule.
+      // We should revisit this in the future.
+      "@typescript-eslint/no-unnecessary-condition": "off",
     },
   }
 );

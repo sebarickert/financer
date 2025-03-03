@@ -48,7 +48,6 @@ export class DockerDatabase {
     }
   }
 
-  // eslint-disable-next-line max-params
   public static async createContainer(
     name: string,
     username: string,
@@ -80,7 +79,6 @@ export class DockerDatabase {
     }
   }
 
-  // eslint-disable-next-line max-statements
   private static async waitForContainer(name: string): Promise<void> {
     let isRunning = false;
     const maxRetries = 60;
@@ -91,13 +89,11 @@ export class DockerDatabase {
         execSync(`docker exec ${name} pg_isready`);
         isRunning = true;
       } catch {
-        // eslint-disable-next-line no-plusplus
         retries++;
         this.logger.log(
           `Waiting for the database to be ready... (${retries}/${maxRetries})`,
         );
 
-        // eslint-disable-next-line no-await-in-loop
         await this.sleep(1000);
       }
     }

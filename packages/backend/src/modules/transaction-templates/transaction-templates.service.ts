@@ -157,7 +157,6 @@ export class TransactionTemplatesService {
     return this.transactionTemplateLogRepo.deleteMany({ userId });
   }
 
-  // eslint-disable-next-line max-statements
   getTransactionFromTemplate(
     template: TransactionTemplateDto,
   ): CreateTransactionDto {

@@ -19,7 +19,6 @@ export default tseslint.config(
   {
     plugins: {
       "unused-imports": unusedImports,
-      // import: importPlugin,
     },
   },
   {
@@ -37,6 +36,16 @@ export default tseslint.config(
       },
     },
   },
+  {
+    settings: {
+      "import/resolver": {
+        typescript: {
+          extensions: [".js", ".jsx", ".ts", ".tsx"],
+        },
+      },
+    },
+  },
+  // Common rules
   {
     rules: {
       "unused-imports/no-unused-imports": "error",
@@ -86,15 +95,6 @@ export default tseslint.config(
           allowNumber: true,
         },
       ],
-    },
-  },
-  {
-    settings: {
-      "import/resolver": {
-        typescript: {
-          extensions: [".js", ".jsx", ".ts", ".tsx"],
-        },
-      },
     },
   }
 );

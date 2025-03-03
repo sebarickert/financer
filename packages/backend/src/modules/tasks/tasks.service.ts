@@ -16,7 +16,6 @@ export class TasksService {
     private readonly systemService: SystemService,
   ) {}
 
-  // eslint-disable-next-line max-lines-per-function
   async generateTransactions() {
     const now = new Date();
     const dayOfMonth = now.getDate();
@@ -34,7 +33,6 @@ export class TasksService {
       );
 
     const result = await Promise.all(
-      // eslint-disable-next-line max-statements
       templates.map(async (template) => {
         if (!template.amount || !template.description) return 'missingData';
 
@@ -51,7 +49,6 @@ export class TasksService {
 
         const templateDto = TransactionTemplateDto.createFromPlain(template);
 
-        // eslint-disable-next-line init-declarations
         let transactionData: CreateTransactionDto;
 
         try {

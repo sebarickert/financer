@@ -1,4 +1,3 @@
-/* eslint-disable max-lines */
 import crypto from 'crypto';
 
 import { Inject, Injectable, forwardRef } from '@nestjs/common';
@@ -41,7 +40,6 @@ export class UserDataService {
     UserPreferenceProperty.DEFAULT_EXPENSE_ACCOUNT,
   ];
 
-  // eslint-disable-next-line max-params
   constructor(
     @Inject(forwardRef(() => UsersService))
     private readonly usersService: UsersService,
@@ -55,7 +53,6 @@ export class UserDataService {
     private readonly prismaTransactionService: PrismaTransactionService,
   ) {}
 
-  // eslint-disable-next-line max-statements
   async findAllOneUserData(
     userId: UserId,
   ): Promise<{ filename: string; data: UserDataExportDto }> {
@@ -95,7 +92,6 @@ export class UserDataService {
     return { filename, data };
   }
 
-  // eslint-disable-next-line max-lines-per-function, max-statements
   async overrideUserData(
     userId: UserId,
     {

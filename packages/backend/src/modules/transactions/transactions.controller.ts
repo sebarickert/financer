@@ -35,7 +35,6 @@ import { ValidateEnumPipe } from '@/utils/validate-enum.pipe';
 export class TransactionsController {
   constructor(private readonly transactionsService: TransactionsService) {}
 
-  // eslint-disable-next-line max-lines-per-function, max-params
   @Get()
   @ApiOkResponse({ type: TransactionListItemDto, isArray: true })
   @ApiQuery({
@@ -104,7 +103,6 @@ export class TransactionsController {
     );
   }
 
-  // eslint-disable-next-line max-lines-per-function, max-params
   @Get('monthly-summaries')
   @ApiOkResponse({
     type: TransactionMonthSummaryDto,

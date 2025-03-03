@@ -36,7 +36,6 @@ export class Auth0Strategy extends PassportStrategy(Strategy, 'auth0') {
     this.logger.log('auth0 oauth enabled');
   }
 
-  // eslint-disable-next-line max-params
   async validate(
     _accessToken: never,
     _refreshToken: never,

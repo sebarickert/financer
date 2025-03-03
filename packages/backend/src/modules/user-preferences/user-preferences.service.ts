@@ -50,7 +50,6 @@ export class UserPreferencesService {
     userId: UserId,
   ): Promise<UserPreferences | null> {
     return this.userPreferencesRepo.findOne({
-      // eslint-disable-next-line camelcase
       userId_key: { userId, key: userPreferenceProperty },
     });
   }
@@ -70,7 +69,6 @@ export class UserPreferencesService {
 
     return this.userPreferencesRepo.update({
       where: {
-        // eslint-disable-next-line camelcase
         userId_key: { userId, key: userPreferenceInDb.key },
       },
       data: { value: updateUserPreferenceDto.value },

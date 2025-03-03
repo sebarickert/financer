@@ -84,7 +84,6 @@ export class TransactionCategoryMappingsService {
     return TransactionCategoryMappingDto.createFromPlain(mappings);
   }
 
-  // eslint-disable-next-line max-lines-per-function, max-params
   async findMonthlySummariesByUserAndId(
     userId: UserId,
     categoryIds: string[],
@@ -123,14 +122,12 @@ export class TransactionCategoryMappingsService {
     >();
 
     Array.from(
-      // eslint-disable-next-line max-statements
       Map.groupBy(filteredMappings, (mapping) => {
         const zonedDate = DateService.toZonedTime(mapping.transaction.date);
 
         const transactionMonth = zonedDate.getMonth() + 1;
         const transactionYear = zonedDate.getFullYear();
 
-        // eslint-disable-next-line init-declarations
         let type: TransactionType;
 
         const hasToAccount = Boolean(mapping.transaction.toAccount);
@@ -150,7 +147,6 @@ export class TransactionCategoryMappingsService {
           year: transactionYear,
         };
       }).entries(),
-      // eslint-disable-next-line max-statements
     ).forEach(([key, value]) => {
       const { type, month: transactionMonth, year: transactionYear } = key;
 

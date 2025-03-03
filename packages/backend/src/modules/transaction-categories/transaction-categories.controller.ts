@@ -90,7 +90,6 @@ export class TransactionCategoriesController {
     return this.transactionCategoriesService.findOne(userId, id);
   }
 
-  // eslint-disable-next-line max-params
   @Get(':id/summary')
   @ApiOkResponse({
     type: [CategoryMonthlySummaryDto],

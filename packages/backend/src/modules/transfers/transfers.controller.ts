@@ -40,7 +40,6 @@ import { ValidateEnumPipe } from '@/utils/validate-enum.pipe';
 export class TransfersController {
   constructor(private readonly transfersService: TransfersService) {}
 
-  // eslint-disable-next-line max-lines-per-function, max-params
   @Get()
   @ApiOkResponse({ type: TransferListItemDto, isArray: true })
   @ApiQuery({

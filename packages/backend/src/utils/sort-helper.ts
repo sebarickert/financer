@@ -1,6 +1,5 @@
 import { ClassDatePropertyKeys } from '@/types/class-property-keys';
 
-// eslint-disable-next-line id-length
 const internalSortDateDesc = (a: Date, b: Date) => b.getTime() - a.getTime();
 
 /**
@@ -27,14 +26,13 @@ export function sortDateDesc<DataObject extends object>(
  * @returns {number | ((a: Record<string, Date>, b: Record<string, Date>) => number)} - The result of the comparison or a comparator function.
  * @throws {Error} - If the arguments are invalid.
  */
-// eslint-disable-next-line func-style
+
 export function sortDateDesc(
   ...args: unknown[]
 ): number | ((a: Record<string, Date>, b: Record<string, Date>) => number) {
   if (args.length === 1 && typeof args[0] === 'string') {
     const [dateProperty] = args as [string];
 
-    // eslint-disable-next-line id-length
     return (a: Record<string, Date>, b: Record<string, Date>) =>
       internalSortDateDesc(a[dateProperty], b[dateProperty]);
   }

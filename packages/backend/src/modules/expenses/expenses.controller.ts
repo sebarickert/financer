@@ -40,7 +40,6 @@ import { ValidateEnumPipe } from '@/utils/validate-enum.pipe';
 export class ExpensesController {
   constructor(private readonly expensesService: ExpensesService) {}
 
-  // eslint-disable-next-line max-params
   @Get()
   @ApiOkResponse({ type: ExpenseListItemDto, isArray: true })
   @ApiQuery({

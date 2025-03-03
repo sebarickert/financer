@@ -1,4 +1,3 @@
-/* eslint-disable max-lines */
 import {
   Inject,
   Injectable,
@@ -40,7 +39,6 @@ import { sortDateDesc } from '@/utils/sort-helper';
 export class TransactionsService {
   private readonly logger = new Logger(TransactionsService.name);
 
-  // eslint-disable-next-line max-params
   constructor(
     private readonly transactionRepo: TransactionRepo,
     @Inject(forwardRef(() => AccountsService))
@@ -83,7 +81,6 @@ export class TransactionsService {
     );
   }
 
-  // eslint-disable-next-line max-lines-per-function
   async findOne(userId: UserId, id: string): Promise<TransactionDetailsDto> {
     const transaction = await this.transactionRepo.findOne({
       where: { id, userId },
@@ -146,7 +143,6 @@ export class TransactionsService {
     });
   }
 
-  // eslint-disable-next-line max-lines-per-function, max-params
   async findAllByUser(
     userId: UserId,
     transactionType: TransactionType | null,
@@ -155,7 +151,7 @@ export class TransactionsService {
     month?: number,
     linkedAccount?: string,
     accountTypes?: AccountType[],
-    // eslint-disable-next-line default-param-last
+
     sortOrder: Prisma.SortOrder = Prisma.SortOrder.desc,
     transactionCategories?: string[],
     parentTransactionCategory?: string,
@@ -246,7 +242,6 @@ export class TransactionsService {
     return TransactionSummaryDto.createFromPlain(transactions);
   }
 
-  // eslint-disable-next-line max-params, max-lines-per-function
   findMonthlySummariesByUser = async (
     userId: UserId,
     year?: number,
@@ -278,14 +273,12 @@ export class TransactionsService {
     >();
 
     Array.from(
-      // eslint-disable-next-line max-statements
       Map.groupBy(transactions, (transaction) => {
         const zonedDate = DateService.toZonedTime(transaction.date);
 
         const transactionMonth = zonedDate.getMonth() + 1;
         const transactionYear = zonedDate.getFullYear();
 
-        // eslint-disable-next-line init-declarations
         let type: TransactionType;
 
         const hasFromAccountWithWithinFilter =
@@ -310,7 +303,6 @@ export class TransactionsService {
           year: transactionYear,
         };
       }).entries(),
-      // eslint-disable-next-line max-statements
     ).forEach(([key, value]) => {
       const { type, month: transactionMonth, year: transactionYear } = key;
 
@@ -429,7 +421,6 @@ export class TransactionsService {
     return this.transactionRepo.deleteMany({ userId });
   }
 
-  // eslint-disable-next-line max-params
   private async updateRelatedAccountBalance(
     userId: UserId,
     transaction: Partial<Transaction>,

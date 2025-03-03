@@ -13,7 +13,6 @@ import { UserId } from '@/types/user-id';
 export class TransfersService {
   constructor(private readonly transactionService: TransactionsService) {}
 
-  // eslint-disable-next-line max-params
   async findAllByUser(
     userId: UserId,
     page: number,

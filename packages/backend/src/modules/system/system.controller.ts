@@ -18,7 +18,6 @@ export class SystemController {
 
   @Get('logs')
   async getLogs(
-    // eslint-disable-next-line no-use-before-define
     @Query('start', new DefaultValuePipe(SystemController.getMonthAgo()))
     start: Date,
     @Query('end', new DefaultValuePipe(new Date())) end: Date,

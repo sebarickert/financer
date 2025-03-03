@@ -2,7 +2,6 @@ import { Decimal } from '@prisma/client/runtime/library';
 
 type FindByType = 'any' | 'income' | 'expense' | 'transfer';
 
-// eslint-disable-next-line no-warning-comments
 // TODO fix type
 export const transactionsRepoFindAllByAccountIdMockData: Record<
   string,

@@ -123,7 +123,6 @@ export class TransactionRepo {
     }
   }
 
-  // eslint-disable-next-line max-statements
   static filterByYearAndMonth(
     year?: number,
     month?: number,

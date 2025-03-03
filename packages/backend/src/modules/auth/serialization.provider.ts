@@ -11,7 +11,6 @@ export class AuthSerializer extends PassportSerializer {
     super();
   }
 
-  // eslint-disable-next-line class-methods-use-this
   serializeUser(user: User, done: (err: Error | null, userId: UserId) => void) {
     done(null, user.id as UserId);
   }

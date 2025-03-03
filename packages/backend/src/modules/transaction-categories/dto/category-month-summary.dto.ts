@@ -1,4 +1,3 @@
-/* eslint-disable max-classes-per-file */
 import { ApiProperty } from '@nestjs/swagger';
 import { Decimal } from '@prisma/client/runtime/library';
 import { Allow } from 'class-validator';

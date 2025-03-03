@@ -48,13 +48,11 @@ export class HttpAccessLogMiddleware implements NestMiddleware {
     next();
   }
 
-  // eslint-disable-next-line class-methods-use-this
   private combineRegexPatterns(patterns: RegExp[]): string {
     const combinedPattern = patterns.map((pattern) => pattern.source).join('|');
     return `(${combinedPattern})`;
   }
 
-  // eslint-disable-next-line class-methods-use-this
   private parseEndpointNameFromPath(path: string): string {
     // E.g. 66d36b1a7c0466d417b797ad
     const mongodbIdRegex = /[0-9a-f]{24}/gu;

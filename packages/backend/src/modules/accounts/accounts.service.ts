@@ -195,7 +195,6 @@ export class AccountsService {
     return latestTransaction?.balance.minus(latestTransaction.amount) ?? null;
   }
 
-  // eslint-disable-next-line max-lines-per-function
   async getAccountBalanceHistory(
     userId: UserId,
     account: Account,

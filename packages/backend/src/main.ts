@@ -31,7 +31,6 @@ const options: SwaggerDocumentOptions = {
     `${controllerKey.replace('Controller', '')}_${methodKey}`,
 };
 
-// eslint-disable-next-line max-statements
 const bootstrap = async () => {
   if (shouldUseInternalDockerDb()) await DatabaseServer.startServer();
 

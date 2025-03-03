@@ -165,7 +165,6 @@ export class TransactionCategoriesService {
     return TransactionCategoryDto.createFromPlain(categories);
   }
 
-  // eslint-disable-next-line max-params
   async findMonthlySummariesByUserAndId(
     userId: UserId,
     parentCategoryId: string,

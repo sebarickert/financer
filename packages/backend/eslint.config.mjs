@@ -10,7 +10,7 @@ export default tseslint.config(
   {
     ignores: ['eslint.config.mjs', 'node_modules', 'dist', 'build'],
   },
-  eslint.configs.all,
+  eslint.configs.recommended,
   tseslint.configs.eslintRecommended,
   ...tseslint.configs.strictTypeChecked,
   ...tseslint.configs.stylisticTypeChecked,
@@ -19,7 +19,6 @@ export default tseslint.config(
   {
     plugins: {
       'unused-imports': unusedImports,
-      // import: importPlugin,
     },
   },
   {
@@ -38,12 +37,18 @@ export default tseslint.config(
     },
   },
   {
+    settings: {
+      'import/resolver': {
+        typescript: {
+          extensions: ['.js', '.jsx', '.ts', '.tsx'],
+        },
+      },
+    },
+  },
+  // Common rules
+  {
     rules: {
-      '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/no-floating-promises': 'warn',
-      '@typescript-eslint/no-unsafe-argument': 'warn',
       'unused-imports/no-unused-imports': 'error',
-      'unused-imports/no-unused-vars': 'warn',
       'linebreak-style': 'off',
       'prefer-template': 'error',
       'prettier/prettier': [
@@ -73,23 +78,16 @@ export default tseslint.config(
       'import/no-extraneous-dependencies': [
         'error',
         {
-          devDependencies: ['**/*.spec.ts', 'jest.config.ts', 'test/**/*.ts'],
+          devDependencies: [
+            '**/*.spec.ts',
+            'jest.config.ts',
+            'test/**/*.ts',
+            './src/setup-tests.tsx',
+          ],
         },
       ],
       'one-var': ['error', 'never'],
       'sort-imports': ['error', { ignoreDeclarationSort: true }],
-      'new-cap': [
-        'error',
-        {
-          newIsCap: true,
-          capIsNew: false, // Allow decorators to start with upper case.
-          properties: true,
-        },
-      ],
-      // TypeScript compilation already ensures that named imports exist in the referenced module
-      'import/named': 'off',
-      'sort-keys': 'off',
-      'no-ternary': 'off',
       '@typescript-eslint/restrict-template-expressions': [
         'error',
         {
@@ -97,45 +95,13 @@ export default tseslint.config(
           allowNumber: true,
         },
       ],
-      // Maybe we should enable this in the future for production code.
-      'no-undefined': 'off',
-      // 'no-magic-numbers': ['error', { ignore: [0] }],
-      'no-magic-numbers': 'off',
-      '@typescript-eslint/no-misused-spread': 'off',
     },
   },
+
+  // NestJs rules
   {
-    settings: {
-      'import/resolver': {
-        typescript: {
-          extensions: ['.js', '.jsx', '.ts', '.tsx'],
-        },
-      },
-    },
-  },
-  {
-    files: ['**/*.spec.ts', 'test/*.ts', '**/*-mock.ts'],
     rules: {
-      'max-lines-per-function': 'off',
-      'max-statements': 'off',
-      'max-lines': 'off',
-      'init-declarations': 'off',
-      'max-classes-per-file': 'off',
-      'class-methods-use-this': 'off',
-      '@typescript-eslint/unbound-method': 'off',
-    },
-  },
-  {
-    files: [
-      '**/*.service.ts',
-      '**/*.controller.ts',
-      '**/*.decorator.ts',
-      '**/*.pipe.ts',
-      '**/*.module.ts',
-      '**/*.guard.ts',
-    ],
-    rules: {
-      'class-methods-use-this': 'off',
+      'no-console': 'warn',
     },
   },
   {
@@ -145,6 +111,19 @@ export default tseslint.config(
         'error',
         { allowWithDecorator: true },
       ],
+    },
+  },
+  {
+    files: ['**/*.spec.ts', 'test/*.ts', '**/*-mock.ts'],
+    rules: {
+      '@typescript-eslint/unbound-method': 'off',
+    },
+  },
+
+  // Misc probably should get rid of
+  {
+    rules: {
+      '@typescript-eslint/no-misused-spread': 'off',
     },
   },
 );
