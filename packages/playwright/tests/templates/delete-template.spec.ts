@@ -1,7 +1,7 @@
-import { applyFixture } from '$utils/applyFixture';
-import { expect, test } from '$utils/financer-page';
-import { deleteTemplate } from '$utils/template/deleteTemplate';
-import { getTemplateDataFromTemplateList } from '$utils/template/getTemplateDataFromTemplateList';
+import { applyFixture } from '@/utils/applyFixture';
+import { expect, test } from '@/utils/financer-page';
+import { deleteTemplate } from '@/utils/template/deleteTemplate';
+import { getTemplateDataFromTemplateList } from '@/utils/template/getTemplateDataFromTemplateList';
 
 test.describe('Delete Template', () => {
   test.beforeEach(async ({ page }) => {

@@ -1,7 +1,7 @@
 import Decimal from 'decimal.js';
 
-import { formatDate } from '$utils/api-helper';
-import { Page } from '$utils/financer-page';
+import { formatDate } from '@/utils/api-helper';
+import { Page } from '@/utils/financer-page';
 
 interface MarketValueFormFields {
   date?: Date;

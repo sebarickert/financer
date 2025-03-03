@@ -1,8 +1,8 @@
 import Decimal from 'decimal.js';
 
-import { TransactionType } from '$types/generated/financer';
-import { parseCurrency } from '$utils/api-helper';
-import { Page, expect } from '$utils/financer-page';
+import { TransactionType } from '@/types/generated/financer';
+import { parseCurrency } from '@/utils/api-helper';
+import { Page, expect } from '@/utils/financer-page';
 
 interface TransactionRow {
   description: string;

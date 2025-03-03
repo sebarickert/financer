@@ -1,6 +1,6 @@
 import { getBaseUrl } from './financer-page';
 
-import fixtureData from '$assets/fixture-data.json';
+import fixtureData from '@/assets/fixture-data.json';
 
 interface TransactionItem {
   createdAt: string;

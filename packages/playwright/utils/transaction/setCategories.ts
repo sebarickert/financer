@@ -1,8 +1,8 @@
 import { Locator } from '@playwright/test';
 import Decimal from 'decimal.js';
 
-import { parseCurrency } from '$utils/api-helper';
-import { Page, expect } from '$utils/financer-page';
+import { parseCurrency } from '@/utils/api-helper';
+import { Page, expect } from '@/utils/financer-page';
 
 interface CategoryItem {
   category?: string;
@@ -29,14 +29,14 @@ const fillCategoryItemForm = async ({
     [`#${fieldIdPrefix}.categoryId`]: { label: category },
   };
 
-  item.locator('summary').click();
+  await item.locator('summary').click();
 
   for (const [selector, value] of Object.entries(formFields)) {
     if (value) {
       if (selector === `#${fieldIdPrefix}.categoryId`) {
-        await item.locator(selector).selectOption(value as string);
+        await item.locator(selector).selectOption(value as { label: string });
       } else {
-        await item.locator(selector).fill(value.toString());
+        await item.locator(selector).fill(value as string);
       }
     }
   }
@@ -59,7 +59,13 @@ export const setCategories = async (
   const hasCategories = !(await firstCategorySelect.isVisible());
 
   if (!hasCategories) {
-    await firstCategorySelect.selectOption(categories[0].category!);
+    const category = categories[0]?.category;
+
+    if (!category) {
+      throw new Error('Category is required');
+    }
+
+    await firstCategorySelect.selectOption(category);
   }
 
   const transactionCategoriesItem = prefixLocator.getByTestId(
@@ -93,9 +99,15 @@ export const setCategories = async (
   );
 
   for (let index = 0; index < categories.length; index++) {
+    const targetCategory = categories[index].category;
+
+    if (!targetCategory) {
+      throw new Error('Category is required');
+    }
+
     await expect(
       categorySummaryItem.nth(index).getByTestId('category-label'),
-    ).toContainText(categories[index].category!);
+    ).toContainText(targetCategory);
 
     if (categories[index].amount) {
       const parsedAmount = parseCurrency(

@@ -1,9 +1,9 @@
-import { getAccountBalanceFromAccountListByName } from '$utils/account/getAccountBalanceFromAccountListByName';
-import { applyFixture } from '$utils/applyFixture';
-import { clickContextualNavigationItem } from '$utils/common/clickContextualNavigationItem';
-import { expect, test } from '$utils/financer-page';
-import { deleteTransaction } from '$utils/transaction/deleteTransaction';
-import { getTransactionDetails } from '$utils/transaction/getTransactionDetails';
+import { getAccountBalanceFromAccountListByName } from '@/utils/account/getAccountBalanceFromAccountListByName';
+import { applyFixture } from '@/utils/applyFixture';
+import { clickContextualNavigationItem } from '@/utils/common/clickContextualNavigationItem';
+import { expect, test } from '@/utils/financer-page';
+import { deleteTransaction } from '@/utils/transaction/deleteTransaction';
+import { getTransactionDetails } from '@/utils/transaction/getTransactionDetails';
 
 test.describe('Delete Transfer', () => {
   test.beforeEach(async ({ page }) => {
@@ -22,9 +22,9 @@ test.describe('Delete Transfer', () => {
     await page.getByRole('link', { name: 'Accounts' }).click();
 
     const initialFromAccountBalance =
-      await getAccountBalanceFromAccountListByName(page, fromAccount!);
+      await getAccountBalanceFromAccountListByName(page, fromAccount);
     const initialToAccountBalance =
-      await getAccountBalanceFromAccountListByName(page, toAccount!);
+      await getAccountBalanceFromAccountListByName(page, toAccount);
 
     await page.goto(`/transactions/transfers/${id}`);
 
@@ -41,9 +41,9 @@ test.describe('Delete Transfer', () => {
     await page.getByRole('link', { name: 'Accounts' }).click();
 
     const updatedFromAccountBalance =
-      await getAccountBalanceFromAccountListByName(page, fromAccount!);
+      await getAccountBalanceFromAccountListByName(page, fromAccount);
     const updatedToAccountBalance =
-      await getAccountBalanceFromAccountListByName(page, toAccount!);
+      await getAccountBalanceFromAccountListByName(page, toAccount);
 
     expect(initialFromAccountBalance.plus(amount)).toEqual(
       updatedFromAccountBalance,

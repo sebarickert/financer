@@ -1,13 +1,13 @@
 import Decimal from 'decimal.js';
 
-import { getAccountBalanceFromAccountListByName } from '$utils/account/getAccountBalanceFromAccountListByName';
-import { applyFixture } from '$utils/applyFixture';
-import { clickContextualNavigationItem } from '$utils/common/clickContextualNavigationItem';
-import { clickPopperItem } from '$utils/common/clickPopperItem';
-import { expect, test } from '$utils/financer-page';
-import { fillTransactionForm } from '$utils/transaction/fillTransactionForm';
-import { getTransactionDetails } from '$utils/transaction/getTransactionDetails';
-import { setCategories } from '$utils/transaction/setCategories';
+import { getAccountBalanceFromAccountListByName } from '@/utils/account/getAccountBalanceFromAccountListByName';
+import { applyFixture } from '@/utils/applyFixture';
+import { clickContextualNavigationItem } from '@/utils/common/clickContextualNavigationItem';
+import { clickPopperItem } from '@/utils/common/clickPopperItem';
+import { expect, test } from '@/utils/financer-page';
+import { fillTransactionForm } from '@/utils/transaction/fillTransactionForm';
+import { getTransactionDetails } from '@/utils/transaction/getTransactionDetails';
+import { setCategories } from '@/utils/transaction/setCategories';
 
 test.describe('Income Transactions', () => {
   test.beforeEach(async ({ page }) => {
@@ -30,7 +30,7 @@ test.describe('Income Transactions', () => {
       await page.getByRole('link', { name: 'Accounts' }).click();
 
       const initialAccountBalance =
-        await getAccountBalanceFromAccountListByName(page, toAccount!);
+        await getAccountBalanceFromAccountListByName(page, toAccount);
 
       await page.goto(`/transactions/incomes/${id}`);
       await clickPopperItem(page, 'Edit');
@@ -62,7 +62,7 @@ test.describe('Income Transactions', () => {
       await page.getByRole('link', { name: 'Accounts' }).click();
 
       const updatedAccountBalance =
-        await getAccountBalanceFromAccountListByName(page, toAccount!);
+        await getAccountBalanceFromAccountListByName(page, toAccount);
 
       const initialAndNewAmountDifference = initialAmount.minus(newAmount);
 
@@ -85,7 +85,7 @@ test.describe('Income Transactions', () => {
       await page.getByRole('link', { name: 'Accounts' }).click();
 
       const initialBalanceForPreviousAccount =
-        await getAccountBalanceFromAccountListByName(page, toAccount!);
+        await getAccountBalanceFromAccountListByName(page, toAccount);
 
       const initialBalanceForNewAccount =
         await getAccountBalanceFromAccountListByName(page, 'Cash account');
@@ -110,7 +110,7 @@ test.describe('Income Transactions', () => {
       await page.getByRole('link', { name: 'Accounts' }).click();
 
       const updatedBalanceForPreviousAccount =
-        await getAccountBalanceFromAccountListByName(page, toAccount!);
+        await getAccountBalanceFromAccountListByName(page, toAccount);
 
       const updatedBalanceForNewAccount =
         await getAccountBalanceFromAccountListByName(page, 'Cash account');

@@ -1,7 +1,7 @@
 import { Locator, expect } from '@playwright/test';
 import Decimal from 'decimal.js';
 
-import { Page } from '$utils/financer-page';
+import { Page } from '@/utils/financer-page';
 
 const getFieldValue = async (locator: Locator) => {
   if ((await locator.count()) > 0) {
@@ -66,7 +66,7 @@ export const getTransactionFormValues = async (
         elements.map(
           (element) =>
             element.querySelector('[data-testid="category-label"]')
-              ?.textContent || '',
+              ?.textContent ?? '',
         ),
       );
 

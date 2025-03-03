@@ -1,5 +1,5 @@
-import { TransactionType } from '$types/generated/financer';
-import { Page } from '$utils/financer-page';
+import { TransactionType } from '@/types/generated/financer';
+import { Page } from '@/utils/financer-page';
 
 interface CategoryFormFields {
   parentCategory?: string;
@@ -18,7 +18,7 @@ export const fillCategoryForm = async (
   const formFields = {
     '#name': name,
     '#parentCategoryId': parentCategory ? { label: parentCategory } : null,
-  };
+  } as const;
 
   if (visibility?.length) {
     await categoryForm
@@ -61,9 +61,11 @@ export const fillCategoryForm = async (
   for (const [selector, value] of Object.entries(formFields)) {
     if (value) {
       if (selector === '#parentCategoryId') {
-        await categoryForm.locator(selector).selectOption(value as string);
+        await categoryForm
+          .locator(selector)
+          .selectOption(value as { label: string });
       } else {
-        await categoryForm.locator(selector).fill(value.toString());
+        await categoryForm.locator(selector).fill(value as string);
       }
     }
   }

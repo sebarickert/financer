@@ -3,8 +3,8 @@ import Decimal from 'decimal.js';
 import {
   TransactionTemplateType,
   TransactionType,
-} from '$types/generated/financer';
-import { Page } from '$utils/financer-page';
+} from '@/types/generated/financer';
+import { Page } from '@/utils/financer-page';
 
 interface TemplateFormFields {
   templateType?: TransactionTemplateType;
@@ -58,9 +58,11 @@ export const fillTemplateForm = async (
         selector === '#toAccount' ||
         selector === '#fromAccount'
       ) {
-        await categoryForm.locator(selector).selectOption(value as string);
+        await categoryForm
+          .locator(selector)
+          .selectOption(value as { label: string });
       } else {
-        await categoryForm.locator(selector).fill(value.toString());
+        await categoryForm.locator(selector).fill(value as string);
       }
     }
   }

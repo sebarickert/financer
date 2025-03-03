@@ -1,10 +1,14 @@
-import { parseCurrency } from '$utils/api-helper';
-import { Page, expect } from '$utils/financer-page';
+import { parseCurrency } from '@/utils/api-helper';
+import { Page, expect } from '@/utils/financer-page';
 
 export const getAccountBalanceFromAccountListByName = async (
   page: Page,
-  accountName: string,
+  accountName: string | undefined,
 ) => {
+  if (!accountName) {
+    throw new Error('Account name is required');
+  }
+
   await expect(page).toHaveURL(/\/accounts\/?$/, { timeout: 5000 });
   await expect(page.getByTestId('account-list').first()).toBeVisible({
     timeout: 5000,

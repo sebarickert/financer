@@ -79,6 +79,7 @@ export const startServer = async (
   const backendProcessStartup = new Promise<ChildProcessWithoutNullStreams>(
     (resolve) => {
       backendProcess.stdout.on('data', (data) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
         if (data.toString().includes('Nest application successfully started')) {
           resolve(backendProcess);
         }
@@ -89,6 +90,7 @@ export const startServer = async (
   const frontendProcessStartup = new Promise<ChildProcessWithoutNullStreams>(
     (resolve) => {
       frontendProcess.stdout.on('data', (data) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
         if (/Ready in \d+ms/.test(data.toString())) {
           resolve(frontendProcess);
         }

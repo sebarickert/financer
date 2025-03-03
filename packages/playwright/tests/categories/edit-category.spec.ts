@@ -1,9 +1,9 @@
-import { TransactionType } from '$types/generated/financer';
-import { applyFixture } from '$utils/applyFixture';
-import { fillCategoryForm } from '$utils/category/fillCategoryForm';
-import { getCategoryDetails } from '$utils/category/getCategoryDetails';
-import { clickPopperItem } from '$utils/common/clickPopperItem';
-import { expect, test } from '$utils/financer-page';
+import { TransactionType } from '@/types/generated/financer';
+import { applyFixture } from '@/utils/applyFixture';
+import { fillCategoryForm } from '@/utils/category/fillCategoryForm';
+import { getCategoryDetails } from '@/utils/category/getCategoryDetails';
+import { clickPopperItem } from '@/utils/common/clickPopperItem';
+import { expect, test } from '@/utils/financer-page';
 
 test.describe('Edit Category', () => {
   test.beforeEach(async ({ page }) => {
@@ -81,7 +81,12 @@ test.describe('Edit Category', () => {
 
       await page.evaluate(
         ([scopedChildCategoryName, scopedChildCategoryId]) => {
-          const targetElement = document.querySelector('#parentCategoryId')!;
+          const targetElement = document.querySelector('#parentCategoryId');
+
+          if (!targetElement) {
+            throw new Error('Parent category select not found');
+          }
+
           targetElement.innerHTML = `${targetElement.innerHTML}<option value="${scopedChildCategoryId}">${scopedChildCategoryName}</option>`;
         },
         [childCategoryName, childCategoryId],

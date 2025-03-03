@@ -4,8 +4,8 @@ import Decimal from 'decimal.js';
 import {
   TransactionTemplateType,
   TransactionType,
-} from '$types/generated/financer';
-import { Page } from '$utils/financer-page';
+} from '@/types/generated/financer';
+import { Page } from '@/utils/financer-page';
 
 const getFieldValue = async (locator: Locator) => {
   if ((await locator.count()) > 0) {

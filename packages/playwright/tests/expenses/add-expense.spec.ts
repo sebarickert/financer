@@ -1,17 +1,17 @@
 import Decimal from 'decimal.js';
 
-import { getAccountBalanceFromAccountListByName } from '$utils/account/getAccountBalanceFromAccountListByName';
-import { applyFixture } from '$utils/applyFixture';
-import { clickContextualNavigationItem } from '$utils/common/clickContextualNavigationItem';
-import { getEmptyListErrorMessageByBrowserName } from '$utils/common/getEmptyListErrorMessageByBrowserName';
-import { expect, test } from '$utils/financer-page';
-import { getTemplateFormValues } from '$utils/template/getTemplateFormValues';
-import { fillAndSubmitTransactionTemplateForm } from '$utils/transaction/fillAndSubmitTransactionTemplateForm';
-import { fillTransactionForm } from '$utils/transaction/fillTransactionForm';
-import { getAllAvailableTransactionTemplates } from '$utils/transaction/getAllAvailableTransactionTemplates';
-import { getTransactionDetails } from '$utils/transaction/getTransactionDetails';
-import { getTransactionFormValues } from '$utils/transaction/getTransactionFormValues';
-import { setCategories } from '$utils/transaction/setCategories';
+import { getAccountBalanceFromAccountListByName } from '@/utils/account/getAccountBalanceFromAccountListByName';
+import { applyFixture } from '@/utils/applyFixture';
+import { clickContextualNavigationItem } from '@/utils/common/clickContextualNavigationItem';
+import { getEmptyListErrorMessageByBrowserName } from '@/utils/common/getEmptyListErrorMessageByBrowserName';
+import { expect, test } from '@/utils/financer-page';
+import { getTemplateFormValues } from '@/utils/template/getTemplateFormValues';
+import { fillAndSubmitTransactionTemplateForm } from '@/utils/transaction/fillAndSubmitTransactionTemplateForm';
+import { fillTransactionForm } from '@/utils/transaction/fillTransactionForm';
+import { getAllAvailableTransactionTemplates } from '@/utils/transaction/getAllAvailableTransactionTemplates';
+import { getTransactionDetails } from '@/utils/transaction/getTransactionDetails';
+import { getTransactionFormValues } from '@/utils/transaction/getTransactionFormValues';
+import { setCategories } from '@/utils/transaction/setCategories';
 
 test.describe('Expense Transactions', () => {
   test.beforeEach(async ({ page }) => {

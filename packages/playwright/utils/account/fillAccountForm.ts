@@ -1,6 +1,6 @@
 import Decimal from 'decimal.js';
 
-import { Page } from '$utils/financer-page';
+import { Page } from '@/utils/financer-page';
 
 interface AccountFormFields {
   name?: string;
@@ -27,9 +27,9 @@ export const fillAccountForm = async (
   for (const [selector, value] of Object.entries(formFields)) {
     if (value) {
       if (selector === '#type') {
-        await value;
+        await (value as Promise<void>);
       } else {
-        await accountForm.locator(selector).fill(value.toString());
+        await accountForm.locator(selector).fill(value as string);
       }
     }
   }

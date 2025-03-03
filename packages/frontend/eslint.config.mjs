@@ -26,7 +26,6 @@ const patchedConfig = compatConfig.map((entry) => {
   const plugins = entry.plugins;
   for (const key in plugins) {
     if (plugins.hasOwnProperty(key) && pluginsToPatch.includes(key)) {
-      // @ts-expect-error - next does not have native support
       plugins[key] = fixupPluginRules(plugins[key]);
     }
   }

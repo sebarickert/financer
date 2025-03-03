@@ -1,8 +1,8 @@
 import Decimal from 'decimal.js';
 
-import { TransactionType } from '$types/generated/financer';
-import { parseCurrency } from '$utils/api-helper';
-import { Page, expect } from '$utils/financer-page';
+import { TransactionType } from '@/types/generated/financer';
+import { parseCurrency } from '@/utils/api-helper';
+import { Page, expect } from '@/utils/financer-page';
 
 interface TransactionDetails {
   id: string;
@@ -101,7 +101,7 @@ export const getTransactionDetails = async (
       .getByText('Type')
       .evaluate((el) => el.parentElement?.nextElementSibling?.textContent)) ??
     ''
-  ).toUpperCase();
+  ).toUpperCase() as TransactionType;
 
   const categories = await getCategories(page);
 
@@ -139,7 +139,7 @@ export const getTransactionDetails = async (
     fromAccount,
     toAccount,
     date,
-    type: type as TransactionType,
+    type: type,
     categories,
   };
 };

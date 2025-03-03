@@ -11,6 +11,7 @@ export const getBaseUrl = () => {
 };
 
 export const test = setup.extend({
+  // eslint-disable-next-line no-empty-pattern
   baseURL: async ({}, use) => {
     const workerIndex = parseInt(process.env.TEST_PARALLEL_INDEX ?? '');
     await use(parseBaseUrl(workerIndex));

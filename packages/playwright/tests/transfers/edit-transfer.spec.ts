@@ -1,13 +1,13 @@
 import Decimal from 'decimal.js';
 
-import { getAccountBalanceFromAccountListByName } from '$utils/account/getAccountBalanceFromAccountListByName';
-import { applyFixture } from '$utils/applyFixture';
-import { clickContextualNavigationItem } from '$utils/common/clickContextualNavigationItem';
-import { clickPopperItem } from '$utils/common/clickPopperItem';
-import { expect, test } from '$utils/financer-page';
-import { fillTransactionForm } from '$utils/transaction/fillTransactionForm';
-import { getTransactionDetails } from '$utils/transaction/getTransactionDetails';
-import { setCategories } from '$utils/transaction/setCategories';
+import { getAccountBalanceFromAccountListByName } from '@/utils/account/getAccountBalanceFromAccountListByName';
+import { applyFixture } from '@/utils/applyFixture';
+import { clickContextualNavigationItem } from '@/utils/common/clickContextualNavigationItem';
+import { clickPopperItem } from '@/utils/common/clickPopperItem';
+import { expect, test } from '@/utils/financer-page';
+import { fillTransactionForm } from '@/utils/transaction/fillTransactionForm';
+import { getTransactionDetails } from '@/utils/transaction/getTransactionDetails';
+import { setCategories } from '@/utils/transaction/setCategories';
 
 test.describe('Transfer Transactions', () => {
   test.beforeEach(async ({ page }) => {
@@ -31,9 +31,9 @@ test.describe('Transfer Transactions', () => {
       await page.getByRole('link', { name: 'Accounts' }).click();
 
       const initialFromAccountBalance =
-        await getAccountBalanceFromAccountListByName(page, fromAccount!);
+        await getAccountBalanceFromAccountListByName(page, fromAccount);
       const initialToAccountBalance =
-        await getAccountBalanceFromAccountListByName(page, toAccount!);
+        await getAccountBalanceFromAccountListByName(page, toAccount);
 
       await page.goto(`/transactions/transfers/${id}`);
       await clickPopperItem(page, 'Edit');
@@ -65,9 +65,9 @@ test.describe('Transfer Transactions', () => {
       await page.getByRole('link', { name: 'Accounts' }).click();
 
       const updatedFromAccountBalance =
-        await getAccountBalanceFromAccountListByName(page, fromAccount!);
+        await getAccountBalanceFromAccountListByName(page, fromAccount);
       const updatedToAccountBalance =
-        await getAccountBalanceFromAccountListByName(page, toAccount!);
+        await getAccountBalanceFromAccountListByName(page, toAccount);
 
       const initialAndNewAmountDifference = initialAmount.minus(newAmount);
 
@@ -94,13 +94,13 @@ test.describe('Transfer Transactions', () => {
       await page.getByRole('link', { name: 'Accounts' }).click();
 
       const initialBalanceForPreviousFromAccount =
-        await getAccountBalanceFromAccountListByName(page, fromAccount!);
+        await getAccountBalanceFromAccountListByName(page, fromAccount);
 
       const initialBalanceForNewFromAccount =
         await getAccountBalanceFromAccountListByName(page, 'Long-term SAVINGS');
 
       const initialBalanceForPreviousToAccount =
-        await getAccountBalanceFromAccountListByName(page, toAccount!);
+        await getAccountBalanceFromAccountListByName(page, toAccount);
 
       const initialBalanceForNewToAccount =
         await getAccountBalanceFromAccountListByName(page, 'Saving account 1');
@@ -126,13 +126,13 @@ test.describe('Transfer Transactions', () => {
       await page.getByRole('link', { name: 'Accounts' }).click();
 
       const updatedBalanceForPreviousFromAccount =
-        await getAccountBalanceFromAccountListByName(page, fromAccount!);
+        await getAccountBalanceFromAccountListByName(page, fromAccount);
 
       const updatedBalanceForNewFromAccount =
         await getAccountBalanceFromAccountListByName(page, 'Long-term SAVINGS');
 
       const updatedBalanceForPreviousToAccount =
-        await getAccountBalanceFromAccountListByName(page, toAccount!);
+        await getAccountBalanceFromAccountListByName(page, toAccount);
 
       const updatedBalanceForNewToAccount =
         await getAccountBalanceFromAccountListByName(page, 'Saving account 1');

@@ -1,4 +1,4 @@
-import { Page } from '$utils/financer-page';
+import { Page } from '@/utils/financer-page';
 
 export const getAllAvailableTransactionTemplates = async (
   page: Page,
