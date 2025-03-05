@@ -1,21 +1,31 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 import { AccountBalanceChange } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime/library';
-import { Type } from 'class-transformer';
+import { Exclude, Type } from 'class-transformer';
 import { IsDate, IsUUID } from 'class-validator';
 
 import { UserId } from '@/types/user-id';
 import { IsDecimal, TransformDecimal } from '@/utils/is-decimal.decorator';
 
 export class AccountBalanceChangeDto implements AccountBalanceChange {
-  constructor(partial: AccountBalanceChange) {
-    Object.assign(this, partial);
+  constructor(data?: AccountBalanceChange) {
+    if (data) {
+      this.id = data.id;
+      this.date = data.date;
+      this.amount = data.amount;
+      this.userId = data.userId as UserId;
+      this.accountId = data.accountId;
+      this.createdAt = data.createdAt;
+      this.updatedAt = data.updatedAt;
+    }
   }
 
-  @ApiProperty()
+  @Exclude()
+  @ApiHideProperty()
   createdAt!: Date;
 
-  @ApiProperty()
+  @Exclude()
+  @ApiHideProperty()
   updatedAt!: Date;
 
   @ApiProperty()

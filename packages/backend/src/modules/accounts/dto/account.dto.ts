@@ -1,6 +1,7 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 import { Account, AccountType } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime/library';
+import { Exclude } from 'class-transformer';
 import {
   IsBoolean,
   IsEnum,
@@ -22,14 +23,26 @@ type CreateFromPlainAccount = Account & {
 };
 
 export class AccountDto implements IAccount {
-  constructor(values: IAccount) {
-    Object.assign(this, values);
+  constructor(data?: IAccount) {
+    if (data) {
+      this.id = data.id;
+      this.name = data.name;
+      this.type = data.type;
+      this.balance = data.balance;
+      this.currentDateBalance = data.currentDateBalance;
+      this.userId = data.userId as UserId;
+      this.createdAt = data.createdAt;
+      this.updatedAt = data.updatedAt;
+      this.isDeleted = data.isDeleted;
+    }
   }
 
-  @ApiProperty()
+  @Exclude()
+  @ApiHideProperty()
   createdAt!: Date;
 
-  @ApiProperty()
+  @Exclude()
+  @ApiHideProperty()
   updatedAt!: Date;
 
   @ApiProperty({ type: String })

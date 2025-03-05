@@ -5,8 +5,11 @@ import { Allow } from 'class-validator';
 import { IsDecimal, TransformDecimal } from '@/utils/is-decimal.decorator';
 
 class CategoryMonthlySummaryDtoId {
-  constructor(data: CategoryMonthlySummaryDtoId) {
-    Object.assign(this, data);
+  constructor(data?: CategoryMonthlySummaryDtoId) {
+    if (data) {
+      this.year = data.year;
+      this.month = data.month;
+    }
   }
 
   @ApiProperty()
@@ -17,8 +20,18 @@ class CategoryMonthlySummaryDtoId {
 }
 
 export class CategoryMonthlySummaryDto {
-  constructor(data: CategoryMonthlySummaryDto) {
-    Object.assign(this, data);
+  constructor(data?: CategoryMonthlySummaryDto) {
+    if (data) {
+      this.id = new CategoryMonthlySummaryDtoId(data.id);
+      this.totalCount = data.totalCount;
+      this.incomesCount = data.incomesCount;
+      this.expensesCount = data.expensesCount;
+      this.transfersCount = data.transfersCount;
+      this.totalAmount = data.totalAmount;
+      this.incomeAmount = data.incomeAmount;
+      this.expenseAmount = data.expenseAmount;
+      this.transferAmount = data.transferAmount;
+    }
   }
 
   @ApiProperty()

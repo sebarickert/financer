@@ -176,7 +176,7 @@ export class TransactionsService {
     const fetchedTransactions = await this.transactionRepo.findMany({
       where: transactionWhere,
       orderBy: { date: sortOrder },
-      take: limit ?? totalCount,
+      take: limit && !isNaN(limit) ? limit : totalCount,
       include: {
         categories: {
           select: {
@@ -238,7 +238,6 @@ export class TransactionsService {
         date: includePastTransactions ? undefined : { gte: new Date() },
       },
     });
-
     return TransactionSummaryDto.createFromPlain(transactions);
   }
 

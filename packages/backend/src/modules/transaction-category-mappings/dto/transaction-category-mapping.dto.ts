@@ -1,6 +1,7 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 import { TransactionCategoryMapping } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime/library';
+import { Exclude } from 'class-transformer';
 import { IsOptional, IsString, IsUUID } from 'class-validator';
 
 import { UserId } from '@/types/user-id';
@@ -10,14 +11,25 @@ import { MinDecimal, ONE_CENT } from '@/utils/min-decimal.decorator';
 export class TransactionCategoryMappingDto
   implements TransactionCategoryMapping
 {
-  constructor(mapping: TransactionCategoryMapping) {
-    Object.assign(this, mapping);
+  constructor(data?: TransactionCategoryMapping) {
+    if (data) {
+      this.id = data.id;
+      this.userId = data.userId as UserId;
+      this.description = data.description;
+      this.categoryId = data.categoryId;
+      this.transactionId = data.transactionId;
+      this.amount = data.amount;
+      this.createdAt = data.createdAt;
+      this.updatedAt = data.updatedAt;
+    }
   }
 
-  @ApiProperty()
+  @Exclude()
+  @ApiHideProperty()
   createdAt!: Date;
 
-  @ApiProperty()
+  @Exclude()
+  @ApiHideProperty()
   updatedAt!: Date;
 
   @ApiProperty({ type: String })

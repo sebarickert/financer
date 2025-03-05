@@ -148,7 +148,7 @@ exports[`TransactionCategoriesService should return an array of transaction cate
   CategoryMonthlySummaryDto {
     "expenseAmount": "1135.98",
     "expensesCount": 2,
-    "id": {
+    "id": CategoryMonthlySummaryDtoId {
       "month": 1,
       "year": 2022,
     },

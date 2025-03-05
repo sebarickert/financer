@@ -1,18 +1,28 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 import { UserPreferenceProperty, UserPreferences } from '@prisma/client';
+import { Exclude } from 'class-transformer';
 import { IsEnum, IsNotEmpty, IsUUID } from 'class-validator';
 
 import { UserId } from '@/types/user-id';
 
 export class UserPreferenceDto implements UserPreferences {
-  constructor(userPreference: UserPreferences) {
-    Object.assign(this, userPreference);
+  constructor(data?: UserPreferences) {
+    if (data) {
+      this.id = data.id;
+      this.userId = data.userId as UserId;
+      this.key = data.key;
+      this.value = data.value;
+      this.createdAt = data.createdAt;
+      this.updatedAt = data.updatedAt;
+    }
   }
 
-  @ApiProperty()
+  @Exclude()
+  @ApiHideProperty()
   createdAt!: Date;
 
-  @ApiProperty()
+  @Exclude()
+  @ApiHideProperty()
   updatedAt!: Date;
 
   @IsUUID()

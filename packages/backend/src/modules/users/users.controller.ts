@@ -13,7 +13,7 @@ import { ApiBody, ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
 import { Role } from '@prisma/client';
 import { Response } from 'express';
 
-import { UpdateUserOwnUserDto } from './dto/update-own-user.dto';
+import { UpdateOwnUserDto } from './dto/update-own-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDto } from './dto/user.dto';
 import { UserIdDecorator } from './users.decorators';
@@ -61,11 +61,11 @@ export class UsersController {
   }
 
   @Patch('my-user')
-  @ApiBody({ type: UpdateUserOwnUserDto })
+  @ApiBody({ type: UpdateOwnUserDto })
   @ApiOkResponse({ type: UserDto })
   updateOwnUser(
     @UserIdDecorator() userId: UserId,
-    @Body() updateUserDto: UpdateUserOwnUserDto,
+    @Body() updateUserDto: UpdateOwnUserDto,
   ) {
     return this.usersService.update(userId, updateUserDto);
   }

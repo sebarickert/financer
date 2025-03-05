@@ -1,7 +1,7 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 import { Transaction } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime/library';
-import { Type } from 'class-transformer';
+import { Exclude, Type } from 'class-transformer';
 import { IsDate, IsNotEmpty, IsString, IsUUID } from 'class-validator';
 
 import { UserId } from '@/types/user-id';
@@ -9,14 +9,26 @@ import { IsDecimal, TransformDecimal } from '@/utils/is-decimal.decorator';
 import { MinDecimal } from '@/utils/min-decimal.decorator';
 
 export class TransactionDto implements Transaction {
-  constructor(values: Transaction) {
-    Object.assign(this, values);
+  constructor(data?: Transaction) {
+    if (data) {
+      this.id = data.id;
+      this.amount = data.amount;
+      this.description = data.description;
+      this.date = data.date;
+      this.userId = data.userId as UserId;
+      this.fromAccount = data.fromAccount;
+      this.toAccount = data.toAccount;
+      this.createdAt = data.createdAt;
+      this.updatedAt = data.updatedAt;
+    }
   }
 
-  @ApiProperty()
+  @Exclude()
+  @ApiHideProperty()
   createdAt!: Date;
 
-  @ApiProperty()
+  @Exclude()
+  @ApiHideProperty()
   updatedAt!: Date;
 
   @ApiProperty({ type: String })

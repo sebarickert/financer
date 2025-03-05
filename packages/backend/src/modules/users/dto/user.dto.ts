@@ -1,22 +1,36 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 import { Role, Theme, User } from '@prisma/client';
+import { Exclude } from 'class-transformer';
 import { IsEnum, IsNotEmpty, IsOptional, IsUUID } from 'class-validator';
 
 import { UserId } from '@/types/user-id';
 
 export class UserDto implements User {
-  constructor(data: User) {
-    Object.assign(this, data);
+  constructor(data?: User) {
+    if (data) {
+      this.id = data.id as UserId;
+      this.createdAt = data.createdAt;
+      this.updatedAt = data.updatedAt;
+      this.name = data.name;
+      this.nickname = data.nickname;
+      this.githubId = data.githubId;
+      this.auth0Id = data.auth0Id;
+      this.profileImageUrl = data.profileImageUrl;
+      this.roles = data.roles;
+      this.theme = data.theme;
+    }
   }
 
   @IsUUID()
   @ApiProperty({ type: 'string' })
   id!: UserId;
 
-  @ApiProperty()
+  @Exclude()
+  @ApiHideProperty()
   createdAt!: Date;
 
-  @ApiProperty()
+  @Exclude()
+  @ApiHideProperty()
   updatedAt!: Date;
 
   @IsNotEmpty()

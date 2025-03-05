@@ -25,9 +25,9 @@ export default tseslint.config(
     languageOptions: {
       globals: {
         ...globals.node,
-        ...globals.es2024,
+        ...globals.es2025,
       },
-      ecmaVersion: 5,
+      ecmaVersion: 2025,
       sourceType: "module",
       parserOptions: {
         projectService: true,

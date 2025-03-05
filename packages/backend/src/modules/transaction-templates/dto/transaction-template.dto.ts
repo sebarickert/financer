@@ -1,10 +1,15 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import {
+  ApiHideProperty,
+  ApiProperty,
+  ApiPropertyOptional,
+} from '@nestjs/swagger';
 import {
   TransactionTemplate,
   TransactionTemplateType,
   TransactionType,
 } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime/library';
+import { Exclude } from 'class-transformer';
 import {
   IsArray,
   IsEnum,
@@ -21,14 +26,31 @@ import { IsDecimal, TransformDecimal } from '@/utils/is-decimal.decorator';
 import { MinDecimal } from '@/utils/min-decimal.decorator';
 
 export class TransactionTemplateDto implements TransactionTemplate {
-  constructor(partial: TransactionTemplate) {
-    Object.assign(this, partial);
+  constructor(data?: TransactionTemplate) {
+    if (data) {
+      this.id = data.id;
+      this.userId = data.userId as UserId;
+      this.templateName = data.templateName;
+      this.templateType = data.templateType;
+      this.templateVisibility = data.templateVisibility;
+      this.amount = data.amount;
+      this.description = data.description;
+      this.dayOfMonth = data.dayOfMonth;
+      this.dayOfMonthToCreate = data.dayOfMonthToCreate;
+      this.fromAccount = data.fromAccount;
+      this.toAccount = data.toAccount;
+      this.categories = data.categories;
+      this.createdAt = data.createdAt;
+      this.updatedAt = data.updatedAt;
+    }
   }
 
-  @ApiProperty()
+  @Exclude()
+  @ApiHideProperty()
   createdAt!: Date;
 
-  @ApiProperty()
+  @Exclude()
+  @ApiHideProperty()
   updatedAt!: Date;
 
   @ApiProperty({ type: String })
@@ -57,11 +79,12 @@ export class TransactionTemplateDto implements TransactionTemplate {
     enum: TransactionType,
     enumName: 'TransactionType',
     type: TransactionType,
+    nullable: true,
   })
   @IsEnum(TransactionType, {
     message: 'Visibility must defined.',
   })
-  readonly templateVisibility!: TransactionType;
+  readonly templateVisibility!: TransactionType | null;
 
   @ApiPropertyOptional({ type: Number, nullable: true })
   @MinDecimal(new Decimal(0.01), {

@@ -25,9 +25,22 @@ export class TransactionListItemDto
   ] as const)
   implements TransactionListItem
 {
-  constructor(values: TransactionListItem) {
-    super(values);
-    Object.assign(this, values);
+  constructor(data: TransactionListItem) {
+    super(data);
+
+    // @ts-expect-error - we have to manually assign these properties
+    this.description = data.description;
+    // @ts-expect-error - we have to manually assign these properties
+    this.amount = data.amount;
+    // @ts-expect-error - we have to manually assign these properties
+    this.id = data.id;
+    // @ts-expect-error - we have to manually assign these properties
+    this.date = data.date;
+
+    this.isRecurring = data.isRecurring;
+    this.fromAccount = data.fromAccount;
+    this.toAccount = data.toAccount;
+    this.categories = data.categories;
   }
 
   @ApiProperty()
@@ -52,11 +65,11 @@ export class TransactionListItemDto
 
   @ApiHideProperty()
   @Exclude()
-  readonly fromAccount!: string;
+  readonly fromAccount!: string | null;
 
   @ApiHideProperty()
   @Exclude()
-  readonly toAccount!: string;
+  readonly toAccount!: string | null;
 
   @ApiProperty({
     type: TransactionListItemCategoryDto,

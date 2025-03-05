@@ -4,8 +4,9 @@ import { Decimal } from '@prisma/client/runtime/library';
 import { IsDecimal, TransformDecimal } from '@/utils/is-decimal.decorator';
 
 class TransactionMonthSummaryIdDto {
-  constructor(values: TransactionMonthSummaryIdDto) {
-    Object.assign(this, values);
+  constructor(data: TransactionMonthSummaryIdDto) {
+    this.year = data.year;
+    this.month = data.month;
   }
 
   @ApiProperty()
@@ -16,8 +17,18 @@ class TransactionMonthSummaryIdDto {
 }
 
 export class TransactionMonthSummaryDto {
-  constructor(values: TransactionMonthSummaryDto) {
-    Object.assign(this, values);
+  constructor(data?: TransactionMonthSummaryDto) {
+    if (data) {
+      this.id = data.id;
+      this.totalCount = data.totalCount;
+      this.incomesCount = data.incomesCount;
+      this.expensesCount = data.expensesCount;
+      this.transfersCount = data.transfersCount;
+      this.totalAmount = new Decimal(data.totalAmount);
+      this.incomeAmount = new Decimal(data.incomeAmount);
+      this.expenseAmount = new Decimal(data.expenseAmount);
+      this.transferAmount = new Decimal(data.transferAmount);
+    }
   }
 
   @ApiProperty({ type: TransactionMonthSummaryIdDto })

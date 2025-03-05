@@ -1,5 +1,6 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 import { TransactionCategory, TransactionType } from '@prisma/client';
+import { Exclude } from 'class-transformer';
 import {
   IsBoolean,
   IsEnum,
@@ -11,14 +12,25 @@ import {
 import { UserId } from '@/types/user-id';
 
 export class TransactionCategoryDto implements TransactionCategory {
-  constructor(transactionCategory: TransactionCategory) {
-    Object.assign(this, transactionCategory);
+  constructor(data?: TransactionCategory) {
+    if (data) {
+      this.id = data.id;
+      this.userId = data.userId as UserId;
+      this.name = data.name;
+      this.visibility = data.visibility;
+      this.deleted = data.deleted;
+      this.parentCategoryId = data.parentCategoryId;
+      this.createdAt = data.createdAt;
+      this.updatedAt = data.updatedAt;
+    }
   }
 
-  @ApiProperty()
+  @Exclude()
+  @ApiHideProperty()
   createdAt!: Date;
 
-  @ApiProperty()
+  @Exclude()
+  @ApiHideProperty()
   updatedAt!: Date;
 
   @ApiProperty({ type: String })

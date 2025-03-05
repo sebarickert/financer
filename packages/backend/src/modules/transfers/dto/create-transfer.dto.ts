@@ -8,6 +8,22 @@ export class CreateTransferDto extends OmitType(
   CreateTransactionDto,
   [] as const,
 ) {
+  constructor(data?: CreateTransferDto) {
+    super();
+    if (data) {
+      // @ts-expect-error - we have to manually assign these properties
+      this.amount = data.amount;
+      // @ts-expect-error - we have to manually assign these properties
+      this.description = data.description;
+      // @ts-expect-error - we have to manually assign these properties
+      this.date = data.date;
+
+      this.fromAccount = data.fromAccount;
+      this.toAccount = data.toAccount;
+      this.categories = data.categories;
+    }
+  }
+
   @ApiProperty({ type: String })
   @Allow()
   @IsNotEqual('toAccount', {

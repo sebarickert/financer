@@ -17,9 +17,12 @@ export class TransactionDetailsDto
   extends TransactionDto
   implements TransactionDetails
 {
-  constructor(values: TransactionDetails) {
-    super(values);
-    Object.assign(this, values);
+  constructor(data: TransactionDetails) {
+    super(data);
+    this.fromAccountName = data.fromAccountName;
+    this.toAccountName = data.toAccountName;
+    this.isRecurring = data.isRecurring;
+    this.categories = data.categories;
   }
 
   @ApiProperty({

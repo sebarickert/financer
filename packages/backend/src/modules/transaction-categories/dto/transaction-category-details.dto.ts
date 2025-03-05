@@ -12,9 +12,12 @@ export class TransactionCategoryDetailsDto
   extends TransactionCategoryDto
   implements TransactionCategoryDetails
 {
-  constructor(transactionCategory: TransactionCategoryDetails) {
-    super(transactionCategory);
-    Object.assign(this, transactionCategory);
+  constructor(data?: TransactionCategoryDetails) {
+    super(data);
+
+    if (data) {
+      this.path = data.path;
+    }
   }
 
   @IsString()

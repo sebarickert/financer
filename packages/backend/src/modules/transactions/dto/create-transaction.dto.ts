@@ -22,6 +22,24 @@ export class CreateTransactionDto extends IntersectionType(
   ] as const),
   PartialType(PickType(TransactionDto, ['fromAccount', 'toAccount'] as const)),
 ) {
+  constructor(data?: CreateTransactionDto) {
+    super();
+    if (data) {
+      // @ts-expect-error - we have to manually assign these properties
+      this.amount = data.amount;
+      // @ts-expect-error - we have to manually assign these properties
+      this.description = data.description;
+      // @ts-expect-error - we have to manually assign these properties
+      this.date = data.date;
+      // @ts-expect-error - we have to manually assign these properties
+      this.fromAccount = data.fromAccount;
+      // @ts-expect-error - we have to manually assign these properties
+      this.toAccount = data.toAccount;
+
+      this.categories = data.categories;
+    }
+  }
+
   @ApiPropertyOptional({
     type: [CreateTransactionCategoryMappingWithoutTransactionDto],
   })

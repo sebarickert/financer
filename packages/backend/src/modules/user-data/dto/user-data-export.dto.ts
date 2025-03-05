@@ -47,4 +47,18 @@ export class UserDataExportDto {
   @ApiProperty({ type: [TransactionTemplateLogDto] })
   @Allow()
   transactionTemplateLogs!: TransactionTemplateLogDto[];
+
+  constructor(data?: UserDataExportDto) {
+    if (data) {
+      this.accountBalanceChanges = data.accountBalanceChanges;
+      this.accounts = data.accounts;
+      this.transactionCategories = data.transactionCategories;
+      this.transactionCategoryMappings = data.transactionCategoryMappings;
+      this.transactionTemplateLogs = data.transactionTemplateLogs;
+      this.transactionTemplates = data.transactionTemplates;
+      this.transactions = data.transactions;
+      this.user = data.user;
+      this.userPreferences = data.userPreferences;
+    }
+  }
 }

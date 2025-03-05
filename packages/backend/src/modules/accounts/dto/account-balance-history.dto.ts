@@ -5,8 +5,12 @@ import { IsDate } from 'class-validator';
 import { IsDecimal, TransformDecimal } from '@/utils/is-decimal.decorator';
 
 export class AccountBalanceHistoryDto {
-  constructor(values: AccountBalanceHistoryDto) {
-    Object.assign(this, values);
+  constructor(data?: AccountBalanceHistoryDto) {
+    if (data) {
+      this.date = data.date;
+      this.amount = data.amount;
+      this.balance = data.balance;
+    }
   }
 
   @ApiProperty()
