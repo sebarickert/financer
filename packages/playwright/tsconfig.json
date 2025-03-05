@@ -24,6 +24,12 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["tests", "utils", "types"],
+  "include": [
+    "tests",
+    "utils",
+    "types",
+    "global-setup.ts",
+    "global-teardown.ts"
+  ],
   "exclude": ["node_modules"]
 }

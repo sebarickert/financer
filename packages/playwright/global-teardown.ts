@@ -1,12 +1,18 @@
-
 import { ChildProcessWithoutNullStreams } from 'child_process';
 
-const teardown = async () => {
-    const workerServers: ChildProcessWithoutNullStreams[] = global.workerServers;
+const teardown = () => {
+  const workerServers =
+    (
+      global as unknown as Record<
+        'workerServers',
+        ChildProcessWithoutNullStreams[] | undefined
+      >
+    ).workerServers ?? [];
 
-    workerServers.forEach((server) => {
-        server.kill();
-    });
-}
+  workerServers.forEach((server) => {
+    server.kill();
+  });
+};
 
+// eslint-disable-next-line import/no-default-export
 export default teardown;
