@@ -40,7 +40,7 @@ export const Dashboard: FC = async () => {
   });
 
   const latestTransactionTimestamp = new DateService(
-    latestTransaction.date,
+    latestTransaction?.date,
   ).getDate();
 
   const balanceHistory = transactionMonthSummary

@@ -18,7 +18,7 @@ export const fillAccountForm = async (
 
   const formFields = {
     '#name': name,
-    '#balance': balance?.toNumber(),
+    '#balance': balance?.toNumber().toString(),
     '#type': type
       ? accountForm.getByLabel(type, { exact: true }).check()
       : undefined,

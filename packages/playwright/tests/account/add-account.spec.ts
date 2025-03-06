@@ -57,7 +57,10 @@ test.describe.parallel('Add Account', () => {
           )?.balance,
         ).toEqual(balance);
 
-        await page.getByText(`New ${type} Account`).click();
+        await page
+          .getByTestId('account-row')
+          .getByText(`New ${type} Account`)
+          .click();
 
         const { type: accountType } = await getAccountDetails(page);
 

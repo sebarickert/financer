@@ -65,19 +65,19 @@ export class TransactionService extends BaseApi {
   public static async getFirstByType(
     type?: TransactionType.EXPENSE,
     options?: FirstTransactionByTypeOptions,
-  ): Promise<SchemaExpenseListItemDto>;
+  ): Promise<SchemaExpenseListItemDto | null>;
   public static async getFirstByType(
     type?: TransactionType.INCOME,
     options?: FirstTransactionByTypeOptions,
-  ): Promise<SchemaIncomeListItemDto>;
+  ): Promise<SchemaIncomeListItemDto | null>;
   public static async getFirstByType(
     type?: TransactionType.TRANSFER,
     options?: FirstTransactionByTypeOptions,
-  ): Promise<SchemaTransferListItemDto>;
+  ): Promise<SchemaTransferListItemDto | null>;
   public static async getFirstByType(
     type?: null,
     options?: FirstTransactionByTypeOptions,
-  ): Promise<SchemaTransactionListItemDto>;
+  ): Promise<SchemaTransactionListItemDto | null>;
   public static async getFirstByType(
     type: TransactionType | null = null,
     options: FirstTransactionByTypeOptions = {},
@@ -86,6 +86,7 @@ export class TransactionService extends BaseApi {
     | SchemaExpenseListItemDto
     | SchemaIncomeListItemDto
     | SchemaTransferListItemDto
+    | null
   > {
     // @ts-expect-error - TS is not able to infer the type of data with null overload
     const data = await this.getAllByType(type, {
@@ -94,25 +95,25 @@ export class TransactionService extends BaseApi {
       sortOrder: SortOrder.asc,
     });
 
-    return data[0];
+    return data.at(0) ?? null;
   }
 
   public static async getLatestByType(
     type?: TransactionType.EXPENSE,
     options?: FirstTransactionByTypeOptions,
-  ): Promise<SchemaExpenseListItemDto>;
+  ): Promise<SchemaExpenseListItemDto | null>;
   public static async getLatestByType(
     type?: TransactionType.INCOME,
     options?: FirstTransactionByTypeOptions,
-  ): Promise<SchemaIncomeListItemDto>;
+  ): Promise<SchemaIncomeListItemDto | null>;
   public static async getLatestByType(
     type?: TransactionType.TRANSFER,
     options?: FirstTransactionByTypeOptions,
-  ): Promise<SchemaTransferListItemDto>;
+  ): Promise<SchemaTransferListItemDto | null>;
   public static async getLatestByType(
     type?: null,
     options?: FirstTransactionByTypeOptions,
-  ): Promise<SchemaTransactionListItemDto>;
+  ): Promise<SchemaTransactionListItemDto | null>;
   public static async getLatestByType(
     type: TransactionType | null = null,
     options: FirstTransactionByTypeOptions = {},
@@ -121,6 +122,7 @@ export class TransactionService extends BaseApi {
     | SchemaExpenseListItemDto
     | SchemaIncomeListItemDto
     | SchemaTransferListItemDto
+    | null
   > {
     // @ts-expect-error - TS is not able to infer the type of data with null overload
     const data = await this.getAllByType(type, {
@@ -129,7 +131,7 @@ export class TransactionService extends BaseApi {
       sortOrder: SortOrder.desc,
     });
 
-    return data[0];
+    return data.at(0) ?? null;
   }
 
   public static async getAllByType(

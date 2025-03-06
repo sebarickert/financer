@@ -46,12 +46,12 @@ export const TransactionListWithMonthlyPager: FC<
     additionalFilterOptions,
   );
 
-  const firstTransactionDate = new DateService(firstTransaction.date);
+  const firstTransactionDate = new DateService(firstTransaction?.date);
   const firstAvailableTransaction = firstTransactionDate.isAfter(currentDate)
     ? currentDate
     : firstTransactionDate.getDate();
 
-  const lastTransactionDate = new DateService(lastTransaction.date);
+  const lastTransactionDate = new DateService(lastTransaction?.date);
   const lastAvailableTransaction = lastTransactionDate.isBefore(currentDate)
     ? currentDate
     : lastTransactionDate.getDate();
