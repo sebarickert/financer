@@ -39,13 +39,11 @@ export const fillTemplateForm = async (
     '#templateVisibility': transactionType ? { label: transactionType } : null,
     '#templateName': name,
     '#description': description,
-    '#amount': amount ? amount.toNumber() : null,
+    '#amount': amount?.toNumber().toString() ?? null,
     '#toAccount': toAccount ? { label: toAccount } : null,
     '#fromAccount': fromAccount ? { label: fromAccount } : null,
-    '#dayOfMonth': dayOfMonth ? dayOfMonth.toNumber() : null,
-    '#dayOfMonthToCreate': dayOfMonthToCreate
-      ? dayOfMonthToCreate.toNumber()
-      : null,
+    '#dayOfMonth': dayOfMonth?.toNumber().toString() ?? null,
+    '#dayOfMonthToCreate': dayOfMonthToCreate?.toNumber().toString() ?? null,
   };
 
   const categoryForm = page.getByTestId('template-form');
