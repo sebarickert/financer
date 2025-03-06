@@ -7,17 +7,17 @@ import {
 } from './TransactionService';
 
 import {
-  CreateExpenseDto,
-  ExpenseDetailsDto,
-  ExpenseListItemDto,
+  SchemaCreateExpenseDto,
+  SchemaExpenseDetailsDto,
+  SchemaExpenseListItemDto,
+  SchemaUpdateExpenseDto,
   SortOrder,
-  UpdateExpenseDto,
-} from '$api/generated/financerApi';
-import { ValidationException } from '$exceptions/validation.exception';
-import { isValidationErrorResponse } from '$utils/apiHelper';
+} from '@/api/ssr-financer-api';
+import { ValidationException } from '@/exceptions/validation.exception';
+import { isValidationErrorResponse } from '@/utils/apiHelper';
 
 export class ExpenseService extends BaseApi {
-  public static async revalidateCache(id?: string): Promise<void> {
+  public static revalidateCache(id?: string): void {
     if (id) {
       revalidateTag(this.getEntityTag(this.API_TAG.EXPENSE, id));
       return;
@@ -28,11 +28,11 @@ export class ExpenseService extends BaseApi {
 
   public static async getFirst(
     options?: FirstTransactionByTypeOptions,
-  ): Promise<ExpenseListItemDto> {
+  ): Promise<SchemaExpenseListItemDto> {
     const data = await this.getAll({
       ...options,
       limit: 1,
-      sortOrder: SortOrder.Asc,
+      sortOrder: SortOrder.asc,
     });
 
     return data[0];
@@ -40,7 +40,7 @@ export class ExpenseService extends BaseApi {
 
   public static async getAll(
     options: TransactionListOptions,
-  ): Promise<ExpenseListItemDto[]> {
+  ): Promise<SchemaExpenseListItemDto[]> {
     const { data, error } = await this.client.GET('/api/expenses', {
       params: {
         query: options,
@@ -54,10 +54,10 @@ export class ExpenseService extends BaseApi {
       throw new Error('Failed to fetch expenses', error);
     }
 
-    return data as ExpenseListItemDto[];
+    return data as SchemaExpenseListItemDto[];
   }
 
-  public static async getById(id: string): Promise<ExpenseDetailsDto> {
+  public static async getById(id: string): Promise<SchemaExpenseDetailsDto> {
     const { data, error } = await this.client.GET(`/api/expenses/{id}`, {
       params: {
         path: {
@@ -73,12 +73,12 @@ export class ExpenseService extends BaseApi {
       throw new Error('Failed to fetch expense', error);
     }
 
-    return data as ExpenseDetailsDto;
+    return data;
   }
 
   public static async add(
-    newExpense: CreateExpenseDto,
-  ): Promise<ExpenseDetailsDto> {
+    newExpense: SchemaCreateExpenseDto,
+  ): Promise<SchemaExpenseDetailsDto> {
     const { error, data } = await this.client.POST('/api/expenses', {
       body: newExpense,
     });
@@ -97,15 +97,15 @@ export class ExpenseService extends BaseApi {
       throw new Error('Failed to add expense', error);
     }
 
-    await this.revalidateCache();
+    this.revalidateCache();
 
-    return data as ExpenseDetailsDto;
+    return data;
   }
 
   public static async update(
     id: string,
-    updatedExpense: UpdateExpenseDto,
-  ): Promise<ExpenseDetailsDto> {
+    updatedExpense: SchemaUpdateExpenseDto,
+  ): Promise<SchemaExpenseDetailsDto> {
     const { error, data } = await this.client.PATCH(`/api/expenses/{id}`, {
       params: {
         path: { id },
@@ -127,10 +127,10 @@ export class ExpenseService extends BaseApi {
       throw new Error('Failed to add expense', error);
     }
 
-    await this.revalidateCache(id);
-    await this.revalidateCache();
+    this.revalidateCache(id);
+    this.revalidateCache();
 
-    return data as ExpenseDetailsDto;
+    return data;
   }
 
   public static async delete(id: string): Promise<void> {
@@ -144,6 +144,6 @@ export class ExpenseService extends BaseApi {
       throw new Error('Failed to delete expense', error);
     }
 
-    await this.revalidateCache();
+    this.revalidateCache();
   }
 }

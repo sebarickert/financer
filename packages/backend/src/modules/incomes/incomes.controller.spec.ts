@@ -1,18 +1,18 @@
-import { INestApplication } from '@nestjs/common';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { Test, TestingModule } from '@nestjs/testing';
 import supertest from 'supertest';
-
-import { createMockServiceProvider } from '../../../test/create-mock-service-provider';
-import { setupTestNestApp } from '../../setup-test-nest-app';
-import { TransactionsService } from '../transactions/transactions.service';
 
 import { IncomesController } from './incomes.controller';
 import { IncomesService } from './incomes.service';
 
+import { setupTestNestApp } from '@/setup-test-nest-app';
+import { createMockServiceProvider } from '@/test/create-mock-service-provider';
+import { TransactionsService } from '@/transactions/transactions.service';
+
 const mockToAccountId = '8941f57e-84e9-4ac2-a5de-1bd944ec3568';
 
 describe('IncomesController', () => {
-  let app: INestApplication;
+  let app: NestExpressApplication;
   let controller: IncomesController;
   let service: IncomesService;
 

@@ -1,12 +1,12 @@
 import { Plus, Tag } from 'lucide-react';
 import { FC } from 'react';
 
-import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
-import { List } from '$blocks/List';
-import { ProminentLink } from '$blocks/ProminentLink';
-import { Button } from '$elements/Button/Button';
-import { Layout } from '$layouts/Layout';
-import { CategoryService } from '$ssr/api/CategoryService';
+import { InfoMessageBlock } from '@/blocks/InfoMessageBlock';
+import { List } from '@/blocks/List';
+import { ProminentLink } from '@/blocks/ProminentLink';
+import { Button } from '@/elements/Button/Button';
+import { Layout } from '@/layouts/Layout';
+import { CategoryService } from '@/ssr/api/CategoryService';
 
 const generateCategoryGroupChild = (
   childName: CategoryItem['label'],
@@ -20,18 +20,18 @@ const generateCategoryGroupChild = (
   link: `/categories/${childId}`,
 });
 
-type CategoryParentItem = {
+interface CategoryParentItem {
   label: string;
   items: CategoryItem[];
   link?: string;
-};
+}
 
-type CategoryItem = {
+interface CategoryItem {
   label: string;
   link: string;
   tree: string;
   id: string;
-};
+}
 
 export const CategoryListingContainer: FC = async () => {
   const categories = await CategoryService.getAllWithTree();
@@ -45,20 +45,23 @@ export const CategoryListingContainer: FC = async () => {
       ({ id, parentCategoryId }) =>
         allParentIds.includes(id) || !!parentCategoryId,
     )
-    .reduce((prev, { name, id, parentCategoryId, categoryTree }) => {
-      if (!parentCategoryId) {
-        prev.push({
-          ...generateCategoryGroupChild(name, id, categoryTree, false),
-          items: [],
-        });
-      } else {
-        prev[prev.length - 1].items.push(
-          generateCategoryGroupChild(name, id, categoryTree),
-        );
-      }
+    .reduce<CategoryParentItem[]>(
+      (prev, { name, id, parentCategoryId, categoryTree }) => {
+        if (!parentCategoryId) {
+          prev.push({
+            ...generateCategoryGroupChild(name, id, categoryTree, false),
+            items: [],
+          });
+        } else {
+          prev[prev.length - 1].items.push(
+            generateCategoryGroupChild(name, id, categoryTree),
+          );
+        }
 
-      return prev;
-    }, [] as CategoryParentItem[]);
+        return prev;
+      },
+      [],
+    );
 
   const generalCategoryGroup = {
     label: 'General',
@@ -73,7 +76,7 @@ export const CategoryListingContainer: FC = async () => {
   };
 
   const categoryRows: CategoryParentItem[] = [
-    ...(!!generalCategoryGroup.items.length ? [generalCategoryGroup] : []),
+    ...(generalCategoryGroup.items.length ? [generalCategoryGroup] : []),
     ...categoriesWithChildren,
   ];
 

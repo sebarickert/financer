@@ -1,10 +1,10 @@
 import clsx from 'clsx';
 import { FC, ReactNode } from 'react';
 
-type CardHeaderProps = {
+interface CardHeaderProps {
   children: ReactNode;
   className?: string;
-};
+}
 
 export const CardHeader: FC<CardHeaderProps> = ({ children, className }) => {
   return (

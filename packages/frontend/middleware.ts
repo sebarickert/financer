@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { getInternalApiRootAddress } from '$utils/address.helper';
+import { getInternalApiRootAddress } from '@/utils/address.helper';
 import { CustomHeader } from 'src/types/custom-headers';
 
 const isPrefetchRequest = (headers: Headers) => {

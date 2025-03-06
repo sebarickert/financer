@@ -1,45 +1,56 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiHideProperty } from '@nestjs/swagger';
 import {
   TransactionTemplateLog,
   TransactionTemplateType,
 } from '@prisma/client';
-import { Type } from 'class-transformer';
-import { IsEnum, IsDate, IsUUID } from 'class-validator';
+import { Exclude, Type } from 'class-transformer';
+import { IsDate, IsEnum, IsUUID } from 'class-validator';
 
-import { UserId } from '../../../types/user-id';
+import { UserId } from '@/types/user-id';
 
 export class TransactionTemplateLogDto implements TransactionTemplateLog {
-  constructor(partial: TransactionTemplateLog) {
-    Object.assign(this, partial);
+  constructor(data?: TransactionTemplateLog) {
+    if (data) {
+      this.id = data.id;
+      this.userId = data.userId as UserId;
+      this.eventType = data.eventType;
+      this.transactionId = data.transactionId;
+      this.templateId = data.templateId;
+      this.executed = data.executed;
+      this.createdAt = data.createdAt;
+      this.updatedAt = data.updatedAt;
+    }
   }
 
   @IsUUID()
-  readonly id: string;
+  readonly id!: string;
 
   @IsUUID()
-  readonly userId: UserId;
+  readonly userId!: UserId;
 
   @IsEnum(TransactionTemplateType, {
     each: true,
     message: 'Type must defined.',
   })
-  readonly eventType: TransactionTemplateType;
+  readonly eventType!: TransactionTemplateType;
 
   @IsUUID()
-  readonly transactionId: string = null;
+  readonly transactionId!: string;
 
   @IsUUID()
-  readonly templateId: string = null;
+  readonly templateId!: string;
 
   @IsDate({ message: 'Date must not be empty.' })
   @Type(() => Date)
-  readonly executed: Date;
+  readonly executed!: Date;
 
-  @ApiProperty()
-  createdAt: Date;
+  @Exclude()
+  @ApiHideProperty()
+  createdAt!: Date;
 
-  @ApiProperty()
-  updatedAt: Date;
+  @Exclude()
+  @ApiHideProperty()
+  updatedAt!: Date;
 
   public static createFromPlain(
     transactionTemplateLog: TransactionTemplateLog,

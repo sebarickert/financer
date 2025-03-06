@@ -3,13 +3,13 @@ import { FC } from 'react';
 
 import { Container } from './Container';
 
-import { Logo } from '$blocks/Logo';
-import { Navigation } from '$blocks/Navigation/Navigation';
-import { Link } from '$elements/Link';
+import { Logo } from '@/blocks/Logo';
+import { Navigation } from '@/blocks/Navigation/Navigation';
+import { Link } from '@/elements/Link';
 
-type HeaderProps = {
+interface HeaderProps {
   isLoading?: boolean;
-};
+}
 
 export const Header: FC<HeaderProps> = ({ isLoading }) => {
   return (

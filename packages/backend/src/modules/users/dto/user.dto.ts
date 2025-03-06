@@ -1,46 +1,60 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { Role, User, Theme } from '@prisma/client';
-import { IsNotEmpty, IsOptional, IsEnum, IsUUID } from 'class-validator';
+import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
+import { Role, Theme, User } from '@prisma/client';
+import { Exclude } from 'class-transformer';
+import { IsEnum, IsNotEmpty, IsOptional, IsUUID } from 'class-validator';
 
-import { UserId } from '../../../types/user-id';
+import { UserId } from '@/types/user-id';
 
 export class UserDto implements User {
-  constructor(data: User) {
-    Object.assign(this, data);
+  constructor(data?: User) {
+    if (data) {
+      this.id = data.id as UserId;
+      this.createdAt = data.createdAt;
+      this.updatedAt = data.updatedAt;
+      this.name = data.name;
+      this.nickname = data.nickname;
+      this.githubId = data.githubId;
+      this.auth0Id = data.auth0Id;
+      this.profileImageUrl = data.profileImageUrl;
+      this.roles = data.roles;
+      this.theme = data.theme;
+    }
   }
 
   @IsUUID()
   @ApiProperty({ type: 'string' })
-  id: UserId;
+  id!: UserId;
 
-  @ApiProperty()
-  createdAt: Date;
+  @Exclude()
+  @ApiHideProperty()
+  createdAt!: Date;
 
-  @ApiProperty()
-  updatedAt: Date;
-
-  @IsNotEmpty()
-  @ApiProperty()
-  name: string;
+  @Exclude()
+  @ApiHideProperty()
+  updatedAt!: Date;
 
   @IsNotEmpty()
   @ApiProperty()
-  nickname: string;
+  name!: string;
+
+  @IsNotEmpty()
+  @ApiProperty()
+  nickname!: string;
 
   @IsOptional()
   @IsNotEmpty()
-  @ApiProperty()
-  githubId: string;
+  @ApiProperty({ type: String, nullable: true })
+  githubId!: string | null;
 
   @IsOptional()
   @IsNotEmpty()
-  @ApiProperty()
-  auth0Id: string;
+  @ApiProperty({ type: String, nullable: true })
+  auth0Id!: string | null;
 
   @IsOptional()
   @IsNotEmpty()
-  @ApiProperty()
-  profileImageUrl: string;
+  @ApiProperty({ type: String, nullable: true })
+  profileImageUrl!: string | null;
 
   @IsOptional()
   @IsEnum(Role, {
@@ -50,12 +64,12 @@ export class UserDto implements User {
     )}.`,
   })
   @ApiProperty({ enum: Role, enumName: 'Role', type: [Role] })
-  roles: Role[];
+  roles!: Role[];
 
   @IsOptional()
   @IsEnum(Theme)
   @ApiProperty({ enum: Theme, enumName: 'Theme', type: Theme })
-  theme: Theme;
+  theme!: Theme;
 
   public static createFromPlain(users: User): UserDto;
   public static createFromPlain(users: User[]): UserDto[];

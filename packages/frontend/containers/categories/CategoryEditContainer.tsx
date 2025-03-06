@@ -1,14 +1,14 @@
 import { notFound } from 'next/navigation';
 import { FC } from 'react';
 
-import { handleCategoryEdit } from '$actions/category/handleCategoryEdit';
-import { CategoryForm } from '$features/category/CategoryForm';
-import { Layout } from '$layouts/Layout';
-import { CategoryService } from '$ssr/api/CategoryService';
+import { handleCategoryEdit } from '@/actions/category/handleCategoryEdit';
+import { CategoryForm } from '@/features/category/CategoryForm';
+import { Layout } from '@/layouts/Layout';
+import { CategoryService } from '@/ssr/api/CategoryService';
 
-type CategoryEditContainerProps = {
+interface CategoryEditContainerProps {
   id: string;
-};
+}
 
 export const CategoryEditContainer: FC<CategoryEditContainerProps> = async ({
   id,

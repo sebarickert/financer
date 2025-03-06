@@ -5,31 +5,33 @@ export class HttpAccessLogMiddleware implements NestMiddleware {
   private readonly logger = new Logger(HttpAccessLogMiddleware.name);
 
   private readonly ignorePatterns = [
-    /^\/static.*$/,
-    /(\/favicon)(.*)/g,
-    /^\/_next.*$/,
-    /^\/fonts.*$/,
-    /^\/apple-touch-icon.*$/,
-    /^\/android-chrome-192x192.png/,
-    /^\/manifest.json/,
-    /^\/health-check\/ping$/,
+    /^\/static.*$/u,
+    /(?:\/favicon)(?:.*)/u,
+    /^\/_next.*$/u,
+    /^\/fonts.*$/u,
+    /^\/apple-touch-icon.*$/u,
+    /^\/android-chrome-192x192.png/u,
+    /^\/manifest.json/u,
+    /^\/health-check\/ping$/u,
   ];
 
   private readonly ignorePattern = new RegExp(
-    this._combineRegexPatterns(this.ignorePatterns),
+    this.combineRegexPatterns(this.ignorePatterns),
+    'u',
   );
 
   use(req: Request, res: Response, next: NextFunction): void {
     // Skip logging for paths that match the ignore patterns.
     if (this.ignorePattern.test(req.originalUrl)) {
-      return next();
+      next();
+      return;
     }
     const start = Date.now();
 
     // The endpoint name to logging because our current log parsing pipeline in the datadog cannot
-    // parse the endpoint name from the request path.
+    // Parse the endpoint name from the request path.
     // This can be removed once the log parsing pipeline is updated.
-    const endpointName = `endpoint:${this._parseEndpointNameFromPath(req.originalUrl)}`;
+    const endpointName = `endpoint:${this.parseEndpointNameFromPath(req.originalUrl)}`;
 
     res.on('finish', () => {
       const duration = Date.now() - start;
@@ -46,14 +48,14 @@ export class HttpAccessLogMiddleware implements NestMiddleware {
     next();
   }
 
-  private _combineRegexPatterns(patterns: RegExp[]): string {
+  private combineRegexPatterns(patterns: RegExp[]): string {
     const combinedPattern = patterns.map((pattern) => pattern.source).join('|');
     return `(${combinedPattern})`;
   }
 
-  private _parseEndpointNameFromPath(path: string): string {
-    // e.g. 66d36b1a7c0466d417b797ad
-    const mongodbIdRegex = /[0-9a-f]{24}/g;
+  private parseEndpointNameFromPath(path: string): string {
+    // E.g. 66d36b1a7c0466d417b797ad
+    const mongodbIdRegex = /[0-9a-f]{24}/gu;
 
     return (
       path

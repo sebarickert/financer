@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { createMockServiceProvider } from '../../../test/create-mock-service-provider';
-
 import { TransactionTemplatesController } from './transaction-templates.controller';
 import { TransactionTemplatesService } from './transaction-templates.service';
+
+import { createMockServiceProvider } from '@/test/create-mock-service-provider';
 
 describe('TransactionTemplateController', () => {
   let controller: TransactionTemplatesController;

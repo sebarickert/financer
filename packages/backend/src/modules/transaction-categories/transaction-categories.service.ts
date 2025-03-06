@@ -6,15 +6,15 @@ import {
 } from '@nestjs/common';
 import { TransactionCategory, TransactionType } from '@prisma/client';
 
-import { TransactionCategoryRepo } from '../../database/repos/transaction-category.repo';
-import { UserId } from '../../types/user-id';
-import { TransactionCategoryMappingsService } from '../transaction-category-mappings/transaction-category-mappings.service';
-
+import { CategoryMonthlySummaryDto } from './dto/category-month-summary.dto';
 import { CreateTransactionCategoryDto } from './dto/create-transaction-category.dto';
 import { TransactionCategoryDetailsDto } from './dto/transaction-category-details.dto';
 import { TransactionCategoryDto } from './dto/transaction-category.dto';
-import { CategoryMonthlySummaryDto } from './dto/transaction-month-summary.dto';
 import { UpdateTransactionCategoryDto } from './dto/update-transaction-category.dto';
+
+import { TransactionCategoryRepo } from '@/database/repos/transaction-category.repo';
+import { TransactionCategoryMappingsService } from '@/transaction-category-mappings/transaction-category-mappings.service';
+import { UserId } from '@/types/user-id';
 
 @Injectable()
 export class TransactionCategoriesService {
@@ -54,8 +54,7 @@ export class TransactionCategoriesService {
     createTransactionCategoryDto: CreateTransactionCategoryDto[],
   ) {
     return this.transactionCategoryRepo.createMany(
-      // @ts-expect-error - remove legacy `v` from import data
-      createTransactionCategoryDto.map(({ v, ...category }) => ({
+      createTransactionCategoryDto.map((category) => ({
         ...category,
         userId,
       })),
@@ -249,13 +248,18 @@ export class TransactionCategoriesService {
   ): string {
     const targetCategory = allCategories.find(({ id }) => id === categoryId);
 
-    if (!targetCategory?.parentCategoryId) {
-      return `${targetCategory?.name}`;
+    if (!targetCategory) {
+      return '';
     }
+
+    if (!targetCategory.parentCategoryId) {
+      return targetCategory.name;
+    }
+
     const parentPath = TransactionCategoriesService.buildParentCategoryPath(
       allCategories,
       targetCategory.parentCategoryId,
     );
-    return `${parentPath} > ${targetCategory?.name}`;
+    return `${parentPath} > ${targetCategory.name}`;
   }
 }

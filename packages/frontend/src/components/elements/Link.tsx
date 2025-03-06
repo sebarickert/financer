@@ -7,12 +7,12 @@ import {
 } from 'next-view-transitions';
 import type { JSX } from 'react';
 
-import { hapticRunner, HapticType } from '$utils/haptic.helper';
-import { isExternalLink } from '$utils/isExternalLink';
+import { HapticType, hapticRunner } from '@/utils/haptic.helper';
+import { isExternalLink } from '@/utils/isExternalLink';
 import {
-  transitionAnimations,
   TransitionType,
-} from '$utils/transitionAnimations';
+  transitionAnimations,
+} from '@/utils/transitionAnimations';
 
 interface LinkProps
   extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'onClick'> {
@@ -22,7 +22,7 @@ interface LinkProps
   isAbsolute?: boolean;
   href: string;
   transition?: TransitionType;
-  /** defaults to `none` */
+  /** Defaults to `none` */
   haptic?: HapticType;
   onClick?: () => void;
   hasHoverEffect?: boolean;
@@ -43,7 +43,7 @@ export const Link = ({
   const router = useTransitionRouter();
 
   const isCurrentPage = pathname === href;
-  const hasActiveSubPage = href !== '/' && pathname?.startsWith(href);
+  const hasActiveSubPage = href !== '/' && pathname.startsWith(href);
 
   const linkClasses = clsx(
     'focus-visible:focus-highlight text-foreground',

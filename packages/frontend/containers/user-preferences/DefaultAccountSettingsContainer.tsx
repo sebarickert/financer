@@ -1,11 +1,11 @@
 import { FC } from 'react';
 
-import { handleAccountSettingsUpdate } from '$actions/settings/handleAccountSettingsUpdate';
-import { settingsPaths } from '$constants/settingsPaths';
-import { Layout } from '$layouts/Layout';
-import { AccountService } from '$ssr/api/AccountService';
-import { UserPreferenceService } from '$ssr/api/UserPreferenceService';
-import { UserDefaultAccountSettingsForm } from '$views/user-preferences/UserDefaultAccountSettingsForm';
+import { handleAccountSettingsUpdate } from '@/actions/settings/handleAccountSettingsUpdate';
+import { settingsPaths } from '@/constants/settingsPaths';
+import { Layout } from '@/layouts/Layout';
+import { AccountService } from '@/ssr/api/AccountService';
+import { UserPreferenceService } from '@/ssr/api/UserPreferenceService';
+import { UserDefaultAccountSettingsForm } from '@/views/user-preferences/UserDefaultAccountSettingsForm';
 
 export const DefaultAccountSettingsContainer: FC = async () => {
   const accounts = await AccountService.getAll();

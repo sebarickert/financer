@@ -1,20 +1,20 @@
 import { ArrowRight, ChartLine, Layers, Tag } from 'lucide-react';
 import { FC } from 'react';
 
-import { Card } from '$blocks/Card/Card';
-import { CardHeader } from '$blocks/Card/CardHeader';
-import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
-import { List } from '$blocks/List';
-import { ProminentLink } from '$blocks/ProminentLink';
-import { Heading } from '$elements/Heading';
-import { Link } from '$elements/Link';
-import { DashboardBalanceHistoryChart } from '$features/dashboard/DashboardBalanceHistoryChart';
-import { DashboardBalanceSummary } from '$features/dashboard/DashboardBalanceSummary';
-import { TransactionList } from '$features/transaction/TransactionList/TransactionList';
-import { DateService } from '$services/DateService';
-import { AccountService } from '$ssr/api/AccountService';
-import { TransactionService } from '$ssr/api/TransactionService';
-import { UserPreferenceService } from '$ssr/api/UserPreferenceService';
+import { Card } from '@/blocks/Card/Card';
+import { CardHeader } from '@/blocks/Card/CardHeader';
+import { InfoMessageBlock } from '@/blocks/InfoMessageBlock';
+import { List } from '@/blocks/List';
+import { ProminentLink } from '@/blocks/ProminentLink';
+import { Heading } from '@/elements/Heading';
+import { Link } from '@/elements/Link';
+import { DashboardBalanceHistoryChart } from '@/features/dashboard/DashboardBalanceHistoryChart';
+import { DashboardBalanceSummary } from '@/features/dashboard/DashboardBalanceSummary';
+import { TransactionList } from '@/features/transaction/TransactionList/TransactionList';
+import { DateService } from '@/services/DateService';
+import { AccountService } from '@/ssr/api/AccountService';
+import { TransactionService } from '@/ssr/api/TransactionService';
+import { UserPreferenceService } from '@/ssr/api/UserPreferenceService';
 
 const currentMonthFilterOptions = {
   year: new DateService().getDate().year,
@@ -65,7 +65,7 @@ export const Dashboard: FC = async () => {
     balanceHistory[balanceHistory.length - 2]?.balance;
 
   const { incomeAmount: totalIncomes = 0, expenseAmount: totalExpenses = 0 } =
-    transactionMonthSummary?.find(
+    transactionMonthSummary.find(
       ({ id }) =>
         id.month === currentMonthFilterOptions.month &&
         id.year === currentMonthFilterOptions.year,
@@ -108,7 +108,7 @@ export const Dashboard: FC = async () => {
       </div>
       <div className="grid gap-4">
         <Card className="pb-0!">
-          {!!transactions.length && (
+          {Boolean(transactions.length) && (
             <CardHeader className="border-b flex justify-between items-center py-4.5!">
               <Heading noMargin className="text-base!">
                 Recent Activity

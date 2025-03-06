@@ -3,26 +3,26 @@
 import { FC, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { AccountDto } from '$api/generated/financerApi';
-import { Drawer } from '$blocks/Drawer';
-import { Form } from '$blocks/Form';
-import { Button } from '$elements/Button/Button';
-import { Input } from '$elements/Input';
-import { useFinancerFormState } from '$hooks/useFinancerFormState';
-import { DATE_FORMAT, DateService } from '$services/DateService';
-import { UserDefaultMarketUpdateSettings } from '$ssr/api/UserPreferenceService';
-import { handleAccountMarketValueUpdate } from 'src/actions/account/handleAccountMarketValueUpdate';
+import { handleAccountMarketValueUpdate } from '@/actions/account/handleAccountMarketValueUpdate';
+import { SchemaAccountDto } from '@/api/ssr-financer-api';
+import { Drawer } from '@/blocks/Drawer';
+import { Form } from '@/blocks/Form';
+import { Button } from '@/elements/Button/Button';
+import { Input } from '@/elements/Input';
+import { useFinancerFormState } from '@/hooks/useFinancerFormState';
+import { DATE_FORMAT, DateService } from '@/services/DateService';
+import { UserDefaultMarketUpdateSettings } from '@/ssr/api/UserPreferenceService';
 
-type AccountUpdateMarketValueDrawerProps = {
-  account: AccountDto;
+interface AccountUpdateMarketValueDrawerProps {
+  account: SchemaAccountDto;
   marketSettings?: UserDefaultMarketUpdateSettings;
   popperId: string;
-};
+}
 
-type AccountUpdateMarketValueFormFields = {
+interface AccountUpdateMarketValueFormFields {
   currentMarketValue: number;
   date: string;
-};
+}
 
 export const AccountUpdateMarketValueDrawer: FC<
   AccountUpdateMarketValueDrawerProps
@@ -47,7 +47,7 @@ export const AccountUpdateMarketValueDrawer: FC<
     () => {
       // FIXME: This is a workaround to close the drawer after the form is submitted.
       // With `hidePopover()` chromium based browsers crashes with the following error: STATUS_ACCESS_VIOLATION
-      // popperRef?.current?.hidePopover();
+      // PopperRef?.current?.hidePopover();
       window.location.reload();
     },
   );

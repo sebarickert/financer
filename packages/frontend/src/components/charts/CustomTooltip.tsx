@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 'use client';
 
 import clsx from 'clsx';
@@ -8,7 +9,7 @@ import {
   ValueType,
 } from 'recharts/types/component/DefaultTooltipContent';
 
-import { ChartConfig } from '$types/ChartConfig';
+import { ChartConfig } from '@/types/ChartConfig';
 
 type CustomTooltipProps = TooltipProps<ValueType, NameType> & {
   config: ChartConfig;
@@ -21,7 +22,7 @@ export const CustomTooltip: FC<CustomTooltipProps> = ({
   config,
   hideLabel,
 }) => {
-  if (active && payload && payload.length) {
+  if (active && payload?.length) {
     return (
       <div className="grid gap-1 p-2 text-xs border rounded-md bg-layer">
         {!hideLabel && (
@@ -31,7 +32,7 @@ export const CustomTooltip: FC<CustomTooltipProps> = ({
         )}
         <ul className="space-y-1">
           {payload.map(({ value, name }) => {
-            const { label, valueFormatter } = config?.[name as string] ?? {};
+            const { label, valueFormatter } = config[name as string] ?? {};
             const tooltipStyle = {
               '--color-bg': `var(--color-${name})`,
             } as React.CSSProperties;

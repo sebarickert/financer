@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { User } from '@prisma/client';
 
-import { isApplicationInTestMode } from '../../config/configuration';
-import { DUMMY_TEST_USER } from '../../config/mockAuthenticationMiddleware';
-import { UserRepo } from '../../database/repos/user.repo';
-
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDto } from './dto/user.dto';
+
+import { isApplicationInTestMode } from '@/config/configuration';
+import { DUMMY_TEST_USER } from '@/config/mockAuthenticationMiddleware';
+import { UserRepo } from '@/database/repos/user.repo';
 
 @Injectable()
 export class UsersService {
@@ -23,20 +23,25 @@ export class UsersService {
     return UserDto.createFromPlain(users);
   }
 
-  async findOne(id: string): Promise<UserDto> {
+  async findOne(id: string): Promise<UserDto | null> {
     if (isApplicationInTestMode()) {
       return DUMMY_TEST_USER as UserDto;
     }
 
     const user = await this.userRepo.findOne({ id });
+
+    if (!user) {
+      return null;
+    }
+
     return UserDto.createFromPlain(user);
   }
 
-  async findOneByGithubId(githubId: string): Promise<User> {
+  async findOneByGithubId(githubId: string): Promise<User | null> {
     return this.userRepo.findOne({ githubId });
   }
 
-  async findOneByAuth0Id(auth0Id: string): Promise<User> {
+  async findOneByAuth0Id(auth0Id: string): Promise<User | null> {
     return this.userRepo.findOne({ auth0Id });
   }
 

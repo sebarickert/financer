@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { FC } from 'react';
 
-import { Layout } from '$layouts/Layout';
+import { Layout } from '@/layouts/Layout';
 import { ChildrenProp } from 'src/types/children-prop';
 
 export const metadata: Metadata = {

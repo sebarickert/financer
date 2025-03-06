@@ -1,8 +1,8 @@
 import { Role } from '@prisma/client';
 import { NextFunction, Request, Response } from 'express';
 
-import { UserDto } from '../modules/users/dto/user.dto';
-import { UserId } from '../types/user-id';
+import { UserDto } from '@/modules/users/dto/user.dto';
+import { UserId } from '@/types/user-id';
 
 export const DUMMY_TEST_USER: Omit<UserDto, 'createdAt' | 'updatedAt'> = {
   roles: [Role.TEST_USER],
@@ -17,11 +17,11 @@ export const DUMMY_TEST_USER: Omit<UserDto, 'createdAt' | 'updatedAt'> = {
 
 export const mockAuthenticationMiddleware = (
   req: Request,
-  _: Response,
+  res: Response,
   next: NextFunction,
 ): void => {
   req.user = DUMMY_TEST_USER;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
   req.isAuthenticated = (() => true) as any;
   next();
 };

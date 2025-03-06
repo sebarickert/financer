@@ -1,13 +1,13 @@
 import { Metadata } from 'next';
 
-import { CategoryContainer } from '$container/categories/CategoryContainer';
-import { CategoryService } from '$ssr/api/CategoryService';
+import { CategoryContainer } from '@/container/categories/CategoryContainer';
+import { CategoryService } from '@/ssr/api/CategoryService';
 
 type Params = Promise<{
   categoryId: string;
 }>;
 
-type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
+type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 
 export const generateMetadata = async ({
   params,

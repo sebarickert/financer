@@ -1,17 +1,17 @@
 'use server';
 
-import { redirect, RedirectType } from 'next/navigation';
+import { RedirectType, redirect } from 'next/navigation';
 
 import {
-  TransactionCategoryDto,
+  SchemaTransactionCategoryDto,
   TransactionType,
-} from '$api/generated/financerApi';
-import { ValidationException } from '$exceptions/validation.exception';
-import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
-import { CategoryService } from '$ssr/api/CategoryService';
+} from '@/api/ssr-financer-api';
+import { ValidationException } from '@/exceptions/validation.exception';
+import { DefaultFormActionHandler } from '@/hooks/useFinancerFormState';
+import { CategoryService } from '@/ssr/api/CategoryService';
 
 export const handleCategoryEdit: DefaultFormActionHandler<
-  TransactionCategoryDto
+  SchemaTransactionCategoryDto
 > = async (category, prev, formData) => {
   try {
     await CategoryService.update(category.id, {

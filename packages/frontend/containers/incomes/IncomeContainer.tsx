@@ -1,16 +1,16 @@
 import { Pencil, Trash } from 'lucide-react';
 import { FC } from 'react';
 
-import { TransactionType } from '$api/generated/financerApi';
-import { Popper } from '$elements/Popper';
-import { TransactionDeleteDrawer } from '$features/transaction/TransactionDeleteDrawer';
-import { Layout } from '$layouts/Layout';
-import { IncomeService } from '$ssr/api/IncomeService';
-import { Transaction } from '$views/Transaction';
+import { TransactionType } from '@/api/ssr-financer-api';
+import { Popper } from '@/elements/Popper';
+import { TransactionDeleteDrawer } from '@/features/transaction/TransactionDeleteDrawer';
+import { Layout } from '@/layouts/Layout';
+import { IncomeService } from '@/ssr/api/IncomeService';
+import { Transaction } from '@/views/Transaction';
 
-type IncomeContainerProps = {
+interface IncomeContainerProps {
   id: string;
-};
+}
 
 export const IncomeContainer: FC<IncomeContainerProps> = async ({ id }) => {
   const income = await IncomeService.getById(id);
@@ -37,7 +37,7 @@ export const IncomeContainer: FC<IncomeContainerProps> = async ({ id }) => {
       }
     >
       <Transaction {...income} />
-      <TransactionDeleteDrawer id={income.id} type={TransactionType.Income} />
+      <TransactionDeleteDrawer id={income.id} type={TransactionType.INCOME} />
     </Layout>
   );
 };

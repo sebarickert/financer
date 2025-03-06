@@ -1,14 +1,14 @@
 import {
   Body,
   Controller,
-  Get,
-  Post,
-  Param,
-  Patch,
   Delete,
-  Query,
+  Get,
   HttpCode,
   HttpStatus,
+  Param,
+  Patch,
+  Post,
+  Query,
 } from '@nestjs/common';
 import {
   ApiBody,
@@ -20,18 +20,18 @@ import {
 } from '@nestjs/swagger';
 import { AccountType, Prisma } from '@prisma/client';
 
-import { UserId } from '../../types/user-id';
-import { ValidateArrayPipe } from '../../utils/validate-array.pipe';
-import { ValidateEntityId } from '../../utils/validate-entity-id.pipe';
-import { ValidateEnumPipe } from '../../utils/validate-enum.pipe';
-import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
-import { UserIdDecorator } from '../users/users.decorators';
-
 import { CreateExpenseDto } from './dto/create-expense.dto';
 import { ExpenseDetailsDto } from './dto/expense-details.dto';
 import { ExpenseListItemDto } from './dto/expense-list-item.dto';
 import { UpdateExpenseDto } from './dto/update-expense.dto';
 import { ExpensesService } from './expenses.service';
+
+import { LoggedIn } from '@/auth/decorators/logged-in.decorators';
+import { UserId } from '@/types/user-id';
+import { UserIdDecorator } from '@/users/users.decorators';
+import { ValidateArrayPipe } from '@/utils/validate-array.pipe';
+import { ValidateEntityId } from '@/utils/validate-entity-id.pipe';
+import { ValidateEnumPipe } from '@/utils/validate-enum.pipe';
 
 @Controller('api/expenses')
 @ApiTags('Expenses')

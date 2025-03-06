@@ -2,9 +2,9 @@ import { Decimal } from '@prisma/client/runtime/library';
 import { Transform, TransformationType } from 'class-transformer';
 import {
   ValidationOptions,
-  registerDecorator,
   ValidatorConstraint,
   ValidatorConstraintInterface,
+  registerDecorator,
 } from 'class-validator';
 
 @ValidatorConstraint({ name: 'IsDecimal' })
@@ -20,12 +20,11 @@ export const IsDecimal = (
     message: 'Property must be a instance of decimal.',
   },
 ) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return (object: any, propertyName: string) => {
+  return (object: object, propertyName: string) => {
     registerDecorator({
       target: object.constructor,
       propertyName,
-      options: options,
+      options,
       validator: IsDecimalConstraint,
     });
   };
@@ -36,6 +35,7 @@ export const TransformDecimal = (fallbackValue: null | undefined = null) => {
     if (type === TransformationType.PLAIN_TO_CLASS) {
       // Incoming transformation: Convert to Decimal
       try {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         return new Decimal(value);
       } catch {
         return fallbackValue;
@@ -44,6 +44,13 @@ export const TransformDecimal = (fallbackValue: null | undefined = null) => {
       // Outgoing transformation: Convert to number
       return value instanceof Decimal ? value.toNumber() : fallbackValue;
     }
-    return value;
+
+    // Class to class transformation
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      return new Decimal(value);
+    } catch {
+      return fallbackValue;
+    }
   });
 };

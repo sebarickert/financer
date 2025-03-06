@@ -1,12 +1,12 @@
-import { TransactionType } from '$types/generated/financer';
-import { Page, expect } from '$utils/financer-page';
+import { TransactionType } from '@/types/generated/financer';
+import { Page, expect } from '@/utils/financer-page';
 
-type AccountDetails = {
+interface AccountDetails {
   id: string;
   name: string;
   parentCategory?: string;
   visibility: TransactionType[];
-};
+}
 
 const getTransactionTypeLocator = async (page: Page) => {
   const transactionTypeElement = page
@@ -63,12 +63,11 @@ export const getCategoryDetails = async (
     TransactionType.Transfer,
   ];
 
-  const visibility: TransactionType[] =
-    typesString
-      .replace(' and ', ', ')
-      .split(',')
-      .map((type) => type.trim() as TransactionType)
-      .filter((type) => validTypes.includes(type)) ?? [];
+  const visibility: TransactionType[] = typesString
+    .replace(' and ', ', ')
+    .split(',')
+    .map((type) => type.trim() as TransactionType)
+    .filter((type) => validTypes.includes(type));
 
   const id =
     new URL(page.url()).pathname.split('/').filter(Boolean).pop() ?? '';

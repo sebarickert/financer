@@ -1,18 +1,16 @@
 'use server';
 
-import { redirect, RedirectType } from 'next/navigation';
+import { RedirectType, redirect } from 'next/navigation';
 
-import { AccountDto, AccountType } from '$api/generated/financerApi';
-import { ValidationException } from '$exceptions/validation.exception';
-import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
-import { AccountService } from '$ssr/api/AccountService';
+import { AccountType, SchemaAccountDto } from '@/api/ssr-financer-api';
+import { ValidationException } from '@/exceptions/validation.exception';
+import { DefaultFormActionHandler } from '@/hooks/useFinancerFormState';
+import { AccountService } from '@/ssr/api/AccountService';
 
-export const handleAccountEdit: DefaultFormActionHandler<AccountDto> = async (
-  account,
-  prevState,
-  formData,
-) => {
-  if (!account?.id) {
+export const handleAccountEdit: DefaultFormActionHandler<
+  SchemaAccountDto
+> = async (account, prevState, formData) => {
+  if (!account.id) {
     return { status: 'ERROR', errors: ['Account not found'] };
   }
 

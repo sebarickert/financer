@@ -1,28 +1,33 @@
-import { notFound, redirect, RedirectType } from 'next/navigation';
+import { RedirectType, notFound, redirect } from 'next/navigation';
 import { FC } from 'react';
 
-import { TransferDetailsDto, VisibilityType } from '$api/generated/financerApi';
-import { ValidationException } from '$exceptions/validation.exception';
+import {
+  SchemaTransferDetailsDto,
+  VisibilityType,
+} from '@/api/ssr-financer-api';
+import { ValidationException } from '@/exceptions/validation.exception';
 import {
   isCategoriesFormFullFields,
   parseCategoriesFormFullFields,
-} from '$features/transaction/TransactionCategories/transaction-categories.types';
-import { TransactionForm } from '$features/transaction/TransactionForm';
-import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
-import { Layout } from '$layouts/Layout';
-import { DATE_FORMAT, DateService } from '$services/DateService';
-import { CategoryService } from '$ssr/api/CategoryService';
-import { TransferService } from '$ssr/api/TransferService';
-import { parseArrayFromFormData } from '$utils/parseArrayFromFormData';
+} from '@/features/transaction/TransactionCategories/transaction-categories.types';
+import { TransactionForm } from '@/features/transaction/TransactionForm';
+import { DefaultFormActionHandler } from '@/hooks/useFinancerFormState';
+import { Layout } from '@/layouts/Layout';
+import { DATE_FORMAT, DateService } from '@/services/DateService';
+import { AccountService } from '@/ssr/api/AccountService';
+import { CategoryService } from '@/ssr/api/CategoryService';
+import { TransferService } from '@/ssr/api/TransferService';
+import { parseArrayFromFormData } from '@/utils/parseArrayFromFormData';
 
-type TransferEditContainerProps = {
+interface TransferEditContainerProps {
   id: string;
-};
+}
 
 export const TransferEditContainer: FC<TransferEditContainerProps> = async ({
   id,
 }) => {
   const transfer = await TransferService.getById(id);
+  const accounts = await AccountService.getAll();
 
   if (!transfer) {
     notFound();
@@ -39,9 +44,9 @@ export const TransferEditContainer: FC<TransferEditContainerProps> = async ({
       'categories',
       isCategoriesFormFullFields,
       parseCategoriesFormFullFields,
-    );
+    ).map((item) => ({ ...item, description: item.description ?? null }));
 
-    let data: TransferDetailsDto;
+    let data: SchemaTransferDetailsDto;
 
     try {
       data = await TransferService.update(transfer.id, {
@@ -50,7 +55,7 @@ export const TransferEditContainer: FC<TransferEditContainerProps> = async ({
         date: formData.get('date') as string,
         toAccount: formData.get('toAccount') as string,
         fromAccount: formData.get('fromAccount') as string,
-        categories: categories,
+        categories,
       });
     } catch (error) {
       if (error instanceof ValidationException) {
@@ -66,18 +71,20 @@ export const TransferEditContainer: FC<TransferEditContainerProps> = async ({
 
   const initialValues = {
     ...transfer,
+    toAccount: transfer.toAccount ?? undefined,
+    fromAccount: transfer.fromAccount ?? undefined,
     categories: transfer.categories.map(
       ({ id: categoryId, amount, description }) => ({
-        categoryId: categoryId,
+        categoryId,
         amount,
-        description,
+        description: description ?? undefined,
       }),
     ),
     date: new DateService(transfer.date).format(DATE_FORMAT.INPUT),
   };
 
   const categories = await CategoryService.getAllWithTree({
-    visibilityType: VisibilityType.Transfer,
+    visibilityType: VisibilityType.TRANSFER,
   });
 
   return (
@@ -88,6 +95,7 @@ export const TransferEditContainer: FC<TransferEditContainerProps> = async ({
         hasToAccountField
         hasFromAccountField
         transactionCategoriesWithCategoryTree={categories}
+        accounts={accounts}
       />
     </Layout>
   );

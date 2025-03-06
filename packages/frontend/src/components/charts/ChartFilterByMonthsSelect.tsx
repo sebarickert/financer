@@ -3,7 +3,7 @@
 import clsx from 'clsx';
 import { ChangeEvent, Dispatch, FC, SetStateAction } from 'react';
 
-type ChartFilterByMonthsSelectProps = {
+interface ChartFilterByMonthsSelectProps {
   onFilterSelect: Dispatch<
     SetStateAction<
       (typeof monthFilterOptions)[keyof typeof monthFilterOptions]['value']
@@ -12,7 +12,7 @@ type ChartFilterByMonthsSelectProps = {
   dataCount: number;
   className?: string;
   defaultValue?: number;
-};
+}
 
 export const monthFilterOptions = {
   THREE_MONTHS: {

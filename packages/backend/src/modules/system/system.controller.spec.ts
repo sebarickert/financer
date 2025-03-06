@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { createMockServiceProvider } from '../../../test/create-mock-service-provider';
-
 import { SystemController } from './system.controller';
 import { SystemService } from './system.service';
+
+import { createMockServiceProvider } from '@/test/create-mock-service-provider';
 
 describe('SystemController', () => {
   let controller: SystemController;

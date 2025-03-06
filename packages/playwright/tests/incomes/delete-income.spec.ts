@@ -1,9 +1,9 @@
-import { getAccountBalanceFromAccountListByName } from '$utils/account/getAccountBalanceFromAccountListByName';
-import { applyFixture } from '$utils/applyFixture';
-import { clickContextualNavigationItem } from '$utils/common/clickContextualNavigationItem';
-import { test, expect } from '$utils/financer-page';
-import { deleteTransaction } from '$utils/transaction/deleteTransaction';
-import { getTransactionDetails } from '$utils/transaction/getTransactionDetails';
+import { getAccountBalanceFromAccountListByName } from '@/utils/account/getAccountBalanceFromAccountListByName';
+import { applyFixture } from '@/utils/applyFixture';
+import { clickContextualNavigationItem } from '@/utils/common/clickContextualNavigationItem';
+import { expect, test } from '@/utils/financer-page';
+import { deleteTransaction } from '@/utils/transaction/deleteTransaction';
+import { getTransactionDetails } from '@/utils/transaction/getTransactionDetails';
 
 test.describe('Delete Income', () => {
   test.beforeEach(async ({ page }) => {
@@ -22,7 +22,7 @@ test.describe('Delete Income', () => {
 
     const initialAccountBalance = await getAccountBalanceFromAccountListByName(
       page,
-      toAccount as string,
+      toAccount,
     );
 
     await page.goto(`/transactions/incomes/${id}`);
@@ -41,7 +41,7 @@ test.describe('Delete Income', () => {
 
     const updatedAccountBalance = await getAccountBalanceFromAccountListByName(
       page,
-      toAccount as string,
+      toAccount,
     );
 
     expect(initialAccountBalance.minus(amount)).toEqual(updatedAccountBalance);

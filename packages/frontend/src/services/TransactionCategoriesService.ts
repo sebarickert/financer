@@ -1,12 +1,12 @@
-import { TransactionCategoryDto } from '$api/generated/financerApi';
+import { SchemaTransactionCategoryDto } from '@/api/ssr-financer-api';
 
 export interface ITransactionCategoryWithCategoryTree
-  extends TransactionCategoryDto {
+  extends SchemaTransactionCategoryDto {
   categoryTree: string;
 }
 
 export const parseParentCategoryPath = (
-  allCategories: TransactionCategoryDto[],
+  allCategories: readonly SchemaTransactionCategoryDto[],
   categoryId: string,
 ): string => {
   const targetCategory = allCategories.find(({ id }) => id === categoryId);
@@ -18,12 +18,12 @@ export const parseParentCategoryPath = (
     allCategories,
     targetCategory.parentCategoryId,
   );
-  return `${parentPath} > ${targetCategory?.name}`;
+  return `${parentPath} > ${targetCategory.name}`;
 };
 
 export const getAllChildCategoryIds = (
   parentId: string,
-  transactionCategories: TransactionCategoryDto[],
+  transactionCategories: SchemaTransactionCategoryDto[],
   depth = 0,
 ): string[] => {
   if (depth > 10) {

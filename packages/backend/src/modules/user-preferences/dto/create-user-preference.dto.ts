@@ -7,4 +7,15 @@ export class CreateUserPreferenceDto extends OmitType(UserPreferenceDto, [
   'userId',
   'createdAt',
   'updatedAt',
-] as const) {}
+] as const) {
+  constructor(data?: CreateUserPreferenceDto) {
+    super();
+
+    if (data) {
+      // @ts-expect-error - we have to manually assign these properties
+      this.key = data.key;
+      // @ts-expect-error - we have to manually assign these properties
+      this.value = data.value;
+    }
+  }
+}

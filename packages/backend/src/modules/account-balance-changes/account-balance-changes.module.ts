@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 
-import { DatabaseModule } from '../../database/database.module';
-
 import { AccountBalanceChangesService } from './account-balance-changes.service';
+
+import { DatabaseModule } from '@/database/database.module';
 
 @Module({
   imports: [DatabaseModule],

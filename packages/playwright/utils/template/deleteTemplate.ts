@@ -1,4 +1,4 @@
-import { Page, expect } from '$utils/financer-page';
+import { Page, expect } from '@/utils/financer-page';
 
 export const deleteTemplate = async (page: Page) => {
   await expect(page.getByRole('button', { name: 'Delete' })).toBeEnabled();

@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { execSync } from 'child_process';
 
 import { Logger } from '@nestjs/common';
 
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class DockerDatabase {
   private static readonly logger = new Logger(DockerDatabase.name);
 
@@ -86,7 +88,7 @@ export class DockerDatabase {
       try {
         execSync(`docker exec ${name} pg_isready`);
         isRunning = true;
-      } catch (error) {
+      } catch {
         retries++;
         this.logger.log(
           `Waiting for the database to be ready... (${retries}/${maxRetries})`,
@@ -104,6 +106,8 @@ export class DockerDatabase {
   }
 
   private static async sleep(ms: number): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, ms));
+    return new Promise((resolve) => {
+      setTimeout(resolve, ms);
+    });
   }
 }

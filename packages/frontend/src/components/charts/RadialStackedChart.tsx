@@ -10,10 +10,10 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-import { ChartConfig } from '$types/ChartConfig';
-import { ChartData } from '$types/ChartData';
+import { ChartConfig } from '@/types/ChartConfig';
+import { ChartData } from '@/types/ChartData';
 
-type RadialStackedChartProps = {
+interface RadialStackedChartProps {
   data: ChartData;
   config: ChartConfig;
   label: {
@@ -21,7 +21,7 @@ type RadialStackedChartProps = {
     secondary: string;
   };
   className?: string;
-};
+}
 
 export const RadialStackedChart: FC<RadialStackedChartProps> = ({
   data,
@@ -55,7 +55,7 @@ export const RadialStackedChart: FC<RadialStackedChartProps> = ({
                     <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle">
                       <tspan
                         x={viewBox.cx}
-                        y={(viewBox.cy || 0) - 16}
+                        y={(viewBox.cy ?? 0) - 16}
                         className="text-lg font-bold fill-foreground"
                         data-testid="radial-stacked-chart-label-main"
                       >
@@ -63,7 +63,7 @@ export const RadialStackedChart: FC<RadialStackedChartProps> = ({
                       </tspan>
                       <tspan
                         x={viewBox.cx}
-                        y={(viewBox.cy || 0) + 4}
+                        y={(viewBox.cy ?? 0) + 4}
                         className="text-base fill-muted-foreground"
                         data-testid="radial-stacked-chart-label-sub"
                       >

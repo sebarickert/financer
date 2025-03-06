@@ -1,16 +1,16 @@
 import { Pencil, Trash } from 'lucide-react';
 import { FC } from 'react';
 
-import { TransactionType } from '$api/generated/financerApi';
-import { Popper } from '$elements/Popper';
-import { TransactionDeleteDrawer } from '$features/transaction/TransactionDeleteDrawer';
-import { Layout } from '$layouts/Layout';
-import { ExpenseService } from '$ssr/api/ExpenseService';
-import { Transaction } from '$views/Transaction';
+import { TransactionType } from '@/api/ssr-financer-api';
+import { Popper } from '@/elements/Popper';
+import { TransactionDeleteDrawer } from '@/features/transaction/TransactionDeleteDrawer';
+import { Layout } from '@/layouts/Layout';
+import { ExpenseService } from '@/ssr/api/ExpenseService';
+import { Transaction } from '@/views/Transaction';
 
-type ExpenseContainerProps = {
+interface ExpenseContainerProps {
   id: string;
-};
+}
 
 export const ExpenseContainer: FC<ExpenseContainerProps> = async ({ id }) => {
   const expense = await ExpenseService.getById(id);
@@ -37,7 +37,7 @@ export const ExpenseContainer: FC<ExpenseContainerProps> = async ({ id }) => {
       }
     >
       <Transaction {...expense} />
-      <TransactionDeleteDrawer id={expense.id} type={TransactionType.Expense} />
+      <TransactionDeleteDrawer id={expense.id} type={TransactionType.EXPENSE} />
     </Layout>
   );
 };

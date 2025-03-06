@@ -1,9 +1,9 @@
-import { redirect, RedirectType } from 'next/navigation';
+import { RedirectType, redirect } from 'next/navigation';
 
-import { AccountType } from '$api/generated/financerApi';
-import { settingsPaths } from '$constants/settingsPaths';
-import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
-import { UserPreferenceService } from '$ssr/api/UserPreferenceService';
+import { AccountType } from '@/api/ssr-financer-api';
+import { settingsPaths } from '@/constants/settingsPaths';
+import { DefaultFormActionHandler } from '@/hooks/useFinancerFormState';
+import { UserPreferenceService } from '@/ssr/api/UserPreferenceService';
 
 export const handleStatisticsPageSettingsUpdate: DefaultFormActionHandler =
   async (prev, formData) => {

@@ -7,17 +7,17 @@ import type {
 } from './TransactionService';
 
 import {
-  CreateIncomeDto,
-  IncomeDetailsDto,
-  IncomeListItemDto,
+  SchemaCreateIncomeDto,
+  SchemaIncomeDetailsDto,
+  SchemaIncomeListItemDto,
+  SchemaUpdateIncomeDto,
   SortOrder,
-  UpdateIncomeDto,
-} from '$api/generated/financerApi';
-import { ValidationException } from '$exceptions/validation.exception';
-import { isValidationErrorResponse } from '$utils/apiHelper';
+} from '@/api/ssr-financer-api';
+import { ValidationException } from '@/exceptions/validation.exception';
+import { isValidationErrorResponse } from '@/utils/apiHelper';
 
 export class IncomeService extends BaseApi {
-  public static async revalidateCache(id?: string): Promise<void> {
+  public static revalidateCache(id?: string): void {
     if (id) {
       revalidateTag(this.getEntityTag(this.API_TAG.INCOME, id));
       return;
@@ -28,11 +28,11 @@ export class IncomeService extends BaseApi {
 
   public static async getFirst(
     options?: FirstTransactionByTypeOptions,
-  ): Promise<IncomeListItemDto> {
+  ): Promise<SchemaIncomeListItemDto> {
     const data = await this.getAll({
       ...options,
       limit: 1,
-      sortOrder: SortOrder.Asc,
+      sortOrder: SortOrder.asc,
     });
 
     return data[0];
@@ -40,7 +40,7 @@ export class IncomeService extends BaseApi {
 
   public static async getAll(
     options: TransactionListOptions,
-  ): Promise<IncomeDetailsDto[]> {
+  ): Promise<SchemaIncomeDetailsDto[]> {
     const { data, error } = await this.client.GET('/api/incomes', {
       params: {
         query: options,
@@ -54,10 +54,10 @@ export class IncomeService extends BaseApi {
       throw new Error('Failed to fetch incomes', error);
     }
 
-    return data as IncomeDetailsDto[];
+    return data as SchemaIncomeDetailsDto[];
   }
 
-  public static async getById(id: string): Promise<IncomeDetailsDto> {
+  public static async getById(id: string): Promise<SchemaIncomeDetailsDto> {
     const { data, error } = await this.client.GET(`/api/incomes/{id}`, {
       params: {
         path: {
@@ -73,12 +73,12 @@ export class IncomeService extends BaseApi {
       throw new Error('Failed to fetch income', error);
     }
 
-    return data as IncomeDetailsDto;
+    return data;
   }
 
   public static async add(
-    newIncome: CreateIncomeDto,
-  ): Promise<IncomeDetailsDto> {
+    newIncome: SchemaCreateIncomeDto,
+  ): Promise<SchemaIncomeDetailsDto> {
     const { error, data } = await this.client.POST('/api/incomes', {
       body: newIncome,
     });
@@ -97,15 +97,15 @@ export class IncomeService extends BaseApi {
       throw new Error('Failed to add income', error);
     }
 
-    await this.revalidateCache();
+    this.revalidateCache();
 
-    return data as IncomeDetailsDto;
+    return data;
   }
 
   public static async update(
     id: string,
-    updatedIncome: UpdateIncomeDto,
-  ): Promise<IncomeDetailsDto> {
+    updatedIncome: SchemaUpdateIncomeDto,
+  ): Promise<SchemaIncomeDetailsDto> {
     const { error, data } = await this.client.PATCH(`/api/incomes/{id}`, {
       params: {
         path: { id },
@@ -127,10 +127,10 @@ export class IncomeService extends BaseApi {
       throw new Error('Failed to add income', error);
     }
 
-    await this.revalidateCache(id);
-    await this.revalidateCache();
+    this.revalidateCache(id);
+    this.revalidateCache();
 
-    return data as IncomeDetailsDto;
+    return data;
   }
 
   public static async delete(id: string): Promise<void> {
@@ -144,6 +144,6 @@ export class IncomeService extends BaseApi {
       throw new Error('Failed to delete income', error);
     }
 
-    await this.revalidateCache();
+    this.revalidateCache();
   }
 }

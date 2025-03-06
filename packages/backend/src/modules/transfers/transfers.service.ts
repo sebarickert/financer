@@ -1,17 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { AccountType, Prisma, TransactionType } from '@prisma/client';
 
-import { UserId } from '../../types/user-id';
-import { TransactionsService } from '../transactions/transactions.service';
-
 import { CreateTransferDto } from './dto/create-transfer.dto';
 import { TransferDetailsDto } from './dto/transfer-details.dto';
 import { TransferListItemDto } from './dto/transfer-list-item.dto';
 import { UpdateTransferDto } from './dto/update-transfer.dto';
 
+import { TransactionsService } from '@/transactions/transactions.service';
+import { UserId } from '@/types/user-id';
+
 @Injectable()
 export class TransfersService {
-  constructor(private transactionService: TransactionsService) {}
+  constructor(private readonly transactionService: TransactionsService) {}
 
   async findAllByUser(
     userId: UserId,
@@ -19,7 +19,7 @@ export class TransfersService {
     limit: number,
     year: number,
     month: number,
-    accountTypes: AccountType[],
+    accountTypes?: AccountType[],
     accountId?: string,
     sortOrder?: Prisma.SortOrder,
   ): Promise<TransferListItemDto[]> {
@@ -30,8 +30,8 @@ export class TransfersService {
       year || undefined,
       month || undefined,
       accountId,
-      accountTypes || undefined,
-      sortOrder || undefined,
+      accountTypes ?? undefined,
+      sortOrder ?? undefined,
     );
   }
 

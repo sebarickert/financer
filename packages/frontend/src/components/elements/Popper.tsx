@@ -6,7 +6,7 @@ import { Button } from './Button/Button';
 import { Heading } from './Heading';
 import { Link } from './Link';
 
-import { List } from '$blocks/List';
+import { List } from '@/blocks/List';
 
 type PopperItem =
   | {
@@ -22,10 +22,10 @@ type PopperItem =
       href?: never;
     };
 
-type PopperProps = {
+interface PopperProps {
   className?: string;
   items?: PopperItem[];
-};
+}
 
 export const Popper: FC<PopperProps> = ({ className, items }) => {
   const popperId = `popper-${crypto.randomUUID()}`;

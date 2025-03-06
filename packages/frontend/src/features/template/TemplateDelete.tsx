@@ -4,15 +4,15 @@ import { Trash } from 'lucide-react';
 import { useId } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { handleTemplateDelete } from '$actions/template/handleTemplateDelete';
-import { Drawer } from '$blocks/Drawer';
-import { Form } from '$blocks/Form';
-import { Button } from '$elements/Button/Button';
-import { useFinancerFormState } from '$hooks/useFinancerFormState';
+import { handleTemplateDelete } from '@/actions/template/handleTemplateDelete';
+import { Drawer } from '@/blocks/Drawer';
+import { Form } from '@/blocks/Form';
+import { Button } from '@/elements/Button/Button';
+import { useFinancerFormState } from '@/hooks/useFinancerFormState';
 
-type TemplateDeleteProps = {
+interface TemplateDeleteProps {
   id: string;
-};
+}
 
 export const TemplateDelete = ({ id }: TemplateDeleteProps) => {
   const popoverId = useId();

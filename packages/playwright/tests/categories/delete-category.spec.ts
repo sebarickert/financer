@@ -1,7 +1,7 @@
-import { applyFixture } from '$utils/applyFixture';
-import { getCategoryDataFromCategoryList } from '$utils/category/getCategoryDataFromCategoryList';
-import { clickPopperItem } from '$utils/common/clickPopperItem';
-import { test, expect } from '$utils/financer-page';
+import { applyFixture } from '@/utils/applyFixture';
+import { getCategoryDataFromCategoryList } from '@/utils/category/getCategoryDataFromCategoryList';
+import { clickPopperItem } from '@/utils/common/clickPopperItem';
+import { expect, test } from '@/utils/financer-page';
 
 test.describe('Delete Category', () => {
   test.beforeEach(async ({ page }) => {

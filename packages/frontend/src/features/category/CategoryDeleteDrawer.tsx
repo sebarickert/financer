@@ -3,15 +3,15 @@
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { handleCategoryDelete } from '$actions/category/handleCategoryDelete';
-import { Drawer } from '$blocks/Drawer';
-import { Form } from '$blocks/Form';
-import { Button } from '$elements/Button/Button';
-import { useFinancerFormState } from '$hooks/useFinancerFormState';
+import { handleCategoryDelete } from '@/actions/category/handleCategoryDelete';
+import { Drawer } from '@/blocks/Drawer';
+import { Form } from '@/blocks/Form';
+import { Button } from '@/elements/Button/Button';
+import { useFinancerFormState } from '@/hooks/useFinancerFormState';
 
-type CategoryDeleteDrawerProps = {
+interface CategoryDeleteDrawerProps {
   id: string;
-};
+}
 
 export const CategoryDeleteDrawer: FC<CategoryDeleteDrawerProps> = ({ id }) => {
   const onSubmit = handleCategoryDelete.bind(null, { id });

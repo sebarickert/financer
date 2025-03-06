@@ -1,15 +1,15 @@
 import Decimal from 'decimal.js';
 
-import { formatDate } from '$utils/api-helper';
-import { Page } from '$utils/financer-page';
+import { formatDate } from '@/utils/api-helper';
+import { Page } from '@/utils/financer-page';
 
-type TransactionFormFields = {
+interface TransactionFormFields {
   fromAccount?: string;
   toAccount?: string;
   amount?: Decimal;
   date?: Date;
   description?: string;
-};
+}
 
 export const fillTransactionForm = async (
   page: Page,
@@ -21,7 +21,7 @@ export const fillTransactionForm = async (
   const formFields = {
     '#description': description,
     '#date': date ? formatDate(date) : null,
-    '#amount': amount?.toNumber(),
+    '#amount': amount?.toNumber().toString(),
     '#toAccount': toAccount ? { label: toAccount } : null,
     '#fromAccount': fromAccount ? { label: fromAccount } : null,
   };
@@ -34,9 +34,11 @@ export const fillTransactionForm = async (
   for (const [selector, value] of Object.entries(formFields)) {
     if (value) {
       if (selector === '#toAccount' || selector === '#fromAccount') {
-        await transactionForm.locator(selector).selectOption(value as string);
+        await transactionForm
+          .locator(selector)
+          .selectOption(value as { label: string });
       } else {
-        await transactionForm.locator(selector).fill(value.toString());
+        await transactionForm.locator(selector).fill(value as string);
       }
     }
   }

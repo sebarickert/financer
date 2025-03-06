@@ -1,11 +1,11 @@
 import Decimal from 'decimal.js';
 
-import { fillAccountForm } from '$utils/account/fillAccountForm';
-import { getAccountDataFromAccountList } from '$utils/account/getAccountDataFromAccountList';
-import { getAccountDetails } from '$utils/account/getAccountDetails';
-import { applyFixture } from '$utils/applyFixture';
-import { accountTypes } from '$utils/constants';
-import { test, expect } from '$utils/financer-page';
+import { fillAccountForm } from '@/utils/account/fillAccountForm';
+import { getAccountDataFromAccountList } from '@/utils/account/getAccountDataFromAccountList';
+import { getAccountDetails } from '@/utils/account/getAccountDetails';
+import { applyFixture } from '@/utils/applyFixture';
+import { accountTypes } from '@/utils/constants';
+import { expect, test } from '@/utils/financer-page';
 
 test.describe.parallel('Add Account', () => {
   test.beforeEach(async ({ page }) => {
@@ -57,7 +57,10 @@ test.describe.parallel('Add Account', () => {
           )?.balance,
         ).toEqual(balance);
 
-        await page.getByText(`New ${type} Account`).click();
+        await page
+          .getByTestId('account-row')
+          .getByText(`New ${type} Account`)
+          .click();
 
         const { type: accountType } = await getAccountDetails(page);
 

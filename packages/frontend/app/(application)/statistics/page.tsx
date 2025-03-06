@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { FC } from 'react';
 
-import { StatisticsOverviewContainer } from '$container/statistics/StatisticsOverviewContainer';
+import { StatisticsOverviewContainer } from '@/container/statistics/StatisticsOverviewContainer';
 
 export const metadata: Metadata = {
   title: 'Statistics',

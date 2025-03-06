@@ -1,19 +1,19 @@
 import clsx from 'clsx';
 import { FC } from 'react';
 
-import { Link } from '$elements/Link';
-import { Container } from '$layouts/Container';
+import { Link } from '@/elements/Link';
+import { Container } from '@/layouts/Container';
 
-export type ContextualNavigationItem = {
+export interface ContextualNavigationItem {
   label: string;
   url: string;
   isExact?: boolean;
-};
+}
 
-type ContextualNavigationProps = {
+interface ContextualNavigationProps {
   items: ContextualNavigationItem[];
   className?: string;
-};
+}
 
 export const ContextualNavigation: FC<ContextualNavigationProps> = ({
   items,

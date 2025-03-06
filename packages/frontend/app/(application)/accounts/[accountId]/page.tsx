@@ -1,13 +1,13 @@
 import { Metadata } from 'next';
 
-import { AccountContainer } from '$container/accounts/AccountContainer';
-import { AccountService } from '$ssr/api/AccountService';
+import { AccountContainer } from '@/container/accounts/AccountContainer';
+import { AccountService } from '@/ssr/api/AccountService';
 
 type Params = Promise<{
   accountId: string;
 }>;
 
-type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
+type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 
 export const generateMetadata = async ({
   params,

@@ -1,9 +1,9 @@
 import clsx from 'clsx';
 import { FC } from 'react';
 
-type FieldGroupProps = {
+interface FieldGroupProps {
   children: React.ReactNode;
-};
+}
 
 /* This component is used to group a field and its icon together */
 export const FieldGroup: FC<FieldGroupProps> = ({ children }) => {

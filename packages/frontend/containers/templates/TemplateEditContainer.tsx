@@ -1,17 +1,17 @@
 import { notFound } from 'next/navigation';
 import { FC } from 'react';
 
-import { handleTemplateEdit } from '$actions/template/handleTemplateEdit';
-import { TemplateDelete } from '$features/template/TemplateDelete';
-import { TemplateForm } from '$features/template/TemplateForm';
-import { Layout } from '$layouts/Layout';
-import { AccountService } from '$ssr/api/AccountService';
-import { CategoryService } from '$ssr/api/CategoryService';
-import { TransactionTemplateService } from '$ssr/api/TransactionTemplateService';
+import { handleTemplateEdit } from '@/actions/template/handleTemplateEdit';
+import { TemplateDelete } from '@/features/template/TemplateDelete';
+import { TemplateForm } from '@/features/template/TemplateForm';
+import { Layout } from '@/layouts/Layout';
+import { AccountService } from '@/ssr/api/AccountService';
+import { CategoryService } from '@/ssr/api/CategoryService';
+import { TransactionTemplateService } from '@/ssr/api/TransactionTemplateService';
 
-type TemplateEditContainerProps = {
+interface TemplateEditContainerProps {
   id: string;
-};
+}
 
 export const TemplateEditContainer: FC<TemplateEditContainerProps> = async ({
   id,
@@ -24,6 +24,9 @@ export const TemplateEditContainer: FC<TemplateEditContainerProps> = async ({
 
   const initialValues = {
     ...template,
+    amount: template.amount ?? undefined,
+    dayOfMonth: template.dayOfMonth ?? undefined,
+    dayOfMonthToCreate: template.dayOfMonthToCreate ?? undefined,
     templateType: template.templateType.at(0),
     categories: template?.categories?.map((categoryId) => ({
       categoryId: categoryId,

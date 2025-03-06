@@ -4,4 +4,14 @@ import { CreateTransactionCategoryMappingDto } from './create-transaction-catego
 
 export class UpdateTransactionCategoryMappingDto extends PartialType(
   CreateTransactionCategoryMappingDto,
-) {}
+) {
+  constructor(data?: UpdateTransactionCategoryMappingDto) {
+    super(data);
+    if (data) {
+      this.amount = data.amount;
+      this.categoryId = data.categoryId;
+      this.description = data.description;
+      this.transactionId = data.transactionId;
+    }
+  }
+}

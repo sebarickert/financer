@@ -1,5 +1,5 @@
 // IMPORTANT: instrument.ts must be imported before any other imports,
-// to ensure that the application is instrumented correctly.
+// To ensure that the application is instrumented correctly.
 import './instrument';
 
 import fs from 'fs';
@@ -16,22 +16,22 @@ import { json } from 'express';
 
 import { AppModule } from './app.module';
 import {
-  isNodeEnvInDev,
   isApplicationInTestMode,
+  isNodeEnvInDev,
   shouldOnlyExportApiSpec,
   shouldUseInternalDockerDb,
 } from './config/configuration';
 import { DatabaseServer } from './config/database-server';
 import { mockAuthenticationMiddleware } from './config/mockAuthenticationMiddleware';
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT ?? 4000;
 
 const options: SwaggerDocumentOptions = {
   operationIdFactory: (controllerKey, methodKey) =>
     `${controllerKey.replace('Controller', '')}_${methodKey}`,
 };
 
-async function bootstrap() {
+const bootstrap = async () => {
   if (shouldUseInternalDockerDb()) await DatabaseServer.startServer();
 
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -56,6 +56,7 @@ async function bootstrap() {
     SwaggerModule.setup('api', app, document);
 
     if (shouldOnlyExportApiSpec()) {
+      // eslint-disable-next-line no-console
       console.log("Exporting API spec to './api-spec.json'");
       fs.writeFileSync('./api-spec.json', JSON.stringify(document));
       process.exit(0);
@@ -63,6 +64,7 @@ async function bootstrap() {
   }
 
   await app.listen(PORT);
-}
+};
 
+// eslint-disable-next-line @typescript-eslint/no-floating-promises
 bootstrap();

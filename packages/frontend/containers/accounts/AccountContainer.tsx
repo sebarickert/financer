@@ -2,19 +2,19 @@ import { ChartNoAxesCombined, Pencil, Trash } from 'lucide-react';
 import { notFound } from 'next/navigation';
 import { FC } from 'react';
 
-import { AccountType } from '$api/generated/financerApi';
-import { Popper } from '$elements/Popper';
-import { AccountDeleteDrawer } from '$features/account/AccountDeleteDrawer';
-import { AccountUpdateMarketValueDrawer } from '$features/account/AccountUpdateMarketValueDrawer';
-import { Layout } from '$layouts/Layout';
-import { AccountService } from '$ssr/api/AccountService';
-import { UserPreferenceService } from '$ssr/api/UserPreferenceService';
-import { Account } from '$views/Account';
+import { AccountType } from '@/api/ssr-financer-api';
+import { Popper } from '@/elements/Popper';
+import { AccountDeleteDrawer } from '@/features/account/AccountDeleteDrawer';
+import { AccountUpdateMarketValueDrawer } from '@/features/account/AccountUpdateMarketValueDrawer';
+import { Layout } from '@/layouts/Layout';
+import { AccountService } from '@/ssr/api/AccountService';
+import { UserPreferenceService } from '@/ssr/api/UserPreferenceService';
+import { Account } from '@/views/Account';
 
-type AccountContainerProps = {
+interface AccountContainerProps {
   id: string;
   queryDate?: string;
-};
+}
 
 export const AccountContainer: FC<AccountContainerProps> = async ({
   id,
@@ -47,7 +47,7 @@ export const AccountContainer: FC<AccountContainerProps> = async ({
               label: 'Delete',
               Icon: Trash,
             },
-            ...(account.type === AccountType.Investment
+            ...(account.type === AccountType.INVESTMENT
               ? [
                   {
                     popperId: accountDrawerPopperId,
@@ -66,7 +66,7 @@ export const AccountContainer: FC<AccountContainerProps> = async ({
         queryDate={queryDate}
       />
       <AccountDeleteDrawer id={account.id} />
-      {account.type === AccountType.Investment && (
+      {account.type === AccountType.INVESTMENT && (
         <AccountUpdateMarketValueDrawer
           popperId={accountDrawerPopperId}
           account={account}

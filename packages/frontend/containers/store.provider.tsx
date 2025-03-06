@@ -3,7 +3,7 @@
 import { FC, useRef } from 'react';
 import { Provider } from 'react-redux';
 
-import { AppStore, createStore } from '$store';
+import { AppStore, createStore } from '@/store';
 import { ChildrenProp } from 'src/types/children-prop';
 
 export const StoreProvider: FC<ChildrenProp> = ({ children }) => {

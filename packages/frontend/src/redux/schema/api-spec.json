@@ -88,6 +88,14 @@
         "tags": ["Authentication"]
       }
     },
+    "/auth/throw-error": {
+      "get": {
+        "operationId": "Auth_throwError",
+        "parameters": [],
+        "responses": { "200": { "description": "" } },
+        "tags": ["Authentication"]
+      }
+    },
     "/api/users/my-user": {
       "get": {
         "operationId": "Users_findOwnUser",
@@ -300,7 +308,10 @@
             "name": "accountTypes",
             "required": false,
             "in": "query",
-            "schema": { "type": "array", "items": { "type": "string" } }
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/components/schemas/AccountType" }
+            }
           }
         ],
         "responses": {
@@ -1414,7 +1425,8 @@
       "get": {
         "operationId": "Tasks_generateTransactions",
         "parameters": [],
-        "responses": { "200": { "description": "" } }
+        "responses": { "200": { "description": "" } },
+        "tags": ["Tasks"]
       }
     },
     "/api/system/logs": {
@@ -1434,7 +1446,8 @@
             "schema": { "format": "date-time", "type": "string" }
           }
         ],
-        "responses": { "200": { "description": "" } }
+        "responses": { "200": { "description": "" } },
+        "tags": ["System"]
       }
     }
   },
@@ -1458,14 +1471,14 @@
           "updatedAt": { "format": "date-time", "type": "string" },
           "name": { "type": "string" },
           "nickname": { "type": "string" },
-          "githubId": { "type": "string" },
-          "auth0Id": { "type": "string" },
-          "profileImageUrl": { "type": "string" },
+          "githubId": { "type": "string", "nullable": true },
+          "auth0Id": { "type": "string", "nullable": true },
+          "profileImageUrl": { "type": "string", "nullable": true },
           "roles": {
             "type": "array",
             "items": { "$ref": "#/components/schemas/Role" }
           },
-          "theme": { "$ref": "#/components/schemas/Theme" }
+          "theme": { "allOf": [{ "$ref": "#/components/schemas/Theme" }] }
         },
         "required": [
           "id",
@@ -1509,7 +1522,9 @@
           "updatedAt": { "format": "date-time", "type": "string" },
           "id": { "type": "string" },
           "userId": { "type": "string" },
-          "key": { "$ref": "#/components/schemas/UserPreferenceProperty" },
+          "key": {
+            "allOf": [{ "$ref": "#/components/schemas/UserPreferenceProperty" }]
+          },
           "value": { "type": "string" }
         },
         "required": ["createdAt", "updatedAt", "id", "userId", "key", "value"]
@@ -1524,8 +1539,8 @@
           "description": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
           "userId": { "type": "string" },
-          "fromAccount": { "type": "string" },
-          "toAccount": { "type": "string" }
+          "fromAccount": { "type": "string", "nullable": true },
+          "toAccount": { "type": "string", "nullable": true }
         },
         "required": [
           "createdAt",
@@ -1558,9 +1573,9 @@
           "updatedAt": { "format": "date-time", "type": "string" },
           "id": { "type": "string" },
           "name": { "type": "string" },
-          "type": { "$ref": "#/components/schemas/AccountType" },
+          "type": { "allOf": [{ "$ref": "#/components/schemas/AccountType" }] },
           "balance": { "type": "number" },
-          "currentDateBalance": { "type": "number" },
+          "currentDateBalance": { "type": "number", "nullable": true },
           "userId": { "type": "string" },
           "isDeleted": { "type": "boolean" }
         },
@@ -1599,7 +1614,6 @@
       },
       "TransactionType": {
         "type": "string",
-        "description": "Type of the transaction",
         "enum": ["INCOME", "EXPENSE", "TRANSFER"]
       },
       "TransactionCategoryDto": {
@@ -1635,7 +1649,7 @@
           "updatedAt": { "format": "date-time", "type": "string" },
           "id": { "type": "string" },
           "userId": { "type": "string" },
-          "description": { "type": "string" },
+          "description": { "type": "string", "nullable": true },
           "categoryId": { "type": "string" },
           "transactionId": { "type": "string" },
           "amount": { "type": "number" }
@@ -1645,6 +1659,7 @@
           "updatedAt",
           "id",
           "userId",
+          "description",
           "categoryId",
           "transactionId",
           "amount"
@@ -1666,12 +1681,12 @@
             "items": { "$ref": "#/components/schemas/TransactionTemplateType" }
           },
           "templateVisibility": {
-            "$ref": "#/components/schemas/TransactionType"
+            "allOf": [{ "$ref": "#/components/schemas/TransactionType" }]
           },
-          "amount": { "type": "number" },
+          "amount": { "type": "number", "nullable": true },
           "description": { "type": "string" },
-          "dayOfMonth": { "type": "number" },
-          "dayOfMonthToCreate": { "type": "number" },
+          "dayOfMonth": { "type": "number", "nullable": true },
+          "dayOfMonthToCreate": { "type": "number", "nullable": true },
           "userId": { "type": "string" },
           "fromAccount": { "type": "string", "nullable": true },
           "toAccount": { "type": "string", "nullable": true },
@@ -1684,6 +1699,7 @@
           "templateName",
           "templateType",
           "templateVisibility",
+          "description",
           "userId"
         ]
       },
@@ -1804,8 +1820,8 @@
         "properties": {
           "name": { "type": "string" },
           "nickname": { "type": "string" },
-          "profileImageUrl": { "type": "string" },
-          "theme": { "$ref": "#/components/schemas/Theme" }
+          "profileImageUrl": { "type": "string", "nullable": true },
+          "theme": { "allOf": [{ "$ref": "#/components/schemas/Theme" }] }
         }
       },
       "UpdateUserDto": {
@@ -1813,21 +1829,21 @@
         "properties": {
           "name": { "type": "string" },
           "nickname": { "type": "string" },
-          "githubId": { "type": "string" },
-          "auth0Id": { "type": "string" },
-          "profileImageUrl": { "type": "string" },
+          "githubId": { "type": "string", "nullable": true },
+          "auth0Id": { "type": "string", "nullable": true },
+          "profileImageUrl": { "type": "string", "nullable": true },
           "roles": {
             "type": "array",
             "items": { "$ref": "#/components/schemas/Role" }
           },
-          "theme": { "$ref": "#/components/schemas/Theme" }
+          "theme": { "allOf": [{ "$ref": "#/components/schemas/Theme" }] }
         }
       },
       "CreateAccountDto": {
         "type": "object",
         "properties": {
           "name": { "type": "string" },
-          "type": { "$ref": "#/components/schemas/AccountType" },
+          "type": { "allOf": [{ "$ref": "#/components/schemas/AccountType" }] },
           "balance": { "type": "number" }
         },
         "required": ["name", "type", "balance"]
@@ -1836,7 +1852,7 @@
         "type": "object",
         "properties": {
           "name": { "type": "string" },
-          "type": { "$ref": "#/components/schemas/AccountType" },
+          "type": { "allOf": [{ "$ref": "#/components/schemas/AccountType" }] },
           "balance": { "type": "number" }
         }
       },
@@ -1864,10 +1880,13 @@
           "amount": { "type": "number" },
           "description": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
-          "fromAccount": { "type": "string" },
-          "toAccount": { "type": "string" },
+          "fromAccount": { "type": "string", "nullable": true },
+          "toAccount": { "type": "string", "nullable": true },
           "isRecurring": { "type": "boolean" },
-          "type": { "$ref": "#/components/schemas/TransactionType" },
+          "type": {
+            "description": "Type of the transaction",
+            "allOf": [{ "$ref": "#/components/schemas/TransactionType" }]
+          },
           "categories": {
             "type": "array",
             "items": {
@@ -1925,7 +1944,7 @@
         "type": "object",
         "properties": {
           "id": { "type": "string" },
-          "description": { "type": "string" },
+          "description": { "type": "string", "nullable": true },
           "amount": { "type": "number" },
           "name": { "type": "string" },
           "path": { "type": "string" }
@@ -1942,12 +1961,15 @@
           "description": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
           "userId": { "type": "string" },
-          "fromAccount": { "type": "string" },
-          "toAccount": { "type": "string" },
-          "fromAccountName": { "type": "string" },
-          "toAccountName": { "type": "string" },
+          "fromAccount": { "type": "string", "nullable": true },
+          "toAccount": { "type": "string", "nullable": true },
+          "fromAccountName": { "type": "string", "nullable": true },
+          "toAccountName": { "type": "string", "nullable": true },
           "isRecurring": { "type": "boolean" },
-          "type": { "$ref": "#/components/schemas/TransactionType" },
+          "type": {
+            "description": "Type of the transaction",
+            "allOf": [{ "$ref": "#/components/schemas/TransactionType" }]
+          },
           "categories": {
             "type": "array",
             "items": {
@@ -1972,10 +1994,18 @@
           "categories"
         ]
       },
+      "CategoryMonthlySummaryDtoId": {
+        "type": "object",
+        "properties": {
+          "year": { "type": "number" },
+          "month": { "type": "number" }
+        },
+        "required": ["year", "month"]
+      },
       "CategoryMonthlySummaryDto": {
         "type": "object",
         "properties": {
-          "id": { "type": "object" },
+          "id": { "$ref": "#/components/schemas/CategoryMonthlySummaryDtoId" },
           "totalCount": { "type": "number" },
           "incomesCount": { "type": "number" },
           "expensesCount": { "type": "number" },
@@ -2055,7 +2085,9 @@
       "UpdateUserPreferenceDto": {
         "type": "object",
         "properties": {
-          "key": { "$ref": "#/components/schemas/UserPreferenceProperty" },
+          "key": {
+            "allOf": [{ "$ref": "#/components/schemas/UserPreferenceProperty" }]
+          },
           "value": { "type": "string" }
         },
         "required": ["key", "value"]
@@ -2069,17 +2101,22 @@
             "items": { "$ref": "#/components/schemas/TransactionTemplateType" }
           },
           "templateVisibility": {
-            "$ref": "#/components/schemas/TransactionType"
+            "allOf": [{ "$ref": "#/components/schemas/TransactionType" }]
           },
-          "amount": { "type": "number" },
+          "amount": { "type": "number", "nullable": true },
           "description": { "type": "string" },
-          "dayOfMonth": { "type": "number" },
-          "dayOfMonthToCreate": { "type": "number" },
+          "dayOfMonth": { "type": "number", "nullable": true },
+          "dayOfMonthToCreate": { "type": "number", "nullable": true },
           "fromAccount": { "type": "string", "nullable": true },
           "toAccount": { "type": "string", "nullable": true },
           "categories": { "type": "array", "items": { "type": "string" } }
         },
-        "required": ["templateName", "templateType", "templateVisibility"]
+        "required": [
+          "templateName",
+          "templateType",
+          "templateVisibility",
+          "description"
+        ]
       },
       "UpdateTransactionTemplateDto": {
         "type": "object",
@@ -2090,12 +2127,12 @@
             "items": { "$ref": "#/components/schemas/TransactionTemplateType" }
           },
           "templateVisibility": {
-            "$ref": "#/components/schemas/TransactionType"
+            "allOf": [{ "$ref": "#/components/schemas/TransactionType" }]
           },
-          "amount": { "type": "number" },
+          "amount": { "type": "number", "nullable": true },
           "description": { "type": "string" },
-          "dayOfMonth": { "type": "number" },
-          "dayOfMonthToCreate": { "type": "number" },
+          "dayOfMonth": { "type": "number", "nullable": true },
+          "dayOfMonthToCreate": { "type": "number", "nullable": true },
           "fromAccount": { "type": "string", "nullable": true },
           "toAccount": { "type": "string", "nullable": true },
           "categories": { "type": "array", "items": { "type": "string" } }
@@ -2111,10 +2148,13 @@
           "description": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
           "userId": { "type": "string" },
-          "fromAccount": { "type": "string" },
-          "fromAccountName": { "type": "string" },
+          "fromAccount": { "type": "string", "nullable": true },
+          "fromAccountName": { "type": "string", "nullable": true },
           "isRecurring": { "type": "boolean" },
-          "type": { "$ref": "#/components/schemas/TransactionType" },
+          "type": {
+            "description": "Type of the transaction",
+            "allOf": [{ "$ref": "#/components/schemas/TransactionType" }]
+          },
           "categories": {
             "type": "array",
             "items": {
@@ -2144,9 +2184,12 @@
           "amount": { "type": "number" },
           "description": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
-          "fromAccount": { "type": "string" },
+          "fromAccount": { "type": "string", "nullable": true },
           "isRecurring": { "type": "boolean" },
-          "type": { "$ref": "#/components/schemas/TransactionType" },
+          "type": {
+            "description": "Type of the transaction",
+            "allOf": [{ "$ref": "#/components/schemas/TransactionType" }]
+          },
           "categories": {
             "type": "array",
             "items": {
@@ -2168,11 +2211,11 @@
       "CreateTransactionCategoryMappingWithoutTransactionDto": {
         "type": "object",
         "properties": {
-          "description": { "type": "string" },
+          "description": { "type": "string", "nullable": true },
           "categoryId": { "type": "string" },
           "amount": { "type": "number" }
         },
-        "required": ["categoryId", "amount"]
+        "required": ["description", "categoryId", "amount"]
       },
       "CreateExpenseDto": {
         "type": "object",
@@ -2180,7 +2223,7 @@
           "amount": { "type": "number" },
           "description": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
-          "fromAccount": { "type": "string" },
+          "fromAccount": { "type": "string", "nullable": true },
           "categories": {
             "type": "array",
             "items": {
@@ -2196,7 +2239,7 @@
           "amount": { "type": "number" },
           "description": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
-          "fromAccount": { "type": "string" },
+          "fromAccount": { "type": "string", "nullable": true },
           "categories": {
             "type": "array",
             "items": {
@@ -2215,10 +2258,13 @@
           "description": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
           "userId": { "type": "string" },
-          "toAccount": { "type": "string" },
-          "toAccountName": { "type": "string" },
+          "toAccount": { "type": "string", "nullable": true },
+          "toAccountName": { "type": "string", "nullable": true },
           "isRecurring": { "type": "boolean" },
-          "type": { "$ref": "#/components/schemas/TransactionType" },
+          "type": {
+            "description": "Type of the transaction",
+            "allOf": [{ "$ref": "#/components/schemas/TransactionType" }]
+          },
           "categories": {
             "type": "array",
             "items": {
@@ -2248,9 +2294,12 @@
           "amount": { "type": "number" },
           "description": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
-          "toAccount": { "type": "string" },
+          "toAccount": { "type": "string", "nullable": true },
           "isRecurring": { "type": "boolean" },
-          "type": { "$ref": "#/components/schemas/TransactionType" },
+          "type": {
+            "description": "Type of the transaction",
+            "allOf": [{ "$ref": "#/components/schemas/TransactionType" }]
+          },
           "categories": {
             "type": "array",
             "items": {
@@ -2275,7 +2324,7 @@
           "amount": { "type": "number" },
           "description": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
-          "toAccount": { "type": "string" },
+          "toAccount": { "type": "string", "nullable": true },
           "categories": {
             "type": "array",
             "items": {
@@ -2291,7 +2340,7 @@
           "amount": { "type": "number" },
           "description": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
-          "toAccount": { "type": "string" },
+          "toAccount": { "type": "string", "nullable": true },
           "categories": {
             "type": "array",
             "items": {
@@ -2310,12 +2359,15 @@
           "description": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
           "userId": { "type": "string" },
-          "fromAccount": { "type": "string" },
-          "toAccount": { "type": "string" },
-          "fromAccountName": { "type": "string" },
-          "toAccountName": { "type": "string" },
+          "fromAccount": { "type": "string", "nullable": true },
+          "toAccount": { "type": "string", "nullable": true },
+          "fromAccountName": { "type": "string", "nullable": true },
+          "toAccountName": { "type": "string", "nullable": true },
           "isRecurring": { "type": "boolean" },
-          "type": { "$ref": "#/components/schemas/TransactionType" },
+          "type": {
+            "description": "Type of the transaction",
+            "allOf": [{ "$ref": "#/components/schemas/TransactionType" }]
+          },
           "categories": {
             "type": "array",
             "items": {
@@ -2347,10 +2399,13 @@
           "amount": { "type": "number" },
           "description": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
-          "fromAccount": { "type": "string" },
-          "toAccount": { "type": "string" },
+          "fromAccount": { "type": "string", "nullable": true },
+          "toAccount": { "type": "string", "nullable": true },
           "isRecurring": { "type": "boolean" },
-          "type": { "$ref": "#/components/schemas/TransactionType" },
+          "type": {
+            "description": "Type of the transaction",
+            "allOf": [{ "$ref": "#/components/schemas/TransactionType" }]
+          },
           "categories": {
             "type": "array",
             "items": {
@@ -2376,8 +2431,8 @@
           "amount": { "type": "number" },
           "description": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
-          "fromAccount": { "type": "string" },
-          "toAccount": { "type": "string" },
+          "fromAccount": { "type": "string", "nullable": true },
+          "toAccount": { "type": "string", "nullable": true },
           "categories": {
             "type": "array",
             "items": {
@@ -2393,8 +2448,8 @@
           "amount": { "type": "number" },
           "description": { "type": "string" },
           "date": { "format": "date-time", "type": "string" },
-          "fromAccount": { "type": "string" },
-          "toAccount": { "type": "string" },
+          "fromAccount": { "type": "string", "nullable": true },
+          "toAccount": { "type": "string", "nullable": true },
           "categories": {
             "type": "array",
             "items": {

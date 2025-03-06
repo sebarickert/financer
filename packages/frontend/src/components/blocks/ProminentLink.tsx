@@ -2,16 +2,16 @@ import clsx from 'clsx';
 import { ChevronRight, LucideIcon } from 'lucide-react';
 import { FC } from 'react';
 
-import { Link } from '$elements/Link';
+import { Link } from '@/elements/Link';
 
-type ProminentLinkProps = {
+interface ProminentLinkProps {
   Icon?: LucideIcon;
   children: React.ReactNode;
   link: string;
   testId?: string;
   entityTitle?: string;
   className?: string;
-};
+}
 
 export const ProminentLink: FC<ProminentLinkProps> = ({
   Icon,

@@ -5,20 +5,20 @@ import { FC } from 'react';
 import { TransactionList } from './TransactionList';
 
 import {
-  TransactionListItemDto,
+  SchemaTransactionListItemDto,
   TransactionType,
-} from '$api/generated/financerApi';
-import { Card } from '$blocks/Card/Card';
-import { CardHeader } from '$blocks/Card/CardHeader';
-import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
-import { Heading } from '$elements/Heading';
-import { DATE_FORMAT, DateService } from '$services/DateService';
-import { formatCurrency } from '$utils/formatCurrency';
+} from '@/api/ssr-financer-api';
+import { Card } from '@/blocks/Card/Card';
+import { CardHeader } from '@/blocks/Card/CardHeader';
+import { InfoMessageBlock } from '@/blocks/InfoMessageBlock';
+import { Heading } from '@/elements/Heading';
+import { DATE_FORMAT, DateService } from '@/services/DateService';
+import { formatCurrency } from '@/utils/formatCurrency';
 
-type GroupedTransactionListProps = {
-  items: TransactionListItemDto[];
+interface GroupedTransactionListProps {
+  items: SchemaTransactionListItemDto[];
   className?: string;
-};
+}
 
 const getGroupLabel = (groupLabel: string) => {
   if (groupLabel === 'Upcoming') {
@@ -38,23 +38,28 @@ const getGroupLabel = (groupLabel: string) => {
   return dt.format(DATE_FORMAT.MONTH_WITH_DATE_LONG);
 };
 
-export const GroupedTransactionList: FC<GroupedTransactionListProps> = async ({
+export const GroupedTransactionList: FC<GroupedTransactionListProps> = ({
   items,
   className,
 }) => {
   const endOfTodayDate = new DateService().getDate().endOf('day');
 
-  const groupedTransactions = Object.entries(
-    Object.groupBy(items, ({ date }) => {
-      const dt = new DateService(date).getDate();
+  const groupedTransactions = Map.groupBy(items, ({ date }) => {
+    const dt = new DateService(date).getDate();
 
-      if (dt > endOfTodayDate) {
-        return 'Upcoming';
-      }
+    if (dt > endOfTodayDate) {
+      return 'Upcoming';
+    }
 
-      return dt.toISODate() as string;
-    }),
-  ).map(([date, data]) => ({ date, data: data || [] }));
+    return dt.toISODate();
+  })
+    .entries()
+    .toArray()
+    .map(([date, data]) => ({ date, data: data || [] }))
+    .filter(({ date }) => Boolean(date)) as {
+    date: string;
+    data: SchemaTransactionListItemDto[];
+  }[];
 
   if (groupedTransactions.length === 0) {
     return (
@@ -71,11 +76,11 @@ export const GroupedTransactionList: FC<GroupedTransactionListProps> = async ({
         const groupAmount = group.data
           .filter(
             ({ type }) =>
-              type === TransactionType.Income ||
-              type === TransactionType.Expense,
+              type === TransactionType.INCOME ||
+              type === TransactionType.EXPENSE,
           )
           .map(({ type, amount }) =>
-            type === TransactionType.Expense ? -amount : amount,
+            type === TransactionType.EXPENSE ? -amount : amount,
           )
           .reduce((acc, curr) => acc + curr, 0);
 

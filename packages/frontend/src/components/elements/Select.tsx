@@ -5,7 +5,7 @@ import { useFormContext } from 'react-hook-form';
 
 import { FieldGroup } from './FieldGroup';
 
-type SelectProps = {
+interface SelectProps {
   children: React.ReactNode;
   id: string;
   isRequired?: boolean;
@@ -13,21 +13,21 @@ type SelectProps = {
   options: Option[];
   defaultValue?: string;
   className?: string;
-  handleOnChange?(event: React.ChangeEvent<HTMLSelectElement>): void;
+  handleOnChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   testId?: string;
   placeholder?: string;
   shouldUnregister?: boolean;
   isLabelHidden?: boolean;
   isBleedingEdge?: boolean;
   Icon?: LucideIcon;
-};
+}
 
-export type Option = {
+export interface Option {
   value: string;
   label: string;
   Icon?: LucideIcon;
   description?: string;
-};
+}
 
 type OptionElementProps = Omit<Option, 'label'> & {
   children: string;
@@ -38,7 +38,7 @@ const OptionElement: FC<OptionElementProps> = ({
   value,
   children,
   // Icon,
-  // description,
+  // Description,
   isDisabled,
 }) => (
   <option
@@ -74,10 +74,11 @@ export const Select = ({
   testId,
   isDisabled = false,
   placeholder = 'Select option',
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   handleOnChange = () => {},
   shouldUnregister,
   isLabelHidden,
-  // isBleedingEdge = true,
+  // IsBleedingEdge = true,
   Icon,
 }: SelectProps): JSX.Element => {
   const { register } = useFormContext();
@@ -100,7 +101,7 @@ export const Select = ({
         {Icon && <Icon />}
         <select
           data-testid={testId}
-          // data-bleeding-edge={isBleedingEdge ? 'on' : 'off'}
+          // Data-bleeding-edge={isBleedingEdge ? 'on' : 'off'}
           id={id}
           data-slot="control"
           className={clsx(

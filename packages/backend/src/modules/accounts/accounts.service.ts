@@ -1,23 +1,24 @@
 import {
-  forwardRef,
   Inject,
   Injectable,
   NotFoundException,
+  forwardRef,
 } from '@nestjs/common';
 import { Account, AccountType } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime/library';
-
-import { AccountRepo } from '../../database/repos/account.repo';
-import { UserId } from '../../types/user-id';
-import { sumArrayItems } from '../../utils/arrays';
-import { DateService } from '../../utils/date.service';
-import { AccountBalanceChangesService } from '../account-balance-changes/account-balance-changes.service';
-import { TransactionsService } from '../transactions/transactions.service';
 
 import { AccountBalanceHistoryDto } from './dto/account-balance-history.dto';
 import { AccountDto } from './dto/account.dto';
 import { CreateAccountDto } from './dto/create-account.dto';
 import { UpdateAccountDto } from './dto/update-account.dto';
+
+import { AccountBalanceChangesService } from '@/account-balance-changes/account-balance-changes.service';
+import { AccountRepo } from '@/database/repos/account.repo';
+import { TransactionsService } from '@/transactions/transactions.service';
+import { UserId } from '@/types/user-id';
+import { sumArrayItems } from '@/utils/arrays';
+import { DateService } from '@/utils/date.service';
+import { sortDateDesc } from '@/utils/sort-helper';
 
 @Injectable()
 export class AccountsService {
@@ -42,8 +43,7 @@ export class AccountsService {
 
   createMany(userId: UserId, createAccountDto: CreateAccountDto[]) {
     return this.accountRepo.createMany(
-      // @ts-expect-error - remove legacy `v` from import data
-      createAccountDto.map(({ v, ...account }) => ({ ...account, userId })),
+      createAccountDto.map((account) => ({ ...account, userId })),
     );
   }
 
@@ -86,7 +86,11 @@ export class AccountsService {
     userId: UserId,
     accountTypes?: AccountType[],
   ): Promise<AccountDto[]> {
-    const type = accountTypes?.length > 0 ? { type: { in: accountTypes } } : {};
+    const type =
+      accountTypes && accountTypes.length > 0
+        ? { type: { in: accountTypes } }
+        : {};
+
     const whereQuery = { userId, isDeleted: false, ...type };
 
     const accounts = await this.accountRepo.findMany({
@@ -179,7 +183,7 @@ export class AccountsService {
   async getCurrentDateAccountBalance(
     userId: UserId,
     account: Account,
-  ): Promise<Decimal> {
+  ): Promise<Decimal | null> {
     const upcomingBalanceChanges = await this.getAccountBalanceHistory(
       userId,
       account,
@@ -188,7 +192,7 @@ export class AccountsService {
 
     const latestTransaction = upcomingBalanceChanges.at(0);
 
-    return latestTransaction?.balance.minus(latestTransaction?.amount);
+    return latestTransaction?.balance.minus(latestTransaction.amount) ?? null;
   }
 
   async getAccountBalanceHistory(
@@ -218,14 +222,14 @@ export class AccountsService {
     const allBalanceChanges = accountBalanceChanges.concat(accountTransactions);
 
     const summarizedBalanceChanges = allBalanceChanges
-      .reduce(
+      .reduce<Date[]>(
         (previous, { date }) =>
-          previous.some((d) => d.getTime() === date.getTime())
+          previous.some((itemDate) => itemDate.getTime() === date.getTime())
             ? previous
             : previous.concat(date),
-        [] as Date[],
+        [],
       )
-      .sort((a, b) => b.getTime() - a.getTime())
+      .sort(sortDateDesc)
       .map((date) => {
         const balanceChangeAmounts = allBalanceChanges
           .filter(({ date: itemDate }) => itemDate.getTime() === date.getTime())
@@ -236,7 +240,7 @@ export class AccountsService {
           amount: sumArrayItems(balanceChangeAmounts),
         };
       })
-      .reduce((previous, { date, amount }) => {
+      .reduce<AccountBalanceHistoryDto[]>((previous, { date, amount }) => {
         const previousBalance = previous.at(-1)?.balance ?? account.balance;
 
         const previousAmount = previous.at(-1)?.amount ?? 0;
@@ -248,8 +252,8 @@ export class AccountsService {
           amount,
           balance: newBalance,
         });
-      }, [] as AccountBalanceHistoryDto[])
-      .sort((a, b) => a.date.getTime() - b.date.getTime());
+      }, [])
+      .sort(sortDateDesc('date'));
 
     return AccountBalanceHistoryDto.createFromPlain(summarizedBalanceChanges);
   }

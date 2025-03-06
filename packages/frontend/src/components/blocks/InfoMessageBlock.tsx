@@ -2,14 +2,14 @@ import clsx from 'clsx';
 import { LucideIcon } from 'lucide-react';
 import { FC } from 'react';
 
-import { Heading } from '$elements/Heading';
+import { Heading } from '@/elements/Heading';
 
-type InfoMessageBlockBaseProps = {
+interface InfoMessageBlockBaseProps {
   title: string;
   children: React.ReactNode;
   action?: React.ReactNode;
   className?: string;
-};
+}
 
 type InfoMessageBlockDefaultProps = InfoMessageBlockBaseProps & {
   Icon?: LucideIcon;

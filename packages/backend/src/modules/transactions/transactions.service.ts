@@ -1,9 +1,9 @@
 import {
-  forwardRef,
   Inject,
   Injectable,
   Logger,
   NotFoundException,
+  forwardRef,
 } from '@nestjs/common';
 import {
   AccountType,
@@ -12,16 +12,6 @@ import {
   TransactionType,
 } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime/library';
-
-import { TransactionRepo } from '../../database/repos/transaction.repo';
-import { ForceMutable } from '../../types/force-mutable';
-import { UserId } from '../../types/user-id';
-import { DateService } from '../../utils/date.service';
-import { AccountsService } from '../accounts/accounts.service';
-import { TransactionCategoriesService } from '../transaction-categories/transaction-categories.service';
-import { CreateTransactionCategoryMappingDto } from '../transaction-category-mappings/dto/create-transaction-category-mapping.dto';
-import { UpdateTransactionCategoryMappingDto } from '../transaction-category-mappings/dto/update-transaction-category-mapping.dto';
-import { TransactionCategoryMappingsService } from '../transaction-category-mappings/transaction-category-mappings.service';
 
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { TransactionDetailsDto } from './dto/transaction-details.dto';
@@ -33,6 +23,17 @@ import { TransactionMonthSummaryDto } from './dto/transaction-month-summary.dto'
 import { TransactionSummaryDto } from './dto/transaction-summary.dto';
 import { TransactionDto } from './dto/transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
+
+import { AccountsService } from '@/accounts/accounts.service';
+import { TransactionRepo } from '@/database/repos/transaction.repo';
+import { TransactionCategoriesService } from '@/transaction-categories/transaction-categories.service';
+import { CreateTransactionCategoryMappingDto } from '@/transaction-category-mappings/dto/create-transaction-category-mapping.dto';
+import { UpdateTransactionCategoryMappingDto } from '@/transaction-category-mappings/dto/update-transaction-category-mapping.dto';
+import { TransactionCategoryMappingsService } from '@/transaction-category-mappings/transaction-category-mappings.service';
+import { ForceMutable } from '@/types/force-mutable';
+import { UserId } from '@/types/user-id';
+import { DateService } from '@/utils/date.service';
+import { sortDateDesc } from '@/utils/sort-helper';
 
 @Injectable()
 export class TransactionsService {
@@ -72,8 +73,7 @@ export class TransactionsService {
 
   createMany(userId: UserId, createTransactionDto: CreateTransactionDto[]) {
     return this.transactionRepo.createMany(
-      // @ts-expect-error - remove legacy `v` from import data
-      createTransactionDto.map(({ v, ...transaction }) => ({
+      createTransactionDto.map((transaction) => ({
         ...transaction,
         userId,
         categories: undefined,
@@ -151,12 +151,13 @@ export class TransactionsService {
     month?: number,
     linkedAccount?: string,
     accountTypes?: AccountType[],
+
     sortOrder: Prisma.SortOrder = Prisma.SortOrder.desc,
     transactionCategories?: string[],
     parentTransactionCategory?: string,
   ): Promise<TransactionListItemDto[]> {
     const targetCategoryIds =
-      transactionCategories ||
+      transactionCategories ??
       (await this.findChildrenCategoryIds(parentTransactionCategory));
 
     const transactionWhere: Prisma.TransactionWhereInput = {
@@ -175,7 +176,7 @@ export class TransactionsService {
     const fetchedTransactions = await this.transactionRepo.findMany({
       where: transactionWhere,
       orderBy: { date: sortOrder },
-      take: limit || totalCount,
+      take: limit && !isNaN(limit) ? limit : totalCount,
       include: {
         categories: {
           select: {
@@ -237,7 +238,6 @@ export class TransactionsService {
         date: includePastTransactions ? undefined : { gte: new Date() },
       },
     });
-
     return TransactionSummaryDto.createFromPlain(transactions);
   }
 
@@ -250,7 +250,7 @@ export class TransactionsService {
     parentTransactionCategory?: string,
   ): Promise<TransactionMonthSummaryDto[]> => {
     const targetCategoryIds =
-      transactionCategories ||
+      transactionCategories ??
       (await this.findChildrenCategoryIds(parentTransactionCategory));
 
     const accountIds = new Set(
@@ -313,7 +313,7 @@ export class TransactionsService {
 
       const summary = summaries.get(
         `${transactionYear}-${transactionMonth}`,
-      ) || {
+      ) ?? {
         id: { month: transactionMonth, year: transactionYear },
         totalCount: 0,
         incomesCount: 0,
@@ -345,19 +345,14 @@ export class TransactionsService {
       summaries.set(`${transactionYear}-${transactionMonth}`, summary);
     });
 
-    const data = Array.from(summaries.values())
-      .sort((a, b) => {
-        // Compare years first
-        if (a.id.year > b.id.year) return -1;
-        if (a.id.year < b.id.year) return 1;
-
-        // If years are equal, compare months
-        if (a.id.month > b.id.month) return -1;
-        if (a.id.month < b.id.month) return 1;
-
-        // If both year and month are equal, consider them equal in terms of sorting
-        return 0;
-      })
+    const data = summaries
+      .values()
+      .toArray()
+      .map((summary) => ({
+        ...summary,
+        idDate: new Date(summary.id.year, summary.id.month - 1),
+      }))
+      .sort(sortDateDesc('idDate'))
       .map((summary) => ({
         ...summary,
         totalAmount: summary.totalAmount,
@@ -408,7 +403,7 @@ export class TransactionsService {
   }
 
   async remove(
-    transaction: Partial<TransactionDto>,
+    transaction: Pick<TransactionDto, 'amount'> & Partial<TransactionDto>,
     userId: UserId,
   ): Promise<void> {
     await this.updateRelatedAccountBalance(
@@ -471,7 +466,9 @@ export class TransactionsService {
     }
 
     await this.transactionCategoriesService.ensureCategoriesExist(
-      categories.map((category) => category.categoryId),
+      categories
+        .map((category) => category.categoryId)
+        .filter(Boolean) as string[],
     );
   }
 
@@ -499,7 +496,7 @@ export class TransactionsService {
 
   private async filterTransactionsByCategory(
     userId: UserId,
-    categoryIds?: string[],
+    categoryIds: string[] | null,
   ) {
     if (!categoryIds) {
       return {};
@@ -540,7 +537,7 @@ export class TransactionsService {
     return TransactionRepo.filterByAccount(accountIds);
   }
 
-  private async findChildrenCategoryIds(parentId: string) {
+  private async findChildrenCategoryIds(parentId: string | undefined) {
     if (!parentId) {
       return null;
     }

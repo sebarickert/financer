@@ -1,12 +1,12 @@
 import Decimal from 'decimal.js';
 
-import { parseCurrency } from '$utils/api-helper';
-import { Page, expect } from '$utils/financer-page';
+import { parseCurrency } from '@/utils/api-helper';
+import { Page, expect } from '@/utils/financer-page';
 
-type AccountRow = {
+interface AccountRow {
   name: string;
   balance: Decimal;
-};
+}
 
 export const getAccountDataFromAccountList = async (
   page: Page,

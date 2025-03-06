@@ -19,9 +19,18 @@ export class TransactionSummaryDto
   ] as const)
   implements TransactionSummary
 {
-  constructor(values: TransactionSummary) {
-    super(values);
-    Object.assign(this, values);
+  constructor(transaction: TransactionSummary) {
+    super();
+    // @ts-expect-error - we have to manually assign these properties
+    this.id = transaction.id;
+    // @ts-expect-error - we have to manually assign these properties
+    this.amount = new Decimal(transaction.amount);
+    // @ts-expect-error - we have to manually assign these properties
+    this.date = new Date(transaction.date);
+    // @ts-expect-error - we have to manually assign these properties
+    this.fromAccount = transaction.fromAccount;
+    // @ts-expect-error - we have to manually assign these properties
+    this.toAccount = transaction.toAccount;
   }
 
   public static createFromPlain(
@@ -34,7 +43,9 @@ export class TransactionSummaryDto
     transaction: TransactionSummary | TransactionSummary[],
   ): TransactionSummaryDto | TransactionSummaryDto[] {
     if (Array.isArray(transaction)) {
-      return transaction.map((a) => TransactionSummaryDto.createFromPlain(a));
+      return transaction.map((item) =>
+        TransactionSummaryDto.createFromPlain(item),
+      );
     }
 
     return new TransactionSummaryDto({

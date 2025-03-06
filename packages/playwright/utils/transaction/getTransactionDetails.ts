@@ -1,10 +1,10 @@
 import Decimal from 'decimal.js';
 
-import { TransactionType } from '$types/generated/financer';
-import { parseCurrency } from '$utils/api-helper';
-import { Page, expect } from '$utils/financer-page';
+import { TransactionType } from '@/types/generated/financer';
+import { parseCurrency } from '@/utils/api-helper';
+import { Page, expect } from '@/utils/financer-page';
 
-type TransactionDetails = {
+interface TransactionDetails {
   id: string;
   amount: Decimal;
   description: string;
@@ -13,13 +13,13 @@ type TransactionDetails = {
   fromAccount?: string;
   toAccount?: string;
   categories: CategoryDetails[];
-};
+}
 
-type CategoryDetails = {
+interface CategoryDetails {
   category: string;
   amount: Decimal;
   description?: string;
-};
+}
 
 const getCategories = async (page: Page): Promise<CategoryDetails[]> => {
   const categoriesElement = await page
@@ -42,7 +42,7 @@ const getCategories = async (page: Page): Promise<CategoryDetails[]> => {
           '[data-testid="category-details-item"]',
         );
 
-        const result: { [key: string]: string } = {};
+        const result: Record<string, string> = {};
 
         Array.from(detailItems).forEach((itemElement) => {
           const itemLabel =
@@ -58,7 +58,7 @@ const getCategories = async (page: Page): Promise<CategoryDetails[]> => {
         return {
           category: result.category || '',
           amount: result.amount || '',
-          description: result?.description,
+          description: result.description,
         };
       });
     });
@@ -101,7 +101,7 @@ export const getTransactionDetails = async (
       .getByText('Type')
       .evaluate((el) => el.parentElement?.nextElementSibling?.textContent)) ??
     ''
-  ).toUpperCase();
+  ).toUpperCase() as TransactionType;
 
   const categories = await getCategories(page);
 
@@ -139,7 +139,7 @@ export const getTransactionDetails = async (
     fromAccount,
     toAccount,
     date,
-    type: type as TransactionType,
+    type: type,
     categories,
   };
 };

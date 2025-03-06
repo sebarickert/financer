@@ -1,17 +1,17 @@
-import { INestApplication } from '@nestjs/common';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { Test, TestingModule } from '@nestjs/testing';
 import supertest from 'supertest';
-
-import { createMockServiceProvider } from '../../../test/create-mock-service-provider';
-import { setupTestNestApp } from '../../setup-test-nest-app';
 
 import { ExpensesController } from './expenses.controller';
 import { ExpensesService } from './expenses.service';
 
+import { setupTestNestApp } from '@/setup-test-nest-app';
+import { createMockServiceProvider } from '@/test/create-mock-service-provider';
+
 const mockFromAccountId = 'af0756cb-b481-4c4c-b182-a1691669afd5';
 
 describe('ExpensesController', () => {
-  let app: INestApplication;
+  let app: NestExpressApplication;
   let service: ExpensesService;
 
   beforeAll(async () => {

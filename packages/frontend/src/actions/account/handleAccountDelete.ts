@@ -1,9 +1,9 @@
 'use server';
 
-import { redirect, RedirectType } from 'next/navigation';
+import { RedirectType, redirect } from 'next/navigation';
 
-import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
-import { AccountService } from '$ssr/api/AccountService';
+import { DefaultFormActionHandler } from '@/hooks/useFinancerFormState';
+import { AccountService } from '@/ssr/api/AccountService';
 
 export const handleAccountDelete: DefaultFormActionHandler<{
   id: string;

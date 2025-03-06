@@ -1,12 +1,12 @@
 import Decimal from 'decimal.js';
 
-import { formatDate } from '$utils/api-helper';
-import { Page } from '$utils/financer-page';
+import { formatDate } from '@/utils/api-helper';
+import { Page } from '@/utils/financer-page';
 
-type MarketValueFormFields = {
+interface MarketValueFormFields {
   date?: Date;
   currentMarketValue?: Decimal;
-};
+}
 
 export const fillUpdateMarketValueForm = async (
   page: Page,

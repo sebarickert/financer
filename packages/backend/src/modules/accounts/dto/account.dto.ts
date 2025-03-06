@@ -1,6 +1,7 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 import { Account, AccountType } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime/library';
+import { Exclude } from 'class-transformer';
 import {
   IsBoolean,
   IsEnum,
@@ -10,31 +11,48 @@ import {
   IsUUID,
 } from 'class-validator';
 
-import { UserId } from '../../../types/user-id';
-import {
-  IsDecimal,
-  TransformDecimal,
-} from '../../../utils/is-decimal.decorator';
+import { UserId } from '@/types/user-id';
+import { IsDecimal, TransformDecimal } from '@/utils/is-decimal.decorator';
 
-export class AccountDto implements Account {
-  constructor(values: Account) {
-    Object.assign(this, values);
+type IAccount = Account & {
+  currentDateBalance: Decimal | null;
+};
+
+type CreateFromPlainAccount = Account & {
+  currentDateBalance?: Decimal | null;
+};
+
+export class AccountDto implements IAccount {
+  constructor(data?: IAccount) {
+    if (data) {
+      this.id = data.id;
+      this.name = data.name;
+      this.type = data.type;
+      this.balance = data.balance;
+      this.currentDateBalance = data.currentDateBalance;
+      this.userId = data.userId as UserId;
+      this.createdAt = data.createdAt;
+      this.updatedAt = data.updatedAt;
+      this.isDeleted = data.isDeleted;
+    }
   }
 
-  @ApiProperty()
-  createdAt: Date;
+  @Exclude()
+  @ApiHideProperty()
+  createdAt!: Date;
 
-  @ApiProperty()
-  updatedAt: Date;
+  @Exclude()
+  @ApiHideProperty()
+  updatedAt!: Date;
 
   @ApiProperty({ type: String })
   @IsUUID()
-  readonly id: string;
+  readonly id!: string;
 
   @ApiProperty()
   @IsNotEmpty({ message: 'Name must not be empty.' })
   @IsString()
-  readonly name: string;
+  readonly name!: string;
 
   @ApiProperty({
     enum: AccountType,
@@ -44,56 +62,48 @@ export class AccountDto implements Account {
   @IsEnum(AccountType, {
     message: `Type must be one of the following: ${Object.values(AccountType).join(', ')}.`,
   })
-  readonly type: AccountType;
+  readonly type!: AccountType;
 
   @ApiProperty({ type: Number })
   @TransformDecimal()
   @IsDecimal({ message: 'Balance must be a decimal number, with 2 decimals.' })
-  readonly balance: Decimal;
+  readonly balance!: Decimal;
 
-  @ApiProperty({ type: Number })
+  @ApiProperty({ type: Number, nullable: true })
   @TransformDecimal()
   @IsDecimal({
     message: 'Current Date Balance must be a decimal number, with 2 decimals.',
   })
   @IsOptional()
-  readonly currentDateBalance?: Decimal;
+  readonly currentDateBalance!: Decimal | null;
 
   @ApiProperty({ type: String })
   @IsUUID()
-  readonly userId: UserId;
+  readonly userId!: UserId;
 
   @ApiProperty()
   @IsBoolean()
-  isDeleted: boolean;
+  isDeleted!: boolean;
 
-  public static createFromPlain(account: Account): AccountDto;
-  public static createFromPlain(account: Account[]): AccountDto[];
+  public static createFromPlain(account: CreateFromPlainAccount): AccountDto;
   public static createFromPlain(
-    account: Account | Account[],
+    account: CreateFromPlainAccount[],
+  ): AccountDto[];
+  public static createFromPlain(
+    account: CreateFromPlainAccount | CreateFromPlainAccount[],
   ): AccountDto | AccountDto[] {
     if (Array.isArray(account)) {
-      return account.map((a) => AccountDto.createFromPlain(a));
+      return account.map((item) => AccountDto.createFromPlain(item));
     }
 
-    const accountDto = {
+    return new AccountDto({
       ...account,
       createdAt: new Date(account.createdAt),
       updatedAt: new Date(account.updatedAt),
       balance: new Decimal(account.balance),
-    };
-
-    // TODO: Add to Prisma model
-    // Conditionally add currentDateBalance if it exists
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    if ((account as any)?.currentDateBalance !== undefined) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (accountDto as any).currentDateBalance = new Decimal(
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (account as any).currentDateBalance,
-      );
-    }
-
-    return new AccountDto(accountDto);
+      currentDateBalance: account.currentDateBalance
+        ? new Decimal(account.currentDateBalance)
+        : null,
+    });
   }
 }

@@ -1,5 +1,6 @@
-import { TransactionCategoryDto } from '$api/generated/financerApi';
+import { SchemaTransactionCategoryDto } from '@/api/ssr-financer-api';
 
-export type TransactionCategoryDtoWithCategoryTree = TransactionCategoryDto & {
-  categoryTree: string;
-};
+export type TransactionCategoryDtoWithCategoryTree =
+  SchemaTransactionCategoryDto & {
+    categoryTree: string;
+  };

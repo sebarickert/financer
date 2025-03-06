@@ -6,23 +6,19 @@ import { IncomeService } from './IncomeService';
 import { TransferService } from './TransferService';
 
 import {
-  ExpenseListItemDto,
-  IncomeListItemDto,
-  TransactionDetailsDto,
-  TransactionListItemDto,
-  TransactionMonthSummaryDto,
-  TransactionsFindAllByUserApiArg,
-  TransactionsFindMonthlySummariesByUserApiArg,
+  SchemaExpenseListItemDto,
+  SchemaIncomeListItemDto,
+  SchemaTransactionDetailsDto,
+  SchemaTransactionListItemDto,
+  SchemaTransactionMonthSummaryDto,
+  SchemaTransferListItemDto,
+  SortOrder,
   TransactionType,
-  TransferListItemDto,
-} from '$api/generated/financerApi';
+  operations,
+} from '@/api/ssr-financer-api';
 
-export type TransactionListOptions = Omit<
-  TransactionsFindAllByUserApiArg,
-  'sortOrder'
-> & {
-  sortOrder?: 'asc' | 'desc';
-};
+export type TransactionListOptions =
+  operations['Transactions_findAllByUser']['parameters']['query'];
 
 export type FirstTransactionByTypeOptions = Omit<
   TransactionListOptions,
@@ -30,7 +26,7 @@ export type FirstTransactionByTypeOptions = Omit<
 >;
 
 export class TransactionService extends BaseApi {
-  public static async revalidateCache(id?: string): Promise<void> {
+  public static revalidateCache(id?: string): void {
     if (id) {
       revalidateTag(this.getEntityTag(this.API_TAG.TRANSACTION, id));
       return;
@@ -40,8 +36,8 @@ export class TransactionService extends BaseApi {
   }
 
   public static async getMonthlySummary(
-    params: TransactionsFindMonthlySummariesByUserApiArg,
-  ): Promise<TransactionMonthSummaryDto[]> {
+    params: operations['Transactions_findMonthlySummariesByUser']['parameters']['query'],
+  ): Promise<readonly SchemaTransactionMonthSummaryDto[]> {
     const { data, error } = await this.client.GET(
       '/api/transactions/monthly-summaries',
       {
@@ -67,114 +63,115 @@ export class TransactionService extends BaseApi {
   }
 
   public static async getFirstByType(
-    type?: TransactionType.Expense,
+    type?: TransactionType.EXPENSE,
     options?: FirstTransactionByTypeOptions,
-  ): Promise<ExpenseListItemDto>;
+  ): Promise<SchemaExpenseListItemDto | null>;
   public static async getFirstByType(
-    type?: TransactionType.Income,
+    type?: TransactionType.INCOME,
     options?: FirstTransactionByTypeOptions,
-  ): Promise<IncomeListItemDto>;
+  ): Promise<SchemaIncomeListItemDto | null>;
   public static async getFirstByType(
-    type?: TransactionType.Transfer,
+    type?: TransactionType.TRANSFER,
     options?: FirstTransactionByTypeOptions,
-  ): Promise<TransferListItemDto>;
+  ): Promise<SchemaTransferListItemDto | null>;
   public static async getFirstByType(
     type?: null,
     options?: FirstTransactionByTypeOptions,
-  ): Promise<TransactionListItemDto>;
+  ): Promise<SchemaTransactionListItemDto | null>;
   public static async getFirstByType(
     type: TransactionType | null = null,
     options: FirstTransactionByTypeOptions = {},
   ): Promise<
-    | TransactionListItemDto
-    | ExpenseListItemDto
-    | IncomeListItemDto
-    | TransferListItemDto
+    | SchemaTransactionListItemDto
+    | SchemaExpenseListItemDto
+    | SchemaIncomeListItemDto
+    | SchemaTransferListItemDto
+    | null
   > {
-    // For some reason ts fails to infer the type of the response so lets just cast as null
-    const data = await this.getAllByType(type as null, {
+    // @ts-expect-error - TS is not able to infer the type of data with null overload
+    const data = await this.getAllByType(type, {
       ...options,
       limit: 1,
-      sortOrder: 'asc',
+      sortOrder: SortOrder.asc,
     });
 
-    return data[0];
+    return data.at(0) ?? null;
   }
 
   public static async getLatestByType(
-    type?: TransactionType.Expense,
+    type?: TransactionType.EXPENSE,
     options?: FirstTransactionByTypeOptions,
-  ): Promise<ExpenseListItemDto>;
+  ): Promise<SchemaExpenseListItemDto | null>;
   public static async getLatestByType(
-    type?: TransactionType.Income,
+    type?: TransactionType.INCOME,
     options?: FirstTransactionByTypeOptions,
-  ): Promise<IncomeListItemDto>;
+  ): Promise<SchemaIncomeListItemDto | null>;
   public static async getLatestByType(
-    type?: TransactionType.Transfer,
+    type?: TransactionType.TRANSFER,
     options?: FirstTransactionByTypeOptions,
-  ): Promise<TransferListItemDto>;
+  ): Promise<SchemaTransferListItemDto | null>;
   public static async getLatestByType(
     type?: null,
     options?: FirstTransactionByTypeOptions,
-  ): Promise<TransactionListItemDto>;
+  ): Promise<SchemaTransactionListItemDto | null>;
   public static async getLatestByType(
     type: TransactionType | null = null,
     options: FirstTransactionByTypeOptions = {},
   ): Promise<
-    | TransactionListItemDto
-    | ExpenseListItemDto
-    | IncomeListItemDto
-    | TransferListItemDto
+    | SchemaTransactionListItemDto
+    | SchemaExpenseListItemDto
+    | SchemaIncomeListItemDto
+    | SchemaTransferListItemDto
+    | null
   > {
-    // For some reason ts fails to infer the type of the response so lets just cast as null
-    const data = await this.getAllByType(type as null, {
+    // @ts-expect-error - TS is not able to infer the type of data with null overload
+    const data = await this.getAllByType(type, {
       ...options,
       limit: 1,
-      sortOrder: 'desc',
+      sortOrder: SortOrder.desc,
     });
 
-    return data[0];
+    return data.at(0) ?? null;
   }
 
   public static async getAllByType(
-    type: TransactionType.Expense,
+    type: TransactionType.EXPENSE,
     options?: TransactionListOptions,
-  ): Promise<ExpenseListItemDto[]>;
+  ): Promise<SchemaExpenseListItemDto[]>;
   public static async getAllByType(
-    type: TransactionType.Income,
+    type: TransactionType.INCOME,
     options?: TransactionListOptions,
-  ): Promise<IncomeListItemDto[]>;
+  ): Promise<SchemaIncomeListItemDto[]>;
   public static async getAllByType(
-    type: TransactionType.Transfer,
+    type: TransactionType.TRANSFER,
     options?: TransactionListOptions,
-  ): Promise<TransferListItemDto[]>;
+  ): Promise<SchemaTransferListItemDto[]>;
   public static async getAllByType(
     type: null,
     options?: TransactionListOptions,
-  ): Promise<TransactionListItemDto[]>;
+  ): Promise<SchemaTransactionListItemDto[]>;
   public static async getAllByType(
     type: TransactionType | null,
     options: TransactionListOptions = {},
   ): Promise<
-    | TransactionListItemDto[]
-    | ExpenseListItemDto[]
-    | IncomeListItemDto[]
-    | TransferListItemDto[]
+    | SchemaTransactionListItemDto[]
+    | SchemaExpenseListItemDto[]
+    | SchemaIncomeListItemDto[]
+    | SchemaTransferListItemDto[]
   > {
-    if (type === TransactionType.Expense) {
+    if (type === TransactionType.EXPENSE) {
       return ExpenseService.getAll(options);
-    } else if (type === TransactionType.Income) {
+    } else if (type === TransactionType.INCOME) {
       return IncomeService.getAll(options);
-    } else if (type === TransactionType.Transfer) {
+    } else if (type === TransactionType.TRANSFER) {
       return TransferService.getAll(options);
-    } else {
-      return this.getAll(options);
     }
+    return this.getAll(options);
   }
 
   private static async getAll(
     options: TransactionListOptions,
-  ): Promise<TransactionListItemDto[]> {
+  ): Promise<SchemaTransactionListItemDto[]> {
     const { data, error } = await this.client.GET('/api/transactions', {
       params: {
         query: options,
@@ -193,10 +190,12 @@ export class TransactionService extends BaseApi {
       throw new Error('Failed to fetch transactions', error);
     }
 
-    return data as unknown as TransactionListItemDto[];
+    return data as unknown as SchemaTransactionListItemDto[];
   }
 
-  public static async getById(id: string): Promise<TransactionDetailsDto> {
+  public static async getById(
+    id: string,
+  ): Promise<SchemaTransactionDetailsDto> {
     const { data, error } = await this.client.GET(`/api/transactions/{id}`, {
       params: {
         path: {
@@ -217,6 +216,6 @@ export class TransactionService extends BaseApi {
       throw new Error('Failed to fetch transaction', error);
     }
 
-    return data as TransactionDetailsDto;
+    return data;
   }
 }

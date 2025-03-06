@@ -4,11 +4,11 @@ import { FC } from 'react';
 import { NavigationCreateTransactionButtonSuspense } from './NavigationCreateTransactionButton';
 import { NavigationItem } from './NavigationItem';
 
-import { NAVIGATION_ITEMS } from '$constants/NAVIGATION_ITEMS';
+import { NAVIGATION_ITEMS } from '@/constants/NAVIGATION_ITEMS';
 
-type NavigationProps = {
+interface NavigationProps {
   isLoading?: boolean;
-};
+}
 
 export const Navigation: FC<NavigationProps> = ({ isLoading }) => {
   return (

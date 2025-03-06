@@ -1,8 +1,8 @@
 import { getBaseUrl } from './financer-page';
 
-import fixtureData from '$assets/fixture-data.json';
+import fixtureData from '@/assets/fixture-data.json';
 
-type TransactionItem = {
+interface TransactionItem {
   createdAt: string;
   updatedAt: string;
   id: string;
@@ -12,7 +12,7 @@ type TransactionItem = {
   userId: string;
   fromAccount: string | null;
   toAccount: string | null;
-};
+}
 
 const updateTransactionDates = (
   transactionItems: TransactionItem[],

@@ -2,9 +2,9 @@ import clsx from 'clsx';
 import Image from 'next/image';
 import type { JSX } from 'react';
 
-type LogoProps = {
+interface LogoProps {
   className?: string;
-};
+}
 
 const LogoIcon = () => (
   <Image

@@ -6,26 +6,26 @@ import { useForm } from 'react-hook-form';
 
 import { AccountTypeRadio } from './AccountTypeRadio';
 
-import { AccountType } from '$api/generated/financerApi';
-import { Form } from '$blocks/Form';
-import { Button } from '$elements/Button/Button';
-import { Input } from '$elements/Input';
+import { AccountType } from '@/api/ssr-financer-api';
+import { Form } from '@/blocks/Form';
+import { Button } from '@/elements/Button/Button';
+import { Input } from '@/elements/Input';
 import {
   DefaultFormActionHandler,
   useFinancerFormState,
-} from '$hooks/useFinancerFormState';
+} from '@/hooks/useFinancerFormState';
 
-type AccountFormProps = {
+interface AccountFormProps {
   onSubmit: DefaultFormActionHandler;
   submitLabel: string;
   initialValues?: Partial<AccountFormFields>;
-};
+}
 
-export type AccountFormFields = {
+export interface AccountFormFields {
   name: string;
   balance: number;
   type: AccountType;
-};
+}
 
 export const AccountForm: FC<AccountFormProps> = ({
   onSubmit,

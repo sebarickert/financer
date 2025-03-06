@@ -1,11 +1,11 @@
 import { Grid2x2 } from 'lucide-react';
 import { FC } from 'react';
 
-import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
-import { Button } from '$elements/Button/Button';
-import { Layout } from '$layouts/Layout';
-import { AccountService } from '$ssr/api/AccountService';
-import { Dashboard } from '$views/Dashboard';
+import { InfoMessageBlock } from '@/blocks/InfoMessageBlock';
+import { Button } from '@/elements/Button/Button';
+import { Layout } from '@/layouts/Layout';
+import { AccountService } from '@/ssr/api/AccountService';
+import { Dashboard } from '@/views/Dashboard';
 
 export const DashboardContainer: FC = async () => {
   const accounts = await AccountService.getAll();

@@ -1,13 +1,17 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import {
+  ApiHideProperty,
+  ApiProperty,
+  ApiPropertyOptional,
+} from '@nestjs/swagger';
 import {
   TransactionTemplate,
   TransactionTemplateType,
   TransactionType,
 } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime/library';
+import { Exclude } from 'class-transformer';
 import {
   IsArray,
-  isEmpty,
   IsEnum,
   IsNotEmpty,
   IsOptional,
@@ -17,32 +21,46 @@ import {
   Min,
 } from 'class-validator';
 
-import { UserId } from '../../../types/user-id';
-import {
-  IsDecimal,
-  TransformDecimal,
-} from '../../../utils/is-decimal.decorator';
-import { MinDecimal } from '../../../utils/min-decimal.decorator';
+import { UserId } from '@/types/user-id';
+import { IsDecimal, TransformDecimal } from '@/utils/is-decimal.decorator';
+import { MinDecimal } from '@/utils/min-decimal.decorator';
 
 export class TransactionTemplateDto implements TransactionTemplate {
-  constructor(partial: TransactionTemplate) {
-    Object.assign(this, partial);
+  constructor(data?: TransactionTemplate) {
+    if (data) {
+      this.id = data.id;
+      this.userId = data.userId as UserId;
+      this.templateName = data.templateName;
+      this.templateType = data.templateType;
+      this.templateVisibility = data.templateVisibility;
+      this.amount = data.amount;
+      this.description = data.description;
+      this.dayOfMonth = data.dayOfMonth;
+      this.dayOfMonthToCreate = data.dayOfMonthToCreate;
+      this.fromAccount = data.fromAccount;
+      this.toAccount = data.toAccount;
+      this.categories = data.categories;
+      this.createdAt = data.createdAt;
+      this.updatedAt = data.updatedAt;
+    }
   }
 
-  @ApiProperty()
-  createdAt: Date;
+  @Exclude()
+  @ApiHideProperty()
+  createdAt!: Date;
 
-  @ApiProperty()
-  updatedAt: Date;
+  @Exclude()
+  @ApiHideProperty()
+  updatedAt!: Date;
 
   @ApiProperty({ type: String })
   @IsUUID()
-  readonly id: string;
+  readonly id!: string;
 
   @ApiProperty()
   @IsNotEmpty({ message: 'Template name must not be empty.' })
   @IsString()
-  readonly templateName: string;
+  readonly templateName!: string;
 
   @ApiProperty({
     enum: TransactionTemplateType,
@@ -55,38 +73,39 @@ export class TransactionTemplateDto implements TransactionTemplate {
     message: 'Type must defined.',
   })
   @IsArray()
-  readonly templateType: TransactionTemplateType[];
+  readonly templateType!: TransactionTemplateType[];
 
   @ApiProperty({
     enum: TransactionType,
     enumName: 'TransactionType',
     type: TransactionType,
+    nullable: true,
   })
   @IsEnum(TransactionType, {
     message: 'Visibility must defined.',
   })
-  readonly templateVisibility: TransactionType;
+  readonly templateVisibility!: TransactionType | null;
 
-  @ApiPropertyOptional({ type: Number })
+  @ApiPropertyOptional({ type: Number, nullable: true })
   @MinDecimal(new Decimal(0.01), {
     message: 'Amount must be a positive number.',
   })
   @IsOptional()
   @TransformDecimal()
   @IsDecimal({ message: 'Amount must be a decimal number.' })
-  readonly amount: Decimal = null;
+  readonly amount: Decimal | null = null;
 
-  @ApiPropertyOptional()
+  @ApiProperty()
   @IsString()
-  readonly description: string = null;
+  readonly description!: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ nullable: true, type: Number })
   @IsOptional()
   @Min(1, { message: 'Day of month must be a positive number.' })
   @Max(31, { message: 'Day of month must not be greater than 31.' })
-  readonly dayOfMonth: number = null;
+  readonly dayOfMonth: number | null = null;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ nullable: true, type: Number })
   @IsOptional()
   @Min(1, {
     message: 'Day of month to create transaction must be a positive number.',
@@ -94,23 +113,23 @@ export class TransactionTemplateDto implements TransactionTemplate {
   @Max(31, {
     message: 'Day of month to create transaction must not be greater than 31.',
   })
-  readonly dayOfMonthToCreate: number = null;
+  readonly dayOfMonthToCreate: number | null = null;
 
   @ApiProperty({ type: String })
   @IsUUID()
-  readonly userId: UserId;
+  readonly userId!: UserId;
 
   @ApiPropertyOptional({ type: String, nullable: true })
   @IsOptional()
   @IsUUID('all', {
     message: 'fromAccount must be formatted as objectId.',
   })
-  readonly fromAccount: string = null;
+  readonly fromAccount: string | null = null;
 
   @ApiPropertyOptional({ type: String, nullable: true })
   @IsOptional()
   @IsUUID('all', { message: 'toAccount must be formatted as objectId.' })
-  readonly toAccount: string = null;
+  readonly toAccount: string | null = null;
 
   @ApiPropertyOptional({ type: String, isArray: true })
   @IsOptional()
@@ -118,7 +137,7 @@ export class TransactionTemplateDto implements TransactionTemplate {
     message: 'Categories must be formatted as objectId array.',
     each: true,
   })
-  categories: string[] = null;
+  categories: string[] = [];
 
   public static createFromPlain(
     transactionTemplate: TransactionTemplate,
@@ -138,7 +157,7 @@ export class TransactionTemplateDto implements TransactionTemplate {
     return new TransactionTemplateDto({
       ...transactionTemplate,
       amount:
-        !isEmpty || transactionTemplate.amount instanceof Decimal
+        transactionTemplate.amount instanceof Decimal
           ? new Decimal(transactionTemplate.amount)
           : null,
     });

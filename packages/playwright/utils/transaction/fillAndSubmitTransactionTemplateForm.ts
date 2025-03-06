@@ -1,8 +1,8 @@
-import { Page, expect } from '$utils/financer-page';
+import { Page, expect } from '@/utils/financer-page';
 
-type TransactionTemplatesFormFields = {
+interface TransactionTemplatesFormFields {
   template: string;
-};
+}
 
 export const fillAndSubmitTransactionTemplateForm = async (
   page: Page,

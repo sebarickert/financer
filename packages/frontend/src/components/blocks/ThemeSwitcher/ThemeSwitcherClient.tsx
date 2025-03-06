@@ -5,32 +5,26 @@ import { FC } from 'react';
 
 import { ThemeSwitcherItem } from './ThemeSwitcherItem';
 
-import { revalidateUserCache } from '$actions/user/revalidateUserCache';
-import {
-  Theme,
-  useUsersUpdateOwnUserMutation,
-} from '$api/generated/financerApi';
+import { handleUpdateUserTheme } from '@/actions/user/handleUpdateUserTheme';
+import { Theme } from '@/api/ssr-financer-api';
 
-type ThemeSwitcherClientProps = {
+interface ThemeSwitcherClientProps {
   className?: string;
   theme: Theme;
-};
+}
 
 export const ThemeSwitcherClient: FC<ThemeSwitcherClientProps> = ({
-  theme = Theme.Auto,
+  theme = Theme.AUTO,
   className,
 }) => {
-  const [updateUser] = useUsersUpdateOwnUserMutation();
-
-  const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    await updateUser({
-      updateUserOwnUserDto: {
-        theme: event.target.value as Theme,
-      },
-    }).unwrap();
-
-    await revalidateUserCache();
-    window.location.reload();
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    handleUpdateUserTheme(event.target.value as Theme)
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((error: unknown) => {
+        console.error('Error updating user theme:', error);
+      });
   };
 
   return (

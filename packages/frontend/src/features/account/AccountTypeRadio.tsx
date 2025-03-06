@@ -4,20 +4,20 @@ import clsx from 'clsx';
 import { FC, useId } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { AccountType } from '$api/generated/financerApi';
-import { ACCOUNT_TYPE_MAPPING } from '$constants/account/ACCOUNT_TYPE_MAPPING';
+import { AccountType } from '@/api/ssr-financer-api';
+import { ACCOUNT_TYPE_MAPPING } from '@/constants/account/ACCOUNT_TYPE_MAPPING';
 
-type AccountTypeRadioProps = {
+interface AccountTypeRadioProps {
   id: string;
   value: AccountType;
-};
+}
 
 export const AccountTypeRadio: FC<AccountTypeRadioProps> = ({ id, value }) => {
   const labelId = `label_${useId()}`;
   const descriptionId = `description_${useId()}`;
   const { register } = useFormContext();
 
-  const Icon = ACCOUNT_TYPE_MAPPING[value].Icon;
+  const { Icon } = ACCOUNT_TYPE_MAPPING[value];
 
   return (
     <label

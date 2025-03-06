@@ -3,27 +3,27 @@
 import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { Form } from '$blocks/Form';
-import { Button } from '$elements/Button/Button';
-import { Input } from '$elements/Input';
-import { Select } from '$elements/Select';
+import { Form } from '@/blocks/Form';
+import { Button } from '@/elements/Button/Button';
+import { Input } from '@/elements/Input';
+import { Select } from '@/elements/Select';
 import {
   DefaultFormActionHandler,
   useFinancerFormState,
-} from '$hooks/useFinancerFormState';
-import { UserDefaultMarketUpdateSettings as UserDefaultMarketUpdateSettingsType } from '$ssr/api/UserPreferenceService';
-import { TransactionCategoryDtoWithCategoryTree } from '$types/TransactionCategoryDtoWithCategoryTree';
+} from '@/hooks/useFinancerFormState';
+import { UserDefaultMarketUpdateSettings as UserDefaultMarketUpdateSettingsType } from '@/ssr/api/UserPreferenceService';
+import { TransactionCategoryDtoWithCategoryTree } from '@/types/TransactionCategoryDtoWithCategoryTree';
 
-export type UserDefaultMarketUpdateSettingsFormFields = {
+export interface UserDefaultMarketUpdateSettingsFormFields {
   transactionDescription: string;
   category: string;
-};
+}
 
-type UserDefaultMarketUpdateSettingsFormProps = {
+interface UserDefaultMarketUpdateSettingsFormProps {
   categories: TransactionCategoryDtoWithCategoryTree[];
   data?: UserDefaultMarketUpdateSettingsType;
   onSave: DefaultFormActionHandler;
-};
+}
 
 export const UserDefaultMarketUpdateSettingsForm: FC<
   UserDefaultMarketUpdateSettingsFormProps

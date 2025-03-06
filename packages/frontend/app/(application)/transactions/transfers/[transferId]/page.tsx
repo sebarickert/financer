@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
-import { TransferContainer } from '$container/transfers/TransferContainer';
-import { TransferService } from '$ssr/api/TransferService';
+import { TransferContainer } from '@/container/transfers/TransferContainer';
+import { TransferService } from '@/ssr/api/TransferService';
 
 type Params = Promise<{
   transferId: string;

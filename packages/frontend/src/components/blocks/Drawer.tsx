@@ -2,9 +2,9 @@ import clsx from 'clsx';
 import { X } from 'lucide-react';
 import { forwardRef } from 'react';
 
-import { Button } from '$elements/Button/Button';
-import { Heading } from '$elements/Heading';
-import { Paragraph } from '$elements/Paragraph';
+import { Button } from '@/elements/Button/Button';
+import { Heading } from '@/elements/Heading';
+import { Paragraph } from '@/elements/Paragraph';
 
 interface DrawerProps {
   className?: string;

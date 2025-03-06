@@ -1,25 +1,24 @@
 import clsx from 'clsx';
 import { Plus, Tag, X } from 'lucide-react';
-import { useEffect, type JSX } from 'react';
+import { type JSX, useEffect } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 
 import { CategoriesFormFullFields } from './transaction-categories.types';
 import { TransactionCategoriesItem } from './TransactionCategoriesItem';
 
-import { Button } from '$elements/Button/Button';
-import { Heading } from '$elements/Heading';
-import { Option, Select } from '$elements/Select';
+import { Button } from '@/elements/Button/Button';
+import { Heading } from '@/elements/Heading';
+import { Option, Select } from '@/elements/Select';
 
-type TransactionCategoriesProps = {
+interface TransactionCategoriesProps {
   transactionCategories: Option[];
-  testId?: string;
   categorySelectOnly?: boolean;
-};
+}
 
-export type FieldArrayFields = {
+export interface FieldArrayFields {
   setFirstCategorySelect: string;
   categories: CategoriesFormFullFields[];
-};
+}
 
 export const TransactionCategories = ({
   transactionCategories,
@@ -30,15 +29,14 @@ export const TransactionCategories = ({
     name: 'categories',
   });
 
-  const transactionAmount = useWatch({ name: 'amount' });
+  const transactionAmount = useWatch({ name: 'amount' }) as number;
 
   const totalAllocatedAmount = fields
     .map(({ amount }) => amount || 0)
     .reduce((current, previous) => current + previous, 0);
 
   const setUnallocatedAmount = (index: number) => {
-    const unallocatedAmount =
-      transactionAmount - totalAllocatedAmount + (0 || 0);
+    const unallocatedAmount = transactionAmount - totalAllocatedAmount;
     setValue(`categories.${index}.amount`, unallocatedAmount);
   };
 
@@ -85,7 +83,9 @@ export const TransactionCategories = ({
               accentColor="secondary"
               className={clsx('absolute right-0 top-0')}
               size="icon"
-              onClick={() => remove(index)}
+              onClick={() => {
+                remove(index);
+              }}
               testId="remove-category"
             >
               <X />
@@ -103,12 +103,12 @@ export const TransactionCategories = ({
             'grid grid-cols-[1fr_auto] gap-2 items-center',
             'text-foreground hover:text-muted-foreground active:text-muted-foreground',
             {
-              'border-t  mt-4 pt-2': !!fields.length,
+              'border-t  mt-4 pt-2': Boolean(fields.length),
             },
           )}
-          onClick={() =>
-            append({ categoryId: '', amount: NaN, description: '' })
-          }
+          onClick={() => {
+            append({ categoryId: '', amount: NaN, description: '' });
+          }}
         >
           <p className="pl-2">Add Category</p>
           <span

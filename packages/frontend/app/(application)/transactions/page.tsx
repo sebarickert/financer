@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
-import { TransactionListWithMonthlyPager } from '$features/transaction/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
-import { TransactionsLayout } from '$features/transactions/TransactionsLayout';
+import { TransactionListWithMonthlyPager } from '@/features/transaction/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
+import { TransactionsLayout } from '@/features/transactions/TransactionsLayout';
 
 export const metadata: Metadata = {
   title: 'Transactions',
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default async function TransactionsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const queryDate = (await searchParams).date as string | undefined;
 

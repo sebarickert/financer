@@ -1,47 +1,54 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 import { AccountBalanceChange } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime/library';
-import { Type } from 'class-transformer';
+import { Exclude, Type } from 'class-transformer';
 import { IsDate, IsUUID } from 'class-validator';
 
-import { UserId } from '../../../types/user-id';
-import {
-  IsDecimal,
-  TransformDecimal,
-} from '../../../utils/is-decimal.decorator';
+import { UserId } from '@/types/user-id';
+import { IsDecimal, TransformDecimal } from '@/utils/is-decimal.decorator';
 
 export class AccountBalanceChangeDto implements AccountBalanceChange {
-  constructor(partial: AccountBalanceChange) {
-    Object.assign(this, partial);
+  constructor(data?: AccountBalanceChange) {
+    if (data) {
+      this.id = data.id;
+      this.date = data.date;
+      this.amount = data.amount;
+      this.userId = data.userId as UserId;
+      this.accountId = data.accountId;
+      this.createdAt = data.createdAt;
+      this.updatedAt = data.updatedAt;
+    }
   }
 
-  @ApiProperty()
-  createdAt: Date;
+  @Exclude()
+  @ApiHideProperty()
+  createdAt!: Date;
 
-  @ApiProperty()
-  updatedAt: Date;
+  @Exclude()
+  @ApiHideProperty()
+  updatedAt!: Date;
 
   @ApiProperty()
   @IsUUID()
-  readonly id: string;
+  readonly id!: string;
 
   @ApiProperty()
   @IsDate()
   @Type(() => Date)
-  readonly date: Date;
+  readonly date!: Date;
 
   @ApiProperty({ type: Number })
   @TransformDecimal()
   @IsDecimal({ message: 'Amount must be a decimal number.' })
-  readonly amount: Decimal;
+  readonly amount!: Decimal;
 
   @ApiProperty()
   @IsUUID()
-  readonly userId: UserId;
+  readonly userId!: UserId;
 
   @ApiProperty()
   @IsUUID()
-  readonly accountId: string;
+  readonly accountId!: string;
 
   public static createFromPlain(
     accountBalanceChange: AccountBalanceChange,

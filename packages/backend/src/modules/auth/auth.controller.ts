@@ -1,6 +1,7 @@
 import {
   Controller,
   Get,
+  Logger,
   Next,
   Req,
   Res,
@@ -21,6 +22,8 @@ import { GithubGuard } from './guards/github.guard';
 @Controller('auth')
 @ApiTags('Authentication')
 export class AuthController {
+  private readonly logger = new Logger(AuthController.name);
+
   constructor(
     private readonly configService: ConfigService,
     private readonly authService: AuthService,
@@ -65,8 +68,9 @@ export class AuthController {
   ) {
     const publicUrl = this.configService.get('publicUrl');
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     passport.authenticate('github', {
-      successRedirect: `${publicUrl}`,
+      successRedirect: publicUrl,
       failureRedirect: '/auth/login/failed',
     })(req, res, next);
   }
@@ -82,8 +86,9 @@ export class AuthController {
   ) {
     const publicUrl = this.configService.get('publicUrl');
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     passport.authenticate('auth0', {
-      successRedirect: `${publicUrl}`,
+      successRedirect: publicUrl,
       failureRedirect: '/auth/login/failed',
     })(req, res, next);
   }
@@ -98,7 +103,7 @@ export class AuthController {
 
     req.logout((err) => {
       if (err) {
-        console.error(err);
+        this.logger.error(err);
       }
 
       res.redirect(publicUrl);

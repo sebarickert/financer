@@ -1,6 +1,9 @@
 import { Formatter, parseArrayFromFormData } from './parseArrayFromFormData';
 
-type TestType = { name: string; age: number };
+interface TestType {
+  name: string;
+  age: number;
+}
 
 const isTestType = (item: unknown): item is TestType => {
   const obj = item as TestType;

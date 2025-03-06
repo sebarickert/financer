@@ -1,14 +1,14 @@
 import Decimal from 'decimal.js';
 
-import { TransactionType } from '$types/generated/financer';
-import { fillAccountForm } from '$utils/account/fillAccountForm';
-import { fillUpdateMarketValueForm } from '$utils/account/fillUpdateMarketValueForm';
-import { getAccountDetails } from '$utils/account/getAccountDetails';
-import { applyFixture } from '$utils/applyFixture';
-import { clickPopperItem } from '$utils/common/clickPopperItem';
-import { accountTypes } from '$utils/constants';
-import { test, expect } from '$utils/financer-page';
-import { getTransactionDataFromTransactionList } from '$utils/transaction/getTransactionDataFromTransactionList';
+import { TransactionType } from '@/types/generated/financer';
+import { fillAccountForm } from '@/utils/account/fillAccountForm';
+import { fillUpdateMarketValueForm } from '@/utils/account/fillUpdateMarketValueForm';
+import { getAccountDetails } from '@/utils/account/getAccountDetails';
+import { applyFixture } from '@/utils/applyFixture';
+import { clickPopperItem } from '@/utils/common/clickPopperItem';
+import { accountTypes } from '@/utils/constants';
+import { expect, test } from '@/utils/financer-page';
+import { getTransactionDataFromTransactionList } from '@/utils/transaction/getTransactionDataFromTransactionList';
 
 test.describe('Edit Account', () => {
   test.beforeEach(async ({ page }) => {

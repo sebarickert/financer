@@ -1,4 +1,4 @@
-import { Formatter } from '$utils/parseArrayFromFormData';
+import { Formatter } from '@/utils/parseArrayFromFormData';
 
 export interface CategoriesFormOnlyCategory {
   categoryId: string;

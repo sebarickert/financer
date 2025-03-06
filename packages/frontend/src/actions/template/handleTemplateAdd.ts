@@ -1,16 +1,16 @@
 'use server';
 
-import { redirect, RedirectType } from 'next/navigation';
+import { RedirectType, redirect } from 'next/navigation';
 
 import {
   TransactionTemplateType,
   TransactionType,
-} from '$api/generated/financerApi';
-import { ValidationException } from '$exceptions/validation.exception';
-import { isCategoriesFormOnlyCategory } from '$features/transaction/TransactionCategories/transaction-categories.types';
-import { DefaultFormActionHandler } from '$hooks/useFinancerFormState';
-import { TransactionTemplateService } from '$ssr/api/TransactionTemplateService';
-import { parseArrayFromFormData } from '$utils/parseArrayFromFormData';
+} from '@/api/ssr-financer-api';
+import { ValidationException } from '@/exceptions/validation.exception';
+import { isCategoriesFormOnlyCategory } from '@/features/transaction/TransactionCategories/transaction-categories.types';
+import { DefaultFormActionHandler } from '@/hooks/useFinancerFormState';
+import { TransactionTemplateService } from '@/ssr/api/TransactionTemplateService';
+import { parseArrayFromFormData } from '@/utils/parseArrayFromFormData';
 
 export const handleTemplateAdd: DefaultFormActionHandler = async (
   prev,

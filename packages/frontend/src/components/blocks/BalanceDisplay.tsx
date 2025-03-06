@@ -1,16 +1,16 @@
 import clsx from 'clsx';
 import { FC, ReactNode } from 'react';
 
-import { TransactionType } from '$api/generated/financerApi';
-import { formatCurrency } from '$utils/formatCurrency';
+import { TransactionType } from '@/api/ssr-financer-api';
+import { formatCurrency } from '@/utils/formatCurrency';
 
-type BalanceDisplayProps = {
+interface BalanceDisplayProps {
   className?: string;
   label: string;
   amount: number;
   children?: ReactNode;
   type?: TransactionType;
-};
+}
 
 export const BalanceDisplay: FC<BalanceDisplayProps> = ({
   className,
@@ -26,13 +26,13 @@ export const BalanceDisplay: FC<BalanceDisplayProps> = ({
   };
 
   const typeMapping = {
-    [TransactionType.Income]: {
+    [TransactionType.INCOME]: {
       balance: `+${formattedAmount}`,
     },
-    [TransactionType.Expense]: {
+    [TransactionType.EXPENSE]: {
       balance: `-${formattedAmount}`,
     },
-    [TransactionType.Transfer]: {},
+    [TransactionType.TRANSFER]: {},
   };
 
   const { balance } = {

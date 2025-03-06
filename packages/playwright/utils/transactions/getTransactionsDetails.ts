@@ -1,13 +1,13 @@
 import Decimal from 'decimal.js';
 
-import { parseCurrency } from '$utils/api-helper';
-import { Page, expect } from '$utils/financer-page';
+import { parseCurrency } from '@/utils/api-helper';
+import { Page, expect } from '@/utils/financer-page';
 
-type TransactionsDetails = {
+interface TransactionsDetails {
   incomes: Decimal;
   expenses: Decimal;
   balance: Decimal;
-};
+}
 
 export const getTransactionsDetails = async (
   page: Page,
@@ -25,14 +25,14 @@ export const getTransactionsDetails = async (
     (await transactionsMonthlySummary
       .getByTestId('details-list-item')
       .getByText('Incomes')
-      .evaluate((el) => el?.parentElement?.nextElementSibling?.textContent)) ??
+      .evaluate((el) => el.parentElement?.nextElementSibling?.textContent)) ??
     '';
 
   const expenses =
     (await transactionsMonthlySummary
       .getByTestId('details-list-item')
       .getByText('Expenses')
-      .evaluate((el) => el?.parentElement?.nextElementSibling?.textContent)) ??
+      .evaluate((el) => el.parentElement?.nextElementSibling?.textContent)) ??
     '';
 
   const balance =

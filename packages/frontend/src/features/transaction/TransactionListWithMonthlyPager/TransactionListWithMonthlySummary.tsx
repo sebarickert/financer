@@ -1,19 +1,19 @@
 import { FC } from 'react';
 
-import { TransactionType } from '$api/generated/financerApi';
-import { BalanceDisplay } from '$blocks/BalanceDisplay';
-import { DetailsList, DetailsItem } from '$blocks/DetailsList';
-import { TRANSACTION_TYPE_MAPPING } from '$constants/transaction/TRANSACTION_TYPE_MAPPING';
+import { TransactionType } from '@/api/ssr-financer-api';
+import { BalanceDisplay } from '@/blocks/BalanceDisplay';
+import { DetailsItem, DetailsList } from '@/blocks/DetailsList';
+import { TRANSACTION_TYPE_MAPPING } from '@/constants/transaction/TRANSACTION_TYPE_MAPPING';
 import {
   TransactionListOptions,
   TransactionService,
-} from '$ssr/api/TransactionService';
-import { UserPreferenceService } from '$ssr/api/UserPreferenceService';
-import { formatCurrency } from '$utils/formatCurrency';
+} from '@/ssr/api/TransactionService';
+import { UserPreferenceService } from '@/ssr/api/UserPreferenceService';
+import { formatCurrency } from '@/utils/formatCurrency';
 
-type TransactionListWithMonthlySummaryProps = {
+interface TransactionListWithMonthlySummaryProps {
   filterOptions: TransactionListOptions;
-};
+}
 
 export const TransactionListWithMonthlySummary: FC<
   TransactionListWithMonthlySummaryProps
@@ -34,14 +34,14 @@ export const TransactionListWithMonthlySummary: FC<
 
   const monthlyDetails: DetailsItem[] = [
     {
-      Icon: TRANSACTION_TYPE_MAPPING[TransactionType.Income].Icon,
-      label: TRANSACTION_TYPE_MAPPING[TransactionType.Income].label.plural,
+      Icon: TRANSACTION_TYPE_MAPPING[TransactionType.INCOME].Icon,
+      label: TRANSACTION_TYPE_MAPPING[TransactionType.INCOME].label.plural,
 
       description: formatCurrency(monthlySummary.incomeAmount) ?? '-',
     },
     {
-      Icon: TRANSACTION_TYPE_MAPPING[TransactionType.Expense].Icon,
-      label: TRANSACTION_TYPE_MAPPING[TransactionType.Expense].label.plural,
+      Icon: TRANSACTION_TYPE_MAPPING[TransactionType.EXPENSE].Icon,
+      label: TRANSACTION_TYPE_MAPPING[TransactionType.EXPENSE].label.plural,
 
       description: formatCurrency(monthlySummary.expenseAmount) ?? '-',
     },

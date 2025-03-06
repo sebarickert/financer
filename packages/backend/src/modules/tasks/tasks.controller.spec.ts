@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { createMockServiceProvider } from '../../../test/create-mock-service-provider';
-
 import { TasksController } from './tasks.controller';
 import { TasksService } from './tasks.service';
+
+import { createMockServiceProvider } from '@/test/create-mock-service-provider';
 
 describe('TasksController', () => {
   let controller: TasksController;

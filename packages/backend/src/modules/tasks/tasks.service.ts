@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { SystemLogLevel, TransactionTemplateType } from '@prisma/client';
 
-import { DateService } from '../../utils/date.service';
-import { SystemService } from '../system/system.service';
-import { TransactionTemplateDto } from '../transaction-templates/dto/transaction-template.dto';
-import { TransactionTemplatesService } from '../transaction-templates/transaction-templates.service';
-import { TransactionsService } from '../transactions/transactions.service';
+import { SystemService } from '@/system/system.service';
+import { TransactionTemplateDto } from '@/transaction-templates/dto/transaction-template.dto';
+import { TransactionTemplatesService } from '@/transaction-templates/transaction-templates.service';
+import { CreateTransactionDto } from '@/transactions/dto/create-transaction.dto';
+import { TransactionsService } from '@/transactions/transactions.service';
+import { DateService } from '@/utils/date.service';
 
 @Injectable()
 export class TasksService {
@@ -48,9 +49,16 @@ export class TasksService {
 
         const templateDto = TransactionTemplateDto.createFromPlain(template);
 
-        const transactionData =
-          this.templateService.getTransactionFromTemplate(templateDto);
-        const userId = templateDto.userId;
+        let transactionData: CreateTransactionDto;
+
+        try {
+          transactionData =
+            this.templateService.getTransactionFromTemplate(templateDto);
+        } catch {
+          return 'missingData';
+        }
+
+        const { userId } = templateDto;
 
         const transaction = await this.transactionsService.create(
           userId,

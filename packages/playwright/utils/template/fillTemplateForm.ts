@@ -3,10 +3,10 @@ import Decimal from 'decimal.js';
 import {
   TransactionTemplateType,
   TransactionType,
-} from '$types/generated/financer';
-import { Page } from '$utils/financer-page';
+} from '@/types/generated/financer';
+import { Page } from '@/utils/financer-page';
 
-type TemplateFormFields = {
+interface TemplateFormFields {
   templateType?: TransactionTemplateType;
   transactionType?: TransactionType;
   name?: string;
@@ -16,7 +16,7 @@ type TemplateFormFields = {
   toAccount?: string;
   dayOfMonth?: Decimal;
   dayOfMonthToCreate?: Decimal;
-};
+}
 
 export const fillTemplateForm = async (
   page: Page,
@@ -39,13 +39,11 @@ export const fillTemplateForm = async (
     '#templateVisibility': transactionType ? { label: transactionType } : null,
     '#templateName': name,
     '#description': description,
-    '#amount': amount ? amount.toNumber() : null,
+    '#amount': amount?.toNumber().toString() ?? null,
     '#toAccount': toAccount ? { label: toAccount } : null,
     '#fromAccount': fromAccount ? { label: fromAccount } : null,
-    '#dayOfMonth': dayOfMonth ? dayOfMonth.toNumber() : null,
-    '#dayOfMonthToCreate': dayOfMonthToCreate
-      ? dayOfMonthToCreate.toNumber()
-      : null,
+    '#dayOfMonth': dayOfMonth?.toNumber().toString() ?? null,
+    '#dayOfMonthToCreate': dayOfMonthToCreate?.toNumber().toString() ?? null,
   };
 
   const categoryForm = page.getByTestId('template-form');
@@ -58,9 +56,11 @@ export const fillTemplateForm = async (
         selector === '#toAccount' ||
         selector === '#fromAccount'
       ) {
-        await categoryForm.locator(selector).selectOption(value as string);
+        await categoryForm
+          .locator(selector)
+          .selectOption(value as { label: string });
       } else {
-        await categoryForm.locator(selector).fill(value.toString());
+        await categoryForm.locator(selector).fill(value as string);
       }
     }
   }

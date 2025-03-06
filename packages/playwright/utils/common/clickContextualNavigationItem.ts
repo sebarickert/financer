@@ -1,4 +1,4 @@
-import { Page, expect } from '$utils/financer-page';
+import { Page, expect } from '@/utils/financer-page';
 
 export const clickContextualNavigationItem = async (
   page: Page,
@@ -11,7 +11,7 @@ export const clickContextualNavigationItem = async (
 
     await expect(drawerButton).toBeVisible();
 
-    drawerButton.click();
+    await drawerButton.click();
   }
 
   await page.getByRole('link', { name }).click();

@@ -1,16 +1,17 @@
 import { Decimal } from '@prisma/client/runtime/library';
 import {
+  ValidationArguments,
   ValidationOptions,
-  registerDecorator,
   ValidatorConstraint,
   ValidatorConstraintInterface,
-  ValidationArguments,
+  registerDecorator,
 } from 'class-validator';
+
+export const ONE_CENT = new Decimal(0.01);
 
 @ValidatorConstraint({ name: 'MinDecimal' })
 export class MinDecimalConstraint implements ValidatorConstraintInterface {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  validate(value: any, args: ValidationArguments) {
+  validate(value: unknown, args: ValidationArguments) {
     if (!(value instanceof Decimal)) {
       return false;
     }
@@ -27,12 +28,11 @@ export const MinDecimal = (
     message: 'Property is lower than lowest allowed.',
   },
 ) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return (object: any, propertyName: string) => {
+  return (object: object, propertyName: string) => {
     registerDecorator({
       target: object.constructor,
       propertyName,
-      options: options,
+      options,
       constraints: [min],
       validator: MinDecimalConstraint,
     });

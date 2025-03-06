@@ -6,10 +6,11 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
-import { Strategy, Profile } from 'passport-github2';
+import { Profile, Strategy } from 'passport-github2';
 
-import { UsersService } from '../../users/users.service';
 import { AuthService } from '../auth.service';
+
+import { UsersService } from '@/users/users.service';
 
 @Injectable()
 export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
@@ -18,10 +19,15 @@ export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
   constructor(
     private readonly authService: AuthService,
     private readonly userService: UsersService,
-    private readonly configService: ConfigService,
+    configService: ConfigService,
   ) {
     const githubKeys = configService.get('githubKeys');
     const publicUrl = configService.get('publicUrl');
+
+    if (!githubKeys) {
+      throw new Error('Github keys are not set');
+    }
+
     super({
       ...githubKeys,
       callbackURL: `${publicUrl}/auth/github/redirect`,
@@ -43,9 +49,9 @@ export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
 
       return await this.userService.create({
         name: profile.displayName,
-        nickname: profile.username,
+        nickname: profile.username ?? profile.displayName,
         githubId: profile.id,
-        profileImageUrl: profile.photos?.slice().shift()?.value,
+        profileImageUrl: profile.photos?.slice().shift()?.value ?? null,
         auth0Id: null,
         roles: [],
         theme: 'AUTO',

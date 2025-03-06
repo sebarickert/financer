@@ -1,32 +1,34 @@
 import crypto from 'crypto';
 
-import { forwardRef, Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { UserPreferenceProperty } from '@prisma/client';
-
-import { PrismaTransactionService } from '../../database/prisma-transaction.service';
-import { UserId } from '../../types/user-id';
-import { AccountBalanceChangesService } from '../account-balance-changes/account-balance-changes.service';
-import { AccountsService } from '../accounts/accounts.service';
-import { TransactionCategoriesService } from '../transaction-categories/transaction-categories.service';
-import { TransactionCategoryMappingsService } from '../transaction-category-mappings/transaction-category-mappings.service';
-import { TransactionTemplatesService } from '../transaction-templates/transaction-templates.service';
-import { TransactionsService } from '../transactions/transactions.service';
-import { UserPreferencesService } from '../user-preferences/user-preferences.service';
-import { UsersService } from '../users/users.service';
 
 import { UserDataExportDto } from './dto/user-data-export.dto';
 import { UserDataImportDto } from './dto/user-data-import.dto';
 
-const getMyDataFilename = (): string => {
-  const addLeadingZero = (number: number): string => `0${number}`.substr(-2);
+import { AccountBalanceChangesService } from '@/account-balance-changes/account-balance-changes.service';
+import { AccountsService } from '@/accounts/accounts.service';
+import { PrismaTransactionService } from '@/database/prisma-transaction.service';
+import { TransactionCategoriesService } from '@/transaction-categories/transaction-categories.service';
+import { TransactionCategoryMappingsService } from '@/transaction-category-mappings/transaction-category-mappings.service';
+import { TransactionTemplatesService } from '@/transaction-templates/transaction-templates.service';
+import { TransactionsService } from '@/transactions/transactions.service';
+import { UserId } from '@/types/user-id';
+import { UserPreferencesService } from '@/user-preferences/user-preferences.service';
+import { UsersService } from '@/users/users.service';
 
+const MONTH_INDEX_OFFSET = 1;
+
+const getMyDataFilename = (): string => {
   const date = new Date();
   const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  return `my-financer-data-${year}${addLeadingZero(month)}${addLeadingZero(
-    day,
-  )}.json`;
+  const month = (date.getMonth() + MONTH_INDEX_OFFSET)
+    .toString()
+
+    .padStart(2, '0');
+
+  const day = date.getDate().toString().padStart(2, '0');
+  return `my-financer-data-${year}${month}${day}.json`;
 };
 
 @Injectable()
@@ -75,7 +77,8 @@ export class UserDataService {
 
     const filename = getMyDataFilename();
     const data = {
-      user,
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      user: user!,
       accounts,
       accountBalanceChanges,
       transactions,
@@ -120,7 +123,8 @@ export class UserDataService {
           accountBalanceChange.accountId,
         );
 
-        return { ...accountBalanceChange, id: newId, accountId: newAccountId };
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        return { ...accountBalanceChange, id: newId, accountId: newAccountId! };
       },
     );
 
@@ -154,7 +158,7 @@ export class UserDataService {
           transactionCategory.parentCategoryId =
             transactionCategoryIdMapping.get(
               transactionCategory.parentCategoryId,
-            );
+            ) ?? null;
         }
         return transactionCategory;
       });
@@ -173,8 +177,10 @@ export class UserDataService {
         return {
           ...transactionCategoryMapping,
           id: newId,
-          categoryId: newCategoryId,
-          transactionId: newTransactionId,
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          categoryId: newCategoryId!,
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          transactionId: newTransactionId!,
         };
       },
     );
@@ -192,16 +198,16 @@ export class UserDataService {
           ? accountIdMapping.get(transactionTemplate.fromAccount)
           : null;
 
-        const newCategories = transactionTemplate.categories.map((category) =>
-          transactionCategoryIdMapping.get(category),
-        );
+        const newCategories = transactionTemplate.categories
+          .map((category) => transactionCategoryIdMapping.get(category))
+          .filter(Boolean) as string[];
 
         return {
           ...transactionTemplate,
           id: newId,
           categories: newCategories,
-          toAccount: newToAccount,
-          fromAccount: newFromAccount,
+          toAccount: newToAccount ?? null,
+          fromAccount: newFromAccount ?? null,
         };
       },
     );
@@ -221,8 +227,10 @@ export class UserDataService {
         return {
           ...transactionTemplateLog,
           id: newId,
-          templateId: newTemplateId,
-          transactionId: newTransactionId,
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          templateId: newTemplateId!,
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          transactionId: newTransactionId!,
         };
       },
     );
@@ -285,6 +293,6 @@ export class UserDataService {
       ),
     ]);
 
-    return { payload: 'Successfully overrided data.' };
+    return { payload: 'Successfully overridden data.' };
   }
 }

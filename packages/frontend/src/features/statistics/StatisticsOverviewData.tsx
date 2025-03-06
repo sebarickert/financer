@@ -3,26 +3,26 @@
 import { ChartLine, Equal, LineChart, Percent, PieChart } from 'lucide-react';
 import { FC, useMemo, useState } from 'react';
 
-import { TransactionMonthSummaryDto } from '$api/generated/financerApi';
-import { DetailsItem, DetailsList } from '$blocks/DetailsList';
-import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
-import { AreaStackedChart } from '$charts/AreaStackedChart';
+import { SchemaTransactionMonthSummaryDto } from '@/api/ssr-financer-api';
+import { DetailsItem, DetailsList } from '@/blocks/DetailsList';
+import { InfoMessageBlock } from '@/blocks/InfoMessageBlock';
+import { AreaStackedChart } from '@/charts/AreaStackedChart';
 import {
   ChartFilterByMonthsSelect,
   monthFilterOptions,
-} from '$charts/ChartFilterByMonthsSelect';
-import { settingsPaths } from '$constants/settingsPaths';
-import { Link } from '$elements/Link';
-import { DATE_FORMAT, DateService } from '$services/DateService';
-import { ChartConfig } from '$types/ChartConfig';
+} from '@/charts/ChartFilterByMonthsSelect';
+import { settingsPaths } from '@/constants/settingsPaths';
+import { Link } from '@/elements/Link';
+import { DATE_FORMAT, DateService } from '@/services/DateService';
+import { ChartConfig } from '@/types/ChartConfig';
 import {
   formatCurrency,
   formatCurrencyAbbreviation,
-} from '$utils/formatCurrency';
+} from '@/utils/formatCurrency';
 
-type StatisticsOverviewDataProps = {
-  data: (Omit<TransactionMonthSummaryDto, 'id'> & { date: string })[];
-};
+interface StatisticsOverviewDataProps {
+  data: (Omit<SchemaTransactionMonthSummaryDto, 'id'> & { date: string })[];
+}
 
 export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
   data,
@@ -41,12 +41,12 @@ export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
     incomes: {
       label: 'Incomes',
       color: 'var(--color-green)',
-      valueFormatter: formatCurrency,
+      valueFormatter: (value) => formatCurrency(value as number),
     },
     expenses: {
       label: 'Expenses',
       color: 'var(--color-red)',
-      valueFormatter: formatCurrency,
+      valueFormatter: (value) => formatCurrency(value as number),
     },
   } satisfies ChartConfig;
 
@@ -151,13 +151,14 @@ export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
           <AreaStackedChart
             data={filteredChartData}
             config={chartConfig}
-            yaxisTickFormatter={(value: number) => {
-              return formatCurrencyAbbreviation(value);
+            yaxisTickFormatter={(value) => {
+              return formatCurrencyAbbreviation(value as number);
             }}
-            xaxisTickFormatter={(value: string) =>
-              DateService.parseFormat(value, DATE_FORMAT.MONTH_LONG).toFormat(
-                DATE_FORMAT.MONTH,
-              )
+            xaxisTickFormatter={(value) =>
+              DateService.parseFormat(
+                value as string,
+                DATE_FORMAT.MONTH_LONG,
+              ).toFormat(DATE_FORMAT.MONTH)
             }
           />
         </div>

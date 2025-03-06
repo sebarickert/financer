@@ -1,12 +1,11 @@
 import { BadRequestException, Injectable, PipeTransform } from '@nestjs/common';
-
-import { isValidObjectId } from '../types/objectId';
+import { isUUID } from 'class-validator';
 
 @Injectable()
 export class ValidateEntityId implements PipeTransform<string> {
-  async transform(value: string) {
+  transform(value: string) {
     if (!value) return null;
-    const isValid = isValidObjectId(value);
+    const isValid = isUUID(value);
     if (!isValid) {
       throw new BadRequestException('Invalid entity ID provided!');
     }

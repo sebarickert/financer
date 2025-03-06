@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { FC } from 'react';
 
-import { SettingsContainer } from '$container/settings/SettingsContainer';
+import { SettingsContainer } from '@/container/settings/SettingsContainer';
 
 export const metadata: Metadata = {
   title: 'Settings',

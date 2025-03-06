@@ -1,15 +1,15 @@
 import clsx from 'clsx';
 import { Children, FC } from 'react';
 
-import { Heading } from '$elements/Heading';
+import { Heading } from '@/elements/Heading';
 
-type ListProps = {
+interface ListProps {
   label?: string;
   children: React.ReactNode | React.ReactNode[];
   className?: string;
   testId?: string;
   itemRoundness?: boolean;
-};
+}
 
 export const List: FC<ListProps> = ({
   label,

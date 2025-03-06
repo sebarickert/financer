@@ -2,14 +2,14 @@ import clsx from 'clsx';
 import { RefreshCw } from 'lucide-react';
 import { FC } from 'react';
 
-import { TransactionType } from '$api/generated/financerApi';
-import { TRANSACTION_TYPE_MAPPING } from '$constants/transaction/TRANSACTION_TYPE_MAPPING';
+import { TransactionType } from '@/api/ssr-financer-api';
+import { TRANSACTION_TYPE_MAPPING } from '@/constants/transaction/TRANSACTION_TYPE_MAPPING';
 
-type TransactionTypeIconProps = {
+interface TransactionTypeIconProps {
   type: TransactionType;
   isRecurring?: boolean;
   className?: string;
-};
+}
 
 export const TransactionTypeIcon: FC<TransactionTypeIconProps> = ({
   type,
@@ -20,7 +20,7 @@ export const TransactionTypeIcon: FC<TransactionTypeIconProps> = ({
     return <RefreshCw className={clsx(className)} />;
   }
 
-  const Icon = TRANSACTION_TYPE_MAPPING[type].Icon;
+  const { Icon } = TRANSACTION_TYPE_MAPPING[type];
 
   return <Icon className={clsx(className)} />;
 };

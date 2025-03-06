@@ -1,4 +1,4 @@
-import { spawn, ChildProcessWithoutNullStreams } from 'child_process';
+import { ChildProcessWithoutNullStreams, spawn } from 'child_process';
 import { cpus } from 'os';
 
 const BASE_FRONTEND_PORT = 3100;
@@ -12,7 +12,7 @@ const getWorkerCountByCpu = () => {
 
 export const getExternalTestServerUrl = () => process.env.TEST_SERVER_URL;
 
-const hasExternalServer = () => !!getExternalTestServerUrl();
+const hasExternalServer = () => Boolean(getExternalTestServerUrl());
 
 export const getWorkerCount = () =>
   process.env.CI || hasExternalServer() ? 1 : getWorkerCountByCpu();
@@ -41,7 +41,7 @@ export const startServer = async (
       PATH: process.env.PATH,
       SCHEMA: 'packages/backend/prisma/schema.prisma',
       // In CI, we have action service that runs the postgres container
-      // and we have to initialize the schema and test user
+      // And we have to initialize the schema and test user
       INITIALIZE_SCHEMA_AND_TEST_USER:
         process.env.INITIALIZE_SCHEMA_AND_TEST_USER,
       DB_USER: process.env.DB_USER,
@@ -79,6 +79,7 @@ export const startServer = async (
   const backendProcessStartup = new Promise<ChildProcessWithoutNullStreams>(
     (resolve) => {
       backendProcess.stdout.on('data', (data) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
         if (data.toString().includes('Nest application successfully started')) {
           resolve(backendProcess);
         }
@@ -89,6 +90,7 @@ export const startServer = async (
   const frontendProcessStartup = new Promise<ChildProcessWithoutNullStreams>(
     (resolve) => {
       frontendProcess.stdout.on('data', (data) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
         if (/Ready in \d+ms/.test(data.toString())) {
           resolve(frontendProcess);
         }

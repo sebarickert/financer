@@ -1,5 +1,6 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 import { TransactionCategory, TransactionType } from '@prisma/client';
+import { Exclude } from 'class-transformer';
 import {
   IsBoolean,
   IsEnum,
@@ -8,30 +9,41 @@ import {
   IsUUID,
 } from 'class-validator';
 
-import { UserId } from '../../../types/user-id';
+import { UserId } from '@/types/user-id';
 
 export class TransactionCategoryDto implements TransactionCategory {
-  constructor(transactionCategory: TransactionCategory) {
-    Object.assign(this, transactionCategory);
+  constructor(data?: TransactionCategory) {
+    if (data) {
+      this.id = data.id;
+      this.userId = data.userId as UserId;
+      this.name = data.name;
+      this.visibility = data.visibility;
+      this.deleted = data.deleted;
+      this.parentCategoryId = data.parentCategoryId;
+      this.createdAt = data.createdAt;
+      this.updatedAt = data.updatedAt;
+    }
   }
 
-  @ApiProperty()
-  createdAt: Date;
+  @Exclude()
+  @ApiHideProperty()
+  createdAt!: Date;
 
-  @ApiProperty()
-  updatedAt: Date;
-
-  @ApiProperty({ type: String })
-  @IsUUID()
-  id: string;
+  @Exclude()
+  @ApiHideProperty()
+  updatedAt!: Date;
 
   @ApiProperty({ type: String })
   @IsUUID()
-  userId: UserId;
+  id!: string;
+
+  @ApiProperty({ type: String })
+  @IsUUID()
+  userId!: UserId;
 
   @ApiProperty()
   @IsNotEmpty({ message: 'Name must not be empty.' })
-  name: string;
+  name!: string;
 
   @ApiProperty({
     enum: TransactionType,
@@ -44,17 +56,17 @@ export class TransactionCategoryDto implements TransactionCategory {
     each: true,
     message: `Visibility must be one of the following: ${Object.values(TransactionType).join(', ')}.`,
   })
-  visibility: TransactionType[];
+  visibility!: TransactionType[];
 
   @ApiProperty()
   @IsOptional()
   @IsBoolean()
-  deleted: boolean;
+  deleted!: boolean;
 
   @ApiProperty({ type: String, nullable: true })
   @IsOptional()
   @IsUUID('all', { message: 'parentCategoryId must not be empty.' })
-  parentCategoryId: string | null;
+  parentCategoryId!: string | null;
 
   public static createFromPlain(
     category: TransactionCategory,

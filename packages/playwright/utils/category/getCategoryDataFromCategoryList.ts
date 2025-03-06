@@ -1,4 +1,4 @@
-import { Page, expect } from '$utils/financer-page';
+import { Page, expect } from '@/utils/financer-page';
 
 export const getCategoryDataFromCategoryList = async (
   page: Page,

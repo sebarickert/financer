@@ -3,13 +3,13 @@ import Decimal from 'decimal.js';
 import {
   TransactionTemplateType,
   TransactionType,
-} from '$types/generated/financer';
-import { applyFixture } from '$utils/applyFixture';
-import { test, expect, Page } from '$utils/financer-page';
-import { fillTemplateForm } from '$utils/template/fillTemplateForm';
-import { getTemplateDataFromTemplateList } from '$utils/template/getTemplateDataFromTemplateList';
-import { getTemplateFormValues } from '$utils/template/getTemplateFormValues';
-import { setCategories } from '$utils/transaction/setCategories';
+} from '@/types/generated/financer';
+import { applyFixture } from '@/utils/applyFixture';
+import { Page, expect, test } from '@/utils/financer-page';
+import { fillTemplateForm } from '@/utils/template/fillTemplateForm';
+import { getTemplateDataFromTemplateList } from '@/utils/template/getTemplateDataFromTemplateList';
+import { getTemplateFormValues } from '@/utils/template/getTemplateFormValues';
+import { setCategories } from '@/utils/transaction/setCategories';
 
 const transactionTypes = [
   TransactionType.Income,
@@ -59,7 +59,7 @@ test.describe('Add Template', () => {
     await page.goto('/templates');
   });
 
-  test('should render the add template button', async ({ page }) => {
+  test('should render the add template button', ({ page }) => {
     expect(page.getByTestId('add-template')).not.toBeNull();
   });
 

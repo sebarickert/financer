@@ -1,16 +1,16 @@
-import { INestApplication } from '@nestjs/common';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AccountType } from '@prisma/client';
 import supertest from 'supertest';
 
-import { createMockServiceProvider } from '../../../test/create-mock-service-provider';
-import { setupTestNestApp } from '../../setup-test-nest-app';
-
 import { AccountsController } from './accounts.controller';
 import { AccountsService } from './accounts.service';
 
+import { setupTestNestApp } from '@/setup-test-nest-app';
+import { createMockServiceProvider } from '@/test/create-mock-service-provider';
+
 describe('AccountsController', () => {
-  let app: INestApplication;
+  let app: NestExpressApplication;
   let service: AccountsService;
 
   beforeAll(async () => {

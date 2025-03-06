@@ -3,15 +3,15 @@
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { Drawer } from '$blocks/Drawer';
-import { Form } from '$blocks/Form';
-import { Button } from '$elements/Button/Button';
-import { useFinancerFormState } from '$hooks/useFinancerFormState';
+import { Drawer } from '@/blocks/Drawer';
+import { Form } from '@/blocks/Form';
+import { Button } from '@/elements/Button/Button';
+import { useFinancerFormState } from '@/hooks/useFinancerFormState';
 import { handleAccountDelete } from 'src/actions/account/handleAccountDelete';
 
-type AccountDeleteDrawerProps = {
+interface AccountDeleteDrawerProps {
   id: string;
-};
+}
 
 export const AccountDeleteDrawer: FC<AccountDeleteDrawerProps> = ({ id }) => {
   const onSubmit = handleAccountDelete.bind(null, { id });

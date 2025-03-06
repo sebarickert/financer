@@ -3,16 +3,16 @@ import { FC } from 'react';
 
 import { TransactionTypeIcon } from '../TransactionTypeIcon';
 
-import { TransactionType } from '$api/generated/financerApi';
+import { TransactionType } from '@/api/ssr-financer-api';
 
-type TransactionTypeSwitcherItemProps = {
+interface TransactionTypeSwitcherItemProps {
   children: string;
   className?: string;
   value: TransactionType;
   name: string;
   isChecked?: boolean;
-  onChange(event: React.ChangeEvent<HTMLInputElement>): void;
-};
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
 
 export const TransactionTypeSwitcherItem: FC<
   TransactionTypeSwitcherItemProps

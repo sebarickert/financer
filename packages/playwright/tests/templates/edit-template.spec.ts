@@ -1,11 +1,11 @@
 import Decimal from 'decimal.js';
 
-import { TransactionType } from '$types/generated/financer';
-import { applyFixture } from '$utils/applyFixture';
-import { test, expect } from '$utils/financer-page';
-import { fillTemplateForm } from '$utils/template/fillTemplateForm';
-import { getTemplateDataFromTemplateList } from '$utils/template/getTemplateDataFromTemplateList';
-import { getTemplateFormValues } from '$utils/template/getTemplateFormValues';
+import { TransactionType } from '@/types/generated/financer';
+import { applyFixture } from '@/utils/applyFixture';
+import { expect, test } from '@/utils/financer-page';
+import { fillTemplateForm } from '@/utils/template/fillTemplateForm';
+import { getTemplateDataFromTemplateList } from '@/utils/template/getTemplateDataFromTemplateList';
+import { getTemplateFormValues } from '@/utils/template/getTemplateFormValues';
 
 test.describe('Edit Template', () => {
   test.beforeEach(async ({ page }) => {

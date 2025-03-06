@@ -1,19 +1,19 @@
-import { INestApplication } from '@nestjs/common';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { Test, TestingModule } from '@nestjs/testing';
 import supertest from 'supertest';
 
-import { createMockServiceProvider } from '../../../test/create-mock-service-provider';
-import { setupTestNestApp } from '../../setup-test-nest-app';
-import { TransactionsService } from '../transactions/transactions.service';
-
 import { TransfersController } from './transfers.controller';
 import { TransfersService } from './transfers.service';
+
+import { setupTestNestApp } from '@/setup-test-nest-app';
+import { createMockServiceProvider } from '@/test/create-mock-service-provider';
+import { TransactionsService } from '@/transactions/transactions.service';
 
 const mockFromAccountId = 'af0756cb-b481-4c4c-b182-a1691669afd5';
 const mockToAccountId = '8941f57e-84e9-4ac2-a5de-1bd944ec3568';
 
 describe('TransfersController', () => {
-  let app: INestApplication;
+  let app: NestExpressApplication;
   let controller: TransfersController;
   let service: TransfersService;
 

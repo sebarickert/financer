@@ -1,8 +1,8 @@
-import { TransactionType } from '$types/generated/financer';
-import { applyFixture } from '$utils/applyFixture';
-import { fillCategoryForm } from '$utils/category/fillCategoryForm';
-import { getCategoryDetails } from '$utils/category/getCategoryDetails';
-import { test, expect } from '$utils/financer-page';
+import { TransactionType } from '@/types/generated/financer';
+import { applyFixture } from '@/utils/applyFixture';
+import { fillCategoryForm } from '@/utils/category/fillCategoryForm';
+import { getCategoryDetails } from '@/utils/category/getCategoryDetails';
+import { expect, test } from '@/utils/financer-page';
 
 test.describe('Add Category', () => {
   test.beforeEach(async ({ page }) => {

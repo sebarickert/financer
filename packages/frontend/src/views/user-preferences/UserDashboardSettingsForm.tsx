@@ -3,29 +3,29 @@
 import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { AccountType } from '$api/generated/financerApi';
-import { Form } from '$blocks/Form';
-import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
-import { ACCOUNT_TYPE_MAPPING } from '$constants/account/ACCOUNT_TYPE_MAPPING';
-import { Button } from '$elements/Button/Button';
-import { Input } from '$elements/Input';
-import { InputOption } from '$elements/InputOption';
+import { AccountType } from '@/api/ssr-financer-api';
+import { Form } from '@/blocks/Form';
+import { InfoMessageBlock } from '@/blocks/InfoMessageBlock';
+import { ACCOUNT_TYPE_MAPPING } from '@/constants/account/ACCOUNT_TYPE_MAPPING';
+import { Button } from '@/elements/Button/Button';
+import { Input } from '@/elements/Input';
+import { InputOption } from '@/elements/InputOption';
 import {
   DefaultFormActionHandler,
   useFinancerFormState,
-} from '$hooks/useFinancerFormState';
+} from '@/hooks/useFinancerFormState';
 
 const allAccountTypes = Object.values(AccountType);
 
-export type UserDashboardSettingsFormFields = {
+export interface UserDashboardSettingsFormFields {
   accountTypes?: AccountType[];
   chunkSize: number;
-};
+}
 
-type UserDashboardSettingsFormProps = {
+interface UserDashboardSettingsFormProps {
   data?: UserDashboardSettingsFormFields;
   onSave: DefaultFormActionHandler;
-};
+}
 
 export const UserDashboardSettingsForm: FC<UserDashboardSettingsFormProps> = ({
   data,

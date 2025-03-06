@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
-import { AccountEditContainer } from '$container/accounts/AccountEditContainer';
-import { AccountService } from '$ssr/api/AccountService';
+import { AccountEditContainer } from '@/container/accounts/AccountEditContainer';
+import { AccountService } from '@/ssr/api/AccountService';
 
 type Params = Promise<{
   accountId: string;

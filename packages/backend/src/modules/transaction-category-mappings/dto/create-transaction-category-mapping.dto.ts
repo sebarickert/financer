@@ -5,9 +5,14 @@ import { TransactionCategoryMappingDto } from './transaction-category-mapping.dt
 export class CreateTransactionCategoryMappingDto extends OmitType(
   TransactionCategoryMappingDto,
   ['id', 'userId', 'createdAt', 'updatedAt'] as const,
-) {}
-
-export class CreateTransactionCategoryMappingWithoutTransactionDto extends OmitType(
-  CreateTransactionCategoryMappingDto,
-  ['transactionId'] as const,
-) {}
+) {
+  constructor(data?: CreateTransactionCategoryMappingDto) {
+    super(data);
+    if (data) {
+      this.amount = data.amount;
+      this.categoryId = data.categoryId;
+      this.description = data.description;
+      this.transactionId = data.transactionId;
+    }
+  }
+}

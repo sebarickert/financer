@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
-import { EditExpenseContainer } from '$container/expenses/ExpenseEditContainer';
-import { ExpenseService } from '$ssr/api/ExpenseService';
+import { EditExpenseContainer } from '@/container/expenses/ExpenseEditContainer';
+import { ExpenseService } from '@/ssr/api/ExpenseService';
 
 type Params = Promise<{
   expenseId: string;

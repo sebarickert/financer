@@ -1,10 +1,11 @@
 import { revalidateTag } from 'next/cache';
 import createClient from 'openapi-fetch';
 
-import { paths } from '$api/generated/ssr-financer-api';
-import { getSessionId } from '$ssr/getSessionId';
-import { getInternalApiRootAddress } from '$utils/address.helper';
+import { paths } from '@/api/ssr-financer-api';
+import { getSessionId } from '@/ssr/getSessionId';
+import { getInternalApiRootAddress } from '@/utils/address.helper';
 
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export abstract class BaseApi {
   public static readonly API_TAG = {
     APP: 'app',
@@ -20,7 +21,7 @@ export abstract class BaseApi {
     CATEGORY: 'category',
   } as const;
 
-  public static async revalidateFullAppCache(): Promise<void> {
+  public static revalidateFullAppCache(): void {
     revalidateTag(this.API_TAG.APP);
   }
 
@@ -46,7 +47,7 @@ export abstract class BaseApi {
 
     return {
       revalidate: requestOptions.revalidate ?? baseOptions.revalidate,
-      tags: baseOptions.tags?.concat(requestOptions.tags ?? []),
+      tags: baseOptions.tags.concat(requestOptions.tags ?? []),
     };
   }
 

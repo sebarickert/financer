@@ -1,14 +1,14 @@
-import { Controller, Get, Body, Patch, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch } from '@nestjs/common';
 import { ApiBody, ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
 import { UserPreferenceProperty } from '@prisma/client';
-
-import { UserId } from '../../types/user-id';
-import { LoggedIn } from '../auth/decorators/loggedIn.decorators';
-import { UserIdDecorator } from '../users/users.decorators';
 
 import { UpdateUserPreferenceDto } from './dto/update-user-preference.dto';
 import { UserPreferenceDto } from './dto/user-preference.dto';
 import { UserPreferencesService } from './user-preferences.service';
+
+import { LoggedIn } from '@/auth/decorators/logged-in.decorators';
+import { UserId } from '@/types/user-id';
+import { UserIdDecorator } from '@/users/users.decorators';
 
 @Controller('api/user-preferences')
 @LoggedIn()
@@ -40,7 +40,7 @@ export class UserPreferencesController {
       (await this.userPreferencesService.findOneByUserAndProperty(
         userPreferenceProperty,
         userId,
-      )) || {
+      )) ?? {
         key: userPreferenceProperty,
         value: '',
         userId,

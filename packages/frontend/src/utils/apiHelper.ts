@@ -1,8 +1,8 @@
-type ValidationErrorResponse = {
+interface ValidationErrorResponse {
   error: string;
   message: string[] | string;
   statusCode: 400;
-};
+}
 
 export const isValidationErrorResponse = (
   error: unknown,

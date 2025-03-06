@@ -1,6 +1,6 @@
-import { handleAccountAdd } from '$actions/account/handleAccountAdd';
-import { AccountForm } from '$features/account/AccountForm';
-import { Layout } from '$layouts/Layout';
+import { handleAccountAdd } from '@/actions/account/handleAccountAdd';
+import { AccountForm } from '@/features/account/AccountForm';
+import { Layout } from '@/layouts/Layout';
 
 export const AccountAddContainer = () => {
   return (

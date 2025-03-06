@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { createMockServiceProvider } from '../../../test/create-mock-service-provider';
-import { UserPreferencesRepo } from '../../database/repos/user-preferences.repo';
-
 import { UserPreferencesService } from './user-preferences.service';
+
+import { UserPreferencesRepo } from '@/database/repos/user-preferences.repo';
+import { createMockServiceProvider } from '@/test/create-mock-service-provider';
 
 describe('UserPreferencesService', () => {
   let service: UserPreferencesService;

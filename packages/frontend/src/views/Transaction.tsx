@@ -3,26 +3,26 @@ import { Calendar, Info, MessageSquareText, Tag } from 'lucide-react';
 import { FC } from 'react';
 
 import {
-  ExpenseDetailsDto,
-  IncomeDetailsDto,
-  TransferDetailsDto,
-} from '$api/generated/financerApi';
-import { BalanceDisplay } from '$blocks/BalanceDisplay';
-import { Card } from '$blocks/Card/Card';
-import { CardHeader } from '$blocks/Card/CardHeader';
-import { DetailsList, DetailsItem } from '$blocks/DetailsList';
-import { TRANSACTION_TYPE_MAPPING } from '$constants/transaction/TRANSACTION_TYPE_MAPPING';
-import { Heading } from '$elements/Heading';
-import { TransactionTypeIcon } from '$features/transaction/TransactionTypeIcon';
-import { DATE_FORMAT, DateService } from '$services/DateService';
-import { CategoryService } from '$ssr/api/CategoryService';
-import { capitalize } from '$utils/capitalize';
-import { formatCurrency } from '$utils/formatCurrency';
+  SchemaExpenseDetailsDto,
+  SchemaIncomeDetailsDto,
+  SchemaTransferDetailsDto,
+} from '@/api/ssr-financer-api';
+import { BalanceDisplay } from '@/blocks/BalanceDisplay';
+import { Card } from '@/blocks/Card/Card';
+import { CardHeader } from '@/blocks/Card/CardHeader';
+import { DetailsItem, DetailsList } from '@/blocks/DetailsList';
+import { TRANSACTION_TYPE_MAPPING } from '@/constants/transaction/TRANSACTION_TYPE_MAPPING';
+import { Heading } from '@/elements/Heading';
+import { TransactionTypeIcon } from '@/features/transaction/TransactionTypeIcon';
+import { DATE_FORMAT, DateService } from '@/services/DateService';
+import { CategoryService } from '@/ssr/api/CategoryService';
+import { capitalize } from '@/utils/capitalize';
+import { formatCurrency } from '@/utils/formatCurrency';
 
 type TransactionProps =
-  | IncomeDetailsDto
-  | ExpenseDetailsDto
-  | TransferDetailsDto;
+  | SchemaIncomeDetailsDto
+  | SchemaExpenseDetailsDto
+  | SchemaTransferDetailsDto;
 
 export const Transaction: FC<TransactionProps> = async ({
   type,
@@ -41,8 +41,8 @@ export const Transaction: FC<TransactionProps> = async ({
   const transactionCategories = await CategoryService.getAllWithTree();
 
   const getCategoryNameById = (categoryId: string) =>
-    transactionCategories?.find((category) => category.id === categoryId)
-      ?.categoryTree || categoryId;
+    transactionCategories.find((category) => category.id === categoryId)
+      ?.categoryTree ?? categoryId;
 
   const transactionDetails: DetailsItem[] = [
     ...(fromAccountName
@@ -109,7 +109,7 @@ export const Transaction: FC<TransactionProps> = async ({
     <>
       <style>{`
         [data-transaction='${id}'] {
-         ${`--color-type: ${TRANSACTION_TYPE_MAPPING[type].color};`}
+         --color-type: ${TRANSACTION_TYPE_MAPPING[type].color};
         }
       `}</style>
       <div
@@ -151,7 +151,7 @@ export const Transaction: FC<TransactionProps> = async ({
           </CardHeader>
           <DetailsList items={transactionDetails} />
         </Card>
-        {!!categoryDetails?.length && (
+        {Boolean(categoryDetails.length) && (
           <Card data-testid="transaction-categories">
             <CardHeader>
               <Heading noMargin>Categories</Heading>
@@ -160,7 +160,7 @@ export const Transaction: FC<TransactionProps> = async ({
               {categoryDetails.map((category, index) => (
                 <DetailsList
                   testId="category-details"
-                  key={category[0].label + index}
+                  key={`${category[0].label}_${index}`}
                   items={category}
                 />
               ))}

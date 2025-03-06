@@ -1,14 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { createMockServiceProvider } from '../../../test/create-mock-service-provider';
-import { DUMMY_TEST_USER } from '../../config/mockAuthenticationMiddleware';
+import { TransactionCategoryMappingsService } from './transaction-category-mappings.service';
+
+import { DUMMY_TEST_USER } from '@/config/mockAuthenticationMiddleware';
 import {
   transactionCategoryMappingRepoFindAllByUserId,
   transactionCategoryMappingRepoFindAllByUserIdTransactionData,
-} from '../../database/repos/mocks/transaction-category-mapping-repo-mock';
-import { TransactionCategoryMappingRepo } from '../../database/repos/transaction-category-mapping.repo';
-
-import { TransactionCategoryMappingsService } from './transaction-category-mappings.service';
+} from '@/database/repos/mocks/transaction-category-mapping-repo-mock';
+import { TransactionCategoryMappingRepo } from '@/database/repos/transaction-category-mapping.repo';
+import { createMockServiceProvider } from '@/test/create-mock-service-provider';
 
 describe('TransactionCategoryMappingsService', () => {
   let service: TransactionCategoryMappingsService;

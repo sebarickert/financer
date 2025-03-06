@@ -2,23 +2,23 @@ import { ChartLine, Info } from 'lucide-react';
 import { FC, useMemo } from 'react';
 
 import {
-  AccountBalanceHistoryDto,
-  AccountDto,
-} from '$api/generated/financerApi';
-import { BalanceDisplay } from '$blocks/BalanceDisplay';
-import { Card } from '$blocks/Card/Card';
-import { DetailsList, DetailsItem } from '$blocks/DetailsList';
-import { InfoMessageBlock } from '$blocks/InfoMessageBlock';
-import { ACCOUNT_TYPE_MAPPING } from '$constants/account/ACCOUNT_TYPE_MAPPING';
-import { AccountBalanceHistoryChart } from '$features/account/AccountBalanceHistoryChart';
-import { TransactionListWithMonthlyPager } from '$features/transaction/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
-import { formatCurrency } from '$utils/formatCurrency';
+  SchemaAccountBalanceHistoryDto,
+  SchemaAccountDto,
+} from '@/api/ssr-financer-api';
+import { BalanceDisplay } from '@/blocks/BalanceDisplay';
+import { Card } from '@/blocks/Card/Card';
+import { DetailsItem, DetailsList } from '@/blocks/DetailsList';
+import { InfoMessageBlock } from '@/blocks/InfoMessageBlock';
+import { ACCOUNT_TYPE_MAPPING } from '@/constants/account/ACCOUNT_TYPE_MAPPING';
+import { AccountBalanceHistoryChart } from '@/features/account/AccountBalanceHistoryChart';
+import { TransactionListWithMonthlyPager } from '@/features/transaction/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
+import { formatCurrency } from '@/utils/formatCurrency';
 
-type AccountProps = {
-  account: AccountDto;
-  balanceHistory: AccountBalanceHistoryDto[];
+interface AccountProps {
+  account: SchemaAccountDto;
+  balanceHistory: SchemaAccountBalanceHistoryDto[];
   queryDate?: string;
-};
+}
 
 export const Account: FC<AccountProps> = ({
   account,
@@ -43,7 +43,7 @@ export const Account: FC<AccountProps> = ({
           label="Balance"
           amount={account.currentDateBalance ?? account.balance}
         >
-          {!!account.currentDateBalance &&
+          {Boolean(account.currentDateBalance) &&
             account.currentDateBalance !== account.balance && (
               <p className="mt-0.5 text-sm text-muted-foreground">
                 <span>Upcoming Balance: </span>
