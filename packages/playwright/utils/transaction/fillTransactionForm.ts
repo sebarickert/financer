@@ -21,7 +21,7 @@ export const fillTransactionForm = async (
   const formFields = {
     '#description': description,
     '#date': date ? formatDate(date) : null,
-    '#amount': amount?.toNumber(),
+    '#amount': amount?.toNumber().toString(),
     '#toAccount': toAccount ? { label: toAccount } : null,
     '#fromAccount': fromAccount ? { label: fromAccount } : null,
   };

@@ -25,7 +25,7 @@ const fillCategoryItemForm = async ({
 
   const formFields = {
     [`#${fieldIdPrefix}.description`]: description,
-    [`#${fieldIdPrefix}.amount`]: amount?.toNumber(),
+    [`#${fieldIdPrefix}.amount`]: amount?.toNumber().toString(),
     [`#${fieldIdPrefix}.categoryId`]: { label: category },
   };
 
