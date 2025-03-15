@@ -1,8 +1,7 @@
 import { Metadata } from 'next';
 
+import { getAccountById } from '@/api-service';
 import { AccountEditContainer } from '@/container/accounts/AccountEditContainer';
-import { AccountService } from '@/ssr/api/AccountService';
-
 type Params = Promise<{
   accountId: string;
 }>;
@@ -13,7 +12,7 @@ export const generateMetadata = async ({
   params: Params;
 }): Promise<Metadata> => {
   const { accountId } = await params;
-  const account = await AccountService.getById(accountId);
+  const account = await getAccountById(accountId);
 
   return {
     title: `Edit ${account?.name} / Accounts`,

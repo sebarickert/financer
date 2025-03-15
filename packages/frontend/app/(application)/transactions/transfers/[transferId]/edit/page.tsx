@@ -1,8 +1,7 @@
 import { Metadata } from 'next';
 
+import { getTransferById } from '@/api-service';
 import { TransferEditContainer } from '@/container/transfers/TransferEditContainer';
-import { TransferService } from '@/ssr/api/TransferService';
-
 type Params = Promise<{
   transferId: string;
 }>;
@@ -13,7 +12,7 @@ export const generateMetadata = async ({
   params: Params;
 }): Promise<Metadata> => {
   const { transferId } = await params;
-  const transfer = await TransferService.getById(transferId);
+  const transfer = await getTransferById(transferId);
 
   return {
     title: `Edit ${transfer.description} / Transfers`,

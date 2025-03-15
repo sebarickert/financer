@@ -2,10 +2,10 @@ import { Pencil, Trash } from 'lucide-react';
 import { FC } from 'react';
 
 import { TransactionType } from '@/api/ssr-financer-api';
+import { getIncomeById } from '@/api-service';
 import { Popper } from '@/elements/Popper';
 import { TransactionDeleteDrawer } from '@/features/transaction/TransactionDeleteDrawer';
 import { Layout } from '@/layouts/Layout';
-import { IncomeService } from '@/ssr/api/IncomeService';
 import { Transaction } from '@/views/Transaction';
 
 interface IncomeContainerProps {
@@ -13,7 +13,7 @@ interface IncomeContainerProps {
 }
 
 export const IncomeContainer: FC<IncomeContainerProps> = async ({ id }) => {
-  const income = await IncomeService.getById(id);
+  const income = await getIncomeById(id);
 
   return (
     <Layout

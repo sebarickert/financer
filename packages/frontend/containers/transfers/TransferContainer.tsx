@@ -2,10 +2,10 @@ import { Pencil, Trash } from 'lucide-react';
 import { FC } from 'react';
 
 import { TransactionType } from '@/api/ssr-financer-api';
+import { getTransferById } from '@/api-service';
 import { Popper } from '@/elements/Popper';
 import { TransactionDeleteDrawer } from '@/features/transaction/TransactionDeleteDrawer';
 import { Layout } from '@/layouts/Layout';
-import { TransferService } from '@/ssr/api/TransferService';
 import { Transaction } from '@/views/Transaction';
 
 interface TransferContainerProps {
@@ -13,7 +13,7 @@ interface TransferContainerProps {
 }
 
 export const TransferContainer: FC<TransferContainerProps> = async ({ id }) => {
-  const transfer = await TransferService.getById(id);
+  const transfer = await getTransferById(id);
 
   return (
     <Layout

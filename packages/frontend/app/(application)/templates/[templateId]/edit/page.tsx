@@ -1,8 +1,7 @@
 import { Metadata } from 'next';
 
+import { getTransactionTemplateById } from '@/api-service';
 import { TemplateEditContainer } from '@/container/templates/TemplateEditContainer';
-import { TransactionTemplateService } from '@/ssr/api/TransactionTemplateService';
-
 type Params = Promise<{
   templateId: string;
 }>;
@@ -13,7 +12,7 @@ export const generateMetadata = async ({
   params: Params;
 }): Promise<Metadata> => {
   const { templateId } = await params;
-  const template = await TransactionTemplateService.getById(templateId);
+  const template = await getTransactionTemplateById(templateId);
 
   return {
     title: `Edit ${template.templateName} / Templates`,

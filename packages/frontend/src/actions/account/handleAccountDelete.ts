@@ -2,8 +2,8 @@
 
 import { RedirectType, redirect } from 'next/navigation';
 
+import { deleteAccount } from '@/api-service';
 import { DefaultFormActionHandler } from '@/hooks/useFinancerFormState';
-import { AccountService } from '@/ssr/api/AccountService';
 
 export const handleAccountDelete: DefaultFormActionHandler<{
   id: string;
@@ -12,7 +12,7 @@ export const handleAccountDelete: DefaultFormActionHandler<{
     return { status: 'ERROR', errors: ['Failed to delete account: no id'] };
   }
 
-  await AccountService.delete(id);
+  await deleteAccount(id);
 
   redirect('/accounts', RedirectType.push);
 };

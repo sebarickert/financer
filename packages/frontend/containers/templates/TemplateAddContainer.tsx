@@ -1,12 +1,11 @@
 import { handleTemplateAdd } from '@/actions/template/handleTemplateAdd';
+import { getAllAccounts, getAllCategoriesWithTree } from '@/api-service';
 import { TemplateForm } from '@/features/template/TemplateForm';
 import { Layout } from '@/layouts/Layout';
-import { AccountService } from '@/ssr/api/AccountService';
-import { CategoryService } from '@/ssr/api/CategoryService';
 
 export const TemplateAddContainer = async () => {
-  const categories = await CategoryService.getAllWithTree();
-  const accounts = await AccountService.getAll();
+  const categories = await getAllCategoriesWithTree();
+  const accounts = await getAllAccounts();
 
   return (
     <Layout title="Add Template" backLink={'/templates'}>

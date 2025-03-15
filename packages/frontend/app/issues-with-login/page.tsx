@@ -3,11 +3,10 @@ import { ArrowLeft, LogOut, MessageSquareText } from 'lucide-react';
 import { Metadata } from 'next';
 import type { JSX } from 'react';
 
+import { getAuthenticationStatus } from '@/api-service';
 import { InfoMessageBlock } from '@/blocks/InfoMessageBlock';
 import { Button } from '@/elements/Button/Button';
 import { Heading } from '@/elements/Heading';
-import { AuthenticationService } from '@/ssr/api/AuthenticationService';
-
 export const metadata: Metadata = {
   title: 'Troubleshooting Login Issues',
 };
@@ -44,7 +43,7 @@ const ResolveAuth0Issues = (): JSX.Element => {
 };
 
 const IssuesWithLogin = async () => {
-  const authenticationStatus = await AuthenticationService.getStatus();
+  const authenticationStatus = await getAuthenticationStatus();
   const isLoggedIn = Boolean(authenticationStatus?.authenticated);
 
   return (

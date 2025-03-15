@@ -3,9 +3,9 @@
 import { RedirectType, redirect } from 'next/navigation';
 
 import { AccountType, SchemaAccountDto } from '@/api/ssr-financer-api';
+import { updateAccount } from '@/api-service';
 import { ValidationException } from '@/exceptions/validation.exception';
 import { DefaultFormActionHandler } from '@/hooks/useFinancerFormState';
-import { AccountService } from '@/ssr/api/AccountService';
 
 export const handleAccountEdit: DefaultFormActionHandler<
   SchemaAccountDto
@@ -15,7 +15,7 @@ export const handleAccountEdit: DefaultFormActionHandler<
   }
 
   try {
-    await AccountService.update(account.id, {
+    await updateAccount(account.id, {
       balance: parseFloat(formData.get('balance') as string),
       name: formData.get('name') as string,
       type: formData.get('type') as AccountType,

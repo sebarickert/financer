@@ -5,10 +5,9 @@ import { RedirectType, redirect } from 'next/navigation';
 import { FC } from 'react';
 
 import { Theme } from '@/api/ssr-financer-api';
+import { getAuthenticationStatus, getOwnUserTheme } from '@/api-service';
 import { faviconList } from '@/assets/favicon-list';
 import { RootProviderContainer } from '@/container/root.provider';
-import { AuthenticationService } from '@/ssr/api/AuthenticationService';
-import { UserService } from '@/ssr/api/UserService';
 import { ChildrenProp } from 'src/types/children-prop';
 import { CustomHeader } from 'src/types/custom-headers';
 
@@ -28,9 +27,9 @@ export const metadata: Metadata = {
 };
 
 export const generateViewport = async (): Promise<Viewport> => {
-  const authenticationStatus = await AuthenticationService.getStatus();
+  const authenticationStatus = await getAuthenticationStatus();
   const isLoggedIn = Boolean(authenticationStatus?.authenticated);
-  const theme = isLoggedIn ? await UserService.getOwnUserTheme() : Theme.AUTO;
+  const theme = isLoggedIn ? await getOwnUserTheme() : Theme.AUTO;
 
   let themeColor: Viewport['themeColor'];
 
@@ -64,7 +63,7 @@ const PUBLIC_ROUTES = ['/privacy-policy/', '/issues-with-login/', '/login/'];
 const RootLayout: FC<ChildrenProp> = async ({ children }) => {
   const headersList = await headers();
 
-  const authenticationStatus = await AuthenticationService.getStatus();
+  const authenticationStatus = await getAuthenticationStatus();
   const pathname = headersList.get(CustomHeader.PATHNAME) ?? '';
 
   const isLoggedIn = Boolean(authenticationStatus?.authenticated);
@@ -75,7 +74,7 @@ const RootLayout: FC<ChildrenProp> = async ({ children }) => {
     redirect('/', RedirectType.replace);
   }
 
-  const theme = isLoggedIn ? await UserService.getOwnUserTheme() : Theme.AUTO;
+  const theme = isLoggedIn ? await getOwnUserTheme() : Theme.AUTO;
 
   // We don't have to polyfill every feature by our self, since next js already does by default for many features
   // See the full list from here: https://nextjs.org/docs/architecture/supported-browsers

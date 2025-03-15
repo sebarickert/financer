@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { ArrowLeft, ChevronDown, ChevronRight } from 'lucide-react';
-import { FC } from 'react';
+import { FC, unstable_ViewTransition as ViewTransition } from 'react';
 
 import {
   ContextualNavigation,
@@ -25,10 +25,9 @@ export const ContentHeader: FC<ContentHeaderProps> = ({
   contextualNavigationItems = [],
 }) => {
   return (
-    <>
+    <ViewTransition name="content-header">
       <header
         className={clsx(
-          'vt-name-[content-header]',
           'max-lg:bg-layer max-lg:border-b',
           'max-lg:fixed max-lg:inset-x-0 max-lg:top-0 z-[100]',
           'max-lg:text-center max-lg:px-1 max-lg:h-14',
@@ -111,6 +110,6 @@ export const ContentHeader: FC<ContentHeaderProps> = ({
           </ul>
         </Drawer>
       )}
-    </>
+    </ViewTransition>
   );
 };

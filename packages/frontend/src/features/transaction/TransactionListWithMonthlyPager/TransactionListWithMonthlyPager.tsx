@@ -7,14 +7,16 @@ import { GroupedTransactionList } from '../TransactionList/GroupedTransactionLis
 import { TransactionListWithMonthlySummary } from './TransactionListWithMonthlySummary';
 
 import { TransactionType } from '@/api/ssr-financer-api';
+import {
+  TransactionListOptions,
+  getAllTransactionsByType,
+  getFirstTransactionByType,
+  getLatestTransactionByType,
+} from '@/api-service';
 import { Card } from '@/blocks/Card/Card';
 import { Pager } from '@/blocks/Pager';
 import { Heading } from '@/elements/Heading';
 import { DATE_FORMAT, DateService } from '@/services/DateService';
-import {
-  TransactionListOptions,
-  TransactionService,
-} from '@/ssr/api/TransactionService';
 
 const currentDate = new DateService().getDate();
 const currentYear = currentDate.year;
@@ -37,11 +39,11 @@ export const TransactionListWithMonthlyPager: FC<
   type = null,
   queryDate = `${currentYear}-${String(currentMonth).padStart(2, '0')}`,
 }) => {
-  const firstTransaction = await TransactionService.getFirstByType(
+  const firstTransaction = await getFirstTransactionByType(
     type as null,
     additionalFilterOptions,
   );
-  const lastTransaction = await TransactionService.getLatestByType(
+  const lastTransaction = await getLatestTransactionByType(
     type as null,
     additionalFilterOptions,
   );
@@ -71,7 +73,7 @@ export const TransactionListWithMonthlyPager: FC<
     month,
   };
 
-  const transactions = await TransactionService.getAllByType(
+  const transactions = await getAllTransactionsByType(
     type as null,
     filterOptions,
   );

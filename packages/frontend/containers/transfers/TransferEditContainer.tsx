@@ -5,6 +5,12 @@ import {
   SchemaTransferDetailsDto,
   VisibilityType,
 } from '@/api/ssr-financer-api';
+import {
+  getAllAccounts,
+  getAllCategoriesWithTree,
+  getTransferById,
+  updateTransfer,
+} from '@/api-service';
 import { ValidationException } from '@/exceptions/validation.exception';
 import {
   isCategoriesFormFullFields,
@@ -14,9 +20,6 @@ import { TransactionForm } from '@/features/transaction/TransactionForm';
 import { DefaultFormActionHandler } from '@/hooks/useFinancerFormState';
 import { Layout } from '@/layouts/Layout';
 import { DATE_FORMAT, DateService } from '@/services/DateService';
-import { AccountService } from '@/ssr/api/AccountService';
-import { CategoryService } from '@/ssr/api/CategoryService';
-import { TransferService } from '@/ssr/api/TransferService';
 import { parseArrayFromFormData } from '@/utils/parseArrayFromFormData';
 
 interface TransferEditContainerProps {
@@ -26,8 +29,8 @@ interface TransferEditContainerProps {
 export const TransferEditContainer: FC<TransferEditContainerProps> = async ({
   id,
 }) => {
-  const transfer = await TransferService.getById(id);
-  const accounts = await AccountService.getAll();
+  const transfer = await getTransferById(id);
+  const accounts = await getAllAccounts();
 
   if (!transfer) {
     notFound();
@@ -49,7 +52,7 @@ export const TransferEditContainer: FC<TransferEditContainerProps> = async ({
     let data: SchemaTransferDetailsDto;
 
     try {
-      data = await TransferService.update(transfer.id, {
+      data = await updateTransfer(transfer.id, {
         amount: parseFloat(formData.get('amount') as string),
         description: formData.get('description') as string,
         date: formData.get('date') as string,
@@ -83,7 +86,7 @@ export const TransferEditContainer: FC<TransferEditContainerProps> = async ({
     date: new DateService(transfer.date).format(DATE_FORMAT.INPUT),
   };
 
-  const categories = await CategoryService.getAllWithTree({
+  const categories = await getAllCategoriesWithTree({
     visibilityType: VisibilityType.TRANSFER,
   });
 

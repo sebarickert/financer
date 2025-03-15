@@ -3,6 +3,7 @@
     "baseUrl": "./",
     "paths": {
       "@/api/*": ["./src/redux/api/generated/*"],
+      "@/api-service": ["./src/ssr/index"],
       "@/reducer/*": ["./src/redux/reducer/*"],
       "@/store": ["./src/redux/store"],
       "@/blocks/*": ["./src/components/blocks/*"],

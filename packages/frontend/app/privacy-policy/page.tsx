@@ -2,16 +2,15 @@ import clsx from 'clsx';
 import { ArrowLeft } from 'lucide-react';
 import { Metadata } from 'next';
 
+import { getAuthenticationStatus } from '@/api-service';
 import { Button } from '@/elements/Button/Button';
 import { Heading } from '@/elements/Heading';
-import { AuthenticationService } from '@/ssr/api/AuthenticationService';
-
 export const metadata: Metadata = {
   title: 'Privacy Policy',
 };
 
 const PrivacyPolicy = async () => {
-  const authenticationStatus = await AuthenticationService.getStatus();
+  const authenticationStatus = await getAuthenticationStatus();
   const isLoggedIn = Boolean(authenticationStatus?.authenticated);
 
   return (

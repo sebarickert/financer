@@ -1,8 +1,7 @@
 import { Metadata } from 'next';
 
+import { getCategoryById } from '@/api-service';
 import { CategoryEditContainer } from '@/container/categories/CategoryEditContainer';
-import { CategoryService } from '@/ssr/api/CategoryService';
-
 type Params = Promise<{
   categoryId: string;
 }>;
@@ -13,7 +12,7 @@ export const generateMetadata = async ({
   params: Params;
 }): Promise<Metadata> => {
   const { categoryId } = await params;
-  const category = await CategoryService.getById(categoryId);
+  const category = await getCategoryById(categoryId);
 
   return {
     title: `Edit ${category.name} / Categories`,

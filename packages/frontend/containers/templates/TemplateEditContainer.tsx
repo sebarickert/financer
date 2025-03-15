@@ -2,13 +2,14 @@ import { notFound } from 'next/navigation';
 import { FC } from 'react';
 
 import { handleTemplateEdit } from '@/actions/template/handleTemplateEdit';
+import {
+  getAllAccounts,
+  getAllCategoriesWithTree,
+  getTransactionTemplateById,
+} from '@/api-service';
 import { TemplateDelete } from '@/features/template/TemplateDelete';
 import { TemplateForm } from '@/features/template/TemplateForm';
 import { Layout } from '@/layouts/Layout';
-import { AccountService } from '@/ssr/api/AccountService';
-import { CategoryService } from '@/ssr/api/CategoryService';
-import { TransactionTemplateService } from '@/ssr/api/TransactionTemplateService';
-
 interface TemplateEditContainerProps {
   id: string;
 }
@@ -16,7 +17,7 @@ interface TemplateEditContainerProps {
 export const TemplateEditContainer: FC<TemplateEditContainerProps> = async ({
   id,
 }) => {
-  const template = await TransactionTemplateService.getById(id);
+  const template = await getTransactionTemplateById(id);
 
   if (!template) {
     notFound();
@@ -34,8 +35,8 @@ export const TemplateEditContainer: FC<TemplateEditContainerProps> = async ({
     })),
   };
 
-  const categories = await CategoryService.getAllWithTree();
-  const accounts = await AccountService.getAll();
+  const categories = await getAllCategoriesWithTree();
+  const accounts = await getAllAccounts();
 
   const handleSubmit = handleTemplateEdit.bind(null, template);
 

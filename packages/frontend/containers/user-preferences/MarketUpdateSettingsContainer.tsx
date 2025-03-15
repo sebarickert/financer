@@ -1,17 +1,18 @@
 import { FC } from 'react';
 
 import { handleMarketSettingsUpdate } from '@/actions/settings/handleMarketSettingsUpdate';
+import {
+  getAllCategoriesWithTree,
+  getDefaultMarketUpdateSettings,
+} from '@/api-service';
 import { settingsPaths } from '@/constants/settingsPaths';
 import { Layout } from '@/layouts/Layout';
-import { CategoryService } from '@/ssr/api/CategoryService';
-import { UserPreferenceService } from '@/ssr/api/UserPreferenceService';
 import { UserDefaultMarketUpdateSettingsForm } from '@/views/user-preferences/UserDefaultMarketUpdateSettingsForm';
 
 export const MarketUpdateSettingsContainer: FC = async () => {
-  const marketUpdateSettings =
-    await UserPreferenceService.getDefaultMarketUpdateSettings();
+  const marketUpdateSettings = await getDefaultMarketUpdateSettings();
 
-  const categories = await CategoryService.getAllWithTree();
+  const categories = await getAllCategoriesWithTree();
 
   return (
     <Layout

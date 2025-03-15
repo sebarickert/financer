@@ -2,8 +2,8 @@
 
 import { RedirectType, redirect } from 'next/navigation';
 
+import { deleteCategory } from '@/api-service';
 import { DefaultFormActionHandler } from '@/hooks/useFinancerFormState';
-import { CategoryService } from '@/ssr/api/CategoryService';
 
 export const handleCategoryDelete: DefaultFormActionHandler<{
   id: string;
@@ -12,7 +12,7 @@ export const handleCategoryDelete: DefaultFormActionHandler<{
     return { status: 'ERROR', errors: ['Failed to delete category: no id'] };
   }
 
-  await CategoryService.delete(id);
+  await deleteCategory(id);
 
   redirect('/categories', RedirectType.push);
 };
