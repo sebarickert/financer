@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import { type JSX, useState } from 'react';
+import { FC, type JSX, useState } from 'react';
 
 import { Logo } from '@/blocks/Logo';
 import { Button } from '@/elements/Button/Button';
@@ -10,13 +10,10 @@ import { Link } from '@/elements/Link';
 import { Loader } from '@/elements/Loader';
 import { Paragraph } from '@/elements/Paragraph';
 
-const { NEXT_PUBLIC_IS_GITHUB_OAUTH_ENABLED } = process.env;
-const { NEXT_PUBLIC_IS_AUTH0_OAUTH_ENABLED } = process.env;
-
-const checkIsEnabled = (stringBoolean: string | undefined) =>
-  stringBoolean && stringBoolean.toLocaleLowerCase() !== 'false';
-
-export const Login = (): JSX.Element => {
+export const Login: FC<{ github: boolean; auth0: boolean }> = ({
+  github,
+  auth0,
+}): JSX.Element => {
   const [isLoadingOAuthPage, setIsLoadingOAuthPage] = useState(false);
 
   const startAuthLoading = () => setTimeout(setIsLoadingOAuthPage, 500, true);
@@ -39,12 +36,12 @@ export const Login = (): JSX.Element => {
               Log in to take control of your finances.
             </Paragraph>
             <ButtonGroup>
-              {checkIsEnabled(NEXT_PUBLIC_IS_GITHUB_OAUTH_ENABLED) && (
+              {github && (
                 <Button href="/auth/github" onClick={startAuthLoading}>
                   Log In to Financer
                 </Button>
               )}
-              {checkIsEnabled(NEXT_PUBLIC_IS_AUTH0_OAUTH_ENABLED) && (
+              {auth0 && (
                 <Button href="/auth/auth0" onClick={startAuthLoading}>
                   Log In to Financer
                 </Button>

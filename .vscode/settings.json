@@ -8,6 +8,7 @@
   "editor.quickSuggestions": {
     "strings": "on"
   },
+  "eslint.format.enable": true,
   "eslint.workingDirectories": [
     {
       "directory": "./packages/frontend",
