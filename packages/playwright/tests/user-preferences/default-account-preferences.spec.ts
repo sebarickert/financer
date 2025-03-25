@@ -58,6 +58,7 @@ test.describe('Default Account Preferences', () => {
 
     await page.getByTestId('add-transaction').click();
 
+    await switchTransactionType(page, TransactionType.Expense);
     const updatedExpenseFormValues = await getTransactionFormValues(page);
     await switchTransactionType(page, TransactionType.Income);
     const updatedIncomeFormValues = await getTransactionFormValues(page);
