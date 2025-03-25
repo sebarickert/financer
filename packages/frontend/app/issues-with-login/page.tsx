@@ -12,8 +12,8 @@ export const metadata: Metadata = {
   title: 'Troubleshooting Login Issues',
 };
 
-const { NEXT_PUBLIC_IS_GITHUB_OAUTH_ENABLED } = process.env;
-const { NEXT_PUBLIC_IS_AUTH0_OAUTH_ENABLED } = process.env;
+const { LOGIN_IS_GITHUB_ENABLED } = process.env;
+const { LOGIN_IS_AUTH_0_ENABLED } = process.env;
 
 const checkIsEnabled = (stringBoolean: string | undefined) =>
   stringBoolean && stringBoolean.toLocaleLowerCase() !== 'false';
@@ -63,12 +63,8 @@ const IssuesWithLogin = async () => {
         </Button>
         <Heading variant="h1">Troubleshooting Login Issues</Heading>
       </div>
-      {checkIsEnabled(NEXT_PUBLIC_IS_GITHUB_OAUTH_ENABLED) && (
-        <ResolveGithubIssues />
-      )}
-      {checkIsEnabled(NEXT_PUBLIC_IS_AUTH0_OAUTH_ENABLED) && (
-        <ResolveAuth0Issues />
-      )}
+      {checkIsEnabled(LOGIN_IS_GITHUB_ENABLED) && <ResolveGithubIssues />}
+      {checkIsEnabled(LOGIN_IS_AUTH_0_ENABLED) && <ResolveAuth0Issues />}
     </main>
   );
 };
