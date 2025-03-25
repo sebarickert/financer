@@ -107,5 +107,6 @@ application:
       env:
         hostname: "0.0.0.0"
         sentryEnabledFrontendSsr: true
-        nextPublicIsGithubOauthEnabled: false
-        nextPublicIsAuth0OauthEnabled: true
+        login:
+          isGithubEnabled: false
+          isAuth0Enabled: true
