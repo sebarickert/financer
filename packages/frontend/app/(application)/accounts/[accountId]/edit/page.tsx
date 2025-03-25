@@ -1,6 +1,9 @@
 import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
-import { AccountEditContainer } from '@/container/accounts/AccountEditContainer';
+import { handleAccountEdit } from '@/actions/account/handleAccountEdit';
+import { AccountForm } from '@/features/account/AccountForm';
+import { ContentHeader } from '@/layouts/ContentHeader';
 import { AccountService } from '@/ssr/api/AccountService';
 
 type Params = Promise<{
@@ -16,13 +19,32 @@ export const generateMetadata = async ({
   const account = await AccountService.getById(accountId);
 
   return {
-    title: `Edit ${account?.name} / Accounts`,
+    title: `Edit ${account?.name}`,
   };
 };
-const AccountEditPage = async ({ params }: { params: Params }) => {
+
+export default async function AccountEditPage({ params }: { params: Params }) {
   const { accountId } = await params;
 
-  return <AccountEditContainer id={accountId} />;
-};
+  const account = await AccountService.getById(accountId);
 
-export default AccountEditPage;
+  if (!account) {
+    notFound();
+  }
+
+  const handleSubmit = handleAccountEdit.bind(null, account);
+
+  return (
+    <>
+      <ContentHeader
+        title="Edit Account"
+        backLink={`/accounts/${account.id}`}
+      />
+      <AccountForm
+        onSubmit={handleSubmit}
+        submitLabel="Save Changes"
+        initialValues={account}
+      />
+    </>
+  );
+}

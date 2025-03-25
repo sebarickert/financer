@@ -1,18 +1,15 @@
+import '@/assets/tailwind.css';
+
 import clsx from 'clsx';
 import { Metadata, Viewport } from 'next';
-import { headers } from 'next/headers';
-import { RedirectType, redirect } from 'next/navigation';
-import { FC } from 'react';
+import { ViewTransitions } from 'next-view-transitions';
 
 import { Theme } from '@/api/ssr-financer-api';
 import { faviconList } from '@/assets/favicon-list';
-import { RootProviderContainer } from '@/container/root.provider';
-import { AuthenticationService } from '@/ssr/api/AuthenticationService';
+import { ScrollToTop } from '@/blocks/ScrollToTop';
+import { StoreProvider } from '@/container/store.provider';
 import { UserService } from '@/ssr/api/UserService';
-import { ChildrenProp } from 'src/types/children-prop';
-import { CustomHeader } from 'src/types/custom-headers';
-
-import '@/assets/tailwind.css';
+import { verifySession } from '@/utils/dal';
 
 const appName = 'Financer';
 
@@ -28,8 +25,7 @@ export const metadata: Metadata = {
 };
 
 export const generateViewport = async (): Promise<Viewport> => {
-  const authenticationStatus = await AuthenticationService.getStatus();
-  const isLoggedIn = Boolean(authenticationStatus?.authenticated);
+  const isLoggedIn = await verifySession();
   const theme = isLoggedIn ? await UserService.getOwnUserTheme() : Theme.AUTO;
 
   let themeColor: Viewport['themeColor'];
@@ -59,26 +55,14 @@ export const generateViewport = async (): Promise<Viewport> => {
   };
 };
 
-const PUBLIC_ROUTES = ['/privacy-policy/', '/issues-with-login/', '/login/'];
-
-const RootLayout: FC<ChildrenProp> = async ({ children }) => {
-  const headersList = await headers();
-
-  const authenticationStatus = await AuthenticationService.getStatus();
-  const pathname = headersList.get(CustomHeader.PATHNAME) ?? '';
-
-  const isLoggedIn = Boolean(authenticationStatus?.authenticated);
-
-  if (!isLoggedIn && !PUBLIC_ROUTES.includes(pathname)) {
-    redirect('/login', RedirectType.replace);
-  } else if (pathname === '/login/' && isLoggedIn) {
-    redirect('/', RedirectType.replace);
-  }
-
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const isLoggedIn = await verifySession();
   const theme = isLoggedIn ? await UserService.getOwnUserTheme() : Theme.AUTO;
 
-  // We don't have to polyfill every feature by our self, since next js already does by default for many features
-  // See the full list from here: https://nextjs.org/docs/architecture/supported-browsers
   return (
     <html
       lang="en"
@@ -91,16 +75,13 @@ const RootLayout: FC<ChildrenProp> = async ({ children }) => {
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
       </head>
       <body className={clsx('max-lg:pb-(--gutter-bottom)')}>
-        <RootProviderContainer
-          shouldShowOnboarding={!authenticationStatus?.hasAccounts}
-          // eslint-disable-next-line  @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
-          authenticationErrors={(authenticationStatus as any)?.errors}
-        >
-          {children}
-        </RootProviderContainer>
+        <StoreProvider>
+          <ViewTransitions>
+            <ScrollToTop />
+            {children}
+          </ViewTransitions>
+        </StoreProvider>
       </body>
     </html>
   );
-};
-
-export default RootLayout;
+}

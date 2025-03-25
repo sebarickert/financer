@@ -4,15 +4,14 @@ import { Metadata } from 'next';
 
 import { Button } from '@/elements/Button/Button';
 import { Heading } from '@/elements/Heading';
-import { AuthenticationService } from '@/ssr/api/AuthenticationService';
+import { verifySession } from '@/utils/dal';
 
 export const metadata: Metadata = {
   title: 'Privacy Policy',
 };
 
 const PrivacyPolicy = async () => {
-  const authenticationStatus = await AuthenticationService.getStatus();
-  const isLoggedIn = Boolean(authenticationStatus?.authenticated);
+  const isLoggedIn = await verifySession();
 
   return (
     <main className="grid max-w-screen-lg gap-6 px-4 pt-6 mx-auto lg:pt-12 pb-safe-offset-12 lg:px-8">
