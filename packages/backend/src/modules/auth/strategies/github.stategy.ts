@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
+import { Theme } from '@prisma/client';
 import { Profile, Strategy } from 'passport-github2';
 
 import { AuthService } from '../auth.service';
@@ -13,7 +14,7 @@ import { AuthService } from '../auth.service';
 import { UsersService } from '@/users/users.service';
 
 @Injectable()
-export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
+export class GithubStrategy extends PassportStrategy(Strategy) {
   private readonly logger = new Logger(GithubStrategy.name);
 
   constructor(
@@ -38,7 +39,7 @@ export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
 
   async validate(_accessToken: never, _refreshToken: never, profile: Profile) {
     if (!profile.id) {
-      throw new ServiceUnavailableException();
+      throw new ServiceUnavailableException("Can't get user id from github");
     }
 
     try {
@@ -54,7 +55,7 @@ export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
         profileImageUrl: profile.photos?.slice().shift()?.value ?? null,
         auth0Id: null,
         roles: [],
-        theme: 'AUTO',
+        theme: Theme.AUTO,
       });
     } catch (error) {
       this.logger.error('Error validating user by github', error);

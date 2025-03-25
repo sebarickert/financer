@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
+import { Theme } from '@prisma/client';
 import { Profile, Strategy } from 'passport-auth0';
 
 import { AuthService } from '../auth.service';
@@ -13,7 +14,7 @@ import { AuthService } from '../auth.service';
 import { UsersService } from '@/users/users.service';
 
 @Injectable()
-export class Auth0Strategy extends PassportStrategy(Strategy, 'auth0') {
+export class Auth0Strategy extends PassportStrategy(Strategy) {
   private readonly logger = new Logger(Auth0Strategy.name);
 
   constructor(
@@ -36,6 +37,10 @@ export class Auth0Strategy extends PassportStrategy(Strategy, 'auth0') {
     this.logger.log('auth0 oauth enabled');
   }
 
+  redirect(url: string, status?: number): void {
+    super.redirect(url, status);
+  }
+
   async validate(
     _accessToken: never,
     _refreshToken: never,
@@ -43,7 +48,7 @@ export class Auth0Strategy extends PassportStrategy(Strategy, 'auth0') {
     profile: Profile,
   ) {
     if (!profile.id) {
-      throw new ServiceUnavailableException();
+      throw new ServiceUnavailableException("Can't get user id from auth0");
     }
 
     try {
@@ -60,7 +65,7 @@ export class Auth0Strategy extends PassportStrategy(Strategy, 'auth0') {
         githubId: null,
         auth0Id: profile.id,
         roles: [],
-        theme: 'AUTO',
+        theme: Theme.AUTO,
       });
     } catch (error) {
       this.logger.error('Error validating user by auth0', error);
