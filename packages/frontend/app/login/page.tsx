@@ -1,11 +1,13 @@
 import clsx from 'clsx';
 import { Metadata } from 'next';
+import { redirect } from 'next/navigation';
 
 import { Logo } from '@/blocks/Logo';
 import { Button } from '@/elements/Button/Button';
 import { ButtonGroup } from '@/elements/Button/ButtonGroup';
 import { Link } from '@/elements/Link';
 import { Paragraph } from '@/elements/Paragraph';
+import { verifySession } from '@/utils/dal';
 
 export const metadata: Metadata = {
   title: 'Login',
@@ -16,7 +18,13 @@ const { LOGIN_IS_GITHUB_ENABLED, LOGIN_IS_AUTH_0_ENABLED } = process.env;
 const checkIsEnabled = (stringBoolean: string | undefined) =>
   !!(stringBoolean && stringBoolean?.toLowerCase?.() === 'true');
 
-export default function Login() {
+export default async function Login() {
+  const isLoggedIn = await verifySession();
+
+  if (isLoggedIn) {
+    redirect('/');
+  }
+
   const github = checkIsEnabled(LOGIN_IS_GITHUB_ENABLED);
   const auth0 = checkIsEnabled(LOGIN_IS_AUTH_0_ENABLED);
 
