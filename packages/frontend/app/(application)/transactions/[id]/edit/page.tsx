@@ -49,15 +49,25 @@ const transactionTypeToVisibilityType: Record<TransactionType, VisibilityType> =
     [TransactionType.TRANSFER]: VisibilityType.TRANSFER,
   };
 
-const TransactionTypeServiceMapping = {
+const TransactionTypeMapping = {
   [TransactionType.INCOME]: {
     service: IncomeService,
+    fields: {
+      hasToAccountField: true,
+    },
   },
   [TransactionType.EXPENSE]: {
     service: ExpenseService,
+    fields: {
+      hasFromAccountField: true,
+    },
   },
   [TransactionType.TRANSFER]: {
     service: TransferService,
+    fields: {
+      hasToAccountField: true,
+      hasFromAccountField: true,
+    },
   },
 };
 
@@ -95,16 +105,17 @@ export default async function EditTransactionPage({
       | SchemaTransferDetailsDto;
 
     try {
-      data = await TransactionTypeServiceMapping[
-        transaction.type
-      ].service.update(transaction.id, {
-        amount: parseFloat(formData.get('amount') as string),
-        description: formData.get('description') as string,
-        date: formData.get('date') as string,
-        toAccount: formData.get('toAccount') as string,
-        fromAccount: formData.get('fromAccount') as string,
-        categories,
-      });
+      data = await TransactionTypeMapping[transaction.type].service.update(
+        transaction.id,
+        {
+          amount: parseFloat(formData.get('amount') as string),
+          description: formData.get('description') as string,
+          date: formData.get('date') as string,
+          toAccount: formData.get('toAccount') as string,
+          fromAccount: formData.get('fromAccount') as string,
+          categories,
+        },
+      );
     } catch (error) {
       if (error instanceof ValidationException) {
         return { status: 'ERROR', errors: error.errors };
@@ -144,10 +155,9 @@ export default async function EditTransactionPage({
       <TransactionForm
         initialValues={initialValues}
         onSubmit={handleSubmit}
-        hasToAccountField
-        hasFromAccountField
         transactionCategoriesWithCategoryTree={categories}
         accounts={accounts}
+        {...TransactionTypeMapping[transaction.type].fields}
       />
     </>
   );

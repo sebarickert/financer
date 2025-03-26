@@ -2,7 +2,6 @@ import Decimal from 'decimal.js';
 
 import { getAccountBalanceFromAccountListByName } from '@/utils/account/getAccountBalanceFromAccountListByName';
 import { applyFixture } from '@/utils/applyFixture';
-import { clickContextualNavigationItem } from '@/utils/common/clickContextualNavigationItem';
 import { clickPopperItem } from '@/utils/common/clickPopperItem';
 import { expect, test } from '@/utils/financer-page';
 import { fillTransactionForm } from '@/utils/transaction/fillTransactionForm';
@@ -12,14 +11,17 @@ import { setCategories } from '@/utils/transaction/setCategories';
 test.describe('Transfer Transactions', () => {
   test.beforeEach(async ({ page }) => {
     await applyFixture();
-    await page.goto('/transactions/transfers');
+    await page.goto('/transactions');
   });
 
   test.describe('Edit Transfer', () => {
     test('should edit transfer and verify account balance and transfer list', async ({
       page,
     }) => {
-      await page.getByTestId('transaction-list-item').first().click();
+      await page
+        .getByTestId('transaction-list-item')
+        .getByText('Dummy TRANSFER from Big money to Investment account')
+        .click();
 
       const {
         id,
@@ -35,7 +37,7 @@ test.describe('Transfer Transactions', () => {
       const initialToAccountBalance =
         await getAccountBalanceFromAccountListByName(page, toAccount);
 
-      await page.goto(`/transactions/transfers/${id}`);
+      await page.goto(`/transactions/${id}`);
       await clickPopperItem(page, 'Edit');
 
       const newAmount = new Decimal(249.99);
@@ -79,14 +81,16 @@ test.describe('Transfer Transactions', () => {
       );
 
       await page.getByRole('link', { name: 'Transactions' }).click();
-      await clickContextualNavigationItem(page, 'Transfers');
       await expect(page.getByTestId(id)).toContainText(updatedDescription);
     });
 
     test('should edit transfer account fields and verify balance updates', async ({
       page,
     }) => {
-      await page.getByTestId('transaction-list-item').first().click();
+      await page
+        .getByTestId('transaction-list-item')
+        .getByText('Dummy TRANSFER from Big money to Investment account')
+        .click();
 
       const { id, toAccount, fromAccount, amount } =
         await getTransactionDetails(page);
@@ -105,7 +109,7 @@ test.describe('Transfer Transactions', () => {
       const initialBalanceForNewToAccount =
         await getAccountBalanceFromAccountListByName(page, 'Saving account 1');
 
-      await page.goto(`/transactions/transfers/${id}`);
+      await page.goto(`/transactions/${id}`);
       await clickPopperItem(page, 'Edit');
 
       await fillTransactionForm(
@@ -167,9 +171,7 @@ test.describe('Transfer Transactions', () => {
     }) => {
       await page
         .getByTestId('transaction-list-item')
-        .getByText('Dummy TRANSFER from Big money to Investment account', {
-          exact: true,
-        })
+        .getByText('Dummy TRANSFER from Big money to Investment account')
         .click();
 
       const { categories: initialCategories } =
@@ -210,12 +212,7 @@ test.describe('Transfer Transactions', () => {
 
       await page
         .getByTestId('transaction-list-item')
-        .getByText(
-          'Dummy TRANSFER from Saving account 2 to Investment account',
-          {
-            exact: true,
-          },
-        )
+        .getByText('Dummy TRANSFER from Saving account 2 to Investment account')
         .click();
 
       const { categories: initialCategories } =
@@ -253,12 +250,7 @@ test.describe('Transfer Transactions', () => {
 
       await page
         .getByTestId('transaction-list-item')
-        .getByText(
-          'Dummy TRANSFER from Saving account 2 to Investment account',
-          {
-            exact: true,
-          },
-        )
+        .getByText('Dummy TRANSFER from Saving account 2 to Investment account')
         .click();
 
       const { categories: initialCategories } =

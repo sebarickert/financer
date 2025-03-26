@@ -2,7 +2,6 @@ import Decimal from 'decimal.js';
 
 import { getAccountBalanceFromAccountListByName } from '@/utils/account/getAccountBalanceFromAccountListByName';
 import { applyFixture } from '@/utils/applyFixture';
-import { clickContextualNavigationItem } from '@/utils/common/clickContextualNavigationItem';
 import { clickPopperItem } from '@/utils/common/clickPopperItem';
 import { expect, test } from '@/utils/financer-page';
 import { fillTransactionForm } from '@/utils/transaction/fillTransactionForm';
@@ -12,14 +11,17 @@ import { setCategories } from '@/utils/transaction/setCategories';
 test.describe('Expense Transactions', () => {
   test.beforeEach(async ({ page }) => {
     await applyFixture();
-    await page.goto('/transactions/expenses');
+    await page.goto('/transactions');
   });
 
   test.describe('Edit Expense', () => {
     test('should edit expense and verify account balance and expense list', async ({
       page,
     }) => {
-      await page.getByTestId('transaction-list-item').first().click();
+      await page
+        .getByTestId('transaction-list-item')
+        .getByText('DUMMY EXPENSE 1')
+        .click();
 
       const {
         id,
@@ -32,7 +34,7 @@ test.describe('Expense Transactions', () => {
       const initialAccountBalance =
         await getAccountBalanceFromAccountListByName(page, fromAccount);
 
-      await page.goto(`/transactions/expenses/${id}`);
+      await page.goto(`/transactions/${id}`);
       await clickPopperItem(page, 'Edit');
 
       const newAmount = new Decimal(249.99);
@@ -71,14 +73,16 @@ test.describe('Expense Transactions', () => {
       );
 
       await page.getByRole('link', { name: 'Transactions' }).click();
-      await clickContextualNavigationItem(page, 'Expenses');
       await expect(page.getByTestId(id)).toContainText(updatedDescription);
     });
 
     test('should edit expense account field and verify balance updates', async ({
       page,
     }) => {
-      await page.getByTestId('transaction-list-item').first().click();
+      await page
+        .getByTestId('transaction-list-item')
+        .getByText('DUMMY EXPENSE 1')
+        .click();
 
       const { id, fromAccount, amount } = await getTransactionDetails(page);
 
@@ -90,7 +94,7 @@ test.describe('Expense Transactions', () => {
       const initialBalanceForNewAccount =
         await getAccountBalanceFromAccountListByName(page, 'Cash account');
 
-      await page.goto(`/transactions/expenses/${id}`);
+      await page.goto(`/transactions/${id}`);
       await clickPopperItem(page, 'Edit');
 
       await fillTransactionForm(
@@ -131,7 +135,7 @@ test.describe('Expense Transactions', () => {
     }) => {
       await page
         .getByTestId('transaction-list-item')
-        .getByText('Dummy EXPENSE 1', { exact: true })
+        .getByText('Dummy EXPENSE 1')
         .click();
 
       const { categories: initialCategories } =
@@ -170,7 +174,7 @@ test.describe('Expense Transactions', () => {
     }) => {
       await page
         .getByTestId('transaction-list-item')
-        .getByText('Dummy EXPENSE 2', { exact: true })
+        .getByText('Dummy EXPENSE 2')
         .click();
 
       const { categories: initialCategories } =
@@ -206,7 +210,7 @@ test.describe('Expense Transactions', () => {
     }) => {
       await page
         .getByTestId('transaction-list-item')
-        .getByText('Dummy EXPENSE 2', { exact: true })
+        .getByText('Dummy EXPENSE 2')
         .click();
 
       const { categories: initialCategories } =

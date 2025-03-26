@@ -72,10 +72,9 @@ const getCategories = async (page: Page): Promise<CategoryDetails[]> => {
 export const getTransactionDetails = async (
   page: Page,
 ): Promise<TransactionDetails> => {
-  await expect(page).toHaveURL(
-    /\/transactions\/(?:incomes|expenses|transfers)\/[\da-fA-F-]{36}/i,
-    { timeout: 5000 },
-  );
+  await expect(page).toHaveURL(/\/transactions\/[\da-fA-F-]{36}/i, {
+    timeout: 5000,
+  });
 
   await expect(page.getByTestId('balance-amount')).toBeVisible({
     timeout: 5000,

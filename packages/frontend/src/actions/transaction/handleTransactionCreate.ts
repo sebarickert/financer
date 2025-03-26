@@ -76,5 +76,5 @@ export const handleTransactionCreate: DefaultFormActionHandler = async (
     return { status: 'ERROR', errors: ['Something went wrong'] };
   }
 
-  redirect(`transactions/${data.id}`, RedirectType.push);
+  redirect(`/transactions/${data.id}`, RedirectType.push);
 };
