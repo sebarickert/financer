@@ -43,7 +43,12 @@ export class AccountsService {
 
   createMany(userId: UserId, createAccountDto: CreateAccountDto[]) {
     return this.accountRepo.createMany(
-      createAccountDto.map((account) => ({ ...account, userId })),
+      createAccountDto.map((account) => ({
+        ...account,
+        userId,
+        // TODO we should remove current balance from user export
+        currentDateBalance: undefined,
+      })),
     );
   }
 
