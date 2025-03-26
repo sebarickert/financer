@@ -1,14 +1,55 @@
+import { Layers, Plus } from 'lucide-react';
 import { Metadata } from 'next';
-import { FC } from 'react';
 
-import { TemplateListingContainer } from '@/container/templates/TemplateListingContainer';
+import { InfoMessageBlock } from '@/blocks/InfoMessageBlock';
+import { RequireAccounts } from '@/components/RequireAccounts';
+import { Button } from '@/elements/Button/Button';
+import { TemplateList } from '@/features/template/TemplateList';
+import { ContentHeader } from '@/layouts/ContentHeader';
+import { AccountService } from '@/ssr/api/AccountService';
+import { TransactionTemplateService } from '@/ssr/api/TransactionTemplateService';
 
 export const metadata: Metadata = {
   title: 'Templates',
 };
 
-const TemplateListingPage: FC = () => {
-  return <TemplateListingContainer />;
-};
+export default async function TemplateListingPage() {
+  const accounts = await AccountService.getAll();
+  const templates = await TransactionTemplateService.getAll();
 
-export default TemplateListingPage;
+  return (
+    <>
+      <ContentHeader
+        title="Templates"
+        headerAction={
+          accounts.length > 0 && (
+            <Button
+              href={`/templates/add`}
+              accentColor="secondary"
+              size="icon"
+              testId="add-template"
+              className="max-lg:button-ghost"
+            >
+              <span className="sr-only">Add template</span>
+              <Plus />
+            </Button>
+          )
+        }
+      />
+      <RequireAccounts>
+        {!templates.length && (
+          <InfoMessageBlock
+            title="No Templates Added"
+            Icon={Layers}
+            action={<Button href={`/templates/add`}>Add Template</Button>}
+          >
+            It seems you haven&apos;t added any templates yet. Create your first
+            template to predefine values or automate common transactions, making
+            it easier to track recurring expenses and income.
+          </InfoMessageBlock>
+        )}
+        <TemplateList templates={templates} />
+      </RequireAccounts>
+    </>
+  );
+}

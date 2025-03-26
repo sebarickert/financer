@@ -1,13 +1,20 @@
 import { Metadata } from 'next';
 
-import { DashboardContainer } from '@/container/DashboardContainer';
+import { RequireAccounts } from '@/components/RequireAccounts';
+import { ContentHeader } from '@/layouts/ContentHeader';
+import { Dashboard } from '@/views/Dashboard';
 
 export const metadata: Metadata = {
   title: 'Dashboard',
 };
 
-const HomePage = () => {
-  return <DashboardContainer />;
-};
-
-export default HomePage;
+export default function DashboardPage() {
+  return (
+    <>
+      <ContentHeader title={'Dashboard'} />
+      <RequireAccounts>
+        <Dashboard />
+      </RequireAccounts>
+    </>
+  );
+}

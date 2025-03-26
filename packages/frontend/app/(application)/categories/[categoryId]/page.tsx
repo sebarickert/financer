@@ -1,7 +1,12 @@
+import { Pencil, Trash } from 'lucide-react';
 import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
-import { CategoryContainer } from '@/container/categories/CategoryContainer';
+import { Popper } from '@/elements/Popper';
+import { CategoryDeleteDrawer } from '@/features/category/CategoryDeleteDrawer';
+import { ContentHeader } from '@/layouts/ContentHeader';
 import { CategoryService } from '@/ssr/api/CategoryService';
+import { Category } from '@/views/Category';
 
 type Params = Promise<{
   categoryId: string;
@@ -18,7 +23,7 @@ export const generateMetadata = async ({
   const category = await CategoryService.getById(categoryId);
 
   return {
-    title: `${category.name} / Categories`,
+    title: category.name,
   };
 };
 
@@ -32,5 +37,43 @@ export default async function CategoryPage({
   const { categoryId } = await params;
   const queryDate = (await searchParams).date as string | undefined;
 
-  return <CategoryContainer id={categoryId} queryDate={queryDate} />;
+  const category = await CategoryService.getById(categoryId);
+
+  if (!category) {
+    notFound();
+  }
+
+  const allCategories = await CategoryService.getAll();
+
+  return (
+    <>
+      <ContentHeader
+        title="Category Details"
+        backLink={'/categories'}
+        headerAction={
+          <Popper
+            items={[
+              {
+                label: 'Edit',
+                href: `/categories/${category.id}/edit`,
+                Icon: Pencil,
+              },
+              {
+                label: 'Delete',
+                popperId: category.id,
+                Icon: Trash,
+              },
+            ]}
+          />
+        }
+      />
+      <Category
+        category={category}
+        categories={allCategories}
+        parentTransactionCategoryId={categoryId}
+        queryDate={queryDate}
+      />
+      <CategoryDeleteDrawer id={category.id} />
+    </>
+  );
 }

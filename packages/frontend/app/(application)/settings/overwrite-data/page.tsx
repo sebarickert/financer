@@ -1,14 +1,22 @@
 import { Metadata } from 'next';
-import { FC } from 'react';
 
-import { OverwriteUserDataContainer } from '@/container/settings/OverwriteUserDataContainer';
+import { handleOverwriteUserData } from '@/actions/user/handleOverwriteUserData';
+import { settingsPaths } from '@/constants/settingsPaths';
+import { ContentHeader } from '@/layouts/ContentHeader';
+import { OverwriteUserData } from '@/views/OverwriteUserData';
 
 export const metadata: Metadata = {
   title: 'Overwrite User Data (DANGER ZONE)',
 };
 
-const OverwriteUserDataPage: FC = () => {
-  return <OverwriteUserDataContainer />;
-};
-
-export default OverwriteUserDataPage;
+export default function OverwriteUserDataPage() {
+  return (
+    <>
+      <ContentHeader
+        title="Overwrite User Data (DANGER ZONE)"
+        backLink={settingsPaths.default}
+      />
+      <OverwriteUserData onOverwriteData={handleOverwriteUserData} />
+    </>
+  );
+}

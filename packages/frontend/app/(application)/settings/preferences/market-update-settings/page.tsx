@@ -1,13 +1,33 @@
 import { Metadata } from 'next';
 
-import { MarketUpdateSettingsContainer } from '@/container/user-preferences/MarketUpdateSettingsContainer';
+import { handleMarketSettingsUpdate } from '@/actions/settings/handleMarketSettingsUpdate';
+import { settingsPaths } from '@/constants/settingsPaths';
+import { ContentHeader } from '@/layouts/ContentHeader';
+import { CategoryService } from '@/ssr/api/CategoryService';
+import { UserPreferenceService } from '@/ssr/api/UserPreferenceService';
+import { UserDefaultMarketUpdateSettingsForm } from '@/views/user-preferences/UserDefaultMarketUpdateSettingsForm';
 
 export const metadata: Metadata = {
   title: 'Market Update Settings',
 };
 
-const MarketUpdateSettingsUserPreferencePage = () => {
-  return <MarketUpdateSettingsContainer />;
-};
+export default async function MarketUpdateSettingsUserPreferencePage() {
+  const marketUpdateSettings =
+    await UserPreferenceService.getDefaultMarketUpdateSettings();
 
-export default MarketUpdateSettingsUserPreferencePage;
+  const categories = await CategoryService.getAllWithTree();
+
+  return (
+    <>
+      <ContentHeader
+        title="Market Update Settings"
+        backLink={settingsPaths.userPreferences}
+      />
+      <UserDefaultMarketUpdateSettingsForm
+        data={marketUpdateSettings}
+        categories={categories}
+        onSave={handleMarketSettingsUpdate}
+      />
+    </>
+  );
+}

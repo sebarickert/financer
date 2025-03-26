@@ -2,7 +2,6 @@ import Decimal from 'decimal.js';
 
 import { getAccountBalanceFromAccountListByName } from '@/utils/account/getAccountBalanceFromAccountListByName';
 import { applyFixture } from '@/utils/applyFixture';
-import { clickContextualNavigationItem } from '@/utils/common/clickContextualNavigationItem';
 import { getEmptyListErrorMessageByBrowserName } from '@/utils/common/getEmptyListErrorMessageByBrowserName';
 import { expect, test } from '@/utils/financer-page';
 import { getTemplateFormValues } from '@/utils/template/getTemplateFormValues';
@@ -16,7 +15,7 @@ import { setCategories } from '@/utils/transaction/setCategories';
 test.describe('Expense Transactions', () => {
   test.beforeEach(async ({ page }) => {
     await applyFixture();
-    await page.goto('/transactions/expenses');
+    await page.goto('/transactions');
   });
 
   test.describe('Add Expense', () => {
@@ -54,7 +53,6 @@ test.describe('Expense Transactions', () => {
       expect(updatedAccountBalance).toEqual(initialAccountBalance.minus(15.5));
 
       await page.getByRole('link', { name: 'Transactions' }).click();
-      await clickContextualNavigationItem(page, 'Expenses');
 
       await expect(
         page
@@ -87,7 +85,7 @@ test.describe('Expense Transactions', () => {
         .getByRole('button', { name: 'Submit' })
         .click();
 
-      await expect(page).toHaveURL(/\/transactions\/expenses\//);
+      await expect(page).toHaveURL(/\/transactions\//);
 
       const { categories } = await getTransactionDetails(page);
 

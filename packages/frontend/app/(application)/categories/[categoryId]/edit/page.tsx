@@ -1,6 +1,9 @@
 import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
-import { CategoryEditContainer } from '@/container/categories/CategoryEditContainer';
+import { handleCategoryEdit } from '@/actions/category/handleCategoryEdit';
+import { CategoryForm } from '@/features/category/CategoryForm';
+import { ContentHeader } from '@/layouts/ContentHeader';
 import { CategoryService } from '@/ssr/api/CategoryService';
 
 type Params = Promise<{
@@ -16,14 +19,35 @@ export const generateMetadata = async ({
   const category = await CategoryService.getById(categoryId);
 
   return {
-    title: `Edit ${category.name} / Categories`,
+    title: `Edit ${category.name}`,
   };
 };
 
-const CategoryEditPage = async ({ params }: { params: Params }) => {
+export default async function CategoryEditPage({ params }: { params: Params }) {
   const { categoryId } = await params;
 
-  return <CategoryEditContainer id={categoryId} />;
-};
+  const category = await CategoryService.getById(categoryId);
 
-export default CategoryEditPage;
+  if (!category) {
+    notFound();
+  }
+
+  const handleSubmit = handleCategoryEdit.bind(null, category);
+  const categories = await CategoryService.getAllWithTree();
+
+  return (
+    <>
+      <ContentHeader
+        title="Edit Category"
+        backLink={`/categories/${category.id}`}
+      />
+      <CategoryForm
+        onSubmit={handleSubmit}
+        submitLabel="Update"
+        currentCategoryId={category.id}
+        initialValues={category}
+        transactionCategoriesWithCategoryTree={categories}
+      />
+    </>
+  );
+}

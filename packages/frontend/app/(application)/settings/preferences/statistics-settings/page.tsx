@@ -1,13 +1,40 @@
 import { Metadata } from 'next';
 
-import { StatisticsPageSettingsContainer } from '@/container/user-preferences/StatisticsPageSettingsContainer';
+import { handleStatisticsPageSettingsUpdate } from '@/actions/settings/handleStatisticsPageSettingsUpdate';
+import { InfoMessageBlock } from '@/blocks/InfoMessageBlock';
+import { settingsContextualNavigationItems } from '@/constants/settingsContextualNavigationItems';
+import { settingsPaths } from '@/constants/settingsPaths';
+import { ContentHeader } from '@/layouts/ContentHeader';
+import { UserPreferenceService } from '@/ssr/api/UserPreferenceService';
+import { UserStatisticsPageSettingsForm } from '@/views/user-preferences/UserStatisticsPageSettingsForm';
 
 export const metadata: Metadata = {
   title: 'Transactions & Statistics Settings',
 };
 
-const StatisticsSettingsUserPreferencePage = () => {
-  return <StatisticsPageSettingsContainer />;
-};
+export default async function SettingsPreferencesPage() {
+  const statisticsSettings =
+    await UserPreferenceService.getStatisticsSettings();
 
-export default StatisticsSettingsUserPreferencePage;
+  return (
+    <>
+      <ContentHeader
+        title="Transactions & Statistics Settings"
+        contextualNavigationItems={settingsContextualNavigationItems}
+        backLink={settingsPaths.default}
+      />
+      <InfoMessageBlock
+        title="Account Types"
+        className="mb-6"
+        variant="barebone"
+      >
+        The selected account types will determine the calculated numbers and
+        charts on your transactions and statistics pages.
+      </InfoMessageBlock>
+      <UserStatisticsPageSettingsForm
+        data={statisticsSettings}
+        onSave={handleStatisticsPageSettingsUpdate}
+      />
+    </>
+  );
+}

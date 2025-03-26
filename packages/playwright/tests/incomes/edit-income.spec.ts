@@ -2,7 +2,6 @@ import Decimal from 'decimal.js';
 
 import { getAccountBalanceFromAccountListByName } from '@/utils/account/getAccountBalanceFromAccountListByName';
 import { applyFixture } from '@/utils/applyFixture';
-import { clickContextualNavigationItem } from '@/utils/common/clickContextualNavigationItem';
 import { clickPopperItem } from '@/utils/common/clickPopperItem';
 import { expect, test } from '@/utils/financer-page';
 import { fillTransactionForm } from '@/utils/transaction/fillTransactionForm';
@@ -12,14 +11,17 @@ import { setCategories } from '@/utils/transaction/setCategories';
 test.describe('Income Transactions', () => {
   test.beforeEach(async ({ page }) => {
     await applyFixture();
-    await page.goto('/transactions/incomes');
+    await page.goto('/transactions');
   });
 
   test.describe('Edit Income', () => {
     test('should edit income and verify account balance and income list', async ({
       page,
     }) => {
-      await page.getByTestId('transaction-list-item').first().click();
+      await page
+        .getByTestId('transaction-list-item')
+        .getByText('DUMMY INCOME 1')
+        .click();
 
       const {
         id,
@@ -32,7 +34,7 @@ test.describe('Income Transactions', () => {
       const initialAccountBalance =
         await getAccountBalanceFromAccountListByName(page, toAccount);
 
-      await page.goto(`/transactions/incomes/${id}`);
+      await page.goto(`/transactions/${id}`);
       await clickPopperItem(page, 'Edit');
 
       const newAmount = new Decimal(249.99);
@@ -71,14 +73,16 @@ test.describe('Income Transactions', () => {
       );
 
       await page.getByRole('link', { name: 'Transactions' }).click();
-      await clickContextualNavigationItem(page, 'Incomes');
       await expect(page.getByTestId(id)).toContainText(updatedDescription);
     });
 
     test('should edit income account field and verify balance updates', async ({
       page,
     }) => {
-      await page.getByTestId('transaction-list-item').first().click();
+      await page
+        .getByTestId('transaction-list-item')
+        .getByText('DUMMY INCOME 1')
+        .click();
 
       const { id, toAccount, amount } = await getTransactionDetails(page);
 
@@ -90,7 +94,7 @@ test.describe('Income Transactions', () => {
       const initialBalanceForNewAccount =
         await getAccountBalanceFromAccountListByName(page, 'Cash account');
 
-      await page.goto(`/transactions/incomes/${id}`);
+      await page.goto(`/transactions/${id}`);
       await clickPopperItem(page, 'Edit');
 
       await fillTransactionForm(
@@ -131,7 +135,7 @@ test.describe('Income Transactions', () => {
     }) => {
       await page
         .getByTestId('transaction-list-item')
-        .getByText('Dummy INCOME 1', { exact: true })
+        .getByText('Dummy INCOME 1')
         .click();
 
       const { categories: initialCategories } =
@@ -172,7 +176,7 @@ test.describe('Income Transactions', () => {
 
       await page
         .getByTestId('transaction-list-item')
-        .getByText('Dummy INCOME 2', { exact: true })
+        .getByText('Dummy INCOME 2')
         .click();
 
       const { categories: initialCategories } =
@@ -210,7 +214,7 @@ test.describe('Income Transactions', () => {
 
       await page
         .getByTestId('transaction-list-item')
-        .getByText('Dummy INCOME 2', { exact: true })
+        .getByText('Dummy INCOME 2')
         .click();
 
       const { categories: initialCategories } =

@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 
 import { revalidateFullAppCache } from '@/actions/revalidateFullAppCache';
 
+// Needed for E2E tests.
 export async function POST() {
   try {
     await revalidateFullAppCache();

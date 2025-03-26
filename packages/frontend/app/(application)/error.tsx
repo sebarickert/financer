@@ -2,17 +2,18 @@
 
 import { Metadata } from 'next';
 
-import { Layout } from '@/layouts/Layout';
+import { ContentHeader } from '@/layouts/ContentHeader';
 import { Error as ErrorPageComponent } from '@/views/Error';
 
 export const metadata: Metadata = {
   title: 'Error',
 };
 
-const ErrorPage = () => (
-  <Layout title="Error">
-    <ErrorPageComponent errorPageType="in-app" />
-  </Layout>
-);
-
-export default ErrorPage;
+export default function ErrorPage() {
+  return (
+    <>
+      <ContentHeader title="Error" />
+      <ErrorPageComponent errorPageType="in-app" />
+    </>
+  );
+}

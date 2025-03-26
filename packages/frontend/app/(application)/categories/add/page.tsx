@@ -1,13 +1,25 @@
 import { Metadata } from 'next';
 
-import { CategoryAddContainer } from '@/container/categories/CategoryAddContainer';
+import { handleCategoryAdd } from '@/actions/category/handleCategoryAdd';
+import { CategoryForm } from '@/features/category/CategoryForm';
+import { ContentHeader } from '@/layouts/ContentHeader';
+import { CategoryService } from '@/ssr/api/CategoryService';
 
 export const metadata: Metadata = {
   title: 'Add Category',
 };
 
-const CategoryAddPage = () => {
-  return <CategoryAddContainer />;
-};
+export default async function CategoryAddPage() {
+  const categories = await CategoryService.getAllWithTree();
 
-export default CategoryAddPage;
+  return (
+    <>
+      <ContentHeader title="Add Category" backLink={'/categories'} />
+      <CategoryForm
+        onSubmit={handleCategoryAdd}
+        submitLabel="Add"
+        transactionCategoriesWithCategoryTree={categories}
+      />
+    </>
+  );
+}

@@ -6,14 +6,13 @@ import type { JSX } from 'react';
 import { InfoMessageBlock } from '@/blocks/InfoMessageBlock';
 import { Button } from '@/elements/Button/Button';
 import { Heading } from '@/elements/Heading';
-import { AuthenticationService } from '@/ssr/api/AuthenticationService';
+import { verifySession } from '@/utils/dal';
 
 export const metadata: Metadata = {
   title: 'Troubleshooting Login Issues',
 };
 
-const { LOGIN_IS_GITHUB_ENABLED } = process.env;
-const { LOGIN_IS_AUTH_0_ENABLED } = process.env;
+const { LOGIN_IS_GITHUB_ENABLED, LOGIN_IS_AUTH_0_ENABLED } = process.env;
 
 const checkIsEnabled = (stringBoolean: string | undefined) =>
   stringBoolean && stringBoolean.toLocaleLowerCase() !== 'false';
@@ -44,8 +43,7 @@ const ResolveAuth0Issues = (): JSX.Element => {
 };
 
 const IssuesWithLogin = async () => {
-  const authenticationStatus = await AuthenticationService.getStatus();
-  const isLoggedIn = Boolean(authenticationStatus?.authenticated);
+  const isLoggedIn = await verifySession();
 
   return (
     <main className="grid max-w-screen-lg gap-6 px-4 pt-6 mx-auto lg:pt-12 pb-safe-offset-12 lg:px-8">

@@ -1,6 +1,5 @@
 import { getAccountBalanceFromAccountListByName } from '@/utils/account/getAccountBalanceFromAccountListByName';
 import { applyFixture } from '@/utils/applyFixture';
-import { clickContextualNavigationItem } from '@/utils/common/clickContextualNavigationItem';
 import { expect, test } from '@/utils/financer-page';
 import { deleteTransaction } from '@/utils/transaction/deleteTransaction';
 import { getTransactionDetails } from '@/utils/transaction/getTransactionDetails';
@@ -8,13 +7,16 @@ import { getTransactionDetails } from '@/utils/transaction/getTransactionDetails
 test.describe('Delete Transfer', () => {
   test.beforeEach(async ({ page }) => {
     await applyFixture();
-    await page.goto('/transactions/transfers');
+    await page.goto('/transactions');
   });
 
   test('should delete an transfer and verify account balances and that the transaction does not exist anymore', async ({
     page,
   }) => {
-    await page.getByTestId('transaction-list-item').first().click();
+    await page
+      .getByTestId('transaction-list-item')
+      .getByText('Dummy TRANSFER from Big money to Investment account')
+      .click();
 
     const { id, toAccount, fromAccount, amount } =
       await getTransactionDetails(page);
@@ -26,13 +28,12 @@ test.describe('Delete Transfer', () => {
     const initialToAccountBalance =
       await getAccountBalanceFromAccountListByName(page, toAccount);
 
-    await page.goto(`/transactions/transfers/${id}`);
+    await page.goto(`/transactions/${id}`);
 
     await deleteTransaction(page);
-    await expect(page).not.toHaveURL(`/transactions/transfers/${id}`);
+    await expect(page).not.toHaveURL(`/transactions/${id}`);
 
     await page.getByRole('link', { name: 'Transactions' }).click();
-    await clickContextualNavigationItem(page, 'Transfers');
 
     await expect(
       page.getByTestId('transaction-list-item').getByTestId(id),

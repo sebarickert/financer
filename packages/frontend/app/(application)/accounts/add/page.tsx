@@ -1,14 +1,18 @@
 import { Metadata } from 'next';
-import { FC } from 'react';
 
-import { AccountAddContainer } from '@/container/accounts/AccountAddContainer';
+import { handleAccountAdd } from '@/actions/account/handleAccountAdd';
+import { AccountForm } from '@/features/account/AccountForm';
+import { ContentHeader } from '@/layouts/ContentHeader';
 
 export const metadata: Metadata = {
   title: 'Add Account',
 };
 
-const AddAccountPage: FC = () => {
-  return <AccountAddContainer />;
-};
-
-export default AddAccountPage;
+export default function AccountAddPage() {
+  return (
+    <>
+      <ContentHeader title="Add Account" backLink="/accounts" />
+      <AccountForm onSubmit={handleAccountAdd} submitLabel="Save Account" />
+    </>
+  );
+}

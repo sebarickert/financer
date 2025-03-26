@@ -1,13 +1,45 @@
 import { Metadata } from 'next';
 
-import { DefaultAccountSettingsContainer } from '@/container/user-preferences/DefaultAccountSettingsContainer';
+import { handleAccountSettingsUpdate } from '@/actions/settings/handleAccountSettingsUpdate';
+import { RequireAccounts } from '@/components/RequireAccounts';
+import { settingsPaths } from '@/constants/settingsPaths';
+import { ContentHeader } from '@/layouts/ContentHeader';
+import { AccountService } from '@/ssr/api/AccountService';
+import { UserPreferenceService } from '@/ssr/api/UserPreferenceService';
+import { UserDefaultAccountSettingsForm } from '@/views/user-preferences/UserDefaultAccountSettingsForm';
 
 export const metadata: Metadata = {
   title: 'Default Account Settings',
 };
 
-const DefaultAccountSettingsUserPreferencePage = () => {
-  return <DefaultAccountSettingsContainer />;
-};
+export default async function DefaultAccountSettingsUserPreferencePage() {
+  const accounts = await AccountService.getAll();
 
-export default DefaultAccountSettingsUserPreferencePage;
+  const defaultIncomeAccount =
+    await UserPreferenceService.getDefaultIncomeAccount();
+  const defaultExpenseAccount =
+    await UserPreferenceService.getDefaultExpenseAccount();
+  const defaultTransferSourceAccount =
+    await UserPreferenceService.getDefaultTransferSourceAccount();
+  const defaultTransferTargetAccount =
+    await UserPreferenceService.getDefaultTransferTargetAccount();
+
+  return (
+    <>
+      <ContentHeader
+        title="Default Account Settings"
+        backLink={settingsPaths.userPreferences}
+      />
+      <RequireAccounts>
+        <UserDefaultAccountSettingsForm
+          accounts={accounts}
+          defaultIncomeAccount={defaultIncomeAccount}
+          defaultExpenseAccount={defaultExpenseAccount}
+          defaultTransferSourceAccount={defaultTransferSourceAccount}
+          defaultTransferTargetAccount={defaultTransferTargetAccount}
+          onSave={handleAccountSettingsUpdate}
+        />
+      </RequireAccounts>
+    </>
+  );
+}
