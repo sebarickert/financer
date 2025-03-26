@@ -44,15 +44,12 @@ export const handleTransactionCreate: DefaultFormActionHandler = async (
   const TransactionDataMapping = {
     [TransactionType.INCOME]: {
       service: IncomeService,
-      url: '/transactions/incomes',
     },
     [TransactionType.EXPENSE]: {
       service: ExpenseService,
-      url: '/transactions/expenses',
     },
     [TransactionType.TRANSFER]: {
       service: TransferService,
-      url: '/transactions/transfers',
     },
   };
 
@@ -79,5 +76,5 @@ export const handleTransactionCreate: DefaultFormActionHandler = async (
     return { status: 'ERROR', errors: ['Something went wrong'] };
   }
 
-  redirect(`${TransactionDataMapping[type].url}/${data.id}`, RedirectType.push);
+  redirect(`transactions/${data.id}`, RedirectType.push);
 };

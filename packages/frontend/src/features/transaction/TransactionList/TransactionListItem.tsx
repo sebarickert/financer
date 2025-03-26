@@ -23,7 +23,7 @@ export const TransactionListItem: FC<
   const isIncome = type === TransactionType.INCOME;
   const isExpense = type === TransactionType.EXPENSE;
 
-  const url = `/transactions/${type.toLowerCase()}s/${id}`;
+  const url = `/transactions/${id}`;
   const formattedCategories = categories.map(({ name }) => name).join(', ');
 
   const ariaLabel = `${description}, ${isIncome ? '+' : isExpense ? '-' : ''}${formatCurrency(amount)}, ${new DateService(date).format()}, ${TRANSACTION_TYPE_MAPPING[type].label.default}${isRecurring ? ', Recurring' : ''}`;
