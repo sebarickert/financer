@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { redirect } from 'next/navigation';
 
 import { handleTemplateAdd } from '@/actions/template/handleTemplateAdd';
 import { TemplateForm } from '@/features/template/TemplateForm';
@@ -13,6 +14,10 @@ export const metadata: Metadata = {
 export default async function AddTemplatePage() {
   const categories = await CategoryService.getAllWithTree();
   const accounts = await AccountService.getAll();
+
+  if (!accounts.length) {
+    redirect('/templates');
+  }
 
   return (
     <>

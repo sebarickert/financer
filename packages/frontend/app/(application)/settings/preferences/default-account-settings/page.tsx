@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 
 import { handleAccountSettingsUpdate } from '@/actions/settings/handleAccountSettingsUpdate';
+import { RequireAccounts } from '@/components/RequireAccounts';
 import { settingsPaths } from '@/constants/settingsPaths';
 import { ContentHeader } from '@/layouts/ContentHeader';
 import { AccountService } from '@/ssr/api/AccountService';
@@ -29,14 +30,16 @@ export default async function DefaultAccountSettingsUserPreferencePage() {
         title="Default Account Settings"
         backLink={settingsPaths.userPreferences}
       />
-      <UserDefaultAccountSettingsForm
-        accounts={accounts}
-        defaultIncomeAccount={defaultIncomeAccount}
-        defaultExpenseAccount={defaultExpenseAccount}
-        defaultTransferSourceAccount={defaultTransferSourceAccount}
-        defaultTransferTargetAccount={defaultTransferTargetAccount}
-        onSave={handleAccountSettingsUpdate}
-      />
+      <RequireAccounts>
+        <UserDefaultAccountSettingsForm
+          accounts={accounts}
+          defaultIncomeAccount={defaultIncomeAccount}
+          defaultExpenseAccount={defaultExpenseAccount}
+          defaultTransferSourceAccount={defaultTransferSourceAccount}
+          defaultTransferTargetAccount={defaultTransferTargetAccount}
+          onSave={handleAccountSettingsUpdate}
+        />
+      </RequireAccounts>
     </>
   );
 }

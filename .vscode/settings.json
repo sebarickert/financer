@@ -30,8 +30,8 @@
   "[typescript]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
-  "javascript.preferences.importModuleSpecifier": "shortest",
-  "typescript.preferences.importModuleSpecifier": "shortest",
+  "javascript.preferences.importModuleSpecifier": "non-relative",
+  "typescript.preferences.importModuleSpecifier": "non-relative",
   "jest.virtualFolders": [
     { "name": "backend", "rootPath": "./packages/backend" },
     { "name": "frontend", "rootPath": "./packages/frontend" }
