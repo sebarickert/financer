@@ -3,7 +3,6 @@
 import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { AccountType } from '@/api/ssr-financer-api';
 import { Form } from '@/blocks/Form';
 import { ACCOUNT_TYPE_MAPPING } from '@/constants/account/ACCOUNT_TYPE_MAPPING';
 import { Button } from '@/elements/Button/Button';
@@ -12,6 +11,7 @@ import {
   DefaultFormActionHandler,
   useFinancerFormState,
 } from '@/hooks/useFinancerFormState';
+import { AccountType } from '@/api/ssr-financer-api';
 
 const allAccountTypes = Object.values(AccountType);
 

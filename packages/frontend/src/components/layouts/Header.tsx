@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { unstable_ViewTransition as ViewTransition } from 'react';
 
 import { getOwnUser, getOwnUserTheme } from '@/api-service';
 import { Logo } from '@/blocks/Logo';
@@ -11,10 +12,10 @@ export const Header = async () => {
   const theme = await getOwnUserTheme();
 
   return (
-    <>
+    <ViewTransition name="header">
       <header
         className={clsx(
-          'vt-name-[header] bg-black',
+          'bg-black',
           'fixed left-0 right-0 top-0 z-(--z-header)',
         )}
       >
@@ -51,6 +52,6 @@ export const Header = async () => {
           <Navigation />
         </div>
       </nav>
-    </>
+    </ViewTransition>
   );
 };

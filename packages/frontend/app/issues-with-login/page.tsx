@@ -3,6 +3,7 @@ import { LogOut, MessageSquareText } from 'lucide-react';
 import { Metadata } from 'next';
 import type { JSX } from 'react';
 
+import { getAuthenticationStatus } from '@/api-service';
 import { InfoMessageBlock } from '@/blocks/InfoMessageBlock';
 import { Button } from '@/elements/Button/Button';
 import { ContentHeader } from '@/layouts/ContentHeader';
