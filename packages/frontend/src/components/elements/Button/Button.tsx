@@ -6,7 +6,6 @@ import { FC, HTMLAttributes, type JSX, useCallback } from 'react';
 import { Link } from '@/elements/Link';
 import { HapticType, hapticRunner } from '@/utils/haptic.helper';
 import { isExternalLink } from '@/utils/isExternalLink';
-import { TransitionType } from '@/utils/transitionAnimations';
 
 export type ButtonAccentColor =
   | 'unstyled'
@@ -23,7 +22,6 @@ interface ButtonProps
   children: React.ReactNode;
   className?: string;
   href?: string;
-  transition?: TransitionType;
   onClick?: () => void;
   type?: 'button' | 'submit' | 'reset';
   testId?: string;
@@ -39,7 +37,6 @@ export const Button: FC<ButtonProps> = ({
   children,
   className,
   href,
-  transition,
   onClick,
   type = 'button',
   testId,
@@ -115,7 +112,6 @@ export const Button: FC<ButtonProps> = ({
         onClick={onClick}
         haptic={haptic}
         testId={testId}
-        transition={transition}
         hasHoverEffect={false}
       >
         {children}

@@ -35,7 +35,6 @@ export const ProminentLink: FC<ProminentLinkProps> = ({
       )}
       testId={testId}
       data-entity-title={entityTitle ?? undefined}
-      transition="slideInFromRight"
       hasHoverEffect={false}
     >
       {Icon && <Icon />}

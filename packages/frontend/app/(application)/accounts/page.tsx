@@ -44,7 +44,6 @@ export default async function AccountsPage() {
             accentColor="primary"
             size="small"
             testId="add-account"
-            transition="slideInFromRight"
             isPill
           >
             <Plus />

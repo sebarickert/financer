@@ -14,7 +14,7 @@ export const Header = async () => {
     <>
       <header
         className={clsx(
-          'vt-name-[header] bg-black',
+          'bg-black',
           'fixed left-0 right-0 top-0 z-(--z-header)',
         )}
       >

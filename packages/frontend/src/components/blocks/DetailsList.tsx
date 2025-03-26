@@ -7,6 +7,7 @@ export interface DetailsItem {
   label: string;
   description: string | React.ReactNode;
   testId?: string;
+  vtName?: string;
 }
 
 interface DetailsListProps {
@@ -39,7 +40,13 @@ export const DetailsList: FC<DetailsListProps> = ({
               <span data-testid={`${testId}-item-label`}>{item.label}</span>
             </dt>
             <dd className="font-medium text-right truncate">
-              <span data-testid={`${testId}-item-description`}>
+              <span
+                data-testid={`${testId}-item-description`}
+                data-vt={!!item.vtName}
+                style={{
+                  '--vt-name': item.vtName,
+                }}
+              >
                 {item.description}
               </span>
             </dd>
