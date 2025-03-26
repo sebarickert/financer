@@ -8,15 +8,13 @@ import {
   SchemaTransferDetailsDto,
   TransactionType,
 } from '@/api/ssr-financer-api';
+import { addExpense, addIncome, addTransfer } from '@/api-service';
 import { ValidationException } from '@/exceptions/validation.exception';
 import {
   isCategoriesFormFullFields,
   parseCategoriesFormFullFields,
 } from '@/features/transaction/TransactionCategories/transaction-categories.types';
 import { DefaultFormActionHandler } from '@/hooks/useFinancerFormState';
-import { ExpenseService } from '@/ssr/api/ExpenseService';
-import { IncomeService } from '@/ssr/api/IncomeService';
-import { TransferService } from '@/ssr/api/TransferService';
 import { parseArrayFromFormData } from '@/utils/parseArrayFromFormData';
 
 export const handleTransactionCreate: DefaultFormActionHandler = async (
@@ -43,15 +41,15 @@ export const handleTransactionCreate: DefaultFormActionHandler = async (
 
   const TransactionDataMapping = {
     [TransactionType.INCOME]: {
-      service: IncomeService,
+      operation: addIncome,
       url: '/transactions/incomes',
     },
     [TransactionType.EXPENSE]: {
-      service: ExpenseService,
+      operation: addExpense,
       url: '/transactions/expenses',
     },
     [TransactionType.TRANSFER]: {
-      service: TransferService,
+      operation: addTransfer,
       url: '/transactions/transfers',
     },
   };
@@ -62,7 +60,7 @@ export const handleTransactionCreate: DefaultFormActionHandler = async (
     | SchemaTransferDetailsDto;
 
   try {
-    data = await TransactionDataMapping[type].service.add({
+    data = await TransactionDataMapping[type].operation({
       amount: parseFloat(formData.get('amount') as string),
       description: formData.get('description') as string,
       date: formData.get('date') as string,

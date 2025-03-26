@@ -21,6 +21,12 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '10mb',
+    },
+    viewTransition: true,
+  },
 };
 
 // Injected content via Sentry wizard below

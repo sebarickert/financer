@@ -1,10 +1,10 @@
 import { Pencil, Trash } from 'lucide-react';
 import { FC } from 'react';
 
+import { getAllCategories, getCategoryById } from '@/api-service';
 import { Popper } from '@/elements/Popper';
 import { CategoryDeleteDrawer } from '@/features/category/CategoryDeleteDrawer';
 import { Layout } from '@/layouts/Layout';
-import { CategoryService } from '@/ssr/api/CategoryService';
 import { Category } from '@/views/Category';
 
 interface CategoryContainerProps {
@@ -16,8 +16,8 @@ export const CategoryContainer: FC<CategoryContainerProps> = async ({
   id,
   queryDate,
 }) => {
-  const allCategories = await CategoryService.getAll();
-  const category = await CategoryService.getById(id);
+  const allCategories = await getAllCategories();
+  const category = await getCategoryById(id);
 
   return (
     <Layout

@@ -2,18 +2,18 @@ import { notFound } from 'next/navigation';
 import { FC } from 'react';
 
 import { handleAccountEdit } from '@/actions/account/handleAccountEdit';
+import { getAccountById } from '@/api-service';
 import { AccountForm } from '@/features/account/AccountForm';
 import { Layout } from '@/layouts/Layout';
-import { AccountService } from '@/ssr/api/AccountService';
 
-type AccountEditContainerProps = {
+interface AccountEditContainerProps {
   id: string;
-};
+}
 
 export const AccountEditContainer: FC<AccountEditContainerProps> = async ({
   id,
 }) => {
-  const account = await AccountService.getById(id);
+  const account = await getAccountById(id);
 
   if (!account) {
     notFound();

@@ -4,12 +4,14 @@ import {
   SchemaAccountDto,
   SchemaCreateTransactionCategoryMappingWithoutTransactionDto,
 } from '@/api/ssr-financer-api';
+import {
+  UserDefaultMarketUpdateSettings,
+  addExpense,
+  addIncome,
+} from '@/api-service';
 import { ValidationException } from '@/exceptions/validation.exception';
 import { DefaultFormActionHandler } from '@/hooks/useFinancerFormState';
 import { DateService } from '@/services/DateService';
-import { ExpenseService } from '@/ssr/api/ExpenseService';
-import { IncomeService } from '@/ssr/api/IncomeService';
-import { UserDefaultMarketUpdateSettings } from '@/ssr/api/UserPreferenceService';
 
 export const handleAccountMarketValueUpdate: DefaultFormActionHandler<{
   account: SchemaAccountDto;
@@ -54,12 +56,12 @@ export const handleAccountMarketValueUpdate: DefaultFormActionHandler<{
 
   try {
     if (marketValueChangeAmount > 0) {
-      await IncomeService.add({
+      await addIncome({
         toAccount: account.id,
         ...transactionBaseFields,
       });
     } else {
-      await ExpenseService.add({
+      await addExpense({
         fromAccount: account.id,
         ...transactionBaseFields,
       });

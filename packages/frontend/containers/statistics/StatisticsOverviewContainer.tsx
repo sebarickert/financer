@@ -1,18 +1,19 @@
 import { FC } from 'react';
 
+import {
+  getStatisticsSettings,
+  getTransactionMonthlySummary,
+} from '@/api-service';
 import { StatisticsOverviewData } from '@/features/statistics/StatisticsOverviewData';
 import { TransactionsLayout } from '@/features/transactions/TransactionsLayout';
 import { DateService } from '@/services/DateService';
-import { TransactionService } from '@/ssr/api/TransactionService';
-import { UserPreferenceService } from '@/ssr/api/UserPreferenceService';
 
 export const StatisticsOverviewContainer: FC = async () => {
-  const statisticsSettings =
-    await UserPreferenceService.getStatisticsSettings();
+  const statisticsSettings = await getStatisticsSettings();
 
   const accountTypeFilter = { accountTypes: statisticsSettings?.accountTypes };
 
-  const transactionMonthSummaries = await TransactionService.getMonthlySummary({
+  const transactionMonthSummaries = await getTransactionMonthlySummary({
     ...accountTypeFilter,
   });
 
@@ -26,7 +27,8 @@ export const StatisticsOverviewContainer: FC = async () => {
       };
     })
     .sort((a, b) => a.date.toMillis() - b.date.toMillis())
-    .map((item) => ({ ...item, date: item.date.toISO() as string }));
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    .map((item) => ({ ...item, date: item.date.toISO()! }));
 
   return (
     <TransactionsLayout title="Statistics">

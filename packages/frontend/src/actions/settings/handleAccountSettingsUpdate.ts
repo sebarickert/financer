@@ -1,8 +1,13 @@
 import { RedirectType, redirect } from 'next/navigation';
 
+import {
+  updateDefaultExpenseAccount,
+  updateDefaultIncomeAccount,
+  updateDefaultTransferSourceAccount,
+  updateDefaultTransferTargetAccount,
+} from '@/api-service';
 import { settingsPaths } from '@/constants/settingsPaths';
 import { DefaultFormActionHandler } from '@/hooks/useFinancerFormState';
-import { UserPreferenceService } from '@/ssr/api/UserPreferenceService';
 
 export const handleAccountSettingsUpdate: DefaultFormActionHandler = async (
   prev,
@@ -11,16 +16,12 @@ export const handleAccountSettingsUpdate: DefaultFormActionHandler = async (
   'use server';
 
   await Promise.all([
-    UserPreferenceService.updateDefaultIncomeAccount(
-      formData.get('toAccountIncome') as string,
-    ),
-    UserPreferenceService.updateDefaultExpenseAccount(
-      formData.get('fromAccountExpense') as string,
-    ),
-    UserPreferenceService.updateDefaultTransferSourceAccount(
+    updateDefaultIncomeAccount(formData.get('toAccountIncome') as string),
+    updateDefaultExpenseAccount(formData.get('fromAccountExpense') as string),
+    updateDefaultTransferSourceAccount(
       formData.get('fromAccountTransfer') as string,
     ),
-    UserPreferenceService.updateDefaultTransferTargetAccount(
+    updateDefaultTransferTargetAccount(
       formData.get('toAccountTransfer') as string,
     ),
   ]);

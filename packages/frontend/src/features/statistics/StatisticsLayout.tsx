@@ -1,18 +1,17 @@
 import { Grid2X2 } from 'lucide-react';
 import { FC } from 'react';
 
+import { getAllAccounts } from '@/api-service';
 import { InfoMessageBlock } from '@/blocks/InfoMessageBlock';
 import { Button } from '@/elements/Button/Button';
 import { Layout, LayoutProps } from '@/layouts/Layout';
-import { AccountService } from '@/ssr/api/AccountService';
-
 type StatisticsLayoutProps = Omit<LayoutProps, 'contextualNavigationItems'>;
 
 export const StatisticsLayout: FC<StatisticsLayoutProps> = async ({
   children,
   ...rest
 }) => {
-  const accounts = await AccountService.getAll();
+  const accounts = await getAllAccounts();
 
   return (
     <Layout {...rest}>

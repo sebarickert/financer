@@ -3,16 +3,16 @@
 import { RedirectType, redirect } from 'next/navigation';
 
 import { AccountType } from '@/api/ssr-financer-api';
+import { addAccount } from '@/api-service';
 import { ValidationException } from '@/exceptions/validation.exception';
 import { DefaultFormActionHandler } from '@/hooks/useFinancerFormState';
-import { AccountService } from '@/ssr/api/AccountService';
 
 export const handleAccountAdd: DefaultFormActionHandler = async (
   prevState,
   formData,
 ) => {
   try {
-    await AccountService.add({
+    await addAccount({
       balance: parseFloat(formData.get('balance') as string),
       name: formData.get('name') as string,
       type: formData.get('type') as AccountType,

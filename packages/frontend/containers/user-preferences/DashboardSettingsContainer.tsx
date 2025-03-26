@@ -1,15 +1,17 @@
 import { FC } from 'react';
 
 import { handleDashboardSettingsUpdate } from '@/actions/settings/handleDashboardSettingsUpdate';
+import {
+  getDashboardSettings,
+  getTransactionListChunkSize,
+} from '@/api-service';
 import { settingsPaths } from '@/constants/settingsPaths';
 import { Layout } from '@/layouts/Layout';
-import { UserPreferenceService } from '@/ssr/api/UserPreferenceService';
 import { UserDashboardSettingsForm } from '@/views/user-preferences/UserDashboardSettingsForm';
 
 export const DashboardSettingsContainer: FC = async () => {
-  const dashboardSettings = await UserPreferenceService.getDashboardSettings();
-  const defaultChunkSize =
-    await UserPreferenceService.getTransactionListChunkSize();
+  const dashboardSettings = await getDashboardSettings();
+  const defaultChunkSize = await getTransactionListChunkSize();
 
   const data = {
     accountTypes: dashboardSettings?.accountTypes,

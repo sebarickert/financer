@@ -1,12 +1,12 @@
 import { Plus, Tag } from 'lucide-react';
 import { FC } from 'react';
 
+import { getAllCategoriesWithTree } from '@/api-service';
 import { InfoMessageBlock } from '@/blocks/InfoMessageBlock';
 import { List } from '@/blocks/List';
 import { ProminentLink } from '@/blocks/ProminentLink';
 import { Button } from '@/elements/Button/Button';
 import { Layout } from '@/layouts/Layout';
-import { CategoryService } from '@/ssr/api/CategoryService';
 
 const generateCategoryGroupChild = (
   childName: CategoryItem['label'],
@@ -34,7 +34,7 @@ interface CategoryItem {
 }
 
 export const CategoryListingContainer: FC = async () => {
-  const categories = await CategoryService.getAllWithTree();
+  const categories = await getAllCategoriesWithTree();
 
   const allParentIds = categories.map(
     ({ parentCategoryId }) => parentCategoryId,

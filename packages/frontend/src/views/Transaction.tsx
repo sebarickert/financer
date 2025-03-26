@@ -7,6 +7,7 @@ import {
   SchemaIncomeDetailsDto,
   SchemaTransferDetailsDto,
 } from '@/api/ssr-financer-api';
+import { getAllCategoriesWithTree } from '@/api-service';
 import { BalanceDisplay } from '@/blocks/BalanceDisplay';
 import { Card } from '@/blocks/Card/Card';
 import { CardHeader } from '@/blocks/Card/CardHeader';
@@ -15,7 +16,6 @@ import { TRANSACTION_TYPE_MAPPING } from '@/constants/transaction/TRANSACTION_TY
 import { Heading } from '@/elements/Heading';
 import { TransactionTypeIcon } from '@/features/transaction/TransactionTypeIcon';
 import { DATE_FORMAT, DateService } from '@/services/DateService';
-import { CategoryService } from '@/ssr/api/CategoryService';
 import { capitalize } from '@/utils/capitalize';
 import { formatCurrency } from '@/utils/formatCurrency';
 
@@ -38,7 +38,7 @@ export const Transaction: FC<TransactionProps> = async ({
     'fromAccountName' in props ? props.fromAccountName : null;
   const toAccountName = 'toAccountName' in props ? props.toAccountName : null;
 
-  const transactionCategories = await CategoryService.getAllWithTree();
+  const transactionCategories = await getAllCategoriesWithTree();
 
   const getCategoryNameById = (categoryId: string) =>
     transactionCategories.find((category) => category.id === categoryId)

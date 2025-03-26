@@ -2,6 +2,7 @@ import { TriangleAlert } from 'lucide-react';
 import { FC } from 'react';
 
 import { Role } from '@/api/ssr-financer-api';
+import { getOwnUser } from '@/api-service';
 import { List } from '@/blocks/List';
 import { ProminentLink } from '@/blocks/ProminentLink';
 import { ThemeSwitcher } from '@/blocks/ThemeSwitcher/ThemeSwitcher';
@@ -9,10 +10,9 @@ import { settingsPaths } from '@/constants/settingsPaths';
 import { Button } from '@/elements/Button/Button';
 import { Heading } from '@/elements/Heading';
 import { SettingsLayout } from '@/features/settings/SettingsLayout';
-import { UserService } from '@/ssr/api/UserService';
 
 export const SettingsContainer: FC = async () => {
-  const userInfo = await UserService.getOwnUser();
+  const userInfo = await getOwnUser();
 
   return (
     <SettingsLayout title="General">

@@ -1,11 +1,11 @@
 import { Grid2X2 } from 'lucide-react';
 import { FC } from 'react';
 
+import { getAllAccounts } from '@/api-service';
 import { InfoMessageBlock } from '@/blocks/InfoMessageBlock';
 import { transactionsContextualNavigationItems } from '@/constants/transactionsContextualNavigationItems';
 import { Button } from '@/elements/Button/Button';
 import { Layout, LayoutProps } from '@/layouts/Layout';
-import { AccountService } from '@/ssr/api/AccountService';
 
 type TransactionsLayoutProps = Omit<LayoutProps, 'contextualNavigationItems'>;
 
@@ -13,7 +13,7 @@ export const TransactionsLayout: FC<TransactionsLayoutProps> = async ({
   children,
   ...rest
 }) => {
-  const accounts = await AccountService.getAll();
+  const accounts = await getAllAccounts();
 
   return (
     <Layout

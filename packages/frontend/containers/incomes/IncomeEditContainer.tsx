@@ -1,10 +1,13 @@
 import { RedirectType, notFound, redirect } from 'next/navigation';
 import { FC } from 'react';
 
+import { SchemaIncomeDetailsDto, VisibilityType } from '@/api/ssr-financer-api';
 import {
-  SchemaIncomeDetailsDto,
-  VisibilityType,
-} from '@/api/ssr-financer-api';
+  getAllAccounts,
+  getAllCategoriesWithTree,
+  getIncomeById,
+  updateIncome,
+} from '@/api-service';
 import { ValidationException } from '@/exceptions/validation.exception';
 import {
   isCategoriesFormFullFields,
@@ -14,9 +17,6 @@ import { TransactionForm } from '@/features/transaction/TransactionForm';
 import { DefaultFormActionHandler } from '@/hooks/useFinancerFormState';
 import { Layout } from '@/layouts/Layout';
 import { DATE_FORMAT, DateService } from '@/services/DateService';
-import { AccountService } from '@/ssr/api/AccountService';
-import { CategoryService } from '@/ssr/api/CategoryService';
-import { IncomeService } from '@/ssr/api/IncomeService';
 import { parseArrayFromFormData } from '@/utils/parseArrayFromFormData';
 
 interface IncomeEditContainerProps {
@@ -26,9 +26,9 @@ interface IncomeEditContainerProps {
 export const IncomeEditContainer: FC<IncomeEditContainerProps> = async ({
   id,
 }) => {
-  const income = await IncomeService.getById(id);
+  const income = await getIncomeById(id);
 
-  const accounts = await AccountService.getAll();
+  const accounts = await getAllAccounts();
 
   if (!income) {
     notFound();
@@ -50,7 +50,7 @@ export const IncomeEditContainer: FC<IncomeEditContainerProps> = async ({
     let data: SchemaIncomeDetailsDto;
 
     try {
-      data = await IncomeService.update(income.id, {
+      data = await updateIncome(income.id, {
         amount: parseFloat(formData.get('amount') as string),
         description: formData.get('description') as string,
         date: formData.get('date') as string,
@@ -82,7 +82,7 @@ export const IncomeEditContainer: FC<IncomeEditContainerProps> = async ({
     date: new DateService(income.date).format(DATE_FORMAT.INPUT),
   };
 
-  const categories = await CategoryService.getAllWithTree({
+  const categories = await getAllCategoriesWithTree({
     visibilityType: VisibilityType.INCOME,
   });
 

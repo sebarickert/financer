@@ -1,15 +1,14 @@
 import { FC } from 'react';
 
 import { handleStatisticsPageSettingsUpdate } from '@/actions/settings/handleStatisticsPageSettingsUpdate';
+import { getStatisticsSettings } from '@/api-service';
 import { InfoMessageBlock } from '@/blocks/InfoMessageBlock';
 import { settingsPaths } from '@/constants/settingsPaths';
 import { Layout } from '@/layouts/Layout';
-import { UserPreferenceService } from '@/ssr/api/UserPreferenceService';
 import { UserStatisticsPageSettingsForm } from '@/views/user-preferences/UserStatisticsPageSettingsForm';
 
 export const StatisticsPageSettingsContainer: FC = async () => {
-  const statisticsSettings =
-    await UserPreferenceService.getStatisticsSettings();
+  const statisticsSettings = await getStatisticsSettings();
 
   return (
     <Layout

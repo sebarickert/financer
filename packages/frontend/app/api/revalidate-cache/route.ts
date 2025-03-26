@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-import { revalidateFullAppCache } from '@/actions/revalidateFullAppCache';
+import { revalidateFullAppCache } from '@/api-service';
 
 export async function POST() {
   try {

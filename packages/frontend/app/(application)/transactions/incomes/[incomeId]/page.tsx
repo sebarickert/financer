@@ -1,8 +1,7 @@
 import { Metadata } from 'next';
 
+import { getIncomeById } from '@/api-service';
 import { IncomeContainer } from '@/container/incomes/IncomeContainer';
-import { IncomeService } from '@/ssr/api/IncomeService';
-
 type Params = Promise<{
   incomeId: string;
 }>;
@@ -13,7 +12,7 @@ export const generateMetadata = async ({
   params: Params;
 }): Promise<Metadata> => {
   const { incomeId } = await params;
-  const income = await IncomeService.getById(incomeId);
+  const income = await getIncomeById(incomeId);
 
   return {
     title: `${income.description} / Incomes`,
