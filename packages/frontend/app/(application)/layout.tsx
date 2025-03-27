@@ -21,6 +21,7 @@ export default async function ApplicationLayout({
           'pt-6 lg:pt-12 pb-safe-offset-12 px-4 lg:px-8',
           'mx-auto max-w-screen-xl',
           'mt-(--gutter-top)',
+          'hero',
         )}
         data-testid="layout-root"
       >
