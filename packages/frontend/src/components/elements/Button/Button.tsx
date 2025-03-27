@@ -51,8 +51,10 @@ export const Button: FC<ButtonProps> = ({
 }): JSX.Element => {
   const buttonStyles = {
     base: clsx(
+      'text-base/6 rounded-md text-center transition-colors font-medium',
       'focus-visible:focus-highlight whitespace-nowrap cursor-pointer',
-      'inline-flex items-center justify-center [&:has(svg)]:gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0',
+      'inline-flex items-center justify-center',
+      '[&:has(svg)]:gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg]:size-6',
       'disabled:pointer-events-none disabled:opacity-50',
     ),
     default: clsx('py-3 h-12 px-5'),

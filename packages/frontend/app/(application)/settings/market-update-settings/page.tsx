@@ -21,7 +21,7 @@ export default async function MarketUpdateSettingsUserPreferencePage() {
     <>
       <ContentHeader
         title="Market Update Settings"
-        backLink={settingsPaths.userPreferences}
+        backLink={settingsPaths.default}
       />
       <UserDefaultMarketUpdateSettingsForm
         data={marketUpdateSettings}

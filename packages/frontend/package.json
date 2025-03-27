@@ -6,6 +6,7 @@
     "@reduxjs/toolkit": "^2.5.1",
     "@sentry/nextjs": "^9.1.0",
     "@types/luxon": "^3.4.2",
+    "@uidotdev/usehooks": "^2.4.1",
     "clsx": "^2.1.1",
     "http-proxy-middleware": "^3.0.3",
     "lucide-react": "^0.475.0",

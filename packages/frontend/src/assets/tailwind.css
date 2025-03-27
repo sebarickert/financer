@@ -20,16 +20,30 @@
   --color-green: hsl(138 67% 30%);
   --color-yellow: hsl(45 85% 55%);
   --color-pink: hsl(340 75% 55%);
-  --color-foreground: hsl(0 0% 9%);
-  --color-muted-foreground: hsl(0 0% 36%);
-  --color-background: hsl(0 0% 100%);
-  --color-layer: hsl(0 0% 96%);
-  --color-accent: hsl(0 0% 91%);
 
-  --header-height: 56px;
+  --color-foreground-light: hsl(0 0% 9%);
+  --color-muted-foreground-light: hsl(0 0% 36%);
+  --color-background-light: hsl(0 0% 100%);
+  --color-layer-light: hsl(0 0% 96%);
+  --color-accent-light: hsl(0 0% 91%);
+
+  --color-foreground-dark: hsl(0 0% 96%);
+  --color-muted-foreground-dark: hsl(0 0% 65%);
+  --color-background-dark: hsl(0 0% 3%);
+  --color-layer-dark: hsl(0 0% 11%);
+  --color-accent-dark: hsl(0 0% 16%);
+
+  --color-foreground: var(--color-foreground-light);
+  --color-muted-foreground: var(--color-muted-foreground-light);
+  --color-background: var(--color-background-light);
+  --color-layer: var(--color-layer-light);
+  --color-accent: var(--color-accent-light);
+
+  --header-height: 48px;
+  --navigation-height: 56px;
   --content-header-height: 56px;
   --gutter-top: var(--content-header-height);
-  --gutter-bottom: var(--header-height);
+  --gutter-bottom: var(--navigation-height);
 
   --account-SAVINGS: var(--color-blue);
   --account-LONG-TERM-SAVINGS: var(--color-dark-blue);
@@ -38,14 +52,17 @@
   --account-PRE-ASSIGNED-CASH: var(--color-orange);
   --account-CREDIT: var(--color-pink);
   --account-LOAN: var(--color-red);
+
+  --z-header: 100;
+  --z-navigation: 99;
 }
 @layer theme {
   :root.dark {
-    --color-foreground: hsl(0 0% 96%);
-    --color-muted-foreground: hsl(0 0% 65%);
-    --color-background: hsl(0 0% 3%);
-    --color-layer: hsl(0 0% 11%);
-    --color-accent: hsl(0 0% 16%);
+    --color-foreground: var(--color-foreground-dark);
+    --color-muted-foreground: var(--color-muted-foreground-dark);
+    --color-background: var(--color-background-dark);
+    --color-layer: var(--color-layer-dark);
+    --color-accent: var(--color-accent-dark);
     @apply scheme-dark;
 
     /* ::picker(select) {
@@ -65,11 +82,11 @@
 
   @media (prefers-color-scheme: dark) {
     :root:not(.light) {
-      --color-foreground: hsl(0 0% 96%);
-      --color-muted-foreground: hsl(0 0% 65%);
-      --color-background: hsl(0 0% 3%);
-      --color-layer: hsl(0 0% 11%);
-      --color-accent: hsl(0 0% 16%);
+      --color-foreground: var(--color-foreground-light);
+      --color-muted-foreground: var(--color-muted-foreground-light);
+      --color-background: var(--color-background-light);
+      --color-layer: var(--color-layer-light);
+      --color-accent: var(--color-accent-light);
       @apply scheme-dark;
 
       /* ::picker(select) {
@@ -82,9 +99,9 @@
 @layer base {
   @media (min-width: theme(--breakpoint-lg)) {
     :root {
-      --header-height: 64px;
+      --navigation-height: 48px;
       --content-header-height: minmax(36px, 48px);
-      --gutter-top: var(--header-height);
+      --gutter-top: calc(var(--header-height) + var(--navigation-height));
       --gutter-bottom: auto;
     }
   }

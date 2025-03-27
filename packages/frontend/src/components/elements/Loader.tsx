@@ -31,7 +31,7 @@ export const Loader: FC<LoaderProps> = ({ className }) => {
   return (
     <div
       className={clsx(
-        'fixed inset-0 z-50 flex items-center w-full h-full',
+        'fixed inset-0 flex items-center w-full h-full',
         className,
       )}
       data-testid="loader"

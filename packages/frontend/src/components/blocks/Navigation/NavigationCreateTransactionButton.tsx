@@ -29,32 +29,26 @@ const CreateTransactionButton: FC<CreateTransactionButtonProps> = ({
         'text-base rounded-md text-center',
         'items-center justify-center',
         'max-lg:flex max-lg:flex-col max-lg:h-full max-lg:!w-full max-lg:rounded-none',
-        'lg:button-primary lg:py-3 lg:h-12 lg:px-[18px] lg:text-base',
+        'lg:button-primary lg:text-sm lg:h-8 lg:px-3 lg:rounded-full lg:[&_svg]:size-5 lg:[&:has(svg)]:gap-1',
       )}
       popoverTarget={id}
       data-testid="add-transaction"
       isDisabled={isDisabled}
     >
-      <Plus />
-      <span className="max-lg:hidden">
-        <span className="sr-only">Add</span> Transaction
-      </span>
+      <Plus className="lg:hidden" />
+      <Plus className="max-lg:hidden" />
+      <span className="max-lg:hidden">Add</span>
     </Button>
   );
 };
 
 interface NavigationCreateTransactionButtonSuspenseProps {
   className?: string;
-  isLoading?: boolean;
 }
 
 export const NavigationCreateTransactionButtonSuspense: FC<
   NavigationCreateTransactionButtonSuspenseProps
-> = ({ isLoading, className }) => {
-  if (isLoading) {
-    return <CreateTransactionButton isDisabled />;
-  }
-
+> = ({ className }) => {
   return (
     <Suspense fallback={<CreateTransactionButton isDisabled />}>
       <NavigationCreateTransactionButton className={className} />

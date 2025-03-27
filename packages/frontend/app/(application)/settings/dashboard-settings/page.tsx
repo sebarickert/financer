@@ -24,7 +24,7 @@ export default async function DashboardSettingsUserPreferencePage() {
     <>
       <ContentHeader
         title="Dashboard Settings"
-        backLink={settingsPaths.userPreferences}
+        backLink={settingsPaths.default}
       />
       <UserDashboardSettingsForm
         data={data}

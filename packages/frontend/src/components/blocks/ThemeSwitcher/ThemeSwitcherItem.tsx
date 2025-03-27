@@ -46,13 +46,13 @@ export const ThemeSwitcherItem: FC<ThemeSwitcherItemProps> = ({
       />
       <span
         className={clsx(
-          'my-1 py-2',
-          'flex items-center justify-center text-sm rounded-md',
-          'peer-checked:bg-background peer-checked:hover:bg-background peer-checked:active:bg-background',
-          'peer-focus-visible:focus-highlight peer-hover:cursor-pointer peer-hover:bg-accent peer-active:cursor-pointer peer-active::bg-accent',
+          'py-2',
+          'flex items-center justify-center rounded-md text-muted-foreground',
+          'peer-checked:bg-accent peer-checked:hover:bg-accent peer-checked:text-foreground peer-checked:hover:text-foreground',
+          'peer-focus-visible:focus-highlight peer-hover:cursor-pointer peer-hover:bg-accent peer-hover:text-foreground',
         )}
       >
-        <Icon />
+        <Icon className="size-5" />
         <span className="sr-only">{children}</span>
       </span>
     </label>

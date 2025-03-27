@@ -56,7 +56,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
         <div
           className={clsx(
             'flex justify-between items-center',
-            'bg-background z-10',
+            'bg-background',
             'sticky top-0',
             'pt-2 pb-2 mb-8',
             'px-6 lg:px-8 -mx-6 lg:-mx-8',

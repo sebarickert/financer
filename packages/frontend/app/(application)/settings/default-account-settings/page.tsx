@@ -28,7 +28,7 @@ export default async function DefaultAccountSettingsUserPreferencePage() {
     <>
       <ContentHeader
         title="Default Account Settings"
-        backLink={settingsPaths.userPreferences}
+        backLink={settingsPaths.default}
       />
       <RequireAccounts>
         <UserDefaultAccountSettingsForm

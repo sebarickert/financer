@@ -2,7 +2,6 @@ import { Metadata } from 'next';
 
 import { handleStatisticsPageSettingsUpdate } from '@/actions/settings/handleStatisticsPageSettingsUpdate';
 import { InfoMessageBlock } from '@/blocks/InfoMessageBlock';
-import { settingsContextualNavigationItems } from '@/constants/settingsContextualNavigationItems';
 import { settingsPaths } from '@/constants/settingsPaths';
 import { ContentHeader } from '@/layouts/ContentHeader';
 import { UserPreferenceService } from '@/ssr/api/UserPreferenceService';
@@ -20,7 +19,6 @@ export default async function SettingsPreferencesPage() {
     <>
       <ContentHeader
         title="Transactions & Statistics Settings"
-        contextualNavigationItems={settingsContextualNavigationItems}
         backLink={settingsPaths.default}
       />
       <InfoMessageBlock
