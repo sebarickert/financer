@@ -1,12 +1,10 @@
-import { Plus } from 'lucide-react';
 import { Metadata } from 'next';
 
 import { AccountType } from '@/api/ssr-financer-api';
+import { Hero } from '@/components/Hero';
 import { RequireAccounts } from '@/components/RequireAccounts';
-import { Button } from '@/elements/Button/Button';
 import { AccountList } from '@/features/account/AccountList';
 import { AccountTypeBalanceChart } from '@/features/account/AccountTypeBalanceChart';
-import { ContentHeader } from '@/layouts/ContentHeader';
 import { AccountService } from '@/ssr/api/AccountService';
 
 export const metadata: Metadata = {
@@ -36,7 +34,8 @@ export default async function AccountsPage() {
 
   return (
     <>
-      <ContentHeader
+      <Hero title="Accounts" />
+      {/* <ContentHeader
         title={'Accounts'}
         headerAction={
           <Button
@@ -51,7 +50,7 @@ export default async function AccountsPage() {
             <Plus />
           </Button>
         }
-      />
+      /> */}
       <RequireAccounts>
         <div className="grid gap-6">
           <AccountTypeBalanceChart data={accounts} className="self-baseline" />

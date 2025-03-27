@@ -18,9 +18,10 @@ export default async function ApplicationLayout({
       <Header />
       <main
         className={clsx(
-          'pt-6 lg:pt-12 pb-safe-offset-12 px-4 lg:px-8',
-          'mx-auto max-w-screen-xl',
+          'pt-12 pb-safe-offset-12 px-4 lg:px-8',
+          'mx-auto max-w-screen-md lg:max-w-screen-xl',
           'mt-(--gutter-top)',
+          'hero',
         )}
         data-testid="layout-root"
       >
