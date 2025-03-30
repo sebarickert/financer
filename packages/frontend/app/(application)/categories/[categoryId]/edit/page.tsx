@@ -38,8 +38,10 @@ export default async function CategoryEditPage({ params }: { params: Params }) {
   return (
     <>
       <ContentHeader
-        title="Edit Category"
-        backLink={`/categories/${category.id}`}
+        title={`Edit ${category.name}`}
+        breadcrumbOverrides={{
+          [`/categories/${categoryId}`]: category.name,
+        }}
       />
       <CategoryForm
         onSubmit={handleSubmit}

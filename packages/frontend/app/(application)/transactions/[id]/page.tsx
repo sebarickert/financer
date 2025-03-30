@@ -37,9 +37,8 @@ export default async function TransactionPage({ params }: { params: Params }) {
   return (
     <>
       <ContentHeader
-        title="Transaction Details"
-        backLink="/transactions"
-        headerAction={
+        title={transaction.description}
+        action={
           <Popper
             items={[
               {

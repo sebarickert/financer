@@ -1,10 +1,12 @@
+import { Plus } from 'lucide-react';
 import { Metadata } from 'next';
 
 import { AccountType } from '@/api/ssr-financer-api';
-import { Hero } from '@/components/Hero';
 import { RequireAccounts } from '@/components/RequireAccounts';
+import { Button } from '@/elements/Button/Button';
 import { AccountList } from '@/features/account/AccountList';
 import { AccountTypeBalanceChart } from '@/features/account/AccountTypeBalanceChart';
+import { ContentHeader } from '@/layouts/ContentHeader';
 import { AccountService } from '@/ssr/api/AccountService';
 
 export const metadata: Metadata = {
@@ -34,23 +36,23 @@ export default async function AccountsPage() {
 
   return (
     <>
-      <Hero title="Accounts" />
-      {/* <ContentHeader
-        title={'Accounts'}
-        headerAction={
+      <ContentHeader
+        title="Accounts"
+        action={
           <Button
             href="/accounts/add"
-            accentColor="secondary"
-            size="icon"
+            accentColor="primary"
+            size="small"
             testId="add-account"
             transition="slideInFromRight"
-            className="max-lg:button-ghost"
+            isPill
           >
-            <span className="sr-only">Add account</span>
             <Plus />
+            <span className="sr-only">Add</span>
+            Account
           </Button>
         }
-      /> */}
+      />
       <RequireAccounts>
         <div className="grid gap-6">
           <AccountTypeBalanceChart data={accounts} className="self-baseline" />

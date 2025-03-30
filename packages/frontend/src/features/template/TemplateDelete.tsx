@@ -47,7 +47,7 @@ export const TemplateDelete = ({ id }: TemplateDeleteProps) => {
             <Button
               accentColor="secondary"
               popoverTargetAction="hide"
-              popoverTarget={id}
+              popoverTarget={popoverId}
             >
               Cancel
             </Button>

@@ -55,8 +55,7 @@ export default async function AccountPage({
     <>
       <ContentHeader
         title={account.name}
-        backLink="/accounts"
-        headerAction={
+        action={
           <Popper
             items={[
               {

@@ -48,9 +48,8 @@ export default async function CategoryPage({
   return (
     <>
       <ContentHeader
-        title="Category Details"
-        backLink={'/categories'}
-        headerAction={
+        title={category.name}
+        action={
           <Popper
             items={[
               {

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function AccountAddPage() {
   return (
     <>
-      <ContentHeader title="Add Account" backLink="/accounts" />
+      <ContentHeader title="Add Account" />
       <AccountForm onSubmit={handleAccountAdd} submitLabel="Save Account" />
     </>
   );

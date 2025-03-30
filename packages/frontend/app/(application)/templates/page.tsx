@@ -21,7 +21,7 @@ export default async function TemplateListingPage() {
     <>
       <ContentHeader
         title="Templates"
-        headerAction={
+        action={
           accounts.length > 0 && (
             <Button
               href={`/templates/add`}

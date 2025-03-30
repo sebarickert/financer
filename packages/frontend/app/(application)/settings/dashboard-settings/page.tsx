@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 
 import { handleDashboardSettingsUpdate } from '@/actions/settings/handleDashboardSettingsUpdate';
-import { settingsPaths } from '@/constants/settingsPaths';
 import { ContentHeader } from '@/layouts/ContentHeader';
 import { UserPreferenceService } from '@/ssr/api/UserPreferenceService';
 import { UserDashboardSettingsForm } from '@/views/user-preferences/UserDashboardSettingsForm';
@@ -22,10 +21,7 @@ export default async function DashboardSettingsUserPreferencePage() {
 
   return (
     <>
-      <ContentHeader
-        title="Dashboard Settings"
-        backLink={settingsPaths.default}
-      />
+      <ContentHeader title="Dashboard Settings" />
       <UserDashboardSettingsForm
         data={data}
         onSave={handleDashboardSettingsUpdate}

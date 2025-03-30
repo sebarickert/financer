@@ -88,7 +88,7 @@ export default async function CategoriesPage() {
     <>
       <ContentHeader
         title="Categories"
-        headerAction={
+        action={
           <Button
             href={`/categories/add`}
             accentColor="secondary"

@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
-import { Hero } from '@/components/Hero';
 import { RequireAccounts } from '@/components/RequireAccounts';
+import { ContentHeader } from '@/layouts/ContentHeader';
 import { Dashboard } from '@/views/Dashboard';
 
 export const metadata: Metadata = {
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function DashboardPage() {
   return (
     <>
-      <Hero title="Dashboard" />
+      <ContentHeader title="Dashboard" />
       <RequireAccounts>
         <Dashboard />
       </RequireAccounts>

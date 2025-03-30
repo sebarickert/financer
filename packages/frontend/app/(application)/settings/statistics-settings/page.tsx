@@ -2,7 +2,6 @@ import { Metadata } from 'next';
 
 import { handleStatisticsPageSettingsUpdate } from '@/actions/settings/handleStatisticsPageSettingsUpdate';
 import { InfoMessageBlock } from '@/blocks/InfoMessageBlock';
-import { settingsPaths } from '@/constants/settingsPaths';
 import { ContentHeader } from '@/layouts/ContentHeader';
 import { UserPreferenceService } from '@/ssr/api/UserPreferenceService';
 import { UserStatisticsPageSettingsForm } from '@/views/user-preferences/UserStatisticsPageSettingsForm';
@@ -17,10 +16,7 @@ export default async function SettingsPreferencesPage() {
 
   return (
     <>
-      <ContentHeader
-        title="Transactions & Statistics Settings"
-        backLink={settingsPaths.default}
-      />
+      <ContentHeader title="Transactions & Statistics Settings" />
       <InfoMessageBlock
         title="Account Types"
         className="mb-6"

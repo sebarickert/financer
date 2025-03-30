@@ -21,7 +21,7 @@ export default async function AddTemplatePage() {
 
   return (
     <>
-      <ContentHeader title="Add Template" backLink={'/templates'} />
+      <ContentHeader title="Add Template" />
       <TemplateForm
         onSubmit={handleTemplateAdd}
         submitLabel="Add"
