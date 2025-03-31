@@ -1,8 +1,8 @@
 import clsx from 'clsx';
 
-import { NavigationCreateTransactionButtonSuspense } from './NavigationCreateTransactionButton';
 import { NavigationItem } from './NavigationItem';
 
+import { NavigationCreateTransactionButton } from '@/blocks/Navigation/NavigationCreateTransactionButton';
 import { NAVIGATION_ITEMS } from '@/constants/NAVIGATION_ITEMS';
 
 export const Navigation = () => {
@@ -18,7 +18,7 @@ export const Navigation = () => {
         <NavigationItem {...NAVIGATION_ITEMS.transactions} />
         <NavigationItem {...NAVIGATION_ITEMS.accounts} />
 
-        <NavigationCreateTransactionButtonSuspense className="lg:ml-auto" />
+        <NavigationCreateTransactionButton className="lg:ml-auto" />
       </ul>
     </nav>
   );

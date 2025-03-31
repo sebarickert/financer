@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { Plus } from 'lucide-react';
-import { FC, Suspense } from 'react';
+import { FC } from 'react';
 
 import { Drawer } from '@/blocks/Drawer';
 import { Button } from '@/elements/Button/Button';
@@ -42,27 +42,9 @@ const CreateTransactionButton: FC<CreateTransactionButtonProps> = ({
   );
 };
 
-interface NavigationCreateTransactionButtonSuspenseProps {
+export const NavigationCreateTransactionButton: FC<{
   className?: string;
-}
-
-export const NavigationCreateTransactionButtonSuspense: FC<
-  NavigationCreateTransactionButtonSuspenseProps
-> = ({ className }) => {
-  return (
-    <Suspense fallback={<CreateTransactionButton isDisabled />}>
-      <NavigationCreateTransactionButton className={className} />
-    </Suspense>
-  );
-};
-
-interface NavigationCreateTransactionButtonProps {
-  className?: string;
-}
-
-const NavigationCreateTransactionButton: FC<
-  NavigationCreateTransactionButtonProps
-> = async ({ className }) => {
+}> = async ({ className }) => {
   const id = 'navigationCreateTransactionButton';
 
   const defaultExpenseAccountId =
