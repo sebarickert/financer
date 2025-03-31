@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 import { StatisticsOverviewData } from '@/features/statistics/StatisticsOverviewData';
-import { TransactionsLayout } from '@/features/transactions/TransactionsLayout';
+import { ContentHeader } from '@/layouts/ContentHeader';
 import { DateService } from '@/services/DateService';
 import { TransactionService } from '@/ssr/api/TransactionService';
 import { UserPreferenceService } from '@/ssr/api/UserPreferenceService';
@@ -34,8 +34,9 @@ export default async function StatisticsOverviewPage() {
     .map((item) => ({ ...item, date: item.date.toISO()! }));
 
   return (
-    <TransactionsLayout title="Statistics">
+    <>
+      <ContentHeader title="Statistics" />
       <StatisticsOverviewData data={monthlySummaryHistory} />
-    </TransactionsLayout>
+    </>
   );
 }

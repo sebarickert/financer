@@ -91,12 +91,14 @@ export default async function CategoriesPage() {
         action={
           <Button
             href={`/categories/add`}
-            accentColor="secondary"
-            size="icon"
-            className="max-lg:button-ghost"
+            accentColor="primary"
+            size="small"
+            transition="slideInFromRight"
+            isPill
           >
-            <span className="sr-only">Add category</span>
             <Plus />
+            <span className="sr-only">Add</span>
+            Category
           </Button>
         }
       />

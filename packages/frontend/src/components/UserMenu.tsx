@@ -3,6 +3,7 @@
 import { useClickAway } from '@uidotdev/usehooks';
 import clsx from 'clsx';
 import {
+  ChartNoAxesCombined,
   Cog,
   Download,
   Layers,
@@ -108,6 +109,9 @@ export const UserMenu: FC<{ roles: readonly Role[]; theme: Theme }> = ({
           </UserMenuItem>
           <UserMenuItem href="/templates/" icon={Layers}>
             Templates
+          </UserMenuItem>
+          <UserMenuItem href="/statistics/" icon={ChartNoAxesCombined}>
+            Statistics
           </UserMenuItem>
         </div>
         <div role="separator" className="h-px my-1 -mx-1 bg-accent" />

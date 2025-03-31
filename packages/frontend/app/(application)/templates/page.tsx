@@ -25,13 +25,15 @@ export default async function TemplateListingPage() {
           accounts.length > 0 && (
             <Button
               href={`/templates/add`}
-              accentColor="secondary"
-              size="icon"
+              accentColor="primary"
+              size="small"
               testId="add-template"
-              className="max-lg:button-ghost"
+              transition="slideInFromRight"
+              isPill
             >
-              <span className="sr-only">Add template</span>
               <Plus />
+              <span className="sr-only">Add</span>
+              Template
             </Button>
           )
         }

@@ -134,7 +134,7 @@ export const StatisticsOverviewData: FC<StatisticsOverviewDataProps> = ({
       >
         View monthly income and expense summaries, along with calculations based
         on the account types you&apos;ve selected in your{' '}
-        <Link className="underline" href={settingsPaths.userPreferences}>
+        <Link className="underline" href={settingsPaths.default}>
           preferences
         </Link>
         .

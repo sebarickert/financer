@@ -37,7 +37,7 @@ const CreateTransactionButton: FC<CreateTransactionButtonProps> = ({
     >
       <Plus className="lg:hidden" />
       <Plus className="max-lg:hidden" />
-      <span className="max-lg:hidden">Add</span>
+      <span className="max-lg:hidden">Transaction</span>
     </Button>
   );
 };

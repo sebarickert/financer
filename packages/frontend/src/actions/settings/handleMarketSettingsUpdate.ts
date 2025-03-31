@@ -15,5 +15,5 @@ export const handleMarketSettingsUpdate: DefaultFormActionHandler = async (
     category: formData.get('category') as string,
   });
 
-  redirect(settingsPaths.userPreferences, RedirectType.push);
+  redirect(settingsPaths.default, RedirectType.push);
 };
