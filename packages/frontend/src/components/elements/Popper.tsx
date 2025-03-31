@@ -1,109 +1,92 @@
+'use client';
+
+import { useClickAway } from '@uidotdev/usehooks';
 import clsx from 'clsx';
-import { EllipsisVertical, LucideIcon } from 'lucide-react';
-import { FC } from 'react';
+import { usePathname } from 'next/navigation';
+import { FC, ReactNode, useEffect, useId, useState } from 'react';
 
-import { Button } from './Button/Button';
-import { Heading } from './Heading';
-import { Link } from './Link';
-
-import { List } from '@/blocks/List';
-
-type PopperItem =
-  | {
-      Icon: LucideIcon;
-      label: string;
-      href: string;
-      popperId?: never;
-    }
-  | {
-      Icon: LucideIcon;
-      label: string;
-      popperId: string;
-      href?: never;
-    };
+import { Button, ButtonAccentColor } from '@/elements/Button/Button';
 
 interface PopperProps {
   className?: string;
-  items?: PopperItem[];
+  children: ReactNode;
+  popperButton: {
+    isPill?: boolean;
+    content: ReactNode;
+    accentColor?: ButtonAccentColor;
+    size?: 'default' | 'small' | 'icon';
+  };
 }
 
-export const Popper: FC<PopperProps> = ({ className, items }) => {
-  const popperId = `popper-${crypto.randomUUID()}`;
+export const Popper: FC<PopperProps> = ({ children, popperButton }) => {
+  const popperId = useId();
+  const [isOpen, setIsOpen] = useState(false);
+  const buttonId = useId();
+  const pathname = usePathname();
 
-  const popperItemClasses = clsx(
-    'pr-3 w-full text-left!',
-    'grid! grid-cols-[40px_1fr] h-11 items-center text-left gap-0!',
-    'hover:bg-accent active:bg-accent transition-colors focus-visible:ring-inset',
-  );
+  const ref = useClickAway<HTMLDivElement>(({ target }) => {
+    if ((target as HTMLElement | null)?.getAttribute('id') === buttonId) return;
+    setIsOpen(false);
+  });
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('keydown', handleKeyDown);
+    } else {
+      document.removeEventListener('keydown', handleKeyDown);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen]);
 
   return (
     <div className="relative inline-block">
       <Button
-        popoverTarget={popperId}
-        accentColor="secondary"
-        size="icon"
-        className={clsx(
-          '[anchor-name:--popover-anchor]',
-          'max-lg:button-ghost',
-        )}
-        id="popover-anchor"
+        accentColor={popperButton.accentColor}
+        size={popperButton.size}
+        aria-expanded={isOpen}
+        aria-controls={popperId}
+        aria-haspopup="true"
         testId="popper-button"
+        isPill={popperButton.isPill}
+        onClick={() => {
+          setIsOpen(!isOpen);
+        }}
+        id={buttonId}
       >
-        <EllipsisVertical />
-        <span className="sr-only">More options</span>
+        {popperButton.content}
       </Button>
       <div
-        className={clsx(
-          'bg-background',
-          'min-w-48',
-          'p-0 rounded-md lg:mt-2',
-          'border',
-          'fixed lg:absolute inset-[unset]',
-          'supports-anchor-name:right-[anchor(--popover-anchor_right)] supports-anchor-name:top-[anchor(--popover-anchor_bottom)]',
-          'ease-in-out duration-200 transition-discrete',
-          'opacity-0 open:starting:opacity-0 open:opacity-100',
-          'translate-x-0 -translate-y-2',
-          'open:starting:translate-x-0 open:starting:-translate-y-2',
-          'open:translate-y-0',
-          'supports-anchor-name:open:translate-x-0 not-supports-[anchor-name]:open:-translate-x-[calc(100%-calc(var(--spacing)*12))]',
-          className,
-        )}
-        popover="auto"
+        aria-hidden={!isOpen}
         id={popperId}
-        data-testid="popper-container"
+        ref={ref}
+        onBlur={(e) => {
+          if (!e.currentTarget.contains(e.relatedTarget)) {
+            setIsOpen(false);
+          }
+        }}
+        className={clsx(
+          'transition-discrete transition-all',
+          'starting:opacity-0 starting:-translate-y-4',
+          'aria-hidden:hidden aria-hidden:opacity-0',
+          'min-w-[8rem] overflow-hidden rounded-md p-1 shadow-md w-56',
+          'border bg-layer',
+          'absolute top-[calc(100%+var(--spacing))] right-0',
+        )}
       >
-        <Heading className="sr-only">Options</Heading>
-        <List>
-          {items?.map(
-            ({ Icon, label, href, popperId: itemPopperId }, index) => {
-              if (href) {
-                return (
-                  <Link
-                    key={index}
-                    href={href}
-                    className={popperItemClasses}
-                    hasHoverEffect={false}
-                  >
-                    <Icon className="w-5 h-5 place-self-center" />
-                    <span>{label}</span>
-                  </Link>
-                );
-              }
-
-              return (
-                <Button
-                  key={index}
-                  accentColor="unstyled"
-                  popoverTarget={itemPopperId}
-                  className={popperItemClasses}
-                >
-                  <Icon className="w-5 h-5 place-self-center" />
-                  <span>{label}</span>
-                </Button>
-              );
-            },
-          )}
-        </List>
+        {children}
       </div>
     </div>
   );

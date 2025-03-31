@@ -1,8 +1,9 @@
-import { Pencil, Trash } from 'lucide-react';
+import { Menu, Pencil, Trash } from 'lucide-react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import { Popper } from '@/elements/Popper';
+import { PopperItem } from '@/elements/PopperItem';
 import { TransactionDeleteDrawer } from '@/features/transaction/TransactionDeleteDrawer';
 import { ContentHeader } from '@/layouts/ContentHeader';
 import { TransactionService } from '@/ssr/api/TransactionService';
@@ -40,19 +41,25 @@ export default async function TransactionPage({ params }: { params: Params }) {
         title={transaction.description}
         action={
           <Popper
-            items={[
-              {
-                href: `/transactions/${id}/edit`,
-                Icon: Pencil,
-                label: 'Edit',
-              },
-              {
-                Icon: Trash,
-                label: 'Delete',
-                popperId: id,
-              },
-            ]}
-          />
+            popperButton={{
+              isPill: true,
+              size: 'small',
+              accentColor: 'secondary',
+              content: (
+                <>
+                  <Menu />
+                  Options
+                </>
+              ),
+            }}
+          >
+            <PopperItem
+              label="Edit"
+              href={`/transactions/${id}/edit`}
+              icon={Pencil}
+            />
+            <PopperItem label="Delete" icon={Trash} popperId={id} />
+          </Popper>
         }
       />
       <Transaction {...transaction} />

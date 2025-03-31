@@ -24,13 +24,15 @@ export const TemplateDelete = ({ id }: TemplateDeleteProps) => {
   return (
     <>
       <Button
-        accentColor="secondary"
-        size="icon"
+        accentColor="danger"
+        size="small"
         popoverTarget={popoverId}
-        className="max-lg:button-ghost"
+        transition="slideInFromRight"
+        isPill
+        className="[&_svg]:size-4!"
       >
         <Trash />
-        <span className="sr-only">Delete</span>
+        Delete
       </Button>
       <Drawer
         id={popoverId}
