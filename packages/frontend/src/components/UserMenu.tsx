@@ -88,6 +88,11 @@ export const UserMenu: FC<{ roles: readonly Role[]; theme: Theme }> = ({
         aria-hidden={!isOpen}
         id={userMenuId}
         ref={ref}
+        onBlur={(e) => {
+          if (!e.currentTarget.contains(e.relatedTarget)) {
+            setIsOpen(false);
+          }
+        }}
         className={clsx(
           'transition-discrete transition-all',
           'starting:opacity-0 starting:-translate-y-4',
