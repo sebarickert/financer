@@ -1,6 +1,6 @@
 import { TransactionType } from '@/types/generated/financer';
 import { applyFixture } from '@/utils/applyFixture';
-import { clickContextualNavigationItem } from '@/utils/common/clickContextualNavigationItem';
+import { clickUserMenuItem } from '@/utils/common/clickUserMenuItem';
 import { expect, test } from '@/utils/financer-page';
 import { getTransactionFormValues } from '@/utils/transaction/getTransactionFormValues';
 import { switchTransactionType } from '@/utils/transaction/switchTransactionType';
@@ -30,8 +30,7 @@ test.describe('Default Account Preferences', () => {
 
     await page.getByRole('button', { name: 'Close drawer' }).click();
 
-    await page.getByRole('link', { name: 'Settings' }).click();
-    await clickContextualNavigationItem(page, 'Preferences');
+    await clickUserMenuItem(page, 'Settings');
     await page.getByRole('link', { name: 'Default Account Settings' }).click();
 
     await page
@@ -52,7 +51,7 @@ test.describe('Default Account Preferences', () => {
       .getByRole('button', { name: 'Save', exact: true })
       .click();
 
-    await expect(page).toHaveURL('/settings/preferences/', {
+    await expect(page).toHaveURL('/settings/', {
       timeout: 5000,
     });
 

@@ -2,7 +2,7 @@ import Decimal from 'decimal.js';
 
 import { getAccountDetails } from '@/utils/account/getAccountDetails';
 import { applyFixture } from '@/utils/applyFixture';
-import { clickContextualNavigationItem } from '@/utils/common/clickContextualNavigationItem';
+import { clickUserMenuItem } from '@/utils/common/clickUserMenuItem';
 import { getDashboardDetails } from '@/utils/dashboard/getDashboardDetails';
 import { expect, test } from '@/utils/financer-page';
 import { getTransactionDataFromTransactionList } from '@/utils/transaction/getTransactionDataFromTransactionList';
@@ -19,8 +19,7 @@ test.describe('Dashboard Preferences', () => {
 
     const initialDashboardStats = await getDashboardDetails(page);
 
-    await page.getByRole('link', { name: 'Settings' }).click();
-    await clickContextualNavigationItem(page, 'Preferences');
+    await clickUserMenuItem(page, 'Settings');
     await page.getByRole('link', { name: 'Dashboard Settings' }).click();
 
     await page
@@ -61,8 +60,7 @@ test.describe('Dashboard Preferences', () => {
 
     const initialDashboardStats = await getDashboardDetails(page);
 
-    await page.getByRole('link', { name: 'Settings' }).click();
-    await clickContextualNavigationItem(page, 'Preferences');
+    await clickUserMenuItem(page, 'Settings');
     await page.getByRole('link', { name: 'Dashboard Settings' }).click();
 
     await page.locator('#chunkSize').fill('10');

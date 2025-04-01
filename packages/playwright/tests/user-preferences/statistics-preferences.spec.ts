@@ -1,7 +1,7 @@
 import Decimal from 'decimal.js';
 
 import { applyFixture } from '@/utils/applyFixture';
-import { clickContextualNavigationItem } from '@/utils/common/clickContextualNavigationItem';
+import { clickUserMenuItem } from '@/utils/common/clickUserMenuItem';
 import { expect, test } from '@/utils/financer-page';
 import { getTransactionDataFromTransactionList } from '@/utils/transaction/getTransactionDataFromTransactionList';
 import { getTransactionsDetails } from '@/utils/transactions/getTransactionsDetails';
@@ -18,8 +18,7 @@ test.describe('Transactions & Statistics Preferences', () => {
 
     const initialTransactionsStats = await getTransactionsDetails(page);
 
-    await page.getByRole('link', { name: 'Settings' }).click();
-    await clickContextualNavigationItem(page, 'Preferences');
+    await clickUserMenuItem(page, 'Settings');
     await page
       .getByRole('link', { name: 'Transactions & Statistics Settings' })
       .click();

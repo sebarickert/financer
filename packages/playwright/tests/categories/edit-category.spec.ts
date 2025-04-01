@@ -3,6 +3,7 @@ import { applyFixture } from '@/utils/applyFixture';
 import { fillCategoryForm } from '@/utils/category/fillCategoryForm';
 import { getCategoryDetails } from '@/utils/category/getCategoryDetails';
 import { clickPopperItem } from '@/utils/common/clickPopperItem';
+import { clickUserMenuItem } from '@/utils/common/clickUserMenuItem';
 import { expect, test } from '@/utils/financer-page';
 
 test.describe('Edit Category', () => {
@@ -66,7 +67,7 @@ test.describe('Edit Category', () => {
       const { id: childCategoryId, name: childCategoryName } =
         await getCategoryDetails(page);
 
-      await page.getByTestId('header-back-link').click();
+      await clickUserMenuItem(page, 'Categories');
 
       await expect(page.getByTestId('category-list').first()).toBeVisible();
 

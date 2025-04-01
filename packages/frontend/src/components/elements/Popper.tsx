@@ -72,6 +72,7 @@ export const Popper: FC<PopperProps> = ({ children, popperButton }) => {
         aria-hidden={!isOpen}
         id={popperId}
         ref={ref}
+        data-testid="popper-container"
         onBlur={(e) => {
           if (!e.currentTarget.contains(e.relatedTarget)) {
             setIsOpen(false);

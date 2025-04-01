@@ -61,7 +61,6 @@ export const UserMenu: FC<{ roles: readonly Role[]; theme: Theme }> = ({
     <div className="relative inline-flex">
       <button
         id={buttonId}
-        aria-label="Open user navigation menu"
         aria-expanded={isOpen}
         aria-controls={userMenuId}
         aria-haspopup="true"
@@ -72,6 +71,7 @@ export const UserMenu: FC<{ roles: readonly Role[]; theme: Theme }> = ({
           'rounded-full cursor-pointer',
           'focus-visible:focus-highlight',
         )}
+        data-testid="user-menu-button"
       >
         <div
           className={clsx(
@@ -82,6 +82,7 @@ export const UserMenu: FC<{ roles: readonly Role[]; theme: Theme }> = ({
           )}
         >
           <UserRound className="size-4" />
+          <span className="sr-only">Open user navigation menu</span>
         </div>
       </button>
       <div
@@ -101,6 +102,7 @@ export const UserMenu: FC<{ roles: readonly Role[]; theme: Theme }> = ({
           'border bg-layer',
           'absolute top-[calc(100%+var(--spacing))] right-0',
         )}
+        data-testid="user-menu-container"
       >
         <div role="group">
           <UserMenuItem href={settingsPaths.default} icon={Cog}>
@@ -175,14 +177,19 @@ const UserMenuItem: FC<
 
   if (onClick) {
     return (
-      <button onClick={onClick} type="button" className={classes}>
+      <button
+        onClick={onClick}
+        type="button"
+        className={classes}
+        data-testid="user-menu-item"
+      >
         {content}
       </button>
     );
   }
 
   return (
-    <Link href={href} className={classes}>
+    <Link href={href} className={classes} testId="user-menu-item">
       {content}
     </Link>
   );

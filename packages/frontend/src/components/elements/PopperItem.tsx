@@ -26,7 +26,7 @@ export const PopperItem: FC<PopperItem> = ({
   popperId,
 }) => {
   const popperItemClasses = clsx(
-    'flex w-full items-center gap-2 text-sm cursor-pointer py-1.5 px-2 rounded-sm justify-start',
+    'flex w-full items-center gap-2 text-sm font-normal cursor-pointer py-1.5 px-2 rounded-sm justify-start',
     'focus-visible:focus-highlight hover:bg-accent',
     '[&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
     'text-muted-foreground hover:text-foreground!',
@@ -42,7 +42,12 @@ export const PopperItem: FC<PopperItem> = ({
 
   if (href) {
     return (
-      <Link href={href} className={popperItemClasses} hasHoverEffect={false}>
+      <Link
+        href={href}
+        className={popperItemClasses}
+        hasHoverEffect={false}
+        testId="popper-item"
+      >
         {content}
       </Link>
     );
@@ -53,6 +58,7 @@ export const PopperItem: FC<PopperItem> = ({
       accentColor="unstyled"
       className={popperItemClasses}
       popoverTarget={popperId}
+      testId="popper-item"
     >
       {content}
     </Button>

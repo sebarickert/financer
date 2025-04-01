@@ -86,7 +86,11 @@ test.describe('Edit Account', () => {
         .getByRole('button', { name: 'Update' })
         .click();
 
-      await page.getByRole('link', { name: 'Accounts' }).click();
+      // TODO: Make so that form update doesn't redirect
+      await page.waitForTimeout(1000);
+      await page.goto('/');
+
+      await page.getByRole('link', { name: 'Accounts' }).first().click();
       await page
         .getByTestId('account-row')
         .getByText('Investment account')
@@ -127,7 +131,11 @@ test.describe('Edit Account', () => {
         .getByRole('button', { name: 'Update' })
         .click();
 
-      await page.getByRole('link', { name: 'Accounts' }).click();
+      // TODO: Make so that form update doesn't redirect
+      await page.waitForTimeout(1000);
+      await page.goto('/');
+
+      await page.getByRole('link', { name: 'Accounts' }).first().click();
       await page
         .getByTestId('account-row')
         .getByText('Investment account')
