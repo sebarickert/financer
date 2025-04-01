@@ -149,8 +149,10 @@ export default async function EditTransactionPage({
   return (
     <>
       <ContentHeader
-        title="Edit Transaction"
-        backLink={`/transactions/${id}`}
+        title={`Edit ${transaction.description}`}
+        breadcrumbOverrides={{
+          [`/transactions/${id}`]: transaction.description,
+        }}
       />
       <TransactionForm
         initialValues={initialValues}

@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { Plus } from 'lucide-react';
-import { FC, Suspense } from 'react';
+import { FC } from 'react';
 
 import { Drawer } from '@/blocks/Drawer';
 import { Button } from '@/elements/Button/Button';
@@ -29,46 +29,22 @@ const CreateTransactionButton: FC<CreateTransactionButtonProps> = ({
         'text-base rounded-md text-center',
         'items-center justify-center',
         'max-lg:flex max-lg:flex-col max-lg:h-full max-lg:!w-full max-lg:rounded-none',
-        'lg:button-primary lg:py-3 lg:h-12 lg:px-[18px] lg:text-base',
+        'lg:button-primary lg:text-sm lg:h-8 lg:px-3 lg:rounded-full lg:[&_svg]:size-5 lg:[&:has(svg)]:gap-1',
       )}
       popoverTarget={id}
       data-testid="add-transaction"
       isDisabled={isDisabled}
     >
-      <Plus />
-      <span className="max-lg:hidden">
-        <span className="sr-only">Add</span> Transaction
-      </span>
+      <Plus className="lg:hidden" />
+      <Plus className="max-lg:hidden" />
+      <span className="max-lg:hidden">Transaction</span>
     </Button>
   );
 };
 
-interface NavigationCreateTransactionButtonSuspenseProps {
+export const NavigationCreateTransactionButton: FC<{
   className?: string;
-  isLoading?: boolean;
-}
-
-export const NavigationCreateTransactionButtonSuspense: FC<
-  NavigationCreateTransactionButtonSuspenseProps
-> = ({ isLoading, className }) => {
-  if (isLoading) {
-    return <CreateTransactionButton isDisabled />;
-  }
-
-  return (
-    <Suspense fallback={<CreateTransactionButton isDisabled />}>
-      <NavigationCreateTransactionButton className={className} />
-    </Suspense>
-  );
-};
-
-interface NavigationCreateTransactionButtonProps {
-  className?: string;
-}
-
-const NavigationCreateTransactionButton: FC<
-  NavigationCreateTransactionButtonProps
-> = async ({ className }) => {
+}> = async ({ className }) => {
   const id = 'navigationCreateTransactionButton';
 
   const defaultExpenseAccountId =

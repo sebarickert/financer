@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 
 import { handleMarketSettingsUpdate } from '@/actions/settings/handleMarketSettingsUpdate';
-import { settingsPaths } from '@/constants/settingsPaths';
 import { ContentHeader } from '@/layouts/ContentHeader';
 import { CategoryService } from '@/ssr/api/CategoryService';
 import { UserPreferenceService } from '@/ssr/api/UserPreferenceService';
@@ -19,10 +18,7 @@ export default async function MarketUpdateSettingsUserPreferencePage() {
 
   return (
     <>
-      <ContentHeader
-        title="Market Update Settings"
-        backLink={settingsPaths.userPreferences}
-      />
+      <ContentHeader title="Market Update Settings" />
       <UserDefaultMarketUpdateSettingsForm
         data={marketUpdateSettings}
         categories={categories}

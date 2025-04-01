@@ -48,10 +48,8 @@ export const Link = ({
   const linkClasses = clsx(
     'focus-visible:focus-highlight text-foreground',
     className,
-    {
-      'hover:text-muted-foreground active:text-muted-foreground':
-        hasHoverEffect,
-    },
+    hasHoverEffect &&
+      'hover:text-muted-foreground active:text-muted-foreground',
   );
   const linkContent = (
     <>

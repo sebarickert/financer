@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 import { TransactionListWithMonthlyPager } from '@/features/transaction/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
-import { TransactionsLayout } from '@/features/transactions/TransactionsLayout';
+import { ContentHeader } from '@/layouts/ContentHeader';
 
 export const metadata: Metadata = {
   title: 'Transactions',
@@ -15,8 +15,9 @@ export default async function TransactionsPage({
   const queryDate = (await searchParams).date as string | undefined;
 
   return (
-    <TransactionsLayout title="Transactions">
+    <>
+      <ContentHeader title="Transactions" />
       <TransactionListWithMonthlyPager isSummaryVisible queryDate={queryDate} />
-    </TransactionsLayout>
+    </>
   );
 }

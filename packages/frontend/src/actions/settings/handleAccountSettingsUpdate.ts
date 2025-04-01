@@ -25,5 +25,5 @@ export const handleAccountSettingsUpdate: DefaultFormActionHandler = async (
     ),
   ]);
 
-  redirect(settingsPaths.userPreferences, RedirectType.push);
+  redirect(settingsPaths.default, RedirectType.push);
 };

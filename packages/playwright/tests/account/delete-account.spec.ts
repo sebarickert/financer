@@ -54,7 +54,7 @@ test.describe('Delete Account', () => {
       .getByRole('button', { name: 'Cancel' })
       .click();
 
-    await page.getByTestId('header-back-link').click();
+    await page.getByRole('link', { name: 'Accounts' }).first().click();
 
     const updatedAccounts = await getAccountDataFromAccountList(page);
 

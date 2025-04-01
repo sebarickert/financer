@@ -37,18 +37,19 @@ export default async function AccountsPage() {
   return (
     <>
       <ContentHeader
-        title={'Accounts'}
-        headerAction={
+        title="Accounts"
+        action={
           <Button
             href="/accounts/add"
-            accentColor="secondary"
-            size="icon"
+            accentColor="primary"
+            size="small"
             testId="add-account"
             transition="slideInFromRight"
-            className="max-lg:button-ghost"
+            isPill
           >
-            <span className="sr-only">Add account</span>
             <Plus />
+            <span className="sr-only">Add</span>
+            Account
           </Button>
         }
       />

@@ -1,12 +1,11 @@
 import clsx from 'clsx';
-import { ArrowLeft, LogOut, MessageSquareText } from 'lucide-react';
+import { LogOut, MessageSquareText } from 'lucide-react';
 import { Metadata } from 'next';
 import type { JSX } from 'react';
 
 import { InfoMessageBlock } from '@/blocks/InfoMessageBlock';
 import { Button } from '@/elements/Button/Button';
-import { Heading } from '@/elements/Heading';
-import { verifySession } from '@/utils/dal';
+import { ContentHeader } from '@/layouts/ContentHeader';
 
 export const metadata: Metadata = {
   title: 'Troubleshooting Login Issues',
@@ -42,29 +41,18 @@ const ResolveAuth0Issues = (): JSX.Element => {
   );
 };
 
-const IssuesWithLogin = async () => {
-  const isLoggedIn = await verifySession();
-
+export default function IssuesWithLogin() {
   return (
-    <main className="grid max-w-screen-lg gap-6 px-4 pt-6 mx-auto lg:pt-12 pb-safe-offset-12 lg:px-8">
-      <div className={clsx('flex gap-4 items-center')}>
-        <Button
-          href={isLoggedIn ? '/' : '/login'}
-          accentColor="secondary"
-          size="icon"
-          haptic="light"
-          testId="header-back-link"
-          className="max-lg:button-ghost shrink-0"
-        >
-          <ArrowLeft />
-          <span className="sr-only">Go back</span>
-        </Button>
-        <Heading variant="h1">Troubleshooting Login Issues</Heading>
-      </div>
+    <main
+      className={clsx(
+        'pt-12 pb-safe-offset-12 px-4 lg:px-8',
+        'mx-auto max-w-screen-md lg:max-w-screen-xl',
+      )}
+      data-testid="layout-root"
+    >
+      <ContentHeader title="Troubleshooting Login Issues" />
       {checkIsEnabled(LOGIN_IS_GITHUB_ENABLED) && <ResolveGithubIssues />}
       {checkIsEnabled(LOGIN_IS_AUTH_0_ENABLED) && <ResolveAuth0Issues />}
     </main>
   );
-};
-
-export default IssuesWithLogin;
+}

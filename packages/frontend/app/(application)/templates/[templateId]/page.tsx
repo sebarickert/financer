@@ -55,9 +55,8 @@ export default async function EditTemplatePage({ params }: { params: Params }) {
   return (
     <>
       <ContentHeader
-        title="Edit Template"
-        backLink={'/templates'}
-        headerAction={<TemplateDelete id={template.id} />}
+        title={`Edit ${template.templateName}`}
+        action={<TemplateDelete id={template.id} />}
       />
       <TemplateForm
         onSubmit={handleSubmit}

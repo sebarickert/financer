@@ -4,7 +4,6 @@ import { forwardRef } from 'react';
 
 import { Button } from '@/elements/Button/Button';
 import { Heading } from '@/elements/Heading';
-import { Paragraph } from '@/elements/Paragraph';
 
 interface DrawerProps {
   className?: string;
@@ -56,7 +55,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
         <div
           className={clsx(
             'flex justify-between items-center',
-            'bg-background z-10',
+            'bg-background',
             'sticky top-0',
             'pt-2 pb-2 mb-8',
             'px-6 lg:px-8 -mx-6 lg:-mx-8',
@@ -77,7 +76,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
             <span className="sr-only">Close Drawer</span>
           </Button>
         </div>
-        {description && <Paragraph className="mb-8">{description}</Paragraph>}
+        {description && <p className="mb-8">{description}</p>}
         {children}
       </section>
     );

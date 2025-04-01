@@ -24,7 +24,7 @@ export const Heading: FC<HeadingProps> = ({
     <HeadingType
       className={clsx('font-medium', className, {
         'text-lg': variant !== 'h1',
-        'lg:text-3xl lg:font-semibold': variant === 'h1',
+        'text-3xl/tight font-semibold tracking-tight': variant === 'h1',
         'mb-2': variant !== 'h1' && !noMargin,
       })}
       data-testid={testId}

@@ -32,15 +32,15 @@ export const generateViewport = async (): Promise<Viewport> => {
 
   switch (theme) {
     case Theme.LIGHT:
-      themeColor = 'hsl(0 0% 96%)';
+      themeColor = 'hsl(0 0% 0%)';
       break;
     case Theme.DARK:
-      themeColor = 'hsl(0 0% 11%)';
+      themeColor = 'hsl(0 0% 0%)';
       break;
     default:
       themeColor = [
-        { media: '(prefers-color-scheme: light)', color: 'hsl(0 0% 96%)' },
-        { media: '(prefers-color-scheme: dark)', color: 'hsl(0 0% 11%)' },
+        { media: '(prefers-color-scheme: light)', color: 'hsl(0 0% 0%)' },
+        { media: '(prefers-color-scheme: dark)', color: 'hsl(0 0% 0%)' },
       ];
   }
 

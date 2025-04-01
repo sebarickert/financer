@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function DashboardPage() {
   return (
     <>
-      <ContentHeader title={'Dashboard'} />
+      <ContentHeader title="Dashboard" />
       <RequireAccounts>
         <Dashboard />
       </RequireAccounts>

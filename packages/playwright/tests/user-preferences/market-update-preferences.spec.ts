@@ -1,8 +1,8 @@
 import { fillUpdateMarketValueForm } from '@/utils/account/fillUpdateMarketValueForm';
 import { getAccountDetails } from '@/utils/account/getAccountDetails';
 import { applyFixture } from '@/utils/applyFixture';
-import { clickContextualNavigationItem } from '@/utils/common/clickContextualNavigationItem';
 import { clickPopperItem } from '@/utils/common/clickPopperItem';
+import { clickUserMenuItem } from '@/utils/common/clickUserMenuItem';
 import { expect, test } from '@/utils/financer-page';
 import { getTransactionDataFromTransactionList } from '@/utils/transaction/getTransactionDataFromTransactionList';
 
@@ -33,6 +33,10 @@ test.describe('Market Update Preferences', () => {
       .getByRole('button', { name: 'Update' })
       .click();
 
+    // TODO: Make so that form update doesn't redirect
+    await page.waitForTimeout(1000);
+    await page.goto('/');
+
     await page.getByRole('link', { name: 'Accounts' }).click();
     await expect(page).toHaveURL(/\/accounts\/?$/);
     await page.getByRole('link', { name }).click();
@@ -54,8 +58,7 @@ test.describe('Market Update Preferences', () => {
       ]),
     );
 
-    await page.getByRole('link', { name: 'Settings' }).click();
-    await clickContextualNavigationItem(page, 'Preferences');
+    await clickUserMenuItem(page, 'Settings');
     await page.getByRole('link', { name: 'Market Update Settings' }).click();
 
     await page
@@ -93,6 +96,10 @@ test.describe('Market Update Preferences', () => {
       .getByTestId('update-market-value-form')
       .getByRole('button', { name: 'Update' })
       .click();
+
+    // TODO: Make so that form update doesn't redirect
+    await page.waitForTimeout(1000);
+    await page.goto('/');
 
     await page.getByRole('link', { name: 'Accounts' }).click();
     await expect(page).toHaveURL(/\/accounts\/?$/);

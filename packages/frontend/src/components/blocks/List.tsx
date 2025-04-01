@@ -31,7 +31,7 @@ export const List: FC<ListProps> = ({
                 data-slot="list-item"
                 data-testid={`${testId}-item`}
                 className={clsx(
-                  '[&>*:focus-visible]:z-10 [&>*:focus-visible]:relative',
+                  '[&>*:focus-visible]:ring-inset',
                   itemRoundness && 'first:[&>:not(style)]:rounded-t-md',
                   itemRoundness && 'last:[&>:not(style)]:rounded-b-md',
                 )}

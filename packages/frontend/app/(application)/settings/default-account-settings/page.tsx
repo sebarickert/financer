@@ -2,7 +2,6 @@ import { Metadata } from 'next';
 
 import { handleAccountSettingsUpdate } from '@/actions/settings/handleAccountSettingsUpdate';
 import { RequireAccounts } from '@/components/RequireAccounts';
-import { settingsPaths } from '@/constants/settingsPaths';
 import { ContentHeader } from '@/layouts/ContentHeader';
 import { AccountService } from '@/ssr/api/AccountService';
 import { UserPreferenceService } from '@/ssr/api/UserPreferenceService';
@@ -26,10 +25,7 @@ export default async function DefaultAccountSettingsUserPreferencePage() {
 
   return (
     <>
-      <ContentHeader
-        title="Default Account Settings"
-        backLink={settingsPaths.userPreferences}
-      />
+      <ContentHeader title="Default Account Settings" />
       <RequireAccounts>
         <UserDefaultAccountSettingsForm
           accounts={accounts}

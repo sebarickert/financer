@@ -13,5 +13,5 @@ export const handleStatisticsPageSettingsUpdate: DefaultFormActionHandler =
       accountTypes: formData.getAll('accountTypes') as AccountType[],
     });
 
-    redirect(settingsPaths.userPreferences, RedirectType.push);
+    redirect(settingsPaths.default, RedirectType.push);
   };

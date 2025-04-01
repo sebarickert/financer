@@ -45,7 +45,7 @@ export const TemplateList: FC<TemplateListProps> = ({ templates }) => {
             <ProminentLink
               Icon={TEMPLATE_ICON_MAPPING[templateType[0]]}
               key={id}
-              link={`/templates/${id}/edit`}
+              link={`/templates/${id}`}
             >
               {templateName}
             </ProminentLink>

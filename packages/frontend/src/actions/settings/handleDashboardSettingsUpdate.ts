@@ -19,5 +19,5 @@ export const handleDashboardSettingsUpdate: DefaultFormActionHandler = async (
     parseInt(formData.get('chunkSize') as string),
   );
 
-  redirect(settingsPaths.userPreferences, RedirectType.push);
+  redirect(settingsPaths.default, RedirectType.push);
 };

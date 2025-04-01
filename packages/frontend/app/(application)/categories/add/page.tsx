@@ -14,7 +14,7 @@ export default async function CategoryAddPage() {
 
   return (
     <>
-      <ContentHeader title="Add Category" backLink={'/categories'} />
+      <ContentHeader title="Add Category" />
       <CategoryForm
         onSubmit={handleCategoryAdd}
         submitLabel="Add"

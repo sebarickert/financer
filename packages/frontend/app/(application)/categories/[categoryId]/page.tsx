@@ -1,8 +1,9 @@
-import { Pencil, Trash } from 'lucide-react';
+import { Menu, Pencil, Trash } from 'lucide-react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import { Popper } from '@/elements/Popper';
+import { PopperItem } from '@/elements/PopperItem';
 import { CategoryDeleteDrawer } from '@/features/category/CategoryDeleteDrawer';
 import { ContentHeader } from '@/layouts/ContentHeader';
 import { CategoryService } from '@/ssr/api/CategoryService';
@@ -48,23 +49,28 @@ export default async function CategoryPage({
   return (
     <>
       <ContentHeader
-        title="Category Details"
-        backLink={'/categories'}
-        headerAction={
+        title={category.name}
+        action={
           <Popper
-            items={[
-              {
-                label: 'Edit',
-                href: `/categories/${category.id}/edit`,
-                Icon: Pencil,
-              },
-              {
-                label: 'Delete',
-                popperId: category.id,
-                Icon: Trash,
-              },
-            ]}
-          />
+            popperButton={{
+              isPill: true,
+              size: 'small',
+              accentColor: 'secondary',
+              content: (
+                <>
+                  <Menu />
+                  Options
+                </>
+              ),
+            }}
+          >
+            <PopperItem
+              label="Edit"
+              href={`/categories/${category.id}/edit`}
+              icon={Pencil}
+            />
+            <PopperItem label="Delete" icon={Trash} popperId={category.id} />
+          </Popper>
         }
       />
       <Category

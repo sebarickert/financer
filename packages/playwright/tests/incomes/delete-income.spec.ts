@@ -30,7 +30,7 @@ test.describe('Delete Income', () => {
     await page.goto(`/transactions/${id}`);
 
     await deleteTransaction(page);
-    await expect(page).not.toHaveURL(`/transactions/${id}`);
+    await expect(page).not.toHaveURL(`/transactions/${id}/`);
 
     await page.getByRole('link', { name: 'Transactions' }).click();
 

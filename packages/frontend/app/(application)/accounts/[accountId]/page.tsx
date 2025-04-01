@@ -1,9 +1,10 @@
-import { ChartNoAxesCombined, Pencil, Trash } from 'lucide-react';
+import { ChartNoAxesCombined, Menu, Pencil, Trash } from 'lucide-react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import { AccountType } from '@/api/ssr-financer-api';
 import { Popper } from '@/elements/Popper';
+import { PopperItem } from '@/elements/PopperItem';
 import { AccountDeleteDrawer } from '@/features/account/AccountDeleteDrawer';
 import { AccountUpdateMarketValueDrawer } from '@/features/account/AccountUpdateMarketValueDrawer';
 import { ContentHeader } from '@/layouts/ContentHeader';
@@ -55,31 +56,34 @@ export default async function AccountPage({
     <>
       <ContentHeader
         title={account.name}
-        backLink="/accounts"
-        headerAction={
+        action={
           <Popper
-            items={[
-              {
-                href: `/accounts/${account.id}/edit`,
-                label: 'Edit',
-                Icon: Pencil,
-              },
-              {
-                popperId: account.id,
-                label: 'Delete',
-                Icon: Trash,
-              },
-              ...(account.type === AccountType.INVESTMENT
-                ? [
-                    {
-                      popperId: accountDrawerPopperId,
-                      label: 'Update Market Value',
-                      Icon: ChartNoAxesCombined,
-                    },
-                  ]
-                : []),
-            ]}
-          />
+            popperButton={{
+              isPill: true,
+              size: 'small',
+              accentColor: 'secondary',
+              content: (
+                <>
+                  <Menu />
+                  Options
+                </>
+              ),
+            }}
+          >
+            <PopperItem
+              label="Edit"
+              href={`/accounts/${account.id}/edit`}
+              icon={Pencil}
+            />
+            <PopperItem label="Delete" icon={Trash} popperId={account.id} />
+            {account.type === AccountType.INVESTMENT && (
+              <PopperItem
+                label="Update Market Value"
+                icon={ChartNoAxesCombined}
+                popperId={accountDrawerPopperId}
+              />
+            )}
+          </Popper>
         }
       />
       <Account

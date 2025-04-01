@@ -37,9 +37,12 @@ export default async function AccountEditPage({ params }: { params: Params }) {
   return (
     <>
       <ContentHeader
-        title="Edit Account"
-        backLink={`/accounts/${account.id}`}
+        title={`Edit ${account.name}`}
+        breadcrumbOverrides={{
+          [`/accounts/${accountId}`]: account.name,
+        }}
       />
+
       <AccountForm
         onSubmit={handleSubmit}
         submitLabel="Save Changes"

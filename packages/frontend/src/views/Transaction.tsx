@@ -113,7 +113,7 @@ export const Transaction: FC<TransactionProps> = async ({
         }
       `}</style>
       <div
-        className={clsx('relative isolate grid gap-4')}
+        className={clsx('grid gap-4')}
         data-testid="transaction-details"
         data-transaction={id}
       >

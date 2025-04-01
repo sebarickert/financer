@@ -28,9 +28,10 @@ interface ButtonProps
   type?: 'button' | 'submit' | 'reset';
   testId?: string;
   isDisabled?: boolean;
-  size?: 'default' | 'icon';
+  size?: 'default' | 'small' | 'icon';
   /** Defaults to `none` */
   haptic?: HapticType;
+  isPill?: boolean;
 }
 
 export const Button: FC<ButtonProps> = ({
@@ -47,15 +48,23 @@ export const Button: FC<ButtonProps> = ({
   popoverTargetAction,
   size = 'default',
   haptic = 'none',
+  isPill,
   ...props
 }): JSX.Element => {
   const buttonStyles = {
     base: clsx(
+      'text-center transition-colors font-medium',
       'focus-visible:focus-highlight whitespace-nowrap cursor-pointer',
-      'inline-flex items-center justify-center [&:has(svg)]:gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0',
+      'inline-flex items-center justify-center',
+      '[&_svg]:pointer-events-none [&_svg]:shrink-0',
       'disabled:pointer-events-none disabled:opacity-50',
     ),
-    default: clsx('py-3 h-12 px-5'),
+    default: clsx(
+      'py-3 h-12 px-5 text-base/6 [&_svg]:size-6 rounded-md [&:has(svg)]:gap-2',
+    ),
+    small: clsx(
+      'h-8 px-3 text-sm/6 [&_svg]:size-5 rounded-sm [&:has(svg)]:gap-1',
+    ),
     icon: clsx('h-12 w-12'),
   };
 
@@ -65,11 +74,13 @@ export const Button: FC<ButtonProps> = ({
       'text-base rounded-md text-center':
         (size === 'icon' || size === 'default') && accentColor !== 'unstyled',
       [buttonStyles.default]: size === 'default' && accentColor !== 'unstyled',
+      [buttonStyles.small]: size === 'small' && accentColor !== 'unstyled',
       [buttonStyles.icon]: size === 'icon' && accentColor !== 'unstyled',
       'button-primary': accentColor === 'primary',
       'button-secondary': accentColor === 'secondary',
       'button-danger': accentColor === 'danger',
       'button-ghost': accentColor === 'ghost',
+      'rounded-full!': isPill,
       '': accentColor === 'unstyled',
     },
     className,
