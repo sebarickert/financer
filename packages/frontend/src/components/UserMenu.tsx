@@ -31,7 +31,12 @@ export const UserMenu: FC<{ roles: readonly Role[]; theme: Theme }> = ({
   const pathname = usePathname();
 
   const ref = useClickAway<HTMLDivElement>(({ target }) => {
-    if ((target as HTMLElement | null)?.getAttribute('id') === buttonId) return;
+    if (
+      (target as HTMLElement | null)?.getAttribute('id') === buttonId ||
+      (target as HTMLElement | null)?.getAttribute('data-id') ===
+        `${buttonId}/span`
+    )
+      return;
     setIsOpen(false);
   });
 
@@ -68,11 +73,15 @@ export const UserMenu: FC<{ roles: readonly Role[]; theme: Theme }> = ({
           setIsOpen(!isOpen);
         }}
         className={clsx(
-          'rounded-full cursor-pointer',
+          'relative rounded-full cursor-pointer',
           'focus-visible:focus-highlight',
         )}
         data-testid="user-menu-button"
       >
+        <span
+          className="top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 absolute size-12"
+          data-id={`${buttonId}/span`}
+        />
         <div
           className={clsx(
             'pointer-events-none select-none',
