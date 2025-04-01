@@ -1,7 +1,5 @@
 import clsx from 'clsx';
 
-import { Container } from './Container';
-
 import { Logo } from '@/blocks/Logo';
 import { Navigation } from '@/blocks/Navigation/Navigation';
 import { UserMenu } from '@/components/UserMenu';
@@ -20,8 +18,9 @@ export const Header = async () => {
           'fixed left-0 right-0 top-0 z-(--z-header)',
         )}
       >
-        <Container
+        <div
           className={clsx(
+            'mx-auto max-w-screen-xl',
             'px-4 h-12 lg:px-8',
             'flex items-center justify-between',
           )}
@@ -32,7 +31,7 @@ export const Header = async () => {
           <div className="inline-flex items-center gap-2">
             <UserMenu roles={roles} theme={theme} />
           </div>
-        </Container>
+        </div>
       </header>
       <nav
         className={clsx(
@@ -42,11 +41,15 @@ export const Header = async () => {
           'fixed left-0 right-0 max-lg:bottom-0 lg:top-(--header-height) z-(--z-navigation)',
         )}
       >
-        <Container
-          className={clsx('lg:px-8', 'lg:flex lg:items-center lg:gap-20')}
+        <div
+          className={clsx(
+            'mx-auto max-w-screen-xl',
+            'lg:px-8',
+            'lg:flex lg:items-center lg:gap-20',
+          )}
         >
           <Navigation />
-        </Container>
+        </div>
       </nav>
     </>
   );

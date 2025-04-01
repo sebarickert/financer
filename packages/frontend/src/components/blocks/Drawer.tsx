@@ -4,7 +4,6 @@ import { forwardRef } from 'react';
 
 import { Button } from '@/elements/Button/Button';
 import { Heading } from '@/elements/Heading';
-import { Paragraph } from '@/elements/Paragraph';
 
 interface DrawerProps {
   className?: string;
@@ -77,7 +76,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
             <span className="sr-only">Close Drawer</span>
           </Button>
         </div>
-        {description && <Paragraph className="mb-8">{description}</Paragraph>}
+        {description && <p className="mb-8">{description}</p>}
         {children}
       </section>
     );
