@@ -2,10 +2,10 @@ import 'server-only';
 
 import { cache } from 'react';
 
-import { AuthenticationService } from '@/ssr/api/AuthenticationService';
+import { getAuthenticationStatus } from '@/api-service';
 
 export const verifySession = cache(async () => {
-  const authenticationStatus = await AuthenticationService.getStatus();
+  const authenticationStatus = await getAuthenticationStatus();
 
   if (!authenticationStatus?.authenticated) {
     return false;

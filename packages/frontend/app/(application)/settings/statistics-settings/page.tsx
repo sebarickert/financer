@@ -1,9 +1,9 @@
 import { Metadata } from 'next';
 
 import { handleStatisticsPageSettingsUpdate } from '@/actions/settings/handleStatisticsPageSettingsUpdate';
+import { getStatisticsSettings } from '@/api-service';
 import { InfoMessageBlock } from '@/blocks/InfoMessageBlock';
 import { ContentHeader } from '@/layouts/ContentHeader';
-import { UserPreferenceService } from '@/ssr/api/UserPreferenceService';
 import { UserStatisticsPageSettingsForm } from '@/views/user-preferences/UserStatisticsPageSettingsForm';
 
 export const metadata: Metadata = {
@@ -11,8 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default async function SettingsPreferencesPage() {
-  const statisticsSettings =
-    await UserPreferenceService.getStatisticsSettings();
+  const statisticsSettings = await getStatisticsSettings();
 
   return (
     <>

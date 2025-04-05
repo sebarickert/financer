@@ -1,14 +1,14 @@
 import { FC } from 'react';
 
 import { TransactionType } from '@/api/ssr-financer-api';
+import {
+  TransactionListOptions,
+  getStatisticsSettings,
+  getTransactionMonthlySummary,
+} from '@/api-service';
 import { BalanceDisplay } from '@/blocks/BalanceDisplay';
 import { DetailsItem, DetailsList } from '@/blocks/DetailsList';
 import { TRANSACTION_TYPE_MAPPING } from '@/constants/transaction/TRANSACTION_TYPE_MAPPING';
-import {
-  TransactionListOptions,
-  TransactionService,
-} from '@/ssr/api/TransactionService';
-import { UserPreferenceService } from '@/ssr/api/UserPreferenceService';
 import { formatCurrency } from '@/utils/formatCurrency';
 
 interface TransactionListWithMonthlySummaryProps {
@@ -18,11 +18,10 @@ interface TransactionListWithMonthlySummaryProps {
 export const TransactionListWithMonthlySummary: FC<
   TransactionListWithMonthlySummaryProps
 > = async ({ filterOptions }) => {
-  const statisticsSettings =
-    await UserPreferenceService.getStatisticsSettings();
+  const statisticsSettings = await getStatisticsSettings();
 
   const monthlySummary = (
-    await TransactionService.getMonthlySummary({
+    await getTransactionMonthlySummary({
       ...filterOptions,
       accountTypes: statisticsSettings?.accountTypes,
     })

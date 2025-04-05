@@ -1,14 +1,14 @@
 import { Grid2X2 } from 'lucide-react';
 import { FC, ReactNode } from 'react';
 
+import { getAllAccounts } from '@/api-service';
 import { InfoMessageBlock } from '@/blocks/InfoMessageBlock';
 import { Button } from '@/elements/Button/Button';
-import { AccountService } from '@/ssr/api/AccountService';
 
 export const RequireAccounts: FC<{ children: ReactNode }> = async ({
   children,
 }) => {
-  const accounts = await AccountService.getAll();
+  const accounts = await getAllAccounts();
 
   if (!accounts.length) {
     return (

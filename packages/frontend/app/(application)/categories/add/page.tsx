@@ -1,16 +1,16 @@
 import { Metadata } from 'next';
 
 import { handleCategoryAdd } from '@/actions/category/handleCategoryAdd';
+import { getAllCategoriesWithTree } from '@/api-service';
 import { CategoryForm } from '@/features/category/CategoryForm';
 import { ContentHeader } from '@/layouts/ContentHeader';
-import { CategoryService } from '@/ssr/api/CategoryService';
 
 export const metadata: Metadata = {
   title: 'Add Category',
 };
 
 export default async function CategoryAddPage() {
-  const categories = await CategoryService.getAllWithTree();
+  const categories = await getAllCategoriesWithTree();
 
   return (
     <>

@@ -2,12 +2,14 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import { handleTemplateEdit } from '@/actions/template/handleTemplateEdit';
+import {
+  getAllAccounts,
+  getAllCategoriesWithTree,
+  getTransactionTemplateById,
+} from '@/api-service';
 import { TemplateDelete } from '@/features/template/TemplateDelete';
 import { TemplateForm } from '@/features/template/TemplateForm';
 import { ContentHeader } from '@/layouts/ContentHeader';
-import { AccountService } from '@/ssr/api/AccountService';
-import { CategoryService } from '@/ssr/api/CategoryService';
-import { TransactionTemplateService } from '@/ssr/api/TransactionTemplateService';
 
 type Params = Promise<{
   templateId: string;
@@ -19,7 +21,7 @@ export const generateMetadata = async ({
   params: Params;
 }): Promise<Metadata> => {
   const { templateId } = await params;
-  const template = await TransactionTemplateService.getById(templateId);
+  const template = await getTransactionTemplateById(templateId);
 
   return {
     title: `Edit ${template.templateName}`,
@@ -29,7 +31,7 @@ export const generateMetadata = async ({
 export default async function EditTemplatePage({ params }: { params: Params }) {
   const { templateId } = await params;
 
-  const template = await TransactionTemplateService.getById(templateId);
+  const template = await getTransactionTemplateById(templateId);
 
   if (!template) {
     notFound();
@@ -47,8 +49,8 @@ export default async function EditTemplatePage({ params }: { params: Params }) {
     })),
   };
 
-  const categories = await CategoryService.getAllWithTree();
-  const accounts = await AccountService.getAll();
+  const categories = await getAllCategoriesWithTree();
+  const accounts = await getAllAccounts();
 
   const handleSubmit = handleTemplateEdit.bind(null, template);
 

@@ -2,8 +2,8 @@
 
 import { RedirectType, redirect } from 'next/navigation';
 
+import { deleteTransactionTemplate } from '@/api-service';
 import { DefaultFormActionHandler } from '@/hooks/useFinancerFormState';
-import { TransactionTemplateService } from '@/ssr/api/TransactionTemplateService';
 
 export const handleTemplateDelete: DefaultFormActionHandler<{
   id: string;
@@ -12,6 +12,6 @@ export const handleTemplateDelete: DefaultFormActionHandler<{
     return { status: 'ERROR', errors: ['Failed to delete template: no id'] };
   }
 
-  await TransactionTemplateService.delete(id);
+  await deleteTransactionTemplate(id);
   redirect('/templates', RedirectType.push);
 };

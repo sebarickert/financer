@@ -1,9 +1,9 @@
 import { RedirectType, redirect } from 'next/navigation';
 
 import { TransactionType } from '@/api/ssr-financer-api';
+import { addCategory } from '@/api-service';
 import { ValidationException } from '@/exceptions/validation.exception';
 import { DefaultFormActionHandler } from '@/hooks/useFinancerFormState';
-import { CategoryService } from '@/ssr/api/CategoryService';
 
 export const handleCategoryAdd: DefaultFormActionHandler = async (
   prev,
@@ -12,7 +12,7 @@ export const handleCategoryAdd: DefaultFormActionHandler = async (
   'use server';
 
   try {
-    await CategoryService.add({
+    await addCategory({
       name: formData.get('name') as string,
       parentCategoryId: formData.get('parentCategoryId') as string,
       visibility: formData.getAll('visibility') as TransactionType[],

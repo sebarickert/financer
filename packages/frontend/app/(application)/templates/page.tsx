@@ -1,21 +1,20 @@
 import { Layers, Plus } from 'lucide-react';
 import { Metadata } from 'next';
 
+import { getAllAccounts, getAllTransactionTemplates } from '@/api-service';
 import { InfoMessageBlock } from '@/blocks/InfoMessageBlock';
 import { RequireAccounts } from '@/components/RequireAccounts';
 import { Button } from '@/elements/Button/Button';
 import { TemplateList } from '@/features/template/TemplateList';
 import { ContentHeader } from '@/layouts/ContentHeader';
-import { AccountService } from '@/ssr/api/AccountService';
-import { TransactionTemplateService } from '@/ssr/api/TransactionTemplateService';
 
 export const metadata: Metadata = {
   title: 'Templates',
 };
 
 export default async function TemplateListingPage() {
-  const accounts = await AccountService.getAll();
-  const templates = await TransactionTemplateService.getAll();
+  const accounts = await getAllAccounts();
+  const templates = await getAllTransactionTemplates();
 
   return (
     <>

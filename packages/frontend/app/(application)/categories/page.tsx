@@ -1,12 +1,12 @@
 import { Plus, Tag } from 'lucide-react';
 import { Metadata } from 'next';
 
+import { getAllCategoriesWithTree } from '@/api-service';
 import { InfoMessageBlock } from '@/blocks/InfoMessageBlock';
 import { List } from '@/blocks/List';
 import { ProminentLink } from '@/blocks/ProminentLink';
 import { Button } from '@/elements/Button/Button';
 import { ContentHeader } from '@/layouts/ContentHeader';
-import { CategoryService } from '@/ssr/api/CategoryService';
 
 export const metadata: Metadata = {
   title: 'Categories',
@@ -38,7 +38,7 @@ const generateCategoryGroupChild = (
 });
 
 export default async function CategoriesPage() {
-  const categories = await CategoryService.getAllWithTree();
+  const categories = await getAllCategoriesWithTree();
 
   const allParentIds = categories.map(
     ({ parentCategoryId }) => parentCategoryId,

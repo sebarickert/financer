@@ -1,14 +1,14 @@
 import clsx from 'clsx';
 
+import { getOwnUser, getOwnUserTheme } from '@/api-service';
 import { Logo } from '@/blocks/Logo';
 import { Navigation } from '@/blocks/Navigation/Navigation';
 import { UserMenu } from '@/components/UserMenu';
 import { Link } from '@/elements/Link';
-import { UserService } from '@/ssr/api/UserService';
 
 export const Header = async () => {
-  const { roles } = await UserService.getOwnUser();
-  const theme = await UserService.getOwnUserTheme();
+  const { roles } = await getOwnUser();
+  const theme = await getOwnUserTheme();
 
   return (
     <>

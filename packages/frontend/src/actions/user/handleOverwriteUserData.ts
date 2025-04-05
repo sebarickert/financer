@@ -10,10 +10,9 @@ import {
   SchemaTransactionTemplateLogDto,
   SchemaUserPreferenceDto,
 } from '@/api/ssr-financer-api';
+import { DEBUG_overrideOwnUserData } from '@/api-service';
 import { ValidationException } from '@/exceptions/validation.exception';
 import { DefaultFormActionHandler } from '@/hooks/useFinancerFormState';
-import { UserService } from '@/ssr/api/UserService';
-
 export const handleOverwriteUserData: DefaultFormActionHandler = async (
   prev,
   formData,
@@ -51,7 +50,7 @@ export const handleOverwriteUserData: DefaultFormActionHandler = async (
   ) as SchemaTransactionTemplateLogDto[];
 
   try {
-    await UserService.DEBUG_overrideOwnUserData({
+    await DEBUG_overrideOwnUserData({
       accountBalanceChanges,
       accounts,
       transactionCategories,
