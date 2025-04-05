@@ -4,6 +4,7 @@ import {
   getStatisticsSettings,
   getTransactionMonthlySummary,
 } from '@/api-service';
+import { generateNavigationViewTransitionName } from '@/features/settings/generateNavigationViewTransitionName';
 import { StatisticsOverviewData } from '@/features/statistics/StatisticsOverviewData';
 import { ContentHeader } from '@/layouts/ContentHeader';
 import { DateService } from '@/services/DateService';
@@ -34,9 +35,11 @@ export default async function StatisticsOverviewPage() {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     .map((item) => ({ ...item, date: item.date.toISO()! }));
 
+  const vtNames = generateNavigationViewTransitionName();
+
   return (
     <>
-      <ContentHeader title="Statistics" />
+      <ContentHeader title="Statistics" titleVtName={vtNames.statistics} />
       <StatisticsOverviewData data={monthlySummaryHistory} />
     </>
   );

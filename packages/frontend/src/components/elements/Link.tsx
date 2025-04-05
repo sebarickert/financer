@@ -21,6 +21,7 @@ interface LinkProps
   onClick?: () => void;
   hasHoverEffect?: boolean;
   noTransition?: boolean;
+  vtName?: string;
 }
 
 export const Link = ({
@@ -32,6 +33,7 @@ export const Link = ({
   href,
   haptic = 'none',
   hasHoverEffect = true,
+  vtName,
   ...props
 }: LinkProps): JSX.Element => {
   const pathname = usePathname();
@@ -84,6 +86,10 @@ export const Link = ({
       }}
       aria-current={isCurrentPage ? 'page' : undefined}
       data-active-sub-page={hasActiveSubPage}
+      data-vt={!!vtName}
+      style={{
+        '--vt-name': vtName,
+      }}
     >
       {linkContent}
     </LinkElement>

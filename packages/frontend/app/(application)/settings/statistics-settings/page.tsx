@@ -14,15 +14,13 @@ export const metadata: Metadata = {
 export default async function SettingsPreferencesPage() {
   const statisticsSettings = await getStatisticsSettings();
 
-  const vtNames = generateUserPreferenceViewTransitionName(
-    'transactions-and-statistics',
-  );
+  const vtNames = generateUserPreferenceViewTransitionName();
 
   return (
     <>
       <ContentHeader
         title="Transactions & Statistics Settings"
-        titleVtName={vtNames.title}
+        titleVtName={vtNames.transactionsAndStatistics}
       />
       <InfoMessageBlock
         title="Account Types"

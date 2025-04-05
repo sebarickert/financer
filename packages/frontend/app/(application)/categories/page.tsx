@@ -7,6 +7,7 @@ import { List } from '@/blocks/List';
 import { ProminentLink } from '@/blocks/ProminentLink';
 import { Button } from '@/elements/Button/Button';
 import { generateCategoryViewTransitionName } from '@/features/category/generateCategoryViewTransitionName';
+import { generateNavigationViewTransitionName } from '@/features/settings/generateNavigationViewTransitionName';
 import { ContentHeader } from '@/layouts/ContentHeader';
 
 export const metadata: Metadata = {
@@ -86,10 +87,13 @@ export default async function CategoriesPage() {
     ...categoriesWithChildren,
   ];
 
+  const vtNames = generateNavigationViewTransitionName();
+
   return (
     <>
       <ContentHeader
         title="Categories"
+        titleVtName={vtNames.categories}
         action={
           <Button
             href={`/categories/add`}

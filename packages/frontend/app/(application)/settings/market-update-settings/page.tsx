@@ -18,13 +18,13 @@ export default async function MarketUpdateSettingsUserPreferencePage() {
 
   const categories = await getAllCategoriesWithTree();
 
-  const vtNames = generateUserPreferenceViewTransitionName('market-update');
+  const vtNames = generateUserPreferenceViewTransitionName();
 
   return (
     <>
       <ContentHeader
         title="Market Update Settings"
-        titleVtName={vtNames.title}
+        titleVtName={vtNames.marketUpdate}
       />
       <UserDefaultMarketUpdateSettingsForm
         data={marketUpdateSettings}

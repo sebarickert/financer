@@ -20,6 +20,7 @@ import { Role, Theme } from '@/api/ssr-financer-api';
 import { ThemeSwitcher } from '@/blocks/ThemeSwitcher/ThemeSwitcher';
 import { settingsPaths } from '@/constants/settingsPaths';
 import { Link } from '@/elements/Link';
+import { generateNavigationViewTransitionName } from '@/features/settings/generateNavigationViewTransitionName';
 
 export const UserMenu: FC<{ roles: readonly Role[]; theme: Theme }> = ({
   roles,
@@ -61,6 +62,8 @@ export const UserMenu: FC<{ roles: readonly Role[]; theme: Theme }> = ({
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, [isOpen]);
+
+  const navigationVtNames = generateNavigationViewTransitionName();
 
   return (
     <div className="relative inline-flex">
@@ -114,19 +117,35 @@ export const UserMenu: FC<{ roles: readonly Role[]; theme: Theme }> = ({
         data-testid="user-menu-container"
       >
         <div role="group">
-          <UserMenuItem href={settingsPaths.default} icon={Cog}>
+          <UserMenuItem
+            href={settingsPaths.default}
+            icon={Cog}
+            vtName={navigationVtNames.settings}
+          >
             Settings
           </UserMenuItem>
         </div>
         <div role="separator" className="h-px my-1 -mx-1 bg-accent" />
         <div role="group">
-          <UserMenuItem href="/categories/" icon={Tag}>
+          <UserMenuItem
+            href="/categories/"
+            icon={Tag}
+            vtName={navigationVtNames.categories}
+          >
             Categories
           </UserMenuItem>
-          <UserMenuItem href="/templates/" icon={Layers}>
+          <UserMenuItem
+            href="/templates/"
+            icon={Layers}
+            vtName={navigationVtNames.templates}
+          >
             Templates
           </UserMenuItem>
-          <UserMenuItem href="/statistics/" icon={ChartNoAxesCombined}>
+          <UserMenuItem
+            href="/statistics/"
+            icon={ChartNoAxesCombined}
+            vtName={navigationVtNames.statistics}
+          >
             Statistics
           </UserMenuItem>
         </div>
@@ -136,6 +155,7 @@ export const UserMenu: FC<{ roles: readonly Role[]; theme: Theme }> = ({
             <UserMenuItem
               href={settingsPaths.dataOverwrite}
               icon={TriangleAlert}
+              vtName={navigationVtNames.overrideUserData}
             >
               Overwrite User Data
             </UserMenuItem>
@@ -161,6 +181,7 @@ const UserMenuItem: FC<
   {
     children: string;
     icon: LucideIcon;
+    vtName?: string;
   } & (
     | { href: string; onClick?: never }
     | {
@@ -168,7 +189,7 @@ const UserMenuItem: FC<
         onClick: () => void;
       }
   )
-> = ({ href, children, icon: Icon, onClick }) => {
+> = ({ href, children, icon: Icon, onClick, vtName }) => {
   const classes = clsx(
     'flex w-full items-center gap-2 text-sm cursor-pointer py-1.5 px-2 rounded-sm',
     'focus-visible:focus-highlight hover:bg-accent',
@@ -198,7 +219,12 @@ const UserMenuItem: FC<
   }
 
   return (
-    <Link href={href} className={classes} testId="user-menu-item">
+    <Link
+      href={href}
+      className={classes}
+      testId="user-menu-item"
+      vtName={vtName}
+    >
       {content}
     </Link>
   );

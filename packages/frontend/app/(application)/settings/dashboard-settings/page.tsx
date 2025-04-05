@@ -22,11 +22,14 @@ export default async function DashboardSettingsUserPreferencePage() {
     chunkSize: defaultChunkSize,
   };
 
-  const vtNames = generateUserPreferenceViewTransitionName('dashboard');
+  const vtNames = generateUserPreferenceViewTransitionName();
 
   return (
     <>
-      <ContentHeader title="Dashboard Settings" titleVtName={vtNames.title} />
+      <ContentHeader
+        title="Dashboard Settings"
+        titleVtName={vtNames.dashboard}
+      />
       <UserDashboardSettingsForm
         data={data}
         onSave={handleDashboardSettingsUpdate}

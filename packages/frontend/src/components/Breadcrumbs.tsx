@@ -5,7 +5,18 @@ import { ChevronRight } from 'lucide-react';
 import { FC, Fragment } from 'react';
 
 import { Link } from '@/elements/Link';
+import { generateNavigationViewTransitionName } from '@/features/settings/generateNavigationViewTransitionName';
 import { useBreadcrumbs } from '@/hooks/useBreadcrumbs';
+
+const navigationVtNames = generateNavigationViewTransitionName();
+
+const breadCrumpVtMapping: Record<string, string | undefined> = {
+  transactions: navigationVtNames.transactions,
+  accounts: navigationVtNames.accounts,
+  categories: navigationVtNames.categories,
+  templates: navigationVtNames.templates,
+  settings: navigationVtNames.settings,
+};
 
 export const Breadcrumbs: FC<{
   currentPageTitle: string;
@@ -26,9 +37,12 @@ export const Breadcrumbs: FC<{
         {breadcrumbs.map((crumb) => {
           const title = breadcrumbOverrides?.[crumb.href] ?? crumb.title;
 
+          const vtName = breadCrumpVtMapping[title.toLowerCase()];
+
           const modifiedCrumb = {
             ...crumb,
             title,
+            vtName,
           };
 
           return (
@@ -48,7 +62,8 @@ const Breadcrumb: FC<{
   href?: string;
   title: string;
   isCurrentPage?: boolean;
-}> = ({ href, title, isCurrentPage }) => {
+  vtName?: string;
+}> = ({ href, title, isCurrentPage, vtName }) => {
   const url = href ?? '';
 
   return (
@@ -66,6 +81,7 @@ const Breadcrumb: FC<{
         <Link
           className="text-muted-foreground hover:text-foreground!"
           href={url}
+          vtName={vtName}
         >
           {title}
         </Link>

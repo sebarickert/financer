@@ -1,9 +1,6 @@
-export const generateUserPreferenceViewTransitionName = (
-  type:
-    | 'dashboard'
-    | 'transactions-and-statistics'
-    | 'default-account'
-    | 'market-update',
-) => ({
-  title: `user-preference-${type}-title`,
+export const generateUserPreferenceViewTransitionName = () => ({
+  dashboard: 'user-preference-dashboard-title',
+  transactionsAndStatistics: 'user-preference-transactions-title',
+  defaultAccount: 'user-preference-default-account-title',
+  marketUpdate: 'user-preference-market-update-title',
 });

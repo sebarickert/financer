@@ -25,13 +25,13 @@ export default async function DefaultAccountSettingsUserPreferencePage() {
   const defaultTransferSourceAccount = await getDefaultTransferSourceAccount();
   const defaultTransferTargetAccount = await getDefaultTransferTargetAccount();
 
-  const vtNames = generateUserPreferenceViewTransitionName('default-account');
+  const vtNames = generateUserPreferenceViewTransitionName();
 
   return (
     <>
       <ContentHeader
         title="Default Account Settings"
-        titleVtName={vtNames.title}
+        titleVtName={vtNames.defaultAccount}
       />
       <RequireAccounts>
         <UserDefaultAccountSettingsForm
