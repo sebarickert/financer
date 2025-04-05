@@ -6,10 +6,10 @@ import {
   TransactionTemplateType,
   TransactionType,
 } from '@/api/ssr-financer-api';
+import { addTransactionTemplate } from '@/api-service';
 import { ValidationException } from '@/exceptions/validation.exception';
 import { isCategoriesFormOnlyCategory } from '@/features/transaction/TransactionCategories/transaction-categories.types';
 import { DefaultFormActionHandler } from '@/hooks/useFinancerFormState';
-import { TransactionTemplateService } from '@/ssr/api/TransactionTemplateService';
 import { parseArrayFromFormData } from '@/utils/parseArrayFromFormData';
 
 export const handleTemplateAdd: DefaultFormActionHandler = async (
@@ -26,7 +26,7 @@ export const handleTemplateAdd: DefaultFormActionHandler = async (
   );
 
   try {
-    await TransactionTemplateService.add({
+    await addTransactionTemplate({
       templateName: formData.get('templateName') as string,
       templateType: [
         formData.get('templateType') as unknown as TransactionTemplateType,

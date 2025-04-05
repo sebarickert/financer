@@ -2,11 +2,11 @@ import { Menu, Pencil, Trash } from 'lucide-react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
+import { getTransactionById } from '@/api-service';
 import { Popper } from '@/elements/Popper';
 import { PopperItem } from '@/elements/PopperItem';
 import { TransactionDeleteDrawer } from '@/features/transaction/TransactionDeleteDrawer';
 import { ContentHeader } from '@/layouts/ContentHeader';
-import { TransactionService } from '@/ssr/api/TransactionService';
 import { Transaction } from '@/views/Transaction';
 
 type Params = Promise<{
@@ -19,7 +19,7 @@ export const generateMetadata = async ({
   params: Params;
 }): Promise<Metadata> => {
   const { id } = await params;
-  const transaction = await TransactionService.getById(id);
+  const transaction = await getTransactionById(id);
 
   return {
     title: transaction.description,
@@ -29,7 +29,7 @@ export const generateMetadata = async ({
 export default async function TransactionPage({ params }: { params: Params }) {
   const { id } = await params;
 
-  const transaction = await TransactionService.getById(id);
+  const transaction = await getTransactionById(id);
 
   if (!transaction) {
     notFound();

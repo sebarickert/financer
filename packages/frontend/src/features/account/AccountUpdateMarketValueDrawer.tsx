@@ -5,14 +5,13 @@ import { useForm } from 'react-hook-form';
 
 import { handleAccountMarketValueUpdate } from '@/actions/account/handleAccountMarketValueUpdate';
 import { SchemaAccountDto } from '@/api/ssr-financer-api';
+import { UserDefaultMarketUpdateSettings } from '@/api-service';
 import { Drawer } from '@/blocks/Drawer';
 import { Form } from '@/blocks/Form';
 import { Button } from '@/elements/Button/Button';
 import { Input } from '@/elements/Input';
 import { useFinancerFormState } from '@/hooks/useFinancerFormState';
 import { DATE_FORMAT, DateService } from '@/services/DateService';
-import { UserDefaultMarketUpdateSettings } from '@/ssr/api/UserPreferenceService';
-
 interface AccountUpdateMarketValueDrawerProps {
   account: SchemaAccountDto;
   marketSettings?: UserDefaultMarketUpdateSettings;

@@ -1,22 +1,23 @@
 import { Metadata } from 'next';
 
+import {
+  getStatisticsSettings,
+  getTransactionMonthlySummary,
+} from '@/api-service';
 import { StatisticsOverviewData } from '@/features/statistics/StatisticsOverviewData';
 import { ContentHeader } from '@/layouts/ContentHeader';
 import { DateService } from '@/services/DateService';
-import { TransactionService } from '@/ssr/api/TransactionService';
-import { UserPreferenceService } from '@/ssr/api/UserPreferenceService';
 
 export const metadata: Metadata = {
   title: 'Statistics',
 };
 
 export default async function StatisticsOverviewPage() {
-  const statisticsSettings =
-    await UserPreferenceService.getStatisticsSettings();
+  const statisticsSettings = await getStatisticsSettings();
 
   const accountTypeFilter = { accountTypes: statisticsSettings?.accountTypes };
 
-  const transactionMonthSummaries = await TransactionService.getMonthlySummary({
+  const transactionMonthSummaries = await getTransactionMonthlySummary({
     ...accountTypeFilter,
   });
 

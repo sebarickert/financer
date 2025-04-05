@@ -2,12 +2,12 @@ import { Plus } from 'lucide-react';
 import { Metadata } from 'next';
 
 import { AccountType } from '@/api/ssr-financer-api';
+import { getAllAccounts } from '@/api-service';
 import { RequireAccounts } from '@/components/RequireAccounts';
 import { Button } from '@/elements/Button/Button';
 import { AccountList } from '@/features/account/AccountList';
 import { AccountTypeBalanceChart } from '@/features/account/AccountTypeBalanceChart';
 import { ContentHeader } from '@/layouts/ContentHeader';
-import { AccountService } from '@/ssr/api/AccountService';
 
 export const metadata: Metadata = {
   title: 'Accounts',
@@ -20,7 +20,7 @@ const accountCategories = {
 } as const;
 
 export default async function AccountsPage() {
-  const accounts = await AccountService.getAll();
+  const accounts = await getAllAccounts();
 
   const groupedAccounts = Object.groupBy(accounts, ({ type }) => {
     if (type === AccountType.LOAN || type === AccountType.CREDIT) {

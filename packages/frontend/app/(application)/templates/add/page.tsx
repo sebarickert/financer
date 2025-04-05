@@ -2,18 +2,17 @@ import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 
 import { handleTemplateAdd } from '@/actions/template/handleTemplateAdd';
+import { getAllAccounts, getAllCategoriesWithTree } from '@/api-service';
 import { TemplateForm } from '@/features/template/TemplateForm';
 import { ContentHeader } from '@/layouts/ContentHeader';
-import { AccountService } from '@/ssr/api/AccountService';
-import { CategoryService } from '@/ssr/api/CategoryService';
 
 export const metadata: Metadata = {
   title: 'Add Template',
 };
 
 export default async function AddTemplatePage() {
-  const categories = await CategoryService.getAllWithTree();
-  const accounts = await AccountService.getAll();
+  const categories = await getAllCategoriesWithTree();
+  const accounts = await getAllAccounts();
 
   if (!accounts.length) {
     redirect('/templates');

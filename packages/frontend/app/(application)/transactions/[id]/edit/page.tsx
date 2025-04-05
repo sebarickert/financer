@@ -8,6 +8,15 @@ import {
   TransactionType,
   VisibilityType,
 } from '@/api/ssr-financer-api';
+import {
+  getAllAccounts,
+  getAllCategoriesWithTree,
+  getTransactionById,
+  getTransferById,
+  updateExpense,
+  updateIncome,
+  updateTransfer,
+} from '@/api-service';
 import { ValidationException } from '@/exceptions/validation.exception';
 import {
   isCategoriesFormFullFields,
@@ -17,12 +26,6 @@ import { TransactionForm } from '@/features/transaction/TransactionForm';
 import { DefaultFormActionHandler } from '@/hooks/useFinancerFormState';
 import { ContentHeader } from '@/layouts/ContentHeader';
 import { DATE_FORMAT, DateService } from '@/services/DateService';
-import { AccountService } from '@/ssr/api/AccountService';
-import { CategoryService } from '@/ssr/api/CategoryService';
-import { ExpenseService } from '@/ssr/api/ExpenseService';
-import { IncomeService } from '@/ssr/api/IncomeService';
-import { TransactionService } from '@/ssr/api/TransactionService';
-import { TransferService } from '@/ssr/api/TransferService';
 import { parseArrayFromFormData } from '@/utils/parseArrayFromFormData';
 
 type Params = Promise<{
@@ -35,7 +38,11 @@ export const generateMetadata = async ({
   params: Params;
 }): Promise<Metadata> => {
   const { id } = await params;
-  const transaction = await TransactionService.getById(id);
+  const transaction = await getTransactionById(id).catch(() => null);
+
+  if (!transaction) {
+    notFound();
+  }
 
   return {
     title: `Edit ${transaction.description}`,
@@ -51,19 +58,19 @@ const transactionTypeToVisibilityType: Record<TransactionType, VisibilityType> =
 
 const TransactionTypeMapping = {
   [TransactionType.INCOME]: {
-    service: IncomeService,
+    update: updateIncome,
     fields: {
       hasToAccountField: true,
     },
   },
   [TransactionType.EXPENSE]: {
-    service: ExpenseService,
+    update: updateExpense,
     fields: {
       hasFromAccountField: true,
     },
   },
   [TransactionType.TRANSFER]: {
-    service: TransferService,
+    update: updateTransfer,
     fields: {
       hasToAccountField: true,
       hasFromAccountField: true,
@@ -78,13 +85,13 @@ export default async function EditTransactionPage({
 }) {
   const { id } = await params;
 
-  const transaction = await TransactionService.getById(id);
+  const transaction = await getTransferById(id);
 
   if (!transaction) {
     notFound();
   }
 
-  const accounts = await AccountService.getAll();
+  const accounts = await getAllAccounts();
 
   const handleSubmit: DefaultFormActionHandler = async (
     prevState,
@@ -105,7 +112,7 @@ export default async function EditTransactionPage({
       | SchemaTransferDetailsDto;
 
     try {
-      data = await TransactionTypeMapping[transaction.type].service.update(
+      data = await TransactionTypeMapping[transaction.type].update(
         transaction.id,
         {
           amount: parseFloat(formData.get('amount') as string),
@@ -142,7 +149,7 @@ export default async function EditTransactionPage({
     date: new DateService(transaction.date).format(DATE_FORMAT.INPUT),
   };
 
-  const categories = await CategoryService.getAllWithTree({
+  const categories = await getAllCategoriesWithTree({
     visibilityType: transactionTypeToVisibilityType[transaction.type],
   });
 

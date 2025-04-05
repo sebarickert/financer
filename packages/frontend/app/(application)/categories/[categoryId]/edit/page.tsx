@@ -2,9 +2,9 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import { handleCategoryEdit } from '@/actions/category/handleCategoryEdit';
+import { getAllCategoriesWithTree, getCategoryById } from '@/api-service';
 import { CategoryForm } from '@/features/category/CategoryForm';
 import { ContentHeader } from '@/layouts/ContentHeader';
-import { CategoryService } from '@/ssr/api/CategoryService';
 
 type Params = Promise<{
   categoryId: string;
@@ -16,7 +16,7 @@ export const generateMetadata = async ({
   params: Params;
 }): Promise<Metadata> => {
   const { categoryId } = await params;
-  const category = await CategoryService.getById(categoryId);
+  const category = await getCategoryById(categoryId);
 
   return {
     title: `Edit ${category.name}`,
@@ -26,14 +26,14 @@ export const generateMetadata = async ({
 export default async function CategoryEditPage({ params }: { params: Params }) {
   const { categoryId } = await params;
 
-  const category = await CategoryService.getById(categoryId);
+  const category = await getCategoryById(categoryId);
 
   if (!category) {
     notFound();
   }
 
   const handleSubmit = handleCategoryEdit.bind(null, category);
-  const categories = await CategoryService.getAllWithTree();
+  const categories = await getAllCategoriesWithTree();
 
   return (
     <>

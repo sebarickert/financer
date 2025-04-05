@@ -2,14 +2,18 @@ import clsx from 'clsx';
 import { Plus } from 'lucide-react';
 import { FC } from 'react';
 
+import {
+  getAllAccounts,
+  getAllCategoriesWithTree,
+  getAllTransactionTemplates,
+  getDefaultExpenseAccount,
+  getDefaultIncomeAccount,
+  getDefaultTransferSourceAccount,
+  getDefaultTransferTargetAccount,
+} from '@/api-service';
 import { Drawer } from '@/blocks/Drawer';
 import { Button } from '@/elements/Button/Button';
 import { TransactionFormSwitcher } from '@/features/transaction/TransactionFormSwitcher';
-import { AccountService } from '@/ssr/api/AccountService';
-import { CategoryService } from '@/ssr/api/CategoryService';
-import { TransactionTemplateService } from '@/ssr/api/TransactionTemplateService';
-import { UserPreferenceService } from '@/ssr/api/UserPreferenceService';
-
 interface CreateTransactionButtonProps {
   id?: string;
   isDisabled?: boolean;
@@ -47,18 +51,14 @@ export const NavigationCreateTransactionButton: FC<{
 }> = async ({ className }) => {
   const id = 'navigationCreateTransactionButton';
 
-  const defaultExpenseAccountId =
-    await UserPreferenceService.getDefaultExpenseAccount();
-  const defaultIncomeAccountId =
-    await UserPreferenceService.getDefaultIncomeAccount();
-  const defaultTransferToAccountId =
-    await UserPreferenceService.getDefaultTransferTargetAccount();
-  const defaultTransferFromAccountId =
-    await UserPreferenceService.getDefaultTransferSourceAccount();
+  const defaultExpenseAccountId = await getDefaultExpenseAccount();
+  const defaultIncomeAccountId = await getDefaultIncomeAccount();
+  const defaultTransferToAccountId = await getDefaultTransferTargetAccount();
+  const defaultTransferFromAccountId = await getDefaultTransferSourceAccount();
 
-  const categories = await CategoryService.getAllWithTree();
-  const templates = await TransactionTemplateService.getAll();
-  const accounts = await AccountService.getAll();
+  const categories = await getAllCategoriesWithTree();
+  const templates = await getAllTransactionTemplates();
+  const accounts = await getAllAccounts();
 
   return (
     <li className={clsx(className)}>

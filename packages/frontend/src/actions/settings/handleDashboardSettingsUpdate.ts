@@ -1,9 +1,12 @@
 import { RedirectType, redirect } from 'next/navigation';
 
 import { AccountType } from '@/api/ssr-financer-api';
+import {
+  updateDashboardSettings,
+  updateTransactionListChunkSize,
+} from '@/api-service';
 import { settingsPaths } from '@/constants/settingsPaths';
 import { DefaultFormActionHandler } from '@/hooks/useFinancerFormState';
-import { UserPreferenceService } from '@/ssr/api/UserPreferenceService';
 
 export const handleDashboardSettingsUpdate: DefaultFormActionHandler = async (
   prev,
@@ -11,11 +14,11 @@ export const handleDashboardSettingsUpdate: DefaultFormActionHandler = async (
 ) => {
   'use server';
 
-  await UserPreferenceService.updateDashboardSettings({
+  await updateDashboardSettings({
     accountTypes: formData.getAll('accountTypes') as AccountType[],
   });
 
-  await UserPreferenceService.updateTransactionListChunkSize(
+  await updateTransactionListChunkSize(
     parseInt(formData.get('chunkSize') as string),
   );
 

@@ -1,6 +1,14 @@
 import { ArrowRight, ChartLine, Layers, Tag } from 'lucide-react';
 import { FC } from 'react';
 
+import {
+  getAccountsTotalBalance,
+  getAllTransactionsByType,
+  getDashboardSettings,
+  getLatestTransactionByType,
+  getTransactionListChunkSize,
+  getTransactionMonthlySummary,
+} from '@/api-service';
 import { Card } from '@/blocks/Card/Card';
 import { CardHeader } from '@/blocks/Card/CardHeader';
 import { InfoMessageBlock } from '@/blocks/InfoMessageBlock';
@@ -12,9 +20,6 @@ import { DashboardBalanceHistoryChart } from '@/features/dashboard/DashboardBala
 import { DashboardBalanceSummary } from '@/features/dashboard/DashboardBalanceSummary';
 import { TransactionList } from '@/features/transaction/TransactionList/TransactionList';
 import { DateService } from '@/services/DateService';
-import { AccountService } from '@/ssr/api/AccountService';
-import { TransactionService } from '@/ssr/api/TransactionService';
-import { UserPreferenceService } from '@/ssr/api/UserPreferenceService';
 
 const currentMonthFilterOptions = {
   year: new DateService().getDate().year,
@@ -22,20 +27,19 @@ const currentMonthFilterOptions = {
 };
 
 export const Dashboard: FC = async () => {
-  const listChunkSizeSettings =
-    await UserPreferenceService.getTransactionListChunkSize();
+  const listChunkSizeSettings = await getTransactionListChunkSize();
 
-  const transactions = await TransactionService.getAllByType(null, {
+  const transactions = await getAllTransactionsByType(null, {
     limit: listChunkSizeSettings ?? 5,
   });
 
-  const dashboardSettings = await UserPreferenceService.getDashboardSettings();
+  const dashboardSettings = await getDashboardSettings();
   const accountTypeFilter = { accountTypes: dashboardSettings?.accountTypes };
 
-  const totalBalance = await AccountService.getTotalBalance(accountTypeFilter);
-  const latestTransaction = await TransactionService.getLatestByType();
+  const totalBalance = await getAccountsTotalBalance(accountTypeFilter);
+  const latestTransaction = await getLatestTransactionByType();
 
-  const transactionMonthSummary = await TransactionService.getMonthlySummary({
+  const transactionMonthSummary = await getTransactionMonthlySummary({
     ...accountTypeFilter,
   });
 

@@ -2,15 +2,15 @@
 
 import { RedirectType, redirect } from 'next/navigation';
 
+import { updateDefaultMarketUpdateSettings } from '@/api-service';
 import { settingsPaths } from '@/constants/settingsPaths';
 import { DefaultFormActionHandler } from '@/hooks/useFinancerFormState';
-import { UserPreferenceService } from '@/ssr/api/UserPreferenceService';
 
 export const handleMarketSettingsUpdate: DefaultFormActionHandler = async (
   prev,
   formData,
 ) => {
-  await UserPreferenceService.updateDefaultMarketUpdateSettings({
+  await updateDefaultMarketUpdateSettings({
     transactionDescription: formData.get('transactionDescription') as string,
     category: formData.get('category') as string,
   });

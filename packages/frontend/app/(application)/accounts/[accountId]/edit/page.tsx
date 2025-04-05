@@ -2,9 +2,9 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import { handleAccountEdit } from '@/actions/account/handleAccountEdit';
+import { getAccountById } from '@/api-service';
 import { AccountForm } from '@/features/account/AccountForm';
 import { ContentHeader } from '@/layouts/ContentHeader';
-import { AccountService } from '@/ssr/api/AccountService';
 
 type Params = Promise<{
   accountId: string;
@@ -16,7 +16,7 @@ export const generateMetadata = async ({
   params: Params;
 }): Promise<Metadata> => {
   const { accountId } = await params;
-  const account = await AccountService.getById(accountId);
+  const account = await getAccountById(accountId);
 
   return {
     title: `Edit ${account?.name}`,
@@ -26,7 +26,7 @@ export const generateMetadata = async ({
 export default async function AccountEditPage({ params }: { params: Params }) {
   const { accountId } = await params;
 
-  const account = await AccountService.getById(accountId);
+  const account = await getAccountById(accountId);
 
   if (!account) {
     notFound();

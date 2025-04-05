@@ -5,10 +5,10 @@ import { Metadata, Viewport } from 'next';
 import { ViewTransitions } from 'next-view-transitions';
 
 import { Theme } from '@/api/ssr-financer-api';
+import { getOwnUserTheme } from '@/api-service';
 import { faviconList } from '@/assets/favicon-list';
 import { ScrollToTop } from '@/blocks/ScrollToTop';
 import { StoreProvider } from '@/container/store.provider';
-import { UserService } from '@/ssr/api/UserService';
 import { verifySession } from '@/utils/dal';
 
 const appName = 'Financer';
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 
 export const generateViewport = async (): Promise<Viewport> => {
   const isLoggedIn = await verifySession();
-  const theme = isLoggedIn ? await UserService.getOwnUserTheme() : Theme.AUTO;
+  const theme = isLoggedIn ? await getOwnUserTheme() : Theme.AUTO;
 
   let themeColor: Viewport['themeColor'];
 
@@ -61,7 +61,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const isLoggedIn = await verifySession();
-  const theme = isLoggedIn ? await UserService.getOwnUserTheme() : Theme.AUTO;
+  const theme = isLoggedIn ? await getOwnUserTheme() : Theme.AUTO;
 
   return (
     <html

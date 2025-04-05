@@ -1,9 +1,11 @@
 import { Metadata } from 'next';
 
 import { handleMarketSettingsUpdate } from '@/actions/settings/handleMarketSettingsUpdate';
+import {
+  getAllCategoriesWithTree,
+  getDefaultMarketUpdateSettings,
+} from '@/api-service';
 import { ContentHeader } from '@/layouts/ContentHeader';
-import { CategoryService } from '@/ssr/api/CategoryService';
-import { UserPreferenceService } from '@/ssr/api/UserPreferenceService';
 import { UserDefaultMarketUpdateSettingsForm } from '@/views/user-preferences/UserDefaultMarketUpdateSettingsForm';
 
 export const metadata: Metadata = {
@@ -11,10 +13,9 @@ export const metadata: Metadata = {
 };
 
 export default async function MarketUpdateSettingsUserPreferencePage() {
-  const marketUpdateSettings =
-    await UserPreferenceService.getDefaultMarketUpdateSettings();
+  const marketUpdateSettings = await getDefaultMarketUpdateSettings();
 
-  const categories = await CategoryService.getAllWithTree();
+  const categories = await getAllCategoriesWithTree();
 
   return (
     <>

@@ -2,11 +2,15 @@ import { Menu, Pencil, Trash } from 'lucide-react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
+import {
+  getAllCategories,
+  getCategoryById,
+  getCategoryNameById,
+} from '@/api-service';
 import { Popper } from '@/elements/Popper';
 import { PopperItem } from '@/elements/PopperItem';
 import { CategoryDeleteDrawer } from '@/features/category/CategoryDeleteDrawer';
 import { ContentHeader } from '@/layouts/ContentHeader';
-import { CategoryService } from '@/ssr/api/CategoryService';
 import { Category } from '@/views/Category';
 
 type Params = Promise<{
@@ -21,10 +25,10 @@ export const generateMetadata = async ({
   params: Params;
 }): Promise<Metadata> => {
   const { categoryId } = await params;
-  const category = await CategoryService.getById(categoryId);
+  const name = await getCategoryNameById(categoryId);
 
   return {
-    title: category.name,
+    title: name,
   };
 };
 
@@ -38,13 +42,13 @@ export default async function CategoryPage({
   const { categoryId } = await params;
   const queryDate = (await searchParams).date as string | undefined;
 
-  const category = await CategoryService.getById(categoryId);
+  const category = await getCategoryById(categoryId);
 
   if (!category) {
     notFound();
   }
 
-  const allCategories = await CategoryService.getAll();
+  const allCategories = await getAllCategories();
 
   return (
     <>

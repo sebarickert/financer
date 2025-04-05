@@ -4,7 +4,6 @@
 @plugin "@tailwindcss/forms";
 
 @plugin "tailwindcss-safe-area";
-@plugin "tailwindcss-view-transitions";
 
 @theme {
   --font-*: initial;
@@ -119,6 +118,10 @@
   h5,
   h6 {
     @apply text-foreground;
+  }
+
+  html {
+    overflow-y: scroll;
   }
 
   body {
