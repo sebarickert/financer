@@ -27,7 +27,6 @@ export const TemplateDelete = ({ id }: TemplateDeleteProps) => {
         accentColor="danger"
         size="small"
         popoverTarget={popoverId}
-        transition="slideInFromRight"
         isPill
         className="[&_svg]:size-4!"
       >

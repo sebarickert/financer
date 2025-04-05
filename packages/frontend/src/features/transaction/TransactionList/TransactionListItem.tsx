@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { RefreshCw } from 'lucide-react';
-import { FC } from 'react';
+import { FC, unstable_ViewTransition as ViewTransition } from 'react';
 
 import {
   SchemaExpenseListItemDto,
@@ -11,6 +11,7 @@ import {
 } from '@/api/ssr-financer-api';
 import { TRANSACTION_TYPE_MAPPING } from '@/constants/transaction/TRANSACTION_TYPE_MAPPING';
 import { Link } from '@/elements/Link';
+import { generateTransactionViewTransitionName } from '@/features/transaction/generateTransactionViewTransitionName';
 import { DateService } from '@/services/DateService';
 import { formatCurrency } from '@/utils/formatCurrency';
 
@@ -36,16 +37,15 @@ export const TransactionListItem: FC<
         }
       `}</style>
       <Link
-        haptic="ultra-light"
+        // haptic="ultra-light"
         href={url}
-        testId={id}
+        // testId={id}
         className={clsx(
           'bg-layer hover:bg-accent active:bg-accent',
           'py-4 px-6 relative',
           'grid',
         )}
-        transition="slideInFromRight"
-        hasHoverEffect={false}
+        // hasHoverEffect={false}
         aria-label={ariaLabel}
         data-transaction-item={id}
       >
@@ -57,23 +57,40 @@ export const TransactionListItem: FC<
             {isRecurring && (
               <RefreshCw className="size-4 text-muted-foreground shrink-0" />
             )}
-            <span className="truncate">{description}</span>
+            <ViewTransition
+              name={generateTransactionViewTransitionName(id, 'name')}
+            >
+              <span
+                className="truncate"
+                data-debug={generateTransactionViewTransitionName(id, 'name')}
+              >
+                {description}
+              </span>
+            </ViewTransition>
           </p>
-          <p
-            className={clsx('text-right whitespace-nowrap')}
-            data-testid="transaction-amount"
-            data-transaction-type={type}
+          <ViewTransition
+            name={generateTransactionViewTransitionName(id, 'amount')}
           >
-            {isIncome && '+'}
-            {isExpense && '-'}
-            {formatCurrency(amount)}
-          </p>
+            <p
+              className={clsx('text-right whitespace-nowrap')}
+              data-testid="transaction-amount"
+              data-transaction-type={type}
+            >
+              {isIncome && '+'}
+              {isExpense && '-'}
+              {formatCurrency(amount)}
+            </p>
+          </ViewTransition>
         </div>
         <div className="text-sm text-muted-foreground flex items-center gap-6 justify-between overflow-hidden">
           <div className="truncate">
-            <time dateTime={date} data-testid="transaction-date">
-              {new DateService(date).format()}
-            </time>
+            <ViewTransition
+              name={generateTransactionViewTransitionName(id, 'date')}
+            >
+              <time dateTime={date} data-testid="transaction-date">
+                {new DateService(date).format()}
+              </time>
+            </ViewTransition>
             {formattedCategories && (
               <>
                 {' - '}

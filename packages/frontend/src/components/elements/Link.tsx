@@ -1,18 +1,11 @@
 'use client';
 import clsx from 'clsx';
+import NextLink from 'next/link';
 import { usePathname } from 'next/navigation';
-import {
-  Link as TransitionLink,
-  useTransitionRouter,
-} from 'next-view-transitions';
 import type { JSX } from 'react';
 
 import { HapticType, hapticRunner } from '@/utils/haptic.helper';
 import { isExternalLink } from '@/utils/isExternalLink';
-import {
-  TransitionType,
-  transitionAnimations,
-} from '@/utils/transitionAnimations';
 
 interface LinkProps
   extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'onClick'> {
@@ -21,7 +14,6 @@ interface LinkProps
   testId?: string;
   isAbsolute?: boolean;
   href: string;
-  transition?: TransitionType;
   /** Defaults to `none` */
   haptic?: HapticType;
   onClick?: () => void;
@@ -34,13 +26,11 @@ export const Link = ({
   testId,
   isAbsolute,
   href,
-  transition,
   haptic = 'none',
   hasHoverEffect = true,
   ...props
 }: LinkProps): JSX.Element => {
   const pathname = usePathname();
-  const router = useTransitionRouter();
 
   const isCurrentPage = pathname === href;
   const hasActiveSubPage = href !== '/' && pathname.startsWith(href);
@@ -75,30 +65,8 @@ export const Link = ({
     );
   }
 
-  if (transition) {
-    return (
-      <a
-        {...props}
-        onClick={(e) => {
-          hapticRunner(haptic);
-          e.preventDefault();
-          props.onClick?.();
-          router.push(href, {
-            onTransitionReady: transitionAnimations[transition],
-          });
-        }}
-        href={href}
-        className={linkClasses}
-        data-testid={testId}
-        aria-current={isCurrentPage ? 'page' : undefined}
-      >
-        {linkContent}
-      </a>
-    );
-  }
-
   return (
-    <TransitionLink
+    <NextLink
       {...props}
       href={href}
       className={linkClasses}
@@ -111,6 +79,6 @@ export const Link = ({
       data-active-sub-page={hasActiveSubPage}
     >
       {linkContent}
-    </TransitionLink>
+    </NextLink>
   );
 };

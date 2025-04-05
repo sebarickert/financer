@@ -2,7 +2,6 @@ import '@/assets/tailwind.css';
 
 import clsx from 'clsx';
 import { Metadata, Viewport } from 'next';
-import { ViewTransitions } from 'next-view-transitions';
 
 import { Theme } from '@/api/ssr-financer-api';
 import { getOwnUserTheme } from '@/api-service';
@@ -76,10 +75,8 @@ export default async function RootLayout({
       </head>
       <body className={clsx('max-lg:pb-(--gutter-bottom)')}>
         <StoreProvider>
-          <ViewTransitions>
-            <ScrollToTop />
-            {children}
-          </ViewTransitions>
+          <ScrollToTop />
+          {children}
         </StoreProvider>
       </body>
     </html>

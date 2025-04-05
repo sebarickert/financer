@@ -27,7 +27,6 @@ export default async function TemplateListingPage() {
               accentColor="primary"
               size="small"
               testId="add-template"
-              transition="slideInFromRight"
               isPill
             >
               <Plus />
