@@ -20,9 +20,7 @@ export const parseArrayFromFormData = <T>(
       const index = parseInt(match[1], 10);
       const property = match[2] as keyof T;
 
-      if (!result[index]) {
-        result[index] = {};
-      }
+      result[index] ??= {};
 
       const formattedValue =
         formatter && formatter[property] ? formatter[property](value) : value;

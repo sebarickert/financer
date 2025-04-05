@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { ApiBody, ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
 import { Role } from '@prisma/client';
-import { Response } from 'express';
+import type { Response } from 'express';
 
 import { UpdateOwnUserDto } from './dto/update-own-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';

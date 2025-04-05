@@ -11,7 +11,7 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { ApiOkResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { User } from '@prisma/client';
-import { NextFunction, Request, Response } from 'express';
+import type { NextFunction, Request, Response } from 'express';
 import passport from 'passport';
 
 import { AuthService } from './auth.service';
