@@ -1,6 +1,6 @@
 import { CanActivate, ExecutionContext } from '@nestjs/common';
 import { User } from '@prisma/client';
-import { Request } from 'express';
+import type { Request } from 'express';
 
 export abstract class BaseGuard implements CanActivate {
   abstract canActivate(context: ExecutionContext): boolean | Promise<boolean>;

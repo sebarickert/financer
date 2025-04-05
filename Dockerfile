@@ -1,3 +1,5 @@
+FROM node:22-alpine AS base-image
+
 ################################################################################
 #
 # Base image for installing all dependencies.
@@ -7,7 +9,7 @@
 # Base image for installing dependencies.
 # Do not use the latest tag for the base image due to build issues with Terser.
 # https://github.com/vercel/next.js/issues/69263
-FROM node:22.6-alpine AS development
+FROM base-image AS development
 
 # Run application with user 'node'.
 # It is not recommended to run applications with 'root' even within
@@ -45,7 +47,7 @@ COPY --chown=node:node . .
 # Base image for building the application.
 # Do not use the latest tag for the base image due to build issues with Terser.
 # https://github.com/vercel/next.js/issues/69263
-FROM node:22.6-alpine AS build
+FROM base-image AS build
 
 # Install rsync
 RUN apk update && apk add --no-cache rsync
@@ -124,7 +126,7 @@ RUN npm run build && \
 ################################################################################
 # Do not use the latest tag for the base image due to build issues with Terser.
 # https://github.com/vercel/next.js/issues/69263
-FROM node:22.6-alpine AS production
+FROM base-image AS production
 
 # Set NODE_ENV to production for running the application.
 ENV NODE_ENV=production
