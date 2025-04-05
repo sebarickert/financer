@@ -10,6 +10,7 @@ interface BalanceDisplayProps {
   amount: number;
   children?: ReactNode;
   type?: TransactionType;
+  balanceVtName?: string;
 }
 
 export const BalanceDisplay: FC<BalanceDisplayProps> = ({
@@ -18,6 +19,7 @@ export const BalanceDisplay: FC<BalanceDisplayProps> = ({
   children,
   amount,
   label,
+  balanceVtName,
 }) => {
   const formattedAmount = formatCurrency(amount);
 
@@ -50,6 +52,10 @@ export const BalanceDisplay: FC<BalanceDisplayProps> = ({
           className="block text-4xl font-semibold break-all"
           data-testid="balance-amount"
           data-slot="balance"
+          data-vt={!!balanceVtName}
+          style={{
+            '--vt-name': balanceVtName,
+          }}
         >
           {balance}
         </span>

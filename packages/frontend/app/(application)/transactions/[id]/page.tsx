@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import { getTransactionById } from '@/api-service';
 import { Popper } from '@/elements/Popper';
 import { PopperItem } from '@/elements/PopperItem';
+import { generateTransactionViewTransitionName } from '@/features/transaction/generateTransactionViewTransitionName';
 import { TransactionDeleteDrawer } from '@/features/transaction/TransactionDeleteDrawer';
 import { ContentHeader } from '@/layouts/ContentHeader';
 import { Transaction } from '@/views/Transaction';
@@ -39,6 +40,9 @@ export default async function TransactionPage({ params }: { params: Params }) {
     <>
       <ContentHeader
         title={transaction.description}
+        titleVtName={
+          generateTransactionViewTransitionName(transaction.id).description
+        }
         action={
           <Popper
             popperButton={{

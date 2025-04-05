@@ -57,7 +57,6 @@ export const AccountList: FC<AccountListProps> = ({
                 'py-4 px-6 rounded-md',
                 'grid',
               )}
-              transition="slideInFromRight"
               hasHoverEffect={false}
               data-account-item={id}
             >

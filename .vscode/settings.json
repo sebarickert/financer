@@ -46,6 +46,7 @@
     "sebarickert",
     "silte",
     "sonarcloud",
+    "sonarqube",
     "testid"
   ],
   "sonarlint.connectedMode.project": {

@@ -128,6 +128,11 @@
     @apply text-foreground bg-background;
   }
 
+  /* View transition name from data attributes */
+  [data-vt="true"] {
+    view-transition-name: var(--vt-name);
+  }
+
   /* FIXME These styles cause browser to crash... */
   /* body:has([data-body-scroll-lock="on"]:popover-open) {
     overflow: hidden;

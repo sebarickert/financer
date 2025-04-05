@@ -14,6 +14,7 @@ import { CardHeader } from '@/blocks/Card/CardHeader';
 import { DetailsItem, DetailsList } from '@/blocks/DetailsList';
 import { TRANSACTION_TYPE_MAPPING } from '@/constants/transaction/TRANSACTION_TYPE_MAPPING';
 import { Heading } from '@/elements/Heading';
+import { generateTransactionViewTransitionName } from '@/features/transaction/generateTransactionViewTransitionName';
 import { TransactionTypeIcon } from '@/features/transaction/TransactionTypeIcon';
 import { DATE_FORMAT, DateService } from '@/services/DateService';
 import { capitalize } from '@/utils/capitalize';
@@ -39,6 +40,8 @@ export const Transaction: FC<TransactionProps> = async ({
   const toAccountName = 'toAccountName' in props ? props.toAccountName : null;
 
   const transactionCategories = await getAllCategoriesWithTree();
+
+  const vtNames = generateTransactionViewTransitionName(id, categories);
 
   const getCategoryNameById = (categoryId: string) =>
     transactionCategories.find((category) => category.id === categoryId)
@@ -67,11 +70,13 @@ export const Transaction: FC<TransactionProps> = async ({
       Icon: Calendar,
       label: 'Date',
       description: new DateService(date).format(DATE_FORMAT.LONG),
+      vtName: vtNames.date,
     },
     {
       Icon: Info,
       label: 'Type',
       description: capitalize(type.toLowerCase()),
+      vtName: vtNames.type,
     },
   ];
 
@@ -85,7 +90,8 @@ export const Transaction: FC<TransactionProps> = async ({
         {
           Icon: Tag,
           label: 'Category',
-          description: getCategoryNameById(categoryId as unknown as string),
+          description: getCategoryNameById(categoryId),
+          vtName: vtNames.categories.get(categoryId),
         },
         {
           Icon: Info,
@@ -130,6 +136,7 @@ export const Transaction: FC<TransactionProps> = async ({
             amount={amount}
             type={type}
             className='[&_[data-slot="label"]]:sr-only text-center'
+            balanceVtName={vtNames.amount}
           >
             <p
               className="text-muted-foreground mt-1"

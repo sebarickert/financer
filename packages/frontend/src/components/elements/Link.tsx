@@ -1,18 +1,11 @@
 'use client';
 import clsx from 'clsx';
 import { usePathname } from 'next/navigation';
-import {
-  Link as TransitionLink,
-  useTransitionRouter,
-} from 'next-view-transitions';
+import { useTransitionRouter } from 'next-view-transitions';
 import type { JSX } from 'react';
 
 import { HapticType, hapticRunner } from '@/utils/haptic.helper';
 import { isExternalLink } from '@/utils/isExternalLink';
-import {
-  TransitionType,
-  transitionAnimations,
-} from '@/utils/transitionAnimations';
 
 interface LinkProps
   extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'onClick'> {
@@ -21,7 +14,6 @@ interface LinkProps
   testId?: string;
   isAbsolute?: boolean;
   href: string;
-  transition?: TransitionType;
   /** Defaults to `none` */
   haptic?: HapticType;
   onClick?: () => void;
@@ -34,7 +26,6 @@ export const Link = ({
   testId,
   isAbsolute,
   href,
-  transition,
   haptic = 'none',
   hasHoverEffect = true,
   ...props
@@ -75,42 +66,40 @@ export const Link = ({
     );
   }
 
-  if (transition) {
-    return (
-      <a
-        {...props}
-        onClick={(e) => {
-          hapticRunner(haptic);
-          e.preventDefault();
-          props.onClick?.();
-          router.push(href, {
-            onTransitionReady: transitionAnimations[transition],
-          });
-        }}
-        href={href}
-        className={linkClasses}
-        data-testid={testId}
-        aria-current={isCurrentPage ? 'page' : undefined}
-      >
-        {linkContent}
-      </a>
-    );
-  }
-
   return (
-    <TransitionLink
+    <a
       {...props}
+      onClick={(e) => {
+        hapticRunner(haptic);
+        e.preventDefault();
+        props.onClick?.();
+        router.push(href);
+      }}
       href={href}
       className={linkClasses}
       data-testid={testId}
-      onClick={() => {
-        hapticRunner(haptic);
-        props.onClick?.();
-      }}
       aria-current={isCurrentPage ? 'page' : undefined}
       data-active-sub-page={hasActiveSubPage}
     >
       {linkContent}
-    </TransitionLink>
+    </a>
   );
+
+  // TODO we should test if VT works as with native link
+  // return (
+  //   <TransitionLink
+  //     {...props}
+  //     href={href}
+  //     className={linkClasses}
+  //     data-testid={testId}
+  //     onClick={() => {
+  //       hapticRunner(haptic);
+  //       props.onClick?.();
+  //     }}
+  //     aria-current={isCurrentPage ? 'page' : undefined}
+  //     data-active-sub-page={hasActiveSubPage}
+  //   >
+  //     {linkContent}
+  //   </TransitionLink>
+  // );
 };

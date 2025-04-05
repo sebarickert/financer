@@ -8,13 +8,13 @@ import { Heading } from '@/elements/Heading';
 
 export const ContentHeader: FC<{
   title: string;
+  titleVtName?: string;
   action?: ReactNode;
   breadcrumbOverrides?: Record<string, string>;
-}> = ({ title, action, breadcrumbOverrides }) => {
+}> = ({ title, action, breadcrumbOverrides, titleVtName }) => {
   return (
     <header
       className={clsx(
-        'vt-name-[content-header]',
         'mb-6 relative',
         'grid grid-cols-[1fr_auto] gap-4 items-center',
       )}
@@ -25,7 +25,14 @@ export const ContentHeader: FC<{
         className="col-span-full"
       />
       <Heading variant="h1" testId="page-main-heading" className="truncate">
-        {title}
+        <span
+          data-vt={!!titleVtName}
+          style={{
+            '--vt-name': titleVtName ?? '',
+          }}
+        >
+          {title}
+        </span>
       </Heading>
       {action}
     </header>

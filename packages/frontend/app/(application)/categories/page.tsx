@@ -93,7 +93,6 @@ export default async function CategoriesPage() {
             href={`/categories/add`}
             accentColor="primary"
             size="small"
-            transition="slideInFromRight"
             isPill
           >
             <Plus />
