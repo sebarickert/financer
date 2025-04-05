@@ -110,7 +110,7 @@ export const TransactionListItem: FC<
             >
               {new DateService(date).format()}
             </time>
-            {formattedCategories && (
+            {formattedCategories.length > 0 && (
               <>
                 {' - '}
                 <span data-testid="transaction-categories">
