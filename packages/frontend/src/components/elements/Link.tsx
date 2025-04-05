@@ -1,7 +1,9 @@
 'use client';
+
 import clsx from 'clsx';
+import NextLink from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useTransitionRouter } from 'next-view-transitions';
+import { Link as TransitionLink } from 'next-view-transitions';
 import type { JSX } from 'react';
 
 import { HapticType, hapticRunner } from '@/utils/haptic.helper';
@@ -18,6 +20,8 @@ interface LinkProps
   haptic?: HapticType;
   onClick?: () => void;
   hasHoverEffect?: boolean;
+  noTransition?: boolean;
+  vtName?: string;
 }
 
 export const Link = ({
@@ -25,13 +29,14 @@ export const Link = ({
   children,
   testId,
   isAbsolute,
+  noTransition,
   href,
   haptic = 'none',
   hasHoverEffect = true,
+  vtName,
   ...props
 }: LinkProps): JSX.Element => {
   const pathname = usePathname();
-  const router = useTransitionRouter();
 
   const isCurrentPage = pathname === href;
   const hasActiveSubPage = href !== '/' && pathname.startsWith(href);
@@ -66,40 +71,27 @@ export const Link = ({
     );
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const LinkElement = noTransition ? NextLink : TransitionLink;
+
   return (
-    <a
+    <LinkElement
       {...props}
-      onClick={(e) => {
-        hapticRunner(haptic);
-        e.preventDefault();
-        props.onClick?.();
-        router.push(href);
-      }}
       href={href}
       className={linkClasses}
       data-testid={testId}
+      onClick={() => {
+        hapticRunner(haptic);
+        props.onClick?.();
+      }}
       aria-current={isCurrentPage ? 'page' : undefined}
       data-active-sub-page={hasActiveSubPage}
+      data-vt={!!vtName}
+      style={{
+        '--vt-name': vtName,
+      }}
     >
       {linkContent}
-    </a>
+    </LinkElement>
   );
-
-  // TODO we should test if VT works as with native link
-  // return (
-  //   <TransitionLink
-  //     {...props}
-  //     href={href}
-  //     className={linkClasses}
-  //     data-testid={testId}
-  //     onClick={() => {
-  //       hapticRunner(haptic);
-  //       props.onClick?.();
-  //     }}
-  //     aria-current={isCurrentPage ? 'page' : undefined}
-  //     data-active-sub-page={hasActiveSubPage}
-  //   >
-  //     {linkContent}
-  //   </TransitionLink>
-  // );
 };

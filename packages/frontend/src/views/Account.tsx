@@ -11,6 +11,7 @@ import { DetailsItem, DetailsList } from '@/blocks/DetailsList';
 import { InfoMessageBlock } from '@/blocks/InfoMessageBlock';
 import { ACCOUNT_TYPE_MAPPING } from '@/constants/account/ACCOUNT_TYPE_MAPPING';
 import { AccountBalanceHistoryChart } from '@/features/account/AccountBalanceHistoryChart';
+import { generateAccountViewTransitionName } from '@/features/account/generateAccountViewTransitionName';
 import { TransactionListWithMonthlyPager } from '@/features/transaction/TransactionListWithMonthlyPager/TransactionListWithMonthlyPager';
 import { formatCurrency } from '@/utils/formatCurrency';
 
@@ -25,15 +26,18 @@ export const Account: FC<AccountProps> = ({
   balanceHistory,
   queryDate,
 }) => {
+  const vtNames = generateAccountViewTransitionName(account.id);
+
   const accountDetails: DetailsItem[] = useMemo(
     () => [
       {
         Icon: Info,
         label: 'Account Type',
         description: ACCOUNT_TYPE_MAPPING[account.type].label,
+        vtName: vtNames.type,
       },
     ],
-    [account.type],
+    [account.type, vtNames.type],
   );
 
   return (
@@ -42,6 +46,7 @@ export const Account: FC<AccountProps> = ({
         <BalanceDisplay
           label="Balance"
           amount={account.currentDateBalance ?? account.balance}
+          balanceVtName={vtNames.balance}
         >
           {Boolean(account.currentDateBalance) &&
             account.currentDateBalance !== account.balance && (

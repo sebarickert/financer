@@ -7,6 +7,7 @@ import { RequireAccounts } from '@/components/RequireAccounts';
 import { Button } from '@/elements/Button/Button';
 import { AccountList } from '@/features/account/AccountList';
 import { AccountTypeBalanceChart } from '@/features/account/AccountTypeBalanceChart';
+import { generateNavigationViewTransitionName } from '@/features/settings/generateNavigationViewTransitionName';
 import { ContentHeader } from '@/layouts/ContentHeader';
 
 export const metadata: Metadata = {
@@ -34,10 +35,13 @@ export default async function AccountsPage() {
     return accountCategories.savings;
   });
 
+  const vtNames = generateNavigationViewTransitionName();
+
   return (
     <>
       <ContentHeader
         title="Accounts"
+        titleVtName={vtNames.accounts}
         action={
           <Button
             href="/accounts/add"

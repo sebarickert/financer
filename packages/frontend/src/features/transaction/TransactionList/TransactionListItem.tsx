@@ -110,7 +110,7 @@ export const TransactionListItem: FC<
             >
               {new DateService(date).format()}
             </time>
-            {formattedCategories && (
+            {formattedCategories.length > 0 && (
               <>
                 {' - '}
                 <span data-testid="transaction-categories">
@@ -120,15 +120,20 @@ export const TransactionListItem: FC<
               </>
             )}
           </div>
-          <span
-            className={clsx('inline-flex items-center gap-2')}
-            data-vt
-            style={{
-              '--vt-name': vtNames.type,
-            }}
-          >
-            {TRANSACTION_TYPE_MAPPING[type].label.default}
+          <span className={clsx('inline-flex items-center gap-2')}>
             <span
+              data-vt
+              style={{
+                '--vt-name': vtNames.type,
+              }}
+            >
+              {TRANSACTION_TYPE_MAPPING[type].label.default}
+            </span>
+            <span
+              data-vt
+              style={{
+                '--vt-name': vtNames.typeIcon,
+              }}
               className={clsx(
                 'size-3 rounded-full inline-block bg-(--color-type)',
               )}

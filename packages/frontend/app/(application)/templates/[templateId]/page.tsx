@@ -7,6 +7,7 @@ import {
   getAllCategoriesWithTree,
   getTransactionTemplateById,
 } from '@/api-service';
+import { generateTemplateViewTransitionName } from '@/features/template/generateTemplateViewTransitionName';
 import { TemplateDelete } from '@/features/template/TemplateDelete';
 import { TemplateForm } from '@/features/template/TemplateForm';
 import { ContentHeader } from '@/layouts/ContentHeader';
@@ -54,10 +55,13 @@ export default async function EditTemplatePage({ params }: { params: Params }) {
 
   const handleSubmit = handleTemplateEdit.bind(null, template);
 
+  const vtNames = generateTemplateViewTransitionName(template.id);
+
   return (
     <>
       <ContentHeader
         title={`Edit ${template.templateName}`}
+        titleVtName={vtNames.name}
         action={<TemplateDelete id={template.id} />}
       />
       <TemplateForm

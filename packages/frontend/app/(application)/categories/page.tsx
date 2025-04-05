@@ -6,6 +6,8 @@ import { InfoMessageBlock } from '@/blocks/InfoMessageBlock';
 import { List } from '@/blocks/List';
 import { ProminentLink } from '@/blocks/ProminentLink';
 import { Button } from '@/elements/Button/Button';
+import { generateCategoryViewTransitionName } from '@/features/category/generateCategoryViewTransitionName';
+import { generateNavigationViewTransitionName } from '@/features/settings/generateNavigationViewTransitionName';
 import { ContentHeader } from '@/layouts/ContentHeader';
 
 export const metadata: Metadata = {
@@ -15,6 +17,7 @@ export const metadata: Metadata = {
 interface CategoryParentItem {
   label: string;
   items: CategoryItem[];
+  id?: string;
   link?: string;
 }
 
@@ -84,10 +87,13 @@ export default async function CategoriesPage() {
     ...categoriesWithChildren,
   ];
 
+  const vtNames = generateNavigationViewTransitionName();
+
   return (
     <>
       <ContentHeader
         title="Categories"
+        titleVtName={vtNames.categories}
         action={
           <Button
             href={`/categories/add`}
@@ -113,20 +119,42 @@ export default async function CategoriesPage() {
             more effectively.
           </InfoMessageBlock>
         )}
-        {categoryRows.map(({ label: parentLabel, items, link: parentLink }) => (
-          <List key={parentLabel} label={parentLabel} testId="category-list">
-            {parentLink && (
-              <ProminentLink link={parentLink} Icon={Tag}>
-                {parentLabel}
-              </ProminentLink>
-            )}
-            {items.map(({ id, link, label }) => (
-              <ProminentLink key={id} link={link} Icon={Tag}>
-                {label}
-              </ProminentLink>
-            ))}
-          </List>
-        ))}
+        {categoryRows.map(
+          ({ label: parentLabel, items, link: parentLink, id: parentId }) => {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            const parentVtNames = generateCategoryViewTransitionName(parentId!);
+            return (
+              <List
+                key={parentLabel}
+                label={parentLabel}
+                testId="category-list"
+              >
+                {parentLink && (
+                  <ProminentLink
+                    link={parentLink}
+                    Icon={Tag}
+                    vtName={parentVtNames.name}
+                  >
+                    {parentLabel}
+                  </ProminentLink>
+                )}
+                {items.map(({ id, link, label }) => {
+                  const vtNames = generateCategoryViewTransitionName(id);
+                  return (
+                    <ProminentLink
+                      key={id}
+                      link={link}
+                      Icon={Tag}
+                      vtName={vtNames.name}
+                    >
+                      {label}
+                    </ProminentLink>
+                  );
+                })}
+              </List>
+            );
+          },
+        )}
       </section>
     </>
   );

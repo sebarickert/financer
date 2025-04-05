@@ -10,6 +10,7 @@ import {
 import { Popper } from '@/elements/Popper';
 import { PopperItem } from '@/elements/PopperItem';
 import { CategoryDeleteDrawer } from '@/features/category/CategoryDeleteDrawer';
+import { generateCategoryViewTransitionName } from '@/features/category/generateCategoryViewTransitionName';
 import { ContentHeader } from '@/layouts/ContentHeader';
 import { Category } from '@/views/Category';
 
@@ -50,10 +51,13 @@ export default async function CategoryPage({
 
   const allCategories = await getAllCategories();
 
+  const vtNames = generateCategoryViewTransitionName(category.id);
+
   return (
     <>
       <ContentHeader
         title={category.name}
+        titleVtName={vtNames.name}
         action={
           <Popper
             popperButton={{

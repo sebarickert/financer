@@ -84,7 +84,7 @@ export const Popper: FC<PopperProps> = ({ children, popperButton }) => {
           'aria-hidden:hidden aria-hidden:opacity-0',
           'min-w-[8rem] overflow-hidden rounded-md p-1 shadow-md w-56',
           'border bg-layer',
-          'absolute top-[calc(100%+var(--spacing))] right-0',
+          'absolute z-10 top-[calc(100%+var(--spacing))] right-0',
         )}
       >
         {children}

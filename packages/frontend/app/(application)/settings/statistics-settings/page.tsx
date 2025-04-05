@@ -3,6 +3,7 @@ import { Metadata } from 'next';
 import { handleStatisticsPageSettingsUpdate } from '@/actions/settings/handleStatisticsPageSettingsUpdate';
 import { getStatisticsSettings } from '@/api-service';
 import { InfoMessageBlock } from '@/blocks/InfoMessageBlock';
+import { generateUserPreferenceViewTransitionName } from '@/features/settings/generateUserPreferenceViewTransitionName';
 import { ContentHeader } from '@/layouts/ContentHeader';
 import { UserStatisticsPageSettingsForm } from '@/views/user-preferences/UserStatisticsPageSettingsForm';
 
@@ -13,9 +14,14 @@ export const metadata: Metadata = {
 export default async function SettingsPreferencesPage() {
   const statisticsSettings = await getStatisticsSettings();
 
+  const vtNames = generateUserPreferenceViewTransitionName();
+
   return (
     <>
-      <ContentHeader title="Transactions & Statistics Settings" />
+      <ContentHeader
+        title="Transactions & Statistics Settings"
+        titleVtName={vtNames.transactionsAndStatistics}
+      />
       <InfoMessageBlock
         title="Account Types"
         className="mb-6"

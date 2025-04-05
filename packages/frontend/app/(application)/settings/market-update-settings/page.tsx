@@ -5,6 +5,7 @@ import {
   getAllCategoriesWithTree,
   getDefaultMarketUpdateSettings,
 } from '@/api-service';
+import { generateUserPreferenceViewTransitionName } from '@/features/settings/generateUserPreferenceViewTransitionName';
 import { ContentHeader } from '@/layouts/ContentHeader';
 import { UserDefaultMarketUpdateSettingsForm } from '@/views/user-preferences/UserDefaultMarketUpdateSettingsForm';
 
@@ -17,9 +18,14 @@ export default async function MarketUpdateSettingsUserPreferencePage() {
 
   const categories = await getAllCategoriesWithTree();
 
+  const vtNames = generateUserPreferenceViewTransitionName();
+
   return (
     <>
-      <ContentHeader title="Market Update Settings" />
+      <ContentHeader
+        title="Market Update Settings"
+        titleVtName={vtNames.marketUpdate}
+      />
       <UserDefaultMarketUpdateSettingsForm
         data={marketUpdateSettings}
         categories={categories}

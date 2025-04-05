@@ -5,6 +5,7 @@ import { getAllAccounts, getAllTransactionTemplates } from '@/api-service';
 import { InfoMessageBlock } from '@/blocks/InfoMessageBlock';
 import { RequireAccounts } from '@/components/RequireAccounts';
 import { Button } from '@/elements/Button/Button';
+import { generateNavigationViewTransitionName } from '@/features/settings/generateNavigationViewTransitionName';
 import { TemplateList } from '@/features/template/TemplateList';
 import { ContentHeader } from '@/layouts/ContentHeader';
 
@@ -16,10 +17,13 @@ export default async function TemplateListingPage() {
   const accounts = await getAllAccounts();
   const templates = await getAllTransactionTemplates();
 
+  const vtNames = generateNavigationViewTransitionName();
+
   return (
     <>
       <ContentHeader
         title="Templates"
+        titleVtName={vtNames.templates}
         action={
           accounts.length > 0 && (
             <Button
