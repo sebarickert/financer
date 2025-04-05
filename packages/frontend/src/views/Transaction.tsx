@@ -128,6 +128,10 @@ export const Transaction: FC<TransactionProps> = async ({
             className={clsx(
               'inline-flex size-12 rounded-full items-center justify-center bg-(--color-type)',
             )}
+            data-vt
+            style={{
+              '--vt-name': vtNames.typeIcon,
+            }}
           >
             <TransactionTypeIcon type={type} isRecurring={isRecurring} />
           </span>

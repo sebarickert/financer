@@ -1,6 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
+import NextLink from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Link as TransitionLink } from 'next-view-transitions';
 import type { JSX } from 'react';
@@ -19,6 +20,7 @@ interface LinkProps
   haptic?: HapticType;
   onClick?: () => void;
   hasHoverEffect?: boolean;
+  noTransition?: boolean;
 }
 
 export const Link = ({
@@ -26,6 +28,7 @@ export const Link = ({
   children,
   testId,
   isAbsolute,
+  noTransition,
   href,
   haptic = 'none',
   hasHoverEffect = true,
@@ -66,8 +69,11 @@ export const Link = ({
     );
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const LinkElement = noTransition ? NextLink : TransitionLink;
+
   return (
-    <TransitionLink
+    <LinkElement
       {...props}
       href={href}
       className={linkClasses}
@@ -80,6 +86,6 @@ export const Link = ({
       data-active-sub-page={hasActiveSubPage}
     >
       {linkContent}
-    </TransitionLink>
+    </LinkElement>
   );
 };

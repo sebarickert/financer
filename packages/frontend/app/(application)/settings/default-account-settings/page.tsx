@@ -9,6 +9,7 @@ import {
   getDefaultTransferTargetAccount,
 } from '@/api-service';
 import { RequireAccounts } from '@/components/RequireAccounts';
+import { generateUserPreferenceViewTransitionName } from '@/features/settings/generateUserPreferenceViewTransitionName';
 import { ContentHeader } from '@/layouts/ContentHeader';
 import { UserDefaultAccountSettingsForm } from '@/views/user-preferences/UserDefaultAccountSettingsForm';
 
@@ -24,9 +25,14 @@ export default async function DefaultAccountSettingsUserPreferencePage() {
   const defaultTransferSourceAccount = await getDefaultTransferSourceAccount();
   const defaultTransferTargetAccount = await getDefaultTransferTargetAccount();
 
+  const vtNames = generateUserPreferenceViewTransitionName('default-account');
+
   return (
     <>
-      <ContentHeader title="Default Account Settings" />
+      <ContentHeader
+        title="Default Account Settings"
+        titleVtName={vtNames.title}
+      />
       <RequireAccounts>
         <UserDefaultAccountSettingsForm
           accounts={accounts}
