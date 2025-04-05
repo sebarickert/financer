@@ -7,6 +7,7 @@ import {
 } from '@/api/ssr-financer-api';
 import { List } from '@/blocks/List';
 import { ProminentLink } from '@/blocks/ProminentLink';
+import { generateTemplateViewTransitionName } from '@/features/template/generateTemplateViewTransitionName';
 
 interface TemplateListProps {
   templates: SchemaTransactionTemplateDto[];
@@ -41,15 +42,19 @@ export const TemplateList: FC<TemplateListProps> = ({ templates }) => {
           key={type}
           testId="template-list"
         >
-          {items.map(({ templateName, id, templateType }) => (
-            <ProminentLink
-              Icon={TEMPLATE_ICON_MAPPING[templateType[0]]}
-              key={id}
-              link={`/templates/${id}`}
-            >
-              {templateName}
-            </ProminentLink>
-          ))}
+          {items.map(({ templateName, id, templateType }) => {
+            const vtNames = generateTemplateViewTransitionName(id);
+            return (
+              <ProminentLink
+                Icon={TEMPLATE_ICON_MAPPING[templateType[0]]}
+                key={id}
+                link={`/templates/${id}`}
+                vtName={vtNames.name}
+              >
+                {templateName}
+              </ProminentLink>
+            );
+          })}
         </List>
       ))}
     </section>

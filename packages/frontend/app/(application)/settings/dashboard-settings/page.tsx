@@ -5,6 +5,7 @@ import {
   getDashboardSettings,
   getTransactionListChunkSize,
 } from '@/api-service';
+import { generateUserPreferenceViewTransitionName } from '@/features/settings/generateUserPreferenceViewTransitionName';
 import { ContentHeader } from '@/layouts/ContentHeader';
 import { UserDashboardSettingsForm } from '@/views/user-preferences/UserDashboardSettingsForm';
 
@@ -21,9 +22,11 @@ export default async function DashboardSettingsUserPreferencePage() {
     chunkSize: defaultChunkSize,
   };
 
+  const vtNames = generateUserPreferenceViewTransitionName('dashboard');
+
   return (
     <>
-      <ContentHeader title="Dashboard Settings" />
+      <ContentHeader title="Dashboard Settings" titleVtName={vtNames.title} />
       <UserDashboardSettingsForm
         data={data}
         onSave={handleDashboardSettingsUpdate}

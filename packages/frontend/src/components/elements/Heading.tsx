@@ -9,6 +9,7 @@ interface HeadingProps {
   className?: string;
   testId?: string;
   noMargin?: boolean;
+  vtName?: string;
 }
 
 export const Heading: FC<HeadingProps> = ({
@@ -17,6 +18,7 @@ export const Heading: FC<HeadingProps> = ({
   className = '',
   testId,
   noMargin,
+  vtName,
 }) => {
   const HeadingType = variant;
 
@@ -29,6 +31,10 @@ export const Heading: FC<HeadingProps> = ({
       })}
       data-testid={testId}
       data-slot="heading"
+      data-vt={!!vtName}
+      style={{
+        '--vt-name': vtName,
+      }}
     >
       {children}
     </HeadingType>

@@ -12,6 +12,7 @@ import { Popper } from '@/elements/Popper';
 import { PopperItem } from '@/elements/PopperItem';
 import { AccountDeleteDrawer } from '@/features/account/AccountDeleteDrawer';
 import { AccountUpdateMarketValueDrawer } from '@/features/account/AccountUpdateMarketValueDrawer';
+import { generateAccountViewTransitionName } from '@/features/account/generateAccountViewTransitionName';
 import { ContentHeader } from '@/layouts/ContentHeader';
 import { Account } from '@/views/Account';
 
@@ -53,10 +54,13 @@ export default async function AccountPage({
     notFound();
   }
 
+  const vtNames = generateAccountViewTransitionName(accountId);
+
   return (
     <>
       <ContentHeader
         title={account.name}
+        titleVtName={vtNames.name}
         action={
           <Popper
             popperButton={{

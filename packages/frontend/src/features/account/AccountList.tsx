@@ -7,6 +7,7 @@ import { List } from '@/blocks/List';
 import { ACCOUNT_TYPE_MAPPING } from '@/constants/account/ACCOUNT_TYPE_MAPPING';
 import { Heading } from '@/elements/Heading';
 import { Link } from '@/elements/Link';
+import { generateAccountViewTransitionName } from '@/features/account/generateAccountViewTransitionName';
 import { formatCurrency } from '@/utils/formatCurrency';
 
 export interface AccountListingItem {
@@ -41,6 +42,7 @@ export const AccountList: FC<AccountListProps> = ({
       itemRoundness={false}
     >
       {accounts.map(({ id, balance, name, type, currentDateBalance }) => {
+        const vtNames = generateAccountViewTransitionName(id);
         return (
           <Fragment key={id}>
             <style>{`
@@ -61,13 +63,19 @@ export const AccountList: FC<AccountListProps> = ({
               data-account-item={id}
             >
               <div className="flex items-center gap-6 justify-between overflow-hidden">
-                <Heading noMargin testId="account-name" className="truncate">
+                <Heading
+                  noMargin
+                  testId="account-name"
+                  className="truncate"
+                  vtName={vtNames.name}
+                >
                   {name}
                 </Heading>
                 <BalanceDisplay
                   className="[&_[data-slot='label']]:sr-only [&_[data-slot='balance']]:text-xl text-right whitespace-nowrap"
                   label="Account Balance"
                   amount={currentDateBalance ?? balance}
+                  balanceVtName={vtNames.balance}
                 />
               </div>
               <div className="text-sm text-muted-foreground flex items-center gap-6 justify-between overflow-hidden">
@@ -77,7 +85,13 @@ export const AccountList: FC<AccountListProps> = ({
                     'before:w-3 before:h-3 before:rounded-full before:block before:bg-(--color-account) before:shrink-0',
                   )}
                 >
-                  <span className="truncate">
+                  <span
+                    className="truncate"
+                    data-vt
+                    style={{
+                      '--vt-name': vtNames.type,
+                    }}
+                  >
                     {ACCOUNT_TYPE_MAPPING[type].label}
                   </span>
                 </span>

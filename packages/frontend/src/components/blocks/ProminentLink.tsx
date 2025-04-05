@@ -11,6 +11,7 @@ interface ProminentLinkProps {
   testId?: string;
   entityTitle?: string;
   className?: string;
+  vtName?: string;
 }
 
 export const ProminentLink: FC<ProminentLinkProps> = ({
@@ -20,6 +21,7 @@ export const ProminentLink: FC<ProminentLinkProps> = ({
   testId,
   className = '',
   entityTitle,
+  vtName,
 }) => {
   return (
     <Link
@@ -38,7 +40,15 @@ export const ProminentLink: FC<ProminentLinkProps> = ({
       hasHoverEffect={false}
     >
       {Icon && <Icon />}
-      <span className={clsx('flex-1')}>{children}</span>
+      <span
+        className={clsx('flex-1')}
+        data-vt={!!vtName}
+        style={{
+          '--vt-name': vtName,
+        }}
+      >
+        {children}
+      </span>
       <ChevronRight />
     </Link>
   );

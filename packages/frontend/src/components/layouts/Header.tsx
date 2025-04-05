@@ -17,6 +17,10 @@ export const Header = async () => {
           'bg-black',
           'fixed left-0 right-0 top-0 z-(--z-header)',
         )}
+        data-vt
+        style={{
+          '--vt-name': 'header',
+        }}
       >
         <div
           className={clsx(
@@ -34,9 +38,13 @@ export const Header = async () => {
         </div>
       </header>
       <nav
+        data-vt
+        style={{
+          '--vt-name': 'navigation',
+        }}
         className={clsx(
           'bg-layer/85 backdrop-blur',
-          'vt-name-[navigation] pb-safe',
+          'pb-safe',
           'max-lg:border-t lg:border-none lg:shadow-[inset_0_-1px] lg:shadow-accent',
           'fixed left-0 right-0 max-lg:bottom-0 lg:top-(--header-height) z-(--z-navigation)',
         )}

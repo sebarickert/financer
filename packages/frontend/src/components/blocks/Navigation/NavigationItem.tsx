@@ -17,6 +17,7 @@ export const NavigationItem: FC<NavigationItemProps> = ({
   return (
     <li className={clsx(className)}>
       <Link
+        noTransition
         haptic="heavy"
         href={url}
         className={clsx(

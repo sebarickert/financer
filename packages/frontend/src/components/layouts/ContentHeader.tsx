@@ -24,15 +24,13 @@ export const ContentHeader: FC<{
         breadcrumbOverrides={breadcrumbOverrides}
         className="col-span-full"
       />
-      <Heading variant="h1" testId="page-main-heading" className="truncate">
-        <span
-          data-vt={!!titleVtName}
-          style={{
-            '--vt-name': titleVtName ?? '',
-          }}
-        >
-          {title}
-        </span>
+      <Heading
+        variant="h1"
+        testId="page-main-heading"
+        className="truncate"
+        vtName={titleVtName}
+      >
+        {title}
       </Heading>
       {action}
     </header>
