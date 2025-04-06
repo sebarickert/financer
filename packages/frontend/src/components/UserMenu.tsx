@@ -20,7 +20,6 @@ import { Role, Theme } from '@/api/ssr-financer-api';
 import { ThemeSwitcher } from '@/blocks/ThemeSwitcher/ThemeSwitcher';
 import { settingsPaths } from '@/constants/settingsPaths';
 import { Link } from '@/elements/Link';
-import { generateNavigationViewTransitionName } from '@/features/settings/generateNavigationViewTransitionName';
 
 export const UserMenu: FC<{ roles: readonly Role[]; theme: Theme }> = ({
   roles,
@@ -62,8 +61,6 @@ export const UserMenu: FC<{ roles: readonly Role[]; theme: Theme }> = ({
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, [isOpen]);
-
-  const navigationVtNames = generateNavigationViewTransitionName();
 
   return (
     <div className="relative inline-flex">
@@ -117,35 +114,19 @@ export const UserMenu: FC<{ roles: readonly Role[]; theme: Theme }> = ({
         data-testid="user-menu-container"
       >
         <div role="group">
-          <UserMenuItem
-            href={settingsPaths.default}
-            icon={Cog}
-            vtName={navigationVtNames.settings}
-          >
+          <UserMenuItem href={settingsPaths.default} icon={Cog}>
             Settings
           </UserMenuItem>
         </div>
         <div role="separator" className="h-px my-1 -mx-1 bg-accent" />
         <div role="group">
-          <UserMenuItem
-            href="/categories/"
-            icon={Tag}
-            vtName={navigationVtNames.categories}
-          >
+          <UserMenuItem href="/categories/" icon={Tag}>
             Categories
           </UserMenuItem>
-          <UserMenuItem
-            href="/templates/"
-            icon={Layers}
-            vtName={navigationVtNames.templates}
-          >
+          <UserMenuItem href="/templates/" icon={Layers}>
             Templates
           </UserMenuItem>
-          <UserMenuItem
-            href="/statistics/"
-            icon={ChartNoAxesCombined}
-            vtName={navigationVtNames.statistics}
-          >
+          <UserMenuItem href="/statistics/" icon={ChartNoAxesCombined}>
             Statistics
           </UserMenuItem>
         </div>
@@ -155,7 +136,6 @@ export const UserMenu: FC<{ roles: readonly Role[]; theme: Theme }> = ({
             <UserMenuItem
               href={settingsPaths.dataOverwrite}
               icon={TriangleAlert}
-              vtName={navigationVtNames.overrideUserData}
             >
               Overwrite User Data
             </UserMenuItem>

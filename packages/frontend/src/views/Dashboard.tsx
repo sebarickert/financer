@@ -18,6 +18,7 @@ import { Heading } from '@/elements/Heading';
 import { Link } from '@/elements/Link';
 import { DashboardBalanceHistoryChart } from '@/features/dashboard/DashboardBalanceHistoryChart';
 import { DashboardBalanceSummary } from '@/features/dashboard/DashboardBalanceSummary';
+import { generateNavigationViewTransitionName } from '@/features/settings/generateNavigationViewTransitionName';
 import { TransactionList } from '@/features/transaction/TransactionList/TransactionList';
 import { DateService } from '@/services/DateService';
 
@@ -75,6 +76,8 @@ export const Dashboard: FC = async () => {
         id.year === currentMonthFilterOptions.year,
     ) ?? {};
 
+  const navigationVtNames = generateNavigationViewTransitionName();
+
   return (
     <section className="grid gap-4">
       <div className="grid lg:grid-cols-[1fr_2fr] gap-4">
@@ -88,10 +91,18 @@ export const Dashboard: FC = async () => {
             }}
           />
           <List>
-            <ProminentLink link="/categories" Icon={Tag}>
+            <ProminentLink
+              link="/categories"
+              Icon={Tag}
+              vtName={navigationVtNames.categories}
+            >
               Categories
             </ProminentLink>
-            <ProminentLink link="/templates" Icon={Layers}>
+            <ProminentLink
+              link="/templates"
+              Icon={Layers}
+              vtName={navigationVtNames.templates}
+            >
               Templates
             </ProminentLink>
           </List>
