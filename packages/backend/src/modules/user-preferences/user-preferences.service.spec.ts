@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 
 import { UserPreferencesService } from './user-preferences.service';
 
-import { UserPreferencesRepo } from '@/database/repos/user-preferences.repo';
+import { UserPreferencesRepo } from '@/modules/user-preferences/user-preferences.repo';
 import { createMockServiceProvider } from '@/test/create-mock-service-provider';
 
 describe('UserPreferencesService', () => {

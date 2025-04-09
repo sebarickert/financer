@@ -8,8 +8,8 @@ import {
   transactionCategoryRepoMockDataFindById,
   transactionCategoryRepoUserMockDataFindAllBy,
 } from '@/database/repos/mocks/transaction-category-repo-mock';
-import { TransactionCategoryMappingRepo } from '@/database/repos/transaction-category-mapping.repo';
-import { TransactionCategoryRepo } from '@/database/repos/transaction-category.repo';
+import { TransactionCategoryMappingRepo } from '@/modules/transaction-category-mappings/transaction-category-mapping.repo';
+import { TransactionCategoryRepo } from '@/modules/transaction-categories/transaction-category.repo';
 import { createMockServiceProvider } from '@/test/create-mock-service-provider';
 import { TransactionCategoryMappingsService } from '@/transaction-category-mappings/transaction-category-mappings.service';
 

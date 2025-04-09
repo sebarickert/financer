@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma, PrismaPromise, UserPreferences } from '@prisma/client';
 
-import { PrismaService } from '../prisma.service';
+import { PrismaService } from '@/database/prisma.service';
 
 @Injectable()
 export class UserPreferencesRepo {
@@ -35,8 +35,15 @@ export class UserPreferencesRepo {
   async create(
     data: Prisma.UserPreferencesUncheckedCreateInput,
   ): Promise<UserPreferences> {
+    const { id, userId, theme, createdAt, updatedAt } = data;
     return this.prisma.userPreferences.create({
-      data,
+      data: {
+        id,
+        userId,
+        theme,
+        createdAt,
+        updatedAt,
+      },
     });
   }
 
@@ -53,8 +60,15 @@ export class UserPreferencesRepo {
     data: Prisma.UserPreferencesUpdateInput;
   }): Promise<UserPreferences> {
     const { where, data } = params;
+    const { id, userId, theme, createdAt, updatedAt } = data as Prisma.UserPreferencesUncheckedUpdateInput;
     return this.prisma.userPreferences.update({
-      data,
+      data: {
+        id,
+        userId,
+        theme,
+        createdAt,
+        updatedAt,
+      },
       where,
     });
   }

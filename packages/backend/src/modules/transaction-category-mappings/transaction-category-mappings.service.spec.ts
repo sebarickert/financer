@@ -7,7 +7,7 @@ import {
   transactionCategoryMappingRepoFindAllByUserId,
   transactionCategoryMappingRepoFindAllByUserIdTransactionData,
 } from '@/database/repos/mocks/transaction-category-mapping-repo-mock';
-import { TransactionCategoryMappingRepo } from '@/database/repos/transaction-category-mapping.repo';
+import { TransactionCategoryMappingRepo } from '@/modules/transaction-category-mappings/transaction-category-mapping.repo';
 import { createMockServiceProvider } from '@/test/create-mock-service-provider';
 
 describe('TransactionCategoryMappingsService', () => {

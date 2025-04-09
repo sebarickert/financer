@@ -5,14 +5,14 @@ import { AccountsService } from './accounts.service';
 
 import { AccountBalanceChangesService } from '@/account-balance-changes/account-balance-changes.service';
 import { DUMMY_TEST_USER } from '@/config/mockAuthenticationMiddleware';
-import { AccountBalanceChangeRepo } from '@/database/repos/account-balance-change.repo';
-import { AccountRepo } from '@/database/repos/account.repo';
+import { AccountBalanceChangeRepo } from '@/modules/account-balance-changes/account-balance-change.repo';
+import { AccountRepo } from '@/modules/accounts/account.repo';
 import {
   accountsRepoFindAllMockData,
   accountsRepoFindById,
 } from '@/database/repos/mocks/account-repo-mock';
 import { transactionsRepoFindAllByAccountIdMockData } from '@/database/repos/mocks/transactions-repo-mock';
-import { TransactionRepo } from '@/database/repos/transaction.repo';
+import { TransactionRepo } from '@/modules/transactions/transaction.repo';
 import { createMockServiceProvider } from '@/test/create-mock-service-provider';
 import { TransactionCategoriesService } from '@/transaction-categories/transaction-categories.service';
 import { TransactionCategoryMappingsService } from '@/transaction-category-mappings/transaction-category-mappings.service';
