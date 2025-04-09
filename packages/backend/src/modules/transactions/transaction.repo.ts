@@ -6,7 +6,7 @@ import {
   TransactionType,
 } from '@prisma/client';
 
-import { PrismaService } from '../prisma.service';
+import { PrismaService } from '@/database/prisma.service';
 
 import { DateService } from '@/utils/date.service';
 
@@ -55,10 +55,15 @@ export class TransactionRepo {
   ): Promise<Transaction> {
     return this.prisma.transaction.create({
       data: {
-        // E2e db does not set default values for these fields so we have to set them manually
-        toAccount: null,
-        fromAccount: null,
-        ...data,
+        id: data.id,
+        userId: data.userId,
+        amount: data.amount,
+        date: data.date,
+        description: data.description,
+        fromAccount: data.fromAccount,
+        toAccount: data.toAccount,
+        createdAt: data.createdAt,
+        updatedAt: data.updatedAt,
       },
     });
   }
@@ -77,7 +82,17 @@ export class TransactionRepo {
   }): Promise<Transaction> {
     const { where, data } = params;
     return this.prisma.transaction.update({
-      data,
+      data: {
+        id: data.id,
+        userId: data.userId,
+        amount: data.amount,
+        date: data.date,
+        description: data.description,
+        fromAccount: data.fromAccount,
+        toAccount: data.toAccount,
+        createdAt: data.createdAt,
+        updatedAt: data.updatedAt,
+      },
       where,
     });
   }
