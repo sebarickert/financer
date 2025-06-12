@@ -35,7 +35,8 @@ const CreateTransactionButton: FC<CreateTransactionButtonProps> = ({
         'max-lg:flex max-lg:flex-col max-lg:h-full max-lg:!w-full max-lg:rounded-none',
         'lg:button-primary lg:text-sm lg:h-8 lg:px-3 lg:rounded-full lg:[&_svg]:size-5 lg:[&:has(svg)]:gap-1',
       )}
-      popoverTarget={id}
+      commandFor={id}
+      command="show-modal"
       data-testid="add-transaction"
       isDisabled={isDisabled}
     >

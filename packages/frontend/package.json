@@ -9,6 +9,7 @@
     "@uidotdev/usehooks": "^2.4.1",
     "clsx": "^2.1.1",
     "http-proxy-middleware": "^3.0.3",
+    "invokers-polyfill": "^0.5.5",
     "lucide-react": "^0.487.0",
     "luxon": "^3.6.1",
     "next": "^15.2.4",

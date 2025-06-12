@@ -77,7 +77,7 @@ export default async function CategoryPage({
               href={`/categories/${category.id}/edit`}
               icon={Pencil}
             />
-            <PopperItem label="Delete" icon={Trash} popperId={category.id} />
+            <PopperItem label="Delete" icon={Trash} drawerId={category.id} />
           </Popper>
         }
       />

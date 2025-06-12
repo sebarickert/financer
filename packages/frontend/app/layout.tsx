@@ -1,6 +1,10 @@
 import '@/assets/tailwind.css';
 
 import clsx from 'clsx';
+import {
+  apply as applyHtmlInvokerPolyfill,
+  isSupported as isHtmlInvokersSupported,
+} from 'invokers-polyfill/fn';
 import { Metadata, Viewport } from 'next';
 import { ViewTransitions } from 'next-view-transitions';
 
@@ -10,6 +14,11 @@ import { faviconList } from '@/assets/favicon-list';
 import { ScrollToTop } from '@/blocks/ScrollToTop';
 import { StoreProvider } from '@/container/store.provider';
 import { verifySession } from '@/utils/dal';
+import { isServerSide } from '@/utils/isServerSide';
+
+if (!isServerSide() && !isHtmlInvokersSupported()) {
+  applyHtmlInvokerPolyfill();
+}
 
 const appName = 'Financer';
 

@@ -28,7 +28,7 @@ export const TransactionTemplateSwitcher = ({
   name,
   transactionTemplates = [],
 }: TransactionTemplateSwitcherProps): JSX.Element | null => {
-  const popoverRef = useRef<HTMLDivElement>(null);
+  const drawerRef = useRef<HTMLDialogElement>(null);
   const templateSwitcherId = useId();
 
   const targetTemplates = useMemo(
@@ -44,7 +44,7 @@ export const TransactionTemplateSwitcher = ({
   const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
     onChange(event);
-    popoverRef.current?.hidePopover();
+    drawerRef.current?.close();
   };
 
   return (
@@ -52,14 +52,15 @@ export const TransactionTemplateSwitcher = ({
       <Button
         accentColor="secondary"
         size="icon"
-        popoverTarget={templateSwitcherId}
+        commandFor={templateSwitcherId}
+        command="show-modal"
         isDisabled={!targetTemplates.length}
         testId="use-template-button"
       >
         <Layers />
         <span className="sr-only">Use Template</span>
       </Button>
-      <Drawer id={templateSwitcherId} heading="Use Template" ref={popoverRef}>
+      <Drawer id={templateSwitcherId} heading="Use Template" ref={drawerRef}>
         <form onSubmit={handleSubmit} data-testid="transaction-templates-form">
           <fieldset className="grid gap-2">
             <legend className="sr-only">Choose Template</legend>
@@ -86,8 +87,8 @@ export const TransactionTemplateSwitcher = ({
           <ButtonGroup className="mt-12">
             <Button type="submit">Switch</Button>
             <Button
-              popoverTargetAction="hide"
-              popoverTarget={templateSwitcherId}
+              command="close"
+              commandFor={templateSwitcherId}
               accentColor="secondary"
             >
               Cancel

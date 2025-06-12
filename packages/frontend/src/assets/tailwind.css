@@ -126,25 +126,16 @@
 
   body {
     @apply text-foreground bg-background;
+
+    &:has(dialog[open]) {
+      overflow: hidden;
+    }
   }
 
   /* View transition name from data attributes */
   [data-vt="true"] {
     view-transition-name: var(--vt-name);
   }
-
-  /* FIXME These styles cause browser to crash... */
-  /* body:has([data-body-scroll-lock="on"]:popover-open) {
-    overflow: hidden;
-  }
-
-  body:has([data-body-no-pointer-events="on"]:popover-open) {
-    pointer-events: none;
-  }
-
-  [data-body-no-pointer-events="on"]:popover-open {
-    pointer-events: auto;
-  } */
 
   /* select[data-bleeding-edge="on"],
   ::picker(select) {

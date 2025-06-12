@@ -15,7 +15,7 @@ import { DATE_FORMAT, DateService } from '@/services/DateService';
 interface AccountUpdateMarketValueDrawerProps {
   account: SchemaAccountDto;
   marketSettings?: UserDefaultMarketUpdateSettings;
-  popperId: string;
+  drawerId: string;
 }
 
 interface AccountUpdateMarketValueFormFields {
@@ -25,8 +25,8 @@ interface AccountUpdateMarketValueFormFields {
 
 export const AccountUpdateMarketValueDrawer: FC<
   AccountUpdateMarketValueDrawerProps
-> = ({ account, marketSettings, popperId }) => {
-  const popperRef = useRef<HTMLDivElement>(null);
+> = ({ account, marketSettings, drawerId }) => {
+  const drawerRef = useRef<HTMLDialogElement>(null);
 
   const methods = useForm<AccountUpdateMarketValueFormFields>({
     defaultValues: {
@@ -44,19 +44,16 @@ export const AccountUpdateMarketValueDrawer: FC<
     'update-market-value',
     handleUpdate,
     () => {
-      // FIXME: This is a workaround to close the drawer after the form is submitted.
-      // With `hidePopover()` chromium based browsers crashes with the following error: STATUS_ACCESS_VIOLATION
-      // PopperRef?.current?.hidePopover();
-      window.location.reload();
+      drawerRef?.current?.close();
     },
   );
 
   return (
     <Drawer
-      id={popperId}
+      id={drawerId}
       heading={'Update Market Value'}
       testId="update-market-value"
-      ref={popperRef}
+      ref={drawerRef}
     >
       <Form methods={methods} action={action} testId="update-market-value-form">
         <div className="space-y-4">

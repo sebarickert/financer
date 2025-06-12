@@ -15,7 +15,7 @@ interface TemplateDeleteProps {
 }
 
 export const TemplateDelete = ({ id }: TemplateDeleteProps) => {
-  const popoverId = useId();
+  const drawerId = useId();
 
   const onSubmit = handleTemplateDelete.bind(null, { id });
   const action = useFinancerFormState('category-delete-form', onSubmit);
@@ -26,7 +26,8 @@ export const TemplateDelete = ({ id }: TemplateDeleteProps) => {
       <Button
         accentColor="danger"
         size="small"
-        popoverTarget={popoverId}
+        commandFor={drawerId}
+        command="show-modal"
         isPill
         className="[&_svg]:size-4!"
       >
@@ -34,7 +35,7 @@ export const TemplateDelete = ({ id }: TemplateDeleteProps) => {
         Delete
       </Button>
       <Drawer
-        id={popoverId}
+        id={drawerId}
         heading={'Delete Template'}
         description={
           'Are you sure you want to permanently delete this template?'
@@ -47,8 +48,8 @@ export const TemplateDelete = ({ id }: TemplateDeleteProps) => {
             </Button>
             <Button
               accentColor="secondary"
-              popoverTargetAction="hide"
-              popoverTarget={popoverId}
+              command="close"
+              commandFor={drawerId}
             >
               Cancel
             </Button>

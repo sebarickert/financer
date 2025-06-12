@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { X } from 'lucide-react';
-import { forwardRef } from 'react';
+import { FC } from 'react';
 
 import { Button } from '@/elements/Button/Button';
 import { Heading } from '@/elements/Heading';
@@ -13,44 +13,83 @@ interface DrawerProps {
   id: string;
   heading?: string;
   description?: string;
+  ref?: React.RefObject<HTMLDialogElement | null>;
 }
 
-export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
-  (
-    { className = '', onClose, children, testId, id, heading, description },
-    ref,
-  ) => {
-    const drawerBaseClasses = clsx(
-      // Backdrop
-      'backdrop:ease-in-out backdrop:duration-200',
-      'backdrop:bg-black/0',
-      'open:starting:backdrop:bg-black/0',
-      'open:backdrop:bg-black/80 dark:open:backdrop:bg-black/90',
-      // Drawer animation
-      'ease-in-out duration-200 transition-discrete',
-      // 'ease-in-out duration-200',
-      'max-lg:translate-y-full lg:translate-x-full',
-      'max-lg:open:starting:translate-y-full lg:open:starting:translate-x-full',
-      'max-lg:open:translate-y-0 lg:open:translate-x-0',
-      // Drawer
-      'bg-background text-foreground fixed text-left',
-      'max-lg:bottom-0 max-lg:inset-x-0 max-lg:top-auto max-lg:w-full max-lg:rounded-t-[10px]',
-      'lg:max-w-[600px] lg:w-full lg:left-auto lg:h-full',
-      'pt-0 pb-safe-offset-12 px-6 lg:px-8',
-      'max-lg:border lg:border-l',
-      'max-h-dvh',
-      className,
-    );
+export const Drawer: FC<DrawerProps> = ({
+  className = '',
+  onClose,
+  children,
+  testId,
+  id,
+  heading,
+  description,
+  ref,
+}) => {
+  const drawerBaseClasses = clsx(
+    // Base styles to reset default dialog styles
+    'fixed inset-0 h-auto max-h-none w-auto max-w-none border-none bg-transparent',
 
-    return (
-      <section
-        className={drawerBaseClasses}
-        popover="auto"
-        id={id}
-        data-testid={testId ?? 'drawer'}
-        ref={ref}
-        data-body-scroll-lock="on"
-        data-body-no-pointer-events="on"
+    // We need same duration for dialog root to keep it in DOM
+    'group transition-discrete duration-300',
+
+    // Drawer backdrop
+    //
+    // Animate out duration
+    'backdrop:duration-100 backdrop:ease-in',
+    // Animate in duration
+    'open:backdrop:duration-300 open:starting:backdrop:ease-out',
+    // Starting styles
+    'backdrop:bg-black backdrop:backdrop-blur-none backdrop:opacity-0',
+    'open:starting:backdrop:opacity-0 open:starting:backdrop:backdrop-blur-none',
+    // Open styles
+    'open:backdrop:opacity-70 open:backdrop:backdrop-blur-xs',
+  );
+
+  const drawerContentBaseClasses = clsx(
+    'transition-discrete',
+    // Animate out duration
+    'ease-in duration-200',
+    // Animate in duration
+    'group-open:duration-300 group-open:starting:ease-out',
+
+    // Starting styles
+    // Mobile
+    'max-lg:translate-y-full max-lg:group-open:starting:translate-y-full',
+    // Desktop
+    'lg:translate-x-full lg:group-open:starting:translate-x-full',
+
+    // Open styles
+    'bg-background text-foreground fixed text-left',
+    'max-lg:bottom-0 max-lg:inset-x-0 max-lg:top-auto max-lg:w-full max-lg:rounded-t-[10px] max-lg:border max-lg:group-open:translate-y-0',
+    'lg:max-w-[600px] lg:w-full lg:left-auto lg:h-full lg:group-open:translate-x-0 lg:border-l',
+    'pt-0 pb-safe-offset-12 px-6 lg:px-8',
+    'max-h-dvh',
+    className,
+  );
+
+  return (
+    <dialog
+      className={drawerBaseClasses}
+      onClose={onClose}
+      id={id}
+      data-testid={testId ?? 'drawer'}
+      ref={ref}
+      data-body-scroll-lock="on"
+      data-body-no-pointer-events="on"
+    >
+      <button
+        className="fixed inset-0 -z-10 border-none bg-transparent"
+        type="button"
+        tabIndex={-1}
+        aria-hidden={true}
+        command="close"
+        commandfor={id}
+      />
+
+      <div
+        className={clsx('z-0', drawerContentBaseClasses)}
+        data-testid="drawer-content"
       >
         <div
           className={clsx(
@@ -65,10 +104,9 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
           <Heading noMargin>{heading}</Heading>
           <Button
             size="icon"
-            onClick={onClose}
             haptic="light"
-            popoverTarget={id}
-            popoverTargetAction="hide"
+            commandFor={id}
+            command="close"
             accentColor="ghost"
             className="translate-x-1/4"
           >
@@ -78,9 +116,9 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
         </div>
         {description && <p className="mb-8">{description}</p>}
         {children}
-      </section>
-    );
-  },
-);
+      </div>
+    </dialog>
+  );
+};
 
 Drawer.displayName = 'Drawer';
