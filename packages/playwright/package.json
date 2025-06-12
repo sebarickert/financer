@@ -21,19 +21,19 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "eslint-config-prettier": "^10.1.1",
-    "eslint-import-resolver-typescript": "^4.3.1",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-import-resolver-typescript": "^4.4.3",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-playwright": "^2.2.0",
-    "eslint-plugin-prettier": "^5.2.6",
-    "globals": "^16.0.0",
-    "oazapfts": "^6.2.2",
+    "eslint-plugin-prettier": "^5.4.1",
+    "globals": "^16.2.0",
+    "oazapfts": "^6.3.0",
     "typescript": "5.8.3",
-    "typescript-eslint": "^8.29.0"
+    "typescript-eslint": "^8.34.0"
   },
   "dependencies": {
-    "@playwright/test": "^1.51.1",
+    "@playwright/test": "^1.53.0",
     "decimal.js": "^10.5.0"
   }
 }
