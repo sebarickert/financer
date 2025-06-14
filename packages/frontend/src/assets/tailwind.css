@@ -122,14 +122,14 @@
 
   html {
     overflow-y: scroll;
-  }
-
-  body {
-    @apply text-foreground bg-background;
 
     &:has(dialog[open]) {
       overflow: hidden;
     }
+  }
+
+  body {
+    @apply text-foreground bg-background;
   }
 
   /* View transition name from data attributes */
