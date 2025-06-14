@@ -36,6 +36,7 @@
     { "name": "backend", "rootPath": "./packages/backend" },
     { "name": "frontend", "rootPath": "./packages/frontend" }
   ],
+  "playwright.env": { "TEST_SERVER_URL": "http://localhost:3000" },
   "cSpell.words": [
     "clsx",
     "datasources",

@@ -80,12 +80,12 @@ export default async function AccountPage({
               href={`/accounts/${account.id}/edit`}
               icon={Pencil}
             />
-            <PopperItem label="Delete" icon={Trash} popperId={account.id} />
+            <PopperItem label="Delete" icon={Trash} drawerId={account.id} />
             {account.type === AccountType.INVESTMENT && (
               <PopperItem
                 label="Update Market Value"
                 icon={ChartNoAxesCombined}
-                popperId={accountDrawerPopperId}
+                drawerId={accountDrawerPopperId}
               />
             )}
           </Popper>
@@ -99,7 +99,7 @@ export default async function AccountPage({
       <AccountDeleteDrawer id={account.id} />
       {account.type === AccountType.INVESTMENT && (
         <AccountUpdateMarketValueDrawer
-          popperId={accountDrawerPopperId}
+          drawerId={accountDrawerPopperId}
           account={account}
           marketSettings={marketSettings}
         />

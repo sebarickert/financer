@@ -10,12 +10,12 @@ type PopperItem =
       icon: LucideIcon;
       label: string;
       href: string;
-      popperId?: never;
+      drawerId?: never;
     }
   | {
       icon: LucideIcon;
       label: string;
-      popperId: string;
+      drawerId: string;
       href?: never;
     };
 
@@ -23,7 +23,7 @@ export const PopperItem: FC<PopperItem> = ({
   icon: Icon,
   label,
   href,
-  popperId,
+  drawerId,
 }) => {
   const popperItemClasses = clsx(
     'flex w-full items-center gap-2 text-sm font-normal cursor-pointer py-1.5 px-2 rounded-sm justify-start',
@@ -57,7 +57,8 @@ export const PopperItem: FC<PopperItem> = ({
     <Button
       accentColor="unstyled"
       className={popperItemClasses}
-      popoverTarget={popperId}
+      commandFor={drawerId}
+      command="show-modal"
       testId="popper-item"
     >
       {content}

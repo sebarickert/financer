@@ -1,4 +1,4 @@
-FROM node:22-alpine AS base-image
+FROM node:24-alpine AS base-image
 
 ################################################################################
 #

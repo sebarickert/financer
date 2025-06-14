@@ -71,7 +71,6 @@ export const Link = ({
     );
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const LinkElement = noTransition ? NextLink : TransitionLink;
 
   return (

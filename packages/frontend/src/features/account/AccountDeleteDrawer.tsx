@@ -29,11 +29,7 @@ export const AccountDeleteDrawer: FC<AccountDeleteDrawerProps> = ({ id }) => {
           <Button type="submit" accentColor="danger">
             Delete
           </Button>
-          <Button
-            accentColor="secondary"
-            popoverTargetAction="hide"
-            popoverTarget={id}
-          >
+          <Button accentColor="secondary" command="close" commandFor={id}>
             Cancel
           </Button>
         </Form.Footer>

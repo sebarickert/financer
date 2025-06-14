@@ -62,7 +62,7 @@ export default async function TransactionPage({ params }: { params: Params }) {
               href={`/transactions/${id}/edit`}
               icon={Pencil}
             />
-            <PopperItem label="Delete" icon={Trash} popperId={id} />
+            <PopperItem label="Delete" icon={Trash} drawerId={id} />
           </Popper>
         }
       />

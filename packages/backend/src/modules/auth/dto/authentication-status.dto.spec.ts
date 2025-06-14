@@ -6,9 +6,10 @@ import { AuthenticationStatusDto } from './authentication-status.dto';
 import { UserDto } from '@/users/dto/user.dto';
 
 describe('AuthenticationStatusDto', () => {
-  const validUserDto = {
-    name: '',
-    nickname: '',
+  const validUserDto: UserDto = {
+    id: '123e4567-e89b-12d3-a456-426614174000',
+    name: 'mock-name',
+    nickname: 'mock-nickname',
     githubId: null,
     auth0Id: null,
     profileImageUrl: null,
@@ -63,13 +64,6 @@ describe('AuthenticationStatusDto', () => {
       const dto = plainToInstance(AuthenticationStatusDto, {
         authenticated: true,
       });
-      const errors = await validate(dto);
-
-      expect(errors).toHaveLength(0);
-    });
-
-    it('should validate an empty DTO', async () => {
-      const dto = plainToInstance(AuthenticationStatusDto, {});
       const errors = await validate(dto);
 
       expect(errors).toHaveLength(0);

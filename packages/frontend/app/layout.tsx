@@ -8,6 +8,7 @@ import { Theme } from '@/api/ssr-financer-api';
 import { getOwnUserTheme } from '@/api-service';
 import { faviconList } from '@/assets/favicon-list';
 import { ScrollToTop } from '@/blocks/ScrollToTop';
+import { PolyfillProvider } from '@/container/polyfill.provider';
 import { StoreProvider } from '@/container/store.provider';
 import { verifySession } from '@/utils/dal';
 
@@ -75,6 +76,7 @@ export default async function RootLayout({
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
       </head>
       <body className={clsx('max-lg:pb-(--gutter-bottom)')}>
+        <PolyfillProvider />
         <StoreProvider>
           <ViewTransitions>
             <ScrollToTop />

@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import { FC, HTMLAttributes, type JSX, useCallback } from 'react';
+import { ButtonHTMLAttributes, FC, type JSX, useCallback } from 'react';
 
 import { Link } from '@/elements/Link';
 import { HapticType, hapticRunner } from '@/utils/haptic.helper';
@@ -15,9 +15,10 @@ export type ButtonAccentColor =
   | 'ghost';
 interface ButtonProps
   extends Pick<
-    HTMLAttributes<unknown>,
-    'popoverTarget' | 'popoverTargetAction' | 'id' | 'title'
+    ButtonHTMLAttributes<HTMLButtonElement>,
+    'popoverTarget' | 'popoverTargetAction' | 'id' | 'title' | 'command'
   > {
+  commandFor?: ButtonHTMLAttributes<HTMLButtonElement>['commandfor'];
   accentColor?: ButtonAccentColor;
   children: React.ReactNode;
   className?: string;
@@ -43,6 +44,8 @@ export const Button: FC<ButtonProps> = ({
   isDisabled,
   popoverTarget,
   popoverTargetAction,
+  commandFor,
+  command,
   size = 'default',
   haptic = 'none',
   isPill,
@@ -130,6 +133,8 @@ export const Button: FC<ButtonProps> = ({
       disabled={isDisabled}
       popoverTarget={popoverTarget}
       popoverTargetAction={popoverTargetAction}
+      commandfor={commandFor}
+      command={command}
       {...props}
     >
       {children}
