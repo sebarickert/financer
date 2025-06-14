@@ -1,10 +1,6 @@
 import '@/assets/tailwind.css';
 
 import clsx from 'clsx';
-import {
-  apply as applyHtmlInvokerPolyfill,
-  isSupported as isHtmlInvokersSupported,
-} from 'invokers-polyfill/fn';
 import { Metadata, Viewport } from 'next';
 import { ViewTransitions } from 'next-view-transitions';
 
@@ -12,13 +8,9 @@ import { Theme } from '@/api/ssr-financer-api';
 import { getOwnUserTheme } from '@/api-service';
 import { faviconList } from '@/assets/favicon-list';
 import { ScrollToTop } from '@/blocks/ScrollToTop';
+import { PolyfillProvider } from '@/container/polyfill.provider';
 import { StoreProvider } from '@/container/store.provider';
 import { verifySession } from '@/utils/dal';
-import { isServerSide } from '@/utils/isServerSide';
-
-if (!isServerSide() && !isHtmlInvokersSupported()) {
-  applyHtmlInvokerPolyfill();
-}
 
 const appName = 'Financer';
 
@@ -84,6 +76,7 @@ export default async function RootLayout({
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
       </head>
       <body className={clsx('max-lg:pb-(--gutter-bottom)')}>
+        <PolyfillProvider />
         <StoreProvider>
           <ViewTransitions>
             <ScrollToTop />

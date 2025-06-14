@@ -75,8 +75,6 @@ export const Drawer: FC<DrawerProps> = ({
       id={id}
       data-testid={testId ?? 'drawer'}
       ref={ref}
-      data-body-scroll-lock="on"
-      data-body-no-pointer-events="on"
     >
       <button
         className="fixed inset-0 -z-10 border-none bg-transparent"
