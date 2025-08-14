@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma, PrismaPromise, TransactionCategory } from '@prisma/client';
 
-import { PrismaService } from '../prisma.service';
+import { PrismaService } from '@/database/prisma.service';
 
 @Injectable()
 export class TransactionCategoryRepo {
@@ -53,7 +53,14 @@ export class TransactionCategoryRepo {
     data: Prisma.TransactionCategoryUncheckedCreateInput,
   ): Promise<TransactionCategory> {
     return this.prisma.transactionCategory.create({
-      data,
+      data: {
+        id: data.id,
+        name: data.name,
+        userId: data.userId,
+        parentCategoryId: data.parentCategoryId,
+        visibility: data.visibility,
+        deleted: data.deleted,
+      },
     });
   }
 
@@ -61,7 +68,14 @@ export class TransactionCategoryRepo {
     data: Prisma.TransactionCategoryUncheckedCreateInput[],
   ): PrismaPromise<Prisma.BatchPayload> {
     return this.prisma.transactionCategory.createMany({
-      data,
+      data: data.map((item) => ({
+        id: item.id,
+        name: item.name,
+        userId: item.userId,
+        parentCategoryId: item.parentCategoryId,
+        visibility: item.visibility,
+        deleted: item.deleted,
+      })),
     });
   }
 
@@ -71,7 +85,14 @@ export class TransactionCategoryRepo {
   }): Promise<TransactionCategory> {
     const { where, data } = params;
     return this.prisma.transactionCategory.update({
-      data,
+      data: {
+        id: data.id,
+        name: data.name,
+        userId: data.userId,
+        parentCategoryId: data.parentCategoryId,
+        visibility: data.visibility,
+        deleted: data.deleted,
+      },
       where,
     });
   }

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma, PrismaPromise, TransactionTemplateLog } from '@prisma/client';
 
-import { PrismaService } from '../prisma.service';
+import { PrismaService } from '@/database/prisma.service';
 
 @Injectable()
 export class TransactionTemplateLogRepo {
@@ -52,8 +52,23 @@ export class TransactionTemplateLogRepo {
   async create(
     data: Prisma.TransactionTemplateLogUncheckedCreateInput,
   ): Promise<TransactionTemplateLog> {
+    const {
+      id,
+      templateId,
+      transactionId,
+      executed,
+      userId,
+      eventType,
+    } = data;
     return this.prisma.transactionTemplateLog.create({
-      data,
+      data: {
+        id,
+        templateId,
+        transactionId,
+        executed,
+        userId,
+        eventType,
+      },
     });
   }
 
@@ -70,8 +85,23 @@ export class TransactionTemplateLogRepo {
     data: Prisma.TransactionTemplateLogUpdateInput;
   }): Promise<TransactionTemplateLog> {
     const { where, data } = params;
+    const {
+      id,
+      templateId,
+      transactionId,
+      executed,
+      userId,
+      eventType,
+    } = data;
     return this.prisma.transactionTemplateLog.update({
-      data,
+      data: {
+        id,
+        templateId,
+        transactionId,
+        executed,
+        userId,
+        eventType,
+      },
       where,
     });
   }

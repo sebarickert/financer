@@ -11,9 +11,9 @@ import {
   transactionsRepoFindAllByIdMockData,
   transactionsRepoFindAllByTypeAndUserMockData,
 } from '@/database/repos/mocks/transactions-repo-mock';
-import { TransactionCategoryMappingRepo } from '@/database/repos/transaction-category-mapping.repo';
-import { TransactionCategoryRepo } from '@/database/repos/transaction-category.repo';
-import { TransactionRepo } from '@/database/repos/transaction.repo';
+import { TransactionCategoryMappingRepo } from '@/modules/transaction-category-mappings/transaction-category-mapping.repo';
+import { TransactionCategoryRepo } from '@/modules/transaction-categories/transaction-category.repo';
+import { TransactionRepo } from '@/modules/transactions/transaction.repo';
 import { createMockServiceProvider } from '@/test/create-mock-service-provider';
 import { TransactionCategoriesService } from '@/transaction-categories/transaction-categories.service';
 import { TransactionCategoryMappingsService } from '@/transaction-category-mappings/transaction-category-mappings.service';

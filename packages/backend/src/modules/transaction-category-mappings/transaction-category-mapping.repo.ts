@@ -5,7 +5,7 @@ import {
   TransactionCategoryMapping,
 } from '@prisma/client';
 
-import { PrismaService } from '../prisma.service';
+import { PrismaService } from '@/database/prisma.service';
 
 @Injectable()
 export class TransactionCategoryMappingRepo {
@@ -49,7 +49,13 @@ export class TransactionCategoryMappingRepo {
     data: Prisma.TransactionCategoryMappingUncheckedCreateInput,
   ): Promise<TransactionCategoryMapping> {
     return this.prisma.transactionCategoryMapping.create({
-      data,
+      data: {
+        id: data.id,
+        transactionId: data.transactionId,
+        categoryId: data.categoryId,
+        amount: data.amount,
+        description: data.description,
+      },
     });
   }
 
@@ -57,7 +63,13 @@ export class TransactionCategoryMappingRepo {
     data: Prisma.TransactionCategoryMappingUncheckedCreateInput[],
   ): PrismaPromise<Prisma.BatchPayload> {
     return this.prisma.transactionCategoryMapping.createMany({
-      data,
+      data: data.map((item) => ({
+        id: item.id,
+        transactionId: item.transactionId,
+        categoryId: item.categoryId,
+        amount: item.amount,
+        description: item.description,
+      })),
     });
   }
 
@@ -67,7 +79,13 @@ export class TransactionCategoryMappingRepo {
   }): Promise<TransactionCategoryMapping> {
     const { where, data } = params;
     return this.prisma.transactionCategoryMapping.update({
-      data,
+      data: {
+        id: data.id,
+        transactionId: data.transactionId,
+        categoryId: data.categoryId,
+        amount: data.amount,
+        description: data.description,
+      },
       where,
     });
   }
