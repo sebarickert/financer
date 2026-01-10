@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { AccountBalanceChange, Prisma, PrismaPromise } from '@prisma/client';
 
-import { PrismaService } from '../prisma.service';
+import { PrismaService } from '@/database/prisma.service';
 
 @Injectable()
 export class AccountBalanceChangeRepo {
@@ -35,8 +35,14 @@ export class AccountBalanceChangeRepo {
   async create(
     data: Prisma.AccountBalanceChangeCreateInput,
   ): Promise<AccountBalanceChange> {
+    const { amount, date, user, account } = data;
     return this.prisma.accountBalanceChange.create({
-      data,
+      data: {
+        amount,
+        date,
+        user,
+        account,
+      },
     });
   }
 
@@ -53,8 +59,14 @@ export class AccountBalanceChangeRepo {
     data: Prisma.AccountBalanceChangeUpdateInput;
   }): Promise<AccountBalanceChange> {
     const { where, data } = params;
+    const { amount, date, user, account } = data;
     return this.prisma.accountBalanceChange.update({
-      data,
+      data: {
+        amount,
+        date,
+        user,
+        account,
+      },
       where,
     });
   }

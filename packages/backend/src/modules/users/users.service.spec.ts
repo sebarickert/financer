@@ -3,7 +3,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UsersService } from './users.service';
 
 import { DUMMY_TEST_USER } from '@/config/mockAuthenticationMiddleware';
-import { UserRepo } from '@/database/repos/user.repo';
+import { UserRepo } from '@/modules/users/user.repo';
 import { createMockServiceProvider } from '@/test/create-mock-service-provider';
 
 describe('UsersService', () => {

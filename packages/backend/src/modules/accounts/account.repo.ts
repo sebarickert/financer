@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Account, Prisma, PrismaPromise } from '@prisma/client';
 
-import { PrismaService } from '../prisma.service';
+import { PrismaService } from '@/database/prisma.service';
 
 @Injectable()
 export class AccountRepo {
@@ -56,8 +56,29 @@ export class AccountRepo {
   }
 
   async create(data: Prisma.AccountUncheckedCreateInput): Promise<Account> {
+    const {
+      id,
+      userId,
+      name,
+      type,
+      balance,
+      createdAt,
+      updatedAt,
+      isDeleted,
+      currentDateBalance,
+    } = data;
     return this.prisma.account.create({
-      data,
+      data: {
+        id,
+        userId,
+        name,
+        type,
+        balance,
+        createdAt,
+        updatedAt,
+        isDeleted,
+        currentDateBalance,
+      },
     });
   }
 
@@ -74,8 +95,29 @@ export class AccountRepo {
     data: Prisma.AccountUpdateInput;
   }): Promise<Account> {
     const { where, data } = params;
+    const {
+      id,
+      userId,
+      name,
+      type,
+      balance,
+      createdAt,
+      updatedAt,
+      isDeleted,
+      currentDateBalance,
+    } = data as Prisma.AccountUncheckedUpdateInput;
     return this.prisma.account.update({
-      data,
+      data: {
+        id,
+        userId,
+        name,
+        type,
+        balance,
+        createdAt,
+        updatedAt,
+        isDeleted,
+        currentDateBalance,
+      },
       where,
     });
   }
